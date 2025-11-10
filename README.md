@@ -1,0 +1,2 @@
+# secoppal
+un buscador conversacional
