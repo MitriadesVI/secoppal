@@ -94,22 +94,34 @@ def _render_trace(debug: dict) -> None:
 
 
 def _render_rating(trace_id: str, current_rating: int | None, history_idx: int) -> None:
-    """Show thumbs up/down. Once rated, show the result."""
+    """Show thumbs up/down with optional comment. Once rated, show result + comment."""
     if current_rating is not None:
         icon = "👍 Relevante" if current_rating == 1 else "👎 Incorrecto"
+        comment = st.session_state.history[history_idx].get("rating_comment")
         st.caption(f"Calificacion: {icon}")
+        if comment:
+            st.caption(f"💬 {comment}")
         return
+
+    comment_key = f"comment_{trace_id}"
+    comment = st.text_input(
+        "Comentario (opcional)",
+        key=comment_key,
+        placeholder="Ej: entidad bien pero faltó filtrar por año",
+    )
 
     c1, c2, c3 = st.columns([1, 1, 10])
     with c1:
         if st.button("👍", key=f"up_{trace_id}", help="Resultados relevantes"):
-            workflow.rate_query(trace_id, rating=1)
+            workflow.rate_query(trace_id, rating=1, comment=comment or None)
             st.session_state.history[history_idx]["rating"] = 1
+            st.session_state.history[history_idx]["rating_comment"] = comment or None
             st.rerun()
     with c2:
         if st.button("👎", key=f"down_{trace_id}", help="Resultados incorrectos"):
-            workflow.rate_query(trace_id, rating=0)
+            workflow.rate_query(trace_id, rating=0, comment=comment or None)
             st.session_state.history[history_idx]["rating"] = 0
+            st.session_state.history[history_idx]["rating_comment"] = comment or None
             st.rerun()
 
 

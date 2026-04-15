@@ -143,15 +143,15 @@ class SoQLBuilder:
         select_clause = ", ".join(spec.select_fields)
         where_clause = " AND ".join(where_clauses) if where_clauses else "1=1"
 
-        # Default: date DESC (most recent first). Override to value DESC
-        # only when user explicitly asks for ordering by price/amount.
+        # Default: value DESC (highest price first).
+        # Secondary sort by date DESC for consistent tie-breaking.
         if params.get("ordering_signal") == "valor_desc":
-            order_column = spec.value
+            order_expr = f"{spec.value} DESC"
         else:
-            order_column = spec.date
+            order_expr = f"{spec.value} DESC, {spec.date} DESC"
         limit = int(params.get("limit", 50))
 
-        return f"SELECT {select_clause} WHERE {where_clause} ORDER BY {order_column} DESC LIMIT {limit}"
+        return f"SELECT {select_clause} WHERE {where_clause} ORDER BY {order_expr} LIMIT {limit}"
 
     @staticmethod
     def _escape(value: str) -> str:
