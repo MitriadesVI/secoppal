@@ -51,45 +51,37 @@ SECOPPAL es un chatbot conversacional que permite buscar **procesos de contratac
 | **API / Backend** | FastAPI + Uvicorn | Servidor HTTP, webhooks de Twilio y Telegram |
 | **UI de pruebas** | Streamlit | Interfaz web para desarrollo y demos |
 | **Orquestación** | Apache Burr | Máquina de estados del pipeline conversacional |
-| **LLM** | DeepSeek V3 (API) | Interpretación de intención y extracción de parámetros (fallback ~30% queries) |
-| **SDK LLM** | openai (compatible) | Cliente para la API de DeepSeek |
+| **Spell correction** | RapidFuzz | Corrección de typos en vocabulario de contratación (36 términos) |
 | **Fuzzy matching** | RapidFuzz | Resolución de nombres de entidades con variaciones |
 | **Datos SECOP** | sodapy + Socrata | Consultas SoQL contra datos.gov.co |
 | **Config** | pydantic-settings | Variables de entorno tipadas y validadas |
 | **Canal WhatsApp** | Twilio | Webhook entrante/saliente de mensajes |
 | **Canal Telegram** | Bot API (nativo) | Webhook de mensajes |
 | **Testing** | pytest | Suite de pruebas unitarias y end-to-end |
-| **HTTP async** | httpx | Llamadas asíncronas (LLM, utilidades) |
 
 ---
 
 ## Arquitectura
 
-**Principio central:** el LLM no genera SQL ni queries. Solo interpreta intención y extrae parámetros. El código determinístico hace todo lo demás.
+**Principio central:** el pipeline es 100% determinístico. No usa LLM. El código extrae parámetros con regex + gazetteer y construye queries SoQL. Costo por query: **$0**.
 
 ```
 Usuario (WhatsApp / Telegram / Streamlit)
         │
         ▼
 ┌───────────────────────────┐
-│  PASO 1: Query Router     │  ← Regex + diccionarios  (gratis, <1 ms)
-│  ¿Se puede resolver       │     Cubre ~70% de queries
-│  sin LLM?                 │
+│  PASO 1: Spell Correction │  ← RapidFuzz, 36 términos  (gratis, <1 ms)
+│  "pretacion" → "prestacion│
+│  "alcladia"  → "alcaldia" │
 └──────────┬────────────────┘
-           │
-     ┌─────┴──────┐
-     │ SÍ         │ NO (~30%)
-     ▼            ▼
-  Params       ┌────────────────────────┐
-  extraídos    │  PASO 2: DeepSeek V3   │  ← Tool calling  (~$0.001/query)
-               │  Interpreta intención  │
-               │  Extrae parámetros     │
-               └──────────┬─────────────┘
-                          │
-                     Params merged
-                          │
-     ┌────────────────────┘
-     ▼
+           ▼
+┌───────────────────────────┐
+│  PASO 2: Query Router     │  ← Regex + gazetteer 10K+ aliases  (gratis, <1 ms)
+│  Extrae: entidad, depto,  │     Cubre 100% de queries
+│  objeto, fechas, montos,  │
+│  estado, modalidad, orden │
+└──────────┬────────────────┘
+           ▼
 ┌───────────────────────────┐
 │  PASO 3: Entity Resolver  │  ← Alias exacto → RapidFuzz → LIKE  (gratis)
 │  "gobernación atlántico"  │
@@ -126,27 +118,20 @@ Usuario (WhatsApp / Telegram / Streamlit)
 El flujo está orquestado por **Apache Burr** como máquina de estados. Cada acción recibe y produce un `State` inmutable.
 
 ```
-parse_query ──► [needs_llm?] ──► llm_parse
-     │                               │
-     └──────────────────────────────►│
-                                     ▼
-                           resolve_entities
-                                     │
-                                build_query
-                                     │
-                             execute_query
-                                     │
-                          [needs_clarification?]
-                           ┌────┘      └────┐
-                    clarify_query    format_response
+parse_query ──► resolve_entities ──► build_query ──► execute_query
+                                                         │
+                                              [needs_clarification?]
+                                               ┌────┘      └────┐
+                                        clarify_query    format_response
 ```
+
+> **Nota:** El paso `llm_parse` existe en el grafo por compatibilidad pero nunca se ejecuta — `_needs_llm()` retorna `False` siempre (ADR-008).
 
 **Transiciones clave:**
 
 | Condición | Siguiente paso |
 |-----------|---------------|
-| `needs_llm = False` | `resolve_entities` (salta el LLM) |
-| `needs_llm = True` | `llm_parse` → `resolve_entities` |
+| `needs_llm = False` (siempre) | `resolve_entities` (salta el LLM) |
 | `needs_clarification = True` | `clarify_query` (pide más info al usuario) |
 | Error en API Socrata | Reintento con backoff exponencial |
 
@@ -154,8 +139,8 @@ parse_query ──► [needs_llm?] ──► llm_parse
 
 ## Componentes principales
 
-### `app/core/query_router.py` — Parser heurístico
-El primer filtro del pipeline. Usa regex y diccionarios para extraer parámetros **sin tocar el LLM**.
+### `app/core/query_router.py` — Parser heurístico (100% de queries)
+El pipeline de parseo. Usa regex, gazetteer y spell correction para extraer parámetros **sin LLM**.
 
 Extrae:
 - **Dataset**: `procesos` vs `contratos` (detectado por palabras clave como "contrato", "firmado", "ejecutando")
@@ -164,7 +149,7 @@ Extrae:
 - **Estado del proceso**: abierto, cerrado, adjudicado, desierto, etc.
 - **Modalidad**: licitación pública, mínima cuantía, selección abreviada, etc.
 - **Montos**: rango `valor_min` / `valor_max` ("más de 500 millones", "entre 200 y 800 millones")
-- **Fechas**: ISO o año solo ("en 2024", "desde enero")
+- **Fechas**: ISO o año solo ("en 2024", "desde enero"), o mes + año ("abril de 2026" → rango fecha_desde/fecha_hasta del mes completo)
 - **Señal de ordenamiento** (`ordering_signal`): detecta frases como "más caros", "más costosos", "más grandes", etc. (`_ORDERING_SIGNAL_RE`). Estas frases son instrucciones de ordenamiento, **no** términos de objeto, y se eliminan del texto antes de la extracción de objeto.
 - **Contratista**: solo para dataset contratos
 - **Términos de objeto**: palabras clave residuales para búsqueda fulltext. Adjetivos de valor/tamaño (`caro`, `costoso`, `grande`, `alto`, `nuevo`, `mejor`, etc.) están en `STOPWORDS` y no contaminan el objeto.
@@ -184,13 +169,14 @@ Retorna `ParsedQuery` con `params`, `needs_llm: bool` y `route_reason: str`.
 
 ---
 
-### `app/core/llm_handler.py` — Fallback LLM (DeepSeek)
-Se activa únicamente cuando el parser heurístico no pudo extraer parámetros suficientes.
+### `app/utils/spell_correction.py` — Corrección de typos
+Corrige errores de escritura comunes en vocabulario de contratación pública antes del parseo.
 
-- Usa la API de DeepSeek con **tool calling** estructurado (función `buscar_procesos`)
-- El LLM devuelve JSON con parámetros — nunca genera SoQL
-- Merge inteligente: no sobrescribe params que la heurística ya extrajo con confianza
-- Timeout de 15 s con fallback silencioso si falla
+- Vocabulario de 36 términos frecuentes (prestación, alcaldía, gobernación, licitación, etc.)
+- Usa RapidFuzz con umbral de 80% de similitud
+- Limpia caracteres especiales pegados a palabras ("servid=cios" → "servicios")
+- Preserva palabras cortas (≤2 chars), números y palabras desconocidas (nombres propios)
+- Se ejecuta después de `normalize_text()` pero antes de cualquier extracción de parámetros
 
 ---
 
@@ -223,9 +209,9 @@ La combinación `query_router v2 + entity_resolver v3` obtuvo **95.5% de accurac
 Recibe parámetros resueltos y construye la query para la API Socrata. **Completamente determinístico.**
 
 - WHERE dinámico según parámetros presentes
-- ORDER BY `precio_base DESC` (procesos) o `valor_del_contrato DESC` (contratos)
+- ORDER BY: `precio_base DESC, fecha DESC` por defecto (valor primario, fecha como desempate). Cuando el usuario pide explícitamente ordenar por precio (`ordering_signal=valor_desc`), usa solo `precio_base DESC`
 - Escaping de inputs para prevenir inyección
-- LIMIT configurable (default: 25 resultados)
+- LIMIT configurable (default: 50 resultados)
 - Soporte LIKE case-insensitive para búsqueda fulltext
 
 ---
@@ -262,9 +248,11 @@ Define la máquina de estados del workflow. Cada acción es una función pura qu
 Almacenamiento append-only en JSONL para observabilidad y mejora continua:
 
 - `log_trace()`: guarda la ejecución completa con UUID (params, SoQL, resultados, canal)
-- `rate()`: califica un resultado (1 = útil, 0 = no útil)
+- `rate()`: califica un resultado (1 = útil, 0 = no útil) con **comentario opcional** para notas específicas ("entidad bien pero faltó filtrar por año")
 - `get_stats()`: precisión, breakdown por ruta (heurística vs LLM), % sin resultados
 - `get_low_rated()`: casos para analizar y mejorar
+
+La UI de Streamlit muestra un campo de comentario opcional debajo de cada resultado, antes de los botones 👍/👎. El comentario se persiste en `rating_comment` del JSONL.
 
 ---
 
@@ -324,14 +312,14 @@ secoppal/
 │   ├── streamlit_app.py       # UI de pruebas
 │   │
 │   ├── core/
-│   │   ├── orchestrator.py       # Máquina de estados (Apache Burr) — V1
+│   │   ├── orchestrator.py       # Máquina de estados (Apache Burr)
 │   │   ├── orchestrator v2.py    # + manejo de errores y gazetteer-first
-│   │   ├── query_router.py       # Parser heurístico (~70% queries) — V1
+│   │   ├── query_router.py       # Parser heurístico (100% queries)
 │   │   ├── query_router v2.py    # + gazetteer-first entity detection
-│   │   ├── entity_resolver.py    # Resolución de entidades — V1 (fuzzy)
+│   │   ├── entity_resolver.py    # Resolución de entidades (V3 activo)
 │   │   ├── entity_resolver v2.py # + scan_entity() / scan_departamento()
 │   │   ├── entity_resolver v3.py # + disambiguación depts (recomendado)
-│   │   ├── llm_handler.py        # Fallback DeepSeek (~30% queries)
+│   │   ├── llm_handler.py        # DeepSeek (legacy, eliminado — ADR-008)
 │   │   ├── soql_builder.py       # Constructor de queries SoQL
 │   │   ├── secop_client.py       # Cliente Socrata con reintentos
 │   │   ├── formatter.py          # Formateador por canal
@@ -344,15 +332,17 @@ secoppal/
 │   │   └── colombia_geography.py  # Clasificación regional
 │   │
 │   └── utils/
+│       ├── spell_correction.py # Corrección de typos (36 términos, RapidFuzz)
 │       ├── logging.py         # Configuración de logging
 │       └── money.py           # Parseo y formato de moneda COP
 │
 ├── tests/
 │   ├── conftest.py
-│   ├── test_query_router.py
-│   ├── test_soql_builder.py
-│   ├── test_entity_resolver.py
-│   └── test_orchestrator.py   # End-to-end con mock de Socrata
+│   ├── test_query_router.py     # 16 tests — producción stack (V2+V3)
+│   ├── test_soql_builder.py     # 4 tests — ordenamiento y filtros
+│   ├── test_entity_resolver.py  # 16 tests — exact, fuzzy, LIKE, scan V3
+│   ├── test_spell_correction.py # 17 tests — typos, preservación, limpieza
+│   └── test_orchestrator.py     # 1 test — e2e con Socrata mock
 │
 ├── scripts/
 │   ├── accuracy_test.py       # Benchmark V1/V2/V3 con 53 queries anotadas
@@ -415,10 +405,11 @@ pytest -v
 pytest tests/test_query_router.py
 ```
 
-La suite incluye (30 tests):
-- **test_query_router** (11 tests): Usa stack de producción (V2 router + V3 entity resolver). Cubre dataset selection, entity/department extraction, stopwords (temporales, indefinidos), limpieza de puntuación, ordering signals y fechas.
-- **test_soql_builder** (2 tests): Construcción correcta de queries SoQL y ORDER BY
+La suite incluye (54 tests):
+- **test_query_router** (16 tests): Usa stack de producción (V2 router + V3 entity resolver). Cubre dataset selection, entity/department extraction, stopwords (temporales, indefinidos), limpieza de puntuación, ordering signals, fechas por año y mes+año.
+- **test_soql_builder** (4 tests): Ordenamiento por precio+fecha (default) vs solo precio (con ordering_signal), filtros WHERE
 - **test_entity_resolver** (16 tests): Exact match, fuzzy, LIKE fallback (V1) + tests de `scan_entity` / `scan_departamento` de V3 (disambiguación de departamentos)
+- **test_spell_correction** (17 tests): Corrección de typos comunes, preservación de palabras correctas/cortas/desconocidas, limpieza de caracteres especiales
 - **test_orchestrator** (1 test): End-to-end con Socrata mockeado
 
 ---
@@ -471,8 +462,8 @@ python scripts/build_gazetteer.py full --top 500
 | `SECOP_APP_TOKEN` | Token de app para la API Socrata | Sí |
 | `SECOP_API_KEY_ID` | Key ID para Socrata | Sí |
 | `SECOP_APP_SECRET` | Secret de app Socrata | Sí |
-| `DEEPSEEK_API_KEY` | API key de DeepSeek | Para queries complejas |
-| `DEEPSEEK_MODEL` | Modelo a usar (default: `deepseek-chat`) | No |
+| `DEEPSEEK_API_KEY` | API key de DeepSeek | No (legacy, LLM eliminado — ADR-008) |
+| `DEEPSEEK_MODEL` | Modelo a usar (default: `deepseek-chat`) | No (legacy) |
 | `DATOS_GOV_DOMAIN` | Dominio Socrata (default: `www.datos.gov.co`) | No |
 | `SECOP_TIMEOUT_SECONDS` | Timeout para API SECOP (default: `30`) | No |
 | `SECOP_RESULTS_LIMIT` | Máximo resultados por query (default: `25`) | No |
@@ -490,29 +481,27 @@ python scripts/build_gazetteer.py full --top 500
 
 ---
 
-### ADR-001: Arquitectura híbrida determinística + LLM
+### ADR-001: Arquitectura determinística (sin LLM)
 
-**Fecha:** 2025-04
+**Fecha:** 2025-04 (actualizado 2026-04)
 **Estado:** Activo
 
-**Decisión:** El LLM (DeepSeek) solo se invoca cuando el parser heurístico no puede extraer parámetros suficientes (~30% de las queries). Para el ~70% restante, todo el procesamiento es determinístico.
+**Decisión:** El pipeline es 100% determinístico. No usa LLM. Regex + gazetteer + spell correction extraen parámetros; código determinístico construye SoQL. Costo por query: $0.
 
-**Contexto:** Los usuarios objetivo hacen queries relativamente predecibles (departamento + tipo + estado + monto). Una arquitectura 100% LLM sería más cara, más lenta y menos confiable para producción.
+**Contexto:** Los usuarios objetivo hacen queries relativamente predecibles (departamento + tipo + estado + monto). Originalmente se diseñó como arquitectura híbrida (heurística + DeepSeek fallback), pero el análisis de producción demostró que el LLM nunca se activaba (0/26 queries). La heurística cubre el 100% de los casos.
 
-**Consecuencias:** Costo marginal muy bajo por query. El LLM nunca genera SoQL — si lo hiciera, sería imposible auditar o garantizar la seguridad de las queries.
+**Consecuencias:** Costo cero por query. Sin dependencia de APIs externas de LLM. Sin latencia adicional. El LLM nunca generó SoQL — y ahora tampoco extrae parámetros.
 
 ---
 
 ### ADR-002: DeepSeek V3 como LLM principal
 
 **Fecha:** 2025-04
-**Estado:** Activo
+**Estado:** Supersedido por ADR-008
 
-**Decisión:** Usar DeepSeek V3 via API compatible con OpenAI SDK, en lugar de GPT-4o u otros modelos.
+**Decisión:** Usar DeepSeek V3 via API compatible con OpenAI SDK como fallback para queries complejas.
 
-**Contexto:** Relación costo/desempeño superior para extracción de parámetros estructurados en español. Compatible con el SDK de OpenAI (sin cambios de código para migrar).
-
-**Alternativas descartadas:** GPT-4o (10x más caro por token), Llama local (latencia, complejidad de infra).
+**Contexto:** Se diseñó como fallback para ~30% de queries. En la práctica, el heurístico cubrió el 100% — DeepSeek nunca se activó en producción (0/26 queries). Eliminado en ADR-008.
 
 ---
 
@@ -582,6 +571,21 @@ python scripts/build_gazetteer.py full --top 500
 **Resultado:** V3 alcanza **95.5% de accuracy** (+0.7pp sobre V1, +12.7pp sobre V2). Gana en 7 de 9 categorías y empata en las 2 restantes.
 
 **Alternativas descartadas:** Invertir el orden (scan_departamento antes que scan_entity) — no funciona porque entidades compuestas como "gobernación de santander" contienen nombres de departamento dentro de ellas.
+
+---
+
+### ADR-008: Eliminación del LLM (DeepSeek) del pipeline
+
+**Fecha:** 2026-04
+**Estado:** Activo
+
+**Decisión:** Eliminar completamente el uso de DeepSeek V3 del pipeline de producción. `_needs_llm()` retorna `False` siempre. El archivo `llm_handler.py` se conserva como legacy pero no se ejecuta.
+
+**Contexto:** Análisis de 26 queries de producción (feedback.jsonl) mostró que el LLM nunca se activó (0%). Las 5 queries con rating negativo fallaron por bugs en la heurística (stopwords, entity resolution, typos) — no por ausencia de LLM. Tras corregir esos bugs (spell correction, V3 entity resolver, stopwords mejorados), la heurística cubre el 100% de los casos con 95.5% de accuracy en benchmark de 53 queries.
+
+**Consecuencias:** Costo $0/query. Sin dependencia de API externa. Latencia reducida (~1ms vs ~2-5s con LLM). La firma `_needs_llm()` se mantiene para no romper la interfaz del orchestrator (Burr).
+
+**Alternativas descartadas:** Mantener DeepSeek como "safety net" — innecesario dado el 0% de uso y el costo de mantener la integración.
 
 ---
 

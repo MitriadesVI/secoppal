@@ -1,5 +1,5 @@
 """
-SECOPAL — Streamlit UI
+SECOPPAL — Streamlit UI
 """
 from __future__ import annotations
 
@@ -11,7 +11,7 @@ from app.service import get_workflow
 # Page config & workflow singleton
 # ---------------------------------------------------------------------------
 
-st.set_page_config(page_title="SECOPAL", page_icon="📋", layout="wide")
+st.set_page_config(page_title="SECOPPAL", page_icon="📋", layout="wide")
 
 workflow = get_workflow()
 
@@ -148,7 +148,7 @@ if "history" not in st.session_state:
 # ═══════════════════════════════════════════════════════════════════════════
 
 with st.sidebar:
-    st.title("📋 SECOPAL")
+    st.title("📋 SECOPPAL")
     st.caption("Buscador conversacional SECOP II")
     st.divider()
 
@@ -192,7 +192,7 @@ with st.sidebar:
 # Main area
 # ═══════════════════════════════════════════════════════════════════════════
 
-st.title("SECOPAL")
+st.title("SECOPPAL")
 st.caption("Busqueda conversacional sobre contratacion publica colombiana — SECOP II")
 
 # ═══════════════════════════════════════════════════════════════════════════
