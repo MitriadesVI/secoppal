@@ -1,7 +1,8 @@
 from app.core.soql_builder import SoQLBuilder
 
 
-def test_build_process_query_uses_price_ordering() -> None:
+def test_build_process_query_with_ordering_signal_uses_price() -> None:
+    """When ordering_signal=valor_desc, ORDER BY should use price."""
     builder = SoQLBuilder()
     soql = builder.build(
         "p6dx-8zbt",
@@ -10,6 +11,7 @@ def test_build_process_query_uses_price_ordering() -> None:
             "objeto": ["mantenimiento", "vial"],
             "estado": "Abierto",
             "valor_min": 500_000_000,
+            "ordering_signal": "valor_desc",
         },
     )
 
@@ -17,10 +19,25 @@ def test_build_process_query_uses_price_ordering() -> None:
     assert "precio_base >= 500000000" in soql
     assert "estado_de_apertura_del_proceso = 'Abierto'" in soql
     assert "ORDER BY precio_base DESC" in soql
-    assert "fecha_de_publicacion_del DESC" not in soql
 
 
-def test_build_contract_query_filters_contractor() -> None:
+def test_build_process_query_default_orders_by_date() -> None:
+    """Without ordering_signal, ORDER BY should use date (most recent first)."""
+    builder = SoQLBuilder()
+    soql = builder.build(
+        "p6dx-8zbt",
+        {
+            "departamento_resolved": "ATLANTICO",
+            "objeto": ["mantenimiento", "vial"],
+        },
+    )
+
+    assert "ORDER BY fecha_de_publicacion_del DESC" in soql
+    assert "precio_base DESC" not in soql
+
+
+def test_build_contract_query_default_orders_by_date() -> None:
+    """Contracts without ordering_signal should order by fecha_de_firma DESC."""
     builder = SoQLBuilder()
     soql = builder.build(
         "jbjy-vk9h",
@@ -35,5 +52,19 @@ def test_build_contract_query_filters_contractor() -> None:
     assert "UPPER(nombre_entidad) LIKE UPPER('%SERVICIO NACIONAL DE APRENDIZAJE -SENA-%')" in soql
     assert "departamento = 'BOGOTA'" in soql
     assert "documento_proveedor = '900123456'" in soql
-    assert "ORDER BY valor_del_contrato DESC" in soql
+    assert "ORDER BY fecha_de_firma DESC" in soql
 
+
+def test_build_contract_query_with_ordering_signal_uses_value() -> None:
+    """When ordering_signal=valor_desc, contracts ORDER BY valor_del_contrato."""
+    builder = SoQLBuilder()
+    soql = builder.build(
+        "jbjy-vk9h",
+        {
+            "departamento_resolved": "BOGOTA",
+            "objeto": ["consultoria"],
+            "ordering_signal": "valor_desc",
+        },
+    )
+
+    assert "ORDER BY valor_del_contrato DESC" in soql
