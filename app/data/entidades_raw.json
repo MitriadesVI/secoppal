@@ -1,0 +1,4865 @@
+[
+  {
+    "official_name": "(Secretaría Distrital de Integración Social)",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 100806,
+    "total_contratos": 86250,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SUBRED INTEGRADA DE SERVICIOS DE SALUD NORTE E.S.E. (OFICIAL)",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 70689,
+    "total_contratos": 63419,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "INSTITUCIÓN UNIVERSITARIA ITM",
+    "departamento": "Antioquia",
+    "total_procesos": 59555,
+    "total_contratos": 60233,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "UNIVERSIDAD NACIONAL DE COLOMBIA",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 101542,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "SUBRED INTEGRADA DE SERVICIOS DE SALUD SUR E.S.E.**",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 39193,
+    "total_contratos": 61500,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+    "departamento": "Bolívar",
+    "total_procesos": 46252,
+    "total_contratos": 45217,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "AGENCIA NACIONAL DE TIERRAS - ANT",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 45300,
+    "total_contratos": 45301,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SUBRED INTEGRADA DE SERVICIOS DE SALUD SUR OCCIDENTE ESE.",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 15474,
+    "total_contratos": 69338,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SUBRED INTEGRADA DE SERVICIO DE SALUD CENTRO ORIENTE E.S.E 1",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 26912,
+    "total_contratos": 53613,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MUNICIPIO DE PEREIRA- OFICIAL",
+    "departamento": "Risaralda",
+    "total_procesos": 38904,
+    "total_contratos": 38719,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "INVIAS",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 40757,
+    "total_contratos": 25195,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "GOBERNACIÓN DEL DEPARTAMENTO ARCHIPIELAGO DE SAN ANDRES PROVIDENCIA Y SANTA CATALINA",
+    "departamento": "San Andrés, Providencia y Santa Catalina",
+    "total_procesos": 30752,
+    "total_contratos": 31203,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "IGAC Sede Central *",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 27939,
+    "total_contratos": 33674,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+    "departamento": "Atlántico",
+    "total_procesos": 16316,
+    "total_contratos": 44749,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MUNICIPIO DE ARMENIA QUINDIO",
+    "departamento": "Quindío",
+    "total_procesos": 29277,
+    "total_contratos": 29617,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "DEPARTAMENTO DE SANTANDER",
+    "departamento": "Santander",
+    "total_procesos": 29241,
+    "total_contratos": 29298,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SECRETARIA DE EDUCACION DEL DISTRITO",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 31526,
+    "total_contratos": 26824,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "INSTITUTO COLOMBIANO AGROPECUARIO - ICA",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 29697,
+    "total_contratos": 27961,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "UNIDAD ADMINISTRATIVA ESPECIAL DE GESTION DE RESTITUCION DE TIERRAS DESPOJADAS**",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 28885,
+    "total_contratos": 28130,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDIA DISTRITAL BARRANCABERMEJA",
+    "departamento": "Santander",
+    "total_procesos": 27958,
+    "total_contratos": 27975,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "GOBIERNO DEPARTAMENTAL",
+    "departamento": "Tolima",
+    "total_procesos": 27694,
+    "total_contratos": 27203,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "INSTITUTO DE DEPORTES Y RECREACION DE MEDELLIN",
+    "departamento": "Antioquia",
+    "total_procesos": 27104,
+    "total_contratos": 27658,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MUNICIPIO DE SAN JOSE DE CUCUTA",
+    "departamento": "Norte de Santander",
+    "total_procesos": 27562,
+    "total_contratos": 26604,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MUNICIPIO DE BUCARAMANGA",
+    "departamento": "Santander",
+    "total_procesos": 27298,
+    "total_contratos": 25615,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "Institución Universitaria Pascual Bravo COMPRADOR",
+    "departamento": "Antioquia",
+    "total_procesos": 26481,
+    "total_contratos": 26413,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "INSTITUCIÓN UNIVERSITARIA COLEGIO MAYOR DE ANTIOQUIA",
+    "departamento": "Antioquia",
+    "total_procesos": 26503,
+    "total_contratos": 25859,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDIA  MUNICIPIO DE IBAGUE*",
+    "departamento": "Tolima",
+    "total_procesos": 26254,
+    "total_contratos": 25648,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "GOBERNACIÓN DE BOYACÁ",
+    "departamento": "Boyacá",
+    "total_procesos": 26098,
+    "total_contratos": 24944,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "IDARTES",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 26307,
+    "total_contratos": 24639,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "GOBERNACIÓN DE BOLÍVAR//",
+    "departamento": "Bolívar",
+    "total_procesos": 24850,
+    "total_contratos": 24509,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "IDRD - ENTIDAD OFICIAL.",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 22103,
+    "total_contratos": 27160,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "INSTITUTO DEL DEPORTE, LA EDUCACIÓN FÍSICA Y LA RECREACIÒN DEL VALLE DEL CAUCA (INDERVALLE)",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 23984,
+    "total_contratos": 23902,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "LA CORPORACION COLOMBIANA DE INVESTIGACION AGROPECUARIA - AGROSAVIA",
+    "departamento": "Cundinamarca",
+    "total_procesos": 47673,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "GOBERNACION DEL QUINDIO ARMENIA",
+    "departamento": "Quindío",
+    "total_procesos": 23542,
+    "total_contratos": 23797,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "Gobernación Norte de Santander*",
+    "departamento": "Norte de Santander",
+    "total_procesos": 23542,
+    "total_contratos": 23405,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDIA DE PASTO",
+    "departamento": "Nariño",
+    "total_procesos": 23368,
+    "total_contratos": 23213,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "GOBERNACIÓN DEL CAUCA",
+    "departamento": "Cauca",
+    "total_procesos": 22755,
+    "total_contratos": 21751,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "DEFENSORÍA DEL PUEBLO",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 13984,
+    "total_contratos": 30476,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MUNICIPIO DE NEIVA",
+    "departamento": "Huila",
+    "total_procesos": 22450,
+    "total_contratos": 21051,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "GOBERNACION DE NARIÑO",
+    "departamento": "Nariño",
+    "total_procesos": 21600,
+    "total_contratos": 21686,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDÍA DE POPAYÁN",
+    "departamento": "Cauca",
+    "total_procesos": 21558,
+    "total_contratos": 20959,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SECRETARÍA DISTRITAL DE MOVILIDAD",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 21794,
+    "total_contratos": 20469,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "UNIVERSIDAD DE ANTIOQUIA",
+    "departamento": "Antioquia",
+    "total_procesos": 41259,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "MINISTERIO DEL INTERIOR",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 20652,
+    "total_contratos": 20507,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "CORPORACION AUTONOMA REGIONAL DE CUNDINAMARCA - CAR.",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 20931,
+    "total_contratos": 19747,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDIA MUNICIPIO DE VILLAVICENCIO",
+    "departamento": "Meta",
+    "total_procesos": 20285,
+    "total_contratos": 20001,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "INSTITUTO DISTRITAL PARA LA PROTECCIÓN DE LA NIÑEZ Y LA JUVENTUD - IDIPRON*",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 20504,
+    "total_contratos": 19659,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "Ministerio de las Culturas, las Artes y los Saberes",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 28102,
+    "total_contratos": 11369,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "CAMARA DE REPRESENTANTES",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 19465,
+    "total_contratos": 19683,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "DANE - DIRECCION TERRITORIAL CENTRO",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 18941,
+    "total_contratos": 19795,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "HOSPITAL MILITAR CENTRAL",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 25558,
+    "total_contratos": 12907,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "DEPARTAMENTO DEL ATLANTICO**",
+    "departamento": "Atlántico",
+    "total_procesos": 12714,
+    "total_contratos": 25236,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "GOBERNACION DEL CASANARE",
+    "departamento": "Casanare",
+    "total_procesos": 18870,
+    "total_contratos": 18358,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "EMPRESA COLOMBIANA DE PETROLEOS",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 37130,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "GOBERNACIÓN DE RISARALDA**",
+    "departamento": "Risaralda",
+    "total_procesos": 18330,
+    "total_contratos": 18689,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SANTIAGO DE CALI DISTRITO ESPECIAL - SECRETARIA DEL DEPORTE Y LA RECREACIÓN",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 9594,
+    "total_contratos": 27249,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "DEPARTAMENTO DEL META",
+    "departamento": "Meta",
+    "total_procesos": 18836,
+    "total_contratos": 17876,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "RADIO TELEVISION NACIONAL DE COLOMBIA.",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 21017,
+    "total_contratos": 15652,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ENTerritorio S.A",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 22465,
+    "total_contratos": 14178,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "UARIV-UNIDAD PARA LA ATENCION Y REPARACION INTEGRAL A LAS VICTIMAS",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 17960,
+    "total_contratos": 17015,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SECRETARIA DISTRITAL DE AMBIENTE",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 17350,
+    "total_contratos": 16986,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ESE HOSPITAL UNIVERSITARIO JULIO MENDEZ BARRENECHE",
+    "departamento": "Magdalena",
+    "total_procesos": 12296,
+    "total_contratos": 21663,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ESE HOSPITAL MANUEL URIBE ANGEL",
+    "departamento": "Antioquia",
+    "total_procesos": 33868,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "UNP",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 17371,
+    "total_contratos": 16424,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "HOSPITAL CENTRAL DE LA POLICIA",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 22675,
+    "total_contratos": 10913,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SIC SUPERINTENDENCIA DE INDUSTRIA Y COMERCIO",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 16853,
+    "total_contratos": 16377,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "DISTRITO ESPECIAL DE CIENCIA TECNOLOGIA E INNOVACION DE MEDELLIN",
+    "departamento": "Antioquia",
+    "total_procesos": 18875,
+    "total_contratos": 13992,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ICBF SEDE NACIONAL",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 17099,
+    "total_contratos": 15568,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SANTIAGO DE CALI DISTRITO ESPECIAL - DEPARTAMENTO ADMINISTRATIVO DE HACIENDA",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 15522,
+    "total_contratos": 15985,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 16068,
+    "total_contratos": 14927,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "INSTITUTO DE DESARROLLO URBANO",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 15901,
+    "total_contratos": 14375,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SUPERINTENDENCIA DE NOTARIADO Y REGISTRO",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 12062,
+    "total_contratos": 17681,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MUNICIPIO DE SABANETA",
+    "departamento": "Antioquia",
+    "total_procesos": 15023,
+    "total_contratos": 14698,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "BANCO DE LA REPUBLICA",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 29677,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "ALCALDIA DE FLORIDABLANCA",
+    "departamento": "Santander",
+    "total_procesos": 14797,
+    "total_contratos": 14746,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDÍA DISTRITAL DE SANTA MARTA",
+    "departamento": "Magdalena",
+    "total_procesos": 14825,
+    "total_contratos": 14637,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SANTIAGO DE CALI DISTRITO ESPECIAL - SECRETARIA DE SEGURIDAD Y JUSTICIA",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 14226,
+    "total_contratos": 14714,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDÍA MUNICIPIO DE PALMIRA",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 14638,
+    "total_contratos": 13959,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MINSALUD",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 14560,
+    "total_contratos": 13727,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "FONDO UNICO DE TECNOLOGÍAS DE LA INFORMACIÓN Y LAS COMUNICACIONES",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 14873,
+    "total_contratos": 13281,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDIA MUNICIPAL DE VALLEDUPAR",
+    "departamento": "Cesar",
+    "total_procesos": 14225,
+    "total_contratos": 13523,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "AEROCIVIL",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 16949,
+    "total_contratos": 10736,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 27676,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "DANE - DIRECCION TERRITORIAL NORTE",
+    "departamento": "Atlántico",
+    "total_procesos": 13077,
+    "total_contratos": 14078,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "DEPARTAMENTO NACIONAL DE PLANEACIÓN",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 13652,
+    "total_contratos": 13152,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "GOBERNACION DEL VALLE DEL CAUCA - DADI",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 13406,
+    "total_contratos": 13160,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "AGENCIA LOGISTICA DE LAS FUERZAS MILITARES",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 18504,
+    "total_contratos": 7714,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "GOBERNACION DE SUCRE",
+    "departamento": "Sucre",
+    "total_procesos": 13253,
+    "total_contratos": 12730,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "UNIVERSIDAD INDUSTRIAL DE SANTANDER",
+    "departamento": "Santander",
+    "total_procesos": 25899,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "TRANSMILENIO S.A.",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 13099,
+    "total_contratos": 12547,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "GOBERNACION DEL CHOCÓ.",
+    "departamento": "No Definido",
+    "total_procesos": 12677,
+    "total_contratos": 12825,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "INCIVA",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 9654,
+    "total_contratos": 15554,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "GOBERNACIÓN DEPARTAMENTO DEL PUTUMAYO",
+    "departamento": "Putumayo",
+    "total_procesos": 12703,
+    "total_contratos": 12452,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "DEPARTAMENTO ADMINISTRATIVO NACIONAL DE ESTADISTICA (DANE)",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 12601,
+    "total_contratos": 12547,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ICBF REGIONAL BOGOTA",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 12582,
+    "total_contratos": 12529,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "AGENCIA DE DESARROLLO RURAL",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 12460,
+    "total_contratos": 12105,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MUNICIPIO DE YUMBO VALLE",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 12144,
+    "total_contratos": 12110,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "HMI",
+    "departamento": "Atlántico",
+    "total_procesos": 20472,
+    "total_contratos": 3485,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "EMPRESAS PUBLICAS DE MEDELLIN E.S.P.",
+    "departamento": "Antioquia",
+    "total_procesos": 23926,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "EMPRESA SOCIAL DEL ESTADO METROSALUD",
+    "departamento": "Antioquia",
+    "total_procesos": 23532,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "DEPARTAMENTO ADMINISTRATIVO DE GESTION DEL MEDIO AMBIENTE DAGMA",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 11326,
+    "total_contratos": 11957,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "FONDO FINANCIERO DISTRITAL DE SALUD..",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 23264,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "GOBERNACION DEL MAGDALENA",
+    "departamento": "Magdalena",
+    "total_procesos": 11703,
+    "total_contratos": 11547,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDIA MUNICIPIO DE DOSQUEBRADAS",
+    "departamento": "Risaralda",
+    "total_procesos": 11462,
+    "total_contratos": 11787,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SERVICIO GEOLOGICO COLOMBIANO**",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 12352,
+    "total_contratos": 10893,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SANTIAGO DE CALI DISTRITO ESPECIAL - SECRETARIA DE BIENESTAR SOCIAL",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 9221,
+    "total_contratos": 13992,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "GOBERNACION DEL HUILA*",
+    "departamento": "Huila",
+    "total_procesos": 11728,
+    "total_contratos": 11141,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "GOBERNACION DE CALDAS",
+    "departamento": "Caldas",
+    "total_procesos": 12183,
+    "total_contratos": 10652,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SENA REGIONAL VALLE Grupo de Apoyo Administrativo Mixto",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 10649,
+    "total_contratos": 12113,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SECRETARIA DISTRITAL DE GOBIERNO 1",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 11608,
+    "total_contratos": 11122,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ESAP SEDE CENTRAL (Cuenta Oficial)",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 11577,
+    "total_contratos": 11105,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MUNICIPIO DE TUNJA/",
+    "departamento": "Boyacá",
+    "total_procesos": 11504,
+    "total_contratos": 11063,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SECRETARIA DE EDUCACION DE CALI",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 10846,
+    "total_contratos": 11719,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "AGENCIA PARA LA REINCORPORACIÓN Y LA NORMALIZACIÓN",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 9342,
+    "total_contratos": 13204,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "DEPARTAMENTO DE ANTIOQUIA//",
+    "departamento": "Antioquia",
+    "total_procesos": 11999,
+    "total_contratos": 10363,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDÍA MUNICIPAL DE CANDELARIA VALLE",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 11110,
+    "total_contratos": 10932,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "HOSPITAL SAN CRISTOBAL DE CIENAGA EMPRESA SOCIAL DEL ESTADO",
+    "departamento": "Magdalena",
+    "total_procesos": 16270,
+    "total_contratos": 5762,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SANTIAGO DE CALI DISTRITO ESPECIAL - SECRETARIA DISTRITAL DE SALUD DE CALI",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 8135,
+    "total_contratos": 13806,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MUNICIPIO DE SINCELEJO",
+    "departamento": "Sucre",
+    "total_procesos": 11246,
+    "total_contratos": 10659,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MUNICIPIO DE PIEDECUESTA",
+    "departamento": "Santander",
+    "total_procesos": 10972,
+    "total_contratos": 10849,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "UPTC",
+    "departamento": "Boyacá",
+    "total_procesos": 21566,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "SECRETARIA DISTRITAL DEL HABITAT-",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 11197,
+    "total_contratos": 10342,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SENA SECRETARIA GENERAL",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 10924,
+    "total_contratos": 10614,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MUNICIPIO DE ENVIGADO*",
+    "departamento": "Antioquia",
+    "total_procesos": 11202,
+    "total_contratos": 10279,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MINISTERIO DE MINAS Y ENERGIA",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 11151,
+    "total_contratos": 10223,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDIA MUNICIPAL DE BUGA",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 10586,
+    "total_contratos": 10686,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "UNIVERSIDAD TECNOLÓGICA DE PEREIRA",
+    "departamento": "Risaralda",
+    "total_procesos": 21263,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "FONDO FINANCIERO DISTRITAL DE SALUD.",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 0,
+    "total_contratos": 21057,
+    "source_datasets": [
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MINVIVIENDA",
+    "departamento": "No Definido",
+    "total_procesos": 10537,
+    "total_contratos": 10493,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPÚBLICA",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 16817,
+    "total_contratos": 4198,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "CONGRESO DE LA REPÚBLICA - HONORABLE SENADO DE LA REPÚBLICA",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 10570,
+    "total_contratos": 10394,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "Jardín Botánico José Celestino Mutis",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 10369,
+    "total_contratos": 10336,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MINISTERIO DE AMBIENTE Y DESARROLLO SOSTENIBLE",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 10435,
+    "total_contratos": 10033,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MUNICIPIO DE SOACHA..",
+    "departamento": "Cundinamarca",
+    "total_procesos": 20463,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "DEPARTAMENTO DE CORDOBA",
+    "departamento": "Córdoba",
+    "total_procesos": 10639,
+    "total_contratos": 9748,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ANM",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 10547,
+    "total_contratos": 9785,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MUNICIPIO DE SOACHA.",
+    "departamento": "Cundinamarca",
+    "total_procesos": 0,
+    "total_contratos": 20145,
+    "source_datasets": [
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "HOSPITAL GENERAL DE MEDELLIN LUZ CASTRO DE GUTIERREZ ESE",
+    "departamento": "Antioquia",
+    "total_procesos": 20126,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "GOBERNACION DEL DEPARTAMENTO DEL CESAR",
+    "departamento": "Cesar",
+    "total_procesos": 10262,
+    "total_contratos": 9583,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "UNIVERSIDAD DE NARIÑO",
+    "departamento": "Nariño",
+    "total_procesos": 19569,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "MINISTERIO DE EDUCACION NACIONAL (MEN)",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 10343,
+    "total_contratos": 9198,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALEJANDRO PROSPERO REVEREND E.S.E.",
+    "departamento": "Magdalena",
+    "total_procesos": 11986,
+    "total_contratos": 7543,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SENA REGIONAL ANTIOQUIA Grupo de Apoyo Administrativo Mixto",
+    "departamento": "Antioquia",
+    "total_procesos": 8526,
+    "total_contratos": 10927,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "DEPARTAMENTO ADMINISTRATIVO NACIONAL DE ESTADISTICA-SUROCCIDENTE",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 9416,
+    "total_contratos": 10016,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SANTIAGO DE CALI  DISTRITO ESPECIAL - SECRETARIA DE CULTURA",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 10142,
+    "total_contratos": 9100,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "PROSPERIDAD SOCIAL",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 8315,
+    "total_contratos": 10763,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MUNICIPIO DE SOLEDAD",
+    "departamento": "Atlántico",
+    "total_procesos": 9383,
+    "total_contratos": 9683,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ESE HOSPITAL DEPARTAMENTAL SAN RAFAEL",
+    "departamento": "Magdalena",
+    "total_procesos": 10965,
+    "total_contratos": 7909,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "UNIDAD EJECUTORA DE SANEAMIENTO DEL VALLE DEL CAUCA",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 9463,
+    "total_contratos": 9349,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "UNIMAGDALENA",
+    "departamento": "Magdalena",
+    "total_procesos": 18700,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "ALCALDÍA MUNICIPIO DE BELLO",
+    "departamento": "Antioquia",
+    "total_procesos": 8993,
+    "total_contratos": 9484,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "DEPARTAMENTO DE CUNDINAMARCA- SECRETARIA DE SALUD",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 9567,
+    "total_contratos": 8905,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MUNICIPIO DE YOPAL..",
+    "departamento": "Casanare",
+    "total_procesos": 0,
+    "total_contratos": 18386,
+    "source_datasets": [
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SANTIAGO DE CALI DISTRITO ESPECIAL - SECRETARIA DE INFRAESTRUCTURA",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 9173,
+    "total_contratos": 9101,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "INSTITUTO NACIONAL DE SALUD",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 12171,
+    "total_contratos": 6010,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "DEPARTAMENTO ADMINISTRATIVO NACIONAL DE ESTADÍSTICA - DIR TER NOROCCIDENTE - (DANE NOROCCIDENTE)",
+    "departamento": "Antioquia",
+    "total_procesos": 8944,
+    "total_contratos": 9161,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 9579,
+    "total_contratos": 8500,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "COLOMBIA COMPRA EFICIENTE",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 12733,
+    "total_contratos": 5166,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MUNICIPIO DE MANIZALES",
+    "departamento": "Caldas",
+    "total_procesos": 9669,
+    "total_contratos": 8154,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SECRETARIA DISTRITAL DE LA MUJER",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 9177,
+    "total_contratos": 8643,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MINCIENCIAS",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 11137,
+    "total_contratos": 6665,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "EMPRESA SOCIAL DEL ESTADO DEL DEPARTAMENTO DEL META E.S.E",
+    "departamento": "Meta",
+    "total_procesos": 8644,
+    "total_contratos": 8795,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ICBF REGIONAL ANTIOQUIA",
+    "departamento": "Antioquia",
+    "total_procesos": 8678,
+    "total_contratos": 8661,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "E.S.E. HOSPITAL JOSE MARÍA HERNANDEZ",
+    "departamento": "Putumayo",
+    "total_procesos": 17196,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "SENA REGIONAL TOLIMA 1",
+    "departamento": "Tolima",
+    "total_procesos": 6771,
+    "total_contratos": 10394,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SENA REGIONAL SANTANDER Grupo de Apoyo Administrativo Mixto",
+    "departamento": "Santander",
+    "total_procesos": 7416,
+    "total_contratos": 9726,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MINISTERIO DEL DEPORTE",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 8642,
+    "total_contratos": 8264,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MUNICIPIO DE YOPAL...",
+    "departamento": "Casanare",
+    "total_procesos": 16779,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "GOBERNACION DEL VALLE DEL CAUCA - SECRETARIA DE EDUCACION",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 8344,
+    "total_contratos": 8331,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "CORPORACION AUTONOMA REGIONAL DE SANTANDER+",
+    "departamento": "Santander",
+    "total_procesos": 8387,
+    "total_contratos": 8184,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "GOBERNACIÓN DE LA GUAJIRA",
+    "departamento": "La Guajira",
+    "total_procesos": 8317,
+    "total_contratos": 8112,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "INSTITUTO PARA LA ECONOMIA SOCIAL- IPES",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 9178,
+    "total_contratos": 7087,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDIA MUNICIPIO DE JAMUNDI",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 8214,
+    "total_contratos": 7876,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "FONDO NACIONAL AMBIENTAL - ANLA",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 8154,
+    "total_contratos": 7869,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MINISTERIO DE AGRICULTURA Y DESARROLLO RURAL",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 8503,
+    "total_contratos": 7407,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "GOBERNACION DEL AMAZONAS",
+    "departamento": "Amazonas",
+    "total_procesos": 8055,
+    "total_contratos": 7837,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "EMPRESA DE ACUEDUCTO Y ALCANTARILLADO DE BOGOTÁ - E.S.P.",
+    "departamento": "No Definido",
+    "total_procesos": 11266,
+    "total_contratos": 4535,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "BIBLIOTECA PUBLICA PILOTO DE MEDELLIN PARA AMERICA LATINA",
+    "departamento": "Antioquia",
+    "total_procesos": 7914,
+    "total_contratos": 7833,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 8054,
+    "total_contratos": 7496,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SENA REGIONAL CESAR Grupo de Apoyo Administrativo Mixto",
+    "departamento": "Cesar",
+    "total_procesos": 7122,
+    "total_contratos": 8388,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ESE HOSPITAL DEPARTAMENTAL UNIVERSITARIO DEL QUINDÍO SAN JUAN DE DIOS",
+    "departamento": "Quindío",
+    "total_procesos": 12280,
+    "total_contratos": 3216,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "JEP",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 7758,
+    "total_contratos": 7725,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDIA LOCAL DE CIUDAD BOLIVAR //",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 8028,
+    "total_contratos": 7289,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDÍA MUNICIPAL COTA",
+    "departamento": "Cundinamarca",
+    "total_procesos": 7619,
+    "total_contratos": 7661,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "INSTITUTO NACIONAL DE MEDICINA LEGAL Y CIENCIAS FORENSES",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 11692,
+    "total_contratos": 3567,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "CUNDINAMARCA-ALCALDIA MUNICIPIO MOSQUERA",
+    "departamento": "Cundinamarca",
+    "total_procesos": 7867,
+    "total_contratos": 7356,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "CORPORACION AUTONOMA REGIONAL DE RISARALDA",
+    "departamento": "Risaralda",
+    "total_procesos": 7991,
+    "total_contratos": 7030,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "CORMACARENA",
+    "departamento": "Meta",
+    "total_procesos": 7680,
+    "total_contratos": 7319,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "INDEPORTES TOLIMA",
+    "departamento": "Tolima",
+    "total_procesos": 7383,
+    "total_contratos": 7566,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SENA REGIONAL NORTE DE SANTANDER Grupo de Apoyo Administrativo Mixto",
+    "departamento": "Norte de Santander",
+    "total_procesos": 5760,
+    "total_contratos": 9187,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SENA REGIONAL BOLIVAR Grupo de Apoyo Administrativo Mixto",
+    "departamento": "Bolívar",
+    "total_procesos": 6870,
+    "total_contratos": 8051,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SECRETARIA GENERAL Y DE CERCANIA AL CIUDADANO",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 7465,
+    "total_contratos": 7451,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ICBF REGIONAL VALLE DEL CAUCA",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 7457,
+    "total_contratos": 7378,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MUNICIPIO DE MONTERIA",
+    "departamento": "Córdoba",
+    "total_procesos": 7933,
+    "total_contratos": 6865,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "RED SALUD CASANARE E.S.E. *",
+    "departamento": "Casanare",
+    "total_procesos": 7433,
+    "total_contratos": 7351,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SENA REGIONAL ATLANTICO Intercentros",
+    "departamento": "Atlántico",
+    "total_procesos": 5806,
+    "total_contratos": 8916,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MINISTERIO DE TRANSPORTE*",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 7662,
+    "total_contratos": 7011,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MUNICIPIO DE LA ESTRELLA",
+    "departamento": "Antioquia",
+    "total_procesos": 7275,
+    "total_contratos": 7305,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "DANE - TERRITORIAL CENTRO ORIENTE",
+    "departamento": "Santander",
+    "total_procesos": 7075,
+    "total_contratos": 7478,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "INSTITUTO DISTRITAL DE LA PARTICIPACIÓN Y ACCIÓN COMUNAL",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 7355,
+    "total_contratos": 7175,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "CAJA DE LA VIVIENDA POPULAR//",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 7357,
+    "total_contratos": 7150,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SANTIAGO DE CALI DISTRITO ESPECIAL - SECRETARIA DE MOVILIDAD",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 7145,
+    "total_contratos": 7308,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "DANE CENTRO OCCIDENTE",
+    "departamento": "Caldas",
+    "total_procesos": 7050,
+    "total_contratos": 7397,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "INSTITUTO NACIONAL DE VIGILANCIA DE MEDICAMENTOS Y ALIMENTOS //",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 7574,
+    "total_contratos": 6725,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "PLANEACIÓN MUNICIPAL CALI**",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 7044,
+    "total_contratos": 7061,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "INSTITUTO COLOMBIANO DE CREDITO EDUCATIVO Y ESTUDIO TÉCNICOS EN EL EXTERIOR MARIANO OSPINA PEREZ.",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 7540,
+    "total_contratos": 6521,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MUNICIPIO DE FUNZA - ALCALDÍA DE FUNZA",
+    "departamento": "Cundinamarca",
+    "total_procesos": 7178,
+    "total_contratos": 6760,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "CENAC AVIACION",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 13909,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "ALCALDIA MUNICIPAL DE GIRARDOT",
+    "departamento": "Cundinamarca",
+    "total_procesos": 7064,
+    "total_contratos": 6810,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "INSTITUTO DEPARTAMENTAL DE SALUD DE NARIÑO",
+    "departamento": "Nariño",
+    "total_procesos": 10080,
+    "total_contratos": 3793,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "E.S.E. HOSPITAL FRAY LUIS DE LEON",
+    "departamento": "Magdalena",
+    "total_procesos": 10408,
+    "total_contratos": 3319,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SENA REGIONAL DISTRITO CAPITAL Grupo de Apoyo Administrativo Mixto CSF",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 5084,
+    "total_contratos": 8619,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ESENTTIA S.A.",
+    "departamento": "Bolívar",
+    "total_procesos": 13637,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "GOBERNACION DEL CAQUETA**",
+    "departamento": "Caquetá",
+    "total_procesos": 6978,
+    "total_contratos": 6648,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SENA REGIONAL RISARALDA Grupo de Apoyo Administrativo Mixto//",
+    "departamento": "Risaralda",
+    "total_procesos": 6223,
+    "total_contratos": 7305,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "INSTITUTO DE CAMINOS Y CONSTRUCCIONES DE CUNDINAMARCA - ICCU",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 7101,
+    "total_contratos": 6341,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "UNIVERSIDAD DEL VALLE",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 13358,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CEET",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 4846,
+    "total_contratos": 8494,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "EMPRESA SOCIAL DEL ESTADO UNIVERSITARIA DEL ATLANTICO//",
+    "departamento": "Atlántico",
+    "total_procesos": 13260,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "SOCIEDAD TELEVISION DE ANTIOQUIA LTDA",
+    "departamento": "Antioquia",
+    "total_procesos": 13250,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "SUPERINTENDENCIA DE SERVICIOS PÚBLICOS DOMICILIARIOS",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 6895,
+    "total_contratos": 6344,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDIA MUNICIPAL FUSAGASUGA",
+    "departamento": "Cundinamarca",
+    "total_procesos": 6958,
+    "total_contratos": 6260,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "FUERZA AEROESPACIAL COLOMBIANA",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 8549,
+    "total_contratos": 4578,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "CONTRALORIA DE BOGOTA",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 6680,
+    "total_contratos": 6293,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MINISTERIO DEL TRABAJO NIVEL CENTRAL*/",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 6716,
+    "total_contratos": 6165,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "empresa social del estado región de salud soacha.",
+    "departamento": "Cundinamarca",
+    "total_procesos": 6447,
+    "total_contratos": 6369,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "FONDANE - DIRECCION TERRITORIAL CENTRO",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 6414,
+    "total_contratos": 6397,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDIA LOCAL DE KENNEDY",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 6322,
+    "total_contratos": 6390,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDIA MUNICIPAL DE CHIA",
+    "departamento": "Cundinamarca",
+    "total_procesos": 6552,
+    "total_contratos": 6112,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SANTIAGO DE CALI DISTRITO ESPECIAL - SECRETARÍA DE PAZ Y CULTURA CIUDADANA",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 6269,
+    "total_contratos": 6337,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 6656,
+    "total_contratos": 5938,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SANTIAGO DE CALI DISTRITO ESPECIAL - SECRETARIA DE DESARROLLO TERRITORIAL Y PARTICIPACION CIUDADANA",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 4749,
+    "total_contratos": 7805,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "FIDUCIARIA LA PREVISORA S.A.- FIDUPREVISORA S.A.",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 8060,
+    "total_contratos": 4385,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "UAECD",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 6356,
+    "total_contratos": 5948,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "UNIDAD ADMINISTRATIVA ESPECIAL DE REHABILITACIÓN Y MANTENIMIENTO VIAL",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 6768,
+    "total_contratos": 5444,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDIA MUNICIPIO DE GIRON SANTANDER",
+    "departamento": "Santander",
+    "total_procesos": 5974,
+    "total_contratos": 6104,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDÍA LOCAL DE SUBA",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 6108,
+    "total_contratos": 5962,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "CORTOLIMA",
+    "departamento": "Tolima",
+    "total_procesos": 6295,
+    "total_contratos": 5765,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ANI",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 6188,
+    "total_contratos": 5797,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "DISAN-DMSOC",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 6586,
+    "total_contratos": 5392,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SECRETARIA DISTRITAL DE PLANEACION",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 6217,
+    "total_contratos": 5736,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "CORPORACION AUTONOMA REGIONAL DE LA FRONTERA NORORIENTAL+",
+    "departamento": "Norte de Santander",
+    "total_procesos": 6068,
+    "total_contratos": 5848,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "Universidad Surcolombiana",
+    "departamento": "Huila",
+    "total_procesos": 11806,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "SENA REGIONAL QUINDIO Grupo de Apoyo Administrativo Mixto",
+    "departamento": "Quindío",
+    "total_procesos": 5124,
+    "total_contratos": 6670,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "CVC",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 6350,
+    "total_contratos": 5416,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SENA REGIONAL ATLANTICO",
+    "departamento": "Atlántico",
+    "total_procesos": 3930,
+    "total_contratos": 7828,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "PERSONERÍA DE BOGOTA",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 5431,
+    "total_contratos": 6252,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MUNICIPIO DE FLORENCIA",
+    "departamento": "Caquetá",
+    "total_procesos": 6068,
+    "total_contratos": 5547,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDIA MUNICIPAL DE MELGAR",
+    "departamento": "Tolima",
+    "total_procesos": 5891,
+    "total_contratos": 5716,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDIA MUNICIPIO DE QUIBDO",
+    "departamento": "Chocó",
+    "total_procesos": 6080,
+    "total_contratos": 5464,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "CIAC S.A.",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 11514,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "EMPRESAS MUNICIPALES DE CALI",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 11464,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "INSTITUTO COLOMBIANO PARA LA EVALUACIÓN DE LA EDUCACIÓN - ICFES",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 5816,
+    "total_contratos": 5626,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "HOSPITAL DEPARTAMENTAL DE VILLAVICENCIO ESE",
+    "departamento": "Meta",
+    "total_procesos": 11420,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "ALCALDIA LOCAL DE SAN CRISTOBAL",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 4948,
+    "total_contratos": 6471,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN RAFAEL.*",
+    "departamento": "Antioquia",
+    "total_procesos": 11373,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "E.S.E. INSTITUTO DE SALUD DE BUCARAMANGA",
+    "departamento": "Santander",
+    "total_procesos": 5735,
+    "total_contratos": 5614,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "DIRECCION DE IMPUESTOS Y ADUANAS NACIONALES*",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 6496,
+    "total_contratos": 4809,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "FONDO DE DESARROLLO LOCAL DE BOSA",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 5878,
+    "total_contratos": 5425,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MUNICIPIO DE LOS PATIOS",
+    "departamento": "Norte de Santander",
+    "total_procesos": 5828,
+    "total_contratos": 5419,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "HOSPITAL DEPARTAMENTAL SAN JUAN DE DIOS DE PUERTO CARREÑO1",
+    "departamento": "Vichada",
+    "total_procesos": 5640,
+    "total_contratos": 5581,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SECRETARIA DISTRITAL DE HACIENDA",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 5200,
+    "total_contratos": 6006,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MUNICIPIO DE SOGAMOSO",
+    "departamento": "Boyacá",
+    "total_procesos": 5827,
+    "total_contratos": 5366,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDÍA MUNICIPAL DE EL ESPINAL",
+    "departamento": "Tolima",
+    "total_procesos": 5805,
+    "total_contratos": 5309,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SENA REGIONAL ANTIOQUIA Grupo Administrativo Intercentros Medellin",
+    "departamento": "Antioquia",
+    "total_procesos": 4245,
+    "total_contratos": 6806,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDIA LOCAL DE USME",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 5703,
+    "total_contratos": 5321,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "CGR-NIVEL CENTRAL",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 5608,
+    "total_contratos": 5405,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ARMADA NACIONAL HOSPITAL NAVAL DE CARTAGENA",
+    "departamento": "Bolívar",
+    "total_procesos": 6043,
+    "total_contratos": 4963,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "DIRECCIÓN TERRITORIAL DE SALUD DE CALDAS",
+    "departamento": "Caldas",
+    "total_procesos": 5670,
+    "total_contratos": 5329,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL MARCO FIDEL SUAREZ",
+    "departamento": "No Definido",
+    "total_procesos": 10905,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "SERVICIO NACIONAL DE APRENDIZAJE - SENA MAGDALENA",
+    "departamento": "Magdalena",
+    "total_procesos": 4590,
+    "total_contratos": 6307,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "HOSPITAL FEDERICO LLERAS ACOSTA DE IBAGUE TOLIMA - EMPRESA SOCIAL DEL ESTADO",
+    "departamento": "Tolima",
+    "total_procesos": 6140,
+    "total_contratos": 4752,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "POLITECNICO COLOMBIANO JAIME ISAZA CADAVID",
+    "departamento": "Antioquia",
+    "total_procesos": 5641,
+    "total_contratos": 5226,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDIA MUNICIPIO DE CALARCA",
+    "departamento": "Quindío",
+    "total_procesos": 5637,
+    "total_contratos": 5190,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDIA DEL MUNICIPIO DE ACACIAS",
+    "departamento": "Meta",
+    "total_procesos": 5611,
+    "total_contratos": 5213,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "Alcaldía De Villamaria",
+    "departamento": "Caldas",
+    "total_procesos": 5499,
+    "total_contratos": 5284,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SANTIAGO DE CALI DISTRITO ESPECIAL - SECRETARIA DE VIVIENDA SOCIAL Y HABITAT",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 5375,
+    "total_contratos": 5361,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SENA DISTRITO CAPITAL GRUPO DE APOYO ADMINISTRATIVO - CGI",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 4820,
+    "total_contratos": 5906,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN JUAN DE DIOS DE PAMPLONA",
+    "departamento": "Norte de Santander",
+    "total_procesos": 10694,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "RNEC",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 5373,
+    "total_contratos": 5246,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MUNICIPIO DE VILLA DEL ROSARIO**",
+    "departamento": "Norte de Santander",
+    "total_procesos": 5401,
+    "total_contratos": 5202,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SUPERVIGILANCIA - MD",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 5320,
+    "total_contratos": 5240,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "CORPORACION AUTONOMA REGIONAL DEL QUINDIO",
+    "departamento": "Quindío",
+    "total_procesos": 5322,
+    "total_contratos": 5158,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SANTIAGO DE CALI DISTRITO ESPECIAL - UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PUBLICOS",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 5039,
+    "total_contratos": 5438,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ESE DEPARTAMENTAL DE PRIMER NIVEL MORENO Y CLAVIJO",
+    "departamento": "Arauca",
+    "total_procesos": 10470,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "SENA REGIONAL SUCRE",
+    "departamento": "Sucre",
+    "total_procesos": 5468,
+    "total_contratos": 4868,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 5266,
+    "total_contratos": 5007,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "INSTITUTO DISTRITAL DE DEPORTE Y RECREACION DE CARTAGENA - IDER",
+    "departamento": "Bolívar",
+    "total_procesos": 5202,
+    "total_contratos": 5061,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDIA MUNICIPIO DE ZIPAQUIRA",
+    "departamento": "Cundinamarca",
+    "total_procesos": 5572,
+    "total_contratos": 4686,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "DISPENSARIO MEDICO DE MEDELLIN//",
+    "departamento": "Antioquia",
+    "total_procesos": 6404,
+    "total_contratos": 3821,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN ANTONIO DE ARBELAEZ",
+    "departamento": "No Definido",
+    "total_procesos": 4995,
+    "total_contratos": 5170,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR",
+    "departamento": "Bolívar",
+    "total_procesos": 5096,
+    "total_contratos": 5011,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDIA MUNICIPAL DE FACATATIVA",
+    "departamento": "Cundinamarca",
+    "total_procesos": 5215,
+    "total_contratos": 4844,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MINISTERIO DE HACIENDA Y CREDITO PUBLICO",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 5414,
+    "total_contratos": 4631,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "FONDO ROTATORIO DEL DANE (FONDANE)",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 4930,
+    "total_contratos": 5108,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "UNIVERSIDAD MILITAR NUEVA GRANADA**",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 10007,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "CONCEJO DISTRITAL DE SANTIAGO DE CALI",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 4981,
+    "total_contratos": 4999,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDIA LOCAL DE ENGATIVÁ",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 5178,
+    "total_contratos": 4785,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "AGENCIA NACIONAL DE HIDROCARBUROS**",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 4757,
+    "total_contratos": 5162,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "Superintendencia de Transporte**",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 5113,
+    "total_contratos": 4777,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SENA REGIONAL META Grupo de Apoyo Administrativo Mixto",
+    "departamento": "Meta",
+    "total_procesos": 4061,
+    "total_contratos": 5810,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "HOSPITAL DEPARTAMENTAL MARIA INMACULADA ESE",
+    "departamento": "Caquetá",
+    "total_procesos": 9805,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "ESE HOSPITAL SAN RAFAEL DE FUSAGASUGÁ",
+    "departamento": "Cundinamarca",
+    "total_procesos": 9720,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "IDS",
+    "departamento": "Norte de Santander",
+    "total_procesos": 4908,
+    "total_contratos": 4797,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "CORPORACIÓN AUTÓNOMA REGIONAL PARA LA DEFENSA DE LA MESETA DE BUCARAMANGA",
+    "departamento": "Santander",
+    "total_procesos": 5037,
+    "total_contratos": 4658,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "CORPOBOYACA",
+    "departamento": "Boyacá",
+    "total_procesos": 4931,
+    "total_contratos": 4760,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDÍA MUNICIPAL DE MADRID CUNDINAMARCA",
+    "departamento": "Cundinamarca",
+    "total_procesos": 4667,
+    "total_contratos": 4896,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ICBF REGIONAL CUNDINAMARCA",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 4788,
+    "total_contratos": 4760,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SANTIAGO DE CALI DISTRITO ESPECIAL- UNIDAD ADMINISTRATIVA ESPECIAL DE GESTION DE BIENES Y SERVICIOS - CALI",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 4941,
+    "total_contratos": 4567,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDIA DE TURBACO BOLIVAR",
+    "departamento": "Bolívar",
+    "total_procesos": 4893,
+    "total_contratos": 4582,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "INSTITUTO DISTRITAL DE PATRIMONIO CULTURAL",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 4933,
+    "total_contratos": 4502,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "REGIONAL DE ASEGURAMIENTO EN SALUD N°6",
+    "departamento": "Antioquia",
+    "total_procesos": 6541,
+    "total_contratos": 2893,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "UNIDADES TECNOLOGICAS DE SANTANDER",
+    "departamento": "Santander",
+    "total_procesos": 4767,
+    "total_contratos": 4595,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ADRES",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 4066,
+    "total_contratos": 5287,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "INSTITUCION UNIVERSITARIA DE BARRANQUILLA-IUB",
+    "departamento": "Atlántico",
+    "total_procesos": 4021,
+    "total_contratos": 5326,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDIA MUNICIPIO DE ARAUCA",
+    "departamento": "Arauca",
+    "total_procesos": 5169,
+    "total_contratos": 4128,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDIA LOCAL DE USAQUEN",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 4874,
+    "total_contratos": 4404,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SENA REGIONAL GUAJIRA Grupo Mixto de Apoyo Administrativo",
+    "departamento": "La Guajira",
+    "total_procesos": 3725,
+    "total_contratos": 5549,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SANTIAGO DE CALI DISTRITO ESPECIAL - SECRETARÍA DE GESTIÓN DEL RIESGO DE EMERGENCIAS Y DESASTRE",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 4709,
+    "total_contratos": 4554,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "UNIVERSIDAD DE PAMPLONA",
+    "departamento": "Norte de Santander",
+    "total_procesos": 9242,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 4897,
+    "total_contratos": 4305,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "INSTITUTO DISTRITAL DE GESTIÓN DE RIESGOS Y CAMBIO CLIMÁTICO - IDIGER",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 4861,
+    "total_contratos": 4272,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ICBF REGIONAL NARIÑO",
+    "departamento": "Nariño",
+    "total_procesos": 4588,
+    "total_contratos": 4527,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SENA REGIONAL CUNDINAMARCA Grupo de Apoyo Administrativo Mixto+",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 4024,
+    "total_contratos": 5079,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MUNICIPIO DE SANTA ROSA DE CABAL",
+    "departamento": "Risaralda",
+    "total_procesos": 4627,
+    "total_contratos": 4459,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "DILOF",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 6435,
+    "total_contratos": 2602,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "METRO CALI S.A ACUERDO DE REESTRUCTURACION",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 4528,
+    "total_contratos": 4504,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ICBF REGIONAL SANTANDER",
+    "departamento": "Santander",
+    "total_procesos": 4543,
+    "total_contratos": 4487,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ESE HOSPITAL SAN JUAN DE DIOS DE YARUMAL",
+    "departamento": "Antioquia",
+    "total_procesos": 8975,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "ENTIDAD DE GESTION ADMINISTRATIVA Y TECNICA",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 8936,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "ARCHIVO GENERAL DE LA NACION",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 4746,
+    "total_contratos": 4170,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "DEPARTAMENTO DEL ARAUCA",
+    "departamento": "Arauca",
+    "total_procesos": 4909,
+    "total_contratos": 3974,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "INSTITUTO DE HIDROLOGIA, METEOROLOGÍA Y ESTUDIOS AMBIENTALES",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 4677,
+    "total_contratos": 4189,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "AUNAP",
+    "departamento": "No Definido",
+    "total_procesos": 4574,
+    "total_contratos": 4288,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "UNIVERSIDAD DE CALDAS.",
+    "departamento": "Caldas",
+    "total_procesos": 8796,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "INSTITUTO DISTRITAL DE PROTECCION Y BIENESTAR ANIMAL",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 4467,
+    "total_contratos": 4328,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "GOBERNACIÓN VALLE DEL CAUCA -SECRETARIA DE SALUD",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 4855,
+    "total_contratos": 3926,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ICBF REGIONAL GUAJIRA",
+    "departamento": "La Guajira",
+    "total_procesos": 4384,
+    "total_contratos": 4301,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "CANAL CAPITAL",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 4427,
+    "total_contratos": 4175,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "DISPENSARIO MEDICO DE CALI",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 5227,
+    "total_contratos": 3355,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "UNIDAD PRESTADORA DE SALUD SANTANDER",
+    "departamento": "Santander",
+    "total_procesos": 4385,
+    "total_contratos": 4179,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "CENTRO NACIONAL DE MEMORIA  HISTORICA",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 4297,
+    "total_contratos": 4261,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "UNIATLANTICO",
+    "departamento": "Atlántico",
+    "total_procesos": 4260,
+    "total_contratos": 4269,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDIA MUNICIPIO DE CAJICA",
+    "departamento": "Cundinamarca",
+    "total_procesos": 4597,
+    "total_contratos": 3919,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SENA REGIONAL NARIÑO Grupo de Apoyo Administrativo Mixto",
+    "departamento": "Nariño",
+    "total_procesos": 4562,
+    "total_contratos": 3929,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDIA MUNICIPAL DE CHINCHINA",
+    "departamento": "Caldas",
+    "total_procesos": 4340,
+    "total_contratos": 4122,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "FONDO ROTATORIO**",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 4305,
+    "total_contratos": 4147,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "INSTITUTO  DISTRITAL DE CIENCIA, BIOTECNOLOGIA E INNOVACIÓN EN SALUD - IDCBIS",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 8449,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "ICBF REGIONAL CAUCA",
+    "departamento": "Cauca",
+    "total_procesos": 4261,
+    "total_contratos": 4158,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "E.S.E HOSPITAL SAN RAFAEL DE ITAGUI",
+    "departamento": "Antioquia",
+    "total_procesos": 8403,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "INSTITUTO MUNICIPAL PARA LA RECREACION Y EL DEPORTE DE CUCUTA",
+    "departamento": "Norte de Santander",
+    "total_procesos": 4226,
+    "total_contratos": 4172,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SANTIAGO DE CALI DISTRITO ESPECIAL - SECRETARIA DE GOBIERNO",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 4168,
+    "total_contratos": 4200,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "CORPOAMAZONIA - CORPORACIÓN PARA EL DESARROLLO SOSTENIBLE DEL SUR DE LA AMAZONIA1",
+    "departamento": "Putumayo",
+    "total_procesos": 4304,
+    "total_contratos": 4048,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "E.S.E HOSPITAL SAN RAFAEL DE CAQUEZA",
+    "departamento": "Cundinamarca",
+    "total_procesos": 4259,
+    "total_contratos": 4046,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDIA LOCAL RAFAEL URIBE URIBE",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 4125,
+    "total_contratos": 4177,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "CLUB MILITAR",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 4756,
+    "total_contratos": 3531,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "CORPORACIÓN AUTÓNOMA REGIONAL DE LA ORINOQUIA",
+    "departamento": "Casanare",
+    "total_procesos": 4233,
+    "total_contratos": 4053,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "UNIVERSIDAD DEL CAUCA",
+    "departamento": "Cauca",
+    "total_procesos": 8228,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "ICBF REGIONAL ATLANTICO",
+    "departamento": "Atlántico",
+    "total_procesos": 4233,
+    "total_contratos": 3992,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ESE HOSPITAL PIO XII DE COLON",
+    "departamento": "Putumayo",
+    "total_procesos": 8217,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "ALCALDIA MUNICIPAL DE PUERTO BOYACA",
+    "departamento": "Boyacá",
+    "total_procesos": 4379,
+    "total_contratos": 3816,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SENA REGIONAL ANTIOQUIA Grupo Administrativo Complejo Itagüí",
+    "departamento": "Antioquia",
+    "total_procesos": 4118,
+    "total_contratos": 3997,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "GOBERNACION DEL VALLE DEL CAUCA - SECRETARIA DE DESARROLLO SOCIAL Y PARTICIPACION",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 4040,
+    "total_contratos": 4027,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "iNSTITUTO DE DEPORTE Y RECREACION DEL META - IDERMETA",
+    "departamento": "Meta",
+    "total_procesos": 3987,
+    "total_contratos": 4072,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MUNICIPIO EL RETIRO",
+    "departamento": "Antioquia",
+    "total_procesos": 4111,
+    "total_contratos": 3926,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDIA LOCAL DE FONTIBON",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 4161,
+    "total_contratos": 3872,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "COMPRADOR ESE CARMEN EMILIA OSPINA PERFIL",
+    "departamento": "Huila",
+    "total_procesos": 3939,
+    "total_contratos": 4079,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SERVICIO NACIONAL DE APRENDIZAJE SENA REGIONAL CORDOBA",
+    "departamento": "Córdoba",
+    "total_procesos": 0,
+    "total_contratos": 8015,
+    "source_datasets": [
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "CORPORACION AUTONOMA REGIONAL DE NARIÑO",
+    "departamento": "Nariño",
+    "total_procesos": 4022,
+    "total_contratos": 3946,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "HOSPITAL SAN JUAN DE DIOS DE HONDA ESE",
+    "departamento": "Tolima",
+    "total_procesos": 4393,
+    "total_contratos": 3551,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MUNICIPIO DE GALAPA.",
+    "departamento": "Atlántico",
+    "total_procesos": 4053,
+    "total_contratos": 3875,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "E.S.E. HOSPITAL REGIONAL SUR ORIENTAL",
+    "departamento": "Norte de Santander",
+    "total_procesos": 3946,
+    "total_contratos": 3969,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SENA Regional Huila Grupo de Apoyo Administrativo Mixto",
+    "departamento": "Huila",
+    "total_procesos": 4188,
+    "total_contratos": 3707,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "METROPARQUES",
+    "departamento": "No Definido",
+    "total_procesos": 7886,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "REGIONAL DE ASEGURAMIENTO EN SALUD No. 1",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 5356,
+    "total_contratos": 2510,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "CENTRAL ADMINISTRATIVA ESPECIALIZADA INGENIEROS CENAC INGENIEROS",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 4829,
+    "total_contratos": 3027,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "E.S.E. HOSPITAL SANTANDER HERRERA",
+    "departamento": "Magdalena",
+    "total_procesos": 7800,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "UNIDAD ADMINISTRATIVA ESPECIAL DE SALUD DE ARAUCA",
+    "departamento": "Arauca",
+    "total_procesos": 3944,
+    "total_contratos": 3821,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "AREA METROPOLITANA DE BUCARAMANGA",
+    "departamento": "Santander",
+    "total_procesos": 3890,
+    "total_contratos": 3871,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "UNIDAD PRESTADORA DE SALUD ATLANTICO",
+    "departamento": "Atlántico",
+    "total_procesos": 3944,
+    "total_contratos": 3814,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "DIRECCION DE SANIDAD DE LA POLICIA NACIONAL - DISAN PONAL",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 7750,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "Municipio de Montenegro--",
+    "departamento": "Quindío",
+    "total_procesos": 3888,
+    "total_contratos": 3860,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDIA DISTRITO DE RIOHACHA",
+    "departamento": "La Guajira",
+    "total_procesos": 4065,
+    "total_contratos": 3675,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "EMPRESA SOCIAL DEL ESTADO DEL MUNICIPIO DE VILLAVICENCIO",
+    "departamento": "Meta",
+    "total_procesos": 3858,
+    "total_contratos": 3862,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "HOSPITAL REGIONAL DE LA ORINOQUIA EMPRESA SOCIAL DEL ESTADO",
+    "departamento": "Casanare",
+    "total_procesos": 7715,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "ICBF REGIONAL TOLIMA",
+    "departamento": "Tolima",
+    "total_procesos": 3892,
+    "total_contratos": 3800,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "EMPRESA SOCIAL DEL ESTADO E.S.E. HOSPITAL REGIONAL NORTE",
+    "departamento": "Norte de Santander",
+    "total_procesos": 3826,
+    "total_contratos": 3851,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "COMANDO GENERAL DE LAS FUERZAS MILITARES",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 5040,
+    "total_contratos": 2625,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "AGENCIA PARA LA INFRAESTRUCTURA DEL META",
+    "departamento": "Meta",
+    "total_procesos": 3875,
+    "total_contratos": 3781,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "INSTITUTO MUNICIPAL PARA EL DEPORTE Y LA RECREACION DE IBAGUE",
+    "departamento": "Tolima",
+    "total_procesos": 3794,
+    "total_contratos": 3828,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "CAJA DE RETIRO DE LAS FUERZAS MILITARES",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 4053,
+    "total_contratos": 3558,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ICANH",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 4056,
+    "total_contratos": 3546,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SECRETARIA DE INFRAESTRUCTURA - GOBERNACION DEL VALLE",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 3799,
+    "total_contratos": 3800,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MUNICIPIO DE TOCANCIPA",
+    "departamento": "Cundinamarca",
+    "total_procesos": 3940,
+    "total_contratos": 3650,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MINISTERIO DE COMERCIO INDUSTRIA Y TURISMO - MINCIT",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 4024,
+    "total_contratos": 3556,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "PARQUES NACIONALES NATURALES DE COLOMBIA - DIRECCION TERRITORIAL CARIBE",
+    "departamento": "Bolívar",
+    "total_procesos": 3930,
+    "total_contratos": 3650,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SUPERINTENDENCIA DE LA ECONOMIA SOLIDARIA",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 3893,
+    "total_contratos": 3665,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDIA MUNICIPAL DE OCAÑA",
+    "departamento": "Norte de Santander",
+    "total_procesos": 3828,
+    "total_contratos": 3705,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "HOSPITAL UNIVERSITARIO DEPARTAMENTAL DE NARIÑO",
+    "departamento": "Nariño",
+    "total_procesos": 7527,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "INSTITUTO DE TURISMO DEL META",
+    "departamento": "Meta",
+    "total_procesos": 3845,
+    "total_contratos": 3680,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MUNICIPIO DE CALDAS ANTIOQUIA",
+    "departamento": "Antioquia",
+    "total_procesos": 3953,
+    "total_contratos": 3562,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "COMISIÓN NACIONAL DEL SERVICIO CIVIL",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 3887,
+    "total_contratos": 3625,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MUNICIPIO DE DUITAMA",
+    "departamento": "Boyacá",
+    "total_procesos": 3830,
+    "total_contratos": 3636,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MINJUSTICIA..",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 7449,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "Unidad de Busqueda de Personas Desaparecidas",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 4209,
+    "total_contratos": 3226,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "ALCALDIA DE GIRARDOTA",
+    "departamento": "Antioquia",
+    "total_procesos": 3739,
+    "total_contratos": 3694,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "INDER ENVIGADO1",
+    "departamento": "Antioquia",
+    "total_procesos": 3733,
+    "total_contratos": 3685,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "RED DE SALUD DE LADERA EMPRESA SOCIAL DEL ESTADO",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 7393,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER",
+    "departamento": "Norte de Santander",
+    "total_procesos": 7386,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "MUNICIPIO DE GUARNE",
+    "departamento": "Antioquia",
+    "total_procesos": 3796,
+    "total_contratos": 3559,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "MUNICIPIO LA DORADA",
+    "departamento": "Caldas",
+    "total_procesos": 3773,
+    "total_contratos": 3565,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "CORPORACION AGENCIA NACIONAL DE GOBIERNO DIGITAL",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 3761,
+    "total_contratos": 3548,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "FONDO DE DESARROLLO LOCAL DE SANTA FE",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 3752,
+    "total_contratos": 3519,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "CORPORACION AUTONOMA REGIONAL DEL CAUCA  12",
+    "departamento": "Cauca",
+    "total_procesos": 3837,
+    "total_contratos": 3386,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL ROSARIO PUMAREJO DE LOPEZ",
+    "departamento": "Cesar",
+    "total_procesos": 7218,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "MUNICIPIO DE PITALITO",
+    "departamento": "Huila",
+    "total_procesos": 3773,
+    "total_contratos": 3442,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "EMPRESA SOCIAL DEL ESTADO SALUD PEREIRA",
+    "departamento": "No Definido",
+    "total_procesos": 7163,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "ESE HOSPITAL SAN JOSE DE MAICAO",
+    "departamento": "La Guajira",
+    "total_procesos": 7148,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "DIRECCION GENERAL MARITIMA - SUBDIRECCION ADMINISTRATIVA Y FINANCIERA - SUBAFIN",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 3939,
+    "total_contratos": 3187,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "UNIDAD DE SERVICIOS PENITENCIARIOS Y CARCELARIOS - USPEC1",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 4231,
+    "total_contratos": 2830,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "EMPRESA DE DESARROLLO URBANO DE MEDELLIN",
+    "departamento": "Antioquia",
+    "total_procesos": 4136,
+    "total_contratos": 2811,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "Empresa Social del Estado Hospital La Candelaria*",
+    "departamento": "Magdalena",
+    "total_procesos": 6819,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "MINJUSTICIA.",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 0,
+    "total_contratos": 6763,
+    "source_datasets": [
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "HOSPITAL SAN JUAN DE DIOS ESE  RIONEGRO",
+    "departamento": "Antioquia",
+    "total_procesos": 6729,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "E.S.E. HOSPITAL MENTAL DE ANTIOQUIA-HOMO",
+    "departamento": "No Definido",
+    "total_procesos": 6639,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "E.S.E. HOSPITAL LOCAL DE ZONA BANANERA",
+    "departamento": "Magdalena",
+    "total_procesos": 6516,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "ESE CENTRO",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 6468,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "EMPRESA SOCIAL DEL ESTADO IMSALUD",
+    "departamento": "Norte de Santander",
+    "total_procesos": 6464,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "ATENCION SEGURIDAD SOCIAL BIENESTAR SALUD EMPRESA DEL ESTADO",
+    "departamento": "No Definido",
+    "total_procesos": 6440,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "ESE HOSPITAL EDUARDO SANTOS",
+    "departamento": "No Definido",
+    "total_procesos": 6364,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "SERVICIO AEREO A TERRITORIOS NACIONALES S.A.",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 6355,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "HOSPITAL SAN VICENTE DE ARAUCA ESE",
+    "departamento": "No Definido",
+    "total_procesos": 6342,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "UNAD",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 6294,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "E.S.E. HOSPITAL SAN RAFAEL DE LETICIA",
+    "departamento": "Amazonas",
+    "total_procesos": 6279,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "E.S.E CENTRO DE SALUD PAZ DEL RIO",
+    "departamento": "Magdalena",
+    "total_procesos": 6258,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "CENTRAL ADMINISTRATIVA Y CONTABLE CENAC PERSONAL",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 0,
+    "total_contratos": 6227,
+    "source_datasets": [
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "AGENCIA DISTRITAL PARA LA EDUCACIÓN SUPERIOR, LA CIENCIA Y LA TECNOLOGÍA, ATENEA",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 6185,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "EMPRESA SOCIAL DEL ESTADO BELLOSALUD",
+    "departamento": "Antioquia",
+    "total_procesos": 6086,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "Universidad de Cartagena",
+    "departamento": "Bolívar",
+    "total_procesos": 6036,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS..",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 6029,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "HOSPITAL REGIONAL ALFONSO JARAMILLO SALAZAR E.S.E.",
+    "departamento": "Tolima",
+    "total_procesos": 5997,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "ESE SAMUEL VILLANUEVA VALEST 12",
+    "departamento": "Magdalena",
+    "total_procesos": 5951,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "CORPORACION COLOMBIA INTERNACIONAL CCI",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 5856,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "HOSPITAL CIVIL DE IPIALES - EMPRESA SOCIAL DEL ESTADO",
+    "departamento": "Nariño",
+    "total_procesos": 5834,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "INDEPORTES CUNDINAMARCA",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 0,
+    "total_contratos": 5809,
+    "source_datasets": [
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "UNIQUINDIO",
+    "departamento": "Quindío",
+    "total_procesos": 5731,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS.",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 0,
+    "total_contratos": 5715,
+    "source_datasets": [
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CGMLTI",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 0,
+    "total_contratos": 5659,
+    "source_datasets": [
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "E.S.E HOSPITAL SANDIEGO DE CERETE",
+    "departamento": "No Definido",
+    "total_procesos": 5650,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 5624,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "ESE HOSPITAL SAN FELIX LA DORADA",
+    "departamento": "Caldas",
+    "total_procesos": 5584,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "E.S.E HOSPITAL PEDRO LEON ALVAREZ DIAZ",
+    "departamento": "No Definido",
+    "total_procesos": 5420,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "RASES - HUILA No.2",
+    "departamento": "Huila",
+    "total_procesos": 5361,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "CORPORACIÓN INTERUNIVERSITARIA DE SERVICIOS - CIS",
+    "departamento": "Antioquia",
+    "total_procesos": 5351,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "UNIVERSIDAD DE LOS LLANOS",
+    "departamento": "Meta",
+    "total_procesos": 5332,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "UNIDAD PRESTADORA DE SALUD ANTIOQUIA",
+    "departamento": "Antioquia",
+    "total_procesos": 5329,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "E.S.E HOSPITAL SAN AGUSTIN DE FONSECA LA GUAJIRA",
+    "departamento": "La Guajira",
+    "total_procesos": 5326,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "HOSPITAL UNIVERSITARIO LA SAMARITANA",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 5262,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "DIRECCION DE ANTINARCOTICOS",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 5260,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "ESE HOSPITAL LOCAL DE MALAMBO SANTA MARÍA MAGDALENA",
+    "departamento": "Atlántico",
+    "total_procesos": 5159,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "E.S.E. HOSPITAL SAN ANTONIO",
+    "departamento": "Vaupés",
+    "total_procesos": 5131,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "BANCO AGRARIO DE COLOMBIA S.A.",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 5102,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "E.S.E. HOSPITAL EL SALVADOR DE UBATE",
+    "departamento": "Cundinamarca",
+    "total_procesos": 5098,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "EMPRESA SOCIAL DEL ESTADO MARCO FELIPE AFANADOR DE TOCAIMA",
+    "departamento": "No Definido",
+    "total_procesos": 5094,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN VICENTE DE PAUL REMEDIOS",
+    "departamento": "Antioquia",
+    "total_procesos": 5060,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "ESE HNSR",
+    "departamento": "La Guajira",
+    "total_procesos": 5035,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "HOSPITAL SAN ANDRES",
+    "departamento": "No Definido",
+    "total_procesos": 5030,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "Sena Regional Boyaca Grupo de Apoyo Administrativo Mixto",
+    "departamento": "Boyacá",
+    "total_procesos": 0,
+    "total_contratos": 4978,
+    "source_datasets": [
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "HOSPITAL RAUL OREJUELA BUENO",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 4934,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "AGENCIA DISTRITAL DE INFRAESTRUCTURA DEL DISTRITO DE BARRANQUILLA",
+    "departamento": "Atlántico",
+    "total_procesos": 0,
+    "total_contratos": 4922,
+    "source_datasets": [
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN RAFAEL DE FACATATIVA",
+    "departamento": "Cundinamarca",
+    "total_procesos": 4842,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "E.S.E. HOSPITAL UNIVERSITARIO HERNANDO MONCALEANO PERDOMO DE NEIVA",
+    "departamento": "Huila",
+    "total_procesos": 4836,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "SOCIEDAD  TEQUENDAMA S.A.",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 4816,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "ESE HOSPITAL SAN JUAN NEPOMUCENO",
+    "departamento": "No Definido",
+    "total_procesos": 4788,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "HOSPITAL UNIVERSITARIO DE SINCELEJO-ESE",
+    "departamento": "Sucre",
+    "total_procesos": 4774,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "COTECMAR",
+    "departamento": "Bolívar",
+    "total_procesos": 4750,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "FINANCIERA DE DESARROLLO TERRITORIAL S.A.",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 4716,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "E.S.E. HOSPITAL DIVINO SALVADOR DE SOPO",
+    "departamento": "Cundinamarca",
+    "total_procesos": 4696,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "ARTESANIAS DE COLOMBIA S.A",
+    "departamento": "No Definido",
+    "total_procesos": 4665,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "E.S.E REGIÓN DE SALUD CENTRO ORIENTE ALMEIDAS",
+    "departamento": "No Definido",
+    "total_procesos": 4625,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAGRADO CORAZÓN DE JESÚS",
+    "departamento": "Putumayo",
+    "total_procesos": 4619,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "EMPRESA SOCIAL DEL ESTADO SALUD YOPAL",
+    "departamento": "Casanare",
+    "total_procesos": 4589,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "UNIVERSIDAD PEDAGÓGICA NACIONAL",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 4571,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL LOCAL",
+    "departamento": "Putumayo",
+    "total_procesos": 4565,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "JEFATURA SALUD FUERZA AEREA",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 4523,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "FONDO DE DESARROLLO DE PROYECTOS DE CUNDINAMARCA",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 4484,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "ESE MUNICIPAL DE SOACHA JULIO CESAR PEÑALOZA*",
+    "departamento": "Cundinamarca",
+    "total_procesos": 0,
+    "total_contratos": 4472,
+    "source_datasets": [
+      "contratos"
+    ]
+  },
+  {
+    "official_name": "E.S.E. HOSPITAL DEPARTAMENTAL SAN VICENTE DE PAUL",
+    "departamento": "Huila",
+    "total_procesos": 4454,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "HOSPITAL SAN VICENTE DE PAUL DE FOMEQUE",
+    "departamento": "Cundinamarca",
+    "total_procesos": 4440,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "Central Hidoreléctrica de Caldas S.A E.S.P BIC",
+    "departamento": "Caldas",
+    "total_procesos": 4430,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "FONDO ROTATORIO DE LA POLICIA NACIONAL",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 4417,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "Fondo Mixto de Promoción Cinematográfica 'Proimágenes Colombia'",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 4409,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN JUAN DE DIOS /",
+    "departamento": "Antioquia",
+    "total_procesos": 4405,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "ESE HOSPITAL ORITO",
+    "departamento": "Putumayo",
+    "total_procesos": 4387,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "ESE HOSPITAL SAN VICENTE DE PAUL DE CALDAS",
+    "departamento": "Antioquia",
+    "total_procesos": 4363,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "ASOCIACIÓN CANAL LOCAL DE TELEVISIÓN DE MEDELLIN - TELEMEDELLIN",
+    "departamento": "Antioquia",
+    "total_procesos": 4260,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "ARMADA NACIONAL BASE NAVAL No. 6 ARC BOGOTA",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 4214,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "E.S.E HOSPITAL 7 DE AGOSTO",
+    "departamento": "No Definido",
+    "total_procesos": 4149,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "ESE HOSPITAL SANTA MATILDE DE MADRID",
+    "departamento": "No Definido",
+    "total_procesos": 4056,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  },
+  {
+    "official_name": "ESE HOSPITAL DEL SUR GABRIEL JARAMILLO PIEDRAHITA",
+    "departamento": "Antioquia",
+    "total_procesos": 4039,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ]
+  }
+]

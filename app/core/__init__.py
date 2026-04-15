@@ -1,0 +1,2 @@
+"""Core SECOPAL workflow components."""
+

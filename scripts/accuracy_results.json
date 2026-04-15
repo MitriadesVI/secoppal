@@ -1,0 +1,2347 @@
+[
+  {
+    "query": "contratos firmados en Bogota 2024",
+    "category": "dataset",
+    "description": "Dataset: contratos por 'firmados'",
+    "expected": {
+      "dataset": "contratos"
+    },
+    "v1": {
+      "score": "1/1",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 5.44,
+      "params": {
+        "dataset": "contratos",
+        "departamento": "bogota",
+        "estado": "Aprobado",
+        "estado_field": "estado_contrato",
+        "departamento_resolved": "Distrito Capital de Bogotá",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "1/1",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.86,
+      "params": {
+        "dataset": "contratos",
+        "fecha_desde": "2024-01-01",
+        "fecha_hasta": "2024-12-31",
+        "departamento": "en bogota",
+        "departamento_resolved": "Distrito Capital de Bogotá",
+        "estado": "Aprobado",
+        "estado_field": "estado_contrato",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "TIE"
+  },
+  {
+    "query": "licitaciones abiertas en Valle del Cauca",
+    "category": "dataset",
+    "description": "Dataset: procesos para licitaciones abiertas",
+    "expected": {
+      "dataset": "procesos"
+    },
+    "v1": {
+      "score": "1/1",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.17,
+      "params": {
+        "dataset": "procesos",
+        "departamento": "valle del cauca",
+        "estado": "Abierto",
+        "estado_field": "estado_de_apertura_del_proceso",
+        "departamento_resolved": "Valle del Cauca",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "1/1",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 1.47,
+      "params": {
+        "dataset": "procesos",
+        "entidad": "valle del cauca",
+        "entidad_resolved": "SECRETARIA DE INFRAESTRUCTURA - GOBERNACION DEL VALLE",
+        "estado": "Abierto",
+        "estado_field": "estado_de_apertura_del_proceso",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "TIE"
+  },
+  {
+    "query": "procesos de infraestructura vial en Cundinamarca",
+    "category": "dataset",
+    "description": "Dataset: procesos explícito",
+    "expected": {
+      "dataset": "procesos"
+    },
+    "v1": {
+      "score": "1/1",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.48,
+      "params": {
+        "dataset": "procesos",
+        "departamento": "cundinamarca",
+        "objeto": [
+          "infraestructura",
+          "vial"
+        ],
+        "departamento_resolved": "Cundinamarca",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "1/1",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.66,
+      "params": {
+        "dataset": "procesos",
+        "departamento": "en cundinamarca",
+        "departamento_resolved": "Cundinamarca",
+        "objeto": [
+          "infraestructura",
+          "vial"
+        ],
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "TIE"
+  },
+  {
+    "query": "contratos en ejecucion del INVIAS",
+    "category": "dataset",
+    "description": "Dataset: contratos por 'en ejecucion'",
+    "expected": {
+      "dataset": "contratos"
+    },
+    "v1": {
+      "score": "1/1",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.92,
+      "params": {
+        "dataset": "contratos",
+        "entidad": "invias",
+        "estado": "En ejecución",
+        "estado_field": "estado_contrato",
+        "entidad_resolved": "ANI",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "1/1",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.26,
+      "params": {
+        "dataset": "contratos",
+        "entidad": "invias",
+        "entidad_resolved": "INVIAS",
+        "estado": "En ejecución",
+        "estado_field": "estado_contrato",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "TIE"
+  },
+  {
+    "query": "contratos liquidados del SENA en 2023",
+    "category": "dataset",
+    "description": "Dataset: contratos por 'liquidados'",
+    "expected": {
+      "dataset": "contratos"
+    },
+    "v1": {
+      "score": "1/1",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.78,
+      "params": {
+        "dataset": "contratos",
+        "fecha_desde": "2023-01-01",
+        "fecha_hasta": "2023-12-31",
+        "entidad": "sena",
+        "estado": "Cerrado",
+        "estado_field": "estado_contrato",
+        "entidad_resolved": "SENA Regional Huila Grupo de Apoyo Administrativo Mixto",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "1/1",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 9.21,
+      "params": {
+        "dataset": "contratos",
+        "fecha_desde": "2023-01-01",
+        "fecha_hasta": "2023-12-31",
+        "entidad": "del sena",
+        "entidad_resolved": "SENA SECRETARIA GENERAL",
+        "estado": "Cerrado",
+        "estado_field": "estado_contrato",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "TIE"
+  },
+  {
+    "query": "procesos abiertos en Antioquia",
+    "category": "departamento",
+    "description": "Departamento: Antioquia + estado",
+    "expected": {
+      "dataset": "procesos",
+      "departamento": "antioquia",
+      "estado": "Abierto"
+    },
+    "v1": {
+      "score": "3/3",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.35,
+      "params": {
+        "dataset": "procesos",
+        "departamento": "antioquia",
+        "estado": "Abierto",
+        "estado_field": "estado_de_apertura_del_proceso",
+        "departamento_resolved": "Antioquia",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "2/3",
+      "accuracy": 66.7,
+      "failures": [
+        "departamento"
+      ],
+      "time_ms": 0.17,
+      "params": {
+        "dataset": "procesos",
+        "entidad": "antioquia",
+        "entidad_resolved": "DEPARTAMENTO DE ANTIOQUIA//",
+        "estado": "Abierto",
+        "estado_field": "estado_de_apertura_del_proceso",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "V1"
+  },
+  {
+    "query": "licitaciones de Cundinamarca por mas de 500 millones",
+    "category": "departamento",
+    "description": "Departamento + monto mínimo: Cundinamarca",
+    "expected": {
+      "dataset": "procesos",
+      "departamento": "cundinamarca",
+      "valor_min": 500000000
+    },
+    "v1": {
+      "score": "3/3",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.53,
+      "params": {
+        "dataset": "procesos",
+        "departamento": "de cundinamarca",
+        "valor_min": 500000000,
+        "departamento_resolved": "Cundinamarca",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "3/3",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.87,
+      "params": {
+        "dataset": "procesos",
+        "departamento": "de cundinamarca",
+        "departamento_resolved": "Cundinamarca",
+        "valor_min": 500000000,
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "TIE"
+  },
+  {
+    "query": "contratos del Valle del Cauca en 2023",
+    "category": "departamento",
+    "description": "Departamento multi-palabra: Valle del Cauca",
+    "expected": {
+      "dataset": "contratos",
+      "departamento": "valle del cauca",
+      "fecha_desde": "2023-01-01"
+    },
+    "v1": {
+      "score": "3/3",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.21,
+      "params": {
+        "dataset": "contratos",
+        "fecha_desde": "2023-01-01",
+        "fecha_hasta": "2023-12-31",
+        "departamento": "valle del cauca",
+        "departamento_resolved": "Valle del Cauca",
+        "needs_llm": true,
+        "route_reason": "heuristic_plus_llm"
+      }
+    },
+    "v2": {
+      "score": "2/3",
+      "accuracy": 66.7,
+      "failures": [
+        "departamento"
+      ],
+      "time_ms": 0.91,
+      "params": {
+        "dataset": "contratos",
+        "fecha_desde": "2023-01-01",
+        "fecha_hasta": "2023-12-31",
+        "entidad": "valle del cauca",
+        "entidad_resolved": "SECRETARIA DE INFRAESTRUCTURA - GOBERNACION DEL VALLE",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "V1"
+  },
+  {
+    "query": "obras en Narino abiertas",
+    "category": "departamento",
+    "description": "Departamento: Nariño",
+    "expected": {
+      "departamento": "narino",
+      "estado": "Abierto"
+    },
+    "v1": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.4,
+      "params": {
+        "dataset": "procesos",
+        "departamento": "narino",
+        "estado": "Abierto",
+        "estado_field": "estado_de_apertura_del_proceso",
+        "objeto": [
+          "obras"
+        ],
+        "departamento_resolved": "Nariño",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "1/2",
+      "accuracy": 50.0,
+      "failures": [
+        "departamento"
+      ],
+      "time_ms": 0.11,
+      "params": {
+        "dataset": "procesos",
+        "entidad": "narino",
+        "entidad_resolved": "GOBERNACION DE NARIÑO",
+        "estado": "Abierto",
+        "estado_field": "estado_de_apertura_del_proceso",
+        "objeto": [
+          "obras"
+        ],
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "V1"
+  },
+  {
+    "query": "licitaciones en Bolivar por mas de 200 millones",
+    "category": "departamento",
+    "description": "Departamento Bolívar + monto",
+    "expected": {
+      "departamento": "bolivar",
+      "valor_min": 200000000
+    },
+    "v1": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.23,
+      "params": {
+        "dataset": "procesos",
+        "departamento": "bolivar",
+        "valor_min": 200000000,
+        "departamento_resolved": "Bolívar",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.27,
+      "params": {
+        "dataset": "procesos",
+        "departamento": "en bolivar",
+        "departamento_resolved": "Bolívar",
+        "valor_min": 200000000,
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "TIE"
+  },
+  {
+    "query": "contratos en el Cesar liquidados",
+    "category": "departamento",
+    "description": "Departamento: El Cesar",
+    "expected": {
+      "dataset": "contratos",
+      "departamento": "cesar"
+    },
+    "v1": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.59,
+      "params": {
+        "dataset": "contratos",
+        "departamento": "cesar",
+        "estado": "Cerrado",
+        "estado_field": "estado_contrato",
+        "departamento_resolved": "Cesar",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 17.12,
+      "params": {
+        "dataset": "contratos",
+        "departamento": "cesar",
+        "departamento_resolved": "Cesar",
+        "estado": "Cerrado",
+        "estado_field": "estado_contrato",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "TIE"
+  },
+  {
+    "query": "proyectos en Norte de Santander abiertos",
+    "category": "departamento",
+    "description": "Departamento compuesto: Norte de Santander (4 palabras)",
+    "expected": {
+      "departamento": "norte de santander",
+      "estado": "Abierto"
+    },
+    "v1": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.6,
+      "params": {
+        "dataset": "procesos",
+        "departamento": "norte de santander",
+        "estado": "Abierto",
+        "estado_field": "estado_de_apertura_del_proceso",
+        "objeto": [
+          "proyectos"
+        ],
+        "departamento_resolved": "Norte de Santander",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "1/2",
+      "accuracy": 50.0,
+      "failures": [
+        "departamento"
+      ],
+      "time_ms": 0.55,
+      "params": {
+        "dataset": "procesos",
+        "entidad": "norte de santander",
+        "entidad_resolved": "Gobernación Norte de Santander*",
+        "estado": "Abierto",
+        "estado_field": "estado_de_apertura_del_proceso",
+        "objeto": [
+          "proyectos"
+        ],
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "V1"
+  },
+  {
+    "query": "procesos de construccion en Bogota abiertos",
+    "category": "departamento",
+    "description": "Bogotá DC + objeto",
+    "expected": {
+      "departamento": "bogota",
+      "estado": "Abierto",
+      "objeto_contains": [
+        "construccion"
+      ]
+    },
+    "v1": {
+      "score": "3/3",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.89,
+      "params": {
+        "dataset": "procesos",
+        "departamento": "bogota",
+        "estado": "Abierto",
+        "estado_field": "estado_de_apertura_del_proceso",
+        "objeto": [
+          "construccion"
+        ],
+        "departamento_resolved": "Distrito Capital de Bogotá",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "3/3",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.34,
+      "params": {
+        "dataset": "procesos",
+        "departamento": "en bogota",
+        "departamento_resolved": "Distrito Capital de Bogotá",
+        "estado": "Abierto",
+        "estado_field": "estado_de_apertura_del_proceso",
+        "objeto": [
+          "construccion"
+        ],
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "TIE"
+  },
+  {
+    "query": "licitaciones de la Gobernacion de Antioquia",
+    "category": "entidad",
+    "description": "Entidad: Gobernación de Antioquia",
+    "expected": {
+      "entidad_hint": "gobernacion",
+      "departamento": "antioquia"
+    },
+    "v1": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.34,
+      "params": {
+        "dataset": "procesos",
+        "departamento": "de antioquia",
+        "entidad": "gobernacion",
+        "departamento_resolved": "Antioquia",
+        "entidad_resolved": "GOBERNACION DE CALDAS",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "1/2",
+      "accuracy": 50.0,
+      "failures": [
+        "departamento"
+      ],
+      "time_ms": 19.87,
+      "params": {
+        "dataset": "procesos",
+        "entidad": "la gobernacion de antioquia",
+        "entidad_resolved": "DEPARTAMENTO DE ANTIOQUIA//",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "V1"
+  },
+  {
+    "query": "contratos del SENA en Cundinamarca",
+    "category": "entidad",
+    "description": "Entidad acrónimo: SENA + depto",
+    "expected": {
+      "dataset": "contratos",
+      "entidad_hint": "sena",
+      "departamento": "cundinamarca"
+    },
+    "v1": {
+      "score": "3/3",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 1.05,
+      "params": {
+        "dataset": "contratos",
+        "departamento": "cundinamarca",
+        "entidad": "sena",
+        "departamento_resolved": "Cundinamarca",
+        "entidad_resolved": "SENA Regional Huila Grupo de Apoyo Administrativo Mixto",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "3/3",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 10.15,
+      "params": {
+        "dataset": "contratos",
+        "entidad": "del sena",
+        "entidad_resolved": "SENA SECRETARIA GENERAL",
+        "departamento": "en cundinamarca",
+        "departamento_resolved": "Cundinamarca",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "TIE"
+  },
+  {
+    "query": "procesos del ICBF abiertos",
+    "category": "entidad",
+    "description": "Entidad acrónimo: ICBF + estado",
+    "expected": {
+      "entidad_hint": "icbf",
+      "estado": "Abierto"
+    },
+    "v1": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 12.0,
+      "params": {
+        "dataset": "procesos",
+        "entidad": "icbf abiertos",
+        "estado": "Abierto",
+        "estado_field": "estado_de_apertura_del_proceso",
+        "entidad_resolved": "ICBF REGIONAL TOLIMA",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 1.33,
+      "params": {
+        "dataset": "procesos",
+        "entidad": "icbf",
+        "entidad_resolved": "ICBF SEDE NACIONAL",
+        "estado": "Abierto",
+        "estado_field": "estado_de_apertura_del_proceso",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "TIE"
+  },
+  {
+    "query": "contratos del Ministerio de Salud en 2024",
+    "category": "entidad",
+    "description": "Entidad: Ministerio de Salud + fecha",
+    "expected": {
+      "dataset": "contratos",
+      "entidad_hint": "ministerio",
+      "fecha_desde": "2024-01-01"
+    },
+    "v1": {
+      "score": "3/3",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.31,
+      "params": {
+        "dataset": "contratos",
+        "fecha_desde": "2024-01-01",
+        "fecha_hasta": "2024-12-31",
+        "entidad": "ministerio de salud",
+        "entidad_resolved": "MINSALUD",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "3/3",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 4.62,
+      "params": {
+        "dataset": "contratos",
+        "fecha_desde": "2024-01-01",
+        "fecha_hasta": "2024-12-31",
+        "entidad": "ministerio de salud",
+        "entidad_resolved": "MINSALUD",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "TIE"
+  },
+  {
+    "query": "procesos del INVIAS en Cundinamarca",
+    "category": "entidad",
+    "description": "Entidad: INVIAS + departamento",
+    "expected": {
+      "entidad_hint": "invias",
+      "departamento": "cundinamarca"
+    },
+    "v1": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.59,
+      "params": {
+        "dataset": "procesos",
+        "departamento": "cundinamarca",
+        "entidad": "invias",
+        "departamento_resolved": "Cundinamarca",
+        "entidad_resolved": "ANI",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.18,
+      "params": {
+        "dataset": "procesos",
+        "entidad": "invias",
+        "entidad_resolved": "INVIAS",
+        "departamento": "en cundinamarca",
+        "departamento_resolved": "Cundinamarca",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "TIE"
+  },
+  {
+    "query": "contratos de la Universidad Nacional de Colombia",
+    "category": "entidad",
+    "description": "Entidad: Universidad Nacional",
+    "expected": {
+      "dataset": "contratos",
+      "entidad_hint": "universidad"
+    },
+    "v1": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.31,
+      "params": {
+        "dataset": "contratos",
+        "entidad": "universidad nacional de colombia",
+        "entidad_resolved": "UNIVERSIDAD NACIONAL DE COLOMBIA",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 12.03,
+      "params": {
+        "dataset": "contratos",
+        "entidad": "la universidad nacional de colombia",
+        "entidad_resolved": "UNIVERSIDAD NACIONAL DE COLOMBIA",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "TIE"
+  },
+  {
+    "query": "licitaciones de la Gobernacion de Santander abiertas",
+    "category": "entidad",
+    "description": "AMBIGUO: 'Gobernacion de Santander' (v2 scan evita split)",
+    "expected": {
+      "entidad_hint": "gobernacion",
+      "estado": "Abierto"
+    },
+    "v1": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 9.9,
+      "params": {
+        "dataset": "procesos",
+        "departamento": "de santander",
+        "entidad": "gobernacion   abiertas",
+        "estado": "Abierto",
+        "estado_field": "estado_de_apertura_del_proceso",
+        "departamento_resolved": "Santander",
+        "entidad_resolved": "GOBERNACION DE CALDAS",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 17.8,
+      "params": {
+        "dataset": "procesos",
+        "entidad": "la gobernacion de santander",
+        "entidad_resolved": "DEPARTAMENTO DE SANTANDER",
+        "estado": "Abierto",
+        "estado_field": "estado_de_apertura_del_proceso",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "TIE"
+  },
+  {
+    "query": "procesos de la Alcaldia de Bogota de infraestructura",
+    "category": "entidad",
+    "description": "Entidad: Alcaldía de Bogotá + objeto",
+    "expected": {
+      "entidad_hint": "alcaldia",
+      "objeto_contains": [
+        "infraestructura"
+      ]
+    },
+    "v1": {
+      "score": "1/2",
+      "accuracy": 50.0,
+      "failures": [
+        "objeto_contains"
+      ],
+      "time_ms": 3.02,
+      "params": {
+        "dataset": "procesos",
+        "departamento": "de bogota",
+        "entidad": "alcaldia   de infraestructura",
+        "departamento_resolved": "Distrito Capital de Bogotá",
+        "entidad_resolved": "(Secretaría Distrital de Integración Social)",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 31.53,
+      "params": {
+        "dataset": "procesos",
+        "entidad": "la alcaldia de bogota",
+        "entidad_resolved": "SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ",
+        "objeto": [
+          "infraestructura"
+        ],
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "V2"
+  },
+  {
+    "query": "procesos adjudicados en Bogota 2024",
+    "category": "estado",
+    "description": "Estado: adjudicado → Seleccionado",
+    "expected": {
+      "dataset": "procesos",
+      "estado": "Seleccionado",
+      "departamento": "bogota"
+    },
+    "v1": {
+      "score": "3/3",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 1.53,
+      "params": {
+        "dataset": "procesos",
+        "departamento": "bogota",
+        "estado": "Seleccionado",
+        "estado_field": "estado_del_procedimiento",
+        "departamento_resolved": "Distrito Capital de Bogotá",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "3/3",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.28,
+      "params": {
+        "dataset": "procesos",
+        "fecha_desde": "2024-01-01",
+        "fecha_hasta": "2024-12-31",
+        "departamento": "en bogota",
+        "departamento_resolved": "Distrito Capital de Bogotá",
+        "estado": "Seleccionado",
+        "estado_field": "estado_del_procedimiento",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "TIE"
+  },
+  {
+    "query": "contratos liquidados del SENA",
+    "category": "estado",
+    "description": "Estado contrato: liquidado (lowercase SECOP)",
+    "expected": {
+      "dataset": "contratos",
+      "estado": "liquidado",
+      "entidad_hint": "sena"
+    },
+    "v1": {
+      "score": "2/3",
+      "accuracy": 66.7,
+      "failures": [
+        "estado"
+      ],
+      "time_ms": 0.95,
+      "params": {
+        "dataset": "contratos",
+        "entidad": "sena",
+        "estado": "Cerrado",
+        "estado_field": "estado_contrato",
+        "entidad_resolved": "SENA Regional Huila Grupo de Apoyo Administrativo Mixto",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "2/3",
+      "accuracy": 66.7,
+      "failures": [
+        "estado"
+      ],
+      "time_ms": 9.46,
+      "params": {
+        "dataset": "contratos",
+        "entidad": "del sena",
+        "entidad_resolved": "SENA SECRETARIA GENERAL",
+        "estado": "Cerrado",
+        "estado_field": "estado_contrato",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "TIE"
+  },
+  {
+    "query": "licitaciones en evaluacion en Antioquia",
+    "category": "estado",
+    "description": "Estado: evaluación",
+    "expected": {
+      "estado": "Evaluación",
+      "departamento": "antioquia"
+    },
+    "v1": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.73,
+      "params": {
+        "dataset": "procesos",
+        "departamento": "antioquia",
+        "estado": "Evaluación",
+        "estado_field": "estado_del_procedimiento",
+        "objeto": [
+          "evaluacion"
+        ],
+        "departamento_resolved": "Antioquia",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "1/2",
+      "accuracy": 50.0,
+      "failures": [
+        "departamento"
+      ],
+      "time_ms": 0.95,
+      "params": {
+        "dataset": "procesos",
+        "entidad": "antioquia",
+        "entidad_resolved": "DEPARTAMENTO DE ANTIOQUIA//",
+        "estado": "Evaluación",
+        "estado_field": "estado_del_procedimiento",
+        "objeto": [
+          "evaluacion"
+        ],
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "V1"
+  },
+  {
+    "query": "contratos en ejecucion del INVIAS",
+    "category": "estado",
+    "description": "Estado contrato: en ejecución",
+    "expected": {
+      "dataset": "contratos",
+      "estado": "en ejecucion",
+      "entidad_hint": "invias"
+    },
+    "v1": {
+      "score": "3/3",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 1.09,
+      "params": {
+        "dataset": "contratos",
+        "entidad": "invias",
+        "estado": "En ejecución",
+        "estado_field": "estado_contrato",
+        "entidad_resolved": "ANI",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "3/3",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 1.03,
+      "params": {
+        "dataset": "contratos",
+        "entidad": "invias",
+        "entidad_resolved": "INVIAS",
+        "estado": "En ejecución",
+        "estado_field": "estado_contrato",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "TIE"
+  },
+  {
+    "query": "procesos cerrados del INVIAS en 2023",
+    "category": "estado",
+    "description": "Estado: cerrado",
+    "expected": {
+      "estado": "Cerrado",
+      "entidad_hint": "invias"
+    },
+    "v1": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.25,
+      "params": {
+        "dataset": "procesos",
+        "fecha_desde": "2023-01-01",
+        "fecha_hasta": "2023-12-31",
+        "entidad": "invias",
+        "estado": "Cerrado",
+        "estado_field": "estado_de_apertura_del_proceso",
+        "entidad_resolved": "ANI",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.18,
+      "params": {
+        "dataset": "procesos",
+        "fecha_desde": "2023-01-01",
+        "fecha_hasta": "2023-12-31",
+        "entidad": "invias",
+        "entidad_resolved": "INVIAS",
+        "estado": "Cerrado",
+        "estado_field": "estado_de_apertura_del_proceso",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "TIE"
+  },
+  {
+    "query": "licitacion publica en Antioquia por mas de 1000 millones",
+    "category": "modalidad",
+    "description": "Modalidad: licitación pública",
+    "expected": {
+      "modalidad": "Licitación pública",
+      "departamento": "antioquia",
+      "valor_min": 1000000000
+    },
+    "v1": {
+      "score": "3/3",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.49,
+      "params": {
+        "dataset": "procesos",
+        "departamento": "antioquia",
+        "modalidad": "Licitación pública",
+        "valor_min": 1000000000,
+        "departamento_resolved": "Antioquia",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "2/3",
+      "accuracy": 66.7,
+      "failures": [
+        "departamento"
+      ],
+      "time_ms": 0.42,
+      "params": {
+        "dataset": "procesos",
+        "entidad": "antioquia",
+        "entidad_resolved": "DEPARTAMENTO DE ANTIOQUIA//",
+        "modalidad": "Licitación pública",
+        "valor_min": 1000000000,
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "V1"
+  },
+  {
+    "query": "procesos de minima cuantia en Valle del Cauca",
+    "category": "modalidad",
+    "description": "Modalidad: mínima cuantía",
+    "expected": {
+      "modalidad": "Mínima cuantía",
+      "departamento": "valle del cauca"
+    },
+    "v1": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.17,
+      "params": {
+        "dataset": "procesos",
+        "departamento": "valle del cauca",
+        "modalidad": "Mínima cuantía",
+        "departamento_resolved": "Valle del Cauca",
+        "needs_llm": true,
+        "route_reason": "heuristic_plus_llm"
+      }
+    },
+    "v2": {
+      "score": "1/2",
+      "accuracy": 50.0,
+      "failures": [
+        "departamento"
+      ],
+      "time_ms": 0.44,
+      "params": {
+        "dataset": "procesos",
+        "entidad": "valle del cauca",
+        "entidad_resolved": "SECRETARIA DE INFRAESTRUCTURA - GOBERNACION DEL VALLE",
+        "modalidad": "Mínima cuantía",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "V1"
+  },
+  {
+    "query": "contratacion directa del ICBF en Bogota",
+    "category": "modalidad",
+    "description": "Modalidad: contratación directa",
+    "expected": {
+      "modalidad": "Contratación directa",
+      "entidad_hint": "icbf"
+    },
+    "v1": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.26,
+      "params": {
+        "dataset": "procesos",
+        "departamento": "bogota",
+        "entidad": "icbf",
+        "modalidad": "Contratación directa",
+        "departamento_resolved": "Distrito Capital de Bogotá",
+        "entidad_resolved": "ICBF REGIONAL TOLIMA",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 1.66,
+      "params": {
+        "dataset": "procesos",
+        "entidad": "icbf",
+        "entidad_resolved": "ICBF SEDE NACIONAL",
+        "departamento": "en bogota",
+        "departamento_resolved": "Distrito Capital de Bogotá",
+        "modalidad": "Contratación directa",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "TIE"
+  },
+  {
+    "query": "seleccion abreviada en Cundinamarca abierta",
+    "category": "modalidad",
+    "description": "Modalidad: selección abreviada",
+    "expected": {
+      "modalidad": "Selección Abreviada de Menor Cuantía",
+      "departamento": "cundinamarca"
+    },
+    "v1": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.14,
+      "params": {
+        "dataset": "procesos",
+        "departamento": "cundinamarca",
+        "estado": "Abierto",
+        "estado_field": "estado_de_apertura_del_proceso",
+        "modalidad": "Selección Abreviada de Menor Cuantía",
+        "departamento_resolved": "Cundinamarca",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.09,
+      "params": {
+        "dataset": "procesos",
+        "departamento": "en cundinamarca",
+        "departamento_resolved": "Cundinamarca",
+        "estado": "Abierto",
+        "estado_field": "estado_de_apertura_del_proceso",
+        "modalidad": "Selección Abreviada de Menor Cuantía",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "TIE"
+  },
+  {
+    "query": "procesos por mas de 1000 millones en Bogota",
+    "category": "montos",
+    "description": "Valor mínimo: 1000 millones",
+    "expected": {
+      "valor_min": 1000000000,
+      "departamento": "bogota"
+    },
+    "v1": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.27,
+      "params": {
+        "dataset": "procesos",
+        "departamento": "bogota",
+        "valor_min": 1000000000,
+        "departamento_resolved": "Distrito Capital de Bogotá",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.2,
+      "params": {
+        "dataset": "procesos",
+        "departamento": "en bogota",
+        "departamento_resolved": "Distrito Capital de Bogotá",
+        "valor_min": 1000000000,
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "TIE"
+  },
+  {
+    "query": "contratos menores a 500 millones en Antioquia",
+    "category": "montos",
+    "description": "Valor máximo: 500 millones",
+    "expected": {
+      "dataset": "contratos",
+      "valor_max": 500000000,
+      "departamento": "antioquia"
+    },
+    "v1": {
+      "score": "3/3",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.25,
+      "params": {
+        "dataset": "contratos",
+        "departamento": "antioquia",
+        "valor_max": 500000000,
+        "departamento_resolved": "Antioquia",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "2/3",
+      "accuracy": 66.7,
+      "failures": [
+        "departamento"
+      ],
+      "time_ms": 0.23,
+      "params": {
+        "dataset": "contratos",
+        "entidad": "antioquia",
+        "entidad_resolved": "DEPARTAMENTO DE ANTIOQUIA//",
+        "valor_max": 500000000,
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "V1"
+  },
+  {
+    "query": "licitaciones de mas de 2 billones",
+    "category": "montos",
+    "description": "Valor mínimo: 2 billones",
+    "expected": {
+      "valor_min": 2000000000000
+    },
+    "v1": {
+      "score": "0/1",
+      "accuracy": 0.0,
+      "failures": [
+        "valor_min"
+      ],
+      "time_ms": 0.25,
+      "params": {
+        "dataset": "procesos",
+        "valor_min": 2000000000,
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "0/1",
+      "accuracy": 0.0,
+      "failures": [
+        "valor_min"
+      ],
+      "time_ms": 0.17,
+      "params": {
+        "dataset": "procesos",
+        "valor_min": 2000000000,
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "TIE"
+  },
+  {
+    "query": "contratos por mas de 50 palos en Cundinamarca",
+    "category": "montos",
+    "description": "Jerga 'palos' = millones",
+    "expected": {
+      "dataset": "contratos",
+      "valor_min": 50000000,
+      "departamento": "cundinamarca"
+    },
+    "v1": {
+      "score": "3/3",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.17,
+      "params": {
+        "dataset": "contratos",
+        "departamento": "cundinamarca",
+        "valor_min": 50000000,
+        "departamento_resolved": "Cundinamarca",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "3/3",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.15,
+      "params": {
+        "dataset": "contratos",
+        "departamento": "en cundinamarca",
+        "departamento_resolved": "Cundinamarca",
+        "valor_min": 50000000,
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "TIE"
+  },
+  {
+    "query": "procesos superiores a 800 millones en Valle del Cauca",
+    "category": "montos",
+    "description": "Valor mínimo: 'superiores a'",
+    "expected": {
+      "valor_min": 800000000,
+      "departamento": "valle del cauca"
+    },
+    "v1": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.15,
+      "params": {
+        "dataset": "procesos",
+        "departamento": "valle del cauca",
+        "valor_min": 800000000,
+        "departamento_resolved": "Valle del Cauca",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "1/2",
+      "accuracy": 50.0,
+      "failures": [
+        "departamento"
+      ],
+      "time_ms": 0.19,
+      "params": {
+        "dataset": "procesos",
+        "entidad": "valle del cauca",
+        "entidad_resolved": "SECRETARIA DE INFRAESTRUCTURA - GOBERNACION DEL VALLE",
+        "valor_min": 800000000,
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "V1"
+  },
+  {
+    "query": "licitaciones de menos de 200 millones en Narino",
+    "category": "montos",
+    "description": "Valor máximo: 'menos de'",
+    "expected": {
+      "valor_max": 200000000,
+      "departamento": "narino"
+    },
+    "v1": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.31,
+      "params": {
+        "dataset": "procesos",
+        "departamento": "narino",
+        "valor_max": 200000000,
+        "departamento_resolved": "Nariño",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "1/2",
+      "accuracy": 50.0,
+      "failures": [
+        "departamento"
+      ],
+      "time_ms": 0.2,
+      "params": {
+        "dataset": "procesos",
+        "entidad": "narino",
+        "entidad_resolved": "GOBERNACION DE NARIÑO",
+        "valor_max": 200000000,
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "V1"
+  },
+  {
+    "query": "procesos desde 2022 en Antioquia",
+    "category": "fechas",
+    "description": "Fecha desde año",
+    "expected": {
+      "fecha_desde": "2022-01-01",
+      "departamento": "antioquia"
+    },
+    "v1": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.25,
+      "params": {
+        "dataset": "procesos",
+        "fecha_desde": "2022-01-01",
+        "departamento": "antioquia",
+        "objeto": [
+          "desde"
+        ],
+        "departamento_resolved": "Antioquia",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "1/2",
+      "accuracy": 50.0,
+      "failures": [
+        "departamento"
+      ],
+      "time_ms": 0.27,
+      "params": {
+        "dataset": "procesos",
+        "fecha_desde": "2022-01-01",
+        "fecha_hasta": "2022-12-31",
+        "entidad": "antioquia",
+        "entidad_resolved": "DEPARTAMENTO DE ANTIOQUIA//",
+        "objeto": [
+          "desde"
+        ],
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "V1"
+  },
+  {
+    "query": "contratos hasta 2023 del SENA",
+    "category": "fechas",
+    "description": "Fecha hasta año",
+    "expected": {
+      "dataset": "contratos",
+      "fecha_hasta": "2023-12-31",
+      "entidad_hint": "sena"
+    },
+    "v1": {
+      "score": "3/3",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.26,
+      "params": {
+        "dataset": "contratos",
+        "fecha_hasta": "2023-12-31",
+        "entidad": "sena",
+        "objeto": [
+          "hasta"
+        ],
+        "entidad_resolved": "SENA Regional Huila Grupo de Apoyo Administrativo Mixto",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "3/3",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 9.37,
+      "params": {
+        "dataset": "contratos",
+        "fecha_hasta": "2023-12-31",
+        "fecha_desde": "2023-01-01",
+        "entidad": "del sena",
+        "entidad_resolved": "SENA SECRETARIA GENERAL",
+        "objeto": [
+          "hasta"
+        ],
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "TIE"
+  },
+  {
+    "query": "licitaciones en 2024 en Cundinamarca",
+    "category": "fechas",
+    "description": "Año completo: en 2024",
+    "expected": {
+      "fecha_desde": "2024-01-01",
+      "fecha_hasta": "2024-12-31",
+      "departamento": "cundinamarca"
+    },
+    "v1": {
+      "score": "3/3",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.71,
+      "params": {
+        "dataset": "procesos",
+        "fecha_desde": "2024-01-01",
+        "fecha_hasta": "2024-12-31",
+        "departamento": "cundinamarca",
+        "departamento_resolved": "Cundinamarca",
+        "needs_llm": true,
+        "route_reason": "heuristic_plus_llm"
+      }
+    },
+    "v2": {
+      "score": "3/3",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.59,
+      "params": {
+        "dataset": "procesos",
+        "fecha_desde": "2024-01-01",
+        "fecha_hasta": "2024-12-31",
+        "departamento": "en cundinamarca",
+        "departamento_resolved": "Cundinamarca",
+        "needs_llm": true,
+        "route_reason": "heuristic_plus_llm"
+      }
+    },
+    "winner": "TIE"
+  },
+  {
+    "query": "procesos desde 2021-01-01 hasta 2021-06-30",
+    "category": "fechas",
+    "description": "Fechas ISO explícitas",
+    "expected": {
+      "fecha_desde": "2021-01-01",
+      "fecha_hasta": "2021-06-30"
+    },
+    "v1": {
+      "score": "1/2",
+      "accuracy": 50.0,
+      "failures": [
+        "fecha_hasta"
+      ],
+      "time_ms": 0.97,
+      "params": {
+        "dataset": "procesos",
+        "fecha_desde": "2021-01-01",
+        "fecha_hasta": "2021-12-31",
+        "objeto": [
+          "desde",
+          "hasta"
+        ],
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "1/2",
+      "accuracy": 50.0,
+      "failures": [
+        "fecha_hasta"
+      ],
+      "time_ms": 0.15,
+      "params": {
+        "dataset": "procesos",
+        "fecha_desde": "2021-01-01",
+        "fecha_hasta": "2021-12-31",
+        "objeto": [
+          "desde",
+          "hasta"
+        ],
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "TIE"
+  },
+  {
+    "query": "contratos del INVIAS desde 2023 hasta 2024",
+    "category": "fechas",
+    "description": "Rango de años con entidad",
+    "expected": {
+      "dataset": "contratos",
+      "fecha_desde": "2023-01-01",
+      "fecha_hasta": "2024-12-31",
+      "entidad_hint": "invias"
+    },
+    "v1": {
+      "score": "4/4",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.28,
+      "params": {
+        "dataset": "contratos",
+        "fecha_desde": "2023-01-01",
+        "fecha_hasta": "2024-12-31",
+        "entidad": "invias",
+        "objeto": [
+          "desde",
+          "hasta"
+        ],
+        "entidad_resolved": "ANI",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "4/4",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.83,
+      "params": {
+        "dataset": "contratos",
+        "fecha_desde": "2023-01-01",
+        "fecha_hasta": "2024-12-31",
+        "entidad": "invias",
+        "entidad_resolved": "INVIAS",
+        "objeto": [
+          "desde",
+          "hasta"
+        ],
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "TIE"
+  },
+  {
+    "query": "licitaciones de mantenimiento vial en Atlantico por mas de 500 millones abiertas",
+    "category": "combinado",
+    "description": "Depto + monto + estado + objeto",
+    "expected": {
+      "departamento": "atlantico",
+      "valor_min": 500000000,
+      "estado": "Abierto",
+      "objeto_contains": [
+        "mantenimiento",
+        "vial"
+      ]
+    },
+    "v1": {
+      "score": "4/4",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.31,
+      "params": {
+        "dataset": "procesos",
+        "departamento": "atlantico",
+        "estado": "Abierto",
+        "estado_field": "estado_de_apertura_del_proceso",
+        "valor_min": 500000000,
+        "objeto": [
+          "mantenimiento",
+          "vial"
+        ],
+        "departamento_resolved": "Atlántico",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "3/4",
+      "accuracy": 75.0,
+      "failures": [
+        "departamento"
+      ],
+      "time_ms": 0.47,
+      "params": {
+        "dataset": "procesos",
+        "entidad": "atlantico",
+        "entidad_resolved": "DEPARTAMENTO DEL ATLANTICO**",
+        "estado": "Abierto",
+        "estado_field": "estado_de_apertura_del_proceso",
+        "valor_min": 500000000,
+        "objeto": [
+          "mantenimiento",
+          "vial"
+        ],
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "V1"
+  },
+  {
+    "query": "contratos del INVIAS en Cundinamarca en 2024 en ejecucion",
+    "category": "combinado",
+    "description": "Entidad + departamento + fecha + estado",
+    "expected": {
+      "dataset": "contratos",
+      "entidad_hint": "invias",
+      "departamento": "cundinamarca",
+      "fecha_desde": "2024-01-01",
+      "estado": "en ejecucion"
+    },
+    "v1": {
+      "score": "5/5",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.15,
+      "params": {
+        "dataset": "contratos",
+        "fecha_desde": "2024-01-01",
+        "fecha_hasta": "2024-12-31",
+        "departamento": "cundinamarca",
+        "entidad": "invias",
+        "estado": "En ejecución",
+        "estado_field": "estado_contrato",
+        "departamento_resolved": "Cundinamarca",
+        "entidad_resolved": "ANI",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "5/5",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.14,
+      "params": {
+        "dataset": "contratos",
+        "fecha_desde": "2024-01-01",
+        "fecha_hasta": "2024-12-31",
+        "entidad": "invias",
+        "entidad_resolved": "INVIAS",
+        "departamento": "en cundinamarca",
+        "departamento_resolved": "Cundinamarca",
+        "estado": "En ejecución",
+        "estado_field": "estado_contrato",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "TIE"
+  },
+  {
+    "query": "procesos de construccion de acueducto en Bogota abiertos por mas de 1000 millones",
+    "category": "combinado",
+    "description": "Objeto + departamento + estado + monto",
+    "expected": {
+      "departamento": "bogota",
+      "estado": "Abierto",
+      "valor_min": 1000000000,
+      "objeto_contains": [
+        "construccion",
+        "acueducto"
+      ]
+    },
+    "v1": {
+      "score": "4/4",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.3,
+      "params": {
+        "dataset": "procesos",
+        "departamento": "bogota",
+        "estado": "Abierto",
+        "estado_field": "estado_de_apertura_del_proceso",
+        "valor_min": 1000000000,
+        "objeto": [
+          "construccion",
+          "acueducto"
+        ],
+        "departamento_resolved": "Distrito Capital de Bogotá",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "4/4",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.44,
+      "params": {
+        "dataset": "procesos",
+        "departamento": "en bogota",
+        "departamento_resolved": "Distrito Capital de Bogotá",
+        "estado": "Abierto",
+        "estado_field": "estado_de_apertura_del_proceso",
+        "valor_min": 1000000000,
+        "objeto": [
+          "construccion",
+          "acueducto"
+        ],
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "TIE"
+  },
+  {
+    "query": "contratos del SENA en Antioquia en ejecucion desde 2023",
+    "category": "combinado",
+    "description": "Entidad + depto + estado + fecha",
+    "expected": {
+      "dataset": "contratos",
+      "entidad_hint": "sena",
+      "departamento": "antioquia",
+      "estado": "en ejecucion",
+      "fecha_desde": "2023-01-01"
+    },
+    "v1": {
+      "score": "5/5",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.16,
+      "params": {
+        "dataset": "contratos",
+        "fecha_desde": "2023-01-01",
+        "departamento": "antioquia",
+        "entidad": "sena",
+        "estado": "En ejecución",
+        "estado_field": "estado_contrato",
+        "objeto": [
+          "desde"
+        ],
+        "departamento_resolved": "Antioquia",
+        "entidad_resolved": "SENA Regional Huila Grupo de Apoyo Administrativo Mixto",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "3/5",
+      "accuracy": 60.0,
+      "failures": [
+        "entidad_hint",
+        "departamento"
+      ],
+      "time_ms": 9.32,
+      "params": {
+        "dataset": "contratos",
+        "fecha_desde": "2023-01-01",
+        "fecha_hasta": "2023-12-31",
+        "entidad": "antioquia",
+        "entidad_resolved": "DEPARTAMENTO DE ANTIOQUIA//",
+        "estado": "En ejecución",
+        "estado_field": "estado_contrato",
+        "objeto": [
+          "sena",
+          "desde"
+        ],
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "V1"
+  },
+  {
+    "query": "licitaciones publicas de transporte masivo en Valle del Cauca por mas de 2000 millones",
+    "category": "combinado",
+    "description": "Modalidad + depto + monto + objeto",
+    "expected": {
+      "modalidad": "Licitación pública",
+      "departamento": "valle del cauca",
+      "valor_min": 2000000000,
+      "objeto_contains": [
+        "transporte"
+      ]
+    },
+    "v1": {
+      "score": "2/4",
+      "accuracy": 50.0,
+      "failures": [
+        "modalidad",
+        "valor_min"
+      ],
+      "time_ms": 0.41,
+      "params": {
+        "dataset": "procesos",
+        "departamento": "valle del cauca",
+        "objeto": [
+          "publicas",
+          "transporte",
+          "masivo"
+        ],
+        "departamento_resolved": "Valle del Cauca",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "1/4",
+      "accuracy": 25.0,
+      "failures": [
+        "modalidad",
+        "departamento",
+        "valor_min"
+      ],
+      "time_ms": 1.87,
+      "params": {
+        "dataset": "procesos",
+        "fecha_desde": "2000-01-01",
+        "fecha_hasta": "2000-12-31",
+        "entidad": "valle del cauca",
+        "entidad_resolved": "SECRETARIA DE INFRAESTRUCTURA - GOBERNACION DEL VALLE",
+        "objeto": [
+          "publicas",
+          "transporte",
+          "masivo"
+        ],
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "V1"
+  },
+  {
+    "query": "contratos de suministro de equipos medicos por mas de 300 millones en 2024",
+    "category": "combinado",
+    "description": "Dataset + monto + fecha + objeto",
+    "expected": {
+      "dataset": "contratos",
+      "valor_min": 300000000,
+      "fecha_desde": "2024-01-01",
+      "objeto_contains": [
+        "suministro",
+        "equipos"
+      ]
+    },
+    "v1": {
+      "score": "4/4",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.95,
+      "params": {
+        "dataset": "contratos",
+        "fecha_desde": "2024-01-01",
+        "fecha_hasta": "2024-12-31",
+        "valor_min": 300000000,
+        "objeto": [
+          "suministro",
+          "equipos",
+          "medicos"
+        ],
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "4/4",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.64,
+      "params": {
+        "dataset": "contratos",
+        "fecha_desde": "2024-01-01",
+        "fecha_hasta": "2024-12-31",
+        "valor_min": 300000000,
+        "objeto": [
+          "suministro",
+          "equipos",
+          "medicos"
+        ],
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "TIE"
+  },
+  {
+    "query": "procesos adjudicados de acueducto en Cundinamarca desde 2022",
+    "category": "combinado",
+    "description": "Estado + departamento + fecha + objeto",
+    "expected": {
+      "estado": "Seleccionado",
+      "departamento": "cundinamarca",
+      "fecha_desde": "2022-01-01",
+      "objeto_contains": [
+        "acueducto"
+      ]
+    },
+    "v1": {
+      "score": "4/4",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.2,
+      "params": {
+        "dataset": "procesos",
+        "fecha_desde": "2022-01-01",
+        "departamento": "cundinamarca",
+        "estado": "Seleccionado",
+        "estado_field": "estado_del_procedimiento",
+        "objeto": [
+          "acueducto",
+          "desde"
+        ],
+        "departamento_resolved": "Cundinamarca",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "4/4",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.27,
+      "params": {
+        "dataset": "procesos",
+        "fecha_desde": "2022-01-01",
+        "fecha_hasta": "2022-12-31",
+        "departamento": "en cundinamarca",
+        "departamento_resolved": "Cundinamarca",
+        "estado": "Seleccionado",
+        "estado_field": "estado_del_procedimiento",
+        "objeto": [
+          "acueducto",
+          "desde"
+        ],
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "TIE"
+  },
+  {
+    "query": "licitaciones de la gobernacion de santander que esten abiertas",
+    "category": "edge_case",
+    "description": "AMBIGUO: 'gobernacion de santander' — v2 scan evita split incorrecto",
+    "expected": {
+      "entidad_hint": "gobernacion",
+      "estado": "Abierto"
+    },
+    "v1": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 12.04,
+      "params": {
+        "dataset": "procesos",
+        "departamento": "de santander",
+        "entidad": "gobernacion   que esten abiertas",
+        "estado": "Abierto",
+        "estado_field": "estado_de_apertura_del_proceso",
+        "departamento_resolved": "Santander",
+        "entidad_resolved": "GOBERNACION DE CALDAS",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 17.5,
+      "params": {
+        "dataset": "procesos",
+        "entidad": "la gobernacion de santander",
+        "entidad_resolved": "DEPARTAMENTO DE SANTANDER",
+        "estado": "Abierto",
+        "estado_field": "estado_de_apertura_del_proceso",
+        "objeto": [
+          "esten"
+        ],
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "TIE"
+  },
+  {
+    "query": "mostrame todo lo del DANE en 2024",
+    "category": "edge_case",
+    "description": "Verbo conversacional + entidad corta DANE",
+    "expected": {
+      "entidad_hint": "dane",
+      "fecha_desde": "2024-01-01"
+    },
+    "v1": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 2.56,
+      "params": {
+        "dataset": "procesos",
+        "fecha_desde": "2024-01-01",
+        "fecha_hasta": "2024-12-31",
+        "entidad": "dane",
+        "objeto": [
+          "mostrame"
+        ],
+        "entidad_resolved": "DEPARTAMENTO ADMINISTRATIVO NACIONAL DE ESTADISTICA (DANE)",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 2.12,
+      "params": {
+        "dataset": "procesos",
+        "fecha_desde": "2024-01-01",
+        "fecha_hasta": "2024-12-31",
+        "entidad": "dane",
+        "entidad_resolved": "DEPARTAMENTO ADMINISTRATIVO NACIONAL DE ESTADISTICA (DANE)",
+        "objeto": [
+          "mostrame"
+        ],
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "TIE"
+  },
+  {
+    "query": "contratos liquidados del ICBF en Atlantico 2022",
+    "category": "edge_case",
+    "description": "Entidad + departamento desambiguados correctamente",
+    "expected": {
+      "dataset": "contratos",
+      "entidad_hint": "icbf",
+      "departamento": "atlantico",
+      "fecha_desde": "2022-01-01"
+    },
+    "v1": {
+      "score": "3/4",
+      "accuracy": 75.0,
+      "failures": [
+        "fecha_desde"
+      ],
+      "time_ms": 0.45,
+      "params": {
+        "dataset": "contratos",
+        "departamento": "atlantico",
+        "entidad": "icbf",
+        "estado": "Cerrado",
+        "estado_field": "estado_contrato",
+        "departamento_resolved": "Atlántico",
+        "entidad_resolved": "ICBF REGIONAL TOLIMA",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "2/4",
+      "accuracy": 50.0,
+      "failures": [
+        "entidad_hint",
+        "departamento"
+      ],
+      "time_ms": 1.64,
+      "params": {
+        "dataset": "contratos",
+        "fecha_desde": "2022-01-01",
+        "fecha_hasta": "2022-12-31",
+        "entidad": "atlantico",
+        "entidad_resolved": "DEPARTAMENTO DEL ATLANTICO**",
+        "estado": "Cerrado",
+        "estado_field": "estado_contrato",
+        "objeto": [
+          "icbf"
+        ],
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "V1"
+  },
+  {
+    "query": "cuales son los contratos mas caros del INVIAS",
+    "category": "edge_case",
+    "description": "Ordering signal + entidad (sin objeto contaminado)",
+    "expected": {
+      "dataset": "contratos",
+      "entidad_hint": "invias"
+    },
+    "v1": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.29,
+      "params": {
+        "dataset": "contratos",
+        "entidad": "invias",
+        "ordering_signal": "valor_desc",
+        "entidad_resolved": "ANI",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 0.39,
+      "params": {
+        "dataset": "contratos",
+        "ordering_signal": "valor_desc",
+        "entidad": "invias",
+        "entidad_resolved": "INVIAS",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "TIE"
+  },
+  {
+    "query": "procesos de la alcaldia de medellin por contratacion directa",
+    "category": "edge_case",
+    "description": "Entidad ciudad + modalidad (ciudad no es departamento)",
+    "expected": {
+      "entidad_hint": "alcaldia",
+      "modalidad": "Contratación directa"
+    },
+    "v1": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 6.61,
+      "params": {
+        "dataset": "procesos",
+        "entidad": "alcaldia de medellin",
+        "modalidad": "Contratación directa",
+        "entidad_resolved": "INSTITUTO DE DEPORTES Y RECREACION DE MEDELLIN",
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "v2": {
+      "score": "2/2",
+      "accuracy": 100.0,
+      "failures": [],
+      "time_ms": 36.5,
+      "params": {
+        "dataset": "procesos",
+        "entidad": "la alcaldia",
+        "entidad_resolved": "SECRETARIA GENERAL Y DE CERCANIA AL CIUDADANO",
+        "modalidad": "Contratación directa",
+        "objeto": [
+          "medellin"
+        ],
+        "needs_llm": false,
+        "route_reason": "heuristic_only"
+      }
+    },
+    "winner": "TIE"
+  }
+]

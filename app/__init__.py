@@ -1,0 +1,2 @@
+"""SECOPAL application package."""
+
