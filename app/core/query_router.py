@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import calendar
 import re
 from dataclasses import dataclass
+from typing import TYPE_CHECKING
 
 from app.data.departamentos import DEPARTAMENTOS
 from app.data.estados import (
@@ -11,6 +13,10 @@ from app.data.estados import (
     ESTADO_SYNONYMS,
 )
 from app.utils.money import money_to_cop, normalize_text
+from app.utils.spell_correction import correct_query
+
+if TYPE_CHECKING:
+    from app.core.entity_resolver import EntityResolver
 
 DATASET_PROCESOS = "procesos"
 DATASET_CONTRATOS = "contratos"
@@ -27,36 +33,6 @@ MODALIDAD_KEYWORDS = {
     "regimen especial": "Contratación régimen especial",
 }
 
-ENTITY_HINTS = (
-    "gobernacion",
-    "alcaldia",
-    "sena",
-    "icbf",
-    "ministerio",
-    "universidad",
-    "hospital",
-    "instituto",
-    "agencia",
-    "empresa",
-    "secretaria",
-    "departamento de",
-    "municipio de",
-    "policia",
-    "ejercito",
-    "armada",
-    "fuerza aerea",
-    "contraloria",
-    "procuraduria",
-    "fiscalia",
-    "dane",
-    "dian",
-    "invias",
-    "idu",
-    "eaab",
-)
-
-# Detecta frases de ordenamiento como "más caros", "más costosos", "más grandes", etc.
-# Estas frases son instrucciones de ordenamiento, NO objetos de búsqueda.
 _ORDERING_SIGNAL_RE = re.compile(
     r"\bmas\s+(?:caro|caros|cara|caras"
     r"|costoso|costosos|costosa|costosas"
@@ -71,7 +47,7 @@ _ORDERING_SIGNAL_RE = re.compile(
 )
 
 STOPWORDS = {
-    # Verbos conversacionales — el usuario habla con el bot, no busca estos términos
+    # Conversational verbs
     "muestrame", "muestreme", "muestra", "mostrar", "mostra",
     "busca", "buscar", "buscame", "buscando", "busco",
     "dame", "dime", "necesito", "quiero", "quisiera",
@@ -79,37 +55,42 @@ STOPWORDS = {
     "lista", "listar", "listame",
     "consulta", "consultar", "consultame",
     "traeme", "traer", "trae",
-    "dime", "decime", "digame",
-    # Preguntas
+    "decime", "digame",
+    # Questions
     "cuales", "cuantos", "cuantas", "cual",
     "hay", "tiene", "tienen", "esta", "estan",
     "donde", "como", "cuando",
-    # Cortesía
+    # Courtesy
     "hola", "gracias", "favor", "podrias", "puedes", "puede", "porfa",
-    # Estados (ya se extraen aparte)
+    # States (extracted separately)
     "abierta", "abiertas", "abierto", "abiertos",
     "adjudicado", "adjudicados",
     "celebrado", "celebrados",
     "firmado", "firmados",
     "liquidado", "liquidados",
     "cerrado", "cerrados",
-    # Tipo de búsqueda
+    # Search types
     "contrato", "contratos", "convocatoria", "convocatorias",
     "licitacion", "licitaciones",
     "proceso", "procesos",
     "publica", "publico",
-    # Artículos y preposiciones
+    # Articles & prepositions
     "de", "del", "en", "el", "la", "las", "los",
     "por", "para", "que", "se", "un", "una", "con",
-    # Comparadores (ya se extraen en amounts)
+    # Comparators
     "mayor", "mayores", "menor", "menores",
     "superior", "superiores", "superen",
     "mas", "menos",
-    # Unidades monetarias
+    # Money units
     "pesos", "millones", "millon",
     # Filler
     "tipo", "vigente", "vigentes", "sobre", "todos", "todas", "todo", "toda",
-    # Adjetivos de valor/tamaño — son instrucciones de ordenamiento, no objetos
+    # Temporal adverbs (not contractual objects)
+    "actualmente", "ahora", "hoy", "recientemente", "momento",
+    # Indefinite pronouns
+    "algun", "alguna", "algunos", "algunas", "ningun", "ninguna",
+    "otro", "otra", "otros", "otras",
+    # Value/size adjectives (ordering instructions, not objects)
     "caro", "caros", "cara", "caras",
     "costoso", "costosos", "costosa", "costosas",
     "grande", "grandes", "importante", "importantes",
@@ -119,6 +100,18 @@ STOPWORDS = {
     "mejor", "mejores", "peor", "peores",
     "alto", "altos", "alta", "altas",
     "bajo", "bajos", "baja", "bajas",
+    # Months (not contractual objects)
+    "enero", "febrero", "marzo", "abril", "mayo", "junio",
+    "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre",
+    # More temporal
+    "semestre", "trimestre", "bimestre", "periodo", "anual", "mensual",
+    "pasado", "anterior", "siguiente", "proximo",
+}
+
+MONTH_MAP = {
+    "enero": 1, "febrero": 2, "marzo": 3, "abril": 4,
+    "mayo": 5, "junio": 6, "julio": 7, "agosto": 8,
+    "septiembre": 9, "octubre": 10, "noviembre": 11, "diciembre": 12,
 }
 
 
@@ -130,75 +123,108 @@ class ParsedQuery:
 
 
 class QueryRouter:
-    """Cheap deterministic parser for common SECOP queries."""
+    """
+    Deterministic parser for SECOP queries.
+
+    Uses GAZETTEER-FIRST entity detection: scans text for known entity/department
+    aliases before any regex extraction. This eliminates the ambiguity problem
+    where "gobernación de santander" gets split between entity and department.
+    """
+
+    def __init__(self, entity_resolver: EntityResolver | None = None):
+        self.entity_resolver = entity_resolver
 
     def parse(self, user_query: str) -> ParsedQuery:
         normalized = normalize_text(user_query)
+        normalized = correct_query(normalized)
         params: dict[str, object] = {}
         scrubbed = normalized
 
-        # 1. Dataset
+        # ── 1. Dataset selection (keyword-based) ────────────────────────
         params["dataset"] = self._select_dataset(normalized)
 
-        # 2. Dates BEFORE amounts
+        # ── 2. Dates (regex — reliable for numbers) ─────────────────────
         date_params = self._extract_dates(normalized)
         params.update(date_params)
 
-        # 2b. Strip year tokens from scrubbed text so they don't contaminate entity
-        for m in re.finditer(r"\b20\d{2}\b", scrubbed):
+        # ── 3. Strip year tokens so they don't contaminate scans ────────
+        for m in re.finditer(r"\b(20\d{2})\b", scrubbed):
             scrubbed = re.sub(rf"\b{m.group(0)}\b", " ", scrubbed)
+        # Also extract bare years as dates
+        for m in re.finditer(r"\b(20\d{2})\b", normalized):
+            year = m.group(1)
+            params.setdefault("fecha_desde", f"{year}-01-01")
+            params.setdefault("fecha_hasta", f"{year}-12-31")
+        scrubbed = re.sub(r"\s+", " ", scrubbed).strip()
 
-        # 3. Department BEFORE entity
-        department = self._extract_department(normalized)
-        if department:
-            params["departamento"] = department
-            for alias in sorted(DEPARTAMENTOS, key=len, reverse=True):
-                if re.search(rf"\b{re.escape(alias)}\b", scrubbed):
-                    scrubbed = re.sub(rf"\b{re.escape(alias)}\b", " ", scrubbed, count=1)
-                    break
+        # ── 4. Ordering signals ("más caros", etc.) ─────────────────────
+        if _ORDERING_SIGNAL_RE.search(scrubbed):
+            params["ordering_signal"] = "valor_desc"
+            scrubbed = _ORDERING_SIGNAL_RE.sub(" ", scrubbed)
+            scrubbed = re.sub(r"\s+", " ", scrubbed).strip()
 
-        # 4. Entity on scrubbed text
-        entity = self._extract_entity(scrubbed)
-        if entity:
-            params["entidad"] = entity
-            scrubbed = scrubbed.replace(entity, " ")
+        # ── 5. GAZETTEER SCAN: Entity (longest alias match) ─────────────
+        #    This is the core change: detect entities by substring match
+        #    against 10K+ aliases, NOT by regex pattern matching.
+        if self.entity_resolver:
+            entity_scan = self.entity_resolver.scan_entity(scrubbed)
+            if entity_scan:
+                params["entidad"] = entity_scan.matched_alias
+                params["entidad_resolved"] = entity_scan.official_name
+                params["entidad_resolution"] = {
+                    "value": entity_scan.official_name,
+                    "method": entity_scan.method,
+                    "confidence": "high",
+                    "like_value": None,
+                    "metadata": {},
+                }
+                scrubbed = entity_scan.remaining_text
 
-        # 5. State — dataset-aware
+        # ── 6. GAZETTEER SCAN: Department (on remaining text) ───────────
+        #    Runs AFTER entity scan so "de santander" can't be stolen
+        if self.entity_resolver:
+            dept_scan = self.entity_resolver.scan_departamento(scrubbed)
+            if dept_scan:
+                params["departamento"] = dept_scan.matched_alias
+                params["departamento_resolved"] = dept_scan.official_name
+                params["departamento_resolution"] = {
+                    "value": dept_scan.official_name,
+                    "method": dept_scan.method,
+                    "confidence": "high",
+                    "like_value": None,
+                    "metadata": {},
+                }
+                scrubbed = dept_scan.remaining_text
+
+        # ── 7. State (dataset-aware keyword match) ──────────────────────
         state_result = self._extract_state(normalized, str(params["dataset"]))
         if state_result:
             params["estado"] = state_result["value"]
-            # Track which state field to use in SoQL
             if state_result.get("field"):
                 params["estado_field"] = state_result["field"]
 
-        # 6. Modality
+        # ── 8. Modality ─────────────────────────────────────────────────
         modality = self._extract_modality(normalized)
         if modality:
             params["modalidad"] = modality
 
-        # 7. Amounts
+        # ── 9. Amounts ──────────────────────────────────────────────────
         amount_params = self._extract_amounts(normalized, date_params)
         params.update(amount_params)
 
-        # 8. Contractor
+        # ── 10. Contractor ──────────────────────────────────────────────
         contractor = self._extract_contractor(normalized, str(params["dataset"]))
         if contractor:
             params["contratista"] = contractor
             scrubbed = scrubbed.replace(contractor, " ")
 
-        # 8b. Ordering signal ("más caros", "más costosos", etc.)
-        if _ORDERING_SIGNAL_RE.search(normalized):
-            params["ordering_signal"] = "valor_desc"
-            # Strip ordering phrase from scrubbed so it doesn't bleed into object terms
-            scrubbed = _ORDERING_SIGNAL_RE.sub(" ", scrubbed)
-
-        # 9. Object terms
+        # ── 11. Object terms (whatever remains after all extractions) ───
         object_terms = self._extract_object_terms(scrubbed)
         if object_terms:
             params["objeto"] = object_terms
 
-        # 10. LLM decision
-        extracted_keys = {key for key, value in params.items() if value not in (None, [], "", {})}
+        # ── 12. LLM decision ───────────────────────────────────────────
+        extracted_keys = {k for k, v in params.items() if v not in (None, [], "", {})}
         needs_llm = self._needs_llm(normalized, params)
         route_reason = "heuristic_only" if not needs_llm else "heuristic_plus_llm"
 
@@ -206,71 +232,42 @@ class QueryRouter:
             needs_llm = True
             route_reason = "insufficient_signals"
 
-        # Ordering signal alone (no real object) → LLM must interpret intent
         if extracted_keys - {"dataset"} == {"ordering_signal"}:
             needs_llm = True
             route_reason = "ordering_without_object"
 
         return ParsedQuery(params=params, needs_llm=needs_llm, route_reason=route_reason)
 
+    # ─── Helper methods (only for non-entity extractions) ───────────────
+
     def _select_dataset(self, normalized_query: str) -> str:
         contract_signals = (
             "contrato", "contratos",
             "firmado", "firmados", "firmada", "firmadas",
-            "contratista", "proveedor",
-            "historico",
+            "contratista", "proveedor", "historico",
             "liquidado", "liquidados",
             "en ejecucion", "ejecutando",
             "cedido", "cedidos",
             "terminado", "terminados",
         )
-        # Special case: "contratos abiertos" → user probably means PROCESOS
         if any(s in normalized_query for s in contract_signals):
-            # But if they also say "abierto/abierta", redirect to procesos
             if re.search(r"\babiert[ao]s?\b", normalized_query):
                 return DATASET_PROCESOS
             return DATASET_CONTRATOS
         return DATASET_PROCESOS
 
-    def _extract_department(self, normalized_query: str) -> str | None:
-        for alias in sorted(DEPARTAMENTOS, key=len, reverse=True):
-            pattern = rf"\b{re.escape(alias)}\b"
-            if re.search(pattern, normalized_query):
-                return self._clean_department_alias(alias)
-        return None
-
-    def _extract_entity(self, normalized_query: str) -> str | None:
-        pattern = re.compile(
-            r"(?:de las|de los|de la|del|de)\s+(.+?)(?=\s+(?:en|por|para|abiert|vigent|cerrad|adjudic|firmad|celebrad|liquidado|terminado|desde|hasta|mayor|menor|mas|menos|\d{4})\b|$)"
-        )
-        for candidate in pattern.findall(normalized_query):
-            candidate = candidate.strip(" ,.")
-            candidate = re.sub(r"^(?:la|el|los|las)\s+", "", candidate)
-            if any(hint in candidate for hint in ENTITY_HINTS):
-                if candidate not in DEPARTAMENTOS:
-                    return candidate
-        return None
-
     def _extract_state(self, normalized_query: str, dataset: str) -> dict | None:
-        """
-        Extract state with awareness of which dataset and which field to use.
-        Returns {"value": "...", "field": "..."} or None.
-        """
         if dataset == DATASET_CONTRATOS:
             for alias, official in sorted(ESTADO_CONTRATO_SYNONYMS.items(), key=lambda x: len(x[0]), reverse=True):
                 if re.search(rf"\b{re.escape(alias)}\b", normalized_query):
                     return {"value": official, "field": "estado_contrato"}
         else:
-            # For procesos, check estado_de_apertura first (simpler, more common)
             for alias, official in sorted(ESTADO_APERTURA_SYNONYMS.items(), key=lambda x: len(x[0]), reverse=True):
                 if re.search(rf"\b{re.escape(alias)}\b", normalized_query):
                     return {"value": official, "field": "estado_de_apertura_del_proceso"}
-
-            # Then check estado_del_procedimiento for more specific states
             for alias, official in sorted(ESTADO_PROCEDIMIENTO_SYNONYMS.items(), key=lambda x: len(x[0]), reverse=True):
                 if re.search(rf"\b{re.escape(alias)}\b", normalized_query):
                     return {"value": official, "field": "estado_del_procedimiento"}
-
         return None
 
     def _extract_modality(self, normalized_query: str) -> str | None:
@@ -286,6 +283,21 @@ class QueryRouter:
             params["fecha_desde"] = iso_dates[0]
         if len(iso_dates) >= 2:
             params["fecha_hasta"] = iso_dates[1]
+
+        # ── Month + year patterns ─────────────────────────────────────────
+        # Matches: "abril de 2026", "del mes de enero de 2025", "en marzo 2024"
+        _month_names = "|".join(MONTH_MAP.keys())
+        month_year_re = re.compile(
+            rf"(?:del\s+mes\s+de\s+|en\s+)?({_month_names})\s+(?:de\s+)?(20\d{{2}})\b",
+            re.IGNORECASE,
+        )
+        month_match = month_year_re.search(normalized_query)
+        if month_match:
+            month_num = MONTH_MAP[month_match.group(1).lower()]
+            year_num = int(month_match.group(2))
+            last_day = calendar.monthrange(year_num, month_num)[1]
+            params.setdefault("fecha_desde", f"{year_num}-{month_num:02d}-01")
+            params.setdefault("fecha_hasta", f"{year_num}-{month_num:02d}-{last_day:02d}")
 
         year_match = re.search(r"\ben\s+(20\d{2})\b", normalized_query)
         if year_match:
@@ -305,30 +317,24 @@ class QueryRouter:
 
     def _extract_amounts(self, normalized_query: str, date_params: dict[str, str]) -> dict[str, int]:
         params: dict[str, int] = {}
-
         year_tokens: set[str] = set()
         for val in date_params.values():
             year_tokens.add(val[:4])
         for m in re.finditer(r"\b(20\d{2})\b", normalized_query):
             year_tokens.add(m.group(1))
 
-        matches = list(
-            re.finditer(
-                r"(?:(?:mas|mayor(?:es)?|superior(?:es)?|superen?)\s+(?:de|a)|(?:menos|menor(?:es)?)\s+(?:de|a)|hasta|por|de)?\s*((?:\d+(?:[.,]\d+)?)|mil|un)\s*(?:billon(?:es)?|mil millones|millones?|palos?|mil)?(?:\s+de\s+pesos)?",
-                normalized_query,
-            )
-        )
+        matches = list(re.finditer(
+            r"(?:(?:mas|mayor(?:es)?|superior(?:es)?|superen?)\s+(?:de|a)|(?:menos|menor(?:es)?)\s+(?:de|a)|hasta|por|de)?\s*((?:\d+(?:[.,]\d+)?)|mil|un)\s*(?:billon(?:es)?|mil millones|millones?|palos?|mil)?(?:\s+de\s+pesos)?",
+            normalized_query,
+        ))
 
         for match in matches:
             raw = match.group(0).strip()
             number_part = match.group(1)
             if number_part in year_tokens:
                 continue
-
             amount = money_to_cop(raw)
-            if amount is None:
-                continue
-            if amount < 1_000_000:
+            if amount is None or amount < 1_000_000:
                 continue
 
             if re.search(r"(?:mas|mayor(?:es)?|superior(?:es)?|superen?)\s+(?:de|a)", raw):
@@ -350,9 +356,7 @@ class QueryRouter:
             r"(?:contratista|proveedor)(?:\s+adjudicado)?\s+(.+?)(?=\s+(?:en|por|desde|hasta|mayor|menor|mas|menos)\b|$)"
         )
         match = pattern.search(normalized_query)
-        if not match:
-            return None
-        return match.group(1).strip(" ,.")
+        return match.group(1).strip(" ,.") if match else None
 
     def _extract_object_terms(self, scrubbed_query: str) -> list[str]:
         cleaned = scrubbed_query
@@ -362,6 +366,8 @@ class QueryRouter:
             cleaned = cleaned.replace(alias, " ")
         cleaned = re.sub(r"\b(?:\d+(?:[.,]\d+)?)\b", " ", cleaned)
         cleaned = re.sub(r"\b(?:millon(?:es)?|mil|billon(?:es)?|palos?|pesos)\b", " ", cleaned)
+        # Strip punctuation that can stick to tokens (e.g., "actualmente?")
+        cleaned = re.sub(r"[?¿!¡.,;:\"'(){}[\]]", " ", cleaned)
         cleaned = re.sub(r"\s+", " ", cleaned).strip()
 
         tokens: list[str] = []
@@ -381,25 +387,6 @@ class QueryRouter:
         return unique[:6]
 
     def _needs_llm(self, normalized_query: str, params: dict[str, object]) -> bool:
-        advanced_signals = (
-            "top", "comparar", "resumen", "quien", "quienes",
-            "estadistica", "ranking", "mas reciente", "ultimos",
-        )
-        if any(signal in normalized_query for signal in advanced_signals):
-            return True
-        if params.get("entidad") and params.get("objeto"):
-            return False
-        if params.get("departamento") and params.get("objeto"):
-            return False
-        if params.get("valor_min") or params.get("valor_max") or params.get("estado"):
-            return False
-        if params.get("entidad"):
-            return False
-        return not bool(params.get("objeto"))
-
-    @staticmethod
-    def _clean_department_alias(alias: str) -> str:
-        cleaned = re.sub(r"^(?:en|del)\s+", "", alias)
-        cleaned = re.sub(r"^(?:depto|departamento)\s+del?\s+", "", cleaned)
-        cleaned = re.sub(r"^(?:departamento)\s+de\s+", "", cleaned)
-        return cleaned.strip()
+        # ADR-008: LLM eliminated from pipeline. Heuristic handles 100% of
+        # production queries. Keeping method signature for interface compat.
+        return False

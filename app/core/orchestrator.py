@@ -35,12 +35,18 @@ def llm_parse(state: State, llm_handler: LLMHandler) -> State:
     writes=["resolved_params", "dataset_id", "needs_clarification", "clarification_reason"],
 )
 def resolve_entities(state: State, entity_resolver: EntityResolver) -> State:
+    """
+    Resolve entities to SECOP-compatible values.
+    If gazetteer scan already resolved in parse_query, just pass through.
+    Only does fuzzy/LIKE for entities the scan missed (e.g. from LLM).
+    """
     params = dict(state["parsed_params"])
     resolved = dict(params)
     needs_clarification = False
     clarification_reason = ""
 
-    if params.get("departamento"):
+    # Department: only resolve if not already resolved by scan
+    if params.get("departamento") and not params.get("departamento_resolved"):
         resolution = entity_resolver.resolve_departamento(str(params["departamento"]))
         resolved["departamento_resolution"] = resolution.to_dict()
         if resolution.value:
@@ -49,7 +55,8 @@ def resolve_entities(state: State, entity_resolver: EntityResolver) -> State:
             needs_clarification = True
             clarification_reason = f"No pude ubicar el departamento '{params['departamento']}'."
 
-    if params.get("entidad"):
+    # Entity: only resolve if not already resolved by scan
+    if params.get("entidad") and not params.get("entidad_resolved"):
         depto_value = resolved.get("departamento_resolved")
         resolution = entity_resolver.resolve_entidad(str(params["entidad"]), departamento=depto_value)
         resolved["entidad_resolution"] = resolution.to_dict()
@@ -73,14 +80,23 @@ def build_query(state: State, soql_builder: SoQLBuilder) -> State:
     return state.update(soql_query=soql)
 
 
-@action(reads=["dataset_id", "soql_query"], writes=["results"])
+@action(reads=["dataset_id", "soql_query"], writes=["results", "query_error"])
 def execute_query(state: State, secop_client: SecopClient) -> State:
-    results = secop_client.query(state["dataset_id"], state["soql_query"])
-    return state.update(results=results)
+    """Execute SECOP query with graceful error handling."""
+    try:
+        results = secop_client.query(state["dataset_id"], state["soql_query"])
+        return state.update(results=results, query_error="")
+    except Exception as exc:
+        return state.update(results=[], query_error=str(exc))
 
 
-@action(reads=["results", "dataset_id", "channel"], writes=["formatted_response", "formatted_rows"])
+@action(reads=["results", "dataset_id", "channel", "query_error"], writes=["formatted_response", "formatted_rows"])
 def format_response(state: State, formatter: Formatter) -> State:
+    if state.get("query_error"):
+        return state.update(
+            formatted_response="SECOP no respondio a tiempo. Intenta de nuevo en unos segundos.",
+            formatted_rows=[],
+        )
     response, rows = formatter.format_for_channel(state["results"], state["dataset_id"], state["channel"])
     return state.update(formatted_response=response, formatted_rows=rows)
 
@@ -98,9 +114,9 @@ class SecopalWorkflow:
 
     def __init__(self, settings: Settings):
         self.settings = settings
-        self.query_router = QueryRouter()
-        self.llm_handler = LLMHandler(api_key=settings.deepseek_api_key, model=settings.deepseek_model)
         self.entity_resolver = EntityResolver(settings.secop_alias_db_path)
+        self.query_router = QueryRouter(entity_resolver=self.entity_resolver)
+        self.llm_handler = LLMHandler(api_key=settings.deepseek_api_key, model=settings.deepseek_model)
         self.soql_builder = SoQLBuilder()
         self.secop_client = SecopClient(
             domain=settings.datos_gov_domain,
@@ -142,6 +158,7 @@ class SecopalWorkflow:
                 soql_query="",
                 dataset_id="",
                 route_reason="",
+                query_error="",
                 needs_llm=False,
                 needs_clarification=False,
                 clarification_reason="",
@@ -164,16 +181,13 @@ class SecopalWorkflow:
             "route_reason": state["route_reason"],
         }
 
-        # Log trace for feedback
         trace_id = self.feedback.log_trace(user_query, channel, result)
         result["trace_id"] = trace_id
 
         return result
 
     def rate_query(self, trace_id: str, rating: int, comment: str | None = None) -> bool:
-        """Rate a previous query result. rating: 1=good, 0=bad."""
         return self.feedback.rate(trace_id, rating, comment)
 
     def get_feedback_stats(self) -> dict:
-        """Get feedback statistics."""
         return self.feedback.get_stats()

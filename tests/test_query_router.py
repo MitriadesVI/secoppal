@@ -156,3 +156,71 @@ def test_year_extracted_as_date_range(router: QueryRouter) -> None:
 
     assert parsed.params.get("fecha_desde") == "2024-01-01"
     assert parsed.params.get("fecha_hasta") == "2024-12-31"
+
+
+# ═════════════════════════════════════════════════════════════════════════════
+# Month stopwords & month+year date extraction
+# ═════════════════════════════════════════════════════════════════════════════
+
+def test_months_not_in_object(router: QueryRouter) -> None:
+    """'abril' is a month name, not a contractual object."""
+    parsed = router.parse("contratos de abril 2026")
+
+    obj = parsed.params.get("objeto", [])
+    assert "abril" not in obj
+
+
+def test_month_year_extraction(router: QueryRouter) -> None:
+    """'abril de 2026' → fecha_desde=2026-04-01, fecha_hasta=2026-04-30."""
+    parsed = router.parse("contratos de abril de 2026")
+
+    assert parsed.params.get("fecha_desde") == "2026-04-01"
+    assert parsed.params.get("fecha_hasta") == "2026-04-30"
+
+
+def test_month_year_del_mes(router: QueryRouter) -> None:
+    """'del mes de enero de 2025' → fecha_desde=2025-01-01, fecha_hasta=2025-01-31."""
+    parsed = router.parse("del mes de enero de 2025")
+
+    assert parsed.params.get("fecha_desde") == "2025-01-01"
+    assert parsed.params.get("fecha_hasta") == "2025-01-31"
+
+
+# ═════════════════════════════════════════════════════════════════════════════
+# Regression: gobernacion de santander 2024 → SANTANDER, not CALDAS
+# ═════════════════════════════════════════════════════════════════════════════
+
+def test_gobernacion_de_santander_2024_resolves_correctly(router: QueryRouter) -> None:
+    """'gobernacion de santander 2024' must resolve to SANTANDER, not CALDAS.
+
+    Regression for bug where year stripping + department-first extraction caused
+    'gobernacion de santander' to be split, leaving only 'gobernacion' which
+    fuzzy-matched to GOBERNACION DE CALDAS.
+    """
+    parsed = router.parse("gobernacion de santander 2024")
+
+    resolved = parsed.params.get("entidad_resolved", "")
+    assert "SANTANDER" in resolved.upper(), (
+        f"Expected SANTANDER in entity, got {resolved!r}"
+    )
+    assert "CALDAS" not in resolved.upper(), (
+        f"Must NOT resolve to CALDAS, got {resolved!r}"
+    )
+    assert parsed.params.get("fecha_desde") == "2024-01-01"
+    assert parsed.params.get("fecha_hasta") == "2024-12-31"
+
+
+def test_contratos_mas_caros_gobernacion_de_santander_2024(router: QueryRouter) -> None:
+    """Full phrase: 'contratos mas caros de la gobernacion de santander 2024'."""
+    parsed = router.parse("contratos mas caros de la gobernacion de santander 2024")
+
+    resolved = parsed.params.get("entidad_resolved", "")
+    assert "SANTANDER" in resolved.upper(), (
+        f"Expected SANTANDER in entity, got {resolved!r}"
+    )
+    assert "CALDAS" not in resolved.upper(), (
+        f"Must NOT resolve to CALDAS, got {resolved!r}"
+    )
+    assert parsed.params["dataset"] == "contratos"
+    assert parsed.params.get("ordering_signal") == "valor_desc"
+    assert parsed.params.get("fecha_desde") == "2024-01-01"
