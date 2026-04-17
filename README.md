@@ -125,13 +125,14 @@ parse_query ──► resolve_entities ──► build_query ──► execute_q
                                         clarify_query    format_response
 ```
 
-> **Nota:** El paso `llm_parse` existe en el grafo por compatibilidad pero nunca se ejecuta — `_needs_llm()` retorna `False` siempre (ADR-008).
+> **Nota:** El paso `llm_parse` se ejecuta condicionalmente cuando `_needs_llm()` detecta municipios o entidades sin resolver en el objeto (ADR-009). ~90% de queries usan solo heurística.
 
 **Transiciones clave:**
 
 | Condición | Siguiente paso |
 |-----------|---------------|
-| `needs_llm = False` (siempre) | `resolve_entities` (salta el LLM) |
+| `needs_llm = False` (mayoría) | `resolve_entities` (salta el LLM) |
+| `needs_llm = True` (municipio/entidad en objeto) | `llm_parse` → `resolve_entities` |
 | `needs_clarification = True` | `clarify_query` (pide más info al usuario) |
 | Error en API Socrata | Reintento con backoff exponencial |
 
@@ -139,14 +140,15 @@ parse_query ──► resolve_entities ──► build_query ──► execute_q
 
 ## Componentes principales
 
-### `app/core/query_router.py` — Parser heurístico (100% de queries)
+### `app/core/query_router.py` — Parser heurístico (~90% de queries)
 El pipeline de parseo. Usa regex, gazetteer y spell correction para extraer parámetros **sin LLM**.
 
 Extrae:
 - **Dataset**: `procesos` vs `contratos` (detectado por palabras clave como "contrato", "firmado", "ejecutando")
 - **Departamento**: 34 departamentos colombianos con aliases y variaciones
 - **Entidad**: gobernación, alcaldía, SENA, ICBF, etc. con hints por regex. Los tokens de año (`20xx`) se eliminan del texto antes de la extracción para evitar contaminación; además, un año en el texto actúa como límite que detiene la captura de entidad.
-- **Estado del proceso**: abierto, cerrado, adjudicado, desierto, etc.
+- **Ciudad/Municipio**: nuevo parámetro extraído por LLM cuando se detecta "en [lugar]" no resuelto como departamento
+- **Estado del proceso**: abierto, cerrado, adjudicado, desierto, convocatoria (→ Publicado), etc.
 - **Modalidad**: licitación pública, mínima cuantía, selección abreviada, etc.
 - **Montos**: rango `valor_min` / `valor_max` ("más de 500 millones", "entre 200 y 800 millones")
 - **Fechas**: ISO o año solo ("en 2024", "desde enero"), o mes + año ("abril de 2026" → rango fecha_desde/fecha_hasta del mes completo)
@@ -319,7 +321,7 @@ secoppal/
 │   │   ├── entity_resolver.py    # Resolución de entidades (V3 activo)
 │   │   ├── entity_resolver v2.py # + scan_entity() / scan_departamento()
 │   │   ├── entity_resolver v3.py # + disambiguación depts (recomendado)
-│   │   ├── llm_handler.py        # DeepSeek (legacy, eliminado — ADR-008)
+│   │   ├── llm_handler.py        # DeepSeek fallback para ciudad/entidad (ADR-009)
 │   │   ├── soql_builder.py       # Constructor de queries SoQL
 │   │   ├── secop_client.py       # Cliente Socrata con reintentos
 │   │   ├── formatter.py          # Formateador por canal
@@ -462,7 +464,7 @@ python scripts/build_gazetteer.py full --top 500
 | `SECOP_APP_TOKEN` | Token de app para la API Socrata | Sí |
 | `SECOP_API_KEY_ID` | Key ID para Socrata | Sí |
 | `SECOP_APP_SECRET` | Secret de app Socrata | Sí |
-| `DEEPSEEK_API_KEY` | API key de DeepSeek | No (legacy, LLM eliminado — ADR-008) |
+| `DEEPSEEK_API_KEY` | API key de DeepSeek | Sí (para fallback LLM — ADR-009) |
 | `DEEPSEEK_MODEL` | Modelo a usar (default: `deepseek-chat`) | No (legacy) |
 | `DATOS_GOV_DOMAIN` | Dominio Socrata (default: `www.datos.gov.co`) | No |
 | `SECOP_TIMEOUT_SECONDS` | Timeout para API SECOP (default: `30`) | No |
@@ -577,7 +579,7 @@ python scripts/build_gazetteer.py full --top 500
 ### ADR-008: Eliminación del LLM (DeepSeek) del pipeline
 
 **Fecha:** 2026-04
-**Estado:** Activo
+**Estado:** Supersedido por ADR-009
 
 **Decisión:** Eliminar completamente el uso de DeepSeek V3 del pipeline de producción. `_needs_llm()` retorna `False` siempre. El archivo `llm_handler.py` se conserva como legacy pero no se ejecuta.
 
@@ -590,3 +592,28 @@ python scripts/build_gazetteer.py full --top 500
 ---
 
 *Para agregar una nueva decisión, copiar la plantilla con: Fecha, Estado (Activo / Supersedido / Descartado), Decisión, Contexto, Alternativas descartadas, Consecuencias.*
+
+---
+
+### ADR-009: Hybrid LLM fallback para ciudad/entidad disambiguation
+
+**Fecha:** 2026-04
+**Estado:** Activo
+
+**Decisión:** Reintroducir DeepSeek V3 como fallback condicional para queries donde el heurístico no puede distinguir entre municipio, entidad y objeto.
+
+**Contexto:** Feedback de producción (traces 3aa726cc, f202ab0c, 78ad68c9) mostró que el heurístico falla cuando:
+- El usuario menciona un municipio ("en Puerto Salgar") — no hay gazetteer de municipios
+- El usuario menciona una entidad por nombre libre ("Secretaría de Integración Social") — no está en las 500 entidades del gazetteer
+
+Estos tokens terminan en `objeto`, generando queries LIKE sobre nombre_del_procedimiento en vez de filtrar por ciudad_entidad o nombre_entidad.
+
+**Triggers para LLM (`_needs_llm()`):**
+1. Patrón "en [lugar]" donde el lugar no se resolvió como departamento y sus tokens quedaron en objeto
+2. Palabras tipo entidad (secretaría, ministerio, instituto, etc.) quedaron en objeto
+
+**Nuevo parámetro:** `ciudad` — mapea a `ciudad_entidad` (procesos) o `ciudad` (contratos) con LIKE (casing inconsistente en SECOP).
+
+**Protecciones:** El LLM no puede sobrescribir: departamento, estado, montos, fechas (REGEX_PRIORITY_KEYS), ni entidades ya resueltas por gazetteer (`entidad_resolved`).
+
+**Consecuencias:** ~5-10% de queries usan LLM (~$0.001/query). 90%+ siguen siendo gratis. Latencia +2-5s solo para queries que antes daban resultados incorrectos. Accuracy benchmark: 96.3% (vs 95.5% pre-ADR-009).
