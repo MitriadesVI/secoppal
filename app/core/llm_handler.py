@@ -16,19 +16,23 @@ Tu unica tarea es extraer parametros de busqueda y llamar la herramienta buscar_
 
 Reglas:
 1. Solo incluye parametros mencionados explicitamente.
-2. Distingue entre territorio y entidad especifica:
-   - "en Atlantico", "del Atlantico", "en el departamento del Atlantico" -> departamento
+2. Distingue entre TERRITORIO, MUNICIPIO/CIUDAD y ENTIDAD ESPECIFICA:
+   - "en Atlantico", "del Atlantico" -> departamento
+   - "en Puerto Salgar", "en Soacha", "en Barranquilla" -> ciudad (nombre del municipio)
    - "de la gobernacion del Atlantico", "del SENA", "de la alcaldia de..." -> entidad
+   - "de la Secretaria de Integracion Social" -> entidad
+   - "contratos de la alcaldia de Puerto Salgar" -> entidad="alcaldia de Puerto Salgar", ciudad no necesario
 3. Convierte valores monetarios:
    - "500 millones" = 500000000
    - "mil millones" y "un billon" (uso coloquial) = 1000000000
    - "200 palos" = 200000000
 4. "abiertas" o "vigentes" -> estado "Abierto"
 5. "contratos firmados" -> dataset "contratos", estado "Celebrado"
-6. "contratos adjudicados" -> dataset "contratos"
-7. "en ejecucion" -> dataset "contratos", estado "En ejecucion"
-8. "liquidados" -> dataset "contratos", estado "Liquidado"
-9. Default: dataset "procesos"
+6. "en ejecucion" -> dataset "contratos", estado "En ejecucion"
+7. "liquidados" -> dataset "contratos", estado "Liquidado"
+8. Default: dataset "procesos"
+9. objeto son las palabras clave de LO QUE SE CONTRATA (mantenimiento, vial, construccion, etc.)
+   NO incluyas nombres de ciudades, departamentos ni entidades en objeto.
 """.strip()
 
 SECOPAL_TOOLS = [
@@ -48,6 +52,10 @@ SECOPAL_TOOLS = [
                         "enum": ["procesos", "contratos"],
                     },
                     "departamento": {"type": "string"},
+                    "ciudad": {
+                        "type": "string",
+                        "description": "Municipio o ciudad donde se ejecuta (Puerto Salgar, Soacha, Barranquilla, etc.)",
+                    },
                     "entidad": {"type": "string"},
                     "objeto": {
                         "type": "array",
