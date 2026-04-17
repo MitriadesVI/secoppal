@@ -114,6 +114,18 @@ MONTH_MAP = {
     "septiembre": 9, "octubre": 10, "noviembre": 11, "diciembre": 12,
 }
 
+# ── LLM trigger heuristics ──────────────────────────────────────────────────
+_ENTITY_SIGNAL_WORDS = {
+    "secretaria", "ministerio", "instituto", "corporacion", "fundacion",
+    "agencia", "unidad", "autoridad", "comision",
+    "superintendencia", "direccion", "servicio", "empresa",
+}
+
+_PREPOSITION_PLACE_RE = re.compile(
+    r"\ben\s+([a-z]{4,}(?:\s+[a-z]{4,})*)",
+    re.IGNORECASE,
+)
+
 
 @dataclass(slots=True)
 class ParsedQuery:
@@ -387,6 +399,27 @@ class QueryRouter:
         return unique[:6]
 
     def _needs_llm(self, normalized_query: str, params: dict[str, object]) -> bool:
-        # ADR-008: LLM eliminated from pipeline. Heuristic handles 100% of
-        # production queries. Keeping method signature for interface compat.
+        """Detect when heuristic likely misclassified tokens.
+
+        Triggers:
+        1. "en [place]" where place is NOT a resolved department → likely a city
+        2. Entity-signal words in objeto (secretaria, ministerio, etc.)
+        """
+        objeto = params.get("objeto", [])
+        if not objeto:
+            return False
+
+        # Signal 1: "en [place]" not resolved as department
+        if not params.get("departamento_resolved"):
+            match = _PREPOSITION_PLACE_RE.search(normalized_query)
+            if match:
+                place_tokens = set(match.group(1).split())
+                objeto_set = set(objeto)
+                if place_tokens & objeto_set:
+                    return True
+
+        # Signal 2: Entity-like words in objeto
+        if set(objeto) & _ENTITY_SIGNAL_WORDS:
+            return True
+
         return False

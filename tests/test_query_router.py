@@ -224,3 +224,35 @@ def test_contratos_mas_caros_gobernacion_de_santander_2024(router: QueryRouter) 
     assert parsed.params["dataset"] == "contratos"
     assert parsed.params.get("ordering_signal") == "valor_desc"
     assert parsed.params.get("fecha_desde") == "2024-01-01"
+
+
+# ═════════════════════════════════════════════════════════════════════════════
+# LLM trigger (_needs_llm)
+# ═════════════════════════════════════════════════════════════════════════════
+
+def test_needs_llm_when_city_in_object(router: QueryRouter) -> None:
+    """'en Puerto Salgar' should trigger LLM — city not resolved as department."""
+    result = router.parse("procesos de ampliacion en puerto salgar")
+    assert result.needs_llm is True
+    assert result.route_reason == "heuristic_plus_llm"
+    assert "ampliacion" in result.params.get("objeto", [])
+
+
+def test_needs_llm_entity_like_words_in_object(router: QueryRouter) -> None:
+    """Entity-like words NOT in gazetteer should trigger LLM."""
+    # "secretaria de integracion social" IS in gazetteer, so use something that isn't
+    result = router.parse("contratos de la secretaria de asuntos especiales de bogota")
+    assert result.needs_llm is True
+
+
+def test_no_llm_when_department_resolved(router: QueryRouter) -> None:
+    """'en Atlantico' resolves to department — no LLM needed."""
+    result = router.parse("procesos de mantenimiento vial en atlantico")
+    assert result.needs_llm is False
+    assert result.params.get("departamento_resolved") is not None
+
+
+def test_no_llm_simple_object_query(router: QueryRouter) -> None:
+    """Simple object search should not trigger LLM."""
+    result = router.parse("licitaciones de mantenimiento vial")
+    assert result.needs_llm is False
