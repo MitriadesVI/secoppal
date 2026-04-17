@@ -17,6 +17,7 @@ class DatasetSpec:
     reference: str | None = None
     contractor: str | None = None
     contractor_document: str | None = None
+    city: str | None = None
     select_fields: tuple[str, ...] = ()
 
 
@@ -36,6 +37,7 @@ class SoQLBuilder:
             date="fecha_de_publicacion_del",
             url="urlproceso",
             reference="referencia_del_proceso",
+            city="ciudad_entidad",
             select_fields=(
                 "id_del_proceso",
                 "referencia_del_proceso",
@@ -66,6 +68,7 @@ class SoQLBuilder:
             contractor="proveedor_adjudicado",
             contractor_document="documento_proveedor",
             reference="referencia_del_contrato",
+            city="ciudad",
             select_fields=(
                 "id_contrato",
                 "referencia_del_contrato",
@@ -97,6 +100,10 @@ class SoQLBuilder:
         if params.get("departamento_resolved"):
             where_clauses.append(f"{spec.department} = '{self._escape(params['departamento_resolved'])}'")
 
+        if params.get("ciudad") and spec.city:
+            where_clauses.append(
+                f"UPPER({spec.city}) LIKE UPPER('%{self._escape(str(params['ciudad']))}%')"
+            )
         entidad_value = params.get("entidad_resolved") or params.get("entidad_like")
         if entidad_value:
             where_clauses.append(

@@ -69,3 +69,24 @@ def test_build_contract_query_with_ordering_signal_uses_value_only() -> None:
     assert "ORDER BY valor_del_contrato DESC LIMIT" in soql
     # Should NOT have secondary sort
     assert "fecha_de_firma" not in soql.split("ORDER BY")[1]
+
+
+def test_ciudad_filter_procesos() -> None:
+    """Ciudad filter should use ciudad_entidad for procesos."""
+    builder = SoQLBuilder()
+    soql = builder.build(
+        "p6dx-8zbt",
+        {"objeto": ["ampliacion"], "ciudad": "Puerto Salgar"},
+    )
+    assert "UPPER(ciudad_entidad) LIKE UPPER('%Puerto Salgar%')" in soql
+    assert "ampliacion" in soql
+
+
+def test_ciudad_filter_contratos() -> None:
+    """Ciudad filter should use ciudad for contratos."""
+    builder = SoQLBuilder()
+    soql = builder.build(
+        "jbjy-vk9h",
+        {"objeto": ["cuidado"], "ciudad": "Barranquilla"},
+    )
+    assert "UPPER(ciudad) LIKE UPPER('%Barranquilla%')" in soql
