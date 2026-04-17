@@ -153,6 +153,9 @@ class LLMHandler:
                 # Don't overwrite keys that regex already extracted with confidence
                 if key in REGEX_PRIORITY_KEYS and key in merged and merged[key] not in (None, "", []):
                     continue
+                # Don't overwrite gazetteer-resolved entity
+                if key == "entidad" and merged.get("entidad_resolved"):
+                    continue
                 merged[key] = value
 
         return merged
