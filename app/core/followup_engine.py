@@ -509,14 +509,12 @@ class FollowupGuards:
 
     @staticmethod
     def check_no_where_1_1(params: dict) -> bool:
-        """Retorna False si no hay scope ni topic (WHERE 1=1 riesgo)."""
-        _SCOPE_TOPIC_KEYS = frozenset({
-            "objeto", "entidad_resolved", "entidad_like",
-            "departamento_resolved", "ciudad", "contratista",
-        })
+        """Retorna False si no hay scope ni topic (WHERE 1=1 riesgo).
+        Usa SCOPE_TOPIC_KEYS desde _followup_constants.py (H9: fuente única).
+        """
         return any(
             params.get(k) and params.get(k) not in (None, [], "", {}, False)
-            for k in _SCOPE_TOPIC_KEYS
+            for k in SCOPE_TOPIC_KEYS
         )
 
     @staticmethod

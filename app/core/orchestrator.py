@@ -8,6 +8,7 @@ from concurrent.futures import ThreadPoolExecutor
 from burr.core import ApplicationBuilder, State, action, default, expr
 
 from app.config import Settings
+from app.core._followup_constants import SCOPE_TOPIC_KEYS
 from app.core.conversation_store import ConversationStore, is_followup, is_reset_command, merge_params, is_pagination_phrase, normalize_pagination_text
 from app.core.direct_responses import reset_response, pagination_no_history_response, suggestion_invalid_response, suggestion_selection_header
 from app.core.entity_resolver import EntityResolver
@@ -156,13 +157,10 @@ def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
     params = state.get("resolved_params", {})
 
     # ── Guard anti-WHERE 1=1 ─────────────────────────────────────────────
-    _SCOPE_TOPIC_KEYS = frozenset({
-        "objeto", "entidad_resolved", "entidad_like",
-        "departamento_resolved", "ciudad", "contratista",
-    })
+    # Fuente: app/core/_followup_constants.py (H9: unificada con FollowupGuards)
     has_scope_or_topic = any(
         params.get(k) and params.get(k) not in (None, [], "", {}, False)
-        for k in _SCOPE_TOPIC_KEYS
+        for k in SCOPE_TOPIC_KEYS
     )
     if not has_scope_or_topic:
         return _with_timing(
