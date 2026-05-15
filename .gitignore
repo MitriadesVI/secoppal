@@ -11,3 +11,4 @@ build/
 *.pyd
 .DS_Store
 
+.claude/
