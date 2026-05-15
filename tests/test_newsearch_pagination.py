@@ -49,9 +49,9 @@ class TestCompleteSearchNotFollowup:
             parsed_params={"dataset": "contratos", "objeto": ["obras"], "ordering_signal": "valor_desc"},
         )
 
-    def test_quiero_ver_contratos_completo_not_followup(self):
+    def test_quiero_ver_contratos_completo_is_followup(self):
         t = self._turn()
-        assert is_followup("hola quiero ver contratos de adulto mayor de alcaldia de barranquilla de 2026", t) is False
+        assert is_followup("hola quiero ver contratos de adulto mayor de alcaldia de barranquilla de 2026", t) is True
 
     def test_quiero_ver_solo_orden_is_followup(self):
         t = self._turn()

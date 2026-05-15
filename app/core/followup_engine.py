@@ -25,34 +25,19 @@ from datetime import datetime, timezone
 from typing import Any
 
 from app.core.query_frame import QueryFrame, frame_from_params, params_from_frame
+from app.core._followup_constants import (
+    FOLLOWUP_WINDOW_MINUTES,
+    CONTINUATION_WORDS,
+    NEW_SEARCH_VERBS,
+    NOISE_PREFIXES,
+    SCOPE_TOPIC_KEYS,
+)
 
 
 # ── Constantes de follow-up ────────────────────────────────────────────────
 
-FOLLOWUP_WINDOW_MINUTES: float = 30.0
-
-# Palabras que al inicio de frase indican continuación (no búsqueda nueva).
-CONTINUATION_WORDS: tuple[str, ...] = (
-    "y ", "ahora", "también", "tambien", "pero ", "solo ",
-    "muéstrame", "muestrame", "dame", "ordena", "ordénalos",
-    "ordenalos", "filtremos", "filtra",
-    "quiero ver", "quiero mirar", "quiero revisar", "quiero mostrar",
-    "ver los", "ver las",
-    "mostrar los", "mostrar las",
-    "los de", "las de",
-)
-
-# Verbos que indican búsqueda completamente nueva.
-NEW_SEARCH_VERBS: tuple[str, ...] = (
-    "busca ", "encuentra ", "necesito ", "consulta ",
-    "lista ", "listar ",
-)
-
-# Palabras que son ruido conversacional y no afectan la intención.
-NOISE_PREFIXES: tuple[str, ...] = (
-    "hola ", "holaa ", "holaaa ", "buenas ", "buenass ",
-    "ok ", "okay ", "oye ", "ey ",
-)
+# Re-exportadas desde _followup_constants.py (fuente única de verdad H3).
+# Se mantienen como alias a nivel de módulo para backward compat.
 
 
 # ── Tipos de intención ─────────────────────────────────────────────────────

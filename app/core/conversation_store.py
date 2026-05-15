@@ -27,14 +27,22 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
 
+from app.core._followup_constants import (
+    FOLLOWUP_WINDOW_MINUTES,
+    CONTINUATION_WORDS,
+    NEW_SEARCH_VERBS,
+    NOISE_PREFIXES,
+    RESET_COMMANDS,
+)
+
 
 # ---------------------------------------------------------------------------
 # Reglas de merge para follow-up detection (v1.2 MVP)
-# objeto: replace (no aditivo). Aditivo ("y tambien X") va en v1.3.
-# dataset: keep_previous_unless_explicit — el usuario que dice "y en bolivar?"
-#          probablemente sigue en procesos, no cambia a contratos.
+# DEPRECATED — ver followup_engine.FollowupMerger (H3/ADR-001).
+# Las políticas de merge están en app/core/followup_engine.py.
+# merge_params() se mantiene por compatibilidad con código que lo importe.
 # ---------------------------------------------------------------------------
-MERGE_RULES: dict[str, str] = {
+MERGE_RULES: dict[str, str] = {  # noqa: B006 — dict inmutable a efectos prácticos
     "departamento_resolved":  "replace",
     "departamento":           "replace",
     "entidad_resolved":       "replace",
@@ -48,32 +56,8 @@ MERGE_RULES: dict[str, str] = {
     "dataset":                "keep_previous_unless_explicit",
 }
 
-# Ventana temporal para follow-up: si el ultimo turno tiene mas de N minutos, no aplicar.
-FOLLOWUP_WINDOW_MINUTES: int = 30
-
-# Palabras que indican continuation en el inicio de la query (lowercased).
-CONTINUATION_WORDS: tuple[str, ...] = (
-    "y ", "ahora", "también", "tambien", "pero ", "solo ",
-    "muéstrame", "muestrame", "dame", "ordena", "ordénalos",
-    "ordenalos", "filtremos", "filtra",
-    "quiero ver", "quiero mirar", "quiero revisar", "quiero mostrar",
-    "ver los", "ver las",
-    "mostrar los", "mostrar las",
-    "los de", "las de",
-)
-
-# Verbos que indican nueva busqueda — si la query empieza con uno de estos,
-# NO es follow-up aunque sea corta.
-# Excluimos "quiero" porque "quiero ver X" es refinamiento, no nueva búsqueda.
-# Excluimos "ver " porque "ver los de mayor valor" también es refinamiento.
-# En su lugar, se usa is_delta_query() para detectar estos casos.
-NEW_SEARCH_VERBS: tuple[str, ...] = (
-    "busca", "encuentra", "necesito", "consulta",
-    "muestra procesos", "muestra contratos", "listar",
-)
-
-# Comandos de reset reconocidos.
-RESET_COMMANDS: frozenset[str] = frozenset({"/reset", "reset", "nueva", "limpiar", "nuevo"})
+# Re-exportadas desde _followup_constants.py (fuente única de verdad H3).
+# Se mantienen como alias a nivel de módulo para backward compat.
 
 
 @dataclass
@@ -242,13 +226,10 @@ def _sanitize_chat_id(chat_id: str) -> str:
 
 
 def merge_params(context_params: dict, new_params: dict) -> dict:
-    """
-    Fusiona new_params sobre context_params segun MERGE_RULES.
-    Campos None en new_params se ignoran (conservar valor anterior).
+    """DEPRECATED — ver followup_engine.detect_and_merge() (H3/ADR-001).
 
-    Si new_params solo trae delta keys (ordering_signal, fecha, valor, estado)
-    sin objeto/entidad/departamento propio, conserva TODO el contexto anterior
-    para esas claves ausentes.
+    Se mantiene por backward compat con código que lo importa directamente.
+    La lógica de merge canónica está en FollowupMerger.merge().
     """
     # Delta keys: refinamientos que NO deben reemplazar contexto si vienen solos
     _DELTA_KEYS = frozenset({
@@ -328,139 +309,17 @@ def is_pagination_phrase(text: str) -> bool:
 
 
 def is_followup(query: str, last_turn: Turn | None) -> bool:
-    """
-    Detecta si query es un follow-up del turno anterior.
-    Requiere turno reciente (<30 min). Sin turno previo o turno viejo → False.
+    """Detecta si hay contexto conversacional utilizable para apply_context.
 
-    Condicion A: query empieza con palabra de continuacion.
-    Condicion C: query es delta puro (solo refinamiento).
-    Condicion B: query corta (<8 palabras) sin verbo de nueva busqueda.
+    ADR-001 / H8 (2026-05-15): esta funcion ahora solo verifica prerrequisitos
+    (turno reciente valido). La clasificacion granular de intencion la hace
+    followup_engine.detect_and_merge() en apply_context.
+
+    Sin turno previo o turno viejo → False.
+    Con turno reciente → True (delegamos a detect_and_merge la clasificacion).
     """
     if last_turn is None:
         return False
     if last_turn.age_minutes() > FOLLOWUP_WINDOW_MINUTES:
         return False
-
-    q = query.strip().lower()
-
-    # Strip leading noise tokens (greetings, fillers) that won't affect meaning
-    _NOISE_PREFIXES = ("hola ", "holaa ", "holaaa ", "buenas ", "buenass ", "ok ", "okay ", "oye ", "ey ")
-    while any(q.startswith(p) for p in _NOISE_PREFIXES):
-        for p in _NOISE_PREFIXES:
-            if q.startswith(p):
-                q = q[len(p):]
-                break
-
-    # Condicion A: continuation word (ej: "quiero ver", "los de", "ver los")
-    for word in CONTINUATION_WORDS:
-        if q.startswith(word):
-            # Si es "quiero ver" + busqueda completa, NO es follow-up
-            if word in ("quiero ver", "quiero mirar", "quiero revisar", "quiero mostrar"):
-                rest = q[len(word):].strip()
-                has_dataset_kw = any(kw in rest for kw in ("contrato", "proceso", "licitacion"))
-                has_content = len(rest.split()) >= 3
-                if has_dataset_kw and has_content:
-                    return False
-            return True
-
-    # Condicion C: delta query — refinamiento puro sin nueva búsqueda
-    if _is_delta_query(q):
-        return True
-
-    # Condicion B: corta y sin verbo de nueva busqueda — solo si es delta puro
-    words = q.split()
-    if len(words) < 8:
-        for verb in NEW_SEARCH_VERBS:
-            if q.startswith(verb):
-                return False
-        # Solo marcar como follow-up si es corta Y es delta (refinamiento puro)
-        # Consultas cortas como "contratos de mantenimiento" NO son follow-up
-        if _is_delta_query(q):
-            return True
-
-    return False
-
-
-def _is_delta_query(q: str) -> bool:
-    """Detecta si la query es puro refinamiento (orden, fecha, estado, valor)
-    sin ser una búsqueda nueva con objeto/entidad/departamento.
-
-    Retorna True si matchea algún patrón de delta y NO parece búsqueda nueva.
-    """
-    # Números de selección (1, 2, 3)
-    if q in ("1", "2", "3"):
-        return True
-
-    # Ordenamiento: mayor valor, más caros, más altos, etc.
-    _DELTA_ORDERING = re.compile(
-        r"\b(?:mayor\s+valor|mayor\s+cuant(?:ia|ía)"
-        r"|m[áa]s\s+(?:caro|caros|alta|altas|alto|altos|grande|grandes|reciente|recientes|nuevo|nuevos)"
-        r"|menos\s+(?:barato|baratos|bajo|bajos)"
-        r"|los\s+(?:d[ée]\s+)?(?:mayor|m[áa]s)\s+\w*valor?\w*"
-        r"|ordena|ordenalos|ord[eé]nalos"
-        r"|por\s+valor|por\s+fecha|por\s+cuant(?:ia|ía)"
-        r")\b",
-        re.IGNORECASE,
-    )
-
-    # Fecha simple: "en 2026", "en 2025", "de 2024", "2026"
-    _DELTA_DATE = re.compile(r"\b(?:en\s+|de\s+)?20\d{2}\b")
-
-    # Estado simple: "firmados", "en ejecucion", etc.
-    _DELTA_STATE = re.compile(
-        r"\b(?:firmados|en\s+ejecuci[oó]n|ejecuci[oó]n|suspendidos|terminados"
-        r"|abiertos|cerrados|cancelados|liquidados|celebrados)"
-        r"\b",
-        re.IGNORECASE,
-    )
-
-    # Si tiene palabras de búsqueda nueva (objeto, entidad concreta), NO es delta
-    _NEW_SEARCH_SIGNALS = re.compile(
-        r"\b(?:contratos?\s+d[ée]\s+|procesos?\s+d[ée]\s+|licitaciones?\s+d[ée]\s+)"
-        r"\w{4,}",  # seguido de palabra sustantiva
-        re.IGNORECASE,
-    )
-
-    # También detectar palabras sustantivas sueltas (>=5 chars) que NO sean
-    # palabras delta conocidas — si existen, probablemente es búsqueda nueva
-    _CONTENT_WORD_RE = re.compile(r"\b[a-záéíóúñ]{5,}\b", re.IGNORECASE)
-    _DELTA_WORDS = frozenset({
-        "mayor", "mayores", "valor", "cuantia", "cuantía",
-        "caro", "caros", "cara", "caras",
-        "alto", "altos", "alta", "altas",
-        "grande", "grandes",
-        "reciente", "recientes",
-        "nuevo", "nuevos", "nueva", "nuevas",
-        "barato", "baratos", "bajo", "bajos",
-        "firmados", "ejecucion", "ejecución",
-        "suspendidos", "terminados",
-        "abiertos", "cerrados", "cancelados",
-        "liquidados", "celebrados",
-        "ordena", "ordenalos", "ordénalos",
-        "fecha", "fechas",
-        "primero", "primera", "ultimo", "ultimos",
-        # Conversacional (no afectan el significado de búsqueda)
-        "ahora", "muestrame", "muestreme", "muestra", "mostrar",
-        "quiero", "necesito", "dame", "dime", "busca", "buscar",
-        "entendi", "entendido", "listo", "vamos",
-        "gracias", "favor", "porfa",
-    })
-
-    if _NEW_SEARCH_SIGNALS.search(q):
-        return False  # tiene objeto concreto → es búsqueda nueva
-
-    # Si tiene palabras sustantivas que no son delta, no es refinamiento
-    content_words = _CONTENT_WORD_RE.findall(q)
-    non_delta_words = [w for w in content_words if w.lower() not in _DELTA_WORDS]
-    if non_delta_words:
-        return False  # tiene contenido sustantivo → búsqueda nueva
-
-    # Si solo tiene señales de refinamiento, es delta
-    has_ordering = bool(_DELTA_ORDERING.search(q))
-    has_date = bool(_DELTA_DATE.search(q))
-    has_state = bool(_DELTA_STATE.search(q))
-    # Palabras totales <= 5 y solo refinamiento
-    words = q.split()
-    is_short = len(words) <= 8  # ligeramente más permisivo para queries con prefijo
-
-    return (has_ordering or has_date or has_state) and is_short
+    return True

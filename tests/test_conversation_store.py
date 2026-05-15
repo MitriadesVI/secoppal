@@ -190,10 +190,13 @@ def test_followup_query_corta_sin_verbo():
     assert is_followup("solo los abiertos", turn) is True
 
 
-def test_no_followup_verbo_nueva_busqueda():
+def test_is_followup_true_para_cualquier_query_con_turno_reciente():
+    """H8 (2026-05): is_followup ahora solo verifica prerrequisitos.
+    Clasificacion granular la hace detect_and_merge en apply_context."""
     turn = _make_turn(minutes_ago=2)
-    assert is_followup("busca contratos en Bogota", turn) is False
-    assert is_followup("necesito licitaciones de agua", turn) is False
+    # Con turno reciente, cualquier query activa contexto conversacional.
+    assert is_followup("busca contratos en Bogota", turn) is True
+    assert is_followup("necesito licitaciones de agua", turn) is True
 
 
 def test_no_followup_sin_turno_previo():

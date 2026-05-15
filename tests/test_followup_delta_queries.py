@@ -48,14 +48,14 @@ class TestIsDeltaQuery:
     def test_no_history_is_not_followup(self):
         assert is_followup("quiero ver los de mayor valor", last_turn=None) is False
 
-    def test_contratos_de_mantenimiento_not_followup(self):
-        """Consulta con objeto explícito NO es delta."""
-        assert is_followup("contratos de mantenimiento", last_turn=_make_turn({"dataset": "contratos"})) is False
+    def test_contratos_de_mantenimiento_is_followup_con_turno_reciente(self):
+        """H8: is_followup ahora solo verifica prerrequisitos. detect_and_merge en apply_context clasificaria esto como new_search."""
+        assert is_followup("contratos de mantenimiento", last_turn=_make_turn({"dataset": "contratos"})) is True
 
-    def test_procesos_abiertos_vial_not_followup(self):
-        """Consulta específica con dataset + objeto NO es delta."""
+    def test_procesos_abiertos_vial_is_followup_con_turno_reciente(self):
+        """H8: is_followup ahora solo verifica prerrequisitos. detect_and_merge en apply_context clasificaria esto como new_search."""
         assert is_followup("procesos abiertos de mantenimiento vial en atlantico",
-                          last_turn=_make_turn({"dataset": "procesos"})) is False
+                          last_turn=_make_turn({"dataset": "procesos"})) is True
 
 
 # ── E2E con workflow mockeado ─────────────────────────────────────────────
