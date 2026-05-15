@@ -2,6 +2,9 @@ from __future__ import annotations
 
 import json
 import logging
+import unicodedata
+
+from app.core.estado_families import CONTRACT_STATE_VALUES, LLM_ESTADO_VALUES, resolve_estado
 
 try:
     from openai import OpenAI
@@ -27,9 +30,14 @@ Reglas:
    - "mil millones" y "un billon" (uso coloquial) = 1000000000
    - "200 palos" = 200000000
 4. "abiertas" o "vigentes" -> estado "Abierto"
-5. "contratos firmados" -> dataset "contratos", estado "Celebrado"
-6. "en ejecucion" -> dataset "contratos", estado "En ejecucion"
-7. "liquidados" -> dataset "contratos", estado "Liquidado"
+5. "contratos firmados" -> dataset "contratos", SIN estado.
+   Razon: todos los registros del dataset contratos son por definicion
+   contratos firmados. "Firmado" selecciona dataset, no estado.
+   Nunca emitas valores en estado, estado_contrato ni estado_field
+   cuando el usuario diga "firmados", "firmado", "contratos suscritos"
+   o equivalentes.
+6. "en ejecucion" -> dataset "contratos", estado_contrato IN ("En ejecución", "Modificado", "Prorrogado")
+7. "cerrados" / "terminados" -> dataset "contratos" y el subconjunto de estado correspondiente
 8. Default: dataset "procesos"
 9. objeto son las palabras clave de LO QUE SE CONTRATA (mantenimiento, vial, construccion, etc.)
    NO incluyas nombres de ciudades, departamentos ni entidades en objeto.
@@ -65,21 +73,11 @@ SECOPAL_TOOLS = [
                     "valor_max": {"type": "number"},
                     "estado": {
                         "type": "string",
-                        "enum": [
-                            # Procesos states
-                            "Abierto",
-                            "Cerrado",
-                            "Adjudicado",
-                            "Desierto",
-                            "Publicado",
-                            "Borrador",
-                            "Cancelado",
-                            # Contratos states
-                            "Celebrado",
-                            "En ejecucion",
-                            "Liquidado",
-                            "Terminado",
-                        ],
+                        "enum": list(LLM_ESTADO_VALUES),
+                    },
+                    "estado_contrato": {
+                        "type": "array",
+                        "items": {"type": "string", "enum": list(CONTRACT_STATE_VALUES)},
                     },
                     "modalidad": {"type": "string"},
                     "contratista": {"type": "string"},
@@ -98,6 +96,85 @@ REGEX_PRIORITY_KEYS = {"departamento", "estado", "valor_min", "valor_max", "fech
 
 # Timeout for DeepSeek API calls (seconds)
 LLM_TIMEOUT_SECONDS = 15
+
+_SIGNED_QUERY_TOKENS = (
+    "firmado",
+    "firmados",
+    "firmada",
+    "firmadas",
+    "suscrito",
+    "suscritos",
+    "suscrita",
+    "suscritas",
+    "celebrado",
+    "celebrados",
+    "celebrada",
+    "celebradas",
+)
+_ESTADO_KEYS = ("estado", "estado_field", "estado_contrato", "estado_contrato_adicional")
+_INVALID_CONTRACT_STATES = {"Firmado", "Celebrado"}
+
+
+def _normalize(text: str) -> str:
+    decomposed = unicodedata.normalize("NFKD", text.lower())
+    return "".join(ch for ch in decomposed if not unicodedata.combining(ch))
+
+
+def _is_signed_query(user_query: str) -> bool:
+    normalized = _normalize(user_query)
+    return any(token in normalized for token in _SIGNED_QUERY_TOKENS)
+
+
+def _drop_estado_keys(params: dict) -> None:
+    for key in _ESTADO_KEYS:
+        params.pop(key, None)
+
+
+def _drop_invalid_contract_states(params: dict) -> None:
+    estado_contrato = params.get("estado_contrato")
+    if isinstance(estado_contrato, list):
+        cleaned = [state for state in estado_contrato if state not in _INVALID_CONTRACT_STATES]
+        if cleaned:
+            params["estado_contrato"] = cleaned
+        else:
+            params.pop("estado_contrato", None)
+
+    if params.get("estado") in _INVALID_CONTRACT_STATES:
+        params.pop("estado", None)
+        if params.get("estado_field") == "estado_contrato":
+            params.pop("estado_field", None)
+
+
+def _apply_contract_estado_family(user_query: str, params: dict) -> None:
+    if params.get("dataset") != "contratos":
+        return
+
+    candidates = []
+    if params.get("estado"):
+        candidates.append(str(params["estado"]))
+    normalized_query = _normalize(user_query)
+    for phrase in ("en ejecucion", "ejecucion", "activos", "activo", "vigentes", "vigente", "cerrados", "cerrado", "terminados", "terminado", "cedidos", "cedido"):
+        if phrase in normalized_query:
+            candidates.append(phrase)
+
+    for candidate in candidates:
+        resolved = resolve_estado(_normalize(candidate), "contratos")
+        if resolved and resolved.get("filters"):
+            _drop_estado_keys(params)
+            params.update(resolved["filters"])
+            return
+
+
+def _enforce_estado_policy(user_query: str, params: dict) -> dict:
+    cleaned = dict(params)
+    if _is_signed_query(user_query):
+        cleaned["dataset"] = "contratos"
+        _drop_estado_keys(cleaned)
+        return cleaned
+
+    _drop_invalid_contract_states(cleaned)
+    _apply_contract_estado_family(user_query, cleaned)
+    return cleaned
 
 
 class LLMHandler:
@@ -147,6 +224,7 @@ class LLMHandler:
             except json.JSONDecodeError:
                 continue
 
+            tool_args = _enforce_estado_policy(user_query, tool_args)
             for key, value in tool_args.items():
                 if value in (None, "", []):
                     continue

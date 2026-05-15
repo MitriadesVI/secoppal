@@ -156,6 +156,25 @@ NATURAL_TO_FAMILY = {
 }
 
 
+def collect_estado_values(dataset: str | None = None) -> tuple[str, ...]:
+    """Return SECOP state literals declared in ESTADO_FAMILIES.
+
+    Values are exact dataset literals; do not normalize capitalization.
+    """
+    values: list[str] = []
+    for family in ESTADO_FAMILIES.values():
+        datasets = [dataset] if dataset else list(family.keys())
+        for dataset_name in datasets:
+            for field_values in family.get(dataset_name, {}).values():
+                values.extend(field_values)
+    return tuple(dict.fromkeys(values))
+
+
+PROCESS_STATE_VALUES = collect_estado_values("procesos")
+CONTRACT_STATE_VALUES = collect_estado_values("contratos")
+LLM_ESTADO_VALUES = tuple(dict.fromkeys([*PROCESS_STATE_VALUES, *CONTRACT_STATE_VALUES]))
+
+
 def resolve_estado(natural_token: str, dataset: str) -> dict | None:
     """Resolve a natural-language estado token to family + filters.
 
