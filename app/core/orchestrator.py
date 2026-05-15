@@ -456,7 +456,7 @@ class SecopalWorkflow:
             app_token=settings.secop_app_token,
             timeout=settings.secop_timeout_seconds,
         )
-        self.formatter = Formatter(max_results=min(settings.secop_results_limit, 10))
+        self.formatter = Formatter(max_results=settings.secop_results_limit)
         self.feedback = FeedbackStore(settings.secop_feedback_path)
         self.conv_store = ConversationStore()
         self.narrator = NarratorHandler(
@@ -539,8 +539,10 @@ class SecopalWorkflow:
                     }
                     # Persist turn for next pagination
                     result_ids = [
-                        str(r.get("referencia_del_proceso") or r.get("id_contrato") or "")
-                        for r in results[:10]
+                        rid for rid in (
+                            str(r.get("referencia_del_proceso") or r.get("id_contrato") or "")
+                            for r in results[:10]
+                        ) if rid
                     ]
                     trace_id = self.feedback.log_trace(user_query, channel, result)
                     result["trace_id"] = trace_id
@@ -679,8 +681,10 @@ class SecopalWorkflow:
             # Add fields that run_query normally computes
             raw_results = result.get("results", [])
             result_ids = [
-                str(r.get("referencia_del_proceso") or r.get("id_contrato") or "")
-                for r in raw_results[:10]
+                rid for rid in (
+                    str(r.get("referencia_del_proceso") or r.get("id_contrato") or "")
+                    for r in raw_results[:10]
+                ) if rid
             ]
             trace_id = self.feedback.log_trace(user_query, channel, result)
             result["trace_id"] = trace_id
@@ -777,8 +781,10 @@ class SecopalWorkflow:
         # Extraer IDs de resultados (prerrequisito de callbacks 2.9)
         raw_results = state.get("results", [])
         result_ids = [
-            str(r.get("referencia_del_proceso") or r.get("id_contrato") or "")
-            for r in raw_results[:10]
+            rid for rid in (
+                str(r.get("referencia_del_proceso") or r.get("id_contrato") or "")
+                for r in raw_results[:10]
+            ) if rid
         ]
 
         result = {

@@ -1,17 +1,18 @@
 """narrator.py — NarratorHandler
 
 Convierte una lista de rows de SECOP en una narrativa conversacional
-usando DeepSeek, con validación de grounding sobre cifras monetarias.
+usando DeepSeek, con validación de grounding sobre cifras monetarias y
+nombres de entidades.
 
 Flujo:
   1. narrate(rows, query, channel, history) -> str | None
-  2. Si narrativa contiene cifras que no matchean los rows (±1%), reintenta con
-     prompt más estricto.
+  2. Si narrativa contiene cifras o entidades que no matchean los rows,
+     reintenta con prompt más estricto.
   3. Segundo intento también falla -> retorna None (orchestrator usa formatter clásico).
 
-La validación NO cubre nombres de entidades — el LLM puede parafrasear
-"Gobernación del Atlántico" como "gobernación atlanticense" sin que eso
-sea alucinación. Lo peligroso es inventar montos.
+La validación cubre:
+  - Cifras monetarias (±1% de tolerancia)
+  - Nombres de entidades (substring matching contra rows)
 """
 
 from __future__ import annotations
@@ -194,6 +195,81 @@ def validate_grounding(narrative: str, rows: list[dict], tolerance: float = 0.01
 
 
 # ---------------------------------------------------------------------------
+# Validación de entidades
+# ---------------------------------------------------------------------------
+
+# Patrón para extraer potenciales nombres de entidad de la narrativa:
+# frases con mayúscula inicial de 2+ palabras, típicas de nombres institucionales.
+_ENTITY_PHRASE_RE = re.compile(
+    r"(?:Gobernaci[oó]n|Alcald[ií]a|Municipio|Ministerio|Secretar[ií]a|"
+    r"Departamento|Distrito|Instituto|Corporaci[oó]n|Empresa|"
+    r"ESE|EPS|SENA|ICBF|INV[ií]AS|ANI|ANM|DNP|FONADE|ECOPETROL|"
+    r"Gobernaci[oó]n\s+\w+|Alcald[ií]a\s+\w+|"
+    r"\b[A-ZÁÉÍÓÚ][a-záéíóú]+(?:\s+(?:de\s+)?[A-ZÁÉÍÓÚ][a-záéíóú]+)+)",
+    re.IGNORECASE,
+)
+
+# Palabras que no son entidades aunque empiecen con mayúscula en el texto
+_ENTITY_FALSE_POSITIVES = frozenset({
+    "Encontré", "SECOP", "Te muestro", "Resultados", "Contratos",
+    "Procesos", "COP", "Millones", "Año", "Años", "Mientras",
+    "Además", "También", "Según", "Como", "Porque", "Para",
+    "Entre", "Desde", "Hasta", "Durante", "Sobre", "Bajo",
+})
+
+
+def _extract_entity_phrases(text: str) -> set[str]:
+    """Extrae frases que parecen nombres de entidad de un texto narrativo."""
+    matches = _ENTITY_PHRASE_RE.findall(text)
+    return {
+        m.strip().rstrip(".,;:!?")
+        for m in matches
+        if m.strip() not in _ENTITY_FALSE_POSITIVES
+        and len(m.strip()) > 4
+    }
+
+
+def _extract_entity_strings_from_rows(rows: list[dict]) -> set[str]:
+    """Extrae todos los nombres de entidad presentes en los rows de SECOP."""
+    entity_fields = ("entidad", "nombre_entidad", "proveedor_adjudicado",
+                     "nombre_del_procedimiento", "objeto_del_contrato")
+    entities: set[str] = set()
+    for row in rows:
+        for field in entity_fields:
+            val = row.get(field)
+            if isinstance(val, str) and val.strip():
+                entities.add(val.strip())
+    return entities
+
+
+def validate_entity_grounding(narrative: str, rows: list[dict]) -> bool:
+    """Verifica que los nombres de entidad en la narrativa aparezcan en los rows.
+
+    Si la narrativa menciona una entidad que no está en ningún row,
+    es potencial alucinación y se rechaza.
+    """
+    narrative_entities = _extract_entity_phrases(narrative)
+    if not narrative_entities:
+        return True  # sin nombres de entidad → no hay qué validar
+
+    row_entities = _extract_entity_strings_from_rows(rows)
+    if not row_entities:
+        return True  # sin entidades en rows → no podemos validar, confiamos
+
+    for phrase in narrative_entities:
+        # Buscar la frase de la narrativa como substring en alguna entidad de los rows
+        phrase_lower = phrase.lower()
+        found = any(phrase_lower in ent.lower() or ent.lower() in phrase_lower
+                    for ent in row_entities)
+        if not found:
+            logger.warning(
+                "Entity grounding fail: '%s' no encontrada en rows", phrase
+            )
+            return False
+    return True
+
+
+# ---------------------------------------------------------------------------
 # NarratorHandler
 # ---------------------------------------------------------------------------
 
@@ -320,13 +396,13 @@ class NarratorHandler:
         universe_insights: Any = None,
         suggestions: list | None = None,
     ) -> str | None:
-        """Wrapper con validación de grounding y reintento automático.
+        """Wrapper con validación de grounding (cifras + entidades) y reintento automático.
 
         Flujo:
           1. narrate() normal
-          2. validate_grounding() — si falla:
+          2. validate_grounding() + validate_entity_grounding() — si falla:
           3. narrate(strict=True) — segundo intento
-          4. validate_grounding() — si falla: retorna None
+          4. validate_grounding() + validate_entity_grounding() — si falla: retorna None
 
         Returns:
             Narrativa validada, o None para que el orchestrator use formatter clásico.
@@ -338,10 +414,17 @@ class NarratorHandler:
         if narrative is None:
             return None
 
-        if validate_grounding(narrative, rows):
+        money_ok = validate_grounding(narrative, rows)
+        entity_ok = validate_entity_grounding(narrative, rows)
+        if money_ok and entity_ok:
             return narrative
 
-        logger.info("Grounding fail en intento 1 — reintentando con prompt estricto")
+        failed = []
+        if not money_ok:
+            failed.append("cifras")
+        if not entity_ok:
+            failed.append("entidades")
+        logger.info("Grounding fail en intento 1 (%s) — reintentando con prompt estricto", ", ".join(failed))
         narrative = self.narrate(
             rows, query, channel, history, total_count,
             strict=True, universe_insights=universe_insights, suggestions=suggestions,
@@ -349,7 +432,9 @@ class NarratorHandler:
         if narrative is None:
             return None
 
-        if validate_grounding(narrative, rows):
+        money_ok = validate_grounding(narrative, rows)
+        entity_ok = validate_entity_grounding(narrative, rows)
+        if money_ok and entity_ok:
             return narrative
 
         logger.warning("Grounding fail en intento 2 — usando formatter clásico")

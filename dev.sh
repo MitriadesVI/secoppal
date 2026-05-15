@@ -1,4 +1,3 @@
- source /Users/rodrigoortiz/Documents/secoppal/.venv/bin/activate
 #!/usr/bin/env bash
 set -e
 
