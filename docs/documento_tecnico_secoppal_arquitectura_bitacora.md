@@ -376,13 +376,25 @@ Los estados de SECOP no se deben traducir de forma coloquial sin control jurídi
 | contratos cedidos | Contratos cedidos | `estado_contrato = 'cedido'` |
 | suspendidos/cancelados | No procede / suspendidos | `estado_contrato IN ('Suspendido', 'Cancelado')` |
 
-### 7.3 Regla crítica
+### 7.3 Invariante INV-005 — Firmado no es estado
+
+`Firmado/firmados` no es un estado contractual filtrable. Es una propiedad universal del dataset contratos (`jbjy-vk9h`). Todo registro en ese dataset representa un contrato con existencia contractual.
+
+Por tanto:
+
+- `firmados` selecciona `dataset='contratos'`.
+- Nunca emite valores en `estado`, `estado_contrato` ni `estado_field`.
+- `en ejecución` es un subconjunto operativo de firmados, no su sinónimo.
+
+Verificación empírica (2026-05-15): los valores reales del campo `estado_contrato` en `jbjy-vk9h` son:
 
 ```text
-Firmado ≠ Cerrado
+En ejecución, Cerrado, Modificado, terminado, Borrador, Aprobado,
+Cancelado, enviado Proveedor, cedido, En aprobación, Suspendido,
+Prorrogado.
 ```
 
-`Cerrado` no se usa como sinónimo de firmado.
+No existen `Firmado` ni `Celebrado`.
 
 ---
 
@@ -438,6 +450,23 @@ Si una consulta con orden por valor sobre universo histórico demora demasiado:
 ## 9. Versionado y bitácora de cambios
 
 > Esta sección debe mantenerse como changelog técnico. Cada cambio importante debe registrar fecha, archivos modificados, bug/causa, solución y validación.
+
+### 2026-05-15 — Auditoría externa: H1 vivo en camino LLM, ADR-006 erosionada
+
+Una auditoría externa identificó que:
+
+- El bug `firmado=Celebrado`, declarado cerrado en el camino determinístico, seguía vivo en `app/core/llm_handler.py` (`SYSTEM_PROMPT` y enum del tool). El camino determinístico estaba correcto; el camino LLM no.
+- ADR-006 (no versiones paralelas en `app/core/`) se había erosionado: reaparecieron `.bak`, `.bak2`, `backup_20260514_173654/`, y binarios de ofimática dentro del módulo.
+
+Acciones tomadas:
+
+- Sincronizado `llm_handler.py` con INV-005 reformulada.
+- Limpiado `app/core/`; archivos movidos a `archive/cleanup_2026-05-15-audit/`.
+- Añadido target `make lint-core` que bloquea reincidencia.
+- Tests nuevos: `test_llm_handler_state_policy.py`, `test_estado_families_integrity.py`, `test_soql_count_select_consistency.py`.
+- Verificación empírica de estados reales en `jbjy-vk9h` registrada en sección 7.3.
+
+Lección: las invariantes deben tener tests que las defiendan. ADR-006 sin `lint-core` es aspiracional; con `lint-core` es defensiva.
 
 ### 2026-05-15 — Limpieza de duplicados core
 
@@ -926,25 +955,37 @@ Este documento puede contener una versión consolidada de las decisiones princip
 
 ## 14. Roadmap inmediato
 
-### Fase A — Cierre documental
+### Fase A — P0 hardening post-auditoría
 
-- Completar este documento.
-- Crear changelog separado si el archivo crece demasiado.
-- Agregar hash del estado actual del core.
+**Estado:** cerrado en 2026-05-15.
 
-### Fase B — Matriz de regresión follow-up
+- INV-005 defendida en código y tests.
+- `app/core/` limpio y protegido por `make lint-core`.
+- Tests de regresión para política de estados y coherencia `COUNT`/`SELECT`.
+- Documento técnico actualizado con verificación empírica de `jbjy-vk9h`.
+
+### Fase B — OBS-001 logger semántico / telemetría operacional
+
+**Dependencia:** solo ejecutar después de P0 verde.
+
+- Añadir `trace_id` a logs y JSONL.
+- Registrar tiempos por etapa: parse, resolve, SoQL build, count, query, observe, narrate, total.
+- Medir tasa LLM, tasa de degradación, timeout/retry y distribución de `intent_type` / `followup_intent_type`.
+- Crear `scripts/analyze_traces.py` para rollups semanales.
+
+### Fase C — Matriz de regresión follow-up
 
 - Asegurar tests para los 10 escenarios mínimos.
 - Agregar fixtures de historial conversacional.
 - Verificar `intent_type` / `followup_intent_type`.
 
-### Fase C — Limpieza imports legacy
+### Fase D — Limpieza imports legacy
 
 - Revisar imports no usados en `orchestrator.py`.
 - No borrar helpers legacy mientras los tests los usen.
 - Marcar `query_frame.classify_turn()` como legacy si ya no opera en producción.
 
-### Fase D — Arranque local de desarrollo
+### Fase E — Arranque local de desarrollo
 
 **Estado:** resuelto mediante `make dev`.
 
@@ -960,7 +1001,7 @@ Este comando debe encargarse de iniciar backend y frontend de desarrollo, evitan
 
 **Decisión:** no crear `scripts/dev.sh` mientras `make dev` sea suficiente. Mantener una sola entrada de arranque reduce confusión.
 
-### Fase E — Relevancia y ranking
+### Fase F — Relevancia y ranking
 
 Después del follow-up:
 
@@ -994,10 +1035,10 @@ Sistema: SECOPPAL
 Fecha: 2026-05-15
 Estado: MVP funcional en hardening semántico/conversacional
 Tests reportados: 424/424 passed
-Último bug crítico cerrado: esten + firmado/cerrado + pérdida de mantenimiento
-Core limpio: pendiente confirmar con find app/core -name "* v*.py"
+Último bug crítico cerrado: INV-005 en camino LLM + limpieza app/core post-auditoría
+Core limpio: confirmado con make lint-core
 Follow-up engine: integrado como política principal de seguimiento
-Política de estados: corregida; firmado ≠ cerrado
-Próximo bloque recomendado: matriz de regresión follow-up
+Política de estados: corregida; firmado no es estado, es selección de dataset contratos
+Próximo bloque recomendado: OBS-001 logger semántico / telemetría operacional
 ```
 
