@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import dataclasses
+import logging
+import time
 
 from burr.core import ApplicationBuilder, State, action, default, expr
 
@@ -22,27 +24,50 @@ from app.core.soql_builder import SoQLBuilder
 from app.core.suggester import generate_suggestions, Suggestion
 
 
-@action(reads=["user_query"], writes=["parsed_params", "needs_llm", "route_reason"])
+logger = logging.getLogger(__name__)
+
+
+def _elapsed_ms(start: float) -> float:
+    return round((time.perf_counter() - start) * 1000, 2)
+
+
+def _with_timing(state: State, key: str, start: float, **updates) -> State:
+    timings = dict(state.get("timings_ms", {}) or {})
+    timings[key] = _elapsed_ms(start)
+    return state.update(**updates, timings_ms=timings)
+
+
+def _with_timings(state: State, timings_update: dict[str, float], **updates) -> State:
+    timings = dict(state.get("timings_ms", {}) or {})
+    timings.update(timings_update)
+    return state.update(**updates, timings_ms=timings)
+
+@action(reads=["user_query", "timings_ms"], writes=["parsed_params", "needs_llm", "route_reason", "timings_ms"])
 def parse_query(state: State, query_router: QueryRouter) -> State:
+    start = time.perf_counter()
     result = query_router.parse(state["user_query"])
-    return state.update(
+    return _with_timing(
+        state,
+        "parse_ms",
+        start,
         parsed_params=result.params,
         needs_llm=result.needs_llm,
         route_reason=result.route_reason,
     )
 
 
-@action(reads=["user_query", "needs_llm", "parsed_params"], writes=["parsed_params"])
+@action(reads=["user_query", "needs_llm", "parsed_params", "timings_ms"], writes=["parsed_params", "timings_ms"])
 def llm_parse(state: State, llm_handler: LLMHandler) -> State:
+    start = time.perf_counter()
     if not state["needs_llm"]:
-        return state
+        return _with_timing(state, "llm_parse_ms", start)
     parsed = llm_handler.parse(state["user_query"], existing_params=state["parsed_params"])
-    return state.update(parsed_params=parsed)
+    return _with_timing(state, "llm_parse_ms", start, parsed_params=parsed)
 
 
 @action(
-    reads=["parsed_params"],
-    writes=["resolved_params", "dataset_id", "needs_clarification", "clarification_reason"],
+    reads=["parsed_params", "timings_ms"],
+    writes=["resolved_params", "dataset_id", "needs_clarification", "clarification_reason", "timings_ms"],
 )
 def resolve_entities(state: State, entity_resolver: EntityResolver) -> State:
     """
@@ -50,6 +75,7 @@ def resolve_entities(state: State, entity_resolver: EntityResolver) -> State:
     If gazetteer scan already resolved in parse_query, just pass through.
     Only does fuzzy/LIKE for entities the scan missed (e.g. from LLM).
     """
+    start = time.perf_counter()
     params = dict(state["parsed_params"])
     resolved = dict(params)
     resolved.pop("dataset_explicit", None)  # meta-field, not for SECOP
@@ -77,7 +103,10 @@ def resolve_entities(state: State, entity_resolver: EntityResolver) -> State:
             resolved["entidad_like"] = resolution.like_value
 
     dataset_id = SoQLBuilder.dataset_id_for(str(params.get("dataset")))
-    return state.update(
+    return _with_timing(
+        state,
+        "resolve_ms",
+        start,
         resolved_params=resolved,
         dataset_id=dataset_id,
         needs_clarification=needs_clarification,
@@ -85,18 +114,20 @@ def resolve_entities(state: State, entity_resolver: EntityResolver) -> State:
     )
 
 
-@action(reads=["resolved_params", "dataset_id"], writes=["soql_query"])
+@action(reads=["resolved_params", "dataset_id", "timings_ms"], writes=["soql_query", "timings_ms"])
 def build_query(state: State, soql_builder: SoQLBuilder) -> State:
+    start = time.perf_counter()
     soql = soql_builder.build(state["dataset_id"], state["resolved_params"])
-    return state.update(soql_query=soql)
+    return _with_timing(state, "build_soql_ms", start, soql_query=soql)
 
 
-@action(reads=["resolved_params", "dataset_id", "soql_query"], writes=["results", "query_error", "total_count", "timeout_suggestions", "needs_clarification", "clarification_reason"])
+@action(reads=["resolved_params", "dataset_id", "soql_query", "timings_ms"], writes=["results", "query_error", "total_count", "timeout_suggestions", "needs_clarification", "clarification_reason", "timings_ms"])
 def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBuilder) -> State:
     """Execute SECOP count + query with graceful error handling.
     On timeout for heavy ordering queries, retry without ordering_signal.
     Guards against WHERE 1=1 — requires at least one scope/topic filter.
     """
+    start_total = time.perf_counter()
     params = state.get("resolved_params", {})
 
     # ── Guard anti-WHERE 1=1 ─────────────────────────────────────────────
@@ -109,7 +140,10 @@ def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
         for k in _SCOPE_TOPIC_KEYS
     )
     if not has_scope_or_topic:
-        return state.update(
+        return _with_timing(
+            state,
+            "execute_total_ms",
+            start_total,
             results=[], query_error="", total_count=0, timeout_suggestions=[],
             needs_clarification=True,
             clarification_reason=(
@@ -120,9 +154,17 @@ def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
 
     try:
         count_soql = soql_builder.build_count(state["dataset_id"], state["resolved_params"])
+        start_count = time.perf_counter()
         total = secop_client.count(state["dataset_id"], count_soql)
+        count_ms = _elapsed_ms(start_count)
+        start_query = time.perf_counter()
         results = secop_client.query(state["dataset_id"], state["soql_query"])
-        return state.update(results=results, query_error="", total_count=total, timeout_suggestions=[])
+        query_ms = _elapsed_ms(start_query)
+        return _with_timings(
+            state,
+            {"secop_count_ms": count_ms, "secop_query_ms": query_ms, "execute_total_ms": _elapsed_ms(start_total)},
+            results=results, query_error="", total_count=total, timeout_suggestions=[]
+        )
     except Exception as exc:
         params = state.get("resolved_params", {})
         # Retry for heavy ordering queries: quitar ordering_signal
@@ -133,11 +175,17 @@ def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
                 did = state["dataset_id"]
                 soql = soql_builder.build(did, relaxed)
                 count_soql = soql_builder.build_count(did, relaxed)
+                start_count = time.perf_counter()
                 total = secop_client.count(did, count_soql)
+                count_ms = _elapsed_ms(start_count)
+                start_query = time.perf_counter()
                 results = secop_client.query(did, soql)
+                query_ms = _elapsed_ms(start_query)
                 if results:
                     timeout_suggestions = _build_timeout_suggestions(params, total)
-                    return state.update(
+                    return _with_timings(
+                        state,
+                        {"secop_count_ms": count_ms, "secop_query_ms": query_ms, "execute_total_ms": _elapsed_ms(start_total)},
                         results=results, query_error="", total_count=total,
                         timeout_suggestions=timeout_suggestions,
                         soql_query=soql,
@@ -145,7 +193,7 @@ def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
                     )
             except Exception:
                 pass
-        return state.update(results=[], query_error=str(exc), total_count=0, timeout_suggestions=[])
+        return _with_timing(state, "execute_total_ms", start_total, results=[], query_error=str(exc), total_count=0, timeout_suggestions=[])
 
 
 def _relax_params(params: dict) -> tuple[dict | None, str]:
@@ -201,20 +249,24 @@ def _build_timeout_suggestions(params: dict, total_count: int) -> list[dict]:
 
 
 @action(
-    reads=["results", "query_error", "resolved_params", "dataset_id", "followup"],
-    writes=["results", "degraded", "degraded_hint", "query_error", "needs_clarification", "clarification_reason"],
+    reads=["results", "query_error", "resolved_params", "dataset_id", "followup", "timings_ms"],
+    writes=["results", "degraded", "degraded_hint", "query_error", "needs_clarification", "clarification_reason", "timings_ms"],
 )
 def degrade_query(state: State, secop_client: SecopClient, soql_builder: SoQLBuilder) -> State:
     """If zero results, try one relaxed query. Marks state degraded=True on success.
 
     En follow-ups conversacionales, NO relaja automáticamente — sugiere alternativas.
     """
+    start = time.perf_counter()
     if state["results"] or state.get("query_error"):
-        return state.update(degraded=False, degraded_hint="")
+        return _with_timing(state, "degrade_ms", start, degraded=False, degraded_hint="")
 
     # En contexto conversacional (follow-up), no relajar filtrar scope/fecha automáticamente
     if state.get("followup"):
-        return state.update(
+        return _with_timing(
+            state,
+            "degrade_ms",
+            start,
             degraded=False, degraded_hint="",
             needs_clarification=True,
             clarification_reason=(
@@ -227,29 +279,30 @@ def degrade_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
 
     relaxed, hint = _relax_params(dict(state["resolved_params"]))
     if relaxed is None:
-        return state.update(degraded=False, degraded_hint="")
+        return _with_timing(state, "degrade_ms", start, degraded=False, degraded_hint="")
 
     try:
         soql = soql_builder.build(state["dataset_id"], relaxed)
         results = secop_client.query(state["dataset_id"], soql)
         if results:
-            return state.update(results=results, degraded=True, degraded_hint=hint, query_error="")
+            return _with_timing(state, "degrade_ms", start, results=results, degraded=True, degraded_hint=hint, query_error="")
     except Exception:
         pass
 
-    return state.update(degraded=False, degraded_hint="")
+    return _with_timing(state, "degrade_ms", start, degraded=False, degraded_hint="")
 
 
 @action(
-    reads=["results", "total_count", "dataset_id", "resolved_params", "query_error"],
-    writes=["universe_insights"],
+    reads=["results", "total_count", "dataset_id", "resolved_params", "query_error", "timings_ms"],
+    writes=["universe_insights", "timings_ms"],
 )
 def observe_universe(state: State, secop_client: SecopClient, soql_builder: SoQLBuilder) -> State:
+    start = time.perf_counter()
     # Early exit: no correr observer si la query falló, no tiene resultados, o la muestra es trivial
     if state.get("query_error") or not state.get("results"):
-        return state.update(universe_insights=None)
+        return _with_timing(state, "observe_ms", start, universe_insights=None)
     if state.get("total_count", 0) < 10:
-        return state.update(universe_insights=None)
+        return _with_timing(state, "observe_ms", start, universe_insights=None)
     insights = observe_universe_fn(
         results=state["results"],
         total_count=state["total_count"],
@@ -258,14 +311,15 @@ def observe_universe(state: State, secop_client: SecopClient, soql_builder: SoQL
         secop_client=secop_client,
         soql_builder=soql_builder,
     )
-    return state.update(universe_insights=insights)
+    return _with_timing(state, "observe_ms", start, universe_insights=insights)
 
 
 @action(
-    reads=["resolved_params", "universe_insights", "total_count", "dataset_id", "results"],
-    writes=["suggestions"],
+    reads=["resolved_params", "universe_insights", "total_count", "dataset_id", "results", "timings_ms"],
+    writes=["suggestions", "timings_ms"],
 )
 def suggester_action(state: State) -> State:
+    start = time.perf_counter()
     suggestions = generate_suggestions(
         params=state.get("resolved_params", {}),
         universe_insights=state.get("universe_insights"),
@@ -273,13 +327,17 @@ def suggester_action(state: State) -> State:
         rows=state.get("results", []),
         dataset_id=state.get("dataset_id", ""),
     )
-    return state.update(suggestions=suggestions)
+    return _with_timing(state, "suggest_ms", start, suggestions=suggestions)
 
 
-@action(reads=["results", "dataset_id", "channel", "query_error", "resolved_params", "degraded", "degraded_hint", "total_count", "universe_insights", "suggestions", "timeout_suggestions"], writes=["formatted_response", "formatted_rows"])
+@action(reads=["results", "dataset_id", "channel", "query_error", "resolved_params", "degraded", "degraded_hint", "total_count", "universe_insights", "suggestions", "timeout_suggestions", "timings_ms"], writes=["formatted_response", "formatted_rows", "timings_ms"])
 def format_response(state: State, formatter: Formatter) -> State:
+    start = time.perf_counter()
     if state.get("query_error"):
-        return state.update(
+        return _with_timing(
+            state,
+            "format_ms",
+            start,
             formatted_response="SECOP no respondio a tiempo. Intenta de nuevo en unos segundos.",
             formatted_rows=[],
         )
@@ -302,10 +360,10 @@ def format_response(state: State, formatter: Formatter) -> State:
             "Cambie a orden por fecha mas reciente.\n\n"
         )
         response = note + response
-    return state.update(formatted_response=response, formatted_rows=rows)
+    return _with_timing(state, "format_ms", start, formatted_response=response, formatted_rows=rows)
 
 
-@action(reads=["parsed_params", "context_params", "followup", "user_query"], writes=["parsed_params", "needs_llm", "needs_clarification", "clarification_reason", "intent_type", "followup_intent_type"])
+@action(reads=["parsed_params", "context_params", "followup", "user_query", "timings_ms"], writes=["parsed_params", "needs_llm", "needs_clarification", "clarification_reason", "intent_type", "followup_intent_type", "timings_ms"])
 def apply_context(state: State) -> State:
     """Fusiona context_params del turno anterior con parsed_params del parse actual.
     Usa followup_engine.detect_and_merge para clasificar la intención granular
@@ -313,8 +371,9 @@ def apply_context(state: State) -> State:
 
     Solo corre cuando followup=True.
     """
+    start = time.perf_counter()
     if not state.get("followup"):
-        return state
+        return _with_timing(state, "apply_context_ms", start)
 
     previous_frame = frame_from_params(state.get("context_params", {}))
     intent, merged = detect_and_merge(
@@ -325,7 +384,10 @@ def apply_context(state: State) -> State:
 
     # Guard contra WHERE 1=1 global
     if not FollowupGuards.check_no_where_1_1(merged):
-        return state.update(
+        return _with_timing(
+            state,
+            "apply_context_ms",
+            start,
             parsed_params=merged,
             needs_llm=False,
             needs_clarification=True,
@@ -340,14 +402,18 @@ def apply_context(state: State) -> State:
     # Si el merge produjo contexto suficiente, no necesita LLM
     has_context = FollowupGuards.check_no_where_1_1(merged)
     if has_context:
-        return state.update(parsed_params=merged, needs_llm=False, intent_type=intent, followup_intent_type=intent)
+        return _with_timing(state, "apply_context_ms", start, parsed_params=merged, needs_llm=False, intent_type=intent, followup_intent_type=intent)
 
-    return state.update(parsed_params=merged, intent_type=intent, followup_intent_type=intent)
+    return _with_timing(state, "apply_context_ms", start, parsed_params=merged, intent_type=intent, followup_intent_type=intent)
 
 
-@action(reads=["clarification_reason"], writes=["formatted_response", "formatted_rows"])
+@action(reads=["clarification_reason", "timings_ms"], writes=["formatted_response", "formatted_rows", "timings_ms"])
 def clarify_query(state: State) -> State:
-    return state.update(
+    start = time.perf_counter()
+    return _with_timing(
+        state,
+        "clarify_ms",
+        start,
         formatted_response=state["clarification_reason"] or "Necesito un poco mas de contexto para buscar en SECOP.",
         formatted_rows=[],
     )
@@ -376,6 +442,7 @@ class SecopalWorkflow:
         )
 
     def run_query(self, user_query: str, channel: str = "whatsapp", chat_id: str | None = None) -> dict:
+        run_start = time.perf_counter()
         # ── Reset command ────────────────────────────────────────────────
         if chat_id and is_reset_command(user_query):
             self.conv_store.clear(chat_id)
@@ -668,6 +735,7 @@ class SecopalWorkflow:
                 timeout_suggestions=[],
                 intent_type="",
                 followup_intent_type="",
+                timings_ms={},
             )
             .with_entrypoint("parse_query")
             .build()
@@ -702,12 +770,11 @@ class SecopalWorkflow:
             "intent_type": state.get("intent_type", ""),
             "followup_intent_type": state.get("followup_intent_type", ""),
             "followup": followup,
+            "timings_ms": dict(state.get("timings_ms", {}) or {}),
         }
 
-        trace_id = self.feedback.log_trace(user_query, channel, result)
-        result["trace_id"] = trace_id
-
         # ── Política de respuesta asesora (Bloque 3) ───────────────────────
+        advisor_start = time.perf_counter()
         advisor_response = build_advisor_response({
             "user_query": user_query,
             "resolved_params": state.get("resolved_params", {}),
@@ -725,6 +792,20 @@ class SecopalWorkflow:
             "degraded_hint": state.get("degraded_hint", ""),
         }, narrator=self.narrator)
         result["response"] = advisor_response
+        result["timings_ms"]["advisor_response_ms"] = _elapsed_ms(advisor_start)
+        result["timings_ms"]["total_ms"] = _elapsed_ms(run_start)
+
+        trace_id = self.feedback.log_trace(user_query, channel, result)
+        result["trace_id"] = trace_id
+        logger.info(
+            "secoppal_query trace_id=%s route=%s dataset=%s total_count=%s results_count=%s total_ms=%s",
+            trace_id,
+            result.get("route_reason", ""),
+            result.get("dataset_id", ""),
+            result.get("total_count", 0),
+            len(result.get("results", [])),
+            result["timings_ms"].get("total_ms"),
+        )
 
         # Persistir turno conversacional
         if chat_id:
