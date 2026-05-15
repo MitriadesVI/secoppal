@@ -368,7 +368,7 @@ class SecopalWorkflow:
             timeout=settings.secop_timeout_seconds,
         )
         self.formatter = Formatter(max_results=min(settings.secop_results_limit, 10))
-        self.feedback = FeedbackStore()
+        self.feedback = FeedbackStore(settings.secop_feedback_path)
         self.conv_store = ConversationStore()
         self.narrator = NarratorHandler(
             api_key=settings.deepseek_api_key,
