@@ -3,6 +3,7 @@ from __future__ import annotations
 import dataclasses
 import logging
 import time
+from concurrent.futures import ThreadPoolExecutor
 
 from burr.core import ApplicationBuilder, State, action, default, expr
 
@@ -41,6 +42,30 @@ def _with_timings(state: State, timings_update: dict[str, float], **updates) -> 
     timings = dict(state.get("timings_ms", {}) or {})
     timings.update(timings_update)
     return state.update(**updates, timings_ms=timings)
+
+
+def _count_and_query_parallel(
+    secop_client: SecopClient,
+    dataset_id: str,
+    count_soql: str,
+    soql_query: str,
+) -> tuple[int, list[dict], dict[str, float]]:
+    """Run SECOP count(*) and SELECT concurrently; return total, rows and timings."""
+    def _count() -> tuple[int, float]:
+        start = time.perf_counter()
+        return secop_client.count(dataset_id, count_soql), _elapsed_ms(start)
+
+    def _query() -> tuple[list[dict], float]:
+        start = time.perf_counter()
+        return secop_client.query(dataset_id, soql_query), _elapsed_ms(start)
+
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        count_future = executor.submit(_count)
+        query_future = executor.submit(_query)
+        total, count_ms = count_future.result()
+        results, query_ms = query_future.result()
+
+    return total, results, {"secop_count_ms": count_ms, "secop_query_ms": query_ms}
 
 @action(reads=["user_query", "timings_ms"], writes=["parsed_params", "needs_llm", "route_reason", "timings_ms"])
 def parse_query(state: State, query_router: QueryRouter) -> State:
@@ -154,15 +179,15 @@ def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
 
     try:
         count_soql = soql_builder.build_count(state["dataset_id"], state["resolved_params"])
-        start_count = time.perf_counter()
-        total = secop_client.count(state["dataset_id"], count_soql)
-        count_ms = _elapsed_ms(start_count)
-        start_query = time.perf_counter()
-        results = secop_client.query(state["dataset_id"], state["soql_query"])
-        query_ms = _elapsed_ms(start_query)
+        total, results, secop_timings = _count_and_query_parallel(
+            secop_client,
+            state["dataset_id"],
+            count_soql,
+            state["soql_query"],
+        )
         return _with_timings(
             state,
-            {"secop_count_ms": count_ms, "secop_query_ms": query_ms, "execute_total_ms": _elapsed_ms(start_total)},
+            {**secop_timings, "execute_total_ms": _elapsed_ms(start_total)},
             results=results, query_error="", total_count=total, timeout_suggestions=[]
         )
     except Exception as exc:
@@ -175,17 +200,17 @@ def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
                 did = state["dataset_id"]
                 soql = soql_builder.build(did, relaxed)
                 count_soql = soql_builder.build_count(did, relaxed)
-                start_count = time.perf_counter()
-                total = secop_client.count(did, count_soql)
-                count_ms = _elapsed_ms(start_count)
-                start_query = time.perf_counter()
-                results = secop_client.query(did, soql)
-                query_ms = _elapsed_ms(start_query)
+                total, results, secop_timings = _count_and_query_parallel(
+                    secop_client,
+                    did,
+                    count_soql,
+                    soql,
+                )
                 if results:
                     timeout_suggestions = _build_timeout_suggestions(params, total)
                     return _with_timings(
                         state,
-                        {"secop_count_ms": count_ms, "secop_query_ms": query_ms, "execute_total_ms": _elapsed_ms(start_total)},
+                        {**secop_timings, "execute_total_ms": _elapsed_ms(start_total)},
                         results=results, query_error="", total_count=total,
                         timeout_suggestions=timeout_suggestions,
                         soql_query=soql,
@@ -481,8 +506,12 @@ class SecopalWorkflow:
                 ds_id = SoQLBuilder.dataset_id_for(pag_params.get("dataset"))
                 soql = self.soql_builder.build(ds_id, pag_params)
                 try:
-                    total = self.secop_client.count(ds_id, self.soql_builder.build_count(ds_id, pag_params))
-                    results = self.secop_client.query(ds_id, soql)
+                    total, results, _secop_timings = _count_and_query_parallel(
+                        self.secop_client,
+                        ds_id,
+                        self.soql_builder.build_count(ds_id, pag_params),
+                        soql,
+                    )
                     response, rows = self.formatter.format_for_channel(
                         results, ds_id, channel,
                         params=pag_params, total_count=total,
@@ -558,8 +587,12 @@ class SecopalWorkflow:
                     soql = self.soql_builder.build(sug_dataset_id, sug_params)
                     try:
                         count_soql = self.soql_builder.build_count(sug_dataset_id, sug_params)
-                        total = self.secop_client.count(sug_dataset_id, count_soql)
-                        results = self.secop_client.query(sug_dataset_id, soql)
+                        total, results, _secop_timings = _count_and_query_parallel(
+                            self.secop_client,
+                            sug_dataset_id,
+                            count_soql,
+                            soql,
+                        )
                         # Generate insights + suggestions for this new result
                         ui = observe_universe_fn(
                             results=results, total_count=total,
