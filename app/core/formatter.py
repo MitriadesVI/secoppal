@@ -3,17 +3,78 @@ from __future__ import annotations
 from app.utils.money import format_cop
 
 
+def build_no_results_message(params: dict | None, dataset_id: str | None = None) -> str:
+    """Generate a helpful 'no results' message with specific relaxation suggestions.
+
+    Inspects the params used in the failed query and suggests which filters
+    to relax, in order of likely impact.
+    """
+    if not params:
+        return (
+            "No encontre resultados. Intenta con terminos mas generales "
+            "o verifica el nombre de la entidad y el departamento."
+        )
+
+    suggestions: list[str] = []
+
+    # Suggest relaxing estado — most common cause of zero results
+    if params.get("estado") or params.get("estado_de_apertura_del_proceso") or params.get("estado_contrato"):
+        suggestions.append("quita el filtro de estado (abierto/cerrado/adjudicado)")
+
+    # Suggest relaxing date range
+    if params.get("fecha_desde") or params.get("fecha_hasta"):
+        suggestions.append("amplia el rango de fechas")
+
+    # Suggest relaxing value range
+    if params.get("valor_min") is not None or params.get("valor_max") is not None:
+        suggestions.append("cambia el rango de valor")
+
+    # Suggest relaxing entity
+    if params.get("entidad_like") or params.get("entidad_resolved"):
+        suggestions.append("verifica el nombre exacto de la entidad")
+
+    # Suggest relaxing department
+    if params.get("departamento_resolved"):
+        suggestions.append("busca en todo el pais quitando el departamento")
+
+    # Suggest simplifying object terms
+    obj = params.get("objeto", [])
+    if len(obj) > 1:
+        suggestions.append(f'busca solo por \"{obj[0]}\" sin los otros terminos')
+    elif len(obj) == 1:
+        suggestions.append("usa un termino mas corto o general")
+
+    # Dataset switch suggestion
+    is_contratos = (dataset_id == "jbjy-vk9h") or params.get("dataset") == "contratos"
+    if is_contratos:
+        suggestions.append("busca en procesos abiertos en vez de contratos")
+    else:
+        suggestions.append("busca en contratos firmados en vez de procesos")
+
+    if not suggestions:
+        return (
+            "No encontre resultados. Intenta con terminos mas generales "
+            "o verifica el nombre de la entidad y el departamento."
+        )
+
+    suggestion_text = "; ".join(suggestions[:3])  # max 3 sugerencias
+    return f"No encontre resultados con esos filtros. Puedes intentar: {suggestion_text}."
+
+
 class Formatter:
     def __init__(self, max_results: int = 10):
         self.max_results = max_results
 
-    def format_for_channel(self, results: list[dict], dataset_id: str, channel: str) -> tuple[str, list[dict]]:
+    def format_for_channel(self, results: list[dict], dataset_id: str, channel: str,
+                           params: dict | None = None, total_count: int = 0,
+                           universe_insights: Any = None,
+                           suggestions: list | None = None) -> tuple[str, list[dict]]:
         rows = self.to_rows(results, dataset_id)
         if channel == "telegram":
-            return self.format_telegram(rows), rows
+            return self.format_telegram(rows, params=params, dataset_id=dataset_id, total_count=total_count, universe_insights=universe_insights, suggestions=suggestions), rows
         if channel == "streamlit":
-            return self.format_streamlit(rows), rows
-        return self.format_whatsapp(rows), rows
+            return self.format_streamlit(rows, params=params, dataset_id=dataset_id, total_count=total_count, universe_insights=universe_insights, suggestions=suggestions), rows
+        return self.format_whatsapp(rows, params=params, dataset_id=dataset_id, total_count=total_count, universe_insights=universe_insights, suggestions=suggestions), rows
 
     def to_rows(self, results: list[dict], dataset_id: str) -> list[dict]:
         rows: list[dict] = []
@@ -58,14 +119,26 @@ class Formatter:
             return ""
         return url
 
-    def format_whatsapp(self, rows: list[dict]) -> str:
+    def format_whatsapp(self, rows: list[dict], params: dict | None = None, dataset_id: str | None = None, total_count: int = 0, universe_insights: Any = None, suggestions: list | None = None) -> str:
         if not rows:
-            return "No encontre resultados con esos filtros. Prueba con otro departamento, entidad o rango de valor."
+            return build_no_results_message(params, dataset_id)
 
-        lines = [f"📋 Encontre {len(rows)} resultados:\n"]
+        shown = len(rows)
+        if total_count > shown:
+            ordering_label = self._ordering_label(params)
+            header = f"📋 Encontre {total_count:,} resultados en SECOP. Te muestro los {shown} {ordering_label}:\n"
+        else:
+            header = f"📋 Encontre {shown} resultados:\n"
+        insights = self._insights_summary(universe_insights, params)
+        if insights:
+            header += insights + "\n"
+        lines = [header]
         for index, row in enumerate(rows, start=1):
             lines.append(f"*{index}.* {self._truncate(row['titulo'], 90)}")
             lines.append(f"🏛️ {row['entidad']}")
+            fecha = (row.get("fecha") or "")[:10]
+            if fecha:
+                lines.append(f"📅 {fecha}")
             tail = f"💰 {row['valor']}"
             if row.get("estado"):
                 tail += f" | {row['estado']}"
@@ -75,32 +148,128 @@ class Formatter:
             if row.get("url"):
                 lines.append(f"🔗 {row['url']}")
             lines.append("")
-        return "\n".join(lines).strip()
+        result = "\n".join(lines).strip()
+        sug_text = self._format_suggestions(suggestions)
+        if sug_text:
+            result += "\n\n" + sug_text
+        return result
 
-    def format_telegram(self, rows: list[dict]) -> str:
+    def format_telegram(self, rows: list[dict], params: dict | None = None, dataset_id: str | None = None, total_count: int = 0, universe_insights: Any = None, suggestions: list | None = None) -> str:
         if not rows:
-            return "No encontre resultados con esos filtros."
+            return build_no_results_message(params, dataset_id)
 
-        lines = [f"Encontre {len(rows)} resultados:\n"]
+        shown = len(rows)
+        if total_count > shown:
+            ordering_label = self._ordering_label(params)
+            header = f"Encontre {total_count:,} resultados en SECOP. Te muestro los {shown} {ordering_label}:\n"
+        else:
+            header = f"Encontre {shown} resultados:\n"
+        insights = self._insights_summary(universe_insights, params)
+        if insights:
+            header += insights + "\n"
+        lines = [header]
         for index, row in enumerate(rows, start=1):
             lines.append(f"{index}. {self._truncate(row['titulo'], 100)}")
             lines.append(f"Entidad: {row['entidad']}")
+            fecha = (row.get("fecha") or "")[:10]
+            if fecha:
+                lines.append(f"Fecha: {fecha}")
             lines.append(f"Valor: {row['valor']} | Estado: {row.get('estado', 'N/D')}")
             if row.get("contratista"):
                 lines.append(f"Contratista: {row['contratista']}")
             if row.get("url"):
                 lines.append(str(row["url"]))
             lines.append("")
-        return "\n".join(lines).strip()
+        result = "\n".join(lines).strip()
+        sug_text = self._format_suggestions(suggestions)
+        if sug_text:
+            result += "\n\n" + sug_text
+        return result
 
-    def format_streamlit(self, rows: list[dict]) -> str:
+    def format_streamlit(self, rows: list[dict], params: dict | None = None, dataset_id: str | None = None, total_count: int = 0, universe_insights: Any = None, suggestions: list | None = None) -> str:
         if not rows:
-            return "No encontre resultados con esos filtros."
-        return f"Encontre {len(rows)} resultados listos para explorar en tabla y tarjetas."
+            return build_no_results_message(params, dataset_id)
+        shown = len(rows)
+        if total_count > shown:
+            ordering_label = self._ordering_label(params)
+            base = f"Encontre {total_count:,} resultados en SECOP. Te muestro los {shown} {ordering_label} listos para explorar en tabla y tarjetas."
+        else:
+            base = f"Encontre {shown} resultados listos para explorar en tabla y tarjetas."
+        insights = self._insights_summary(universe_insights, params)
+        if insights:
+            base += f"\n\n{insights}"
+        sug_text = self._format_suggestions(suggestions)
+        if sug_text:
+            base += f"\n\n{sug_text}"
+        return base
+
+    @staticmethod
+    def _insights_summary(insights, params: dict | None = None) -> str:
+        """Build a short insight string from UniverseInsights, or empty if none.
+        Skips tautological insights (e.g. "100% son de X" when user already searched for X).
+        """
+        if not insights:
+            return ""
+        params = params or {}
+        lines = []
+
+        # Entidad dominante: skip si el usuario ya filtró por esa entidad
+        if getattr(insights, "has_dominant_entity", False):
+            name = getattr(insights, "dominant_entity_name", None)
+            pct = getattr(insights, "dominant_entity_pct", None)
+            if name and pct:
+                resolved = (params.get("entidad_resolved") or "").lower()
+                if name.lower() not in resolved:
+                    lines.append(f"El {pct:.0f}% son de {name}.")
+
+        if getattr(insights, "has_temporal_concentration", False):
+            yr = getattr(insights, "dominant_year", None)
+            pct = getattr(insights, "dominant_year_pct", None)
+            if yr and pct:
+                lines.append(f"La mayoria son de {yr}.")
+
+        if getattr(insights, "has_value_outlier", False):
+            val = getattr(insights, "outlier_value", None)
+            vs = getattr(insights, "value_stats", None)
+            median_str = ""
+            if vs and vs.get("median"):
+                try:
+                    median_str = f" (la mediana es {format_cop(vs['median'])})"
+                except Exception:
+                    pass
+            if val:
+                lines.append(f"Hay uno de {format_cop(val)}{median_str}.")
+
+        if getattr(insights, "has_diverse_modalities", False):
+            lines.append("Hay variedad de modalidades de contratacion.")
+
+        return "\n".join(lines)
+
+    @staticmethod
+    def _format_suggestions(suggestions: list | None) -> str:
+        """Build suggestion text from list of Suggestion objects, or empty if none."""
+        if not suggestions:
+            return ""
+        lines = ["💡 *Sugerencias:*"]
+        for i, s in enumerate(suggestions, start=1):
+            label = getattr(s, "label", str(s)) if not isinstance(s, dict) else s.get("label", "")
+            if label:
+                lines.append(f"{i}. {label}")
+        return "\n".join(lines)
 
     @staticmethod
     def _truncate(value: str, max_length: int) -> str:
         if len(value) <= max_length:
             return value
         return value[: max_length - 3].rstrip() + "..."
+
+    @staticmethod
+    def _ordering_label(params: dict | None) -> str:
+        """Retorna etiqueta de ordenación para el header.
+        valor_desc → 'de mayor valor'
+        default    → 'más recientes'
+        """
+        if params and params.get("ordering_signal") == "valor_desc":
+            return "de mayor valor"
+        return "más recientes"
 

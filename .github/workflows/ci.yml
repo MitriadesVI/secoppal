@@ -1,0 +1,68 @@
+name: CI
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      run_smoke:
+        description: "Correr smoke test contra SECOP real"
+        required: false
+        default: "false"
+  schedule:
+    - cron: "0 8 * * 1"  # Lunes 8am UTC
+
+jobs:
+  unit-tests:
+    name: Unit tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run unit tests
+        run: pytest tests/ -q --tb=short
+
+  smoke:
+    name: Smoke test (SECOP real)
+    runs-on: ubuntu-latest
+    # Corre en: dispatch manual con run_smoke=true, o schedule semanal
+    if: >
+      (github.event_name == 'workflow_dispatch' && github.event.inputs.run_smoke == 'true')
+      || github.event_name == 'schedule'
+    needs: unit-tests
+
+    env:
+      SECOP_APP_TOKEN: ${{ secrets.SECOP_APP_TOKEN }}
+      DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+      DATOS_GOV_DOMAIN: www.datos.gov.co
+      SECOP_TIMEOUT_SECONDS: 30
+      SECOP_RESULTS_LIMIT: 25
+      SECOP_ALIAS_DB_PATH: app/data/aliases_db.json
+      DEEPSEEK_MODEL: deepseek-chat
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run smoke test
+        run: python scripts/smoke_test.py

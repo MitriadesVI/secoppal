@@ -143,6 +143,9 @@ def _clean_resolved(resolved: dict) -> dict:
 if "history" not in st.session_state:
     st.session_state.history: list[dict] = []
 
+if "chat_id" not in st.session_state:
+    st.session_state.chat_id = "st_default"
+
 # ═══════════════════════════════════════════════════════════════════════════
 # Sidebar
 # ═══════════════════════════════════════════════════════════════════════════
@@ -240,7 +243,8 @@ if incoming_query:
     st.session_state.history.append({"role": "user", "content": incoming_query})
 
     with st.spinner("Consultando SECOP..."):
-        result = workflow.run_query(incoming_query, channel="streamlit")
+        result = workflow.run_query(incoming_query, channel="streamlit",
+                                     chat_id=st.session_state.chat_id)
 
     debug_payload = {
         "route_reason": result.get("route_reason", ""),

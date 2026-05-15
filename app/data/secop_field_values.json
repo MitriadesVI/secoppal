@@ -6,119 +6,115 @@
       "estado_de_apertura_del_proceso": [
         {
           "value": "Abierto",
-          "count": 7376569
+          "count": 7548002
         },
         {
           "value": "Cerrado",
-          "count": 1020978
+          "count": 1077608
         }
       ],
       "estado_del_procedimiento": [
         {
           "value": "Seleccionado",
-          "count": 5176397
+          "count": 5309349
         },
         {
           "value": "Publicado",
-          "count": 2499234
+          "count": 2553780
         },
         {
           "value": "Evaluación",
-          "count": 492074
+          "count": 525654
         },
         {
           "value": "Cancelado",
-          "count": 144550
+          "count": 149173
         },
         {
           "value": "Borrador",
-          "count": 41984
+          "count": 42819
         },
         {
           "value": "Abierto",
-          "count": 30993
+          "count": 32121
         },
         {
           "value": "Aprobado",
-          "count": 7885
+          "count": 7968
         },
         {
           "value": "En aprobación",
-          "count": 4288
+          "count": 4587
         },
         {
           "value": "Suspendido",
-          "count": 142
+          "count": 159
         }
       ],
       "modalidad_de_contratacion": [
         {
           "value": "Contratación directa",
-          "count": 3862029
+          "count": 3925778
         },
         {
           "value": "Contratación régimen especial",
-          "count": 3255110
+          "count": 3335251
         },
         {
           "value": "Mínima cuantía",
-          "count": 389408
+          "count": 402533
         },
         {
           "value": "Selección Abreviada de Menor Cuantía",
-          "count": 198898
+          "count": 213474
         },
         {
           "value": "Selección abreviada subasta inversa",
-          "count": 172703
+          "count": 195084
         },
         {
           "value": "Solicitud de información a los Proveedores",
-          "count": 156437
+          "count": 160833
         },
         {
           "value": "Contratación régimen especial (con ofertas)",
-          "count": 125031
+          "count": 129548
         },
         {
           "value": "Contratación Directa (con ofertas)",
-          "count": 91363
+          "count": 110480
         },
         {
           "value": "Licitación pública",
-          "count": 56378
+          "count": 60280
         },
         {
           "value": "Concurso de méritos abierto",
-          "count": 39357
+          "count": 40680
         },
         {
           "value": "Licitación pública Obra Publica",
-          "count": 28160
+          "count": 29498
         },
         {
           "value": "Licitación Pública Acuerdo Marco de Precios",
-          "count": 9079
-        },
-        {
-          "value": "Subasta de prueba",
-          "count": 4594
+          "count": 11222
         },
         {
           "value": "Seleccion Abreviada Menor Cuantia Sin Manifestacion Interes",
-          "count": 4556
+          "count": 4707
         },
         {
-          "value": "No Definido",
-          "count": 2856
+          "value": "Subasta de prueba",
+          "count": 4634
         },
         {
           "value": "Enajenación de bienes con subasta",
-          "count": 782
+          "count": 796
         },
         {
           "value": "Enajenación de bienes con sobre cerrado",
-          "count": 756
+          "count": 762
         },
         {
           "value": "Concurso de méritos con precalificación",
@@ -128,99 +124,99 @@
       "tipo_de_contrato": [
         {
           "value": "Prestación de servicios",
-          "count": 5471548
+          "count": 5584950
         },
         {
           "value": "Decreto 092 de 2017",
-          "count": 1162394
+          "count": 1194430
         },
         {
           "value": "Suministros",
-          "count": 651761
+          "count": 694806
         },
         {
           "value": "Otro",
-          "count": 345725
+          "count": 360147
         },
         {
           "value": "Compraventa",
-          "count": 308756
+          "count": 318926
         },
         {
           "value": "Obra",
-          "count": 130174
+          "count": 135078
         },
         {
           "value": "No",
-          "count": 94974
+          "count": 94975
         },
         {
           "value": "No Especificado",
-          "count": 66722
+          "count": 71140
         },
         {
           "value": "Arrendamiento de inmuebles",
-          "count": 44665
+          "count": 44944
         },
         {
           "value": "Seguros",
-          "count": 29501
+          "count": 30730
         },
         {
           "value": "Interventoría",
-          "count": 26450
+          "count": 27370
         },
         {
           "value": "Consultoría",
-          "count": 22287
+          "count": 23045
         },
         {
           "value": "Comodato",
-          "count": 13271
+          "count": 13309
         },
         {
           "value": "Acuerdo Marco de Precios",
-          "count": 9089
+          "count": 11232
         },
         {
           "value": "Arrendamiento de muebles",
-          "count": 8315
+          "count": 8461
         },
         {
           "value": "Servicios financieros",
-          "count": 5301
+          "count": 5454
         },
         {
           "value": "Operaciones de Crédito Público",
-          "count": 1466
+          "count": 1494
         },
         {
           "value": "Concesión",
-          "count": 1383
+          "count": 1420
         },
         {
           "value": "Venta muebles",
-          "count": 1239
+          "count": 1251
         },
         {
           "value": "Asociación Público Privada",
-          "count": 1125
+          "count": 1135
         },
         {
           "value": "Negocio fiduciario",
-          "count": 621
+          "count": 629
         },
         {
           "value": "Venta inmuebles",
-          "count": 300
+          "count": 307
         },
         {
           "value": "Comisión",
-          "count": 237
+          "count": 279
         },
         {
           "value": "No definido",
-          "count": 212
+          "count": 67
         },
         {
           "value": "Acuerdo de cooperación",
@@ -234,139 +230,139 @@
       "departamento_entidad": [
         {
           "value": "Distrito Capital de Bogotá",
-          "count": 2435363
+          "count": 2500207
         },
         {
           "value": "Antioquia",
-          "count": 887612
+          "count": 913455
         },
         {
           "value": "Valle del Cauca",
-          "count": 626090
+          "count": 637770
         },
         {
           "value": "No Definido",
-          "count": 557619
+          "count": 569832
         },
         {
           "value": "Cundinamarca",
-          "count": 397747
+          "count": 416715
         },
         {
           "value": "Santander",
-          "count": 343982
+          "count": 353189
         },
         {
           "value": "Boyacá",
-          "count": 229864
-        },
-        {
-          "value": "Bolívar",
-          "count": 224958
+          "count": 235725
         },
         {
           "value": "Magdalena",
-          "count": 222801
+          "count": 228815
+        },
+        {
+          "value": "Bolívar",
+          "count": 228563
         },
         {
           "value": "Nariño",
-          "count": 214501
+          "count": 221572
         },
         {
           "value": "Atlántico",
-          "count": 195854
+          "count": 200038
         },
         {
           "value": "Tolima",
-          "count": 195545
+          "count": 199608
         },
         {
           "value": "Norte de Santander",
-          "count": 189675
+          "count": 193766
         },
         {
           "value": "Meta",
-          "count": 168060
+          "count": 171195
         },
         {
           "value": "Caldas",
-          "count": 164230
+          "count": 168344
         },
         {
           "value": "Huila",
-          "count": 162526
+          "count": 166804
         },
         {
           "value": "Risaralda",
-          "count": 158079
+          "count": 165822
         },
         {
           "value": "Quindío",
-          "count": 141592
+          "count": 147772
         },
         {
           "value": "Cauca",
-          "count": 125845
+          "count": 128549
         },
         {
           "value": "Cesar",
-          "count": 104707
+          "count": 107337
         },
         {
           "value": "Casanare",
-          "count": 104468
+          "count": 107136
         },
         {
           "value": "Córdoba",
-          "count": 89818
+          "count": 92551
         },
         {
           "value": "Putumayo",
-          "count": 84993
+          "count": 88295
         },
         {
           "value": "Sucre",
-          "count": 70671
+          "count": 71878
         },
         {
           "value": "La Guajira",
-          "count": 67996
+          "count": 70833
         },
         {
           "value": "Caquetá",
-          "count": 66388
+          "count": 68685
         },
         {
           "value": "Arauca",
-          "count": 44007
+          "count": 45182
         },
         {
           "value": "San Andrés, Providencia y Santa Catalina",
-          "count": 43554
+          "count": 44043
         },
         {
           "value": "Chocó",
-          "count": 25013
+          "count": 25718
         },
         {
           "value": "Amazonas",
-          "count": 22265
+          "count": 23104
         },
         {
           "value": "Vichada",
-          "count": 10810
+          "count": 11336
         },
         {
           "value": "Guaviare",
-          "count": 7859
+          "count": 8132
         },
         {
           "value": "Vaupés",
-          "count": 7388
+          "count": 7785
         },
         {
           "value": "Guainía",
-          "count": 5667
+          "count": 5854
         }
       ]
     },
@@ -488,47 +484,47 @@
       "estado_contrato": [
         {
           "value": "En ejecución",
-          "count": 1831943
+          "count": 1764568
         },
         {
           "value": "Cerrado",
-          "count": 1447150
+          "count": 1504586
         },
         {
           "value": "Modificado",
-          "count": 985368
+          "count": 1000239
         },
         {
           "value": "terminado",
-          "count": 704987
+          "count": 719217
         },
         {
           "value": "Borrador",
-          "count": 233029
+          "count": 233434
         },
         {
           "value": "Aprobado",
-          "count": 191727
+          "count": 188489
         },
         {
           "value": "Cancelado",
-          "count": 106514
+          "count": 106829
         },
         {
           "value": "enviado Proveedor",
-          "count": 41410
+          "count": 41496
         },
         {
           "value": "cedido",
-          "count": 26616
+          "count": 27553
         },
         {
           "value": "En aprobación",
-          "count": 21683
+          "count": 21775
         },
         {
           "value": "Suspendido",
-          "count": 6284
+          "count": 6141
         },
         {
           "value": "Prorrogado",
@@ -538,43 +534,43 @@
       "modalidad_de_contratacion": [
         {
           "value": "Contratación directa",
-          "count": 4262042
+          "count": 4263874
         },
         {
           "value": "Contratación régimen especial",
-          "count": 756206
+          "count": 763459
         },
         {
           "value": "Mínima cuantía",
-          "count": 308657
+          "count": 314152
         },
         {
           "value": "Contratación Directa (con ofertas)",
-          "count": 74248
+          "count": 74344
         },
         {
           "value": "Selección Abreviada de Menor Cuantía",
-          "count": 55633
+          "count": 56542
         },
         {
           "value": "Selección abreviada subasta inversa",
-          "count": 49575
+          "count": 50169
         },
         {
           "value": "Contratación régimen especial (con ofertas)",
-          "count": 47583
+          "count": 48909
         },
         {
           "value": "Concurso de méritos abierto",
-          "count": 15562
+          "count": 15749
         },
         {
           "value": "Licitación pública",
-          "count": 14699
+          "count": 14895
         },
         {
           "value": "Licitación pública Obra Publica",
-          "count": 8661
+          "count": 8760
         },
         {
           "value": "Licitación Pública Acuerdo Marco de Precios",
@@ -582,19 +578,15 @@
         },
         {
           "value": "Seleccion Abreviada Menor Cuantia Sin Manifestacion Interes",
-          "count": 1276
-        },
-        {
-          "value": "No Definido",
-          "count": 383
+          "count": 1281
         },
         {
           "value": "Enajenación de bienes con sobre cerrado",
-          "count": 310
+          "count": 311
         },
         {
           "value": "Enajenación de bienes con subasta",
-          "count": 253
+          "count": 259
         },
         {
           "value": "Concurso de méritos con precalificación",
@@ -604,51 +596,51 @@
       "tipo_de_contrato": [
         {
           "value": "Prestación de servicios",
-          "count": 4795892
+          "count": 4805954
         },
         {
           "value": "Otro",
-          "count": 205848
+          "count": 206516
         },
         {
           "value": "Decreto 092 de 2017",
-          "count": 196054
+          "count": 198374
         },
         {
           "value": "Suministros",
-          "count": 138934
+          "count": 141311
         },
         {
           "value": "Compraventa",
-          "count": 112593
+          "count": 113648
         },
         {
           "value": "Obra",
-          "count": 48803
+          "count": 49315
         },
         {
           "value": "Arrendamiento de inmuebles",
-          "count": 44453
+          "count": 44457
         },
         {
           "value": "Comodato",
-          "count": 12810
+          "count": 12816
         },
         {
           "value": "Interventoría",
-          "count": 12277
+          "count": 12420
         },
         {
           "value": "Consultoría",
-          "count": 10769
+          "count": 10923
         },
         {
           "value": "Seguros",
-          "count": 10021
+          "count": 10269
         },
         {
           "value": "Arrendamiento de muebles",
-          "count": 2165
+          "count": 2191
         },
         {
           "value": "Acuerdo Marco de Precios",
@@ -656,39 +648,39 @@
         },
         {
           "value": "Servicios financieros",
-          "count": 1235
+          "count": 1245
         },
         {
           "value": "Operaciones de Crédito Público",
-          "count": 749
+          "count": 754
         },
         {
           "value": "Asociación Público Privada",
-          "count": 710
+          "count": 711
         },
         {
           "value": "Venta muebles",
-          "count": 477
+          "count": 484
         },
         {
           "value": "No Especificado",
           "count": 372
         },
         {
+          "value": "Negocio fiduciario",
+          "count": 241
+        },
+        {
           "value": "Comisión",
           "count": 235
         },
         {
-          "value": "Negocio fiduciario",
-          "count": 228
-        },
-        {
           "value": "Concesión",
-          "count": 227
+          "count": 229
         },
         {
           "value": "No Definido",
-          "count": 133
+          "count": 136
         },
         {
           "value": "Venta inmuebles",
@@ -702,139 +694,139 @@
       "departamento": [
         {
           "value": "Distrito Capital de Bogotá",
-          "count": 1932671
+          "count": 1935771
         },
         {
           "value": "Valle del Cauca",
-          "count": 554694
+          "count": 554934
         },
         {
           "value": "Antioquia",
-          "count": 512388
+          "count": 513779
         },
         {
           "value": "Santander",
-          "count": 252706
+          "count": 254331
         },
         {
           "value": "Cundinamarca",
-          "count": 239553
+          "count": 240647
         },
         {
           "value": "Atlántico",
-          "count": 184046
+          "count": 184573
         },
         {
           "value": "Bolívar",
-          "count": 158474
+          "count": 158980
         },
         {
           "value": "Tolima",
-          "count": 151255
+          "count": 151984
         },
         {
           "value": "Boyacá",
-          "count": 138119
+          "count": 138935
         },
         {
           "value": "Norte de Santander",
-          "count": 133538
+          "count": 134234
         },
         {
           "value": "Meta",
-          "count": 125469
+          "count": 126119
         },
         {
           "value": "No Definido",
-          "count": 112941
+          "count": 112820
         },
         {
           "value": "Risaralda",
-          "count": 109409
+          "count": 110188
         },
         {
           "value": "Magdalena",
-          "count": 107647
+          "count": 109124
         },
         {
           "value": "Quindío",
-          "count": 107431
+          "count": 107587
         },
         {
           "value": "Caldas",
-          "count": 93415
+          "count": 93982
         },
         {
           "value": "Huila",
-          "count": 91695
+          "count": 92206
         },
         {
           "value": "Cauca",
-          "count": 86918
+          "count": 87404
         },
         {
           "value": "Nariño",
-          "count": 86619
+          "count": 86820
         },
         {
           "value": "Casanare",
-          "count": 76977
+          "count": 77408
         },
         {
           "value": "Cesar",
-          "count": 56877
+          "count": 57159
         },
         {
           "value": "Sucre",
-          "count": 44558
+          "count": 44655
         },
         {
           "value": "San Andrés, Providencia y Santa Catalina",
-          "count": 38667
+          "count": 38704
         },
         {
           "value": "Córdoba",
-          "count": 35862
+          "count": 36028
         },
         {
           "value": "Putumayo",
-          "count": 31609
+          "count": 31718
         },
         {
           "value": "La Guajira",
-          "count": 30391
+          "count": 30532
         },
         {
           "value": "Caquetá",
-          "count": 29084
+          "count": 29225
         },
         {
           "value": "Arauca",
-          "count": 21464
+          "count": 21570
         },
         {
           "value": "Chocó",
-          "count": 19259
+          "count": 19385
         },
         {
           "value": "Amazonas",
-          "count": 14389
+          "count": 14424
         },
         {
           "value": "Vichada",
-          "count": 9661
+          "count": 10129
         },
         {
           "value": "Guaviare",
-          "count": 4187
+          "count": 4209
         },
         {
           "value": "Guainía",
-          "count": 3208
+          "count": 3226
         },
         {
           "value": "Vaupés",
-          "count": 1651
+          "count": 1658
         }
       ]
     },
@@ -863,6 +855,9 @@
         "fecha_de_fin_del_contrato",
         "fecha_de_firma",
         "fecha_de_inicio_del_contrato",
+        "fecha_de_notificaci_n_de_prorrogaci_n",
+        "fecha_fin_liquidacion",
+        "fecha_inicio_liquidacion",
         "g_nero_representante_legal",
         "habilita_pago_adelantado",
         "id_contrato",
@@ -889,21 +884,16 @@
         "orden",
         "origen_de_los_recursos",
         "pilares_del_acuerdo",
-        "presupuesto_general_de_la_nacion_pgn",
         "proceso_de_compra",
         "proveedor_adjudicado",
         "puntos_del_acuerdo",
         "rama",
-        "recursos_de_credito",
-        "recursos_propios",
         "recursos_propios_alcald_as_gobernaciones_y_resguardos_ind_genas_",
         "referencia_del_contrato",
         "reversion",
         "saldo_cdp",
         "saldo_vigencia",
         "sector",
-        "sistema_general_de_participaciones",
-        "sistema_general_de_regal_as",
         "tipo_de_contrato",
         "tipo_de_cuenta",
         "tipo_de_documento_ordenador_de_pago",
@@ -923,84 +913,82 @@
         "valor_pendiente_de_pago"
       ],
       "sample_row": {
-        "nombre_entidad": "CAJA DE RETIRO DE LAS FUERZAS MILITARES",
-        "nit_entidad": "899999118",
+        "nombre_entidad": "PARQUES NACIONALES NATURALES DE COLOMBIA - DIRECCION  TERRITORIAL AMAZONIA",
+        "nit_entidad": "900005502",
         "departamento": "Distrito Capital de Bogotá",
-        "ciudad": "Bogotá",
-        "localizaci_n": "Colombia, Bogotá,  Bogotá",
-        "orden": "Nacional",
-        "sector": "defensa",
+        "ciudad": "No Definido",
+        "localizaci_n": "Colombia, Bogotá, No Definido",
+        "orden": "Territorial",
+        "sector": "Ambiente y Desarrollo Sostenible",
         "rama": "Ejecutivo",
         "entidad_centralizada": "Centralizada",
-        "proceso_de_compra": "CO1.BDOS.6724470",
-        "id_contrato": "CO1.PCCNTR.6780953",
-        "referencia_del_contrato": "CD-311-2024",
+        "proceso_de_compra": "CO1.BDOS.848814",
+        "id_contrato": "CO1.PCCNTR.1000001",
+        "referencia_del_contrato": "DTAM NACION-CS NO. 020-2019",
         "estado_contrato": "Cerrado",
-        "codigo_de_categoria_principal": "V1.80111600",
-        "descripcion_del_proceso": "Prestación de servicios profesionales especializados para apoyar a la Oficina Asesora de Planeación en la operación; mantenimiento y mejoramiento del Sistema Integrado de Gestión y de las políticas de Planeación Institucional y Seguimiento y evaluación del desempeño institucional conforme al Modelo",
-        "tipo_de_contrato": "Prestación de servicios",
-        "modalidad_de_contratacion": "Contratación directa",
-        "justificacion_modalidad_de": "Servicios profesionales y apoyo a la gestión",
-        "fecha_de_firma": "2024-09-18T00:00:00.000",
-        "fecha_de_inicio_del_contrato": "2024-09-23T00:00:00.000",
-        "fecha_de_fin_del_contrato": "2025-02-19T00:00:00.000",
-        "condiciones_de_entrega": "No Definido",
-        "tipodocproveedor": "Cédula de Ciudadanía",
-        "documento_proveedor": "1016019452",
-        "proveedor_adjudicado": "Andres Mauricio Cepeda Triana",
+        "codigo_de_categoria_principal": "V1.50161509",
+        "descripcion_del_proceso": "Contratar a monto agotable por el sistema de precios unitarios; sin formula de reajuste el suministro de elementos de aseo y limpieza e insumos de cafetería y restaurante; para los Parques Nacionales Naturales de  Amacayacu; Cahuinarí; Río Puré y Yaigojé Apaporis",
+        "tipo_de_contrato": "Suministros",
+        "modalidad_de_contratacion": "Mínima cuantía",
+        "justificacion_modalidad_de": "Presupuesto inferior al 10% de la menor cuantía",
+        "fecha_de_firma": "2019-06-19T00:00:00.000",
+        "fecha_de_inicio_del_contrato": "2019-06-18T00:00:00.000",
+        "fecha_de_fin_del_contrato": "2019-12-31T00:00:00.000",
+        "condiciones_de_entrega": "Como acordado previamente",
+        "tipodocproveedor": "NIT",
+        "documento_proveedor": "830130048",
+        "proveedor_adjudicado": "INDUSTRIAS GUERRERO Y COMPAÑIA S.A.S.",
         "es_grupo": "No",
-        "es_pyme": "No",
-        "habilita_pago_adelantado": "No",
-        "liquidaci_n": "No",
+        "es_pyme": "Si",
+        "habilita_pago_adelantado": "No Definido",
+        "liquidaci_n": "Si",
         "obligaci_n_ambiental": "No",
         "obligaciones_postconsumo": "No",
         "reversion": "No",
         "origen_de_los_recursos": "Distribuido",
         "destino_gasto": "Funcionamiento",
-        "valor_del_contrato": "23300213",
+        "valor_del_contrato": "17897916",
         "valor_de_pago_adelantado": "0",
-        "valor_facturado": "21816123",
-        "valor_pendiente_de_pago": "1484090",
-        "valor_pagado": "21816123",
+        "valor_facturado": "17896237",
+        "valor_pendiente_de_pago": "1679",
+        "valor_pagado": "17896237",
         "valor_amortizado": "0",
         "valor_pendiente_de": "0",
-        "valor_pendiente_de_ejecucion": "1484090",
-        "saldo_cdp": "439121582",
-        "saldo_vigencia": "308907161",
+        "valor_pendiente_de_ejecucion": "1679",
+        "saldo_cdp": "17897916",
+        "saldo_vigencia": "0",
         "espostconflicto": "No",
         "dias_adicionados": "0",
         "puntos_del_acuerdo": "No aplica",
         "pilares_del_acuerdo": "No aplica",
         "urlproceso": {
-          "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.6734694&isFromPublicArea=True&isModal=true&asPopupView=true"
+          "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.846428&isFromPublicArea=True&isModal=true&asPopupView=true"
         },
-        "nombre_representante_legal": "Andres Mauricio Cepeda Triana",
+        "nombre_representante_legal": "INDUSTRIAS GUERRERO Y CIA SAS",
         "nacionalidad_representante_legal": "CO",
-        "domicilio_representante_legal": "Carrera 104 #13d 35",
-        "tipo_de_identificaci_n_representante_legal": "Sin Descripcion",
-        "identificaci_n_representante_legal": "Sin Descripcion",
-        "g_nero_representante_legal": "Mujer",
-        "presupuesto_general_de_la_nacion_pgn": "23300213",
-        "sistema_general_de_participaciones": "0",
-        "sistema_general_de_regal_as": "0",
+        "domicilio_representante_legal": "No Definido",
+        "tipo_de_identificaci_n_representante_legal": "NIT",
+        "identificaci_n_representante_legal": "8301300481",
+        "g_nero_representante_legal": "No Definido",
         "recursos_propios_alcald_as_gobernaciones_y_resguardos_ind_genas_": "0",
-        "recursos_de_credito": "0",
-        "recursos_propios": "0",
-        "ultima_actualizacion": "2026-03-27T00:00:00.000",
-        "codigo_entidad": "701174138",
-        "codigo_proveedor": "701526378",
-        "objeto_del_contrato": "Prestación de servicios profesionales especializados para apoyar a la Oficina Asesora de Planeación en la operación; mantenimiento y mejoramiento del Sistema Integrado de Gestión y de las políticas de Planeación Institucional y Seguimiento y evaluación del desempeño institucional conforme al Modelo Integrado de Planeación y Gestión de la entidad.",
-        "duraci_n_del_contrato": "100 Dia(s)",
-        "nombre_del_banco": "No definido",
-        "tipo_de_cuenta": "No Definido",
-        "n_mero_de_cuenta": "No definido",
-        "el_contrato_puede_ser_prorrogado": "No",
-        "nombre_ordenador_del_gasto": "FREDY CALIXTO",
+        "ultima_actualizacion": "2020-12-30T00:00:00.000",
+        "codigo_entidad": "701224107",
+        "codigo_proveedor": "700658065",
+        "fecha_inicio_liquidacion": "2019-06-18T00:00:00.000",
+        "fecha_fin_liquidacion": "2021-01-03T00:00:00.000",
+        "objeto_del_contrato": "Contratar a monto agotable por el sistema de precios unitarios; sin formula de reajuste el suministro de elementos de aseo y limpieza e insumos de cafetería y restaurante; para los Parques Nacionales Naturales de  Amacayacu; Cahuinarí; Río Puré y Yaigojé Apaporis",
+        "duraci_n_del_contrato": "No definido",
+        "nombre_del_banco": "BBVA",
+        "tipo_de_cuenta": "Corriente",
+        "n_mero_de_cuenta": "130006182",
+        "el_contrato_puede_ser_prorrogado": "Si",
+        "fecha_de_notificaci_n_de_prorrogaci_n": "2019-11-18T00:00:00.000",
+        "nombre_ordenador_del_gasto": "DIANACASTELLANOS",
         "tipo_de_documento_ordenador_del_gasto": "Cédula de Ciudadanía",
-        "n_mero_de_documento_ordenador_del_gasto": "79548026",
-        "nombre_supervisor": "SONIA CAROLINA MEJIA NARVAEZ",
+        "n_mero_de_documento_ordenador_del_gasto": "51698201",
+        "nombre_supervisor": "ARTEMIO CANO TABARES",
         "tipo_de_documento_supervisor": "Cédula de Ciudadanía",
-        "n_mero_de_documento_supervisor": "52420327",
+        "n_mero_de_documento_supervisor": "15888923",
         "nombre_ordenador_de_pago": "No definido",
         "tipo_de_documento_ordenador_de_pago": "No definido",
         "n_mero_de_documento_ordenador_de_pago": "No definido",

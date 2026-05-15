@@ -30,6 +30,41 @@ class SecopClient:
         self.client = client or Socrata(domain, app_token=app_token, timeout=timeout)
         self.max_retries = max_retries
 
+    def aggregate(self, dataset_id: str, soql: str, timeout: int | None = None) -> list[dict]:
+        """Execute a single aggregation query. No retries — best-effort for observer."""
+        client = self.client
+        if timeout is not None:
+            # Patch timeout on the underlying client for this call if possible
+            orig = getattr(client, "timeout", None)
+            try:
+                client.timeout = timeout
+                rows = client.get(dataset_id, query=soql)
+            finally:
+                if orig is not None:
+                    client.timeout = orig
+        else:
+            rows = client.get(dataset_id, query=soql)
+        return list(rows)
+
+    def count(self, dataset_id: str, soql_count_query: str) -> int:
+        """Execute a SELECT count(*) query and return the integer result."""
+        last_error: Exception | None = None
+
+        for attempt in range(self.max_retries):
+            try:
+                rows = self.client.get(dataset_id, query=soql_count_query)
+                if rows:
+                    raw = list(rows[0].values())[0]
+                    return int(raw)
+                return 0
+            except Exception as exc:  # pragma: no cover - network/runtime path
+                last_error = exc
+                logger.warning("SECOP count failed on attempt %s/%s: %s", attempt + 1, self.max_retries, exc)
+                if attempt < self.max_retries - 1:
+                    time.sleep(2**attempt)
+
+        raise RuntimeError(f"Unable to count SECOP dataset {dataset_id}") from last_error
+
     def query(self, dataset_id: str, soql_query: str) -> list[dict]:
         last_error: Exception | None = None
 

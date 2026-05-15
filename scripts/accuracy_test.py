@@ -58,9 +58,11 @@ def _load_module(name: str, path: Path):
     return mod
 
 _core = PROJECT_ROOT / "app" / "core"
-_er_v2_mod = _load_module("entity_resolver_v2", _core / "entity_resolver v2.py")
-_er_v3_mod = _load_module("entity_resolver_v3", _core / "entity_resolver v3.py")
-_qr_v2_mod = _load_module("query_router_v2",    _core / "query_router v2.py")
+# Stack V2 (legacy, desde archive/ — mantener para comparativa histórica)
+_er_v2_path = _core.parent.parent / "archive" / "cleanup_2026-05-16" / "entity_resolver v2.py"
+_er_v2_mod = _load_module("entity_resolver_v2", _er_v2_path)
+_er_v3_mod = _load_module("entity_resolver_v3", _core / "entity_resolver.py")
+_qr_v2_mod = _load_module("query_router_v2",    _core / "query_router.py")
 EntityResolverV2 = _er_v2_mod.EntityResolver
 EntityResolverV3 = _er_v3_mod.EntityResolver
 QueryRouterV2    = _qr_v2_mod.QueryRouter

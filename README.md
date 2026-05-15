@@ -145,7 +145,7 @@ El pipeline de parseo. Usa regex, gazetteer y spell correction para extraer par�
 
 Extrae:
 - **Dataset**: `procesos` vs `contratos` (detectado por palabras clave como "contrato", "firmado", "ejecutando")
-- **Departamento**: 34 departamentos colombianos con aliases y variaciones
+- **Departamento**: 32 departamentos colombianos con aliases y variaciones
 - **Entidad**: gobernación, alcaldía, SENA, ICBF, etc. con hints por regex. Los tokens de año (`20xx`) se eliminan del texto antes de la extracción para evitar contaminación; además, un año en el texto actúa como límite que detiene la captura de entidad.
 - **Ciudad/Municipio**: nuevo parámetro extraído por LLM cuando se detecta "en [lugar]" no resuelto como departamento
 - **Estado del proceso**: abierto, cerrado, adjudicado, desierto, convocatoria (→ Publicado), etc.

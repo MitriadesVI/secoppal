@@ -86,3 +86,54 @@ class TestFullQueryCorrection:
         result = correct_query("contratos por 5000000")
         assert "5000000" in result
         assert "contratos" in result
+
+class TestFeedbackTypos:
+    """Typos reales observados en feedback.jsonl (1.3)."""
+
+    def test_alcadia_to_alcaldia(self):
+        assert correct_query("alcadia") == "alcaldia"
+
+    def test_licitasciones_to_licitaciones(self):
+        result = correct_query("licitasciones")
+        assert result == "licitaciones"
+
+    def test_consutoria_to_consultoria(self):
+        assert correct_query("consutoria") == "consultoria"
+
+    def test_manteniminto_to_mantenimiento(self):
+        assert correct_query("manteniminto") == "mantenimiento"
+
+    def test_infraestrucutra_to_infraestructura(self):
+        assert correct_query("infraestrucutra") == "infraestructura"
+
+    def test_gobernacion_unchanged(self):
+        assert correct_query("gobernacion") == "gobernacion"
+
+
+class TestNewVocabularyTerms:
+    """Nuevos terminos agregados en 1.3 deben reconocerse correctamente."""
+
+    def test_vial_unchanged(self):
+        assert correct_query("vial") == "vial"
+
+    def test_destronque_unchanged(self):
+        assert correct_query("destronque") == "destronque"
+
+    def test_mobiliario_unchanged(self):
+        assert correct_query("mobiliario") == "mobiliario"
+
+    def test_hidrografia_unchanged(self):
+        assert correct_query("hidrografia") == "hidrografia"
+
+    def test_agroforestales_unchanged(self):
+        assert correct_query("agroforestales") == "agroforestales"
+
+    def test_convocatoria_unchanged(self):
+        assert correct_query("convocatoria") == "convocatoria"
+
+    def test_ferreas_unchanged(self):
+        assert correct_query("ferreas") == "ferreas"
+
+    def test_vocab_size_above_80(self):
+        from app.utils.spell_correction import VOCABULARY
+        assert len(VOCABULARY) >= 80, f"Vocabulary only has {len(VOCABULARY)} terms"

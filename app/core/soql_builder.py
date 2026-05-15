@@ -2,6 +2,11 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+try:
+    from app.data.morphological_variants import ROOT_TO_VARIANTS
+except ImportError:
+    ROOT_TO_VARIANTS: dict[str, frozenset[str]] = {}
+
 
 @dataclass(frozen=True, slots=True)
 class DatasetSpec:
@@ -14,6 +19,7 @@ class DatasetSpec:
     state: str
     date: str
     url: str
+    modality: str = "modalidad_de_contratacion"
     reference: str | None = None
     contractor: str | None = None
     contractor_document: str | None = None
@@ -95,6 +101,34 @@ class SoQLBuilder:
 
     def build(self, dataset_id: str, params: dict) -> str:
         spec = self.SPECS[dataset_id]
+        where_clause = self._build_where(spec, params)
+
+        select_clause = ", ".join(spec.select_fields)
+
+        # Default: date DESC (most recent first).
+        # valor_desc: value DESC, date DESC
+        # fecha_desc: date DESC, value DESC (same as default, explicit intent)
+        ordering = params.get("ordering_signal", "")
+        if ordering == "valor_desc":
+            order_expr = f"{spec.value} DESC, {spec.date} DESC"
+        else:
+            order_expr = f"{spec.date} DESC, {spec.value} DESC"
+        limit = int(params.get("limit", 50))
+        offset = int(params.get("offset", 0))
+        limit_clause = f"LIMIT {limit}"
+        if offset:
+            limit_clause += f" OFFSET {offset}"
+
+        return f"SELECT {select_clause} WHERE {where_clause} ORDER BY {order_expr} {limit_clause}"
+
+    def build_count(self, dataset_id: str, params: dict) -> str:
+        """Build a SELECT count(*) query with the same filters as build(), no LIMIT/ORDER."""
+        spec = self.SPECS[dataset_id]
+        where_clause = self._build_where(spec, params)
+        return f"SELECT count(*) WHERE {where_clause}"
+
+    def _build_where(self, spec: DatasetSpec, params: dict) -> str:
+        """Build the WHERE clause string shared by build() and build_count()."""
         where_clauses: list[str] = []
 
         if params.get("departamento_resolved"):
@@ -111,14 +145,25 @@ class SoQLBuilder:
             )
 
         for term in params.get("objeto", []):
-            escaped_term = self._escape(term)
-            if spec.description:
-                where_clauses.append(
-                    f"(UPPER({spec.object_name}) LIKE UPPER('%{escaped_term}%') OR "
-                    f"UPPER({spec.description}) LIKE UPPER('%{escaped_term}%'))"
-                )
-            else:
-                where_clauses.append(f"UPPER({spec.object_name}) LIKE UPPER('%{escaped_term}%')")
+            # str = required term (AND with other object entries)
+            # list[str] = OR group created by parser for "X o Y"
+            terms = term if isinstance(term, list) else [term]
+            term_conditions: list[str] = []
+            for sub_term in terms:
+                # Expand to all morphological variants (OR clauses).
+                # ROOT_TO_VARIANTS maps root→frozenset of all surface forms.
+                # If the term is not in the index, it's used as-is (single LIKE).
+                term_variants = ROOT_TO_VARIANTS.get(sub_term, frozenset([sub_term]))
+                for variant in sorted(term_variants):  # sorted for deterministic SoQL
+                    esc = self._escape(variant)
+                    if spec.description:
+                        term_conditions.append(
+                            f"UPPER({spec.object_name}) LIKE UPPER('%{esc}%') OR "
+                            f"UPPER({spec.description}) LIKE UPPER('%{esc}%')"
+                        )
+                    else:
+                        term_conditions.append(f"UPPER({spec.object_name}) LIKE UPPER('%{esc}%')")
+            where_clauses.append(f"({' OR '.join(term_conditions)})")
 
         if params.get("valor_min") is not None:
             where_clauses.append(f"{spec.value} >= {int(params['valor_min'])}")
@@ -128,7 +173,20 @@ class SoQLBuilder:
         if params.get("estado"):
             # Use the specific field identified by QueryRouter, or fall back to spec default
             estado_field = params.get("estado_field", spec.state)
-            where_clauses.append(f"{estado_field} = '{self._escape(params['estado'])}'")
+            estado_val = params["estado"]
+            # If a more specific list exists for this field, skip scalar (list handles below)
+            if not (estado_field in params and isinstance(params.get(estado_field), list)):
+                self._add_estado_clause(where_clauses, estado_field, estado_val)
+
+        # NUEVO: estado_families filters — puede ser lista o simple
+        legacy_field = params.get("estado_field")
+        for field in ("estado_de_apertura_del_proceso", "estado_del_procedimiento",
+                      "estado_contrato", "estado_contrato_adicional"):
+            if field in params and params[field]:
+                # Skip if legacy estado/estado_field already covers this
+                if field == legacy_field:
+                    continue
+                self._add_estado_clause(where_clauses, field, params[field])
 
         if params.get("modalidad"):
             where_clauses.append(f"modalidad_de_contratacion = '{self._escape(params['modalidad'])}'")
@@ -139,27 +197,94 @@ class SoQLBuilder:
             where_clauses.append(f"{spec.date} <= '{self._escape(params['fecha_hasta'])}'")
 
         if params.get("contratista") and spec.contractor:
-            contractor = str(params["contratista"]).strip()
-            if contractor.isdigit() and spec.contractor_document:
-                where_clauses.append(f"{spec.contractor_document} = '{self._escape(contractor)}'")
+            contratista = params["contratista"]
+            if isinstance(contratista, list):
+                # NIT detectado por forma: lista de variantes → OR sobre documento_proveedor
+                if spec.contractor_document:
+                    variants = " OR ".join(
+                        f"{spec.contractor_document} = '{self._escape(v)}'"
+                        for v in contratista
+                    )
+                    where_clauses.append(f"({variants})")
+                else:
+                    # dataset sin documento_proveedor — LIKE sobre nombre
+                    variants = " OR ".join(
+                        f"UPPER({spec.contractor}) LIKE UPPER('%{self._escape(v)}%')"
+                        for v in contratista
+                    )
+                    where_clauses.append(f"({variants})")
             else:
-                where_clauses.append(
-                    f"UPPER({spec.contractor}) LIKE UPPER('%{self._escape(contractor)}%')"
-                )
+                contractor = str(contratista).strip()
+                if contractor.isdigit() and spec.contractor_document:
+                    where_clauses.append(f"{spec.contractor_document} = '{self._escape(contractor)}'")
+                else:
+                    where_clauses.append(
+                        f"UPPER({spec.contractor}) LIKE UPPER('%{self._escape(contractor)}%')"
+                    )
 
-        select_clause = ", ".join(spec.select_fields)
-        where_clause = " AND ".join(where_clauses) if where_clauses else "1=1"
+        return " AND ".join(where_clauses) if where_clauses else "1=1"
 
-        # Default: date DESC (most recent first) — users want to see
-        # actionable/recent results.  Only sort by value when explicitly requested.
-        if params.get("ordering_signal") == "valor_desc":
-            order_expr = f"{spec.value} DESC, {spec.date} DESC"
-        else:
-            order_expr = f"{spec.date} DESC, {spec.value} DESC"
-        limit = int(params.get("limit", 50))
+    def build_top_entities(self, dataset_id: str, params: dict, limit: int = 5) -> str:
+        spec = self.SPECS[dataset_id]
+        where = self._build_where(spec, params)
+        return (
+            f"SELECT {spec.entity}, count(*) AS cnt WHERE {where} "
+            f"GROUP BY {spec.entity} ORDER BY cnt DESC LIMIT {limit}"
+        )
 
-        return f"SELECT {select_clause} WHERE {where_clause} ORDER BY {order_expr} LIMIT {limit}"
+    def build_value_stats(self, dataset_id: str, params: dict) -> str:
+        spec = self.SPECS[dataset_id]
+        where = self._build_where(spec, params)
+        v = spec.value
+        return (
+            f"SELECT avg({v}) AS mean, min({v}) AS min_val, max({v}) AS max_val "
+            f"WHERE {where} AND {v} IS NOT NULL"
+        )
+
+    def build_top_modalities(self, dataset_id: str, params: dict, limit: int = 3) -> str:
+        spec = self.SPECS[dataset_id]
+        where = self._build_where(spec, params)
+        m = spec.modality
+        return (
+            f"SELECT {m}, count(*) AS cnt WHERE {where} "
+            f"GROUP BY {m} ORDER BY cnt DESC LIMIT {limit}"
+        )
+
+    def build_date_range(self, dataset_id: str, params: dict) -> str:
+        spec = self.SPECS[dataset_id]
+        where = self._build_where(spec, params)
+        d = spec.date
+        return (
+            f"SELECT min({d}) AS date_min, max({d}) AS date_max "
+            f"WHERE {where} AND {d} IS NOT NULL"
+        )
+
+    def build_temporal_dist(self, dataset_id: str, params: dict) -> str:
+        spec = self.SPECS[dataset_id]
+        where = self._build_where(spec, params)
+        d = spec.date
+        return (
+            f"SELECT date_trunc_y({d}) AS yr, count(*) AS cnt "
+            f"WHERE {where} AND {d} IS NOT NULL "
+            f"GROUP BY yr ORDER BY yr DESC"
+        )
 
     @staticmethod
     def _escape(value: str) -> str:
         return value.replace("'", "''")
+
+    @staticmethod
+    def _add_estado_clause(where_clauses: list[str], field: str, value) -> None:
+        """Add estado filter — handles both scalar and list values.
+
+        Scalar: field = 'value'
+        List: field IN ('v1', 'v2', ...)
+        """
+        if isinstance(value, list):
+            if len(value) == 1:
+                where_clauses.append(f"{field} = '{SoQLBuilder._escape(value[0])}'")
+            else:
+                escaped = ", ".join(f"'{SoQLBuilder._escape(v)}'" for v in value)
+                where_clauses.append(f"{field} IN ({escaped})")
+        else:
+            where_clauses.append(f"{field} = '{SoQLBuilder._escape(str(value))}'")

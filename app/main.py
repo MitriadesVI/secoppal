@@ -8,6 +8,7 @@ from fastapi.responses import JSONResponse, PlainTextResponse, Response
 from pydantic import BaseModel, Field
 
 from app.config import get_settings
+from app.core.conversation_store import is_reset_command
 from app.service import get_workflow
 
 settings = get_settings()
@@ -64,7 +65,17 @@ async def twilio_whatsapp_webhook(
     body: str = Form(..., alias="Body"),
     sender: str | None = Form(default=None, alias="From"),
 ) -> Response:
-    result = get_workflow().run_query(body, channel="whatsapp")
+    chat_id = sender or None
+
+    if chat_id and is_reset_command(body):
+        get_workflow().conv_store.clear(chat_id)
+        payload = (
+            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+            "<Response><Message>Conversacion reiniciada. Puedes empezar una nueva busqueda.</Message></Response>"
+        )
+        return Response(content=payload, media_type="application/xml")
+
+    result = get_workflow().run_query(body, channel="whatsapp", chat_id=chat_id)
     payload = (
         "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
         f"<Response><Message>{escape(result['response'])}</Message></Response>"
@@ -87,7 +98,20 @@ async def telegram_webhook(
     if not text or not chat_id:
         return JSONResponse(content={"ok": True, "ignored": True})
 
-    result = get_workflow().run_query(text, channel="telegram")
+    chat_id_str = str(chat_id)
+
+    # Comando de reset
+    if is_reset_command(text):
+        get_workflow().conv_store.clear(chat_id_str)
+        if settings.telegram_bot_token:
+            async with httpx.AsyncClient(timeout=20) as client:
+                await client.post(
+                    f"https://api.telegram.org/bot{settings.telegram_bot_token}/sendMessage",
+                    json={"chat_id": chat_id, "text": "Conversacion reiniciada. Puedes empezar una nueva busqueda."},
+                )
+        return JSONResponse(content={"ok": True, "reset": True})
+
+    result = get_workflow().run_query(text, channel="telegram", chat_id=chat_id_str)
 
     if settings.telegram_bot_token:
         async with httpx.AsyncClient(timeout=20) as client:

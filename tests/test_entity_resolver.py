@@ -6,9 +6,9 @@ import pytest
 
 from app.core.entity_resolver import EntityResolver
 
-# ── Cargar EntityResolver v3 dinámicamente (archivo con espacio en el nombre) ──
+# ── Cargar EntityResolver canónico ──
 def _load_er_v3() -> type:
-    path = Path("app/core/entity_resolver v3.py")
+    path = Path("app/core/entity_resolver.py")
     spec = importlib.util.spec_from_file_location("entity_resolver_v3", path)
     mod = importlib.util.module_from_spec(spec)
     sys.modules["entity_resolver_v3"] = mod
