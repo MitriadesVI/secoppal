@@ -507,7 +507,7 @@ pytest -q
 
 **Decisión:**
 
-- `QueryFrame` puede quedar como estructura intermedia/legacy.
+- `QueryFrame` es la representación intermedia oficial entre `params` y `FollowupEngine`. No es legacy: vive en el hot path de `apply_context` como transporte entre `frame_from_params` y `detect_and_merge`. Su eventual eliminación es un refactor futuro, no urgente.
 - `ConversationStore` queda como memoria transaccional.
 - `FollowupEngine` decide intención conversacional.
 
