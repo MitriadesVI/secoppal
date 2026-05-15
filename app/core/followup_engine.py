@@ -233,6 +233,7 @@ class FollowupClassifier:
         """Clasifica la intención del follow-up.
 
         Orden de evaluación (importante):
+        0. new_search_verb — verbo de busqueda nueva explicito
         1. pagination_more — paginación pura sin filtros nuevos
         2. change_dataset — dataset explicitamente cambiado
         3. change_year — solo año sin topic nuevo
@@ -245,6 +246,17 @@ class FollowupClassifier:
         """
         if previous_frame is None:
             return "new_search"
+
+        # 0. Verbo de búsqueda nueva explícito (H8: evita contaminación de contexto)
+        #    Si el usuario empieza con "busca", "necesito", "encuentra", etc.,
+        #    quiere una búsqueda nueva, no un follow-up.
+        noise_free = TextNormalizer.strip_noise(text)
+        for verb in NEW_SEARCH_VERBS:
+            if noise_free.startswith(verb):
+                # Si hay contenido después del verbo, es búsqueda nueva
+                rest = noise_free[len(verb):].strip()
+                if len(rest.split()) >= 1:
+                    return "new_search"
 
         # 1. Paginación pura
         if cls.is_pagination_pure(text):
