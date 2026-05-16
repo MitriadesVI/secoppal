@@ -1,2 +1,2 @@
-"""SECOPAL application package."""
+"""SECOPPAL application package."""
 

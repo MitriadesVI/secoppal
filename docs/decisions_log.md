@@ -86,3 +86,39 @@ Registro de Decisiones Arquitectónicas (ADR). Append-only. Una entrada por deci
 **Decisión:** Cambiar mensaje a "Necesito al menos un filtro de entidad, lugar, tema o contratista para buscar." El guard en execute_query sigue siendo el mismo (`resolved_params` debe tener al menos un key en `_SCOPE_TOPIC_KEYS`).
 
 ---
+
+---
+
+## ADR-008: Regla semántica “firmados” vs estados contractuales reales
+
+**Fecha:** 2026-05-16
+
+**Contexto:** El handler de LLM tenía un kill-switch en `_is_signed_query()` que, al detectar “firmados”, borraba inmediatamente todas las claves de estado. Esto rompía consultas mixtas del tipo “contratos firmados que estén en ejecución”, donde el usuario quiere forzar el dataset contratos pero aplicar un filtro de estado real.
+
+**Decisión:** 
+- “firmados / suscritos / celebrados” solo fuerza `dataset = "contratos"`.
+- Nunca borra estados válidos.
+- Se ejecuta `_drop_invalid_contract_states()` + `_apply_contract_estado_family()` incluso después de detectar “firmados”.
+- Si al final no queda ningún `estado_contrato` real, recién entonces se limpian las claves de estado.
+
+**Alternativas descartadas:** 
+- Mantener el kill-switch agresivo (rompe el caso mixto).
+- Tratar “firmados o en ejecución” como universo amplio (demasiado permisivo y ambiguo).
+
+**Consecuencias:** 
+- Se agregó test `test_llm_firmados_que_esten_en_ejecucion_mantiene_estado_activo`.
+- Se cerró el bug B9 de la auditoría 2.
+- Se preserva la invariante: “firmados” = universo de contratos; “en ejecución” = subconjunto operativo.
+
+---
+
+**Cierre Auditoría P0 (2026-05-16)**
+
+Se cerraron los 4 bugs de alta prioridad de la segunda auditoría:
+
+- **B1**: `/chat` ahora propaga `chat_id` correctamente.
+- **B2**: `degrade_query` recalcula `total_count`.
+- **B3**: Se removió `re.IGNORECASE` del regex de entidades del narrator.
+- **B8/B9**: Regla semántica de “firmados” + estados reales implementada y testeada.
+
+Suite: 466/466 tests pasando. `feedback.jsonl` sin modificaciones.

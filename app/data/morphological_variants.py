@@ -28,7 +28,6 @@ MORPHOLOGICAL_VARIANTS: dict[str, str] = {
     # ── dotacion / dotaciones ───────────────────────────────────────────────
     "dotacion": "dotacion",
     "dotaciones": "dotacion",
-    "dotaciones": "dotacion",
     # ── pavimentacion ───────────────────────────────────────────────────────
     "pavimentacion": "pavimentacion",
     "pavimentaciones": "pavimentacion",

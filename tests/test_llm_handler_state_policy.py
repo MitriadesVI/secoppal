@@ -4,7 +4,7 @@ import json
 from types import SimpleNamespace
 
 from app.core import llm_handler as llm_module
-from app.core.llm_handler import LLMHandler, SECOPAL_TOOLS
+from app.core.llm_handler import LLMHandler, SECOPPAL_TOOLS
 
 
 class _FakeCompletions:
@@ -111,6 +111,6 @@ def test_llm_no_emite_estados_inexistentes(monkeypatch):
 
 def test_llm_tool_estado_enum_no_declara_estados_inexistentes():
     invalid = {"Firmado", "Celebrado"}
-    estado_enum = SECOPAL_TOOLS[0]["function"]["parameters"]["properties"]["estado"]["enum"]
+    estado_enum = SECOPPAL_TOOLS[0]["function"]["parameters"]["properties"]["estado"]["enum"]
 
     assert not (invalid & set(estado_enum))

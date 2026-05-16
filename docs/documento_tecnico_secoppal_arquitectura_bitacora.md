@@ -1042,3 +1042,43 @@ Política de estados: corregida; firmado no es estado, es selección de dataset 
 Próximo bloque recomendado: OBS-001 logger semántico / telemetría operacional
 ```
 
+
+---
+
+## 10. Estado actual y cierre de auditoría (Mayo 2026)
+
+**Última actualización:** 2026-05-16
+
+### Auditoría P0 cerrada
+
+Se completó el micro-sprint de corrección de los 4 bugs de alta prioridad identificados en la segunda auditoría holística:
+
+| Bug | Descripción | Estado |
+|-----|-------------|--------|
+| **B1** | `/chat` no propagaba `chat_id` (memoria conversacional muerta vía HTTP) | ✅ Cerrado |
+| **B2** | `degrade_query` no recalculaba `total_count` | ✅ Cerrado |
+| **B3** | Regex de entidades del narrator con `re.IGNORECASE` generaba falsos positivos | ✅ Cerrado |
+| **B9** | `_is_signed_query` actuaba como kill-switch y borraba estados reales ("firmados o en ejecución") | ✅ Cerrado |
+
+### Regla semántica vigente (ADR-008)
+
+- `"firmados"`, `"suscritos"`, `"celebrados"` → solo fuerzan `dataset = "contratos"`.
+- Nunca borran filtros de estado válidos.
+- Si el usuario combina “firmados” + un estado real (“en ejecución”, “activos”, “vigentes”), se aplica la familia correspondiente.
+- Si no hay estado real explícito, queda universo completo de contratos.
+
+**Test principal que defiende esta regla:**
+```python
+"contratos firmados que estén en ejecución de mantenimiento en Bogotá"
+→ dataset == "contratos"
+→ estado_contrato contiene ["En ejecución", "Modificado", "Prorrogado"]
+```
+
+### Métricas actuales
+
+- **Tests:** 466 pasando
+- **feedback.jsonl:** sin modificaciones desde el cierre
+- **Cobertura de invariantes semánticas:** alta (estados, firmados, follow-up, degradación)
+
+El sistema se encuentra en estado **Verde-Amarillo** y listo para exposición controlada a usuarios internos.
+

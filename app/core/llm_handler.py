@@ -43,7 +43,7 @@ Reglas:
    NO incluyas nombres de ciudades, departamentos ni entidades en objeto.
 """.strip()
 
-SECOPAL_TOOLS = [
+SECOPPAL_TOOLS = [
     {
         "type": "function",
         "function": {
@@ -215,7 +215,7 @@ class LLMHandler:
                     {"role": "system", "content": SYSTEM_PROMPT},
                     {"role": "user", "content": user_query},
                 ],
-                tools=SECOPAL_TOOLS,
+                tools=SECOPPAL_TOOLS,
                 tool_choice="auto",
             )
         except Exception as exc:

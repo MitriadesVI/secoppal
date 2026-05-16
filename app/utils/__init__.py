@@ -1,2 +1,2 @@
-"""Utility helpers for SECOPAL."""
+"""Utility helpers for SECOPPAL."""
 

@@ -9,7 +9,7 @@ from burr.core import ApplicationBuilder, State, action, default, expr
 
 from app.config import Settings
 from app.core._followup_constants import SCOPE_TOPIC_KEYS
-from app.core.conversation_store import ConversationStore, is_followup, is_reset_command, merge_params, is_pagination_phrase, normalize_pagination_text
+from app.core.conversation_store import ConversationStore, is_followup, is_reset_command, is_pagination_phrase
 from app.core.direct_responses import reset_response, pagination_no_history_response, suggestion_invalid_response, suggestion_selection_header
 from app.core.entity_resolver import EntityResolver
 from app.core.feedback import FeedbackStore
@@ -18,7 +18,7 @@ from app.core.llm_handler import LLMHandler
 from app.core.narrator import NarratorHandler
 from app.core.observer import observe as observe_universe_fn, UniverseInsights
 from app.core.followup_engine import detect_and_merge, FollowupGuards
-from app.core.query_frame import QueryFrame, frame_from_params, params_from_frame, classify_turn, merge_frames as merge_query_frames
+from app.core.query_frame import frame_from_params
 from app.core.query_router import QueryRouter
 from app.core.response_policy import build_advisor_response
 from app.core.secop_client import SecopClient

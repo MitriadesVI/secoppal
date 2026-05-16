@@ -1,5 +1,5 @@
 """
-SECOPAL — Query Feedback System
+SECOPPAL — Query Feedback System
 =================================
 
 Stores complete query traces with user ratings.

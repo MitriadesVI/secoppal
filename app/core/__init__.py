@@ -1,2 +1,2 @@
-"""Core SECOPAL workflow components."""
+"""Core SECOPPAL workflow components."""
 
