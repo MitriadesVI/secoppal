@@ -169,7 +169,15 @@ def _enforce_estado_policy(user_query: str, params: dict) -> dict:
     cleaned = dict(params)
     if _is_signed_query(user_query):
         cleaned["dataset"] = "contratos"
-        _drop_estado_keys(cleaned)
+        _drop_invalid_contract_states(cleaned)
+        _apply_contract_estado_family(user_query, cleaned)
+
+        # Si después de aplicar familias no quedó ningún estado real,
+        # entonces limpiamos las claves de estado (comportamiento correcto para "firmados")
+        if not cleaned.get("estado_contrato"):
+            cleaned.pop("estado", None)
+            cleaned.pop("estado_field", None)
+
         return cleaned
 
     _drop_invalid_contract_states(cleaned)

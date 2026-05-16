@@ -12,12 +12,13 @@ from app.core.conversation_store import is_reset_command
 from app.service import get_workflow
 
 settings = get_settings()
-app = FastAPI(title="SECOPAL", version="0.1.0")
+app = FastAPI(title="SECOPPAL", version="0.1.0")
 
 
 class ChatRequest(BaseModel):
     query: str = Field(..., min_length=3)
     channel: str = Field(default="streamlit")
+    chat_id: str | None = Field(default=None)
 
 
 class RateRequest(BaseModel):
@@ -29,7 +30,7 @@ class RateRequest(BaseModel):
 @app.get("/")
 async def root() -> dict:
     return {
-        "name": "SECOPAL",
+        "name": "SECOPPAL",
         "channels": ["streamlit", "telegram", "whatsapp"],
         "status": "ok",
     }
@@ -42,7 +43,7 @@ async def health() -> dict:
 
 @app.post("/chat")
 async def chat(request: ChatRequest) -> JSONResponse:
-    result = get_workflow().run_query(request.query, channel=request.channel)
+    result = get_workflow().run_query(request.query, channel=request.channel, chat_id=request.chat_id)
     return JSONResponse(content=result)
 
 

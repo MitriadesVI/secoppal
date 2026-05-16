@@ -308,7 +308,18 @@ def degrade_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
         soql = soql_builder.build(state["dataset_id"], relaxed)
         results = secop_client.query(state["dataset_id"], soql)
         if results:
-            return _with_timing(state, "degrade_ms", start, results=results, degraded=True, degraded_hint=hint, query_error="")
+            count_soql = soql_builder.build_count(state["dataset_id"], relaxed)
+            total = secop_client.count(state["dataset_id"], count_soql)
+            return _with_timing(
+                state,
+                "degrade_ms",
+                start,
+                results=results,
+                total_count=total,
+                degraded=True,
+                degraded_hint=hint,
+                query_error="",
+            )
     except Exception:
         pass
 

@@ -206,7 +206,6 @@ _ENTITY_PHRASE_RE = re.compile(
     r"ESE|EPS|SENA|ICBF|INV[ií]AS|ANI|ANM|DNP|FONADE|ECOPETROL|"
     r"Gobernaci[oó]n\s+\w+|Alcald[ií]a\s+\w+|"
     r"\b[A-ZÁÉÍÓÚ][a-záéíóú]+(?:\s+(?:de\s+)?[A-ZÁÉÍÓÚ][a-záéíóú]+)+)",
-    re.IGNORECASE,
 )
 
 # Palabras que no son entidades aunque empiecen con mayúscula en el texto

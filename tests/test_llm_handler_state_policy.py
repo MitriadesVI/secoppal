@@ -79,6 +79,19 @@ def test_llm_en_ejecucion_emite_familia_activa(monkeypatch):
     assert "Prorrogado" in estados
 
 
+def test_llm_firmados_que_esten_en_ejecucion_mantiene_estado_activo(monkeypatch):
+    """
+    B9: 'firmados que estén en ejecución' debe forzar dataset=contratos
+    y aplicar el filtro de estado activo (no debe borrarlo por el kill-switch de firmados).
+    """
+    result = _parse_with_fake_llm(monkeypatch, "contratos firmados que estén en ejecución de mantenimiento en Bogotá")
+    assert result["dataset"] == "contratos"
+    estados = result.get("estado_contrato", [])
+    assert "En ejecución" in estados
+    assert "Modificado" in estados
+    assert "Prorrogado" in estados
+
+
 def test_llm_no_emite_estados_inexistentes(monkeypatch):
     """
     No emitir valores que no existen en el dataset real jbjy-vk9h.
