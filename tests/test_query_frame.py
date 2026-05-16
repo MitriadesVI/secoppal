@@ -4,6 +4,7 @@ Cubre: delta puro, contextual re-query, cambio de año, cambio de ciudad,
 cambio de dataset, sin historial.
 """
 from __future__ import annotations
+import pytest
 
 from app.config import Settings
 from app.core.orchestrator import SecopalWorkflow
@@ -19,30 +20,35 @@ from app.core.query_frame import (
 class TestClassifyTurn:
     def test_no_previous_is_new_search(self):
         f = frame_from_params({"dataset": "contratos"})
-        assert classify_turn(f, None) == "new_search"
+        with pytest.warns(DeprecationWarning):
+            assert classify_turn(f, None) == "new_search"
 
     def test_only_modifiers_is_refine_delta(self):
         prev = frame_from_params({"dataset": "contratos", "objeto": ["obra"]})
         curr = frame_from_params({"ordering_signal": "valor_desc"})
-        assert classify_turn(curr, prev) == "refine_delta"
+        with pytest.warns(DeprecationWarning):
+            assert classify_turn(curr, prev) == "refine_delta"
 
     def test_new_topic_without_scope_is_contextual_requery(self):
         prev = frame_from_params({"dataset": "contratos", "objeto": ["infancia"],
                                    "ciudad": "Barranquilla"})
         curr = frame_from_params({"dataset": "contratos", "objeto": ["escuela"],
                                    "ordering_signal": "valor_desc"})
-        assert classify_turn(curr, prev) == "contextual_requery"
+        with pytest.warns(DeprecationWarning):
+            assert classify_turn(curr, prev) == "contextual_requery"
 
     def test_switch_scope_detected(self):
         prev = frame_from_params({"dataset": "contratos", "ciudad": "Barranquilla"})
         curr = frame_from_params({"dataset": "contratos", "ciudad": "Medellin"})
-        assert classify_turn(curr, prev) == "switch_scope"
+        with pytest.warns(DeprecationWarning):
+            assert classify_turn(curr, prev) == "switch_scope"
 
     def test_switch_dataset_detected(self):
         prev = frame_from_params({"dataset": "contratos", "objeto": ["infancia"]})
         curr = frame_from_params({"dataset": "procesos", "dataset_explicit": True,
                                    "objeto": ["infancia"]})
-        assert classify_turn(curr, prev) == "switch_dataset"
+        with pytest.warns(DeprecationWarning):
+            assert classify_turn(curr, prev) == "switch_dataset"
 
 
 class TestMergeFrames:

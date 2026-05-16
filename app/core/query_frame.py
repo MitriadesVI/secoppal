@@ -8,6 +8,7 @@ individual. Esto elimina los parches por frase.
 """
 from __future__ import annotations
 
+import warnings
 from dataclasses import dataclass, field
 from typing import Any
 
@@ -100,15 +101,26 @@ def params_from_frame(frame: QueryFrame) -> dict:
 
 
 # ---------------------------------------------------------------------------
-# classify_turn — determina intención conversacional
+# classify_turn — determina intención conversacional (DEPRECATED)
 # ---------------------------------------------------------------------------
 
 def classify_turn(current: QueryFrame, previous: QueryFrame | None) -> str:
-    """Clasifica el turno actual vs anterior.
+    """Clasifica el turno actual vs anterior. (DEPRECATED)
+
+    Esta función está marcada como legacy y será removida en el futuro.
+    Usa el sistema de intent_type en QueryFrame en su lugar.
 
     Retorna uno de: new_search, refine_delta, contextual_requery,
     switch_scope, switch_dataset, suggestion_selection, reset.
     """
+    warnings.warn(
+        "classify_turn() is deprecated and will be removed. "
+        "Use FollowupClassifier/detect_and_merge() to classify follow-up intent, "
+        "then carry the result in QueryFrame.intent_type.",
+        DeprecationWarning,
+        stacklevel=2
+    )
+
     if previous is None:
         return "new_search"
 
@@ -170,8 +182,8 @@ def is_complete_new_search(frame: QueryFrame) -> bool:
 def merge_frames(previous: QueryFrame, current: QueryFrame) -> QueryFrame:
     """Fusiona dos frames según la intención del turno actual.
 
-    El intent_type DEBE ser calculado antes con classify_turn()
-    y debe estar seteado en current.intent_type.
+    El intent_type DEBE estar seteado previamente en `current.intent_type`.
+    (classify_turn ya no se usa para esto).
     """
     intent = current.intent_type
 

@@ -122,3 +122,12 @@ Se cerraron los 4 bugs de alta prioridad de la segunda auditoría:
 - **B8/B9**: Regla semántica de “firmados” + estados reales implementada y testeada.
 
 Suite: 466/466 tests pasando. `feedback.jsonl` sin modificaciones.
+
+
+## 2026-05-16 — Deprecación de classify_turn (B5)
+- Se marcó `query_frame.classify_turn()` como deprecated.
+- Se agregó `warnings.warn(DeprecationWarning)`.
+- Se actualizó docstring y tests.
+- Razón: ya no se usa en el flujo principal de producción.
+- Decisión: mantener la función por compatibilidad pero no usarla en nuevo código.
+
