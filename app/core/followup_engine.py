@@ -461,6 +461,9 @@ def _merge_change_dataset(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
 def _merge_contextual_requery(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
     """Nuevo topic. Hereda scope y dataset. Offset = 0."""
     merged_topic = list(curr.topic) if curr.topic else list(prev.topic)
+    # OPP-003: preserve opportunity objeto when follow-up only adds geography
+    if getattr(prev, "intent_type", None) == "opportunity_search" and not curr.topic:
+        merged_topic = list(prev.topic)
     return QueryFrame(
         dataset=prev.dataset,
         dataset_explicit=prev.dataset_explicit,

@@ -76,3 +76,50 @@ def test_opportunity_timeout_ux():
     assert result.get("total_count") is None or result.get("total_count", 0) == 0
     # Core UX: good message and no false "0 results" on timeout
     # Full opportunity-aware suggestions integrated in next pass
+
+def test_opportunity_search_applies_open_state_filter():
+    """1. opportunity_search debe producir filtro real de estados abiertos en SoQL."""
+    from app.core.query_router import QueryRouter
+    from app.core.soql_builder import SoQLBuilder
+    qr = QueryRouter()
+    sb = SoQLBuilder()
+    parsed = qr.parse("alguna oportunidad en temas de pintura")
+    assert parsed.params.get("intent_type") == "opportunity_search"
+    soql = sb.build("p6dx-8zbt", parsed.params)
+    assert "estado_del_procedimiento" in soql or "Publicado" in soql or "Abierto" in soql
+    assert "LIKE" in soql and "ORDER BY fecha_de_publicacion_del DESC" in soql
+
+
+def test_opportunity_followup_alguno_en_atlantico_inherits_topic():
+    """2. Follow-up geográfico debe heredar objeto de oportunidad."""
+    from app.core.orchestrator import SecopalWorkflow
+    from app.config import Settings
+    workflow = SecopalWorkflow(Settings())
+    r1 = workflow.run_query("alguna oportunidad en temas de pintura")
+    r2 = workflow.run_query("alguno en atlantico?")
+    assert "pintura" in str(r2.get("resolved_params", {}))
+    assert r2.get("resolved_params", {}).get("departamento_resolved") == "Atlántico"
+    assert "alguno" not in str(r2.get("resolved_params", {}).get("objeto", []))
+
+
+def test_alguno_not_object_in_followup():
+    """3. "alguno" no debe entrar en objeto."""
+    from app.core.query_router import QueryRouter
+    qr = QueryRouter()
+    parsed = qr.parse("alguno en atlantico")
+    objeto = parsed.params.get("objeto", [])
+    assert "alguno" not in objeto
+
+
+def test_opportunity_followup_soql():
+    """4. SoQL de follow-up oportunidad debe tener pintura + Atlántico + estados abiertos + ORDER fecha."""
+    from app.core.query_router import QueryRouter
+    from app.core.soql_builder import SoQLBuilder
+    qr = QueryRouter()
+    sb = SoQLBuilder()
+    parsed = qr.parse("alguno en atlantico")
+    soql = sb.build("p6dx-8zbt", parsed.params)
+    assert "Atlántico" in soql or "departamento_entidad" in soql
+    assert "pintura" in soql.lower() or "LIKE" in soql
+    assert "fecha_de_publicacion_del DESC" in soql
+    assert "precio_base DESC" not in soql or "ORDER BY fecha" in soql

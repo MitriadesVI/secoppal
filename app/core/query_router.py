@@ -142,7 +142,7 @@ STOPWORDS = {
     # Temporal adverbs (not contractual objects)
     "actualmente", "ahora", "hoy", "recientemente", "momento",
     # Indefinite pronouns
-    "algun", "alguna", "algunos", "algunas", "ningun", "ninguna",
+    "algun", "alguna", "algunos", "algunas", "alguno", "algunos", "ningun", "ninguna",
     "otro", "otra", "otros", "otras",
     # Value/size adjectives (ordering instructions, not objects)
     "caro", "caros", "cara", "caras",
@@ -308,6 +308,8 @@ class QueryRouter:
             params["intent_type"] = "opportunity_search"
             params.setdefault("dataset", "procesos")
             params.setdefault("estado_family", "oferta_abierta")
+            # OPP-003: concrete estado keys that SoQLBuilder actually uses
+            params.setdefault("estado_de_apertura_del_proceso", ["Publicado", "Abierto", "Borrador"])
 
         # ── 1. Dataset selection (keyword-based) ────────────────────────
         #    Only set if not already determined by intent

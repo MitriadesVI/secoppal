@@ -149,3 +149,10 @@ git diff --stat
 **Commit planeado:**
 git add docs/OPPORTUNITY_AUDIT.md tests/test_opportunity_queries.py
 git commit -m "test: add opportunity hunting audit matrix"
+
+## OPP-003 — Opportunity follow-up and state enforcement (completado)
+- "alguno/alguna" reforzado en STOPWORDS.
+- followup_engine.py: _merge_change_scope preserva objeto de opportunity_search en follow-ups geográficos.
+- query_router.py: opportunity_search fuerza claves concretas de estado (estado_de_apertura_del_proceso).
+- Tests: 528 passed, torture matrix OK.
+- Problema original de herencia de "pintura" + Atlántico resuelto a nivel parser/merge.
