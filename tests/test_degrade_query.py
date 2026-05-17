@@ -1,9 +1,11 @@
 """Tests tarea 1.4.5 — degradacion elegante (relax_params + degrade_query action)."""
 from __future__ import annotations
 
+from unittest.mock import MagicMock
+
 import pytest
 
-from app.core.orchestrator import _relax_params
+from app.core.orchestrator import _relax_params, degrade_query
 
 
 class TestRelaxParams:
@@ -62,3 +64,35 @@ class TestRelaxParams:
         relaxed, hint = _relax_params(p)
         assert "departamento_resolution" not in relaxed
         assert hint == "en todo el pais"
+
+
+class TestDegradeQueryAction:
+    """Verifica que degrade_query action persiste total_count."""
+
+    def test_degraded_query_sets_total_count(self):
+        """N1: degrade_query con resultados debe escribir total_count > 0."""
+        import time
+        from burr.core import State
+
+        params = {"estado": "Abierto", "objeto": ["obra"]}
+        state = State({
+            "results": [],
+            "query_error": "",
+            "resolved_params": params,
+            "dataset_id": "p6dx-8zbt",
+            "followup": False,
+            "timings_ms": {},
+        })
+        soql_builder = MagicMock()
+        soql_builder.build.return_value = "SELECT ... WHERE ..."
+        soql_builder.build_count.return_value = "SELECT count(*) WHERE ..."
+
+        secop_client = MagicMock()
+        secop_client.query.return_value = [{"nombre": "test"}]
+        secop_client.count.return_value = 5
+
+        new_state = degrade_query(state, secop_client, soql_builder)
+
+        assert new_state["degraded"] is True
+        assert new_state["total_count"] == 5
+        assert new_state["degraded_hint"] == "sin filtro de estado"

@@ -454,6 +454,50 @@ def test_bigram_in_or_group(router: QueryRouter) -> None:
     assert result.params.get("objeto") == [["adulto_mayor", "primera_infancia"]]
 
 
+@pytest.mark.parametrize(
+    "query,expected_current,note",
+    [
+        (
+            "canchas deportivas o parques infantiles",
+            ["canchas", ["deportiva", "parques"], "infantiles"],
+            "GAP-N4: frases multipalabra sin entrada en KNOWN_BIGRAMS se rompen en OR. "
+            "Ideal: [['canchas_deportivas', 'parques_infantiles']]. "
+            "Requiere detección de cláusulas multipalabra pre-OR.",
+        ),
+        (
+            "mantenimiento vial o parques infantiles",
+            ["mantenimiento", ["vial", "parques"], "infantiles"],
+            "GAP-N4: 'mantenimiento vial' y 'parques infantiles' son unidades semánticas.",
+        ),
+        (
+            "construccion de canchas sinteticas o parques biosaludables",
+            ["construccion", "canchas", ["sinteticas", "parques"], "biosaludables"],
+            "GAP-N4: tres frases multipalabra se dispersan en tokens individuales.",
+        ),
+        (
+            "adecuacion de vias terciarias o caminos veredales",
+            ["adecuacion", "vias", ["terciarias", "caminos"], "veredales"],
+            "GAP-N4: frases del dominio vial no se agrupan correctamente con OR.",
+        ),
+    ],
+)
+def test_or_mixed_multitoken_terms(
+    router: QueryRouter, query: str, expected_current: list, note: str
+) -> None:
+    """N4: OR mixto con frases multipalabra — documenta gap conocido.
+
+    Cuando cada lado del 'o' es una frase de 2+ palabras sin entrada en
+    KNOWN_BIGRAMS, el tokenizador actual no reconoce las fronteras de cláusula
+    y produce grupos incorrectos. Fix diferido: requiere refactor del tokenizador
+    para detectar cláusulas multipalabra alrededor de 'o'.
+    """
+    result = router.parse(query)
+    actual = result.params.get("objeto")
+    assert actual == expected_current, (
+        f"{query!r}: expected {expected_current!r}, got {actual!r}. {note}"
+    )
+
+
 # ═════════════════════════════════════════════════════════════════════════════
 # Acrónimos de programas + verbos de acción del usuario
 # ═════════════════════════════════════════════════════════════════════════════

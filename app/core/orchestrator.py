@@ -273,7 +273,7 @@ def _build_timeout_suggestions(params: dict, total_count: int) -> list[dict]:
 
 @action(
     reads=["results", "query_error", "resolved_params", "dataset_id", "followup", "timings_ms"],
-    writes=["results", "degraded", "degraded_hint", "query_error", "needs_clarification", "clarification_reason", "timings_ms"],
+    writes=["results", "total_count", "degraded", "degraded_hint", "query_error", "needs_clarification", "clarification_reason", "timings_ms"],
 )
 def degrade_query(state: State, secop_client: SecopClient, soql_builder: SoQLBuilder) -> State:
     """If zero results, try one relaxed query. Marks state degraded=True on success.
@@ -306,10 +306,11 @@ def degrade_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
 
     try:
         soql = soql_builder.build(state["dataset_id"], relaxed)
-        results = secop_client.query(state["dataset_id"], soql)
+        count_soql = soql_builder.build_count(state["dataset_id"], relaxed)
+        total, results, _timings = _count_and_query_parallel(
+            secop_client, state["dataset_id"], count_soql, soql
+        )
         if results:
-            count_soql = soql_builder.build_count(state["dataset_id"], relaxed)
-            total = secop_client.count(state["dataset_id"], count_soql)
             return _with_timing(
                 state,
                 "degrade_ms",
