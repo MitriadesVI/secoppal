@@ -24,7 +24,9 @@ El objetivo no es replicar un portal de filtros, sino construir un **asesor inte
 9. Generar sugerencias accionables para explorar el universo contractual.
 10. Mantener trazabilidad de bugs, decisiones y cambios mediante tests y bitácoras.
 
-El sistema está actualmente en una etapa de **MVP funcional con endurecimiento semántico y conversacional**. Ya existen parser determinístico, resolución de entidades, constructor SoQL, política de respuesta asesora, seguimiento conversacional, sugerencias, paginación, feedback y suite de tests.
+El sistema está actualmente en una etapa de **MVP funcional con endurecimiento semántico y conversacional + primera ruta analítica**. Ya existen parser determinístico, resolución de entidades, constructor SoQL, política de respuesta asesora, seguimiento conversacional, sugerencias, paginación, feedback y suite de tests.
+
+En mayo 2026 se agregó la primera ruta analítica determinística (AQ-001A aggregate_sum) que permite responder consultas del tipo “cuánto se contrató en X” con SUM + COUNT en vez de listar contratos.
 
 ---
 
@@ -1082,3 +1084,35 @@ Se completó el micro-sprint de corrección de los 4 bugs de alta prioridad iden
 
 El sistema se encuentra en estado **Verde-Amarillo** y listo para exposición controlada a usuarios internos.
 
+
+---
+
+## 11. Decisiones arquitectónicas relevantes (D21)
+
+### D21: Analytical queries determinísticas antes de LLM classifier (2026-05-17)
+
+**Contexto:** Antes de implementar comparativas, distribuciones o top-N, se priorizó una ruta analítica simple y determinística para responder preguntas de agregación básica.
+
+**Decisión:**
+- El LLM nunca genera SoQL.
+- `analytics.py` detecta intent analítico de forma determinística.
+- `aggregate_sum` exige al menos un scope/topic (guard anti-global).
+- `analytical_response` no puede ser sobrescrita por `format_response` ni `build_advisor_response`.
+- `top_entities`, `top_contractors` y distribuciones quedan diferidos para fases posteriores (AQ-001B).
+
+**Reglas vigentes:**
+- Ruta analítica → antes que clasificador LLM.
+- Solo `aggregate_sum` en esta fase.
+- Guard + short-circuit en múltiples puntos del grafo Burr.
+
+---
+
+## 12. Roadmap próximo bloque recomendado (actualizado 2026-05-17)
+
+Después del cierre de AQ-001A, el orden recomendado es:
+
+1. **OPP-001** — Opportunity Hunting Audit (revisión de oportunidades de mejora de producto)
+2. **AQ-001B** — `top_entities` / `top_contractors` (agregaciones de ranking)
+3. **OBS-001** — Observabilidad operativa (queda pendiente si el foco es análisis de negocio)
+
+No se recomienda activar H10 ni LLM classifier para queries analíticas mientras la ruta determinística funcione bien.
