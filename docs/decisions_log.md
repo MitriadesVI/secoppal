@@ -47,127 +47,30 @@ Registro de Decisiones Arquitectónicas (ADR). Append-only. Una entrada por deci
 
 ## ADR-004: Prioridad lista estado sobre scalar legacy en SoQLBuilder
 
-**Fecha:** 2026-05-16  
-**Contexto:** Cuando existía `estado_contrato` como lista (ej: `["En ejecución", "Modificado"]`) Y `estado` como scalar legacy (ej: "En ejecución"), el SoQLBuilder escribía `estado_contrato = 'En ejecución'` y saltaba la lista por el `continue` del bloque legacy. El filtro IN nunca se generaba.
-
-**Decisión:** En `_build_where()`, si `params[field]` existe como lista Y `estado_field == field`, la lista tiene prioridad. El scalar solo se escribe si no hay lista para ese field.
-
-**Alternativas descartadas:** Eliminar el scalar `estado` por completo (rompe backward compatibility con tests legacy). Forzar limpieza de `estado` en query_router cuando hay lista (más cambios, más riesgo).
-
----
-
-## ADR-005: Stopwords auxiliares subjuntivas
-
-**Fecha:** 2026-05-16  
-**Contexto:** "esten" (de "estén") se colaba como objeto contractual porque no estaba en STOPWORDS. Esto producía consultas SoQL con `LIKE '%esten%'` que devolvían resultados sin relación con el tema real del usuario.
-
-**Decisión:** Agregar `este`, `esten`, `sea`, `sean`, `encuentre`, `encuentren` a STOPWORDS en query_router.py. Complementa el set existente de verbos auxiliares ("esta", "estan", "hay", "tiene").
-
-**Alternativas descartadas:** Crear un filtro gramatical Post-Parse (el fix es más barato en STOPWORDS). Usar POS tagging (overkill para un puñado de tokens).
-
----
-
-## ADR-006: Archivado de archivos v2/v3 legacy
-
-**Fecha:** 2026-05-16  
-**Contexto:** `app/core/` contenía 5 archivos con espacios y sufijos de versión (`soql_builder v2.py`, `query_router v2.py`, `orchestrator v2.py`, `entity_resolver v2.py`, `entity_resolver v3.py`). Esto es veneno lento: confunde al agente (agarra el archivo equivocado), rompe imports, contamina tests y requiere sync manual constante entre copias.
-
-**Decisión:** Archivar todos en `archive/cleanup_2026-05-16/`. SHA256 pre/post guardados en `docs/auditoria_2026-05-16/`. Tests y accuracy_test.py actualizados para cargar desde canonical o archive según corresponda. Regla: **nunca versiones paralelas dentro de app/core**.
-
-**Alternativas descartadas:** Mantener sync manual (ya demostró ser frágil con el bug del Chocó). Dejarlos (siguen siendo veneno lento).
-
----
-
-## ADR-007: Guard anti-WHERE 1=1 específico (solo scope/topic)
-
-**Fecha:** 2026-05-15  
-**Contexto:** El mensaje del guard ofrecía "fecha o valor" como filtros base, pero fecha y valor solos no pasan el guard — solo scope/topic (entidad, lugar, tema, contratista). El mensaje engañaba al usuario.
-
-**Decisión:** Cambiar mensaje a "Necesito al menos un filtro de entidad, lugar, tema o contratista para buscar." El guard en execute_query sigue siendo el mismo (`resolved_params` debe tener al menos un key en `_SCOPE_TOPIC_KEYS`).
-
----
-
----
-
-## ADR-008: Regla semántica “firmados” vs estados contractuales reales
-
 **Fecha:** 2026-05-16
 
-**Contexto:** El handler de LLM tenía un kill-switch en `_is_signed_query()` que, al detectar “firmados”, borraba inmediatamente todas las claves de estado. Esto rompía consultas mixtas del tipo “contratos firmados que estén en ejecución”, donde el usuario quiere forzar el dataset contratos pero aplicar un filtro de estado real.
+## 2026-05-17 — AQ-001A aggregate_sum integrado
 
-**Decisión:** 
-- “firmados / suscritos / celebrados” solo fuerza `dataset = "contratos"`.
-- Nunca borra estados válidos.
-- Se ejecuta `_drop_invalid_contract_states()` + `_apply_contract_estado_family()` incluso después de detectar “firmados”.
-- Si al final no queda ningún `estado_contrato` real, recién entonces se limpian las claves de estado.
+Se agregó la primera ruta analítica determinística de SECOPPAL:
+- detecta consultas tipo “cuánto se contrató”, “valor total contratado”, “cuánto suma”
+- construye SoQL agregado con SUM + COUNT
+- usa guard anti-global
+- responde con texto analítico en vez de lista de contratos
+- propaga analytical_intent, analytical_response y route_reason por el grafo
+- evita que degrade_query, format_response y build_advisor_response sobrescriban la respuesta analítica
 
-**Alternativas descartadas:** 
-- Mantener el kill-switch agresivo (rompe el caso mixto).
-- Tratar “firmados o en ejecución” como universo amplio (demasiado permisivo y ambiguo).
+Alcance:
+- solo aggregate_sum
+- sin top_entities
+- sin top_contractors
+- sin distribuciones
+- sin comparativas
+- sin LLM classifier
+- sin H10
 
-**Consecuencias:** 
-- Se agregó test `test_llm_firmados_que_esten_en_ejecucion_mantiene_estado_activo`.
-- Se cerró el bug B9 de la auditoría 2.
-- Se preserva la invariante: “firmados” = universo de contratos; “en ejecución” = subconjunto operativo.
-
----
-
-**Cierre Auditoría P0 (2026-05-16)**
-
-Se cerraron los 4 bugs de alta prioridad de la segunda auditoría:
-
-- **B1**: `/chat` ahora propaga `chat_id` correctamente.
-- **B2**: `degrade_query` recalcula `total_count`.
-- **B3**: Se removió `re.IGNORECASE` del regex de entidades del narrator.
-- **B8/B9**: Regla semántica de “firmados” + estados reales implementada y testeada.
-
-Suite: 466/466 tests pasando. `feedback.jsonl` sin modificaciones.
-
-
-## 2026-05-16 — Deprecación de classify_turn (B5)
-- Se marcó `query_frame.classify_turn()` como deprecated.
-- Se agregó `warnings.warn(DeprecationWarning)`.
-- Se actualizó docstring y tests.
-- Razón: ya no se usa en el flujo principal de producción.
-- Decisión: mantener la función por compatibilidad pero no usarla en nuevo código.
-
-
-## 2026-05-16 — Parser real-world queries: entidades numéricas y topónimos
-
-**BUG-001 — Protección de años en entidades jurídicas (fixed-core):**
-- Query real: "contratos de fundación 2030" → "2030" era capturado como año.
-- Causa: loop genérico de años en `parse()` (líneas 341-344) sin protección de span nominal.
-- Fix: `_ENTITY_NUMBER_RE` detecta patrones `fundación|corporación|asociación|... 20\d{2}`. El loop ahora salta años dentro de spans protegidos.
-- DEUDA-001: la resolución de "Fundación 2030" como contratista/entidad depende del gazetteer/aliases (no resuelta en este fix).
-
-**BUG-002 — Topónimo Chiriguaná sin preposición (fixed):**
-- Query real: "contraos chiriguana" → Chiriguaná era tratado como objeto.
-- Causa: `_CITY_PATTERN_RE` no incluía chiriguana/chiriguaná. `_COMMON_CITIES` existe pero no se usa operativamente.
-- Fix: `chiriguana|chiriguaná` agregado a `_CITY_PATTERN_RE` (línea 209).
-- DEUDA-002: "que mencionen chiriguana" no tiene bypass textual; chiriguana se prioriza como topónimo (comportamiento actual aceptable).
-
-**Método:** 3 parches quirúrgicos. Sin LLM classifier. Sin H10/auth. Sin refactor amplio.
-**Suite:** 504/504 tests pasando.
-**feedback.jsonl:** intacto (SHA: 9e811275...).
-**Tag:** `secoppal-parser-realworld-fixes-2026-05-16`
-
-
-## 2026-05-17 — N5 feedback.rate race condition diferido
-
-Se documenta N5 (audit3): `feedback.rate()` lee el archivo JSONL completo,
-modifica el item correspondiente y reescribe el archivo entero. En un despliegue
-multi-worker concurrente esto puede causar race condition (dos workers
-modificando el mismo archivo simultáneamente puede corromper o perder ratings).
-
-**Decisión:**
-- Mantener como deuda diferida.
-- El piloto actual (single-worker, acceso controlado) no está expuesto a esta race.
-- Antes de escalar a multi-worker o exposición pública, migrar a uno de:
-  - `rating_events.jsonl` append-only (event sourcing, inmutable).
-  - File locking (`fcntl.flock` o `portalocker`).
-  - Base de datos (PostgreSQL con row-level locking).
-- **No afecta** búsquedas ni respuestas. Solo afecta consistencia de feedback
-  bajo concurrencia alta.
-
-**Tag:** `N5-audit3-2026-05-17`
-
+Validación:
+- make lint-core limpio
+- tests/test_analytical_queries.py: 10 passed
+- suite completa: 519 passed
+- torture matrix verde
+- feedback.jsonl intacto

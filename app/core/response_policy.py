@@ -41,6 +41,13 @@ def build_advisor_response(
     Returns:
         str con la respuesta formateada para el canal.
     """
+    # ── Camino analítico: respuesta ya construida en execute_query ──────
+    # Tiene prioridad absoluta: no se sobrescribe ni se le añaden secciones
+    # tabulares ("interpretación", "universo", "lectura rápida", etc.).
+    analytical = context.get("analytical_response", "")
+    if analytical:
+        return analytical
+
     needs_clarification = context.get("needs_clarification", False)
     clarification_reason = context.get("clarification_reason", "")
     query_error = context.get("query_error", "")

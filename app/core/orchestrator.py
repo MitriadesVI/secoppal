@@ -9,6 +9,7 @@ from burr.core import ApplicationBuilder, State, action, default, expr
 
 from app.config import Settings
 from app.core._followup_constants import SCOPE_TOPIC_KEYS
+from app.core.analytics import maybe_handle_analytical_query
 from app.core.conversation_store import ConversationStore, is_followup, is_reset_command, is_pagination_phrase
 from app.core.direct_responses import reset_response, pagination_no_history_response, suggestion_invalid_response, suggestion_selection_header
 from app.core.entity_resolver import EntityResolver
@@ -147,7 +148,7 @@ def build_query(state: State, soql_builder: SoQLBuilder) -> State:
     return _with_timing(state, "build_soql_ms", start, soql_query=soql)
 
 
-@action(reads=["resolved_params", "dataset_id", "soql_query", "timings_ms"], writes=["results", "query_error", "total_count", "timeout_suggestions", "needs_clarification", "clarification_reason", "timings_ms"])
+@action(reads=["resolved_params", "dataset_id", "soql_query", "user_query", "timings_ms"], writes=["results", "query_error", "total_count", "timeout_suggestions", "needs_clarification", "clarification_reason", "analytical_response", "analytical_intent", "route_reason", "timings_ms"])
 def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBuilder) -> State:
     """Execute SECOP count + query with graceful error handling.
     On timeout for heavy ordering queries, retry without ordering_signal.
@@ -155,6 +156,33 @@ def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
     """
     start_total = time.perf_counter()
     params = state.get("resolved_params", {})
+
+    # ── Ruta analítica (aggregate_sum) ─────────────────────────────
+    # Si maybe_handle_analytical_query atiende la consulta, NO se ejecuta el
+    # camino tabular. La respuesta queda en analytical_response y se propaga
+    # intacta por degrade_query/format_response/build_advisor_response.
+    analytics = maybe_handle_analytical_query(
+        user_query=state.get("user_query", ""),
+        params=params,
+        dataset_id=state.get("dataset_id", ""),
+        secop_client=secop_client,
+        soql_builder=soql_builder,
+    )
+    if analytics:
+        return _with_timing(
+            state,
+            "execute_total_ms",
+            start_total,
+            results=[],
+            query_error="",
+            total_count=int(analytics.get("total_count", 0) or 0),
+            timeout_suggestions=[],
+            needs_clarification=bool(analytics.get("needs_clarification", False)),
+            clarification_reason=analytics.get("clarification_reason", ""),
+            analytical_response=analytics.get("response", ""),
+            analytical_intent=analytics.get("analytical_intent", ""),
+            route_reason=analytics.get("route_reason", state.get("route_reason", "")),
+        )
 
     # ── Guard anti-WHERE 1=1 ─────────────────────────────────────────────
     # Fuente: app/core/_followup_constants.py (H9: unificada con FollowupGuards)
@@ -272,15 +300,19 @@ def _build_timeout_suggestions(params: dict, total_count: int) -> list[dict]:
 
 
 @action(
-    reads=["results", "query_error", "resolved_params", "dataset_id", "followup", "timings_ms"],
+    reads=["results", "query_error", "resolved_params", "dataset_id", "followup", "analytical_response", "timings_ms"],
     writes=["results", "total_count", "degraded", "degraded_hint", "query_error", "needs_clarification", "clarification_reason", "timings_ms"],
 )
 def degrade_query(state: State, secop_client: SecopClient, soql_builder: SoQLBuilder) -> State:
     """If zero results, try one relaxed query. Marks state degraded=True on success.
 
     En follow-ups conversacionales, NO relaja automáticamente — sugiere alternativas.
+    En modo analítico (analytical_response presente), no degrada nunca.
     """
     start = time.perf_counter()
+    # Modo analítico: la respuesta ya está construida, no hay nada que degradar.
+    if state.get("analytical_response"):
+        return _with_timing(state, "degrade_ms", start, degraded=False, degraded_hint="")
     if state["results"] or state.get("query_error"):
         return _with_timing(state, "degrade_ms", start, degraded=False, degraded_hint="")
 
@@ -365,9 +397,20 @@ def suggester_action(state: State) -> State:
     return _with_timing(state, "suggest_ms", start, suggestions=suggestions)
 
 
-@action(reads=["results", "dataset_id", "channel", "query_error", "resolved_params", "degraded", "degraded_hint", "total_count", "universe_insights", "suggestions", "timeout_suggestions", "timings_ms"], writes=["formatted_response", "formatted_rows", "timings_ms"])
+@action(reads=["results", "dataset_id", "channel", "query_error", "resolved_params", "degraded", "degraded_hint", "total_count", "universe_insights", "suggestions", "timeout_suggestions", "analytical_response", "timings_ms"], writes=["formatted_response", "formatted_rows", "timings_ms"])
 def format_response(state: State, formatter: Formatter) -> State:
     start = time.perf_counter()
+    # Modo analítico: la respuesta ya viene formateada desde execute_query.
+    # No pasar por formatter (no hay rows tabulares que renderizar).
+    analytical = state.get("analytical_response")
+    if analytical:
+        return _with_timing(
+            state,
+            "format_ms",
+            start,
+            formatted_response=analytical,
+            formatted_rows=[],
+        )
     if state.get("query_error"):
         return _with_timing(
             state,
@@ -782,6 +825,8 @@ class SecopalWorkflow:
                 timeout_suggestions=[],
                 intent_type="",
                 followup_intent_type="",
+                analytical_response="",
+                analytical_intent="",
                 timings_ms={},
             )
             .with_entrypoint("parse_query")
@@ -818,6 +863,8 @@ class SecopalWorkflow:
             "timeout_suggestions": state.get("timeout_suggestions", []),
             "intent_type": state.get("intent_type", ""),
             "followup_intent_type": state.get("followup_intent_type", ""),
+            "analytical_intent": state.get("analytical_intent", ""),
+            "analytical_response": state.get("analytical_response", ""),
             "followup": followup,
             "timings_ms": dict(state.get("timings_ms", {}) or {}),
         }
@@ -839,6 +886,7 @@ class SecopalWorkflow:
             "clarification_reason": state.get("clarification_reason", ""),
             "degraded": state.get("degraded", False),
             "degraded_hint": state.get("degraded_hint", ""),
+            "analytical_response": state.get("analytical_response", ""),
         }, narrator=self.narrator)
         result["response"] = advisor_response
         result["timings_ms"]["advisor_response_ms"] = _elapsed_ms(advisor_start)

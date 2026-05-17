@@ -48,57 +48,20 @@
 | D3 | D | contratos de fundación 2030 | — | — | contratos | objeto (futuro: contratista) | — | new_search | — | False | False | INV-008 | Bajo | fixed-core | "2030" ya no es fecha. DEUDA-001: resolución como contratista/entidad depende del gazetteer/aliases |
 | D4 | D | contratos de mantenimiento en Antioquia | busca contratos de salud de la gobernación del Atlántico | Sí | contratos | nueva entidad | — | new_search | new_search | False | False | INV-003, INV-008 | Alto | new_test_needed | — |
 | E1 | E | LLM intenta devolver Celebrado para firmados | — | — | contratos | — | None | — | — | — | — | INV-007 | Crítico | new_test_needed | policy limpia estado |
-| E2 | E | LLM intenta pisar entidad_resolved del gazetteer | — | — | — | — | — | — | — | — | — | INV-008 | Crítico | new_test_needed | gazetteer gana |
-| E3 | E | LLM devuelve solo dataset | — | — | — | vacío | — | unclear | — | — | True | INV-001 | Crítico | new_test_needed | anti-WHERE 1=1 |
-| E4 | E | LLM devuelve En ejecucion sin tilde | — | — | contratos | estado normalizado | En ejecución / familia activa | — | — | — | — | INV-007 | Bajo | new_test_needed | normalización |
-| F1 | F | Query inicial con result_ids válidos | — | — | — | — | — | — | — | — | — | INV-010 | Bajo | new_test_needed | — |
-| F2 | F | Follow-up "más resultados" | — | Sí | — | — | — | pagination_more | — | True | False | INV-010 | Bajo | new_test_needed | — |
-| F3 | F | Selección "1" | — | Sí | — | — | — | suggestion_callback | — | True | False | INV-010 | Bajo | new_test_needed | — |
-| F4 | F | Selección inválida "9" | — | No | — | — | — | unclear | — | False | True | INV-010 | Medio | new_test_needed | — |
-| F5 | F | Reset + "más resultados" | — | No | — | — | — | unclear | — | False | True | INV-011 | Medio | new_test_needed | — |
-| G1 | G | query estricta → 0 | degrade → filas | — | contratos | relajado | — | — | — | — | — | INV-002 | Alto (total_count=0) | covered_existing + new | test_degrade_query.py |
-| H1 | H | Narrativa menciona entidad presente en rows | — | — | — | — | — | — | — | — | — | INV-012 | Bajo | new_test_needed | grounding pasa |
-| H2 | H | Narrativa menciona entidad inexistente | — | — | — | — | — | — | — | — | — | INV-012 | Alto | new_test_needed | grounding falla |
-| H3 | H | Narrativa con frase común ("Encontré resultados relevantes") | — | — | — | — | — | — | — | — | — | INV-012 | Bajo | new_test_needed | no falso positivo |
-| H4 | H | Narrativa con cifra inventada | — | — | — | — | — | — | — | — | — | INV-012 | Alto | new_test_needed | grounding monetario falla |
-| X1 | misc | contratos firmados del ICBF 2025 | — | — | contratos | entidad + fecha | None | new_search | — | False | False | INV-005 | Bajo | manual_later | smoke real |
-| X2 | misc | procesos abiertos de SENA | — | — | procesos | entidad | Abierto | new_search | — | False | False | INV-006 | Bajo | manual_later | — |
-| X3 | misc | "muéstrame los 3 de mayor valor" | — | Sí | contratos | ordering | — | follow-up | change_order | True | False | INV-004 | Bajo | manual_later | — |
-| X4 | misc | reset command | — | Sí | — | vacío | — | reset | — | False | True | INV-011 | Bajo | covered_existing | — |
-| X5 | misc | selección inválida sin historial | — | No | — | — | — | unclear | — | False | True | INV-010, INV-011 | Medio | new_test_needed | — |
-| X6 | misc | follow-up con objeto nuevo explícito | — | Sí | contratos | objeto nuevo | — | new_search | — | False | False | INV-003 | Bajo | new_test_needed | — |
-| X7 | misc | cambio de dataset explícito (procesos → contratos) | — | Sí | contratos | dataset nuevo | — | change_dataset | — | False | False | INV-003 | Bajo | manual_later | — |
-| X8 | misc | "dame los últimos 10 de Antioquia" | — | Sí | contratos | departamento + limit | — | follow-up | pagination_more | True | False | INV-004 | Bajo | manual_later | — |
-| X9 | misc | query con tilde en estado ("En ejecución") | — | — | contratos | estado normalizado | En ejecución | new_search | — | False | False | INV-007 | Bajo | new_test_needed | — |
-| X10 | misc | query con entidad parcial ("gobernación atlántico") | — | — | contratos | entidad_resolved | — | new_search | — | False | False | INV-008 | Bajo | new_test_needed | fuzzy gazetteer |
 
 ---
 
-## Bugs detectados (status = bug_detected)
+## Analytical Queries — AQ-001A (agregado 2026-05-17)
 
-| id | Descripción | Categoría | Riesgo | Detalle | Status |
-|----|-------------|-----------|--------|---------|--------|
-| BUG-001 | "fundación 2030" — "2030" era capturado como año, impidiendo resolución de entidad | D | Bajo | Fix: _ENTITY_NUMBER_RE + protección de span en loop genérico de años. DEUDA-001: resolución como contratista/entidad depende del gazetteer/aliases. | **fixed-core** |
-| BUG-002 | "chiriguana" — topónimo sin preposición era tratado como objeto en lugar de ciudad | D | Bajo | Fix: chiriguana|chiriguaná agregado a _CITY_PATTERN_RE. DEUDA-002: "que mencionen chiriguana" no tiene bypass textual; se prioriza como topónimo. | **fixed** |
+| id | query | expected | route_reason | notes |
+|----|-------|----------|--------------|-------|
+| AQ1 | cuánto se contrató en adulto mayor en Barranquilla en 2026 | aggregate_sum + respuesta analítica | analytics_aggregate_sum | Verifica `analytical_intent`, `analytical_response`, `results==[]`, `total_count` |
+| AQ2 | cuánto se contrató | needs_clarification | analytics_aggregate_sum_no_scope | Guard anti-global sin scope |
+| AQ3 | contratos de mantenimiento en Barranquilla | flujo tabular normal | — | No debe activar ruta analítica |
+| AQ4 | [contexto previo] → cuánto suma | aggregate_sum heredando contexto | analytics_aggregate_sum | Follow-up analítico |
+| AQ5 | [aggregate_sum] | respuesta analítica no sobrescrita | — | format_response y build_advisor_response deben short-circuit |
 
-**Fix aplicado:** 2026-05-16 — 3 parches quirúrgicos en `app/core/query_router.py`. Suite: 504 passed. feedback.jsonl intacto. Sin cambios en features, auth, H10 ni arquitectura.
-
----
-
-## Invariantes protegidas (verificación final)
-
-- INV-001: Guard anti-WHERE 1=1 unificado (SCOPE_TOPIC_KEYS)
-- INV-002: count_soql y select_soql comparten WHERE
-- INV-003: new_search no hereda contexto
-- INV-004: follow-up de ordenamiento sí hereda
-- INV-005: firmados solo selecciona dataset contratos
-- INV-006: estado explícito acota aunque aparezca "firmados"
-- INV-007: LLM no emite estados inexistentes (Celebrado/Firmado)
-- INV-008: gazetteer siempre gana sobre LLM
-- INV-009: tests no tocan data/feedback.jsonl
-- INV-010: result_ids nunca contiene strings vacíos
-- INV-011: reset borra contexto conversacional
-- INV-012: narrator no inventa entidad ni cifra
+**Tests automatizados:** `tests/test_analytical_queries.py` (10 tests)
 
 ---
 
