@@ -278,9 +278,15 @@ def _relax_params(params: dict) -> tuple[dict | None, str]:
 
 
 def _build_timeout_suggestions(params: dict, total_count: int) -> list[dict]:
-    """Generate suggestions for timeout scenarios — filter by year."""
+    """Generate suggestions for timeout scenarios.
+    For opportunity_search: no quitar fecha if none existed.
+    Suggest acotar por lugar/frescura/subtipo instead.
+    """
     suggestions = []
-    if not params.get("fecha_desde"):
+    is_opportunity = params.get("intent_type") == "opportunity_search"
+    has_fecha = bool(params.get("fecha_desde"))
+
+    if not has_fecha and not is_opportunity:
         suggestions.append({
             "label": "Solo 2026",
             "modified_params": {**params, "fecha_desde": "2026-01-01", "fecha_hasta": "2026-12-31"},
@@ -291,11 +297,25 @@ def _build_timeout_suggestions(params: dict, total_count: int) -> list[dict]:
             "modified_params": {**params, "fecha_desde": "2023-01-01", "fecha_hasta": "2026-12-31"},
             "reason": "Contratos de los ultimos 3 anos",
         })
-    suggestions.append({
-        "label": "Sin ordenar por valor",
-        "modified_params": {k: v for k, v in params.items() if k != "ordering_signal"},
-        "reason": "Quitar el orden por valor para que la busqueda sea mas rapida",
-    })
+
+    if is_opportunity:
+        suggestions.append({
+            "label": "Acotar por lugar o entidad",
+            "modified_params": params,
+            "reason": "Agregar ciudad o entidad para reducir resultados",
+        })
+        suggestions.append({
+            "label": "Ultimos 45 dias",
+            "modified_params": {**params, "fecha_desde": "2026-04-01", "fecha_hasta": "2026-05-17"},
+            "reason": "Ventana reciente para oportunidades activas",
+        })
+    else:
+        suggestions.append({
+            "label": "Sin ordenar por valor",
+            "modified_params": {k: v for k, v in params.items() if k != "ordering_signal"},
+            "reason": "Quitar el orden por valor para que la busqueda sea mas rapida",
+        })
+
     return suggestions[:3]
 
 

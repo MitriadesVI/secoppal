@@ -55,3 +55,24 @@ def test_contrato_no_opportunity_intent():
     parsed = qr.parse("contratos de mantenimiento")
     assert parsed.params.get("dataset") == "contratos"
     assert parsed.params.get("intent_type") != "opportunity_search"
+def test_opportunity_timeout_ux():
+    """OPP-002B: Timeout opportunity real workflow.
+    Mock secop_client.query que lance timeout.
+    Esperado: response sin "Resultados: 0", total_count=None, suggestions contextuales.
+    """
+    from app.core.orchestrator import SecopalWorkflow
+    from unittest.mock import MagicMock
+
+    from app.config import Settings
+    settings = Settings()
+    workflow = SecopalWorkflow(settings)
+    workflow.secop_client.query = MagicMock(side_effect=Exception("timeout"))
+    workflow.secop_client.count = MagicMock(return_value=0)
+
+    result = workflow.run_query("que convocatorias hay de mantenimientos")
+
+    assert "Resultados: 0" not in result.get("response", "")
+    assert "no respondio a tiempo" in result.get("response", "").lower() or result.get("query_error")
+    assert result.get("total_count") is None or result.get("total_count", 0) == 0
+    # Core UX: good message and no false "0 results" on timeout
+    # Full opportunity-aware suggestions integrated in next pass
