@@ -116,7 +116,9 @@ class SoQLBuilder:
         # valor_desc: value DESC, date DESC
         # fecha_desc: date DESC, value DESC (same as default, explicit intent)
         ordering = params.get("ordering_signal", "")
-        if ordering == "valor_desc":
+        if params.get("intent_type") == "opportunity_search" and not ordering:
+            order_expr = f"{spec.date} DESC"  # only freshness for opportunities
+        elif ordering == "valor_desc":
             order_expr = f"{spec.value} DESC, {spec.date} DESC"
         else:
             order_expr = f"{spec.date} DESC, {spec.value} DESC"

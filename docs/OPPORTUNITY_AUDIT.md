@@ -1,7 +1,7 @@
 # OPP-001 — Opportunity Hunting Audit
 
 **Fecha:** 2026-05-17  
-**Estado:** Fase 1-3 completadas (definición + matriz + tests)  
+**Estado:** OPP-002 implementado (policy mínima opportunity_search). Fase 1-4 completadas.  
 **Objetivo:** Auditar qué tan bien SECOPPAL encuentra oportunidades SECOP (procesos activos o accionables, no contratos firmados).  
 **Alcance:** Solo documentación y tests con mocks. Sin implementación de Radar, notificaciones, WhatsApp/Telegram, H10, AQ-001A, top_entities, ni uso de Licitaciones.info como fuente.
 

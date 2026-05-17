@@ -301,6 +301,14 @@ class QueryRouter:
                 consumed_spans.append(intent_span)
                 scrubbed = scrubbed.replace(intent_span, " ", 1)
 
+        # OPP-002: opportunity_search trigger (minimal, deterministic)
+        opportunity_keywords = ("oportunidad", "oportunidades", "convocatoria", "convocatorias",
+                                "licitación abierta", "licitaciones abiertas", "procesos abiertos")
+        if any(kw in normalized for kw in opportunity_keywords):
+            params["intent_type"] = "opportunity_search"
+            params.setdefault("dataset", "procesos")
+            params.setdefault("estado_family", "oferta_abierta")
+
         # ── 1. Dataset selection (keyword-based) ────────────────────────
         #    Only set if not already determined by intent
         params.setdefault("dataset", self._select_dataset(normalized))
