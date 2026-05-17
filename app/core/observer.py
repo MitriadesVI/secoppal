@@ -21,6 +21,10 @@ if TYPE_CHECKING:
 
 logger = get_logger(__name__)
 
+# ── Timeouts de agregación (N6, audit3) ──────────────────────────────────
+OBSERVER_AGG_TIMEOUT_PER_TASK = 4   # timeout pasado a secop_client.aggregate
+OBSERVER_AGG_TIMEOUT_GLOBAL = 5     # timeout de as_completed sobre todas las tareas
+
 
 @dataclass
 class UniverseInsights:
@@ -177,19 +181,24 @@ def _compute_from_aggregation(
 
     with ThreadPoolExecutor(max_workers=5) as executor:
         futures = {
-            executor.submit(secop_client.aggregate, dataset_id, q, 4): name
+            executor.submit(
+                secop_client.aggregate, dataset_id, q, OBSERVER_AGG_TIMEOUT_PER_TASK
+            ): name
             for name, q in queries.items()
         }
         try:
-            for future in as_completed(futures, timeout=5):
+            for future in as_completed(futures, timeout=OBSERVER_AGG_TIMEOUT_GLOBAL):
                 name = futures[future]
                 try:
-                    agg_results[name] = future.result(timeout=1)
+                    agg_results[name] = future.result()
                 except Exception as exc:
                     logger.warning("aggregate %s failed: %s", name, exc)
                     agg_results[name] = None
         except FuturesTimeout:
-            logger.warning("observe_universe: global timeout (5s) — using partial results")
+            logger.warning(
+                "observe_universe: global timeout (%ds) — using partial results",
+                OBSERVER_AGG_TIMEOUT_GLOBAL,
+            )
 
     # Si todas las queries fallaron, sube la excepción para que observe() retorne None
     if all(v is None for v in agg_results.values()):

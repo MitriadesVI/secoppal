@@ -151,3 +151,23 @@ Suite: 466/466 tests pasando. `feedback.jsonl` sin modificaciones.
 **feedback.jsonl:** intacto (SHA: 9e811275...).
 **Tag:** `secoppal-parser-realworld-fixes-2026-05-16`
 
+
+## 2026-05-17 — N5 feedback.rate race condition diferido
+
+Se documenta N5 (audit3): `feedback.rate()` lee el archivo JSONL completo,
+modifica el item correspondiente y reescribe el archivo entero. En un despliegue
+multi-worker concurrente esto puede causar race condition (dos workers
+modificando el mismo archivo simultáneamente puede corromper o perder ratings).
+
+**Decisión:**
+- Mantener como deuda diferida.
+- El piloto actual (single-worker, acceso controlado) no está expuesto a esta race.
+- Antes de escalar a multi-worker o exposición pública, migrar a uno de:
+  - `rating_events.jsonl` append-only (event sourcing, inmutable).
+  - File locking (`fcntl.flock` o `portalocker`).
+  - Base de datos (PostgreSQL con row-level locking).
+- **No afecta** búsquedas ni respuestas. Solo afecta consistencia de feedback
+  bajo concurrencia alta.
+
+**Tag:** `N5-audit3-2026-05-17`
+

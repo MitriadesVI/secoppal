@@ -1,10 +1,17 @@
 from __future__ import annotations
 
+import logging
 from dataclasses import dataclass
+
+logger = logging.getLogger(__name__)
 
 try:
     from app.data.morphological_variants import ROOT_TO_VARIANTS
-except ImportError:
+except ImportError as exc:
+    logger.warning(
+        "Could not import ROOT_TO_VARIANTS; morphological expansion disabled: %s",
+        exc,
+    )
     ROOT_TO_VARIANTS: dict[str, frozenset[str]] = {}
 
 

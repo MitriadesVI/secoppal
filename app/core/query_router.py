@@ -16,11 +16,19 @@ from app.data.estados import (
 from app.utils.money import money_to_cop, normalize_text
 from app.utils.spell_correction import correct_query
 
+import logging
+
+logger = logging.getLogger(__name__)
+
 # Import bigram registry from morphological variants dict (created in 1.2.c).
 # If the module doesn't exist yet, KNOWN_BIGRAMS is empty — no bigram detection.
 try:
     from app.data.morphological_variants import KNOWN_BIGRAMS, VARIANT_TO_ROOT
-except ImportError:
+except ImportError as exc:
+    logger.warning(
+        "Could not import morphological_variants; bigram detection and variant expansion disabled: %s",
+        exc,
+    )
     KNOWN_BIGRAMS: frozenset[tuple[str, ...]] = frozenset()
     VARIANT_TO_ROOT: dict[str, str] = {}
 
