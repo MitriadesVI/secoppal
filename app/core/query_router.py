@@ -206,7 +206,8 @@ _CITY_PATTERN_RE = re.compile(
     r"|neiva|popay[áa]n|pasto|tunja"
     r"|villavicencio|yopal|quibd[óo]|leticia"
     r"|riohacha|san\s+andr[eé]s|mocoa"
-    r"|in[íi]rida|mit[uú]|puerto\s+carreño|arauca)\b",
+    r"|in[íi]rida|mit[uú]|puerto\s+carreño|arauca"
+    r"|chiriguana|chiriguaná)\b",
     re.IGNORECASE,
 )
 
@@ -224,6 +225,23 @@ _PREPOSITION_PLACE_RE = re.compile(
     r"\ben\s+([a-z]{4,}(?:\s+[a-z]{4,})*)",
     re.IGNORECASE,
 )
+
+# ── Protección de años dentro de entidades jurídicas (BUG-001) ─────────────
+_ENTITY_NUMBER_RE = re.compile(
+    r"\b(?:fundaci[oó]n|fundacion|corporaci[oó]n|corporacion|"
+    r"asociaci[oó]n|asociacion|empresa|uni[oó]n\s+temporal|"
+    r"union\s+temporal|consorcio|cooperativa)\s+(20\d{2})\b",
+    re.IGNORECASE,
+)
+
+
+def _protected_entity_year_spans(text: str) -> list[tuple[int, int]]:
+    """Retorna spans de años que hacen parte de nombres jurídicos, no fechas."""
+    return [m.span(1) for m in _ENTITY_NUMBER_RE.finditer(text)]
+
+
+def _inside_spans(start: int, end: int, spans: list[tuple[int, int]]) -> bool:
+    return any(start >= s and end <= e for s, e in spans)
 
 
 @dataclass(slots=True)
@@ -321,7 +339,10 @@ class QueryRouter:
         for m in re.finditer(_year_re, scrubbed):
             scrubbed = re.sub(rf"\b{re.escape(m.group(0))}\b", " ", scrubbed)
         # Also extract bare years as dates
+        protected_year_spans = _protected_entity_year_spans(normalized)
         for m in re.finditer(_year_re, normalized):
+            if _inside_spans(m.start(1), m.end(1), protected_year_spans):
+                continue
             year = m.group(1)
             params.setdefault("fecha_desde", f"{year}-01-01")
             params.setdefault("fecha_hasta", f"{year}-12-31")
