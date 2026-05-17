@@ -45,7 +45,7 @@
 | C5 | C | contratos de salud en Bogotá | los de mayor valor | No | contratos | ordering | — | new_search | change_order | False | False | INV-003 | Bajo | new_test_needed | Reset previo |
 | D1 | D | contratos de la gobernación del atlántico | — | — | contratos | entidad_resolved | — | new_search | — | False | False | INV-008 | Medio | new_test_needed | — |
 | D2 | D | contratos de la alcaldía de barranquilla | — | — | contratos | entidad_resolved | — | new_search | — | False | False | INV-008 | Medio | new_test_needed | — |
-| D3 | D | contratos de fundación 2030 | — | — | contratos | objeto | — | new_search | — | False | False | INV-008 | Bajo (confusión año/entidad) | bug_detected | "2030" capturado como año; entidad no resuelta |
+| D3 | D | contratos de fundación 2030 | — | — | contratos | objeto (futuro: contratista) | — | new_search | — | False | False | INV-008 | Bajo | fixed-core | "2030" ya no es fecha. DEUDA-001: resolución como contratista/entidad depende del gazetteer/aliases |
 | D4 | D | contratos de mantenimiento en Antioquia | busca contratos de salud de la gobernación del Atlántico | Sí | contratos | nueva entidad | — | new_search | new_search | False | False | INV-003, INV-008 | Alto | new_test_needed | — |
 | E1 | E | LLM intenta devolver Celebrado para firmados | — | — | contratos | — | None | — | — | — | — | INV-007 | Crítico | new_test_needed | policy limpia estado |
 | E2 | E | LLM intenta pisar entidad_resolved del gazetteer | — | — | — | — | — | — | — | — | — | INV-008 | Crítico | new_test_needed | gazetteer gana |
@@ -76,11 +76,12 @@
 
 ## Bugs detectados (status = bug_detected)
 
-| id | Descripción | Categoría | Riesgo | Detalle |
-|----|-------------|-----------|--------|---------|
-| BUG-001 | "fundación 2030" — "2030" es capturado como año por _extract_dates(), impidiendo la resolución de entidad | D | Bajo | El parser de fechas compite con la detección de entidades numéricas. Solo afecta entidades con números que parecen años. No confunde con FUNSOCOM. |
+| id | Descripción | Categoría | Riesgo | Detalle | Status |
+|----|-------------|-----------|--------|---------|--------|
+| BUG-001 | "fundación 2030" — "2030" era capturado como año, impidiendo resolución de entidad | D | Bajo | Fix: _ENTITY_NUMBER_RE + protección de span en loop genérico de años. DEUDA-001: resolución como contratista/entidad depende del gazetteer/aliases. | **fixed-core** |
+| BUG-002 | "chiriguana" — topónimo sin preposición era tratado como objeto en lugar de ciudad | D | Bajo | Fix: chiriguana|chiriguaná agregado a _CITY_PATTERN_RE. DEUDA-002: "que mencionen chiriguana" no tiene bypass textual; se prioriza como topónimo. | **fixed** |
 
-**Nota:** Ningún fix aplicado durante QA-001 por regla 6 del alcance. Queda documentado para futura iteración.
+**Fix aplicado:** 2026-05-16 — 3 parches quirúrgicos en `app/core/query_router.py`. Suite: 504 passed. feedback.jsonl intacto. Sin cambios en features, auth, H10 ni arquitectura.
 
 ---
 

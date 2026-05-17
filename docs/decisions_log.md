@@ -131,3 +131,23 @@ Suite: 466/466 tests pasando. `feedback.jsonl` sin modificaciones.
 - Razón: ya no se usa en el flujo principal de producción.
 - Decisión: mantener la función por compatibilidad pero no usarla en nuevo código.
 
+
+## 2026-05-16 — Parser real-world queries: entidades numéricas y topónimos
+
+**BUG-001 — Protección de años en entidades jurídicas (fixed-core):**
+- Query real: "contratos de fundación 2030" → "2030" era capturado como año.
+- Causa: loop genérico de años en `parse()` (líneas 341-344) sin protección de span nominal.
+- Fix: `_ENTITY_NUMBER_RE` detecta patrones `fundación|corporación|asociación|... 20\d{2}`. El loop ahora salta años dentro de spans protegidos.
+- DEUDA-001: la resolución de "Fundación 2030" como contratista/entidad depende del gazetteer/aliases (no resuelta en este fix).
+
+**BUG-002 — Topónimo Chiriguaná sin preposición (fixed):**
+- Query real: "contraos chiriguana" → Chiriguaná era tratado como objeto.
+- Causa: `_CITY_PATTERN_RE` no incluía chiriguana/chiriguaná. `_COMMON_CITIES` existe pero no se usa operativamente.
+- Fix: `chiriguana|chiriguaná` agregado a `_CITY_PATTERN_RE` (línea 209).
+- DEUDA-002: "que mencionen chiriguana" no tiene bypass textual; chiriguana se prioriza como topónimo (comportamiento actual aceptable).
+
+**Método:** 3 parches quirúrgicos. Sin LLM classifier. Sin H10/auth. Sin refactor amplio.
+**Suite:** 504/504 tests pasando.
+**feedback.jsonl:** intacto (SHA: 9e811275...).
+**Tag:** `secoppal-parser-realworld-fixes-2026-05-16`
+
