@@ -790,7 +790,7 @@ queries:
     category: ptar_long_form
     mode: parser
     expected:
-      objeto_contains: [plantas, tratamiento, aguas, residuales]
+      objeto_contains: [tratamiento_aguas_residuales]
 
   - id: CORPUS-M002
     text: "PTAR en cordoba"
@@ -798,7 +798,7 @@ queries:
     severity: smoke
     mode: parser
     expected:
-      objeto_contains: [ptar]
+      objeto_contains: [tratamiento_aguas_residuales]
       departamento_resolved: "Córdoba"
 
   - id: CORPUS-M003

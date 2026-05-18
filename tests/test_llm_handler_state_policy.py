@@ -114,3 +114,54 @@ def test_llm_tool_estado_enum_no_declara_estados_inexistentes():
     estado_enum = SECOPPAL_TOOLS[0]["function"]["parameters"]["properties"]["estado"]["enum"]
 
     assert not (invalid & set(estado_enum))
+
+
+def test_opportunity_policy_enforces_intent_on_bidder_phrase():
+    """LLM-OPP-001: helper debe forzar opportunity_search cuando detecta frases de proponente."""
+    from app.core.opportunity_policy import enforce_bidder_opportunity_policy
+
+    for phrase in [
+        'quiero presentarme en algo de plantas de tratamiento de aguas residuales',
+        'para presentarme en licitaciones de mantenimiento',
+        'para poder presentarme en obras de acueducto',
+        'puedo ofertar en construccion de colegios',
+        'quiero ofertar en suministro de alimentos',
+        'quiero participar en convocatorias de tecnologia',
+        'donde pueda ofertar en vias',
+        'donde pueda presentarme en salud',
+    ]:
+        params = {'dataset': 'procesos', 'objeto': ['test']}
+        result = enforce_bidder_opportunity_policy(phrase, params)
+        assert result.get('intent_type') == 'opportunity_search', f'Falló para: {phrase}'
+        assert result.get('estado_family') == 'oferta_abierta', f'Falló para: {phrase}'
+        assert result.get('dataset') == 'procesos'
+
+
+def test_opportunity_policy_cleans_closed_states():
+    """LLM-OPP-001: debe limpiar estados cerrados/terminados que vengan del LLM o contexto."""
+    from app.core.opportunity_policy import enforce_bidder_opportunity_policy
+
+    params = {
+        'dataset': 'procesos',
+        'objeto': ['mantenimiento'],
+        'estado': 'Cerrado',
+        'estado_contrato': ['Cerrado', 'terminado'],
+        'estado_field': 'estado_contrato',
+    }
+    result = enforce_bidder_opportunity_policy(
+        'quiero presentarme en mantenimiento', params
+    )
+    assert result.get('intent_type') == 'opportunity_search'
+    assert result.get('estado_family') == 'oferta_abierta'
+    assert result.get('estado') not in ('Cerrado', 'cerrado')
+    assert 'Cerrado' not in (result.get('estado_contrato') or [])
+    assert 'terminado' not in (result.get('estado_contrato') or [])
+
+
+def test_opportunity_policy_noop_on_non_bidder():
+    """LLM-OPP-001: no debe alterar params si la frase no es de proponente."""
+    from app.core.opportunity_policy import enforce_bidder_opportunity_policy
+
+    params = {'dataset': 'contratos', 'objeto': ['mantenimiento'], 'estado': 'En ejecución'}
+    result = enforce_bidder_opportunity_policy('contratos de mantenimiento en antioquia', params)
+    assert result == params  # sin cambios

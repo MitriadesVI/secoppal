@@ -5,6 +5,7 @@ import logging
 import unicodedata
 
 from app.core.estado_families import CONTRACT_STATE_VALUES, LLM_ESTADO_VALUES, resolve_estado
+from app.core.opportunity_policy import enforce_bidder_opportunity_policy
 
 try:
     from openai import OpenAI
@@ -200,6 +201,7 @@ class LLMHandler:
     def parse(self, user_query: str, existing_params: dict | None = None) -> dict:
         merged = dict(existing_params or {})
         if not self.enabled:
+            merged = enforce_bidder_opportunity_policy(user_query, merged)
             return merged
 
         try:
@@ -220,6 +222,7 @@ class LLMHandler:
             )
         except Exception as exc:
             logger.warning("LLM call failed (timeout or error), using regex-only params: %s", exc)
+            merged = enforce_bidder_opportunity_policy(user_query, merged)
             return merged
 
         message = response.choices[0].message
@@ -244,4 +247,6 @@ class LLMHandler:
                     continue
                 merged[key] = value
 
+        # LLM-OPP-001: enforce opportunity intent after successful LLM merge
+        merged = enforce_bidder_opportunity_policy(user_query, merged)
         return merged

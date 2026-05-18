@@ -174,3 +174,32 @@ def test_para_presentarme_activates_opportunity():
     qr = QueryRouter()
     parsed = qr.parse("algun proceso para presentarme de construccion")
     assert parsed.params.get("intent_type") == "opportunity_search" or "presentarme" not in parsed.params.get("objeto", [])
+
+
+def test_ptar_variants_are_or_not_and():
+    """PTAR-VARIANTS-001: 'plantas de tratamiento de aguas residuales' no debe generar AND PTAR obligatorio."""
+    from app.core.soql_builder import SoQLBuilder
+    from app.core.query_router import QueryRouter
+
+    qr = QueryRouter()
+    parsed = qr.parse("plantas de tratamiento de aguas residuales")
+    sb = SoQLBuilder()
+    soql = sb.build("p6dx-8zbt", parsed.params)
+
+    # Must NOT contain a separate AND clause requiring PTAR
+    assert "AND (UPPER(objeto_del_contrato) LIKE '%PTAR%'" not in soql.upper()
+    assert "AND (UPPER(objeto_del_contrato) LIKE '%STAR%'" not in soql.upper()
+    # Should contain at least one of the roots as OR variants
+    assert any(x in soql.upper() for x in ["PLANTAS DE TRATAMIENTO", "TRATAMIENTO DE AGUAS RESIDUALES"])
+
+
+@pytest.mark.xfail(reason="REFERENCE-001 pendiente: búsqueda exacta por referencia de proceso")
+def test_dicar_reference_query():
+    """No debe romper con referencia exacta de proceso."""
+    from app.core.query_router import QueryRouter
+    qr = QueryRouter()
+    parsed = qr.parse("PN DICAR SA MC 017 2026")
+    # No debe contaminar objeto con "PN" ni "DICAR" como términos sueltos
+    obj = parsed.params.get("objeto", [])
+    assert "pn" not in [o.lower() for o in obj]
+    assert "dicar" not in [o.lower() for o in obj]

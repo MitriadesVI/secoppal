@@ -151,6 +151,13 @@ MORPHOLOGICAL_VARIANTS: dict[str, str] = {
     "adultos mayores": "adulto_mayor",
     "persona mayor": "adulto_mayor",
     "personas mayores": "adulto_mayor",
+    # ── PTAR / plantas de tratamiento de aguas residuales (PTAR-VARIANTS-001) ─
+    "plantas de tratamiento de aguas residuales": "tratamiento_aguas_residuales",
+    "planta de tratamiento de aguas residuales": "tratamiento_aguas_residuales",
+    "tratamiento de aguas residuales": "tratamiento_aguas_residuales",
+    "aguas residuales": "tratamiento_aguas_residuales",
+    "ptar": "tratamiento_aguas_residuales",
+    "star": "tratamiento_aguas_residuales",
 }
 
 # O(1) lookup (same data, clearer intent at call site)
