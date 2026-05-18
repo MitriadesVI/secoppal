@@ -1145,3 +1145,27 @@ Se corrigieron patrones detectados en pruebas manuales:
 - “quiero vender/ofrezco/soy proveedor de X” (BIDDER-INTENT-003).
 
 Estos casos fortalecen `opportunity_search` y el smoke test de producto.
+
+
+### 2026-05-17 — Query Corpus V1 + LLM-OPP-001 + PTAR-VARIANTS-001
+
+- Se agrego corpus vivo de 99 queries para depuracion sistematica (docs/QUERY_CORPUS.md).
+- Se implemento `enforce_bidder_opportunity_policy` como modulo independiente.
+- Variantes PTAR/STAR/aguas residuales colapsadas a raiz unica.
+- 22 corpus FAIL conocidos pasan a backlog en docs/CORPUS_BACKLOG.md.
+- Pendiente CORPUS-002 para cerrar los 5 critical FAIL.
+
+### 2026-05-17 — VALUE-SANITY-002A: valores atípicos en datos abiertos
+
+Se detectó que algunos registros del dataset Contratos (`jbjy-vk9h`) traen `valor_del_contrato` inflado frente a `valor_facturado`. Caso guía: Luruaco/CD-1028-2025, donde `valor_del_contrato` aparece como $250.000.000.000 y `valor_facturado` como $250.000.000.
+
+Decisión:
+- No modificar silenciosamente el valor fuente.
+- Marcar el resultado como valor atípico con `detect_value_anomaly()`.
+- Mostrar referencia de `valor_facturado` cuando exista.
+- Advertir si el mayor valor mostrado tiene inconsistencia de fuente.
+
+Validación:
+- 12 tests nuevos.
+- Suite: 596 passed, 1 xfailed.
+- Torture matrix verde.

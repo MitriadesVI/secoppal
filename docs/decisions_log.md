@@ -130,4 +130,24 @@ Los verbos auxiliares/comerciales describen intención del usuario, no objeto co
 - “para poder presentarme” → opportunity_search/procesos
 - “ofrezco insumos médicos” → objeto=insumos/medicos
 
-También se corrigió parsing de rangos monetarios compactos tipo “1000-3000 millones”.
+También se corrigió parsing de rangos monetarios compactos tipo "1000-3000 millones".
+
+---
+
+## ADR-005: Detección de valores atípicos en fuente (sin alteración silenciosa)
+
+**Fecha:** 2026-05-17
+**Contexto:** El dataset Contratos (`jbjy-vk9h`) de Socrata contiene errores de digitación donde `valor_del_contrato` aparece inflado x1000 frente a `valor_facturado`. Caso guía: Luruaco/CD-1028-2025 — `valor_del_contrato` = 250.000.000.000 vs `valor_facturado` = 250.000.000. Esto afecta ranking por mayor valor, lectura rápida y confianza del usuario.
+
+**Decisión:** Detectar y marcar visiblemente — nunca corregir silenciosamente el dato fuente. Implementación:
+1. `detect_value_anomaly()` en `app/utils/value_sanity.py`: compara ratio `valor_del_contrato / valor_facturado`; si ≥ 100, marca `value_quality="suspect"` con referencia de `valor_facturado`.
+2. Formatter muestra warning por tarjeta: "⚠️ valor atípico en datos abiertos (valor facturado: $X)".
+3. Si el primer resultado (mayor valor) es sospechoso, header global: "⚠️ El mayor valor mostrado tiene inconsistencia de fuente; verificar SECOP."
+4. Solo opera sobre dataset Contratos. No toca Procesos.
+
+**Alternativas descartadas:**
+- Dividir valor por 1000 automáticamente: rompería contratos correctos. El ratio x1000 no es uniforme (hay casos de 489,867x en el DANE).
+- Reemplazar `valor_del_contrato` por `valor_facturado`: este último puede ser 0, parcial, o tener semántica distinta.
+- Umbral absoluto (ej: > 1 billón COP): contratos nacionales legítimos pueden superarlo.
+
+**Consecuencias:** El dato fuente permanece intacto. El usuario ve el valor reportado y la advertencia simultáneamente. Futuros rankings y top N heredan la marca sin necesidad de lógica adicional. No afecta el pipeline de SoQL/ordenamiento.
