@@ -497,6 +497,18 @@ class QueryRouter:
             span = estado_family_result["consumed_span"]
             consumed_spans.append(span)
             scrubbed = re.sub(r"\b" + re.escape(span) + r"\b", " ", scrubbed, flags=re.IGNORECASE)
+            # CORPUS-F006/OC001: si la apertura del proceso quedó establecida
+            # vía estado_family=oferta_abierta sobre dataset=procesos, esto es
+            # equivalente a opportunity_search. Sincronizamos intent_type para
+            # que el suggester, soql ordering y followup_merge lo respeten igual
+            # que con las keywords explícitas ("oportunidad"/"convocatoria").
+            if (estado_family_result["family"] == "oferta_abierta"
+                    and params.get("dataset") == "procesos"):
+                params.setdefault("intent_type", "opportunity_search")
+                params.setdefault(
+                    "estado_del_procedimiento",
+                    ["Publicado", "Borrador", "Abierto"],
+                )
         else:
             # ── 7b. OLD State extractor (dataset-aware keyword match) ────────
             state_result = self._extract_state(normalized, str(params["dataset"]))

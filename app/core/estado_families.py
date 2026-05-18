@@ -108,6 +108,12 @@ NATURAL_TO_FAMILY = {
     "abiertas": "oferta_abierta",
     "convocatoria": "oferta_abierta",
     "convocatorias": "oferta_abierta",
+    # CORPUS-R005: "licitaciones de construccion convocadas" — participio de
+    # "convocar" tan fuerte como "convocatoria" para indicar proceso abierto.
+    "convocado": "oferta_abierta",
+    "convocados": "oferta_abierta",
+    "convocada": "oferta_abierta",
+    "convocadas": "oferta_abierta",
     "borrador": "oferta_abierta",
     "borradores": "oferta_abierta",
     "vigente": "oferta_abierta",

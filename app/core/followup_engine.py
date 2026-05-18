@@ -305,7 +305,17 @@ class FollowupClassifier:
         has_new_filters = bool(cls._NEW_FILTER_SIGNALS.search(norm_text))
 
         if has_mas and has_new_filters:
-            return "refine_filter"
+            # CORPUS-R018: si el turno introduce un topic completamente nuevo
+            # (no vacío, no débil, sin solape con el topic previo), no es un
+            # refinamiento del topic anterior — es un cambio de topic
+            # (contextual_requery). Ej: prev="contratos mas altos de barranquilla"
+            # vs curr="OK AHORA MUESTRAME PRIMERA INFANCIA 2025, LOS MAS COSTOSOS".
+            if (current_frame.topic
+                    and not cls._is_weak_topic(current_frame.topic)
+                    and not cls._topics_overlap(current_frame.topic, previous_frame.topic)):
+                pass  # cae a la rama de contextual_requery más abajo
+            else:
+                return "refine_filter"
 
         # 7. Solo modificadores sin topic nuevo (o con topic débil)
         if current_frame.modifiers and (
@@ -378,6 +388,28 @@ class FollowupClassifier:
         "mismo", "misma", "mismos", "mismas",
         "unicamente",
     })
+
+    @classmethod
+    def _topics_overlap(cls, curr_topic: list, prev_topic: list) -> bool:
+        """True si los topics comparten al menos un token significativo.
+
+        Útil para distinguir un refinamiento del mismo topic (overlap) de un
+        cambio de topic genuino (sin overlap). Tokens débiles se ignoran.
+        """
+        def _flatten(items: list) -> set[str]:
+            out: set[str] = set()
+            for item in items or []:
+                if isinstance(item, list):
+                    out.update(str(x).lower() for x in item)
+                else:
+                    out.add(str(item).lower())
+            return {t for t in out if t and t not in cls._WEAK_TOPIC_TOKENS}
+
+        c = _flatten(curr_topic)
+        p = _flatten(prev_topic)
+        if not c or not p:
+            return False
+        return bool(c & p)
 
     @classmethod
     def _is_weak_topic(cls, topic: list) -> bool:
