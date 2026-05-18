@@ -85,3 +85,15 @@ shasum -a 256 data/feedback.jsonl
 ```
 
 **Resultado:** Suite 466+26 = verde. feedback.jsonl intacto. 0 cambios funcionales fuera de tests/docs/scripts.
+---
+
+## Bidder Intent / Value Ranges — 2026-05-17
+
+| id | query | expected |
+|---|---|---|
+| VR1 | contratos de mantenimiento entre 1000-3000 millones de 2026 | valor_min=1000000000 + valor_max=3000000000 |
+| VR2 | contratos de mantenimiento entre 1000 y 3000 millones | rango monetario completo |
+| BI1 | algun mantenimiento de vias para poder presentarme | opportunity_search + procesos + no `poder` en objeto |
+| BI2 | quiero vender carpas, alguna oportunidad | opportunity_search + objeto=carpas + no `vender` |
+| BI3 | ofrezco insumos médicos, alguna convocatoria | opportunity_search + objeto=insumos/medicos |
+| BI4 | soy proveedor de carpas, hay procesos abiertos | opportunity_search + objeto=carpas + no `proveedor` |

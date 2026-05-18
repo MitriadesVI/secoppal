@@ -153,7 +153,7 @@ git commit -m "test: add opportunity hunting audit matrix"
 ## OPP-003 — Opportunity follow-up and state enforcement (completado)
 - "alguno/alguna" reforzado en STOPWORDS.
 - followup_engine.py: _merge_change_scope preserva objeto de opportunity_search en follow-ups geográficos.
-- query_router.py: opportunity_search fuerza claves concretas de estado (estado_de_apertura_del_proceso).
+- query_router.py: opportunity_search emite intent_type explícito (corregido en G1-G5).
 - Tests: 528 passed, torture matrix OK.
 - Problema original de herencia de "pintura" + Atlántico resuelto a nivel parser/merge.
 
@@ -216,3 +216,30 @@ OPP-003: `intent_type=opportunity_search` explícito en query_router (3 tests ma
 - G4 (sugerencias proactivas "ver solo esta semana") — diferido.
 - OPP-001 Radar — fuera de scope.
 
+
+---
+
+## Cierre BIDDER/VALUE microfixes — 2026-05-17
+
+Se corrigieron tres patrones detectados en pruebas manuales reales:
+
+### VALUE-RANGE-001 — rangos monetarios compactos
+Caso: “contratos de mantenimiento entre 1000-3000 millones de 2026”.
+Problema: solo se extraía `valor_max`; faltaba `valor_min`.
+Solución: parser reconoce rangos con guion, “entre X y Y”, “de X a Y” y aplica unidad monetaria compartida.
+
+### BIDDER-INTENT-002 — “para poder presentarme”
+Caso: “algun mantenimiento de vias para poder presentarme?”.
+Problema: `poder` entraba como objeto y el dataset podía heredarse como contratos.
+Solución: bidder intent fuerte fuerza `opportunity_search`/procesos y limpia auxiliares verbales.
+
+### BIDDER-INTENT-003 — verbos comerciales del proponente
+Caso: “quiero vender carpas, alguna oportunidad?”.
+Problema: `vender` entraba como objeto contractual.
+Solución: verbos comerciales como vender/ofrecer/comercializar/proveedor se interpretan como intención del usuario, no como objeto.
+
+Validación:
+- tests de rangos monetarios
+- tests de bidder intent
+- torture matrix verde
+- feedback.jsonl intacto

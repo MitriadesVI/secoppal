@@ -1136,3 +1136,12 @@ Se elevó `intent_type=opportunity_search` a primera clase:
 - Timeout UX específico para oportunidades (mensaje + sugerencias de lugar/ventana).
 
 Validación: 567 passed, 0 fallos, torture matrix verde.
+
+### 2026-05-17 — Bidder intent y rangos monetarios reales
+
+Se corrigieron patrones detectados en pruebas manuales:
+- rangos monetarios compactos (VALUE-RANGE-001);
+- “para poder presentarme” (BIDDER-INTENT-002);
+- “quiero vender/ofrezco/soy proveedor de X” (BIDDER-INTENT-003).
+
+Estos casos fortalecen `opportunity_search` y el smoke test de producto.

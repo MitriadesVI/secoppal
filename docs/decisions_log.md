@@ -47,7 +47,11 @@ Registro de Decisiones Arquitectónicas (ADR). Append-only. Una entrada por deci
 
 ## ADR-004: Prioridad lista estado sobre scalar legacy en SoQLBuilder
 
-**Fecha:** 2026-05-16
+**Fecha:** 2026-05-16  
+**Contexto:** coexistían `estado`, `estado_field`, `estado_contrato`, `estado_del_procedimiento` y familias de estado.  
+**Decisión:** cuando exista una lista específica de estados o una familia traducida a lista, esa lista tiene prioridad sobre el scalar legacy.  
+**Alternativas descartadas:** mantener scalar legacy como fallback sin prioridad (generaba contradicciones como `estado_de_apertura='Abierto'` + `estado_del_procedimiento IN (...)`).  
+**Consecuencias:** evita doble filtrado y reduce contradicciones en queries de oportunidad/contrato. La familia `oferta_abierta` ahora usa exclusivamente `estado_del_procedimiento`.
 
 ## 2026-05-17 — AQ-001A aggregate_sum integrado
 
@@ -106,3 +110,24 @@ Cambios:
 - G5: timeout_suggestions + response_policy personalizado
 
 Validación: 567 passed, torture matrix verde, feedback.jsonl intacto.
+
+---
+
+## 2026-05-17 — Bidder intent: verbos de intención comercial no son objeto contractual
+
+Se amplió la política de bidder intent para interpretar frases como:
+- “para poder presentarme”
+- “quiero vender X”
+- “vendo X”
+- “ofrezco X”
+- “soy proveedor de X”
+
+**Decisión:**
+Los verbos auxiliares/comerciales describen intención del usuario, no objeto contractual. El objeto debe ser el bien/servicio ofrecido.
+
+**Ejemplos:**
+- “quiero vender carpas” → objeto=carpas
+- “para poder presentarme” → opportunity_search/procesos
+- “ofrezco insumos médicos” → objeto=insumos/medicos
+
+También se corrigió parsing de rangos monetarios compactos tipo “1000-3000 millones”.
