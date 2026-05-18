@@ -112,7 +112,7 @@ def test_alguno_not_object_in_followup():
     assert "alguno" not in objeto
 
 
-@pytest.mark.xfail(reason="OPP-003 pendiente: intent_type explícito para opportunity_search")
+@pytest.mark.xfail(reason="requiere contexto de followup — pintura no puede aparecer parseando 'alguno en atlantico' aislado")
 def test_opportunity_followup_soql():
     """4. SoQL de follow-up oportunidad debe tener pintura + Atlántico + estados abiertos + ORDER fecha."""
     from app.core.query_router import QueryRouter
@@ -126,7 +126,6 @@ def test_opportunity_followup_soql():
     assert "fecha_de_publicacion_del DESC" in soql
     assert "precio_base DESC" not in soql or "ORDER BY fecha" in soql
 
-@pytest.mark.xfail(reason="OPP-003 pendiente: intent_type explícito para opportunity_search")
 def test_followup_value_filter_inherits_topic_and_geo():
     """1. Follow-up de valor debe heredar topic y geo de oportunidad."""
     from app.core.query_router import QueryRouter
