@@ -1126,3 +1126,13 @@ Validación:
 - tests B1-B7: 19/19
 - torture matrix verde
 - feedback.jsonl intacto
+
+### 2026-05-17 — OPP-003: intent_type explícito + G5 timeout específico
+
+Se elevó `intent_type=opportunity_search` a primera clase:
+- Emisión desde intent_vocabulary (bidder intent) y query_router.
+- Round-trip en QueryFrame.
+- Tests E2E con chat_id.
+- Timeout UX específico para oportunidades (mensaje + sugerencias de lugar/ventana).
+
+Validación: 567 passed, 0 fallos, torture matrix verde.

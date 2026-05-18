@@ -186,3 +186,33 @@ OPP-003: `intent_type=opportunity_search` explícito en query_router (3 tests ma
 - `run_torture_matrix.py`: INV-001..012 verdes
 - `feedback.jsonl`: SHA estable
 
+
+---
+
+## Cierre OPP-003 — intent_type explícito + G1-G5 (2026-05-17)
+
+### Cambios implementados
+- **G1**: `intent_type=opportunity_search` emitido desde `intent_vocabulary` (bidder intent: "para presentarme", "donde me pueda presentar") y desde query_router para keywords explícitas.
+- **G1.b**: Regresión corregida: se eliminó emisión incorrecta de `estado_de_apertura_del_proceso` en el bloque OPP-002.
+- **G2**: Round-trip completo de `intent_type` en `QueryFrame` (`frame_from_params` ↔ `params_from_frame`). El intent sobrevive a través de `followup_engine.merge`.
+- **G3**: 3 tests OPP-003 quitados de xfail. Ahora usan `chat_id` + mocks de SECOP y verifican preservación de `intent_type` en resolved_params del turno 2.
+- **G5**: 
+  - `execute_query` genera `timeout_suggestions` específicas para opportunity_search.
+  - `response_policy.build_advisor_response` emite mensaje personalizado cuando hay timeout en oportunidad: "SECOP tardo en responder. Para buscar oportunidades activas conviene acotar..." + sugerencias de lugar/ventana (sin "quitar fecha").
+
+### Flujo verificado E2E
+1. Bidder intent ("para presentarme") → intent_type=opportunity_search.
+2. Follow-up de valor ("muestrame solo aquellos...") → intent_type preservado + valor_min aplicado.
+3. Timeout en oportunidad → mensaje específico + sugerencias contextuales.
+
+### Validación
+- `make lint-core`: limpio
+- `pytest tests/test_opportunity_queries.py -q`: 16/16
+- `pytest tests/ -q`: 567 passed, 0 failed
+- `run_torture_matrix.py`: INV-001..012 verdes
+- `feedback.jsonl`: SHA estable
+
+### Pendiente
+- G4 (sugerencias proactivas "ver solo esta semana") — diferido.
+- OPP-001 Radar — fuera de scope.
+

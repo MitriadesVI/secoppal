@@ -89,3 +89,20 @@ También se mejoró la presentación de oportunidades:
 Pendiente: OPP-003 para `intent_type=opportunity_search` explícito.
 
 Validación: test_pamplonita 4/4, test_bugs_b1_b7 19/19, torture matrix verde, feedback.jsonl intacto.
+
+## 2026-05-17 — OPP-003: intent_type explícito para opportunity_search + G1-G5
+
+Se implementó `intent_type=opportunity_search` como ciudadano de primera clase:
+
+- Detectado en parser por keywords + bidder intent ("para presentarme").
+- Preservado a través de follow-ups vía round-trip en QueryFrame.
+- Propagado al SoQL (orden por fecha) y suggester.
+- UX de timeout específica (mensaje personalizado + sugerencias de acotación).
+
+Cambios:
+- G1: query_router + intent_vocabulary
+- G2: QueryFrame round-trip
+- G3: tests E2E con chat_id
+- G5: timeout_suggestions + response_policy personalizado
+
+Validación: 567 passed, torture matrix verde, feedback.jsonl intacto.
