@@ -37,12 +37,12 @@ MORPHOLOGICAL_VARIANTS: dict[str, str] = {
     "parques automotores": "parque_automotor",
     # ── vial / vias / malla vial ─────────────────────────────────────────────
     "vial": "vial",
-    "vias": "vial",
+    "vias": "vias",
     "vía": "vial",
     "vías": "vial",
     "malla vial": "vial",
     "infraestructura vial": "vial",
-    "mantenimiento vial": "vial",
+
     # ── dotacion / dotaciones ───────────────────────────────────────────────
     "dotacion": "dotacion",
     "dotaciones": "dotacion",
@@ -105,6 +105,9 @@ MORPHOLOGICAL_VARIANTS: dict[str, str] = {
     "refrigerios escolares": "alimentacion_escolar",
     "simat": "alimentacion_escolar",
     "paef": "paef",
+    # ── carpa / carpas (BIDDER-INTENT-003) ───────────────────────────────────
+    "carpa": "carpa",
+    "carpas": "carpa",
     "programa de apoyo al empleo formal": "paef",
     "icbf": "icbf",
     "instituto colombiano de bienestar familiar": "icbf",

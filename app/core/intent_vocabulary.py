@@ -95,6 +95,22 @@ INTENT_PATTERNS: list[tuple[re.Pattern, dict]] = [
             "filter_active_only": True,
         },
     ),
+    # ── Commercial bidder intent (BIDDER-INTENT-003) ──
+    # "quiero vender", "vendo", "ofrezco", "soy proveedor de"
+    (
+        re.compile(
+            r"(?:quiero\s+)?(?:vender|vendemos|vendo)"
+            r"|(?:ofrezco|ofrecer|ofrecemos|ofrecen)"
+            r"|(?:comercializo|comercializar)"
+            r"|(?:soy\s+proveedor(?:es)?\s+de)"
+            r"|(?:tengo\s+.*\s+para\s+vender)",
+            re.IGNORECASE,
+        ),
+        {
+            "estado_family": "oferta_abierta",
+            "force_dataset": "procesos",
+        },
+    ),
     # ── "que procesos en convocatoria o publicados tiene X" ──
     (
         re.compile(

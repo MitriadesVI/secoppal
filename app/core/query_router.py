@@ -116,6 +116,11 @@ STOPWORDS = {
     "gracias", "favor", "podrias", "puedes", "puede", "porfa",
     # Bidder intent noise
     "poder", "pueda", "puedo", "puedan",
+    # Commercial bidder verbs (BIDDER-INTENT-003)
+    "vender", "vendo", "vendemos", "venderle", "venderles",
+    "ofrezco", "ofrecer", "ofrecemos", "ofrecen",
+    "comercializo", "comercializar", "comercializamos",
+    "proveedor", "proveedores",
     # States (extracted separately)
     "abierta", "abiertas", "abierto", "abiertos",
     "adjudicado", "adjudicados",
