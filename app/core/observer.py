@@ -169,12 +169,16 @@ def _compute_from_aggregation(
     secop_client: "SecopClient",
     soql_builder: "SoQLBuilder",
 ) -> UniverseInsights:
+    # SAFE-SOQL-001: el observer corre DESPUÉS de una consulta tabular ya
+    # validada por el guard del orchestrator. Compila estadísticas sobre el
+    # universo seleccionado, así que opta por allow_global=True para no
+    # rechazarse a sí mismo cuando params son una vista parcial del estado.
     queries = {
-        "top_entities":   soql_builder.build_top_entities(dataset_id, params),
-        "value_stats":    soql_builder.build_value_stats(dataset_id, params),
-        "top_modalities": soql_builder.build_top_modalities(dataset_id, params),
-        "date_range":     soql_builder.build_date_range(dataset_id, params),
-        "temporal_dist":  soql_builder.build_temporal_dist(dataset_id, params),
+        "top_entities":   soql_builder.build_top_entities(dataset_id, params, allow_global=True),
+        "value_stats":    soql_builder.build_value_stats(dataset_id, params, allow_global=True),
+        "top_modalities": soql_builder.build_top_modalities(dataset_id, params, allow_global=True),
+        "date_range":     soql_builder.build_date_range(dataset_id, params, allow_global=True),
+        "temporal_dist":  soql_builder.build_temporal_dist(dataset_id, params, allow_global=True),
     }
 
     agg_results: dict[str, list[dict] | None] = {k: None for k in queries}

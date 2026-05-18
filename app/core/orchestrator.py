@@ -23,7 +23,7 @@ from app.core.query_frame import frame_from_params
 from app.core.query_router import QueryRouter
 from app.core.response_policy import build_advisor_response
 from app.core.secop_client import SecopClient
-from app.core.soql_builder import SoQLBuilder
+from app.core.soql_builder import SoQLBuilder, UnsafeGlobalQueryError
 from app.core.suggester import generate_suggestions, Suggestion
 
 
@@ -144,7 +144,14 @@ def resolve_entities(state: State, entity_resolver: EntityResolver) -> State:
 @action(reads=["resolved_params", "dataset_id", "timings_ms"], writes=["soql_query", "timings_ms"])
 def build_query(state: State, soql_builder: SoQLBuilder) -> State:
     start = time.perf_counter()
-    soql = soql_builder.build(state["dataset_id"], state["resolved_params"])
+    try:
+        soql = soql_builder.build(state["dataset_id"], state["resolved_params"])
+    except UnsafeGlobalQueryError:
+        # SAFE-SOQL-001: el builder rechazó una consulta global accidental.
+        # execute_query tiene un guard equivalente (SCOPE_TOPIC_KEYS) que
+        # convierte este caso en needs_clarification. Dejamos soql_query
+        # vacío para que ese guard sea quien responda al usuario.
+        soql = ""
     return _with_timing(state, "build_soql_ms", start, soql_query=soql)
 
 

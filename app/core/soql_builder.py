@@ -5,6 +5,46 @@ from dataclasses import dataclass
 
 logger = logging.getLogger(__name__)
 
+
+class UnsafeGlobalQueryError(RuntimeError):
+    """Raised when SoQLBuilder would emit a query with no substantial filter.
+
+    A "substantial" filter is one of: scope (departamento, ciudad, entidad,
+    contratista), topic (objeto), estado-family fields, or modalidad. Date
+    ranges, value ranges and ordering signals alone are NOT substantial —
+    they narrow nothing without a scope or topic and would otherwise produce
+    a tautological WHERE 1=1 across the full SECOP universe.
+
+    Callers that genuinely need a global query (admin/diagnostic tools)
+    must opt in explicitly with ``allow_global=True``.
+    """
+
+
+# Filtros que cuentan como "base suficiente" para una consulta a SECOP.
+# fecha/valor/orden/dataset/intent_type por sí solos NO cuentan.
+_SUBSTANTIAL_FILTER_KEYS: frozenset[str] = frozenset({
+    # scope
+    "departamento_resolved", "ciudad",
+    "entidad_resolved", "entidad_like",
+    "contratista",
+    # topic
+    "objeto",
+    # estado
+    "estado", "estado_de_apertura_del_proceso", "estado_del_procedimiento",
+    "estado_contrato", "estado_contrato_adicional",
+    # modality
+    "modalidad",
+})
+
+
+def _has_substantial_filter(params: dict) -> bool:
+    for key in _SUBSTANTIAL_FILTER_KEYS:
+        value = params.get(key)
+        if value in (None, "", [], {}, False):
+            continue
+        return True
+    return False
+
 try:
     from app.data.morphological_variants import ROOT_TO_VARIANTS
 except ImportError as exc:
@@ -106,9 +146,9 @@ class SoQLBuilder:
     def dataset_id_for(cls, dataset_name: str | None) -> str:
         return cls.CONTRATOS_DATASET if dataset_name == "contratos" else cls.PROCESOS_DATASET
 
-    def build(self, dataset_id: str, params: dict) -> str:
+    def build(self, dataset_id: str, params: dict, *, allow_global: bool = False) -> str:
         spec = self.SPECS[dataset_id]
-        where_clause = self._build_where(spec, params)
+        where_clause = self._build_where(spec, params, allow_global=allow_global)
 
         select_clause = ", ".join(spec.select_fields)
 
@@ -130,14 +170,25 @@ class SoQLBuilder:
 
         return f"SELECT {select_clause} WHERE {where_clause} ORDER BY {order_expr} {limit_clause}"
 
-    def build_count(self, dataset_id: str, params: dict) -> str:
+    def build_count(self, dataset_id: str, params: dict, *, allow_global: bool = False) -> str:
         """Build a SELECT count(*) query with the same filters as build(), no LIMIT/ORDER."""
         spec = self.SPECS[dataset_id]
-        where_clause = self._build_where(spec, params)
+        where_clause = self._build_where(spec, params, allow_global=allow_global)
         return f"SELECT count(*) WHERE {where_clause}"
 
-    def _build_where(self, spec: DatasetSpec, params: dict) -> str:
-        """Build the WHERE clause string shared by build() and build_count()."""
+    def _build_where(self, spec: DatasetSpec, params: dict, *, allow_global: bool = False) -> str:
+        """Build the WHERE clause string shared by build() and build_count().
+
+        Raises UnsafeGlobalQueryError if the resulting clause would collapse to
+        a tautology (``1=1``) and the caller has not opted in via
+        ``allow_global=True``. Date/value/order alone are not substantial
+        filters — they narrow nothing without a scope or topic.
+        """
+        if not allow_global and not _has_substantial_filter(params):
+            raise UnsafeGlobalQueryError(
+                "SoQL build refused: no substantial filter (scope/topic/estado/modalidad). "
+                "Pass allow_global=True only if a global query is intentional."
+            )
         where_clauses: list[str] = []
 
         if params.get("departamento_resolved"):
@@ -233,44 +284,44 @@ class SoQLBuilder:
 
         return " AND ".join(where_clauses) if where_clauses else "1=1"
 
-    def build_top_entities(self, dataset_id: str, params: dict, limit: int = 5) -> str:
+    def build_top_entities(self, dataset_id: str, params: dict, limit: int = 5, *, allow_global: bool = False) -> str:
         spec = self.SPECS[dataset_id]
-        where = self._build_where(spec, params)
+        where = self._build_where(spec, params, allow_global=allow_global)
         return (
             f"SELECT {spec.entity}, count(*) AS cnt WHERE {where} "
             f"GROUP BY {spec.entity} ORDER BY cnt DESC LIMIT {limit}"
         )
 
-    def build_value_stats(self, dataset_id: str, params: dict) -> str:
+    def build_value_stats(self, dataset_id: str, params: dict, *, allow_global: bool = False) -> str:
         spec = self.SPECS[dataset_id]
-        where = self._build_where(spec, params)
+        where = self._build_where(spec, params, allow_global=allow_global)
         v = spec.value
         return (
             f"SELECT avg({v}) AS mean, min({v}) AS min_val, max({v}) AS max_val "
             f"WHERE {where} AND {v} IS NOT NULL"
         )
 
-    def build_top_modalities(self, dataset_id: str, params: dict, limit: int = 3) -> str:
+    def build_top_modalities(self, dataset_id: str, params: dict, limit: int = 3, *, allow_global: bool = False) -> str:
         spec = self.SPECS[dataset_id]
-        where = self._build_where(spec, params)
+        where = self._build_where(spec, params, allow_global=allow_global)
         m = spec.modality
         return (
             f"SELECT {m}, count(*) AS cnt WHERE {where} "
             f"GROUP BY {m} ORDER BY cnt DESC LIMIT {limit}"
         )
 
-    def build_date_range(self, dataset_id: str, params: dict) -> str:
+    def build_date_range(self, dataset_id: str, params: dict, *, allow_global: bool = False) -> str:
         spec = self.SPECS[dataset_id]
-        where = self._build_where(spec, params)
+        where = self._build_where(spec, params, allow_global=allow_global)
         d = spec.date
         return (
             f"SELECT min({d}) AS date_min, max({d}) AS date_max "
             f"WHERE {where} AND {d} IS NOT NULL"
         )
 
-    def build_temporal_dist(self, dataset_id: str, params: dict) -> str:
+    def build_temporal_dist(self, dataset_id: str, params: dict, *, allow_global: bool = False) -> str:
         spec = self.SPECS[dataset_id]
-        where = self._build_where(spec, params)
+        where = self._build_where(spec, params, allow_global=allow_global)
         d = spec.date
         return (
             f"SELECT date_trunc_y({d}) AS yr, count(*) AS cnt "

@@ -130,10 +130,17 @@ def test_build_count_where_matches_build_where() -> None:
 
 
 def test_build_count_empty_params() -> None:
-    """build_count() with no filters uses WHERE 1=1."""
+    """SAFE-SOQL-001: build_count() sin filtros DEBE rechazarse por defecto.
+
+    El opt-in explícito ``allow_global=True`` queda cubierto por
+    tests/test_safe_soql.py.
+    """
+    from app.core.soql_builder import UnsafeGlobalQueryError
+    import pytest as _pytest
+
     builder = SoQLBuilder()
-    soql = builder.build_count("jbjy-vk9h", {})
-    assert soql == "SELECT count(*) WHERE 1=1"
+    with _pytest.raises(UnsafeGlobalQueryError):
+        builder.build_count("jbjy-vk9h", {})
 
 
 def test_ciudad_filter_contratos() -> None:
