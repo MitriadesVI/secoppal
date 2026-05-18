@@ -144,6 +144,14 @@ STOPWORDS = {
     # Indefinite pronouns
     "algun", "alguna", "algunos", "algunas", "alguno", "algunos", "ningun", "ninguna",
     "otro", "otra", "otros", "otras",
+    # Demonstrative pronouns / anaphoric refinement words.
+    # Aparecen en follow-ups tipo "muestrame solo aquellos que sean mas de X".
+    # Sin scrub, contaminan 'objeto' y borran el topic heredado.
+    "solo", "solos", "sola", "solas", "solamente", "unicamente", "únicamente",
+    "aquel", "aquella", "aquellos", "aquellas",
+    "eso", "esos", "esa", "esas",
+    "esto", "estos", "estas",  # nota: "esta"/"estan"/"este"/"esten" ya están arriba
+    "mismo", "misma", "mismos", "mismas",
     # Value/size adjectives (ordering instructions, not objects)
     "caro", "caros", "cara", "caras",
     "costoso", "costosos", "costosa", "costosas",
@@ -300,6 +308,13 @@ class QueryRouter:
             if intent_config.get("scrub_only") or "estado_family" in intent_config:
                 consumed_spans.append(intent_span)
                 scrubbed = scrubbed.replace(intent_span, " ", 1)
+            # OPP-003 G1: si el intent del bidder activa la familia oferta_abierta
+            # (ej. "para presentarme", "donde me pueda presentar"), también
+            # marcar intent_type=opportunity_search para que el resto del
+            # pipeline (suggester, soql ordering, follow-up merge) lo respete.
+            if intent_config.get("estado_family") == "oferta_abierta":
+                params["intent_type"] = "opportunity_search"
+                params.setdefault("dataset", "procesos")
 
         # OPP-002: opportunity_search trigger (minimal, deterministic)
         opportunity_keywords = ("oportunidad", "oportunidades", "convocatoria", "convocatorias",
@@ -308,8 +323,11 @@ class QueryRouter:
             params["intent_type"] = "opportunity_search"
             params.setdefault("dataset", "procesos")
             params.setdefault("estado_family", "oferta_abierta")
-            # OPP-003: concrete estado keys that SoQLBuilder actually uses
-            params.setdefault("estado_de_apertura_del_proceso", ["Publicado", "Abierto", "Borrador"])
+            # OPP-003: filtro de estado debe usar estado_del_procedimiento
+            # (el campo correcto con 9 valores). estado_de_apertura_del_proceso
+            # solo tiene 2 valores y su semántica solapa peligrosamente — ver
+            # fix Pamplonita SAMC-PNITA-002-2026 (2026-05-17).
+            params.setdefault("estado_del_procedimiento", ["Publicado", "Borrador", "Abierto"])
 
         # ── 1. Dataset selection (keyword-based) ────────────────────────
         #    Only set if not already determined by intent
@@ -654,7 +672,7 @@ class QueryRouter:
         # Detect "entre X y Y" range BEFORE individual amount parsing so the
         # two numbers don't each get mis-classified by the generic loop below.
         _range_re = re.compile(
-            r"entre\s+((?:\d+(?:[.,]\d+)?|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|mil)?(?:\s+de\s+pesos)?)\s+y\s+((?:\d+(?:[.,]\d+)?|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|mil)?(?:\s+de\s+pesos)?)",
+            r"(?:entre|de)\s+((?:\d+(?:[.,]\d+)?|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|mil)?(?:\s+de\s+pesos)?)(?:\s*[-–—]\s*|\s+y\s+|\s+a\s+)((?:\d+(?:[.,]\d+)?|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|mil)?(?:\s+de\s+pesos)?)",
             re.IGNORECASE,
         )
         range_match = _range_re.search(normalized_query)
