@@ -282,6 +282,19 @@ class FollowupClassifier:
         if has_order and not current_frame.topic and not has_year and not has_scope_signal:
             return "change_order"
 
+        # 4.5. Refinamiento numérico con topic débil/anafórico.
+        # Casos como "muestrame solo aquellos que sean por mas de 100 millones":
+        # el parser puede dejar tokens débiles ("solo", "aquellos") como topic
+        # pese al scrub. Si hay modifier numérico real (valor/fecha) y el
+        # topic actual es débil, tratar como refine_filter para HEREDAR el
+        # topic previo en lugar de reemplazarlo con basura.
+        has_numeric_modifier = any(
+            current_frame.modifiers.get(k) is not None
+            for k in ("valor_min", "valor_max", "fecha_desde", "fecha_hasta")
+        )
+        if has_numeric_modifier and cls._is_weak_topic(current_frame.topic):
+            return "refine_filter"
+
         # 5. Cambio de scope (entidad/ciudad diferente)
         if current_frame.scope:
             if cls._scope_differs(current_frame.scope, previous_frame.scope):
@@ -294,8 +307,10 @@ class FollowupClassifier:
         if has_mas and has_new_filters:
             return "refine_filter"
 
-        # 7. Solo modificadores sin topic nuevo
-        if current_frame.modifiers and not current_frame.topic:
+        # 7. Solo modificadores sin topic nuevo (o con topic débil)
+        if current_frame.modifiers and (
+            not current_frame.topic or cls._is_weak_topic(current_frame.topic)
+        ):
             return "refine_filter"
 
         # 6. Tiene topic — contextual requery
@@ -352,6 +367,38 @@ class FollowupClassifier:
         """El frame tiene contenido de búsqueda sustantivo."""
         return bool(frame.topic or frame.scope or frame.dataset)
 
+    # Tokens que NO son objeto contractual aunque sobrevivan al scrub del parser.
+    # Pronombres, adverbios anafóricos y conectores que aparecen típicamente
+    # en refinamientos como "muestrame solo aquellos que sean...".
+    _WEAK_TOPIC_TOKENS: frozenset[str] = frozenset({
+        "solo", "solos", "sola", "solas", "solamente",
+        "aquel", "aquella", "aquellos", "aquellas",
+        "eso", "esos", "esa", "esas",
+        "esto", "estos", "estas",
+        "mismo", "misma", "mismos", "mismas",
+        "unicamente",
+    })
+
+    @classmethod
+    def _is_weak_topic(cls, topic: list) -> bool:
+        """True si el topic está vacío o compuesto SOLO por tokens débiles.
+
+        Útil para detectar follow-ups donde el parser no logró limpiar
+        pronombres/anáforas y dejó tokens sin valor semántico como objeto.
+        En esos casos NO debe sustituirse el topic heredado.
+        """
+        if not topic:
+            return True
+        flat: list[str] = []
+        for item in topic:
+            if isinstance(item, list):
+                flat.extend(str(x) for x in item)
+            else:
+                flat.append(str(item))
+        if not flat:
+            return True
+        return all(t.lower() in cls._WEAK_TOPIC_TOKENS for t in flat)
+
 
 # ── Merger — políticas de merge por intención ──────────────────────────────
 
@@ -390,12 +437,23 @@ def _merge_pagination_more(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
 
 
 def _merge_refine_filter(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
-    """Hereda dataset/scope/topic. Aplica filtros nuevos. Offset = 0."""
+    """Hereda dataset/scope. Aplica filtros nuevos. Offset = 0.
+
+    Topic: hereda del previo cuando el current está vacío o contiene SOLO
+    tokens débiles (pronombres/anáforas que el parser no pudo limpiar).
+    Esto evita que "muestrame solo aquellos que sean por mas de 100 millones"
+    reemplace el topic real (ej. "construccion") con ["solo", "aquellos"].
+    """
+    inherited_topic = (
+        list(prev.topic)
+        if FollowupClassifier._is_weak_topic(curr.topic)
+        else list(curr.topic)
+    )
     return QueryFrame(
         dataset=prev.dataset,
         dataset_explicit=prev.dataset_explicit,
         scope=dict(prev.scope),
-        topic=list(curr.topic) if curr.topic else list(prev.topic),
+        topic=inherited_topic,
         modifiers={**prev.modifiers, **curr.modifiers},
         raw_params={**prev.raw_params, **curr.raw_params},
         intent_type="refine_filter",
@@ -433,12 +491,22 @@ def _merge_change_order(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
 
 
 def _merge_change_scope(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
-    """Nuevo scope. Hereda dataset y topic. Offset = 0."""
+    """Nuevo scope. Hereda dataset y topic. Offset = 0.
+
+    Topic: si el current está vacío o es débil (pronombres/anáforas),
+    se hereda el topic previo. Mantiene la cadena conversacional intacta
+    en secuencias tipo T1 topic+scope → T2 change_scope → T3 modifier+débil.
+    """
+    inherited_topic = (
+        list(prev.topic)
+        if FollowupClassifier._is_weak_topic(curr.topic)
+        else list(curr.topic)
+    )
     return QueryFrame(
         dataset=prev.dataset,
         dataset_explicit=prev.dataset_explicit,
         scope=dict(curr.scope) if curr.scope else dict(prev.scope),
-        topic=list(curr.topic) if curr.topic else list(prev.topic),
+        topic=inherited_topic,
         modifiers={**prev.modifiers, **curr.modifiers},
         raw_params={**prev.raw_params, **curr.raw_params},
         intent_type="change_scope",
@@ -446,12 +514,20 @@ def _merge_change_scope(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
 
 
 def _merge_change_dataset(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
-    """Nuevo dataset. Hereda scope y topic si aplican."""
+    """Nuevo dataset. Hereda scope y topic si aplican.
+
+    Topic: misma defensa que change_scope contra topics débiles del current.
+    """
+    inherited_topic = (
+        list(prev.topic)
+        if FollowupClassifier._is_weak_topic(curr.topic)
+        else list(curr.topic)
+    )
     return QueryFrame(
         dataset=curr.dataset,
         dataset_explicit=True,
         scope=dict(curr.scope) if curr.scope else dict(prev.scope),
-        topic=list(curr.topic) if curr.topic else list(prev.topic),
+        topic=inherited_topic,
         modifiers={**prev.modifiers, **curr.modifiers},
         raw_params={**prev.raw_params, **curr.raw_params},
         intent_type="change_dataset",
@@ -459,8 +535,22 @@ def _merge_change_dataset(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
 
 
 def _merge_contextual_requery(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
-    """Nuevo topic. Hereda scope y dataset. Offset = 0."""
-    merged_topic = list(curr.topic) if curr.topic else list(prev.topic)
+    """Nuevo topic. Hereda scope y dataset. Offset = 0.
+
+    Si el current.topic es vacío o sólo tokens débiles (pronombres/anáforas),
+    se hereda el topic previo en lugar de reemplazarlo.
+    """
+    if FollowupClassifier._is_weak_topic(curr.topic):
+        merged_topic = list(prev.topic)
+    else:
+        merged_topic = list(curr.topic)
+    # OPP-004: preserve objeto when follow-up only adds value/scope
+    if prev.intent_type == "opportunity_search" and not any(k in curr.modifiers for k in ["objeto"]):
+        # BIDDER-INTENT-002: strong bidder intent overrides previous dataset
+        if curr.intent_type == "opportunity_search":
+            curr.dataset = "procesos"
+            curr.estado_family = "oferta_abierta"
+        merged_topic = list(prev.topic)
     # OPP-003: preserve opportunity objeto when follow-up only adds geography
     if getattr(prev, "intent_type", None) == "opportunity_search" and not curr.topic:
         merged_topic = list(prev.topic)

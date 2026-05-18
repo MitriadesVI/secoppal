@@ -17,11 +17,12 @@ import re
 #   filter_active_only: bool — add fecha_cierre >= today (future work)
 #   consumed_span: str — override auto-detected span
 INTENT_PATTERNS: list[tuple[re.Pattern, dict]] = [
-    # ── "para presentarme" / "donde me pueda presentar" / "para ofertar" ──
+    # ── "para presentarme" / "donde me pueda presentar" / "para poder presentarme" ──
     (
         re.compile(
-            r"(?:para\s+(?:presentar(?:me)?|participar|ofertar|postular(?:me)?|aplicar(?:me)?))"
-            r"|(?:donde\s+(?:me\s+)?pueda\s+(?:presentar|participar|ofertar|postular|aplicar))",
+            r"(?:para\s+(?:poder\s+)?(?:presentar(?:me)?|participar|ofertar|postular(?:me)?|aplicar(?:me)?))"
+            r"|(?:donde\s+(?:me\s+)?pueda\s+(?:presentar|participar|ofertar|postular|aplicar))"
+            r"|(?:para\s+poder\s+(?:presentar|ofertar|participar))",
             re.IGNORECASE,
         ),
         {

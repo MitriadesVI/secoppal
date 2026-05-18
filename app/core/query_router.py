@@ -114,6 +114,8 @@ STOPWORDS = {
     "hola", "holaa", "holaaa", "buenas", "buenass", "bueno", "buenos", "ey", "oye", "ok", "okay",
     # Courtesy
     "gracias", "favor", "podrias", "puedes", "puede", "porfa",
+    # Bidder intent noise
+    "poder", "pueda", "puedo", "puedan",
     # States (extracted separately)
     "abierta", "abiertas", "abierto", "abiertos",
     "adjudicado", "adjudicados",

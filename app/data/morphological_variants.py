@@ -25,6 +25,24 @@ MORPHOLOGICAL_VARIANTS: dict[str, str] = {
     # ── mantenimiento / mantenimientos ──────────────────────────────────────
     "mantenimiento": "mantenimiento",
     "mantenimientos": "mantenimiento",
+    # B6: frases multi-token muy frecuentes que el parser troceaba en AND
+    # de tokens individuales — reducía drásticamente el recall.
+    # Se mapean al root "mantenimiento" para que el SoQL emita un único
+    # LIKE expandido en lugar de N LIKE encadenados con AND.
+    "mantenimiento correctivo y preventivo": "mantenimiento",
+    "mantenimiento preventivo y correctivo": "mantenimiento",
+    "mantenimiento correctivo": "mantenimiento",
+    "mantenimiento preventivo": "mantenimiento",
+    "parque automotor": "parque_automotor",
+    "parques automotores": "parque_automotor",
+    # ── vial / vias / malla vial ─────────────────────────────────────────────
+    "vial": "vial",
+    "vias": "vial",
+    "vía": "vial",
+    "vías": "vial",
+    "malla vial": "vial",
+    "infraestructura vial": "vial",
+    "mantenimiento vial": "vial",
     # ── dotacion / dotaciones ───────────────────────────────────────────────
     "dotacion": "dotacion",
     "dotaciones": "dotacion",
@@ -148,6 +166,10 @@ for _root in list(_ROOT_TO_VARIANTS.keys()):
 if "alimentacion_escolar" in _ROOT_TO_VARIANTS:
     _ROOT_TO_VARIANTS["alimentacion_escolar"].discard("pae")
     _ROOT_TO_VARIANTS["alimentacion_escolar"].discard("alimentacion_escolar")
+# B6: "parque_automotor" es un slug interno. No debe emitirse como LIKE
+# (no aparece en la descripción real). Sí "parque automotor" / "parques automotores".
+if "parque_automotor" in _ROOT_TO_VARIANTS:
+    _ROOT_TO_VARIANTS["parque_automotor"].discard("parque_automotor")
 # OR-only protected phrase: preserve legacy normal parsing as "primera", "infancia",
 # but allow explicit alternatives like "adulto mayor o primera infancia" to be grouped.
 _ROOT_TO_VARIANTS.setdefault("primera_infancia", set()).update({
