@@ -1,0 +1,1076 @@
+# SECOPPAL Query Corpus v1 — regression harness for the deterministic parser
+# and the follow-up workflow.
+#
+# Source mix:
+#   - negatives_feedback : 24 unique queries with rating=0 from data/feedback.jsonl
+#     (IDs CORPUS-R001..R024, in source order)
+#   - followup_manual    : 3 manual follow-up scenarios derived from feedback
+#     (IDs CORPUS-R025..R027)
+#   - top_freq           : 15 highest-frequency queries from feedback.jsonl
+#     (IDs CORPUS-F001..F015)
+#   - opportunity_cases  : Pamplonita + manual openness checks
+#     (IDs CORPUS-OC001..OC005)
+#   - bidder_intent      : commercial bidder / "presentarme" scenarios
+#     (IDs CORPUS-BI001..BI005)
+#   - value_ranges       : monetary range patterns
+#     (IDs CORPUS-V001..V008)
+#   - morphological      : plural/singular and PTAR-style topics
+#     (IDs CORPUS-M001..M005)
+#   - references         : outliers / process IDs / single-municipio
+#     (IDs CORPUS-REF001..REF003)
+#   - contextual_requery : multi-turn topic switches
+#     (IDs CORPUS-CR001..CR005)
+#   - analytical         : "cuanto suma", "cuantos hay"
+#     (IDs CORPUS-AN001..AN005)
+#   - smoke              : positive sanity checks that must keep passing
+#     (IDs CORPUS-SM001..CORPUS-SM010)
+#
+# Severity field:
+#   - critical : breaks a top-frequency user flow or a manually-reported sprint
+#   - high     : silent wrong-answer; user gets results but they are misleading
+#   - medium   : edge case or cosmetic
+#   - smoke    : positive baseline, regression alarm only
+#
+# Assertion semantics (see scripts/run_query_corpus.py):
+#   - expected.<key>: scalar  → require parsed[key] == value
+#   - expected.<key>_contains : sequence  → require every item in actual[key]
+#   - expected.not_present    : sequence  → require key absent or falsy
+#   - workflow turns: expected_intent matches the followup classifier,
+#     expected_frame applies the same semantics to the merged frame
+#
+# Owners: parser team. Adding a query: add an entry, run the runner,
+# inspect FAIL vs PASS, and only commit if FAIL is intentional (= flagged bug).
+version: 1
+generated_from: data/feedback.jsonl
+notes: |
+  This is a living regression file. FAIL entries are NOT corpus bugs — they
+  are real parser/workflow bugs we have not yet fixed. Each FAIL row should
+  map to an open ticket or a follow-up commit.
+
+queries:
+
+  # ──────────────────────────────────────────────────────────────────
+  # negatives_feedback (rating=0, in source order)
+  # ──────────────────────────────────────────────────────────────────
+
+  - id: CORPUS-R001
+    text: "contratos de limpieza y destronque en 2026"
+    source: feedback_rating_0
+    severity: high
+    category: opportunity_detection_topic
+    mode: parser
+    expected:
+      dataset: contratos
+      fecha_desde: "2026-01-01"
+      fecha_hasta: "2026-12-31"
+      objeto_contains: [limpieza]
+    notes: |
+      Feedback comment menciona "ALCALDIA DE UNGUIA / DESTRONQUE Y LIMPIEZA".
+      Hoy "destronque" no entra en objeto. No es crítico (sigue siendo búsqueda).
+
+  - id: CORPUS-R002
+    text: "que procesos tiene en convocatoria la alcaldia de ocaña?"
+    source: feedback_rating_0
+    severity: high
+    category: opportunity_search_missing
+    mode: parser
+    expected:
+      dataset: procesos
+      intent_type: opportunity_search
+      estado_family: oferta_abierta
+
+  - id: CORPUS-R003
+    text: "convocatorias abiertas para limpiar?"
+    source: feedback_rating_0
+    severity: high
+    category: morphological_verb
+    mode: parser
+    expected:
+      dataset: procesos
+      intent_type: opportunity_search
+      estado_family: oferta_abierta
+      objeto_contains: [limpieza]
+    notes: |
+      "limpiar" (verbo) debería normalizar a "limpieza" (sustantivo).
+
+  - id: CORPUS-R004
+    text: "procesos convocatoria de MOBILIARIO DE OFICINA"
+    source: feedback_rating_0
+    severity: high
+    category: opportunity_detection_topic
+    mode: parser
+    expected:
+      dataset: procesos
+      intent_type: opportunity_search
+      estado_family: oferta_abierta
+      objeto_contains: [mobiliario]
+
+  - id: CORPUS-R005
+    text: "licitaciones de construccion convocadas"
+    source: feedback_rating_0
+    severity: critical
+    category: opportunity_search_missing_convocadas
+    mode: parser
+    expected:
+      dataset: procesos
+      intent_type: opportunity_search
+      estado_family: oferta_abierta
+      objeto_contains: [construccion]
+    notes: |
+      "convocadas" (participio plural de "convocar") es señal de proceso abierto
+      tan fuerte como "convocatoria". Hoy el parser solo dispara opportunity_search
+      con la familia "convocatoria/oportunidad" exacta.
+      Comment: "terrible eso del proceso no detecto nada de construccion cuando antes
+      si, en objeto esta convocadas".
+
+  - id: CORPUS-R006
+    text: "cuales han sido los contratos mas altos celebrados por la alcaldia de barranquilla en 2026?"
+    source: feedback_rating_0
+    severity: high
+    category: ordering_signal
+    mode: parser
+    expected:
+      dataset: contratos
+      ordering_signal: valor_desc
+      fecha_desde: "2026-01-01"
+      fecha_hasta: "2026-12-31"
+
+  - id: CORPUS-R007
+    text: "contrato de construccion de centros de vida gobernacion atlantico"
+    source: feedback_rating_0
+    severity: high
+    category: entity_without_de
+    mode: parser
+    expected:
+      dataset: contratos
+      objeto_contains: [construccion]
+    notes: |
+      "gobernacion atlantico" sin "de" / "del" — debería resolverse como
+      departamento Atlántico o entidad gobernación.
+
+  - id: CORPUS-R008
+    text: "contratos dotacion mas grandes de la gobernacion de atlantico"
+    source: feedback_rating_0
+    severity: high
+    category: entity_resolution
+    mode: parser
+    expected:
+      dataset: contratos
+      ordering_signal: valor_desc
+      objeto_contains: [dotacion]
+
+  - id: CORPUS-R009
+    text: "muestrame procesos donde me pueda presentar en mantenimientos por mas de 2000 millones de pesos"
+    source: feedback_rating_0
+    severity: high
+    category: bidder_intent_with_amount
+    mode: parser
+    expected:
+      dataset: procesos
+      intent_type: opportunity_search
+      estado_family: oferta_abierta
+      valor_min: 2000000000
+      objeto_contains: [mantenimiento]
+
+  - id: CORPUS-R010
+    text: "que tiene la alcadia de puerto concordia para presentarme ?"
+    source: feedback_rating_0
+    severity: high
+    category: bidder_intent
+    mode: parser
+    expected:
+      intent_type: opportunity_search
+      estado_family: oferta_abierta
+      dataset: procesos
+    notes: |
+      "alcadia" es typo común de "alcaldia". El spell-corrector debería resolverlo.
+
+  - id: CORPUS-R011
+    text: "que oportunidades de diplomado hay abiertas o convocatoria?"
+    source: feedback_rating_0
+    severity: high
+    category: opportunity_search
+    mode: parser
+    expected:
+      dataset: procesos
+      intent_type: opportunity_search
+      estado_family: oferta_abierta
+      objeto_contains: [diplomado]
+
+  - id: CORPUS-R012
+    text: "alguna oferta para contratos de MANTENIMIENTO DE TRAMPAS DE GRASAS ?"
+    source: feedback_rating_0
+    severity: medium
+    category: noise_in_objeto
+    mode: parser
+    expected:
+      dataset: contratos
+      objeto_contains: [mantenimiento, trampas]
+    notes: |
+      "oferta" no debería quedar como objeto. Hoy se cuela.
+
+  - id: CORPUS-R013
+    text: "holaa muestrame contratos de primera infancia de la alcaldia de barranquilla"
+    source: feedback_rating_0
+    severity: high
+    category: greeting_pollution
+    mode: parser
+    expected:
+      dataset: contratos
+      objeto_contains: [primera_infancia]
+    notes: |
+      Comment: "no mostro nada, holaaa en objeto? que clase de idea es esa".
+      "holaa" no debe entrar en objeto.
+
+  - id: CORPUS-R014
+    text: "contratos de primera infancia alcaldia de barranquilla"
+    source: feedback_rating_0
+    severity: high
+    category: entity_resolution
+    mode: parser
+    expected:
+      dataset: contratos
+      objeto_contains: [primera_infancia]
+
+  - id: CORPUS-R015
+    text: "muestrame los de mayor valor de 2026"
+    source: feedback_rating_0
+    severity: medium
+    category: standalone_ordering
+    mode: parser
+    expected:
+      ordering_signal: valor_desc
+      fecha_desde: "2026-01-01"
+      fecha_hasta: "2026-12-31"
+    notes: |
+      Sin "contrato/proceso" explícito, el parser elige dataset=procesos
+      por default. No se asserta dataset aquí — es responsabilidad del
+      followup_merger heredar el dataset previo en un flujo real.
+
+  - id: CORPUS-R016
+    text: "quiero ver los de mayor valor"
+    source: feedback_rating_0
+    severity: medium
+    category: standalone_ordering_followup
+    mode: parser
+    expected:
+      ordering_signal: valor_desc
+
+  - id: CORPUS-R017
+    text: "muestrame los contratos mas altos del distrito de barranquilla de primera infancia"
+    source: feedback_rating_0
+    severity: high
+    category: ordering_with_topic
+    mode: parser
+    expected:
+      dataset: contratos
+      ordering_signal: valor_desc
+      objeto_contains: [primera_infancia]
+
+  - id: CORPUS-R018
+    text: "OK AHORA MUESTRAME PRIMERA INFANCIA 2025, LOS MAS COSTOSOS"
+    source: feedback_rating_0
+    severity: critical
+    category: contextual_requery
+    mode: workflow
+    notes: |
+      Feedback comment: "terrible, no siguio la linea de primera infancia,
+      segundo esos nisiquiera son los de mayor valor de 2026".
+      Workflow real: el usuario venía consultando Barranquilla, cambia topic.
+    turns:
+      - text: "muestrame los contratos mas altos del distrito de barranquilla"
+        expected_intent: new_search
+      - text: "OK AHORA MUESTRAME PRIMERA INFANCIA 2025, LOS MAS COSTOSOS"
+        expected_intent: contextual_requery
+        expected_frame:
+          fecha_desde: "2025-01-01"
+          fecha_hasta: "2025-12-31"
+          ordering_signal: valor_desc
+          objeto_contains: [primera_infancia]
+
+  - id: CORPUS-R019
+    text: "muestrame mas"
+    source: feedback_rating_0
+    severity: high
+    category: pagination_pure
+    mode: workflow
+    turns:
+      - text: "contratos de primera infancia de barranquilla en 2026"
+        expected_intent: new_search
+      - text: "muestrame mas"
+        expected_intent: pagination_more
+
+  - id: CORPUS-R020
+    text: "que oportunidades hay para construccion de canchas o parques?"
+    source: feedback_rating_0
+    severity: high
+    category: opportunity_with_or
+    mode: parser
+    expected:
+      dataset: procesos
+      intent_type: opportunity_search
+      estado_family: oferta_abierta
+
+  - id: CORPUS-R021
+    text: "Quiero presentarme o licitar en el pae, alguna oportunidad?"
+    source: feedback_rating_0
+    severity: high
+    category: bidder_intent_pae
+    mode: parser
+    expected:
+      dataset: procesos
+      intent_type: opportunity_search
+      estado_family: oferta_abierta
+      objeto_contains: [alimentacion_escolar]
+    notes: |
+      Parser actual expande "pae" → ["alimentacion", "escolar"] (deseado).
+
+  - id: CORPUS-R022
+    text: "quiero licitar en el pae alguna convocatoria??"
+    source: feedback_rating_0
+    severity: high
+    category: bidder_intent_pae
+    mode: parser
+    expected:
+      dataset: procesos
+      intent_type: opportunity_search
+      estado_family: oferta_abierta
+      objeto_contains: [alimentacion_escolar]
+
+  - id: CORPUS-R023
+    text: "contratos de adulto mayor mas caros del distrito de barranquilla entre 2025 y 2026"
+    source: feedback_rating_0
+    severity: medium
+    category: date_range_between
+    mode: parser
+    expected:
+      dataset: contratos
+      ordering_signal: valor_desc
+      objeto_contains: [adulto_mayor]
+      fecha_desde: "2025-01-01"
+      fecha_hasta: "2026-12-31"
+
+  - id: CORPUS-R024
+    text: "muestrame mas contratos que esten firmados o en ejecucion"
+    source: feedback_rating_0
+    severity: high
+    category: refine_filter_with_estado
+    mode: workflow
+    turns:
+      - text: "contratos de primera infancia de barranquilla en 2026"
+        expected_intent: new_search
+      - text: "muestrame mas contratos que esten firmados o en ejecucion"
+        expected_intent: refine_filter
+
+  # ──────────────────────────────────────────────────────────────────
+  # followup_manual
+  # ──────────────────────────────────────────────────────────────────
+
+  - id: CORPUS-R025
+    source: manual_sprint
+    severity: high
+    category: refine_filter_geographic
+    mode: workflow
+    turns:
+      - text: "procesos abiertos de mantenimiento vial en atlantico"
+        expected_intent: new_search
+      - text: "y en Bolivar?"
+        expected_intent: change_scope
+
+  - id: CORPUS-R026
+    source: manual_sprint
+    severity: high
+    category: contextual_requery_topic
+    mode: workflow
+    turns:
+      - text: "contratos de adulto mayor de alcaldia de barranquilla de 2026"
+        expected_intent: new_search
+      - text: "y primera infancia?"
+        expected_intent: contextual_requery
+        expected_frame:
+          objeto_contains: [primera_infancia]
+
+  - id: CORPUS-R027
+    source: manual_sprint
+    severity: critical
+    category: refine_filter_numeric_weak_topic
+    mode: workflow
+    notes: |
+      Caso del sprint: el usuario consulta construccion, luego refina solo por
+      valor. El parser debe heredar el topic previo en lugar de reemplazarlo
+      con ['solo', 'aquellos']. Hoy el merger ya tiene _is_weak_topic; este
+      caso valida la regresión.
+    turns:
+      - text: "contratos de construccion en bogota 2026"
+        expected_intent: new_search
+      - text: "muestrame solo aquellos que sean por mas de 100 millones"
+        expected_intent: refine_filter
+        expected_frame:
+          valor_min: 100000000
+          topic_contains: [construccion]
+
+  # ──────────────────────────────────────────────────────────────────
+  # top_freq (15 most-frequent queries in feedback.jsonl)
+  # ──────────────────────────────────────────────────────────────────
+
+  - id: CORPUS-F001
+    text: "contratos de primera infancia de barranquilla en 2026"
+    source: top_freq
+    severity: smoke
+    mode: parser
+    expected:
+      dataset: contratos
+      fecha_desde: "2026-01-01"
+      fecha_hasta: "2026-12-31"
+      objeto_contains: [primera_infancia]
+
+  - id: CORPUS-F002
+    text: "quiero ver los de mayor valor"
+    source: top_freq
+    severity: smoke
+    mode: parser
+    expected:
+      ordering_signal: valor_desc
+
+  - id: CORPUS-F003
+    text: "procesos en Atlantico"
+    source: top_freq
+    severity: smoke
+    mode: parser
+    expected:
+      dataset: procesos
+      departamento_resolved: "Atlántico"
+
+  - id: CORPUS-F004
+    text: "contratos de adulto mayor de alcaldia de barranquilla de 2026"
+    source: top_freq
+    severity: smoke
+    mode: parser
+    expected:
+      dataset: contratos
+      fecha_desde: "2026-01-01"
+      fecha_hasta: "2026-12-31"
+      objeto_contains: [adulto_mayor]
+
+  - id: CORPUS-F005
+    text: "muestrame mas"
+    source: top_freq
+    severity: smoke
+    mode: workflow
+    turns:
+      - text: "procesos en Atlantico"
+        expected_intent: new_search
+      - text: "muestrame mas"
+        expected_intent: pagination_more
+
+  - id: CORPUS-F006
+    text: "licitaciones de mantenimiento vial en Atlantico por mas de 500 millones abiertas"
+    source: top_freq
+    severity: critical
+    category: opportunity_with_amount_dept
+    mode: parser
+    expected:
+      dataset: procesos
+      intent_type: opportunity_search
+      estado_family: oferta_abierta
+      departamento_resolved: "Atlántico"
+      valor_min: 500000000
+      objeto_contains: [mantenimiento]
+    notes: |
+      Top-freq #6, mismo bug que CORPUS-R005: "abiertas" no activa
+      intent_type=opportunity_search aunque sí estado_family.
+
+  - id: CORPUS-F007
+    text: "contratos de primera infancia alcaldia de barranquilla"
+    source: top_freq
+    severity: smoke
+    mode: parser
+    expected:
+      dataset: contratos
+      objeto_contains: [primera_infancia]
+
+  - id: CORPUS-F008
+    text: "procesos abiertos de mantenimiento vial en atlantico"
+    source: top_freq
+    severity: smoke
+    mode: parser
+    expected:
+      dataset: procesos
+      estado_family: oferta_abierta
+      departamento_resolved: "Atlántico"
+      objeto_contains: [mantenimiento]
+
+  - id: CORPUS-F009
+    text: "quiero ver los mas recientes"
+    source: top_freq
+    severity: smoke
+    mode: parser
+    expected:
+      ordering_signal: fecha_desc
+
+  - id: CORPUS-F010
+    text: "pavimentacion en Cordoba"
+    source: top_freq
+    severity: smoke
+    mode: parser
+    expected:
+      departamento_resolved: "Córdoba"
+      objeto_contains: [pavimentacion]
+
+  - id: CORPUS-F011
+    text: "procesos de pavimentacion en el Choco"
+    source: top_freq
+    severity: smoke
+    mode: parser
+    expected:
+      dataset: procesos
+      departamento_resolved: "Chocó"
+      objeto_contains: [pavimentacion]
+
+  - id: CORPUS-F012
+    text: "y en Bolivar?"
+    source: top_freq
+    severity: smoke
+    mode: workflow
+    turns:
+      - text: "procesos de pavimentacion en el Choco"
+        expected_intent: new_search
+      - text: "y en Bolivar?"
+        expected_intent: change_scope
+
+  - id: CORPUS-F013
+    text: "hola muestrame contratos de primera infancia de barranquilla en 2026"
+    source: top_freq
+    severity: smoke
+    category: greeting_pollution
+    mode: parser
+    expected:
+      dataset: contratos
+      objeto_contains: [primera_infancia]
+
+  - id: CORPUS-F014
+    text: "mantenimiento vial"
+    source: top_freq
+    severity: smoke
+    mode: parser
+    expected:
+      objeto_contains: [mantenimiento]
+
+  - id: CORPUS-F015
+    text: "contratos de mantenimiento en antioquia"
+    source: top_freq
+    severity: smoke
+    mode: parser
+    expected:
+      dataset: contratos
+      departamento_resolved: "Antioquia"
+      objeto_contains: [mantenimiento]
+
+  # ──────────────────────────────────────────────────────────────────
+  # opportunity_cases — Pamplonita + manual openness scenarios
+  # ──────────────────────────────────────────────────────────────────
+
+  - id: CORPUS-OC001
+    text: "MANTENIMIENTO CORRECTIVO Y PREVENTIVO PARQUE AUTOMOTOR abierto en norte de santander"
+    source: manual_sprint
+    severity: critical
+    category: opportunity_search_missing_abierto
+    mode: parser
+    expected:
+      dataset: procesos
+      intent_type: opportunity_search
+      estado_family: oferta_abierta
+      departamento_resolved: "Norte de Santander"
+      objeto_contains: [mantenimiento]
+    notes: |
+      Pamplonita SAMC-PNITA-002-2026 — caso del 2026-05-17. Hoy se setea
+      estado_family pero NO intent_type=opportunity_search, lo que rompe
+      ordering y suggester downstream.
+
+  - id: CORPUS-OC002
+    text: "convocatorias abiertas en norte de santander"
+    source: manual_sprint
+    severity: high
+    mode: parser
+    expected:
+      dataset: procesos
+      intent_type: opportunity_search
+      estado_family: oferta_abierta
+      departamento_resolved: "Norte de Santander"
+
+  - id: CORPUS-OC003
+    text: "procesos abiertos en pamplonita"
+    source: manual_sprint
+    severity: high
+    category: municipio_resolution
+    mode: parser
+    expected:
+      dataset: procesos
+      estado_family: oferta_abierta
+
+  - id: CORPUS-OC004
+    text: "quiero presentarme a mantenimiento vial"
+    source: manual_sprint
+    severity: high
+    category: bidder_intent
+    mode: parser
+    expected:
+      dataset: procesos
+      intent_type: opportunity_search
+      estado_family: oferta_abierta
+      objeto_contains: [mantenimiento]
+
+  - id: CORPUS-OC005
+    text: "donde me puedo presentar para construccion de vias"
+    source: manual_sprint
+    severity: high
+    category: bidder_intent_indirect
+    mode: parser
+    expected:
+      dataset: procesos
+      intent_type: opportunity_search
+      estado_family: oferta_abierta
+
+  # ──────────────────────────────────────────────────────────────────
+  # bidder_intent
+  # ──────────────────────────────────────────────────────────────────
+
+  - id: CORPUS-BI001
+    text: "algun mantenimiento de vias para poder presentarme"
+    source: manual_sprint
+    severity: high
+    mode: parser
+    expected:
+      dataset: procesos
+      intent_type: opportunity_search
+      estado_family: oferta_abierta
+      objeto_contains: [mantenimiento]
+
+  - id: CORPUS-BI002
+    text: "quiero vender carpas, alguna oportunidad"
+    source: manual_sprint
+    severity: high
+    category: commercial_bidder_verb
+    mode: parser
+    expected:
+      dataset: procesos
+      intent_type: opportunity_search
+      estado_family: oferta_abierta
+    expected_objeto_must_not_contain: [vender, vendo, ofrecer]
+
+  - id: CORPUS-BI003
+    text: "ofrezco servicios de mantenimiento, alguna convocatoria abierta"
+    source: manual_sprint
+    severity: high
+    category: commercial_bidder_verb
+    mode: parser
+    expected:
+      dataset: procesos
+      intent_type: opportunity_search
+      estado_family: oferta_abierta
+      objeto_contains: [mantenimiento]
+
+  - id: CORPUS-BI004
+    text: "comercializo equipos medicos, donde puedo licitar"
+    source: manual_sprint
+    severity: high
+    category: commercial_bidder_verb
+    mode: parser
+    expected:
+      dataset: procesos
+      intent_type: opportunity_search
+      estado_family: oferta_abierta
+
+  - id: CORPUS-BI005
+    text: "soy proveedor de papelería, hay alguna licitación?"
+    source: manual_sprint
+    severity: high
+    category: commercial_bidder_verb
+    mode: parser
+    expected:
+      dataset: procesos
+      intent_type: opportunity_search
+      estado_family: oferta_abierta
+
+  # ──────────────────────────────────────────────────────────────────
+  # value_ranges
+  # ──────────────────────────────────────────────────────────────────
+
+  - id: CORPUS-V001
+    text: "contratos de mantenimiento entre 1000-3000 millones de 2026"
+    source: manual_sprint
+    severity: high
+    category: range_hyphen
+    mode: parser
+    expected:
+      dataset: contratos
+      valor_min: 1000000000
+      valor_max: 3000000000
+      fecha_desde: "2026-01-01"
+      fecha_hasta: "2026-12-31"
+
+  - id: CORPUS-V002
+    text: "contratos entre 500 millones y 2000 millones en bogota"
+    source: manual_sprint
+    severity: high
+    category: range_y_keyword
+    mode: parser
+    expected:
+      dataset: contratos
+      valor_min: 500000000
+      valor_max: 2000000000
+
+  - id: CORPUS-V003
+    text: "procesos de mas de 100 millones"
+    source: manual_sprint
+    severity: smoke
+    mode: parser
+    expected:
+      dataset: procesos
+      valor_min: 100000000
+
+  - id: CORPUS-V004
+    text: "contratos de menos de 50 millones"
+    source: manual_sprint
+    severity: smoke
+    mode: parser
+    expected:
+      dataset: contratos
+      valor_max: 50000000
+
+  - id: CORPUS-V005
+    text: "contratos de 750 millones o mas"
+    source: manual_sprint
+    severity: high
+    category: range_x_o_mas
+    mode: parser
+    expected:
+      dataset: contratos
+      valor_min: 750000000
+
+  - id: CORPUS-V006
+    text: "procesos superiores a 1500 millones"
+    source: manual_sprint
+    severity: smoke
+    mode: parser
+    expected:
+      dataset: procesos
+      valor_min: 1500000000
+
+  - id: CORPUS-V007
+    text: "desde 200 millones hasta mil millones"
+    source: manual_sprint
+    severity: high
+    category: range_mil_millones_literal
+    mode: parser
+    expected:
+      valor_min: 200000000
+      valor_max: 1000000000
+    notes: |
+      "mil millones" debe ser 1_000_000_000, no 1_000_000_000_000.
+
+  - id: CORPUS-V008
+    text: "procesos por mas de 2000 millones de pesos en atlantico"
+    source: manual_sprint
+    severity: smoke
+    mode: parser
+    expected:
+      dataset: procesos
+      valor_min: 2000000000
+      departamento_resolved: "Atlántico"
+
+  # ──────────────────────────────────────────────────────────────────
+  # morphological / PTAR
+  # ──────────────────────────────────────────────────────────────────
+
+  - id: CORPUS-M001
+    text: "plantas de tratamiento de aguas residuales"
+    source: manual_sprint
+    severity: high
+    category: ptar_long_form
+    mode: parser
+    expected:
+      objeto_contains: [plantas, tratamiento, aguas, residuales]
+
+  - id: CORPUS-M002
+    text: "PTAR en cordoba"
+    source: manual_sprint
+    severity: smoke
+    mode: parser
+    expected:
+      objeto_contains: [ptar]
+      departamento_resolved: "Córdoba"
+
+  - id: CORPUS-M003
+    text: "construcción de planta de tratamiento de aguas residuales en la guajira"
+    source: manual_sprint
+    severity: high
+    category: ptar_with_construccion
+    mode: parser
+    expected:
+      departamento_resolved: "La Guajira"
+      objeto_contains: [construccion]
+
+  - id: CORPUS-M004
+    text: "convocatorias abiertas para limpieza"
+    source: manual_sprint
+    severity: smoke
+    mode: parser
+    expected:
+      dataset: procesos
+      intent_type: opportunity_search
+      objeto_contains: [limpieza]
+
+  - id: CORPUS-M005
+    text: "pavimentación de vías"
+    source: manual_sprint
+    severity: smoke
+    mode: parser
+    expected:
+      objeto_contains: [pavimentacion, vias]
+
+  # ──────────────────────────────────────────────────────────────────
+  # references / outliers
+  # ──────────────────────────────────────────────────────────────────
+
+  - id: CORPUS-REF001
+    text: "CD-1028-2025"
+    source: manual_sprint
+    severity: medium
+    category: process_id_token
+    mode: parser
+    expected:
+      fecha_desde: "2025-01-01"
+      fecha_hasta: "2025-12-31"
+    notes: |
+      Hoy "CD-1028-2025" se reduce a un filtro por año. Idealmente
+      reconoceríamos el shape "XX-NNNN-YYYY" como referencia de proceso.
+
+  - id: CORPUS-REF002
+    text: "contratos en Luruaco 2026"
+    source: manual_sprint
+    severity: medium
+    category: small_municipio
+    mode: parser
+    expected:
+      dataset: contratos
+      fecha_desde: "2026-01-01"
+      fecha_hasta: "2026-12-31"
+
+  - id: CORPUS-REF003
+    text: "MIC-043-2026 de manizales"
+    source: feedback_comment
+    severity: medium
+    category: process_id_with_city
+    mode: parser
+    expected:
+      fecha_desde: "2026-01-01"
+      fecha_hasta: "2026-12-31"
+
+  # ──────────────────────────────────────────────────────────────────
+  # contextual_requery — multi-turn topic switches
+  # ──────────────────────────────────────────────────────────────────
+
+  - id: CORPUS-CR001
+    source: manual_sprint
+    severity: high
+    mode: workflow
+    turns:
+      - text: "procesos abiertos de mantenimiento vial en atlantico"
+        expected_intent: new_search
+      - text: "y en construcción de vías?"
+        expected_intent: contextual_requery
+        expected_frame:
+          objeto_contains: [construccion]
+
+  - id: CORPUS-CR002
+    source: manual_sprint
+    severity: high
+    mode: workflow
+    turns:
+      - text: "contratos de primera infancia de barranquilla en 2026"
+        expected_intent: new_search
+      - text: "ahora en 2025"
+        expected_intent: change_year
+        expected_frame:
+          fecha_desde: "2025-01-01"
+
+  - id: CORPUS-CR003
+    source: manual_sprint
+    severity: high
+    mode: workflow
+    turns:
+      - text: "contratos de primera infancia de barranquilla en 2026"
+        expected_intent: new_search
+      - text: "los mas caros"
+        expected_intent: change_order
+        expected_frame:
+          ordering_signal: valor_desc
+
+  - id: CORPUS-CR004
+    source: manual_sprint
+    severity: high
+    mode: workflow
+    turns:
+      - text: "contratos de primera infancia en barranquilla"
+        expected_intent: new_search
+      - text: "ahora en medellin"
+        expected_intent: change_scope
+
+  - id: CORPUS-CR005
+    source: manual_sprint
+    severity: high
+    mode: workflow
+    turns:
+      - text: "procesos abiertos de mantenimiento vial en atlantico"
+        expected_intent: new_search
+      - text: "ahora contratos firmados"
+        expected_intent: change_dataset
+
+  # ──────────────────────────────────────────────────────────────────
+  # analytical
+  # ──────────────────────────────────────────────────────────────────
+
+  - id: CORPUS-AN001
+    text: "cuanto suman los contratos de primera infancia en barranquilla 2026"
+    source: manual_sprint
+    severity: high
+    category: analytical_sum
+    mode: parser
+    expected:
+      dataset: contratos
+      objeto_contains: [primera_infancia]
+
+  - id: CORPUS-AN002
+    text: "cuantos procesos abiertos hay en atlantico"
+    source: manual_sprint
+    severity: smoke
+    mode: parser
+    expected:
+      dataset: procesos
+      departamento_resolved: "Atlántico"
+
+  - id: CORPUS-AN003
+    source: manual_sprint
+    severity: high
+    mode: workflow
+    turns:
+      - text: "contratos de primera infancia en barranquilla 2026"
+        expected_intent: new_search
+      - text: "cuanto suman"
+        expected_intent: refine_filter
+
+  - id: CORPUS-AN004
+    text: "cuanto se contrató"
+    source: manual_sprint
+    severity: medium
+    category: ambiguous_aggregate
+    mode: parser
+    expected: {}
+    notes: |
+      Sin scope ni topic, debería pedir clarificación (needs_clarification=true)
+      en vez de ejecutar un agregado global.
+
+  - id: CORPUS-AN005
+    text: "total de contratos firmados en 2026"
+    source: manual_sprint
+    severity: smoke
+    mode: parser
+    expected:
+      dataset: contratos
+      fecha_desde: "2026-01-01"
+
+  # ──────────────────────────────────────────────────────────────────
+  # smoke — positive baseline
+  # ──────────────────────────────────────────────────────────────────
+
+  - id: CORPUS-SM001
+    text: "contratos en bogota"
+    source: smoke
+    severity: smoke
+    mode: parser
+    expected:
+      dataset: contratos
+
+  - id: CORPUS-SM002
+    text: "procesos en medellin"
+    source: smoke
+    severity: smoke
+    mode: parser
+    expected:
+      dataset: procesos
+
+  - id: CORPUS-SM003
+    text: "contratos de 2025"
+    source: smoke
+    severity: smoke
+    mode: parser
+    expected:
+      dataset: contratos
+      fecha_desde: "2025-01-01"
+
+  - id: CORPUS-SM004
+    text: "oportunidades de construccion en cali"
+    source: smoke
+    severity: smoke
+    mode: parser
+    expected:
+      dataset: procesos
+      intent_type: opportunity_search
+      estado_family: oferta_abierta
+      objeto_contains: [construccion]
+
+  - id: CORPUS-SM005
+    text: "contratos firmados de alcaldia de medellin en 2026"
+    source: smoke
+    severity: smoke
+    mode: parser
+    expected:
+      dataset: contratos
+      fecha_desde: "2026-01-01"
+
+  - id: CORPUS-SM006
+    text: "convocatorias de pavimentacion abiertas"
+    source: smoke
+    severity: smoke
+    mode: parser
+    expected:
+      dataset: procesos
+      intent_type: opportunity_search
+      estado_family: oferta_abierta
+      objeto_contains: [pavimentacion]
+
+  - id: CORPUS-SM007
+    text: "procesos de alimentacion escolar en valle del cauca"
+    source: smoke
+    severity: smoke
+    mode: parser
+    expected:
+      dataset: procesos
+      departamento_resolved: "Valle del Cauca"
+
+  - id: CORPUS-SM008
+    text: "contratos por mas de 100 millones en bolivar"
+    source: smoke
+    severity: smoke
+    mode: parser
+    expected:
+      dataset: contratos
+      valor_min: 100000000
+      departamento_resolved: "Bolívar"
+
+  - id: CORPUS-SM009
+    text: "los mas recientes"
+    source: smoke
+    severity: smoke
+    mode: parser
+    expected:
+      ordering_signal: fecha_desc
+
+  - id: CORPUS-SM010
+    text: "contratos de primera infancia"
+    source: smoke
+    severity: smoke
+    mode: parser
+    expected:
+      objeto_contains: [primera_infancia]
