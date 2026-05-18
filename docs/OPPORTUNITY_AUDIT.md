@@ -156,3 +156,33 @@ git commit -m "test: add opportunity hunting audit matrix"
 - query_router.py: opportunity_search fuerza claves concretas de estado (estado_de_apertura_del_proceso).
 - Tests: 528 passed, torture matrix OK.
 - Problema original de herencia de "pintura" + Atlántico resuelto a nivel parser/merge.
+
+---
+
+## Cierre OPP — Estado de oportunidad y presentación de resultados (2026-05-17)
+
+### Bug corregido
+Doble filtro de estados eliminado. `oferta_abierta` ahora usa únicamente `estado_del_procedimiento IN ('Publicado', 'Borrador', 'Abierto')`. El campo `estado_de_apertura_del_proceso` fue removido de la familia porque generaba AND restrictivo que excluía procesos válidos.
+
+### Caso guía
+Pamplonita / Norte de Santander — oportunidad de mantenimiento correctivo y preventivo de parque automotor que no aparecía por combinación de estados.
+
+### Fixes B1-B7 aplicados
+- **B1** Deduplicación por id_del_proceso antes del slice.
+- **B2** Títulos inteligentes (`_smart_title`) cuando SECOP trae razón social como título.
+- **B3** Escape de `$` para Streamlit en `build_advisor_response`.
+- **B4** `urllib.parse.quote` en URLs de fallback.
+- **B5** Suggester ya no propone “Buscar en contratos” cuando `estado_family="oferta_abierta"`.
+- **B6** Soporte de frases multi-token (`mantenimiento correctivo y preventivo`, `parque automotor`).
+- **B7** Lectura rápida reordenada: header → resultados → lectura rápida → sugerencias.
+
+### Pendiente explícito
+OPP-003: `intent_type=opportunity_search` explícito en query_router (3 tests marcados xfail).
+
+### Validación
+- `test_pamplonita_oferta_abierta_bug.py`: 4/4
+- `test_bugs_b1_b7.py`: 19/19
+- `pytest tests/`: 564 passed (3 xfail OPP-003)
+- `run_torture_matrix.py`: INV-001..012 verdes
+- `feedback.jsonl`: SHA estable
+

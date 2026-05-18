@@ -1116,3 +1116,13 @@ Después del cierre de AQ-001A, el orden recomendado es:
 3. **OBS-001** — Observabilidad operativa (queda pendiente si el foco es análisis de negocio)
 
 No se recomienda activar H10 ni LLM classifier para queries analíticas mientras la ruta determinística funcione bien.
+
+### 2026-05-17 — Oportunidades SECOP: estado, dedupe y presentación
+
+Se ajustó la política de oportunidades para evitar doble filtrado de estados y mejorar la salida visible de procesos. El caso guía fue una oportunidad de mantenimiento correctivo/preventivo de parque automotor en Norte de Santander que no aparecía por combinación restrictiva de estados.
+
+Validación:
+- tests Pamplonita: 4/4
+- tests B1-B7: 19/19
+- torture matrix verde
+- feedback.jsonl intacto

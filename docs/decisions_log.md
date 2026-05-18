@@ -74,3 +74,18 @@ Validación:
 - suite completa: 519 passed
 - torture matrix verde
 - feedback.jsonl intacto
+## 2026-05-17 — OPP: estado de oportunidad y presentación de resultados
+
+Se corrigió la política de filtrado para oportunidades SECOP. `oferta_abierta` deja de combinar filtros sobre `estado_de_apertura_del_proceso` y `estado_del_procedimiento`, porque el doble AND excluía procesos relevantes. La fuente operativa para la familia queda en `estado_del_procedimiento IN ('Publicado','Borrador','Abierto')`.
+
+También se mejoró la presentación de oportunidades:
+- deduplicación por identificador de proceso/contrato;
+- títulos inteligentes cuando SECOP trae proveedor como nombre;
+- URLs escapadas;
+- corrección de `$` en Streamlit;
+- sugerencias coherentes para oportunidad;
+- soporte de frases como `mantenimiento correctivo y preventivo` y `parque automotor`.
+
+Pendiente: OPP-003 para `intent_type=opportunity_search` explícito.
+
+Validación: test_pamplonita 4/4, test_bugs_b1_b7 19/19, torture matrix verde, feedback.jsonl intacto.
