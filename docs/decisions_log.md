@@ -151,3 +151,30 @@ También se corrigió parsing de rangos monetarios compactos tipo "1000-3000 mil
 - Umbral absoluto (ej: > 1 billón COP): contratos nacionales legítimos pueden superarlo.
 
 **Consecuencias:** El dato fuente permanece intacto. El usuario ve el valor reportado y la advertencia simultáneamente. Futuros rankings y top N heredan la marca sin necesidad de lógica adicional. No afecta el pipeline de SoQL/ordenamiento.
+
+---
+
+## 2026-05-18 — SAFE-SOQL-001: defensa interna anti consultas globales
+
+SoQLBuilder ya no emite `WHERE 1=1` salvo `allow_global=True` explícito.
+El guard del orchestrator (`SCOPE_TOPIC_KEYS` en `execute_query`) sigue
+siendo la primera defensa y el responsable del mensaje al usuario; el
+builder queda como segunda defensa para que un bug futuro o una salida
+LLM mal formada no puedan disparar una consulta global a SECOP.
+
+**Decisión:**
+Un filtro "substancial" es uno de: scope (departamento, ciudad, entidad,
+contratista), topic (objeto), familia de estado o modalidad. fecha, valor
+y orden por sí solos NO cuentan — no acotan nada sin scope o topic.
+
+**Opt-in:**
+Callers que requieran un global query legítimo (p.ej. `observer.py`
+agregando sobre un universo ya validado) deben pasar `allow_global=True`
+y quedar cubiertos por tests dedicados.
+
+**Compromiso UX:**
+Si el builder rechaza, `build_query` deja `soql_query=""` y el guard del
+orchestrator entrega `needs_clarification` con un solo mensaje pidiendo
+filtros.
+
+Validación: 534 passed, corpus crítico 5/5, feedback.jsonl intacto.

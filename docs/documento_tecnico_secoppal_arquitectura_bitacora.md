@@ -1169,3 +1169,35 @@ Validación:
 - 12 tests nuevos.
 - Suite: 596 passed, 1 xfailed.
 - Torture matrix verde.
+
+### 2026-05-18 — CORPUS-001-B + CORPUS-002 — corpus de regresión sobre el parser
+
+Se agregó un corpus de queries reales (`tests/fixtures/query_corpus_v1.yaml`,
+88 entradas) y un runner (`scripts/run_query_corpus.py`) con tres modos
+(`--mode parser|workflow|all`) y filtros por `--severity`, `--id` y
+`--limit`. Convenciones en `docs/QUERY_CORPUS.md`.
+
+Sobre ese corpus se cerraron los 4 críticos iniciales:
+- CORPUS-R005: `convocadas` ahora activa `oferta_abierta` vía
+  `estado_families.NATURAL_TO_FAMILY`.
+- CORPUS-F006 / CORPUS-OC001: `estado_family=oferta_abierta` sobre
+  `dataset=procesos` se promueve a `intent_type=opportunity_search`.
+- CORPUS-R018: el heurístico "más + filtro nuevo → refine_filter" ya no
+  degrada follow-ups que introducen un topic completamente nuevo
+  (helper `_topics_overlap` en `followup_engine.py`).
+
+Pase tras los fixes: 82/88; corpus crítico 5/5.
+
+### 2026-05-18 — SAFE-SOQL-001 — Defensa interna anti consultas globales
+
+SoQLBuilder ya no emite `WHERE 1=1` salvo `allow_global=True` explícito.
+El guard del orchestrator sigue siendo la primera defensa; el builder
+queda como segunda defensa.
+
+Un filtro "substancial" es scope, topic, familia de estado o modalidad.
+fecha/valor/orden por sí solos no califican. Tests en
+`tests/test_safe_soql.py` cubren los 6 escenarios pedidos más opt-in y
+filtros sustanciales individuales. `observer.py` opta por
+`allow_global=True` porque opera sobre un universo ya validado.
+
+Validación: 534 passed, corpus crítico 5/5, feedback.jsonl intacto.
