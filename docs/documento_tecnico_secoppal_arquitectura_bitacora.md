@@ -1201,3 +1201,31 @@ filtros sustanciales individuales. `observer.py` opta por
 `allow_global=True` porque opera sobre un universo ya validado.
 
 Validación: 534 passed, corpus crítico 5/5, feedback.jsonl intacto.
+
+### 2026-05-18 — Reconciliación main + cierre CORPUS-002-HIGH
+
+Se reconcilió main desde el worktree `claude/zealous-yalow-296fb6` vía
+rama de rescate `rescue/dirty-secoppal-2026-05-18` y cherry-picks
+quirúrgicos. Resultado final:
+
+- **VALUE-SANITY-002A:** `detect_value_anomaly()` marca valores atípicos
+  en dataset Contratos sin alterar el dato fuente. ADR-005 registrada.
+- **LLM-OPP-VERIFY-001:** `opportunity_policy.py` reintroducido como
+  enforcement post-LLM para `intent_type=opportunity_search` en queries
+  de proponente.
+- **PTAR-VARIANTS-001:** 7 variantes PTAR/STAR/aguas residuales colapsadas
+  a raíz `tratamiento_aguas_residuales`.
+- **TEST-HYGIENE-001:** 1 xpass eliminado, xfail actualizados.
+- **CORPUS-003A:** V005 ("o más") y V007 ("mil millones") cerrados.
+- **CORPUS-003B:** OC004/OC005 (bidder intent indirecto) cerrados.
+- **CORPUS-003C:** R003 (`limpiar→limpieza`) cerrado.
+- **AN003:** cherry-pick para analytical followup "cuánto suma".
+
+**Validación final:**
+- Suite: 579 passed, 3 xfailed.
+- Corpus: 88/88 PASS, 0 FAIL.
+- Torture matrix: 12/12 invariantes.
+- feedback.jsonl intacto.
+
+**Pendiente registrado:** DEMO-BLOCKERS-001 — 5 tareas UX (COMMAND-SLOT,
+OPP-UX, OPP-STATE, OPP-SUGGEST, OPP-RELEVANCE). Prioridad HIGH.

@@ -178,3 +178,27 @@ orchestrator entrega `needs_clarification` con un solo mensaje pidiendo
 filtros.
 
 Validación: 534 passed, corpus crítico 5/5, feedback.jsonl intacto.
+
+---
+
+## 2026-05-18 — Reconciliación de main y cierre CORPUS-002-HIGH
+
+**Fecha:** 2026-05-18
+**Contexto:** main contenía solo parte de los fixes del sprint; el worktree
+`claude/zealous-yalow-296fb6` tenía SAFE-SOQL, corpus runner, critical fixes
+y torture fixtures sin mergear. Además el working tree local tenía cambios no
+commiteados (opportunity_policy.py, PTAR variants, morphological expansions).
+
+**Decisión:** Reconciliar vía rama de rescate y cherry-picks quirúrgicos, no
+merge completo del worktree. Los fixes se integraron en 14 commits validados
+uno a uno contra lint, pytest, corpus y torture matrix.
+
+**Resultado:**
+- Corpus: 88/88 PASS, 0 FAIL (desde 82/88 inicial).
+- Suite: 579 passed, 3 xfailed.
+- Torture matrix: 12/12 invariantes.
+- feedback.jsonl intacto.
+- git status limpio.
+
+**Sprint pendiente:** DEMO-BLOCKERS-001 — 5 tareas UX registradas como
+fact en memoria estructurada. Prioridad HIGH. No ejecutar ahora.
