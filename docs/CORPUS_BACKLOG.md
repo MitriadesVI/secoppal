@@ -2,7 +2,20 @@
 
 Fallos conocidos del corpus, agrupados por severidad. NO editar parser/core para hacer pasar estos casos — son bugs reales que requieren features o fixes separados.
 
-**Última actualización:** 2026-05-19 (madrugada, sexta tanda) — feedback humano de Caquetá. Total acumulado: 23 categorías de bugs, 5 CRITICAL. Plan de robustecimiento sistémico en pausa (ver [docs/SECOPPAL_ROBUSTECIMIENTO_SISTEMICO.md](SECOPPAL_ROBUSTECIMIENTO_SISTEMICO.md)); estos hallazgos alimentan el Sprint 0A cuando se retome.
+**Última actualización:** 2026-05-19 (madrugada, post-decisión de modelo de negocio) — confirmado modelo B2B SaaS ($10-20 USD/mes, meta 500 WAU en 2 años, ~$90K ARR). SOURCE-COVERAGE-001 sube a CRITICAL porque el delay de 48h del dataset Socrata destruye la propuesta de valor para proponentes pagos. Total acumulado: 23 categorías de bugs, **6 CRITICAL**. Plan de robustecimiento sistémico en pausa (ver [docs/SECOPPAL_ROBUSTECIMIENTO_SISTEMICO.md](SECOPPAL_ROBUSTECIMIENTO_SISTEMICO.md)); estos hallazgos alimentan el Sprint 0A cuando se retome.
+
+## Modelo de negocio confirmado (2026-05-19)
+
+| Dimensión | Valor |
+|---|---|
+| Modelo | B2B SaaS — suscripción individual |
+| Pricing | $10-20 USD/mes per user (target $15 promedio) |
+| Usuario objetivo | Proponentes activos buscando oportunidades en SECOP |
+| Meta 2 años | 500 WAU (~2,000-3,000 MAU) |
+| ARR target | ~$90K |
+| Tráfico esperado peak | 5K-10K queries/día |
+
+**Implicación crítica del modelo:** los proponentes pagan por encontrar oportunidades **antes** del cierre. Mínima cuantía tiene plazo 1-3 días hábiles. Un usuario que ve oportunidades con 48h de delay pierde la mitad de mínimas cuantías. Eso es churn directo. **La velocidad de datos no es feature, es prerequisito del modelo de negocio.**
 
 **Estado del corpus v1:** **88/88 PASS, 0 FAIL** (sin cambios desde 2026-05-18). El corpus v1 sigue verde — los bugs nuevos son patrones que el corpus v1 no probaba.
 
@@ -43,7 +56,7 @@ Estos NO son fallos del corpus v1 (el corpus pasa 88/88). Son bugs reales detect
 | OPP-TIMEOUT-001 | Timeout SECOP reportado como "0 resultados" sin avisar al usuario | 6 | CRITICAL |
 | ACCENT-NORMALIZATION-001 | Tildes en dato fuente no matchean LIKE sin tilde (`UPPER` no quita tildes). Casos: consultoría, logístico, turísticos, logísticos | 4 | CRITICAL |
 | MUNICIPAL-GEO-GAP-001 | Alcaldías municipales con `departamento_entidad` vacío/inconsistente. Casos: Paicol/Huila, Paipa/Boyacá, Mariquita/Tolima, Yarumal/Antioquia | 4 | **CRITICAL** — patrón sistémico en 4 departamentos distintos |
-| SOURCE-COVERAGE-001 | Procesos publicados en SECOP nativo en las últimas 24-48h no están aún en dataset público `p6dx-8zbt` (delay de sincronización Socrata). Casos: Paipa/SMC MP 021, Doncello/CMC-2026-019 | 2 | **HIGH (nuevo, requiere ruta de diagnóstico, no fix técnico — limitación de la fuente)** |
+| SOURCE-COVERAGE-001 | Procesos publicados en SECOP nativo en las últimas 24-48h no están aún en dataset público `p6dx-8zbt` (delay de sincronización Socrata). Casos: Paipa/SMC MP 021, Doncello/CMC-2026-019 | 2 | **CRITICAL (subir desde HIGH)** — el modelo B2B exige tiempo casi real; delay = churn de proponentes pagos |
 | STATE-PRIORITY-001 | `estado_family=oferta_abierta` no se proyecta a SoQL en algunas rutas | 3 | HIGH (ya en DEMO-BLOCKERS) |
 | OPP-INTENT-001 | "algún proceso para X" / "alguna oferta del Y" / "algún proceso de Z en W" no activa `intent_type=opportunity_search` ni `estado_family=oferta_abierta` | 3 | HIGH |
 | NUMBER-CONTEXT-PHRASE-001 | Verbos comparativos ("supere", "exceda", "alcance") y conectores temporales ("en") permanecen en `objeto` cuando el parser ya extrajo correctamente el modificador (valor/fecha). AND con el verbo mata la búsqueda. Caso: "no supere los 25 millones" → valor_max=25M ✓ + objeto contiene "supere" → 0 resultados | 1 | **HIGH (nuevo)** |
@@ -165,7 +178,66 @@ Luego el `QueryPlan` original del plan, con extensiones para `courtesy_filler` (
 | RELEVANCE-PHRASE-001 | Boost de frase técnica compuesta (nuevo) | Pendiente HIGH | Cubierto por Sprint 3 Relevance v1 (shingle bigramas en BM25) o v2 (embedding de frase completa). Caso canónico: "control de calidad de agua para consumo humano" |
 | DEDUP-PROCESS-001 | Dedup procesos por entidad+monto+objeto (nuevo) | Pendiente MEDIUM | Sprint 2-3. Ya mencionado en OPP audit 2026-05-17. Confirmado 3× (Guateque, La Estrella, Doncello) |
 | NUMBER-CONTEXT-PHRASE-001 | Verbos comparativos / conectores temporales como objeto (nuevo) | Pendiente HIGH | 1 caso ("supere" en objeto cuando valor_max ya inferido). Fix: scrub catalog post-extracción de modificadores |
-| SOURCE-COVERAGE-001 | Procesos recientes invisibles por delay de sync Socrata (nuevo) | Pendiente HIGH | 2 casos (Paipa, Doncello). No es bug técnico — es limitación de la fuente. Fix: ruta de diagnóstico que avise al usuario cuando referencia es de las últimas 48h |
+| SOURCE-COVERAGE-001 | Procesos recientes invisibles por delay de sync Socrata (nuevo) | Pendiente CRITICAL | 2 casos (Paipa, Doncello). Limitación de la fuente, no bug técnico. **Sube de HIGH a CRITICAL tras decisión de modelo B2B.** Fase 1: ruta de diagnóstico transparente. Fases 2-3: ver roadmap de datos abajo. |
+
+---
+
+## Roadmap de infraestructura de datos (post-decisión modelo B2B)
+
+Hallazgo de la investigación del 2026-05-19: licitaciones.info opera con BD propia replicada de SECOP (no consume Socrata en vivo). Apuntar a 500 WAU pagando requiere camino similar, ejecutado en tres fases con criterios de transición claros.
+
+### Fase 1 — 0-6 meses (Opción A): Socrata + diagnóstico transparente
+
+**Qué hacer:**
+- Mantener Socrata `p6dx-8zbt` como fuente única.
+- Implementar SOURCE-COVERAGE-001 con UX honesta: cuando una query es probablemente afectada por delay (referencia reciente, scope estrecho, intent_type=opportunity_search), avisar al usuario antes de declarar "0 resultados".
+- Mensaje canónico: *"SECOP publica con delay de 24-48h en mi base de datos. Si tu oportunidad es de hoy o ayer, verifica directamente en SECOP nativo o licitaciones.info."*
+
+**Costo:** $0 adicional. Cabe en Sprint 2 del plan vigente.
+
+**Criterio de salida (transición a Fase 2):** **50+ usuarios pagando $15/mes (~$9K MRR)** validando que la propuesta de "asesor conversacional" tiene tracción real. Si no se llega, no invertir más; reconsiderar producto.
+
+### Fase 2 — 6-12 meses (Opción C): licenciar acceso a BD ajena
+
+**Qué hacer:** contactar tres opciones en orden:
+
+1. **Apitude.co** — B2B confirmado, ya tienen REST API sobre SECOP. Pedir demo, precio, delay garantizado, SLA.
+2. **Licitaciones.info / colombialicita.com partnership** — improbable pero valioso si lo logras. Modelo: white-label o API access bajo revenue share. Email directo a su equipo comercial.
+3. **CCE (Colombia Compra Eficiente) directamente** — preguntar por feed de integrador autorizado, RSS, webhook o API más rápida que Socrata. Pueden decir no, pero el costo del email es cero.
+
+**Costo estimado:** $200-800 USD/mes según opción y volumen.
+
+**Trade-off:** dependes de tercero (pricing, SLA, ToS). Pero evitas 2-3 semanas de dev de crawler y un servidor 24/7 que monitorear.
+
+**Criterio de salida (transición a Fase 3):** costo de C supera $5K/año recurrente Y volumen de queries justifica BD propia, O necesitas enriquecer datos (HV de contratistas, scoring de relevance) que el tercero no expone.
+
+### Fase 3 — 12-24 meses hacia 500 WAU (Opción B): crawler propio
+
+**Qué hacer:**
+- Construir `app/data/secop_crawler.py` (módulo nuevo, no parte del core SECOPPAL) que sincroniza periódicamente desde community.secop.gov.co.
+- BD propia (PostgreSQL probablemente) con índices optimizados para los filtros de SECOPPAL.
+- SECOPPAL consume BD propia en lugar de Socrata.
+- Mantener Socrata como **fallback** si crawler falla — degradación graceful.
+
+**Costo:**
+- Dev inicial: 2-3 semanas tiempo completo.
+- Infraestructura: ~$50-200 USD/mes (servidor cloud + BD + monitoreo).
+- Mantenimiento: 4-8h/mes ante cambios en SECOP nativo.
+
+**Trade-off:** control total + posibilidad de monetizar dato a terceros (exactamente lo que hace licitaciones.info con `licitacionesdata.com`). Costo: complejidad operativa y dependencia técnica.
+
+### Decisión registrada hoy (2026-05-19)
+
+- **No saltar fases.** Sin validación de Fase 1, no invertir en Fase 2. Sin tracción real en Fase 2, no invertir en Fase 3.
+- **No mezclar fuentes en una misma query.** O todo Socrata, o todo BD propia. Hibridación crea inconsistencias sutiles que destruyen confianza.
+- **Considerar partnership con licitaciones.info antes de construir crawler.** Si su modelo comercial lo permite, es win-win.
+- **SOURCE-COVERAGE-001 (diagnóstico Fase 1) es PRE-REQUISITO de cualquier lanzamiento pagado.** Sin esto, churn será mayor que crecimiento.
+
+### Lo que NO se decidió hoy
+
+- Pricing exacto entre $10-20 USD/mes (definirlo en cohorte de validación).
+- Modelo B2B individual vs enterprise (proponente individual vs empresa contratista). Esto afecta features futuras (subcuentas, carpetas compartidas, alertas por equipo).
+- Si SECOPPAL eventualmente vende dato a terceros (modelo `licitacionesdata.com` clonado). Decisión post-Fase 3.
 | REFERENCE-001 (ampliado) | Búsqueda exacta por referencia + diagnóstico de cobertura | Pendiente HIGH | Ampliar el alcance: cuando el usuario reporta "no encontré X" y trae referencia, búsqueda exacta + diagnóstico de por qué no apareció (campo, tildes, dataset, sync) |
 | COURTESY-FILLER-001 | (nuevo) | Pendiente HIGH | Cubierto por `DialoguePolicy` en Sprint 1A |
 | BIDDER-CATALOG-AND-001 | (nuevo) | Pendiente HIGH | Cubierto por `QueryPlan` Sprint 1A — requiere shape `objeto_or` |
