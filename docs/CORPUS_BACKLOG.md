@@ -2,7 +2,7 @@
 
 Fallos conocidos del corpus, agrupados por severidad. NO editar parser/core para hacer pasar estos casos — son bugs reales que requieren features o fixes separados.
 
-**Última actualización:** 2026-05-19 — sesión de feedback humano reveló 12 categorías de bugs no cubiertas por el corpus v1. Plan de robustecimiento sistémico en pausa (ver [docs/SECOPPAL_ROBUSTECIMIENTO_SISTEMICO.md](SECOPPAL_ROBUSTECIMIENTO_SISTEMICO.md)); estos hallazgos alimentan el Sprint 0A cuando se retome.
+**Última actualización:** 2026-05-19 (tarde) — sesión de feedback humano continuó. Total: 16 categorías de bugs no cubiertas por el corpus v1. Plan de robustecimiento sistémico en pausa (ver [docs/SECOPPAL_ROBUSTECIMIENTO_SISTEMICO.md](SECOPPAL_ROBUSTECIMIENTO_SISTEMICO.md)); estos hallazgos alimentan el Sprint 0A cuando se retome.
 
 **Estado del corpus v1:** **88/88 PASS, 0 FAIL** (sin cambios desde 2026-05-18). El corpus v1 sigue verde — los bugs nuevos son patrones que el corpus v1 no probaba.
 
@@ -41,7 +41,10 @@ Estos NO son fallos del corpus v1 (el corpus pasa 88/88). Son bugs reales detect
 | OPP-TIMEOUT-001 | Timeout SECOP reportado como "0 resultados" sin avisar al usuario | 5 | CRITICAL (subir desde HIGH) |
 | ACCENT-NORMALIZATION-001 | Tildes en dato fuente no matchean LIKE sin tilde (`UPPER` no quita tildes) | 3 | CRITICAL (categoría nueva) |
 | STATE-PRIORITY-001 | `estado_family=oferta_abierta` no se proyecta a SoQL en algunas rutas | 3 | HIGH (ya en DEMO-BLOCKERS) |
-| MUNICIPAL-GEO-GAP-001 | Alcaldías municipales con `departamento_entidad` vacío/inconsistente. Caso Paicol/Huila | 1 | HIGH (necesita curl directo para confirmar) |
+| MUNICIPAL-GEO-GAP-001 | Alcaldías municipales con `departamento_entidad` vacío/inconsistente. Casos: Paicol/Huila, Paipa/Boyacá | 2 | HIGH (necesita curl directo para confirmar y dimensionar) |
+| OPP-INTENT-001 | "algún proceso para X" no activa `intent_type=opportunity_search` ni `estado_family=oferta_abierta` | 1 | HIGH |
+| RELEVANCE-PHRASE-001 | Frases técnicas compuestas (ej. "control de calidad de agua para consumo humano") destruidas por AND de tokens. Sin boost de frase exacta | 1 | HIGH |
+| DEDUP-PROCESS-001 | Mismo proceso aparece varias veces con distinto `noticeUID` (cambios de fase/estado generan registros separados). Sin dedup en UI | 1 (Guateque + La Estrella) | MEDIUM |
 | COURTESY-FILLER-001 | `hola`, `estoy interesado`, `actualmente`, `algún` entran como objeto contractual | 1 | HIGH |
 | BIDDER-CATALOG-AND-001 | `vendo X, Y y Z` tratado como AND obligatorio → 0 resultados | 1 (electrobombas) | HIGH |
 | POLYSEMIC-TOPIC-001 | `alojamiento` con 5 sentidos no desambiguados (hospedaje/hosting/logístico/albergue/militar) | 1 | HIGH |
@@ -67,6 +70,9 @@ El corpus v1 (`query_corpus_v1.yaml`) no prueba estos patrones. Deben entrar al 
 - `morphological_uneven_expansion` — cobertura morfológica desigual entre rubros
 - `uncertain_zero_response` — distinguir "no hay" de "no pude confirmar"
 - `state_catalog_audit` — verificar exhaustivamente el catálogo de estados SECOP por dataset
+- `opportunity_intent_implicit` — "algún proceso para X" / "hay algún proceso de Y" deben activar opportunity_search por default (sin marcadores históricos contrarios)
+- `relevance_phrase_match` — boost para frases técnicas compuestas (control de calidad de agua, análisis fisicoquímico, mínima cuantía, etc.). Shingle bigramas en BM25 + embedding de la frase completa
+- `process_dedup` — dedup por entidad+monto+objeto para mismo proceso con distinto `noticeUID` (cambios de fase generan registros)
 
 ---
 
@@ -125,7 +131,11 @@ Luego el `QueryPlan` original del plan, con extensiones para `courtesy_filler`, 
 | REFERENCE-001 | Búsqueda exacta por referencia de proceso (`test_dicar` xfail) | Pendiente | Sin nuevas confirmaciones |
 | CORPUS-CI-001 | known_fail/expected_fail para gate de CI | Pendiente | Sin nuevas confirmaciones |
 | ACCENT-NORMALIZATION-001 | Tildes (nuevo) | Pendiente CRITICAL | Confirmado 3× — `consultoría`, `logístico`, `turísticos` |
-| MUNICIPAL-GEO-GAP-001 | Datos territoriales municipios (nuevo) | Pendiente HIGH | 1 caso (Paicol). Confirmar con curl directo antes de fix |
+| MUNICIPAL-GEO-GAP-001 | Datos territoriales municipios (nuevo) | Pendiente HIGH | 2 casos confirmados (Paicol/Huila, Paipa/Boyacá). Patrón sistémico — algunas alcaldías municipales tienen `departamento_entidad` mal poblado. Confirmar con curl directo + audit con `discover_secop.py` |
+| OPP-INTENT-001 | "algún proceso para X" no activa opportunity_search (nuevo) | Pendiente HIGH | Cubierto por `QueryPlan` Sprint 1A. Regla: dataset=procesos + query con interrogativo indefinido sin marcadores históricos → opportunity_search por default |
+| RELEVANCE-PHRASE-001 | Boost de frase técnica compuesta (nuevo) | Pendiente HIGH | Cubierto por Sprint 3 Relevance v1 (shingle bigramas en BM25) o v2 (embedding de frase completa). Caso canónico: "control de calidad de agua para consumo humano" |
+| DEDUP-PROCESS-001 | Dedup procesos por entidad+monto+objeto (nuevo) | Pendiente MEDIUM | Sprint 2-3. Ya mencionado en OPP audit 2026-05-17. Confirmado vivo (Guateque ×3, La Estrella ×2) |
+| REFERENCE-001 (ampliado) | Búsqueda exacta por referencia + diagnóstico de cobertura | Pendiente HIGH | Ampliar el alcance: cuando el usuario reporta "no encontré X" y trae referencia, búsqueda exacta + diagnóstico de por qué no apareció (campo, tildes, dataset, sync) |
 | COURTESY-FILLER-001 | (nuevo) | Pendiente HIGH | Cubierto por `DialoguePolicy` en Sprint 1A |
 | BIDDER-CATALOG-AND-001 | (nuevo) | Pendiente HIGH | Cubierto por `QueryPlan` Sprint 1A — requiere shape `objeto_or` |
 | POLYSEMIC-TOPIC-001 | (nuevo) | Pendiente HIGH | Cubierto por `QueryPlan` Sprint 1A + ResponsePolicy Sprint 2 |
