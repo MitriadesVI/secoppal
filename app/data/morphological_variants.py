@@ -76,7 +76,9 @@ MORPHOLOGICAL_VARIANTS: dict[str, str] = {
     "senalizacion": "senalizacion",
     "senalizaciones": "senalizacion",
     # ── aseo / aseos ────────────────────────────────────────────────────────
-    "aseo": "aseo",
+    "aseo urbano": "aseo",
+    # ── verbs → nouns ───────────────────────────────────────────────────
+    "limpiar": "limpieza",
     "aseos": "aseo",
     # ── vigilancia ──────────────────────────────────────────────────────────
     "vigilancia": "vigilancia",
