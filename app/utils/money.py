@@ -36,6 +36,8 @@ def money_to_cop(raw_text: str) -> int | None:
         amount = float(match.group(1).replace(",", "."))
     elif re.search(r"\bun\b", text):
         amount = 1.0
+    elif re.search(r"\bmil\s+millones\b", text):
+        amount = 1.0   # "mil millones" = 1 000 000 000 (one billion), not 1000 × 1e9
     elif re.search(r"\bmil\b", text):
         amount = 1000.0
     else:

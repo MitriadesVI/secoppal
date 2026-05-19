@@ -691,7 +691,7 @@ class QueryRouter:
         # Detect "entre X y Y" range BEFORE individual amount parsing so the
         # two numbers don't each get mis-classified by the generic loop below.
         _range_re = re.compile(
-            r"(?:entre|de)\s+((?:\d+(?:[.,]\d+)?|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|mil)?(?:\s+de\s+pesos)?)(?:\s*[-–—]\s*|\s+y\s+|\s+a\s+)((?:\d+(?:[.,]\d+)?|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|mil)?(?:\s+de\s+pesos)?)",
+            r"(?:entre|de|desde)\s+((?:\d+(?:[.,]\d+)?|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|mil)?(?:\s+de\s+pesos)?)(?:\s*[-–—]\s*|\s+y\s+|\s+a\s+|\s+hasta\s+)((?:\d+(?:[.,]\d+)?|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|mil)?(?:\s+de\s+pesos)?)",
             re.IGNORECASE,
         )
         range_match = _range_re.search(normalized_query)
@@ -720,8 +720,21 @@ class QueryRouter:
                 # Remove matched span so generic loop below doesn't re-parse it
                 normalized_query = normalized_query[: range_match.start()] + " " + normalized_query[range_match.end() :]
 
+        # Detect "X o más" / "X o mas" → valor_min only (before generic loop)
+        _o_mas_re = re.compile(
+            r"((?:\d+(?:[.,]\d+)?|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|mil)?(?:\s+de\s+pesos)?)\s+o\s+m[aá]s",
+            re.IGNORECASE,
+        )
+        om = _o_mas_re.search(normalized_query)
+        if om:
+            amount = money_to_cop(om.group(1))
+            if amount and amount >= 1_000_000:
+                params["valor_min"] = amount
+                # Remove matched span
+                normalized_query = normalized_query[: om.start()] + " " + normalized_query[om.end() :]
+
         matches = list(re.finditer(
-            r"(?:(?:mas|mayor(?:es)?|superior(?:es)?|superen?)\s+(?:de|a)|(?:menos|menor(?:es)?)\s+(?:de|a)|hasta|por|de)?\s*((?:\d+(?:[.,]\d+)?)|mil|un)\s*(?:billon(?:es)?|mil millones|millones?|palos?|mil)?(?:\s+de\s+pesos)?",
+            r"(?:(?:mas|mayor(?:es)?|superior(?:es)?|superen?)\s+(?:de|a)|(?:menos|menor(?:es)?)\s+(?:de|a)|hasta|por|de|desde)?\s*((?:\d+(?:[.,]\d+)?)|mil|un)\s*(?:billon(?:es)?|mil millones|millones?|palos?|mil)?(?:\s+de\s+pesos)?",
             normalized_query,
         ))
 
@@ -734,7 +747,7 @@ class QueryRouter:
             if amount is None or amount < 1_000_000:
                 continue
 
-            if re.search(r"(?:mas|mayor(?:es)?|superior(?:es)?|superen?)\s+(?:de|a)", raw):
+            if re.search(r"(?:mas|mayor(?:es)?|superior(?:es)?|superen?)\s+(?:de|a)|desde", raw):
                 params["valor_min"] = amount
             elif re.search(r"(?:menos|menor(?:es)?)\s+(?:de|a)|hasta", raw):
                 params["valor_max"] = amount
