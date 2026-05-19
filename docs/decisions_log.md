@@ -202,3 +202,24 @@ uno a uno contra lint, pytest, corpus y torture matrix.
 
 **Sprint pendiente:** DEMO-BLOCKERS-001 — 8 tareas UX/estado/scope registradas como
 fact en memoria estructurada. Prioridad HIGH. No ejecutar ahora.
+
+---
+
+## 2026-05-18 — Plan de robustecimiento sistémico (en pausa)
+
+**Fecha:** 2026-05-18
+**Contexto:** Plan aprobado en `docs/SECOPPAL_ROBUSTECIMIENTO_SISTEMICO.md`.
+Baseline M0 capturado en `baseline/` (579 passed, corpus 88/88, lint verde).
+Commit base: `b16ed0b`.
+
+**Estado:** En pausa. Bloqueado por Sprint 0A — esperando 20-30 queries humanas
+reales del usuario para construir `dialogue_policy_corpus.yaml` (50-60 casos:
+20-30 humanas + 30 sintéticas en 7 categorías).
+
+**Al retomar:**
+1. Leer `docs/SECOPPAL_ROBUSTECIMIENTO_SISTEMICO.md` §7 (sprints) y §9 (medición).
+2. Leer `baseline/README.md`.
+3. Clasificar queries humanas → YAML del corpus → extender runner.
+4. Sprint 1A (`query_plan.py`, `dialogue_policy.py`, nodo Burr) no arranca sin corpus 0A.
+
+**Línea roja:** Cero regresiones pytest/corpus/lint/feedback.
