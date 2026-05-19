@@ -18,10 +18,13 @@ import re
 #   consumed_span: str — override auto-detected span
 INTENT_PATTERNS: list[tuple[re.Pattern, dict]] = [
     # ── "para presentarme" / "donde me pueda presentar" / "para poder presentarme" ──
+    # CORPUS-003B: added quiero/necesito + verb, puedo variant of pueda
     (
         re.compile(
             r"(?:para\s+(?:poder\s+)?(?:presentar(?:me)?|participar|ofertar|postular(?:me)?|aplicar(?:me)?))"
-            r"|(?:donde\s+(?:me\s+)?pueda\s+(?:presentar|participar|ofertar|postular|aplicar))"
+            r"|(?:donde\s+(?:me\s+)?pued[ao]\s+(?:presentar|participar|ofertar|postular|aplicar))"
+            r"|(?:(?:quiero|necesito|quisiera|deseo)\s+(?:presentarme|participar|ofertar))"
+            r"|(?:(?:me\s+)?puedo\s+(?:presentar|participar|ofertar|postular))"
             r"|(?:para\s+poder\s+(?:presentar|ofertar|participar))",
             re.IGNORECASE,
         ),
