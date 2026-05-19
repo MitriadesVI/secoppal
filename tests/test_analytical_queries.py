@@ -257,3 +257,64 @@ class TestAnalyticalQueriesIntegration:
         assert resolved.get("ciudad") in ("Barranquilla", "barranquilla") or \
                "mantenimiento" in str(resolved.get("objeto", []))
         wf.secop_client.aggregate.assert_called_once()
+
+    def test_followup_analitico_plural_hereda_contexto(self, tmp_path):
+        """CORPUS-AN003: "cuánto suman" (plural) hereda contexto igual que el singular."""
+        wf = _make_workflow(tmp_path)
+        wf.secop_client.query = MagicMock(return_value=[
+            {
+                "id_contrato": "C-1",
+                "objeto_del_contrato": "Primera infancia",
+                "nombre_entidad": "Distrito de Barranquilla",
+                "valor_del_contrato": 100_000_000,
+                "fecha_de_firma": "2026-02-01",
+                "estado_contrato": "En ejecución",
+            }
+        ])
+        wf.secop_client.count = MagicMock(return_value=1)
+        wf.secop_client.aggregate = MagicMock(
+            return_value=[{"total_value": 1_200_000_000, "total_count": 15}]
+        )
+
+        chat = "st_an003_plural"
+        wf.run_query(
+            "contratos de primera infancia en Barranquilla 2026",
+            channel="streamlit",
+            chat_id=chat,
+        )
+        result = wf.run_query("cuanto suman", channel="streamlit", chat_id=chat)
+
+        assert result.get("analytical_intent") == "aggregate_sum"
+        assert result.get("route_reason") == "analytics_aggregate_sum"
+        assert result.get("needs_clarification") is False
+        resolved = result.get("resolved_params", {})
+        # Topic heredado de "primera infancia" — "cuanto/suman" no deben quedar como objeto.
+        objeto_blob = str(resolved.get("objeto", []))
+        assert "primera" in objeto_blob.lower(), f"objeto perdido: {objeto_blob}"
+        assert "cuanto" not in objeto_blob.lower(), f"cuanto se coló en objeto: {objeto_blob}"
+        assert "suman" not in objeto_blob.lower(), f"suman se coló en objeto: {objeto_blob}"
+        # Scope heredado.
+        assert (resolved.get("ciudad") or "").lower() == "barranquilla" \
+               or "BARRANQUILLA" in (resolved.get("entidad_resolved") or "")
+        wf.secop_client.aggregate.assert_called_once()
+
+    def test_followup_analitico_sin_contexto_pide_clarificacion(self, tmp_path):
+        """CORPUS-AN003 / SAFE-SOQL: "cuánto suma" como primer turno NO consulta SECOP.
+
+        Sin scope/topic, ni `maybe_handle_analytical_query` ni la ruta tabular
+        deben emitir consultas. Se devuelve needs_clarification.
+        """
+        wf = _make_workflow(tmp_path)
+        wf.secop_client.aggregate = MagicMock()
+        wf.secop_client.query = MagicMock()
+        wf.secop_client.count = MagicMock()
+
+        result = wf.run_query("cuánto suman", channel="streamlit")
+
+        assert result.get("needs_clarification") is True
+        # La ruta analítica debió detectar la intención y rechazar por falta de scope.
+        assert result.get("analytical_intent") == "aggregate_sum"
+        assert result.get("route_reason") == "analytics_aggregate_sum_no_scope"
+        wf.secop_client.aggregate.assert_not_called()
+        wf.secop_client.query.assert_not_called()
+        wf.secop_client.count.assert_not_called()

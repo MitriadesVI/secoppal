@@ -176,6 +176,24 @@ class FollowupClassifier:
         re.IGNORECASE,
     )
 
+    # ── Señales de pregunta analítica (CORPUS-AN003) ───────────────────
+    # Cuando el usuario hace una pregunta agregada en un follow-up
+    # ("cuánto suma/n", "total contratado", "cuántos hay"), el turno NO
+    # introduce un topic nuevo — pregunta sobre el universo previo. Debe
+    # clasificarse como refine_filter para que el merger herede topic/
+    # scope/dataset y luego analytics.py active aggregate_sum.
+    _ANALYTICAL_FOLLOWUP_PATTERNS = re.compile(
+        r"\b("
+        r"cu[áa]nto\s+suma[n]?|cu[áa]nto\s+sumaron|"
+        r"cu[áa]nto\s+se\s+contrat[óo]|"
+        r"valor\s+total\s+contratado|suma\s+de\s+contratos|"
+        r"total\s+contratado|"
+        r"cu[áa]ntos\s+(?:contratos|procesos|hay)|"
+        r"cu[áa]ntas\s+(?:licitaciones|convocatorias)"
+        r")\b",
+        re.IGNORECASE,
+    )
+
     # ── Señales de filtros nuevos (NO paginación) ──────────────────────
     _NEW_FILTER_SIGNALS = re.compile(
         r"\b("
@@ -261,6 +279,16 @@ class FollowupClassifier:
         # 1. Paginación pura
         if cls.is_pagination_pure(text):
             return "pagination_more"
+
+        # 1.5. Follow-up analítico ("cuánto suma/n", "total contratado",
+        # "cuántos contratos hay"). CORPUS-AN003.
+        # Lo tratamos como refine_filter para heredar topic/scope/dataset
+        # del turno previo. analytics.py se encargará luego de detectar
+        # aggregate_sum sobre el universo heredado. Si no hay scope tras
+        # heredar, maybe_handle_analytical_query devuelve needs_clarification
+        # (no se genera consulta global — guard SAFE-SOQL-001).
+        if cls._ANALYTICAL_FOLLOWUP_PATTERNS.search(text):
+            return "refine_filter"
 
         # 2. Dataset cambiado explícitamente
         if (current_frame.dataset_explicit

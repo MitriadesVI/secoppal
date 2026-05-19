@@ -13,11 +13,12 @@ from app.core._followup_constants import SCOPE_TOPIC_KEYS
 
 _AGGREGATE_SUM_PATTERNS = re.compile(
     r"\b("
-    r"cuánto se contrató|cuanto se contrato|"
-    r"valor total contratado|"
-    r"suma de contratos|"
-    r"cuánto suma|cuanto suma|"
-    r"total contratado"
+    r"cu[áa]nto\s+se\s+contrat[óo]|"
+    r"valor\s+total\s+contratado|"
+    r"suma\s+de\s+contratos|"
+    # CORPUS-AN003: aceptar plural ("cuánto suman") y pretérito ("sumaron").
+    r"cu[áa]nto\s+suma[n]?|cu[áa]nto\s+sumaron|"
+    r"total\s+contratado"
     r")\b",
     re.IGNORECASE,
 )

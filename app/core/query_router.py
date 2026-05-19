@@ -196,6 +196,13 @@ STOPWORDS = {
     "conocer", "saber", "identificar",
     "existe", "existen",
     "ofrecen", "ofrece",
+    # CORPUS-AN003: verbos/cuantificadores analíticos. No son objeto
+    # contractual; son señal de pregunta agregada ("cuánto suma/n", "cuántos
+    # contratos hay", "total contratado"). El detector analítico vive en
+    # analytics.py; aquí solo se previene que contaminen 'objeto'.
+    "cuanto", "cuanta",
+    "suma", "suman", "sumaron", "sumo", "sumó",
+    "total", "totales",
 }
 
 MONTH_MAP = {
