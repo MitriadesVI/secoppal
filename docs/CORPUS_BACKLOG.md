@@ -2,7 +2,7 @@
 
 Fallos conocidos del corpus, agrupados por severidad. NO editar parser/core para hacer pasar estos casos — son bugs reales que requieren features o fixes separados.
 
-**Última actualización:** 2026-05-19 (madrugada) — cuarta tanda de feedback humano. Total acumulado: 22 categorías de bugs, 5 CRITICAL. Plan de robustecimiento sistémico en pausa (ver [docs/SECOPPAL_ROBUSTECIMIENTO_SISTEMICO.md](SECOPPAL_ROBUSTECIMIENTO_SISTEMICO.md)); estos hallazgos alimentan el Sprint 0A cuando se retome.
+**Última actualización:** 2026-05-19 (madrugada, sexta tanda) — feedback humano de Caquetá. Total acumulado: 23 categorías de bugs, 5 CRITICAL. Plan de robustecimiento sistémico en pausa (ver [docs/SECOPPAL_ROBUSTECIMIENTO_SISTEMICO.md](SECOPPAL_ROBUSTECIMIENTO_SISTEMICO.md)); estos hallazgos alimentan el Sprint 0A cuando se retome.
 
 **Estado del corpus v1:** **88/88 PASS, 0 FAIL** (sin cambios desde 2026-05-18). El corpus v1 sigue verde — los bugs nuevos son patrones que el corpus v1 no probaba.
 
@@ -41,17 +41,19 @@ Estos NO son fallos del corpus v1 (el corpus pasa 88/88). Son bugs reales detect
 | LLM-EXPANSION-AND-001 | LLM expande topic a múltiples bigrams sinónimos pero se unen con AND en SoQL, matando la búsqueda. Caso: `"residuos sólidos"` + `"manejo de residuos"` como AND obligatorio → 0 resultados | 1 | **CRITICAL (nuevo)** |
 | ENTITY-MISRESOLUTION-FALLBACK-001 | `rewrite_alcald[ií]a` devuelve entidad arbitraria con `confidence=high` cuando no encuentra match. Caso: "alcaldía de paipa" → "MUNICIPIO DE MANIZALES" / "(Secretaría Distrital de Integración Social)". Engaño operacional al usuario | 2 | CRITICAL |
 | OPP-TIMEOUT-001 | Timeout SECOP reportado como "0 resultados" sin avisar al usuario | 6 | CRITICAL |
-| ACCENT-NORMALIZATION-001 | Tildes en dato fuente no matchean LIKE sin tilde (`UPPER` no quita tildes) | 3 | CRITICAL |
+| ACCENT-NORMALIZATION-001 | Tildes en dato fuente no matchean LIKE sin tilde (`UPPER` no quita tildes). Casos: consultoría, logístico, turísticos, logísticos | 4 | CRITICAL |
 | MUNICIPAL-GEO-GAP-001 | Alcaldías municipales con `departamento_entidad` vacío/inconsistente. Casos: Paicol/Huila, Paipa/Boyacá, Mariquita/Tolima, Yarumal/Antioquia | 4 | **CRITICAL** — patrón sistémico en 4 departamentos distintos |
+| SOURCE-COVERAGE-001 | Procesos publicados en SECOP nativo en las últimas 24-48h no están aún en dataset público `p6dx-8zbt` (delay de sincronización Socrata). Casos: Paipa/SMC MP 021, Doncello/CMC-2026-019 | 2 | **HIGH (nuevo, requiere ruta de diagnóstico, no fix técnico — limitación de la fuente)** |
 | STATE-PRIORITY-001 | `estado_family=oferta_abierta` no se proyecta a SoQL en algunas rutas | 3 | HIGH (ya en DEMO-BLOCKERS) |
-| OPP-INTENT-001 | "algún proceso para X" / "alguna oferta del Y" no activa `intent_type=opportunity_search` ni `estado_family=oferta_abierta` | 2 | HIGH |
+| OPP-INTENT-001 | "algún proceso para X" / "alguna oferta del Y" / "algún proceso de Z en W" no activa `intent_type=opportunity_search` ni `estado_family=oferta_abierta` | 3 | HIGH |
+| NUMBER-CONTEXT-PHRASE-001 | Verbos comparativos ("supere", "exceda", "alcance") y conectores temporales ("en") permanecen en `objeto` cuando el parser ya extrajo correctamente el modificador (valor/fecha). AND con el verbo mata la búsqueda. Caso: "no supere los 25 millones" → valor_max=25M ✓ + objeto contiene "supere" → 0 resultados | 1 | **HIGH (nuevo)** |
 | ENTITY-MULTI-REGIONAL-001 | Entidades con regionales (SENA, ICBF, DNP, ministerios) no consideran modificadores territoriales en la query. Caso: "del sena bolivar" → "SENA SECRETARIA GENERAL" (Bogotá), no "SENA REGIONAL BOLÍVAR" | 1 | **HIGH (nuevo)** |
 | FOLLOWUP-VALUE-INHERIT-001 | `valor_max`/`valor_min`/`modalidad` heredados del turno anterior cuando el topic cambia completamente. Caso: residuos sólidos (≤20M) → silvopastoriles → hereda 20M sin pedirlo | 1 | **HIGH (nuevo)** |
 | NO-FOLLOWUP-DETECTION-001 | Quejas/comentarios del usuario tratados como nueva query (no como seguimiento conversacional) | 1 | HIGH |
 | NIT-AMOUNT-CONFUSION-001 | Montos en COP (8-9 dígitos) confundidos con NITs/contratistas sin discriminar contexto léxico | 1 | HIGH |
 | OPP-INTENT-001 | "algún proceso para X" no activa `intent_type=opportunity_search` ni `estado_family=oferta_abierta` | 1 | HIGH |
 | RELEVANCE-PHRASE-001 | Frases técnicas compuestas (ej. "control de calidad de agua para consumo humano") destruidas por AND de tokens. Sin boost de frase exacta | 1 | HIGH |
-| DEDUP-PROCESS-001 | Mismo proceso aparece varias veces con distinto `noticeUID` (cambios de fase/estado generan registros separados). Sin dedup en UI | 1 (Guateque + La Estrella) | MEDIUM |
+| DEDUP-PROCESS-001 | Mismo proceso aparece varias veces con distinto `noticeUID` (cambios de fase/estado generan registros separados). Sin dedup en UI | 3 (Guateque, La Estrella, Doncello) | MEDIUM |
 | COURTESY-FILLER-001 | `hola`, `estoy interesado`, `actualmente`, `algún`, vocabulario de queja (`nada`, `terrible`, `incorrecto`, `mal`, `fracaso`) y señales de bidder (`oferta` como objeto cuando significa "oportunidad") entran como objeto contractual | 3 | HIGH |
 | BIDDER-CATALOG-AND-001 | `vendo X, Y y Z` tratado como AND obligatorio → 0 resultados | 1 (electrobombas) | HIGH |
 | POLYSEMIC-TOPIC-001 | `alojamiento` con 5 sentidos no desambiguados (hospedaje/hosting/logístico/albergue/militar) | 1 | HIGH |
@@ -87,6 +89,8 @@ El corpus v1 (`query_corpus_v1.yaml`) no prueba estos patrones. Deben entrar al 
 - `llm_expansion_or` — cuando el LLM expande un topic a múltiples bigrams sinónimos/alternativos, unirlos con OR, no AND. Aplica al post-procesamiento del tool call del LLM
 - `entity_multi_regional` — entidades con regionales (SENA, ICBF, ministerios, cajas) deben componerse con modificadores territoriales: `entidad_canonica + departamento → regional específica`. Catálogo curado de entidades multi-regional
 - `followup_value_purge` — extensión de followup_dataset_purge para `valor_min`/`valor_max`/`modalidad`. Heurística: si tokens del topic nuevo no tienen overlap con anterior, purgar modificadores monetarios
+- `modifier_scrub` — cuando el parser infiere con éxito un modificador (`valor_max`, `valor_min`, `fecha_desde`, `fecha_hasta`) a partir de una frase ("no supere los X", "en 2026"), las palabras de la frase (verbos comparativos, conectores temporales) deben scrubearse del objeto. Catálogo: supere, exceda, supera, alcance, rebase, llegue, baje, suba, cueste, valga, en, desde, hasta, durante
+- `source_coverage_diagnostic` — cuando el usuario reporta "no encontré X" y trae referencia/datos del proceso, ofrecer ruta de diagnóstico que incluya verificación de sincronización del dataset (delay de 24-48h de Socrata)
 
 ---
 
@@ -159,7 +163,9 @@ Luego el `QueryPlan` original del plan, con extensiones para `courtesy_filler` (
 | NO-FOLLOWUP-DETECTION-001 | Quejas tratadas como query nueva (nuevo) | Pendiente HIGH | Cubierto por extensión del `followup_engine` — detectar quejas/citas como `non_query_followup`, ofrecer diagnóstico en vez de parsear |
 | NIT-AMOUNT-CONFUSION-001 | Montos confundidos con NITs (nuevo) | Pendiente HIGH | Cubierto por QueryPlan Sprint 1A — categoría `number_disambiguation`. Discriminar por contexto léxico ("COP", "$", "millones") |
 | RELEVANCE-PHRASE-001 | Boost de frase técnica compuesta (nuevo) | Pendiente HIGH | Cubierto por Sprint 3 Relevance v1 (shingle bigramas en BM25) o v2 (embedding de frase completa). Caso canónico: "control de calidad de agua para consumo humano" |
-| DEDUP-PROCESS-001 | Dedup procesos por entidad+monto+objeto (nuevo) | Pendiente MEDIUM | Sprint 2-3. Ya mencionado en OPP audit 2026-05-17. Confirmado vivo (Guateque ×3, La Estrella ×2) |
+| DEDUP-PROCESS-001 | Dedup procesos por entidad+monto+objeto (nuevo) | Pendiente MEDIUM | Sprint 2-3. Ya mencionado en OPP audit 2026-05-17. Confirmado 3× (Guateque, La Estrella, Doncello) |
+| NUMBER-CONTEXT-PHRASE-001 | Verbos comparativos / conectores temporales como objeto (nuevo) | Pendiente HIGH | 1 caso ("supere" en objeto cuando valor_max ya inferido). Fix: scrub catalog post-extracción de modificadores |
+| SOURCE-COVERAGE-001 | Procesos recientes invisibles por delay de sync Socrata (nuevo) | Pendiente HIGH | 2 casos (Paipa, Doncello). No es bug técnico — es limitación de la fuente. Fix: ruta de diagnóstico que avise al usuario cuando referencia es de las últimas 48h |
 | REFERENCE-001 (ampliado) | Búsqueda exacta por referencia + diagnóstico de cobertura | Pendiente HIGH | Ampliar el alcance: cuando el usuario reporta "no encontré X" y trae referencia, búsqueda exacta + diagnóstico de por qué no apareció (campo, tildes, dataset, sync) |
 | COURTESY-FILLER-001 | (nuevo) | Pendiente HIGH | Cubierto por `DialoguePolicy` en Sprint 1A |
 | BIDDER-CATALOG-AND-001 | (nuevo) | Pendiente HIGH | Cubierto por `QueryPlan` Sprint 1A — requiere shape `objeto_or` |
