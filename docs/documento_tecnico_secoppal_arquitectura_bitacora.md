@@ -1227,6 +1227,6 @@ quirúrgicos. Resultado final:
 - Torture matrix: 12/12 invariantes.
 - feedback.jsonl intacto.
 
-**Pendiente registrado:** DEMO-BLOCKERS-001 — 7 tareas UX/estado (COMMAND-SLOT,
+**Pendiente registrado:** DEMO-BLOCKERS-001 — 8 tareas UX/estado/scope (COMMAND-SLOT,
 OPP-UX, OPP-STATE, OPP-SUGGEST, OPP-RELEVANCE, OPP-TIMEOUT-001,
-STATE-PRIORITY-001). Prioridad HIGH.
+STATE-PRIORITY-001, OPP-SCOPE-001). Prioridad HIGH.
