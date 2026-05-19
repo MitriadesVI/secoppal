@@ -2,7 +2,7 @@
 
 Fallos conocidos del corpus, agrupados por severidad. NO editar parser/core para hacer pasar estos casos — son bugs reales que requieren features o fixes separados.
 
-**Última actualización:** 2026-05-19 (tarde) — sesión de feedback humano continuó. Total: 16 categorías de bugs no cubiertas por el corpus v1. Plan de robustecimiento sistémico en pausa (ver [docs/SECOPPAL_ROBUSTECIMIENTO_SISTEMICO.md](SECOPPAL_ROBUSTECIMIENTO_SISTEMICO.md)); estos hallazgos alimentan el Sprint 0A cuando se retome.
+**Última actualización:** 2026-05-19 (noche) — sesión de feedback humano cerró con tres bugs nuevos, uno CRITICAL. Total: 19 categorías de bugs no cubiertas por el corpus v1. Plan de robustecimiento sistémico en pausa (ver [docs/SECOPPAL_ROBUSTECIMIENTO_SISTEMICO.md](SECOPPAL_ROBUSTECIMIENTO_SISTEMICO.md)); estos hallazgos alimentan el Sprint 0A cuando se retome.
 
 **Estado del corpus v1:** **88/88 PASS, 0 FAIL** (sin cambios desde 2026-05-18). El corpus v1 sigue verde — los bugs nuevos son patrones que el corpus v1 no probaba.
 
@@ -38,14 +38,17 @@ Estos NO son fallos del corpus v1 (el corpus pasa 88/88). Son bugs reales detect
 
 | ID | Descripción | Apariciones | Severidad |
 |----|-------------|------------:|-----------|
+| ENTITY-MISRESOLUTION-FALLBACK-001 | `rewrite_alcald[ií]a` devuelve entidad arbitraria con `confidence=high` cuando no encuentra match. Caso: "alcaldía de paipa" → "MUNICIPIO DE MANIZALES" / "(Secretaría Distrital de Integración Social)". Engaño operacional al usuario | 2 | **CRITICAL (nuevo)** |
 | OPP-TIMEOUT-001 | Timeout SECOP reportado como "0 resultados" sin avisar al usuario | 5 | CRITICAL (subir desde HIGH) |
 | ACCENT-NORMALIZATION-001 | Tildes en dato fuente no matchean LIKE sin tilde (`UPPER` no quita tildes) | 3 | CRITICAL (categoría nueva) |
+| MUNICIPAL-GEO-GAP-001 | Alcaldías municipales con `departamento_entidad` vacío/inconsistente. Casos: Paicol/Huila, Paipa/Boyacá, Mariquita/Tolima | 3 | **CRITICAL (subir desde HIGH)** — patrón sistémico confirmado en 3 departamentos distintos |
 | STATE-PRIORITY-001 | `estado_family=oferta_abierta` no se proyecta a SoQL en algunas rutas | 3 | HIGH (ya en DEMO-BLOCKERS) |
-| MUNICIPAL-GEO-GAP-001 | Alcaldías municipales con `departamento_entidad` vacío/inconsistente. Casos: Paicol/Huila, Paipa/Boyacá | 2 | HIGH (necesita curl directo para confirmar y dimensionar) |
+| NO-FOLLOWUP-DETECTION-001 | Quejas/comentarios del usuario tratados como nueva query (no como seguimiento conversacional) | 1 | HIGH (nuevo) |
+| NIT-AMOUNT-CONFUSION-001 | Montos en COP (8-9 dígitos) confundidos con NITs/contratistas sin discriminar contexto léxico | 1 | HIGH (nuevo) |
 | OPP-INTENT-001 | "algún proceso para X" no activa `intent_type=opportunity_search` ni `estado_family=oferta_abierta` | 1 | HIGH |
 | RELEVANCE-PHRASE-001 | Frases técnicas compuestas (ej. "control de calidad de agua para consumo humano") destruidas por AND de tokens. Sin boost de frase exacta | 1 | HIGH |
 | DEDUP-PROCESS-001 | Mismo proceso aparece varias veces con distinto `noticeUID` (cambios de fase/estado generan registros separados). Sin dedup en UI | 1 (Guateque + La Estrella) | MEDIUM |
-| COURTESY-FILLER-001 | `hola`, `estoy interesado`, `actualmente`, `algún` entran como objeto contractual | 1 | HIGH |
+| COURTESY-FILLER-001 | `hola`, `estoy interesado`, `actualmente`, `algún`, y también vocabulario de queja (`nada`, `terrible`, `incorrecto`, `mal`, `fracaso`) entran como objeto contractual | 2 | HIGH |
 | BIDDER-CATALOG-AND-001 | `vendo X, Y y Z` tratado como AND obligatorio → 0 resultados | 1 (electrobombas) | HIGH |
 | POLYSEMIC-TOPIC-001 | `alojamiento` con 5 sentidos no desambiguados (hospedaje/hosting/logístico/albergue/militar) | 1 | HIGH |
 | FOLLOWUP-DATASET-PURGE-001 | Follow-up que cambia dataset hereda `intent_type`/`estado_family` incompatibles | 1 | HIGH |
@@ -73,6 +76,10 @@ El corpus v1 (`query_corpus_v1.yaml`) no prueba estos patrones. Deben entrar al 
 - `opportunity_intent_implicit` — "algún proceso para X" / "hay algún proceso de Y" deben activar opportunity_search por default (sin marcadores históricos contrarios)
 - `relevance_phrase_match` — boost para frases técnicas compuestas (control de calidad de agua, análisis fisicoquímico, mínima cuantía, etc.). Shingle bigramas en BM25 + embedding de la frase completa
 - `process_dedup` — dedup por entidad+monto+objeto para mismo proceso con distinto `noticeUID` (cambios de fase generan registros)
+- `entity_misresolution_confidence` — cuando `rewrite_alcald[ií]a` o cualquier fallback no encuentra match canónico, devolver `entidad_resolved=null` + `confidence=low`. Nunca high con dato arbitrario
+- `discourse_filler` — extender courtesy_filler para cubrir vocabulario de queja, evaluación y meta-conversación
+- `number_disambiguation` — discriminar NIT vs monto vs referencia por contexto léxico (presencia de "COP", "$", "millones", patrón de dígitos)
+- `non_query_followup` — detectar cuando el siguiente turno del usuario es queja/comentario/cita de evidencia, no nueva búsqueda. Ofrecer ruta de diagnóstico en vez de ejecutar parse
 
 ---
 
@@ -111,14 +118,17 @@ Surgieron durante la sesión de feedback y deben implementarse junto con el plan
 
 ---
 
-## Orden recomendado para Sprint 1A (revisado tras feedback)
+## Orden recomendado para Sprint 1A (revisado tras feedback 2026-05-19 noche)
 
-Antes de implementar `QueryPlan` completo, dos fixes puntuales destrabarían 30-40% del ruido visible:
+Antes de implementar `QueryPlan` completo, **tres fixes puntuales CRITICAL** destrabarían 40-50% del ruido visible:
 
-1. **OPP-TIMEOUT-001** — timeout no debe reportarse como 0. ~2 horas + tests. CRITICAL.
-2. **ACCENT-NORMALIZATION-001** — `regexp_replace` sobre tildes en SoQL (`UPPER` no las quita). ~3 horas + tests. CRITICAL.
+1. **ENTITY-MISRESOLUTION-FALLBACK-001** — `rewrite_alcald[ií]a` debe devolver null + confidence low cuando no encuentra match canónico, NUNCA entidad arbitraria con high confidence. ~2 horas + tests. **Es el más grave porque miente al usuario.**
+2. **OPP-TIMEOUT-001** — timeout no debe reportarse como 0. ~2 horas + tests.
+3. **ACCENT-NORMALIZATION-001** — `regexp_replace` sobre tildes en SoQL (`UPPER` no las quita). ~3 horas + tests.
 
-Luego el `QueryPlan` original del plan, con extensiones para `courtesy_filler`, `bidder_catalog`, `procurement_verb`, `polysemic_topic` y `followup_dataset_purge` ya consideradas desde el inicio.
+Pre-requisito ineludible: **MUNICIPAL-GEO-GAP-001 audit con `discover_secop.py`** (3 confirmaciones, patrón sistémico). 1-2 horas para dimensionar. Si afecta >10% del territorio, el fix entra como CRITICAL #4.
+
+Luego el `QueryPlan` original del plan, con extensiones para `courtesy_filler` (ampliado a discourse_filler), `bidder_catalog`, `procurement_verb`, `polysemic_topic`, `followup_dataset_purge`, `non_query_followup` y `number_disambiguation` ya consideradas desde el inicio.
 
 ---
 
@@ -130,8 +140,11 @@ Luego el `QueryPlan` original del plan, con extensiones para `courtesy_filler`, 
 | VALUE-TYPO-001 | `milloones` normalizar, `valor_min > valor_max` → aclaración | Pendiente | Sin nuevas confirmaciones |
 | REFERENCE-001 | Búsqueda exacta por referencia de proceso (`test_dicar` xfail) | Pendiente | Sin nuevas confirmaciones |
 | CORPUS-CI-001 | known_fail/expected_fail para gate de CI | Pendiente | Sin nuevas confirmaciones |
+| ENTITY-MISRESOLUTION-FALLBACK-001 | Fallback de rewrite_alcald devuelve entidad arbitraria con high confidence (nuevo) | Pendiente CRITICAL | 2 casos: "Paipa"→Manizales y "Paipa+texto contaminado"→Secretaría Distrital. Fix puntual en `entity_resolver.py` — degradar fallback a `null+confidence=low` |
 | ACCENT-NORMALIZATION-001 | Tildes (nuevo) | Pendiente CRITICAL | Confirmado 3× — `consultoría`, `logístico`, `turísticos` |
-| MUNICIPAL-GEO-GAP-001 | Datos territoriales municipios (nuevo) | Pendiente HIGH | 2 casos confirmados (Paicol/Huila, Paipa/Boyacá). Patrón sistémico — algunas alcaldías municipales tienen `departamento_entidad` mal poblado. Confirmar con curl directo + audit con `discover_secop.py` |
+| MUNICIPAL-GEO-GAP-001 | Datos territoriales municipios (nuevo) | Pendiente CRITICAL | 3 casos confirmados (Paicol/Huila, Paipa/Boyacá, Mariquita/Tolima). Patrón sistémico en 3 departamentos distintos. Audit `discover_secop.py` obligatorio antes de Sprint 1A |
+| NO-FOLLOWUP-DETECTION-001 | Quejas tratadas como query nueva (nuevo) | Pendiente HIGH | Cubierto por extensión del `followup_engine` — detectar quejas/citas como `non_query_followup`, ofrecer diagnóstico en vez de parsear |
+| NIT-AMOUNT-CONFUSION-001 | Montos confundidos con NITs (nuevo) | Pendiente HIGH | Cubierto por QueryPlan Sprint 1A — categoría `number_disambiguation`. Discriminar por contexto léxico ("COP", "$", "millones") |
 | OPP-INTENT-001 | "algún proceso para X" no activa opportunity_search (nuevo) | Pendiente HIGH | Cubierto por `QueryPlan` Sprint 1A. Regla: dataset=procesos + query con interrogativo indefinido sin marcadores históricos → opportunity_search por default |
 | RELEVANCE-PHRASE-001 | Boost de frase técnica compuesta (nuevo) | Pendiente HIGH | Cubierto por Sprint 3 Relevance v1 (shingle bigramas en BM25) o v2 (embedding de frase completa). Caso canónico: "control de calidad de agua para consumo humano" |
 | DEDUP-PROCESS-001 | Dedup procesos por entidad+monto+objeto (nuevo) | Pendiente MEDIUM | Sprint 2-3. Ya mencionado en OPP audit 2026-05-17. Confirmado vivo (Guateque ×3, La Estrella ×2) |
