@@ -1,0 +1,1 @@
+929634c docs: align SECOPPAL documentation with corpus green state
