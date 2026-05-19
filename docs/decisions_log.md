@@ -200,5 +200,5 @@ uno a uno contra lint, pytest, corpus y torture matrix.
 - feedback.jsonl intacto.
 - git status limpio.
 
-**Sprint pendiente:** DEMO-BLOCKERS-001 — 5 tareas UX registradas como
+**Sprint pendiente:** DEMO-BLOCKERS-001 — 8 tareas UX/estado/scope registradas como
 fact en memoria estructurada. Prioridad HIGH. No ejecutar ahora.

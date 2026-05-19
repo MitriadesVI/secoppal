@@ -1,7 +1,16 @@
 # QUERY_CORPUS V1 — SECOPPAL
 
+## Estado actual canónico — 2026-05-18
+
+- **Corpus:** 88/88 PASS, 0 FAIL
+- **Runner:** `scripts/run_query_corpus.py` (modos `parser|workflow|all`)
+- **Suite:** 579 passed, 3 xfailed
+- **Torture matrix:** 12/12 invariantes
+- **CORPUS-003A/B/C cerraron:** V005, V007, OC004, OC005, R003, AN003
+- **Próximo sprint:** DEMO-BLOCKERS-001 (8 tareas UX/estado/scope)
+
 ## Propósito
-Corpus vivo de **99 queries** reales para depuración sistemática, regresión y cobertura de casos edge en SECOPPAL. Sembrado con 31 queries marcadas `rating=0` en `feedback.jsonl` + 11 queries top-frecuentes + 7 casos manuales reportados directamente por el usuario en la última semana.
+Corpus vivo de **88 queries** reales para depuración sistemática, regresión y cobertura de casos edge en SECOPPAL. Sembrado con 31 queries marcadas `rating=0` en `feedback.jsonl` + 11 queries top-frecuentes + 7 casos manuales reportados directamente por el usuario en la última semana.
 
 ## Validation modes — clave para entender el runner
 
@@ -119,7 +128,7 @@ Marca `TIMEOUT` por query individual sin abortar la corrida completa.
 | estado_policy | 6 | parser |
 | anti_global | 5 | workflow |
 | timeout_ux | 5 | workflow |
-| **Total** | **99** | 70 parser / 29 workflow |
+|| **Total** | **88** | 70 parser / 18 workflow |
 
 **Fuentes:**
 - `feedback_rating_0`: 31 — bugs reales reportados por usuarios.
@@ -134,17 +143,17 @@ Marca `TIMEOUT` por query individual sin abortar la corrida completa.
 
 | Metrica | Valor |
 |---|---|
-| Queries totales | 99 |
-| De feedback real rating=0 | 31 |
-| Top-frecuentes | 11 |
-| Casos manuales recientes | 7 |
-| Categorias | 11 |
-| Modo parser | 70 |
-| Modo workflow | 29 |
-| Pass rate inicial | 77/99 |
-| FAIL restantes | 22 (backlog accionable, no ruido del runner) |
+| Queries totales | 88 |
+|| De feedback real rating=0 | 31 |
+|| Top-frecuentes | 11 |
+|| Casos manuales recientes | 7 |
+|| Categorias | 11 |
+|| Modo parser | 70 |
+|| Modo workflow | 18 |
+|| Pass rate inicial | 77/88 |
+|| FAIL restantes | 22 (backlog accionable, no ruido del runner) |
 
-Los 22 FAIL se documentan en docs/CORPUS_BACKLOG.md y se priorizan por severidad.
+Los 22 FAIL se documentan en docs/CORPUS_BACKLOG.md y se priorizan por severidad. A 2026-05-18 todos fueron cerrados (CORPUS 88/88).
 
 **Regla:** El corpus no bloquea CI. Solo se usa como herramienta de diagnostico y triage. Antes de integrarlo como gate de CI se requiere implementar known_fail/expected_fail (CORPUS-CI-001) o un baseline de regresion.
 

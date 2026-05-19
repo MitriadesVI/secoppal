@@ -5,6 +5,17 @@
 **Sistema:** SECOPPAL — asistente conversacional para consulta y análisis de contratación pública SECOP II  
 **Propósito del documento:** dejar una descripción comprensible para un tercero técnico o funcional sobre qué hace el sistema, cómo está construido, qué archivos lo componen, qué decisiones de arquitectura se han tomado, qué bugs relevantes se han detectado y cuál es el estado actual del proyecto.
 
+## Estado canónico actual — 2026-05-18
+
+- **Main:** limpio, reconciliado desde worktree `claude/zealous-yalow-296fb6`
+- **Suite:** 579 passed, 3 xfailed
+- **Corpus:** 88/88 PASS, 0 FAIL
+- **Torture matrix:** 12/12 invariantes
+- **feedback.jsonl:** intacto
+- **Próximo sprint:** DEMO-BLOCKERS-001 (8 tareas UX/estado/scope, HIGH)
+- **Backlog:** VALUE-TYPO-001, REFERENCE-001
+- **Conteos históricos (424/466/534/596):** superados; referencia, no estado actual
+
 ---
 
 ## 1. Resumen ejecutivo

@@ -1,5 +1,7 @@
 # QA-001 Torture Matrix SECOPPAL
 
+> **Nota:** Documento histórico de QA-001/Torture Matrix. Estado actual: corpus vivo 88/88 en `QUERY_CORPUS.md`; torture matrix 12/12 invariantes.
+
 **Fecha creación:** 2026-05-16  
 **Objetivo:** Matriz reproducible de casos límite semánticos, conversacionales y jurídicos.  
 **Alcance:** Solo tests, fixtures y diagnósticos. Sin features nuevas, sin tocar H10, sin refactor de arquitectura.  
