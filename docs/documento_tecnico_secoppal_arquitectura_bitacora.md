@@ -1230,3 +1230,9 @@ quirúrgicos. Resultado final:
 **Pendiente registrado:** DEMO-BLOCKERS-001 — 8 tareas UX/estado/scope (COMMAND-SLOT,
 OPP-UX, OPP-STATE, OPP-SUGGEST, OPP-RELEVANCE, OPP-TIMEOUT-001,
 STATE-PRIORITY-001, OPP-SCOPE-001). Prioridad HIGH.
+
+### 2026-05-18 — VALUE-TYPO-001 registrado en backlog
+
+Typo "milloones" → "millones" debe normalizarse. Si valor_min > valor_max
+(1B > 5M) no ejecutar consulta, pedir aclaración. "milloones" no debe
+entrar como objeto contractual ni generar SoQL con LIKE '%milloones%'.
