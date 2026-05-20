@@ -2,7 +2,7 @@
 
 Fallos conocidos del corpus, agrupados por severidad. NO editar parser/core para hacer pasar estos casos — son bugs reales que requieren features o fixes separados.
 
-**Última actualización:** 2026-05-19 (madrugada, post-decisión de modelo de negocio) — confirmado modelo B2B SaaS ($10-20 USD/mes, meta 500 WAU en 2 años, ~$90K ARR). SOURCE-COVERAGE-001 sube a CRITICAL porque el delay de 48h del dataset Socrata destruye la propuesta de valor para proponentes pagos. Total acumulado: 23 categorías de bugs, **6 CRITICAL**. Plan de robustecimiento sistémico en pausa (ver [docs/SECOPPAL_ROBUSTECIMIENTO_SISTEMICO.md](SECOPPAL_ROBUSTECIMIENTO_SISTEMICO.md)); estos hallazgos alimentan el Sprint 0A cuando se retome.
+**Última actualización:** 2026-05-19 (séptima tanda, polaridad invertida en filtros monetarios) — 4 bugs nuevos detectados, uno CRITICAL. Total acumulado: 27 categorías de bugs, **7 CRITICAL**. Plan de robustecimiento sistémico en pausa (ver [docs/SECOPPAL_ROBUSTECIMIENTO_SISTEMICO.md](SECOPPAL_ROBUSTECIMIENTO_SISTEMICO.md)); estos hallazgos alimentan el Sprint 0A cuando se retome.
 
 ## Modelo de negocio confirmado (2026-05-19)
 
@@ -51,14 +51,19 @@ Estos NO son fallos del corpus v1 (el corpus pasa 88/88). Son bugs reales detect
 
 | ID | Descripción | Apariciones | Severidad |
 |----|-------------|------------:|-----------|
-| LLM-EXPANSION-AND-001 | LLM expande topic a múltiples bigrams sinónimos pero se unen con AND en SoQL, matando la búsqueda. Caso: `"residuos sólidos"` + `"manejo de residuos"` como AND obligatorio → 0 resultados | 1 | **CRITICAL (nuevo)** |
+| MIN-MAX-INVERSION-001 | "No sean mayores a X" se parsea como `valor_min=X` cuando debería ser `valor_max=X`. Polaridad de negación invertida. Patrón canónico de proponentes ("no mayores a mi capacidad"). Mata el modelo B2B | 1 (Huila transporte escolar) | **CRITICAL (nuevo)** — mata propuesta de valor del usuario pago |
+| LLM-EXPANSION-AND-001 | LLM expande topic a múltiples bigrams sinónimos pero se unen con AND en SoQL, matando la búsqueda. Caso: `"residuos sólidos"` + `"manejo de residuos"` como AND obligatorio → 0 resultados | 1 | CRITICAL |
 | ENTITY-MISRESOLUTION-FALLBACK-001 | `rewrite_alcald[ií]a` devuelve entidad arbitraria con `confidence=high` cuando no encuentra match. Caso: "alcaldía de paipa" → "MUNICIPIO DE MANIZALES" / "(Secretaría Distrital de Integración Social)". Engaño operacional al usuario | 2 | CRITICAL |
 | OPP-TIMEOUT-001 | Timeout SECOP reportado como "0 resultados" sin avisar al usuario | 6 | CRITICAL |
-| ACCENT-NORMALIZATION-001 | Tildes en dato fuente no matchean LIKE sin tilde (`UPPER` no quita tildes). Casos: consultoría, logístico, turísticos, logísticos | 4 | CRITICAL |
-| MUNICIPAL-GEO-GAP-001 | Alcaldías municipales con `departamento_entidad` vacío/inconsistente. Casos: Paicol/Huila, Paipa/Boyacá, Mariquita/Tolima, Yarumal/Antioquia | 4 | **CRITICAL** — patrón sistémico en 4 departamentos distintos |
+| ACCENT-NORMALIZATION-001 | Tildes/diacríticos (incluyendo ñ) en dato fuente no matchean LIKE sin diacrítico (`UPPER` no los quita). Casos: consultoría, logístico, turísticos, logísticos, DISEÑO, JARDINERÍA, CAFETERÍA, SÓLIDOS | 7 | CRITICAL |
+| MUNICIPAL-GEO-GAP-001 | Alcaldías municipales con `departamento_entidad` vacío/inconsistente. Casos: Paicol/Huila, Paipa/Boyacá, Mariquita/Tolima, Yarumal/Antioquia, Olaya/Antioquia, Palermo/Huila (probable) | 5+ | **CRITICAL** — patrón sistémico en 5+ departamentos |
 | SOURCE-COVERAGE-001 | Procesos publicados en SECOP nativo en las últimas 24-48h no están aún en dataset público `p6dx-8zbt` (delay de sincronización Socrata). Casos: Paipa/SMC MP 021, Doncello/CMC-2026-019 | 2 | **CRITICAL (subir desde HIGH)** — el modelo B2B exige tiempo casi real; delay = churn de proponentes pagos |
 | STATE-PRIORITY-001 | `estado_family=oferta_abierta` no se proyecta a SoQL en algunas rutas | 3 | HIGH (ya en DEMO-BLOCKERS) |
-| OPP-INTENT-001 | "algún proceso para X" / "alguna oferta del Y" / "algún proceso de Z en W" no activa `intent_type=opportunity_search` ni `estado_family=oferta_abierta` | 3 | HIGH |
+| OPP-INTENT-001 | "algún proceso para X" / "alguna oferta del Y" / "algún proceso de Z en W" no activa `intent_type=opportunity_search` ni `estado_family=oferta_abierta`. Confirmado en Putumayo aseo, Antioquia residuos, Huila transporte | 5 | HIGH |
+| MULTI-AND-OVER-RESTRICTIVE-001 | Cuando parser/LLM extraen ≥4 tokens en objeto, AND obligatorio sobre todos hace matemáticamente improbable encontrar match. Caso canónico: "ASEO, CAFETERÍA, JARDINERÍA Y MANTENIMIENTO" → 6 ANDs → 0 resultados. Fix: degradar a OR sobre tokens menos específicos, mantener AND sobre tokens raros | 1 | **HIGH (nuevo)** |
+| CITY-TO-ENTITY-AUTOPROMOTION-001 | `city_to_entity` con confidence medium convierte unilateralmente mención de ciudad en filtro `WHERE entidad LIKE 'alcaldía de X'`, ocultando procesos de otras entidades (gobernación, hospitales, SENA, universidades públicas) en esa ciudad | 2 (Barranquilla casa lúdica, Barranquilla aires) | **HIGH (nuevo)** |
+| TEMPORAL-MONTH-PARSING-001 | "en mayo", "el mes pasado", "este mes" no se resuelven como filtros de fecha. Mes sin año debe interpretarse como mes del año actual | 1 (Putumayo aseo "en mayo") | **HIGH (nuevo)** |
+| AUTO-FALLBACK-WITHOUT-QUALITY-001 | Cuando 0 resultados, fallback automático sin filtro de fecha trae procesos viejos (2023) cuando user pidió 2026. UX dice "sin filtro de fechas" pero no aclara que son potencialmente irrelevantes | 1 (Antioquia residuos → Caracolí 2023) | MEDIUM (nuevo) |
 | NUMBER-CONTEXT-PHRASE-001 | Verbos comparativos ("supere", "exceda", "alcance") y conectores temporales ("en") permanecen en `objeto` cuando el parser ya extrajo correctamente el modificador (valor/fecha). AND con el verbo mata la búsqueda. Caso: "no supere los 25 millones" → valor_max=25M ✓ + objeto contiene "supere" → 0 resultados | 1 | **HIGH (nuevo)** |
 | ENTITY-MULTI-REGIONAL-001 | Entidades con regionales (SENA, ICBF, DNP, ministerios) no consideran modificadores territoriales en la query. Caso: "del sena bolivar" → "SENA SECRETARIA GENERAL" (Bogotá), no "SENA REGIONAL BOLÍVAR" | 1 | **HIGH (nuevo)** |
 | FOLLOWUP-VALUE-INHERIT-001 | `valor_max`/`valor_min`/`modalidad` heredados del turno anterior cuando el topic cambia completamente. Caso: residuos sólidos (≤20M) → silvopastoriles → hereda 20M sin pedirlo | 1 | **HIGH (nuevo)** |
@@ -66,7 +71,7 @@ Estos NO son fallos del corpus v1 (el corpus pasa 88/88). Son bugs reales detect
 | NIT-AMOUNT-CONFUSION-001 | Montos en COP (8-9 dígitos) confundidos con NITs/contratistas sin discriminar contexto léxico | 1 | HIGH |
 | OPP-INTENT-001 | "algún proceso para X" no activa `intent_type=opportunity_search` ni `estado_family=oferta_abierta` | 1 | HIGH |
 | RELEVANCE-PHRASE-001 | Frases técnicas compuestas (ej. "control de calidad de agua para consumo humano") destruidas por AND de tokens. Sin boost de frase exacta | 1 | HIGH |
-| DEDUP-PROCESS-001 | Mismo proceso aparece varias veces con distinto `noticeUID` (cambios de fase/estado generan registros separados). Sin dedup en UI | 3 (Guateque, La Estrella, Doncello) | MEDIUM |
+| DEDUP-PROCESS-001 | Mismo proceso aparece varias veces con distinto `noticeUID` (cambios de fase/estado generan registros separados). Sin dedup en UI | 4 (Guateque, La Estrella, Doncello, Yaguara ×3) | MEDIUM |
 | COURTESY-FILLER-001 | `hola`, `estoy interesado`, `actualmente`, `algún`, vocabulario de queja (`nada`, `terrible`, `incorrecto`, `mal`, `fracaso`) y señales de bidder (`oferta` como objeto cuando significa "oportunidad") entran como objeto contractual | 3 | HIGH |
 | BIDDER-CATALOG-AND-001 | `vendo X, Y y Z` tratado como AND obligatorio → 0 resultados | 1 (electrobombas) | HIGH |
 | POLYSEMIC-TOPIC-001 | `alojamiento` con 5 sentidos no desambiguados (hospedaje/hosting/logístico/albergue/militar) | 1 | HIGH |
@@ -104,6 +109,11 @@ El corpus v1 (`query_corpus_v1.yaml`) no prueba estos patrones. Deben entrar al 
 - `followup_value_purge` — extensión de followup_dataset_purge para `valor_min`/`valor_max`/`modalidad`. Heurística: si tokens del topic nuevo no tienen overlap con anterior, purgar modificadores monetarios
 - `modifier_scrub` — cuando el parser infiere con éxito un modificador (`valor_max`, `valor_min`, `fecha_desde`, `fecha_hasta`) a partir de una frase ("no supere los X", "en 2026"), las palabras de la frase (verbos comparativos, conectores temporales) deben scrubearse del objeto. Catálogo: supere, exceda, supera, alcance, rebase, llegue, baje, suba, cueste, valga, en, desde, hasta, durante
 - `source_coverage_diagnostic` — cuando el usuario reporta "no encontré X" y trae referencia/datos del proceso, ofrecer ruta de diagnóstico que incluya verificación de sincronización del dataset (delay de 24-48h de Socrata)
+- `value_polarity` — mapeo correcto de frases de negación monetaria: "no mayor a", "no exceda", "menor o igual a", "por debajo de", "no sean menores a", "al menos". Cada una asigna al campo correcto (valor_min vs valor_max)
+- `topic_token_demotion` — cuando objeto tiene ≥4 tokens, degradar AND a OR sobre tokens menos específicos (servicios, general, mantenimiento, suministro). Mantener AND solo sobre tokens raros (jardinería, cafetería, electrobombas)
+- `city_entity_suggestion` — `city_to_entity` con confidence medium NO debe convertirse en filtro WHERE silencioso. Solo ofrecer como sugerencia al usuario
+- `temporal_relative` — parsear meses sin año ("en mayo"), referencias relativas ("este mes", "el mes pasado", "hace dos meses"), trimestres y semestres
+- `auto_fallback_transparency` — cuando fallback automático cambia drásticamente la ventana temporal (>1 año fuera), marcar individualmente cada resultado o pedir confirmación al usuario
 
 ---
 
@@ -142,17 +152,19 @@ Surgieron durante la sesión de feedback y deben implementarse junto con el plan
 
 ---
 
-## Orden recomendado para Sprint 1A (revisado tras feedback 2026-05-19 madrugada)
+## Orden recomendado para Sprint 1A (revisado tras feedback 2026-05-19 séptima tanda)
 
-Antes de implementar `QueryPlan` completo, **cinco fixes CRITICAL** secuenciales (~12-15 horas combinadas) destrabarían >50% del ruido visible:
+Antes de implementar `QueryPlan` completo, **siete fixes CRITICAL** (~16-20 horas combinadas) destrabarían >60% del ruido visible:
 
-1. **ENTITY-MISRESOLUTION-FALLBACK-001** — `rewrite_alcald[ií]a` debe devolver null + confidence low cuando no encuentra match canónico. ~2 horas. **El más grave: miente al usuario.**
-2. **LLM-EXPANSION-AND-001** — post-procesar el tool call del LLM: cuando emite múltiples bigrams sinónimos en `objeto`, unirlos con OR no AND. ~2 horas.
-3. **OPP-TIMEOUT-001** — timeout no debe reportarse como 0. ~2 horas.
-4. **ACCENT-NORMALIZATION-001** — `regexp_replace` sobre tildes en SoQL. ~3 horas.
-5. **MUNICIPAL-GEO-GAP-001** — fallback territorial (OR sobre `departamento_entidad` / `ciudad_entidad` / nombre de entidad) si el audit confirma magnitud. ~3-4 horas.
+1. **MIN-MAX-INVERSION-001** — parser de polaridad monetaria correcto. ~3 horas. **Sube a #1: mata directamente al usuario pago.**
+2. **ENTITY-MISRESOLUTION-FALLBACK-001** — `rewrite_alcald` devuelve null + confidence low. ~2 horas.
+3. **LLM-EXPANSION-AND-001** — post-procesar tool call LLM: OR sobre bigrams sinónimos. ~2 horas.
+4. **OPP-TIMEOUT-001** — timeout ≠ 0. ~2 horas.
+5. **ACCENT-NORMALIZATION-001** — `regexp_replace` sobre tildes + ñ en SoQL. ~3 horas. **Bug más frecuente: 7 confirmaciones.**
+6. **MUNICIPAL-GEO-GAP-001** — fallback territorial. ~3-4 horas.
+7. **MULTI-AND-OVER-RESTRICTIVE-001** — degradación AND→OR cuando objeto tiene ≥4 tokens. ~3 horas.
 
-Pre-requisito ineludible: **`discover_secop.py` audit** sobre muestra de entidades municipales (4 confirmaciones en 24h — Paicol, Paipa, Mariquita, Yarumal). 1-2 horas para dimensionar y decidir fix definitivo.
+Pre-requisito ineludible: **`discover_secop.py` audit** sobre muestra de entidades municipales (5+ confirmaciones — Paicol, Paipa, Mariquita, Yarumal, Olaya, Palermo).
 
 Luego el `QueryPlan` original del plan, con extensiones para `courtesy_filler` (ampliado a `discourse_filler` que incluye señales de "oferta"="oportunidad"), `bidder_catalog`, `procurement_verb`, `polysemic_topic`, `followup_dataset_purge`, `followup_value_purge`, `non_query_followup`, `number_disambiguation`, `entity_multi_regional` y `opportunity_intent_implicit` consideradas desde el inicio.
 
