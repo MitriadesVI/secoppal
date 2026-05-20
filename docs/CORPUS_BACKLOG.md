@@ -2,7 +2,25 @@
 
 Fallos conocidos del corpus, agrupados por severidad. NO editar parser/core para hacer pasar estos casos — son bugs reales que requieren features o fixes separados.
 
-**Última actualización:** 2026-05-19 (séptima tanda, polaridad invertida en filtros monetarios) — 4 bugs nuevos detectados, uno CRITICAL. Total acumulado: 27 categorías de bugs, **7 CRITICAL**. Plan de robustecimiento sistémico en pausa (ver [docs/SECOPPAL_ROBUSTECIMIENTO_SISTEMICO.md](SECOPPAL_ROBUSTECIMIENTO_SISTEMICO.md)); estos hallazgos alimentan el Sprint 0A cuando se retome.
+**Última actualización:** 2026-05-19 (octava tanda, **re-diagnóstico empírico vía Socrata directo**) — verificación con 9 procesos confirma que MUNICIPAL-GEO-GAP-001 era hipótesis falsa (todos los procesos "no encontrados" tienen `departamento_entidad` correctamente poblado). SOURCE-COVERAGE-001 baja a MEDIUM (delay real <24h, no 48h). Nuevos CRITICAL: PAGINATION-CUTS-OFF-RELEVANT, STATE-CATALOG-INCOMPLETE. Total acumulado: **28 categorías de bugs, 9 CRITICAL** tras re-diagnóstico. Plan de robustecimiento sistémico en pausa (ver [docs/SECOPPAL_ROBUSTECIMIENTO_SISTEMICO.md](SECOPPAL_ROBUSTECIMIENTO_SISTEMICO.md)); estos hallazgos alimentan el Sprint 0A cuando se retome.
+
+## Re-diagnóstico empírico (2026-05-19, octava tanda)
+
+Verifiqué directamente en Socrata 9 procesos reportados como "no encontrados". **TODOS están en el dataset con campos territoriales correctamente poblados.** Esto invalida la hipótesis MUNICIPAL-GEO-GAP-001 y obliga a reasignar los culpables reales:
+
+| Proceso | depto/ciudad en dataset | Verdadero culpable |
+|---|---|---|
+| Paicol DHMP-SA-SFDS-003 | Huila / Paicol | ACCENT (turísticos) |
+| Paipa SMC MP 021 | Boyacá / No Definido | ENTITY-MISRESOLUTION (→Manizales) |
+| Yarumal CMC-SD-051 | Antioquia / Yarumal | FOLLOWUP-VALUE-INHERIT (heredó valor_max=20M, proceso vale 48M) |
+| Olaya CMC 0017-2026 | Antioquia / Olaya | ACCENT (sólidos) + LLM-EXPANSION-AND |
+| Doncello CMC-2026-019 | Caquetá / El Doncello | **PAGINATION LIMIT 50** (1,647 resultados, quedó fuera) |
+| Mariquita SAMC-JCT-006 | Tolima / Mariquita | STATE-CATALOG-INCOMPLETE (probable) |
+| Palermo IP-017-2026 | Huila / Palermo | MIN-MAX-INVERSION |
+| Putumayo UNIPUTUMAYO-MC-013 | Putumayo / Mocoa | ACCENT (cafetería/jardinería) + MULTI-AND |
+| Ipiales SMC-006-2026 | Nariño / Ipiales | ACCENT (DISEÑO) |
+
+**Implicación honesta:** mi diagnóstico previo asumía MUNICIPAL-GEO-GAP cuando un proceso de municipio pequeño no aparecía. **Falso.** CCE puebla correctamente los campos territoriales. El bug siempre estaba en otra parte (filtros, parsing, paginación). Sin la verificación empírica de hoy, habríamos invertido tiempo en "fix" que no se necesita.
 
 ## Modelo de negocio confirmado (2026-05-19)
 
@@ -51,13 +69,17 @@ Estos NO son fallos del corpus v1 (el corpus pasa 88/88). Son bugs reales detect
 
 | ID | Descripción | Apariciones | Severidad |
 |----|-------------|------------:|-----------|
-| MIN-MAX-INVERSION-001 | "No sean mayores a X" se parsea como `valor_min=X` cuando debería ser `valor_max=X`. Polaridad de negación invertida. Patrón canónico de proponentes ("no mayores a mi capacidad"). Mata el modelo B2B | 1 (Huila transporte escolar) | **CRITICAL (nuevo)** — mata propuesta de valor del usuario pago |
-| LLM-EXPANSION-AND-001 | LLM expande topic a múltiples bigrams sinónimos pero se unen con AND en SoQL, matando la búsqueda. Caso: `"residuos sólidos"` + `"manejo de residuos"` como AND obligatorio → 0 resultados | 1 | CRITICAL |
-| ENTITY-MISRESOLUTION-FALLBACK-001 | `rewrite_alcald[ií]a` devuelve entidad arbitraria con `confidence=high` cuando no encuentra match. Caso: "alcaldía de paipa" → "MUNICIPIO DE MANIZALES" / "(Secretaría Distrital de Integración Social)". Engaño operacional al usuario | 2 | CRITICAL |
+| MIN-MAX-INVERSION-001 | "No sean mayores a X" se parsea como `valor_min=X` cuando debería ser `valor_max=X`. Polaridad de negación invertida. **Confirmado culpable directo en caso Palermo IP-017-2026** | 1 verificado | **CRITICAL** — mata propuesta de valor del usuario pago |
+| ACCENT-NORMALIZATION-001 | Tildes/diacríticos (incluyendo ñ) en dato fuente no matchean LIKE sin diacrítico (`UPPER` no los quita). **Confirmado culpable directo en Paicol, Olaya, Putumayo, Ipiales.** Casos: consultoría, logístico, turísticos, logísticos, DISEÑO, JARDINERÍA, CAFETERÍA, SÓLIDOS, TURÍSTICOS, ARTÍSTICOS | **9+ verificadas** | CRITICAL — bug más frecuente con evidencia más sólida |
+| ENTITY-MISRESOLUTION-FALLBACK-001 | `rewrite_alcald[ií]a` devuelve entidad arbitraria con `confidence=high` cuando no encuentra match. **Confirmado culpable directo en Paipa SMC MP 021 → Manizales.** | 2 verificados | CRITICAL |
+| LLM-EXPANSION-AND-001 | LLM expande topic a múltiples bigrams sinónimos pero se unen con AND en SoQL. Caso: `"residuos sólidos"` + `"manejo de residuos"` como AND → 0 resultados (Olaya) | 1 | CRITICAL |
 | OPP-TIMEOUT-001 | Timeout SECOP reportado como "0 resultados" sin avisar al usuario | 6 | CRITICAL |
-| ACCENT-NORMALIZATION-001 | Tildes/diacríticos (incluyendo ñ) en dato fuente no matchean LIKE sin diacrítico (`UPPER` no los quita). Casos: consultoría, logístico, turísticos, logísticos, DISEÑO, JARDINERÍA, CAFETERÍA, SÓLIDOS | 7 | CRITICAL |
-| MUNICIPAL-GEO-GAP-001 | Alcaldías municipales con `departamento_entidad` vacío/inconsistente. Casos: Paicol/Huila, Paipa/Boyacá, Mariquita/Tolima, Yarumal/Antioquia, Olaya/Antioquia, Palermo/Huila (probable) | 5+ | **CRITICAL** — patrón sistémico en 5+ departamentos |
-| SOURCE-COVERAGE-001 | Procesos publicados en SECOP nativo en las últimas 24-48h no están aún en dataset público `p6dx-8zbt` (delay de sincronización Socrata). Casos: Paipa/SMC MP 021, Doncello/CMC-2026-019 | 2 | **CRITICAL (subir desde HIGH)** — el modelo B2B exige tiempo casi real; delay = churn de proponentes pagos |
+| PAGINATION-CUTS-OFF-RELEVANT-001 | `LIMIT 50` silencioso oculta procesos relevantes cuando hay >50 resultados. **Confirmado culpable directo en Doncello CMC-2026-019** (1,647 resultados totales, el de Doncello quedó fuera del top 50 ordenado por fecha+valor) | 1 verificado | **CRITICAL (nuevo)** — usuario no sabe que solo ve 50 de N |
+| MULTI-AND-OVER-RESTRICTIVE-001 | ≥4 tokens en objeto con AND obligatorio = match matemáticamente improbable. **Confirmado en Putumayo (6 ANDs) e Ipiales (4 ANDs).** | 2 verificados | **CRITICAL** (sube de HIGH) |
+| FOLLOWUP-VALUE-INHERIT-001 | `valor_max`/`valor_min`/`modalidad` heredados cuando el topic cambia completamente. **Confirmado culpable directo en Yarumal silvopastoriles** (heredó valor_max=20M de query anterior de residuos sólidos, proceso vale 48M) | 1 verificado | **CRITICAL** (sube de HIGH) |
+| STATE-CATALOG-INCOMPLETE-001 | Catálogo `estado_del_procedimiento IN (...)` no cubre todos los estados reales que SECOP usa. **Probable culpable en Mariquita SAMC-JCT-006** (el proceso tiene estado "Publicado" oficialmente pero Phase "Presentación de observaciones" — auditar valores reales del campo) | 1 probable | **CRITICAL (nuevo)** — necesita audit de `discover_secop.py` |
+| ~~MUNICIPAL-GEO-GAP-001~~ | ~~Alcaldías municipales con departamento_entidad vacío/inconsistente~~ **REMOVED 2026-05-19**: 9 procesos verificados en Socrata, TODOS tienen campos territoriales bien poblados. Era diagnóstico erróneo. Los casos atribuidos a este bug se redistribuyeron en ACCENT/ENTITY-MISRESOLUTION/FOLLOWUP-VALUE-INHERIT/PAGINATION | 0 (era 5 supuestos) | **ELIMINADO** |
+| SOURCE-COVERAGE-001 | Procesos publicados en SECOP nativo en las últimas <12h pueden no estar en dataset Socrata. **Re-diagnóstico 2026-05-19**: 9 procesos verificados, incluso del 18/05 ya estaban en Socrata el 19/05. Delay real <24h, probablemente <12h. **Baja de CRITICAL a MEDIUM**. Sigue válido el diagnóstico transparente como UX pero no requiere crawler propio urgente | 0 confirmados | **MEDIUM (baja desde CRITICAL)** — investigación empírica invalidó la magnitud del problema |
 | STATE-PRIORITY-001 | `estado_family=oferta_abierta` no se proyecta a SoQL en algunas rutas | 3 | HIGH (ya en DEMO-BLOCKERS) |
 | OPP-INTENT-001 | "algún proceso para X" / "alguna oferta del Y" / "algún proceso de Z en W" no activa `intent_type=opportunity_search` ni `estado_family=oferta_abierta`. Confirmado en Putumayo aseo, Antioquia residuos, Huila transporte | 5 | HIGH |
 | MULTI-AND-OVER-RESTRICTIVE-001 | Cuando parser/LLM extraen ≥4 tokens en objeto, AND obligatorio sobre todos hace matemáticamente improbable encontrar match. Caso canónico: "ASEO, CAFETERÍA, JARDINERÍA Y MANTENIMIENTO" → 6 ANDs → 0 resultados. Fix: degradar a OR sobre tokens menos específicos, mantener AND sobre tokens raros | 1 | **HIGH (nuevo)** |
@@ -152,19 +174,25 @@ Surgieron durante la sesión de feedback y deben implementarse junto con el plan
 
 ---
 
-## Orden recomendado para Sprint 1A (revisado tras feedback 2026-05-19 séptima tanda)
+## Orden recomendado para Sprint 1A (revisado tras re-diagnóstico empírico 2026-05-19)
 
-Antes de implementar `QueryPlan` completo, **siete fixes CRITICAL** (~16-20 horas combinadas) destrabarían >60% del ruido visible:
+Antes de implementar `QueryPlan` completo, **nueve fixes CRITICAL** (~20-25 horas combinadas) destrabarían >70% del ruido visible. Orden por impacto al modelo de negocio:
 
-1. **MIN-MAX-INVERSION-001** — parser de polaridad monetaria correcto. ~3 horas. **Sube a #1: mata directamente al usuario pago.**
-2. **ENTITY-MISRESOLUTION-FALLBACK-001** — `rewrite_alcald` devuelve null + confidence low. ~2 horas.
-3. **LLM-EXPANSION-AND-001** — post-procesar tool call LLM: OR sobre bigrams sinónimos. ~2 horas.
-4. **OPP-TIMEOUT-001** — timeout ≠ 0. ~2 horas.
-5. **ACCENT-NORMALIZATION-001** — `regexp_replace` sobre tildes + ñ en SoQL. ~3 horas. **Bug más frecuente: 7 confirmaciones.**
-6. **MUNICIPAL-GEO-GAP-001** — fallback territorial. ~3-4 horas.
-7. **MULTI-AND-OVER-RESTRICTIVE-001** — degradación AND→OR cuando objeto tiene ≥4 tokens. ~3 horas.
+1. **MIN-MAX-INVERSION-001** (~3h) — parser de polaridad monetaria correcto. **Mata directamente al usuario pago.**
+2. **ACCENT-NORMALIZATION-001** (~3h) — `regexp_replace` sobre tildes + ñ en SoQL. **Bug más frecuente: 9+ confirmaciones empíricas.**
+3. **ENTITY-MISRESOLUTION-FALLBACK-001** (~2h) — `rewrite_alcald` debe devolver null + confidence low cuando no hay match canónico. **Engaño operacional.**
+4. **PAGINATION-CUTS-OFF-RELEVANT-001** (~3h) — paginación visible, advertencia cuando LIMIT recorta resultados. **Oculta procesos sin avisar.**
+5. **LLM-EXPANSION-AND-001** (~2h) — post-procesar tool call LLM: OR sobre bigrams sinónimos.
+6. **OPP-TIMEOUT-001** (~2h) — timeout ≠ 0 resultados.
+7. **MULTI-AND-OVER-RESTRICTIVE-001** (~3h) — degradar AND→OR sobre tokens menos específicos cuando hay ≥4.
+8. **FOLLOWUP-VALUE-INHERIT-001** (~2h) — purgar `valor_max`/`valor_min`/`modalidad` cuando el topic cambia completamente.
+9. **STATE-CATALOG-INCOMPLETE-001** (~2h + audit) — `discover_secop.py` sobre `estado_del_procedimiento` para completar la familia `oferta_abierta`.
 
-Pre-requisito ineludible: **`discover_secop.py` audit** sobre muestra de entidades municipales (5+ confirmaciones — Paicol, Paipa, Mariquita, Yarumal, Olaya, Palermo).
+**Pre-requisito reducido**: el audit con `discover_secop.py` solo necesita correr sobre el catálogo de `estado_del_procedimiento` (objetivo: descubrir valores que no contemplamos), NO sobre campos territoriales. Eso es 30 minutos, no 1-2 horas.
+
+**Lo que YA NO es CRITICAL gracias al re-diagnóstico empírico:**
+- ~~MUNICIPAL-GEO-GAP-001~~ — eliminado, no era bug.
+- ~~SOURCE-COVERAGE-001~~ — baja a MEDIUM, no requiere crawler urgente.
 
 Luego el `QueryPlan` original del plan, con extensiones para `courtesy_filler` (ampliado a `discourse_filler` que incluye señales de "oferta"="oportunidad"), `bidder_catalog`, `procurement_verb`, `polysemic_topic`, `followup_dataset_purge`, `followup_value_purge`, `non_query_followup`, `number_disambiguation`, `entity_multi_regional` y `opportunity_intent_implicit` consideradas desde el inicio.
 
@@ -181,7 +209,9 @@ Luego el `QueryPlan` original del plan, con extensiones para `courtesy_filler` (
 | LLM-EXPANSION-AND-001 | LLM expande topic a bigrams sinónimos unidos con AND (nuevo) | Pendiente CRITICAL | 1 caso (residuos sólidos + manejo de residuos). Fix en post-procesamiento de tool call LLM: shape `objeto_or` |
 | ENTITY-MISRESOLUTION-FALLBACK-001 | Fallback de rewrite_alcald devuelve entidad arbitraria con high confidence (nuevo) | Pendiente CRITICAL | 2 casos: "Paipa"→Manizales y "Paipa+texto contaminado"→Secretaría Distrital. Fix puntual en `entity_resolver.py` — degradar fallback a `null+confidence=low` |
 | ACCENT-NORMALIZATION-001 | Tildes (nuevo) | Pendiente CRITICAL | Confirmado 3× — `consultoría`, `logístico`, `turísticos` |
-| MUNICIPAL-GEO-GAP-001 | Datos territoriales municipios (nuevo) | Pendiente CRITICAL | **4 casos confirmados** (Paicol/Huila, Paipa/Boyacá, Mariquita/Tolima, Yarumal/Antioquia). Patrón sistémico en 4 departamentos distintos. Audit `discover_secop.py` obligatorio antes de Sprint 1A |
+| ~~MUNICIPAL-GEO-GAP-001~~ | ~~Datos territoriales municipios~~ ELIMINADO 2026-05-19 | n/a | **Era diagnóstico erróneo.** Verificación empírica con 9 procesos (Paicol, Paipa, Mariquita, Yarumal, Olaya, Doncello, Palermo, Putumayo, Ipiales) confirmó que TODOS tienen campos territoriales bien poblados en Socrata. Los casos atribuidos se redistribuyeron a ACCENT/ENTITY-MISRESOLUTION/FOLLOWUP-VALUE-INHERIT/PAGINATION |
+| PAGINATION-CUTS-OFF-RELEVANT-001 | LIMIT 50 oculta procesos relevantes (nuevo CRITICAL) | Pendiente CRITICAL | 1 caso verificado (Doncello, 1647 resultados totales). Fix: paginación visible + advertencia "muestro 50 de N" + sugerir refinar filtros |
+| STATE-CATALOG-INCOMPLETE-001 | Catálogo de estados no cubre todos los valores reales (nuevo CRITICAL) | Pendiente CRITICAL | 1 caso probable (Mariquita SAMC-JCT-006). Pre-req: `discover_secop.py` sobre campo `estado_del_procedimiento` con muestra reciente |
 | ENTITY-MULTI-REGIONAL-001 | Entidades con regionales no consideran modificadores territoriales (nuevo) | Pendiente HIGH | 1 caso ("del sena bolivar" → SENA SECRETARIA GENERAL en Bogotá). Catálogo curado: SENA, ICBF, DNP, ministerios, cajas de compensación, universidades públicas |
 | FOLLOWUP-VALUE-INHERIT-001 | valor_max/modalidad heredados cuando topic cambia (nuevo) | Pendiente HIGH | 1 caso (residuos sólidos ≤20M → silvopastoriles hereda 20M). Fix en `followup_engine` — heurística de overlap de tokens entre turnos |
 | OPP-INTENT-001 | "alguna oferta del X" / "algún proceso para Y" debe activar opportunity_search (confirmado 2× ahora) | Pendiente HIGH | Cubierto por `QueryPlan` Sprint 1A. Adicional: "oferta" como token de objeto debe scrubearse cuando aparezca en contexto opportunity |
