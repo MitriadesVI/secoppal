@@ -28,7 +28,7 @@ _SUBSTANTIAL_FILTER_KEYS: frozenset[str] = frozenset({
     "entidad_resolved", "entidad_like",
     "contratista",
     # topic
-    "objeto",
+    "objeto", "objeto_or",
     # estado
     "estado", "estado_de_apertura_del_proceso", "estado_del_procedimiento",
     "estado_contrato", "estado_contrato_adicional",
@@ -53,6 +53,12 @@ except ImportError as exc:
         exc,
     )
     ROOT_TO_VARIANTS: dict[str, frozenset[str]] = {}
+
+try:
+    from app.core.intent_vocabulary import COMMON_TOKENS
+except ImportError as exc:
+    logger.warning("Could not import COMMON_TOKENS; object demotion disabled: %s", exc)
+    COMMON_TOKENS: frozenset[str] = frozenset()
 
 
 @dataclass(frozen=True, slots=True)
@@ -204,25 +210,35 @@ class SoQLBuilder:
                 f"UPPER({spec.entity}) LIKE UPPER('%{self._escape(str(entidad_value))}%')"
             )
 
-        for term in params.get("objeto", []):
-            # str = required term (AND with other object entries)
-            # list[str] = OR group created by parser for "X o Y"
-            terms = term if isinstance(term, list) else [term]
-            term_conditions: list[str] = []
-            for sub_term in terms:
-                # Expand to all morphological variants (OR clauses).
-                # ROOT_TO_VARIANTS maps root→frozenset of all surface forms.
-                # If the term is not in the index, it's used as-is (single LIKE).
-                term_variants = ROOT_TO_VARIANTS.get(sub_term, frozenset([sub_term]))
-                for variant in sorted(term_variants):  # sorted for deterministic SoQL
-                    esc = self._escape(variant)
-                    if spec.description:
-                        term_conditions.append(
-                            f"UPPER({spec.object_name}) LIKE UPPER('%{esc}%') OR "
-                            f"UPPER({spec.description}) LIKE UPPER('%{esc}%')"
-                        )
-                    else:
-                        term_conditions.append(f"UPPER({spec.object_name}) LIKE UPPER('%{esc}%')")
+        objeto_terms = params.get("objeto", []) or []
+        if self._should_demote_objeto(objeto_terms):
+            rare_terms, common_terms = self._split_objeto_by_rarity(objeto_terms)
+            for term in rare_terms:
+                where_clauses.append(
+                    f"({' OR '.join(self._object_term_conditions(spec, term))})"
+                )
+            if common_terms:
+                common_conditions: list[str] = []
+                for term in common_terms:
+                    common_conditions.extend(self._object_term_conditions(spec, term))
+                where_clauses.append(f"({' OR '.join(common_conditions)})")
+        else:
+            for term in objeto_terms:
+                # str = required term (AND with other object entries)
+                # list[str] = OR group created by parser for "X o Y"
+                terms = term if isinstance(term, list) else [term]
+                term_conditions: list[str] = []
+                for sub_term in terms:
+                    term_conditions.extend(
+                        self._object_term_conditions(spec, str(sub_term))
+                    )
+                where_clauses.append(f"({' OR '.join(term_conditions)})")
+
+        objeto_or = params.get("objeto_or") or []
+        if objeto_or:
+            term_conditions = []
+            for term in objeto_or:
+                term_conditions.extend(self._object_term_conditions(spec, str(term)))
             where_clauses.append(f"({' OR '.join(term_conditions)})")
 
         if params.get("valor_min") is not None:
@@ -330,8 +346,44 @@ class SoQLBuilder:
         )
 
     @staticmethod
+    def _should_demote_objeto(objeto: list) -> bool:
+        return len(objeto) >= 4 and all(isinstance(term, str) for term in objeto)
+
+    @staticmethod
+    def _split_objeto_by_rarity(objeto: list[str]) -> tuple[list[str], list[str]]:
+        rare_terms = [term for term in objeto if term.lower() not in COMMON_TOKENS]
+        common_terms = [term for term in objeto if term.lower() in COMMON_TOKENS]
+        return rare_terms, common_terms
+
+    @staticmethod
     def _escape(value: str) -> str:
         return value.replace("'", "''")
+
+    @classmethod
+    def _accent_fold_like(cls, field: str, escaped_pattern: str) -> str:
+        field_expr = cls._accent_fold_expr(f"UPPER({field})")
+        pattern_expr = cls._accent_fold_expr(f"UPPER('%{escaped_pattern}%')")
+        return f"{field_expr} LIKE {pattern_expr}"
+
+    def _object_term_conditions(self, spec: DatasetSpec, term: str) -> list[str]:
+        # Expand to all morphological variants (OR clauses).
+        # ROOT_TO_VARIANTS maps root to all surface forms; unknown terms are used as-is.
+        term_variants = ROOT_TO_VARIANTS.get(term, frozenset([term]))
+        conditions: list[str] = []
+        for variant in sorted(term_variants):  # sorted for deterministic SoQL
+            esc = self._escape(variant)
+            if spec.description:
+                conditions.append(
+                    f"{self._accent_fold_like(spec.object_name, esc)} OR "
+                    f"{self._accent_fold_like(spec.description, esc)}"
+                )
+            else:
+                conditions.append(self._accent_fold_like(spec.object_name, esc))
+        return conditions
+
+    @staticmethod
+    def _accent_fold_expr(expr: str) -> str:
+        return f"unaccent({expr})"
 
     @staticmethod
     def _add_estado_clause(where_clauses: list[str], field: str, value) -> None:

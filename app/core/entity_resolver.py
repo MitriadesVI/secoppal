@@ -21,6 +21,13 @@ class ResolutionResult:
     confidence: str
     like_value: str | None = None
     metadata: dict[str, str] = field(default_factory=dict)
+    ecosystem_entities: list[str] = field(default_factory=list)
+    clarification_needed: bool = False
+    clarification_hint: str | None = None
+
+    @property
+    def central_entity(self) -> str | None:
+        return self.value
 
     def to_dict(self) -> dict:
         return asdict(self)
@@ -218,10 +225,14 @@ class EntityResolver:
 
     def resolve_entidad(self, user_input: str, departamento: str | None = None) -> ResolutionResult:
         normalized = normalize_text(user_input)
+        strict_rewrite = self._strict_rewrite_target(normalized)
 
         # Tier 1: Exact alias match
         if normalized in self.alias_index:
-            return ResolutionResult(value=self.alias_index[normalized], method="exact", confidence="high")
+            official = self.alias_index[normalized]
+            if strict_rewrite and not self._official_matches_strict_rewrite(official, strict_rewrite):
+                return self._unresolved_rewrite(user_input, strict_rewrite)
+            return ResolutionResult(value=official, method="exact", confidence="high")
 
         # Tier 2: Department-scoped fuzzy
         if departamento and departamento in self.entities_by_department:
@@ -232,8 +243,11 @@ class EntityResolver:
                 scorer=fuzz.WRatio, score_cutoff=self.FUZZY_CUTOFF_ENTIDAD,
             )
             if match:
+                official = dept_choices[match[0]]
+                if strict_rewrite and not self._official_matches_strict_rewrite(official, strict_rewrite):
+                    return self._unresolved_rewrite(user_input, strict_rewrite)
                 return ResolutionResult(
-                    value=dept_choices[match[0]], method=f"fuzzy_dept({int(match[1])})", confidence="medium",
+                    value=official, method=f"fuzzy_dept({int(match[1])})", confidence="medium",
                     metadata={"departamento_filter": departamento},
                 )
 
@@ -243,13 +257,59 @@ class EntityResolver:
             scorer=fuzz.WRatio, score_cutoff=self.FUZZY_CUTOFF_ENTIDAD,
         )
         if match:
+            official = self.choice_to_official[match[0]]
+            if strict_rewrite and not self._official_matches_strict_rewrite(official, strict_rewrite):
+                return self._unresolved_rewrite(user_input, strict_rewrite)
             return ResolutionResult(
-                value=self.choice_to_official[match[0]], method=f"fuzzy({int(match[1])})", confidence="medium",
+                value=official, method=f"fuzzy({int(match[1])})", confidence="medium",
             )
 
         # Tier 4: LIKE fallback
+        if strict_rewrite:
+            return self._unresolved_rewrite(user_input, strict_rewrite)
         logger.info("Entity '%s' fell through to LIKE fallback", user_input)
         return ResolutionResult(value=None, like_value=normalized.upper(), method="like", confidence="low")
+
+    def _unresolved_rewrite(self, user_input: str, strict_rewrite: tuple[str, str]) -> ResolutionResult:
+        _kind, target = strict_rewrite
+        return ResolutionResult(
+            value=None,
+            method="rewrite_unresolved",
+            confidence="low",
+            metadata={"target": target},
+            clarification_needed=True,
+            clarification_hint=(
+                f"No encontré '{user_input}' en el catálogo de entidades. "
+                "¿Cuál es el nombre oficial de la entidad?"
+            ),
+        )
+
+    @staticmethod
+    def _strict_rewrite_target(normalized: str) -> tuple[str, str] | None:
+        municipality_match = re.match(
+            r"^(?:municipio|alcaldia(?:\s+municipal)?)\s+de\s+(.+)$",
+            normalized,
+        )
+        if municipality_match:
+            return ("municipality", municipality_match.group(1).strip())
+
+        department_match = re.match(r"^(?:departamento|gobernacion)\s+de\s+(.+)$", normalized)
+        if department_match:
+            return ("department", department_match.group(1).strip())
+
+        return None
+
+    @staticmethod
+    def _official_matches_strict_rewrite(official: str, strict_rewrite: tuple[str, str]) -> bool:
+        kind, target = strict_rewrite
+        official_norm = normalize_text(official)
+        if target not in official_norm:
+            return False
+        if kind == "municipality":
+            return any(marker in official_norm for marker in ("municipio", "alcaldia", "distrito"))
+        if kind == "department":
+            return any(marker in official_norm for marker in ("departamento", "gobernacion"))
+        return False
 
     # =====================================================================
     # INDEX BUILDING

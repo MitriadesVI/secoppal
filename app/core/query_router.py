@@ -138,8 +138,10 @@ STOPWORDS = {
     "por", "para", "que", "se", "un", "una", "con",
     # Comparators
     "mayor", "mayores", "menor", "menores",
-    "superior", "superiores", "superen",
+    "superior", "superiores", "supere", "superen",
+    "exceda", "excedan", "rebase", "rebasen",
     "mas", "menos",
+    "no", "maximo", "máximo", "minimo", "mínimo",
     # Money units
     "pesos", "millones", "millon",
     # Filler
@@ -425,12 +427,15 @@ class QueryRouter:
         from app.core.entity_types import rewrite_entity
         entity_candidates = rewrite_entity(scrubbed)
         rewritten_entity = None
+        unresolved_rewrite = None
         if entity_candidates and self.entity_resolver:
             for canonical, consumed, rtype in entity_candidates:
                 match = self.entity_resolver.resolve_entidad(canonical)
-                if match and match.method != "fallback_like":
+                if match and match.value and match.method != "fallback_like":
                     rewritten_entity = (canonical, consumed, rtype, match)
                     break
+                if match and match.clarification_needed and unresolved_rewrite is None:
+                    unresolved_rewrite = (canonical, consumed, rtype, match)
             if rewritten_entity:
                 canonical, consumed, rtype, match = rewritten_entity
                 params["entidad"] = canonical
@@ -441,6 +446,17 @@ class QueryRouter:
                     "confidence": "high",
                     "like_value": None,
                     "metadata": {"rewritten_from": consumed},
+                }
+                consumed_spans.append(consumed)
+                scrubbed = scrubbed.replace(consumed, " ", 1)
+                scrubbed = re.sub(r"\s+", " ", scrubbed).strip()
+            elif unresolved_rewrite:
+                canonical, consumed, rtype, match = unresolved_rewrite
+                params["entidad"] = canonical
+                params["entidad_resolution"] = {
+                    **match.to_dict(),
+                    "method": f"rewrite_{rtype}_unresolved",
+                    "metadata": {**match.metadata, "rewritten_from": consumed},
                 }
                 consumed_spans.append(consumed)
                 scrubbed = scrubbed.replace(consumed, " ", 1)
@@ -739,6 +755,88 @@ class QueryRouter:
                 params["valor_min"] = amount
                 # Remove matched span
                 normalized_query = normalized_query[: om.start()] + " " + normalized_query[om.end() :]
+
+        amount_text = (
+            r"((?:\d+(?:[.,]\d+)?|un|mil)\s*"
+            r"(?:billon(?:es)?|mil\s+millones|millones?|palos?|mil)?"
+            r"(?:\s+de\s+pesos)?)"
+        )
+        polarity_patterns = (
+            (
+                "valor_max",
+                re.compile(
+                    rf"""
+                    \b(?:
+                        no\s+(?:sea|sean)?\s*(?:mayor(?:es)?|superior(?:es)?)\s+(?:a|de|que)
+                        |que\s+no\s+(?:supere|superen|exceda|excedan|rebase|rebasen)(?:\s+los?)?
+                        |no\s+(?:supere|superen|exceda|excedan|rebase|rebasen)(?:\s+los?)?
+                        |no\s+m[aá]s\s+de
+                    )\s+{amount_text}
+                    """,
+                    re.IGNORECASE | re.VERBOSE,
+                ),
+            ),
+            (
+                "valor_min",
+                re.compile(
+                    rf"""
+                    \b(?:
+                        no\s+(?:sea|sean)?\s*menor(?:es)?\s+(?:a|de|que)
+                        |que\s+no\s+baje(?:n)?\s+de
+                        |no\s+baje(?:n)?\s+de
+                    )\s+{amount_text}
+                    """,
+                    re.IGNORECASE | re.VERBOSE,
+                ),
+            ),
+            (
+                "valor_max",
+                re.compile(
+                    rf"""
+                    \b(?:
+                        menor(?:es)?\s+(?:a|de|que)
+                        |menos\s+de
+                        |inferior(?:es)?\s+(?:a|de|que)
+                        |por\s+debajo\s+de
+                        |hasta
+                        |m[aá]ximo
+                    )\s+{amount_text}
+                    """,
+                    re.IGNORECASE | re.VERBOSE,
+                ),
+            ),
+            (
+                "valor_min",
+                re.compile(
+                    rf"""
+                    \b(?:
+                        mayor(?:es)?\s+(?:a|de|que)
+                        |m[aá]s\s+de
+                        |superior(?:es)?\s+(?:a|de|que)
+                        |supere(?:n)?(?:\s+los?)?
+                        |exceda(?:n)?(?:\s+los?)?
+                        |por\s+encima\s+de
+                        |al\s+menos
+                        |m[ií]nimo
+                        |desde
+                        |a\s+partir\s+de
+                    )\s+{amount_text}
+                    """,
+                    re.IGNORECASE | re.VERBOSE,
+                ),
+            ),
+        )
+        for field, pattern in polarity_patterns:
+            for match in list(pattern.finditer(normalized_query)):
+                amount = money_to_cop(match.group(1))
+                if amount is None or amount < 1_000_000:
+                    continue
+                params[field] = amount
+                normalized_query = (
+                    normalized_query[: match.start()]
+                    + " "
+                    + normalized_query[match.end() :]
+                )
 
         matches = list(re.finditer(
             r"(?:(?:mas|mayor(?:es)?|superior(?:es)?|superen?)\s+(?:de|a)|(?:menos|menor(?:es)?)\s+(?:de|a)|hasta|por|de|desde)?\s*((?:\d+(?:[.,]\d+)?)|mil|un)\s*(?:billon(?:es)?|mil millones|millones?|palos?|mil)?(?:\s+de\s+pesos)?",

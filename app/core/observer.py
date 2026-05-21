@@ -51,6 +51,8 @@ class UniverseInsights:
     outlier_value: float | None
 
     has_diverse_modalities: bool
+    truncation_warning: bool = False
+    truncation_ratio: float | None = None
 
 
 # ---------------------------------------------------------------------------
@@ -67,8 +69,9 @@ def observe(
 ) -> "UniverseInsights | None":
     """Retorna UniverseInsights o None si algo crítico falla."""
     try:
+        limit = int(params.get("limit", 50) or 50)
         if total_count <= 50:
-            return _compute_from_sample(results, total_count)
+            return _compute_from_sample(results, total_count, limit=limit)
         else:
             return _compute_from_aggregation(
                 total_count, dataset_id, params, secop_client, soql_builder
@@ -82,7 +85,9 @@ def observe(
 # Cómputo desde sample (total_count <= 50)
 # ---------------------------------------------------------------------------
 
-def _compute_from_sample(results: list[dict], total_count: int) -> UniverseInsights:
+def _compute_from_sample(
+    results: list[dict], total_count: int, limit: int = 50
+) -> UniverseInsights:
     spec_procesos_entity = "entidad"
     # Detectar dataset por keys del primer row
     sample_size = len(results)
@@ -95,7 +100,7 @@ def _compute_from_sample(results: list[dict], total_count: int) -> UniverseInsig
             "date_range": None,
             "temporal_dist": {},
         }
-        return _build_insights(raw, total_count, sample_size, "sample")
+        return _build_insights(raw, total_count, sample_size, "sample", limit=limit)
 
     # Detectar campo de entidad/fecha/valor/modalidad desde las keys del primer row
     first = results[0]
@@ -155,7 +160,7 @@ def _compute_from_sample(results: list[dict], total_count: int) -> UniverseInsig
         "date_range": date_range,
         "temporal_dist": year_counts,
     }
-    return _build_insights(raw, total_count, sample_size, "sample")
+    return _build_insights(raw, total_count, sample_size, "sample", limit=limit)
 
 
 # ---------------------------------------------------------------------------
@@ -212,7 +217,10 @@ def _compute_from_aggregation(
     if spec is None:
         raise KeyError(f"dataset_id '{dataset_id}' not found in SoQLBuilder.SPECS")
     raw = _parse_agg_results(agg_results, spec)
-    return _build_insights(raw, total_count, sample_size=0, computed_from="aggregation")
+    limit = int(params.get("limit", 50) or 50)
+    return _build_insights(
+        raw, total_count, sample_size=0, computed_from="aggregation", limit=limit
+    )
 
 
 def _parse_agg_results(agg: dict, spec) -> dict:
@@ -355,9 +363,17 @@ def _derive_signals(raw: dict, total_count: int) -> dict:
 # ---------------------------------------------------------------------------
 
 def _build_insights(
-    raw: dict, total_count: int, sample_size: int, computed_from: str
+    raw: dict,
+    total_count: int,
+    sample_size: int,
+    computed_from: str,
+    limit: int = 50,
 ) -> UniverseInsights:
     signals = _derive_signals(raw, total_count)
+    truncation_warning = total_count > limit
+    truncation_ratio = (
+        limit / total_count if truncation_warning and total_count else None
+    )
     return UniverseInsights(
         total_count=total_count,
         sample_size=sample_size,
@@ -367,5 +383,7 @@ def _build_insights(
         top_modalities=raw.get("top_modalities", []),
         temporal_distribution=raw.get("temporal_dist", {}),
         computed_from=computed_from,
+        truncation_warning=truncation_warning,
+        truncation_ratio=truncation_ratio,
         **signals,
     )

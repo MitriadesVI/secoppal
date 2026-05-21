@@ -19,6 +19,10 @@ ESTADO_FAMILIES = {
     "oferta_abierta": {
         "procesos": {
             "estado_de_apertura_del_proceso": ["Abierto"],
+            # B0 Sprint 1A audit, datos.gov.co p6dx-8zbt, 2026-05-20:
+            # estados reales: Seleccionado, Publicado, Evaluación, Cancelado,
+            # Borrador, Abierto, Aprobado, En aprobación, Suspendido.
+            # Solo estos tres representan oportunidad abierta/pre-publicada.
             "estado_del_procedimiento": [
                 "Publicado",
                 "Borrador",

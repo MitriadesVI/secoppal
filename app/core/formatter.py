@@ -227,7 +227,11 @@ class Formatter:
         shown = len(rows)
         if total_count > shown:
             ordering_label = self._ordering_label(params)
-            header = f"📋 Encontre {total_count:,} resultados en SECOP. Te muestro los {shown} {ordering_label}:\n"
+            remaining = total_count - shown
+            header = (
+                f"📋 Encontre {total_count:,} resultados en SECOP. "
+                f"Te muestro los {shown} {ordering_label}; hay {remaining:,} mas:\n"
+            )
         else:
             header = f"📋 Encontre {shown} resultados:\n"
         insights = self._insights_summary(universe_insights, params)
@@ -269,7 +273,11 @@ class Formatter:
         shown = len(rows)
         if total_count > shown:
             ordering_label = self._ordering_label(params)
-            header = f"Encontre {total_count:,} resultados en SECOP. Te muestro los {shown} {ordering_label}:\n"
+            remaining = total_count - shown
+            header = (
+                f"Encontre {total_count:,} resultados en SECOP. "
+                f"Te muestro los {shown} {ordering_label}; hay {remaining:,} mas:\n"
+            )
         else:
             header = f"Encontre {shown} resultados:\n"
         insights = self._insights_summary(universe_insights, params)
@@ -307,7 +315,12 @@ class Formatter:
         shown = len(rows)
         if total_count > shown:
             ordering_label = self._ordering_label(params)
-            base = f"Encontre {total_count:,} resultados en SECOP. Te muestro los {shown} {ordering_label} listos para explorar en tabla y tarjetas."
+            remaining = total_count - shown
+            base = (
+                f"Encontre {total_count:,} resultados en SECOP. "
+                f"Te muestro los {shown} {ordering_label}; hay {remaining:,} mas "
+                "listos para explorar en tabla y tarjetas."
+            )
         else:
             base = f"Encontre {shown} resultados listos para explorar en tabla y tarjetas."
         insights = self._insights_summary(universe_insights, params)
@@ -390,4 +403,3 @@ class Formatter:
         if params and params.get("ordering_signal") == "valor_desc":
             return "de mayor valor"
         return "más recientes"
-
