@@ -115,6 +115,8 @@ SCRUB_CATALOG = frozenset({
     "baje", "suba", "cueste", "valga",
     "mayores", "menores", "mayor", "menor", "sea", "sean",
     "en", "desde", "hasta", "durante",
+    # Filler articles that appear with number phrases
+    "los", "las", "el", "la", "un", "una", "unos", "unas",
 })
 
 # R6: SECOP contract nouns for implicit_opportunity cross-check
