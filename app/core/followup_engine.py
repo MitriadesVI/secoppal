@@ -708,5 +708,37 @@ def detect_and_merge(
 
     merged_frame = FollowupMerger.merge(previous_frame, current_frame, intent)
     merged_params = params_from_frame(merged_frame)
+    _purge_stale_inherited_params(merged_params, previous_frame, current_frame)
 
     return intent, merged_params
+
+
+def _purge_stale_inherited_params(
+    merged_params: dict,
+    previous_frame: QueryFrame,
+    current_frame: QueryFrame,
+) -> None:
+    if (
+        current_frame.topic
+        and not FollowupClassifier._is_weak_topic(current_frame.topic)
+        and previous_frame.topic
+        and not FollowupClassifier._topics_overlap(
+            current_frame.topic, previous_frame.topic
+        )
+    ):
+        for key in ("valor_min", "valor_max", "modalidad"):
+            merged_params.pop(key, None)
+
+    if (
+        current_frame.scope
+        and FollowupClassifier._scope_differs(
+            current_frame.scope, previous_frame.scope
+        )
+        and "entidad_resolved" not in current_frame.scope
+        and (
+            "ciudad" in current_frame.scope
+            or "departamento_resolved" in current_frame.scope
+        )
+    ):
+        for key in ("entidad", "entidad_resolved", "entidad_resolution", "entidad_like"):
+            merged_params.pop(key, None)
