@@ -223,3 +223,40 @@ reales del usuario para construir `dialogue_policy_corpus.yaml` (50-60 casos:
 4. Sprint 1A (`query_plan.py`, `dialogue_policy.py`, nodo Burr) no arranca sin corpus 0A.
 
 **Línea roja:** Cero regresiones pytest/corpus/lint/feedback.
+
+---
+
+## ADR-006: QueryPlan + DialoguePolicy como capa de decisión pre-ejecución
+
+**Fecha:** 2026-05-21
+**Contexto:** 80 queries humanas con ~20% éxito. Parchar `query_router.py` con condicionales aislados no escala. Sprint 1A demostró que los CRITICAL son resolubles puntualmente, pero los HIGH son patrones que requieren una capa que centralice la decisión.
+
+**Decisión:** introducir `dialogue_policy.py` (clasificador puro de señales) + `query_plan.py` (compute determinístico con 9 reglas P1..P9). Insertarlos como nodo Burr `plan_query` entre `apply_context` y `resolve_entities`. Los 5 bugs HIGH canónicos se resuelven en la capa nueva, no en parches.
+
+**Reglas implementadas:**
+- P1: command_incomplete → clarificación sin ejecutar SECOP
+- P2: non_query_followup → diagnóstico en vez de búsqueda
+- P3: city_mention_as_topic → mover token de objeto a ciudad
+- P4: implicit_opportunity → promover intent_type=opportunity_search
+- P5: temporal_month → resolver "en mayo", "este mes", etc. a rango de fechas
+- P6: number_phrase_scrub → eliminar verbos comparativos del objeto
+- P7: discourse_filler → eliminar tokens de cortesía del objeto
+- P8: invalid_value_range → bloquear rangos inválidos (min > max)
+- P9: bare_city_no_entity_promotion → purgar autopromoción de entidad
+
+**Alternativas descartadas:**
+- 5 fixes puntuales en query_router (parche infinito).
+- Capa con relevance/embeddings/LLM (sobrearquitectura para datos disponibles).
+- Migrar stopwords inmediatamente (deferido a Sprint 3 o cuando dialogue_policy esté estabilizado).
+
+**Consecuencias:** una sola capa nombrada para decisiones de "qué hacer con esta query". Cada bug nuevo cae en una regla nombrada (P1..P9) o se convierte en bug arquitectónico explícito. LoC topes (300/400) defienden contra god-object.
+
+**Métricas al cierre:**
+- pytest: 718 passed, 3 xfailed
+- corpus v1: 88/88 PASS
+- corpus dialogue: 60/60 PASS (100% todas las categorías)
+- lint-core: verde
+- query_plan.py: 247 LoC (<300)
+- dialogue_policy.py: 381 LoC (<400)
+
+**Bugs cerrados:** CITY-MENTION-AS-OBJECT-001, CITY-TO-ENTITY-AUTOPROMOTION-001, TEMPORAL-MONTH-PARSING-001, NUMBER-CONTEXT-PHRASE-001, OPP-INTENT-001, COURTESY-FILLER-001, NO-FOLLOWUP-DETECTION-001.
