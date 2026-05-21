@@ -4,6 +4,7 @@ metadata:
   created: "2026-05-21"
   total_cases: 60
   source: "docs/CORPUS_BACKLOG.md (17 real) + synthetic (28) + negative (15)"
+  purpose: "Unit-level corpus over compute_query_plan(). Tests rules in isolation with curated params. E2E coverage lives in tests/test_sprint2a_canonical_smoke.py + tests/test_plan_query_*.py."
 
 cases:
   # ═══════════════ 17 REALES DEL BACKLOG ═══════════════

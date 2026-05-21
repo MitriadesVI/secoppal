@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
-"""run_dialogue_corpus.py — Runner for dialogue_policy_corpus.yaml.
+"""run_dialogue_corpus.py — Unit-level runner for dialogue_policy_corpus.yaml.
+
+Tests compute_query_plan() rules in isolation with curated params.
+This is NOT an E2E test — it does not exercise the full Burr pipeline
+(SecopalWorkflow). E2E coverage lives in:
+  tests/test_sprint2a_canonical_smoke.py
+  tests/test_plan_query_*.py
 
 Validates QueryPlan output against expected_params, signals, and flags.
 Usage:

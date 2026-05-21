@@ -259,4 +259,6 @@ reales del usuario para construir `dialogue_policy_corpus.yaml` (50-60 casos:
 - query_plan.py: 247 LoC (<300)
 - dialogue_policy.py: 381 LoC (<400)
 
-**Bugs cerrados:** CITY-MENTION-AS-OBJECT-001, CITY-TO-ENTITY-AUTOPROMOTION-001, TEMPORAL-MONTH-PARSING-001, NUMBER-CONTEXT-PHRASE-001, OPP-INTENT-001, COURTESY-FILLER-001, NO-FOLLOWUP-DETECTION-001.
+**Bugs cerrados:** CITY-MENTION-AS-OBJECT-001, CITY-TO-ENTITY-AUTOPROMOTION-001, TEMPORAL-MONTH-PARSING-001, NUMBER-CONTEXT-PHRASE-001, COURTESY-FILLER-001, NO-FOLLOWUP-DETECTION-001.
+
+**Bugs en PARTIAL:** OPP-INTENT-001 (P4 setea intent_type pero soql_builder no proyecta estado_family al WHERE; cierre completo depende de STATE-PRIORITY-001, HIGH ya en DEMO-BLOCKERS).

@@ -292,3 +292,28 @@ Hallazgo de la investigación del 2026-05-19: licitaciones.info opera con BD pro
 | MORPHO-UNEVEN-001 | (nuevo) | Pendiente MEDIUM | Curación manual de `morphological_variants.py` para 25 rubros frecuentes |
 | HEADER-TOPIC-OMISSION-001 | (nuevo) | Pendiente LOW | Sprint 2 `formatter.py` |
 | MOJIBAKE-DISPLAY-001 | (nuevo) | Pendiente LOW | Normalización Unicode en `formatter.py` |
+
+---
+
+## Deuda arquitectónica Sprint 2A
+
+D1. Plan guard vive en resolve_entities (early return), no en
+    transición Burr condicional. La transición with expr() no
+    respetó el should_execute_decision escrito por plan_query.
+    Investigar Burr write/read ordering en Sprint 2B.
+
+D2. build_advisor_response pisa la respuesta de clarificación.
+    Parche en run_query detecta should_execute=False y restaura.
+    Limpiar acoplamiento en Sprint 2B.
+
+D3. P2 (non_query_followup) sin smoke E2E real (solo unit + corpus
+    con prev_params inyectado). P8 (invalid_value_range) es código
+    muerto E2E porque query_router auto-swap previene rangos
+    inválidos aguas arriba.
+
+D4. Corpus runner es unit-level con params curados, no E2E.
+    Los tests E2E reales viven en test_sprint2a_canonical_smoke.py
+    y test_plan_query_*.py.
+
+D5. dialogue_policy.py recibió expansión léxica ("favor"/"por favor")
+    en B5 fuera de scope. Registrar para auditoría arquitectónica.
