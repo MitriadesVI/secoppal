@@ -34,7 +34,7 @@ logger = logging.getLogger(__name__)
 
 # ── Sprint 2A rule activation — expanded per sub-block B4.x ──────────────
 # B4.1: {\"P3\", \"P9\"}  → B4.2: +P4  → B4.3: +P5+P6+P7  → B4.4: all  → B4.5: None
-ENABLED_RULES_SPRINT_2A: set[str] | None = {"P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9"}
+ENABLED_RULES_SPRINT_2A: set[str] | None = None  # B4.5: None = all rules (default)
 
 
 def _elapsed_ms(start: float) -> float:
