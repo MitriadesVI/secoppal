@@ -4,6 +4,8 @@ import dataclasses
 import logging
 import time
 from concurrent.futures import ThreadPoolExecutor
+from dataclasses import asdict
+from datetime import date
 
 from burr.core import ApplicationBuilder, State, action, default, expr
 
@@ -21,6 +23,7 @@ from app.core.observer import observe as observe_universe_fn, UniverseInsights
 from app.core.followup_engine import detect_and_merge, FollowupGuards
 from app.core.query_frame import frame_from_params
 from app.core.query_router import QueryRouter
+from app.core.query_plan import compute_query_plan
 from app.core.response_policy import build_advisor_response
 from app.core.secop_client import SecopClient
 from app.core.soql_builder import SoQLBuilder, UnsafeGlobalQueryError
@@ -104,6 +107,30 @@ def llm_parse(state: State, llm_handler: LLMHandler) -> State:
         return _with_timing(state, "llm_parse_ms", start)
     parsed = llm_handler.parse(state["user_query"], existing_params=state["parsed_params"])
     return _with_timing(state, "llm_parse_ms", start, parsed_params=parsed)
+
+
+@action(
+    reads=["parsed_params", "raw_query", "prev_params", "turn_index"],
+    writes=["query_plan", "parsed_params"],
+)
+def plan_query(state: State) -> State:
+    """Compute QueryPlan and attach it to state as a JSON-serializable dict.
+
+    B3: enabled_rules=set() means NO rules are active — pure pass-through.
+    B4 sub-blocks will activate rules progressively by changing this set.
+    """
+    params = state.get("parsed_params", {})
+    raw = state.get("raw_query", "")
+    context = {
+        "prev_params": state.get("prev_params"),
+        "turn_index": state.get("turn_index", 0),
+        "today": date.today(),
+    }
+    # B3: noop — B4.x will change this set
+    plan = compute_query_plan(params, raw, context, enabled_rules=set())
+    # CRITICAL: store as dict (asdict), never raw dataclass.
+    # conversation_store persists state as JSONL; a dataclass breaks json.dumps.
+    return state.update(query_plan=asdict(plan))
 
 
 @action(
@@ -850,6 +877,7 @@ class SecopalWorkflow:
                 parse_query=parse_query.bind(query_router=self.query_router),
                 apply_context=apply_context,
                 llm_parse=llm_parse.bind(llm_handler=self.llm_handler),
+                plan_query=plan_query,
                 resolve_entities=resolve_entities.bind(entity_resolver=self.entity_resolver),
                 build_query=build_query.bind(soql_builder=self.soql_builder),
                 execute_query=execute_query.bind(secop_client=self.secop_client, soql_builder=self.soql_builder),
@@ -862,11 +890,12 @@ class SecopalWorkflow:
             .with_transitions(
                 ("parse_query", "apply_context", expr("followup")),
                 ("parse_query", "llm_parse", expr("not followup and needs_llm")),
-                ("parse_query", "resolve_entities", expr("not followup and not needs_llm")),
+                ("parse_query", "plan_query", expr("not followup and not needs_llm")),
                 ("apply_context", "clarify_query", expr("needs_clarification")),
                 ("apply_context", "llm_parse", expr("not needs_clarification and needs_llm")),
-                ("apply_context", "resolve_entities", expr("not needs_clarification and not needs_llm")),
-                ("llm_parse", "resolve_entities", default),
+                ("apply_context", "plan_query", expr("not needs_clarification and not needs_llm")),
+                ("llm_parse", "plan_query", default),
+                ("plan_query", "resolve_entities", default),
                 ("resolve_entities", "clarify_query", expr("needs_clarification")),
                 ("resolve_entities", "build_query", expr("not needs_clarification")),
                 ("build_query", "execute_query", default),
@@ -879,6 +908,7 @@ class SecopalWorkflow:
             )
             .with_state(
                 user_query=user_query,
+                raw_query=user_query,
                 channel=channel,
                 parsed_params={},
                 resolved_params={},
@@ -889,6 +919,7 @@ class SecopalWorkflow:
                 dataset_id="",
                 route_reason="",
                 query_error="",
+                query_plan={},
                 needs_llm=False,
                 needs_clarification=False,
                 clarification_reason="",
@@ -945,6 +976,7 @@ class SecopalWorkflow:
             "followup_intent_type": state.get("followup_intent_type", ""),
             "analytical_intent": state.get("analytical_intent", ""),
             "analytical_response": state.get("analytical_response", ""),
+            "query_plan": state.get("query_plan", {}),
             "followup": followup,
             "timings_ms": dict(state.get("timings_ms", {}) or {}),
         }

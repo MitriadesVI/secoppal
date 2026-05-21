@@ -85,6 +85,8 @@ def geo_mention_resolution(token: str) -> GeoMention:
     Checks GAZETTEER_CIUDADES first (cities), then DEPARTAMENTOS
     (departments). If neither matches, returns kind="unknown".
     """
+    if not isinstance(token, str):
+        return GeoMention(kind="unknown")
     key = normalize_text(token.strip())
     if not key:
         return GeoMention(kind="unknown")
