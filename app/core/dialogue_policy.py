@@ -71,8 +71,8 @@ _R2_PATTERNS = [
 
 # R3: discourse_filler tokens — NOT contractual object
 _COURTESY_TOKENS = frozenset({
-    "hola", "buenas", "buenos", "gracias", "por favor",
-    "porfa", "porfavor",
+    "hola", "buenas", "buenos", "gracias",
+    "porfa", "porfavor", "favor",
 })
 
 _FILLER_PREFIXES = frozenset({
@@ -246,6 +246,12 @@ def _detect_discourse_filler(
             for w in prefix.split():
                 if w not in tokens_to_scrub:
                     tokens_to_scrub.append(w)
+
+    # "por favor" → scrub both tokens even though individually innocent
+    if re.search(r"\bpor\s+favor\b", query_lower):
+        for w in ("por", "favor"):
+            if w in tokens and w not in tokens_to_scrub:
+                tokens_to_scrub.append(w)
 
     # "estoy interesado en" → scrub "estoy", "interesado"
     if re.search(r"\bestoy\s+interesad[oa]\b", query_lower):
