@@ -128,6 +128,12 @@ def resolve_entities(state: State, entity_resolver: EntityResolver) -> State:
             resolved["entidad_resolved"] = resolution.value
         elif resolution.like_value:
             resolved["entidad_like"] = resolution.like_value
+        elif resolution.clarification_needed:
+            needs_clarification = True
+            clarification_reason = (
+                resolution.clarification_hint
+                or f"No pude ubicar la entidad '{params['entidad']}'."
+            )
 
     dataset_id = SoQLBuilder.dataset_id_for(str(params.get("dataset")))
     return _with_timing(

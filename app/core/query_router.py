@@ -427,12 +427,15 @@ class QueryRouter:
         from app.core.entity_types import rewrite_entity
         entity_candidates = rewrite_entity(scrubbed)
         rewritten_entity = None
+        unresolved_rewrite = None
         if entity_candidates and self.entity_resolver:
             for canonical, consumed, rtype in entity_candidates:
                 match = self.entity_resolver.resolve_entidad(canonical)
-                if match and match.method != "fallback_like":
+                if match and match.value and match.method != "fallback_like":
                     rewritten_entity = (canonical, consumed, rtype, match)
                     break
+                if match and match.clarification_needed and unresolved_rewrite is None:
+                    unresolved_rewrite = (canonical, consumed, rtype, match)
             if rewritten_entity:
                 canonical, consumed, rtype, match = rewritten_entity
                 params["entidad"] = canonical
@@ -443,6 +446,17 @@ class QueryRouter:
                     "confidence": "high",
                     "like_value": None,
                     "metadata": {"rewritten_from": consumed},
+                }
+                consumed_spans.append(consumed)
+                scrubbed = scrubbed.replace(consumed, " ", 1)
+                scrubbed = re.sub(r"\s+", " ", scrubbed).strip()
+            elif unresolved_rewrite:
+                canonical, consumed, rtype, match = unresolved_rewrite
+                params["entidad"] = canonical
+                params["entidad_resolution"] = {
+                    **match.to_dict(),
+                    "method": f"rewrite_{rtype}_unresolved",
+                    "metadata": {**match.metadata, "rewritten_from": consumed},
                 }
                 consumed_spans.append(consumed)
                 scrubbed = scrubbed.replace(consumed, " ", 1)
