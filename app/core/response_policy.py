@@ -51,6 +51,7 @@ def build_advisor_response(
     needs_clarification = context.get("needs_clarification", False)
     clarification_reason = context.get("clarification_reason", "")
     query_error = context.get("query_error", "")
+    risk_flag_timeout = context.get("risk_flag_timeout", False)
     timeout_suggestions = context.get("timeout_suggestions", [])
     resolved = context.get("resolved_params", {})
     rows = context.get("rows", [])
@@ -61,6 +62,8 @@ def build_advisor_response(
 
     # ── Camino 0: Error de SECOP ─────────────────────────────────────
     if query_error:
+        if risk_flag_timeout:
+            return _build_timeout_response(resolved)
         return (
             "SECOP no respondio a tiempo. La consulta esta bien formada, "
             "pero el portal se demoro.\n\n"
@@ -117,6 +120,26 @@ def _build_ambiguous_response(clarification_reason: str, resolved: dict) -> str:
             lines.append(f"{i}. {p}")
         lines.append("")
         lines.append("Cual camino quieres?")
+    return "\n".join(lines)
+
+
+def _build_timeout_response(resolved: dict) -> str:
+    filters = _summarize_active_filters(resolved)
+    lines = [
+        "SECOP no respondio a tiempo. No puedo confirmar si hay o no resultados."
+    ]
+    if filters:
+        lines.append("")
+        lines.append("La busqueda combinaba:")
+        for item in filters:
+            lines.append(f"- {item}")
+    lines.extend([
+        "",
+        "Puedo intentar:",
+        "1. Reducir el alcance agregando mas filtros",
+        "2. Buscar en una ventana de fechas mas pequena",
+        "3. Reintentar en unos minutos",
+    ])
     return "\n".join(lines)
 
 

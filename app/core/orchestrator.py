@@ -69,6 +69,20 @@ def _count_and_query_parallel(
 
     return total, results, {"secop_count_ms": count_ms, "secop_query_ms": query_ms}
 
+
+def _is_timeout_exception(exc: BaseException) -> bool:
+    seen: set[int] = set()
+    current: BaseException | None = exc
+    while current and id(current) not in seen:
+        seen.add(id(current))
+        if isinstance(current, TimeoutError):
+            return True
+        message = str(current).lower()
+        if "timeout" in message or "timed out" in message:
+            return True
+        current = current.__cause__ or current.__context__
+    return False
+
 @action(reads=["user_query", "timings_ms"], writes=["parsed_params", "needs_llm", "route_reason", "timings_ms"])
 def parse_query(state: State, query_router: QueryRouter) -> State:
     start = time.perf_counter()
@@ -161,7 +175,7 @@ def build_query(state: State, soql_builder: SoQLBuilder) -> State:
     return _with_timing(state, "build_soql_ms", start, soql_query=soql)
 
 
-@action(reads=["resolved_params", "dataset_id", "soql_query", "user_query", "timings_ms"], writes=["results", "query_error", "total_count", "timeout_suggestions", "needs_clarification", "clarification_reason", "analytical_response", "analytical_intent", "route_reason", "timings_ms"])
+@action(reads=["resolved_params", "dataset_id", "soql_query", "user_query", "timings_ms"], writes=["results", "query_error", "total_count", "timeout_suggestions", "risk_flag_timeout", "needs_clarification", "clarification_reason", "analytical_response", "analytical_intent", "route_reason", "timings_ms"])
 def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBuilder) -> State:
     """Execute SECOP count + query with graceful error handling.
     On timeout for heavy ordering queries, retry without ordering_signal.
@@ -190,6 +204,7 @@ def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
             query_error="",
             total_count=int(analytics.get("total_count", 0) or 0),
             timeout_suggestions=[],
+            risk_flag_timeout=False,
             needs_clarification=bool(analytics.get("needs_clarification", False)),
             clarification_reason=analytics.get("clarification_reason", ""),
             analytical_response=analytics.get("response", ""),
@@ -209,6 +224,7 @@ def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
             "execute_total_ms",
             start_total,
             results=[], query_error="", total_count=0, timeout_suggestions=[],
+            risk_flag_timeout=False,
             needs_clarification=True,
             clarification_reason=(
                 "Necesito al menos un filtro de entidad, lugar, tema o contratista "
@@ -227,7 +243,8 @@ def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
         return _with_timings(
             state,
             {**secop_timings, "execute_total_ms": _elapsed_ms(start_total)},
-            results=results, query_error="", total_count=total, timeout_suggestions=[]
+            results=results, query_error="", total_count=total, timeout_suggestions=[],
+            risk_flag_timeout=False,
         )
     except Exception as exc:
         params = state.get("resolved_params", {})
@@ -252,12 +269,33 @@ def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
                         {**secop_timings, "execute_total_ms": _elapsed_ms(start_total)},
                         results=results, query_error="", total_count=total,
                         timeout_suggestions=timeout_suggestions,
+                        risk_flag_timeout=False,
                         soql_query=soql,
                         resolved_params=relaxed,
                     )
             except Exception:
                 pass
-        return _with_timing(state, "execute_total_ms", start_total, results=[], query_error=str(exc), total_count=0, timeout_suggestions=[])
+        if _is_timeout_exception(exc):
+            return _with_timing(
+                state,
+                "execute_total_ms",
+                start_total,
+                results=[],
+                query_error=str(exc),
+                total_count=None,
+                timeout_suggestions=[],
+                risk_flag_timeout=True,
+            )
+        return _with_timing(
+            state,
+            "execute_total_ms",
+            start_total,
+            results=[],
+            query_error=str(exc),
+            total_count=0,
+            timeout_suggestions=[],
+            risk_flag_timeout=False,
+        )
 
 
 def _relax_params(params: dict) -> tuple[dict | None, str]:
@@ -423,14 +461,14 @@ def suggester_action(state: State) -> State:
     suggestions = generate_suggestions(
         params=state.get("resolved_params", {}),
         universe_insights=state.get("universe_insights"),
-        total_count=state.get("total_count", 0),
+        total_count=state.get("total_count") or 0,
         rows=state.get("results", []),
         dataset_id=state.get("dataset_id", ""),
     )
     return _with_timing(state, "suggest_ms", start, suggestions=suggestions)
 
 
-@action(reads=["results", "dataset_id", "channel", "query_error", "resolved_params", "degraded", "degraded_hint", "total_count", "universe_insights", "suggestions", "timeout_suggestions", "analytical_response", "timings_ms"], writes=["formatted_response", "formatted_rows", "timings_ms"])
+@action(reads=["results", "dataset_id", "channel", "query_error", "risk_flag_timeout", "resolved_params", "degraded", "degraded_hint", "total_count", "universe_insights", "suggestions", "timeout_suggestions", "analytical_response", "timings_ms"], writes=["formatted_response", "formatted_rows", "timings_ms"])
 def format_response(state: State, formatter: Formatter) -> State:
     start = time.perf_counter()
     # Modo analítico: la respuesta ya viene formateada desde execute_query.
@@ -445,11 +483,17 @@ def format_response(state: State, formatter: Formatter) -> State:
             formatted_rows=[],
         )
     if state.get("query_error"):
+        message = "SECOP no respondio a tiempo. Intenta de nuevo en unos segundos."
+        if state.get("risk_flag_timeout"):
+            message = (
+                "SECOP no respondio a tiempo. "
+                "No puedo confirmar si hay o no resultados."
+            )
         return _with_timing(
             state,
             "format_ms",
             start,
-            formatted_response="SECOP no respondio a tiempo. Intenta de nuevo en unos segundos.",
+            formatted_response=message,
             formatted_rows=[],
         )
     params = state.get("resolved_params") or {}
@@ -856,6 +900,7 @@ class SecopalWorkflow:
                 universe_insights=None,
                 suggestions=[],
                 timeout_suggestions=[],
+                risk_flag_timeout=False,
                 intent_type="",
                 followup_intent_type="",
                 analytical_response="",
@@ -894,6 +939,8 @@ class SecopalWorkflow:
             "universe_insights": state.get("universe_insights"),
             "suggestions": state.get("suggestions", []),
             "timeout_suggestions": state.get("timeout_suggestions", []),
+            "risk_flag_timeout": state.get("risk_flag_timeout", False),
+            "query_error": state.get("query_error", ""),
             "intent_type": state.get("intent_type", ""),
             "followup_intent_type": state.get("followup_intent_type", ""),
             "analytical_intent": state.get("analytical_intent", ""),
@@ -914,6 +961,7 @@ class SecopalWorkflow:
             "dataset_id": state.get("dataset_id", ""),
             "channel": channel,
             "query_error": state.get("query_error", ""),
+            "risk_flag_timeout": state.get("risk_flag_timeout", False),
             "timeout_suggestions": state.get("timeout_suggestions", []),
             "needs_clarification": state.get("needs_clarification", False),
             "clarification_reason": state.get("clarification_reason", ""),
