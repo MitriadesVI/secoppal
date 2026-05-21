@@ -54,6 +54,12 @@ except ImportError as exc:
     )
     ROOT_TO_VARIANTS: dict[str, frozenset[str]] = {}
 
+try:
+    from app.core.intent_vocabulary import COMMON_TOKENS
+except ImportError as exc:
+    logger.warning("Could not import COMMON_TOKENS; object demotion disabled: %s", exc)
+    COMMON_TOKENS: frozenset[str] = frozenset()
+
 
 @dataclass(frozen=True, slots=True)
 class DatasetSpec:
@@ -204,14 +210,29 @@ class SoQLBuilder:
                 f"UPPER({spec.entity}) LIKE UPPER('%{self._escape(str(entidad_value))}%')"
             )
 
-        for term in params.get("objeto", []):
-            # str = required term (AND with other object entries)
-            # list[str] = OR group created by parser for "X o Y"
-            terms = term if isinstance(term, list) else [term]
-            term_conditions: list[str] = []
-            for sub_term in terms:
-                term_conditions.extend(self._object_term_conditions(spec, str(sub_term)))
-            where_clauses.append(f"({' OR '.join(term_conditions)})")
+        objeto_terms = params.get("objeto", []) or []
+        if self._should_demote_objeto(objeto_terms):
+            rare_terms, common_terms = self._split_objeto_by_rarity(objeto_terms)
+            for term in rare_terms:
+                where_clauses.append(
+                    f"({' OR '.join(self._object_term_conditions(spec, term))})"
+                )
+            if common_terms:
+                common_conditions: list[str] = []
+                for term in common_terms:
+                    common_conditions.extend(self._object_term_conditions(spec, term))
+                where_clauses.append(f"({' OR '.join(common_conditions)})")
+        else:
+            for term in objeto_terms:
+                # str = required term (AND with other object entries)
+                # list[str] = OR group created by parser for "X o Y"
+                terms = term if isinstance(term, list) else [term]
+                term_conditions: list[str] = []
+                for sub_term in terms:
+                    term_conditions.extend(
+                        self._object_term_conditions(spec, str(sub_term))
+                    )
+                where_clauses.append(f"({' OR '.join(term_conditions)})")
 
         objeto_or = params.get("objeto_or") or []
         if objeto_or:
@@ -323,6 +344,16 @@ class SoQLBuilder:
             f"WHERE {where} AND {d} IS NOT NULL "
             f"GROUP BY yr ORDER BY yr DESC"
         )
+
+    @staticmethod
+    def _should_demote_objeto(objeto: list) -> bool:
+        return len(objeto) >= 4 and all(isinstance(term, str) for term in objeto)
+
+    @staticmethod
+    def _split_objeto_by_rarity(objeto: list[str]) -> tuple[list[str], list[str]]:
+        rare_terms = [term for term in objeto if term.lower() not in COMMON_TOKENS]
+        common_terms = [term for term in objeto if term.lower() in COMMON_TOKENS]
+        return rare_terms, common_terms
 
     @staticmethod
     def _escape(value: str) -> str:

@@ -10,6 +10,13 @@ Deterministic regex-based. No LLM.
 
 import re
 
+COMMON_TOKENS = {
+    "servicios", "servicio", "general", "generales",
+    "mantenimiento", "suministro", "suministros",
+    "prestacion", "prestación", "apoyo", "gestion", "gestión",
+    "contratacion", "contratación", "adquisicion", "adquisición",
+}
+
 # Each entry: (compiled_regex, intent_config_dict)
 # intent_config can include:
 #   estado_family: str — force a specific estado family
