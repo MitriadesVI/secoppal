@@ -28,7 +28,7 @@ _SUBSTANTIAL_FILTER_KEYS: frozenset[str] = frozenset({
     "entidad_resolved", "entidad_like",
     "contratista",
     # topic
-    "objeto",
+    "objeto", "objeto_or",
     # estado
     "estado", "estado_de_apertura_del_proceso", "estado_del_procedimiento",
     "estado_contrato", "estado_contrato_adicional",
@@ -210,19 +210,14 @@ class SoQLBuilder:
             terms = term if isinstance(term, list) else [term]
             term_conditions: list[str] = []
             for sub_term in terms:
-                # Expand to all morphological variants (OR clauses).
-                # ROOT_TO_VARIANTS maps root→frozenset of all surface forms.
-                # If the term is not in the index, it's used as-is (single LIKE).
-                term_variants = ROOT_TO_VARIANTS.get(sub_term, frozenset([sub_term]))
-                for variant in sorted(term_variants):  # sorted for deterministic SoQL
-                    esc = self._escape(variant)
-                    if spec.description:
-                        term_conditions.append(
-                            f"{self._accent_fold_like(spec.object_name, esc)} OR "
-                            f"{self._accent_fold_like(spec.description, esc)}"
-                        )
-                    else:
-                        term_conditions.append(self._accent_fold_like(spec.object_name, esc))
+                term_conditions.extend(self._object_term_conditions(spec, str(sub_term)))
+            where_clauses.append(f"({' OR '.join(term_conditions)})")
+
+        objeto_or = params.get("objeto_or") or []
+        if objeto_or:
+            term_conditions = []
+            for term in objeto_or:
+                term_conditions.extend(self._object_term_conditions(spec, str(term)))
             where_clauses.append(f"({' OR '.join(term_conditions)})")
 
         if params.get("valor_min") is not None:
@@ -338,6 +333,22 @@ class SoQLBuilder:
         field_expr = cls._accent_fold_expr(f"UPPER({field})")
         pattern_expr = cls._accent_fold_expr(f"UPPER('%{escaped_pattern}%')")
         return f"{field_expr} LIKE {pattern_expr}"
+
+    def _object_term_conditions(self, spec: DatasetSpec, term: str) -> list[str]:
+        # Expand to all morphological variants (OR clauses).
+        # ROOT_TO_VARIANTS maps root to all surface forms; unknown terms are used as-is.
+        term_variants = ROOT_TO_VARIANTS.get(term, frozenset([term]))
+        conditions: list[str] = []
+        for variant in sorted(term_variants):  # sorted for deterministic SoQL
+            esc = self._escape(variant)
+            if spec.description:
+                conditions.append(
+                    f"{self._accent_fold_like(spec.object_name, esc)} OR "
+                    f"{self._accent_fold_like(spec.description, esc)}"
+                )
+            else:
+                conditions.append(self._accent_fold_like(spec.object_name, esc))
+        return conditions
 
     @staticmethod
     def _accent_fold_expr(expr: str) -> str:

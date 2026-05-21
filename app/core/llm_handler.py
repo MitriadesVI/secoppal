@@ -186,6 +186,26 @@ def _enforce_estado_policy(user_query: str, params: dict) -> dict:
     return cleaned
 
 
+def is_synonym_expansion(objeto: list[str]) -> bool:
+    """Detecta cuando el LLM devolvio dos frases alternativas del mismo tema."""
+    if len(objeto) != 2 or not all(
+        isinstance(term, str) and " " in term for term in objeto
+    ):
+        return False
+    tokens1 = set(_normalize(objeto[0]).split())
+    tokens2 = set(_normalize(objeto[1]).split())
+    return len(tokens1 & tokens2) >= 1
+
+
+def _promote_synonym_expansion(params: dict) -> dict:
+    cleaned = dict(params)
+    objeto = cleaned.get("objeto")
+    if isinstance(objeto, list) and is_synonym_expansion(objeto):
+        cleaned["objeto_or"] = objeto
+        cleaned.pop("objeto", None)
+    return cleaned
+
+
 class LLMHandler:
     """Uses DeepSeek's OpenAI-compatible API for structured fallback parsing."""
 
@@ -235,7 +255,9 @@ class LLMHandler:
             except json.JSONDecodeError:
                 continue
 
-            tool_args = _enforce_estado_policy(user_query, tool_args)
+            tool_args = _promote_synonym_expansion(
+                _enforce_estado_policy(user_query, tool_args)
+            )
             for key, value in tool_args.items():
                 if value in (None, "", []):
                     continue
