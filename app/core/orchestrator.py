@@ -24,7 +24,7 @@ from app.core.followup_engine import detect_and_merge, FollowupGuards
 from app.core.query_frame import frame_from_params
 from app.core.query_router import QueryRouter
 from app.core.query_plan import compute_query_plan
-from app.core.response_policy import build_advisor_response
+from app.core.response_policy import build_advisor_response, build_clarification_response
 from app.core.secop_client import SecopClient
 from app.core.soql_builder import SoQLBuilder, UnsafeGlobalQueryError
 from app.core.suggester import generate_suggestions, Suggestion
@@ -34,7 +34,7 @@ logger = logging.getLogger(__name__)
 
 # ── Sprint 2A rule activation — expanded per sub-block B4.x ──────────────
 # B4.1: {\"P3\", \"P9\"}  → B4.2: +P4  → B4.3: +P5+P6+P7  → B4.4: all  → B4.5: None
-ENABLED_RULES_SPRINT_2A: set[str] | None = {"P3", "P9", "P4", "P5", "P6", "P7"}
+ENABLED_RULES_SPRINT_2A: set[str] | None = {"P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9"}
 
 
 def _elapsed_ms(start: float) -> float:
@@ -118,9 +118,7 @@ def llm_parse(state: State, llm_handler: LLMHandler) -> State:
     writes=["query_plan", "parsed_params", "should_execute_decision"],
 )
 def plan_query(state: State) -> State:
-    """Compute QueryPlan and attach it to state as a JSON-serializable dict.
-    Stores should_execute_decision for conditional routing in Burr graph.
-    """
+    """Compute QueryPlan. If blocked, set formatted_response directly for clarify path."""
     params = state.get("parsed_params", {})
     raw = state.get("raw_query", "")
     context = {
@@ -138,14 +136,27 @@ def plan_query(state: State) -> State:
 
 @action(
     reads=["parsed_params", "timings_ms"],
-    writes=["resolved_params", "dataset_id", "needs_clarification", "clarification_reason", "timings_ms"],
+    writes=["resolved_params", "dataset_id", "needs_clarification", "clarification_reason", "formatted_response", "formatted_rows", "timings_ms"],
 )
 def resolve_entities(state: State, entity_resolver: EntityResolver) -> State:
     """
     Resolve entities to SECOP-compatible values.
     If gazetteer scan already resolved in parse_query, just pass through.
     Only does fuzzy/LIKE for entities the scan missed (e.g. from LLM).
+
+    B4.4: if plan_query blocked execution, pass through to clarify_query.
     """
+    # ── Plan guard: if QueryPlan blocked, route to clarification ───────
+    qp = state.get("query_plan", {}) or {}
+    if not qp.get("should_execute", True):
+        cr = build_clarification_response(qp)
+        return state.update(
+            formatted_response=cr["response"],
+            formatted_rows=[],
+            needs_clarification=True,
+            clarification_reason=qp.get("reason", ""),
+        )
+
     start = time.perf_counter()
     params = dict(state["parsed_params"])
     resolved = dict(params)
@@ -595,11 +606,17 @@ def apply_context(state: State) -> State:
 @action(reads=["clarification_reason", "timings_ms"], writes=["formatted_response", "formatted_rows", "timings_ms"])
 def clarify_query(state: State) -> State:
     start = time.perf_counter()
+    plan = state.get("query_plan", {}) or {}
+    if plan.get("clarification_question"):
+        cr = build_clarification_response(plan)
+        msg = cr["response"]
+    else:
+        msg = state["clarification_reason"] or "Necesito un poco mas de contexto para buscar en SECOP."
     return _with_timing(
         state,
         "clarify_ms",
         start,
-        formatted_response=state["clarification_reason"] or "Necesito un poco mas de contexto para buscar en SECOP.",
+        formatted_response=msg,
         formatted_rows=[],
     )
 
@@ -898,7 +915,6 @@ class SecopalWorkflow:
                 ("apply_context", "llm_parse", expr("not needs_clarification and needs_llm")),
                 ("apply_context", "plan_query", expr("not needs_clarification and not needs_llm")),
                 ("llm_parse", "plan_query", default),
-                ("plan_query", "clarify_query", expr("not should_execute_decision")),
                 ("plan_query", "resolve_entities", default),
                 ("resolve_entities", "clarify_query", expr("needs_clarification")),
                 ("resolve_entities", "build_query", expr("not needs_clarification")),
@@ -1006,7 +1022,15 @@ class SecopalWorkflow:
             "degraded_hint": state.get("degraded_hint", ""),
             "analytical_response": state.get("analytical_response", ""),
         }, narrator=self.narrator)
-        result["response"] = advisor_response
+        qp = result.get("query_plan", {}) or {}
+        if qp.get("should_execute") is False:
+            result["response"] = state.get("formatted_response", "") or (
+                qp.get("clarification_question") or "Necesito más información."
+            )
+            result["needs_clarification"] = True
+        else:
+            result["response"] = advisor_response
+        result["should_execute_decision"] = state.get("should_execute_decision")
         result["timings_ms"]["advisor_response_ms"] = _elapsed_ms(advisor_start)
         result["timings_ms"]["total_ms"] = _elapsed_ms(run_start)
 
