@@ -41,14 +41,15 @@ def test_query_plan_is_json_serializable():
 
 
 def test_b3_does_not_modify_parsed_params():
-    """B3 is no-op (enabled_rules=set()): P3 would move 'ipiales' to
-    ciudad if active, but in B3 no rules are active."""
+    """B3 was no-op. B4.1 activates P3 → 'ipiales' should now be extracted.
+    This test validates the activation worked E2E."""
     wf = _wf()
-    result = wf.run_query("diseño ipiales", chat_id="test_b3_noop")
-    assert "query_plan" in result
-    params = result.get("parsed_params", {})
-    objeto = [t.lower() for t in params.get("objeto", [])]
-    assert "ipiales" in objeto, "B3 must not have applied P3 yet"
+    result = wf.run_query("diseño ipiales", chat_id="test_b41_active")
+    plan = result.get("query_plan", {})
+    # P3 is now active → ciudad must be extracted
+    assert plan["params"].get("ciudad") == "Ipiales", (
+        "B4.1 should extract Ipiales from objeto into ciudad"
+    )
 
 
 def test_corpus_v1_unaffected():

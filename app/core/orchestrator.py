@@ -32,6 +32,10 @@ from app.core.suggester import generate_suggestions, Suggestion
 
 logger = logging.getLogger(__name__)
 
+# ── Sprint 2A rule activation — expanded per sub-block B4.x ──────────────
+# B4.1: {\"P3\", \"P9\"}  → B4.2: +P4  → B4.3: +P5+P6+P7  → B4.4: all  → B4.5: None
+ENABLED_RULES_SPRINT_2A: set[str] | None = {"P3", "P9"}
+
 
 def _elapsed_ms(start: float) -> float:
     return round((time.perf_counter() - start) * 1000, 2)
@@ -111,13 +115,11 @@ def llm_parse(state: State, llm_handler: LLMHandler) -> State:
 
 @action(
     reads=["parsed_params", "raw_query", "prev_params", "turn_index"],
-    writes=["query_plan", "parsed_params"],
+    writes=["query_plan", "parsed_params", "should_execute_decision"],
 )
 def plan_query(state: State) -> State:
     """Compute QueryPlan and attach it to state as a JSON-serializable dict.
-
-    B3: enabled_rules=set() means NO rules are active — pure pass-through.
-    B4 sub-blocks will activate rules progressively by changing this set.
+    Stores should_execute_decision for conditional routing in Burr graph.
     """
     params = state.get("parsed_params", {})
     raw = state.get("raw_query", "")
@@ -126,11 +128,12 @@ def plan_query(state: State) -> State:
         "turn_index": state.get("turn_index", 0),
         "today": date.today(),
     }
-    # B3: noop — B4.x will change this set
-    plan = compute_query_plan(params, raw, context, enabled_rules=set())
-    # CRITICAL: store as dict (asdict), never raw dataclass.
-    # conversation_store persists state as JSONL; a dataclass breaks json.dumps.
-    return state.update(query_plan=asdict(plan))
+    plan = compute_query_plan(params, raw, context, enabled_rules=ENABLED_RULES_SPRINT_2A)
+    return state.update(
+        query_plan=asdict(plan),
+        parsed_params=plan.params,
+        should_execute_decision=plan.should_execute,
+    )
 
 
 @action(
@@ -895,6 +898,7 @@ class SecopalWorkflow:
                 ("apply_context", "llm_parse", expr("not needs_clarification and needs_llm")),
                 ("apply_context", "plan_query", expr("not needs_clarification and not needs_llm")),
                 ("llm_parse", "plan_query", default),
+                ("plan_query", "clarify_query", expr("not should_execute_decision")),
                 ("plan_query", "resolve_entities", default),
                 ("resolve_entities", "clarify_query", expr("needs_clarification")),
                 ("resolve_entities", "build_query", expr("not needs_clarification")),
@@ -920,6 +924,7 @@ class SecopalWorkflow:
                 route_reason="",
                 query_error="",
                 query_plan={},
+                should_execute_decision=True,
                 needs_llm=False,
                 needs_clarification=False,
                 clarification_reason="",
