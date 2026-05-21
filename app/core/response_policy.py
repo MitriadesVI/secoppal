@@ -243,7 +243,11 @@ def _build_clear_response(
     shown = len(rows)
     ordering = _build_ordering_label(resolved)
     if total_count > shown:
-        sections.append(f"Encontre {total_count:,} resultados. Te muestro los {shown} {ordering}:\n")
+        remaining = total_count - shown
+        sections.append(
+            f"Encontre {total_count:,} resultados. "
+            f"Te muestro los {shown} {ordering}; hay {remaining:,} mas.\n"
+        )
     else:
         sections.append(f"Encontre {shown} resultados {ordering}:\n")
 
@@ -263,6 +267,11 @@ def _build_clear_response(
     if suggestions:
         sug_lines = _format_suggestions_list(suggestions)
         sections.append(sug_lines)
+    elif total_count > shown:
+        sections.append(
+            "Para reducir resultados, agrega filtros: año, modalidad, "
+            "rango de valor, o entidad especifica."
+        )
 
     return "\n".join(sections)
 
