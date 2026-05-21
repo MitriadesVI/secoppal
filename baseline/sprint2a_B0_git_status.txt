@@ -1,0 +1,9 @@
+ M docs/SPRINT_2A_IMPLEMENTATION_PLAN.md
+?? baseline/sprint2a_B0_commit.txt
+?? baseline/sprint2a_B0_corpus.txt
+?? baseline/sprint2a_B0_git_status.txt
+?? baseline/sprint2a_B0_lint.txt
+?? baseline/sprint2a_B0_pytest.txt
+?? data/conversations/torture-f1.jsonl
+?? data/conversations/torture-f4.jsonl
+?? data/conversations/torture-g1.jsonl
