@@ -218,11 +218,11 @@ class SoQLBuilder:
                     esc = self._escape(variant)
                     if spec.description:
                         term_conditions.append(
-                            f"UPPER({spec.object_name}) LIKE UPPER('%{esc}%') OR "
-                            f"UPPER({spec.description}) LIKE UPPER('%{esc}%')"
+                            f"{self._accent_fold_like(spec.object_name, esc)} OR "
+                            f"{self._accent_fold_like(spec.description, esc)}"
                         )
                     else:
-                        term_conditions.append(f"UPPER({spec.object_name}) LIKE UPPER('%{esc}%')")
+                        term_conditions.append(self._accent_fold_like(spec.object_name, esc))
             where_clauses.append(f"({' OR '.join(term_conditions)})")
 
         if params.get("valor_min") is not None:
@@ -332,6 +332,16 @@ class SoQLBuilder:
     @staticmethod
     def _escape(value: str) -> str:
         return value.replace("'", "''")
+
+    @classmethod
+    def _accent_fold_like(cls, field: str, escaped_pattern: str) -> str:
+        field_expr = cls._accent_fold_expr(f"UPPER({field})")
+        pattern_expr = cls._accent_fold_expr(f"UPPER('%{escaped_pattern}%')")
+        return f"{field_expr} LIKE {pattern_expr}"
+
+    @staticmethod
+    def _accent_fold_expr(expr: str) -> str:
+        return f"unaccent({expr})"
 
     @staticmethod
     def _add_estado_clause(where_clauses: list[str], field: str, value) -> None:
