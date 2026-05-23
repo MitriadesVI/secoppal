@@ -3,8 +3,10 @@
 **Fecha:** 2026-05-21
 **Audiencia:** ejecutor (Codex) + revisor (humano + Claude)
 **Alcance:** capa mínima `QueryPlan` + `DialoguePolicy` centralizando decisiones pre-ejecución. Los 5 bugs HIGH del backlog entran como **pruebas de aceptación de la capa nueva**, no como parches en `query_router.py`.
-**Estimación total:** 17-20 horas de implementación + tests.
+**Estimación total:** 20-22 horas de implementación + tests.
 **Pre-requisitos:** Sprint 1A cerrado (PR mergeado a main), corpus v1 88/88 PASS, suite 612 passed / 3 xfailed.
+
+**Bitácora de revisión (2026-05-21):** se aplicaron 8 ajustes tras revisión externa — corpus mínimo B1.5 antes de B2 (principio corpus→capa), archivos permitidos B1 corregidos, `deepcopy` y `enabled_rules` en `compute_query_plan`, nueva regla **P9 bare_city_no_entity_promotion** (cubre CITY-TO-ENTITY-AUTOPROMOTION sin tocar `entity_resolver.resolve_entity`), serialización JSON del plan en B3, activación granular por sub-bloque en B4, `context["today"]` inyectable, y PARTIAL vs CLOSED en B6 condicionado a umbrales de corpus.
 
 ---
 
@@ -20,7 +22,7 @@ Cada bloque (B0..B6) es **atómico, verificable y reversible**:
 - **Criterios de aceptación:** condiciones medibles para cerrar el bloque.
 - **Verificación pre/post:** comandos exactos para confirmar no-regresión.
 
-**Orden de ejecución no negociable:** B0 → B1 → B2 → B3 → B4 → B5 → B6. Cada bloque debe quedar en verde antes de empezar el siguiente.
+**Orden de ejecución no negociable:** B0 → B1 → **B1.5** → B2 → B3 → B4 → B5 → B6. Cada bloque debe quedar en verde antes de empezar el siguiente.
 
 ---
 
@@ -204,7 +206,9 @@ Crear una capa de clasificación que toma `raw_query` + `params` y produce **se�
 ### Archivos a tocar
 
 - `app/core/dialogue_policy.py` (crear)
+- `app/core/entity_resolver.py` (extender: agregar `geo_mention_resolution`)
 - `tests/test_dialogue_policy.py` (crear)
+- `tests/test_geo_mention_resolution.py` (crear)
 
 ### Especificación funcional
 
@@ -320,6 +324,31 @@ def geo_mention_resolution(token: str) -> GeoMention:
 ```
 
 **Implementación mínima:** lookup contra `GAZETTEER_CIUDADES` y `GAZETTEER_DEPARTAMENTOS` ya existentes. NO se agrega catálogo nuevo. NO se hace fuzzy. NO se incluyen entidades multi-regional.
+
+**Tests específicos** (`tests/test_geo_mention_resolution.py`):
+
+```python
+from app.core.entity_resolver import geo_mention_resolution
+
+def test_geo_mention_city_known():
+    res = geo_mention_resolution("ipiales")
+    assert res.kind == "city"
+    assert res.canonical == "Ipiales"
+    assert res.confidence == "high"
+
+def test_geo_mention_department_known():
+    res = geo_mention_resolution("bolívar")
+    assert res.kind == "department"
+
+def test_geo_mention_unknown_returns_unknown():
+    res = geo_mention_resolution("xyzzyfoobar")
+    assert res.kind == "unknown"
+    assert res.canonical is None
+
+def test_geo_mention_case_insensitive():
+    assert geo_mention_resolution("IPIALES").canonical == "Ipiales"
+    assert geo_mention_resolution("Ipiales").canonical == "Ipiales"
+```
 
 ### Tests (mínimos)
 
@@ -440,6 +469,154 @@ interface for QueryPlan and future ENTITY-MULTI-REGIONAL work.
 
 ---
 
+## B1.5 — Corpus mínimo antes de QueryPlan (principio corpus→capa)
+
+**Tiempo:** 1.5 horas
+**Pre-requisitos:** B1 cerrado.
+
+### Objetivo
+
+Dejar escritos los casos del corpus **antes** de implementar `QueryPlan` (B2). Esto cumple el principio del plan sistémico: *corpus → capa, no capa → corpus*. Sin este bloque, B2 nace contra intuición; con este bloque, B2 nace contra evidencia escrita.
+
+No se construye el runner completo todavía — eso es B5. Aquí solo dejamos los casos en un YAML que los tests de B2/B4 puedan leer manualmente para validar contra contrato escrito.
+
+### Archivos a tocar
+
+- `tests/fixtures/dialogue_policy_corpus_min.yaml` (crear)
+- `tests/test_dialogue_policy_corpus_min.py` (crear)
+
+### Composición del corpus mínimo
+
+**30 casos = 10 reales + 10 sintéticos + 10 negativos.**
+
+**10 reales del backlog** (literales del CORPUS_BACKLOG.md):
+
+| ID | Query | Bug del backlog |
+|---|---|---|
+| CITY-ASOBJ-001 | "diseño ipiales" | CITY-MENTION-AS-OBJECT-001 |
+| CITY-ASOBJ-002 | "manejo de residuos sólidos olaya" | CITY-MENTION-AS-OBJECT-001 |
+| CITY-ASOBJ-003 | "silvopastoriles yarumal" | CITY-MENTION-AS-OBJECT-001 |
+| CITY-NOENT-001 | "casas lúdicas barranquilla" | CITY-TO-ENTITY-AUTOPROMOTION-001 |
+| CITY-NOENT-002 | "aires acondicionados barranquilla" | CITY-TO-ENTITY-AUTOPROMOTION-001 |
+| OPP-IMPL-001 | "algún proceso para aseo en putumayo" | OPP-INTENT-001 |
+| OPP-IMPL-002 | "alguna oferta del sena en huila" | OPP-INTENT-001 |
+| TEMPORAL-001 | "aseo putumayo en mayo" | TEMPORAL-MONTH-PARSING-001 |
+| NUM-SCRUB-001 | "transporte escolar huila no supere 25 millones" | NUMBER-CONTEXT-PHRASE-001 |
+| COURTESY-001 | "hola estoy interesado en casas lúdicas en barranquilla" | COURTESY-FILLER-001 |
+
+**10 sintéticos derivados** (variaciones razonables):
+
+| ID | Query | Categoría |
+|---|---|---|
+| CITY-ASOBJ-SYN-001 | "obras palermo" | city_as_scope |
+| CITY-ASOBJ-SYN-002 | "consultoría doncello" | city_as_scope |
+| CITY-NOENT-SYN-001 | "casa lúdica medellín" | city_not_entity |
+| OPP-IMPL-SYN-001 | "hay algún proceso de residuos en antioquia" | implicit_opportunity |
+| OPP-IMPL-SYN-002 | "dónde me puedo presentar para transporte escolar" | implicit_opportunity |
+| TEMPORAL-SYN-001 | "procesos en junio" | temporal_month |
+| TEMPORAL-SYN-002 | "contratos este mes" | temporal_month |
+| NUM-SCRUB-SYN-001 | "obras que no excedan 50 millones" | number_phrase_scrub |
+| COURTESY-SYN-001 | "buenas tardes quisiera ver procesos de aseo" | discourse_filler |
+| NON-QUERY-SYN-001 | "nada de eso sirve, no funcionó" (tras query previa) | non_query_followup |
+
+**10 negativos** (queries legítimas que NO deben activar reglas):
+
+| ID | Query | Por qué NO debe disparar |
+|---|---|---|
+| NEG-001 | "contratos de mantenimiento en bogotá" | scope completo, no implicit_opportunity |
+| NEG-002 | "consultoría cartagena" | consultoría es topic legítimo, no filler |
+| NEG-003 | "transporte escolar 2026 bolívar" | año explícito, no temporal_month |
+| NEG-004 | "procesos del 2025" | año pasado explícito, no opportunity |
+| NEG-005 | "contratos de la alcaldía de barranquilla" | marcador explícito, no purgar entidad |
+| NEG-006 | "obras del distrito de bogotá" | marcador explícito |
+| NEG-007 | "gobernación del atlántico contratos firmados" | marcador explícito |
+| NEG-008 | "filtra por departamento huila" | comando completo, no command_incomplete |
+| NEG-009 | "muéstrame más" (paginación) | followup conocido, no non_query_followup |
+| NEG-010 | "contratos de mantenimiento entre 10 y 50 millones" | rango válido, no invalid_range |
+
+### Estructura YAML
+
+```yaml
+# tests/fixtures/dialogue_policy_corpus_min.yaml
+metadata:
+  version: "0.1-min"
+  created: "2026-05-21"
+  total_cases: 30
+  composition: { real: 10, synthetic: 10, negative: 10 }
+  purpose: "Contrato de diseño para B2/B4. Runner completo en B5."
+
+cases:
+  - id: CITY-ASOBJ-001
+    query: "diseño ipiales"
+    category: city_as_scope
+    severity: HIGH
+    source: "CORPUS_BACKLOG.md CITY-MENTION-AS-OBJECT-001"
+    should_execute: true
+    expected_signals: ["city_mention_as_topic"]
+    expected_params:
+      ciudad: "Ipiales"
+      objeto_contains: ["diseño"]
+      objeto_not_contains: ["ipiales"]
+  # ... 29 casos más
+```
+
+### Tests
+
+```python
+# tests/test_dialogue_policy_corpus_min.py
+import yaml
+from pathlib import Path
+
+CORPUS = yaml.safe_load(Path("tests/fixtures/dialogue_policy_corpus_min.yaml").read_text())
+
+def test_corpus_has_30_cases():
+    assert CORPUS["metadata"]["total_cases"] == 30
+    assert len(CORPUS["cases"]) == 30
+
+def test_corpus_composition():
+    cats = {c["category"] for c in CORPUS["cases"]}
+    assert "city_as_scope" in cats
+    assert "city_not_entity" in cats
+    assert "implicit_opportunity" in cats
+    assert "temporal_month" in cats
+    assert "number_phrase_scrub" in cats
+    assert "discourse_filler" in cats
+
+def test_corpus_negatives_present():
+    negatives = [c for c in CORPUS["cases"] if c["id"].startswith("NEG-")]
+    assert len(negatives) == 10
+
+def test_corpus_real_cases_cite_backlog():
+    reals = [c for c in CORPUS["cases"] if "source" in c and "CORPUS_BACKLOG" in c.get("source", "")]
+    assert len(reals) == 10
+```
+
+### Reglas locales
+
+- Sin runner ejecutable. Solo el YAML + tests de estructura.
+- El YAML es el **contrato de diseño** que B2 (compute_query_plan) y B4 (activación de reglas) deben respetar.
+- Si en B2/B4 un caso del corpus mínimo no se puede satisfacer con la spec actual, parar y consultar — no cambiar el corpus para hacer pasar la implementación.
+
+### Criterios de aceptación
+
+- YAML con 30 casos creados.
+- Tests de estructura verdes.
+- Corpus v1: 88/88 PASS (sin tocar core).
+
+### Commit
+
+```
+feat(sprint2a): B1.5 — minimal dialogue corpus before QueryPlan (corpus→layer)
+
+30 cases: 10 real from CORPUS_BACKLOG.md + 10 synthetic + 10 negative.
+No runner yet — that's B5. This is the design contract for B2/B4.
+
+Honors the sistémico principle: corpus precedes layer, not the
+other way around.
+```
+
+---
+
 ## B2 — `query_plan.py` mínimo
 
 **Tiempo:** 3 horas
@@ -460,13 +637,18 @@ Crear el dataclass `QueryPlan` y la función `compute_query_plan()` que toma `pa
 ```python
 # app/core/query_plan.py
 
+from copy import deepcopy
 from dataclasses import dataclass, field
+from datetime import date
 from typing import Literal
+
+# Rule IDs as canonical strings (used by enabled_rules)
+ALL_RULES = {"P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9"}
 
 @dataclass
 class QueryPlan:
     should_execute: bool
-    params: dict                              # params (posiblemente modificados por las reglas)
+    params: dict                              # params modificados (copia, nunca el input)
     missing_slots: list[str] = field(default_factory=list)
     risk_flags: list[str] = field(default_factory=list)
     clarification_question: str | None = None
@@ -477,16 +659,39 @@ def compute_query_plan(
     params: dict,
     raw_query: str,
     context: dict | None = None,
+    enabled_rules: set[str] | None = None,
 ) -> QueryPlan:
     """
-    Pure function. No side effects. Consumes dialogue_policy.classify() signals
-    and combines them with params to decide execution.
+    Pure function. No side effects. No mutation of input params.
+
+    Args:
+        params: parsed params from query_router. NOT mutated.
+        raw_query: original user text.
+        context: optional dict with keys:
+            - prev_params: dict | None
+            - prev_intent_type: str | None
+            - turn_index: int
+            - today: date | None  (defaults to date.today(); inject in tests)
+        enabled_rules: subset of ALL_RULES to apply. None = all rules.
+                       Used by B4 sub-blocks to activate rules progressively.
+
+    Returns:
+        QueryPlan with deep-copied params (callers can mutate without affecting
+        the original) and the rule trace in reason.
     """
+    working_params = deepcopy(params)
+    rules_to_apply = enabled_rules if enabled_rules is not None else ALL_RULES
+    today = (context or {}).get("today") or date.today()
+    # ... apply rules in order P1, P2, P3, P9, P4, P5, P6, P7, P8 ...
 ```
 
 #### Reglas de derivación (en orden estricto)
 
-Estas reglas se evalúan en orden. La primera que dispara `should_execute=False` corta la evaluación.
+Las 9 reglas se evalúan **en este orden**: P1 → P2 → P3 → **P9** → P4 → P5 → P6 → P7 → P8.
+
+Cada regla solo se aplica si su ID está en `enabled_rules`. La primera regla que dispara `should_execute=False` corta la evaluación. Todas las modificaciones operan sobre `working_params` (deepcopy del input).
+
+**Por qué P9 va entre P3 y P4:** primero corregimos ciudad/objeto (P3); luego limpiamos entidad autopromocionada (P9); recién después promovemos intención de oportunidad (P4). Si P9 fuera después de P4, podría quedar `intent_type=opportunity_search` con entidad contaminada.
 
 **Regla P1 — command_incomplete:**
 Si hay señal `command_incomplete`:
@@ -509,6 +714,45 @@ Si hay señal `city_mention_as_topic`:
 - Si `params.objeto` queda vacío tras mover el token Y no hay otros tokens significativos: `should_execute=False`, `missing_slots=["topic"]`, `clarification_question="Detecté '<city>' como ciudad. ¿Qué tema/rubro buscas?"`, `reason="city_extracted_topic_missing"`.
 - Si `params.objeto` queda con tokens: continuar a P4 con params modificados.
 
+**Regla P9 — bare_city_no_entity_promotion (cubre CITY-TO-ENTITY-AUTOPROMOTION-001):**
+
+Si **todas** estas condiciones se cumplen sobre `working_params`:
+- `working_params.ciudad` está poblado.
+- `working_params.entidad` o `working_params.entidad_resolved` está poblado (autopromoción ya ocurrió aguas arriba).
+- `raw_query` NO contiene ningún marcador explícito de entidad.
+
+Entonces:
+- Eliminar `working_params.entidad`.
+- Eliminar `working_params.entidad_resolved`.
+- Eliminar `working_params.entidad_resolution` si existe.
+- `risk_flags.append("entity_autopromotion_purged")`.
+- Continuar (no bloquear ejecución).
+
+Catálogo de marcadores (matching case-insensitive sobre `raw_query`):
+
+```python
+ENTITY_MARKERS = (
+    "alcaldía de", "alcaldia de",
+    "gobernación de", "gobernacion de",
+    "distrito de",
+    "municipio de",
+    "secretaría de", "secretaria de",
+    "entidad ",                  # con espacio para evitar matchear "entidades"
+)
+```
+
+**Casos esperados:**
+
+| Query | ciudad | entidad_resolved | risk_flag |
+|---|---|---|---|
+| "casas lúdicas barranquilla" | Barranquilla | None | entity_autopromotion_purged |
+| "aires acondicionados barranquilla" | Barranquilla | None | entity_autopromotion_purged |
+| "contratos de la alcaldía de barranquilla" | Barranquilla | (preservado) | — |
+| "procesos del distrito de bogotá" | Bogotá | (preservado) | — |
+| "gobernación del atlántico contratos" | — | (preservado) | — |
+
+**Importante:** P9 NO toca `entity_resolver.resolve_entity()`. Es la capa `QueryPlan` la que purga el resultado de la autopromoción aguas arriba. Esto mantiene `entity_resolver` intacto para llamadas legítimas con marcador explícito.
+
 **Regla P4 — implicit_opportunity:**
 Si hay señal `implicit_opportunity` y `params.intent_type` está vacío o es `"history_search"`:
 - `params.intent_type="opportunity_search"`
@@ -519,6 +763,13 @@ Si hay señal `implicit_opportunity` y `params.intent_type` está vacío o es `"
 Si hay señal `temporal_month`:
 - Si `params.fecha_desde`/`params.fecha_hasta` ya están poblados: NO sobrescribir, `risk_flags.append("temporal_conflict")`.
 - Si están vacíos: poblar `fecha_desde=YYYY-MM-01`, `fecha_hasta=YYYY-MM-último_día` según payload.
+
+**Fecha de referencia inyectable:** P5 (y `dialogue_policy.classify` para R4) usa `today = context.get("today") or date.today()`. En producción, `date.today()` es la fecha local. En tests, **siempre inyectar** `context={"today": date(2026, 5, 21)}` para evitar flakiness por calendario o zona horaria.
+
+```python
+# Patrón en compute_query_plan y en dialogue_policy.classify:
+today = (context or {}).get("today") or date.today()
+```
 
 **Regla P6 — number_phrase_scrub:**
 Si hay señal `number_phrase_scrub`:
@@ -581,16 +832,58 @@ def test_implicit_opportunity_promotes_intent():
     assert plan.params.get("intent_type") == "opportunity_search"
     assert plan.params.get("estado_family") == "oferta_abierta"
 
-# P5 — caso real Putumayo
-def test_temporal_month_resolves_to_current_year():
-    from datetime import datetime
+# P5 — caso real Putumayo (con fecha inyectada para evitar flakiness)
+def test_temporal_month_uses_injected_today():
+    from datetime import date
     plan = compute_query_plan(
         {"objeto": ["aseo"], "departamento_resolved": "Putumayo", "dataset": "procesos"},
         "aseo putumayo en mayo",
-        None,
+        context={"today": date(2026, 5, 21)},
     )
-    current_year = datetime.now().year
-    assert plan.params.get("fecha_desde") == f"{current_year}-05-01"
+    assert plan.params.get("fecha_desde") == "2026-05-01"
+    assert plan.params.get("fecha_hasta") == "2026-05-31"
+
+def test_temporal_month_pasado():
+    from datetime import date
+    plan = compute_query_plan(
+        {"objeto": ["aseo"], "dataset": "procesos"},
+        "aseo el mes pasado",
+        context={"today": date(2026, 5, 21)},
+    )
+    assert plan.params.get("fecha_desde") == "2026-04-01"
+
+# P9 — casos reales Barranquilla
+@pytest.mark.parametrize("query,initial_entity", [
+    ("casas lúdicas barranquilla", "ALCALDÍA DE BARRANQUILLA"),
+    ("aires acondicionados barranquilla", "DISTRITO DE BARRANQUILLA"),
+])
+def test_p9_purges_autopromoted_entity(query, initial_entity):
+    params = {
+        "objeto": query.split()[:-1],
+        "ciudad": "Barranquilla",
+        "entidad_resolved": initial_entity,
+    }
+    plan = compute_query_plan(params, query, None)
+    assert plan.params.get("entidad_resolved") is None
+    assert "entity_autopromotion_purged" in plan.risk_flags
+
+@pytest.mark.parametrize("query", [
+    "contratos de la alcaldía de barranquilla",
+    "procesos del distrito de bogotá",
+    "gobernación del atlántico contratos",
+    "municipio de medellín obras",
+    "secretaría de salud bogotá",
+])
+def test_p9_preserves_entity_when_marker_present(query):
+    params = {
+        "objeto": ["contratos"],
+        "ciudad": "Barranquilla",
+        "entidad_resolved": "ALCALDÍA DE BARRANQUILLA",
+    }
+    plan = compute_query_plan(params, query, None)
+    # Si hay marcador explícito, NO purgar
+    assert plan.params.get("entidad_resolved") == "ALCALDÍA DE BARRANQUILLA"
+    assert "entity_autopromotion_purged" not in plan.risk_flags
 
 # P6 — caso real Palermo (extiende Sprint 1A B1)
 def test_number_phrase_scrub_removes_verb_from_objeto():
@@ -642,6 +935,42 @@ def test_compute_is_pure():
     p2 = compute_query_plan(dict(params), "mantenimiento bolívar", None)
     assert p1.should_execute == p2.should_execute
     assert p1.params == p2.params
+
+# No-mutación del input (Riesgo 4 de la revisión)
+def test_compute_does_not_mutate_input_params():
+    from copy import deepcopy
+    params = {"objeto": ["diseño", "ipiales"], "dataset": "procesos"}
+    original = deepcopy(params)
+    compute_query_plan(params, "diseño ipiales", None)
+    assert params == original, "compute_query_plan must not mutate input params"
+
+def test_compute_does_not_mutate_input_context():
+    from copy import deepcopy
+    from datetime import date
+    context = {"today": date(2026, 5, 21), "turn_index": 1}
+    original = deepcopy(context)
+    compute_query_plan({"objeto": ["aseo"]}, "aseo en mayo", context)
+    assert context == original
+
+# enabled_rules — granularidad por sub-bloque
+def test_enabled_rules_p3_only_activates_city_extraction():
+    params = {"objeto": ["diseño", "ipiales"], "dataset": "procesos"}
+    plan = compute_query_plan(params, "diseño ipiales", None, enabled_rules={"P3"})
+    assert plan.params.get("ciudad") == "Ipiales"
+    # P4 NO está activa → no debe promoverse intent_type
+    assert plan.params.get("intent_type") != "opportunity_search"
+
+def test_enabled_rules_none_means_all():
+    params = {"objeto": ["mantenimiento"], "dataset": "procesos"}
+    plan = compute_query_plan(params, "algún proceso para mantenimiento", None, enabled_rules=None)
+    assert plan.params.get("intent_type") == "opportunity_search"
+
+def test_enabled_rules_empty_set_means_noop():
+    params = {"objeto": ["diseño", "ipiales"], "dataset": "procesos"}
+    plan = compute_query_plan(params, "diseño ipiales", None, enabled_rules=set())
+    # Ninguna regla activa → params casi idénticos al input
+    assert "ipiales" in [t.lower() for t in plan.params.get("objeto", [])]
+    assert plan.params.get("ciudad") in (None, "")
 ```
 
 ```python
@@ -683,9 +1012,18 @@ def test_dialogue_policy_under_400_loc():
 feat(sprint2a): B2 — add query_plan.py consuming DialoguePolicy signals
 
 QueryPlan dataclass + compute_query_plan() pure function with
-8 derivation rules (P1..P8). Not yet wired into orchestrator.
+9 derivation rules (P1..P9), evaluation order:
+  P1 → P2 → P3 → P9 → P4 → P5 → P6 → P7 → P8
+
+Key safety properties:
+- deepcopy of input params (no mutation guarantee)
+- enabled_rules: set[str] | None for granular activation in B4 sub-blocks
+- context["today"]: date | None inyectable (no calendar/timezone flakiness)
+- P9 (bare_city_no_entity_promotion) covers CITY-TO-ENTITY-AUTOPROMOTION
+  without modifying entity_resolver.resolve_entity
 
 Adds LoC guard tests (G8): query_plan<300, dialogue_policy<400.
+Not yet wired into orchestrator (B3).
 ```
 
 ---
@@ -710,10 +1048,14 @@ Este commit es la prueba de que la inserción estructural no rompe el corpus v1 
 
 En `orchestrator.py`:
 
-1. Importar `compute_query_plan` de `query_plan.py`.
+1. Importar `compute_query_plan` y `asdict` de `query_plan.py` / `dataclasses`.
 2. Crear el action Burr `plan_query`:
 
 ```python
+from dataclasses import asdict
+from datetime import date
+from app.core.query_plan import compute_query_plan
+
 @action(reads=["parsed_params", "raw_query", "prev_params", "turn_index"], writes=["query_plan", "parsed_params"])
 def plan_query(state):
     params = state.get("parsed_params", {})
@@ -721,10 +1063,13 @@ def plan_query(state):
     context = {
         "prev_params": state.get("prev_params"),
         "turn_index": state.get("turn_index", 0),
+        "today": date.today(),
     }
-    plan = compute_query_plan(params, raw, context)
-    # FASE B3: no-op pasante — guardamos el plan pero NO modificamos parsed_params.
-    return state.update(query_plan=plan)
+    # B3: enabled_rules=set() → noop pasante. B4.x cambiará este set.
+    plan = compute_query_plan(params, raw, context, enabled_rules=set())
+    # CRÍTICO: guardar como dict serializable (asdict), NUNCA dataclass crudo.
+    # conversation_store persiste el state en JSONL; un dataclass rompe json.dumps.
+    return state.update(query_plan=asdict(plan))
 ```
 
 3. Insertar el nodo en el grafo entre `apply_context` y `resolve_entities`:
@@ -739,20 +1084,36 @@ parse_query → apply_context → plan_query → resolve_entities → ...
 
 ```python
 # tests/test_plan_query_node.py
+import json
 
-def test_plan_query_attaches_plan_to_state(monkeypatch):
+def test_plan_query_attaches_plan_to_state():
     from app.core import orchestrator
     result = orchestrator.run_query("contratos de mantenimiento en bolívar", chat_id="test_b3")
     assert "query_plan" in result
-    assert result["query_plan"].should_execute is True
+    # query_plan se guarda como dict (asdict), no como dataclass
+    assert isinstance(result["query_plan"], dict)
+    assert result["query_plan"]["should_execute"] is True
+
+def test_query_plan_is_json_serializable():
+    """Riesgo 5 de la revisión: conversation_store persiste el state en JSONL.
+    Si query_plan fuera un dataclass crudo, json.dumps() rompería la persistencia."""
+    from app.core import orchestrator
+    result = orchestrator.run_query("contratos de mantenimiento en bolívar", chat_id="test_b3_json")
+    # Esto debe NO levantar TypeError
+    serialized = json.dumps(result["query_plan"])
+    assert "should_execute" in serialized
 
 def test_b3_does_not_modify_parsed_params():
-    """B3 es no-op: aunque QueryPlan compute moveria 'ipiales' a ciudad, el state final aun no debe aplicar el cambio."""
+    """B3 es no-op (enabled_rules=set()): aunque QueryPlan compute movería 'ipiales' a
+    ciudad si P3 estuviera activa, en B3 no hay reglas activas y los params no cambian."""
     from app.core import orchestrator
     result = orchestrator.run_query("diseño ipiales", chat_id="test_b3_noop")
-    # En B3 todavía no se aplica el plan. El comportamiento sigue siendo el de Sprint 1A.
-    # Sólo verificamos que el plan se computó:
     assert "query_plan" in result
+    # En B3 todavía no se aplica ninguna regla. El comportamiento sigue siendo el de Sprint 1A.
+    # La ciudad NO debe haberse extraído del objeto.
+    params = result.get("parsed_params", {})
+    objeto = [t.lower() for t in params.get("objeto", [])]
+    assert "ipiales" in objeto, "B3 no debe haber aplicado P3 todavía"
 
 def test_corpus_v1_unaffected():
     """Smoke: el corpus v1 debe seguir verde después de insertar el nodo."""
@@ -782,11 +1143,13 @@ def test_corpus_v1_unaffected():
 feat(sprint2a): B3 — wire plan_query node as no-op pass-through
 
 Inserts plan_query between apply_context and resolve_entities.
-Computes QueryPlan and stores in state.query_plan, but does NOT
-modify parsed_params or alter flow. Pure structural insertion.
+Calls compute_query_plan with enabled_rules=set() (no rules active),
+stores asdict(plan) in state.query_plan as a JSON-serializable dict.
+
+Does NOT modify parsed_params or alter flow. Pure structural insertion.
 
 Proves corpus v1 unaffected by the insertion (88/88).
-Rules activate progressively in B4.
+Rules activate progressively in B4 sub-blocks via enabled_rules.
 ```
 
 ---
@@ -800,15 +1163,19 @@ Rules activate progressively in B4.
 
 Activar el plan en el orchestrator y conectar las reglas al flujo. Se hace en sub-bloques (B4.1..B4.5), **cada uno con su commit propio** y verificación contra corpus v1 + tests específicos.
 
-### Estructura
+### Estructura — activación granular vía `enabled_rules`
 
-| Sub-bloque | Regla(s) activada(s) | Caso del backlog | Tiempo |
+Cada sub-bloque pasa un `enabled_rules` set explícito al `plan_query` action. **No** se activa "todo" hasta B4.5. Esto evita que B4.1 prenda reglas que no han sido validadas todavía.
+
+| Sub-bloque | `enabled_rules` | Caso del backlog | Tiempo |
 |---|---|---|---|
-| B4.1 | P3 city_mention_as_topic | CITY-MENTION-AS-OBJECT-001 | 1h |
-| B4.2 | P4 implicit_opportunity | OPP-INTENT-001 | 45min |
-| B4.3 | P5 temporal_month + P6 number_phrase_scrub + P7 discourse_filler | TEMPORAL/NUMBER/COURTESY | 1.5h |
-| B4.4 | P1 command_incomplete + P2 non_query_followup + P8 invalid_range | COMMAND-SLOT/NO-FOLLOWUP/VALUE-TYPO | 1h |
-| B4.5 | Smoke integrado | Validar los 5 bugs canónicos pasan E2E | 30min |
+| B4.1 | `{"P3", "P9"}` | CITY-MENTION-AS-OBJECT-001 + CITY-TO-ENTITY-AUTOPROMOTION-001 | 1.25h |
+| B4.2 | `{"P3", "P9", "P4"}` | OPP-INTENT-001 | 45min |
+| B4.3 | `{"P3", "P9", "P4", "P5", "P6", "P7"}` | TEMPORAL/NUMBER/COURTESY | 1.5h |
+| B4.4 | `{"P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9"}` | COMMAND-SLOT/NO-FOLLOWUP/VALUE-TYPO | 1h |
+| B4.5 | `None` (todas, default) | Smoke integrado | 30min |
+
+**Nota arquitectónica:** P3 y P9 entran juntos en B4.1 porque la autopromoción de entidad ocurre típicamente *después* de extraer ciudad. Validarlos por separado introduce un estado intermedio inestable (ciudad extraída pero entidad contaminada) que no aporta valor.
 
 ### Archivos a tocar (acumulado)
 
@@ -818,25 +1185,46 @@ Activar el plan en el orchestrator y conectar las reglas al flujo. Se hace en su
 
 ### Especificación común
 
-En `plan_query` action, cambiar de no-op a aplicación:
+En `plan_query` action, cambiar de `enabled_rules=set()` (no-op) a un set explícito por sub-bloque. **No** usar `None` (todas) hasta B4.5.
 
 ```python
-@action(reads=[...], writes=["query_plan", "parsed_params", "should_execute_decision"])
+from dataclasses import asdict
+from datetime import date
+from app.core.query_plan import compute_query_plan
+
+# Set ACTIVO depende del sub-bloque que se está cerrando.
+# B4.1: {"P3", "P9"}
+# B4.2: {"P3", "P9", "P4"}
+# B4.3: {"P3", "P9", "P4", "P5", "P6", "P7"}
+# B4.4: {"P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9"}
+# B4.5: None  (todas, default)
+ENABLED_RULES_SPRINT_2A = {"P3", "P9"}  # se va expandiendo sub-bloque a sub-bloque
+
+@action(reads=["parsed_params", "raw_query", "prev_params", "turn_index"],
+        writes=["query_plan", "parsed_params", "should_execute_decision"])
 def plan_query(state):
     params = state.get("parsed_params", {})
     raw = state.get("raw_query", "")
-    context = {...}
-    plan = compute_query_plan(params, raw, context)
+    context = {
+        "prev_params": state.get("prev_params"),
+        "turn_index": state.get("turn_index", 0),
+        "today": date.today(),
+    }
+    plan = compute_query_plan(params, raw, context, enabled_rules=ENABLED_RULES_SPRINT_2A)
     return state.update(
-        query_plan=plan,
-        parsed_params=plan.params,           # ← AHORA SÍ aplicamos params modificados
+        query_plan=asdict(plan),             # serializable
+        parsed_params=plan.params,           # AHORA SÍ aplicamos params modificados
         should_execute_decision=plan.should_execute,
     )
 ```
 
 Agregar transición condicional al grafo: si `should_execute_decision == False`, ir a `clarify_query` (que ya existe). Si `True`, continuar a `resolve_entities`.
 
-### B4.1 — Activar P3 city_mention_as_topic
+**Cada sub-bloque (B4.1..B4.5) actualiza `ENABLED_RULES_SPRINT_2A` y commitea el cambio junto con sus tests específicos.**
+
+### B4.1 — Activar `{"P3", "P9"}` (city extraction + entity autopromotion purge)
+
+Setear `ENABLED_RULES_SPRINT_2A = {"P3", "P9"}` en `orchestrator.py`.
 
 **Tests específicos:**
 
@@ -856,11 +1244,35 @@ def test_city_extracted_e2e(query, expected_city, expected_objeto):
         assert tok in objeto
 ```
 
-**Criterio:** los 3 casos pasan; corpus v1: 88/88.
+Y agregar test E2E para P9 (CITY-TO-ENTITY-AUTOPROMOTION):
 
-**Commit:** `feat(sprint2a): B4.1 — activate city extraction (CITY-MENTION-AS-OBJECT-001)`
+```python
+@pytest.mark.parametrize("query", [
+    "casas lúdicas barranquilla",
+    "aires acondicionados barranquilla",
+])
+def test_p9_no_entity_autopromotion_e2e(query):
+    result = workflow.run_query(query, chat_id="test_p9")
+    params = result["parsed_params"]
+    assert params.get("ciudad") == "Barranquilla"
+    assert params.get("entidad_resolved") in (None, "")
+    plan = result["query_plan"]
+    assert "entity_autopromotion_purged" in plan["risk_flags"]
 
-### B4.2 — Activar P4 implicit_opportunity
+def test_p9_preserves_entity_with_explicit_marker_e2e():
+    result = workflow.run_query("contratos de la alcaldía de barranquilla", chat_id="test_p9_marker")
+    params = result["parsed_params"]
+    assert params.get("entidad_resolved") is not None
+    assert "barranquilla" in params["entidad_resolved"].lower()
+```
+
+**Criterio:** 3 casos de P3 + 3 casos de P9 (incluyendo el preservation) pasan; corpus v1: 88/88.
+
+**Commit:** `feat(sprint2a): B4.1 — activate P3+P9 (city extraction + entity autopromotion purge)`
+
+### B4.2 — Activar `{"P3", "P9", "P4"}` (suma P4 implicit_opportunity)
+
+Setear `ENABLED_RULES_SPRINT_2A = {"P3", "P9", "P4"}` en `orchestrator.py`.
 
 **Tests específicos:**
 
@@ -884,15 +1296,19 @@ def test_implicit_opportunity_e2e(query):
 
 **Commit:** `feat(sprint2a): B4.2 — promote implicit opportunity intent (OPP-INTENT-001)`
 
-### B4.3 — Activar P5+P6+P7
+### B4.3 — Activar `{"P3", "P9", "P4", "P5", "P6", "P7"}` (suma temporal + scrub + filler)
 
-**Tests específicos:** `tests/test_plan_query_scrub_and_temporal.py` con casos de Putumayo (en mayo), Palermo (supere), Barranquilla (hola estoy interesado).
+Setear `ENABLED_RULES_SPRINT_2A = {"P3", "P9", "P4", "P5", "P6", "P7"}`.
+
+**Tests específicos:** `tests/test_plan_query_scrub_and_temporal.py` con casos de Putumayo (en mayo), Palermo (supere), Barranquilla (hola estoy interesado). Recordar inyectar `today=date(2026, 5, 21)` en los tests de temporal.
 
 **Criterio:** los 3 casos pasan; corpus v1: 88/88.
 
-**Commit:** `feat(sprint2a): B4.3 — temporal + scrub + discourse filler`
+**Commit:** `feat(sprint2a): B4.3 — activate P5+P6+P7 (temporal + scrub + discourse filler)`
 
-### B4.4 — Activar P1+P2+P8 (clarification path)
+### B4.4 — Activar todas las reglas (suma P1, P2, P8 — clarification path)
+
+Setear `ENABLED_RULES_SPRINT_2A = {"P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9"}`.
 
 Aquí sí hay que tocar `response_policy.py`: cuando `should_execute=False`, la respuesta debe usar `plan.clarification_question` directamente (sin LLM).
 
@@ -917,7 +1333,9 @@ def build_clarification_response(plan: QueryPlan) -> dict:
 
 **Commit:** `feat(sprint2a): B4.4 — clarification path for command/non-query/invalid-range`
 
-### B4.5 — Smoke integrado
+### B4.5 — `enabled_rules=None` (todas) + smoke integrado
+
+Cambiar `ENABLED_RULES_SPRINT_2A = None` para que `compute_query_plan` use el default (todas las reglas). Equivalente funcional a B4.4, pero es el "estado de régimen" del sprint — futuras reglas se añaden al set `ALL_RULES` y se activan solas.
 
 Test que ejercita los 5 bugs canónicos en una sola corrida:
 
@@ -1190,15 +1608,21 @@ Verificar que los 5 bugs HIGH canónicos pasan E2E, capturar métricas finales d
 **Consecuencias:** una sola capa nombrada para decisiones de "qué hacer con esta query". Cada bug nuevo cae en una regla nombrada (P1..P8) o se convierte en bug arquitectónico explícito. LoC topes (300/400) defienden contra god-object.
 ```
 
-4. Actualizar `CORPUS_BACKLOG.md` marcando como cerrados:
-   - CITY-MENTION-AS-OBJECT-001 → CLOSED Sprint 2A
-   - CITY-TO-ENTITY-AUTOPROMOTION-001 → CLOSED Sprint 2A
-   - TEMPORAL-MONTH-PARSING-001 → CLOSED Sprint 2A
-   - NUMBER-CONTEXT-PHRASE-001 → CLOSED Sprint 2A (extensión de Sprint 1A B1)
-   - OPP-INTENT-001 → CLOSED Sprint 2A
-   - COURTESY-FILLER-001 → CLOSED Sprint 2A (parcial; discourse_filler base, polisemia diferida)
-   - NO-FOLLOWUP-DETECTION-001 → CLOSED Sprint 2A
-   - FOLLOWUP-DATASET-PURGE-001 → REVISAR (si el discourse_filler + non_query no lo cubre, queda HIGH)
+4. Actualizar `CORPUS_BACKLOG.md` con estado condicionado al umbral del corpus dialogue:
+
+   **CLOSED** (siempre que el umbral por categoría se cumpla en B5/B6):
+   - CITY-MENTION-AS-OBJECT-001 → CLOSED Sprint 2A (regla P3; umbral city_as_scope ≥85%)
+   - CITY-TO-ENTITY-AUTOPROMOTION-001 → CLOSED Sprint 2A (regla P9; umbral city_not_entity ≥85%)
+   - TEMPORAL-MONTH-PARSING-001 → CLOSED Sprint 2A (regla P5; umbral temporal_month ≥80%)
+   - NUMBER-CONTEXT-PHRASE-001 → CLOSED Sprint 2A (regla P6; extensión de Sprint 1A B1)
+   - OPP-INTENT-001 → CLOSED Sprint 2A (regla P4; umbral implicit_opportunity ≥85%)
+
+   **PARTIAL** (cobertura base, evaluación condicional):
+   - COURTESY-FILLER-001 → PARTIAL Sprint 2A salvo que `discourse_filler` ≥80% en corpus → CLOSED
+   - NO-FOLLOWUP-DETECTION-001 → PARTIAL Sprint 2A salvo que `non_query_followup` ≥80% → CLOSED
+   - FOLLOWUP-DATASET-PURGE-001 → REVISAR (extensión natural si non_query_followup pasa)
+
+   **Regla:** el commit de B6 NO declara CLOSED hasta correr el corpus dialogue (B5) y verificar el umbral. Si una categoría no llega al umbral, queda PARTIAL y se documenta qué casos fallan como deuda Sprint 2B.
 
 ### Criterios de aceptación
 
@@ -1215,12 +1639,19 @@ docs(sprint2a): B6 — close Sprint 2A, ADR-006, update backlog
 Final metrics:
 - pytest: 612 → N passed
 - corpus v1: 88/88 PASS (no regression)
-- corpus dialogue: M/60 PASS (categories above threshold)
+- corpus dialogue: M/60 PASS by category
 - lint-core: clean
 
-Closed bugs: CITY-MENTION-AS-OBJECT, CITY-TO-ENTITY-AUTOPROMOTION,
-TEMPORAL-MONTH-PARSING, NUMBER-CONTEXT-PHRASE, OPP-INTENT,
-COURTESY-FILLER (partial), NO-FOLLOWUP-DETECTION.
+CLOSED (umbral cumplido):
+- CITY-MENTION-AS-OBJECT-001 (P3)
+- CITY-TO-ENTITY-AUTOPROMOTION-001 (P9)
+- TEMPORAL-MONTH-PARSING-001 (P5)
+- NUMBER-CONTEXT-PHRASE-001 (P6)
+- OPP-INTENT-001 (P4)
+
+PARTIAL / CONDITIONAL on corpus threshold:
+- COURTESY-FILLER-001 (P7) — discourse_filler ≥80% required
+- NO-FOLLOWUP-DETECTION-001 (P2) — non_query_followup ≥80% required
 ```
 
 ---
@@ -1306,18 +1737,19 @@ Necesito decisión sobre: <opciones A / B / C>
 | Bloque | Tarea | Tiempo | Acumulado |
 |---|---|---:|---:|
 | B0 | Baseline | 0.5h | 0.5h |
-| B1 | dialogue_policy.py | 3.5h | 4h |
-| B2 | query_plan.py | 3h | 7h |
-| B3 | Inserción Burr (no-op) | 2h | 9h |
-| B4.1 | Activar P3 city | 1h | 10h |
-| B4.2 | Activar P4 opportunity | 0.75h | 10.75h |
-| B4.3 | Activar P5+P6+P7 | 1.5h | 12.25h |
-| B4.4 | Activar P1+P2+P8 + clarification | 1h | 13.25h |
-| B4.5 | Smoke integrado | 0.5h | 13.75h |
-| B5 | Corpus YAML + runner | 3.5h | 17.25h |
-| B6 | Cierre + ADR + backlog | 1.5h | 18.75h |
+| B1 | dialogue_policy.py + geo_mention_resolution | 3.5h | 4h |
+| **B1.5** | **Corpus mínimo (30 casos) antes de QueryPlan** | **1.5h** | **5.5h** |
+| B2 | query_plan.py (9 reglas P1..P9, deepcopy, enabled_rules) | 3.5h | 9h |
+| B3 | Inserción Burr (no-op con `enabled_rules=set()`) | 2h | 11h |
+| B4.1 | Activar `{"P3","P9"}` (city + autopromotion) | 1.25h | 12.25h |
+| B4.2 | Activar `+ "P4"` (opportunity) | 0.75h | 13h |
+| B4.3 | Activar `+ "P5","P6","P7"` (temporal/scrub/filler) | 1.5h | 14.5h |
+| B4.4 | Activar `+ "P1","P2","P8"` (clarification path) | 1h | 15.5h |
+| B4.5 | `enabled_rules=None` + smoke 5 bugs | 0.5h | 16h |
+| B5 | Corpus YAML expandido (60 casos) + runner | 3.5h | 19.5h |
+| B6 | Cierre + ADR-006 + backlog (CLOSED/PARTIAL) | 1.5h | 21h |
 
-**Total: ~19 horas de implementación + tests.** Distribuible en 4-6 días de trabajo enfocado.
+**Total: ~21 horas de implementación + tests.** Distribuible en 4-6 días de trabajo enfocado.
 
 ---
 
@@ -1325,8 +1757,23 @@ Necesito decisión sobre: <opciones A / B / C>
 
 Sprint 1A fue **defensa táctica**: parchar incendios CRITICAL. Sprint 2A es **el primer paso estructural**: introducir la capa que faltaba para decir "antes de ejecutar, ¿esto tiene sentido?".
 
-La métrica de éxito **no es** "cuántos bugs cerré" sino **"los 5 casos canónicos del backlog funcionan E2E, el corpus v1 no regresó, y la nueva capa cabe en sus topes de LoC"**.
+La capa nueva tiene **9 reglas determinísticas** (P1..P9) que se evalúan en orden estricto: `P1 → P2 → P3 → P9 → P4 → P5 → P6 → P7 → P8`. Cada regla solo se aplica si está en `enabled_rules` — eso permite que B4 active reglas progresivamente sin saltos. P9 (introducida en revisión) cubre CITY-TO-ENTITY-AUTOPROMOTION sin tocar `entity_resolver`, manteniendo la filosofía: *QueryPlan decide qué hacer, los módulos viejos no cambian*.
 
-Si al cerrar B6 los 5 casos pasan, corpus v1 sigue en 88/88, corpus dialogue cumple umbrales por categoría, y `query_plan.py + dialogue_policy.py` están bajo sus límites, Sprint 2A está cerrado. Sprint 2B (BIDDER-CATALOG, PROCUREMENT-ACTION, MORPHO uneven, NIT-AMOUNT) puede arrancar.
+La métrica de éxito **no es** "cuántos bugs cerré" sino:
+1. Los 5 casos canónicos del backlog funcionan E2E (CITY-MENTION/CITY-TO-ENTITY/TEMPORAL/NUMBER-SCRUB/OPP-INTENT).
+2. Corpus v1 no regresó (88/88).
+3. Corpus dialogue cumple umbrales por categoría (negativos al 100%).
+4. `query_plan.py < 300 LoC`, `dialogue_policy.py < 400 LoC` (G8).
+5. `compute_query_plan` no muta inputs y es JSON-serializable vía `asdict`.
+
+Si todo se cumple en B6, Sprint 2A está cerrado. Sprint 2B (BIDDER-CATALOG, PROCUREMENT-ACTION, MORPHO uneven, NIT-AMOUNT) puede arrancar.
 
 **Recordatorio de Sprint 1A:** la última vez te desviaste de "QueryPlan estructural" a "9 fixes CRITICAL" porque los incendios pesaron más. Esta vez el plan es explícito sobre qué NO hacer (G9). Si una idea parece valer la pena pero está en G9, **es trampa** — apuntala en `docs/CORPUS_BACKLOG.md` como deuda Sprint 2B/3 y sigue. El sprint termina cuando termina, no cuando "ya que estamos".
+
+**Tres errores que la revisión 2026-05-21 detectó y este doc ahora previene:**
+
+1. *Crear capa antes que corpus.* B1.5 inserta el corpus mínimo entre B1 y B2.
+2. *Mutar `params` accidentalmente.* `compute_query_plan` hace `deepcopy` y hay tests que verifican el invariante.
+3. *Activar todas las reglas a la vez en B4.* `enabled_rules` por sub-bloque evita esto.
+
+Si llegas a B6 con los 5 casos canónicos E2E pasando, los umbrales cumplidos y el commit log en orden, listo. Si no llegas, no inventes — escala según la sección "Si algo sale mal".
