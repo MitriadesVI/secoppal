@@ -29,7 +29,7 @@ CONTINUATION_WORDS: tuple[str, ...] = (
 # Verbos que indican búsqueda completamente nueva — si la query empieza
 # con uno de estos, NO es follow-up aunque sea corta.
 NEW_SEARCH_VERBS: tuple[str, ...] = (
-    "busca ", "encuentra ", "necesito ", "consulta ",
+    "busca ", "buscar ", "encuentra ", "necesito ", "consulta ",
     "lista ", "listar ",
     "muestra procesos ", "muestra contratos ",
 )
