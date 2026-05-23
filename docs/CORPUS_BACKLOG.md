@@ -84,20 +84,20 @@ Estos NO son fallos del corpus v1 (el corpus pasa 88/88). Son bugs reales detect
 | ~~MUNICIPAL-GEO-GAP-001~~ | ~~Alcaldías municipales con departamento_entidad vacío/inconsistente~~ **REMOVED 2026-05-19**: 9 procesos verificados en Socrata, TODOS tienen campos territoriales bien poblados. Era diagnóstico erróneo. Los casos atribuidos a este bug se redistribuyeron en ACCENT/ENTITY-MISRESOLUTION/FOLLOWUP-VALUE-INHERIT/PAGINATION | 0 (era 5 supuestos) | **ELIMINADO** |
 | SOURCE-COVERAGE-001 | Procesos publicados en SECOP nativo en las últimas <12h pueden no estar en dataset Socrata. **Re-diagnóstico 2026-05-19**: 9 procesos verificados, incluso del 18/05 ya estaban en Socrata el 19/05. Delay real <24h, probablemente <12h. **Baja de CRITICAL a MEDIUM**. Sigue válido el diagnóstico transparente como UX pero no requiere crawler propio urgente | 0 confirmados | **MEDIUM (baja desde CRITICAL)** — investigación empírica invalidó la magnitud del problema |
 | STATE-PRIORITY-001 | `estado_family=oferta_abierta` no se proyecta a SoQL en algunas rutas | 3 | HIGH (ya en DEMO-BLOCKERS) |
-| OPP-INTENT-001 | "algún proceso para X" / "alguna oferta del Y" / "algún proceso de Z en W" no activa `intent_type=opportunity_search` ni `estado_family=oferta_abierta`. Confirmado en Putumayo aseo, Antioquia residuos, Huila transporte | 5 | HIGH |
+| OPP-INTENT-001 | "algún proceso para X" / "alguna oferta del Y" / "algún proceso de Z en W" no activa  ni . Confirmado en Putumayo aseo, Antioquia residuos, Huila transporte | 5 | **CLOSED Sprint 2A (P4)** |
 | MULTI-AND-OVER-RESTRICTIVE-001 | Cuando parser/LLM extraen ≥4 tokens en objeto, AND obligatorio sobre todos hace matemáticamente improbable encontrar match. Caso canónico: "ASEO, CAFETERÍA, JARDINERÍA Y MANTENIMIENTO" → 6 ANDs → 0 resultados. Fix: degradar a OR sobre tokens menos específicos, mantener AND sobre tokens raros | 1 | **HIGH (nuevo)** |
-| CITY-TO-ENTITY-AUTOPROMOTION-001 | `city_to_entity` con confidence medium convierte unilateralmente mención de ciudad en filtro `WHERE entidad LIKE 'alcaldía de X'`, ocultando procesos de otras entidades (gobernación, hospitales, SENA, universidades públicas) en esa ciudad | 2 (Barranquilla casa lúdica, Barranquilla aires) | **HIGH (nuevo)** |
-| TEMPORAL-MONTH-PARSING-001 | "en mayo", "el mes pasado", "este mes" no se resuelven como filtros de fecha. Mes sin año debe interpretarse como mes del año actual | 1 (Putumayo aseo "en mayo") | **HIGH (nuevo)** |
+| CITY-TO-ENTITY-AUTOPROMOTION-001 | `city_to_entity` convierte ciudad en entidad, ocultando procesos de otras entidades en esa ciudad | 2 (Barranquilla) | **CLOSED Sprint 2A (P9)** |
+| TEMPORAL-MONTH-PARSING-001 | "en mayo", "el mes pasado", "este mes" no se resuelven como filtros de fecha. Mes sin año debe interpretarse como mes del año actual | 1 (Putumayo aseo "en mayo") | **CLOSED Sprint 2A (P5)** |
 | AUTO-FALLBACK-WITHOUT-QUALITY-001 | Cuando 0 resultados, fallback automático sin filtro de fecha trae procesos viejos (2023) cuando user pidió 2026. UX dice "sin filtro de fechas" pero no aclara que son potencialmente irrelevantes | 1 (Antioquia residuos → Caracolí 2023) | MEDIUM (nuevo) |
-| NUMBER-CONTEXT-PHRASE-001 | Verbos comparativos ("supere", "exceda", "alcance") y conectores temporales ("en") permanecen en `objeto` cuando el parser ya extrajo correctamente el modificador (valor/fecha). AND con el verbo mata la búsqueda. Caso: "no supere los 25 millones" → valor_max=25M ✓ + objeto contiene "supere" → 0 resultados | 1 | **HIGH (nuevo)** |
+| NUMBER-CONTEXT-PHRASE-001 | Verbos comparativos ("supere", "exceda", "alcance") y conectores temporales ("en") permanecen en  cuando el parser ya extrajo correctamente el modificador (valor/fecha). AND con el verbo mata la búsqueda. Caso: "no supere los 25 millones" → valor_max=25M ✓ + objeto contiene "supere" → 0 resultados | 1 | **CLOSED Sprint 2A (P6)** |
 | ENTITY-MULTI-REGIONAL-001 | Entidades con regionales (SENA, ICBF, DNP, ministerios) no consideran modificadores territoriales en la query. Caso: "del sena bolivar" → "SENA SECRETARIA GENERAL" (Bogotá), no "SENA REGIONAL BOLÍVAR" | 1 | **HIGH (nuevo)** |
 | FOLLOWUP-VALUE-INHERIT-001 | `valor_max`/`valor_min`/`modalidad` heredados del turno anterior cuando el topic cambia completamente. Caso: residuos sólidos (≤20M) → silvopastoriles → hereda 20M sin pedirlo | 1 | **HIGH (nuevo)** |
-| NO-FOLLOWUP-DETECTION-001 | Quejas/comentarios del usuario tratados como nueva query (no como seguimiento conversacional) | 1 | HIGH |
+| NO-FOLLOWUP-DETECTION-001 | Quejas/comentarios del usuario tratados como nueva query (no como seguimiento conversacional) | 1 | **CLOSED Sprint 2A (P2)** |
 | NIT-AMOUNT-CONFUSION-001 | Montos en COP (8-9 dígitos) confundidos con NITs/contratistas sin discriminar contexto léxico | 1 | HIGH |
-| OPP-INTENT-001 | "algún proceso para X" no activa `intent_type=opportunity_search` ni `estado_family=oferta_abierta` | 1 | HIGH |
+| OPP-INTENT-001 | "algún proceso para X" no activa `intent_type=opportunity_search` ni `estado_family=oferta_abierta` | 1 | **CLOSED Sprint 2A (P4)** |
 | RELEVANCE-PHRASE-001 | Frases técnicas compuestas (ej. "control de calidad de agua para consumo humano") destruidas por AND de tokens. Sin boost de frase exacta | 1 | HIGH |
 | DEDUP-PROCESS-001 | Mismo proceso aparece varias veces con distinto `noticeUID` (cambios de fase/estado generan registros separados). Sin dedup en UI | 4 (Guateque, La Estrella, Doncello, Yaguara ×3) | MEDIUM |
-| COURTESY-FILLER-001 | `hola`, `estoy interesado`, `actualmente`, `algún`, vocabulario de queja (`nada`, `terrible`, `incorrecto`, `mal`, `fracaso`), señales de bidder (`oferta` como objeto cuando significa "oportunidad"), y verbos interrogativos (`fueron`, `fue`, `son`, `están`) entran como objeto contractual | 4 | HIGH |
+| COURTESY-FILLER-001 | Tokens de cortesía, queja, bidder y verbos interrogativos entraban como objeto contractual | 4 | **CLOSED Sprint 2A (P7+P3)** |
 | BIDDER-CATALOG-AND-001 | `vendo X, Y y Z` tratado como AND obligatorio → 0 resultados | 1 (electrobombas) | HIGH |
 | POLYSEMIC-TOPIC-001 | `alojamiento` con 5 sentidos no desambiguados (hospedaje/hosting/logístico/albergue/militar) | 1 | HIGH |
 | FOLLOWUP-DATASET-PURGE-001 | Follow-up que cambia dataset hereda `intent_type`/`estado_family` incompatibles | 1 | HIGH |
@@ -292,3 +292,28 @@ Hallazgo de la investigación del 2026-05-19: licitaciones.info opera con BD pro
 | MORPHO-UNEVEN-001 | (nuevo) | Pendiente MEDIUM | Curación manual de `morphological_variants.py` para 25 rubros frecuentes |
 | HEADER-TOPIC-OMISSION-001 | (nuevo) | Pendiente LOW | Sprint 2 `formatter.py` |
 | MOJIBAKE-DISPLAY-001 | (nuevo) | Pendiente LOW | Normalización Unicode en `formatter.py` |
+
+---
+
+## Deuda arquitectónica Sprint 2A
+
+D1. Plan guard vive en resolve_entities (early return), no en
+    transición Burr condicional. La transición with expr() no
+    respetó el should_execute_decision escrito por plan_query.
+    Investigar Burr write/read ordering en Sprint 2B.
+
+D2. build_advisor_response pisa la respuesta de clarificación.
+    Parche en run_query detecta should_execute=False y restaura.
+    Limpiar acoplamiento en Sprint 2B.
+
+D3. P2 (non_query_followup) sin smoke E2E real (solo unit + corpus
+    con prev_params inyectado). P8 (invalid_value_range) es código
+    muerto E2E porque query_router auto-swap previene rangos
+    inválidos aguas arriba.
+
+D4. Corpus runner es unit-level con params curados, no E2E.
+    Los tests E2E reales viven en test_sprint2a_canonical_smoke.py
+    y test_plan_query_*.py.
+
+D5. dialogue_policy.py recibió expansión léxica ("favor"/"por favor")
+    en B5 fuera de scope. Registrar para auditoría arquitectónica.

@@ -267,6 +267,14 @@ class SoQLBuilder:
         if params.get("modalidad"):
             where_clauses.append(f"modalidad_de_contratacion = '{self._escape(params['modalidad'])}'")
 
+        # STATE-PRIORITY-001: oportunidades en procesos requieren apertura=Abierto
+        if (
+            params.get("intent_type") == "opportunity_search"
+            and spec.dataset_id == self.PROCESOS_DATASET
+            and not params.get("estado_de_apertura_del_proceso")
+        ):
+            where_clauses.append("estado_de_apertura_del_proceso = 'Abierto'")
+
         if params.get("fecha_desde"):
             where_clauses.append(f"{spec.date} >= '{self._escape(params['fecha_desde'])}'")
         if params.get("fecha_hasta"):

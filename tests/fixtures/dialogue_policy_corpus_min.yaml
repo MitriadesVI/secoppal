@@ -1,0 +1,280 @@
+# tests/fixtures/dialogue_policy_corpus_min.yaml
+# Minimal corpus — 30 cases. Design contract for B2/B4.
+# No runner yet (that's B5). Tests in test_dialogue_policy_corpus_min.py
+# validate structure only.
+
+metadata:
+  version: "0.1-min"
+  created: "2026-05-21"
+  total_cases: 30
+  composition: { real: 10, synthetic: 10, negative: 10 }
+  purpose: "Contrato de diseño para B2/B4. Runner completo en B5."
+
+cases:
+  # ──────────────── 10 reales del backlog ────────────────
+
+  - id: CITY-ASOBJ-001
+    query: "diseño ipiales"
+    category: city_as_scope
+    severity: HIGH
+    source: "CORPUS_BACKLOG.md CITY-MENTION-AS-OBJECT-001"
+    should_execute: true
+    expected_signals: ["city_mention_as_topic"]
+    expected_params:
+      ciudad: "Ipiales"
+      objeto_contains: ["diseño"]
+      objeto_not_contains: ["ipiales"]
+
+  - id: CITY-ASOBJ-002
+    query: "manejo de residuos sólidos olaya"
+    category: city_as_scope
+    severity: HIGH
+    source: "CORPUS_BACKLOG.md CITY-MENTION-AS-OBJECT-001"
+    should_execute: true
+    expected_signals: ["city_mention_as_topic"]
+    expected_params:
+      ciudad: "Olaya"
+      objeto_not_contains: ["olaya"]
+
+  - id: CITY-ASOBJ-003
+    query: "silvopastoriles yarumal"
+    category: city_as_scope
+    severity: HIGH
+    source: "CORPUS_BACKLOG.md CITY-MENTION-AS-OBJECT-001"
+    should_execute: true
+    expected_signals: ["city_mention_as_topic"]
+    expected_params:
+      ciudad: "Yarumal"
+      objeto_not_contains: ["yarumal"]
+
+  - id: CITY-NOENT-001
+    query: "casas lúdicas barranquilla"
+    category: city_not_entity
+    severity: HIGH
+    source: "CORPUS_BACKLOG.md CITY-TO-ENTITY-AUTOPROMOTION-001"
+    should_execute: true
+    expected_params:
+      ciudad: "Barranquilla"
+      entidad_resolved: null
+
+  - id: CITY-NOENT-002
+    query: "aires acondicionados barranquilla"
+    category: city_not_entity
+    severity: HIGH
+    source: "CORPUS_BACKLOG.md CITY-TO-ENTITY-AUTOPROMOTION-001"
+    should_execute: true
+    expected_params:
+      ciudad: "Barranquilla"
+      entidad_resolved: null
+
+  - id: OPP-IMPL-001
+    query: "algún proceso para aseo en putumayo"
+    category: implicit_opportunity
+    severity: HIGH
+    source: "CORPUS_BACKLOG.md OPP-INTENT-001"
+    should_execute: true
+    expected_signals: ["implicit_opportunity"]
+    expected_params:
+      intent_type: "opportunity_search"
+
+  - id: OPP-IMPL-002
+    query: "alguna oferta del sena en huila"
+    category: implicit_opportunity
+    severity: HIGH
+    source: "CORPUS_BACKLOG.md OPP-INTENT-001"
+    should_execute: true
+    expected_signals: ["implicit_opportunity"]
+    expected_params:
+      intent_type: "opportunity_search"
+
+  - id: TEMPORAL-001
+    query: "aseo putumayo en mayo"
+    category: temporal_month
+    severity: HIGH
+    source: "CORPUS_BACKLOG.md TEMPORAL-MONTH-PARSING-001"
+    should_execute: true
+    expected_signals: ["temporal_month"]
+    expected_params:
+      fecha_desde_starts_with: "2026-05"
+
+  - id: NUM-SCRUB-001
+    query: "transporte escolar huila no supere 25 millones"
+    category: number_phrase_scrub
+    severity: HIGH
+    source: "CORPUS_BACKLOG.md NUMBER-CONTEXT-PHRASE-001"
+    should_execute: true
+    expected_signals: ["number_phrase_scrub"]
+    expected_params:
+      objeto_not_contains: ["supere"]
+
+  - id: COURTESY-001
+    query: "hola estoy interesado en casas lúdicas en barranquilla"
+    category: discourse_filler
+    severity: HIGH
+    source: "CORPUS_BACKLOG.md COURTESY-FILLER-001"
+    should_execute: true
+    expected_signals: ["discourse_filler"]
+
+  # ──────────────── 10 sintéticos derivados ────────────────
+
+  - id: CITY-ASOBJ-SYN-001
+    query: "obras palermo"
+    category: city_as_scope
+    severity: MEDIUM
+    should_execute: true
+    expected_signals: ["city_mention_as_topic"]
+    expected_params:
+      ciudad: "Palermo"
+
+  - id: CITY-ASOBJ-SYN-002
+    query: "consultoría doncello"
+    category: city_as_scope
+    severity: MEDIUM
+    should_execute: true
+    expected_signals: ["city_mention_as_topic"]
+    expected_params:
+      ciudad: "Doncello"
+
+  - id: CITY-NOENT-SYN-001
+    query: "casa lúdica medellín"
+    category: city_not_entity
+    severity: MEDIUM
+    should_execute: true
+    expected_params:
+      ciudad: "Medellín"
+      entidad_resolved: null
+
+  - id: OPP-IMPL-SYN-001
+    query: "hay algún proceso de residuos en antioquia"
+    category: implicit_opportunity
+    severity: MEDIUM
+    should_execute: true
+    expected_signals: ["implicit_opportunity"]
+    expected_params:
+      intent_type: "opportunity_search"
+
+  - id: OPP-IMPL-SYN-002
+    query: "dónde me puedo presentar para transporte escolar"
+    category: implicit_opportunity
+    severity: MEDIUM
+    should_execute: true
+    expected_signals: ["implicit_opportunity"]
+    expected_params:
+      intent_type: "opportunity_search"
+
+  - id: TEMPORAL-SYN-001
+    query: "procesos en junio"
+    category: temporal_month
+    severity: MEDIUM
+    should_execute: true
+    expected_signals: ["temporal_month"]
+    expected_params:
+      fecha_desde_starts_with: "2026-06"
+
+  - id: TEMPORAL-SYN-002
+    query: "contratos este mes"
+    category: temporal_month
+    severity: MEDIUM
+    should_execute: true
+    expected_signals: ["temporal_month"]
+    expected_params:
+      fecha_desde_starts_with: "2026-05"
+
+  - id: NUM-SCRUB-SYN-001
+    query: "obras que no excedan 50 millones"
+    category: number_phrase_scrub
+    severity: MEDIUM
+    should_execute: true
+    expected_signals: ["number_phrase_scrub"]
+    expected_params:
+      objeto_not_contains: ["excedan"]
+
+  - id: COURTESY-SYN-001
+    query: "buenas tardes quisiera ver procesos de aseo"
+    category: discourse_filler
+    severity: MEDIUM
+    should_execute: true
+    expected_signals: ["discourse_filler"]
+
+  - id: NON-QUERY-SYN-001
+    query: "nada de eso sirve, no funcionó"
+    category: non_query_followup
+    severity: MEDIUM
+    should_execute: false
+    expected_signals: ["non_query_followup"]
+    expected_params:
+      clarification_contains: "algo no funcionó"
+
+  # ──────────────── 10 negativos ────────────────
+
+  - id: NEG-001
+    query: "contratos de mantenimiento en bogotá"
+    category: negative
+    severity: LOW
+    should_execute: true
+    expected_signals_not: ["implicit_opportunity", "city_mention_as_topic"]
+
+  - id: NEG-002
+    query: "consultoría cartagena"
+    category: negative
+    severity: LOW
+    should_execute: true
+    expected_signals_not: ["discourse_filler", "city_mention_as_topic"]
+
+  - id: NEG-003
+    query: "transporte escolar 2026 bolívar"
+    category: negative
+    severity: LOW
+    should_execute: true
+    expected_signals_not: ["temporal_month"]
+
+  - id: NEG-004
+    query: "procesos del 2025"
+    category: negative
+    severity: LOW
+    should_execute: true
+    expected_signals_not: ["implicit_opportunity", "temporal_month"]
+
+  - id: NEG-005
+    query: "contratos de la alcaldía de barranquilla"
+    category: negative
+    severity: LOW
+    should_execute: true
+    expected_signals_not: ["city_mention_as_topic"]
+    expected_params:
+      entidad_resolved: null  # marker present → entity is preserved (P9)
+
+  - id: NEG-006
+    query: "obras del distrito de bogotá"
+    category: negative
+    severity: LOW
+    should_execute: true
+    expected_signals_not: ["city_mention_as_topic"]
+
+  - id: NEG-007
+    query: "gobernación del atlántico contratos firmados"
+    category: negative
+    severity: LOW
+    should_execute: true
+    expected_signals_not: ["city_mention_as_topic"]
+
+  - id: NEG-008
+    query: "filtra por departamento huila"
+    category: negative
+    severity: LOW
+    should_execute: true
+    expected_signals_not: ["command_incomplete"]
+
+  - id: NEG-009
+    query: "muéstrame más"
+    category: negative
+    severity: LOW
+    should_execute: true
+    expected_signals_not: ["non_query_followup"]
+
+  - id: NEG-010
+    query: "contratos de mantenimiento entre 10 y 50 millones"
+    category: negative
+    severity: LOW
+    should_execute: true
+    expected_signals_not: ["command_incomplete", "non_query_followup"]

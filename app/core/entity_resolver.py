@@ -14,6 +14,89 @@ from app.utils.money import normalize_text
 logger = logging.getLogger(__name__)
 
 
+# ── Ciudad gazetteer — canonical names for Colombian municipalities ──────
+# Built from _COMMON_CITIES already known to query_router.  Used by
+# geo_mention_resolution() to detect city tokens in object text.
+GAZETTEER_CIUDADES: dict[str, str] = {
+    "barranquilla": "Barranquilla",
+    "soledad": "Soledad",
+    "cartagena": "Cartagena",
+    "bogota": "Bogotá",
+    "bogotá": "Bogotá",
+    "medellin": "Medellín",
+    "medellín": "Medellín",
+    "cali": "Cali",
+    "santa marta": "Santa Marta",
+    "sincelejo": "Sincelejo",
+    "monteria": "Montería",
+    "montería": "Montería",
+    "valledupar": "Valledupar",
+    "bucaramanga": "Bucaramanga",
+    "cucuta": "Cúcuta",
+    "cúcuta": "Cúcuta",
+    "ibague": "Ibagué",
+    "ibagué": "Ibagué",
+    "pereira": "Pereira",
+    "manizales": "Manizales",
+    "armenia": "Armenia",
+    "neiva": "Neiva",
+    "popayan": "Popayán",
+    "popayán": "Popayán",
+    "pasto": "Pasto",
+    "tunja": "Tunja",
+    "villavicencio": "Villavicencio",
+    "yopal": "Yopal",
+    "quibdo": "Quibdó",
+    "quibdó": "Quibdó",
+    "leticia": "Leticia",
+    "riohacha": "Riohacha",
+    "san andres": "San Andrés",
+    "san andrés": "San Andrés",
+    "mocoa": "Mocoa",
+    "inirida": "Inírida",
+    "inírida": "Inírida",
+    "mitú": "Mitú",
+    "mitu": "Mitú",
+    "puerto carreño": "Puerto Carreño",
+    "arauca": "Arauca",
+    "chiriguana": "Chiriguaná",
+    "chiriguaná": "Chiriguaná",
+    # ── Additional cities from backlog / CORPUS_BACKLOG.md ──
+    "ipiales": "Ipiales",
+    "olaya": "Olaya",
+    "yarumal": "Yarumal",
+    "palermo": "Palermo",
+    "doncello": "Doncello",
+    "paicol": "Paicol",
+}
+
+
+@dataclass
+class GeoMention:
+    """Result of looking up a token in the geography gazetteer."""
+    kind: str  # "city", "department", "entity", "unknown"
+    canonical: str | None = None
+    confidence: str = "low"  # "high", "medium", "low"
+
+
+def geo_mention_resolution(token: str) -> GeoMention:
+    """Pure lookup: gazetteer-only, no fuzzy beyond exact lowercase match.
+
+    Checks GAZETTEER_CIUDADES first (cities), then DEPARTAMENTOS
+    (departments). If neither matches, returns kind="unknown".
+    """
+    if not isinstance(token, str):
+        return GeoMention(kind="unknown")
+    key = normalize_text(token.strip())
+    if not key:
+        return GeoMention(kind="unknown")
+    if key in GAZETTEER_CIUDADES:
+        return GeoMention(kind="city", canonical=GAZETTEER_CIUDADES[key], confidence="high")
+    if key in DEPARTAMENTOS:
+        return GeoMention(kind="department", canonical=DEPARTAMENTOS[key], confidence="high")
+    return GeoMention(kind="unknown")
+
+
 @dataclass(slots=True)
 class ResolutionResult:
     value: str | None

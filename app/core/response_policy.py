@@ -497,3 +497,17 @@ def _format_suggestions_list(suggestions: list) -> str:
         if label:
             lines.append(f"{i}. {label}")
     return "\n".join(lines)
+
+
+def build_clarification_response(plan: dict) -> dict:
+    """Build a clarification response from a QueryPlan dict (asdict output).
+
+    Used by clarify_query action when plan_query blocks execution.
+    """
+    return {
+        "response": plan.get("clarification_question") or "Necesito más información para buscar.",
+        "needs_clarification": True,
+        "reason": plan.get("reason", ""),
+        "missing_slots": plan.get("missing_slots", []),
+        "risk_flags": plan.get("risk_flags", []),
+    }

@@ -676,6 +676,19 @@ class FollowupGuards:
         return intent == "pagination_more"
 
 
+def _is_contratista_only_query(current_frame: QueryFrame) -> bool:
+    """Detecta query cuyo único filtro nuevo es contratista/proveedor."""
+    has_contratista = bool(
+        current_frame.modifiers.get("contratista")
+        or current_frame.raw_params.get("contratista")
+    )
+    has_no_topic = (
+        not current_frame.topic
+        or FollowupClassifier._is_weak_topic(current_frame.topic)
+    )
+    return has_contratista and has_no_topic
+
+
 # ── API pública ────────────────────────────────────────────────────────────
 
 def detect_and_merge(
@@ -709,6 +722,19 @@ def detect_and_merge(
     merged_frame = FollowupMerger.merge(previous_frame, current_frame, intent)
     merged_params = params_from_frame(merged_frame)
     _purge_stale_inherited_params(merged_params, previous_frame, current_frame)
+
+    # B4 — FOLLOWUP-NIT-LEAK-001: purga herencia en contratista-only pivot
+    if _is_contratista_only_query(current_frame):
+        for key in (
+            "objeto", "objeto_or", "fecha_desde", "fecha_hasta",
+            "valor_min", "valor_max", "entidad", "entidad_resolved",
+            "entidad_resolution", "entidad_like", "ciudad",
+            "departamento", "departamento_resolved", "modalidad",
+            "estado_family", "estado", "estado_field",
+            "estado_de_apertura_del_proceso", "estado_del_procedimiento",
+            "estado_contrato", "estado_contrato_adicional",
+        ):
+            merged_params.pop(key, None)
 
     return intent, merged_params
 
