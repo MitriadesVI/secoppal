@@ -44,6 +44,8 @@ NOISE_PREFIXES: tuple[str, ...] = (
 # Comandos de reset reconocidos.
 RESET_COMMANDS: frozenset[str] = frozenset({
     "/reset", "reset", "nueva", "limpiar", "nuevo",
+    "/new", "/nueva", "/limpiar", "/nuevo",
+    "/clear", "/restart",
 })
 
 # Claves de scope/topic que deben existir para que una consulta pase
