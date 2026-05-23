@@ -347,7 +347,7 @@ def _detect_number_phrase_scrub(
     if not objeto:
         return
 
-    tokens_to_scrub = [t for t in objeto if t.lower() in SCRUB_CATALOG]
+    tokens_to_scrub = [t for t in objeto if not isinstance(t, list) and t.lower() in SCRUB_CATALOG]
     if tokens_to_scrub:
         signals.append(DialogueSignal(
             kind="number_phrase_scrub",
@@ -372,6 +372,8 @@ def _detect_city_mention_as_topic(
     from app.core.entity_resolver import geo_mention_resolution
 
     for token in objeto:
+        if isinstance(token, list):
+            continue
         gm = geo_mention_resolution(token)
         if gm.kind == "city":
             signals.append(DialogueSignal(

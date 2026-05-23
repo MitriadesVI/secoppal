@@ -123,7 +123,7 @@ def compute_query_plan(
                     working_params["ciudad"] = city
                     new_objeto = [
                         t for t in objeto
-                        if t.lower().strip() != token.lower().strip()
+                        if isinstance(t, list) or t.lower().strip() != token.lower().strip()
                     ]
                     working_params["objeto"] = new_objeto
                     reason_parts.append("city_extracted_to_scope")
@@ -197,7 +197,7 @@ def compute_query_plan(
                 tokens_to_scrub = sig.payload.get("tokens_to_scrub", [])
                 objeto: list[str] = working_params.get("objeto", [])
                 scrub_set = {x.lower().strip() for x in tokens_to_scrub}
-                new_objeto = [t for t in objeto if t.lower().strip() not in scrub_set]
+                new_objeto = [t for t in objeto if isinstance(t, list) or t.lower().strip() not in scrub_set]
                 working_params["objeto"] = new_objeto
                 if not new_objeto:
                     risk_flags.append("topic_emptied_by_scrub")
@@ -211,7 +211,7 @@ def compute_query_plan(
                 tokens_to_scrub = sig.payload.get("tokens_to_scrub", [])
                 objeto: list[str] = working_params.get("objeto", [])
                 scrub_set = {x.lower().strip() for x in tokens_to_scrub}
-                new_objeto = [t for t in objeto if t.lower().strip() not in scrub_set]
+                new_objeto = [t for t in objeto if isinstance(t, list) or t.lower().strip() not in scrub_set]
                 working_params["objeto"] = new_objeto
                 reason_parts.append("filler_scrubbed")
                 break
