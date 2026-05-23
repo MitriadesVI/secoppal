@@ -92,6 +92,11 @@ _VAGUE_QUANTIFIERS = frozenset({
 
 _INTERROGATIVE_VERBS = frozenset({
     "fueron", "fue", "son", "están", "estan",
+    "tienes", "tiene", "tendrás", "tendrán", "tendrias", "tendría",
+    "hay", "habrá", "haya",
+    "puedes", "puede", "podrías", "podria", "pueden",
+    "sabes", "sabe", "conoces", "conoce",
+    "encuentro", "encuentra", "encuentran",
 })
 
 # R4: temporal month patterns
