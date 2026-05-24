@@ -384,6 +384,9 @@ class SoQLBuilder:
     def _object_term_conditions(self, spec: DatasetSpec, term: str) -> list[str]:
         # Expand to all morphological variants (OR clauses).
         # ROOT_TO_VARIANTS maps root to all surface forms; unknown terms are used as-is.
+        # BOTH routing paths (heuristic_only and heuristic_plus_llm) converge here —
+        # so morphological expansion is always applied. Confirmed by test_morpho_expansion_consistency.py.
+        # MORPHO-EXPANSION-INCONSISTENT-001 was a false alarm.
         term_variants = ROOT_TO_VARIANTS.get(term, frozenset([term]))
         conditions: list[str] = []
         for variant in sorted(term_variants):  # sorted for deterministic SoQL
