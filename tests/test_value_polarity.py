@@ -22,6 +22,15 @@ NEGATION_CASES = [
     ("que no baje de 5 millones", {"valor_min": 5_000_000}),
 ]
 
+# Sprint 4 — MIN-MAX-INVERSION-001 nuevos patrones
+SPRINT4_CASES = [
+    ("menor o igual a 40 millones", {"valor_max": 40_000_000}),
+    ("mayor o igual a 60 millones", {"valor_min": 60_000_000}),
+    ("a lo sumo 80 millones", {"valor_max": 80_000_000}),
+    ("menor o igual que 35 millones", {"valor_max": 35_000_000}),
+    ("mayor o igual que 75 millones", {"valor_min": 75_000_000}),
+]
+
 NO_FILLER_CASES = [
     (
         "transporte escolar no sean mayores a 30 millones",
@@ -30,7 +39,7 @@ NO_FILLER_CASES = [
 ]
 
 
-@pytest.mark.parametrize("query,expected", POSITIVE_CASES + NEGATION_CASES)
+@pytest.mark.parametrize("query,expected", POSITIVE_CASES + NEGATION_CASES + SPRINT4_CASES)
 def test_value_polarity(query, expected):
     params = router.parse(query).params
     for key, value in expected.items():

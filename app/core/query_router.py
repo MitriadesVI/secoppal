@@ -794,12 +794,13 @@ class QueryRouter:
                 re.compile(
                     rf"""
                     \b(?:
-                        menor(?:es)?\s+(?:a|de|que)
+                        menor(?:es)?\s+(?:o\s+igual\s+)?(?:a|de|que)
                         |menos\s+de
                         |inferior(?:es)?\s+(?:a|de|que)
                         |por\s+debajo\s+de
                         |hasta
                         |m[aá]ximo
+                        |a\s+lo\s+sumo
                     )\s+{amount_text}
                     """,
                     re.IGNORECASE | re.VERBOSE,
@@ -810,7 +811,7 @@ class QueryRouter:
                 re.compile(
                     rf"""
                     \b(?:
-                        mayor(?:es)?\s+(?:a|de|que)
+                        mayor(?:es)?\s+(?:o\s+igual\s+)?(?:a|de|que)
                         |m[aá]s\s+de
                         |superior(?:es)?\s+(?:a|de|que)
                         |supere(?:n)?(?:\s+los?)?
