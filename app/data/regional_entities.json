@@ -1,0 +1,63 @@
+{
+  "SENA": {
+    "Bolívar": "SENA REGIONAL BOLÍVAR",
+    "Atlántico": "SENA REGIONAL ATLÁNTICO",
+    "Antioquia": "SENA REGIONAL ANTIOQUIA",
+    "Cundinamarca": "SENA REGIONAL CUNDINAMARCA",
+    "Valle del Cauca": "SENA REGIONAL VALLE DEL CAUCA",
+    "Santander": "SENA REGIONAL SANTANDER",
+    "Norte de Santander": "SENA REGIONAL NORTE DE SANTANDER",
+    "Boyacá": "SENA REGIONAL BOYACÁ",
+    "Magdalena": "SENA REGIONAL MAGDALENA",
+    "Cesar": "SENA REGIONAL CESAR",
+    "Córdoba": "SENA REGIONAL CÓRDOBA",
+    "Nariño": "SENA REGIONAL NARIÑO",
+    "Cauca": "SENA REGIONAL CAUCA",
+    "Huila": "SENA REGIONAL HUILA",
+    "Tolima": "SENA REGIONAL TOLIMA",
+    "Caldas": "SENA REGIONAL CALDAS",
+    "Risaralda": "SENA REGIONAL RISARALDA",
+    "Quindío": "SENA REGIONAL QUINDÍO",
+    "Sucre": "SENA REGIONAL SUCRE",
+    "La Guajira": "SENA REGIONAL GUAJIRA",
+    "Chocó": "SENA REGIONAL CHOCÓ",
+    "Putumayo": "SENA REGIONAL PUTUMAYO",
+    "Amazonas": "SENA REGIONAL AMAZONAS",
+    "Guaviare": "SENA REGIONAL GUAVIARE",
+    "Caquetá": "SENA REGIONAL CAQUETÁ",
+    "Casanare": "SENA REGIONAL CASANARE",
+    "Arauca": "SENA REGIONAL ARAUCA",
+    "Vichada": "SENA REGIONAL VICHADA",
+    "Guainía": "SENA REGIONAL GUAINÍA",
+    "Vaupés": "SENA REGIONAL VAUPÉS",
+    "San Andrés": "SENA REGIONAL SAN ANDRÉS",
+    "Bogotá": "SENA DIRECCIÓN GENERAL"
+  },
+  "ICBF": {
+    "Bolívar": "ICBF REGIONAL BOLÍVAR",
+    "Atlántico": "ICBF REGIONAL ATLÁNTICO",
+    "Antioquia": "ICBF REGIONAL ANTIOQUIA",
+    "Cundinamarca": "ICBF REGIONAL CUNDINAMARCA",
+    "Valle del Cauca": "ICBF REGIONAL VALLE DEL CAUCA",
+    "Santander": "ICBF REGIONAL SANTANDER",
+    "Norte de Santander": "ICBF REGIONAL NORTE DE SANTANDER",
+    "Boyacá": "ICBF REGIONAL BOYACÁ",
+    "Magdalena": "ICBF REGIONAL MAGDALENA",
+    "Cesar": "ICBF REGIONAL CESAR",
+    "Córdoba": "ICBF REGIONAL CÓRDOBA",
+    "Nariño": "ICBF REGIONAL NARIÑO",
+    "Cauca": "ICBF REGIONAL CAUCA",
+    "Huila": "ICBF REGIONAL HUILA",
+    "Tolima": "ICBF REGIONAL TOLIMA",
+    "Bogotá": "ICBF SEDE DIRECCIÓN GENERAL"
+  },
+  "DNP": {
+    "Bogotá": "DEPARTAMENTO NACIONAL DE PLANEACIÓN"
+  },
+  "Ministerio de Educación": {
+    "Bogotá": "MINISTERIO DE EDUCACIÓN NACIONAL"
+  },
+  "Ministerio de Salud": {
+    "Bogotá": "MINISTERIO DE SALUD Y PROTECCIÓN SOCIAL"
+  }
+}

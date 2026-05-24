@@ -496,6 +496,24 @@ class QueryRouter:
                 }
                 scrubbed = dept_scan.remaining_text
 
+        # ── 6.5 MULTI-REGIONAL ENTITY RESOLUTION (ENTITY-MULTI-REGIONAL-001) ──
+        # Si la entidad resuelta es multi-regional (SENA, ICBF, etc.) y hay
+        # departamento, resolver a la regional específica.
+        if "entidad_resolved" in params and "departamento_resolved" in params:
+            try:
+                from app.data.regional_entities import resolve_regional
+                regional = resolve_regional(
+                    str(params["entidad_resolved"]),
+                    str(params["departamento_resolved"]),
+                )
+                if regional:
+                    params["entidad_resolved"] = regional
+                    if "entidad_resolution" in params and isinstance(params["entidad_resolution"], dict):
+                        params["entidad_resolution"]["value"] = regional
+                        params["entidad_resolution"]["method"] = "multi_regional"
+            except ImportError:
+                pass  # regional_entities module not available — skip silently
+
         # ── 7. ESTADO FAMILY: semantic normalization (runs BEFORE old extractor) ──
         #    Detects natural-language tokens like "publicados", "abiertos",
         #    "vigentes" and maps them to SECOP-accurate estado filters.
