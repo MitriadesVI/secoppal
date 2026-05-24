@@ -11,10 +11,22 @@ Deterministic regex-based. No LLM.
 import re
 
 COMMON_TOKENS = {
+    # Originales (Sprint 2A)
     "servicios", "servicio", "general", "generales",
     "mantenimiento", "suministro", "suministros",
     "prestacion", "prestación", "apoyo", "gestion", "gestión",
     "contratacion", "contratación", "adquisicion", "adquisición",
+    # Sprint 4 — MULTI-AND-OVER-RESTRICTIVE-001 (degradar AND→OR sobre tokens genéricos)
+    "integral", "integrales",
+    "soporte", "soportes", "apoyos",
+    "obra", "obras", "publica", "publico", "pública", "público",
+    "profesional", "profesionales",
+    "asistencia", "asistencias", "tecnica", "técnica", "tecnicos", "técnicos",
+    "proyecto", "proyectos", "actividad", "actividades",
+    "nacional", "nacionales", "regional", "regionales",
+    "suministro", "suministrar", "compra", "compras",
+    "adecuacion", "adecuación", "mejoramiento", "reparacion", "reparación",
+    "construccion", "construcción", "rehabilitacion", "rehabilitación",
 }
 
 # Each entry: (compiled_regex, intent_config_dict)

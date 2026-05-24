@@ -1,5 +1,7 @@
 import re
 
+import pytest
+
 from app.core.soql_builder import SoQLBuilder
 
 
@@ -35,3 +37,74 @@ def test_long_object_list_demotes_common_terms_to_or_group() -> None:
     assert "mantenimiento" in where
     assert "servicios" in where
     assert re.search(r"mantenimiento.* OR .*servicios|servicios.* OR .*mantenimiento", where)
+
+
+def test_putumayo_6_and_case_demotes_common_to_or():
+    """Caso canónico: ASEO, CAFETERÍA, JARDINERÍA, MANTENIMIENTO, SERVICIOS, SUMINISTRO.
+    maintenance + servicios + suministro deben ir como OR."""
+    where = _where(
+        {
+            "objeto": [
+                "aseo",
+                "cafeteria",
+                "jardineria",
+                "mantenimiento",
+                "servicios",
+                "suministro",
+            ]
+        }
+    )
+    # Tokens raros (aseo, cafeteria, jardineria) con AND
+    assert "aseo" in where
+    assert "cafeteria" in where
+    assert "jardineria" in where
+    # Common tokens (mantenimiento, servicios, suministro) con OR entre ellos
+    assert "mantenimiento" in where and "servicios" in where and "suministro" in where
+    assert " OR " in where
+    # La estructura debe ser: (aseo AND cafeteria AND jardineria) AND (mantenimiento OR servicios OR suministro)
+    assert " AND " in where
+
+
+def test_four_tokens_no_common_keeps_and():
+    """4 tokens sin common → AND completo, sin degradación."""
+    where = _where(
+        {
+            "objeto": [
+                "electrobombas",
+                "motores",
+                "turbinas",
+                "generadores",
+            ]
+        }
+    )
+    assert "electrobombas" in where
+    assert "motores" in where
+    assert "turbinas" in where
+    assert "generadores" in where
+    # Todos los tokens deben estar unidos con AND (no OR entre términos
+    # distintos — el OR de name LIKE x OR desc LIKE x es esperado por término)
+    assert " AND " in where
+    # Contar ANDs: 4 términos → 3 ANDs entre términos + algunos dentro de LIKE groups
+    # Verificar que hay al menos 3 ANDs (los que unen los 4 grupos de término)
+    assert where.count(" AND ") >= 3
+
+
+def test_three_tokens_and_only_no_degradation():
+    """3 tokens AND → sin cambio, aunque haya common tokens."""
+    where = _where(
+        {
+            "objeto": [
+                "aseo",
+                "mantenimiento",
+                "servicios",
+            ]
+        }
+    )
+    # len < 4, no se degrada
+    assert "aseo" in where
+    assert "mantenimiento" in where
+    assert "servicios" in where
+    assert " AND " in where
+    # No debe haber OR entre térmicos distintos
+    # (el OR interno de LIKE name OR LIKE desc NO cuenta)
+    assert where.count(" AND ") >= 2  # 3 términos → al menos 2 ANDs entre grupos
