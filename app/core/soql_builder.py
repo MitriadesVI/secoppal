@@ -391,7 +391,23 @@ class SoQLBuilder:
 
     @staticmethod
     def _accent_fold_expr(expr: str) -> str:
-        return f"unaccent({expr})"
+        """Replace tildes and ñ in SoQL field using regexp_replace chain.
+
+        Socrata SoQL does not support PostgreSQL's unaccent(). Instead we use
+        nested regexp_replace calls to strip Á→A, É→E, Í→I, Ó→O, Ú→U, Ñ→N,
+        then remove any remaining non-ASCII chars.
+        """
+        # Build regexp_replace chain: strip each accented char + ñ, then non-alpha/num
+        # ORDER MATTERS: replace lowercase first (inside uppercase strings they
+        # appear when the field is already uppercased but has residual lower accents)
+        replacements = [
+            ("á", "a"), ("é", "e"), ("í", "i"), ("ó", "o"), ("ú", "u"), ("ñ", "n"),
+            ("Á", "A"), ("É", "E"), ("Í", "I"), ("Ó", "O"), ("Ú", "U"), ("Ñ", "N"),
+        ]
+        inner = f"UPPER({expr})"
+        for accented, plain in replacements:
+            inner = f"regexp_replace({inner}, '{accented}', '{plain}')"
+        return inner
 
     @staticmethod
     def _add_estado_clause(where_clauses: list[str], field: str, value) -> None:
