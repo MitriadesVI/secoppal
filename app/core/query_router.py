@@ -506,11 +506,15 @@ class QueryRouter:
         if "entidad_resolved" in params and "departamento_resolved" in params:
             try:
                 from app.data.regional_entities import resolve_regional
-                regional = resolve_regional(
-                    str(params["entidad_resolved"]),
+                original_entity = str(params["entidad_resolved"])
+                regional, canonical_short = resolve_regional(
+                    original_entity,
                     str(params["departamento_resolved"]),
                 )
                 if regional:
+                    # Guardar el nombre canónico corto como like_value para SoQL
+                    # (ej: "SENA" en vez de "SENA REGIONAL BOLÍVAR" que tiene tildes y no existe en SECOP)
+                    params["entidad_like"] = canonical_short
                     params["entidad_resolved"] = regional
                     if "entidad_resolution" in params and isinstance(params["entidad_resolution"], dict):
                         params["entidad_resolution"]["value"] = regional

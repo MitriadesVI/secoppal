@@ -20,7 +20,7 @@ if _db_path.exists():
         _regional_db = json.load(f)
 
 
-def resolve_regional(entidad_resolved: str, departamento_resolved: str) -> str | None:
+def resolve_regional(entidad_resolved: str, departamento_resolved: str) -> tuple[str | None, str | None]:
     """Resolve a multi-regional entity to its department-specific office.
 
     Args:
@@ -28,8 +28,10 @@ def resolve_regional(entidad_resolved: str, departamento_resolved: str) -> str |
         departamento_resolved: Official department name (e.g., "Bolívar")
 
     Returns:
-        Regional entity name if found, or None if not a multi-regional entity
+        Tuple of (regional_name, canonical_short_name) if found,
+        or (None, None) if not a multi-regional entity
         or no specific regional exists for this department.
+        canonical_short_name is the central entity key (e.g., "SENA") for LIKE matching.
     """
     # Try exact match on the central entity name
     # The catalog keys are the canonical central entity names
@@ -43,9 +45,9 @@ def resolve_regional(entidad_resolved: str, departamento_resolved: str) -> str |
                     # Guard: if entidad_resolved is already the regional, skip
                     # (idempotent — don't re-resolve same value)
                     if entidad_resolved.upper() == regional.upper():
-                        return None
-                    return regional
+                        return None, None
+                    return regional, central_name
             # If no specific department match, return None (keep central entity)
-            return None
+            return None, None
 
-    return None
+    return None, None

@@ -49,7 +49,7 @@ def test_build_contract_query_default_orders_by_date_then_value() -> None:
         },
     )
 
-    assert "UPPER(nombre_entidad) LIKE UPPER('%SERVICIO NACIONAL DE APRENDIZAJE -SENA-%')" in soql
+    assert "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SERVICIO NACIONAL DE APRENDIZAJE -SENA-%'))" in soql
     assert "departamento = 'BOGOTA'" in soql
     assert "documento_proveedor = '900123456'" in soql
     assert "ORDER BY fecha_de_firma DESC, valor_del_contrato DESC" in soql

@@ -7,27 +7,39 @@ from app.data.regional_entities import resolve_regional
 
 
 def test_sena_bolivar_resolves_to_regional():
-    assert resolve_regional("SENA", "Bolívar") == "SENA REGIONAL BOLÍVAR"
+    regional, canonical = resolve_regional("SENA", "Bolívar")
+    assert regional == "SENA REGIONAL BOLÍVAR"
+    assert canonical == "SENA"
 
 
 def test_sena_atlantico_resolves_to_regional():
-    assert resolve_regional("SENA", "Atlántico") == "SENA REGIONAL ATLÁNTICO"
+    regional, canonical = resolve_regional("SENA", "Atlántico")
+    assert regional == "SENA REGIONAL ATLÁNTICO"
+    assert canonical == "SENA"
 
 
 def test_icbf_magdalena_resolves_to_regional():
-    assert resolve_regional("ICBF", "Magdalena") == "ICBF REGIONAL MAGDALENA"
+    regional, canonical = resolve_regional("ICBF", "Magdalena")
+    assert regional == "ICBF REGIONAL MAGDALENA"
+    assert canonical == "ICBF"
 
 
 def test_icbf_bogota_resolves_to_direccion():
-    assert resolve_regional("ICBF", "Bogotá") == "ICBF SEDE DIRECCIÓN GENERAL"
+    regional, canonical = resolve_regional("ICBF", "Bogotá")
+    assert regional == "ICBF SEDE DIRECCIÓN GENERAL"
+    assert canonical == "ICBF"
 
 
 def test_unknown_entity_returns_none():
-    """Non-multi-regional entities return None."""
-    assert resolve_regional("INVIAS", "Cundinamarca") is None
+    """Non-multi-regional entities return (None, None)."""
+    regional, canonical = resolve_regional("INVIAS", "Cundinamarca")
+    assert regional is None
+    assert canonical is None
 
 
 def test_unknown_department_for_multi_entity_returns_none():
-    """If the department has no specific regional, return None — keep central entity."""
+    """If the department has no specific regional, return (None, None)."""
     # DNP only has Bogotá in the catalog
-    assert resolve_regional("DNP", "Bolívar") is None
+    regional, canonical = resolve_regional("DNP", "Bolívar")
+    assert regional is None
+    assert canonical is None
