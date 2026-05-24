@@ -356,20 +356,44 @@ class Formatter:
             return ""
         params = params or {}
         lines = []
+        resolved_entity = (params.get("entidad_resolved") or "").lower()
+        resolved_modality = (params.get("modalidad") or "").lower()
+        has_date_filter = bool(params.get("fecha_desde") or params.get("fecha_hasta"))
 
-        # Entidad dominante: skip si el usuario ya filtró por esa entidad
+        # 1. Entidad concentración (Observer 2.0)
+        ec_name = getattr(insights, "entity_concentration_name", None)
+        ec_pct = getattr(insights, "entity_concentration_pct", None)
+        if ec_name and ec_pct is not None and ec_name.lower() not in resolved_entity:
+            lines.append(f"{ec_name} concentra el {ec_pct:.0f}% del universo.")
+
+        # 2. Modalidad dominancia (Observer 2.0)
+        md_name = getattr(insights, "modality_dominance_name", None)
+        md_pct = getattr(insights, "modality_dominance_pct", None)
+        if md_name and md_pct is not None and md_name.lower() not in resolved_modality:
+            lines.append(f"{md_name} domina con el {md_pct:.0f}%.")
+
+        # 3. Temporal skew por trimestre (Observer 2.0)
+        ts_q = getattr(insights, "temporal_skew_quarter", None)
+        ts_pct = getattr(insights, "temporal_skew_pct", None)
+        if ts_q and ts_pct is not None and not has_date_filter:
+            lines.append(f"Concentrado en {ts_q} ({ts_pct:.0f}%).")
+
+        # 4. Value outlier ratio (Observer 2.0)
+        vor = getattr(insights, "value_outlier_ratio", None)
+        if vor:
+            lines.append(f"El mayor valor supera el promedio {vor:.0f}x.")
+
+        # Legacy signals (mantenidos para compatibilidad)
         if getattr(insights, "has_dominant_entity", False):
             name = getattr(insights, "dominant_entity_name", None)
             pct = getattr(insights, "dominant_entity_pct", None)
-            if name and pct:
-                resolved = (params.get("entidad_resolved") or "").lower()
-                if name.lower() not in resolved:
-                    lines.append(f"El {pct:.0f}% son de {name}.")
+            if name and pct and name.lower() not in resolved_entity:
+                lines.append(f"El {pct:.0f}% son de {name}.")
 
         if getattr(insights, "has_temporal_concentration", False):
             yr = getattr(insights, "dominant_year", None)
             pct = getattr(insights, "dominant_year_pct", None)
-            if yr and pct:
+            if yr and pct and not has_date_filter:
                 lines.append(f"La mayoria son de {yr}.")
 
         if getattr(insights, "has_value_outlier", False):

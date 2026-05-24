@@ -55,6 +55,19 @@ class UniverseInsights:
     truncation_warning: bool = False
     truncation_ratio: float | None = None
 
+    # Observer 2.0 — signals enriquecidos por categoría
+    entity_concentration_pct: float | None = None
+    entity_concentration_name: str | None = None
+
+    modality_dominance_name: str | None = None
+    modality_dominance_pct: float | None = None
+
+    temporal_skew_quarter: str | None = None
+    temporal_skew_pct: float | None = None
+
+    value_outlier_ratio: float | None = None
+    has_value_outlier_ratio: bool = False
+
 
 # ---------------------------------------------------------------------------
 # Punto de entrada público
@@ -147,10 +160,15 @@ def _compute_from_sample(
     date_range = (min(dates)[:10], max(dates)[:10]) if dates else None
 
     year_counts: dict[int, int] = {}
+    quarter_counts: dict[str, int] = {}
     for d in dates:
         try:
             yr = int(d[:4])
             year_counts[yr] = year_counts.get(yr, 0) + 1
+            # Q1-Q4 extraction
+            month = int(d[5:7]) if len(d) >= 7 else 1
+            q = (month - 1) // 3 + 1
+            quarter_counts[f"Q{q} {yr}"] = quarter_counts.get(f"Q{q} {yr}", 0) + 1
         except (ValueError, IndexError):
             pass
 
@@ -160,6 +178,7 @@ def _compute_from_sample(
         "top_modalities": top_modalities,
         "date_range": date_range,
         "temporal_dist": year_counts,
+        "temporal_dist_quarter": quarter_counts,
     }
     return _build_insights(raw, total_count, sample_size, "sample", limit=limit)
 
@@ -313,13 +332,14 @@ def _parse_agg_results(agg: dict, spec) -> dict:
 # ---------------------------------------------------------------------------
 
 def _derive_signals(raw: dict, total_count: int) -> dict:
-    """Computa los 8 campos de señales. Pura, sin side effects."""
+    """Computa los 8+ campos de señales. Pura, sin side effects."""
     top_entities: list[tuple[str, int]] = raw.get("top_entities", [])
     value_stats: dict | None = raw.get("value_stats")
     top_modalities: list[tuple[str, int]] = raw.get("top_modalities", [])
     temporal_dist: dict[int, int] = raw.get("temporal_dist", {})
+    quarter_dist: dict[str, int] = raw.get("temporal_dist_quarter", {})
 
-    # Entidad dominante
+    # Entidad dominante (>40%)
     has_dominant_entity = False
     dominant_entity_name = None
     dominant_entity_pct = None
@@ -331,7 +351,7 @@ def _derive_signals(raw: dict, total_count: int) -> dict:
             dominant_entity_name = top_name
             dominant_entity_pct = round(pct * 100, 1)
 
-    # Concentración temporal
+    # Concentración temporal por año (>60%)
     has_temporal_concentration = False
     dominant_year = None
     dominant_year_pct = None
@@ -343,7 +363,7 @@ def _derive_signals(raw: dict, total_count: int) -> dict:
             dominant_year = yr
             dominant_year_pct = round(pct * 100, 1)
 
-    # Outlier de valor
+    # Outlier de valor (>5x median)
     has_value_outlier = False
     outlier_value = None
     if value_stats:
@@ -360,6 +380,50 @@ def _derive_signals(raw: dict, total_count: int) -> dict:
         if top_mod_cnt / total_count < 0.50:
             has_diverse_modalities = True
 
+    # ── Observer 2.0 signals ────────────────────────────────────────────────
+
+    # top_entity_concentration — siempre computar (sin threshold)
+    entity_concentration_pct = None
+    entity_concentration_name = None
+    if top_entities and total_count > 0:
+        top_name, top_cnt = top_entities[0]
+        entity_concentration_pct = round(top_cnt / total_count * 100, 1)
+        entity_concentration_name = top_name
+
+    # modality_dominance — si top modality >= 50%
+    modality_dominance_name = None
+    modality_dominance_pct = None
+    if top_modalities and total_count > 0:
+        top_mod_name, top_mod_cnt = top_modalities[0]
+        if top_mod_cnt / total_count >= 0.50:
+            modality_dominance_name = top_mod_name
+            modality_dominance_pct = round(top_mod_cnt / total_count * 100, 1)
+
+    # temporal_skew — trimestre con mayor concentración, si >70%
+    temporal_skew_quarter = None
+    temporal_skew_pct = None
+    dist_to_use = quarter_dist if quarter_dist else {}
+    if not dist_to_use and temporal_dist:
+        # fallback aggregation: year as pseudo-quarter
+        dist_to_use = {str(yr): cnt for yr, cnt in temporal_dist.items()}
+    if dist_to_use and total_count > 0:
+        best_q, q_cnt = max(dist_to_use.items(), key=lambda x: x[1])
+        if q_cnt / total_count > 0.70:
+            temporal_skew_quarter = best_q
+            temporal_skew_pct = round(q_cnt / total_count * 100, 1)
+
+    # value_outlier_ratio — max > 10x mean
+    value_outlier_ratio = None
+    has_value_outlier_ratio = False
+    if value_stats:
+        mean = value_stats.get("mean")
+        max_val = value_stats.get("max")
+        if mean and max_val and mean > 0:
+            ratio = max_val / mean
+            if ratio > 10:
+                value_outlier_ratio = round(ratio, 1)
+                has_value_outlier_ratio = True
+
     return {
         "has_dominant_entity": has_dominant_entity,
         "dominant_entity_name": dominant_entity_name,
@@ -370,6 +434,15 @@ def _derive_signals(raw: dict, total_count: int) -> dict:
         "has_value_outlier": has_value_outlier,
         "outlier_value": outlier_value,
         "has_diverse_modalities": has_diverse_modalities,
+        # 2.0
+        "entity_concentration_pct": entity_concentration_pct,
+        "entity_concentration_name": entity_concentration_name,
+        "modality_dominance_name": modality_dominance_name,
+        "modality_dominance_pct": modality_dominance_pct,
+        "temporal_skew_quarter": temporal_skew_quarter,
+        "temporal_skew_pct": temporal_skew_pct,
+        "value_outlier_ratio": value_outlier_ratio,
+        "has_value_outlier_ratio": has_value_outlier_ratio,
     }
 
 
