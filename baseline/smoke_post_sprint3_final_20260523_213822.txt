@@ -1,0 +1,29 @@
+SECOP query failed on attempt 1/1: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=15)
+SECOP query failed on attempt 1/1: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=15)
+aggregate top_entities failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate top_modalities failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate value_stats failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate temporal_dist failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate top_entities failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate value_stats failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate top_modalities failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate temporal_dist failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+SECOP count failed on attempt 1/1: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=15)
+  #  QUERY                                                    N  T(s)  STATUS
+--------------------------------------------------------------------------------
+  2  contratos de mantenimiento vial en Antioquia             0  30.5  ✗ FAIL
+  3  procesos abiertos en Cundinamarca                       50   3.1  ✓ OK
+  6  contratos entre 100 y 500 millones en Bogota            50   3.5  ✓ OK
+ 10  contratos de obra mayores a 500 millones en Santander    50   3.7  ✓ OK
+ 12  contratos del INVIAS                                    50  15.7  ✓ OK
+ 13  contratos de la gobernacion de Boyaca                   50  15.2  ✓ OK
+ 15  procesos de la alcaldia de Cali                         50  17.2  ✓ OK
+ 20  suministros de medicamentos en Atlantico                50  11.9  ✓ OK
+ 22  procesos convocados en Tolima                           50   2.2  ✓ OK
+ 24  contratos de trampa de grasa en Putumayo                 4   0.8  ✓ OK
+--------------------------------------------------------------------------------
+Resultados: 9/10 con >0 resultados
+Tiempo medio: 10.4s/query
+
+PASS — race fix validado (9 >= 7)
+Listo para Sprint 3 fase 2.
