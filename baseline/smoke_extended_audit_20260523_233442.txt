@@ -1,0 +1,145 @@
+SECOP query failed on attempt 1/1: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=15)
+SECOP query failed on attempt 1/1: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=15)
+aggregate temporal_dist failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate value_stats failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate top_entities failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate top_modalities failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate date_range failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate value_stats failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate top_entities failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate temporal_dist failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate date_range failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+SECOP query failed on attempt 1/1: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=15)
+SECOP query failed on attempt 1/1: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=15)
+SECOP query failed on attempt 1/1: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=15)
+aggregate date_range failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate top_entities failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate temporal_dist failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate value_stats failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate top_modalities failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate temporal_dist failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate top_modalities failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate date_range failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate top_entities failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate value_stats failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+SECOP query failed on attempt 1/1: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=15)
+SECOP query failed on attempt 1/1: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=15)
+SECOP query failed on attempt 1/1: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=15)
+SECOP query failed on attempt 1/1: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=15)
+aggregate top_entities failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate top_modalities failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate temporal_dist failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate value_stats failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+SECOP query failed on attempt 1/1: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=15)
+SECOP query failed on attempt 1/1: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=15)
+SECOP query failed on attempt 1/1: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=15)
+SECOP query failed on attempt 1/1: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=15)
+SECOP query failed on attempt 1/1: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=15)
+SECOP query failed on attempt 1/1: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=15)
+SECOP query failed on attempt 1/1: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=15)
+SECOP count failed on attempt 1/1: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=15)
+SECOP query failed on attempt 1/1: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=15)
+aggregate top_entities failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate top_modalities failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate temporal_dist failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate value_stats failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate top_modalities failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate temporal_dist failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+
+======================================================================
+  BUCKET: A-ACCENT (10 queries)
+======================================================================
+  #  QUERY                                                          N  T(s)  STATUS
+--------------------------------------------------------------------------------
+  1  consultoria en sistemas en Bogota                              0  30.5  ✗ FAIL
+  2  diseño de obras en Antioquia                                  50  29.6  ✓ OK
+  3  jardineria y mantenimiento en Cundinamarca                    50  19.3  ✓ OK
+  4  servicios turisticos en Atlantico                              0  30.2  ✗ FAIL
+  5  cafeteria y restaurante escolar                                0  15.2  ✗ FAIL
+  6  logistica y transporte en Valle                               50  28.7  ✓ OK
+  7  consultoria informatica en Santander                          50  17.8  ✓ OK
+  8  servicios artisticos y culturales en Caldas                    0  30.2  ✗ FAIL
+  9  residuos solidos en Bolivar                                   50   9.1  ✓ OK
+ 10  construccion de vias en Tolima                                50   7.7  ✓ OK
+--------------------------------------------------------------------------------
+  Pass: 6/10 (60%) | Avg: 21.8s
+
+======================================================================
+  BUCKET: B-MULTI-AND (5 queries)
+======================================================================
+  #  QUERY                                                          N  T(s)  STATUS
+--------------------------------------------------------------------------------
+ 11  aseo cafeteria jardineria y mantenimiento                      0  15.0  ✗ FAIL
+ 12  control de calidad de agua para consumo humano                 0  15.2  ✗ FAIL
+ 13  alimentacion escolar PAE en Cordoba                           50  20.8  ✓ OK
+ 14  transporte escolar rural integral en Huila                     0  18.6  ✗ FAIL
+ 15  dotacion de uniformes educativos en Narino                     0  21.7  ✗ FAIL
+--------------------------------------------------------------------------------
+  Pass: 1/5 (20%) | Avg: 18.3s
+
+======================================================================
+  BUCKET: C-VALUE-POLARITY (5 queries)
+======================================================================
+  #  QUERY                                                          N  T(s)  STATUS
+--------------------------------------------------------------------------------
+ 16  contratos no mayores a 100 millones en Cundinamarca            0  30.5  ✗ FAIL
+ 17  contratos no menores a 500 millones en Antioquia               0  30.4  ✗ FAIL
+ 18  contratos menor o igual a 50 millones en Bogota               50  34.3  ✓ OK
+ 19  contratos a lo sumo 200 millones en Santander                 50  11.2  ✓ OK
+ 20  contratos por debajo de 30 millones en Atlantico               0   7.4  ✗ FAIL
+--------------------------------------------------------------------------------
+  Pass: 2/5 (40%) | Avg: 22.8s
+
+======================================================================
+  BUCKET: D-ENTITY-MULTI-REGIONAL (5 queries)
+======================================================================
+  #  QUERY                                                          N  T(s)  STATUS
+--------------------------------------------------------------------------------
+ 21  contratos del SENA en Bolivar                                  0  15.7  ✗ FAIL
+ 22  contratos del SENA en Atlantico                                0  12.3  ✗ FAIL
+ 23  contratos del ICBF en Magdalena                               50   3.5  ✓ OK
+ 24  contratos del SENA en Antioquia                               50   4.0  ✓ OK
+ 25  contratos del ICBF en Tolima                                  50   3.7  ✓ OK
+--------------------------------------------------------------------------------
+  Pass: 3/5 (60%) | Avg: 7.8s
+
+======================================================================
+  BUCKET: E-STATE-CATALOG (5 queries)
+======================================================================
+  #  QUERY                                                          N  T(s)  STATUS
+--------------------------------------------------------------------------------
+ 26  procesos publicados en Tolima                                 50   2.4  ✓ OK
+ 27  procesos en borrador en Bogota                                50   4.7  ✓ OK
+ 28  procesos en evaluacion en Antioquia                           50   5.8  ✓ OK
+ 29  procesos aprobados en Cundinamarca                            50  14.2  ✓ OK
+ 30  procesos seleccionados en Valle del Cauca                     50  22.0  ✓ OK
+--------------------------------------------------------------------------------
+  Pass: 5/5 (100%) | Avg: 9.8s
+
+======================================================================
+  RESUMEN FINAL
+======================================================================
+Bucket                 Pass     %  Avg(s)
+---------------------------------------------
+A-ACCENT             6/ 10   60%   21.8s
+B-MULTI-AND          1/  5   20%   18.3s
+C-VALUE-POLARITY     2/  5   40%   22.8s
+D-ENTITY-MULTI-REGIONAL 3/  5   60%    7.8s
+E-STATE-CATALOG      5/  5  100%    9.8s
+---------------------------------------------
+TOTAL                17/ 30   57%
+
+Queries con 0 resultados:
+  [A-ACCENT] #1 consultoria en sistemas en Bogota                   30.5s  FAIL
+  [A-ACCENT] #4 servicios turisticos en Atlantico                   30.2s  FAIL
+  [A-ACCENT] #5 cafeteria y restaurante escolar                     15.2s  FAIL
+  [A-ACCENT] #8 servicios artisticos y culturales en Caldas         30.2s  FAIL
+  [B-MULTI-AND] #11 aseo cafeteria jardineria y mantenimiento           15.0s  FAIL
+  [B-MULTI-AND] #12 control de calidad de agua para consumo humano      15.2s  FAIL
+  [B-MULTI-AND] #14 transporte escolar rural integral en Huila          18.6s  FAIL
+  [B-MULTI-AND] #15 dotacion de uniformes educativos en Narino          21.7s  FAIL
+  [C-VALUE-POLARITY] #16 contratos no mayores a 100 millones en Cundinamarca  30.5s  FAIL
+  [C-VALUE-POLARITY] #17 contratos no menores a 500 millones en Antioquia    30.4s  FAIL
+  [C-VALUE-POLARITY] #20 contratos por debajo de 30 millones en Atlantico     7.4s  FAIL
+  [D-ENTITY-MULTI-REGIONAL] #21 contratos del SENA en Bolivar                       15.7s  FAIL
+  [D-ENTITY-MULTI-REGIONAL] #22 contratos del SENA en Atlantico                     12.3s  FAIL
