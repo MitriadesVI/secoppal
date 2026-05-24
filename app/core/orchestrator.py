@@ -316,6 +316,29 @@ def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
                     )
             except Exception:
                 pass
+
+        # B5: Tras 1er fallo, degradar (ampliar ventana o quitar AND menos crítico)
+        try:
+            degraded, hint = _relax_params(dict(params))
+            if degraded:
+                did = state["dataset_id"]
+                soql = soql_builder.build(did, degraded)
+                count_soql = soql_builder.build_count(did, degraded)
+                total, results, secop_timings = _count_and_query_parallel(
+                    secop_client, did, count_soql, soql
+                )
+                if results:
+                    return _with_timings(
+                        state,
+                        {**secop_timings, "execute_total_ms": _elapsed_ms(start_total)},
+                        results=results, query_error="", total_count=total,
+                        timeout_suggestions=[], risk_flag_timeout=False,
+                        degraded=True, degraded_hint=hint,
+                        soql_query=soql, resolved_params=degraded,
+                    )
+        except Exception:
+            pass
+
         if _is_timeout_exception(exc):
             return _with_timing(
                 state,

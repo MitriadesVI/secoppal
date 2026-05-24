@@ -116,7 +116,7 @@ def maybe_handle_analytical_query(
 
     try:
         soql = build_aggregate_sum_query(soql_builder, dataset_id, params)
-        rows = secop_client.aggregate(dataset_id, soql, timeout=10)
+        rows = secop_client.with_timeout(10).aggregate(dataset_id, soql)
         response = format_aggregate_sum_response(rows, params, dataset_id)
 
         return {

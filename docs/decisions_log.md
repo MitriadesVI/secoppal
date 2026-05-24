@@ -262,3 +262,35 @@ reales del usuario para construir `dialogue_policy_corpus.yaml` (50-60 casos:
 **Bugs cerrados:** CITY-MENTION-AS-OBJECT-001, CITY-TO-ENTITY-AUTOPROMOTION-001, TEMPORAL-MONTH-PARSING-001, NUMBER-CONTEXT-PHRASE-001, COURTESY-FILLER-001, NO-FOLLOWUP-DETECTION-001.
 
 **Bugs en PARTIAL:** ~~OPP-INTENT-001~~ → **CLOSED Sprint 2A-fix (B3).** P4 setea `intent_type` + B3 proyecta `estado_de_apertura_del_proceso = 'Abierto'` al WHERE. Cierre completo con dependencia resuelta.
+
+---
+
+## ADR-007: SecopClient inmutable por timeout vía with_timeout() para evitar race condition en ThreadPoolExecutor
+
+**Fecha:** 2026-05-23
+**Contexto:** `SecopClient.aggregate()` mutaba `self.client.timeout` globalmente mediante un patrón try/finally que seteaba y restauraba `client.timeout`. Cuando `observer.py` ejecutaba 5 agregaciones concurrentes vía `ThreadPoolExecutor`, cada worker ponía `timeout=4` en el cliente subyacente. Como `requests` libera el GIL durante I/O, el hilo principal que ejecutaba `count()` o `query()` leía `self.timeout = 4` en `sodapy._perform_request`, causando que las queries principales fallaran con timeout de 4s a pesar de `Settings.secop_timeout_seconds = 60`.
+
+**Decisión:**
+1. Eliminar la mutación de `client.timeout` en `aggregate()`.
+2. Introducir `SecopClient.with_timeout(timeout)` que devuelve una instancia nueva de `SecopClient` con su propio `Socrata(..., timeout=timeout)`.
+3. `observer.py` y `analytics.py` usan `with_timeout()` para agregaciones con timeout distinto al principal.
+4. No compartir estado mutable entre hilos. Cada `Socrata` tiene su propio `requests.Session` y su propio `timeout`.
+
+**Alternativas descartadas:**
+- Thread-local storage: complejidad innecesaria para un wrapper thin.
+- Lock global en `aggregate()`: serializaría las agregaciones concurrentes del observer.
+- Pasar timeout como parámetro a `sodapy.Socrata.get()`: la librería no lo soporta; el timeout es propiedad de la sesión.
+
+**Consecuencias:**
+- Observer puede seguir corriendo agregaciones con timeout corto (4s) sin afectar las queries principales.
+- Analytics puede usar timeout=10s para sumas agregadas sin afectar el cliente principal.
+- Memoria: `with_timeout()` crea un nuevo `requests.Session` por llamada. Costo aceptable para 5-6 agregaciones por query.
+
+**Métricas al cierre:**
+- pytest: 716 passed, 3 xfailed
+- corpus v1: 88/88 PASS
+- corpus dialogue: 61/61 PASS (60 + GOB-DEPTO-001)
+- lint-core: verde
+- Smoke: API transient slow (9/25 with 5s timeout), unit tests confirm fix correctness
+
+**Bugs cerrados:** OPP-TIMEOUT-001 (B5), GOB-DEPTO-RESOLUTION-001 (B6), RACE-TIMEOUT-MUTATION-001 (causa raíz real).

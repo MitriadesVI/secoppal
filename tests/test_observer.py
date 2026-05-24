@@ -225,6 +225,7 @@ class TestObserveEntryPoint:
 
     def test_uses_aggregation_when_total_count_above_50(self, sample_contratos, soql_builder):
         client = MagicMock()
+        client.with_timeout.return_value = client
         # Mock all 5 aggregation results
         client.aggregate.side_effect = [
             [{"nombre_entidad": "INVIAS", "cnt": "100"}, {"nombre_entidad": "ANLA", "cnt": "50"}],  # top_entities
@@ -241,11 +242,18 @@ class TestObserveEntryPoint:
 
     def test_returns_none_on_critical_failure(self, soql_builder):
         client = MagicMock()
+        client.with_timeout.return_value = client
         # Force exception in _compute_from_aggregation
         client.aggregate.side_effect = RuntimeError("SECOP down")
         insights = observe([], total_count=200, dataset_id="jbjy-vk9h",
                            params={}, secop_client=client, soql_builder=soql_builder)
-        assert insights is None
+        # B5: observer no longer crashes when all aggregations fail; returns empty insights with partial=True
+        assert insights is not None
+        assert insights.partial is True
+        assert insights.computed_from == "aggregation"
+        assert insights.top_entities == []
+        assert insights.value_stats is None
+        assert insights.top_modalities == []
 
     def test_sample_executes_no_network(self, soql_builder):
         client = MagicMock()
@@ -258,6 +266,7 @@ class TestObserveEntryPoint:
     def test_aggregation_partial_timeout(self, soql_builder):
         """Some queries timeout, others return — best-effort gives partial insights."""
         client = MagicMock()
+        client.with_timeout.return_value = client
         def side_effect(*args, **kwargs):
             soql = args[1] if len(args) > 1 else kwargs.get("soql", "")
             if "avg(" in soql:

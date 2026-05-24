@@ -2,8 +2,8 @@
 metadata:
   version: "1.0"
   created: "2026-05-21"
-  total_cases: 60
-  source: "docs/CORPUS_BACKLOG.md (17 real) + synthetic (28) + negative (15)"
+  total_cases: 61
+  source: "docs/CORPUS_BACKLOG.md (17 real) + synthetic (28) + negative (15) + gobernacion (1)"
   purpose: "Unit-level corpus over compute_query_plan(). Tests rules in isolation with curated params. E2E coverage lives in tests/test_sprint2a_canonical_smoke.py + tests/test_plan_query_*.py."
 
 cases:
@@ -492,3 +492,13 @@ cases:
     severity: LOW
     should_execute: true
     expected_signals_not: [implicit_opportunity]
+
+  # ═══════════════ 1 GOBERNACIÓN ═══════════════
+
+  - id: GOB-DEPTO-001
+    query: "contratos de la gobernacion de Boyaca"
+    category: entity_resolution
+    severity: HIGH
+    source: "GOB-DEPTO-RESOLUTION-001"
+    should_execute: true
+    expected_params: { entidad_resolved: "GOBERNACIÓN DE BOYACÁ" }

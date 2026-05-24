@@ -51,6 +51,7 @@ class UniverseInsights:
     outlier_value: float | None
 
     has_diverse_modalities: bool
+    partial: bool = False
     truncation_warning: bool = False
     truncation_ratio: float | None = None
 
@@ -191,7 +192,8 @@ def _compute_from_aggregation(
     with ThreadPoolExecutor(max_workers=5) as executor:
         futures = {
             executor.submit(
-                secop_client.aggregate, dataset_id, q, OBSERVER_AGG_TIMEOUT_PER_TASK
+                secop_client.with_timeout(OBSERVER_AGG_TIMEOUT_PER_TASK).aggregate,
+                dataset_id, q,
             ): name
             for name, q in queries.items()
         }
@@ -209,17 +211,30 @@ def _compute_from_aggregation(
                 OBSERVER_AGG_TIMEOUT_GLOBAL,
             )
 
-    # Si todas las queries fallaron, sube la excepción para que observe() retorne None
-    if all(v is None for v in agg_results.values()):
-        raise RuntimeError("all aggregation queries failed")
-
     spec = soql_builder.SPECS.get(dataset_id)
     if spec is None:
-        raise KeyError(f"dataset_id '{dataset_id}' not found in SoQLBuilder.SPECS")
+        logger.warning("dataset_id '%s' not found in SoQLBuilder.SPECS — returning empty insights", dataset_id)
+        return _build_insights(
+            {}, total_count, sample_size=0, computed_from="aggregation",
+            limit=int(params.get("limit", 50) or 50), partial=True,
+        )
+
+    # Si todas las queries fallaron, devolver insights vacíos con partial=True
+    # en lugar de crashear.
+    if all(v is None for v in agg_results.values()):
+        raw = _parse_agg_results(agg_results, spec)
+        limit = int(params.get("limit", 50) or 50)
+        return _build_insights(
+            raw, total_count, sample_size=0, computed_from="aggregation",
+            limit=limit, partial=True,
+        )
+
     raw = _parse_agg_results(agg_results, spec)
     limit = int(params.get("limit", 50) or 50)
+    has_partial = any(v is None for v in agg_results.values())
     return _build_insights(
-        raw, total_count, sample_size=0, computed_from="aggregation", limit=limit
+        raw, total_count, sample_size=0, computed_from="aggregation",
+        limit=limit, partial=has_partial,
     )
 
 
@@ -368,6 +383,7 @@ def _build_insights(
     sample_size: int,
     computed_from: str,
     limit: int = 50,
+    partial: bool = False,
 ) -> UniverseInsights:
     signals = _derive_signals(raw, total_count)
     truncation_warning = total_count > limit
@@ -383,6 +399,7 @@ def _build_insights(
         top_modalities=raw.get("top_modalities", []),
         temporal_distribution=raw.get("temporal_dist", {}),
         computed_from=computed_from,
+        partial=partial,
         truncation_warning=truncation_warning,
         truncation_ratio=truncation_ratio,
         **signals,

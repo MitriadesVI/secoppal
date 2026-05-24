@@ -22,28 +22,31 @@ class SecopClient:
         app_token: str | None,
         timeout: int = 30,
         client: Any | None = None,
-        max_retries: int = 3,
+        max_retries: int = 1,
     ) -> None:
         if client is None and Socrata is None:
             raise RuntimeError("sodapy is required to instantiate SecopClient without a custom client.")
 
+        self.domain = domain
+        self.app_token = app_token
+        self.timeout = timeout
         self.client = client or Socrata(domain, app_token=app_token, timeout=timeout)
         self.max_retries = max_retries
 
-    def aggregate(self, dataset_id: str, soql: str, timeout: int | None = None) -> list[dict]:
+    def with_timeout(self, timeout: int) -> "SecopClient":
+        """Return a new SecopClient with a different timeout, sharing nothing mutable."""
+        if Socrata is None:
+            raise RuntimeError("sodapy is required for with_timeout.")
+        return SecopClient(
+            domain=self.domain,
+            app_token=self.app_token,
+            timeout=timeout,
+            max_retries=self.max_retries,
+        )
+
+    def aggregate(self, dataset_id: str, soql: str) -> list[dict]:
         """Execute a single aggregation query. No retries — best-effort for observer."""
-        client = self.client
-        if timeout is not None:
-            # Patch timeout on the underlying client for this call if possible
-            orig = getattr(client, "timeout", None)
-            try:
-                client.timeout = timeout
-                rows = client.get(dataset_id, query=soql)
-            finally:
-                if orig is not None:
-                    client.timeout = orig
-        else:
-            rows = client.get(dataset_id, query=soql)
+        rows = self.client.get(dataset_id, query=soql)
         return list(rows)
 
     def count(self, dataset_id: str, soql_count_query: str) -> int:

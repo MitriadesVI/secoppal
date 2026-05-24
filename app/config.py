@@ -24,7 +24,7 @@ class Settings(BaseSettings):
     deepseek_api_key: str | None = Field(default=None, alias="DEEPSEEK_API_KEY")
     deepseek_model: str = Field(default="deepseek-chat", alias="DEEPSEEK_MODEL")
     datos_gov_domain: str = Field(default="www.datos.gov.co", alias="DATOS_GOV_DOMAIN")
-    secop_timeout_seconds: int = Field(default=30, alias="SECOP_TIMEOUT_SECONDS")
+    secop_timeout_seconds: int = Field(default=15, alias="SECOP_TIMEOUT_SECONDS")
     secop_results_limit: int = Field(default=25, alias="SECOP_RESULTS_LIMIT")
     secop_alias_db_path: Path = Field(default=Path("app/data/aliases_db.json"), alias="SECOP_ALIAS_DB_PATH")
     telegram_bot_token: str | None = Field(default=None, alias="TELEGRAM_BOT_TOKEN")

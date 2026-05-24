@@ -105,6 +105,7 @@ class TestNoRegresion:
 class TestMaybeHandleAnalyticalQueryConMock:
     def test_llama_aggregate_y_retorna_resultado(self):
         mock_client = MagicMock()
+        mock_client.with_timeout.return_value = mock_client
         mock_client.aggregate.return_value = [
             {"total_value": 1000000, "total_count": 2}
         ]
@@ -140,6 +141,7 @@ class TestAnalyticalQueriesIntegration:
     def test_query_directa_aggregate_sum(self, tmp_path):
         """Query directa analítica produce respuesta agregada visible al usuario."""
         wf = _make_workflow(tmp_path)
+        wf.secop_client.with_timeout = MagicMock(return_value=wf.secop_client)
         wf.secop_client.aggregate = MagicMock(
             return_value=[{"total_value": 500_000_000, "total_count": 12}]
         )
@@ -225,6 +227,7 @@ class TestAnalyticalQueriesIntegration:
     def test_followup_analitico_hereda_contexto(self, tmp_path):
         """Follow-up analítico hereda topic/scope del turno previo."""
         wf = _make_workflow(tmp_path)
+        wf.secop_client.with_timeout = MagicMock(return_value=wf.secop_client)
         wf.secop_client.query = MagicMock(return_value=[
             {
                 "id_contrato": "C-1",
@@ -261,6 +264,7 @@ class TestAnalyticalQueriesIntegration:
     def test_followup_analitico_plural_hereda_contexto(self, tmp_path):
         """CORPUS-AN003: "cuánto suman" (plural) hereda contexto igual que el singular."""
         wf = _make_workflow(tmp_path)
+        wf.secop_client.with_timeout = MagicMock(return_value=wf.secop_client)
         wf.secop_client.query = MagicMock(return_value=[
             {
                 "id_contrato": "C-1",

@@ -314,8 +314,10 @@ class EntityResolver:
         if normalized in self.alias_index:
             official = self.alias_index[normalized]
             if strict_rewrite and not self._official_matches_strict_rewrite(official, strict_rewrite):
-                return self._unresolved_rewrite(user_input, strict_rewrite)
-            return ResolutionResult(value=official, method="exact", confidence="high")
+                # Skip exact match that fails strict rewrite, continue to fuzzy
+                pass
+            else:
+                return ResolutionResult(value=official, method="exact", confidence="high")
 
         # Tier 2: Department-scoped fuzzy
         if departamento and departamento in self.entities_by_department:
@@ -334,17 +336,19 @@ class EntityResolver:
                     metadata={"departamento_filter": departamento},
                 )
 
-        # Tier 3: Global fuzzy
-        match = process.extractOne(
+        # Tier 3: Global fuzzy — try top-3 candidates to avoid alias-collision traps
+        matches = process.extract(
             normalized, list(self.choice_to_official.keys()),
-            scorer=fuzz.WRatio, score_cutoff=self.FUZZY_CUTOFF_ENTIDAD,
+            scorer=fuzz.WRatio, limit=3,
         )
-        if match:
-            official = self.choice_to_official[match[0]]
+        for match, score, _ in matches:
+            if score < self.FUZZY_CUTOFF_ENTIDAD:
+                break
+            official = self.choice_to_official[match]
             if strict_rewrite and not self._official_matches_strict_rewrite(official, strict_rewrite):
-                return self._unresolved_rewrite(user_input, strict_rewrite)
+                continue
             return ResolutionResult(
-                value=official, method=f"fuzzy({int(match[1])})", confidence="medium",
+                value=official, method=f"fuzzy({int(score)})", confidence="medium",
             )
 
         # Tier 4: LIKE fallback
