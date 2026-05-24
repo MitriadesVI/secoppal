@@ -27,8 +27,12 @@ def generate_suggestions(
     total_count: int,
     rows: list[dict],
     dataset_id: str,
+    intent_type: str = "",
 ) -> list[Suggestion]:
-    """Genera 2-3 sugerencias basadas en el estado actual de la consulta."""
+    """Genera 2-3 sugerencias basadas en el estado actual de la consulta.
+
+    Ahora contextual por intent_type para orientar al usuario según su perfil.
+    """
     _ESTADO_FAMILIES = [
         ("Ver contratos activos (en ejecución)", ["En ejecución", "Modificado", "Prorrogado"], "Contratos actualmente activos"),
         ("Ver contratos cerrados", ["Cerrado"], "Contratos con gestión cerrada"),
@@ -38,26 +42,88 @@ def generate_suggestions(
     suggestions: list[Suggestion] = []
     params = params or {}
 
-    # 1. Familias de estado_contrato reales (contratos dataset)
-    if dataset_id == "jbjy-vk9h" and "estado" not in params:
-        # Solo la primera familia (firmados) compite por los 3 slots.
-        # Las otras dos se agregan si hay espacio después de ordering/contratista/dataset.
+    # ── Contextual por intent_type (Sprint 3 fase 2) ────────────────────
+
+    if intent_type == "opportunity_search":
+        if params.get("valor_min") is None:
+            suggestions.append(Suggestion(
+                label="Restringir a >100 millones",
+                modified_params={**params, "valor_min": 100_000_000},
+                reason="Filtrar oportunidades de alta cuantía",
+            ))
+        if not params.get("modalidad") and universe_insights and universe_insights.modality_dominance_name:
+            suggestions.append(Suggestion(
+                label=f"Filtrar por {universe_insights.modality_dominance_name}",
+                modified_params={**params, "modalidad": universe_insights.modality_dominance_name},
+                reason="Concentrar en la modalidad más frecuente",
+            ))
+        if dataset_id == "p6dx-8zbt" and len(suggestions) < 3:
+            suggestions.append(Suggestion(
+                label="Ver contratos firmados",
+                modified_params={**params, "dataset": "contratos"},
+                reason="Explorar contratos ya ejecutados",
+            ))
+
+    elif intent_type == "contract_search":
+        if "estado" not in params and dataset_id == "jbjy-vk9h":
+            suggestions.append(Suggestion(
+                label="Ver solo adjudicados",
+                modified_params={**params, "estado": ["Adjudicado"]},
+                reason="Filtrar contratos ya adjudicados",
+            ))
+        if params.get("ordering_signal") != "valor_desc" and total_count > 1:
+            suggestions.append(Suggestion(
+                label="Ordenar por mayor valor",
+                modified_params={**params, "ordering_signal": "valor_desc"},
+                reason="Ver los contratos de mayor cuantía primero",
+            ))
+        if len(suggestions) < 3:
+            suggestions.append(Suggestion(
+                label="Buscar en procesos",
+                modified_params={**params, "dataset": "procesos"},
+                reason="Explorar procesos de selección similares",
+            ))
+
+    elif intent_type == "entity_query":
+        if dataset_id != "p6dx-8zbt":
+            suggestions.append(Suggestion(
+                label="Ver procesos abiertos",
+                modified_params={**params, "dataset": "procesos", "intent_type": "opportunity_search"},
+                reason="Ver oportunidades de esta entidad",
+            ))
+        if params.get("ordering_signal") != "valor_desc" and total_count > 1:
+            suggestions.append(Suggestion(
+                label="Ordenar por mayor valor",
+                modified_params={**params, "ordering_signal": "valor_desc"},
+                reason="Ver los de mayor cuantía primero",
+            ))
+        if len(suggestions) < 3:
+            suggestions.append(Suggestion(
+                label="Ver contratos",
+                modified_params={**params, "dataset": "contratos"},
+                reason="Explorar contratos de esta entidad",
+            ))
+
+    # ── Genéricas (fallback cuando hay espacio) ──────────────────────────
+
+    # Familias de estado_contrato (contratos dataset)
+    if dataset_id == "jbjy-vk9h" and "estado" not in params and len(suggestions) < 3:
         suggestions.append(Suggestion(
             label=_ESTADO_FAMILIES[0][0],
             modified_params={**params, "estado": _ESTADO_FAMILIES[0][1]},
             reason=_ESTADO_FAMILIES[0][2],
         ))
 
-    # 2. Sugerencia de orden por valor
-    if params.get("ordering_signal") != "valor_desc" and total_count > 1:
+    # Orden por valor
+    if params.get("ordering_signal") != "valor_desc" and total_count > 1 and len(suggestions) < 3:
         suggestions.append(Suggestion(
             label="Ordenar por mayor valor",
             modified_params={**params, "ordering_signal": "valor_desc"},
             reason="Ver los contratos de mayor cuantía primero",
         ))
 
-    # 3. Sugerencia de dataset switch
-    if total_count > 0:
+    # Dataset switch
+    if total_count > 0 and len(suggestions) < 3:
         other = "procesos" if dataset_id == "jbjy-vk9h" else "contratos"
         suggestions.append(Suggestion(
             label=f"Buscar en {other}",
@@ -65,7 +131,7 @@ def generate_suggestions(
             reason=f"Explorar resultados similares en {other}",
         ))
 
-    # Las otras 3 familias de estado se agregan si hay espacio
+    # Otras familias de estado si hay espacio
     if dataset_id == "jbjy-vk9h" and "estado" not in params and len(suggestions) < 3:
         for label, values, reason in _ESTADO_FAMILIES[1:]:
             if len(suggestions) >= 3:

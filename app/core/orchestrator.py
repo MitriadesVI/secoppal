@@ -557,6 +557,7 @@ def suggester_action(state: State) -> State:
         total_count=state.get("total_count") or 0,
         rows=state.get("results", []),
         dataset_id=state.get("dataset_id", ""),
+        intent_type=state.get("intent_type", ""),
     )
     return _with_timing(state, "suggest_ms", start, suggestions=suggestions)
 
@@ -835,6 +836,7 @@ class SecopalWorkflow:
                         new_suggestions = generate_suggestions(
                             params=sug_params, universe_insights=ui,
                             total_count=total, rows=results, dataset_id=sug_dataset_id,
+                            intent_type=sug_params.get("intent_type", ""),
                         )
                         response, rows = self.formatter.format_for_channel(
                             results, sug_dataset_id, channel,
