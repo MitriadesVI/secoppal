@@ -19,3 +19,4 @@ data/conversations/torture-*.jsonl
 data/conversations/audit_*.jsonl
 data/conversations/dbg_*.jsonl
 data/conversations/debug_*.jsonl
+data/conversations/demo_*.jsonl
