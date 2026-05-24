@@ -101,6 +101,25 @@ async def telegram_webhook(
 
     chat_id_str = str(chat_id)
 
+    # Comando /start — onboarding
+    if text.strip() == "/start":
+        welcome = (
+            "👋 ¡Hola! Soy SECOPPAL, tu asistente para buscar oportunidades "
+            "y contratos en SECOP II (Colombia).\n\n"
+            "Puedes preguntarme cosas como:\n"
+            "• contratos de obra en Bogotá\n"
+            "• procesos abiertos en INVIAS\n"
+            "• contratos mayores a 500M en Antioquia\n\n"
+            "¿Qué te gustaría buscar?"
+        )
+        if settings.telegram_bot_token:
+            async with httpx.AsyncClient(timeout=20) as client:
+                await client.post(
+                    f"https://api.telegram.org/bot{settings.telegram_bot_token}/sendMessage",
+                    json={"chat_id": chat_id, "text": welcome},
+                )
+        return JSONResponse(content={"ok": True, "start": True})
+
     # Comando de reset
     if is_reset_command(text):
         get_workflow().conv_store.clear(chat_id_str)

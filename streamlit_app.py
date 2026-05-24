@@ -198,6 +198,18 @@ with st.sidebar:
 st.title("SECOPPAL")
 st.caption("Busqueda conversacional sobre contratacion publica colombiana — SECOP II")
 
+# Onboarding cuando no hay historial
+if not st.session_state.history:
+    st.info(
+        "👋 **Bienvenido a SECOPPAL** — tu asistente para buscar oportunidades "
+        "y contratos en SECOP II.\n\n"
+        "**Ejemplos de consultas:**\n"
+        "• contratos de obra en Bogotá\n"
+        "• procesos abiertos en INVIAS\n"
+        "• contratos mayores a 500M en Antioquia\n\n"
+        "Haz clic en un ejemplo de la barra lateral o escribe tu consulta abajo."
+    )
+
 # ═══════════════════════════════════════════════════════════════════════════
 # Render chat history
 # ═══════════════════════════════════════════════════════════════════════════
