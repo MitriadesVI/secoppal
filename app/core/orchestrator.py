@@ -28,6 +28,7 @@ from app.core.response_policy import build_advisor_response, build_clarification
 from app.core.secop_client import SecopClient
 from app.core.soql_builder import SoQLBuilder, UnsafeGlobalQueryError
 from app.core.suggester import generate_suggestions, Suggestion
+from app.core.relevance import RelevanceScorer
 
 
 logger = logging.getLogger(__name__)
@@ -1059,6 +1060,30 @@ class SecopalWorkflow:
 
         # ── Política de respuesta asesora (Bloque 3) ───────────────────────
         advisor_start = time.perf_counter()
+
+        # ── Relevance scoring (Sprint 6 Fase 1 — BM25 post-ranking) ───
+        resolved = state.get("resolved_params", {})
+        objeto_terms = resolved.get("objeto", []) or []
+        if objeto_terms and len(state.get("results", [])) > 0:
+            try:
+                scorer = RelevanceScorer()
+                topic_flat: list[str] = []
+                for t in objeto_terms:
+                    if isinstance(t, list):
+                        topic_flat.extend(t)
+                    else:
+                        topic_flat.append(str(t))
+                if len(topic_flat) >= 3:
+                    field = "objeto_del_contrato" if state.get("dataset_id") == "jbjy-vk9h" else "nombre_del_procedimiento"
+                    scored = scorer.score_rows(topic_flat, state["results"], field=field)
+                    state = state.update(
+                        results=[r for r, _ in scored],
+                        relevance_classes=[s.classification for _, s in scored],
+                        relevance_scores=[s.bm25_score for _, s in scored],
+                    )
+            except Exception:
+                pass  # relevance scoring is best-effort, never block
+
         advisor_response = build_advisor_response({
             "user_query": user_query,
             "resolved_params": state.get("resolved_params", {}),
