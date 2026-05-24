@@ -1,0 +1,50 @@
+SECOP query failed on attempt 1/1: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=15)
+SECOP query failed on attempt 1/1: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=15)
+SECOP query failed on attempt 1/1: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=15)
+SECOP query failed on attempt 1/1: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=15)
+SECOP query failed on attempt 1/1: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=15)
+SECOP query failed on attempt 1/1: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=15)
+SECOP query failed on attempt 1/1: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=15)
+SECOP query failed on attempt 1/1: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=15)
+aggregate date_range failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate top_modalities failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate top_entities failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate value_stats failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate temporal_dist failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate top_entities failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate top_modalities failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate date_range failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate temporal_dist failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+aggregate value_stats failed: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=4)
+SECOP query failed on attempt 1/1: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=15)
+SECOP query failed on attempt 1/1: HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=15)
+
+======================================================================
+  BUCKET: A-ACCENT (10 queries)
+======================================================================
+  #  QUERY                                                          N  T(s)  STATUS
+--------------------------------------------------------------------------------
+  1  consultoria en sistemas en Bogota                              0  30.5  ✗ FAIL TIMEOUT
+  2  diseño de obras en Antioquia                                   0  30.7  ✗ FAIL TIMEOUT
+  3  jardineria y mantenimiento en Cundinamarca                     0  30.4  ✗ FAIL TIMEOUT
+  4  servicios turisticos en Atlantico                              0  30.4  ✗ FAIL TIMEOUT
+  5  cafeteria y restaurante escolar en Santander                   9   5.6  ✓ OK
+  6  logistica y transporte en Valle                               50  21.6  ✓ OK TIMEOUT
+  7  consultoria informatica en Santander                          50  25.1  ✓ OK TIMEOUT
+  8  servicios artisticos y culturales en Caldas                    0  30.2  ✗ FAIL TIMEOUT
+  9  residuos solidos en Bolivar                                   50  10.9  ✓ OK
+ 10  construccion de vias en Tolima                                50   9.8  ✓ OK
+--------------------------------------------------------------------------------
+  Pass: 5/10 (50%) | Avg: 22.5s | Timeouts: 7
+  ⚠️  >3 timeouts — API congestionada. Abortando smoke.
+
+======================================================================
+  RESUMEN FINAL
+======================================================================
+Bucket                 Pass     %  Avg(s)  Timeouts
+--------------------------------------------------
+--------------------------------------------------
+TOTAL                5/ 10   50%
+Timeouts: 7
+
+⚠️  Alta tasa de timeouts — los resultados pueden no ser confiables.
