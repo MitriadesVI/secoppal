@@ -157,6 +157,14 @@ STOPWORDS = {
     # Aparecen en follow-ups tipo "muestrame solo aquellos que sean mas de X".
     # Sin scrub, contaminan 'objeto' y borran el topic heredado.
     "solo", "solos", "sola", "solas", "solamente", "unicamente", "únicamente",
+    # Follow-up refinement verbs — "filtra por X", "aplicá filtro", "ponelo entre X y Y"
+    "filtra", "filtrar", "filtrame", "filtrarme", "filtrado", "filtrados",
+    "aplica", "aplicar", "aplicale", "aplicame",
+    "pon", "pone", "poner", "ponelo", "ponle", "poneme",
+    "deja", "dejar", "dejame",
+    "limita", "limitar", "limitame", "limitalo",
+    "acota", "acotar", "acotame", "acotalo",
+    "restringe", "restringir", "restrinjame",
     "aquel", "aquella", "aquellos", "aquellas",
     "eso", "esos", "esa", "esas",
     "esto", "estos", "estas",  # nota: "esta"/"estan"/"este"/"esten" ya están arriba
