@@ -29,6 +29,17 @@ COMMON_TOKENS = {
     "construccion", "construcción", "rehabilitacion", "rehabilitación",
 }
 
+# Sprint 5 — PROCUREMENT-ACTION-001
+# Verbos de acción contractual que NO son objeto de contratación.
+# Deben eliminarse del objeto cuando aparecen junto con sustantivos reales.
+# Si la query solo contiene estos verbos (sin sustantivos), se mantienen.
+ACTION_VERBS: frozenset[str] = frozenset({
+    "adquisicion", "adquisición", "adquisiciones",
+    "compra", "compras", "comprar",
+    "contratar", "contratacion", "contratación", "contrataciones",
+    "contractual", "contractuales",
+})
+
 # Each entry: (compiled_regex, intent_config_dict)
 # intent_config can include:
 #   estado_family: str — force a specific estado family

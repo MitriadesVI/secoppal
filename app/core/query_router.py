@@ -956,6 +956,15 @@ class QueryRouter:
                     tokens.append(VARIANT_TO_ROOT.get(token, token))
                 i += 1
 
+        # ── PROCUREMENT-ACTION-001: scrub verbos contractuales ──
+        # Si hay tokens sustantivos (no verbos), eliminar los verbos de acción.
+        # Los verbos solos (sin sustantivos) se mantienen para no romper queries
+        # como "oportunidades de contratacion".
+        from app.core.intent_vocabulary import ACTION_VERBS
+        non_verb_tokens = [t for t in tokens if t != "o" and t not in ACTION_VERBS]
+        if non_verb_tokens:
+            tokens = [t for t in tokens if t not in ACTION_VERBS]
+
         grouped_tokens: list[str | list[str]] = []
         i = 0
         while i < len(tokens):
