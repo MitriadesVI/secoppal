@@ -1061,6 +1061,26 @@ class SecopalWorkflow:
         # ── Política de respuesta asesora (Bloque 3) ───────────────────────
         advisor_start = time.perf_counter()
 
+        # ── Entity ecosystem expansion (Sprint 6 Fase 3) ─────────────────
+        # Si no hay entidad explícita pero sí ciudad/departamento, expandir
+        resolved_post = state.get("resolved_params", {})
+        if resolved_post and not resolved_post.get("entidad_resolved") and not resolved_post.get("entidad_like"):
+            from app.core.entity_ecosystem import get_ecosystem_entities, should_expand_ecosystem
+            if should_expand_ecosystem(resolved_post):
+                ecosys = get_ecosystem_entities(
+                    ciudad=str(resolved_post.get("ciudad", "")),
+                    departamento=str(resolved_post.get("departamento_resolved", "")),
+                )
+                if ecosys:
+                    resolved_post = dict(resolved_post)
+                    resolved_post["entidad_ecosystem"] = ecosys
+                    # Rebuild SoQL with ecosystem entities
+                    try:
+                        new_soql = self.soql_builder.build(state["dataset_id"], resolved_post)
+                        state = state.update(soql_query=new_soql, resolved_params=resolved_post)
+                    except Exception:
+                        pass  # ecosystem is best-effort
+
         # ── Relevance scoring (Sprint 6 Fase 1 — BM25 post-ranking) ───
         resolved = state.get("resolved_params", {})
         objeto_terms = resolved.get("objeto", []) or []

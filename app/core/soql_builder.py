@@ -205,7 +205,15 @@ class SoQLBuilder:
                 f"UPPER({spec.city}) LIKE UPPER('%{self._escape(str(params['ciudad']))}%')"
             )
         entidad_value = params.get("entidad_resolved") or params.get("entidad_like")
-        if entidad_value:
+        entidad_ecosystem = params.get("entidad_ecosystem")
+        if entidad_ecosystem and isinstance(entidad_ecosystem, list) and not entidad_value:
+            # ENTITY-ECOSYSTEM-001: expand to OR across all ecosystem entities
+            entity_likes = " OR ".join(
+                f"UPPER({spec.entity}) LIKE UPPER('%{self._escape(str(e))}%')"
+                for e in entidad_ecosystem[:15]  # max 15 to avoid query bloat
+            )
+            where_clauses.append(f"({entity_likes})")
+        elif entidad_value:
             where_clauses.append(
                 f"UPPER({spec.entity}) LIKE UPPER('%{self._escape(str(entidad_value))}%')"
             )
