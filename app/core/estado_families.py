@@ -40,10 +40,13 @@ ESTADO_FAMILIES = {
             "estado_del_procedimiento": [
                 "Evaluación",
                 "Seleccionado",
+                "Aprobado",
+                "En aprobación",
             ],
         },
         "contratos": {
             "estado_contrato": [
+                "Borrador",
                 "enviado Proveedor",
                 "En aprobación",
                 "Aprobado",
