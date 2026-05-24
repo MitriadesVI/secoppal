@@ -221,10 +221,19 @@ class SoQLBuilder:
         objeto_terms = params.get("objeto", []) or []
         if self._should_demote_objeto(objeto_terms):
             rare_terms, common_terms = self._split_objeto_by_rarity(objeto_terms)
-            for term in rare_terms:
-                where_clauses.append(
-                    f"({' OR '.join(self._object_term_conditions(spec, term))})"
-                )
+            # With 3+ rare terms, AND between them is too strict
+            # (e.g., "control de calidad de agua para consumo humano" → 5 terms).
+            # Merge into a single OR group — BM25 re-ranks later for precision.
+            if len(rare_terms) >= 3:
+                all_conditions: list[str] = []
+                for term in rare_terms:
+                    all_conditions.extend(self._object_term_conditions(spec, term))
+                where_clauses.append(f"({' OR '.join(all_conditions)})")
+            else:
+                for term in rare_terms:
+                    where_clauses.append(
+                        f"({' OR '.join(self._object_term_conditions(spec, term))})"
+                    )
             if common_terms:
                 common_conditions: list[str] = []
                 for term in common_terms:

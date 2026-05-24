@@ -81,12 +81,10 @@ def test_four_tokens_no_common_keeps_and():
     assert "motores" in where
     assert "turbinas" in where
     assert "generadores" in where
-    # Todos los tokens deben estar unidos con AND (no OR entre términos
-    # distintos — el OR de name LIKE x OR desc LIKE x es esperado por término)
-    assert " AND " in where
-    # Contar ANDs: 4 términos → 3 ANDs entre términos + algunos dentro de LIKE groups
-    # Verificar que hay al menos 3 ANDs (los que unen los 4 grupos de término)
-    assert where.count(" AND ") >= 3
+    # With 4 rare terms, demotion merges them into a single OR group
+    # (AND between 4+ rare terms is too strict for real SECOP data).
+    # The OR inside each term (nombre LIKE x OR desc LIKE x) still exists.
+    assert where.count(" OR ") >= 7  # 8 LIKEs → 7 ORs within the big group
 
 
 def test_three_tokens_and_only_no_degradation():
