@@ -320,3 +320,23 @@ D4. Corpus runner es unit-level con params curados, no E2E.
 
 D5. dialogue_policy.py recibió expansión léxica ("favor"/"por favor")
     en B5 fuera de scope. Registrar para auditoría arquitectónica.
+
+---
+
+## Mejoras UX Sprint 3 fase 2 (2026-05-23)
+
+Estas NO son fixes de bugs del corpus — son mejoras de UX incremental que no afectan el comportamiento core de parsing/SoQL.
+
+| Mejora | Archivos | Estado |
+|--------|----------|--------|
+| Observer 2.0 — 4 signals cuantitativos (entity_concentration, modality_dominance, temporal_skew, value_outlier_ratio) | `app/core/observer.py`, `app/core/formatter.py` | ✅ Cerrado |
+| Suggester contextual por intent_type | `app/core/suggester.py`, `app/core/orchestrator.py` | ✅ Cerrado |
+| Onboarding /start en Telegram + Streamlit | `app/main.py`, `streamlit_app.py` | ✅ Cerrado |
+| Demo scripts multi-turno A/B/C | `scripts/demo_*.py` | ✅ Cerrado |
+
+**Métricas al cierre:**
+- pytest: 736 passed, 3 xfailed
+- corpus v1: 88/88 PASS
+- corpus dialogue: 60/60 PASS
+- lint-core: verde
+- ADR-009 registrado en `docs/decisions_log.md`

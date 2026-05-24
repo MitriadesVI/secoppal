@@ -327,3 +327,47 @@ reales del usuario para construir `dialogue_policy_corpus.yaml` (50-60 casos:
 - Smoke acotado: 9/10 OK, tiempo medio 10.8s/query (vs 8/10, 13.9s anterior)
 
 **Bugs cerrados:** COUNT-QUERY-LATENCY-001.
+
+---
+
+## ADR-009: Observer 2.0 — signals enriquecidos por categoría + suggester contextual por intent_type
+
+**Fecha:** 2026-05-23
+**Contexto:** El observer original reportaba 4 signals binarios (has_dominant_entity, has_temporal_concentration, has_value_outlier, has_diverse_modalities). Eran útiles pero poco granulares: no decían CUÁNTO domina una entidad, CUÁNTO se concentra en un trimestre, ni qué modalidad domina con qué porcentaje. Además, el suggester generaba las mismas 3 sugerencias sin importar si el usuario buscaba oportunidades, contratos o información de una entidad.
+
+**Decisión:**
+1. **Observer 2.0**: Agregar 4 signals cuantitativos nuevos a `UniverseInsights`:
+   - `entity_concentration_pct` / `entity_concentration_name`: % del universo de la entidad top (sin threshold, siempre computado).
+   - `modality_dominance_name` / `modality_dominance_pct`: nombre y % de la modalidad top si supera 50%.
+   - `temporal_skew_quarter` / `temporal_skew_pct`: trimestre (Q1-Q4) con >70% de concentración, computado desde fechas individuales del sample o fallback a años para aggregation.
+   - `value_outlier_ratio`: ratio max/mean cuando supera 10x.
+
+2. **Exclusión de dimensiones fijadas**: `formatter._insights_summary` skipea signals que el usuario ya filtró explícitamente (entidad, modalidad, fechas). Evita tautologías como "INVIAS concentra 100%" cuando la query ya pedía "contratos del INVIAS".
+
+3. **Suggester contextual por intent_type**: `generate_suggestions()` acepta `intent_type` y genera sugerencias diferenciadas:
+   - `opportunity_search` → "Restringir a >100M", filtrar por modalidad dominante, "Ver contratos firmados"
+   - `contract_search` → "Ver solo adjudicados", "Ordenar por mayor valor", "Buscar en procesos"
+   - `entity_query` → "Ver procesos abiertos", "Ordenar por mayor valor", "Ver contratos"
+   - Fallback genérico cuando hay espacio (estado, orden, dataset switch).
+
+4. **Onboarding**: `/start` en Telegram y mensaje de bienvenida en Streamlit cuando no hay historial.
+
+**Alternativas descartadas:**
+- Usar LLM para generar insights a partir de agregaciones (overkill, los datos ya están disponibles).
+- Agregar signals trimestrales como nueva query de agregación en soql_builder (complejidad innecesaria; quarter se computa desde fechas del sample).
+- Hacer suggester stateful con memoria de preferencias del usuario (queda para Sprint 4 personalización).
+
+**Consecuencias:**
+- Los insights son más accionables: "INVIAS concentra el 65% del universo" en vez de "Hay una entidad dominante".
+- Las sugerencias orientan al usuario según su perfil: un proponente ve filtros de cuantía, un veedor ve comparativas.
+- `formatter.py` ahora recibe `params` en `_insights_summary` para la exclusión de dimensiones fijadas.
+
+**Métricas al cierre:**
+- pytest: 736 passed, 3 xfailed
+- corpus v1: 88/88 PASS
+- corpus dialogue: 60/60 PASS
+- lint-core: verde
+- Observer tests: test_observer_signals.py (9 tests)
+- Suggester tests: test_suggester_contextual.py (6 tests)
+
+**Bugs cerrados:** Ninguno nuevo — mejora UX incremental (Sprint 3 fase 2).
