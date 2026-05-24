@@ -1,0 +1,97 @@
+{
+  "alojamiento": {
+    "hint": "¿Buscas alojamiento tipo hospedaje/hotelero, o alojamiento de datos/hosting tecnológico?",
+    "senses": {
+      "hospedaje_hotelero": {
+        "context_markers": ["hotel", "hospedaje", "habitacion", "huesped", "turismo", "turista", "cama", "albergue", "hostal", "posada"],
+        "label": "Alojamiento hotelero / hospedaje",
+        "object_variants": ["alojamiento", "hospedaje", "hotel", "albergue"]
+      },
+      "hosting_tecnologico": {
+        "context_markers": ["datos", "servidor", "cloud", "nube", "hosting", "web", "tecnologia", "informatico", "tic", "base de datos"],
+        "label": "Alojamiento de datos / hosting tecnológico",
+        "object_variants": ["hosting", "alojamiento datos", "servidor", "nube"]
+      },
+      "alojamiento_logistico": {
+        "context_markers": ["bodega", "almacen", "inventario", "logistico", "distribucion", "mercancia", "deposito"],
+        "label": "Alojamiento logístico / bodegaje",
+        "object_variants": ["bodegaje", "almacenamiento", "alojamiento logistico", "deposito"]
+      },
+      "alojamiento_militar": {
+        "context_markers": ["militar", "cuartel", "batallon", "brigada", "fuerza", "policia", "ejercito", "armada"],
+        "label": "Alojamiento militar / acuartelamiento",
+        "object_variants": ["alojamiento militar", "acuartelamiento", "alojamiento fuerza publica"]
+      }
+    }
+  },
+  "transporte": {
+    "hint": "¿Buscas transporte de pasajeros/escolar, o transporte de carga/logístico?",
+    "senses": {
+      "transporte_pasajeros": {
+        "context_markers": ["escolar", "pasajero", "ruta", "bus", "colectivo", "estudiante", "personal", "empleado", "funcionario"],
+        "label": "Transporte de pasajeros / escolar",
+        "object_variants": ["transporte escolar", "transporte pasajeros", "ruta escolar", "transporte personal"]
+      },
+      "transporte_carga": {
+        "context_markers": ["carga", "mercancia", "logistico", "flete", "camion", "acarreo", "contenedor", "distribucion"],
+        "label": "Transporte de carga / logístico",
+        "object_variants": ["transporte carga", "flete", "acarreo", "transporte mercancia"]
+      },
+      "transporte_urbano": {
+        "context_markers": ["urbano", "municipal", "ciudad", "metro", "transmilenio", "sitp", "transporte publico"],
+        "label": "Transporte urbano / público",
+        "object_variants": ["transporte urbano", "transporte publico", "sistema transporte"]
+      }
+    }
+  },
+  "servicios": {
+    "hint": "¿Servicios generales, de consultoría profesional, o de mantenimiento?",
+    "senses": {
+      "servicios_generales": {
+        "context_markers": ["aseo", "limpieza", "cafeteria", "vigilancia", "mensajeria", "recepcion"],
+        "label": "Servicios generales (aseo, cafetería, vigilancia)",
+        "object_variants": ["servicios generales", "aseo", "limpieza", "cafeteria", "vigilancia"]
+      },
+      "servicios_profesionales": {
+        "context_markers": ["consultoria", "asesoria", "profesional", "especializado", "tecnico", "experto", "estudio"],
+        "label": "Servicios profesionales / consultoría",
+        "object_variants": ["consultoria", "asesoria", "servicios profesionales"]
+      },
+      "servicios_mantenimiento": {
+        "context_markers": ["mantenimiento", "reparacion", "correctivo", "preventivo"],
+        "label": "Servicios de mantenimiento / reparación",
+        "object_variants": ["mantenimiento", "reparacion"]
+      }
+    }
+  },
+  "soporte": {
+    "hint": "¿Soporte técnico/informático, o soporte físico/estructural?",
+    "senses": {
+      "soporte_tecnico": {
+        "context_markers": ["tecnico", "informatico", "software", "hardware", "sistema", "computo", "tic", "tecnologia", "help desk", "mesa ayuda"],
+        "label": "Soporte técnico / informático",
+        "object_variants": ["soporte tecnico", "soporte informatico", "mesa ayuda", "help desk"]
+      },
+      "soporte_fisico": {
+        "context_markers": ["estructural", "fisico", "estructura", "cimentacion", "anclaje", "montaje"],
+        "label": "Soporte estructural / físico",
+        "object_variants": ["soporte estructural", "estructura soporte", "anclaje"]
+      }
+    }
+  },
+  "dotacion": {
+    "hint": "¿Dotación de personal/uniformes, o dotación de equipos/mobiliario?",
+    "senses": {
+      "dotacion_personal": {
+        "context_markers": ["uniforme", "vestido", "calzado", "ropa", "prenda", "textil", "personal", "empleado", "funcionario"],
+        "label": "Dotación de personal (uniformes, calzado)",
+        "object_variants": ["dotacion", "uniforme", "calzado", "ropa trabajo"]
+      },
+      "dotacion_equipos": {
+        "context_markers": ["equipo", "mobiliario", "mueble", "maquina", "instrumento", "herramienta", "computador", "oficina"],
+        "label": "Dotación de equipos / mobiliario",
+        "object_variants": ["dotacion equipos", "mobiliario", "equipamiento"]
+      }
+    }
+  }
+}
