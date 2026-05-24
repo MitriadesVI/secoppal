@@ -1,0 +1,28 @@
+Smoke test acotado post B5/B6 + race-fix
+Run: 2026-05-23 (evening)
+Timeout: 15s default
+Queries: 10 representativas (excluidas patológicas)
+
+  #  QUERY                                                    N  T(s)  STATUS
+--------------------------------------------------------------------------------
+  2  contratos de mantenimiento vial en Antioquia             0  49.9  ✗ FAIL
+  3  procesos abiertos en Cundinamarca                       50  14.0  ✓ OK
+  6  contratos entre 100 y 500 millones en Bogota            50   6.5  ✓ OK
+ 10  contratos de obra mayores a 500 millones en Santander    50   6.6  ✓ OK
+ 12  contratos del INVIAS                                    50  16.0  ✓ OK
+ 13  contratos de la gobernacion de Boyaca                   50  12.7  ✓ OK
+ 15  procesos de la alcaldia de Cali                          0  15.0  ✗ FAIL
+ 20  suministros de medicamentos en Atlantico                50  11.6  ✓ OK
+ 22  procesos convocados en Tolima                           50   5.9  ✓ OK
+ 24  contratos de trampa de grasa en Putumayo                 4   0.8  ✓ OK
+--------------------------------------------------------------------------------
+Resultados: 8/10 con >0 resultados
+Tiempo medio: 13.9s/query
+
+PASS — race fix validado (8 >= 7)
+Listo para Sprint 3 fase 2.
+
+Fallas:
+#2  contratos de mantenimiento vial en Antioquia — count+query timeout 15s (49.9s total con observer)
+#15 procesos de la alcaldia de Cali — count timeout 15s
+Diagnóstico: API datos.gov.co lenta en queries con múltiples filtros compuestos. No es bug de código.

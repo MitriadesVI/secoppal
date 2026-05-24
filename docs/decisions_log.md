@@ -294,3 +294,36 @@ reales del usuario para construir `dialogue_policy_corpus.yaml` (50-60 casos:
 - Smoke: API transient slow (9/25 with 5s timeout), unit tests confirm fix correctness
 
 **Bugs cerrados:** OPP-TIMEOUT-001 (B5), GOB-DEPTO-RESOLUTION-001 (B6), RACE-TIMEOUT-MUTATION-001 (causa raíz real).
+
+---
+
+## ADR-008: Query-first, count-lazy para reducir latencia percibida
+
+**Fecha:** 2026-05-23
+**Contexto:** `count(*)` sobre datasets de millones de filas con WHERE compuesto tarda 10-15s. `_count_and_query_parallel` ejecutaba count y query en paralelo con `ThreadPoolExecutor(max_workers=2)`, pero el tiempo total era `max(count_time, query_time)`. Cuando count tardaba 15s y query 8s, el usuario esperaba 15s. Smoke acotado mostraba 2/10 fallos por count timeout y tiempo medio 13.9s/query.
+
+**Decisión:**
+1. Reemplazar `_count_and_query_parallel` con `_query_first_then_count` que ejecuta `query()` primero.
+2. Si `len(results) < limit`: `total_count = len(results)` exacto, sin ejecutar count.
+3. Si `len(results) == limit`: ejecutar `count()` con el cliente normal (timeout=15s). Si tiene éxito, usar ese valor. Si falla, `total_count = len(results)` con flag `total_count_approximate=True`.
+4. El formatter y response_policy detectan `total_count_approximate=True` y renderizan "Encontré X+ resultados" en lugar de "Encontré X resultados".
+5. No usar timeout corto para count — el cliente normal ya tiene timeout=15s. Si falla, degradamos graceful a "X+".
+
+**Alternativas descartadas:**
+- Cachear count por (dataset, filtros) con TTL 1h: buena idea pero queda para Sprint 4.
+- Timeout corto de 8s para count: rompía mocks en tests y no mejora el caso happy path.
+- Ejecutar count en background y editar mensaje de Telegram después: requiere reestructurar el grafo Burr.
+
+**Consecuencias:**
+- Queries que devuelven < limit resultados son ~50% más rápidas (no pagan count).
+- Queries que devuelven == limit y count falla responden con query_time en lugar de count_time.
+- El usuario ve "50+ resultados" cuando el total exacto no está disponible — UX honesta.
+
+**Métricas al cierre:**
+- pytest: 721 passed, 3 xfailed
+- corpus v1: 88/88 PASS
+- corpus dialogue: 61/61 PASS
+- lint-core: verde
+- Smoke acotado: 9/10 OK, tiempo medio 10.8s/query (vs 8/10, 13.9s anterior)
+
+**Bugs cerrados:** COUNT-QUERY-LATENCY-001.

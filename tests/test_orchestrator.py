@@ -56,13 +56,14 @@ def test_workflow_exposes_total_count_when_universe_is_larger() -> None:
     workflow = SecopalWorkflow(Settings())
     workflow.secop_client.query = lambda dataset_id, soql_query: [  # type: ignore[method-assign]
         {
-            "nombre_del_procedimiento": "Pavimentacion calle 5",
+            "nombre_del_procedimiento": f"Pavimentacion calle {i}",
             "entidad": "MUNICIPIO DE MONTERIA",
             "precio_base": "200000000",
             "estado_de_apertura_del_proceso": "Abierto",
             "fecha_de_publicacion_del": "2026-03-15T00:00:00.000",
             "urlproceso": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.TEST.2",
         }
+        for i in range(50)
     ]
     workflow.secop_client.count = lambda dataset_id, soql_query: 347  # type: ignore[method-assign]
     workflow.narrator.narrate_with_grounding = lambda **kw: None  # type: ignore[method-assign] # disable narrator

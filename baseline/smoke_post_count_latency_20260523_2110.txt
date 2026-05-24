@@ -1,0 +1,18 @@
+Smoke Acotado post COUNT-QUERY-LATENCY-001
+Fecha: $(date)
+
+  #  QUERY                                                    N  T(s)  STATUS
+--------------------------------------------------------------------------------
+  2  contratos de mantenimiento vial en Antioquia             0  30.7  ✗ FAIL
+  3  procesos abiertos en Cundinamarca                       50   3.2  ✓ OK
+  6  contratos entre 100 y 500 millones en Bogota            50   3.6  ✓ OK
+ 10  contratos de obra mayores a 500 millones en Santander    50   4.0  ✓ OK
+ 12  contratos del INVIAS                                    50  17.6  ✓ OK
+ 13  contratos de la gobernacion de Boyaca                   50  15.8  ✓ OK
+ 15  procesos de la alcaldia de Cali                         50  17.7  ✓ OK
+ 20  suministros de medicamentos en Atlantico                50  11.9  ✓ OK
+ 22  procesos convocados en Tolima                           50   2.2  ✓ OK
+ 24  contratos de trampa de grasa en Putumayo                 4   1.2  ✓ OK
+--------------------------------------------------------------------------------
+Resultados: 9/10 con >0 resultados
+Tiempo medio: 10.8s/query

@@ -56,6 +56,7 @@ def build_advisor_response(
     resolved = context.get("resolved_params", {})
     rows = context.get("rows", [])
     total_count = context.get("total_count", 0)
+    total_count_approximate = context.get("total_count_approximate", False)
     suggestions = context.get("suggestions", [])
     insights = context.get("universe_insights")
     channel = context.get("channel", "streamlit")
@@ -87,6 +88,7 @@ def build_advisor_response(
         resolved=resolved,
         rows=rows,
         total_count=total_count,
+        total_count_approximate=total_count_approximate,
         insights=insights,
         suggestions=suggestions,
         narrator=narrator,
@@ -243,6 +245,7 @@ def _build_clear_response(
     resolved: dict,
     rows: list[dict],
     total_count: int,
+    total_count_approximate: bool,
     insights: "UniverseInsights | None",
     suggestions: list,
     narrator: "NarratorHandler | None",
@@ -270,6 +273,11 @@ def _build_clear_response(
         sections.append(
             f"Encontre {total_count:,} resultados. "
             f"Te muestro los {shown} {ordering}; hay {remaining:,} mas.\n"
+        )
+    elif total_count_approximate and shown == total_count:
+        sections.append(
+            f"Encontre {shown}+ resultados. "
+            f"Te muestro los {shown} {ordering}.\n"
         )
     else:
         sections.append(f"Encontre {shown} resultados {ordering}:\n")

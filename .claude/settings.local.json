@@ -7,7 +7,8 @@
       "Bash(.venv/bin/python scripts/accuracy_test.py --verbose --category departamento)",
       "Bash(.venv/bin/python scripts/accuracy_test.py --verbose --output scripts/accuracy_results.json)",
       "Bash(.venv/bin/python scripts/accuracy_test.py --verbose --category montos)",
-      "Bash(.venv/bin/pytest tests/test_entity_resolver.py -v)"
+      "Bash(.venv/bin/pytest tests/test_entity_resolver.py -v)",
+      "Bash(.venv/bin/python -c ' *)"
     ]
   }
 }

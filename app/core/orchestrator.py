@@ -53,28 +53,48 @@ def _with_timings(state: State, timings_update: dict[str, float], **updates) -> 
     return state.update(**updates, timings_ms=timings)
 
 
-def _count_and_query_parallel(
+def _query_first_then_count(
     secop_client: SecopClient,
     dataset_id: str,
     count_soql: str,
     soql_query: str,
-) -> tuple[int, list[dict], dict[str, float]]:
-    """Run SECOP count(*) and SELECT concurrently; return total, rows and timings."""
-    def _count() -> tuple[int, float]:
-        start = time.perf_counter()
-        return secop_client.count(dataset_id, count_soql), _elapsed_ms(start)
+    limit: int = 50,
+) -> tuple[int, list[dict], dict[str, float], bool]:
+    """Run query first; skip count if <limit rows. If ==limit, count with short timeout.
 
-    def _query() -> tuple[list[dict], float]:
-        start = time.perf_counter()
-        return secop_client.query(dataset_id, soql_query), _elapsed_ms(start)
+    Returns (total, results, timings, approximate).
+    approximate=True when count failed but query returned limit rows.
+    """
+    start = time.perf_counter()
 
-    with ThreadPoolExecutor(max_workers=2) as executor:
-        count_future = executor.submit(_count)
-        query_future = executor.submit(_query)
-        total, count_ms = count_future.result()
-        results, query_ms = query_future.result()
+    # Step 1: query first
+    query_start = time.perf_counter()
+    results = secop_client.query(dataset_id, soql_query)
+    query_ms = _elapsed_ms(query_start)
 
-    return total, results, {"secop_count_ms": count_ms, "secop_query_ms": query_ms}
+    shown = len(results)
+    if shown < limit:
+        # Exact count known; no need to hit SECOP count
+        return shown, results, {
+            "secop_count_ms": 0,
+            "secop_query_ms": query_ms,
+        }, False
+
+    # Step 2: count — if it fails we show "X+"
+    count_start = time.perf_counter()
+    try:
+        total = secop_client.count(dataset_id, count_soql)
+        count_ms = _elapsed_ms(count_start)
+        return total, results, {
+            "secop_count_ms": count_ms,
+            "secop_query_ms": query_ms,
+        }, False
+    except Exception:
+        count_ms = _elapsed_ms(count_start)
+        return shown, results, {
+            "secop_count_ms": count_ms,
+            "secop_query_ms": query_ms,
+        }, True
 
 
 def _is_timeout_exception(exc: BaseException) -> bool:
@@ -275,16 +295,19 @@ def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
 
     try:
         count_soql = soql_builder.build_count(state["dataset_id"], state["resolved_params"])
-        total, results, secop_timings = _count_and_query_parallel(
+        limit = int(state.get("resolved_params", {}).get("limit", 50) or 50)
+        total, results, secop_timings, approximate = _query_first_then_count(
             secop_client,
             state["dataset_id"],
             count_soql,
             state["soql_query"],
+            limit=limit,
         )
         return _with_timings(
             state,
             {**secop_timings, "execute_total_ms": _elapsed_ms(start_total)},
-            results=results, query_error="", total_count=total, timeout_suggestions=[],
+            results=results, query_error="", total_count=total,
+            total_count_approximate=approximate, timeout_suggestions=[],
             risk_flag_timeout=False,
         )
     except Exception as exc:
@@ -297,11 +320,13 @@ def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
                 did = state["dataset_id"]
                 soql = soql_builder.build(did, relaxed)
                 count_soql = soql_builder.build_count(did, relaxed)
-                total, results, secop_timings = _count_and_query_parallel(
+                limit = int(relaxed.get("limit", 50) or 50)
+                total, results, secop_timings, approximate = _query_first_then_count(
                     secop_client,
                     did,
                     count_soql,
                     soql,
+                    limit=limit,
                 )
                 if results:
                     timeout_suggestions = _build_timeout_suggestions(params, total)
@@ -309,6 +334,7 @@ def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
                         state,
                         {**secop_timings, "execute_total_ms": _elapsed_ms(start_total)},
                         results=results, query_error="", total_count=total,
+                        total_count_approximate=approximate,
                         timeout_suggestions=timeout_suggestions,
                         risk_flag_timeout=False,
                         soql_query=soql,
@@ -324,14 +350,17 @@ def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
                 did = state["dataset_id"]
                 soql = soql_builder.build(did, degraded)
                 count_soql = soql_builder.build_count(did, degraded)
-                total, results, secop_timings = _count_and_query_parallel(
-                    secop_client, did, count_soql, soql
+                limit = int(degraded.get("limit", 50) or 50)
+                total, results, secop_timings, approximate = _query_first_then_count(
+                    secop_client, did, count_soql, soql,
+                    limit=limit,
                 )
                 if results:
                     return _with_timings(
                         state,
                         {**secop_timings, "execute_total_ms": _elapsed_ms(start_total)},
                         results=results, query_error="", total_count=total,
+                        total_count_approximate=approximate,
                         timeout_suggestions=[], risk_flag_timeout=False,
                         degraded=True, degraded_hint=hint,
                         soql_query=soql, resolved_params=degraded,
@@ -474,7 +503,7 @@ def degrade_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
     try:
         soql = soql_builder.build(state["dataset_id"], relaxed)
         count_soql = soql_builder.build_count(state["dataset_id"], relaxed)
-        total, results, _timings = _count_and_query_parallel(
+        total, results, _timings, _approx = _query_first_then_count(
             secop_client, state["dataset_id"], count_soql, soql
         )
         if results:
@@ -564,10 +593,11 @@ def format_response(state: State, formatter: Formatter) -> State:
     total_count = state.get("total_count", 0)
     universe_insights = state.get("universe_insights")
     suggestions = state.get("suggestions", [])
+    approximate = state.get("total_count_approximate", False)
     response, rows = formatter.format_for_channel(
         state["results"], state["dataset_id"], state["channel"],
         params=params, total_count=total_count, universe_insights=universe_insights,
-        suggestions=suggestions,
+        suggestions=suggestions, total_count_approximate=approximate,
     )
     if state.get("degraded") and state.get("degraded_hint"):
         note = f"No encontre resultados exactos. Te muestro resultados {state['degraded_hint']}:\n\n"
@@ -706,7 +736,7 @@ class SecopalWorkflow:
                 ds_id = SoQLBuilder.dataset_id_for(pag_params.get("dataset"))
                 soql = self.soql_builder.build(ds_id, pag_params)
                 try:
-                    total, results, _secop_timings = _count_and_query_parallel(
+                    total, results, _secop_timings, _approx = _query_first_then_count(
                         self.secop_client,
                         ds_id,
                         self.soql_builder.build_count(ds_id, pag_params),
@@ -789,7 +819,7 @@ class SecopalWorkflow:
                     soql = self.soql_builder.build(sug_dataset_id, sug_params)
                     try:
                         count_soql = self.soql_builder.build_count(sug_dataset_id, sug_params)
-                        total, results, _secop_timings = _count_and_query_parallel(
+                        total, results, _secop_timings, _approx = _query_first_then_count(
                             self.secop_client,
                             sug_dataset_id,
                             count_soql,
@@ -1031,6 +1061,7 @@ class SecopalWorkflow:
             "user_query": user_query,
             "resolved_params": state.get("resolved_params", {}),
             "total_count": state.get("total_count", 0),
+            "total_count_approximate": state.get("total_count_approximate", False),
             "rows": state.get("formatted_rows", []),
             "universe_insights": state.get("universe_insights"),
             "suggestions": state.get("suggestions", []),

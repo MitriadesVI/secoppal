@@ -165,13 +165,14 @@ class Formatter:
     def format_for_channel(self, results: list[dict], dataset_id: str, channel: str,
                            params: dict | None = None, total_count: int = 0,
                            universe_insights: Any = None,
-                           suggestions: list | None = None) -> tuple[str, list[dict]]:
+                           suggestions: list | None = None,
+                           total_count_approximate: bool = False) -> tuple[str, list[dict]]:
         rows = self.to_rows(results, dataset_id)
         if channel == "telegram":
-            return self.format_telegram(rows, params=params, dataset_id=dataset_id, total_count=total_count, universe_insights=universe_insights, suggestions=suggestions), rows
+            return self.format_telegram(rows, params=params, dataset_id=dataset_id, total_count=total_count, universe_insights=universe_insights, suggestions=suggestions, total_count_approximate=total_count_approximate), rows
         if channel == "streamlit":
-            return self.format_streamlit(rows, params=params, dataset_id=dataset_id, total_count=total_count, universe_insights=universe_insights, suggestions=suggestions), rows
-        return self.format_whatsapp(rows, params=params, dataset_id=dataset_id, total_count=total_count, universe_insights=universe_insights, suggestions=suggestions), rows
+            return self.format_streamlit(rows, params=params, dataset_id=dataset_id, total_count=total_count, universe_insights=universe_insights, suggestions=suggestions, total_count_approximate=total_count_approximate), rows
+        return self.format_whatsapp(rows, params=params, dataset_id=dataset_id, total_count=total_count, universe_insights=universe_insights, suggestions=suggestions, total_count_approximate=total_count_approximate), rows
 
     def to_rows(self, results: list[dict], dataset_id: str) -> list[dict]:
         # B1: deduplicar ANTES de cortar al max_results.
@@ -220,7 +221,7 @@ class Formatter:
             return ""
         return url
 
-    def format_whatsapp(self, rows: list[dict], params: dict | None = None, dataset_id: str | None = None, total_count: int = 0, universe_insights: Any = None, suggestions: list | None = None) -> str:
+    def format_whatsapp(self, rows: list[dict], params: dict | None = None, dataset_id: str | None = None, total_count: int = 0, universe_insights: Any = None, suggestions: list | None = None, total_count_approximate: bool = False) -> str:
         if not rows:
             return build_no_results_message(params, dataset_id)
 
@@ -232,6 +233,9 @@ class Formatter:
                 f"📋 Encontre {total_count:,} resultados en SECOP. "
                 f"Te muestro los {shown} {ordering_label}; hay {remaining:,} mas:\n"
             )
+        elif total_count_approximate and shown == total_count:
+            header = f"📋 Encontre {shown}+ resultados en SECOP. " \
+                     f"Te muestro los {shown} {self._ordering_label(params)}:\n"
         else:
             header = f"📋 Encontre {shown} resultados:\n"
         insights = self._insights_summary(universe_insights, params)
@@ -266,7 +270,7 @@ class Formatter:
             result = "⚠️ El mayor valor mostrado tiene inconsistencia de fuente; verificar SECOP.\n\n" + result
         return result
 
-    def format_telegram(self, rows: list[dict], params: dict | None = None, dataset_id: str | None = None, total_count: int = 0, universe_insights: Any = None, suggestions: list | None = None) -> str:
+    def format_telegram(self, rows: list[dict], params: dict | None = None, dataset_id: str | None = None, total_count: int = 0, universe_insights: Any = None, suggestions: list | None = None, total_count_approximate: bool = False) -> str:
         if not rows:
             return build_no_results_message(params, dataset_id)
 
@@ -278,6 +282,9 @@ class Formatter:
                 f"Encontre {total_count:,} resultados en SECOP. "
                 f"Te muestro los {shown} {ordering_label}; hay {remaining:,} mas:\n"
             )
+        elif total_count_approximate and shown == total_count:
+            header = f"Encontre {shown}+ resultados en SECOP. " \
+                     f"Te muestro los {shown} {self._ordering_label(params)}:\n"
         else:
             header = f"Encontre {shown} resultados:\n"
         insights = self._insights_summary(universe_insights, params)
@@ -309,7 +316,7 @@ class Formatter:
             result = "⚠️ El mayor valor mostrado tiene inconsistencia de fuente; verificar SECOP.\n\n" + result
         return result
 
-    def format_streamlit(self, rows: list[dict], params: dict | None = None, dataset_id: str | None = None, total_count: int = 0, universe_insights: Any = None, suggestions: list | None = None) -> str:
+    def format_streamlit(self, rows: list[dict], params: dict | None = None, dataset_id: str | None = None, total_count: int = 0, universe_insights: Any = None, suggestions: list | None = None, total_count_approximate: bool = False) -> str:
         if not rows:
             return build_no_results_message(params, dataset_id)
         shown = len(rows)
@@ -319,6 +326,12 @@ class Formatter:
             base = (
                 f"Encontre {total_count:,} resultados en SECOP. "
                 f"Te muestro los {shown} {ordering_label}; hay {remaining:,} mas "
+                "listos para explorar en tabla y tarjetas."
+            )
+        elif total_count_approximate and shown == total_count:
+            base = (
+                f"Encontre {shown}+ resultados en SECOP. "
+                f"Te muestro los {shown} {self._ordering_label(params)} "
                 "listos para explorar en tabla y tarjetas."
             )
         else:

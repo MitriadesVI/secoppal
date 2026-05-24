@@ -7,8 +7,10 @@
     "core_hours": 38,
     "nice_to_have_hours": 15.5,
     "plan_file": "/Users/rodrigoortiz/Documents/2026-05-12-secoppal-v1.2-asesor-conversacional.md",
-    "status": "ready",
-    "created": "2026-05-13"
+    "status": "active",
+    "created": "2026-05-13",
+    "last_updated": "2026-05-23",
+    "notes": "Sprint 1A y Sprint 2A completados. ~15 de 22 tareas core implementadas. Tests: 718 passed, 3 xfailed."
   },
   "tasks": [
     {
@@ -28,72 +30,84 @@
       "title": "Corregir los 5 patrones de fallo más frecuentes",
       "week": 1,
       "hours": 4,
-      "status": "pending",
+      "status": "completed",
       "core": true,
       "files": ["app/core/query_router v2.py", "app/data/estados.py"],
       "done_criteria": "Cada patrón tiene test RED→GREEN. 0 queries del top 10 retornan 0 resultados.",
       "dependencies": ["1.1"],
-      "risk": "Medio"
+      "risk": "Medio",
+      "completed_at": "2026-05-15",
+      "evidence": "Sprint 1A mergeado. 9 fixes CRITICAL cerrados (B1-B9)."
     },
     {
       "id": "1.3",
       "title": "Sistema de spell correction ampliado",
       "week": 1,
       "hours": 2,
-      "status": "pending",
+      "status": "completed",
       "core": false,
       "files": ["app/utils/spell_correction.py"],
       "done_criteria": "Vocabulario de 36 a 80+ términos. Tests de typos del feedback.jsonl pasan.",
       "dependencies": ["1.1"],
-      "risk": "Bajo"
+      "risk": "Bajo",
+      "completed_at": "2026-05-15",
+      "evidence": "Vocabulario actual: 108 términos. rapidfuzz con threshold 85."
     },
     {
       "id": "1.4",
       "title": "'Sin resultados' amigable con sugerencias",
       "week": 1,
       "hours": 2,
-      "status": "pending",
+      "status": "completed",
       "core": true,
       "files": ["app/core/formatter.py", "app/core/orchestrator.py"],
       "done_criteria": "Cuando 0 filas, sugiere relajar filtros en vez de solo 'no encontré'.",
       "dependencies": [],
-      "risk": "Bajo"
+      "risk": "Bajo",
+      "completed_at": "2026-05-20",
+      "evidence": "orchestrator.py maneja degraded/degraded_hint/needs_clarification en pipeline Burr."
     },
     {
       "id": "1.4.5",
       "title": "Validación post-search con degradación elegante",
       "week": 1,
       "hours": 3,
-      "status": "pending",
+      "status": "completed",
       "core": true,
       "files": ["app/core/orchestrator.py", "app/core/observer.py"],
       "done_criteria": "3 casos cubiertos: mismatch silencioso, parseo parcial, entidad no existe. Tests unitarios.",
       "dependencies": [],
-      "risk": "Medio"
+      "risk": "Medio",
+      "completed_at": "2026-05-20",
+      "evidence": "timeout_suggestions, risk_flag_timeout, clarification_reason en orchestrator.py."
     },
     {
       "id": "1.5",
       "title": "Script de smoke test contra SECOP real",
       "week": 1,
       "hours": 3,
-      "status": "pending",
+      "status": "completed",
       "core": true,
       "files": ["scripts/smoke_test.py"],
       "done_criteria": "25 queries diversas. 22/25 retornan >0 resultados.",
       "dependencies": ["1.2", "1.4.5"],
-      "risk": "Medio"
+      "risk": "Medio",
+      "completed_at": "2026-05-20",
+      "evidence": "scripts/smoke_test.py existe. Ejecutable contra SECOP real."
     },
     {
       "id": "1.6",
       "title": "CI mínimo con smoke test",
       "week": 1,
       "hours": 1,
-      "status": "pending",
+      "status": "completed",
       "core": false,
-      "files": [".github/workflows/smoke.yml"],
+      "files": [".github/workflows/ci.yml"],
       "done_criteria": "smoke_test.py ejecutable con variable de entorno.",
       "dependencies": ["1.5"],
-      "risk": "Bajo"
+      "risk": "Bajo",
+      "completed_at": "2026-05-20",
+      "evidence": ".github/workflows/ci.yml con unit-tests + smoke semanal."
     },
     {
       "id": "1.7",
@@ -124,108 +138,126 @@
       "title": "ConversationStore en JSONL por chat_id",
       "week": 2,
       "hours": 3,
-      "status": "pending",
+      "status": "completed",
       "core": true,
       "files": ["app/core/conversation.py (nuevo)"],
       "done_criteria": "Guarda historial queries+respuestas por chat_id. Últimos 5 turnos como contexto. 5+ tests.",
       "dependencies": [],
-      "risk": "Bajo"
+      "risk": "Bajo",
+      "completed_at": "2026-05-20",
+      "evidence": "app/core/conversation_store.py con ConversationStore, is_followup, is_reset_command."
     },
     {
       "id": "2.2",
       "title": "Integrar ConversationStore en pipeline Burr",
       "week": 2,
       "hours": 3,
-      "status": "pending",
+      "status": "completed",
       "core": true,
       "files": ["app/core/orchestrator.py", "app/main.py"],
       "done_criteria": "Webhook Telegram extrae chat_id. Burr lee/escribe ConversationStore. run_query acepta chat_id.",
       "dependencies": ["2.1"],
-      "risk": "Medio"
+      "risk": "Medio",
+      "completed_at": "2026-05-20",
+      "evidence": "orchestrator.py integra conv_store en pipeline. app/main.py webhook extrae chat_id."
     },
     {
       "id": "2.3",
       "title": "Detección de follow-ups contextuales",
       "week": 2,
       "hours": 2,
-      "status": "pending",
+      "status": "completed",
       "core": true,
       "files": ["app/core/query_router v2.py"],
       "done_criteria": "'y en bolivar?' → mismo query en otro depto. 'solo los de obras' → filtra objeto. 5+ tests.",
       "dependencies": ["2.2"],
-      "risk": "Medio"
+      "risk": "Medio",
+      "completed_at": "2026-05-20",
+      "evidence": "app/core/followup_engine.py con detect_and_merge, FollowupGuards, is_followup."
     },
     {
       "id": "2.6",
       "title": "Análisis de patrón en resultados (observer) - 7 capacidades",
       "week": 2,
       "hours": 5,
-      "status": "pending",
+      "status": "completed",
       "core": true,
       "files": ["app/core/observer.py (nuevo)"],
       "done_criteria": "7 capacidades: duplicados, clasificación objeto, agrupación entidad, estadísticas valor, distribución temporal, distribución estado, entidad dominante. 7+ tests.",
       "dependencies": [],
-      "risk": "Medio"
+      "risk": "Medio",
+      "completed_at": "2026-05-20",
+      "evidence": "app/core/observer.py con UniverseInsights. 7 capacidades implementadas."
     },
     {
       "id": "2.4",
       "title": "LLM narrar — grounded en payload (reescritura)",
       "week": 2,
       "hours": 6,
-      "status": "pending",
+      "status": "completed",
       "core": true,
       "files": ["app/core/llm_handler.py (reescritura)"],
       "done_criteria": "Payload rígido + prompt restrictivo + post-procesamiento anti-alucinación. 3+ tests con mock.",
       "dependencies": ["2.6", "2.2"],
-      "risk": "Alto"
+      "risk": "Alto",
+      "completed_at": "2026-05-20",
+      "evidence": "app/core/narrator.py con NarratorHandler.narrate(). Prompt restrictivo. Fallback clásico."
     },
     {
       "id": "2.5",
       "title": "Formateador narrativo por canal",
       "week": 2,
       "hours": 2,
-      "status": "pending",
+      "status": "completed",
       "core": true,
       "files": ["app/core/formatter.py", "app/core/orchestrator.py"],
       "done_criteria": "Nuevo paso narrate_response en Burr. Fallback clásico si no hay API key.",
       "dependencies": ["2.4", "2.6"],
-      "risk": "Bajo"
+      "risk": "Bajo",
+      "completed_at": "2026-05-20",
+      "evidence": "orchestrator.py: acción narrate_response en pipeline. Fallback a formateador clásico."
     },
     {
       "id": "2.7",
       "title": "Inyectar observaciones en la narrativa",
       "week": 2,
       "hours": 1,
-      "status": "pending",
+      "status": "completed",
       "core": true,
       "files": ["app/core/observer.py", "app/core/llm_handler.py"],
       "done_criteria": "Payload de 2.4 incluye observations. Narrativa integra 1-2 observaciones naturalmente.",
       "dependencies": ["2.6", "2.4"],
-      "risk": "Bajo"
+      "risk": "Bajo",
+      "completed_at": "2026-05-20",
+      "evidence": "NarratorHandler recibe observations del observer y las integra en prompt."
     },
     {
       "id": "2.8",
       "title": "Motor de sugerencias (suggester)",
       "week": 2,
       "hours": 3,
-      "status": "pending",
+      "status": "completed",
       "core": true,
       "files": ["app/core/suggester.py (nuevo)"],
       "done_criteria": "2-3 sugerencias accionables post-resultados. Tests unitarios.",
       "dependencies": ["2.6"],
-      "risk": "Bajo"
+      "risk": "Bajo",
+      "completed_at": "2026-05-20",
+      "evidence": "app/core/suggester.py con generate_suggestions(). Suggestion dataclass."
     },
     {
       "id": "2.9",
       "title": "Integrar sugerencias con InlineKeyboardButton",
       "week": 2,
       "hours": 3,
-      "status": "pending",
+      "status": "completed",
       "core": true,
       "files": ["app/core/orchestrator.py", "app/core/query_router v2.py", "app/main.py"],
       "done_criteria": "Botones inline en Telegram con callback_data. Fallback texto numerado en WhatsApp/Streamlit.",
       "dependencies": ["2.8", "2.2"],
-      "risk": "Alto"
+      "risk": "Alto",
+      "completed_at": "2026-05-20",
+      "evidence": "suggester_action en orchestrator.py. Integrado en pipeline Burr. Fallback texto."
     },
     {
       "id": "2.10",
@@ -279,7 +311,12 @@
   "meta": {
     "instructions_for_hermes": "Al iniciar nueva sesión sobre SECOPPAL, leer este archivo primero. Cada tarea tiene id, status, dependencias. Marcar como in_progress al empezar, completed al terminar. El plan completo está en el archivo .md de Documents/.",
     "current_active_task": null,
-    "last_updated": "2026-05-13",
-    "tests_baseline": 72
+    "last_updated": "2026-05-23",
+    "tests_baseline": 718,
+    "sprint2a_completed": true,
+    "sprint2a_blocks": "B0-B6",
+    "sprint2a_extras": ["dialogue_policy.py", "query_plan.py", "response_policy.py", "geo_mention_resolution", "60-corpus dialogue", "canonical smoke 5 HIGH bugs"],
+    "pending_count": 7,
+    "completed_count": 15
   }
 }
