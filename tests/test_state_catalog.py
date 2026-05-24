@@ -52,3 +52,43 @@ def test_query_router_includes_publicado_for_publicados():
     edp = params.get("estado_del_procedimiento")
     assert edp is not None
     assert "Publicado" in edp
+
+
+# ── Known duplicates (Sprint 5) ───────────────────────────────────────
+
+# Seleccionado aparece en en_evaluacion y contrato_activo. Es intencional:
+# un proceso en "Seleccionado" puede ser evaluación pre-adjudicación
+# o contrato activo ya adjudicado — depende de contexto adicional.
+_KNOWN_OVERLAPS = {
+    "procesos:estado_del_procedimiento:Seleccionado",
+}
+
+
+def test_catalog_no_unexpected_duplicates():
+    """Verificar que solo los overlaps conocidos existen entre familias."""
+    from app.core.estado_families import ESTADO_FAMILIES
+
+    seen_procesos: dict[str, str] = {}
+    for family_name, family in ESTADO_FAMILIES.items():
+        for field, values in family.get("procesos", {}).items():
+            for v in values:
+                key = f"procesos:{field}:{v}"
+                if key in seen_procesos:
+                    # Allow known intentional overlaps
+                    assert key in _KNOWN_OVERLAPS, (
+                        f"Unexpected duplicate {key} in families "
+                        f"{seen_procesos[key]} and {family_name}"
+                    )
+                seen_procesos[key] = family_name
+
+    seen_contratos: dict[str, str] = {}
+    for family_name, family in ESTADO_FAMILIES.items():
+        for field, values in family.get("contratos", {}).items():
+            for v in values:
+                key = f"contratos:{field}:{v}"
+                if key in seen_contratos:
+                    assert key in _KNOWN_OVERLAPS, (
+                        f"Unexpected duplicate {key} in families "
+                        f"{seen_contratos[key]} and {family_name}"
+                    )
+                seen_contratos[key] = family_name

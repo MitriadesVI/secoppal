@@ -58,6 +58,11 @@ ESTADO_FAMILIES = {
     # expediente/gestión contractual. "En ejecución", "Modificado" y "Prorrogado"
     # son contratos activos/vigentes. "Firmado" solo fuerza dataset='contratos'
     # sin aplicar filtro de estado (no hay campo "firmado" en SECOP).
+    #
+    # NOTA (Sprint 5): "Seleccionado" en estado_del_procedimiento aparece tanto
+    # en en_evaluacion como en contrato_activo. Es intencional: un proceso en
+    # "Seleccionado" puede ser (a) evaluación pre-adjudicación o (b) contrato
+    # activo ya adjudicado — depende de contexto adicional.
     "contrato_activo": {
         "procesos": {
             "estado_de_apertura_del_proceso": ["Cerrado"],

@@ -255,9 +255,15 @@ MORPHOLOGICAL_VARIANTS: dict[str, str] = {
     "apartamentos": "vivienda",
     "casa": "vivienda",
     "casas": "vivienda",
-    # sede / sedes (0→2 variantes)
+    # sede / sedes / infraestructura física (0→6 variantes)
     "sede": "sede",
     "sedes": "sede",
+    "infraestructura fisica": "sede",
+    "infraestructura física": "sede",
+    "planta fisica": "sede",
+    "planta física": "sede",
+    "edificio": "sede",
+    "edificios": "sede",
     # uniforme / uniformes (0→3 variantes)
     "uniforme": "uniforme",
     "uniformes": "uniforme",

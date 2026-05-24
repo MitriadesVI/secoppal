@@ -40,6 +40,10 @@ def resolve_regional(entidad_resolved: str, departamento_resolved: str) -> str |
             # Look for department match
             for dept_name, regional in regionals.items():
                 if dept_name.upper() in departamento_resolved.upper():
+                    # Guard: if entidad_resolved is already the regional, skip
+                    # (idempotent — don't re-resolve same value)
+                    if entidad_resolved.upper() == regional.upper():
+                        return None
                     return regional
             # If no specific department match, return None (keep central entity)
             return None

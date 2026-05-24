@@ -20,7 +20,7 @@ def test_rubros_frecuentes_tienen_variantes():
     ]
     for rubro in expected_rubros:
         variants = ROOT_TO_VARIANTS.get(rubro, frozenset())
-        assert len(variants) >= 2, (
+        assert len(variants) >= 3, (
             f"Rubro '{rubro}' tiene solo {len(variants)} variantes: {sorted(variants)}. "
             f"Se esperaban ≥3."
         )

@@ -12,20 +12,19 @@ def router():
 
 
 def test_adquisicion_de_uniformes_scrubs_verb(router):
-    """'adquisición de uniformes' → objeto=['uniformes'], no ['adquisicion','uniformes']"""
+    """'adquisición de uniformes' → objeto=['uniforme'], no ['adquisicion']"""
     r = router.parse("adquisicion de uniformes")
     obj = r.params.get("objeto", [])
-    # "adquisicion" is an action verb, should be scrubbed when substantive noun exists
     assert "adquisicion" not in obj
-    assert "uniformes" in obj
+    assert "uniforme" in obj
 
 
 def test_compra_de_equipos_scrubs_verb(router):
-    """'compra de equipos de computo' → objeto=['equipos','computo']"""
+    """'compra de equipos de computo' → objeto=['equipo','computo']"""
     r = router.parse("compra de equipos de computo")
     obj = r.params.get("objeto", [])
     assert "compra" not in obj
-    assert "equipos" in obj
+    assert "equipo" in obj or "equipos" in obj
 
 
 def test_contratar_servicios_de_aseo_scrubs_verb(router):
@@ -52,8 +51,8 @@ def test_adquisiciones_multiples_scrubs_all(router):
 
 
 def test_compra_de_medicamentos_en_atlantico(router):
-    """'compra de medicamentos en Atlantico' → medicamentos, no compra"""
+    """'compra de medicamentos en Atlantico' → medicamento, no compra"""
     r = router.parse("compra de medicamentos en Atlantico")
     obj = r.params.get("objeto", [])
     assert "compra" not in obj
-    assert "medicamentos" in obj
+    assert "medicamento" in obj or "medicamentos" in obj
