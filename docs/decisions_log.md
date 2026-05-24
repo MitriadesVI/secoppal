@@ -371,3 +371,95 @@ reales del usuario para construir `dialogue_policy_corpus.yaml` (50-60 casos:
 - Suggester tests: test_suggester_contextual.py (6 tests)
 
 **Bugs cerrados:** Ninguno nuevo — mejora UX incremental (Sprint 3 fase 2).
+
+---
+
+## ADR-010: ACCENT-NORMALIZATION — unaccent() en SoQL, NO regexp_replace
+
+**Fecha:** 2026-05-23
+**Contexto:** El bug ACCENT-NORMALIZATION-001 (9+ apariciones) requería que LIKE en SoQL fuera insensible a tildes para matchear datos de SECOP que contienen tildes (CONSULTORÍA, DISEÑO, JARDINERÍA, etc.). La implementación original usaba `unaccent(UPPER(field))` en ambos lados del LIKE.
+
+Durante Sprint 4 se intentó migrar a `regexp_replace()` por instrucción del plan, bajo la hipótesis de que `unaccent()` era PostgreSQL-only y no estaría disponible en Socrata SoQL. 
+
+**Hecho empírico:** Socrata rechazó `regexp_replace()` con 3 argumentos:
+```
+query.soql.no-such-function; No such function 'regexp_replace'; arity=3
+```
+El smoke test cayó de 9/10 a 6/10. Se revirtió el cambio con `git commit --amend`.
+
+**Decisión:**
+1. Mantener `unaccent()` como función de normalización de tildes en SoQL. Socrata lo soporta (backend PostgreSQL).
+2. Agregar `strip_accents()` en `app/utils/text.py` para normalización Python-side (útil para valores que se inyectan como literales en WHERE).
+3. NO intentar `regexp_replace` en SoQL — no está disponible en la API de Socrata.
+
+**Alternativas descartadas:**
+- `regexp_replace` con 2 argumentos (sin replacement): no existe en SoQL.
+- Normalizar solo del lado Python (strip_accents antes de LIKE): no sirve porque los DATOS en SECOP tienen tildes.
+- Usar COLLATE o funciones de normalización Unicode: no disponibles en SoQL.
+
+**Consecuencias:**
+- `unaccent()` es la función correcta y funciona en producción (smoke 9/10 verificado).
+- `strip_accents()` Python es útil pero no reemplaza `unaccent()` en SoQL.
+- Cualquier intento futuro de cambiar la normalización de tildes debe validarse contra la API real de Socrata ANTES de commit (no solo tests unitarios).
+
+**Métricas al cierre:**
+- Smoke: 9/10 (con unaccent), 6/10 (con regexp_replace — regresión confirmada)
+- Tests: test_accent_normalization.py 19/19 pass
+- Commit: `61f5dfb` (amend con revert)
+
+**Bugs cerrados:** ACCENT-NORMALIZATION-001 (Sprint 4).
+
+---
+
+## ADR-011: COMMON_TOKENS expansion para AND→OR demotion
+
+**Fecha:** 2026-05-23
+**Contexto:** El mecanismo de degradación AND→OR (`_should_demote_objeto` + `_split_objeto_by_rarity`) existía desde Sprint 1A pero con solo 17 tokens en `COMMON_TOKENS`. Casos como "ASEO, CAFETERÍA, JARDINERÍA Y MANTENIMIENTO" (6 tokens) no se beneficiaban porque pocos tokens caían en la categoría "common".
+
+**Decisión:**
+1. Expandir `COMMON_TOKENS` de 17 a ~50 tokens en `app/core/intent_vocabulary.py`.
+2. Criterio de inclusión: tokens que aparecen en miles de procesos SECOP y no discriminan (general, integral, obra, pública, profesional, etc.).
+3. El mecanismo de degradación no cambia — solo se amplía el vocabulario.
+
+**Tokens agregados (Sprint 4):**
+integral, integrales, soporte, soportes, apoyos, obra, obras, publica, publico, pública, público, profesional, profesionales, asistencia, asistencias, tecnica, técnica, tecnicos, técnicos, proyecto, proyectos, actividad, actividades, nacional, nacionales, regional, regionales, suministrar, compra, compras, adecuacion, adecuación, mejoramiento, reparacion, reparación, construccion, construcción, rehabilitacion, rehabilitación.
+
+**Alternativas descartadas:**
+- Clasificar tokens por frecuencia real en SECOP (requiere analítica sobre el dataset — postergado).
+- Usar LLM para decidir qué tokens degradar (overkill, no determinístico).
+
+**Consecuencias:**
+- Queries con ≥4 tokens ahora degradan correctamente los tokens genéricos a OR.
+- El caso Putumayo (6 ANDs) ahora genera OR sobre mantenimiento, servicios, suministro, etc.
+
+**Métricas al cierre:**
+- Tests: test_multi_and_demotion.py 5/5 pass (incluye caso Putumayo 6-AND)
+- Commit: `20989f5`
+
+**Bugs cerrados:** MULTI-AND-OVER-RESTRICTIVE-001 (Sprint 4, sobre infraestructura Sprint 1A).
+
+---
+
+## ADR-012: Value polarity completeness — patrones faltantes
+
+**Fecha:** 2026-05-23
+**Contexto:** El parser de polaridad monetaria en `query_router.py` cubría ~15 frases (no mayor a, no menor a, por debajo de, por encima de, al menos, etc.) pero faltaban 3 patrones: "menor o igual a", "mayor o igual a", "a lo sumo".
+
+**Decisión:**
+1. Agregar `(?:o\s+igual\s+)?` opcional en los patrones de "menor(es)" y "mayor(es)" para cubrir "menor o igual a X" y "mayor o igual a X".
+2. Agregar patrón "a lo sumo" → `valor_max` en el grupo de limitantes superiores.
+3. No modificar la estructura de `polarity_patterns` — solo extender regex.
+
+**Alternativas descartadas:**
+- Reescribir el parser de polaridad como tabla de mapeo explícita (más mantenible pero rompe compatibilidad con el pipeline actual de regex+scrub).
+- Usar LLM para desambiguar polaridad (no determinístico, latencia innecesaria).
+
+**Consecuencias:**
+- 12 frases de polaridad ahora cubiertas completamente (eran ~9 antes).
+- El caso Palermo (MIN-MAX-INVERSION) ya estaba cubierto por patrones existentes; los nuevos cierran edge cases.
+
+**Métricas al cierre:**
+- Tests: test_value_polarity.py 16/16 pass (5 nuevos Sprint 4)
+- Commit: `77dbb9c`
+
+**Bugs cerrados:** MIN-MAX-INVERSION-001 (Sprint 4).
