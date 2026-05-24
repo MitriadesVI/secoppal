@@ -30,7 +30,7 @@ def test_vendo_uniformes_opportunity():
     result = router.parse("vendo uniformes, hay oportunidades?")
     params = result.params if hasattr(result, "params") else result
     objeto = params.get("objeto", [])
-    assert "uniformes" in str(objeto).lower()
+    assert "uniforme" in str(objeto).lower() or "uniformes" in str(objeto).lower()
     assert "vendo" not in str(objeto).lower()
 
 
@@ -39,7 +39,8 @@ def test_ofrezco_insumos_medicos_opportunity():
     result = router.parse("ofrezco insumos médicos, alguna convocatoria?")
     params = result.params if hasattr(result, "params") else result
     objeto = params.get("objeto", [])
-    assert "insumos" in str(objeto).lower() or "medicos" in str(objeto).lower()
+    # MORPHO-UNEVEN normaliza "insumos"→"insumo", "médicos"→"salud"
+    assert "insumo" in str(objeto).lower() or "salud" in str(objeto).lower()
     assert "ofrezco" not in str(objeto).lower()
 
 

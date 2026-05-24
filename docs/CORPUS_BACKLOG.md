@@ -81,33 +81,39 @@ Estos NO son fallos del corpus v1 (el corpus pasa 88/88). Son bugs reales detect
 | MULTI-AND-OVER-RESTRICTIVE-001 | ≥4 tokens en objeto con AND obligatorio = match matemáticamente improbable. **Confirmado en Putumayo (6 ANDs) e Ipiales (4 ANDs).** | 2 verificados | **CLOSED Sprint 4 (A2)** — COMMON_TOKENS expandido a ~50, mecanismo AND→OR ya existía en Sprint 1A. Commit `20989f5` |
 | FOLLOWUP-VALUE-INHERIT-001 | `valor_max`/`valor_min`/`modalidad` heredados cuando el topic cambia completamente. **Confirmado culpable directo en Yarumal silvopastoriles** (heredó valor_max=20M de query anterior de residuos sólidos, proceso vale 48M) | 1 verificado | **CLOSED Sprint 1A (B8)** — `_purge_stale_inherited_params()` purga modificadores cuando no hay overlap de topic. Commit `b5f6a80`. Auditoría 2026-05-23: verificado en código + tests (8/8) |
 | FOLLOWUP-ENTITY-PURGE-001 | Follow-up que cambia scope territorial (depto → ciudad) no purga la entidad heredada mal resuelta. Caso: gobernación Bolívar (mal resuelta a ICBF) → "magangue" → mantuvo ICBF + agregó "magangue" como objeto contractual | 1 verificado | **HIGH (nuevo)** — extension de FOLLOWUP-DATASET-PURGE-001 a campo entidad |
-| MORPHO-EXPANSION-INCONSISTENT-001 | Expansión morfológica de sinónimos se aplica en algunas rutas (heuristic_only) pero no en otras (heuristic_plus_llm). Caso adulto mayor: con LLM solo buscó "adulto mayor" sin expandir a "personas mayores", "centros de vida", etc. | 1 verificado | **MEDIUM (nuevo)** |
-| ENTITY-ECOSYSTEM-EXPANSION-001 | Alcaldías mayores y gobernaciones grandes (Bogotá, Medellín, Cali, Valle, Antioquia, etc.) tienen 30-60+ entidades dependientes. Modelo actual solo busca entidad central. Pregunta abierta: ¿strict, ecosistema, híbrido con sugerencia? | observación arquitectónica | **HIGH (nuevo) — APLAZADO A SPRINT 3** con interfaz preparada en Sprint 1A |
-| STATE-CATALOG-INCOMPLETE-001 | Catálogo `estado_del_procedimiento IN (...)` no cubre todos los estados reales que SECOP usa. **Probable culpable en Mariquita SAMC-JCT-006** (el proceso tiene estado "Publicado" oficialmente pero Phase "Presentación de observaciones" — auditar valores reales del campo) | 1 probable | **CRITICAL (nuevo)** — necesita audit de `discover_secop.py` |
-| ~~MUNICIPAL-GEO-GAP-001~~ | ~~Alcaldías municipales con departamento_entidad vacío/inconsistente~~ **REMOVED 2026-05-19**: 9 procesos verificados en Socrata, TODOS tienen campos territoriales bien poblados. Era diagnóstico erróneo. Los casos atribuidos a este bug se redistribuyeron en ACCENT/ENTITY-MISRESOLUTION/FOLLOWUP-VALUE-INHERIT/PAGINATION | 0 (era 5 supuestos) | **ELIMINADO** |
-| SOURCE-COVERAGE-001 | Procesos publicados en SECOP nativo en las últimas <12h pueden no estar en dataset Socrata. **Re-diagnóstico 2026-05-19**: 9 procesos verificados, incluso del 18/05 ya estaban en Socrata el 19/05. Delay real <24h, probablemente <12h. **Baja de CRITICAL a MEDIUM**. Sigue válido el diagnóstico transparente como UX pero no requiere crawler propio urgente | 0 confirmados | **MEDIUM (baja desde CRITICAL)** — investigación empírica invalidó la magnitud del problema |
+| FOLLOWUP-ENTITY-PURGE-001 | Follow-up que cambia scope territorial (depto → ciudad) no purga la entidad heredada mal resuelta. Caso: gobernación Bolívar (mal resuelta a ICBF) → "magangue" → mantuvo ICBF + agregó "magangue" como objeto contractual | 1 verificado | **CLOSED Sprint 1A (B4)** — `_purge_stale_inherited_params()` purga entidad al cambiar scope. Commit `b5f6a80`. Auditoría 2026-05-23: verificado |
+| MORPHO-EXPANSION-INCONSISTENT-001 | Expansión morfológica de sinónimos se aplica en algunas rutas (heuristic_only) pero no en otras (heuristic_plus_llm). Caso adulto mayor: con LLM solo buscó "adulto mayor" sin expandir a "personas mayores", "centros de vida", etc. | 1 verificado | **MEDIUM** — PARCIAL: ambas rutas usan ROOT_TO_VARIANTS en SoQL builder. Posiblemente ya es consistente. Pendiente verificación. |
+| ENTITY-ECOSYSTEM-EXPANSION-001 | Alcaldías mayores y gobernaciones grandes (Bogotá, Medellín, Cali, Valle, Antioquia, etc.) tienen 30-60+ entidades dependientes. Modelo actual solo busca entidad central. Pregunta abierta: ¿strict, ecosistema, híbrido con sugerencia? | observación arquitectónica | **HIGH — APLAZADO A SPRINT 7+** con interfaz preparada en Sprint 1A |
+| STATE-CATALOG-INCOMPLETE-001 | Catálogo `estado_del_procedimiento IN (...)` no cubre todos los estados reales que SECOP usa. **Probable culpable en Mariquita SAMC-JCT-006** (el proceso tiene estado "Publicado" oficialmente pero Phase "Presentación de observaciones" — auditar valores reales del campo) | 1 probable | **CLOSED Sprint 5** — +Aprobado/+En aprobación/+Borrador (246K registros). Smoke extendido 5/5 confirma. Commit `3761126` |
+| SOURCE-COVERAGE-001 | Procesos publicados en SECOP nativo en las últimas <12h pueden no estar en dataset Socrata. Delay real <24h. | 0 confirmados | **MEDIUM — VIVO**. 0% implementado. UX honesta de delay pendiente. |
 | STATE-PRIORITY-001 | `estado_family=oferta_abierta` no se proyecta a SoQL en algunas rutas | 3 | **CLOSED Sprint 2A-fix (B3)** |
-| OPP-INTENT-001 | "algún proceso para X" / "alguna oferta del Y" / "algún proceso de Z en W" no activa  ni . Confirmado en Putumayo aseo, Antioquia residuos, Huila transporte | 5 | **CLOSED Sprint 2A (P4)** |
-| MULTI-AND-OVER-RESTRICTIVE-001 | Cuando parser/LLM extraen ≥4 tokens en objeto, AND obligatorio sobre todos hace matemáticamente improbable encontrar match. Caso canónico: "ASEO, CAFETERÍA, JARDINERÍA Y MANTENIMIENTO" → 6 ANDs → 0 resultados. Fix: degradar a OR sobre tokens menos específicos, mantener AND sobre tokens raros | 1 | **HIGH (nuevo)** |
+| OPP-INTENT-001 | "algún proceso para X" / "alguna oferta del Y" / "algún proceso de Z en W" no activa intent_type. Confirmado en Putumayo aseo, Antioquia residuos, Huila transporte | 5 | **CLOSED Sprint 2A (P4)** |
 | CITY-TO-ENTITY-AUTOPROMOTION-001 | `city_to_entity` convierte ciudad en entidad, ocultando procesos de otras entidades en esa ciudad | 2 (Barranquilla) | **CLOSED Sprint 2A (P9)** |
-| TEMPORAL-MONTH-PARSING-001 | "en mayo", "el mes pasado", "este mes" no se resuelven como filtros de fecha. Mes sin año debe interpretarse como mes del año actual | 1 (Putumayo aseo "en mayo") | **CLOSED Sprint 2A (P5)** |
-| AUTO-FALLBACK-WITHOUT-QUALITY-001 | Cuando 0 resultados, fallback automático sin filtro de fecha trae procesos viejos (2023) cuando user pidió 2026. UX dice "sin filtro de fechas" pero no aclara que son potencialmente irrelevantes | 1 (Antioquia residuos → Caracolí 2023) | MEDIUM (nuevo) |
-| NUMBER-CONTEXT-PHRASE-001 | Verbos comparativos ("supere", "exceda", "alcance") y conectores temporales ("en") permanecen en  cuando el parser ya extrajo correctamente el modificador (valor/fecha). AND con el verbo mata la búsqueda. Caso: "no supere los 25 millones" → valor_max=25M ✓ + objeto contiene "supere" → 0 resultados | 1 | **CLOSED Sprint 2A (P6)** |
-| ENTITY-MULTI-REGIONAL-001 | Entidades con regionales (SENA, ICBF, DNP, ministerios) no consideran modificadores territoriales en la query. Caso: "del sena bolivar" → "SENA SECRETARIA GENERAL" (Bogotá), no "SENA REGIONAL BOLÍVAR" | 1 | **HIGH (nuevo)** |
-| FOLLOWUP-VALUE-INHERIT-001 | `valor_max`/`valor_min`/`modalidad` heredados del turno anterior cuando el topic cambia completamente. Caso: residuos sólidos (≤20M) → silvopastoriles → hereda 20M sin pedirlo | 1 | **HIGH (nuevo)** |
-| NO-FOLLOWUP-DETECTION-001 | Quejas/comentarios del usuario tratados como nueva query (no como seguimiento conversacional) | 1 | **CLOSED Sprint 2A (P2)** |
-| NIT-AMOUNT-CONFUSION-001 | Montos en COP (8-9 dígitos) confundidos con NITs/contratistas sin discriminar contexto léxico | 1 | HIGH |
-| OPP-INTENT-001 | "algún proceso para X" no activa `intent_type=opportunity_search` ni `estado_family=oferta_abierta` | 1 | **CLOSED Sprint 2A (P4)** |
-| RELEVANCE-PHRASE-001 | Frases técnicas compuestas (ej. "control de calidad de agua para consumo humano") destruidas por AND de tokens. Sin boost de frase exacta | 1 | HIGH |
-| DEDUP-PROCESS-001 | Mismo proceso aparece varias veces con distinto `noticeUID` (cambios de fase/estado generan registros separados). Sin dedup en UI | 4 (Guateque, La Estrella, Doncello, Yaguara ×3) | MEDIUM |
+| TEMPORAL-MONTH-PARSING-001 | "en mayo", "el mes pasado", "este mes" no se resuelven como filtros de fecha. | 1 (Putumayo aseo "en mayo") | **CLOSED Sprint 2A (P5)** |
+| AUTO-FALLBACK-WITHOUT-QUALITY-001 | Cuando 0 resultados, fallback automático sin filtro de fecha trae procesos viejos (2023) cuando user pidió 2026. | 1 (Antioquia residuos → Caracolí 2023) | **MEDIUM — PARCIAL**. degraded_hint existe pero no avisa año real de resultados. |
+| NUMBER-CONTEXT-PHRASE-001 | Verbos comparativos ("supere", "exceda", "alcance") y conectores temporales ("en") permanecen en objeto. | 1 | **CLOSED Sprint 2A (P6)** |
+| ENTITY-MULTI-REGIONAL-001 | Entidades con regionales (SENA, ICBF, DNP, ministerios) no consideran modificadores territoriales. Caso: "del sena bolivar" → "SENA SECRETARIA GENERAL". | 1 | **CLOSED Sprint 5** — regional_entities.json (SENA 32 deptos, ICBF 16). Smoke 3/5. Commit `afb1e17` |
+| NIT-AMOUNT-CONFUSION-001 | Montos en COP (8-9 dígitos) confundidos con NITs/contratistas sin discriminar contexto léxico | 1 | **CLOSED Sprint 2A** — `_extract_nit()` + test_monto_no_confundido_con_nit |
+| RELEVANCE-PHRASE-001 | Frases técnicas compuestas (ej. "control de calidad de agua para consumo humano") destruidas por AND de tokens. Sin boost de frase exacta | 1 | **HIGH — VIVO**. 0% implementado. Prioridad #1 para cohorte según plan maestro. |
+| DEDUP-PROCESS-001 | Mismo proceso aparece varias veces con distinto `noticeUID` (cambios de fase/estado generan registros separados). Sin dedup en UI | 4 (Guateque, La Estrella, Doncello, Yaguara ×3) | **MEDIUM — PARCIAL**. `_dedupe_results()` implementado pero sin test unitario. |
 | COURTESY-FILLER-001 | Tokens de cortesía, queja, bidder y verbos interrogativos entraban como objeto contractual | 4 | **CLOSED Sprint 2A (P7+P3)** |
-| BIDDER-CATALOG-AND-001 | `vendo X, Y y Z` tratado como AND obligatorio → 0 resultados | 1 (electrobombas) | HIGH |
-| POLYSEMIC-TOPIC-001 | `alojamiento` con 5 sentidos no desambiguados (hospedaje/hosting/logístico/albergue/militar) | 1 | HIGH |
-| FOLLOWUP-DATASET-PURGE-001 | Follow-up que cambia dataset hereda `intent_type`/`estado_family` incompatibles | 1 | HIGH |
-| PROCUREMENT-ACTION-001 | `adquisición`/`compra`/`contratar` entran como AND obligatorio | 1 | HIGH |
-| MORPHO-UNEVEN-001 | Expansión morfológica desigual (`cultura` completo, `turismo` nada) | 1 | MEDIUM |
-| HEADER-TOPIC-OMISSION-001 | Header del response omite tokens del objeto buscado | 1 | LOW |
-| MOJIBAKE-DISPLAY-001 | Caracteres mal decodificados de SECOP (`Ã³`, `Ã±`) renderizados en UI | 1 | LOW |
+| BIDDER-CATALOG-AND-001 | `vendo X, Y y Z` tratado como AND obligatorio → 0 resultados | 1 (electrobombas) | **CLOSED Sprint 1A** — intent_vocabulary OR groups + _extract_object_terms "o" detection |
+| POLYSEMIC-TOPIC-001 | `alojamiento` con 5 sentidos no desambiguados (hospedaje/hosting/logístico/albergue/militar) | 1 | **HIGH — VIVO**. 0% implementado. Requiere catálogo curado. |
+| FOLLOWUP-DATASET-PURGE-001 | Follow-up que cambia dataset hereda `intent_type`/`estado_family` incompatibles | 1 | **CLOSED Sprint 1A (B6)** — `_merge_change_dataset` no hereda intent_type/estado |
+| PROCUREMENT-ACTION-001 | `adquisición`/`compra`/`contratar` entran como AND obligatorio | 1 | **CLOSED Sprint 5** — ACTION_VERBS scrub en _extract_object_terms. Commit `6226234` |
+| MORPHO-UNEVEN-001 | Expansión morfológica desigual (`cultura` completo, `turismo` nada) | 1 | **CLOSED Sprint 5** — 120 variantes en 15 rubros. ROOT_TO_VARIANTS 35→50. Commit `3007088` |
+| HEADER-TOPIC-OMISSION-001 | Header del response omite tokens del objeto buscado | 1 | **CLOSED** — `_build_interpretation` renderiza objeto correctamente |
+| MOJIBAKE-DISPLAY-001 | Caracteres mal decodificados de SECOP (`Ã³`, `Ã±`) renderizados en UI | 1 | **LOW — VIVO**. 0% implementado. `unicodedata.normalize('NFKC')` pendiente. |
+
+---
+
+**Consolidado 2026-05-23 (post-Sprint 5):** Tabla única. Las secciones duplicadas "Pendientes fuera del corpus" y "Categorías nuevas para corpus de diálogo" fueron eliminadas. Su contenido relevante se fusionó aquí. La tabla "Pendientes fuera del corpus" listaba bugs como vivos que ya estaban cerrados desde Sprint 1A — era desactualización por doble mantenimiento.
+
+**Bugs realmente vivos (7):** SOURCE-COVERAGE-001, POLYSEMIC-TOPIC-001, RELEVANCE-PHRASE-001, MOJIBAKE-DISPLAY-001, AUTO-FALLBACK-WITHOUT-QUALITY-001, MORPHO-EXPANSION-INCONSISTENT-001, ENTITY-ECOSYSTEM-EXPANSION-001.
+
+---
+
+## Categorías nuevas para corpus de diálogo (Sprint 0A)
 
 ---
 
@@ -201,100 +207,6 @@ Antes de implementar `QueryPlan` completo, **nueve fixes CRITICAL** (~20-25 hora
 - ~~SOURCE-COVERAGE-001~~ — baja a MEDIUM, no requiere crawler urgente.
 
 Luego el `QueryPlan` original del plan, con extensiones para `courtesy_filler` (ampliado a `discourse_filler` que incluye señales de "oferta"="oportunidad"), `bidder_catalog`, `procurement_verb`, `polysemic_topic`, `followup_dataset_purge`, `followup_value_purge`, `non_query_followup`, `number_disambiguation`, `entity_multi_regional` y `opportunity_intent_implicit` consideradas desde el inicio.
-
----
-
-## Pendientes fuera del corpus
-
-| ID | Descripción | Sprint | Estado tras feedback 2026-05-19 |
-| ID | Descripción | Sprint | Estado tras feedback 2026-05-19 |
-|----|-------------|--------|---------------------------------|
-| DEMO-BLOCKERS-001 | 8 tareas UX/estado/scope | Pendiente HIGH | OPP-TIMEOUT sube a CRITICAL (5 apariciones); STATE-PRIORITY confirmado vivo (3 apariciones) |
-| VALUE-TYPO-001 | `milloones` normalizar, `valor_min > valor_max` → aclaración | Pendiente | Sin nuevas confirmaciones |
-| REFERENCE-001 | Búsqueda exacta por referencia de proceso (`test_dicar` xfail) | Pendiente | Sin nuevas confirmaciones |
-| CORPUS-CI-001 | known_fail/expected_fail para gate de CI | Pendiente | Sin nuevas confirmaciones |
-| LLM-EXPANSION-AND-001 | LLM expande topic a bigrams sinónimos unidos con AND (nuevo) | **CLOSED Sprint 1A (B5)** — `_promote_synonym_expansion` → `objeto_or`. Commit `20d2ffd`. Auditoría 2026-05-23: verificado | **Cerrado Sprint 1A** — el backlog estaba desactualizado |
-| ENTITY-MISRESOLUTION-FALLBACK-001 | Fallback de rewrite_alcald devuelve entidad arbitraria con high confidence (nuevo) | **CLOSED Sprint 1A (B3)** — `_unresolved_rewrite()` → null+low+clarification. Commit `f55eced`. Auditoría 2026-05-23: verificado | **Cerrado Sprint 1A** — el backlog estaba desactualizado |
-| ACCENT-NORMALIZATION-001 | Tildes (nuevo) | **CLOSED Sprint 4 (A1)** — unaccent() confirmado Socrata-compatible. Commit `61f5dfb` | Cerrado: 19 tests pass, smoke 9/10 sin error |
-| PAGINATION-CUTS-OFF-RELEVANT-001 | LIMIT 50 oculta procesos relevantes (nuevo CRITICAL) | **CLOSED Sprint 1A (B4)** — header + pagination_more. Commit `ee28365`. Auditoría 2026-05-23: verificado | **Cerrado Sprint 1A** — el backlog estaba desactualizado |
-| STATE-CATALOG-INCOMPLETE-001 | Catálogo de estados no cubre todos los valores reales (nuevo CRITICAL) | Pendiente CRITICAL | 1 caso probable (Mariquita SAMC-JCT-006). Pre-req: `discover_secop.py` sobre campo `estado_del_procedimiento` con muestra reciente |
-| ENTITY-MULTI-REGIONAL-001 | Entidades con regionales no consideran modificadores territoriales (nuevo) | Pendiente HIGH | 1 caso ("del sena bolivar" → SENA SECRETARIA GENERAL en Bogotá). Catálogo curado: SENA, ICBF, DNP, ministerios, cajas de compensación, universidades públicas |
-| FOLLOWUP-VALUE-INHERIT-001 | valor_max/modalidad heredados cuando topic cambia (nuevo) | **CLOSED Sprint 1A (B8)** — `_purge_stale_inherited_params()`. Commit `b5f6a80`. Auditoría 2026-05-23: verificado | **Cerrado Sprint 1A** — el backlog estaba desactualizado |
-| OPP-INTENT-001 | "alguna oferta del X" / "algún proceso para Y" debe activar opportunity_search (confirmado 2× ahora) | Pendiente HIGH | Cubierto por `QueryPlan` Sprint 1A. Adicional: "oferta" como token de objeto debe scrubearse cuando aparezca en contexto opportunity |
-| NO-FOLLOWUP-DETECTION-001 | Quejas tratadas como query nueva (nuevo) | Pendiente HIGH | Cubierto por extensión del `followup_engine` — detectar quejas/citas como `non_query_followup`, ofrecer diagnóstico en vez de parsear |
-| NIT-AMOUNT-CONFUSION-001 | Montos confundidos con NITs (nuevo) | Pendiente HIGH | Cubierto por QueryPlan Sprint 1A — categoría `number_disambiguation`. Discriminar por contexto léxico ("COP", "$", "millones") |
-| RELEVANCE-PHRASE-001 | Boost de frase técnica compuesta (nuevo) | Pendiente HIGH | Cubierto por Sprint 3 Relevance v1 (shingle bigramas en BM25) o v2 (embedding de frase completa). Caso canónico: "control de calidad de agua para consumo humano" |
-| DEDUP-PROCESS-001 | Dedup procesos por entidad+monto+objeto (nuevo) | Pendiente MEDIUM | Sprint 2-3. Ya mencionado en OPP audit 2026-05-17. Confirmado 3× (Guateque, La Estrella, Doncello) |
-| NUMBER-CONTEXT-PHRASE-001 | Verbos comparativos / conectores temporales como objeto (nuevo) | Pendiente HIGH | 1 caso ("supere" en objeto cuando valor_max ya inferido). Fix: scrub catalog post-extracción de modificadores |
-| SOURCE-COVERAGE-001 | Procesos recientes invisibles por delay de sync Socrata (nuevo) | Pendiente CRITICAL | 2 casos (Paipa, Doncello). Limitación de la fuente, no bug técnico. **Sube de HIGH a CRITICAL tras decisión de modelo B2B.** Fase 1: ruta de diagnóstico transparente. Fases 2-3: ver roadmap de datos abajo. |
-
----
-
-## Roadmap de infraestructura de datos (post-decisión modelo B2B)
-
-Hallazgo de la investigación del 2026-05-19: licitaciones.info opera con BD propia replicada de SECOP (no consume Socrata en vivo). Apuntar a 500 WAU pagando requiere camino similar, ejecutado en tres fases con criterios de transición claros.
-
-### Fase 1 — 0-6 meses (Opción A): Socrata + diagnóstico transparente
-
-**Qué hacer:**
-- Mantener Socrata `p6dx-8zbt` como fuente única.
-- Implementar SOURCE-COVERAGE-001 con UX honesta: cuando una query es probablemente afectada por delay (referencia reciente, scope estrecho, intent_type=opportunity_search), avisar al usuario antes de declarar "0 resultados".
-- Mensaje canónico: *"SECOP publica con delay de 24-48h en mi base de datos. Si tu oportunidad es de hoy o ayer, verifica directamente en SECOP nativo o licitaciones.info."*
-
-**Costo:** $0 adicional. Cabe en Sprint 2 del plan vigente.
-
-**Criterio de salida (transición a Fase 2):** **50+ usuarios pagando $15/mes (~$9K MRR)** validando que la propuesta de "asesor conversacional" tiene tracción real. Si no se llega, no invertir más; reconsiderar producto.
-
-### Fase 2 — 6-12 meses (Opción C): licenciar acceso a BD ajena
-
-**Qué hacer:** contactar tres opciones en orden:
-
-1. **Apitude.co** — B2B confirmado, ya tienen REST API sobre SECOP. Pedir demo, precio, delay garantizado, SLA.
-2. **Licitaciones.info / colombialicita.com partnership** — improbable pero valioso si lo logras. Modelo: white-label o API access bajo revenue share. Email directo a su equipo comercial.
-3. **CCE (Colombia Compra Eficiente) directamente** — preguntar por feed de integrador autorizado, RSS, webhook o API más rápida que Socrata. Pueden decir no, pero el costo del email es cero.
-
-**Costo estimado:** $200-800 USD/mes según opción y volumen.
-
-**Trade-off:** dependes de tercero (pricing, SLA, ToS). Pero evitas 2-3 semanas de dev de crawler y un servidor 24/7 que monitorear.
-
-**Criterio de salida (transición a Fase 3):** costo de C supera $5K/año recurrente Y volumen de queries justifica BD propia, O necesitas enriquecer datos (HV de contratistas, scoring de relevance) que el tercero no expone.
-
-### Fase 3 — 12-24 meses hacia 500 WAU (Opción B): crawler propio
-
-**Qué hacer:**
-- Construir `app/data/secop_crawler.py` (módulo nuevo, no parte del core SECOPPAL) que sincroniza periódicamente desde community.secop.gov.co.
-- BD propia (PostgreSQL probablemente) con índices optimizados para los filtros de SECOPPAL.
-- SECOPPAL consume BD propia en lugar de Socrata.
-- Mantener Socrata como **fallback** si crawler falla — degradación graceful.
-
-**Costo:**
-- Dev inicial: 2-3 semanas tiempo completo.
-- Infraestructura: ~$50-200 USD/mes (servidor cloud + BD + monitoreo).
-- Mantenimiento: 4-8h/mes ante cambios en SECOP nativo.
-
-**Trade-off:** control total + posibilidad de monetizar dato a terceros (exactamente lo que hace licitaciones.info con `licitacionesdata.com`). Costo: complejidad operativa y dependencia técnica.
-
-### Decisión registrada hoy (2026-05-19)
-
-- **No saltar fases.** Sin validación de Fase 1, no invertir en Fase 2. Sin tracción real en Fase 2, no invertir en Fase 3.
-- **No mezclar fuentes en una misma query.** O todo Socrata, o todo BD propia. Hibridación crea inconsistencias sutiles que destruyen confianza.
-- **Considerar partnership con licitaciones.info antes de construir crawler.** Si su modelo comercial lo permite, es win-win.
-- **SOURCE-COVERAGE-001 (diagnóstico Fase 1) es PRE-REQUISITO de cualquier lanzamiento pagado.** Sin esto, churn será mayor que crecimiento.
-
-### Lo que NO se decidió hoy
-
-- Pricing exacto entre $10-20 USD/mes (definirlo en cohorte de validación).
-- Modelo B2B individual vs enterprise (proponente individual vs empresa contratista). Esto afecta features futuras (subcuentas, carpetas compartidas, alertas por equipo).
-- Si SECOPPAL eventualmente vende dato a terceros (modelo `licitacionesdata.com` clonado). Decisión post-Fase 3.
-| REFERENCE-001 (ampliado) | Búsqueda exacta por referencia + diagnóstico de cobertura | Pendiente HIGH | Ampliar el alcance: cuando el usuario reporta "no encontré X" y trae referencia, búsqueda exacta + diagnóstico de por qué no apareció (campo, tildes, dataset, sync) |
-| COURTESY-FILLER-001 | (nuevo) | Pendiente HIGH | Cubierto por `DialoguePolicy` en Sprint 1A |
-| BIDDER-CATALOG-AND-001 | (nuevo) | Pendiente HIGH | Cubierto por `QueryPlan` Sprint 1A — requiere shape `objeto_or` |
-| POLYSEMIC-TOPIC-001 | (nuevo) | Pendiente HIGH | Cubierto por `QueryPlan` Sprint 1A + ResponsePolicy Sprint 2 |
-| FOLLOWUP-DATASET-PURGE-001 | (nuevo) | Pendiente HIGH | Fix puntual en `followup_engine._merge_change_dataset` |
-| PROCUREMENT-ACTION-001 | (nuevo) | Pendiente HIGH | Cubierto por `QueryPlan` Sprint 1A — requiere shape `objeto_signal` |
-| MORPHO-UNEVEN-001 | (nuevo) | Pendiente MEDIUM | Curación manual de `morphological_variants.py` para 25 rubros frecuentes |
-| HEADER-TOPIC-OMISSION-001 | (nuevo) | Pendiente LOW | Sprint 2 `formatter.py` |
-| MOJIBAKE-DISPLAY-001 | (nuevo) | Pendiente LOW | Normalización Unicode en `formatter.py` |
 
 ---
 

@@ -205,6 +205,10 @@ STOPWORDS = {
     "cuanto", "cuanta",
     "suma", "suman", "sumaron", "sumo", "sumó",
     "total", "totales",
+    # Sprint 5 — VALUE-POLARITY residual scrub:
+    # "por debajo de X" → polarity already sets valor_max, but "debajo"
+    # leaks into objeto when "por" is consumed as stopword earlier.
+    "debajo",
 }
 
 MONTH_MAP = {
