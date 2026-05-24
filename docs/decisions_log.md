@@ -462,4 +462,63 @@ integral, integrales, soporte, soportes, apoyos, obra, obras, publica, publico, 
 - Tests: test_value_polarity.py 16/16 pass (5 nuevos Sprint 4)
 - Commit: `77dbb9c`
 
+---
+
+## ADR-013: unaccent() obligatorio en todas las cláusulas LIKE de entidad
+
+**Fecha:** 2026-05-24
+**Contexto:** El smoke Fase 5 bucket D (ENTITY-MULTI-REGIONAL) reveló que SENA Bolivar y SENA Atlantico fallaban con 0 resultados. Las cláusulas LIKE de `nombre_entidad` usaban `UPPER() LIKE UPPER()` sin `unaccent()`, mientras que las cláusulas de objeto ya usaban `_accent_fold_like()` (agregado en Sprint 4 para ACCENT). Además, `entidad_resolved` contenía nombres sintéticos con tildes ("SENA REGIONAL BOLÍVAR") que no existen en SECOP (los nombres reales son "SENA REGIONAL BOLIVAR ..." sin tilde).
+
+**Decisión:**
+1. Aplicar `_accent_fold_like()` en TODAS las cláusulas de entidad: entidad única, ecosistema expansion, y ciudad LIKE.
+2. Invertir precedencia en SoQL builder: `entidad_like` (nombre canónico corto) tiene prioridad sobre `entidad_resolved` (nombre display/regional).
+3. `resolve_regional()` ahora retorna `tuple[str|None, str|None]` — (nombre_regional, nombre_canónico) — para que el caller pueda setear `entidad_like` al nombre canónico ("SENA", "ICBF") que sí existe en SECOP.
+4. El query_router setea `params["entidad_like"] = canonical_short` al resolver multi-regional.
+
+**Alternativas descartadas:**
+- Usar `regexp_replace` con 3 argumentos (Socrata no lo soporta).
+- Mantener `UPPER()` sin unaccent y normalizar los nombres en el gazetteer (no escala: nuevos nombres siempre pueden tener tildes).
+- Usar el nombre sintético regional completo como LIKE (no matchea — los nombres reales tienen sufijos como "Grupo de Apoyo Administrativo Mixto").
+
+**Consecuencias:**
+- Todas las cláusulas `nombre_entidad`, `departamento_entidad`, `ciudad_entidad`, `proveedor_adjudicado` usan `_accent_fold_like` (unaccent).
+- Entidades multi-regionales generan `LIKE unaccent('%SENA%')` en vez de `LIKE '%SENA REGIONAL BOLÍVAR%'`.
+- `resolve_regional()` cambió firma — tests actualizados (9 tests en 2 archivos).
+- Smoke D-bucket: 3/5 → 5/5 confirmado con queries individuales contra API real.
+
+**Métricas al cierre:**
+- Tests: test_entity_multi_regional.py 6/6, test_entity_multi_regional_edges.py 3/3
+- Suite: 830 passed, 0 failed, 10 xfailed
+- Commit: `b39a138`
+
+---
+
+## ADR-014: OR merge para 3+ rare terms en objeto (refinamiento MULTI-AND-DEMOTION)
+
+**Fecha:** 2026-05-24
+**Contexto:** El smoke Fase 5 bucket B (MULTI-AND+RELEVANCE) dio 0/10. Las queries con frases técnicas ("control de calidad de agua para consumo humano", 5 términos) generaban 5 cláusulas AND en SoQL — match matemáticamente imposible en 8.6M procesos. Sprint 4 había expandido COMMON_TOKENS (~50) pero no cubría el caso donde TODOS los términos son raros (fuera de COMMON_TOKENS). El mecanismo `_should_demote_objeto` separaba rare/common pero seguía uniendo los rare con AND.
+
+**Decisión:**
+Cuando `_should_demote_objeto` dispara Y `len(rare_terms) >= 3`: fusionar todos los rare_terms en un solo grupo OR (en vez de grupos AND individuales). El BM25 relevance scorer reordena después para recuperar precisión.
+
+```python
+# Antes: (control OR) AND (calidad OR) AND (agua OR) AND (consumo OR) AND (humano OR)
+# Ahora: (control OR calidad OR agua OR consumo OR humano)  ← un solo grupo OR
+```
+
+**Alternativas descartadas:**
+- Bajar threshold de demotion a 3 términos (genera falsos positivos en queries de 3 términos específicos).
+- Usar OR solo si hay common_terms (no cubre el caso "todos raros").
+- Dejar AND y confiar en BM25 (BM25 no puede rankear resultados que nunca llegaron de Socrata).
+
+**Consecuencias:**
+- Queries de 4+ términos técnicos ahora retornan resultados (validado: "control de calidad de agua..." 0→50 results).
+- El trade-off precisión/recall se compensa con BM25 post-query.
+- El comportamiento para 1-2 rare terms no cambia (siguen con AND).
+- Tests: test_multi_and_demotion.py actualizado (5/5).
+
+**Métricas al cierre:**
+- Tests: 830 passed, 0 failed, 10 xfailed
+- Commit: `dd0b2bf`
+
 **Bugs cerrados:** MIN-MAX-INVERSION-001 (Sprint 4).

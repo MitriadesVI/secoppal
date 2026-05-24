@@ -1247,3 +1247,29 @@ STATE-PRIORITY-001, OPP-SCOPE-001). Prioridad HIGH.
 Typo "milloones" → "millones" debe normalizarse. Si valor_min > valor_max
 (1B > 5M) no ejecutar consulta, pedir aclaración. "milloones" no debe
 entrar como objeto contractual ni generar SoQL con LIKE '%milloones%'.
+
+### 2026-05-24 — Sprint 6 Fase 5 smoke gate: 3 bugs fixados
+
+**MORPHO-VERIFY (29ac24b):** MORPHO-EXPANSION-INCONSISTENT-001 cerrado.
+Verificado que ambas rutas (heuristic_only y heuristic_plus_llm) convergen
+en `_object_term_conditions()` que usa ROOT_TO_VARIANTS. Falso positivo.
+3 tests nuevos en test_morpho_expansion_consistency.py.
+
+**ENTITY-MULTI-REGIONAL-002 (b39a138):** Descubierto en smoke D-bucket.
+LIKE nombre_entidad sin unaccent() + entidad_resolved sintética con tildes
+inexistente en SECOP. Fix: `_accent_fold_like` en todas las cláusulas
+entidad + `entidad_like` con nombre canónico corto. resolve_regional()
+ahora retorna tuple (regional, canonical). ADR-013.
+
+**MULTI-AND-DEMOTION (dd0b2bf):** Descubierto en smoke B-bucket (0/10).
+4+ rare terms en AND colapsaban queries de frases técnicas. Fix: OR merge
+cuando rare_terms ≥3. BM25 reordena post-query. ADR-014.
+
+**Smoke gate Fase 5:** 6 intentos diurnos fallidos por API saturada
+(10-30s/query en horario 2-4pm Colombia). Cronjob cdb0c2867f32 programado
+lunes 5am (10:00 UTC) con no_agent=true y scripts/smoke_burst.py.
+Target ≥45/50. API solo responde <2s en madrugada.
+
+**Validación:** Suite 830/0. Ambos fixes validados con queries individuales
+contra API real (0→50 results). CORPUS_BACKLOG actualizado (1 bug vivo).
+decisions_log: ADR-013, ADR-014.
