@@ -404,9 +404,16 @@ def _relax_params(params: dict) -> tuple[dict | None, str]:
         return p, "sin filtro de estado"
 
     if "fecha_desde" in p or "fecha_hasta" in p:
-        p.pop("fecha_desde", None)
-        p.pop("fecha_hasta", None)
-        return p, "sin filtro de fechas"
+        original_from = p.pop("fecha_desde", None) or ""
+        original_to = p.pop("fecha_hasta", None) or ""
+        # AUTO-FALLBACK-WITHOUT-QUALITY: avisa que el año cambió
+        if original_from and original_to:
+            hint = f"sin filtro de fechas (pediste {original_from[:4]}-{original_to[:4]}, ampliado a todos los años)"
+        elif original_from:
+            hint = f"sin filtro de fechas (pediste desde {original_from[:4]}, ampliado a todos los años)"
+        else:
+            hint = "sin filtro de fechas"
+        return p, hint
 
     if "valor_min" in p or "valor_max" in p:
         p.pop("valor_min", None)
@@ -1101,8 +1108,8 @@ class SecopalWorkflow:
                         relevance_classes=[s.classification for _, s in scored],
                         relevance_scores=[s.bm25_score for _, s in scored],
                     )
-            except Exception:
-                pass  # relevance scoring is best-effort, never block
+            except Exception as exc:
+                logger.warning("relevance scoring failed: %s", exc)
 
         advisor_response = build_advisor_response({
             "user_query": user_query,

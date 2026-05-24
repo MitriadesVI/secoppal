@@ -21,7 +21,7 @@ class TestRelaxParams:
         relaxed, hint = _relax_params(p)
         assert "fecha_desde" not in relaxed
         assert "fecha_hasta" not in relaxed
-        assert hint == "sin filtro de fechas"
+        assert hint == "sin filtro de fechas (pediste 2026-2026, ampliado a todos los años)"
 
     def test_drops_valor_when_no_estado_fecha(self):
         p = {"valor_min": 50_000_000, "valor_max": 200_000_000, "objeto": ["dotacion"]}
