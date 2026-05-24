@@ -70,6 +70,19 @@ def escape_dollars_for_streamlit(text: str) -> str:
     return re.sub(r"\$(?=\d)", r"\\$", text)
 
 
+def _fix_mojibake(text: str) -> str:
+    """MOJIBAKE-DISPLAY-001: Normalize SECOP mojibake (Ã³→ó, Ã±→ñ).
+    Only applied to SECOP-sourced text, not emoji or formatting chars."""
+    replacements = {
+        "Ã¡": "á", "Ã©": "é", "Ã­": "í", "Ã³": "ó", "Ãº": "ú",
+        "Ã±": "ñ", "Ã": "Á", "Ã‰": "É", "Ã“": "Ó", "Ãš": "Ú",
+        "Ã‘": "Ñ",
+    }
+    for bad, good in replacements.items():
+        text = text.replace(bad, good)
+    return text
+
+
 def _dedupe_results(results: list[dict], dataset_id: str) -> list[dict]:
     """B1: deduplica por id estable conservando el primero encontrado.
 
@@ -177,6 +190,12 @@ class Formatter:
     def to_rows(self, results: list[dict], dataset_id: str) -> list[dict]:
         # B1: deduplicar ANTES de cortar al max_results.
         deduped = _dedupe_results(results, dataset_id)
+        # MOJIBAKE-DISPLAY-001: normalize malformed UTF-8 from SECOP
+        # Only apply to string fields, not numeric/None values
+        for r in deduped:
+            for k in list(r.keys()):
+                if isinstance(r[k], str):
+                    r[k] = _fix_mojibake(r[k])
         rows: list[dict] = []
         for item in deduped[: self.max_results]:
             url = self._safe_url(item)
