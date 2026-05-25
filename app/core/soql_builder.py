@@ -163,7 +163,39 @@ class SoQLBuilder:
         # valor_desc: value DESC, date DESC
         # fecha_desc: date DESC, value DESC (same as default, explicit intent)
         ordering = params.get("ordering_signal", "")
-        if params.get("intent_type") == "opportunity_search" and not ordering:
+        has_estado = bool(
+            params.get("estado")
+            or params.get("estado_family")
+            or params.get("estado_de_apertura_del_proceso")
+            or params.get("estado_del_procedimiento")
+            or params.get("estado_contrato")
+        )
+        intent = params.get("intent_type", "")
+        is_historical = "historical" in intent.lower() or "analysis" in intent.lower()
+
+        # Default ordering: open/active first when user didn't specify estado,
+        # isn't doing historical analysis, and isn't an explicit opportunity search
+        if (
+            not has_estado
+            and not is_historical
+            and intent != "opportunity_search"
+            and not ordering
+        ):
+            if dataset_id == "p6dx-8zbt":
+                order_expr = (
+                    f"CASE WHEN {spec.state} IN ('Abierto', 'Publicado') "
+                    f"THEN 0 ELSE 1 END, "
+                    f"{spec.date} DESC, {spec.value} DESC"
+                )
+            else:
+                # Contratos: activos primero (En ejecución, Modificado, Prorrogado)
+                order_expr = (
+                    f"CASE WHEN {spec.state} IN "
+                    f"('En ejecución', 'Modificado', 'Prorrogado') "
+                    f"THEN 0 ELSE 1 END, "
+                    f"{spec.date} DESC, {spec.value} DESC"
+                )
+        elif params.get("intent_type") == "opportunity_search" and not ordering:
             order_expr = f"{spec.date} DESC"  # only freshness for opportunities
         elif ordering == "valor_desc":
             order_expr = f"{spec.value} DESC, {spec.date} DESC"
