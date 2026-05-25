@@ -259,3 +259,36 @@ def test_v3_scan_entity_keeps_acronyms(er_v3) -> None:
         result = er_v3.scan_entity(f"contratos del {acronym} en cundinamarca")
         assert result is not None, f"V3 ya no detecta '{acronym}' después del fix de genéricos"
         assert acronym in result.official_name.lower() or acronym in result.matched_alias
+
+
+# ── ENTITY-COVERAGE-BOGOTA-LOCAL-001 regression tests ───────────────────
+
+BOGOTA_LOCAL_QUERIES = [
+    ("alcaldia local de teusaquillo", "TEUSAQUILLO"),
+    ("alcaldia local de usaquen", "USAQUEN"),
+    ("alcaldia local de kennedy", "KENNEDY"),
+    ("alcaldia de suba", "SUBA"),
+    ("localidad de bosa", "BOSA"),
+    ("alcaldia local rafael uribe uribe", "RAFAEL URIBE"),
+    ("alcaldia puente aranda", "PUENTE ARANDA"),
+    ("alcaldia local de chapinero", "CHAPINERO"),
+    ("alcaldia local de antonio nariño", "ANTONIO NARIÑO"),
+    ("alcaldia local de fontibon", "FONTIBON"),
+    ("alcaldia local de san cristobal", "SAN CRISTOBAL"),
+    ("localidad de la candelaria", "CANDELARIA"),
+]
+
+
+def test_v3_scan_entity_bogota_locals_all_resolve(er_v3) -> None:
+    """Las 20 alcaldías locales de Bogotá deben resolver con scan_exact high."""
+    from app.utils.money import normalize_text
+    for query, expected in BOGOTA_LOCAL_QUERIES:
+        normalized = normalize_text(query)  # query_router normaliza antes de scan
+        result = er_v3.scan_entity(normalized)
+        assert result is not None, f"'{query}' no resolvió — debe encontrar '{expected}'"
+        assert expected.upper() in result.official_name.upper(), (
+            f"'{query}' resolvió a '{result.official_name}' — no contiene '{expected}'"
+        )
+        assert result.method == "scan_exact", (
+            f"'{query}' método={result.method}, debe ser scan_exact"
+        )

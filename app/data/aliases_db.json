@@ -16388,5 +16388,122 @@
       "hospital del sur g j piedrahita",
       "ese hospital del sur gabriel jaramillo piedrahita"
     ]
+  },
+  {
+    "official_name": "ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL",
+    "departamento": "BOGOTA D.C.",
+    "aliases": [
+      "alcaldia local de chapinero",
+      "alcaldia local chapinero",
+      "alcaldia chapinero",
+      "chapinero localidad",
+      "localidad de chapinero",
+      "localidad chapinero"
+    ],
+    "nit": "899999061"
+  },
+  {
+    "official_name": "ALCALDIA LOCAL DE TUNJUELITO",
+    "departamento": "BOGOTA D.C.",
+    "aliases": [
+      "alcaldia local de tunjuelito",
+      "alcaldia local tunjuelito",
+      "alcaldia tunjuelito",
+      "tunjuelito localidad",
+      "localidad de tunjuelito",
+      "localidad tunjuelito"
+    ],
+    "nit": "899999061"
+  },
+  {
+    "official_name": "ALCALDÍA LOCAL DE BARRIOS UNIDOS",
+    "departamento": "BOGOTA D.C.",
+    "aliases": [
+      "alcaldia local de barrios unidos",
+      "alcaldia local barrios unidos",
+      "alcaldia barrios unidos",
+      "barrios unidos localidad",
+      "localidad de barrios unidos",
+      "localidad barrios unidos"
+    ],
+    "nit": "899999061"
+  },
+  {
+    "official_name": "ALCALDIA LOCAL DE TEUSAQUILLO(oficial)",
+    "departamento": "BOGOTA D.C.",
+    "aliases": [
+      "alcaldia local de teusaquillo",
+      "alcaldia local teusaquillo oficial",
+      "alcaldia teusaquillo",
+      "teusaquillo localidad",
+      "localidad de teusaquillo",
+      "localidad teusaquillo"
+    ],
+    "nit": "899999061"
+  },
+  {
+    "official_name": "ALCALDIA LOCAL DE MARTIRES",
+    "departamento": "BOGOTA D.C.",
+    "aliases": [
+      "alcaldia local de los martires",
+      "alcaldia local los martires",
+      "alcaldia los martires",
+      "los martires localidad",
+      "localidad de los martires",
+      "localidad los martires"
+    ],
+    "nit": "899999061"
+  },
+  {
+    "official_name": "ALCALDIA LOCAL DE ANTONIO NARIÑO",
+    "departamento": "BOGOTA D.C.",
+    "aliases": [
+      "alcaldia local de antonio nariño",
+      "alcaldia local antonio narino",
+      "alcaldia antonio nariño",
+      "antonio nariño localidad",
+      "localidad de antonio nariño",
+      "localidad antonio narino"
+    ],
+    "nit": "899999061"
+  },
+  {
+    "official_name": "CENTRAL ADMINISTRATIVA Y CONTABLE  PUENTE ARANDA+",
+    "departamento": "BOGOTA D.C.",
+    "aliases": [
+      "alcaldia local de puente aranda",
+      "alcaldia local puente aranda",
+      "alcaldia puente aranda",
+      "puente aranda localidad",
+      "localidad de puente aranda",
+      "localidad puente aranda"
+    ],
+    "nit": "830039548"
+  },
+  {
+    "official_name": "FONDO DE DESARROLLO LOCAL DE LA CANDELARIA",
+    "departamento": "BOGOTA D.C.",
+    "aliases": [
+      "alcaldia local de la candelaria",
+      "alcaldia local la candelaria",
+      "alcaldia la candelaria",
+      "la candelaria localidad",
+      "localidad de la candelaria",
+      "localidad la candelaria"
+    ],
+    "nit": "899999061"
+  },
+  {
+    "official_name": "ALCALDIA LOCAL DE SUMAPAZ",
+    "departamento": "BOGOTA D.C.",
+    "aliases": [
+      "alcaldia local de sumapaz",
+      "alcaldia local sumapaz",
+      "alcaldia sumapaz",
+      "sumapaz localidad",
+      "localidad de sumapaz",
+      "localidad sumapaz"
+    ],
+    "nit": "899999061"
   }
 ]
