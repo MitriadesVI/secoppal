@@ -3,6 +3,9 @@ SECOPPAL — Streamlit UI
 """
 from __future__ import annotations
 
+import re
+import uuid
+
 import streamlit as st
 
 from app.service import get_workflow
@@ -136,6 +139,35 @@ def _clean_resolved(resolved: dict) -> dict:
     return clean
 
 
+def _safe_key(value: str) -> str:
+    return re.sub(r"[^a-zA-Z0-9_]+", "_", value).strip("_")[:80]
+
+
+def _current_user_identity() -> dict:
+    email = (st.session_state.get("user_email") or "").strip().lower()
+    name = (st.session_state.get("user_name") or "").strip()
+    if email:
+        channel_user_key = f"email:{email}"
+        st.session_state.chat_id = f"st_email_{_safe_key(email)}"
+        return {
+            "channel": "streamlit",
+            "channel_user_key": channel_user_key,
+            "name": name or None,
+            "email": email,
+            "is_anonymous": False,
+        }
+
+    anon_id = st.session_state.anonymous_user_id
+    st.session_state.chat_id = f"st_anon_{anon_id}"
+    return {
+        "channel": "streamlit",
+        "channel_user_key": f"anon:{anon_id}",
+        "name": name or None,
+        "email": None,
+        "is_anonymous": True,
+    }
+
+
 # ═══════════════════════════════════════════════════════════════════════════
 # Session state
 # ═══════════════════════════════════════════════════════════════════════════
@@ -145,6 +177,15 @@ if "history" not in st.session_state:
 
 if "chat_id" not in st.session_state:
     st.session_state.chat_id = "st_default"
+
+if "anonymous_user_id" not in st.session_state:
+    st.session_state.anonymous_user_id = uuid.uuid4().hex[:12]
+
+if "user_name" not in st.session_state:
+    st.session_state.user_name = ""
+
+if "user_email" not in st.session_state:
+    st.session_state.user_email = ""
 
 # ═══════════════════════════════════════════════════════════════════════════
 # Sidebar
@@ -170,6 +211,12 @@ with st.sidebar:
     c5, c6 = st.columns(2)
     c5.metric("Solo regex", stats["heuristic_only"])
     c6.metric("Con LLM", stats["with_llm"])
+
+    st.divider()
+
+    st.subheader("Usuario")
+    st.text_input("Nombre", key="user_name")
+    st.text_input("Email", key="user_email")
 
     st.divider()
 
@@ -253,10 +300,12 @@ if typed_query:
 
 if incoming_query:
     st.session_state.history.append({"role": "user", "content": incoming_query})
+    user_identity = _current_user_identity()
 
     with st.spinner("Consultando SECOP..."):
         result = workflow.run_query(incoming_query, channel="streamlit",
-                                     chat_id=st.session_state.chat_id)
+                                     chat_id=st.session_state.chat_id,
+                                     user_identity=user_identity)
 
     debug_payload = {
         "route_reason": result.get("route_reason", ""),

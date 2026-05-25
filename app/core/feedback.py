@@ -203,6 +203,10 @@ class FeedbackStore:
         workflow_result is the dict returned by SecopalWorkflow.run_query()
         """
         trace_id = uuid.uuid4().hex[:12]
+        has_suggestions = bool(
+            workflow_result.get("suggestions")
+            or workflow_result.get("timeout_suggestions")
+        )
 
         trace = {
             "trace_id": trace_id,
@@ -244,7 +248,13 @@ class FeedbackStore:
             try:
                 with self._connect() as conn:
                     user_id = self._upsert_user(conn, channel, user_identity)
-                    self._upsert_trace(conn, trace, user_id=user_id, source="app")
+                    self._upsert_trace(
+                        conn,
+                        trace,
+                        user_id=user_id,
+                        source="app",
+                        has_suggestions=has_suggestions,
+                    )
             except sqlite3.Error:
                 logger.exception("failed to write feedback trace to sqlite trace_id=%s", trace_id)
         return trace_id
@@ -403,8 +413,15 @@ class FeedbackStore:
         user_id: str | None,
         source: str,
         migrated_at: str | None = None,
+        has_suggestions: bool | None = None,
     ) -> None:
-        row = _trace_to_row(trace, user_id=user_id, source=source, migrated_at=migrated_at)
+        row = _trace_to_row(
+            trace,
+            user_id=user_id,
+            source=source,
+            migrated_at=migrated_at,
+            has_suggestions=has_suggestions,
+        )
         placeholders = ", ".join("?" for _ in TRACE_COLUMNS)
         columns = ", ".join(TRACE_COLUMNS)
         updates = ", ".join(
@@ -540,8 +557,10 @@ def _trace_to_row(
     user_id: str | None,
     source: str,
     migrated_at: str | None,
+    has_suggestions: bool | None = None,
 ) -> dict[str, Any]:
-    suggestions = trace.get("suggestions")
+    if has_suggestions is None:
+        has_suggestions = bool(trace.get("suggestions") or trace.get("timeout_suggestions"))
     total_ms = trace.get("total_ms")
     if total_ms is None:
         total_ms = (trace.get("timings_ms", {}) or {}).get("total_ms")
@@ -569,7 +588,7 @@ def _trace_to_row(
         "followup_intent_type": str(trace.get("followup_intent_type", "")),
         "analytical_intent": str(trace.get("analytical_intent", "")),
         "clarification_reason": str(trace.get("clarification_reason", "")),
-        "has_suggestions": _bool_int(bool(suggestions)),
+        "has_suggestions": _bool_int(has_suggestions),
         "risk_flag_timeout": _bool_int(trace.get("risk_flag_timeout", False)),
         "results_count": int(trace.get("results_count") or 0),
         "first_result_title": str(trace.get("first_result_title", "")),

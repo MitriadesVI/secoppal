@@ -6,6 +6,7 @@ import time
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import asdict
 from datetime import date
+from typing import Any
 
 from burr.core import ApplicationBuilder, State, action, default, expr
 
@@ -698,14 +699,25 @@ class SecopalWorkflow:
             timeout=settings.secop_timeout_seconds,
         )
         self.formatter = Formatter(max_results=settings.secop_results_limit)
-        self.feedback = FeedbackStore(settings.secop_feedback_path)
+        self.feedback = FeedbackStore(
+            settings.secop_feedback_path,
+            db_path=settings.secop_feedback_db_path,
+            sqlite_enabled=settings.secop_feedback_sqlite_enabled,
+            jsonl_dual_write=settings.secop_feedback_jsonl_dual_write,
+        )
         self.conv_store = ConversationStore()
         self.narrator = NarratorHandler(
             api_key=settings.deepseek_api_key,
             model=settings.deepseek_model,
         )
 
-    def run_query(self, user_query: str, channel: str = "whatsapp", chat_id: str | None = None) -> dict:
+    def run_query(
+        self,
+        user_query: str,
+        channel: str = "whatsapp",
+        chat_id: str | None = None,
+        user_identity: dict[str, Any] | None = None,
+    ) -> dict:
         run_start = time.perf_counter()
         # ── Reset command ────────────────────────────────────────────────
         if chat_id and is_reset_command(user_query):
@@ -785,7 +797,7 @@ class SecopalWorkflow:
                             for r in results[:10]
                         ) if rid
                     ]
-                    trace_id = self.feedback.log_trace(user_query, channel, result)
+                    trace_id = self.feedback.log_trace(user_query, channel, result, user_identity=user_identity)
                     result["trace_id"] = trace_id
                     self.conv_store.append_turn(
                         chat_id=chat_id,
@@ -928,7 +940,7 @@ class SecopalWorkflow:
                     for r in raw_results[:10]
                 ) if rid
             ]
-            trace_id = self.feedback.log_trace(user_query, channel, result)
+            trace_id = self.feedback.log_trace(user_query, channel, result, user_identity=user_identity)
             result["trace_id"] = trace_id
 
             # Suggestion response
@@ -1060,6 +1072,8 @@ class SecopalWorkflow:
             "followup_intent_type": state.get("followup_intent_type", ""),
             "analytical_intent": state.get("analytical_intent", ""),
             "analytical_response": state.get("analytical_response", ""),
+            "clarification_reason": state.get("clarification_reason", ""),
+            "total_count_approximate": state.get("total_count_approximate", False),
             "query_plan": state.get("query_plan", {}),
             "followup": followup,
             "timings_ms": dict(state.get("timings_ms", {}) or {}),
@@ -1142,7 +1156,7 @@ class SecopalWorkflow:
         result["timings_ms"]["advisor_response_ms"] = _elapsed_ms(advisor_start)
         result["timings_ms"]["total_ms"] = _elapsed_ms(run_start)
 
-        trace_id = self.feedback.log_trace(user_query, channel, result)
+        trace_id = self.feedback.log_trace(user_query, channel, result, user_identity=user_identity)
         result["trace_id"] = trace_id
         logger.info(
             "secoppal_query trace_id=%s route=%s dataset=%s total_count=%s results_count=%s total_ms=%s",

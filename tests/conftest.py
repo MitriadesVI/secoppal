@@ -14,3 +14,4 @@ if str(ROOT) not in sys.path:
 def isolate_feedback_jsonl(monkeypatch, tmp_path):
     """Route workflow feedback traces to per-test temp files, never data/feedback.jsonl."""
     monkeypatch.setenv("SECOP_FEEDBACK_PATH", str(tmp_path / "feedback.jsonl"))
+    monkeypatch.setenv("SECOP_FEEDBACK_DB_PATH", str(tmp_path / "secoppal.db"))

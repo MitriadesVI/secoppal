@@ -19,6 +19,9 @@ class ChatRequest(BaseModel):
     query: str = Field(..., min_length=3)
     channel: str = Field(default="streamlit")
     chat_id: str | None = Field(default=None)
+    user_name: str | None = Field(default=None)
+    user_email: str | None = Field(default=None)
+    is_anonymous: bool = Field(default=True)
 
 
 class RateRequest(BaseModel):
@@ -43,7 +46,19 @@ async def health() -> dict:
 
 @app.post("/chat")
 async def chat(request: ChatRequest) -> JSONResponse:
-    result = get_workflow().run_query(request.query, channel=request.channel, chat_id=request.chat_id)
+    identity = _build_user_identity(
+        channel=request.channel,
+        channel_user_key=request.chat_id or request.user_email,
+        name=request.user_name,
+        email=request.user_email,
+        is_anonymous=request.is_anonymous and not request.user_email,
+    )
+    result = get_workflow().run_query(
+        request.query,
+        channel=request.channel,
+        chat_id=request.chat_id,
+        user_identity=identity,
+    )
     return JSONResponse(content=result)
 
 
@@ -76,7 +91,16 @@ async def twilio_whatsapp_webhook(
         )
         return Response(content=payload, media_type="application/xml")
 
-    result = get_workflow().run_query(body, channel="whatsapp", chat_id=chat_id)
+    result = get_workflow().run_query(
+        body,
+        channel="whatsapp",
+        chat_id=chat_id,
+        user_identity=_build_user_identity(
+            channel="whatsapp",
+            channel_user_key=chat_id,
+            is_anonymous=True,
+        ),
+    )
     payload = (
         "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
         f"<Response><Message>{escape(result['response'])}</Message></Response>"
@@ -95,6 +119,7 @@ async def telegram_webhook(
     message = update.get("message") or update.get("edited_message") or {}
     text = message.get("text")
     chat_id = message.get("chat", {}).get("id")
+    sender = message.get("from", {}) or {}
 
     if not text or not chat_id:
         return JSONResponse(content={"ok": True, "ignored": True})
@@ -131,7 +156,20 @@ async def telegram_webhook(
                 )
         return JSONResponse(content={"ok": True, "reset": True})
 
-    result = get_workflow().run_query(text, channel="telegram", chat_id=chat_id_str)
+    telegram_name = " ".join(
+        part for part in (sender.get("first_name"), sender.get("last_name")) if part
+    ) or sender.get("username")
+    result = get_workflow().run_query(
+        text,
+        channel="telegram",
+        chat_id=chat_id_str,
+        user_identity=_build_user_identity(
+            channel="telegram",
+            channel_user_key=chat_id_str,
+            name=telegram_name,
+            is_anonymous=True,
+        ),
+    )
 
     if settings.telegram_bot_token:
         async with httpx.AsyncClient(timeout=20) as client:
@@ -156,3 +194,20 @@ async def examples() -> PlainTextResponse:
         )
     )
 
+
+def _build_user_identity(
+    channel: str,
+    channel_user_key: str | None,
+    name: str | None = None,
+    email: str | None = None,
+    is_anonymous: bool = True,
+) -> dict | None:
+    if not channel_user_key and not email:
+        return None
+    return {
+        "channel": channel,
+        "channel_user_key": channel_user_key or email,
+        "name": name.strip() if name else None,
+        "email": email.strip().lower() if email else None,
+        "is_anonymous": is_anonymous,
+    }
