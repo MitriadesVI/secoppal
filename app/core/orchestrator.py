@@ -1269,7 +1269,24 @@ class SecopalWorkflow:
             "query_plan": state.get("query_plan", {}),
             "followup": followup,
             "timings_ms": dict(state.get("timings_ms", {}) or {}),
+            "contextual_filters": {},
         }
+
+        # ── Contextual filters (Feature: refinement bar) ──────────────────
+        raw_results = result.get("results", [])
+        total_count = result.get("total_count", 0)
+        threshold = 20
+        if raw_results and total_count > threshold:
+            try:
+                from app.core.contextual_suggestions import compute_contextual_filters
+                computed = compute_contextual_filters(
+                    raw_results,
+                    result["dataset_id"],
+                    result.get("resolved_params", {}),
+                )
+                result["contextual_filters"] = computed
+            except Exception:
+                pass  # best-effort, never block the main flow
 
         # ── Política de respuesta asesora (Bloque 3) ───────────────────────
         advisor_start = time.perf_counter()
