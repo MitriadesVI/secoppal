@@ -162,6 +162,27 @@ class EntityResolver:
         "departamento", "municipio", "distrito",
     }
 
+    # Bare generic entity-type tokens that should NEVER resolve to a
+    # specific entity on their own.  If the alias is ONLY one of these
+    # words (not a multi-word phrase like "alcaldía de manizales"), the
+    # scan must skip it and force clarification.
+    #
+    # Fixes ENTITY-MISRESOLUTION-CATASTROPHIC: "alcaldía" alone was
+    # resolving to MUNICIPIO DE MANIZALES because the gazetteer had it
+    # as a standalone alias (data-side bug) and _is_unqualified_dept
+    # only protected department names, not generic entity-type tokens
+    # (code-side bug).
+    _GENERIC_ENTITY_TOKENS: set[str] = {
+        "alcaldia", "alcaldía",
+        "gobernacion", "gobernación",
+        "secretaria", "secretaría",
+        "municipio", "departamento",
+        "distrito", "instituto",
+        "ministerio", "agencia",
+        "fondo", "corporacion", "corporación",
+        "empresa", "entidad",
+    }
+
     # =====================================================================
     # SCAN: Find entities/departments as substrings in text
     # =====================================================================
@@ -170,13 +191,19 @@ class EntityResolver:
         """
         Scan text for known entity aliases. Returns the LONGEST match.
 
-        Post-validation: if the match is ALSO a known department name
-        (e.g., "antioquia", "atlantico"), reject it UNLESS the text has
-        an entity qualifier before it ("gobernacion de", "alcaldia de").
-        This prevents department names from being stolen by the entity scanner.
+        Post-validation: two reject functions run in series:
+        1. _is_unqualified_dept — rejects bare dept names (e.g., "antioquia")
+        2. _is_unqualified_generic — rejects bare generic tokens (e.g., "alcaldía")
+        Both must pass for the match to be accepted.
         """
+        def _combined_reject(alias: str, full_text: str) -> bool:
+            return (
+                self._is_unqualified_dept(alias, full_text)
+                or self._is_unqualified_generic(alias, full_text)
+            )
+
         result = self._scan_against_index(
-            normalized_text, self._scan_index, reject_fn=self._is_unqualified_dept
+            normalized_text, self._scan_index, reject_fn=_combined_reject
         )
         return result
 
@@ -222,6 +249,37 @@ class EntityResolver:
 
         # Bare department name without qualifier → reject
         return True
+
+    def _is_unqualified_generic(self, alias: str, full_text: str) -> bool:
+        """
+        Returns True if the alias is a bare generic entity-type token
+        that should NEVER resolve to a specific entity on its own.
+
+        Examples:
+        - "alcaldía" → bare generic → REJECT (was resolving to Manizales)
+        - "la alcaldía" → article + generic → REJECT
+        - "gobernación" → bare generic → REJECT
+        - "el municipio" → article + generic → REJECT
+        - "alcaldía de manizales" → qualified → KEEP
+        - "gobernación de bolívar" → qualified → KEEP
+
+        This is the complement of _is_unqualified_dept which protects
+        department names.  Together they prevent ENTITY-MISRESOLUTION.
+        """
+        alias_lower = alias.strip().lower()
+
+        # Exact match against generic tokens
+        if alias_lower in self._GENERIC_ENTITY_TOKENS:
+            return True
+
+        # Article/preposition + generic token: "la alcaldía", "el municipio"
+        _ARTICLES = {"el", "la", "los", "las", "de", "del"}
+        words = alias_lower.split()
+        content_words = [w for w in words if w not in _ARTICLES]
+        if len(content_words) == 1 and content_words[0] in self._GENERIC_ENTITY_TOKENS:
+            return True
+
+        return False
 
     def scan_departamento(self, normalized_text: str) -> ScanResult | None:
         """

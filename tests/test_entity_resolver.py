@@ -190,3 +190,72 @@ def test_v3_scan_entity_and_departamento_no_collision(er_v3) -> None:
     dept_result = er_v3.scan_departamento(entity_result.remaining_text)
     assert dept_result is not None, "Después de sacar 'sena', debería quedar 'antioquia'"
     assert "antioquia" in dept_result.official_name.lower()
+
+
+# ── ENTITY-MISRESOLUTION-CATASTROPHIC regression tests ─────────────────────
+# Bug: "alcaldía" alone was resolving to MUNICIPIO DE MANIZALES because the
+# gazetteer had it as a standalone alias.  _is_unqualified_generic now
+# protects against bare generic entity-type tokens.
+
+GENERIC_ONLY_QUERIES = [
+    "procesos de la alcaldía sobre vías",
+    "procesos de alcaldía en cundinamarca",
+    "contratos de la gobernación en 2025",
+    "contratos de gobernacion para bolivar",
+    "licitaciones del municipio en bogotá",
+    "procesos de la secretaría de educación",
+    "procesos del ministerio en 2026",
+]
+
+
+def test_v3_scan_entity_rejects_bare_alcaldia(er_v3) -> None:
+    """'alcaldía' sola NO debe resolver a una entidad — es un token genérico."""
+    result = er_v3.scan_entity("procesos de la alcaldía sobre vías")
+    # Si devuelve algo, no debe ser por el token 'alcaldía' solo
+    if result is not None:
+        assert "alcaldia" not in result.matched_alias or len(result.matched_alias.split()) > 2, (
+            f"scan_entity devolvió '{result.matched_alias}' — 'alcaldía' solo no debe resolver entidad"
+        )
+
+
+def test_v3_scan_entity_rejects_bare_gobernacion(er_v3) -> None:
+    """'gobernación' sola NO debe resolver a una entidad."""
+    result = er_v3.scan_entity("contratos de la gobernación en 2025")
+    if result is not None:
+        alias_words = result.matched_alias.split()
+        # Debe tener más que solo artículo + "gobernacion"/"gobernación"
+        content = [w for w in alias_words if w not in ("el", "la", "los", "las", "de", "del")]
+        assert len(content) > 1 or content[0] not in ("gobernacion", "gobernación"), (
+            f"scan_entity devolvió '{result.matched_alias}' — 'gobernación' solo no debe resolver entidad"
+        )
+
+
+def test_v3_scan_entity_rejects_bare_municipio(er_v3) -> None:
+    """'municipio' solo NO debe resolver a una entidad."""
+    result = er_v3.scan_entity("licitaciones del municipio en bogotá")
+    if result is not None:
+        assert "municipio" not in result.matched_alias.lower() or len(result.matched_alias.split()) > 2, (
+            f"'municipio' solo no debe resolver: '{result.matched_alias}'"
+        )
+
+
+def test_v3_scan_entity_keeps_qualified_gobernacion_bolivar(er_v3) -> None:
+    """'gobernación de bolívar' SÍ debe resolver (tiene calificador territorial)."""
+    result = er_v3.scan_entity("procesos de la gobernacion de bolivar en 2023")
+    assert result is not None, "V3 debería detectar 'gobernacion de bolivar'"
+    assert "bolívar" in result.matched_alias.lower() or "bolivar" in result.matched_alias.lower()
+
+
+def test_v3_scan_entity_keeps_qualified_alcaldia_manizales(er_v3) -> None:
+    """'alcaldía de manizales' SÍ debe resolver (tiene calificador territorial)."""
+    result = er_v3.scan_entity("procesos de la alcaldía de manizales sobre vías")
+    assert result is not None, "V3 debería detectar 'alcaldía de manizales'"
+    assert "manizales" in result.matched_alias.lower()
+
+
+def test_v3_scan_entity_keeps_acronyms(er_v3) -> None:
+    """Verificar que SENA, ICBF, INVIAS siguen funcionando después del fix."""
+    for acronym in ("sena", "icbf", "invias"):
+        result = er_v3.scan_entity(f"contratos del {acronym} en cundinamarca")
+        assert result is not None, f"V3 ya no detecta '{acronym}' después del fix de genéricos"
+        assert acronym in result.official_name.lower() or acronym in result.matched_alias
