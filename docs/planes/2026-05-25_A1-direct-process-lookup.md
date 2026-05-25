@@ -1,8 +1,8 @@
-# Plan: A1 — Búsqueda por número/URL de proceso
+# Plan: A1 — Búsqueda directa por ID, URL o referencia de entidad
 
 **Fecha:** 2026-05-25
 **Feature:** A1 del Bloque A (Proponentes)
-**Riesgo:** Mínimo (~3h)
+**Riesgo:** Mínimo (~3h → ~4.5h con entity_ref)
 **Slug:** `direct-process-lookup`
 
 ---
@@ -184,7 +184,7 @@ Agregar al corpus de smoke tests 2 casos con IDs reales conocidos (ej: `CO1.NTC.
 
 ## 9. No incluido (out of scope)
 
-- Búsqueda por `referencia_del_proceso` (ej: "LP-2026-001") — eso requiere fuzzy matching → feature separada
+- Búsqueda por `referencia_del_proceso` (ej: "LP-2026-001") ~~— eso requiere fuzzy matching → feature separada~~ → **INCLUIDO en A1-COMPLETION**
 - Historial de consultas por ID
 - Búsqueda por NIT de contratista
 
@@ -207,6 +207,8 @@ Agregar al corpus de smoke tests 2 casos con IDs reales conocidos (ej: `CO1.NTC.
 3. **`route_reason` value:**
    - `"direct_lookup_id"` cuando vino de ID puro.
    - `"direct_lookup_url"` cuando vino de URL parseada.
+   - `"direct_lookup_entity_ref"` cuando vino de referencia interna de entidad (match único).
+   - `"entity_ref_disambiguation"` cuando hay múltiples matches para una referencia.
    Permite analytics post-cohort sobre uso de lookup directo vs búsqueda natural.
 
 4. **UX rich detail en Streamlit:**
@@ -215,5 +217,10 @@ Agregar al corpus de smoke tests 2 casos con IDs reales conocidos (ej: `CO1.NTC.
    - Link "Ver en SECOP" prominente.
    - Si proceso adjudicado, sugerir lookup del contrato relacionado.
 
-5. **Bypass es estricto:** solo IDs SECOP determinísticos (CO1.XXX.YYY) y URLs `community.secop.gov.co`.
-   Referencias propias de entidad (SAMC, LP, CD, CMC) quedan en out-of-scope para feature separada (FUZZY-REFERENCE-LOOKUP-001).
+5. **Bypass es estricto:** solo IDs SECOP determinísticos (CO1.XXX.YYY), URLs `community.secop.gov.co`, y referencias internas con prefijos conocidos (LP, LIC, SAMC, MC, CMC, CD, IP, etc.).
+
+6. **Ambos formatos son ciudadanos de primera clase.** En SECOP II, cada proceso tiene DOS identificadores visibles: número electrónico (CO1.XXX.YYY) y referencia interna (CD-XX-YYYY). El usuario típico copia indistintamente cualquiera de los dos. Reconocer solo uno era diseño incompleto. Feature A1 se cierra a su alcance real con soporte de referencias internas vía LIKE (no equality, porque el dataset no garantiza formato exacto).
+
+7. **Validación de referencias:** mínimo 2 segmentos significativos (prefijo + número/código). `CD` solo o `5534` solo no califican. Esto evita falsos positivos con texto natural.
+
+8. **Normalización de referencias:** uppercase + espacios→guiones para el LIKE, pero el dataset puede tener variaciones de formato. El LIKE captura todas.

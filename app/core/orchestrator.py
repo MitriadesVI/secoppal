@@ -960,13 +960,117 @@ class SecopalWorkflow:
             return result
 
         # ── Direct lookup (Feature A1) ────────────────────────────────────
-        from app.core.direct_lookup import detect_direct_lookup, dataset_for_id, PREFIX_DATASET
+        from app.core.direct_lookup import (
+            detect_direct_lookup, dataset_for_id, PREFIX_DATASET,
+            normalize_entity_ref, build_entity_ref_soql,
+        )
 
-        lookup_id, lookup_source = detect_direct_lookup(user_query)
-        if lookup_id is not None:
+        lookup_value, lookup_kind = detect_direct_lookup(user_query)
+        if lookup_value is not None:
             try:
-                # Determine dataset from prefix (single round-trip when known)
-                lookup_dataset = dataset_for_id(lookup_id)
+                # ── Branch: entity_ref → LIKE query across both datasets ─
+                if lookup_kind == "entity_ref":
+                    normalized = normalize_entity_ref(lookup_value)
+                    datasets_to_search = [SoQLBuilder.PROCESOS_DATASET, SoQLBuilder.CONTRATOS_DATASET]
+                    all_results: list[dict] = []
+                    soql = ""
+                    for ds_id in datasets_to_search:
+                        soql = build_entity_ref_soql(ds_id, normalized, limit=5)
+                        try:
+                            rows = self.secop_client.query(ds_id, soql)
+                            for r in rows:
+                                r["_dataset_id"] = ds_id
+                            all_results.extend(rows)
+                        except Exception:
+                            continue
+
+                    match_count = len(all_results)
+
+                    # 0 results — friendly message
+                    if match_count == 0:
+                        return {
+                            "response": (
+                                f"🔍 No encontré la referencia `{lookup_value}` en SECOP II.\n\n"
+                                f"Puede que:\n"
+                                f"• La referencia esté mal escrita.\n"
+                                f"• El proceso sea de SECOP I (anterior a 2019).\n"
+                                f"• El proceso aún no esté publicado en datos.gov.co.\n\n"
+                                f"💡 Intenta con el número electrónico CO1.XXX.YYY si lo tienes."
+                            ),
+                            "rows": [], "results": [], "dataset_id": "", "soql_query": soql,
+                            "parsed_params": {}, "resolved_params": {},
+                            "needs_llm": False, "needs_clarification": False,
+                            "route_reason": "direct_lookup_entity_ref",
+                            "degraded": False, "degraded_hint": "", "total_count": 0,
+                            "universe_insights": None, "suggestions": [],
+                            "timeout_suggestions": [], "intent_type": "direct_lookup",
+                            "followup": False, "trace_id": "", "narrated": False,
+                        }
+
+                    # 1 result — rich detail (same as id/url lookup)
+                    if match_count == 1:
+                        hit = all_results[0]
+                        ds = hit.pop("_dataset_id")
+                        hit_results = [hit]
+                        response, rows = self.formatter.format_for_channel(
+                            hit_results, ds, channel,
+                            params={"intent_type": "direct_lookup", "route_reason": "direct_lookup_entity_ref"},
+                            total_count=1,
+                        )
+                        result = {
+                            "response": response, "rows": rows, "results": hit_results,
+                            "dataset_id": ds, "soql_query": soql,
+                            "parsed_params": {"direct_lookup_ref": lookup_value, "route_reason": "direct_lookup_entity_ref"},
+                            "resolved_params": {"direct_lookup_ref": lookup_value},
+                            "needs_llm": False, "needs_clarification": False,
+                            "route_reason": "direct_lookup_entity_ref",
+                            "degraded": False, "degraded_hint": "", "total_count": 1,
+                            "universe_insights": None, "suggestions": [],
+                            "timeout_suggestions": [], "intent_type": "direct_lookup",
+                            "followup": False, "trace_id": "", "narrated": False,
+                        }
+                        trace_id = self.feedback.log_trace(user_query, channel, result, user_identity=user_identity)
+                        result["trace_id"] = trace_id
+                        return result
+
+                    # 2+ results — disambiguation list
+                    candidates: list[str] = []
+                    for i, r in enumerate(all_results[:5], 1):
+                        ds = r.get("_dataset_id")
+                        id_ = r.get("id_del_proceso") or r.get("id_contrato", "")
+                        entidad = (r.get("entidad") or r.get("nombre_entidad", "") or "?")[:60]
+                        objeto = (r.get("nombre_del_procedimiento") or r.get("objeto_del_contrato", "") or "Sin titulo")[:80]
+                        estado = r.get("estado_de_apertura_del_proceso") or r.get("estado_contrato", "?")
+                        tipo = "Contrato" if ds == "jbjy-vk9h" else "Proceso"
+                        candidates.append(
+                            f"{i}. [{tipo}] `{id_}` — {objeto}\n"
+                            f"   🏛️ {entidad} | 📌 {estado}"
+                        )
+
+                    disambig_response = (
+                        f"🔍 Encontré {match_count} resultados para la referencia `{lookup_value}`:\n\n"
+                        + "\n\n".join(candidates)
+                        + f"\n\nResponde con el número (1-{min(match_count, 5)}) o pega el ID CO1.XXX.YYY para ver el detalle completo."
+                    )
+
+                    result = {
+                        "response": disambig_response,
+                        "rows": [], "results": [], "dataset_id": "", "soql_query": soql,
+                        "parsed_params": {"direct_lookup_ref": lookup_value, "route_reason": "entity_ref_disambiguation"},
+                        "resolved_params": {"direct_lookup_ref": lookup_value},
+                        "needs_llm": False, "needs_clarification": False,
+                        "route_reason": "entity_ref_disambiguation",
+                        "degraded": False, "degraded_hint": "", "total_count": match_count,
+                        "universe_insights": None, "suggestions": [], "timeout_suggestions": [],
+                        "intent_type": "direct_lookup", "followup": False,
+                        "trace_id": "", "narrated": False,
+                    }
+                    trace_id = self.feedback.log_trace(user_query, channel, result, user_identity=user_identity)
+                    result["trace_id"] = trace_id
+                    return result
+
+                # ── Branch: id or url → equality query ──────────────────
+                lookup_dataset = dataset_for_id(lookup_value)
                 datasets_to_try: list[str] = (
                     [lookup_dataset] if lookup_dataset
                     else [SoQLBuilder.PROCESOS_DATASET, SoQLBuilder.CONTRATOS_DATASET]
@@ -981,7 +1085,7 @@ class SecopalWorkflow:
                     fields = ", ".join(spec.select_fields)
                     soql = (
                         f"SELECT {fields} "
-                        f"WHERE {id_field} = '{SoQLBuilder._escape(lookup_id)}' "
+                        f"WHERE {id_field} = '{SoQLBuilder._escape(lookup_value)}' "
                         f"LIMIT 1"
                     )
                     try:
@@ -993,13 +1097,12 @@ class SecopalWorkflow:
                     except Exception:
                         continue
 
-                route_reason = f"direct_lookup_{lookup_source}"
+                route_reason = f"direct_lookup_{lookup_kind}"
 
                 if not hit_results:
-                    # ID not found in any dataset — friendly message
                     return {
                         "response": (
-                            f"🔍 No encontré el proceso con ID `{lookup_id}` en SECOP II.\n\n"
+                            f"🔍 No encontré el proceso con ID `{lookup_value}` en SECOP II.\n\n"
                             f"Puede que:\n"
                             f"• El ID esté mal escrito.\n"
                             f"• El proceso sea de SECOP I (anterior a 2019).\n"
@@ -1015,7 +1118,7 @@ class SecopalWorkflow:
                         "followup": False, "trace_id": "", "narrated": False,
                     }
 
-                # Format result with rich detail (card mode)
+                # Format result with rich detail
                 response, rows = self.formatter.format_for_channel(
                     hit_results, hit_dataset, channel,
                     params={"intent_type": "direct_lookup", "route_reason": route_reason},
@@ -1028,8 +1131,8 @@ class SecopalWorkflow:
                     "results": hit_results,
                     "dataset_id": hit_dataset,
                     "soql_query": soql,
-                    "parsed_params": {"direct_lookup_id": lookup_id, "route_reason": route_reason},
-                    "resolved_params": {"direct_lookup_id": lookup_id},
+                    "parsed_params": {"direct_lookup_id": lookup_value, "route_reason": route_reason},
+                    "resolved_params": {"direct_lookup_id": lookup_value},
                     "needs_llm": False,
                     "needs_clarification": False,
                     "route_reason": route_reason,
@@ -1045,7 +1148,7 @@ class SecopalWorkflow:
                 return result
 
             except Exception as exc:
-                logger.warning("direct_lookup failed for %s: %s", lookup_id, exc)
+                logger.warning("direct_lookup failed for %s: %s", lookup_value, exc)
                 # Fall through to normal pipeline
 
         # ── Normal flow ──────────────────────────────────────────────────
