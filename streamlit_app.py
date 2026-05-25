@@ -43,6 +43,10 @@ def _render_contextual_filters(filters: dict) -> None:
     if not filters:
         return
 
+    # Defensivo: no mostrar encabezado si ninguna categoría tiene opciones
+    if not any(options for options in filters.values()):
+        return
+
     icons = {"estado": "📋", "fecha": "📅", "monto": "💰", "entidad": "🏛️", "ciudad": "🌆"}
 
     st.markdown("🎚️ **Refinar:**")
@@ -93,6 +97,8 @@ def _render_cards(rows: list[dict]) -> None:
         ]
         if fecha:
             parts.append(f"📅 {fecha}")
+        else:
+            parts.append("📅 Sin fecha")
         if contratista:
             parts.append(f"🤝 {contratista}")
         if url:
