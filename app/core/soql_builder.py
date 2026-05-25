@@ -313,13 +313,9 @@ class SoQLBuilder:
                 self._add_estado_clause(where_clauses, estado_field, estado_val)
 
         # NUEVO: estado_families filters — puede ser lista o simple
-        legacy_field = params.get("estado_field")
         for field in ("estado_de_apertura_del_proceso", "estado_del_procedimiento",
                       "estado_contrato", "estado_contrato_adicional"):
             if field in params and params[field]:
-                # Skip if legacy estado/estado_field already covers this
-                if field == legacy_field:
-                    continue
                 self._add_estado_clause(where_clauses, field, params[field])
 
         if params.get("modalidad"):
