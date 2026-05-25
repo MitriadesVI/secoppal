@@ -227,3 +227,44 @@ No filtrar. Solo marcar.
    - **No aplicar:** si usuario especificó estado, o intent_type es histórico/análisis.
 
 5. **Detección de basura:** 6 patrones Nivel 1 (conservador). Solo en campos `nombre_del_procedimiento`, `referencia_del_proceso`, `objeto_del_contrato`, `referencia_del_contrato`. NO en `descripci_n_del_procedimiento` (falsos positivos con texto legal). Sin confidence score. Marcar con "⚠️ posible duplicado/prueba".
+
+6. **Detección retorna primera coincidencia por posición en el texto**, no por orden de patrón en la lista. Si "prueba de copia test" aparece en el nombre, se marca "prueba" (posición 0) aunque "copia" esté antes en la lista de patrones.
+
+---
+
+## 7. Detalles de implementación (post-implementación)
+
+### 7.1 `compute_contextual_filters()` — conteo real por categoría
+
+- **Fecha:** calcula conteo real del set. "Últimos 30 días" solo cuenta filas cuya `fecha_publicacion` cae dentro del rango. Si 1 resultado cae en 30d pero 25 en 90d, ambas opciones aparecen.
+- **Categorías con <2 opciones:** no se incluyen en el dict de retorno (no sirve refinar por algo uniforme).
+- **No sugiere lo que el usuario ya filtró:** si `params` tiene `departamento_resolved='Antioquia'`, no sugiere entidades — sugiere ciudades de Antioquia.
+
+### 7.2 `apply_refinement()` — respeta contexto previo
+
+- Si `params = {departamento: 'Antioquia', valor_min: 600M}` y el filtro nuevo es `estado='Abierto'`, el resultado es `{departamento: 'Antioquia', valor_min: 600M, estado: 'Abierto'}`.
+- Caso fecha: `filter_key='fecha'` con `filter_value='30d'` convierte a `fecha_desde` concreta (`date.today() - 30d`) antes de mergear.
+
+### 7.3 Integración Streamlit — patrón `_pending_refinement`
+
+- El campo `contextual_filters` viaja en el result dict del workflow.
+- Se renderiza DESPUÉS del header y ANTES de los cards.
+- Al clickear, `_pending_refinement` guarda `{category, value, label}` en `session_state`.
+- Reusa el patrón existente de `_pending_example` — mismo mecanismo.
+- El refinement se procesa antes del próximo `run_query`, construyendo query implícita con `apply_refinement()`.
+
+### 7.4 Default ordering — condiciones de activación
+
+- **No aplicar si:** `params` tiene `estado`, `estado_family`, `estado_de_apertura_del_proceso`, `estado_del_procedimiento`, o `estado_contrato`.
+- **No aplicar si:** `intent_type` contiene `'historical'` o `'analysis'`.
+- **No aplicar si:** `intent_type == 'opportunity_search'` (tiene su propia rama de ordering).
+- **No aplicar si:** `ordering_signal` está presente (el usuario pidió orden explícito).
+- **Secondary sort:** `fecha DESC, valor DESC` siempre como fallback, incluso en rama opportunity.
+
+### 7.5 `detect_test_or_duplicate()` — búsqueda y patrones
+
+- Patrones operan sobre lowercase del campo con `re.search` (no `re.match`).
+- Retorna primera coincidencia por posición en el texto, no por orden de patrón.
+- Si el row no tiene los campos esperados, retorna `None`.
+- Patrón `x{3,}` (sin word boundaries) para capturar `XXXX` incluso después de dígitos (`2026XXXX`).
+- `\bcopia\b` NO captura "fotocopiadora" porque `\b` requiere word boundary antes de 'c'.

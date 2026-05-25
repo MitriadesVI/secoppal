@@ -39,7 +39,11 @@ def test_timeout_suggestions_real_no_quitar_fecha():
 
 
 def test_opportunity_ordering_fecha_desc() -> None:
-    """5. Opportunity amplia sin orden explícito → ORDER BY fecha_de_publicacion_del DESC, precio_base DESC."""
+    """5. Opportunity amplia sin orden explícito → ORDER BY fecha_de_publicacion_del DESC, precio_base DESC.
+    
+    Updated 2026-05-25: ADR-XXX oportunidad incluye precio_base DESC como secondary sort.
+    Anteriormente era "solo freshness" (fecha DESC únicamente).
+    """
     from app.core.soql_builder import SoQLBuilder
     sb = SoQLBuilder()
     params = {"intent_type": "opportunity_search", "objeto": ["mantenimiento"]}
