@@ -59,8 +59,13 @@ def test_query_router_includes_publicado_for_publicados():
 # Seleccionado aparece en en_evaluacion y contrato_activo. Es intencional:
 # un proceso en "Seleccionado" puede ser evaluación pre-adjudicación
 # o contrato activo ya adjudicado — depende de contexto adicional.
+# Aprobado y En aprobación aparecen en oferta_abierta y en_evaluacion.
+# Son fases de transición del funnel; es intencional que estén en ambas
+# familias según el contexto de búsqueda del usuario.
 _KNOWN_OVERLAPS = {
     "procesos:estado_del_procedimiento:Seleccionado",
+    "procesos:estado_del_procedimiento:Aprobado",
+    "procesos:estado_del_procedimiento:En aprobación",
 }
 
 

@@ -178,6 +178,36 @@ def test_or_group_with_anchor_combines_and_with_or_group() -> None:
     assert " OR " in where.split(" AND ", 1)[1]
 
 
+def test_estado_no_duplicado_cuando_legacy_y_lista_coinciden():
+    params = {
+        "estado": "Abierto",
+        "estado_field": "estado_de_apertura_del_proceso",
+        "estado_de_apertura_del_proceso": ["Abierto"],
+    }
+    soql = SoQLBuilder().build("p6dx-8zbt", params)
+    assert soql.count("estado_de_apertura_del_proceso = 'Abierto'") == 1
+
+
+def test_oferta_abierta_incluye_funnel_pre_cierre():
+    """DOGFOOD-2026-05-25: oferta_abierta cubre el funnel completo pre-cierre."""
+    params = {
+        "intent_type": "opportunity_search",
+        "estado_family": "oferta_abierta",
+        "estado_del_procedimiento": [
+            "Borrador",
+            "En aprobación",
+            "Aprobado",
+            "Publicado",
+            "Abierto",
+        ],
+    }
+    soql = SoQLBuilder().build("p6dx-8zbt", params, allow_global=True)
+    for estado in ["Borrador", "En aprobación", "Aprobado", "Publicado", "Abierto"]:
+        assert estado in soql, f"'{estado}' debe estar en el SoQL del funnel"
+    for estado in ["Seleccionado", "Evaluación", "Cancelado"]:
+        assert estado not in soql, f"'{estado}' no debe estar en el SoQL del funnel"
+
+
 def test_simple_list_still_uses_and() -> None:
     builder = SoQLBuilder()
     soql = builder.build("p6dx-8zbt", {"objeto": ["pavimentacion", "bolivar"]})

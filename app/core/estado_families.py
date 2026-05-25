@@ -18,12 +18,22 @@ Discrepancies from specification (documented):
 ESTADO_FAMILIES = {
     "oferta_abierta": {
         "procesos": {
-            # DOGFOOD-2026-05-25: solo 'Publicado' indica proceso activamente
-            # recibiendo ofertas. 'Borrador' son borradores no publicados;
-            # 'Abierto' como estado_del_procedimiento es ambiguo y trae
-            # basura de años anteriores que nunca fue actualizada en SECOP.
+            # Funnel pre-cierre completo: desde Borrador hasta Publicado.
+            # estado_del_procedimiento es SNAPSHOT del momento, no histórico.
+            # Borrador (42K), En aprobación (3K), Aprobado (7K) son fases
+            # legítimas pre-publicación. Publicado (2.5M) recibe ofertas.
+            # Abierto (31K) es valor residual de versiones antiguas.
+            # Excluidos: Seleccionado (ya con ganador), Evaluación (plazo
+            # cerrado), Cancelado, Suspendido.
+            # DOGFOOD-2026-05-25: commit 12188a6 fue demasiado agresivo
+            # al reducir a solo Publicado. Corregido con lectura correcta
+            # del modelo de funnel.
             "estado_del_procedimiento": [
                 "Publicado",
+                "Borrador",
+                "En aprobación",
+                "Aprobado",
+                "Abierto",
             ],
         },
         "contratos": {

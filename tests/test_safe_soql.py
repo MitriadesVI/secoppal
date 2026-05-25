@@ -63,7 +63,13 @@ def test_valid_opportunity_query_still_builds() -> None:
         "dataset": "procesos",
         "intent_type": "opportunity_search",
         "estado_family": "oferta_abierta",
-        "estado_del_procedimiento": ["Publicado"],
+        "estado_del_procedimiento": [
+            "Borrador",
+            "En aprobación",
+            "Aprobado",
+            "Publicado",
+            "Abierto",
+        ],
         "departamento_resolved": "Atlántico",
         "objeto": ["mantenimiento"],
     }
