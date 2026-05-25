@@ -522,3 +522,26 @@ Cuando `_should_demote_objeto` dispara Y `len(rare_terms) >= 3`: fusionar todos 
 - Commit: `dd0b2bf`
 
 **Bugs cerrados:** MIN-MAX-INVERSION-001 (Sprint 4).
+
+---
+
+## ADR-016: Secondary sort en opportunity_search + skip de estado legacy duplicado
+
+**Fecha:** 2026-05-25
+**Contexto:** Dogfooding de query "procesos para ofertar en cundinamarca entre 100 y 500 millones en reparaciones o mantenimientos" reveló dos bugs en SoQL builder:
+
+1. **Opportunity_search sin secondary sort:** La rama `opportunity_search` solo emitía `ORDER BY fecha DESC`, perdiendo `precio_base DESC`. Un universo de 50+ procesos ordenados solo por fecha no ayuda al proponente a identificar las oportunidades valiosas.
+
+2. **Estado duplicado en WHERE:** `query_router.py` emitía `params["estado"] = "Abierto"` (legacy) Y `params["estado_de_apertura_del_proceso"] = ["Abierto", "Publicado"]` (resuelto desde `estado_family=oferta_abierta`). SoQL builder aplicaba ambos, generando WHERE con filtro duplicado.
+
+**Decisión:**
+1. Agregar `precio_base DESC` como secondary sort en la rama `opportunity_search`. El orden final es `fecha DESC, precio_base DESC`.
+2. Saltar el legacy `params["estado"]` en SoQL builder si cualquier campo específico (`estado_de_apertura_del_proceso`, `estado_del_procedimiento`, `estado_contrato`, `estado_contrato_adicional`) ya está presente en params. Los campos específicos (provenientes de `estado_family`) tienen semántica más precisa que el legacy.
+
+**Alternativas descartadas:**
+- Limpiar `query_router.py` para no emitir ambos (más invasivo, mismo efecto).
+- Quitar secondary sort y confiar en BM25 post-query (no aplica — BM25 reordena, no agrega dimensión de valor).
+
+**Consecuencias:**
+- Test `test_opportunity_ordering_fecha_desc` actualizado para reflejar la nueva semántica con comentario ADR.
+- El guard "skip si campo específico existe" cubre 4 campos de estado. Si en el futuro se agregan más, deben incluirse en la tupla de verificación.

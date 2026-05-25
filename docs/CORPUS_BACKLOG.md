@@ -264,4 +264,42 @@ Estas NO son fixes de bugs del corpus — son mejoras de UX incremental que no a
 - corpus v1: 88/88 PASS
 - corpus dialogue: 60/60 PASS
 - lint-core: verde
-- ADR-009 registrado en `docs/decisions_log.md`
+
+---
+
+## Bugs dogfooding 2026-05-25
+
+Bugs descubiertos en sesión de dogfooding con query real: "muéstrame procesos para ofertar en cundinamarca entre 100 y 500 millones en reparaciones o mantenimientos".
+
+| Bug | Severidad | Estado | Commit |
+|-----|-----------|--------|--------|
+| MULTI-AND-OVER-RESTRICTIVE-002 — "o" explícito ignorado, SoQL usaba AND | ALTA | ✅ Cerrado | `f9aec55` |
+| ESTADO-DUPLICADO-001 — `params["estado"]` y `params["estado_de_apertura_del_proceso"]` ambos emitían WHERE | MEDIA | ✅ Cerrado | `b5a9f0f` |
+| OPP-SECONDARY-SORT-001 — opportunity_search solo ordenaba por fecha, sin precio_base | MEDIA | ✅ Cerrado | `b5a9f0f` |
+| HEADER-PLURAL-001 — "1 resultados" en vez de "1 resultado" | BAJA | ✅ Cerrado | `ad74d69` |
+
+### MULTI-AND-OVER-RESTRICTIVE-002
+
+**Causa:** `_extract_object_terms()` en query_router.py detectaba "o" explícito y producía `[["reparaciones", "mantenimientos"]]` (OR group). Pero `llm_handler.py` luego lo pisaba con lista plana `["reparaciones", "mantenimientos"]`. El SoQL builder interpretaba lista plana como AND.
+
+**Fix:** `llm_handler.py` ahora verifica si regex ya produjo OR groups (`isinstance(item, list)`). Si sí, preserva el grupo y salta el merge de LLM para objeto.
+
+**Deuda:** ARCH-OBJETO-MERGE-001 — source of truth ambigua entre regex y LLM. Caso edge: si LLM tiene término nuevo que regex no capturó y regex emitió flat list, el nuevo término no se incorpora.
+
+### ESTADO-DUPLICADO-001
+
+**Causa:** `query_router.py:545` ponía `params["estado"] = "Abierto"` (legacy) Y `params["estado_de_apertura_del_proceso"] = ["Abierto", "Publicado"]` (estado_family resuelto). SoQL builder procesaba ambos.
+
+**Fix:** SoQL builder ahora salta el legacy `estado` si algún campo específico (`estado_de_apertura_del_proceso`, `estado_del_procedimiento`, `estado_contrato`, `estado_contrato_adicional`) ya está presente en params.
+
+### OPP-SECONDARY-SORT-001
+
+**Causa:** Rama `opportunity_search` en soql_builder.build() solo emitía `ORDER BY fecha DESC` sin secondary sort por valor.
+
+**Fix:** Agregado `precio_base DESC` como secondary sort en la rama opportunity_search. Actualizado test `test_opportunity_ordering_fecha_desc` con comentario ADR.
+
+### HEADER-PLURAL-001
+
+**Causa:** Todos los headers usaban "resultados" hardcodeado. Con total_count=1 decía "1 resultados".
+
+**Fix:** Helper `_resultado(n)` que retorna singular/plural. Aplicado a WhatsApp, Telegram y Streamlit. Caso `total_count_approximate` preserva el `+` ("1+ resultados").
