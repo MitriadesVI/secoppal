@@ -4,7 +4,8 @@ import json
 import sqlite3
 
 from app.core.feedback import FeedbackStore
-from scripts.migrate_feedback_sqlite import main as migrate_main
+from app.core.feedback import ensure_feedback_schema
+from scripts.migrate_feedback_sqlite import ensure_workspace_items_schema, main as migrate_main
 
 
 def _workflow_result(**overrides):
@@ -222,3 +223,67 @@ def test_email_normalization_reuses_same_streamlit_user(tmp_path):
 
     users = _db_rows(db_path, "SELECT email FROM users")
     assert [row["email"] for row in users] == ["foo@bar.com"]
+
+
+def test_workspace_items_table_exists_and_accepts_inserts(tmp_path):
+    db_path = tmp_path / "secoppal.db"
+    with sqlite3.connect(db_path) as conn:
+        conn.row_factory = sqlite3.Row
+        conn.execute("PRAGMA foreign_keys=ON")
+        ensure_feedback_schema(conn)
+        ensure_workspace_items_schema(conn, applied_at="2026-05-25T00:00:00+00:00")
+        conn.execute(
+            """
+            INSERT INTO users (
+                user_id, channel, channel_user_key, is_anonymous,
+                created_at, updated_at
+            )
+            VALUES (?, ?, ?, ?, ?, ?)
+            """,
+            (
+                "streamlit:anon:test",
+                "streamlit",
+                "anon:test",
+                1,
+                "2026-05-25T00:00:00+00:00",
+                "2026-05-25T00:00:00+00:00",
+            ),
+        )
+        conn.execute(
+            """
+            INSERT INTO workspace_items (
+                item_id, user_id, item_type, reference_id, title,
+                created_at, updated_at
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+            """,
+            (
+                "item-1",
+                "streamlit:anon:test",
+                "proceso",
+                "PROC-1",
+                "Proceso de prueba",
+                "2026-05-25T00:00:00+00:00",
+                "2026-05-25T00:00:00+00:00",
+            ),
+        )
+        row = conn.execute(
+            """
+            SELECT item_id, user_id, item_type, reference_id, title,
+                   status, archived, is_pinned
+            FROM workspace_items
+            WHERE item_id = ?
+            """,
+            ("item-1",),
+        ).fetchone()
+
+    assert dict(row) == {
+        "item_id": "item-1",
+        "user_id": "streamlit:anon:test",
+        "item_type": "proceso",
+        "reference_id": "PROC-1",
+        "title": "Proceso de prueba",
+        "status": "active",
+        "archived": 0,
+        "is_pinned": 0,
+    }

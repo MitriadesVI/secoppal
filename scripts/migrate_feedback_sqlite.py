@@ -34,6 +34,49 @@ from app.core.feedback import TRACE_COLUMNS, _trace_to_row, ensure_feedback_sche
 
 
 MIGRATION_NAME = "feedback_jsonl_to_sqlite_001"
+WORKSPACE_ITEMS_MIGRATION_NAME = "workspace_items_schema_001"
+
+
+WORKSPACE_ITEMS_TABLE_SQL = """
+CREATE TABLE IF NOT EXISTS workspace_items (
+    item_id TEXT PRIMARY KEY,
+    user_id TEXT NOT NULL,
+    item_type TEXT NOT NULL CHECK (
+        item_type IN (
+            'proceso', 'contrato', 'contratista', 'entidad',
+            'busqueda', 'analisis', 'nota', 'radar_ref',
+            'documento', 'paa_rubro'
+        )
+    ),
+    reference_id TEXT,
+    title TEXT NOT NULL,
+    note TEXT,
+    status TEXT NOT NULL DEFAULT 'active',
+    deadline TEXT,
+    source_trace_id TEXT,
+    metadata_json TEXT,
+    save_reason TEXT,
+    is_pinned INTEGER NOT NULL DEFAULT 0 CHECK (is_pinned IN (0, 1)),
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL,
+    archived INTEGER NOT NULL DEFAULT 0 CHECK (archived IN (0, 1)),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+) WITHOUT ROWID
+"""
+
+WORKSPACE_ITEMS_INDEX_SQL = (
+    "CREATE INDEX IF NOT EXISTS idx_workspace_user ON workspace_items(user_id, archived)",
+    "CREATE INDEX IF NOT EXISTS idx_workspace_user_deadline ON workspace_items(user_id, deadline)",
+    """
+    CREATE INDEX IF NOT EXISTS idx_workspace_user_type
+      ON workspace_items(user_id, item_type, archived)
+    """,
+    """
+    CREATE INDEX IF NOT EXISTS idx_workspace_user_pinned
+      ON workspace_items(user_id, is_pinned) WHERE is_pinned = 1
+    """,
+    "CREATE INDEX IF NOT EXISTS idx_workspace_reference ON workspace_items(reference_id)",
+)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -79,6 +122,7 @@ def main(argv: list[str] | None = None) -> int:
                 """,
                 (MIGRATION_NAME, migrated_at),
             )
+            ensure_workspace_items_schema(conn, applied_at=migrated_at)
             conn.execute("COMMIT")
         except Exception:
             conn.execute("ROLLBACK")
@@ -169,6 +213,42 @@ def insert_trace(conn: sqlite3.Connection, trace: dict[str, Any], migrated_at: s
             {updates}
         """,
         tuple(row[column] for column in TRACE_COLUMNS),
+    )
+
+
+def ensure_workspace_items_schema(conn: sqlite3.Connection, applied_at: str | None = None) -> None:
+    table = conn.execute(
+        """
+        SELECT name FROM sqlite_master
+        WHERE type = 'table' AND name = 'workspace_items'
+        """
+    ).fetchone()
+    if table is not None:
+        row_count = conn.execute("SELECT COUNT(*) FROM workspace_items").fetchone()[0]
+        autoindex = conn.execute(
+            """
+            SELECT name FROM sqlite_master
+            WHERE type = 'index'
+              AND tbl_name = 'workspace_items'
+              AND name LIKE 'sqlite_autoindex_%'
+            """
+        ).fetchone()
+        if row_count == 0 and autoindex is not None:
+            conn.execute("DROP TABLE workspace_items")
+
+    conn.execute(WORKSPACE_ITEMS_TABLE_SQL)
+    for statement in WORKSPACE_ITEMS_INDEX_SQL:
+        conn.execute(statement)
+    conn.execute(
+        """
+        INSERT INTO schema_migrations (name, applied_at)
+        VALUES (?, ?)
+        ON CONFLICT(name) DO UPDATE SET applied_at = excluded.applied_at
+        """,
+        (
+            WORKSPACE_ITEMS_MIGRATION_NAME,
+            applied_at or datetime.now(timezone.utc).isoformat(),
+        ),
     )
 
 
