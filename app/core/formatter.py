@@ -3,7 +3,7 @@ from __future__ import annotations
 import re
 from typing import Any
 
-from app.utils.money import format_cop
+from app.utils.money import format_cop, format_money
 from app.utils.value_sanity import detect_value_anomaly
 
 
@@ -208,7 +208,7 @@ class Formatter:
                     {
                         "titulo": _smart_title(item, dataset_id),  # B2
                         "entidad": item.get("entidad", ""),
-                        "valor": format_cop(item.get("precio_base")),
+                        "valor": format_money(item.get("precio_base")),
                         "estado": item.get("estado_de_apertura_del_proceso", ""),
                         "fecha": item.get("fecha_de_publicacion_del", ""),
                         "url": url,
@@ -219,7 +219,7 @@ class Formatter:
                 row_data = {
                     "titulo": _smart_title(item, dataset_id),  # B2
                     "entidad": item.get("nombre_entidad", ""),
-                    "valor": format_cop(item.get("valor_del_contrato")),
+                    "valor": format_money(item.get("valor_del_contrato")),
                     "estado": item.get("estado_contrato", ""),
                     "fecha": item.get("fecha_de_firma", ""),
                     "contratista": item.get("proveedor_adjudicado", ""),

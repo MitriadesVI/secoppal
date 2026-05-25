@@ -64,3 +64,22 @@ def format_cop(value: Any) -> str:
     if amount <= 0:
         return "Sin valor"
     return f"${amount:,.0f}"
+
+
+def format_money(value: Any) -> str:
+    """Formato legible para cifras grandes — convención Colombia.
+
+    billón  = 10^12  → $X.XXB
+    mil millones = 10^9  → $X.XXMM
+    millón  = 10^6   → $XM
+    """
+    amount = safe_money(value)
+    if amount <= 0:
+        return "Sin valor"
+    if amount >= 1_000_000_000_000:
+        return f"${amount / 1_000_000_000_000:.2f}B"
+    if amount >= 1_000_000_000:
+        return f"${amount / 1_000_000_000:.2f}MM"
+    if amount >= 1_000_000:
+        return f"${amount / 1_000_000:.0f}M"
+    return f"${amount:,.0f}"
