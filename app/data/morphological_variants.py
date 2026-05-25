@@ -326,14 +326,28 @@ ROOT_TO_VARIANTS: dict[str, frozenset[str]] = {
 # redundant: '%mantenimiento%' already matches 'mantenimiento correctivo'.
 # This produces fewer LIKE clauses → smaller SoQL → faster Socrata queries.
 # Fixes VARIANT-EXPLOSION-001: 12 LIKEs → 2 LIKEs for "mantenimiento".
+#
+# MIN_VARIANT_LENGTH threshold: variants shorter than 5 characters
+# (acronyms like PTAR, STAR, PAE) are kept in the output but do NOT
+# suppress longer, more specific variants.  This prevents false positives
+# where '%ptar%' would match 'computar', '%star%' would match 'estar', etc.
+# Acronyms of government entities (ICBF, OCAD, SGP) have no false-positive
+# risk but the threshold is applied uniformly for simplicity.
+
+MIN_VARIANT_LENGTH = 5
+
 
 def dedup_like_variants(variants: frozenset[str]) -> list[str]:
     """Return variants with substring-redundant entries removed.
 
     Sorted by length ascending so shorter (more general) variants are
     checked first.  Any longer variant that CONTAINS an already-kept
-    shorter variant as a substring is dropped.  Underscores are
-    replaced with spaces because SECOP data does not use them.
+    shorter variant (of length >= MIN_VARIANT_LENGTH) as a substring
+    is dropped.  Underscores are replaced with spaces because SECOP
+    data does not use them.
+
+    Variants shorter than MIN_VARIANT_LENGTH are kept but do NOT act
+    as dedup winners — they cannot suppress longer variants.
     """
     # Strip underscores: "adulto_mayor" → "adulto mayor"
     cleaned = sorted(
@@ -344,8 +358,12 @@ def dedup_like_variants(variants: frozenset[str]) -> list[str]:
     for v in cleaned:
         if not v:
             continue
-        # Discard if any shorter kept variant is a substring of this one
-        if any(shorter in v for shorter in kept):
+        # Only variants >= MIN_VARIANT_LENGTH can suppress longer ones.
+        # Short acronyms (PTAR, STAR, PAE) are kept but don't dedup.
+        if any(
+            len(shorter) >= MIN_VARIANT_LENGTH and shorter in v
+            for shorter in kept
+        ):
             continue
         kept.append(v)
     return kept
