@@ -114,11 +114,15 @@ class TestVariantesMorfologicas:
         assert "trampas de grasas" in obj
 
     def test_soql_or_expansion_mantenimiento(self):
-        """SoQL debe incluir OR para mantenimiento Y mantenimientos."""
+        """SoQL debe incluir mantenimiento.  Variantes que son substring
+        de 'mantenimiento' (como 'mantenimientos') se deduplican —
+        LIKE '%mantenimiento%' ya las cubre todas.  Fixes VARIANT-EXPLOSION-001."""
         p = parse("contratos de mantenimiento en antioquia")
         soql = build(p.params)
         assert "mantenimiento" in soql.lower()
-        assert "mantenimientos" in soql.lower()
+        # 'mantenimientos' es substring-contenido por 'mantenimiento' → deduped
+        # Verificar que NO hay explosión de variantes redundantes
+        assert soql.lower().count("mantenimiento") == 2  # solo 2 campos (obj+desc)
 
     def test_soql_term_not_in_dict_no_expansion(self):
         """Término no en el diccionario no genera OR extra."""

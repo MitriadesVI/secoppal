@@ -188,8 +188,8 @@ def test_ptar_variants_are_or_not_and():
     # Must NOT contain a separate AND clause requiring PTAR
     assert "AND (UPPER(objeto_del_contrato) LIKE '%PTAR%'" not in soql.upper()
     assert "AND (UPPER(objeto_del_contrato) LIKE '%STAR%'" not in soql.upper()
-    # Should contain at least one of the roots as OR variants
-    assert any(x in soql.upper() for x in ["PLANTAS DE TRATAMIENTO", "TRATAMIENTO DE AGUAS RESIDUALES"])
+    # Should contain the deduped root terms (shortest forms kept)
+    assert any(x in soql.upper() for x in ["PTAR", "STAR", "AGUAS RESIDUALES"])
 
 
 @pytest.mark.xfail(reason="REFERENCE-001 pendiente: búsqueda exacta por referencia de proceso")

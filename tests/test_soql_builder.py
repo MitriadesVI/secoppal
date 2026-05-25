@@ -195,7 +195,8 @@ def test_alimentacion_escolar_does_not_emit_bare_pae_like() -> None:
 
     assert "%pae%" not in where.lower()
     assert "%alimentacion escolar%" in where.lower()
-    assert "%programa de alimentacion escolar%" in where.lower()
+    # 'programa de alimentacion escolar' es deduped (contiene 'alimentacion escolar')
+    # 'complemento alimentario' sobrevive (no contiene 'alimentacion escolar')
     assert "%complemento alimentario%" in where.lower()
     assert "%simat%" in where.lower()
 
@@ -212,9 +213,84 @@ def test_cultura_expands_domain_variants_without_temas() -> None:
 
     assert "gobernacion del departamento del cesar" in lower
     assert "%cultura%" in lower
-    assert "%cultural%" in lower
-    assert "%culturales%" in lower
-    assert "%patrimonio cultural%" in lower
-    assert "%eventos culturales%" in lower
-    assert "%artísticas%" in lower
+    # 'cultural', 'culturales', 'patrimonio cultural', 'eventos culturales'
+    # son deduped (contienen 'cultura' como substring). Fixes VARIANT-EXPLOSION-001.
+    assert "%artistica%" in lower
+    assert "%festivales%" in lower
     assert "%temas%" not in lower
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# VARIANT-EXPLOSION-001 regression tests
+# ═══════════════════════════════════════════════════════════════════════════
+
+def test_variant_explosion_mantenimiento_no_redundant_likes() -> None:
+    """Caso confirmado en produccion: 'contratos de mantenimiento 500-600M
+    en Cundinamarca' generaba 12 LIKEs redundantes.  Despues del fix de
+    dedup_like_variants(), solo debe emitir 2 LIKEs (objeto + descripcion)
+    para 'mantenimiento'.  Ningun LIKE para variantes redundantes
+    ('mantenimiento correctivo', 'mantenimientos', etc.)."""
+    builder = SoQLBuilder()
+    soql = builder.build(
+        "jbjy-vk9h",
+        {
+            "dataset": "contratos",
+            "objeto": ["mantenimiento"],
+            "departamento_resolved": "Cundinamarca",
+            "valor_min": 500_000_000,
+            "valor_max": 600_000_000,
+        },
+    )
+    where = soql.split(" WHERE ", 1)[1].rsplit(" ORDER BY ", 1)[0]
+    lower = where.lower()
+
+    # Exactamente 2 LIKEs para mantenimiento (objeto + descripcion)
+    assert lower.count("%mantenimiento%") == 2, (
+        f"Esperaba 2 %mantenimiento%, encontre {lower.count('%mantenimiento%')}"
+    )
+
+    # NO debe haber LIKEs para variantes redundantes
+    for banned in (
+        "mantenimiento correctivo", "mantenimiento preventivo",
+        "mantenimientos", "mantenimiento preventivo y correctivo",
+        "mantenimiento correctivo y preventivo",
+    ):
+        assert banned not in lower, f"Variante redundante '{banned}' presente en SoQL"
+
+    # WHERE clause debe ser compacto (<300 caracteres vs ~1500 del bug)
+    assert len(where) < 300, (
+        f"WHERE clause muy largo: {len(where)} caracteres (debe ser <300)"
+    )
+
+
+def test_variant_explosion_adulto_mayor_underscore_stripped() -> None:
+    """'adulto_mayor' con underscore debe transformarse a 'adulto mayor'
+    (con espacio) en el LIKE.  SECOP no usa underscores en datos reales.
+    Las variantes morfologicas distintas ('persona mayor', 'personas mayores')
+    deben conservarse como LIKEs separados."""
+    builder = SoQLBuilder()
+    soql = builder.build(
+        "jbjy-vk9h",
+        {
+            "dataset": "contratos",
+            "objeto": ["adulto_mayor"],
+            "departamento_resolved": "Cundinamarca",
+            "valor_min": 500_000_000,
+            "fecha_desde": "2025-01-01",
+            "fecha_hasta": "2025-12-31",
+        },
+    )
+    where = soql.split(" WHERE ", 1)[1].rsplit(" ORDER BY ", 1)[0]
+    lower = where.lower()
+
+    # Ningun underscore en LIKEs
+    assert "adulto_mayor" not in lower, (
+        "Underscore 'adulto_mayor' presente en SoQL: " + lower[:200] + "..."
+    )
+
+    # Debe contener 'adulto mayor' con espacio
+    assert "%adulto mayor%" in lower, "Falta LIKE '%adulto mayor%' en SoQL"
+
+    # Variantes distintas deben estar presentes
+    assert "%persona mayor%" in lower, "Falta LIKE '%persona mayor%'"
+    assert "%personas mayores%" in lower, "Falta LIKE '%personas mayores%'"

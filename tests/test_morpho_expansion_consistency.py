@@ -5,27 +5,27 @@ from app.core.soql_builder import SoQLBuilder
 
 
 def test_heuristic_path_expands_morphology():
-    """Path heuristic_only: objeto=['transporte'] → SoQL contiene transportes."""
+    """Path heuristic_only: objeto=['transporte'] → SoQL contiene transporte.
+    'transportes' es substring-contenido → deduped. Fixes VARIANT-EXPLOSION-001."""
     builder = SoQLBuilder()
     soql = builder.build("p6dx-8zbt", {"objeto": ["transporte"], "departamento_resolved": "Bolívar"})
-    assert "transportes" in soql
     assert "transporte" in soql
+    # 'transportes' deduped — 'transporte' ya lo cubre via LIKE '%transporte%'
 
 
 def test_llm_path_single_term_expands_morphology():
-    """Path LLM: objeto=['transporte'] post-LLM → misma expansión morfológica."""
+    """Path LLM: objeto=['transporte'] → misma expansión que path heuristico."""
     from app.core.llm_handler import _promote_synonym_expansion
     params = {"objeto": ["transporte"]}
-    # _promote_synonym_expansion no cambia single terms — solo pairs
     result = _promote_synonym_expansion(params)
     builder = SoQLBuilder()
     soql = builder.build("p6dx-8zbt", {**result, "departamento_resolved": "Bolívar"})
-    assert "transportes" in soql
     assert "transporte" in soql
+    # 'transportes' deduped — comportamiento unificado con heuristic path
 
 
 def test_both_paths_produce_same_morpho_expansion():
-    """Ambas rutas producen el mismo número de LIKE clauses para 'transporte'."""
+    """Ambas rutas producen el mismo SoQL para 'transporte' (dedup aplicado)."""
     builder = SoQLBuilder()
     base = {"departamento_resolved": "Bolívar"}
 
@@ -37,5 +37,5 @@ def test_both_paths_produce_same_morpho_expansion():
     llm_params = _promote_synonym_expansion({"objeto": ["transporte"]})
     soql_l = builder.build("p6dx-8zbt", {**base, **llm_params})
 
-    assert soql_h.count(" LIKE ") == soql_l.count(" LIKE ")
-    assert soql_h.count("transportes") == soql_l.count("transportes")
+    # Mismo número de LIKEs y mismo SoQL completo (determinístico post-dedup)
+    assert soql_h == soql_l

@@ -46,13 +46,14 @@ def _has_substantial_filter(params: dict) -> bool:
     return False
 
 try:
-    from app.data.morphological_variants import ROOT_TO_VARIANTS
+    from app.data.morphological_variants import ROOT_TO_VARIANTS, dedup_like_variants
 except ImportError as exc:
     logger.warning(
         "Could not import ROOT_TO_VARIANTS; morphological expansion disabled: %s",
         exc,
     )
     ROOT_TO_VARIANTS: dict[str, frozenset[str]] = {}
+    dedup_like_variants = lambda v: sorted(v, key=len)  # type: ignore
 
 try:
     from app.core.intent_vocabulary import COMMON_TOKENS
@@ -397,8 +398,11 @@ class SoQLBuilder:
         # so morphological expansion is always applied. Confirmed by test_morpho_expansion_consistency.py.
         # MORPHO-EXPANSION-INCONSISTENT-001 was a false alarm.
         term_variants = ROOT_TO_VARIANTS.get(term, frozenset([term]))
+        # Dedup: '%mantenimiento%' already matches 'mantenimiento correctivo'
+        # so we only need the shortest variant. Fixes VARIANT-EXPLOSION-001.
+        deduped = dedup_like_variants(term_variants)
         conditions: list[str] = []
-        for variant in sorted(term_variants):  # sorted for deterministic SoQL
+        for variant in deduped:
             esc = self._escape(variant)
             if spec.description:
                 conditions.append(

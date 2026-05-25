@@ -320,6 +320,36 @@ ROOT_TO_VARIANTS: dict[str, frozenset[str]] = {
     k: frozenset(v) for k, v in _ROOT_TO_VARIANTS.items()
 }
 
+# ── SoQL LIKE dedup ────────────────────────────────────────────────────────
+# When LIKE patterns have wildcards on both ends ('%term%'), a shorter
+# variant that is a substring of a longer variant makes the longer one
+# redundant: '%mantenimiento%' already matches 'mantenimiento correctivo'.
+# This produces fewer LIKE clauses → smaller SoQL → faster Socrata queries.
+# Fixes VARIANT-EXPLOSION-001: 12 LIKEs → 2 LIKEs for "mantenimiento".
+
+def dedup_like_variants(variants: frozenset[str]) -> list[str]:
+    """Return variants with substring-redundant entries removed.
+
+    Sorted by length ascending so shorter (more general) variants are
+    checked first.  Any longer variant that CONTAINS an already-kept
+    shorter variant as a substring is dropped.  Underscores are
+    replaced with spaces because SECOP data does not use them.
+    """
+    # Strip underscores: "adulto_mayor" → "adulto mayor"
+    cleaned = sorted(
+        (v.replace('_', ' ').strip() for v in variants),
+        key=len,
+    )
+    kept: list[str] = []
+    for v in cleaned:
+        if not v:
+            continue
+        # Discard if any shorter kept variant is a substring of this one
+        if any(shorter in v for shorter in kept):
+            continue
+        kept.append(v)
+    return kept
+
 # Auto-build multiword phrase set from all multi-word keys (bigrams, trigrams, etc.)
 # Used by query_router for greedy left-to-right matching before single-token parsing.
 KNOWN_BIGRAMS: frozenset[tuple[str, ...]] = frozenset(

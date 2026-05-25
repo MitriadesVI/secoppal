@@ -87,7 +87,8 @@ def test_valid_contrato_query_still_builds() -> None:
     soql = builder.build(CONTRATOS, params)
     assert "1=1" not in soql
     assert "Atlántico" in soql
-    assert "primera_infancia" in soql.lower() or "PRIMERA_INFANCIA" in soql.upper()
+    assert "primera infancia" in soql.lower() or "PRIMERA INFANCIA" in soql.upper()
+    # underscore stripped → "primera infancia" (con espacio) en LIKE
 
 
 def test_allow_global_opt_in_bypasses_guard() -> None:
