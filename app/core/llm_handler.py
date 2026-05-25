@@ -267,6 +267,14 @@ class LLMHandler:
                 # Don't overwrite gazetteer-resolved entity
                 if key == "entidad" and merged.get("entidad_resolved"):
                     continue
+                # MULTI-AND-OVER-RESTRICTIVE-002: preserve regex OR groups in objeto
+                # Regex detects 'X o Y' as [['X', 'Y']] — LLM returns flat ['X', 'Y'].
+                # Flat list overwrites OR group → AND instead of OR in SoQL.
+                if key == 'objeto' and isinstance(merged.get('objeto'), list):
+                    regex_obj = merged['objeto'] or []
+                    if any(isinstance(item, list) for item in regex_obj):
+                        continue  # keep regex OR groups, skip LLM flat list
+
                 merged[key] = value
 
         # LLM-OPP-001: enforce opportunity intent after successful LLM merge
