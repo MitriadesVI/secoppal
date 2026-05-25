@@ -58,6 +58,72 @@ def _render_cards(rows: list[dict]) -> None:
         st.divider()
 
 
+def _render_detail_card(row: dict, dataset_id: str = "") -> None:
+    """Render a single result with full detail — used for direct lookups."""
+    estado_icons = {
+        "Abierto": "🟢", "Publicado": "🔵", "Cerrado": "🔴",
+        "Adjudicado": "🟡", "Celebrado": "🟢", "En ejecucion": "🔵",
+        "Liquidado": "⚪", "Desierto": "🔴", "Cancelado": "🚫",
+    }
+
+    titulo = row.get("titulo", "Sin titulo")
+    entidad = row.get("entidad", "")
+    valor = row.get("valor", "")
+    estado = row.get("estado", "")
+    fecha = (row.get("fecha") or "")[:10]
+    contratista = row.get("contratista", "")
+    url = row.get("url", "")
+    referencia = row.get("referencia_del_proceso") or row.get("referencia_del_contrato", "")
+    id_proceso = row.get("id_del_proceso") or row.get("id_contrato", "")
+    modalidad = row.get("modalidad", "")
+    departamento = row.get("departamento", "")
+    ciudad = row.get("ciudad", "")
+    descripcion = row.get("descripcion", "") or row.get("nombre_del_procedimiento", "")
+    es_contrato = dataset_id == "jbjy-vk9h"
+    icon = estado_icons.get(estado, "⚪")
+
+    with st.expander(f"📋 Informacion completa — {titulo[:80]}...", expanded=True):
+        st.markdown(f"**{'Objeto' if es_contrato else 'Nombre del procedimiento'}:** {titulo}")
+
+        c1, c2, c3 = st.columns(3)
+        c1.markdown(f"**ID:** `{id_proceso}`")
+        c2.markdown(f"**Referencia:** `{referencia}`")
+        c3.markdown(f"**Estado:** {icon} {estado}")
+
+        c4, c5 = st.columns(2)
+        c4.markdown(f"**Entidad:** {entidad}")
+        c5.markdown(f"**Valor:** {valor}")
+
+        c6, c7, c8 = st.columns(3)
+        c6.markdown(f"**Departamento:** {departamento}")
+        c7.markdown(f"**Ciudad:** {ciudad}")
+        c8.markdown(f"**Modalidad:** {modalidad}")
+
+        if fecha:
+            st.markdown(f"**Fecha:** {fecha}")
+
+        if contratista:
+            st.markdown(f"**Proveedor adjudicado:** {contratista}")
+
+        if descripcion and descripcion != titulo:
+            st.markdown(f"**Descripcion:** {descripcion}")
+
+    # Link prominente a SECOP
+    if url:
+        st.markdown(f"### 🔗 [Ver proceso completo en SECOP II]({url})")
+
+    # Sugerencia de lookup relacionado
+    if not es_contrato and estado == "Adjudicado" and id_proceso:
+        st.info(
+            "💡 Este proceso fue adjudicado. Para buscar el contrato asociado, "
+            "pega el ID del contrato (CO1.PCCNTR.XXXXX) en el buscador."
+        )
+    elif es_contrato and id_proceso:
+        st.info(
+            "💡 Esto es un contrato. Busca el proceso original con su ID si lo tienes a mano."
+        )
+
+
 def _render_trace(debug: dict) -> None:
     """Show the full pipeline trace in a collapsible expander."""
     with st.expander("🔍 Trace del pipeline", expanded=False):
@@ -271,7 +337,14 @@ for idx, item in enumerate(st.session_state.history):
         st.markdown(item["content"])
 
         rows = item.get("rows", [])
-        if rows and show_cards:
+        route_reason = item.get("debug", {}).get("route_reason", "")
+        dataset_id = item.get("debug", {}).get("dataset_id", "")
+        is_direct_lookup = route_reason.startswith("direct_lookup")
+
+        if is_direct_lookup and rows:
+            # Rich detail mode for direct lookups
+            _render_detail_card(rows[0], dataset_id=dataset_id)
+        elif rows and show_cards:
             _render_cards(rows)
         elif rows:
             st.dataframe(rows, use_container_width=True)

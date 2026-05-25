@@ -959,6 +959,95 @@ class SecopalWorkflow:
                 )
             return result
 
+        # ── Direct lookup (Feature A1) ────────────────────────────────────
+        from app.core.direct_lookup import detect_direct_lookup, dataset_for_id, PREFIX_DATASET
+
+        lookup_id, lookup_source = detect_direct_lookup(user_query)
+        if lookup_id is not None:
+            try:
+                # Determine dataset from prefix (single round-trip when known)
+                lookup_dataset = dataset_for_id(lookup_id)
+                datasets_to_try: list[str] = (
+                    [lookup_dataset] if lookup_dataset
+                    else [SoQLBuilder.PROCESOS_DATASET, SoQLBuilder.CONTRATOS_DATASET]
+                )
+
+                hit_results: list[dict] = []
+                hit_dataset = ""
+                soql = ""
+                for ds_id in datasets_to_try:
+                    spec = SoQLBuilder.SPECS[ds_id]
+                    id_field = "id_del_proceso" if ds_id == SoQLBuilder.PROCESOS_DATASET else "id_contrato"
+                    fields = ", ".join(spec.select_fields)
+                    soql = (
+                        f"SELECT {fields} "
+                        f"WHERE {id_field} = '{SoQLBuilder._escape(lookup_id)}' "
+                        f"LIMIT 1"
+                    )
+                    try:
+                        rows = self.secop_client.query(ds_id, soql)
+                        if rows:
+                            hit_results = rows
+                            hit_dataset = ds_id
+                            break
+                    except Exception:
+                        continue
+
+                route_reason = f"direct_lookup_{lookup_source}"
+
+                if not hit_results:
+                    # ID not found in any dataset — friendly message
+                    return {
+                        "response": (
+                            f"🔍 No encontré el proceso con ID `{lookup_id}` en SECOP II.\n\n"
+                            f"Puede que:\n"
+                            f"• El ID esté mal escrito.\n"
+                            f"• El proceso sea de SECOP I (anterior a 2019).\n"
+                            f"• El proceso aún no esté publicado en datos.gov.co."
+                        ),
+                        "rows": [], "results": [], "dataset_id": "", "soql_query": soql,
+                        "parsed_params": {}, "resolved_params": {},
+                        "needs_llm": False, "needs_clarification": False,
+                        "route_reason": route_reason,
+                        "degraded": False, "degraded_hint": "", "total_count": 0,
+                        "universe_insights": None, "suggestions": [],
+                        "timeout_suggestions": [], "intent_type": "direct_lookup",
+                        "followup": False, "trace_id": "", "narrated": False,
+                    }
+
+                # Format result with rich detail (card mode)
+                response, rows = self.formatter.format_for_channel(
+                    hit_results, hit_dataset, channel,
+                    params={"intent_type": "direct_lookup", "route_reason": route_reason},
+                    total_count=1,
+                )
+
+                result = {
+                    "response": response,
+                    "rows": rows,
+                    "results": hit_results,
+                    "dataset_id": hit_dataset,
+                    "soql_query": soql,
+                    "parsed_params": {"direct_lookup_id": lookup_id, "route_reason": route_reason},
+                    "resolved_params": {"direct_lookup_id": lookup_id},
+                    "needs_llm": False,
+                    "needs_clarification": False,
+                    "route_reason": route_reason,
+                    "degraded": False, "degraded_hint": "", "total_count": 1,
+                    "universe_insights": None,
+                    "suggestions": [],
+                    "timeout_suggestions": [],
+                    "intent_type": "direct_lookup",
+                    "followup": False, "trace_id": "", "narrated": False,
+                }
+                trace_id = self.feedback.log_trace(user_query, channel, result, user_identity=user_identity)
+                result["trace_id"] = trace_id
+                return result
+
+            except Exception as exc:
+                logger.warning("direct_lookup failed for %s: %s", lookup_id, exc)
+                # Fall through to normal pipeline
+
         # ── Normal flow ──────────────────────────────────────────────────
         # Follow-up detection
         history = self.conv_store.get_history(chat_id, last_n=5) if chat_id else []
