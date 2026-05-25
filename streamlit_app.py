@@ -24,6 +24,45 @@ workflow = get_workflow()
 # ═══════════════════════════════════════════════════════════════════════════
 
 
+def detect_test_or_duplicate_from_row(row: dict) -> str | None:
+    """Wrapper para detect_test_or_duplicate sin dataset_id explícito.
+    Infiere dataset del row por campos disponibles.
+    """
+    try:
+        from app.core.contextual_suggestions import detect_test_or_duplicate
+        dataset_id = "p6dx-8zbt" if "nombre_del_procedimiento" in row else "jbjy-vk9h"
+        return detect_test_or_duplicate(row, dataset_id)
+    except Exception:
+        return None
+
+
+def _render_contextual_filters(filters: dict) -> None:
+    """Renderiza barra de filtros contextuales con botones clickeables.
+    Un clic = un filtro aplicado inmediatamente.
+    """
+    if not filters:
+        return
+
+    icons = {"estado": "📋", "fecha": "📅", "monto": "💰", "entidad": "🏛️", "ciudad": "🌆"}
+
+    st.markdown("🎚️ **Refinar:**")
+    for category, options in filters.items():
+        if not options:
+            continue
+        cols = st.columns(len(options))
+        icon = icons.get(category, "🔹")
+        for i, opt in enumerate(options):
+            with cols[i]:
+                label = f"{icon} {opt['label']}"
+                if st.button(label, key=f"refine_{category}_{opt['value']}_{uuid.uuid4().hex[:6]}"):
+                    st.session_state._pending_refinement = {
+                        "category": category,
+                        "value": opt["value"],
+                        "label": opt["label"],
+                    }
+                    st.rerun()
+
+
 def _render_cards(rows: list[dict]) -> None:
     """Render results as compact cards with SECOP links."""
     estado_icons = {
@@ -41,6 +80,11 @@ def _render_cards(rows: list[dict]) -> None:
         contratista = row.get("contratista", "")
         url = row.get("url", "")
         icon = estado_icons.get(estado, "⚪")
+
+        # Warning for duplicate/test entries
+        warning = detect_test_or_duplicate_from_row(row)
+        if warning:
+            st.caption(f"⚠️ _{warning}_")
 
         parts = [
             f"**{i}.** {titulo}",
@@ -336,13 +380,18 @@ for idx, item in enumerate(st.session_state.history):
     with st.chat_message("assistant"):
         st.markdown(item["content"])
 
+        # Contextual filter bar
+        contextual_filters = item.get("contextual_filters", {})
+        total_count = item.get("total_count", 0)
+        if contextual_filters and total_count > 20:
+            _render_contextual_filters(contextual_filters)
+
         rows = item.get("rows", [])
         route_reason = item.get("debug", {}).get("route_reason", "")
         dataset_id = item.get("debug", {}).get("dataset_id", "")
         is_direct_lookup = route_reason.startswith("direct_lookup")
 
         if is_direct_lookup and rows:
-            # Rich detail mode for direct lookups
             _render_detail_card(rows[0], dataset_id=dataset_id)
         elif rows and show_cards:
             _render_cards(rows)
@@ -359,10 +408,37 @@ for idx, item in enumerate(st.session_state.history):
             _render_rating(trace_id, rating, idx)
 
 # ═══════════════════════════════════════════════════════════════════════════
-# Chat input
+# Chat input — handle pending refinement and examples
 # ═══════════════════════════════════════════════════════════════════════════
 
 incoming_query: str | None = None
+
+# Pending refinement from filter bar
+if hasattr(st.session_state, "_pending_refinement") and st.session_state._pending_refinement:
+    ref = st.session_state._pending_refinement
+    del st.session_state._pending_refinement
+
+    # Build implicit query from refinement
+    category = ref.get("category", "")
+    label = ref.get("label", "")
+    filter_value = ref.get("value")
+
+    from app.core.contextual_suggestions import apply_refinement
+
+    # Get last assistant params from history
+    last_params = {}
+    for item in reversed(st.session_state.history):
+        debug = item.get("debug", {})
+        if debug:
+            last_params = debug.get("resolved_params", {})
+            break
+
+    # Apply refinement
+    refined_params = apply_refinement(last_params, category, filter_value)
+
+    # Rebuild query — use the original query with refinement
+    incoming_query = f"filtrando por {label}"
+
 if hasattr(st.session_state, "_pending_example"):
     incoming_query = st.session_state._pending_example
     del st.session_state._pending_example
@@ -398,6 +474,8 @@ if incoming_query:
             "debug": debug_payload,
             "trace_id": result.get("trace_id"),
             "rating": None,
+            "contextual_filters": result.get("contextual_filters", {}),
+            "total_count": result.get("total_count", 0),
         }
     )
     st.rerun()
