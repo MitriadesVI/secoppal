@@ -64,7 +64,7 @@ def test_router_extracts_territorial_process_query(router: QueryRouter) -> None:
     assert parsed.params.get("departamento_resolved") is not None
     assert "atlántico" in parsed.params["departamento_resolved"].lower() or \
            "atlantico" in parsed.params["departamento_resolved"].lower()
-    assert parsed.params["estado"] == "Abierto"
+    assert parsed.params["estado"] == "Publicado"
     assert parsed.params["valor_min"] == 500_000_000
     assert "mantenimiento" in parsed.params.get("objeto", [])
     assert "vial" in parsed.params.get("objeto", [])

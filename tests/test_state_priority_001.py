@@ -16,11 +16,12 @@ def test_opportunity_explicit_abierto_filters_both_dimensions():
         "objeto": ["construccion"],
         "ciudad": "bogota",
         "intent_type": "opportunity_search",
-        "estado_del_procedimiento": ["Publicado", "Borrador", "Abierto"],
+        "estado_del_procedimiento": ["Publicado"],
         "estado_de_apertura_del_proceso": ["Abierto"],
     }
     soql = _soql_for(params)
-    assert "estado_del_procedimiento IN" in soql
+    assert "estado_del_procedimiento" in soql
+    assert "Publicado" in soql
     assert "estado_de_apertura_del_proceso = 'Abierto'" in soql
 
 
@@ -30,7 +31,7 @@ def test_implicit_opportunity_derives_apertura():
         "objeto": ["mantenimiento"],
         "departamento_resolved": "BOLIVAR",
         "intent_type": "opportunity_search",
-        "estado_del_procedimiento": ["Publicado", "Borrador", "Abierto"],
+        "estado_del_procedimiento": ["Publicado"],
     }
     soql = _soql_for(params)
     assert "estado_de_apertura_del_proceso = 'Abierto'" in soql

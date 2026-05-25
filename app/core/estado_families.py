@@ -18,15 +18,12 @@ Discrepancies from specification (documented):
 ESTADO_FAMILIES = {
     "oferta_abierta": {
         "procesos": {
-            "estado_de_apertura_del_proceso": ["Abierto"],
-            # B0 Sprint 1A audit, datos.gov.co p6dx-8zbt, 2026-05-20:
-            # estados reales: Seleccionado, Publicado, Evaluación, Cancelado,
-            # Borrador, Abierto, Aprobado, En aprobación, Suspendido.
-            # Solo estos tres representan oportunidad abierta/pre-publicada.
+            # DOGFOOD-2026-05-25: solo 'Publicado' indica proceso activamente
+            # recibiendo ofertas. 'Borrador' son borradores no publicados;
+            # 'Abierto' como estado_del_procedimiento es ambiguo y trae
+            # basura de años anteriores que nunca fue actualizada en SECOP.
             "estado_del_procedimiento": [
                 "Publicado",
-                "Borrador",
-                "Abierto",
             ],
         },
         "contratos": {

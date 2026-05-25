@@ -27,7 +27,7 @@ def test_catalog_has_borrador_en_contratos():
 # ── Query resolution ─────────────────────────────────────────────────────
 
 def test_procesos_publicados_tolima_resolves_publicado():
-    """'procesos publicados en Tolima' → estado_del_procedimiento IN ('Publicado','Borrador','Abierto')"""
+    """'procesos publicados en Tolima' → estado_del_procedimiento IN ('Publicado')"""
     r = detect_estado_family("procesos publicados en tolima", "procesos")
     assert r is not None
     assert r["family"] == "oferta_abierta"
