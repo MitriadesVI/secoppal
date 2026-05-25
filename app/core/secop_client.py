@@ -91,17 +91,35 @@ class SecopClient:
             url_value = url_value.get("url", "")
         url_value = str(url_value or "")
 
-        # Fix broken URLs for BOTH datasets
+        # URL repair hierarchy (FIX-URL-FREEFORM-001):
+        # 1. Use original URL if valid (not empty, not "Login")
+        # 2. Build from id_del_proceso / id_contrato (CO1.XXX.YYY — always valid)
+        # 3. Fallback to url-encoded referencia_del_proceso / referencia_del_contrato
+        # 4. Empty string
         if not url_value or "Login" in url_value:
             if dataset_id == "p6dx-8zbt":
+                process_id = normalized.get("id_del_proceso", "")
                 reference = normalized.get("referencia_del_proceso", "")
             else:
+                process_id = normalized.get("id_contrato", "")
                 reference = normalized.get("referencia_del_contrato", "")
 
-            if reference:
+            url_value = ""  # reset — will rebuild if possible
+            # Priority 1: Build from CO1 ID (deterministic, always valid format)
+            pid = str(process_id or "").strip()
+            if pid:
+                from urllib.parse import quote
                 url_value = (
                     "https://community.secop.gov.co/Public/Tendering/"
-                    f"OpportunityDetail/Index?noticeUID={reference}"
+                    f"OpportunityDetail/Index?noticeUID={quote(pid)}"
+                )
+            # Priority 2: Fallback to reference (url-encoded to handle spaces/special chars)
+            elif reference:
+                from urllib.parse import quote
+                ref_str = str(reference).strip()
+                url_value = (
+                    "https://community.secop.gov.co/Public/Tendering/"
+                    f"OpportunityDetail/Index?noticeUID={quote(ref_str)}"
                 )
 
         normalized["urlproceso"] = url_value

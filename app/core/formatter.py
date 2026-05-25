@@ -228,17 +228,38 @@ class Formatter:
 
     @staticmethod
     def _safe_url(item: dict) -> str:
-        """Extract URL, handling dict format and broken login URLs."""
+        """Extract URL, handling dict format and broken login URLs.
+
+        URL repair hierarchy (FIX-URL-FREEFORM-001):
+        1. Original URL if valid
+        2. Build from id_del_proceso / id_contrato (CO1 IDs — always valid)
+        3. Fallback to url-encoded referencia
+        4. Empty string
+        """
         url_raw = item.get("urlproceso", "")
         if isinstance(url_raw, dict):
             url_raw = url_raw.get("url", "")
         url = str(url_raw or "")
-        if "Login" in url:
-            ref = item.get("referencia_del_proceso") or item.get("referencia_del_contrato", "")
-            if ref:
-                return f"https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID={ref}"
-            return ""
-        return url
+        if "Login" not in url and url:
+            return url
+        # URL is broken — reconstruct from IDs
+        from urllib.parse import quote
+
+        # Priority 1: CO1 ID
+        pid = str(item.get("id_del_proceso") or item.get("id_contrato") or "").strip()
+        if pid:
+            return (
+                "https://community.secop.gov.co/Public/Tendering/"
+                f"OpportunityDetail/Index?noticeUID={quote(pid)}"
+            )
+        # Priority 2: reference (url-encoded)
+        ref = str(item.get("referencia_del_proceso") or item.get("referencia_del_contrato") or "").strip()
+        if ref:
+            return (
+                "https://community.secop.gov.co/Public/Tendering/"
+                f"OpportunityDetail/Index?noticeUID={quote(ref)}"
+            )
+        return ""
 
     def format_whatsapp(self, rows: list[dict], params: dict | None = None, dataset_id: str | None = None, total_count: int = 0, universe_insights: Any = None, suggestions: list | None = None, total_count_approximate: bool = False) -> str:
         if not rows:
