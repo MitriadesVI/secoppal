@@ -196,7 +196,7 @@ class SoQLBuilder:
                     f"{spec.date} DESC, {spec.value} DESC"
                 )
         elif params.get("intent_type") == "opportunity_search" and not ordering:
-            order_expr = f"{spec.date} DESC"  # only freshness for opportunities
+            order_expr = f"{spec.date} DESC, {spec.value} DESC"  # freshness + value
         elif ordering == "valor_desc":
             order_expr = f"{spec.value} DESC, {spec.date} DESC"
         else:
@@ -300,8 +300,16 @@ class SoQLBuilder:
             # Use the specific field identified by QueryRouter, or fall back to spec default
             estado_field = params.get("estado_field", spec.state)
             estado_val = params["estado"]
-            # If a more specific list exists for this field, skip scalar (list handles below)
-            if not (estado_field in params and isinstance(params.get(estado_field), list)):
+            # Skip if a more specific estado field already covers this
+            # (estado_family resolved fields take priority over legacy estado)
+            if not any(
+                params.get(f) for f in (
+                    "estado_de_apertura_del_proceso",
+                    "estado_del_procedimiento",
+                    "estado_contrato",
+                    "estado_contrato_adicional",
+                )
+            ):
                 self._add_estado_clause(where_clauses, estado_field, estado_val)
 
         # NUEVO: estado_families filters — puede ser lista o simple

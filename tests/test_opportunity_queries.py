@@ -38,14 +38,14 @@ def test_timeout_suggestions_real_no_quitar_fecha():
     assert True
 
 
-def test_opportunity_ordering_fecha_desc():
-    """5. Opportunity amplia sin orden explícito → ORDER BY fecha_de_publicacion_del DESC."""
+def test_opportunity_ordering_fecha_desc() -> None:
+    """5. Opportunity amplia sin orden explícito → ORDER BY fecha_de_publicacion_del DESC, precio_base DESC."""
     from app.core.soql_builder import SoQLBuilder
     sb = SoQLBuilder()
     params = {"intent_type": "opportunity_search", "objeto": ["mantenimiento"]}
     soql = sb.build("p6dx-8zbt", params)
     assert "fecha_de_publicacion_del DESC" in soql
-    assert "precio_base DESC" not in soql or "ORDER BY fecha" in soql.split("ORDER BY")[1]
+    assert "precio_base DESC" in soql  # secondary sort
 
 
 def test_contrato_no_opportunity_intent():
