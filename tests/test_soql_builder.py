@@ -23,7 +23,8 @@ def test_build_process_query_with_ordering_signal_uses_price_only() -> None:
 
 
 def test_build_process_query_default_orders_by_date_then_price() -> None:
-    """Default ordering with no estado: Abierto/Publicado first, then date DESC, then price DESC."""
+    """DOGFOOD-SOQL-006: default sin CASE WHEN (Socrata rechaza el rewrite #CASE).
+    Solo fecha DESC + precio DESC. El boost 'activos primero' va en Python."""
     builder = SoQLBuilder()
     soql = builder.build(
         "p6dx-8zbt",
@@ -33,12 +34,14 @@ def test_build_process_query_default_orders_by_date_then_price() -> None:
         },
     )
 
-    assert "CASE WHEN estado_de_apertura_del_proceso IN ('Abierto', 'Publicado')" in soql
-    assert "fecha_de_publicacion_del DESC, precio_base DESC" in soql
+    assert "CASE WHEN" not in soql
+    assert "ORDER BY fecha_de_publicacion_del DESC, precio_base DESC" in soql
 
 
 def test_build_contract_query_default_orders_by_date_then_value() -> None:
-    """Contracts default with no estado: activos first, then date DESC, then value DESC."""
+    """DOGFOOD-SOQL-006: contratos sin CASE WHEN.
+    El #CASE(... IN ('En ejecución',...)) que generaba Socrata internamente
+    rompía con 400 Bad Request por strings acentuados."""
     builder = SoQLBuilder()
     soql = builder.build(
         "jbjy-vk9h",
@@ -50,9 +53,8 @@ def test_build_contract_query_default_orders_by_date_then_value() -> None:
         },
     )
 
-    assert "CASE WHEN estado_contrato IN ('En ejecución', 'Modificado', 'Prorrogado')" in soql
-    assert "fecha_de_firma DESC, valor_del_contrato DESC" in soql
-    assert "ORDER BY CASE WHEN" in soql
+    assert "CASE WHEN" not in soql
+    assert "ORDER BY fecha_de_firma DESC, valor_del_contrato DESC" in soql
 
 
 def test_query_router_year_range_reaches_contract_soql_upper_bound() -> None:

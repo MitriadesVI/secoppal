@@ -67,6 +67,21 @@
 
 ---
 
+## Dogfooding 2026-05-25 — Fixes críticos UX
+
+| id | categoría | query | expected | fix | status |
+|---|---|---|---|---|---|
+| D1 | URL | proceso CO1.REQ.1274538 | link vacío, "Vista pública no disponible" | DOGFOOD-URL-005 | ✅ |
+| D2 | fecha | proceso en Borrador | muestra fecha fallback con etiqueta | DOGFOOD-DATE-002 | ✅ |
+| D3 | refinamiento | click "Últimos 30 días" | nueva query con fecha aplicada | DOGFOOD-REFINE-004 | ✅ |
+| D4 | rango | "entre 500 y mil millones" | valor_min=500M, valor_max=1000M | DOGFOOD-RANGE-005 | ✅ |
+| D5 | scrub | "se celebraron en 2025" | "celebraron" NO en objeto | DOGFOOD-ACTION-005B | ✅ |
+| D6 | SoQL | contratos en jbjy-vk9h | no CASE WHEN en ORDER BY | DOGFOOD-SOQL-006 | ✅ |
+
+**Tests automatizados:** test_url_repair.py, test_best_date.py, test_refinement.py, test_range_parsing.py, test_action_verbs.py
+
+---
+
 ## Archivos generados
 
 - `docs/TEST_MATRIX.md` (este archivo)

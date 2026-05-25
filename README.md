@@ -477,6 +477,56 @@ python scripts/build_gazetteer.py full --top 500
 
 ---
 
+## Datasets de SECOP y CCE — Inventario
+
+> Actualizado 2026-05-24. Fuente: catálogo datos.gov.co (CCE, DNP, Cámaras de Comercio).
+
+### Integrados (producción)
+
+| Slug | Dataset | Qué desbloquea |
+|------|---------|---------------|
+| `p6dx-8zbt` | SECOP II procesos | Búsqueda de procesos abiertos, análisis de competencia |
+| `jbjy-vk9h` | SECOP II contratos | Búsqueda de contratos firmados, tracking de ejecución |
+
+### Identificados para Sprint 2 (alto impacto)
+
+| Slug | Dataset | Filas | Qué desbloquea |
+|------|---------|-------|---------------|
+| *pendiente* | SECOP Integrado Detallado (SECOP I+II, nivel contrato) | ~60 cols | Execution tracking (valor_facturado, pagado, pendiente), funding sources (PGN/SGP/SGR), compliance flags. Convierte el producto de "buscador" a "sistema de inteligencia fiscal". |
+| `b6m4-qgqv` | SECOP II PAA Encabezado | 52.7K | Forecast oficial por entidad/año. Misión/visión para RAG. |
+| *pendiente* | PAA Detalle (línea por línea) | ? | Clasificador UNSPSC gratuito. Radar predictivo de oportunidades pre-publicación. |
+| *pendiente* | RUES — Registro Único Empresarial Social | 9.26M | Onboarding instantáneo de proponentes, detector de empresas de papel, validación cruzada NIT. Publicado por Cámara Santa Rosa de Cabal (sincronizado nacional). |
+
+### Identificados para Sprint 3-4
+
+| Slug | Dataset | Filas | Qué desbloquea |
+|------|---------|-------|---------------|
+| `ceth-n4bn` | Grupos de Proveedores SECOP II | ? | Resolución de consorcios/UTs, valor atribuible proporcional, detector de cartel suave. |
+| *pendiente* | Ofertas 2023 (todas, no solo ganadoras) | 9.17M | Win-rate real, densidad de competencia, bidability score con datos crudos. |
+| *pendiente* | Archivos de descarga (PDFs: pliegos, ofertas, contratos) | 7.87M | Pliego analyzer sin scraping. Descarga on-demand. |
+
+### Identificados para Sprint 5
+
+| Slug | Dataset | Filas | Qué desbloquea |
+|------|---------|-------|---------------|
+| *pendiente* | DNP-ProyectosContratos | 1.46M | Vinculación contratos→proyectos BPIN. Segmento veedurías+B2G+periodismo. |
+
+### Pendientes de búsqueda
+
+- Sanciones e inhabilidades — Procuraduría SIRI
+- Boletín de Responsables Fiscales — Contraloría
+- Multas y sanciones contractuales — CCE / Procuraduría
+- TVEC Acuerdos Marco de Precios — CCE
+- Pliegos tipo — CCE (templates oficiales)
+
+### NO integrar (redundantes)
+
+- **Contratación Municipios PDET** — flags PDET ya incluidos en SECOP Integrado Detallado
+- **Procesos Tipo y Valor** (community-derived) — redundante con `p6dx-8zbt`
+- **Proponentes Activos 2020** (Cámara Valledupar, 901 filas) — usar RUES
+
+---
+
 ## Registro de Decisiones Técnicas (ADR)
 
 > Esta sección documenta las decisiones de diseño significativas, el contexto que las motivó y las alternativas descartadas. Se actualiza cuando se toma una decisión que no es obvia desde el código.

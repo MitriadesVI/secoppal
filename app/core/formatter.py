@@ -87,6 +87,46 @@ def _fix_mojibake(text: str) -> str:
     return text
 
 
+_ACTIVE_STATES_PROCESOS = frozenset({"Abierto", "Publicado"})
+_ACTIVE_STATES_CONTRATOS = frozenset({"En ejecución", "Modificado", "Prorrogado"})
+
+
+def _reorder_active_first(results: list[dict], dataset_id: str, params: dict | None) -> list[dict]:
+    """DOGFOOD-SOQL-006: pone activos primero en Python.
+
+    Antes lo hacía SoQL con CASE WHEN IN (...), pero Socrata revienta con
+    strings acentuados ("En ejecución"). Sólo se aplica cuando el usuario
+    no filtró estado y no es búsqueda histórica/oportunidad — mismas
+    condiciones que el ORDER BY antes activaba.
+    """
+    if not results:
+        return results
+    params = params or {}
+    has_estado = bool(
+        params.get("estado") or params.get("estado_family")
+        or params.get("estado_de_apertura_del_proceso")
+        or params.get("estado_del_procedimiento")
+        or params.get("estado_contrato")
+    )
+    intent = (params.get("intent_type") or "").lower()
+    if has_estado or "historical" in intent or "analysis" in intent or intent == "opportunity_search":
+        return results
+
+    if dataset_id == "p6dx-8zbt":
+        active = _ACTIVE_STATES_PROCESOS
+        field = "estado_de_apertura_del_proceso"
+    else:
+        active = _ACTIVE_STATES_CONTRATOS
+        field = "estado_contrato"
+
+    def _key(idx_row: tuple[int, dict]) -> tuple[int, int]:
+        idx, row = idx_row
+        is_active = 0 if str(row.get(field, "") or "").strip() in active else 1
+        return (is_active, idx)  # estable: idx preserva orden por fecha del SoQL
+
+    return [r for _, r in sorted(enumerate(results), key=_key)]
+
+
 def _dedupe_results(results: list[dict], dataset_id: str) -> list[dict]:
     """B1: deduplica por id estable conservando el primero encontrado.
 
@@ -184,16 +224,43 @@ class Formatter:
                            universe_insights: Any = None,
                            suggestions: list | None = None,
                            total_count_approximate: bool = False) -> tuple[str, list[dict]]:
-        rows = self.to_rows(results, dataset_id)
+        rows = self.to_rows(results, dataset_id, params=params)
         if channel == "telegram":
             return self.format_telegram(rows, params=params, dataset_id=dataset_id, total_count=total_count, universe_insights=universe_insights, suggestions=suggestions, total_count_approximate=total_count_approximate), rows
         if channel == "streamlit":
             return self.format_streamlit(rows, params=params, dataset_id=dataset_id, total_count=total_count, universe_insights=universe_insights, suggestions=suggestions, total_count_approximate=total_count_approximate), rows
         return self.format_whatsapp(rows, params=params, dataset_id=dataset_id, total_count=total_count, universe_insights=universe_insights, suggestions=suggestions, total_count_approximate=total_count_approximate), rows
 
-    def to_rows(self, results: list[dict], dataset_id: str) -> list[dict]:
+    @staticmethod
+    def _best_date_for_row(item: dict, dataset_id: str) -> tuple[str, str]:
+        """Cascada de fechas disponibles en p6dx-8zbt cuando publicación está vacía.
+
+        Returns: (fecha_iso, etiqueta). Etiqueta indica fuente para que la UI
+        pueda mostrarla con contexto. fecha_iso vacío → "Pendiente de publicación".
+        """
+        if dataset_id == "p6dx-8zbt":
+            cascade = (
+                ("fecha_de_publicacion_del", "Publicación"),
+                ("fecha_de_publicacion_fase_3", "Publicación fase 3"),
+                ("fecha_de_recepcion_de_respuestas_al_in", "Recepción ofertas"),
+                ("fecha_de_apertura_efectiva", "Apertura"),
+            )
+        else:
+            cascade = (
+                ("fecha_de_firma", "Firma"),
+                ("fecha_de_inicio_del_contrato", "Inicio"),
+            )
+        for field, label in cascade:
+            val = item.get(field)
+            if val:
+                return str(val), label
+        return "", "Pendiente de publicación"
+
+    def to_rows(self, results: list[dict], dataset_id: str, params: dict | None = None) -> list[dict]:
+        # DOGFOOD-SOQL-006: boost activos primero antes de dedupe/cut.
+        reordered = _reorder_active_first(results, dataset_id, params)
         # B1: deduplicar ANTES de cortar al max_results.
-        deduped = _dedupe_results(results, dataset_id)
+        deduped = _dedupe_results(reordered, dataset_id)
         # MOJIBAKE-DISPLAY-001: normalize malformed UTF-8 from SECOP
         # Only apply to string fields, not numeric/None values
         for r in deduped:
@@ -203,6 +270,7 @@ class Formatter:
         rows: list[dict] = []
         for item in deduped[: self.max_results]:
             url = self._safe_url(item)
+            fecha_iso, fecha_label = self._best_date_for_row(item, dataset_id)
             if dataset_id == "p6dx-8zbt":
                 rows.append(
                     {
@@ -210,7 +278,8 @@ class Formatter:
                         "entidad": item.get("entidad", ""),
                         "valor": format_money(item.get("precio_base")),
                         "estado": item.get("estado_de_apertura_del_proceso", ""),
-                        "fecha": item.get("fecha_de_publicacion_del", ""),
+                        "fecha": fecha_iso,
+                        "fecha_label": fecha_label,
                         "url": url,
                     }
                 )
@@ -221,7 +290,8 @@ class Formatter:
                     "entidad": item.get("nombre_entidad", ""),
                     "valor": format_money(item.get("valor_del_contrato")),
                     "estado": item.get("estado_contrato", ""),
-                    "fecha": item.get("fecha_de_firma", ""),
+                    "fecha": fecha_iso,
+                    "fecha_label": fecha_label,
                     "contratista": item.get("proveedor_adjudicado", ""),
                     "url": url,
                 }
@@ -234,11 +304,12 @@ class Formatter:
     def _safe_url(item: dict) -> str:
         """Extract URL, handling dict format and broken login URLs.
 
-        URL repair hierarchy (FIX-URL-FREEFORM-001):
+        URL repair hierarchy (FIX-URL-FREEFORM-001 + DOGFOOD-URL-005):
         1. Original URL if valid
-        2. Build from id_del_proceso / id_contrato (CO1 IDs — always valid)
-        3. Fallback to url-encoded referencia
-        4. Empty string
+        2. Build from CO1.NTC IDs (públicos)
+        3. CO1.REQ.X → vacío (requisición pre-publicación, no consultable)
+        4. Fallback referencia url-encoded
+        5. Empty string
         """
         url_raw = item.get("urlproceso", "")
         if isinstance(url_raw, dict):
@@ -246,17 +317,19 @@ class Formatter:
         url = str(url_raw or "")
         if "Login" not in url and url:
             return url
-        # URL is broken — reconstruct from IDs
+
         from urllib.parse import quote
 
-        # Priority 1: CO1 ID
         pid = str(item.get("id_del_proceso") or item.get("id_contrato") or "").strip()
+        # CO1.REQ.X = requisiciones pre-publicación; OpportunityDetail
+        # devuelve "argument out of range". No mostrar link roto.
+        if pid.upper().startswith("CO1.REQ."):
+            return ""
         if pid:
             return (
                 "https://community.secop.gov.co/Public/Tendering/"
                 f"OpportunityDetail/Index?noticeUID={quote(pid)}"
             )
-        # Priority 2: reference (url-encoded)
         ref = str(item.get("referencia_del_proceso") or item.get("referencia_del_contrato") or "").strip()
         if ref:
             return (

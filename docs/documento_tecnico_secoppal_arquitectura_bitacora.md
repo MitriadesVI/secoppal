@@ -1273,3 +1273,51 @@ Target ≥45/50. API solo responde <2s en madrugada.
 **Validación:** Suite 830/0. Ambos fixes validados con queries individuales
 contra API real (0→50 results). CORPUS_BACKLOG actualizado (1 bug vivo).
 decisions_log: ADR-013, ADR-014.
+
+### 2026-05-25 — Dogfooding UX fixes (A-E) + CASE WHEN BadRequest
+
+Dogfooding con query real "procesos abiertos hoy en Cundinamarca por mas de
+1000 millones" reveló 5 bugs críticos de UX. Fixes aplicados en sesión de
+trabajo con tests 945 passed.
+
+**Fix A — Refinement buttons (DOGFOOD-REFINE-004):**
+- `orchestrator.py:_run_refinement()` ejecuta query refinada vía bypass del
+  pipeline SoQL (no re-parsea query natural).
+- `streamlit_app.py` consume `_pending_refinement` del session_state y pasa
+  `seed_resolved_params` a `run_query()`.
+
+**Fix B — URLs por tipo de proceso (DOGFOOD-URL-005):**
+- `formatter.py:_safe_url()` + `secop_client.py:_normalize_row()` detectan
+  prefijo CO1.REQ.X vs CO1.NTC.X.
+- REQ → "" (pre-publicación, SECOP devuelve "argument out of range").
+- NTC → reconstruir `OpportunityDetail/Index?noticeUID=`.
+- UI: "Vista pública no disponible (proceso pre-publicación)".
+
+**Fix C — Fecha fallback cascada (DOGFOOD-DATE-002):**
+- `formatter.py:_best_date_for_row()` busca: publicacion_del → publicacion_fase_3
+  → recepcion_respuestas → apertura_efectiva.
+- Cada fecha trae etiqueta indicando fuente.
+- Todas null → "Pendiente de publicación".
+
+**Fix D — Rango "entre X y Y" (DOGFOOD-RANGE-005):**
+- `query_router.py:_extract_amounts()` hereda unidad atómica vs compuesta según
+  si el lado con unidad tiene dígito.
+- Ej: "entre 500 y mil millones" → min=500M, max=1000M.
+
+**Fix E — Header desactualizado (colateral):**
+- Con refinement bypass, el header se reconstruye desde params nuevos en cada
+  turn. Auto-resuelto.
+
+**Fix estructural — CASE WHEN en ORDER BY (DOGFOOD-SOQL-006):**
+- `CASE WHEN estado_contrato IN (...) THEN 0 ELSE 1 END` en jbjy-vk9h causaba
+  400 Bad Request "Unexpected character" (parser interno Socrata no soporta
+  strings acentuados en CASE).
+- Fix: eliminar CASE WHEN del ordering SoQL. Boost "activos primero" movido a
+  post-procesamiento Python (`formatter._reorder_active_first`).
+- Impacto colateral: timeouts sistemáticos en contratos atribuidos a "API lenta"
+  desaparecieron (el CASE WHEN era la causa real, no la red).
+
+**Tests actualizados:** test_url_repair.py reescrito para nueva política URL.
+**Validación:** 945 passed, 10 xfailed.
+**Documentación:** ADR-017, DOGFOOD_2026-05-25.md, funnel-full-ux-fixes-2026-05-25.md.
+**Pendientes post-dogfooding:** F (trace vacío follow-up), G (gramática "5 resultados").

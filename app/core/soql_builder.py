@@ -173,28 +173,20 @@ class SoQLBuilder:
         intent = params.get("intent_type", "")
         is_historical = "historical" in intent.lower() or "analysis" in intent.lower()
 
-        # Default ordering: open/active first when user didn't specify estado,
-        # isn't doing historical analysis, and isn't an explicit opportunity search
+        # Default ordering: solo fecha DESC + valor DESC.
+        # DOGFOOD-SOQL-006: el CASE WHEN ... IN (...) que usábamos para poner
+        # "activos primero" rompe Socrata para jbjy-vk9h: el parser interno
+        # transforma `CASE WHEN x IN ('En ejecución', ...) THEN ... END` a
+        # `#CASE(x IN (...), 0, TRUE, 1)` y revienta con strings acentuados
+        # (400 Bad Request "Unexpected character"). El boost "activos primero"
+        # ahora se aplica en post-procesamiento (formatter._reorder_active_first).
         if (
             not has_estado
             and not is_historical
             and intent != "opportunity_search"
             and not ordering
         ):
-            if dataset_id == "p6dx-8zbt":
-                order_expr = (
-                    f"CASE WHEN {spec.state} IN ('Abierto', 'Publicado') "
-                    f"THEN 0 ELSE 1 END, "
-                    f"{spec.date} DESC, {spec.value} DESC"
-                )
-            else:
-                # Contratos: activos primero (En ejecución, Modificado, Prorrogado)
-                order_expr = (
-                    f"CASE WHEN {spec.state} IN "
-                    f"('En ejecución', 'Modificado', 'Prorrogado') "
-                    f"THEN 0 ELSE 1 END, "
-                    f"{spec.date} DESC, {spec.value} DESC"
-                )
+            order_expr = f"{spec.date} DESC, {spec.value} DESC"
         elif params.get("intent_type") == "opportunity_search" and not ordering:
             order_expr = f"{spec.date} DESC, {spec.value} DESC"  # freshness + value
         elif ordering == "valor_desc":

@@ -21,3 +21,6 @@ data/conversations/dbg_*.jsonl
 data/conversations/debug_*.jsonl
 data/conversations/demo_*.jsonl
 .coverage
+
+# Personal strategic memory — not tracked in git
+memory/

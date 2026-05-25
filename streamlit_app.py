@@ -81,6 +81,7 @@ def _render_cards(rows: list[dict]) -> None:
         valor = row.get("valor", "")
         estado = row.get("estado", "")
         fecha = (row.get("fecha") or "")[:10]
+        fecha_label = row.get("fecha_label", "")
         contratista = row.get("contratista", "")
         url = row.get("url", "")
         icon = estado_icons.get(estado, "⚪")
@@ -96,13 +97,19 @@ def _render_cards(rows: list[dict]) -> None:
             f"💰 {valor} {icon} {estado}",
         ]
         if fecha:
-            parts.append(f"📅 {fecha}")
+            # Mostrar etiqueta de fuente si no es la publicación canónica
+            if fecha_label and fecha_label != "Publicación":
+                parts.append(f"📅 {fecha} _({fecha_label})_")
+            else:
+                parts.append(f"📅 {fecha}")
         else:
-            parts.append("📅 Sin fecha")
+            parts.append(f"📅 _{fecha_label or 'Pendiente de publicación'}_")
         if contratista:
             parts.append(f"🤝 {contratista}")
         if url:
             parts.append(f"[🔗 Ver en SECOP]({url})")
+        else:
+            parts.append("🔒 _Vista pública no disponible (proceso pre-publicación)_")
 
         st.markdown("  \n".join(parts))
         st.divider()
@@ -121,6 +128,7 @@ def _render_detail_card(row: dict, dataset_id: str = "") -> None:
     valor = row.get("valor", "")
     estado = row.get("estado", "")
     fecha = (row.get("fecha") or "")[:10]
+    fecha_label = row.get("fecha_label", "")
     contratista = row.get("contratista", "")
     url = row.get("url", "")
     referencia = row.get("referencia_del_proceso") or row.get("referencia_del_contrato", "")
@@ -150,7 +158,10 @@ def _render_detail_card(row: dict, dataset_id: str = "") -> None:
         c8.markdown(f"**Modalidad:** {modalidad}")
 
         if fecha:
-            st.markdown(f"**Fecha:** {fecha}")
+            label_str = f" _({fecha_label})_" if fecha_label and fecha_label != "Publicación" else ""
+            st.markdown(f"**Fecha:** {fecha}{label_str}")
+        else:
+            st.markdown(f"**Fecha:** _{fecha_label or 'Pendiente de publicación'}_")
 
         if contratista:
             st.markdown(f"**Proveedor adjudicado:** {contratista}")
@@ -161,6 +172,8 @@ def _render_detail_card(row: dict, dataset_id: str = "") -> None:
     # Link prominente a SECOP
     if url:
         st.markdown(f"### 🔗 [Ver proceso completo en SECOP II]({url})")
+    else:
+        st.info("🔒 Vista pública no disponible — este proceso está en etapa de requisición pre-publicación (CO1.REQ).")
 
     # Sugerencia de lookup relacionado
     if not es_contrato and estado == "Adjudicado" and id_proceso:
@@ -418,20 +431,20 @@ for idx, item in enumerate(st.session_state.history):
 # ═══════════════════════════════════════════════════════════════════════════
 
 incoming_query: str | None = None
+seed_resolved_params: dict | None = None
 
 # Pending refinement from filter bar
 if hasattr(st.session_state, "_pending_refinement") and st.session_state._pending_refinement:
     ref = st.session_state._pending_refinement
     del st.session_state._pending_refinement
 
-    # Build implicit query from refinement
     category = ref.get("category", "")
     label = ref.get("label", "")
     filter_value = ref.get("value")
 
     from app.core.contextual_suggestions import apply_refinement
 
-    # Get last assistant params from history
+    # Get last assistant resolved params from history
     last_params = {}
     for item in reversed(st.session_state.history):
         debug = item.get("debug", {})
@@ -439,11 +452,12 @@ if hasattr(st.session_state, "_pending_refinement") and st.session_state._pendin
             last_params = debug.get("resolved_params", {})
             break
 
-    # Apply refinement
-    refined_params = apply_refinement(last_params, category, filter_value)
-
-    # Rebuild query — use the original query with refinement
-    incoming_query = f"filtrando por {label}"
+    if last_params:
+        seed_resolved_params = apply_refinement(last_params, category, filter_value)
+        incoming_query = f"🎚️ {label}"
+    else:
+        # No hay contexto previo — degrade silenciosamente, sin enviar query
+        incoming_query = None
 
 if hasattr(st.session_state, "_pending_example"):
     incoming_query = st.session_state._pending_example
@@ -452,6 +466,7 @@ if hasattr(st.session_state, "_pending_example"):
 typed_query = st.chat_input("Escribe tu consulta sobre procesos o contratos SECOP")
 if typed_query:
     incoming_query = typed_query
+    seed_resolved_params = None  # query natural manda
 
 if incoming_query:
     st.session_state.history.append({"role": "user", "content": incoming_query})
@@ -460,7 +475,8 @@ if incoming_query:
     with st.spinner("Consultando SECOP..."):
         result = workflow.run_query(incoming_query, channel="streamlit",
                                      chat_id=st.session_state.chat_id,
-                                     user_identity=user_identity)
+                                     user_identity=user_identity,
+                                     seed_resolved_params=seed_resolved_params)
 
     debug_payload = {
         "route_reason": result.get("route_reason", ""),

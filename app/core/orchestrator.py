@@ -586,12 +586,26 @@ def format_response(state: State, formatter: Formatter) -> State:
             formatted_rows=[],
         )
     if state.get("query_error"):
-        message = "SECOP no respondio a tiempo. Intenta de nuevo en unos segundos."
-        if state.get("risk_flag_timeout"):
+        err = str(state.get("query_error") or "")
+        err_lower = err.lower()
+        # DOGFOOD-ERRMSG-007: distinguir 4xx (bug del builder) de timeout real
+        if "400" in err or "bad request" in err_lower or "unexpected character" in err_lower:
             message = (
-                "SECOP no respondio a tiempo. "
+                "⚠️ Error interno: la consulta SoQL generada fue rechazada por SECOP "
+                "(400 Bad Request). Este es un bug del builder, no de SECOP — "
+                "el equipo ya tiene el trace para revisar."
+            )
+        elif "404" in err:
+            message = "SECOP devolvió 404 — el dataset no respondió. Reintenta."
+        elif "5" in err[:3] or "server error" in err_lower:
+            message = "SECOP tuvo un error interno (5xx). Reintenta en unos segundos."
+        elif state.get("risk_flag_timeout"):
+            message = (
+                "⏱️ SECOP no respondió a tiempo. "
                 "No puedo confirmar si hay o no resultados."
             )
+        else:
+            message = "⏱️ SECOP no respondió a tiempo. Intenta de nuevo en unos segundos."
         return _with_timing(
             state,
             "format_ms",
@@ -711,14 +725,129 @@ class SecopalWorkflow:
             model=settings.deepseek_model,
         )
 
+    def _run_refinement(
+        self,
+        user_query: str,
+        channel: str,
+        chat_id: str | None,
+        user_identity: dict[str, Any] | None,
+        seed_resolved_params: dict,
+    ) -> dict | None:
+        """Ejecuta una refinement bar mergeada con contexto previo.
+
+        Toma los params ya resueltos del turno anterior + el filtro recién aplicado,
+        construye SoQL y ejecuta sin pasar por el parser. Retorna None si no se
+        puede ejecutar (sin scope/topic) para que el caller caiga al flujo normal.
+        """
+        params = dict(seed_resolved_params)
+        # offset/limit deben empezar de cero porque es una nueva búsqueda
+        params.pop("offset", None)
+        params.setdefault("limit", 50)
+
+        # Guard anti-WHERE 1=1
+        has_scope_or_topic = any(
+            params.get(k) and params.get(k) not in (None, [], "", {}, False)
+            for k in SCOPE_TOPIC_KEYS
+        )
+        if not has_scope_or_topic:
+            return None
+
+        ds_id = SoQLBuilder.dataset_id_for(params.get("dataset"))
+        try:
+            soql = self.soql_builder.build(ds_id, params)
+            count_soql = self.soql_builder.build_count(ds_id, params)
+            total, results, _t, approx = _query_first_then_count(
+                self.secop_client, ds_id, count_soql, soql,
+                limit=int(params.get("limit", 50) or 50),
+            )
+        except Exception as exc:
+            logger.warning("refinement failed: %s", exc)
+            return None
+
+        response, rows = self.formatter.format_for_channel(
+            results, ds_id, channel,
+            params=params, total_count=total,
+            total_count_approximate=approx,
+        )
+        header = "🎚️ Refinamiento aplicado\n\n"
+        result = {
+            "response": header + response,
+            "rows": rows,
+            "results": results,
+            "dataset_id": ds_id,
+            "soql_query": soql,
+            "parsed_params": params,
+            "resolved_params": params,
+            "needs_llm": False,
+            "needs_clarification": False,
+            "route_reason": "refinement",
+            "degraded": False, "degraded_hint": "",
+            "total_count": total,
+            "total_count_approximate": approx,
+            "universe_insights": None,
+            "suggestions": [], "timeout_suggestions": [],
+            "intent_type": "refinement",
+            "followup": True,
+            "trace_id": "", "narrated": False,
+            "contextual_filters": {},
+        }
+
+        # Contextual filters (igual que en flujo normal)
+        if results and total > 20:
+            try:
+                from app.core.contextual_suggestions import compute_contextual_filters
+                result["contextual_filters"] = compute_contextual_filters(
+                    results, ds_id, params,
+                )
+            except Exception:
+                pass
+
+        trace_id = self.feedback.log_trace(user_query, channel, result, user_identity=user_identity)
+        result["trace_id"] = trace_id
+
+        if chat_id:
+            result_ids = [
+                rid for rid in (
+                    str(r.get("referencia_del_proceso") or r.get("id_contrato") or "")
+                    for r in results[:10]
+                ) if rid
+            ]
+            self.conv_store.append_turn(
+                chat_id=chat_id,
+                user_query=user_query,
+                response=result["response"],
+                parsed_params=params,
+                result_ids=result_ids,
+                trace_id=trace_id,
+            )
+        return result
+
     def run_query(
         self,
         user_query: str,
         channel: str = "whatsapp",
         chat_id: str | None = None,
         user_identity: dict[str, Any] | None = None,
+        seed_resolved_params: dict | None = None,
     ) -> dict:
         run_start = time.perf_counter()
+
+        # ── Refinement bar bypass (DOGFOOD-A) ─────────────────────────────
+        # Cuando la UI envía params ya resueltos desde un botón de refinamiento,
+        # se omite el parser y se ejecuta el SoQL directamente. Esto evita que
+        # un texto sintético como "filtrando por X" sea malinterpretado y que
+        # el contexto previo se pierda.
+        if seed_resolved_params:
+            res = self._run_refinement(
+                user_query=user_query,
+                channel=channel,
+                chat_id=chat_id,
+                user_identity=user_identity,
+                seed_resolved_params=seed_resolved_params,
+            )
+            if res is not None:
+                return res
+            # si _run_refinement no pudo, caer al flujo normal
         # ── Reset command ────────────────────────────────────────────────
         if chat_id and is_reset_command(user_query):
             self.conv_store.clear(chat_id)

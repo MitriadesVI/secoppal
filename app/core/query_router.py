@@ -753,24 +753,51 @@ class QueryRouter:
         )
         range_match = _range_re.search(normalized_query)
         if range_match:
-            full_range_text = range_match.group(0)
             lo_text = range_match.group(1)
             hi_text = range_match.group(2)
+
+            # DOGFOOD-D: cuando un lado del rango no trae unidad explícita,
+            # hereda la unidad del otro lado con esta regla:
+            #   - Si el otro lado tiene NÚMERO + unidad compuesta ("2 mil millones"),
+            #     hereda la unidad COMPUESTA ("mil millones") → "1" → 1 mil millones.
+            #   - Si el otro lado es solo "mil millones" (sin número antes),
+            #     hereda solo la unidad ATÓMICA ("millones") → "500" → 500 millones.
+            _any_unit_re = re.compile(
+                r"billon(?:es)?|mil\s+millones|millones?|palos?|\bmil\b",
+                re.IGNORECASE,
+            )
+            _compound_unit_re = re.compile(
+                r"mil\s+millones?|billon(?:es)?|millones?|palos?",
+                re.IGNORECASE,
+            )
+            _atomic_unit_re = re.compile(
+                r"billon(?:es)?|millones?|palos?",
+                re.IGNORECASE,
+            )
+            _has_digit_re = re.compile(r"\d")
+
+            lo_has_unit = bool(_any_unit_re.search(lo_text))
+            hi_has_unit = bool(_any_unit_re.search(hi_text))
+
+            def _inherit_unit(donor_text: str) -> str | None:
+                if _has_digit_re.search(donor_text):
+                    m = _compound_unit_re.search(donor_text)
+                else:
+                    m = _atomic_unit_re.search(donor_text)
+                return m.group(0) if m else None
+
+            if not lo_has_unit and hi_has_unit:
+                u = _inherit_unit(hi_text)
+                if u:
+                    lo_text = lo_text + " " + u
+            if not hi_has_unit and lo_has_unit:
+                u = _inherit_unit(lo_text)
+                if u:
+                    hi_text = hi_text + " " + u
+
             amount_lo = money_to_cop(lo_text)
             amount_hi = money_to_cop(hi_text)
-            # If one side lacks a unit, inherit the unit from the full range text.
-            # e.g. "entre 100 y 500 millones" — lo_text="100", hi_text="500 millones"
-            if amount_lo is None or amount_lo < 1_000_000:
-                # Try to infer multiplier from hi side or full text
-                _mult_re = re.compile(r"billon(?:es)?|mil\s+millones|millones?|palos?", re.IGNORECASE)
-                mult_match = _mult_re.search(hi_text) or _mult_re.search(full_range_text)
-                if mult_match:
-                    amount_lo = money_to_cop(lo_text + " " + mult_match.group(0))
-            if amount_hi is None or amount_hi < 1_000_000:
-                _mult_re = re.compile(r"billon(?:es)?|mil\s+millones|millones?|palos?", re.IGNORECASE)
-                mult_match = _mult_re.search(lo_text) or _mult_re.search(full_range_text)
-                if mult_match:
-                    amount_hi = money_to_cop(hi_text + " " + mult_match.group(0))
+
             if amount_lo and amount_hi and amount_lo >= 1_000_000 and amount_hi >= 1_000_000:
                 params["valor_min"] = min(amount_lo, amount_hi)
                 params["valor_max"] = max(amount_lo, amount_hi)

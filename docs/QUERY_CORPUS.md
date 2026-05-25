@@ -1,12 +1,13 @@
 # QUERY_CORPUS V1 — SECOPPAL
 
-## Estado actual canónico — 2026-05-18
+## Estado actual canónico — 2026-05-25
 
 - **Corpus:** 88/88 PASS, 0 FAIL
 - **Runner:** `scripts/run_query_corpus.py` (modos `parser|workflow|all`)
-- **Suite:** 579 passed, 3 xfailed
-- **Torture matrix:** 12/12 invariantes
+- **Suite:** 945 passed, 10 xfailed
 - **CORPUS-003A/B/C cerraron:** V005, V007, OC004, OC005, R003, AN003
+- **Dogfooding 2026-05-25 cerrado:** URL-005, DATE-002, REFINE-004, RANGE-005, ACTION-005B, SOQL-006
+- **Pendientes:** F (trace vacío follow-up), G (gramática "5 resultados")
 - **Próximo sprint:** DEMO-BLOCKERS-001 (8 tareas UX/estado/scope)
 
 ## Propósito
@@ -171,13 +172,28 @@ Los 22 FAIL se documentan en docs/CORPUS_BACKLOG.md y se priorizan por severidad
 - `convocadas` → `oferta_abierta`
 - `oferta_abierta + procesos` promueve a `opportunity_search`
 - follow-up con topic nuevo ya no cae automáticamente como `refine_filter`
+- CORPUS-V007 "mil millones" → cerrado en CORPUS-003A (2026-05-18)
 
-**Pendientes high (6):**
-- CORPUS-R003 — limpiar
-- CORPUS-OC004/OC005 — bidder intent indirecto
-- CORPUS-V005 — "X o más"
-- CORPUS-V007 — "mil millones"
-- CORPUS-AN003 — "cuánto suman"
+**Pendientes high (5 → 0):**
+- ~~CORPUS-R003 — limpiar~~ → CERRADO CORPUS-003C
+- ~~CORPUS-OC004/OC005 — bidder intent indirecto~~ → CERRADO CORPUS-003B
+- ~~CORPUS-V005 — "X o más"~~ → CERRADO CORPUS-003A
+- ~~CORPUS-V007 — "mil millones"~~ → CERRADO CORPUS-003A (rango "entre 500 y mil millones")
+- ~~CORPUS-AN003 — "cuánto suman"~~ → CERRADO AN003
+
+## CORPUS-003 — Dogfooding 2026-05-25
+
+**Estado:** 88/88 PASS + fixes de UX aplicados fuera de corpus.
+
+Nuevos casos para agregar al corpus (descubiertos en dogfooding real):
+- DOGFOOD-URL-005: URLs CO1.REQ.X → "Vista pública no disponible"
+- DOGFOOD-DATE-002: Fecha fallback cascada (publicacion → fase_3 → recepcion → apertura)
+- DOGFOOD-REFINE-004: Refinement buttons funcionales vía bypass SoQL
+- DOGFOOD-RANGE-005: "entre 500 y mil millones" → herencia de unidad compuesta
+- DOGFOOD-ACTION-005B: "celebraron" scrub de ACTION_VERBS
+- DOGFOOD-SOQL-006: CASE WHEN en ORDER BY causaba 400 BadRequest (no es caso de corpus, es fix estructural)
+
+**Próximo sprint:** F (trace vacío follow-up), G (gramática "5 resultados").
 
 ## Mantenimiento
 

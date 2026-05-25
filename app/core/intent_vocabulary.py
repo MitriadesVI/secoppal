@@ -38,6 +38,8 @@ ACTION_VERBS: frozenset[str] = frozenset({
     "compra", "compras", "comprar",
     "contratar", "contratacion", "contratación", "contrataciones",
     "contractual", "contractuales",
+    # DOGFOOD-G: "qué contratos celebraron" — el verbo no es objeto contractual
+    "celebrar", "celebro", "celebró", "celebraron",
 })
 
 # Each entry: (compiled_regex, intent_config_dict)

@@ -545,3 +545,62 @@ Cuando `_should_demote_objeto` dispara Y `len(rare_terms) >= 3`: fusionar todos 
 **Consecuencias:**
 - Test `test_opportunity_ordering_fecha_desc` actualizado para reflejar la nueva semántica con comentario ADR.
 - El guard "skip si campo específico existe" cubre 4 campos de estado. Si en el futuro se agregan más, deben incluirse en la tupla de verificación.
+
+---
+
+## ADR-017: Dogfooding UX fixes — URLs, fechas, refinamiento, rango, CASE WHEN
+
+**Fecha:** 2026-05-25
+**Contexto:** Dogfooding con query real "procesos abiertos hoy en Cundinamarca por mas de 1000 millones" reveló 5 bugs críticos (A-E) y 1 bug estructural (BadRequest) que bloqueaban la experiencia de demo. Los fixes fueron aplicados en sesión de trabajo con verificación de tests (945 passed, 10 xfailed).
+
+**Decisión:**
+
+1. **URLs por tipo de proceso (DOGFOOD-URL-005):**
+   - `formatter.py:_safe_url()` y `secop_client.py:_normalize_row()` detectan prefijo del ID.
+   - CO1.NTC.X → reconstruir URL pública via `OpportunityDetail/Index?noticeUID=`.
+   - CO1.REQ.X → retornar "" (requisición pre-publicación, SECOP devuelve "argument out of range").
+   - UI muestra "Vista pública no disponible (proceso pre-publicación)" cuando URL vacía.
+
+2. **Fallback de fecha en cards (DOGFOOD-DATE-002):**
+   - `formatter.py:_best_date_for_row()` implementa cascada: `fecha_de_publicacion_del` → `fecha_de_publicacion_fase_3` → `fecha_de_recepcion_de_respuestas_al_in` → `fecha_de_apertura_efectiva`.
+   - Cada fecha trae etiqueta que indica fuente ("Publicación", "Recepción ofertas", "Apertura").
+   - Si todas null → "Pendiente de publicación" (no "Sin fecha").
+
+3. **Refinement buttons funcionales (DOGFOOD-REFINE-004):**
+   - `orchestrator.py:_run_refinement()` — método nuevo que ejecuta query con params refinados vía bypass del pipeline SoQL.
+   - `streamlit_app.py` consume `_pending_refinement` del session_state, construye `seed_resolved_params` con `apply_refinement()`, y pasa como `seed_resolved_params` a `run_query()`.
+   - Bypass evita re-parsear la query natural — los params refinados se inyectan directamente al builder.
+
+4. **Rango "entre X y Y" herencia de unidad (DOGFOOD-RANGE-005):**
+   - `query_router.py:_extract_amounts()` detecta rango con regex `entre|de|desde ... y|a|hasta`.
+   - Cuando un lado no trae unidad explícita, hereda del otro lado con regla:
+     - Si el lado con unidad tiene dígito → hereda unidad compuesta ("mil millones").
+     - Si el lado con unidad NO tiene dígito → hereda unidad atómica ("millones").
+   - Ej: "entre 500 y mil millones" → valor_min=500M, valor_max=1000M.
+   - Ej: "entre 1 y 2 mil millones" → valor_min=1000M, valor_max=2000M.
+
+5. **ACTION_VERBS += "celebrar" (DOGFOOD-ACTION-005B):**
+   - "celebrar", "celebró", "celebraron" añadidos a `ACTION_VERBS` en `intent_vocabulary.py`.
+   - Scrub remueve verbo del objeto cuando aparece junto a sustantivos reales.
+   - Ej: "qué contratos de prevención se celebraron" → objeto="prevencion" (no "celebraron").
+
+6. **Eliminación de CASE WHEN en ORDER BY (DOGFOOD-SOQL-006):**
+   - El `CASE WHEN estado_contrato IN ('En ejecución', 'Modificado', 'Prorrogado') THEN 0 ELSE 1 END` en ORDER BY para jbjy-vk9h rompía Socrata: el parser interno transformaba a `#CASE(x IN (...), 0, TRUE, 1)` y revienta con strings acentuados (400 Bad Request "Unexpected character").
+   - Fix: eliminar CASE WHEN del default ordering. El boost "activos primero" se movió a post-procesamiento Python (`formatter._reorder_active_first`).
+   - Impacto colateral: resolvió timeouts sistemáticos en contratos que se atribuían erróneamente a "API lenta".
+
+**Alternativas descartadas:**
+- Para URLs: construir URL con `referencia_del_proceso` como noticeUID (descubierto en diagnóstico histórico nov 2025 que referencia ≠ noticeUID — genera URLs rotos).
+- Para fechas: usar solo `fecha_de_publicacion_del` con fallback "Sin fecha" (más del 50% de cards quedaban sin fecha visible).
+- Para rango: regex simple sin herencia de unidad (fallaba con "entre 500 y mil millones" → 500 pesos vs 1000M).
+- Para CASE WHEN: intentar escapar tildes en strings del IN (Socrata no lo soporta; el error es del parser interno, no del string literal).
+
+**Consecuencias:**
+- Los 5 bugs críticos del dogfooding quedan documentados con slugs DOGFOOD-XXX.
+- El fix de CASE WHEN resolvió timeouts en contratos de forma colateral.
+- Tests actualizados: `test_url_repair.py` (test obsoleto reescrito para nueva política).
+
+**Métricas al cierre:**
+- Tests: 945 passed, 10 xfailed
+- Commit: múltiples commits en sesión de trabajo (no un commit único)
+- Documentación: DOGFOOD_2026-05-25.md, funnel-full-ux-fixes-2026-05-25.md

@@ -8,7 +8,9 @@
       "Bash(.venv/bin/python scripts/accuracy_test.py --verbose --output scripts/accuracy_results.json)",
       "Bash(.venv/bin/python scripts/accuracy_test.py --verbose --category montos)",
       "Bash(.venv/bin/pytest tests/test_entity_resolver.py -v)",
-      "Bash(.venv/bin/python -c ' *)"
+      "Bash(.venv/bin/python -c ' *)",
+      "Bash(curl -sI -L --max-time 8 https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=__TRACKED_VAR__)",
+      "Bash(python -c \"from app.core.formatter import Formatter; from app.core.secop_client import SecopClient; from app.core.contextual_suggestions import apply_refinement; from app.core.intent_vocabulary import ACTION_VERBS; from app.core.query_router import QueryRouter; print\\('imports OK'\\); print\\('celebrar in ACTION_VERBS:', 'celebrar' in ACTION_VERBS\\)\")"
     ]
   }
 }

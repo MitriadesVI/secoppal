@@ -91,11 +91,11 @@ class SecopClient:
             url_value = url_value.get("url", "")
         url_value = str(url_value or "")
 
-        # URL repair hierarchy (FIX-URL-FREEFORM-001):
+        # URL repair hierarchy (FIX-URL-FREEFORM-001 + DOGFOOD-URL-005):
         # 1. Use original URL if valid (not empty, not "Login")
-        # 2. Build from id_del_proceso / id_contrato (CO1.XXX.YYY — always valid)
-        # 3. Fallback to url-encoded referencia_del_proceso / referencia_del_contrato
-        # 4. Empty string
+        # 2. Build from id_del_proceso / id_contrato (CO1.NTC = público; CO1.REQ = pre-publicación, no link)
+        # 3. Fallback to url-encoded referencia
+        # 4. Empty string (UI muestra "Vista pública no disponible")
         if not url_value or "Login" in url_value:
             if dataset_id == "p6dx-8zbt":
                 process_id = normalized.get("id_del_proceso", "")
@@ -104,17 +104,18 @@ class SecopClient:
                 process_id = normalized.get("id_contrato", "")
                 reference = normalized.get("referencia_del_contrato", "")
 
-            url_value = ""  # reset — will rebuild if possible
-            # Priority 1: Build from CO1 ID (deterministic, always valid format)
+            url_value = ""
             pid = str(process_id or "").strip()
-            if pid:
+            # CO1.REQ.X son requisiciones pre-publicación; SECOP devuelve
+            # "argument out of range" si las consultamos vía OpportunityDetail.
+            # Mejor no mostrar link que mostrar uno roto.
+            if pid and not pid.upper().startswith("CO1.REQ."):
                 from urllib.parse import quote
                 url_value = (
                     "https://community.secop.gov.co/Public/Tendering/"
                     f"OpportunityDetail/Index?noticeUID={quote(pid)}"
                 )
-            # Priority 2: Fallback to reference (url-encoded to handle spaces/special chars)
-            elif reference:
+            elif reference and not pid.upper().startswith("CO1.REQ."):
                 from urllib.parse import quote
                 ref_str = str(reference).strip()
                 url_value = (

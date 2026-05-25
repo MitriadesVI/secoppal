@@ -2,7 +2,7 @@
 
 Fallos conocidos del corpus, agrupados por severidad. NO editar parser/core para hacer pasar estos casos — son bugs reales que requieren features o fixes separados.
 
-**Última actualización:** 2026-05-24 (Sprint 6 Fase 5 smoke — ENTITY-MULTI-REGIONAL unaccent fix + MULTI-AND-DEMOTION OR merge)
+**Última actualización:** 2026-05-25 (Dogfooding UX fixes ADR-017 + CASE WHEN BadRequest fix)
 
 ## Re-diagnóstico empírico (2026-05-19, octava tanda)
 
@@ -303,3 +303,23 @@ Bugs descubiertos en sesión de dogfooding con query real: "muéstrame procesos 
 **Causa:** Todos los headers usaban "resultados" hardcodeado. Con total_count=1 decía "1 resultados".
 
 **Fix:** Helper `_resultado(n)` que retorna singular/plural. Aplicado a WhatsApp, Telegram y Streamlit. Caso `total_count_approximate` preserva el `+` ("1+ resultados").
+
+---
+
+## Fixes dogfooding UX 2026-05-25 (sesión Claude)
+
+Fixes aplicados en sesión de trabajo posterior al dogfooding inicial. Documentados en ADR-017.
+
+| Fix | Archivos | Estado |
+|-----|----------|--------|
+| **DOGFOOD-URL-005** — URLs por tipo de proceso | `formatter.py:_safe_url()`, `secop_client.py:_normalize_row()` | ✅ Cerrado |
+| **DOGFOOD-DATE-002** — Fecha fallback cascada | `formatter.py:_best_date_for_row()` | ✅ Cerrado |
+| **DOGFOOD-REFINE-004** — Refinement buttons funcionales | `orchestrator.py:_run_refinement()`, `streamlit_app.py` | ✅ Cerrado |
+| **DOGFOOD-RANGE-005** — Rango "entre X y Y" herencia de unidad | `query_router.py:_extract_amounts()` | ✅ Cerrado |
+| **DOGFOOD-ACTION-005B** — ACTION_VERBS += "celebrar" | `intent_vocabulary.py` | ✅ Cerrado |
+| **DOGFOOD-SOQL-006** — Eliminar CASE WHEN en ORDER BY | `soql_builder.py`, `formatter.py:_reorder_active_first()` | ✅ Cerrado |
+
+**Nota técnica DOGFOOD-SOQL-006:** El CASE WHEN `estado_contrato IN ('En ejecución', ...)` en ORDER BY de jbjy-vk9h causaba 400 Bad Request "Unexpected character". El parser interno de Socrata transformaba a `#CASE(x IN (...), 0, TRUE, 1)` y fallaba con strings acentuados. Fix: eliminar CASE WHEN del ordering SoQL, mover boost "activos primero" a post-procesamiento Python. Impacto colateral: timeouts sistemáticos en contratos atribuidos a "API lenta" se resolvieron.
+
+**Tests:** 945 passed, 10 xfailed.
+**Documentación:** `docs/operacional/DOGFOOD_2026-05-25.md`, `docs/planes/funnel-full-ux-fixes-2026-05-25.md`, `docs/decisions_log.md#ADR-017`.

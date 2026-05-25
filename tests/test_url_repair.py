@@ -20,8 +20,10 @@ class TestNormalizeRowUrl:
         assert "Login" not in result["urlproceso"]
         assert "SI-" not in result["urlproceso"]
 
-    def test_url_from_id_when_original_is_empty(self):
-        """When urlproceso is empty, rebuild from id_del_proceso."""
+    def test_url_empty_for_co1_req_pre_publicacion(self):
+        """DOGFOOD-URL-005: CO1.REQ.X son requisiciones pre-publicación;
+        OpportunityDetail devuelve 'argument out of range'. La política es
+        no mostrar link roto; UI muestra 'Vista pública no disponible'."""
         client = SecopClient(domain="www.datos.gov.co", app_token=None)
         row = {
             "urlproceso": "",
@@ -29,7 +31,18 @@ class TestNormalizeRowUrl:
             "referencia_del_proceso": "CD-08-2026-5534",
         }
         result = client._normalize_row("p6dx-8zbt", row)
-        assert "CO1.REQ.9912169" in result["urlproceso"]
+        assert result["urlproceso"] == ""
+
+    def test_url_from_id_when_original_is_empty_ntc(self):
+        """When urlproceso is empty and id es CO1.NTC.X, rebuild URL."""
+        client = SecopClient(domain="www.datos.gov.co", app_token=None)
+        row = {
+            "urlproceso": "",
+            "id_del_proceso": "CO1.NTC.9912169",
+            "referencia_del_proceso": "CD-08-2026-5534",
+        }
+        result = client._normalize_row("p6dx-8zbt", row)
+        assert "CO1.NTC.9912169" in result["urlproceso"]
 
     def test_url_from_id_contrato_when_original_is_login(self):
         """When urlproceso is 'Login' on contratos, rebuild from id_contrato."""

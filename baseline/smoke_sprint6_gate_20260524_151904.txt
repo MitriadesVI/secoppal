@@ -1,0 +1,21 @@
+SMOKE SPRINT 6 GATE — 20260524_151904
+======================================================================
+Target: ≥45/50 (90%)
+Status: COMPLETE
+Elapsed total: 874s
+
+Bucket                         Pass     %  Avg(s)  Timeouts
+------------------------------------------------------------
+A-ACCENT                     6/  8   75%   23.6s     2
+B-MULTI-AND+RELEVANCE        0/ 10    0%    4.1s     1
+C-VALUE-POLARITY             4/  5   80%   19.6s     1
+D-ENTITY-MULTI-REGIONAL      5/  5  100%   18.1s     0
+E-ENTITY-ECOSYSTEM           5/  7   71%   17.0s     2
+F-POLYSEMIC                  4/  5   80%   14.6s     0
+G-STATE-CATALOG+AUTO-FALLBACK 10/ 10  100%    4.7s     0
+------------------------------------------------------------
+TOTAL                        34/ 50   68%
+Timeouts: 6
+API pre-check: 1.1s
+
+❌ GATE FALLIDO — 34/50. Investigar buckets <70%.
