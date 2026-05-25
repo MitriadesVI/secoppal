@@ -118,7 +118,7 @@ class TestTotalCountHeader:
             [self.FAKE_ROW], "p6dx-8zbt", "whatsapp", total_count=1
         )
         assert "más recientes" not in msg
-        assert "Encontre 1 resultados" in msg
+        assert "Encontre 1 resultado" in msg
 
     def test_telegram_shows_universe(self):
         msg, _ = F.format_for_channel(

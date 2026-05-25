@@ -7,6 +7,10 @@ from app.utils.money import format_cop
 from app.utils.value_sanity import detect_value_anomaly
 
 
+
+def _resultado(n: int) -> str:
+    return "resultado" if n == 1 else "resultados"
+
 # B2: patrones que indican que el "título" del proceso es en realidad un
 # nombre de razón social o persona, no la descripción del objeto.
 _LEGAL_FORM_SUFFIX_RE = re.compile(
@@ -270,14 +274,14 @@ class Formatter:
             ordering_label = self._ordering_label(params)
             remaining = total_count - shown
             header = (
-                f"📋 Encontre {total_count:,} resultados en SECOP. "
+                f"📋 Encontre {total_count:,} {_resultado(total_count)} en SECOP. "
                 f"Te muestro los {shown} {ordering_label}; hay {remaining:,} mas:\n"
             )
         elif total_count_approximate and shown == total_count:
-            header = f"📋 Encontre {shown}+ resultados en SECOP. " \
+            header = f"📋 Encontre {shown}+ {_resultado(shown)} en SECOP. " \
                      f"Te muestro los {shown} {self._ordering_label(params)}:\n"
         else:
-            header = f"📋 Encontre {shown} resultados:\n"
+            header = f"📋 Encontre {shown} {_resultado(shown)}:\n"
         insights = self._insights_summary(universe_insights, params)
         if insights:
             header += insights + "\n"
@@ -319,14 +323,14 @@ class Formatter:
             ordering_label = self._ordering_label(params)
             remaining = total_count - shown
             header = (
-                f"Encontre {total_count:,} resultados en SECOP. "
+                f"Encontre {total_count:,} {_resultado(total_count)} en SECOP. "
                 f"Te muestro los {shown} {ordering_label}; hay {remaining:,} mas:\n"
             )
         elif total_count_approximate and shown == total_count:
-            header = f"Encontre {shown}+ resultados en SECOP. " \
+            header = f"Encontre {shown}+ {_resultado(shown)} en SECOP. " \
                      f"Te muestro los {shown} {self._ordering_label(params)}:\n"
         else:
-            header = f"Encontre {shown} resultados:\n"
+            header = f"Encontre {shown} {_resultado(shown)}:\n"
         insights = self._insights_summary(universe_insights, params)
         if insights:
             header += insights + "\n"
@@ -364,18 +368,18 @@ class Formatter:
             ordering_label = self._ordering_label(params)
             remaining = total_count - shown
             base = (
-                f"Encontre {total_count:,} resultados en SECOP. "
+                f"Encontre {total_count:,} {_resultado(total_count)} en SECOP. "
                 f"Te muestro los {shown} {ordering_label}; hay {remaining:,} mas "
                 "listos para explorar en tabla y tarjetas."
             )
         elif total_count_approximate and shown == total_count:
             base = (
-                f"Encontre {shown}+ resultados en SECOP. "
+                f"Encontre {shown}+ {_resultado(shown)} en SECOP. "
                 f"Te muestro los {shown} {self._ordering_label(params)} "
                 "listos para explorar en tabla y tarjetas."
             )
         else:
-            base = f"Encontre {shown} resultados listos para explorar en tabla y tarjetas."
+            base = f"Encontre {shown} {_resultado(shown)} listos para explorar en tabla y tarjetas."
         insights = self._insights_summary(universe_insights, params)
         if insights:
             base += f"\n\n{insights}"
