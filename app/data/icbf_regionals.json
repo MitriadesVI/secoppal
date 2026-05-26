@@ -1,0 +1,355 @@
+{
+  "_meta": {
+    "description": "ICBF Regional Catalog — sede nacional + 32 regionales departamentales",
+    "nit_base": "899999239",
+    "nit_note": "NIT base 899999239. Regionales pueden compartir NIT o tener digito adicional verificacion. Verificar contra SECOP por regional."
+  },
+  "sede_nacional": {
+    "official_name": "ICBF SEDE NACIONAL",
+    "departamento": "Distrito Capital de Bogotá",
+    "source_datasets": ["procesos", "contratos"],
+    "aliases": [
+      "icbf sede nacional",
+      "icbf nacional",
+      "icbf sede central",
+      "icbf central",
+      "sede nacional del icbf",
+      "icbf"
+    ]
+  },
+  "regionales": [
+    {
+      "departamento": "Amazonas",
+      "official_name": "ICBF REGIONAL AMAZONAS",
+      "aliases": [
+        "icbf amazonas",
+        "icbf regional amazonas",
+        "bienestar familiar amazonas",
+        "instituto colombiano de bienestar familiar amazonas"
+      ]
+    },
+    {
+      "departamento": "Antioquia",
+      "official_name": "ICBF REGIONAL ANTIOQUIA",
+      "aliases": [
+        "icbf antioquia",
+        "icbf regional antioquia",
+        "bienestar familiar antioquia",
+        "instituto colombiano de bienestar familiar antioquia"
+      ]
+    },
+    {
+      "departamento": "Arauca",
+      "official_name": "ICBF REGIONAL ARAUCA *",
+      "aliases": [
+        "icbf arauca",
+        "icbf regional arauca",
+        "bienestar familiar arauca",
+        "instituto colombiano de bienestar familiar arauca"
+      ]
+    },
+    {
+      "departamento": "Atlántico",
+      "official_name": "ICBF REGIONAL ATLANTICO",
+      "aliases": [
+        "icbf atlantico",
+        "icbf regional atlantico",
+        "bienestar familiar atlantico",
+        "instituto colombiano de bienestar familiar atlantico"
+      ]
+    },
+    {
+      "departamento": "Bolívar",
+      "official_name": "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR",
+      "aliases": [
+        "icbf bolivar",
+        "icbf regional bolivar",
+        "bienestar familiar bolivar",
+        "instituto colombiano de bienestar familiar bolivar",
+        "instituto colombiano de bienestar familiar regional bolivar"
+      ]
+    },
+    {
+      "departamento": "Boyacá",
+      "official_name": "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA",
+      "aliases": [
+        "icbf boyaca",
+        "icbf regional boyaca",
+        "bienestar familiar boyaca",
+        "instituto colombiano de bienestar familiar boyaca",
+        "instituto colombiano de bienestar familiar regional boyaca"
+      ]
+    },
+    {
+      "departamento": "Caldas",
+      "official_name": "ICBF REGIONAL CALDAS",
+      "aliases": [
+        "icbf caldas",
+        "icbf regional caldas",
+        "bienestar familiar caldas",
+        "instituto colombiano de bienestar familiar caldas"
+      ]
+    },
+    {
+      "departamento": "Caquetá",
+      "official_name": "ICBF REGIONAL CAQUETA",
+      "aliases": [
+        "icbf caqueta",
+        "icbf regional caqueta",
+        "bienestar familiar caqueta",
+        "instituto colombiano de bienestar familiar caqueta"
+      ]
+    },
+    {
+      "departamento": "Casanare",
+      "official_name": "ICBF REGIONAL CASANARE",
+      "aliases": [
+        "icbf casanare",
+        "icbf regional casanare",
+        "bienestar familiar casanare",
+        "instituto colombiano de bienestar familiar casanare"
+      ]
+    },
+    {
+      "departamento": "Cauca",
+      "official_name": "ICBF REGIONAL CAUCA",
+      "aliases": [
+        "icbf cauca",
+        "icbf regional cauca",
+        "bienestar familiar cauca",
+        "instituto colombiano de bienestar familiar cauca"
+      ]
+    },
+    {
+      "departamento": "Cesar",
+      "official_name": "ICBF REGIONAL CESAR",
+      "aliases": [
+        "icbf cesar",
+        "icbf regional cesar",
+        "bienestar familiar cesar",
+        "instituto colombiano de bienestar familiar cesar"
+      ]
+    },
+    {
+      "departamento": "Chocó",
+      "official_name": "ICBF REGIONAL CHOCO",
+      "aliases": [
+        "icbf choco",
+        "icbf regional choco",
+        "bienestar familiar choco",
+        "instituto colombiano de bienestar familiar choco"
+      ]
+    },
+    {
+      "departamento": "Córdoba",
+      "official_name": "ICBF REGIONAL CORDOBA",
+      "aliases": [
+        "icbf cordoba",
+        "icbf regional cordoba",
+        "bienestar familiar cordoba",
+        "instituto colombiano de bienestar familiar cordoba"
+      ]
+    },
+    {
+      "departamento": "Cundinamarca",
+      "official_name": "ICBF REGIONAL CUNDINAMARCA",
+      "aliases": [
+        "icbf cundinamarca",
+        "icbf regional cundinamarca",
+        "bienestar familiar cundinamarca",
+        "instituto colombiano de bienestar familiar cundinamarca"
+      ]
+    },
+    {
+      "departamento": "Guainía",
+      "official_name": "ICBF REGIONAL GUAINIA",
+      "aliases": [
+        "icbf guainia",
+        "icbf regional guainia",
+        "bienestar familiar guainia",
+        "instituto colombiano de bienestar familiar guainia"
+      ]
+    },
+    {
+      "departamento": "Guaviare",
+      "official_name": "ICBF REGIONAL GUAVIARE",
+      "aliases": [
+        "icbf guaviare",
+        "icbf regional guaviare",
+        "bienestar familiar guaviare",
+        "instituto colombiano de bienestar familiar guaviare"
+      ]
+    },
+    {
+      "departamento": "Huila",
+      "official_name": "ICBF REGIONAL HUILA",
+      "aliases": [
+        "icbf huila",
+        "icbf regional huila",
+        "bienestar familiar huila",
+        "instituto colombiano de bienestar familiar huila"
+      ]
+    },
+    {
+      "departamento": "La Guajira",
+      "official_name": "ICBF REGIONAL GUAJIRA",
+      "aliases": [
+        "icbf guajira",
+        "icbf regional guajira",
+        "bienestar familiar guajira",
+        "instituto colombiano de bienestar familiar guajira",
+        "icbf la guajira",
+        "bienestar familiar la guajira"
+      ]
+    },
+    {
+      "departamento": "Magdalena",
+      "official_name": "ICBF REGIONAL MAGDALENA",
+      "aliases": [
+        "icbf magdalena",
+        "icbf regional magdalena",
+        "bienestar familiar magdalena",
+        "instituto colombiano de bienestar familiar magdalena"
+      ]
+    },
+    {
+      "departamento": "Meta",
+      "official_name": "ICBF REGIONAL META",
+      "aliases": [
+        "icbf meta",
+        "icbf regional meta",
+        "bienestar familiar meta",
+        "instituto colombiano de bienestar familiar meta"
+      ]
+    },
+    {
+      "departamento": "Nariño",
+      "official_name": "ICBF REGIONAL NARIÑO",
+      "aliases": [
+        "icbf narino",
+        "icbf regional narino",
+        "bienestar familiar narino",
+        "instituto colombiano de bienestar familiar narino"
+      ]
+    },
+    {
+      "departamento": "Norte de Santander",
+      "official_name": "ICBF REGIONAL NORTE DE SANTANDER",
+      "aliases": [
+        "icbf norte de santander",
+        "icbf regional norte de santander",
+        "bienestar familiar norte de santander",
+        "instituto colombiano de bienestar familiar norte de santander"
+      ]
+    },
+    {
+      "departamento": "Putumayo",
+      "official_name": "ICBF REGIONAL PUTUMAYO",
+      "aliases": [
+        "icbf putumayo",
+        "icbf regional putumayo",
+        "bienestar familiar putumayo",
+        "instituto colombiano de bienestar familiar putumayo"
+      ]
+    },
+    {
+      "departamento": "Quindío",
+      "official_name": "ICBF REGIONAL QUINDIO",
+      "aliases": [
+        "icbf quindio",
+        "icbf regional quindio",
+        "bienestar familiar quindio",
+        "instituto colombiano de bienestar familiar quindio"
+      ]
+    },
+    {
+      "departamento": "Risaralda",
+      "official_name": "ICBF RISARALDA//",
+      "aliases": [
+        "icbf risaralda",
+        "icbf regional risaralda",
+        "bienestar familiar risaralda",
+        "instituto colombiano de bienestar familiar risaralda"
+      ]
+    },
+    {
+      "departamento": "San Andrés, Providencia y Santa Catalina",
+      "official_name": "ICBF REGIONAL SAN ANDRES",
+      "aliases": [
+        "icbf san andres",
+        "icbf regional san andres",
+        "bienestar familiar san andres",
+        "instituto colombiano de bienestar familiar san andres"
+      ]
+    },
+    {
+      "departamento": "Santander",
+      "official_name": "ICBF REGIONAL SANTANDER",
+      "aliases": [
+        "icbf santander",
+        "icbf regional santander",
+        "bienestar familiar santander",
+        "instituto colombiano de bienestar familiar santander"
+      ]
+    },
+    {
+      "departamento": "Sucre",
+      "official_name": "ICBF REGIONAL SUCRE",
+      "aliases": [
+        "icbf sucre",
+        "icbf regional sucre",
+        "bienestar familiar sucre",
+        "instituto colombiano de bienestar familiar sucre"
+      ]
+    },
+    {
+      "departamento": "Tolima",
+      "official_name": "ICBF REGIONAL TOLIMA",
+      "aliases": [
+        "icbf tolima",
+        "icbf regional tolima",
+        "bienestar familiar tolima",
+        "instituto colombiano de bienestar familiar tolima"
+      ]
+    },
+    {
+      "departamento": "Vaupés",
+      "official_name": "ICBF REGIONAL VAUPES",
+      "aliases": [
+        "icbf vaupes",
+        "icbf regional vaupes",
+        "bienestar familiar vaupes",
+        "instituto colombiano de bienestar familiar vaupes"
+      ]
+    },
+    {
+      "departamento": "Valle del Cauca",
+      "official_name": "ICBF REGIONAL VALLE DEL CAUCA",
+      "aliases": [
+        "icbf valle del cauca",
+        "icbf regional valle del cauca",
+        "icbf valle",
+        "bienestar familiar valle del cauca",
+        "instituto colombiano de bienestar familiar valle del cauca"
+      ]
+    },
+    {
+      "departamento": "Vichada",
+      "official_name": "ICBF REGIONAL VICHADA",
+      "aliases": [
+        "icbf vichada",
+        "icbf regional vichada",
+        "bienestar familiar vichada",
+        "instituto colombiano de bienestar familiar vichada"
+      ]
+    }
+  ],
+  "_macro_regions": {
+    "caribe": ["Atlántico", "Bolívar", "Cesar", "Córdoba", "La Guajira", "Magdalena", "Sucre", "San Andrés, Providencia y Santa Catalina"],
+    "costa_atlantica": ["Atlántico", "Bolívar", "Cesar", "Córdoba", "La Guajira", "Magdalena", "Sucre", "San Andrés, Providencia y Santa Catalina"],
+    "eje_cafetero": ["Caldas", "Quindío", "Risaralda"],
+    "pacifico": ["Chocó", "Valle del Cauca", "Cauca", "Nariño"],
+    "amazonia": ["Amazonas", "Caquetá", "Guainía", "Guaviare", "Putumayo", "Vaupés"],
+    "orinoquia": ["Arauca", "Casanare", "Meta", "Vichada"]
+  }
+}
