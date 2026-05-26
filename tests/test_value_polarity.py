@@ -31,25 +31,41 @@ SPRINT4_CASES = [
     ("mayor o igual que 75 millones", {"valor_min": 75_000_000}),
 ]
 
-NO_FILLER_CASES = [
+# PARSER-POLARITY-MONETARY-002: post-number polarity patterns (dogfood 2026-05-25)
+POST_NUMBER_CASES = [
+    ("500 millones o menos", {"valor_max": 500_000_000, "valor_min": None}),
+    ("100 millones o mas", {"valor_min": 100_000_000}),
+    ("1000 millones y mayores", {"valor_min": 1_000_000_000}),
+    ("500 millones para arriba", {"valor_min": 500_000_000}),
+    ("500 millones en adelante", {"valor_min": 500_000_000}),
+]
+
+NO_FALSE_RANGE_CASES = [
     (
-        "transporte escolar no sean mayores a 30 millones",
-        {"valor_max": 30_000_000, "objeto_not_contains": ["mayores", "sean", "no"]},
+        "contratos por 500 millones o menos",
+        {"valor_max": 500_000_000, "valor_min": None, "objeto_not_contains": ["menos"]},
+    ),
+    (
+        "contratos de 500 millones en adelante",
+        {"valor_min": 500_000_000, "objeto_not_contains": ["adelante"]},
     ),
 ]
 
 
-@pytest.mark.parametrize("query,expected", POSITIVE_CASES + NEGATION_CASES + SPRINT4_CASES)
+@pytest.mark.parametrize("query,expected", POSITIVE_CASES + NEGATION_CASES + SPRINT4_CASES + POST_NUMBER_CASES)
 def test_value_polarity(query, expected):
     params = router.parse(query).params
     for key, value in expected.items():
         assert params.get(key) == value
 
 
-@pytest.mark.parametrize("query,expected", NO_FILLER_CASES)
+@pytest.mark.parametrize("query,expected", NO_FALSE_RANGE_CASES)
 def test_value_phrase_scrub(query, expected):
     params = router.parse(query).params
     objeto = params.get("objeto", [])
-    assert params.get("valor_max") == expected["valor_max"]
     for forbidden in expected["objeto_not_contains"]:
         assert forbidden not in objeto
+    if "valor_max" in expected:
+        assert params.get("valor_max") == expected["valor_max"]
+    if "valor_min" in expected:
+        assert params.get("valor_min") == expected["valor_min"]

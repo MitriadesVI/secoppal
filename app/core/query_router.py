@@ -217,6 +217,8 @@ STOPWORDS = {
     # "por debajo de X" → polarity already sets valor_max, but "debajo"
     # leaks into objeto when "por" is consumed as stopword earlier.
     "debajo",
+    # PARSER-POLARITY-MONETARY-002: post-number polarity tokens
+    "adelante", "arriba", "abajo",
 }
 
 MONTH_MAP = {
@@ -580,8 +582,13 @@ class QueryRouter:
             params["modalidad"] = modality
 
         # ── 9. Amounts ──────────────────────────────────────────────────
-        amount_params = self._extract_amounts(normalized, date_params)
+        amount_params, amount_spans = self._extract_amounts(normalized, date_params)
         params.update(amount_params)
+        # Scrub consumed amount spans so residual tokens ("adelante", "menos")
+        # don't leak into objeto.
+        for span in amount_spans:
+            scrubbed = scrubbed.replace(span, " ", 1)
+        scrubbed = re.sub(r"\s+", " ", scrubbed).strip()
 
         # ── 10. Contractor ──────────────────────────────────────────────
         # Solo corre si el NIT no fue ya detectado por forma en paso 1.5
@@ -733,8 +740,14 @@ class QueryRouter:
 
         return params
 
-    def _extract_amounts(self, normalized_query: str, date_params: dict[str, str]) -> dict[str, int]:
+    def _extract_amounts(self, normalized_query: str, date_params: dict[str, str]) -> tuple[dict[str, int], list[str]]:
+        """Extrae montos monetarios con polaridad (min/max/rango).
+
+        Retorna (params, consumed_spans) donde consumed_spans son los
+        spans de texto detectados y consumidos, para scrub posterior.
+        """
         params: dict[str, int] = {}
+        consumed_spans: list[str] = []
         year_tokens: set[str] = set()
         for val in date_params.values():
             year_tokens.add(val[:4])
@@ -815,6 +828,8 @@ class QueryRouter:
             if amount and amount >= 1_000_000:
                 params["valor_min"] = amount
                 # Remove matched span
+                span = normalized_query[om.start():om.end()]
+                consumed_spans.append(span)
                 normalized_query = normalized_query[: om.start()] + " " + normalized_query[om.end() :]
 
         amount_text = (
@@ -894,6 +909,44 @@ class QueryRouter:
                 if amount is None or amount < 1_000_000:
                     continue
                 params[field] = amount
+                span = normalized_query[match.start():match.end()]
+                consumed_spans.append(span)
+                normalized_query = (
+                    normalized_query[: match.start()]
+                    + " "
+                    + normalized_query[match.end() :]
+                )
+
+        # PARSER-POLARITY-MONETARY-002: post-number polarity patterns.
+        # Detects "X o menos", "X en adelante", etc. AFTER pre-number polarity
+        # but BEFORE the generic number scanner, so the number is consumed
+        # and doesn't trigger false ±20% range construction.
+        _less_than_post_re = re.compile(
+            rf"{amount_text}\s+(?:o\s+menos|o\s+menores|y\s+menos|y\s+menores|para\s+abajo|para\s+menos)",
+            re.IGNORECASE,
+        )
+        for match in list(_less_than_post_re.finditer(normalized_query)):
+            amount = money_to_cop(match.group(1))
+            if amount and amount >= 1_000_000:
+                params["valor_max"] = amount
+                span = normalized_query[match.start():match.end()]
+                consumed_spans.append(span)
+                normalized_query = (
+                    normalized_query[: match.start()]
+                    + " "
+                    + normalized_query[match.end() :]
+                )
+
+        _more_than_post_re = re.compile(
+            rf"{amount_text}\s+(?:en\s+adelante|o\s+mas|o\s+más|o\s+mayores|y\s+mas|y\s+más|y\s+mayores|o\s+superiores|para\s+arriba|para\s+mas|para\s+más)",
+            re.IGNORECASE,
+        )
+        for match in list(_more_than_post_re.finditer(normalized_query)):
+            amount = money_to_cop(match.group(1))
+            if amount and amount >= 1_000_000:
+                params["valor_min"] = amount
+                span = normalized_query[match.start():match.end()]
+                consumed_spans.append(span)
                 normalized_query = (
                     normalized_query[: match.start()]
                     + " "
@@ -919,12 +972,15 @@ class QueryRouter:
             elif re.search(r"(?:menos|menor(?:es)?)\s+(?:de|a)|hasta", raw):
                 params["valor_max"] = amount
             elif re.search(r"\bpor\b", raw):
-                params.setdefault("valor_min", int(amount * 0.8))
-                params.setdefault("valor_max", int(amount * 1.2))
+                # PARSER-POLARITY-MONETARY-002: only build ±20% range if NO
+                # explicit valor_min/valor_max was already set by a post-pattern.
+                if "valor_min" not in params and "valor_max" not in params:
+                    params.setdefault("valor_min", int(amount * 0.8))
+                    params.setdefault("valor_max", int(amount * 1.2))
             else:
                 params.setdefault("valor_max", amount)
 
-        return params
+        return params, consumed_spans
 
     def _extract_nit(self, normalized_query: str) -> list[str] | None:
         """Detecta NITs colombianos por forma y retorna variantes base + con DV.
