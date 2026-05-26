@@ -1,0 +1,216 @@
+{
+  "_meta": {
+    "description": "SENA Entity Ecosystem Catalog",
+    "nit_base_common": "899999034",
+    "status": "draft",
+    "note": "SENA has multiple units per department: regional parent, admin groups, centers, intercentros. Each regional ecosystem captures all SENA entities in that department via member_name_contains_all."
+  },
+  "national": {
+    "label": "SENA Nacional",
+    "trigger_aliases": [
+      "sena",
+      "servicio nacional de aprendizaje",
+      "sena nacional",
+      "sena sede nacional",
+      "sena central"
+    ],
+    "official_names": [
+      "SENA SECRETARIA GENERAL",
+      "SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas",
+      "SENA DIRECCIÓN GENERAL Dirección Jurídica"
+    ],
+    "aliases_matched": ["sena", "servicio nacional de aprendizaje", "sena nacional"]
+  },
+  "regional_groups": [
+    {
+      "label": "SENA Magdalena",
+      "department": "Magdalena",
+      "aliases": [
+        "sena magdalena",
+        "sena regional magdalena",
+        "servicio nacional de aprendizaje sena magdalena",
+        "servicio nacional de aprendizaje regional magdalena",
+        "sena en magdalena"
+      ],
+      "member_name_contains_all": ["SENA", "MAGDALENA"]
+    },
+    {
+      "label": "SENA Santander",
+      "department": "Santander",
+      "aliases": [
+        "sena santander",
+        "sena regional santander",
+        "servicio nacional de aprendizaje sena santander",
+        "servicio nacional de aprendizaje regional santander",
+        "sena en santander"
+      ],
+      "member_name_contains_all": ["SENA", "SANTANDER"]
+    },
+    {
+      "label": "SENA Bolívar",
+      "department": "Bolívar",
+      "aliases": [
+        "sena bolivar",
+        "sena regional bolivar",
+        "servicio nacional de aprendizaje sena bolivar",
+        "servicio nacional de aprendizaje regional bolivar",
+        "sena en bolivar"
+      ],
+      "member_name_contains_all": ["SENA", "BOLIVAR"]
+    },
+    {
+      "label": "SENA Atlántico",
+      "department": "Atlántico",
+      "aliases": [
+        "sena atlantico",
+        "sena regional atlantico",
+        "servicio nacional de aprendizaje sena atlantico",
+        "servicio nacional de aprendizaje regional atlantico",
+        "sena en atlantico"
+      ],
+      "member_name_contains_all": ["SENA", "ATLANTICO"]
+    },
+    {
+      "label": "SENA Antioquia",
+      "department": "Antioquia",
+      "aliases": [
+        "sena antioquia",
+        "sena regional antioquia",
+        "servicio nacional de aprendizaje sena antioquia",
+        "servicio nacional de aprendizaje regional antioquia",
+        "sena en antioquia"
+      ],
+      "member_name_contains_all": ["SENA", "ANTIOQUIA"]
+    },
+    {
+      "label": "SENA Valle del Cauca",
+      "department": "Valle del Cauca",
+      "aliases": [
+        "sena valle",
+        "sena valle del cauca",
+        "sena regional valle",
+        "sena regional valle del cauca",
+        "servicio nacional de aprendizaje sena valle",
+        "sena en valle del cauca"
+      ],
+      "member_name_contains_all": ["SENA", "VALLE"]
+    },
+    {
+      "label": "SENA Cauca",
+      "department": "Cauca",
+      "aliases": [
+        "sena cauca",
+        "sena regional cauca",
+        "servicio nacional de aprendizaje sena cauca",
+        "servicio nacional de aprendizaje regional cauca",
+        "sena en cauca"
+      ],
+      "member_name_contains_all": ["SENA", "CAUCA"]
+    },
+    {
+      "label": "SENA Nariño",
+      "department": "Nariño",
+      "aliases": [
+        "sena narino",
+        "sena regional narino",
+        "servicio nacional de aprendizaje sena narino",
+        "servicio nacional de aprendizaje regional narino",
+        "sena en narino"
+      ],
+      "member_name_contains_all": ["SENA", "NARINO"]
+    },
+    {
+      "label": "SENA Cundinamarca",
+      "department": "Cundinamarca",
+      "aliases": [
+        "sena cundinamarca",
+        "sena regional cundinamarca",
+        "servicio nacional de aprendizaje sena cundinamarca",
+        "servicio nacional de aprendizaje regional cundinamarca",
+        "sena en cundinamarca"
+      ],
+      "member_name_contains_all": ["SENA", "CUNDINAMARCA"]
+    },
+    {
+      "label": "SENA Distrito Capital",
+      "department": "Distrito Capital de Bogotá",
+      "aliases": [
+        "sena bogota",
+        "sena distrito capital",
+        "sena regional bogota",
+        "sena regional distrito capital",
+        "servicio nacional de aprendizaje sena bogota",
+        "sena en bogota",
+        "sena capital"
+      ],
+      "member_name_contains_all": ["SENA", "DISTRITO CAPITAL"]
+    },
+    {
+      "label": "SENA Córdoba",
+      "department": "Córdoba",
+      "aliases": [
+        "sena cordoba",
+        "sena regional cordoba",
+        "servicio nacional de aprendizaje sena cordoba",
+        "servicio nacional de aprendizaje regional cordoba",
+        "sena en cordoba"
+      ],
+      "member_name_contains_all": ["SENA", "CORDOBA"]
+    },
+    {
+      "label": "SENA La Guajira",
+      "department": "La Guajira",
+      "aliases": [
+        "sena guajira",
+        "sena la guajira",
+        "sena regional guajira",
+        "sena regional la guajira",
+        "servicio nacional de aprendizaje sena guajira",
+        "sena en guajira"
+      ],
+      "member_name_contains_all": ["SENA", "GUAJIRA"]
+    },
+    {
+      "label": "SENA Sucre",
+      "department": "Sucre",
+      "aliases": [
+        "sena sucre",
+        "sena regional sucre",
+        "servicio nacional de aprendizaje sena sucre",
+        "servicio nacional de aprendizaje regional sucre",
+        "sena en sucre"
+      ],
+      "member_name_contains_all": ["SENA", "SUCRE"]
+    },
+    {
+      "label": "SENA Cesar",
+      "department": "Cesar",
+      "aliases": [
+        "sena cesar",
+        "sena regional cesar",
+        "servicio nacional de aprendizaje sena cesar",
+        "sena en cesar"
+      ],
+      "member_name_contains_all": ["SENA", "CESAR"]
+    },
+    {
+      "label": "SENA Norte de Santander",
+      "department": "Norte de Santander",
+      "aliases": [
+        "sena norte de santander",
+        "sena regional norte de santander",
+        "servicio nacional de aprendizaje sena norte de santander",
+        "sena en norte de santander"
+      ],
+      "member_name_contains_all": ["SENA", "NORTE DE SANTANDER"]
+    }
+  ],
+  "macro_regions": {
+    "caribe": ["Atlántico", "Bolívar", "Cesar", "Córdoba", "La Guajira", "Magdalena", "Sucre", "San Andrés, Providencia y Santa Catalina"],
+    "costa_atlantica": ["Atlántico", "Bolívar", "Cesar", "Córdoba", "La Guajira", "Magdalena", "Sucre", "San Andrés, Providencia y Santa Catalina"],
+    "eje_cafetero": ["Caldas", "Quindío", "Risaralda"],
+    "pacifico": ["Chocó", "Valle del Cauca", "Cauca", "Nariño"],
+    "amazonia": ["Amazonas", "Caquetá", "Guainía", "Guaviare", "Putumayo", "Vaupés"],
+    "orinoquia": ["Arauca", "Casanare", "Meta", "Vichada"]
+  }
+}
