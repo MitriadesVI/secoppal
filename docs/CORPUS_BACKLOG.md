@@ -323,3 +323,21 @@ Fixes aplicados en sesión de trabajo posterior al dogfooding inicial. Documenta
 
 **Tests:** 945 passed, 10 xfailed.
 **Documentación:** `docs/operacional/DOGFOOD_2026-05-25.md`, `docs/planes/funnel-full-ux-fixes-2026-05-25.md`, `docs/decisions_log.md#ADR-017`.
+
+---
+
+## PARSER-POLARITY-MONETARY-002 (2026-05-25)
+
+**Causa:** Patrones post-número no detectados. "500 millones o menos" → rango falso ±20% (400M-600M). "en adelante" → "adelante" caía como término en objeto.
+
+**Fix:** `query_router.py:_extract_amounts()`:
+- Agregados `_less_than_post_re` ("o menos", "y menores", "para abajo", etc.) → `valor_max`.
+- Agregados `_more_than_post_re` ("en adelante", "o mas", "y mayores", "para arriba", etc.) → `valor_min`.
+- Post-patterns evaluados ANTES del scanner numérico genérico para evitar construcción de rango falso.
+- Guard en scanner genérico: solo construye rango ±20% si NO hay `valor_min`/`valor_max` previo.
+- `_extract_amounts()` retorna `consumed_spans` para scrub en caller.
+- Tokens "adelante", "arriba", "abajo" agregados a STOPWORDS como safety net.
+
+**Tests:** `tests/test_value_polarity.py` +6 casos (POST_NUMBER_CASES + NO_FALSE_RANGE_CASES).
+**Suite:** 951 passed, 10 xfailed.
+**Commit:** `e3fed68`.
