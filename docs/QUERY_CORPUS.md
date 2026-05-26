@@ -1,14 +1,12 @@
 # QUERY_CORPUS V1 — SECOPPAL
 
-## Estado actual canónico — 2026-05-25
+## Estado actual canónico — 2026-05-26 (G7C.2)
 
-- **Corpus:** 88/88 PASS, 0 FAIL
+- **Corpus:** 89/89 PASS, 0 FAIL
 - **Runner:** `scripts/run_query_corpus.py` (modos `parser|workflow|all`)
-- **Suite:** 945 passed, 10 xfailed
-- **CORPUS-003A/B/C cerraron:** V005, V007, OC004, OC005, R003, AN003
-- **Dogfooding 2026-05-25 cerrado:** URL-005, DATE-002, REFINE-004, RANGE-005, ACTION-005B, SOQL-006
-- **Pendientes:** F (trace vacío follow-up), G (gramática "5 resultados")
-- **Próximo sprint:** DEMO-BLOCKERS-001 (8 tareas UX/estado/scope)
+- **Suite:** 289 passed, 13 xfailed
+- **Entity Ecosystem:** ICBF + SENA resolvers integrados en pipeline, con typo normalization y token scrub
+- **Rama activa:** `feature/gazetteer-append-manager`
 
 ## Propósito
 Corpus vivo de **88 queries** reales para depuración sistemática, regresión y cobertura de casos edge en SECOPPAL. Sembrado con 31 queries marcadas `rating=0` en `feedback.jsonl` + 11 queries top-frecuentes + 7 casos manuales reportados directamente por el usuario en la última semana.
@@ -21,6 +19,8 @@ Cada query declara su **`validation_mode`**:
 |---|---|---|---|
 | `parser` | Solo lo que produce `QueryRouter.parse()`. Sin red, sin pipeline. | < 50 ms/query | `dataset`, `intent_type`, `estado_family`, `departamento_resolved`, `ciudad`, `entidad_resolved`, `valor_min`, `valor_max`, `fecha_desde`, `fecha_hasta`, `ordering_signal`, `objeto_contains`, `objeto_not_contains`, `soql_contains`, `soql_not_contains` |
 | `workflow` | `SecopalWorkflow.run_query()` end-to-end con mocks de SECOP. Cubre follow-up, paginación, analytics, anti-WHERE 1=1, timeout UX. | ~200 ms/query | Todas las de `parser` + `followup_intent_type`, `needs_clarification`, `analytical_intent`, `analytical_response_contains`, `response_contains`, `response_not_contains`, `route_reason`, `total_count_min/max` |
+
+**Nota G7C.2 (Entity Ecosystem):** El modo `parser` del runner ahora evalúa `resolve_entity_ecosystem()` **solo cuando el entry declara campos `entity_ecosystem_*` en `expected`**. Esto es una extensión consciente: el ecosistema institucional vive conceptualmente *después del parser* y *antes del SoQL builder*. El corpus no se convierte en workflow; simplemente se enriquece con una capa intermedia cuando el caso lo requiere. Para limpieza futura esto podría renombrarse a `parser_plus_ecosystem`. |
 
 **Por qué dos modos:** el bug del corpus original era pedirle a `parse()` claves que solo existen tras el pipeline (`followup_intent_type`, `needs_clarification`, etc.). Eso generaba FAILs falsos. La separación elimina ese ruido.
 
