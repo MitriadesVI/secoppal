@@ -34,6 +34,8 @@ _SUBSTANTIAL_FILTER_KEYS: frozenset[str] = frozenset({
     "estado_contrato", "estado_contrato_adicional",
     # modality
     "modalidad",
+    # entity ecosystem (G7C)
+    "entidad_contains_all", "entidad_in_candidates",
 })
 
 
@@ -242,6 +244,29 @@ class SoQLBuilder:
             where_clauses.append(
                 self._accent_fold_like(spec.entity, self._escape(str(entidad_value)))
             )
+
+        # G7C: entity ecosystem contains_all — AND of LIKEs (e.g. SENA + MAGDALENA)
+        entidad_contains_all = params.get("entidad_contains_all")
+        if entidad_contains_all and isinstance(entidad_contains_all, list):
+            for token in entidad_contains_all:
+                where_clauses.append(
+                    self._accent_fold_like(spec.entity, self._escape(str(token)))
+                )
+
+        # G7C: entity ecosystem in_candidates — OR of official name LIKEs
+        entidad_in_candidates = params.get("entidad_in_candidates")
+        if entidad_in_candidates and isinstance(entidad_in_candidates, list) and not entidad_value:
+            if len(entidad_in_candidates) <= 15:
+                entity_likes = " OR ".join(
+                    self._accent_fold_like(spec.entity, self._escape(str(e)))
+                    for e in entidad_in_candidates
+                )
+                where_clauses.append(f"({entity_likes})")
+            else:
+                # Too many — fallback to contains_all tokens if available, else first 15
+                where_clauses.append(
+                    self._accent_fold_like(spec.entity, self._escape(str(entidad_in_candidates[0])))
+                )
 
         objeto_terms = params.get("objeto", []) or []
         if self._should_demote_objeto(objeto_terms):

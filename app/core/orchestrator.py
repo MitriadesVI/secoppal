@@ -186,7 +186,23 @@ def resolve_entities(state: State, entity_resolver: EntityResolver) -> State:
     needs_clarification = False
     clarification_reason = ""
 
-    # Department: only resolve if not already resolved by scan
+    # ── G7C: Entity Ecosystem detection (after parse, before entity resolution) ──
+    from app.core.entity_ecosystem_router import (
+        resolve_entity_ecosystem, build_entity_ecosystem_filter
+    )
+    raw_query = state.get("user_query", "")
+    ecosystem_match = resolve_entity_ecosystem(raw_query)
+    if ecosystem_match:
+        ecosystem_filter = build_entity_ecosystem_filter(ecosystem_match)
+        resolved.update(ecosystem_filter)
+        # If ecosystem provides department, don't override if already resolved
+        dept_from_ecosystem = ecosystem_match.department
+        if dept_from_ecosystem and not resolved.get("departamento_resolved"):
+            resolved["departamento_resolved"] = dept_from_ecosystem
+        # Mark entity as "covered by ecosystem" so normal entity resolver skips
+        resolved["entidad_ecosystem_covered"] = True
+
+    # Department: only resolve if not already resolved by scan or ecosystem
     if params.get("departamento") and not params.get("departamento_resolved"):
         resolution = entity_resolver.resolve_departamento(str(params["departamento"]))
         resolved["departamento_resolution"] = resolution.to_dict()
