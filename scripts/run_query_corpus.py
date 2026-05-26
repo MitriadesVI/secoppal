@@ -180,6 +180,17 @@ def check_parser_entry(entry: dict, parser) -> CheckResult:
     parsed = parser.parse(text)
     actual = dict(parsed.params)
 
+    # G7C.2: evaluate entity ecosystem if the entry expects ecosystem fields
+    if any(k.startswith("entity_ecosystem") for k in expected):
+        from app.core.entity_ecosystem_router import (
+            resolve_entity_ecosystem, build_entity_ecosystem_filter
+        )
+        match = resolve_entity_ecosystem(text)
+        if match:
+            actual.update(build_entity_ecosystem_filter(match))
+            if match.department and not actual.get("departamento_resolved"):
+                actual["departamento_resolved"] = match.department
+
     fails: list[str] = []
     fails.extend(_assert_expected_block(actual, expected))
     if blocklist:

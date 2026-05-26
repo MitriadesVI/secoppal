@@ -1074,3 +1074,22 @@ queries:
     mode: parser
     expected:
       objeto_contains: [primera_infancia]
+
+  - id: CORPUS-SM011
+    text: "que contratos celebro el icfb magdalena en 2025?"
+    source: smoke
+    severity: high
+    category: ecosystem_icbf_typo
+    mode: parser
+    expected:
+      dataset: contratos
+      fecha_desde: "2025-01-01"
+      fecha_hasta: "2025-12-31"
+      departamento_resolved: "Magdalena"
+      entity_ecosystem: "ICBF"
+      entity_ecosystem_resolution_type: "icbf_regional"
+    notes: |
+      G7C.1 regression: "icfb" typo must resolve to ICBF ecosystem,
+      NOT leak into objeto as contractual topic. SoQL must target
+      nombre_entidad (ICBF Regional Magdalena), not objeto_del_contrato.
+      This validates normalize_institutional_acronyms() + scrub.

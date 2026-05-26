@@ -50,8 +50,8 @@ def normalize_institutional_acronyms(raw_query: str) -> str:
     """
     result = raw_query
     for typo, canonical in INSTITUTIONAL_ACRONYM_FIXES.items():
-        # Word boundary replacement: match as standalone token
-        pattern = re.compile(re.escape(typo), re.IGNORECASE)
+        # Word boundary replacement: \b ensures standalone token
+        pattern = re.compile(rf"\b{re.escape(typo)}\b", re.IGNORECASE)
         result = pattern.sub(canonical, result)
     return result
 

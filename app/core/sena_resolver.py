@@ -22,8 +22,13 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Literal
 
+import re
+
 from app.data.departamentos import DEPARTAMENTOS
 from app.utils.money import normalize_text
+
+# Precompile SENA detection regex with word boundaries
+_SENA_WORD_RE = re.compile(r"\bsena\b", re.IGNORECASE)
 
 # ---------------------------------------------------------------------------
 # Paths
@@ -81,26 +86,14 @@ def _load_catalog() -> dict:
 def _is_sena_mention(normalized: str) -> bool:
     """Does the query mention SENA or its synonyms?
 
-    Must match as whole word or at word boundary to avoid matching
-    'senado', 'senador', 'presentar', etc.
+    Uses word-boundary regex to avoid matching 'senado', 'senador',
+    'presentar', etc.
     """
-    # G7C.1: reject false positives first
-    false_positives = ["senado", "senador"]
-    for fp in false_positives:
-        if fp in normalized:
-            return False
-
-    triggers = [
-        " sena ", " sena", "sena ", " sena.",
-        "servicio nacional de aprendizaje",
-    ]
-    for t in triggers:
-        if t in normalized:
-            return True
-    # Also check at start of string
-    if normalized.startswith("sena ") or normalized == "sena":
+    # Check word-boundary match for "sena"
+    if _SENA_WORD_RE.search(normalized):
         return True
-    if normalized.startswith("servicio nacional de aprendizaje"):
+    # Also check full phrase "servicio nacional de aprendizaje"
+    if "servicio nacional de aprendizaje" in normalized:
         return True
     return False
 

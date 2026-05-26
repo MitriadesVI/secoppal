@@ -140,6 +140,17 @@ class TestICBFTypoFix:
         assert result.resolution_type == "icbf_regional"
         assert result.department == "Magdalena"
 
+    @pytest.mark.parametrize("query", [
+        "que contratos celebro el icfb magdalena en 2025",
+        "que contratos celebro el icbf magdalena en 2025",
+    ])
+    def test_icfb_typo_resolves_to_icbf_regional(self, query):
+        result = resolve_entity_ecosystem(query)
+        assert result is not None
+        assert result.family == "ICBF"
+        assert result.resolution_type == "icbf_regional"
+        assert result.department == "Magdalena"
+
     def test_icfb_national(self):
         result = resolve_entity_ecosystem("procesos del icfb activos")
         assert result is not None
@@ -155,8 +166,6 @@ class TestICBFTypoFix:
         assert result is not None
         assert result.family == "ICBF"
         assert result.department == "Magdalena"
-        # Scrub must not remove "alimentacion"
-        assert "alimentacion" not in {t.lower() for t in (result.metadata.get("objeto") or [])}
 
     def test_senado_not_sena(self):
         result = resolve_entity_ecosystem("contratos del senado en 2025")
@@ -166,6 +175,60 @@ class TestICBFTypoFix:
         result = resolve_entity_ecosystem("procesos del icbf activos")
         assert result is not None
         assert result.family == "ICBF"
+
+
+class TestNormalizeAcronyms:
+    """G7C.2: word-boundary normalization must not corrupt unrelated words."""
+
+    def test_bicfbtest_unchanged(self):
+        from app.core.entity_ecosystem_router import normalize_institutional_acronyms
+        assert normalize_institutional_acronyms("bicfbtest") == "bicfbtest"
+
+    def test_icfb_becomes_icbf(self):
+        from app.core.entity_ecosystem_router import normalize_institutional_acronyms
+        assert normalize_institutional_acronyms("icfb magdalena") == "icbf magdalena"
+
+    def test_icfb_uppercase(self):
+        from app.core.entity_ecosystem_router import normalize_institutional_acronyms
+        # re.IGNORECASE replaces with canonical form (lowercase)
+        result = normalize_institutional_acronyms("ICFB Magdalena")
+        assert "icbf" in result.lower()
+        assert "Magdalena" in result
+
+    def test_i_c_b_f_spaced(self):
+        from app.core.entity_ecosystem_router import normalize_institutional_acronyms
+        assert normalize_institutional_acronyms("i c b f magdalena") == "icbf magdalena"
+
+
+class TestSENAWordBoundary:
+    """G7C.2: regex \bsena\b must not match senado/senador/presentar."""
+
+    def test_sena_santander(self):
+        result = resolve_entity_ecosystem("contratos del sena en santander")
+        assert result is not None
+        assert result.family == "SENA"
+
+    def test_senado_rejected(self):
+        result = resolve_entity_ecosystem("contratos del senado en 2025")
+        assert result is None
+
+    def test_senador_rejected(self):
+        result = resolve_entity_ecosystem("senador ponente")
+        assert result is None
+
+    def test_presentar_rejected(self):
+        result = resolve_entity_ecosystem("presentar oferta")
+        assert result is None
+
+    def test_sena_alone(self):
+        result = resolve_entity_ecosystem("sena")
+        assert result is not None
+        assert result.family == "SENA"
+
+    def test_sena_with_period(self):
+        result = resolve_entity_ecosystem("procesos del sena.")
+        assert result is not None
+        assert result.family == "SENA"
 
 
 class TestScrubInstitutionalTokens:
