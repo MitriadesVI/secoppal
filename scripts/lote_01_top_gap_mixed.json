@@ -1,0 +1,550 @@
+[
+  {
+    "official_name": "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR",
+    "departamento": "Bolívar",
+    "total_procesos": 4958,
+    "total_contratos": 4591,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "alcaldia_municipal"
+  },
+  {
+    "official_name": "ALCALDIA MUNICIPAL LA TEBAIDA QUINDIO",
+    "departamento": "Quindío",
+    "total_procesos": 4510,
+    "total_contratos": 3473,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "alcaldia_municipal"
+  },
+  {
+    "official_name": "MINISTERIO DE JUSTICIA Y DEL DERECHO..",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 7548,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ],
+    "entity_type": "ministerio"
+  },
+  {
+    "official_name": "GOBERNACIÓN DEL VALLE DEL CAUCA - SECRETARÍA DE DESARROLLO RURAL, AGRICULTURA Y PESCA",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 3705,
+    "total_contratos": 3735,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "secretaria"
+  },
+  {
+    "official_name": "FONDO DE PASIVO SOCIAL DE FERROCARRILES NACIONALES DE COLOMBIA ENTIDAD",
+    "departamento": "Cundinamarca",
+    "total_procesos": 3673,
+    "total_contratos": 3639,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "fondo"
+  },
+  {
+    "official_name": "ICBF REGIONAL CORDOBA",
+    "departamento": "Córdoba",
+    "total_procesos": 3677,
+    "total_contratos": 3567,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "icbf_regional"
+  },
+  {
+    "official_name": "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CBA",
+    "departamento": "Cundinamarca",
+    "total_procesos": 3821,
+    "total_contratos": 3385,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "sena_regional"
+  },
+  {
+    "official_name": "CORPORACION AUTONOMA REGIONAL DE LAS CUENCAS DE LOS RIOS NEGRO - NARE",
+    "departamento": "Antioquia",
+    "total_procesos": 3673,
+    "total_contratos": 3498,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "corporacion_autonoma"
+  },
+  {
+    "official_name": "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA",
+    "departamento": "Boyacá",
+    "total_procesos": 3559,
+    "total_contratos": 3468,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "instituto"
+  },
+  {
+    "official_name": "SUPERINTENDENCIA NACIONAL DE SALUD",
+    "departamento": "No Definido",
+    "total_procesos": 3791,
+    "total_contratos": 3161,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "superintendencia"
+  },
+  {
+    "official_name": "SENA REGIONAL CHOCO Grupo de Apoyo Administrativo Mixto",
+    "departamento": "Chocó",
+    "total_procesos": 3590,
+    "total_contratos": 3351,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "sena_regional"
+  },
+  {
+    "official_name": "ESE HOSPITAL SALAZAR DE VILLETA",
+    "departamento": "Cundinamarca",
+    "total_procesos": 3441,
+    "total_contratos": 3432,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "ese_hospital"
+  },
+  {
+    "official_name": "SERVICIO NACIONAL DE APRENDIZAJE SENA REGIONAL SAN ANDRES",
+    "departamento": "San Andrés, Providencia y Santa Catalina",
+    "total_procesos": 3548,
+    "total_contratos": 3321,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "sena_regional"
+  },
+  {
+    "official_name": "DEPARTAMENTO DE CUNDINAMARCA - SECRETARIA DE EDUCACION",
+    "departamento": "Cundinamarca",
+    "total_procesos": 3614,
+    "total_contratos": 3249,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "secretaria"
+  },
+  {
+    "official_name": "INSTITUTO DEPARTAMENTAL DE DEPORTES DE ANTIOQUIA",
+    "departamento": "Antioquia",
+    "total_procesos": 3107,
+    "total_contratos": 3754,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "instituto"
+  },
+  {
+    "official_name": "ICBF REGIONAL MAGDALENA",
+    "departamento": "Magdalena",
+    "total_procesos": 3459,
+    "total_contratos": 3385,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "icbf_regional"
+  },
+  {
+    "official_name": "ALCALDIA DE EL PEÑOL",
+    "departamento": "Antioquia",
+    "total_procesos": 3440,
+    "total_contratos": 3383,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "alcaldia_municipal"
+  },
+  {
+    "official_name": "SENA REGIONAL ANTIOQUIA Grupo Administrativo CIAA",
+    "departamento": "Antioquia",
+    "total_procesos": 3588,
+    "total_contratos": 3215,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "sena_regional"
+  },
+  {
+    "official_name": "MINISTERIO DE JUSTICIA Y DEL DERECHO.",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 0,
+    "total_contratos": 6769,
+    "source_datasets": [
+      "contratos"
+    ],
+    "entity_type": "ministerio"
+  },
+  {
+    "official_name": "ICBF REGIONAL NORTE DE SANTANDER",
+    "departamento": "Norte de Santander",
+    "total_procesos": 3404,
+    "total_contratos": 3359,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "icbf_regional"
+  },
+  {
+    "official_name": "ALCALDIA MUNICIPIO DE SAN GIL - SANTANDER",
+    "departamento": "Santander",
+    "total_procesos": 3576,
+    "total_contratos": 3079,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "alcaldia_municipal"
+  },
+  {
+    "official_name": "ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 2926,
+    "total_contratos": 3656,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "fondo"
+  },
+  {
+    "official_name": "HOSPITAL DEPARTAMENTAL UNIVERSITARIO SANTA SOFIA DE CALDAS",
+    "departamento": "Caldas",
+    "total_procesos": 3523,
+    "total_contratos": 2934,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "ese_hospital"
+  },
+  {
+    "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL EMIRO QUINTERO CAÑIZARES 12",
+    "departamento": "Norte de Santander",
+    "total_procesos": 2735,
+    "total_contratos": 3721,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "ese_hospital"
+  },
+  {
+    "official_name": "HOSPITAL SAN RAFAEL EL CERRITO",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 3176,
+    "total_contratos": 3242,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "ese_hospital"
+  },
+  {
+    "official_name": "ICBF REGIONAL CHOCO",
+    "departamento": "Chocó",
+    "total_procesos": 3206,
+    "total_contratos": 3174,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "icbf_regional"
+  },
+  {
+    "official_name": "DEPARTAMENTO DE CUNDINAMARCA -SECRETARIA DE GOBIERNO",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 3303,
+    "total_contratos": 3074,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "secretaria"
+  },
+  {
+    "official_name": "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CDA",
+    "departamento": "Cundinamarca",
+    "total_procesos": 2912,
+    "total_contratos": 3462,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "sena_regional"
+  },
+  {
+    "official_name": "ALCALDIA DISTRITAL DE BUENAVENTURA-VALLE",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 3273,
+    "total_contratos": 3074,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "alcaldia_municipal"
+  },
+  {
+    "official_name": "Instituto Departamental de Recreación y Deporte INDERSANTANDER SITIO OFICIAL",
+    "departamento": "Santander",
+    "total_procesos": 3108,
+    "total_contratos": 3219,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "instituto"
+  },
+  {
+    "official_name": "SUPERINTENDENCIA DEL SUBSIDIO FAMILIAR",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 3395,
+    "total_contratos": 2912,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "superintendencia"
+  },
+  {
+    "official_name": "SENA REGIONAL CAUCA Grupo Administrativo Intercentros CTPI",
+    "departamento": "Cauca",
+    "total_procesos": 2995,
+    "total_contratos": 3287,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "sena_regional"
+  },
+  {
+    "official_name": "ICBF REGIONAL HUILA",
+    "departamento": "Huila",
+    "total_procesos": 3158,
+    "total_contratos": 3029,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "icbf_regional"
+  },
+  {
+    "official_name": "ALCALDIA MUNICIPIO DE CUMARAL META",
+    "departamento": "Meta",
+    "total_procesos": 3247,
+    "total_contratos": 2891,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "alcaldia_municipal"
+  },
+  {
+    "official_name": "SENA REGIONAL SANTANDER Grupo Administrativo CIDT",
+    "departamento": "Santander",
+    "total_procesos": 4024,
+    "total_contratos": 2080,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "sena_regional"
+  },
+  {
+    "official_name": "SENA REGIONAL PUTUMAYO Grupo de Apoyo Administrativo",
+    "departamento": "Putumayo",
+    "total_procesos": 2622,
+    "total_contratos": 3477,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "sena_regional"
+  },
+  {
+    "official_name": "SENA REGIONAL CASANARE Grupo Administrativo Mixto",
+    "departamento": "Casanare",
+    "total_procesos": 2873,
+    "total_contratos": 3181,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "sena_regional"
+  },
+  {
+    "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL BENJAMIN BARNEY GASCA",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 2976,
+    "total_contratos": 2975,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "ese_hospital"
+  },
+  {
+    "official_name": "SECRETARIA GENERAL- GOBERNACION DEL VALLE",
+    "departamento": "Valle del Cauca",
+    "total_procesos": 2965,
+    "total_contratos": 2949,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "secretaria"
+  },
+  {
+    "official_name": "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CTDPE",
+    "departamento": "Cundinamarca",
+    "total_procesos": 3119,
+    "total_contratos": 2573,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "sena_regional"
+  },
+  {
+    "official_name": "ICBF REGIONAL CALDAS",
+    "departamento": "Caldas",
+    "total_procesos": 2899,
+    "total_contratos": 2749,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "icbf_regional"
+  },
+  {
+    "official_name": "HOSPITAL MUNICIPAL DE ACACIAS E.S.E.",
+    "departamento": "Meta",
+    "total_procesos": 3188,
+    "total_contratos": 2441,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "ese_hospital"
+  },
+  {
+    "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL REGIONAL NOROCCIDENTAL",
+    "departamento": "Norte de Santander",
+    "total_procesos": 2864,
+    "total_contratos": 2742,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "ese_hospital"
+  },
+  {
+    "official_name": "ESE HOSPITAL LOCAL CARTAGENA DE INDIAS.*",
+    "departamento": "Bolívar",
+    "total_procesos": 2989,
+    "total_contratos": 2443,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "ese_hospital"
+  },
+  {
+    "official_name": "SENA REGIONAL CAUCA Centro agropecuario",
+    "departamento": "Cauca",
+    "total_procesos": 2461,
+    "total_contratos": 2955,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "sena_regional"
+  },
+  {
+    "official_name": "ALCALDIA MUNICIPIO DE LETICIA",
+    "departamento": "Amazonas",
+    "total_procesos": 3108,
+    "total_contratos": 2513,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "alcaldia_municipal"
+  },
+  {
+    "official_name": "NUEVA EMPRESA SOCIAL DEL ESTADO HOSPITAL DEPARTAMENTAL SAN FRANCISCO DE ASÍS",
+    "departamento": "Chocó",
+    "total_procesos": 3234,
+    "total_contratos": 1908,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "ese_hospital"
+  },
+  {
+    "official_name": "ICBF REGIONAL CESAR",
+    "departamento": "Cesar",
+    "total_procesos": 2568,
+    "total_contratos": 2547,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "icbf_regional"
+  },
+  {
+    "official_name": "ALCALDIA MUNICIPAL DE LA JAGUA DE IBIRICO",
+    "departamento": "Cesar",
+    "total_procesos": 2687,
+    "total_contratos": 2222,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "alcaldia_municipal"
+  },
+  {
+    "official_name": "SENA REGIONAL CAQUETA",
+    "departamento": "Caquetá",
+    "total_procesos": 2059,
+    "total_contratos": 2845,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "entity_type": "sena_regional"
+  }
+]

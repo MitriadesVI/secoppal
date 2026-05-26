@@ -1,0 +1,6303 @@
+{
+  "fetched": 1000,
+  "covered": 502,
+  "gap": 498,
+  "entities": [
+    {
+      "official_name": "INRAVISIÓN",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 20954,
+      "total_contratos": 15652,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 36606
+    },
+    {
+      "official_name": "ESE METROSALUD",
+      "departamento": "Antioquia",
+      "total_procesos": 23685,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 23685
+    },
+    {
+      "official_name": "DAPRE",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 16950,
+      "total_contratos": 4204,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 21154
+    },
+    {
+      "official_name": "MINTRABAJO NIVEL CENTRAL*/",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 6475,
+      "total_contratos": 6168,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 12643
+    },
+    {
+      "official_name": "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR",
+      "departamento": "Bolívar",
+      "total_procesos": 4958,
+      "total_contratos": 4591,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "alcaldia_municipal",
+      "priority": "P2",
+      "volume": 9549
+    },
+    {
+      "official_name": "ALCALDÍA MUNICIPAL DE SOPO",
+      "departamento": "Cundinamarca",
+      "total_procesos": 4851,
+      "total_contratos": 3312,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 8163
+    },
+    {
+      "official_name": "ALCALDIA MUNICIPAL LA TEBAIDA QUINDIO",
+      "departamento": "Quindío",
+      "total_procesos": 4510,
+      "total_contratos": 3473,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "alcaldia_municipal",
+      "priority": "P2",
+      "volume": 7983
+    },
+    {
+      "official_name": "MINISTERIO DE JUSTICIA Y DEL DERECHO..",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 7548,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ministerio",
+      "priority": "P2",
+      "volume": 7548
+    },
+    {
+      "official_name": "UNIDAD DE SALUD DE IBAGUE  U.S.I. - E.S.E.",
+      "departamento": "Tolima",
+      "total_procesos": 3735,
+      "total_contratos": 3724,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 7459
+    },
+    {
+      "official_name": "GOBERNACIÓN DEL VALLE DEL CAUCA - SECRETARÍA DE DESARROLLO RURAL, AGRICULTURA Y PESCA",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 3705,
+      "total_contratos": 3735,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "secretaria",
+      "priority": "P2",
+      "volume": 7440
+    },
+    {
+      "official_name": "FONDO DE PASIVO SOCIAL DE FERROCARRILES NACIONALES DE COLOMBIA ENTIDAD",
+      "departamento": "Cundinamarca",
+      "total_procesos": 3673,
+      "total_contratos": 3639,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "fondo",
+      "priority": "P2",
+      "volume": 7312
+    },
+    {
+      "official_name": "INDERBU",
+      "departamento": "Santander",
+      "total_procesos": 3662,
+      "total_contratos": 3645,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 7307
+    },
+    {
+      "official_name": "MUNICIPIO DE LA CEJA",
+      "departamento": "Antioquia",
+      "total_procesos": 3898,
+      "total_contratos": 3401,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 7299
+    },
+    {
+      "official_name": "IU. Digital",
+      "departamento": "Antioquia",
+      "total_procesos": 3687,
+      "total_contratos": 3575,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 7262
+    },
+    {
+      "official_name": "ICBF REGIONAL CORDOBA",
+      "departamento": "Córdoba",
+      "total_procesos": 3677,
+      "total_contratos": 3567,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "icbf_regional",
+      "priority": "P1",
+      "volume": 7244
+    },
+    {
+      "official_name": "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CBA",
+      "departamento": "Cundinamarca",
+      "total_procesos": 3821,
+      "total_contratos": 3385,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "sena_regional",
+      "priority": "P2",
+      "volume": 7206
+    },
+    {
+      "official_name": "CORPORACION AUTONOMA REGIONAL DE LAS CUENCAS DE LOS RIOS NEGRO - NARE",
+      "departamento": "Antioquia",
+      "total_procesos": 3673,
+      "total_contratos": 3498,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "corporacion_autonoma",
+      "priority": "P2",
+      "volume": 7171
+    },
+    {
+      "official_name": "UNIDAD DE GESTION PENSIONAL Y PARAFISCALES - UGPP",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 3722,
+      "total_contratos": 3387,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 7109
+    },
+    {
+      "official_name": "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA",
+      "departamento": "Boyacá",
+      "total_procesos": 3559,
+      "total_contratos": 3468,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "instituto",
+      "priority": "P2",
+      "volume": 7027
+    },
+    {
+      "official_name": "SUPERINTENDENCIA NACIONAL DE SALUD",
+      "departamento": "No Definido",
+      "total_procesos": 3791,
+      "total_contratos": 3161,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "superintendencia",
+      "priority": "P2",
+      "volume": 6952
+    },
+    {
+      "official_name": "SENA REGIONAL CHOCO Grupo de Apoyo Administrativo Mixto",
+      "departamento": "Chocó",
+      "total_procesos": 3590,
+      "total_contratos": 3351,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "sena_regional",
+      "priority": "P1",
+      "volume": 6941
+    },
+    {
+      "official_name": "ESE HOSPITAL SALAZAR DE VILLETA",
+      "departamento": "Cundinamarca",
+      "total_procesos": 3441,
+      "total_contratos": 3432,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 6873
+    },
+    {
+      "official_name": "UPRA",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 3504,
+      "total_contratos": 3367,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 6871
+    },
+    {
+      "official_name": "SERVICIO NACIONAL DE APRENDIZAJE SENA REGIONAL SAN ANDRES",
+      "departamento": "San Andrés, Providencia y Santa Catalina",
+      "total_procesos": 3548,
+      "total_contratos": 3321,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "sena_regional",
+      "priority": "P1",
+      "volume": 6869
+    },
+    {
+      "official_name": "DEPARTAMENTO DE CUNDINAMARCA - SECRETARIA DE EDUCACION",
+      "departamento": "Cundinamarca",
+      "total_procesos": 3614,
+      "total_contratos": 3249,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "secretaria",
+      "priority": "P2",
+      "volume": 6863
+    },
+    {
+      "official_name": "INSTITUTO DEPARTAMENTAL DE DEPORTES DE ANTIOQUIA",
+      "departamento": "Antioquia",
+      "total_procesos": 3107,
+      "total_contratos": 3754,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "instituto",
+      "priority": "P2",
+      "volume": 6861
+    },
+    {
+      "official_name": "ICBF REGIONAL MAGDALENA",
+      "departamento": "Magdalena",
+      "total_procesos": 3459,
+      "total_contratos": 3385,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "icbf_regional",
+      "priority": "P2",
+      "volume": 6844
+    },
+    {
+      "official_name": "ALCALDIA DE EL PEÑOL",
+      "departamento": "Antioquia",
+      "total_procesos": 3440,
+      "total_contratos": 3383,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "alcaldia_municipal",
+      "priority": "P2",
+      "volume": 6823
+    },
+    {
+      "official_name": "DEPARTAMENTO DEL VALLE DEL CAUCA - UNIDAD ADMINISTRATIVA ESPECIAL DE IMPUESTOS RENTAS Y GESTION TRIBUTARIA",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 3434,
+      "total_contratos": 3371,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 6805
+    },
+    {
+      "official_name": "SENA REGIONAL ANTIOQUIA Grupo Administrativo CIAA",
+      "departamento": "Antioquia",
+      "total_procesos": 3588,
+      "total_contratos": 3215,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "sena_regional",
+      "priority": "P2",
+      "volume": 6803
+    },
+    {
+      "official_name": "UNIDAD PRESTADORA DE SALUD BOGOTÁ",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 3504,
+      "total_contratos": 3285,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 6789
+    },
+    {
+      "official_name": "IDECUT",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 3136,
+      "total_contratos": 3649,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 6785
+    },
+    {
+      "official_name": "EMPRESA DE RENOVACION Y DESARROLLO URBANO DE BOGOTA D.C",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 3536,
+      "total_contratos": 3248,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 6784
+    },
+    {
+      "official_name": "MINISTERIO DE JUSTICIA Y DEL DERECHO.",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 0,
+      "total_contratos": 6769,
+      "source_datasets": [
+        "contratos"
+      ],
+      "entity_type": "ministerio",
+      "priority": "P2",
+      "volume": 6769
+    },
+    {
+      "official_name": "ORQUESTA FILARMONICA DE BOGOTA",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 3517,
+      "total_contratos": 3251,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 6768
+    },
+    {
+      "official_name": "ICBF REGIONAL NORTE DE SANTANDER",
+      "departamento": "Norte de Santander",
+      "total_procesos": 3404,
+      "total_contratos": 3359,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "icbf_regional",
+      "priority": "P2",
+      "volume": 6763
+    },
+    {
+      "official_name": "MUNICIPIO DE DAGUA",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 3543,
+      "total_contratos": 3216,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 6759
+    },
+    {
+      "official_name": "PNNC-NC",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 3494,
+      "total_contratos": 3215,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 6709
+    },
+    {
+      "official_name": "ESCUELA DE FORMACION INPEC",
+      "departamento": "Cundinamarca",
+      "total_procesos": 3360,
+      "total_contratos": 3329,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 6689
+    },
+    {
+      "official_name": "ISVIMED",
+      "departamento": "Antioquia",
+      "total_procesos": 3432,
+      "total_contratos": 3234,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 6666
+    },
+    {
+      "official_name": "ALCALDIA MUNICIPIO DE SAN GIL - SANTANDER",
+      "departamento": "Santander",
+      "total_procesos": 3576,
+      "total_contratos": 3079,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "alcaldia_municipal",
+      "priority": "P2",
+      "volume": 6655
+    },
+    {
+      "official_name": "ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2926,
+      "total_contratos": 3656,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "fondo",
+      "priority": "P2",
+      "volume": 6582
+    },
+    {
+      "official_name": "HOSPITAL DEPARTAMENTAL UNIVERSITARIO SANTA SOFIA DE CALDAS",
+      "departamento": "Caldas",
+      "total_procesos": 3523,
+      "total_contratos": 2934,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 6457
+    },
+    {
+      "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL EMIRO QUINTERO CAÑIZARES 12",
+      "departamento": "Norte de Santander",
+      "total_procesos": 2735,
+      "total_contratos": 3721,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 6456
+    },
+    {
+      "official_name": "AUTORIDAD NACIONAL DE LICENCIAS AMBIENTALES - ANLA",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 3338,
+      "total_contratos": 3115,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 6453
+    },
+    {
+      "official_name": "CAJA DE SUELDOS DE RETIRO DE LA POLICIA NACIONAL",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 3497,
+      "total_contratos": 2921,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 6418
+    },
+    {
+      "official_name": "HOSPITAL SAN RAFAEL EL CERRITO",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 3176,
+      "total_contratos": 3242,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 6418
+    },
+    {
+      "official_name": "GOBVALLE - HACIENDA",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 3173,
+      "total_contratos": 3238,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 6411
+    },
+    {
+      "official_name": "IDACO",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 3287,
+      "total_contratos": 3108,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 6395
+    },
+    {
+      "official_name": "ICBF REGIONAL CHOCO",
+      "departamento": "Chocó",
+      "total_procesos": 3206,
+      "total_contratos": 3174,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "icbf_regional",
+      "priority": "P1",
+      "volume": 6380
+    },
+    {
+      "official_name": "DEPARTAMENTO DE CUNDINAMARCA -SECRETARIA DE GOBIERNO",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 3303,
+      "total_contratos": 3074,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "secretaria",
+      "priority": "P2",
+      "volume": 6377
+    },
+    {
+      "official_name": "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CDA",
+      "departamento": "Cundinamarca",
+      "total_procesos": 2912,
+      "total_contratos": 3462,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "sena_regional",
+      "priority": "P2",
+      "volume": 6374
+    },
+    {
+      "official_name": "RASES 8",
+      "departamento": "Atlántico",
+      "total_procesos": 3887,
+      "total_contratos": 2480,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 6367
+    },
+    {
+      "official_name": "ALCALDIA DISTRITAL DE BUENAVENTURA-VALLE",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 3273,
+      "total_contratos": 3074,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "alcaldia_municipal",
+      "priority": "P2",
+      "volume": 6347
+    },
+    {
+      "official_name": "EMPRESA DE DESARROLLO URBANO DE BARRANQUILLA Y LA REGION CARIBE SA",
+      "departamento": "Atlántico",
+      "total_procesos": 3498,
+      "total_contratos": 2838,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 6336
+    },
+    {
+      "official_name": "Instituto Departamental de Recreación y Deporte INDERSANTANDER SITIO OFICIAL",
+      "departamento": "Santander",
+      "total_procesos": 3108,
+      "total_contratos": 3219,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "instituto",
+      "priority": "P2",
+      "volume": 6327
+    },
+    {
+      "official_name": "SUPERINTENDENCIA DEL SUBSIDIO FAMILIAR",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 3395,
+      "total_contratos": 2912,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "superintendencia",
+      "priority": "P2",
+      "volume": 6307
+    },
+    {
+      "official_name": "SENA REGIONAL CAUCA Grupo Administrativo Intercentros CTPI",
+      "departamento": "Cauca",
+      "total_procesos": 2995,
+      "total_contratos": 3287,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "sena_regional",
+      "priority": "P2",
+      "volume": 6282
+    },
+    {
+      "official_name": "MUNICIPIO DE EL CERRITO.",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 3278,
+      "total_contratos": 2993,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 6271
+    },
+    {
+      "official_name": "CENTRAL ADMINISTRATIVA Y CONTABLE ESPECIALIZADA CENAC EDUCACIÓN//",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2880,
+      "total_contratos": 3373,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 6253
+    },
+    {
+      "official_name": "SANTIAGO DE CALI DISTRITO ESPECIAL - DEPARTAMENTO ADMINISTRATIVO DE TECNOLOGIAS DE LA INFORMACION Y LAS COMUNICACIONES",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 2736,
+      "total_contratos": 3463,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 6199
+    },
+    {
+      "official_name": "ICBF REGIONAL HUILA",
+      "departamento": "Huila",
+      "total_procesos": 3158,
+      "total_contratos": 3029,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "icbf_regional",
+      "priority": "P2",
+      "volume": 6187
+    },
+    {
+      "official_name": "SANTIAGO DE CALI DISTRITO ESPECIAL -DEPARTAMENTO ADMINISTRATIVO DE DESARROLLO E INNOVACION INSTITUCIONAL",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 2701,
+      "total_contratos": 3456,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 6157
+    },
+    {
+      "official_name": "MUNICIPIO DE QUIMBAYA",
+      "departamento": "Quindío",
+      "total_procesos": 3144,
+      "total_contratos": 3002,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 6146
+    },
+    {
+      "official_name": "ALCALDIA MUNICIPIO DE CUMARAL META",
+      "departamento": "Meta",
+      "total_procesos": 3247,
+      "total_contratos": 2891,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "alcaldia_municipal",
+      "priority": "P2",
+      "volume": 6138
+    },
+    {
+      "official_name": "SENA REGIONAL SANTANDER Grupo Administrativo CIDT",
+      "departamento": "Santander",
+      "total_procesos": 4024,
+      "total_contratos": 2080,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "sena_regional",
+      "priority": "P2",
+      "volume": 6104
+    },
+    {
+      "official_name": "SENA REGIONAL PUTUMAYO Grupo de Apoyo Administrativo",
+      "departamento": "Putumayo",
+      "total_procesos": 2622,
+      "total_contratos": 3477,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "sena_regional",
+      "priority": "P2",
+      "volume": 6099
+    },
+    {
+      "official_name": "MUNICIPIO DE PAIPA",
+      "departamento": "Boyacá",
+      "total_procesos": 3223,
+      "total_contratos": 2856,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 6079
+    },
+    {
+      "official_name": "CORPORACION AUTONOMA REGIONAL DEL MAGDALENA",
+      "departamento": "Magdalena",
+      "total_procesos": 3183,
+      "total_contratos": 2882,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "corporacion_autonoma",
+      "priority": "P2",
+      "volume": 6065
+    },
+    {
+      "official_name": "SENA REGIONAL CASANARE Grupo Administrativo Mixto",
+      "departamento": "Casanare",
+      "total_procesos": 2873,
+      "total_contratos": 3181,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "sena_regional",
+      "priority": "P2",
+      "volume": 6054
+    },
+    {
+      "official_name": "ALCALDIA DE MOCOA",
+      "departamento": "No Definido",
+      "total_procesos": 3211,
+      "total_contratos": 2841,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "alcaldia_municipal",
+      "priority": "P2",
+      "volume": 6052
+    },
+    {
+      "official_name": "Grupo Intendencia Regional Caribe",
+      "departamento": "Bolívar",
+      "total_procesos": 3252,
+      "total_contratos": 2792,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 6044
+    },
+    {
+      "official_name": "MINISTERIO DE DEFENSA NACIONAL",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 3521,
+      "total_contratos": 2518,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "ministerio",
+      "priority": "P2",
+      "volume": 6039
+    },
+    {
+      "official_name": "CORPORACIÓN AUTÓNOMA REGIONAL DEL CENTRO DE ANTIOQUIA",
+      "departamento": "Antioquia",
+      "total_procesos": 3378,
+      "total_contratos": 2645,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "corporacion_autonoma",
+      "priority": "P2",
+      "volume": 6023
+    },
+    {
+      "official_name": "MUNICIPIO DE MARINILLA",
+      "departamento": "Antioquia",
+      "total_procesos": 3170,
+      "total_contratos": 2807,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 5977
+    },
+    {
+      "official_name": "FONDO ADAPTACIÓN",
+      "departamento": "No Definido",
+      "total_procesos": 3217,
+      "total_contratos": 2738,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "fondo",
+      "priority": "P2",
+      "volume": 5955
+    },
+    {
+      "official_name": "ALCALDIA DE CAUCASIA",
+      "departamento": "Antioquia",
+      "total_procesos": 3092,
+      "total_contratos": 2859,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "alcaldia_municipal",
+      "priority": "P2",
+      "volume": 5951
+    },
+    {
+      "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL BENJAMIN BARNEY GASCA",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 2976,
+      "total_contratos": 2975,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 5951
+    },
+    {
+      "official_name": "UPME",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 3085,
+      "total_contratos": 2858,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 5943
+    },
+    {
+      "official_name": "MUNICIPIO DE LA CALERA CUNDINAMARCA",
+      "departamento": "Cundinamarca",
+      "total_procesos": 3258,
+      "total_contratos": 2657,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 5915
+    },
+    {
+      "official_name": "SECRETARIA GENERAL- GOBERNACION DEL VALLE",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 2965,
+      "total_contratos": 2949,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "secretaria",
+      "priority": "P2",
+      "volume": 5914
+    },
+    {
+      "official_name": "AGENCIA DE EDUCACIÓN POSTSECUNDARIA DE MEDELLÍN -SAPIENCIA-",
+      "departamento": "Antioquia",
+      "total_procesos": 2963,
+      "total_contratos": 2936,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 5899
+    },
+    {
+      "official_name": "FONDO DE VIVIENDA DE INTERES SOCIAL Y REFORMA URBANA DISTRITAL DE CARTAGENA DE INDIAS",
+      "departamento": "Bolívar",
+      "total_procesos": 3011,
+      "total_contratos": 2884,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "fondo",
+      "priority": "P2",
+      "volume": 5895
+    },
+    {
+      "official_name": "REGIONAL DE ASEGURAMIENTO EN SALUD No 3",
+      "departamento": "Risaralda",
+      "total_procesos": 3968,
+      "total_contratos": 1900,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 5868
+    },
+    {
+      "official_name": "ALCALDIA MUNICIPIO DE APARTADO",
+      "departamento": "Antioquia",
+      "total_procesos": 3240,
+      "total_contratos": 2613,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "alcaldia_municipal",
+      "priority": "P2",
+      "volume": 5853
+    },
+    {
+      "official_name": "UNIDAD ADMINISTRATIVA ESPECIAL JUNTA CENTRAL DE CONTADORES",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 3140,
+      "total_contratos": 2681,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 5821
+    },
+    {
+      "official_name": "MUNICIPIO DE PÚERTO ASIS PUTUMAYO",
+      "departamento": "Putumayo",
+      "total_procesos": 3223,
+      "total_contratos": 2547,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 5770
+    },
+    {
+      "official_name": "DIRECCION DE TRANSITO DE BUCARAMANGA",
+      "departamento": "Santander",
+      "total_procesos": 2922,
+      "total_contratos": 2825,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 5747
+    },
+    {
+      "official_name": "ALCADIA MUNICIPAL DE COPACABANA",
+      "departamento": "Antioquia",
+      "total_procesos": 2938,
+      "total_contratos": 2797,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 5735
+    },
+    {
+      "official_name": "DIRECCIÓN DE SANIDAD EJÉRCITO1",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 3511,
+      "total_contratos": 2220,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 5731
+    },
+    {
+      "official_name": "INSTITUTO MUNICIPAL DE DEPORTE Y RECREACION DE VILLAVICENCIO IMDER",
+      "departamento": "Meta",
+      "total_procesos": 2888,
+      "total_contratos": 2843,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "instituto",
+      "priority": "P2",
+      "volume": 5731
+    },
+    {
+      "official_name": "ALCALDIA MUNICIPAL DE IPIALES - NIVEL CENTRAL",
+      "departamento": "Nariño",
+      "total_procesos": 2892,
+      "total_contratos": 2831,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "alcaldia_municipal",
+      "priority": "P2",
+      "volume": 5723
+    },
+    {
+      "official_name": "METUN",
+      "departamento": "Boyacá",
+      "total_procesos": 3003,
+      "total_contratos": 2715,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 5718
+    },
+    {
+      "official_name": "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CTDPE",
+      "departamento": "Cundinamarca",
+      "total_procesos": 3119,
+      "total_contratos": 2573,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "sena_regional",
+      "priority": "P2",
+      "volume": 5692
+    },
+    {
+      "official_name": "Instituto Municipal de Cultura y Turismo de Bucaramanga",
+      "departamento": "Santander",
+      "total_procesos": 2944,
+      "total_contratos": 2730,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "instituto",
+      "priority": "P2",
+      "volume": 5674
+    },
+    {
+      "official_name": "CORPORACION AUTONOMA REGIONAL DEL ALTO MAGDALENA",
+      "departamento": "Huila",
+      "total_procesos": 3046,
+      "total_contratos": 2610,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "corporacion_autonoma",
+      "priority": "P2",
+      "volume": 5656
+    },
+    {
+      "official_name": "ICBF REGIONAL CALDAS",
+      "departamento": "Caldas",
+      "total_procesos": 2899,
+      "total_contratos": 2749,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "icbf_regional",
+      "priority": "P2",
+      "volume": 5648
+    },
+    {
+      "official_name": "Instituto Municipal de Deporte y Recreación de Bello",
+      "departamento": "Antioquia",
+      "total_procesos": 2861,
+      "total_contratos": 2786,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "instituto",
+      "priority": "P2",
+      "volume": 5647
+    },
+    {
+      "official_name": "ALCALDIA MUNICIPIO DE CIRCASIA QUINDIO",
+      "departamento": "Quindío",
+      "total_procesos": 2948,
+      "total_contratos": 2683,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "alcaldia_municipal",
+      "priority": "P2",
+      "volume": 5631
+    },
+    {
+      "official_name": "HOSPITAL MUNICIPAL DE ACACIAS E.S.E.",
+      "departamento": "Meta",
+      "total_procesos": 3188,
+      "total_contratos": 2441,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 5629
+    },
+    {
+      "official_name": "ALCALDIA MUNICIPIO DE LETICIA",
+      "departamento": "Amazonas",
+      "total_procesos": 3108,
+      "total_contratos": 2513,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "alcaldia_municipal",
+      "priority": "P1",
+      "volume": 5621
+    },
+    {
+      "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL REGIONAL NOROCCIDENTAL",
+      "departamento": "Norte de Santander",
+      "total_procesos": 2864,
+      "total_contratos": 2742,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 5606
+    },
+    {
+      "official_name": "UNIDAD ADMINISTRATIVA ESPECIAL MIGRACION COLOMBIA-*",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 3039,
+      "total_contratos": 2518,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 5557
+    },
+    {
+      "official_name": "ALCALDIA DEL MUNICIPIO DE AGUAZUL",
+      "departamento": "Casanare",
+      "total_procesos": 3000,
+      "total_contratos": 2556,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "alcaldia_municipal",
+      "priority": "P2",
+      "volume": 5556
+    },
+    {
+      "official_name": "CONCEJO MUNICIPAL DE MEDELLIN",
+      "departamento": "Antioquia",
+      "total_procesos": 2635,
+      "total_contratos": 2880,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 5515
+    },
+    {
+      "official_name": "UPRES VALLE",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 3045,
+      "total_contratos": 2394,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 5439
+    },
+    {
+      "official_name": "ESE HOSPITAL LOCAL CARTAGENA DE INDIAS.*",
+      "departamento": "Bolívar",
+      "total_procesos": 2989,
+      "total_contratos": 2443,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 5432
+    },
+    {
+      "official_name": "MUNICIPIO DE SIBATE",
+      "departamento": "Cundinamarca",
+      "total_procesos": 3077,
+      "total_contratos": 2344,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 5421
+    },
+    {
+      "official_name": "SENA REGIONAL CAUCA Centro agropecuario",
+      "departamento": "Cauca",
+      "total_procesos": 2461,
+      "total_contratos": 2955,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "sena_regional",
+      "priority": "P2",
+      "volume": 5416
+    },
+    {
+      "official_name": "ALCALDIA MUNICIPIO DE RICAURTE",
+      "departamento": "Cundinamarca",
+      "total_procesos": 2988,
+      "total_contratos": 2425,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "alcaldia_municipal",
+      "priority": "P2",
+      "volume": 5413
+    },
+    {
+      "official_name": "INSTITUTO DEPARTAMENTAL DE DEPORTES Y RECREACION DEL CAUCA",
+      "departamento": "Cauca",
+      "total_procesos": 2758,
+      "total_contratos": 2638,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "instituto",
+      "priority": "P2",
+      "volume": 5396
+    },
+    {
+      "official_name": "SENA REGIONAL SANTANDER Grupo Administrativo CA",
+      "departamento": "Santander",
+      "total_procesos": 2534,
+      "total_contratos": 2857,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "sena_regional",
+      "priority": "P2",
+      "volume": 5391
+    },
+    {
+      "official_name": "MUNICIPIO DE UBATE",
+      "departamento": "Cundinamarca",
+      "total_procesos": 3135,
+      "total_contratos": 2234,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 5369
+    },
+    {
+      "official_name": "ESE HOSPITAL NUESTRA SEÑORA DE LAS MERCEDES FUNZA DEL MUNICIPIO DE FUNZA",
+      "departamento": "Cundinamarca",
+      "total_procesos": 2657,
+      "total_contratos": 2692,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 5349
+    },
+    {
+      "official_name": "PERSONERIA DISTRITAL DE SANTIAGO DE CALI",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 2732,
+      "total_contratos": 2612,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 5344
+    },
+    {
+      "official_name": "MUNICIPIO DE CARTAGO",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 2748,
+      "total_contratos": 2580,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 5328
+    },
+    {
+      "official_name": "INSTITUTO MUNICIPAL PARA LA RECREACION Y EL DEPORTE DE SOACHA",
+      "departamento": "Cundinamarca",
+      "total_procesos": 2581,
+      "total_contratos": 2741,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "instituto",
+      "priority": "P2",
+      "volume": 5322
+    },
+    {
+      "official_name": "ESE HOSPITAL LOCAL MUNICIPIO DE LOS PATIOS",
+      "departamento": "Norte de Santander",
+      "total_procesos": 2633,
+      "total_contratos": 2667,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 5300
+    },
+    {
+      "official_name": "ALCALDIA MUNICIPIO DE PUERTO LOPEZ - META",
+      "departamento": "Meta",
+      "total_procesos": 3033,
+      "total_contratos": 2263,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "alcaldia_municipal",
+      "priority": "P2",
+      "volume": 5296
+    },
+    {
+      "official_name": "SANTIAGO DE CALI DISTRITO ESPECIAL - SECRETARIA DE DESARROLLO ECONOMICO",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 2587,
+      "total_contratos": 2707,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "secretaria",
+      "priority": "P2",
+      "volume": 5294
+    },
+    {
+      "official_name": "INSTITUTO MUNICIPAL DEL DEPORTE Y LA RECREACION DE YUMBO",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 2509,
+      "total_contratos": 2781,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "instituto",
+      "priority": "P2",
+      "volume": 5290
+    },
+    {
+      "official_name": "E.S.E HOSPITAL NUESTRA SEÑORA DEL CARMEN DEL COLEGIO",
+      "departamento": "Cundinamarca",
+      "total_procesos": 2746,
+      "total_contratos": 2530,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 5276
+    },
+    {
+      "official_name": "SUPERSOCIEDADES",
+      "departamento": "No Definido",
+      "total_procesos": 2939,
+      "total_contratos": 2333,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 5272
+    },
+    {
+      "official_name": "INSTITUTO MUNICIPAL DEL DEPORTE Y LA RECREACION DE ARMENIA - SITIO OFICIAL",
+      "departamento": "Quindío",
+      "total_procesos": 2679,
+      "total_contratos": 2588,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "instituto",
+      "priority": "P2",
+      "volume": 5267
+    },
+    {
+      "official_name": "INSTITUTO PARA EL FOMENTO DEL DEPORTE, LA RECREACION, EL APROVECHAMIENTO DEL TIEMPO LIBRE Y LA EDUCACION FISICA DE BARRANCABERMEJA",
+      "departamento": "Santander",
+      "total_procesos": 2653,
+      "total_contratos": 2606,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "instituto",
+      "priority": "P2",
+      "volume": 5259
+    },
+    {
+      "official_name": "REGIONAL DE ASEGURAMIENTO EN SALUD No. 4",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 3134,
+      "total_contratos": 2092,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 5226
+    },
+    {
+      "official_name": "ESCUELA TECNOLÓGICA INSTITUTO TÉCNICO CENTRAL",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2771,
+      "total_contratos": 2401,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "instituto",
+      "priority": "P2",
+      "volume": 5172
+    },
+    {
+      "official_name": "HOSPITAL DE AGUAZUL JUAN HERNANDO URREGO E.S.E",
+      "departamento": "Casanare",
+      "total_procesos": 2632,
+      "total_contratos": 2537,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 5169
+    },
+    {
+      "official_name": "MUNICIPIO DE PAMPLONA",
+      "departamento": "Norte de Santander",
+      "total_procesos": 2714,
+      "total_contratos": 2454,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 5168
+    },
+    {
+      "official_name": "NUEVA EMPRESA SOCIAL DEL ESTADO HOSPITAL DEPARTAMENTAL SAN FRANCISCO DE ASÍS",
+      "departamento": "Chocó",
+      "total_procesos": 3234,
+      "total_contratos": 1908,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P1",
+      "volume": 5142
+    },
+    {
+      "official_name": "REGIONAL DE ASEGURAMIENTO EN SALUD No. 5",
+      "departamento": "Santander",
+      "total_procesos": 3093,
+      "total_contratos": 2043,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 5136
+    },
+    {
+      "official_name": "ESCUELA SUPERIOR DE GUERRA",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2938,
+      "total_contratos": 2179,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 5117
+    },
+    {
+      "official_name": "ICBF REGIONAL CESAR",
+      "departamento": "Cesar",
+      "total_procesos": 2568,
+      "total_contratos": 2547,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "icbf_regional",
+      "priority": "P1",
+      "volume": 5115
+    },
+    {
+      "official_name": "DEPARTAMENTO ADMINISTRATIVO DE LA FUNCIÓN PÚBLICA ENTIDAD",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2746,
+      "total_contratos": 2360,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 5106
+    },
+    {
+      "official_name": "CENTRO DE COMERCIO Y SERVICIOS - SENA REGIONAL CAUCA",
+      "departamento": "Cauca",
+      "total_procesos": 2005,
+      "total_contratos": 3079,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "sena_regional",
+      "priority": "P2",
+      "volume": 5084
+    },
+    {
+      "official_name": "CENTRAL ADMINISTRATIVA Y CONTABLE TELEMATICA",
+      "departamento": "Cundinamarca",
+      "total_procesos": 3749,
+      "total_contratos": 1331,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 5080
+    },
+    {
+      "official_name": "FISCALÍA GENERAL DE LA NACIÓN NIVEL CENTRAL.",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 3339,
+      "total_contratos": 1732,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 5071
+    },
+    {
+      "official_name": "CENTRO CULTURAL BACATA",
+      "departamento": "Cundinamarca",
+      "total_procesos": 2590,
+      "total_contratos": 2475,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 5065
+    },
+    {
+      "official_name": "SECRETARÍA DE MOVILIDAD CONTEMPORANEA",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2560,
+      "total_contratos": 2504,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "secretaria",
+      "priority": "P2",
+      "volume": 5064
+    },
+    {
+      "official_name": "INSTITUTO DISTRITAL DE TURISMO",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2614,
+      "total_contratos": 2443,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "instituto",
+      "priority": "P2",
+      "volume": 5057
+    },
+    {
+      "official_name": "MUNICIPIO DE BARBOSA",
+      "departamento": "Antioquia",
+      "total_procesos": 2632,
+      "total_contratos": 2420,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 5052
+    },
+    {
+      "official_name": "MUNICIPIO DE PUERTO GAITAN",
+      "departamento": "Meta",
+      "total_procesos": 2604,
+      "total_contratos": 2442,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 5046
+    },
+    {
+      "official_name": "DEPARTAMENTO DEL VALLE DEL CAUCA - SECRETARIA DE TURISMO",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 2520,
+      "total_contratos": 2509,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "secretaria",
+      "priority": "P2",
+      "volume": 5029
+    },
+    {
+      "official_name": "SENA REGIONAL ANTIOQUIA Grupo Administrativo CTAPT",
+      "departamento": "Antioquia",
+      "total_procesos": 2018,
+      "total_contratos": 3011,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "sena_regional",
+      "priority": "P2",
+      "volume": 5029
+    },
+    {
+      "official_name": "Departamento Administrativo de Jurídica",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 2420,
+      "total_contratos": 2591,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 5011
+    },
+    {
+      "official_name": "PARQUES NACIONALES NATURALES DE COLOMBIA - DIRECCION TERRITORIAL ANDES OCCIDENTALES**",
+      "departamento": "Antioquia",
+      "total_procesos": 2612,
+      "total_contratos": 2390,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 5002
+    },
+    {
+      "official_name": "DISPENSARIO MEDICO DE BUCARAMANGA*",
+      "departamento": "Santander",
+      "total_procesos": 2912,
+      "total_contratos": 2088,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 5000
+    },
+    {
+      "official_name": "GOBERNACION DEL VALLE DEL CAUCA - DEPARTAMENTO ADMINISTRATIVO DE PLANEACION",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 2501,
+      "total_contratos": 2498,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "gobernacion",
+      "priority": "P2",
+      "volume": 4999
+    },
+    {
+      "official_name": "DEPARTAMENTO DE CUNDINAMARCA - SECRETARÍA DE LO SOCIAL Y LA FAMILIA",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2550,
+      "total_contratos": 2421,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "secretaria",
+      "priority": "P2",
+      "volume": 4971
+    },
+    {
+      "official_name": "ALCALDIA MUNICIPAL SAN CARLOS",
+      "departamento": "Antioquia",
+      "total_procesos": 2728,
+      "total_contratos": 2242,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "alcaldia_municipal",
+      "priority": "P2",
+      "volume": 4970
+    },
+    {
+      "official_name": "INFIBAGUE**",
+      "departamento": "Tolima",
+      "total_procesos": 2625,
+      "total_contratos": 2338,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4963
+    },
+    {
+      "official_name": "ART",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2596,
+      "total_contratos": 2364,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4960
+    },
+    {
+      "official_name": "GOBERNACIÓN DEL VALLE DEL CAUCA - SECRETARIA DE LAS TECNOLOGÍAS DE LA INFORMACIÓN Y LAS COMUNICACIONES",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 2460,
+      "total_contratos": 2491,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "secretaria",
+      "priority": "P2",
+      "volume": 4951
+    },
+    {
+      "official_name": "EMPRESAS PÚBLICAS DE CUNDINAMARCA S.A. E.S.P.",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2583,
+      "total_contratos": 2365,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4948
+    },
+    {
+      "official_name": "MUNICIPIO DE CHIQUINQUIRA+",
+      "departamento": "Boyacá",
+      "total_procesos": 2636,
+      "total_contratos": 2310,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4946
+    },
+    {
+      "official_name": "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CDAE",
+      "departamento": "Cundinamarca",
+      "total_procesos": 2254,
+      "total_contratos": 2681,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "sena_regional",
+      "priority": "P2",
+      "volume": 4935
+    },
+    {
+      "official_name": "ESE HOSPITAL LOCAL EL RETEN",
+      "departamento": "No Definido",
+      "total_procesos": 3668,
+      "total_contratos": 1255,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 4923
+    },
+    {
+      "official_name": "CORPORACIÓN AUTÓNOMA DEL RÍO GRANDE DE LA MAGDALENA**",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2566,
+      "total_contratos": 2344,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "corporacion_autonoma",
+      "priority": "P2",
+      "volume": 4910
+    },
+    {
+      "official_name": "ALCALDIA MUNICIPAL DE LA JAGUA DE IBIRICO",
+      "departamento": "Cesar",
+      "total_procesos": 2687,
+      "total_contratos": 2222,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "alcaldia_municipal",
+      "priority": "P1",
+      "volume": 4909
+    },
+    {
+      "official_name": "SENA REGIONAL CAQUETA",
+      "departamento": "Caquetá",
+      "total_procesos": 2059,
+      "total_contratos": 2845,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "sena_regional",
+      "priority": "P1",
+      "volume": 4904
+    },
+    {
+      "official_name": "C - ESE HMZR - COMPRADOR",
+      "departamento": "Cesar",
+      "total_procesos": 2370,
+      "total_contratos": 2486,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P1",
+      "volume": 4856
+    },
+    {
+      "official_name": "SENA REGIONAL HUILA Grupo Administrativo CGDSS",
+      "departamento": "Huila",
+      "total_procesos": 2428,
+      "total_contratos": 2421,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "sena_regional",
+      "priority": "P2",
+      "volume": 4849
+    },
+    {
+      "official_name": "MUNICIPIO DE SEGOVIA",
+      "departamento": "Antioquia",
+      "total_procesos": 2543,
+      "total_contratos": 2303,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4846
+    },
+    {
+      "official_name": "GOBERNACION DEL VALLE- SECRETARIA DE MUJER, EQUIDAD DE GENERO Y DIVERSIDAD SEXUAL",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 2434,
+      "total_contratos": 2409,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "secretaria",
+      "priority": "P2",
+      "volume": 4843
+    },
+    {
+      "official_name": "INSTITUTO DE CULTURA Y TURISMO DE MANIZALES",
+      "departamento": "Caldas",
+      "total_procesos": 2507,
+      "total_contratos": 2333,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "instituto",
+      "priority": "P2",
+      "volume": 4840
+    },
+    {
+      "official_name": "SENA REGIONAL BOLIVAR Grupo Administrativo CINFP",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2510,
+      "total_contratos": 2310,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "sena_regional",
+      "priority": "P2",
+      "volume": 4820
+    },
+    {
+      "official_name": "ICBF REGIONAL SUCRE",
+      "departamento": "Sucre",
+      "total_procesos": 2428,
+      "total_contratos": 2387,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "icbf_regional",
+      "priority": "P1",
+      "volume": 4815
+    },
+    {
+      "official_name": "INSTITUCION UNIVERSITARIA DE ENVIGADO",
+      "departamento": "Antioquia",
+      "total_procesos": 2464,
+      "total_contratos": 2342,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4806
+    },
+    {
+      "official_name": "ICBF REGIONAL META",
+      "departamento": "Meta",
+      "total_procesos": 2430,
+      "total_contratos": 2349,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "icbf_regional",
+      "priority": "P2",
+      "volume": 4779
+    },
+    {
+      "official_name": "INSTITUTO DEPARTAMENTAL DE CULTURA DEL META",
+      "departamento": "Meta",
+      "total_procesos": 2394,
+      "total_contratos": 2374,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "instituto",
+      "priority": "P2",
+      "volume": 4768
+    },
+    {
+      "official_name": "VEEDURIA DISTRITAL",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2456,
+      "total_contratos": 2308,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4764
+    },
+    {
+      "official_name": "CONCEJO DISTRITAL DE CARTAGENA DE INDIAS",
+      "departamento": "Bolívar",
+      "total_procesos": 2380,
+      "total_contratos": 2380,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4760
+    },
+    {
+      "official_name": "E.S.E CENTRO HOSPITAL LUIS ANTONIO MONTERO",
+      "departamento": "Nariño",
+      "total_procesos": 2358,
+      "total_contratos": 2401,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 4759
+    },
+    {
+      "official_name": "ESTABLECIMIENTO PUBLICO AMBIENTAL DE CARTAGENA",
+      "departamento": "Bolívar",
+      "total_procesos": 2398,
+      "total_contratos": 2353,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4751
+    },
+    {
+      "official_name": "ALCALDÍA MUNICIPAL DE MAGANGUE",
+      "departamento": "Bolívar",
+      "total_procesos": 1946,
+      "total_contratos": 2796,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4742
+    },
+    {
+      "official_name": "MUNICIPIO EL CARMEN DE VIBORAL",
+      "departamento": "Antioquia",
+      "total_procesos": 2605,
+      "total_contratos": 2132,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4737
+    },
+    {
+      "official_name": "MUNICIPIO DE ZARZAL",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 2523,
+      "total_contratos": 2214,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4737
+    },
+    {
+      "official_name": "AREA METROPOLITANA DEL VALLE DE ABURRA",
+      "departamento": "Antioquia",
+      "total_procesos": 2493,
+      "total_contratos": 2243,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4736
+    },
+    {
+      "official_name": "MUNICIPIO SANTA ROSA DE OSOS",
+      "departamento": "Antioquia",
+      "total_procesos": 2681,
+      "total_contratos": 2046,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4727
+    },
+    {
+      "official_name": "BASPC Nº 19 *",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2785,
+      "total_contratos": 1941,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4726
+    },
+    {
+      "official_name": "ALCALDIA MUNICIPIO DE SANTANDER DE QUILICHAO",
+      "departamento": "Cauca",
+      "total_procesos": 2570,
+      "total_contratos": 2143,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "alcaldia_municipal",
+      "priority": "P2",
+      "volume": 4713
+    },
+    {
+      "official_name": "MUNICIPIO DE SEVILLA",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 2513,
+      "total_contratos": 2197,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4710
+    },
+    {
+      "official_name": "DEPARTAMENTO DE CUNDINAMARCA-SECRETARIA DE HACIENDA",
+      "departamento": "Cundinamarca",
+      "total_procesos": 2406,
+      "total_contratos": 2303,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "secretaria",
+      "priority": "P2",
+      "volume": 4709
+    },
+    {
+      "official_name": "SECRETARIA DE MOVILIDAD Y TRANSPORTE",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 2338,
+      "total_contratos": 2361,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "secretaria",
+      "priority": "P2",
+      "volume": 4699
+    },
+    {
+      "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN ROQUE PRADERA.",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 3140,
+      "total_contratos": 1534,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 4674
+    },
+    {
+      "official_name": "IDERBOL-",
+      "departamento": "Bolívar",
+      "total_procesos": 2313,
+      "total_contratos": 2341,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4654
+    },
+    {
+      "official_name": "Central administrativa regional Usaquen",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2727,
+      "total_contratos": 1902,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4629
+    },
+    {
+      "official_name": "INSTITUTO DE DEPORTES DEL DEPARTAMENTO NORTE DE SANTANDER INDENORTE",
+      "departamento": "Norte de Santander",
+      "total_procesos": 2348,
+      "total_contratos": 2269,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "instituto",
+      "priority": "P2",
+      "volume": 4617
+    },
+    {
+      "official_name": "UNIDAD PRESTADORA DE SALUD HUILA",
+      "departamento": "Huila",
+      "total_procesos": 2520,
+      "total_contratos": 2073,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4593
+    },
+    {
+      "official_name": "PARQUES NACIONALES NATURALES DE COLOMBIA - DIRECCION TERRITORIAL ANDES NORORIENTALES",
+      "departamento": "Santander",
+      "total_procesos": 2428,
+      "total_contratos": 2162,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4590
+    },
+    {
+      "official_name": "SENA REGIONAL ARAUCA Grupo de Apoyo Administrativo Mixto",
+      "departamento": "Arauca",
+      "total_procesos": 2368,
+      "total_contratos": 2221,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "sena_regional",
+      "priority": "P1",
+      "volume": 4589
+    },
+    {
+      "official_name": "ALCALDIA DE FLANDES",
+      "departamento": "Tolima",
+      "total_procesos": 2483,
+      "total_contratos": 2100,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "alcaldia_municipal",
+      "priority": "P2",
+      "volume": 4583
+    },
+    {
+      "official_name": "CENTRO TECNOLÓGICO DE CÚCUTA",
+      "departamento": "Norte de Santander",
+      "total_procesos": 2322,
+      "total_contratos": 2239,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4561
+    },
+    {
+      "official_name": "SENA REGIONAL HUILA Grupo Administrativo CEFA",
+      "departamento": "Huila",
+      "total_procesos": 2678,
+      "total_contratos": 1850,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "sena_regional",
+      "priority": "P2",
+      "volume": 4528
+    },
+    {
+      "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN RAFAEL DE TUNJA",
+      "departamento": "Boyacá",
+      "total_procesos": 3025,
+      "total_contratos": 1483,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 4508
+    },
+    {
+      "official_name": "ESE HOSPITAL LOCAL DE SITIONUEVO",
+      "departamento": "Magdalena",
+      "total_procesos": 3465,
+      "total_contratos": 1030,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 4495
+    },
+    {
+      "official_name": "UNIAJC",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 2354,
+      "total_contratos": 2134,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4488
+    },
+    {
+      "official_name": "MUNICIPIO DE LA PLATA",
+      "departamento": "Huila",
+      "total_procesos": 2401,
+      "total_contratos": 2081,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4482
+    },
+    {
+      "official_name": "Rama Judicial  Dirección Ejecutiva de Administración Judicial",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2719,
+      "total_contratos": 1753,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4472
+    },
+    {
+      "official_name": "CENTRAL DE URGENCIAS LOUIS PASTEUR E.S.E",
+      "departamento": "Tolima",
+      "total_procesos": 2202,
+      "total_contratos": 2219,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4421
+    },
+    {
+      "official_name": "INSTITUTO DEPARTAMENTAL DE BELLAS ARTES",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 2275,
+      "total_contratos": 2137,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "instituto",
+      "priority": "P2",
+      "volume": 4412
+    },
+    {
+      "official_name": "Patrimonio Autónomo-Fondo De Seguridad Vial",
+      "departamento": "No Definido",
+      "total_procesos": 2209,
+      "total_contratos": 2190,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "fondo",
+      "priority": "P2",
+      "volume": 4399
+    },
+    {
+      "official_name": "AGENCIA NACIONAL DE DEFENSA JURÍDICA DEL ESTADO",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2432,
+      "total_contratos": 1961,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4393
+    },
+    {
+      "official_name": "UAE FONDO NACIONAL DE ESTUPEFACIENTES",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2298,
+      "total_contratos": 2088,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "fondo",
+      "priority": "P2",
+      "volume": 4386
+    },
+    {
+      "official_name": "ALCALDIA MUNICIPAL DE VILLETA",
+      "departamento": "Cundinamarca",
+      "total_procesos": 2378,
+      "total_contratos": 2004,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "alcaldia_municipal",
+      "priority": "P2",
+      "volume": 4382
+    },
+    {
+      "official_name": "SANTIAGO DE CALI DISTRITO ESPECIAL - DEPARTAMENTO ADMINISTRATIVO DE CONTRATACION PUBLICA",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 2362,
+      "total_contratos": 2011,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4373
+    },
+    {
+      "official_name": "INSTITUTO CARO Y CUERVO",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2330,
+      "total_contratos": 2000,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "instituto",
+      "priority": "P2",
+      "volume": 4330
+    },
+    {
+      "official_name": "INSTITUTO NACIONAL PENITENCIARIO Y CARCELARIO INPEC+",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2666,
+      "total_contratos": 1660,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "instituto",
+      "priority": "P2",
+      "volume": 4326
+    },
+    {
+      "official_name": "INSTITUTO DE PATRIMONIO Y CULTURAL DE CARTAGENA DE INDIAS - IPCC",
+      "departamento": "Bolívar",
+      "total_procesos": 2191,
+      "total_contratos": 2127,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "instituto",
+      "priority": "P2",
+      "volume": 4318
+    },
+    {
+      "official_name": "MUNICIPIO DE GUATAPE",
+      "departamento": "Antioquia",
+      "total_procesos": 2181,
+      "total_contratos": 2119,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4300
+    },
+    {
+      "official_name": "INSTITUTO MUNICIPAL DEL DEPORTE Y LA RECREACION DE PALMIRA",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 1824,
+      "total_contratos": 2460,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "instituto",
+      "priority": "P2",
+      "volume": 4284
+    },
+    {
+      "official_name": "TELEVISION REGIONAL DEL ORIENTE LIMITADA. CANAL TRO",
+      "departamento": "Santander",
+      "total_procesos": 2479,
+      "total_contratos": 1794,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4273
+    },
+    {
+      "official_name": "DISPENSARIO MEDICO TOLEMAIDA.",
+      "departamento": "Cundinamarca",
+      "total_procesos": 2435,
+      "total_contratos": 1834,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4269
+    },
+    {
+      "official_name": "MUNICIPIO DE SAN JUAN BAUTISTA DE GUACARI2",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 2219,
+      "total_contratos": 2049,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4268
+    },
+    {
+      "official_name": "ICBF REGIONAL CAQUETA",
+      "departamento": "Caquetá",
+      "total_procesos": 2212,
+      "total_contratos": 2051,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "icbf_regional",
+      "priority": "P1",
+      "volume": 4263
+    },
+    {
+      "official_name": "CORPORACION AUTONOMA REGIONAL DEL GUAVIO - CORPOGUAVIO (OFICIAL)",
+      "departamento": "Cundinamarca",
+      "total_procesos": 2095,
+      "total_contratos": 2154,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "corporacion_autonoma",
+      "priority": "P2",
+      "volume": 4249
+    },
+    {
+      "official_name": "EMPRESA SOCIAL DEL ESTADO CENTRO 1 ESE",
+      "departamento": "Cauca",
+      "total_procesos": 2115,
+      "total_contratos": 2133,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4248
+    },
+    {
+      "official_name": "DIRECCIÓN DE INVESTIGACIÓN CRIMINAL E INTERPOL",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 3329,
+      "total_contratos": 917,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4246
+    },
+    {
+      "official_name": "CENAC TOLEMAIDA",
+      "departamento": "Cundinamarca",
+      "total_procesos": 2873,
+      "total_contratos": 1343,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4216
+    },
+    {
+      "official_name": "ICBF RISARALDA//",
+      "departamento": "Caldas",
+      "total_procesos": 2129,
+      "total_contratos": 2068,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4197
+    },
+    {
+      "official_name": "ESE HOSPITAL MUNICIPAL DE SABANAGRANDE",
+      "departamento": "Atlántico",
+      "total_procesos": 3008,
+      "total_contratos": 1187,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 4195
+    },
+    {
+      "official_name": "DMORI",
+      "departamento": "Meta",
+      "total_procesos": 2278,
+      "total_contratos": 1917,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4195
+    },
+    {
+      "official_name": "ESE HOSPITAL LOCAL DE CALAMAR",
+      "departamento": "Bolívar",
+      "total_procesos": 2092,
+      "total_contratos": 2096,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 4188
+    },
+    {
+      "official_name": "ESE HOSPITAL SAN ANTONIO DE PADUA DE SIMITI",
+      "departamento": "Bolívar",
+      "total_procesos": 2082,
+      "total_contratos": 2098,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 4180
+    },
+    {
+      "official_name": "MUNICIPIO DE LA UNION",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 2231,
+      "total_contratos": 1948,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4179
+    },
+    {
+      "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL NUESTRA SEÑORA DEL CARMEN DE GUAMAL MAGDALENA",
+      "departamento": "Magdalena",
+      "total_procesos": 4167,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 4167
+    },
+    {
+      "official_name": "HOSPITAL DEPARTAMENTAL SAN ANTONIO DE VILLAMARIA ESE",
+      "departamento": "Caldas",
+      "total_procesos": 2963,
+      "total_contratos": 1189,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 4152
+    },
+    {
+      "official_name": "INSTITUTO TOLIMENSE DE FORMACION TECNICA PROFESIONAL",
+      "departamento": "Tolima",
+      "total_procesos": 2182,
+      "total_contratos": 1969,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "instituto",
+      "priority": "P2",
+      "volume": 4151
+    },
+    {
+      "official_name": "INSTITUTO MUNICIPAL DE RECREACIÓN Y DEPORTES DE CHIA",
+      "departamento": "Cundinamarca",
+      "total_procesos": 2076,
+      "total_contratos": 2058,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "instituto",
+      "priority": "P2",
+      "volume": 4134
+    },
+    {
+      "official_name": "COMANDO DE RECLUTAMIENTO Y CONTROL RESERVAS DEL EJERCITO NACIONAL",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2265,
+      "total_contratos": 1848,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4113
+    },
+    {
+      "official_name": "EMPRESA INDUSTRIAL Y COMERCIAL DEL ESTADO ADMINISTRADORA DEL MONOPOLIO RENTISTICO DE LOS JUEGOS DE SUERTE Y AZAR",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2095,
+      "total_contratos": 2018,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4113
+    },
+    {
+      "official_name": "ESE SANTIAGO DE TUNJA *",
+      "departamento": "Boyacá",
+      "total_procesos": 2043,
+      "total_contratos": 2047,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4090
+    },
+    {
+      "official_name": "SISTEMA ESTRATEGICO DE TRANSPORTE PUBLICO DE SANTA MARTA S.A.S.",
+      "departamento": "Magdalena",
+      "total_procesos": 2063,
+      "total_contratos": 2015,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4078
+    },
+    {
+      "official_name": "DIRECCION DE SANIDAD EJERCITO DISPENSARIO MEDICO YOPAL",
+      "departamento": "Casanare",
+      "total_procesos": 2509,
+      "total_contratos": 1562,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4071
+    },
+    {
+      "official_name": "MUNICIPIO DE JERICO - ANTIOQUIA",
+      "departamento": "Antioquia",
+      "total_procesos": 2092,
+      "total_contratos": 1972,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4064
+    },
+    {
+      "official_name": "PERSONERIA DISTRITAL DE MEDELLIN*",
+      "departamento": "Antioquia",
+      "total_procesos": 2027,
+      "total_contratos": 2037,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4064
+    },
+    {
+      "official_name": "IMPRENTA NACIONAL DE COLOMBIA",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2323,
+      "total_contratos": 1734,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4057
+    },
+    {
+      "official_name": "DISPENSARIO MEDICO NEIVA - DIRECCIÓN DE SANIDAD EJERCITO",
+      "departamento": "Huila",
+      "total_procesos": 2481,
+      "total_contratos": 1572,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4053
+    },
+    {
+      "official_name": "EMPRESA SOCIAL DEL ESTADO BARRANCABERMEJA",
+      "departamento": "No Definido",
+      "total_procesos": 2009,
+      "total_contratos": 2035,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4044
+    },
+    {
+      "official_name": "MUNICIPIO DE EL SANTUARIO ANTIOQUIA",
+      "departamento": "Antioquia",
+      "total_procesos": 2131,
+      "total_contratos": 1912,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4043
+    },
+    {
+      "official_name": "INM",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2332,
+      "total_contratos": 1708,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4040
+    },
+    {
+      "official_name": "ICBF REGIONAL QUINDIO",
+      "departamento": "Quindío",
+      "total_procesos": 2074,
+      "total_contratos": 1953,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "icbf_regional",
+      "priority": "P2",
+      "volume": 4027
+    },
+    {
+      "official_name": "EMPRESA SOCIAL DEL ESTADO PASTO SALUD E.S.E.",
+      "departamento": "No Definido",
+      "total_procesos": 4024,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4024
+    },
+    {
+      "official_name": "GOBERNACION DEL VALLE - SECRETARIA DE ASUNTOS ETNICOS",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 2002,
+      "total_contratos": 2020,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "secretaria",
+      "priority": "P2",
+      "volume": 4022
+    },
+    {
+      "official_name": "GOBERNACION DEL VALLE DEL CAUCA - SECRETARIA DE VIVIENDA Y HABITAT",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 2025,
+      "total_contratos": 1992,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "secretaria",
+      "priority": "P2",
+      "volume": 4017
+    },
+    {
+      "official_name": "ESCUELA TALLER CARTAGENA DE INDIAS",
+      "departamento": "No Definido",
+      "total_procesos": 1953,
+      "total_contratos": 2061,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4014
+    },
+    {
+      "official_name": "DUBERNEY MAHECHA GALINDO",
+      "departamento": "Antioquia",
+      "total_procesos": 2109,
+      "total_contratos": 1904,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 4013
+    },
+    {
+      "official_name": "SENA REGIONAL VALLE Grupo Administrativo CNPB",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 2177,
+      "total_contratos": 1830,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "sena_regional",
+      "priority": "P2",
+      "volume": 4007
+    },
+    {
+      "official_name": "FONDO DE PRESTACIONES ECONOMICAS CESANTIAS Y PENSIONES",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2076,
+      "total_contratos": 1931,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "fondo",
+      "priority": "P2",
+      "volume": 4007
+    },
+    {
+      "official_name": "BIBLIOTECA DEPARTAMENTAL JORGE GARCES BORRERO",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 2073,
+      "total_contratos": 1923,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3996
+    },
+    {
+      "official_name": "ALCALDIA MUNICIPIO DE GARZON",
+      "departamento": "Huila",
+      "total_procesos": 2072,
+      "total_contratos": 1924,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "alcaldia_municipal",
+      "priority": "P2",
+      "volume": 3996
+    },
+    {
+      "official_name": "NUEVO HOSPITAL LA CANDELARIA DE PURIFICACION TOLIMA EMPRESA SOCIAL DEL ESTADO",
+      "departamento": "Tolima",
+      "total_procesos": 3995,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 3995
+    },
+    {
+      "official_name": "ESE HOSPITAL SAN JERÓNIMO DE MONTERÍA",
+      "departamento": "Córdoba",
+      "total_procesos": 3987,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P1",
+      "volume": 3987
+    },
+    {
+      "official_name": "AREA METROPOLITANA CENTRO OCCIDENTE",
+      "departamento": "Risaralda",
+      "total_procesos": 2011,
+      "total_contratos": 1965,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3976
+    },
+    {
+      "official_name": "INSTITUTO DE PLANIFICACIÓN Y PROMOCIÓN DE SOLUCIONES ENERGÉTICAS PARA LAS ZONAS NO INTERCONECTADAS IPSE",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2173,
+      "total_contratos": 1799,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "instituto",
+      "priority": "P2",
+      "volume": 3972
+    },
+    {
+      "official_name": "EMPRESA SOCIAL DEL ESTADO SOR TERESA ADELE",
+      "departamento": "Caquetá",
+      "total_procesos": 3970,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P1",
+      "volume": 3970
+    },
+    {
+      "official_name": "SENA REGIONAL GUAVIARE",
+      "departamento": "Guaviare",
+      "total_procesos": 2056,
+      "total_contratos": 1901,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "sena_regional",
+      "priority": "P1",
+      "volume": 3957
+    },
+    {
+      "official_name": "MASORA",
+      "departamento": "Antioquia",
+      "total_procesos": 1907,
+      "total_contratos": 2050,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3957
+    },
+    {
+      "official_name": "MUNICIPIO DE EL BAGRE",
+      "departamento": "Antioquia",
+      "total_procesos": 2072,
+      "total_contratos": 1883,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3955
+    },
+    {
+      "official_name": "PARQUES NACIONALES NATURALES DE COLOMBIA - DIRECCION TERRITORIAL ORINOQUIA",
+      "departamento": "Meta",
+      "total_procesos": 2095,
+      "total_contratos": 1854,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3949
+    },
+    {
+      "official_name": "SENA REGIONAL ANTIOQUIA CENTRO DE LOS RECURSOS NATURALES RENOVABLES LA SALADA",
+      "departamento": "Antioquia",
+      "total_procesos": 2125,
+      "total_contratos": 1795,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "sena_regional",
+      "priority": "P2",
+      "volume": 3920
+    },
+    {
+      "official_name": "MUNICIPIO DE PUERTO TRIUNFO",
+      "departamento": "Antioquia",
+      "total_procesos": 2074,
+      "total_contratos": 1844,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3918
+    },
+    {
+      "official_name": "UNIVERSIDAD DEL TOLIMA",
+      "departamento": "Tolima",
+      "total_procesos": 3913,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3913
+    },
+    {
+      "official_name": "PARQUES NACIONALES NATURALES DE COLOMBIA - DIRECCION  TERRITORIAL AMAZONIA",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2068,
+      "total_contratos": 1845,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3913
+    },
+    {
+      "official_name": "MUNICIPIO DE CAROLINA DEL PRINCIPE",
+      "departamento": "Antioquia",
+      "total_procesos": 2128,
+      "total_contratos": 1780,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3908
+    },
+    {
+      "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL FRANCISCO LUIS JIMENEZ MARTINEZ",
+      "departamento": "No Definido",
+      "total_procesos": 3900,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 3900
+    },
+    {
+      "official_name": "E.S.E HOSPITAL UNIVERSITARIO DE SANTANDER",
+      "departamento": "Santander",
+      "total_procesos": 1929,
+      "total_contratos": 1964,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 3893
+    },
+    {
+      "official_name": "INSTITUTO MUNICIPAL DEL DEPORTE Y RECREACION DE LA ESTRELLA",
+      "departamento": "Antioquia",
+      "total_procesos": 1903,
+      "total_contratos": 1972,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "instituto",
+      "priority": "P2",
+      "volume": 3875
+    },
+    {
+      "official_name": "SENA REGIONAL CALDAS CENTRO DE AUTOMATIZACION INDUSTRIAL",
+      "departamento": "Caldas",
+      "total_procesos": 2492,
+      "total_contratos": 1381,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "sena_regional",
+      "priority": "P2",
+      "volume": 3873
+    },
+    {
+      "official_name": "PATRIMONIO AUTÓNOMO FONDO NACIONAL DEL TURISMO FONTUR",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 3871,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "fondo",
+      "priority": "P2",
+      "volume": 3871
+    },
+    {
+      "official_name": "DIRECCION DE SANIDAD DE EJERCITO-DISPENSARIO MEDICO FLORENCIA",
+      "departamento": "Caquetá",
+      "total_procesos": 2296,
+      "total_contratos": 1571,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P1",
+      "volume": 3867
+    },
+    {
+      "official_name": "UNIDAD ADMINISTRATIVA ESPECIAL DIRECCION NACIONAL DE BOMBEROS",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 1919,
+      "total_contratos": 1932,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3851
+    },
+    {
+      "official_name": "MUNICIPIO DE YARUMAL",
+      "departamento": "Antioquia",
+      "total_procesos": 2054,
+      "total_contratos": 1782,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3836
+    },
+    {
+      "official_name": "INSTITUTO PARA EL DESARROLLO DE ANTIOQUIA IDEA",
+      "departamento": "Antioquia",
+      "total_procesos": 2328,
+      "total_contratos": 1503,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "instituto",
+      "priority": "P2",
+      "volume": 3831
+    },
+    {
+      "official_name": "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CAE",
+      "departamento": "Cundinamarca",
+      "total_procesos": 2268,
+      "total_contratos": 1560,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "sena_regional",
+      "priority": "P2",
+      "volume": 3828
+    },
+    {
+      "official_name": "MUNICIPIO DE TENJO",
+      "departamento": "Cundinamarca",
+      "total_procesos": 2121,
+      "total_contratos": 1705,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3826
+    },
+    {
+      "official_name": "METRO DE BOGOTA SA",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2119,
+      "total_contratos": 1704,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3823
+    },
+    {
+      "official_name": "ESE SAN ANTONIO DE ANOLAIMA",
+      "departamento": "No Definido",
+      "total_procesos": 3811,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3811
+    },
+    {
+      "official_name": "ESE HOSPITAL SAN JOSE DE GUADUAS",
+      "departamento": "Cundinamarca",
+      "total_procesos": 2494,
+      "total_contratos": 1317,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 3811
+    },
+    {
+      "official_name": "CENTRAL ADMINISTRATIVA Y CONTABLE - CENAC - ARMENIA",
+      "departamento": "Quindío",
+      "total_procesos": 2420,
+      "total_contratos": 1388,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3808
+    },
+    {
+      "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL LA ESTRELLA",
+      "departamento": "Antioquia",
+      "total_procesos": 3801,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 3801
+    },
+    {
+      "official_name": "SUCRE - E.S.E CENTRO DE SALUD SAMPUES",
+      "departamento": "Sucre",
+      "total_procesos": 1892,
+      "total_contratos": 1908,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P1",
+      "volume": 3800
+    },
+    {
+      "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL PROFESOR JORGE CAVELIER",
+      "departamento": "Cundinamarca",
+      "total_procesos": 3794,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 3794
+    },
+    {
+      "official_name": "ESE HOSPITAL ALEJANDRO MAESTRE SIERRA",
+      "departamento": "Magdalena",
+      "total_procesos": 3792,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 3792
+    },
+    {
+      "official_name": "SENA REGIONAL NARIÑO CENTRO SUR COLOMBIANO DE LOGISTICA INTERNACIONAL",
+      "departamento": "Nariño",
+      "total_procesos": 2032,
+      "total_contratos": 1760,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "sena_regional",
+      "priority": "P2",
+      "volume": 3792
+    },
+    {
+      "official_name": "ESM BATALLÓN ASPC NO. 6",
+      "departamento": "Tolima",
+      "total_procesos": 2268,
+      "total_contratos": 1497,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3765
+    },
+    {
+      "official_name": "PARQUES NACIONALES NATURALES- DIRECCION TERRITORIAL PACIFICO",
+      "departamento": "Antioquia",
+      "total_procesos": 2036,
+      "total_contratos": 1727,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3763
+    },
+    {
+      "official_name": "MUNICIPIO DE TAURAMENA",
+      "departamento": "Casanare",
+      "total_procesos": 2058,
+      "total_contratos": 1702,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3760
+    },
+    {
+      "official_name": "NARIÑO - IPS MUNICIPAL DE IPIALES E.S.E.",
+      "departamento": "No Definido",
+      "total_procesos": 3754,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3754
+    },
+    {
+      "official_name": "APOYO LOGISTICO COMANDO EJERCITO",
+      "departamento": "Boyacá",
+      "total_procesos": 2530,
+      "total_contratos": 1214,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3744
+    },
+    {
+      "official_name": "MUNICIPIO DE MAICAO",
+      "departamento": "La Guajira",
+      "total_procesos": 1924,
+      "total_contratos": 1812,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3736
+    },
+    {
+      "official_name": "INSTITUTO DE CASAS FISCALES DE EJERCITO",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 1963,
+      "total_contratos": 1766,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "instituto",
+      "priority": "P2",
+      "volume": 3729
+    },
+    {
+      "official_name": "AGENCIA DE COMERCIALIZACIÓN Y DE COMPETITIVIDAD PARA EL DESARROLLO REGIONAL  ACODER",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 1907,
+      "total_contratos": 1822,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3729
+    },
+    {
+      "official_name": "ALCALDIA MUNICIPAL DE ANDALUCIA VALLE DEL CAUCA",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 2049,
+      "total_contratos": 1671,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "alcaldia_municipal",
+      "priority": "P2",
+      "volume": 3720
+    },
+    {
+      "official_name": "INDERHUILA",
+      "departamento": "Huila",
+      "total_procesos": 1930,
+      "total_contratos": 1776,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3706
+    },
+    {
+      "official_name": "REFINERÍA DE CARTAGENA S.A.S.",
+      "departamento": "Bolívar",
+      "total_procesos": 3697,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3697
+    },
+    {
+      "official_name": "HOCOL S.A",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 3684,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3684
+    },
+    {
+      "official_name": "SENA REGIONAL NARIÑO Grupo Administrativo CAPCP",
+      "departamento": "Nariño",
+      "total_procesos": 1826,
+      "total_contratos": 1850,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "sena_regional",
+      "priority": "P2",
+      "volume": 3676
+    },
+    {
+      "official_name": "CONTADURÍA GENERAL DE LA NACIÓN",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 1886,
+      "total_contratos": 1780,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3666
+    },
+    {
+      "official_name": "DEPARTAMENTO DE CUNDINAMARCA-SECRETARIA DEL AMBIENTE",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2046,
+      "total_contratos": 1618,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "secretaria",
+      "priority": "P2",
+      "volume": 3664
+    },
+    {
+      "official_name": "MUNICIPIO DE SAN PEDRO DE LOS MILAGROS",
+      "departamento": "Antioquia",
+      "total_procesos": 1919,
+      "total_contratos": 1733,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3652
+    },
+    {
+      "official_name": "INDEPORTES QUINDIO",
+      "departamento": "Quindío",
+      "total_procesos": 1899,
+      "total_contratos": 1752,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3651
+    },
+    {
+      "official_name": "ARMADA NACIONAL - BASE NAVAL No.1 ARC BOLÍVAR",
+      "departamento": "Bolívar",
+      "total_procesos": 2253,
+      "total_contratos": 1377,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3630
+    },
+    {
+      "official_name": "INSTITUTO AMAZÓNICO DE INVESTIGACIONES CIENTÍFICAS SINCHI",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 3626,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "instituto",
+      "priority": "P2",
+      "volume": 3626
+    },
+    {
+      "official_name": "DIRECCIÓN GENERAL DE SANIDAD MILITAR+",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2000,
+      "total_contratos": 1620,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3620
+    },
+    {
+      "official_name": "ALCALDIA MUNICIPIO DE SOPETRAN",
+      "departamento": "No Definido",
+      "total_procesos": 1961,
+      "total_contratos": 1657,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "alcaldia_municipal",
+      "priority": "P2",
+      "volume": 3618
+    },
+    {
+      "official_name": "AGENCIA NACIONAL DEL ESPECTRO",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 1871,
+      "total_contratos": 1743,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3614
+    },
+    {
+      "official_name": "INSTITUTO DEPARTAMENTAL DEL DEPORTE DE BOYACA",
+      "departamento": "Boyacá",
+      "total_procesos": 1838,
+      "total_contratos": 1773,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "instituto",
+      "priority": "P2",
+      "volume": 3611
+    },
+    {
+      "official_name": "HOSPITAL SAN JUAN BOSCO",
+      "departamento": "Cesar",
+      "total_procesos": 2251,
+      "total_contratos": 1358,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P1",
+      "volume": 3609
+    },
+    {
+      "official_name": "HOSPITAL LORENCITA VILLEGAS DE SANTOS ESE",
+      "departamento": "Nariño",
+      "total_procesos": 3606,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 3606
+    },
+    {
+      "official_name": "CORPOCALDAS.",
+      "departamento": "Caldas",
+      "total_procesos": 1976,
+      "total_contratos": 1621,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3597
+    },
+    {
+      "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL LOCAL ARJONA",
+      "departamento": "No Definido",
+      "total_procesos": 3593,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 3593
+    },
+    {
+      "official_name": "ESE HOSPITAL LOCAL NUEVA GRANADA",
+      "departamento": "No Definido",
+      "total_procesos": 3581,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 3581
+    },
+    {
+      "official_name": "ALCALDIA DE CAICEDONIA",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 1941,
+      "total_contratos": 1634,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "alcaldia_municipal",
+      "priority": "P2",
+      "volume": 3575
+    },
+    {
+      "official_name": "ESE HOSPITAL LUISA SANTIAGA MARQUEZ IGUARAN",
+      "departamento": "Magdalena",
+      "total_procesos": 3567,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 3567
+    },
+    {
+      "official_name": "SUBCUENTA PARA LA ADMON DE LOS RECURSOS Y MANEJO SPN FONAM - DTOR",
+      "departamento": "Meta",
+      "total_procesos": 1929,
+      "total_contratos": 1617,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3546
+    },
+    {
+      "official_name": "POLICIA METROPOLITANA DE MANIZALES-UPRES CALDAS",
+      "departamento": "Caldas",
+      "total_procesos": 2049,
+      "total_contratos": 1490,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3539
+    },
+    {
+      "official_name": "ALCALDIA MUNICIPAL LA VIRGINIA RISARALDA",
+      "departamento": "Risaralda",
+      "total_procesos": 1842,
+      "total_contratos": 1697,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "alcaldia_municipal",
+      "priority": "P2",
+      "volume": 3539
+    },
+    {
+      "official_name": "ICBF REGIONAL PUTUMAYO",
+      "departamento": "Putumayo",
+      "total_procesos": 1826,
+      "total_contratos": 1710,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "icbf_regional",
+      "priority": "P2",
+      "volume": 3536
+    },
+    {
+      "official_name": "MUNICIPIO DE VILLA DE LEYVA//",
+      "departamento": "Boyacá",
+      "total_procesos": 1983,
+      "total_contratos": 1552,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3535
+    },
+    {
+      "official_name": "INSTITUTO MUNICIPAL DE CULTURA, RECREACION Y DEPORTE DE ZIPAQUIRA",
+      "departamento": "Cundinamarca",
+      "total_procesos": 1795,
+      "total_contratos": 1738,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "instituto",
+      "priority": "P2",
+      "volume": 3533
+    },
+    {
+      "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN MARCOS DE CHINCHINA",
+      "departamento": "Caldas",
+      "total_procesos": 3528,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 3528
+    },
+    {
+      "official_name": "PROCURADURIA GENERAL DE LA NACION",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2057,
+      "total_contratos": 1458,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3515
+    },
+    {
+      "official_name": "UNIVERSIDAD DE CORDOBA",
+      "departamento": "Córdoba",
+      "total_procesos": 3494,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P1",
+      "volume": 3494
+    },
+    {
+      "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL DE NAZARETH",
+      "departamento": "La Guajira",
+      "total_procesos": 3484,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 3484
+    },
+    {
+      "official_name": "ESM BATALLON DE ASPC NO.2 CACIQUE ALFONSO XEQUE ¨NIVEL I",
+      "departamento": "Atlántico",
+      "total_procesos": 2107,
+      "total_contratos": 1374,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3481
+    },
+    {
+      "official_name": "ESE HOSPITAL NUESTRA SEÑORA DEL PILAR",
+      "departamento": "La Guajira",
+      "total_procesos": 3475,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 3475
+    },
+    {
+      "official_name": "SENA REGIONAL ANTIOQUIA Grupo Administrativo CTTAOA?",
+      "departamento": "Antioquia",
+      "total_procesos": 1928,
+      "total_contratos": 1532,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "sena_regional",
+      "priority": "P2",
+      "volume": 3460
+    },
+    {
+      "official_name": "SECRETARIA DE AMBIENTE Y DESARROLLO SOSTENIBLE",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 0,
+      "total_contratos": 3440,
+      "source_datasets": [
+        "contratos"
+      ],
+      "entity_type": "secretaria",
+      "priority": "P2",
+      "volume": 3440
+    },
+    {
+      "official_name": "INSTITUTO NACIONAL PARA SORDOS",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 1880,
+      "total_contratos": 1556,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "instituto",
+      "priority": "P2",
+      "volume": 3436
+    },
+    {
+      "official_name": "MUNICIPIO DE CHIGORODO",
+      "departamento": "Antioquia",
+      "total_procesos": 1822,
+      "total_contratos": 1605,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3427
+    },
+    {
+      "official_name": "EMPRESA SOCIAL DEL ESTADO MUNICIPAL MANUEL CASTRO TOVAR",
+      "departamento": "No Definido",
+      "total_procesos": 3423,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3423
+    },
+    {
+      "official_name": "HOSPITAL RICAURTE EMPRESA SOCIAL DEL ESTADO",
+      "departamento": "No Definido",
+      "total_procesos": 3422,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 3422
+    },
+    {
+      "official_name": "DIMAR - GRUPO INTENDENCIA REGIONAL PACIFICO",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 1913,
+      "total_contratos": 1508,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3421
+    },
+    {
+      "official_name": "CANAL REGIONAL DE TELEVISION S.A.S",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 3418,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3418
+    },
+    {
+      "official_name": "UNIVERSIDAD DE CUNDINAMARCA",
+      "departamento": "Cundinamarca",
+      "total_procesos": 3416,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3416
+    },
+    {
+      "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL NUESTRA SEÑORA DEL PERPETUO SOCORRO",
+      "departamento": "No Definido",
+      "total_procesos": 3408,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 3408
+    },
+    {
+      "official_name": "ESE CENTRO DE SALUD SAN JOSE DE SAN MARCOS SUCRE",
+      "departamento": "Sucre",
+      "total_procesos": 3406,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P1",
+      "volume": 3406
+    },
+    {
+      "official_name": "ESE HOSPITAL CRISTIAN MORENO",
+      "departamento": "Cesar",
+      "total_procesos": 3403,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P1",
+      "volume": 3403
+    },
+    {
+      "official_name": "E.S.E. HOSPITAL RAFAEL PABA MANJARREZ DE SAN SEBASTIAN MAGDALENA",
+      "departamento": "Magdalena",
+      "total_procesos": 3394,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 3394
+    },
+    {
+      "official_name": "UNIVERSIDAD DE LA GUAJIRA",
+      "departamento": "No Definido",
+      "total_procesos": 3360,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3360
+    },
+    {
+      "official_name": "CORPOURABA",
+      "departamento": "Antioquia",
+      "total_procesos": 1802,
+      "total_contratos": 1556,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3358
+    },
+    {
+      "official_name": "E S E HOSPITAL DE BARANOA",
+      "departamento": "Atlántico",
+      "total_procesos": 3333,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 3333
+    },
+    {
+      "official_name": "ALCALDIA DE HONDA",
+      "departamento": "Tolima",
+      "total_procesos": 1843,
+      "total_contratos": 1484,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "alcaldia_municipal",
+      "priority": "P2",
+      "volume": 3327
+    },
+    {
+      "official_name": "ALCALDÍA MUNICIPAL DE ROLDANILLO",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 1811,
+      "total_contratos": 1510,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3321
+    },
+    {
+      "official_name": "Corporacion para el Manejo Sostenible de los Bosques MASBOSQUES",
+      "departamento": "Antioquia",
+      "total_procesos": 3318,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "corporacion",
+      "priority": "P2",
+      "volume": 3318
+    },
+    {
+      "official_name": "ESE HOSPITAL ISMAEL SILVA",
+      "departamento": "Cundinamarca",
+      "total_procesos": 3313,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 3313
+    },
+    {
+      "official_name": "HOSPITAL REGIONAL DE MONIQUIRA ESE",
+      "departamento": "Boyacá",
+      "total_procesos": 2328,
+      "total_contratos": 961,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 3289
+    },
+    {
+      "official_name": "FUNDACION GILBERTO ALZATE AVENDAÑO",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 1809,
+      "total_contratos": 1462,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3271
+    },
+    {
+      "official_name": "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CTCM",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 0,
+      "total_contratos": 3268,
+      "source_datasets": [
+        "contratos"
+      ],
+      "entity_type": "sena_regional",
+      "priority": "P2",
+      "volume": 3268
+    },
+    {
+      "official_name": "HOSPITAL FRANCISCO DE PAULA SANTANDER EMPRESA SOCIAL DEL ESTADO",
+      "departamento": "Cauca",
+      "total_procesos": 3263,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 3263
+    },
+    {
+      "official_name": "Industrias Cárnicas del Oriente S.A.",
+      "departamento": "Antioquia",
+      "total_procesos": 3263,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3263
+    },
+    {
+      "official_name": "CESAR ESE HOSPITAL REGIONAL SAN ANDRES - CHIRIGUANA",
+      "departamento": "Cesar",
+      "total_procesos": 3260,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P1",
+      "volume": 3260
+    },
+    {
+      "official_name": "CENTRAL ADMINISTRATIVA Y CONTABLE ESPECIALIZADA INTELIGENCIA",
+      "departamento": "Cundinamarca",
+      "total_procesos": 2095,
+      "total_contratos": 1124,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3219
+    },
+    {
+      "official_name": "MUNICIPIO DE URIBIA",
+      "departamento": "La Guajira",
+      "total_procesos": 1831,
+      "total_contratos": 1380,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3211
+    },
+    {
+      "official_name": "E.S.E HOSPITAL JORGE JULIO GUZMAN.",
+      "departamento": "Putumayo",
+      "total_procesos": 3204,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 3204
+    },
+    {
+      "official_name": "E.S.E HOSPITAL CARISMA",
+      "departamento": "Antioquia",
+      "total_procesos": 3200,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 3200
+    },
+    {
+      "official_name": "TERMINAL DE TRANSPORTE S.A",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2030,
+      "total_contratos": 1167,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3197
+    },
+    {
+      "official_name": "HOSPITAL CLARITA SANTOS NARIÑO",
+      "departamento": "No Definido",
+      "total_procesos": 3186,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 3186
+    },
+    {
+      "official_name": "Empresa Social del Estado HOSPITAL DE LA VEGA//",
+      "departamento": "Cundinamarca",
+      "total_procesos": 3179,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 3179
+    },
+    {
+      "official_name": "SENA REGIONAL CALDAS - CENTRO DE PROCESOS INDUSTRIALES Y CONSTRUCCIÓN (OFICIAL)",
+      "departamento": "Caldas",
+      "total_procesos": 1843,
+      "total_contratos": 1330,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "sena_regional",
+      "priority": "P2",
+      "volume": 3173
+    },
+    {
+      "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL LOCAL DE ALGARROBO",
+      "departamento": "Magdalena",
+      "total_procesos": 3166,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 3166
+    },
+    {
+      "official_name": "ESE HOSPITAL MALVINAS HECTOR OROZCO OROZCO",
+      "departamento": "Caquetá",
+      "total_procesos": 3165,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P1",
+      "volume": 3165
+    },
+    {
+      "official_name": "ALCALDIA MUNICIPIO DE JARDÍN",
+      "departamento": "Antioquia",
+      "total_procesos": 1796,
+      "total_contratos": 1362,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "alcaldia_municipal",
+      "priority": "P2",
+      "volume": 3158
+    },
+    {
+      "official_name": "FONDO ROTATORIO DE LA REGISTRADURIA",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 1859,
+      "total_contratos": 1296,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "fondo",
+      "priority": "P2",
+      "volume": 3155
+    },
+    {
+      "official_name": "ESE HOSPITAL PONEDERA",
+      "departamento": "Atlántico",
+      "total_procesos": 3145,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 3145
+    },
+    {
+      "official_name": "E.S.E HOSPITAL LOCAL DE TENERIFE",
+      "departamento": "No Definido",
+      "total_procesos": 3126,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 3126
+    },
+    {
+      "official_name": "ESE  HOSPITAL SAN VICENTE DE PAUL DE LORICA",
+      "departamento": "Córdoba",
+      "total_procesos": 3080,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P1",
+      "volume": 3080
+    },
+    {
+      "official_name": "E.S.E. HOSPITAL SAN JOSE DE TIERRALTA",
+      "departamento": "Córdoba",
+      "total_procesos": 3068,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P1",
+      "volume": 3068
+    },
+    {
+      "official_name": "ESE HOSPITAL SANTO TOMAS DE VILLANUEVA",
+      "departamento": "No Definido",
+      "total_procesos": 3066,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 3066
+    },
+    {
+      "official_name": "ASOCIACIÓN COLOMBIANA DE PORCICULTORES",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 3055,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3055
+    },
+    {
+      "official_name": "HOSPITAL MARÍA AUXILIADORA EMPRESA SOCIAL DEL ESTADO DEL MUNICIPIO DE MOSQUERA",
+      "departamento": "No Definido",
+      "total_procesos": 3039,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 3039
+    },
+    {
+      "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL CUMBAL",
+      "departamento": "Nariño",
+      "total_procesos": 3012,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 3012
+    },
+    {
+      "official_name": "SENA DIRECCION GENERAL",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 1983,
+      "total_contratos": 1028,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3011
+    },
+    {
+      "official_name": "AGUAS DE MANIZALES",
+      "departamento": "Caldas",
+      "total_procesos": 3002,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 3002
+    },
+    {
+      "official_name": "E S E HOSPITAL LOCAL JORGE CRISTO SAHIUM VILLA DEL ROSARIO",
+      "departamento": "Norte de Santander",
+      "total_procesos": 3002,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 3002
+    },
+    {
+      "official_name": "INDUSTRIA MILITAR",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2992,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 2992
+    },
+    {
+      "official_name": "CAPRESOCA E.P.S.",
+      "departamento": "Casanare",
+      "total_procesos": 2962,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 2962
+    },
+    {
+      "official_name": "SECRETARIA DE DESARROLLO ECONOMICO Y COMPETITIVIDAD",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 0,
+      "total_contratos": 2956,
+      "source_datasets": [
+        "contratos"
+      ],
+      "entity_type": "secretaria",
+      "priority": "P2",
+      "volume": 2956
+    },
+    {
+      "official_name": "HOSPITAL LOCAL DE PUERTO LOPEZ ESE**",
+      "departamento": "Meta",
+      "total_procesos": 2955,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2955
+    },
+    {
+      "official_name": "ESE HOSPITAL SAN ONOFRE",
+      "departamento": "Sucre",
+      "total_procesos": 1796,
+      "total_contratos": 1141,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P1",
+      "volume": 2937
+    },
+    {
+      "official_name": "HOSPITAL SAN RAFAEL DE EL ESPINAL TOLIMA E.S.E",
+      "departamento": "Tolima",
+      "total_procesos": 1942,
+      "total_contratos": 984,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2926
+    },
+    {
+      "official_name": "ESE HOSPITAL SAN ANTONIO DE CHIA",
+      "departamento": "Cundinamarca",
+      "total_procesos": 2917,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2917
+    },
+    {
+      "official_name": "INSTITUTO NACIONAL DE CANCEROLOGIA ESE",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2914,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "instituto",
+      "priority": "P2",
+      "volume": 2914
+    },
+    {
+      "official_name": "MUNICIPIO DE ANAPOIMA/",
+      "departamento": "Cundinamarca",
+      "total_procesos": 1819,
+      "total_contratos": 1083,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 2902
+    },
+    {
+      "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN RAFAEL NIVEL II",
+      "departamento": "La Guajira",
+      "total_procesos": 2897,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2897
+    },
+    {
+      "official_name": "E.S.E JAIME ALVARADO Y CASTILLA",
+      "departamento": "Arauca",
+      "total_procesos": 2867,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P1",
+      "volume": 2867
+    },
+    {
+      "official_name": "ESE HOSPITAL LOCAL SAN JOSE DE PUEBLO VIEJO",
+      "departamento": "Magdalena",
+      "total_procesos": 2849,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2849
+    },
+    {
+      "official_name": "ESE CENTRO DE SALUD CAMILO HURTADO CIFUENTES",
+      "departamento": "Nariño",
+      "total_procesos": 2844,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 2844
+    },
+    {
+      "official_name": "COLONIA AGRICOLA ACACIAS",
+      "departamento": "Meta",
+      "total_procesos": 1871,
+      "total_contratos": 964,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 2835
+    },
+    {
+      "official_name": "CENTRO DE SALUD LUIS ACOSTA ESE",
+      "departamento": "Nariño",
+      "total_procesos": 2829,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 2829
+    },
+    {
+      "official_name": "LICEOS DEL  EJERCITO",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 0,
+      "total_contratos": 2802,
+      "source_datasets": [
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 2802
+    },
+    {
+      "official_name": "HUV - HOSPITAL UNIVERSITARIO DEL VALLE EVARISTO GARCIA E.S.E.",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 2794,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2794
+    },
+    {
+      "official_name": "E.S.E HOSPITAL SAN RAFAEL DE PACHO",
+      "departamento": "No Definido",
+      "total_procesos": 2788,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2788
+    },
+    {
+      "official_name": "INDUSTRIA LICORERA DE CALDAS",
+      "departamento": "Caldas",
+      "total_procesos": 2783,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 2783
+    },
+    {
+      "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN ANTONIO DE SESQUILE",
+      "departamento": "No Definido",
+      "total_procesos": 2767,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2767
+    },
+    {
+      "official_name": "EMPRESA SOCIAL DEL ESTADO RAFAEL TOVAR POVEDA",
+      "departamento": "Caquetá",
+      "total_procesos": 2754,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P1",
+      "volume": 2754
+    },
+    {
+      "official_name": "E.S.E CAMU DE SAN PELAYO",
+      "departamento": "No Definido",
+      "total_procesos": 2747,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 2747
+    },
+    {
+      "official_name": "Sena - Centro Agropecuario de Buga",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 0,
+      "total_contratos": 2733,
+      "source_datasets": [
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 2733
+    },
+    {
+      "official_name": "HOSPITAL SAN ANTONIO DE BARBACOAS E.S.E.",
+      "departamento": "Nariño",
+      "total_procesos": 2727,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2727
+    },
+    {
+      "official_name": "E.S.E. HOSPITAL EDUARDO ARREDONDO DAZA",
+      "departamento": "No Definido",
+      "total_procesos": 2721,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2721
+    },
+    {
+      "official_name": "RED DE SALUD DEL NORTE EMPRESA SOCIAL DEL ESTADO",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 2720,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 2720
+    },
+    {
+      "official_name": "ESE HOSPITAL SAN ANTONIO DE GUATAVITA",
+      "departamento": "Cundinamarca",
+      "total_procesos": 2705,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2705
+    },
+    {
+      "official_name": "E.S.E HOSPITAL SAN JUAN DE DIOS DE ABEJORRAL",
+      "departamento": "No Definido",
+      "total_procesos": 2673,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2673
+    },
+    {
+      "official_name": "ESE HOSPITAL SAN JUAN DE DIOS DE CONCORDIA",
+      "departamento": "No Definido",
+      "total_procesos": 2650,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2650
+    },
+    {
+      "official_name": "CORPORACIÓN COLOMBIA CREA TALENTO",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2643,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "corporacion",
+      "priority": "P2",
+      "volume": 2643
+    },
+    {
+      "official_name": "E.S.E. HOSPITAL SAN SEBASTIAN DE URABA",
+      "departamento": "Antioquia",
+      "total_procesos": 2637,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2637
+    },
+    {
+      "official_name": "E.S.E. SUROCCIDENTE",
+      "departamento": "Cauca",
+      "total_procesos": 2629,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 2629
+    },
+    {
+      "official_name": "EMPRESAS PUBLICAS DE ARMENIA ESP",
+      "departamento": "Quindío",
+      "total_procesos": 2621,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 2621
+    },
+    {
+      "official_name": "INSTITUTO DE INVESTIGACION DE RECURSOS BIOLOGICOS ALEXANDER VON HUMBOLDT",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2617,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "instituto",
+      "priority": "P2",
+      "volume": 2617
+    },
+    {
+      "official_name": "EMPRESA SOCIAL DEL ESTADO (ESE) HOSPITAL DEPARTAMENTAL DE SAN ANDRÉS, PROVIDENCIA Y SANTA CATALINA",
+      "departamento": "San Andrés, Providencia y Santa Catalina",
+      "total_procesos": 2601,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P1",
+      "volume": 2601
+    },
+    {
+      "official_name": "ESENTTIA MASTERBATCH LTDA",
+      "departamento": "Bolívar",
+      "total_procesos": 2593,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 2593
+    },
+    {
+      "official_name": "ESE HOSPITAL PILOTO JAMUNDI",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 2584,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2584
+    },
+    {
+      "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN JOSE DE LA PALMA",
+      "departamento": "No Definido",
+      "total_procesos": 2574,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2574
+    },
+    {
+      "official_name": "SENA-REGIONAL ATLANTICO -CENTRO PARA EL DESARROLLO AGROECOLOGICO Y AGROINDUSTRIAL",
+      "departamento": "Atlántico",
+      "total_procesos": 0,
+      "total_contratos": 2553,
+      "source_datasets": [
+        "contratos"
+      ],
+      "entity_type": "sena_regional",
+      "priority": "P2",
+      "volume": 2553
+    },
+    {
+      "official_name": "SENA-GRUPO DE APOYO ADMINITRATIVO INTERCENTROS CGA Y CFAFC",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 0,
+      "total_contratos": 2550,
+      "source_datasets": [
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 2550
+    },
+    {
+      "official_name": "E.S.E. HOSPITAL UNIVERSITARIO ERASMO MEOZ",
+      "departamento": "No Definido",
+      "total_procesos": 2524,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2524
+    },
+    {
+      "official_name": "FONDO COLOMBIA EN PAZ",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2513,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "fondo",
+      "priority": "P2",
+      "volume": 2513
+    },
+    {
+      "official_name": "E.S.E HOSPITAL LOCAL NUESTRA SEÑORA SANTA ANA",
+      "departamento": "Magdalena",
+      "total_procesos": 2513,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2513
+    },
+    {
+      "official_name": "HOSPITAL DE CHIBOLO E.S.E.",
+      "departamento": "No Definido",
+      "total_procesos": 2492,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2492
+    },
+    {
+      "official_name": "UNIVERSIDAD DE LA AMAZONIA (Entidad)",
+      "departamento": "Caquetá",
+      "total_procesos": 2473,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P1",
+      "volume": 2473
+    },
+    {
+      "official_name": "E.S.E HOSPITAL DIOGENES TRONCOSO",
+      "departamento": "Cundinamarca",
+      "total_procesos": 2469,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2469
+    },
+    {
+      "official_name": "E.S.E HOSPITAL DEL ROSARIO",
+      "departamento": "Huila",
+      "total_procesos": 2458,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2458
+    },
+    {
+      "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN FRANCISCO DE ASIS",
+      "departamento": "Huila",
+      "total_procesos": 2456,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2456
+    },
+    {
+      "official_name": "E.S.E. REGIÓN DE SALUD MEDINA",
+      "departamento": "Cundinamarca",
+      "total_procesos": 2454,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 2454
+    },
+    {
+      "official_name": "CENTRO DE SALUD SAN JUAN BAUTISTA PUPIALES E.S.E",
+      "departamento": "Nariño",
+      "total_procesos": 2445,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 2445
+    },
+    {
+      "official_name": "ESE HOSPITAL LOCAL SABANAS DE SAN ANGEL /",
+      "departamento": "Magdalena",
+      "total_procesos": 2444,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2444
+    },
+    {
+      "official_name": "ESE HOSPITAL SANTA LUCIA DE FREDONIA",
+      "departamento": "No Definido",
+      "total_procesos": 2419,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2419
+    },
+    {
+      "official_name": "HOSPITAL MUNICIPAL LUIS ABLANQUE DE LA PLATA EMPRESA SOCIAL DEL ESTADO",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 2409,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2409
+    },
+    {
+      "official_name": "SENA REGIONAL SANTANDER Grupo Administrativo CGAO",
+      "departamento": "Santander",
+      "total_procesos": 0,
+      "total_contratos": 2404,
+      "source_datasets": [
+        "contratos"
+      ],
+      "entity_type": "sena_regional",
+      "priority": "P2",
+      "volume": 2404
+    },
+    {
+      "official_name": "GESTION ENERGETICA S.A ESP",
+      "departamento": "Caldas",
+      "total_procesos": 2395,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 2395
+    },
+    {
+      "official_name": "E.S.E HOSPITAL SAN RAFAEL SAN VICENTE",
+      "departamento": "Caquetá",
+      "total_procesos": 2385,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P1",
+      "volume": 2385
+    },
+    {
+      "official_name": "ESE HOSPITAL SAN JOSE DE AGUADAS",
+      "departamento": "No Definido",
+      "total_procesos": 2379,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2379
+    },
+    {
+      "official_name": "ESE HOSPITAL NUESTRA SEÑORA DE LAS MERCEDES",
+      "departamento": "No Definido",
+      "total_procesos": 2374,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2374
+    },
+    {
+      "official_name": "E.S.E.HOSPITAL SAN ANDRES APOSTOL DE SAN ANDRES DE SOTAVENTO",
+      "departamento": "Córdoba",
+      "total_procesos": 2373,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P1",
+      "volume": 2373
+    },
+    {
+      "official_name": "SENA HOTELERIA TURISMO Y ALIMENTOS",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 0,
+      "total_contratos": 2373,
+      "source_datasets": [
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 2373
+    },
+    {
+      "official_name": "GOBERNACION DEL VALLE - SECRETARIA DE CONVIVENCIA Y SEGURIDAD CIUDADANA",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 0,
+      "total_contratos": 2358,
+      "source_datasets": [
+        "contratos"
+      ],
+      "entity_type": "secretaria",
+      "priority": "P2",
+      "volume": 2358
+    },
+    {
+      "official_name": "E.S.E HOSPITAL NUESTRA SEÑORA DEL CARMEN DE TABIO",
+      "departamento": "Cundinamarca",
+      "total_procesos": 2350,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2350
+    },
+    {
+      "official_name": "E.S.E.HOSPITAL DE REMOLINO",
+      "departamento": "Magdalena",
+      "total_procesos": 2336,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2336
+    },
+    {
+      "official_name": "E.S.E. HOSPITAL OSCAR EMIRO VERGARA CRUZ",
+      "departamento": "No Definido",
+      "total_procesos": 2334,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2334
+    },
+    {
+      "official_name": "ETICNAR",
+      "departamento": "Nariño",
+      "total_procesos": 2327,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 2327
+    },
+    {
+      "official_name": "EMPRESA SOCIAL DEL ESTADO VIRGEN DE LOURDES",
+      "departamento": "Nariño",
+      "total_procesos": 2321,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 2321
+    },
+    {
+      "official_name": "EMPRESA DE SERVICIOS PUBLICOS DOMICILIARIOS PERLA DEL MANACACIAS",
+      "departamento": "Meta",
+      "total_procesos": 2318,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 2318
+    },
+    {
+      "official_name": "ESE HOSPITAL MUNICIPAL ALGECIRAS",
+      "departamento": "Huila",
+      "total_procesos": 2318,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2318
+    },
+    {
+      "official_name": "HOSPITAL REGIONAL DUITAMA",
+      "departamento": "Boyacá",
+      "total_procesos": 2316,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2316
+    },
+    {
+      "official_name": "OLEODUCTO CENTRAL S.A.",
+      "departamento": "No Definido",
+      "total_procesos": 2291,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 2291
+    },
+    {
+      "official_name": "HOSPITAL HERNANDO QUINTERO BLANCO E.S.E",
+      "departamento": "Cesar",
+      "total_procesos": 2282,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P1",
+      "volume": 2282
+    },
+    {
+      "official_name": "ESE HOSPITAL LOCAL DE GALAPA",
+      "departamento": "Atlántico",
+      "total_procesos": 2279,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2279
+    },
+    {
+      "official_name": "HOSPITAL SAN BERNABE ESE",
+      "departamento": "No Definido",
+      "total_procesos": 2279,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2279
+    },
+    {
+      "official_name": "HOSPITAL SAN GABRIEL ARCANGEL //",
+      "departamento": "Putumayo",
+      "total_procesos": 2278,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2278
+    },
+    {
+      "official_name": "SENA REGIONAL BOLIVAR Centro para la Industria Petroquímica",
+      "departamento": "Bolívar",
+      "total_procesos": 0,
+      "total_contratos": 2259,
+      "source_datasets": [
+        "contratos"
+      ],
+      "entity_type": "sena_regional",
+      "priority": "P2",
+      "volume": 2259
+    },
+    {
+      "official_name": "EMPRESA DE ENERGIA DE PEREIRA SA ESP",
+      "departamento": "Risaralda",
+      "total_procesos": 2258,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 2258
+    },
+    {
+      "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN VICENTE DE PAUL DE SAN JUAN DE RIO SECO",
+      "departamento": "No Definido",
+      "total_procesos": 2241,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2241
+    },
+    {
+      "official_name": "UNIVERSIDAD TECNOLOGICA DEL CHOCO",
+      "departamento": "Chocó",
+      "total_procesos": 2238,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P1",
+      "volume": 2238
+    },
+    {
+      "official_name": "POLICIA METROPOLITANA DE BUCARAMANGA",
+      "departamento": "Santander",
+      "total_procesos": 2236,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 2236
+    },
+    {
+      "official_name": "CONCEJO DISTRITAL DE BARRANQUILLA",
+      "departamento": "Atlántico",
+      "total_procesos": 0,
+      "total_contratos": 2207,
+      "source_datasets": [
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 2207
+    },
+    {
+      "official_name": "HOSPITAL SAN CARLOS E.S.E.",
+      "departamento": "No Definido",
+      "total_procesos": 2202,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2202
+    },
+    {
+      "official_name": "ESE HOSPITAL SAN JOSE",
+      "departamento": "No Definido",
+      "total_procesos": 2192,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2192
+    },
+    {
+      "official_name": "SENA REGIONAL VALLE Grupo Administrativo CBI",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 0,
+      "total_contratos": 2186,
+      "source_datasets": [
+        "contratos"
+      ],
+      "entity_type": "sena_regional",
+      "priority": "P2",
+      "volume": 2186
+    },
+    {
+      "official_name": "EMPRESA DE ACUEDUCTO Y ALCANTARILLADO DE PEREIRA S.A.S. E.S.P.",
+      "departamento": "Risaralda",
+      "total_procesos": 2183,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 2183
+    },
+    {
+      "official_name": "EMPRESA SOCIAL DEL ESTADO VIDASINU",
+      "departamento": "Córdoba",
+      "total_procesos": 2176,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P1",
+      "volume": 2176
+    },
+    {
+      "official_name": "E.S.E HOSPITAL SAN JORGE DE AYAPEL",
+      "departamento": "Córdoba",
+      "total_procesos": 2174,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P1",
+      "volume": 2174
+    },
+    {
+      "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL MUNICIPAL SAN ANTONIO DE TIMANA",
+      "departamento": "No Definido",
+      "total_procesos": 2174,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2174
+    },
+    {
+      "official_name": "E.S.E. HOSPITAL SANTA ROSA DE TENJO",
+      "departamento": "Cundinamarca",
+      "total_procesos": 2171,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2171
+    },
+    {
+      "official_name": "CORPORACIÓN AUTÓNOMA REGIONAL DEL ATLÁNTICO",
+      "departamento": "Atlántico",
+      "total_procesos": 0,
+      "total_contratos": 2171,
+      "source_datasets": [
+        "contratos"
+      ],
+      "entity_type": "corporacion_autonoma",
+      "priority": "P2",
+      "volume": 2171
+    },
+    {
+      "official_name": "ESE HOSPITAL REGIONAL SEGUNDO NIVEL DE ATENCION VALLE DE TENZA",
+      "departamento": "Boyacá",
+      "total_procesos": 2162,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2162
+    },
+    {
+      "official_name": "SENA REGIONAL BOYACA Grupo Administrativo CGAFE",
+      "departamento": "Boyacá",
+      "total_procesos": 0,
+      "total_contratos": 2153,
+      "source_datasets": [
+        "contratos"
+      ],
+      "entity_type": "sena_regional",
+      "priority": "P2",
+      "volume": 2153
+    },
+    {
+      "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL JOSE CAYETANO VASQUEZ DE PUERTO BOYACA",
+      "departamento": "Boyacá",
+      "total_procesos": 2124,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2124
+    },
+    {
+      "official_name": "SENA - CENTRO LATINOAMERICANO DE ESPECIES MENORES TULUA",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 0,
+      "total_contratos": 2123,
+      "source_datasets": [
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 2123
+    },
+    {
+      "official_name": "HOSPITAL CENTRO EMPRESA SOCIAL DEL ESTADO  DE PLANADAS1",
+      "departamento": "Tolima",
+      "total_procesos": 2116,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2116
+    },
+    {
+      "official_name": "ESE HMEP",
+      "departamento": "Bolívar",
+      "total_procesos": 2105,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 2105
+    },
+    {
+      "official_name": "LA PREVISORA S.A. COMPAÑÍA DE SEGUROS",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2102,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 2102
+    },
+    {
+      "official_name": "ADMINISTRADORA COLOMBIANA DE PENSIONES COLPENSIONES",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 2100,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 2100
+    },
+    {
+      "official_name": "E.S.E HOSPITAL SAN FRANCISCO  DE GACHETA",
+      "departamento": "Cundinamarca",
+      "total_procesos": 2097,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2097
+    },
+    {
+      "official_name": "ESE HOSPITAL LOCAL DE TURBANA",
+      "departamento": "No Definido",
+      "total_procesos": 2088,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2088
+    },
+    {
+      "official_name": "E.S.E HOSPITAL GABRIEL PELAEZ MONTOYA",
+      "departamento": "No Definido",
+      "total_procesos": 2084,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2084
+    },
+    {
+      "official_name": "INDERCAS**",
+      "departamento": "Casanare",
+      "total_procesos": 0,
+      "total_contratos": 2083,
+      "source_datasets": [
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 2083
+    },
+    {
+      "official_name": "HOSPITAL LA BUENA ESPERANZA DE YUMBO E.S.E.",
+      "departamento": "Valle del Cauca",
+      "total_procesos": 2071,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2071
+    },
+    {
+      "official_name": "CENTRO DE SALUD POLICARPA E.S.E.",
+      "departamento": "Nariño",
+      "total_procesos": 2059,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 2059
+    },
+    {
+      "official_name": "ESE HOSPITAL DEPARTAMENTAL SAN ANTONIO DE PADUA",
+      "departamento": "Huila",
+      "total_procesos": 2057,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2057
+    },
+    {
+      "official_name": "CEHANI E.S.E",
+      "departamento": "No Definido",
+      "total_procesos": 2037,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 2037
+    },
+    {
+      "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL DE JUAN DE ACOSTA",
+      "departamento": "Atlántico",
+      "total_procesos": 2024,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2024
+    },
+    {
+      "official_name": "ÁREA METROPOLITANA DE BARRANQUILLA",
+      "departamento": "Atlántico",
+      "total_procesos": 0,
+      "total_contratos": 2023,
+      "source_datasets": [
+        "contratos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 2023
+    },
+    {
+      "official_name": "ESE FABIO JARAMILLO LONDOÑO",
+      "departamento": "Caquetá",
+      "total_procesos": 2009,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P1",
+      "volume": 2009
+    },
+    {
+      "official_name": "ESE HOSPITAL JUAN LUIS LONDOÑO",
+      "departamento": "Norte de Santander",
+      "total_procesos": 2001,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 2001
+    },
+    {
+      "official_name": "COMISIÓN PARA EL ESCLARECIMIENTO DE LA VERDAD, LA CONVIVENCIA Y LA NO REPETICIÓN EN LIQUIDACIÓN",
+      "departamento": "Distrito Capital de Bogotá",
+      "total_procesos": 1992,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 1992
+    },
+    {
+      "official_name": "HOSPITAL GENERAL SAN ISIDRO ESE",
+      "departamento": "Caldas",
+      "total_procesos": 1972,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 1972
+    },
+    {
+      "official_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN RAFAEL +",
+      "departamento": "Antioquia",
+      "total_procesos": 1970,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 1970
+    },
+    {
+      "official_name": "ESE CENTRO DE SALUD LOS ANDES",
+      "departamento": "Nariño",
+      "total_procesos": 1965,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 1965
+    },
+    {
+      "official_name": "HOSPITAL EL BUEN SAMARITANO E.S.E.",
+      "departamento": "Nariño",
+      "total_procesos": 1963,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 1963
+    },
+    {
+      "official_name": "CENIT TRANSPORTE Y LOGISTICA DE HIDROCARBUROS S.A.S.",
+      "departamento": "No Definido",
+      "total_procesos": 1962,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 1962
+    },
+    {
+      "official_name": "EMPRESA DE ENERGIA DE ARAUCA  ENELAR E.S.P",
+      "departamento": "Arauca",
+      "total_procesos": 1962,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P1",
+      "volume": 1962
+    },
+    {
+      "official_name": "ESE HOSPITAL MENTAL RUDESINDO SOTO",
+      "departamento": "No Definido",
+      "total_procesos": 1958,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 1958
+    },
+    {
+      "official_name": "HOSPITAL SAN JOSE SAMANA",
+      "departamento": "No Definido",
+      "total_procesos": 1958,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 1958
+    },
+    {
+      "official_name": "ESE HOSPITAL SAN VICENTE DE PAUL ANSERMA CALDAS",
+      "departamento": "Caldas",
+      "total_procesos": 1939,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "ese_hospital",
+      "priority": "P2",
+      "volume": 1939
+    },
+    {
+      "official_name": "EMPRESA DE DESARROLLO SOSTENIBLE",
+      "departamento": "No Definido",
+      "total_procesos": 1937,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 1937
+    },
+    {
+      "official_name": "CENTRO DE SALUD TABLON DE GOMEZ",
+      "departamento": "Nariño",
+      "total_procesos": 1936,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P2",
+      "volume": 1936
+    },
+    {
+      "official_name": "EMPRESA DE ENERGÍA ELÉCTRICA DEL DEPARTAMENTO DEL GUAVIARE",
+      "departamento": "Guaviare",
+      "total_procesos": 1932,
+      "total_contratos": 0,
+      "source_datasets": [
+        "procesos"
+      ],
+      "entity_type": "otro",
+      "priority": "P1",
+      "volume": 1932
+    }
+  ]
+}
