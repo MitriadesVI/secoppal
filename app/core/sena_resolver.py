@@ -84,6 +84,12 @@ def _is_sena_mention(normalized: str) -> bool:
     Must match as whole word or at word boundary to avoid matching
     'senado', 'senador', 'presentar', etc.
     """
+    # G7C.1: reject false positives first
+    false_positives = ["senado", "senador"]
+    for fp in false_positives:
+        if fp in normalized:
+            return False
+
     triggers = [
         " sena ", " sena", "sena ", " sena.",
         "servicio nacional de aprendizaje",

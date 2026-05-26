@@ -201,6 +201,12 @@ def resolve_entities(state: State, entity_resolver: EntityResolver) -> State:
             resolved["departamento_resolved"] = dept_from_ecosystem
         # Mark entity as "covered by ecosystem" so normal entity resolver skips
         resolved["entidad_ecosystem_covered"] = True
+        # G7C.1: scrub institutional tokens from objeto so they don't become topic filters
+        from app.core.entity_ecosystem_router import scrub_institutional_tokens_from_objeto
+        if resolved.get("objeto"):
+            resolved["objeto"] = scrub_institutional_tokens_from_objeto(
+                resolved["objeto"], ecosystem_match.family
+            )
 
     # Department: only resolve if not already resolved by scan or ecosystem
     if params.get("departamento") and not params.get("departamento_resolved"):

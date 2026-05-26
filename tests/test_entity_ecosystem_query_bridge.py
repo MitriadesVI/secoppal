@@ -26,12 +26,11 @@ class TestEcosystemDetectionInPipeline:
     """Simulate what resolve_entities does with ecosystem detection."""
 
     def _simulate_resolve_entities(self, user_query: str, parsed_params: dict) -> dict:
-        """Simulate the ecosystem detection logic from orchestrator.resolve_entities."""
+        """Simulate the ecosystem detection + scrub logic from orchestrator.resolve_entities."""
         params = dict(parsed_params)
         resolved = dict(params)
         resolved.pop("dataset_explicit", None)
 
-        # G7C: Entity Ecosystem detection
         ecosystem_match = resolve_entity_ecosystem(user_query)
         if ecosystem_match:
             ecosystem_filter = build_entity_ecosystem_filter(ecosystem_match)
@@ -40,6 +39,12 @@ class TestEcosystemDetectionInPipeline:
             if dept_from_ecosystem and not resolved.get("departamento_resolved"):
                 resolved["departamento_resolved"] = dept_from_ecosystem
             resolved["entidad_ecosystem_covered"] = True
+            # G7C.1: scrub institutional tokens from objeto
+            from app.core.entity_ecosystem_router import scrub_institutional_tokens_from_objeto
+            if resolved.get("objeto"):
+                resolved["objeto"] = scrub_institutional_tokens_from_objeto(
+                    resolved["objeto"], ecosystem_match.family
+                )
 
         return resolved
 
@@ -135,6 +140,34 @@ class TestEcosystemDetectionInPipeline:
         # Ecosystem should still be detected but entity remains
         assert resolved["entity_ecosystem"] == "ICBF"
         assert resolved.get("entidad_resolved") == "ALCALDÍA DE MEDELLÍN"
+
+    def test_icfb_typo_scrubs_objeto(self):
+        """G7C.1: 'icfb' typo must resolve AND scrub from objeto."""
+        resolved = self._simulate_resolve_entities(
+            "que contratos celebro el icfb magdalena en 2025",
+            {"dataset": "contratos", "objeto": ["icfb"]},
+        )
+        assert resolved["entity_ecosystem"] == "ICBF"
+        assert resolved["entity_ecosystem_resolution_type"] == "icbf_regional"
+        # objeto must be scrubbed of institutional tokens
+        assert resolved.get("objeto") == [] or resolved.get("objeto") is None
+
+    def test_icbf_topic_preserved_with_scrub(self):
+        """G7C.1: real topic 'alimentacion' survives, 'icbf' is scrubbed."""
+        resolved = self._simulate_resolve_entities(
+            "contratos de alimentacion del icfb magdalena en 2025",
+            {"dataset": "contratos", "objeto": ["alimentacion", "icfb", "bienestar"]},
+        )
+        assert resolved["entity_ecosystem"] == "ICBF"
+        assert resolved.get("objeto") == ["alimentacion"]
+
+    def test_sena_scrubs_objeto(self):
+        resolved = self._simulate_resolve_entities(
+            "procesos de mantenimiento del sena santander",
+            {"dataset": "procesos", "objeto": ["mantenimiento", "sena", "servicio"]},
+        )
+        assert resolved["entity_ecosystem"] == "SENA"
+        assert resolved.get("objeto") == ["mantenimiento"]
 
 
 class TestSoQLBuilderEcosystemSupport:

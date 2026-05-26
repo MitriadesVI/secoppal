@@ -126,7 +126,72 @@ class TestNegativeCases:
         assert result is None, f"'{query}' should NOT resolve to an ecosystem"
 
 
-class TestBuildFilterMetadata:
+class TestICBFTypoFix:
+    """G7C.1: ICFB typo normalization — 'icfb' must resolve same as 'icbf'."""
+
+    @pytest.mark.parametrize("query", [
+        "que contratos celebro el icfb magdalena en 2025",
+        "que contratos celebro el icbf magdalena en 2025",
+    ])
+    def test_icfb_typo_resolves_to_icbf_regional(self, query):
+        result = resolve_entity_ecosystem(query)
+        assert result is not None
+        assert result.family == "ICBF"
+        assert result.resolution_type == "icbf_regional"
+        assert result.department == "Magdalena"
+
+    def test_icfb_national(self):
+        result = resolve_entity_ecosystem("procesos del icfb activos")
+        assert result is not None
+        assert result.family == "ICBF"
+        assert result.resolution_type == "icbf_national"
+        assert result.warning is not None
+
+    def test_icbf_topic_preserved(self):
+        """Non-institutional topic tokens must survive scrub."""
+        result = resolve_entity_ecosystem(
+            "contratos de alimentacion del icfb magdalena en 2025"
+        )
+        assert result is not None
+        assert result.family == "ICBF"
+        assert result.department == "Magdalena"
+        # Scrub must not remove "alimentacion"
+        assert "alimentacion" not in {t.lower() for t in (result.metadata.get("objeto") or [])}
+
+    def test_senado_not_sena(self):
+        result = resolve_entity_ecosystem("contratos del senado en 2025")
+        assert result is None
+
+    def test_icbf_not_broken(self):
+        result = resolve_entity_ecosystem("procesos del icbf activos")
+        assert result is not None
+        assert result.family == "ICBF"
+
+
+class TestScrubInstitutionalTokens:
+    def test_scrub_icbf_tokens(self):
+        from app.core.entity_ecosystem_router import scrub_institutional_tokens_from_objeto
+        objeto = ["icbf", "alimentacion", "bienestar", "familiar"]
+        scrubbed = scrub_institutional_tokens_from_objeto(objeto, "ICBF")
+        assert scrubbed == ["alimentacion"]
+
+    def test_scrub_sena_tokens(self):
+        from app.core.entity_ecosystem_router import scrub_institutional_tokens_from_objeto
+        objeto = ["sena", "mantenimiento", "servicio", "nacional"]
+        scrubbed = scrub_institutional_tokens_from_objeto(objeto, "SENA")
+        assert scrubbed == ["mantenimiento"]
+
+    def test_scrub_empty_objeto(self):
+        from app.core.entity_ecosystem_router import scrub_institutional_tokens_from_objeto
+        assert scrub_institutional_tokens_from_objeto([], "ICBF") == []
+        # When objeto is None, returns as-is (no crash)
+        assert scrub_institutional_tokens_from_objeto(None, "ICBF") is None  # type: ignore[arg-type]
+
+    def test_scrub_or_groups(self):
+        from app.core.entity_ecosystem_router import scrub_institutional_tokens_from_objeto
+        objeto = [["icbf", "alimentacion"], ["bienestar", "transporte"]]
+        scrubbed = scrub_institutional_tokens_from_objeto(objeto, "ICBF")
+        assert scrubbed == [["alimentacion"], ["transporte"]]
     def test_icbf_national_filter(self):
         match = resolve_entity_ecosystem("procesos del icbf activos")
         assert match is not None
