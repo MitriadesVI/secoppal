@@ -276,7 +276,7 @@ class Formatter:
                     {
                         "titulo": _smart_title(item, dataset_id),  # B2
                         "entidad": item.get("entidad", ""),
-                        "valor": format_money(item.get("precio_base")),
+                        "valor": format_cop(item.get("precio_base")),
                         "estado": item.get("estado_de_apertura_del_proceso", ""),
                         "fecha": fecha_iso,
                         "fecha_label": fecha_label,
@@ -288,7 +288,7 @@ class Formatter:
                 row_data = {
                     "titulo": _smart_title(item, dataset_id),  # B2
                     "entidad": item.get("nombre_entidad", ""),
-                    "valor": format_money(item.get("valor_del_contrato")),
+                    "valor": format_cop(item.get("valor_del_contrato")),
                     "estado": item.get("estado_contrato", ""),
                     "fecha": fecha_iso,
                     "fecha_label": fecha_label,

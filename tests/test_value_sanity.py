@@ -93,8 +93,8 @@ class TestFormatterValueWarning:
         assert row.get("value_quality") == "suspect"
         assert "difiere" in row.get("value_warning", "")
         assert row.get("value_reference") == 250_000_000.0
-        # valor_del_contrato should still be in the formatted valor string
-        assert "$250.00MM" in row["valor"]
+        # valor_del_contrato should still be in the formatted valor string (exact format in cards)
+        assert "$250,000,000,000" in row["valor"]
 
     def test_raw_valor_del_contrato_not_modified(self):
         """The raw valor_del_contrato field is preserved — anomaly is metadata only."""

@@ -6,6 +6,7 @@ Cada clic refina inmediatamente sin nueva query natural.
 """
 from __future__ import annotations
 
+import math
 import re
 from datetime import date, datetime, timedelta
 from typing import Any
@@ -186,13 +187,15 @@ def compute_contextual_filters(
     )
 
     if not has_valor:
-        thresholds = [500_000_000, 1_000_000_000, 5_000_000_000]
+        values = sorted(
+            float(r.get(value_field) or 0)
+            for r in results
+            if (r.get(value_field) or 0) > 0
+        )
+        thresholds = _adaptive_monto_thresholds(values)
         monto_options = []
         for thr in thresholds:
-            count = sum(
-                1 for r in results
-                if (r.get(value_field) or 0) >= thr
-            )
+            count = sum(1 for v in values if v >= thr)
             if count > 0:
                 label = f">{_format_cop_compact(thr)} ({count})"
                 monto_options.append({"label": label, "value": thr, "count": count})
@@ -280,9 +283,62 @@ def apply_refinement(params: dict, filter_key: str, filter_value: Any) -> dict:
 
 
 def _format_cop_compact(value: float) -> str:
-    """Formato compacto: 500000000 → '500M', 1000000000 → '1B'."""
-    if value >= 1_000_000_000:
-        b = value / 1_000_000_000
+    """Formato compacto colombiano para chips: 500M, 1MM, 1B.
+
+    Alineado con app.utils.money.format_money:
+    - billón (10^12) → B
+    - mil millones (10^9) → MM
+    - millón (10^6) → M
+    """
+    if value >= 1_000_000_000_000:
+        b = value / 1_000_000_000_000
         return f"{b:.0f}B" if b == int(b) else f"{b:.1f}B"
+    if value >= 1_000_000_000:
+        mm = value / 1_000_000_000
+        return f"{mm:.0f}MM" if mm == int(mm) else f"{mm:.1f}MM"
     m = value / 1_000_000
     return f"{m:.0f}M"
+
+
+_NICE_STEPS = (1, 2, 3, 5, 7)
+
+
+def _round_to_nice(value: float) -> float:
+    """Redondea HACIA ABAJO a la escala {1, 2, 3, 5, 7} × 10^N.
+
+    Garantiza nice ≤ value (evita thresholds por encima del max).
+    La escala fina (5 pasos por década) permite diferenciar percentiles
+    aún cuando el rango de valores cae dentro de una sola década.
+    """
+    if value <= 0:
+        return 0.0
+    exponent = math.floor(math.log10(value))
+    scale = 10 ** exponent
+    norm = value / scale  # ∈ [1, 10)
+    nice = next((s for s in reversed(_NICE_STEPS) if s <= norm), 1)
+    return float(nice * scale)
+
+
+def _adaptive_monto_thresholds(sorted_values: list[float]) -> list[float]:
+    """Devuelve hasta 3 thresholds 'lindos' que parten el result set.
+
+    Usa percentiles p33/p66/p90 de los valores ordenados, los redondea a
+    1/2/5×10^N y dedupea. Descarta thresholds que excedan el max real
+    (evita chips con count=0 por redondeo hacia arriba). Si <4 valores,
+    no devuelve nada — categoría no aplica.
+    """
+    n = len(sorted_values)
+    if n < 4:
+        return []
+    max_val = sorted_values[-1]
+    raw = [
+        sorted_values[n // 3],
+        sorted_values[(2 * n) // 3],
+        sorted_values[min((9 * n) // 10, n - 1)],
+    ]
+    seen: list[float] = []
+    for r in raw:
+        nice = _round_to_nice(r)
+        if nice > 0 and nice <= max_val and nice not in seen:
+            seen.append(nice)
+    return sorted(seen)

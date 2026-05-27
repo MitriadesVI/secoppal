@@ -69,6 +69,12 @@ def format_cop(value: Any) -> str:
 def format_money(value: Any) -> str:
     """Formato legible para cifras grandes — convención Colombia.
 
+    Uso: narración conversacional (chat/whatsapp/telegram) donde la
+    compacidad importa más que el centavo exacto.
+
+    Para vistas que requieren precisión exacta (tarjetas, detalle),
+    usar format_cop, que devuelve el valor completo con separadores.
+
     billón  = 10^12  → $X.XXB
     mil millones = 10^9  → $X.XXMM
     millón  = 10^6   → $XM

@@ -8,6 +8,8 @@ from app.core.contextual_suggestions import (
     compute_contextual_filters,
     detect_test_or_duplicate,
     apply_refinement,
+    _adaptive_monto_thresholds,
+    _round_to_nice,
 )
 
 
@@ -225,6 +227,70 @@ class TestComputeContextualFilters:
         params = {"fecha_desde": "2026-01-01"}
         filters = compute_contextual_filters(results, "p6dx-8zbt", params)
         assert "fecha" not in filters
+
+    def test_monto_adapts_to_small_values(self):
+        # Result set con valores 100M-400M: NO debe sugerir ">500M" (hardcoded viejo)
+        # debe sugerir umbrales relativos al set real
+        results = [
+            _make_row_procesos(precio=v)
+            for v in (100_000_000, 150_000_000, 200_000_000, 250_000_000,
+                      300_000_000, 350_000_000, 400_000_000, 450_000_000)
+        ]
+        filters = compute_contextual_filters(results, "p6dx-8zbt", {})
+        assert "monto" in filters
+        thresholds = [opt["value"] for opt in filters["monto"]]
+        # Ningún threshold debe exceder el máximo del set
+        assert max(thresholds) <= 500_000_000
+        # Y debe haber al menos uno por debajo de la mediana (útil para refinar)
+        assert min(thresholds) < 300_000_000
+
+    def test_monto_adapts_to_large_values(self):
+        # Result set con valores 1MM-50MM: debe sugerir umbrales en MM, no hardcoded 500M
+        results = [
+            _make_row_procesos(precio=v)
+            for v in (1_000_000_000, 5_000_000_000, 10_000_000_000,
+                      15_000_000_000, 20_000_000_000, 30_000_000_000,
+                      40_000_000_000, 50_000_000_000)
+        ]
+        filters = compute_contextual_filters(results, "p6dx-8zbt", {})
+        assert "monto" in filters
+        thresholds = [opt["value"] for opt in filters["monto"]]
+        # Mínimo threshold debe ser >= 1MM (no irse a millones)
+        assert min(thresholds) >= 1_000_000_000
+
+
+class TestAdaptiveMontoHelpers:
+    def test_round_to_nice_floors_to_finescale(self):
+        # Escala fina {1, 2, 3, 5, 7} por década, siempre floor
+        assert _round_to_nice(1_200_000) == 1_000_000      # 1.2 → 1
+        assert _round_to_nice(2_800_000) == 2_000_000      # 2.8 → 2
+        assert _round_to_nice(4_500_000) == 3_000_000      # 4.5 → 3
+        assert _round_to_nice(6_000_000) == 5_000_000      # 6.0 → 5
+        assert _round_to_nice(8_500_000) == 7_000_000      # 8.5 → 7
+        assert _round_to_nice(450_000_000) == 300_000_000  # 4.5 → 3
+
+    def test_round_to_nice_never_exceeds_input(self):
+        # Invariante crítico: floor garantiza nice ≤ value
+        for v in (1.1e9, 3.7e8, 9.9e6, 250_000):
+            assert _round_to_nice(v) <= v
+
+    def test_round_to_nice_handles_zero_and_negative(self):
+        assert _round_to_nice(0) == 0.0
+        assert _round_to_nice(-100) == 0.0
+
+    def test_adaptive_thresholds_returns_empty_when_too_few_values(self):
+        assert _adaptive_monto_thresholds([100, 200, 300]) == []
+
+    def test_adaptive_thresholds_dedupes_and_sorts(self):
+        values = sorted([200_000_000] * 10)
+        thresholds = _adaptive_monto_thresholds(values)
+        assert len(thresholds) <= 1  # todos los percentiles colapsan a 200M
+
+    def test_adaptive_thresholds_caps_at_max(self):
+        # Ningún threshold debe exceder el max real del set
+        values = sorted([100_000_000, 200_000_000, 300_000_000, 400_000_000, 500_000_000])
+        thresholds = _adaptive_monto_thresholds(values)
+        assert all(t <= 500_000_000 for t in thresholds)
 
 
 # ═══════════════════════════════════════════════════════════════════════

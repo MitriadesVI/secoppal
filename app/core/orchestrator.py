@@ -814,8 +814,8 @@ class SecopalWorkflow:
             "contextual_filters": {},
         }
 
-        # Contextual filters (igual que en flujo normal)
-        if results and total > 20:
+        # Contextual filters (mismo threshold que flujo normal: ≥5)
+        if results and total >= 5:
             try:
                 from app.core.contextual_suggestions import compute_contextual_filters
                 result["contextual_filters"] = compute_contextual_filters(
@@ -1426,8 +1426,8 @@ class SecopalWorkflow:
         # ── Contextual filters (Feature: refinement bar) ──────────────────
         raw_results = result.get("results", [])
         total_count = result.get("total_count", 0)
-        threshold = 20
-        if raw_results and total_count > threshold:
+        threshold = 5
+        if raw_results and total_count >= threshold:
             try:
                 from app.core.contextual_suggestions import compute_contextual_filters
                 computed = compute_contextual_filters(

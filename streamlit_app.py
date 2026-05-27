@@ -36,35 +36,62 @@ def detect_test_or_duplicate_from_row(row: dict) -> str | None:
         return None
 
 
-def _render_contextual_filters(filters: dict) -> None:
+def _render_contextual_filters(
+    filters: dict,
+    key_scope: str,
+    *,
+    show_header: bool = True,
+    stacked: bool = False,
+) -> None:
     """Renderiza barra de filtros contextuales con botones clickeables.
     Un clic = un filtro aplicado inmediatamente.
-    """
-    if not filters:
-        return
 
-    # Defensivo: no mostrar encabezado si ninguna categoría tiene opciones
-    if not any(options for options in filters.values()):
+    Args:
+        filters: dict {category: [{label, value, count}, ...]}
+        key_scope: prefijo único para las widget keys (evita colisión entre
+            la barra inline y la barra del sidebar).
+        show_header: muestra "🎚️ Refinar:" arriba (omitir en sidebar).
+        stacked: usa una columna por chip (vertical) en vez de fila horizontal.
+            Útil en sidebar donde el ancho es limitado.
+    """
+    if not filters or not any(options for options in filters.values()):
         return
 
     icons = {"estado": "📋", "fecha": "📅", "monto": "💰", "entidad": "🏛️", "ciudad": "🌆"}
 
-    st.markdown("🎚️ **Refinar:**")
+    if show_header:
+        st.markdown("🎚️ **Refinar:**")
+
     for category, options in filters.items():
         if not options:
             continue
-        cols = st.columns(len(options))
         icon = icons.get(category, "🔹")
-        for i, opt in enumerate(options):
-            with cols[i]:
+        if stacked:
+            for opt in options:
                 label = f"{icon} {opt['label']}"
-                if st.button(label, key=f"refine_{category}_{opt['value']}_{uuid.uuid4().hex[:6]}"):
+                if st.button(
+                    label,
+                    key=f"refine_{key_scope}_{category}_{opt['value']}",
+                    use_container_width=True,
+                ):
                     st.session_state._pending_refinement = {
                         "category": category,
                         "value": opt["value"],
                         "label": opt["label"],
                     }
                     st.rerun()
+        else:
+            cols = st.columns(len(options))
+            for i, opt in enumerate(options):
+                with cols[i]:
+                    label = f"{icon} {opt['label']}"
+                    if st.button(label, key=f"refine_{key_scope}_{category}_{opt['value']}"):
+                        st.session_state._pending_refinement = {
+                            "category": category,
+                            "value": opt["value"],
+                            "label": opt["label"],
+                        }
+                        st.rerun()
 
 
 def _render_cards(rows: list[dict]) -> None:
@@ -363,6 +390,23 @@ with st.sidebar:
             st.session_state._pending_example = ex
             st.rerun()
 
+    # ── Refinar última búsqueda (chips sticky en sidebar) ──────────────
+    # Encuentra el turno assistant más reciente con filtros contextuales
+    # y los renderiza acá para que sigan accesibles mientras scrolleas.
+    _last_filters: dict | None = None
+    for _item in reversed(st.session_state.history):
+        if _item.get("role") == "assistant":
+            _cf = _item.get("contextual_filters") or {}
+            if _cf and _item.get("total_count", 0) >= 5:
+                _last_filters = _cf
+                break
+    if _last_filters:
+        st.divider()
+        st.subheader("🎚️ Refinar última búsqueda")
+        _render_contextual_filters(
+            _last_filters, "sidebar", show_header=False, stacked=True,
+        )
+
     st.divider()
     show_trace = st.toggle("Mostrar trace del pipeline", value=True)
     show_cards = st.toggle("Tarjetas en vez de tabla", value=True)
@@ -390,6 +434,14 @@ if not st.session_state.history:
 # Render chat history
 # ═══════════════════════════════════════════════════════════════════════════
 
+# Índice del último mensaje assistant — usado para mostrar "Ver más"
+# solo en el turno actual y evitar botones obsoletos en turnos viejos.
+_last_assistant_idx = next(
+    (i for i in range(len(st.session_state.history) - 1, -1, -1)
+     if st.session_state.history[i].get("role") == "assistant"),
+    -1,
+)
+
 for idx, item in enumerate(st.session_state.history):
     if item["role"] == "user":
         with st.chat_message("user"):
@@ -399,11 +451,12 @@ for idx, item in enumerate(st.session_state.history):
     with st.chat_message("assistant"):
         st.markdown(item["content"])
 
-        # Contextual filter bar
+        # Contextual filter bar — aparece incluso con pocos resultados (≥5)
+        # para que los refinamientos sucesivos sigan teniendo opciones visibles.
         contextual_filters = item.get("contextual_filters", {})
         total_count = item.get("total_count", 0)
-        if contextual_filters and total_count > 20:
-            _render_contextual_filters(contextual_filters)
+        if contextual_filters and total_count >= 5:
+            _render_contextual_filters(contextual_filters, f"inline_{idx}")
 
         rows = item.get("rows", [])
         route_reason = item.get("debug", {}).get("route_reason", "")
@@ -416,6 +469,23 @@ for idx, item in enumerate(st.session_state.history):
             _render_cards(rows)
         elif rows:
             st.dataframe(rows, use_container_width=True)
+
+        # Botón "Ver más resultados" — solo en el turno actual, cuando hay
+        # más resultados de los mostrados y no es un direct lookup.
+        if (
+            idx == _last_assistant_idx
+            and not is_direct_lookup
+            and rows
+            and total_count > len(rows)
+        ):
+            remaining = total_count - len(rows)
+            if st.button(
+                f"📄 Ver más resultados ({remaining} restantes)",
+                key=f"paginate_{idx}",
+                use_container_width=True,
+            ):
+                st.session_state._pending_pagination = True
+                st.rerun()
 
         debug = item.get("debug")
         if debug and show_trace:
@@ -462,6 +532,14 @@ if hasattr(st.session_state, "_pending_refinement") and st.session_state._pendin
 if hasattr(st.session_state, "_pending_example"):
     incoming_query = st.session_state._pending_example
     del st.session_state._pending_example
+
+# Pending pagination from "Ver más resultados" button
+if getattr(st.session_state, "_pending_pagination", False):
+    del st.session_state._pending_pagination
+    # "más resultados" coincide con is_pagination_phrase y reusa el flujo
+    # de paginación del orchestrator (avanza offset desde el último turno).
+    incoming_query = "más resultados"
+    seed_resolved_params = None
 
 typed_query = st.chat_input("Escribe tu consulta sobre procesos o contratos SECOP")
 if typed_query:
