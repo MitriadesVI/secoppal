@@ -48,17 +48,135 @@
 
 ---
 
-## 3. Decisiones Aprobadas
+## Estado: Post-G7D (Documentation Consolidation)
 
-| Decision | Veredicto |
-|----------|-----------|
-| Volumen o equidad geografica? | **Hibrido:** 70% volumen, 20% tipos estrategicos, 10% equidad |
-| Entidades solo en contratos? | **Si**, con `source_datasets=["contratos"]` |
-| Top-1000 o mas alla? | **Top-1000 primero**; top-2000 solo despues de medir uso |
-| NIT en gazetteer? | **Si, opcional** desde ya — util para validacion, dedup, SECOP I, RUES |
-| LLM para aliases? | **Solo tipo="otro"**; lo demas es heuristico |
-| Regiones macro en gazetteer? | **NO** — catalogo geografico separado (`app/data/geo_regions.py`) |
-| SECOP I antes de regiones macro? | **Si** — conviene normalizar departamentos multi-dataset primero |
+**Última actualización:** 2026-05-26  
+**Rama:** `main` (feature/gazetteer-append-manager mergeada y borrada)  
+**Corpus:** 89/89 PASS  
+**Tests ecosystem + gazetteer:** 205 passed, 13 xfailed  
+**Entidades en gazetteer:** 559 (Lote 01 completado)
+
+---
+
+## Sprints Completados
+
+### Sprint A0/A5 — Lote 01: 50 entidades + gazetteer_manager.py
+
+**Estado:** COMPLETED ✅  
+**Commit:** `7781d6d`  
+**SHA del baseline:** `d78ebf3` (commit base pre-ecosystems)
+
+**Entregables:**
+- `scripts/gazetteer_manager.py` — append manager con validación, diff, stats, hygiene
+- `scripts/lote_01_top_gap_mixed.json` — 50 entidades (70% volumen + 20% tipos críticos + 10% equidad)
+- `tests/test_gazetteer_lote_01.py` — test de colisión + cobertura
+- `tests/test_gazetteer_manager.py` — tests del manager
+- `docs/gazetteer/lote_01_debt.md` — deuda técnica identificada (13 entidades con <3 aliases, 13 xfail)
+- `docs/gazetteer/LOTE_01_POST_AUDIT.md` — audit post-lote
+- `baseline/gazetteer_append/` — 5 archivos de baseline pre-cambios
+
+**Resultado:** 509 → 559 entidades en gazetteer. Suite completa estable.
+
+### G7A — ICBF Regional Catalog (ecosystem pattern MVP)
+
+**Estado:** COMPLETED ✅  
+**Commit:** `9bbe79b`
+
+**Entregables:**
+- `app/data/icbf_regionals.json` — catálogo de 32 regionales ICBF
+- `app/core/icbf_resolver.py` — resolver puro (sin SECOP calls)
+- `tests/test_icbf_regionals.py` — 47 tests
+- `docs/gazetteer/ICBF_REGIONAL_MODEL.md`
+
+### G7B — SENA Entity Ecosystem (audit-first)
+
+**Estado:** COMPLETED ✅  
+**Commit:** `a73e741`
+
+**Entregables:**
+- `scripts/audit_sena_entities.py` — audit contra SECOP II live (89 entidades únicas)
+- `app/data/sena_units.json` — catálogo con 7 tipos y 89 entidades
+- `app/core/sena_resolver.py` — resolver con patrón `contains_all`
+- `tests/test_sena_resolver.py` — 41 tests
+- `docs/gazetteer/SENA_ENTITY_MODEL.md`
+- `docs/gazetteer/SENA_ENTITY_AUDIT.md`
+
+### G7C / G7C.1 / G7C.2 — Entity Ecosystem Bridge + typo fix + hardening
+
+**Estado:** COMPLETED ✅  
+**Commits:** `d78ebf3`, `9bd7dda`, `85b07cf`
+
+**Entregables:**
+- `app/core/entity_ecosystem_router.py` — bridge entre parser y SoQL builder
+- `app/core/orchestrator.py` — integración (solo registro, ~24 líneas)
+- `app/core/soql_builder.py` — soporte para `entidad_contains_all` y `entidad_in_candidates`
+- `tests/test_entity_ecosystem_router.py` + `tests/test_entity_ecosystem_query_bridge.py` — 59 tests
+- `docs/gazetteer/ENTITY_ECOSYSTEM_QUERY_BRIDGE.md` (G7D)
+
+### G7C.2+ — UX Layer (chips, moneda, sidebar)
+
+**Estado:** COMPLETED ✅  
+**Commit:** `30b6c7a`
+
+**Entregables:**
+- `streamlit_app.py` — chips adaptativos, sidebar sticky, montos por percentil
+- Chips con p33/p66/p90, threshold 5, widget keys estables (msg_idx-based)
+- `format_cop()` exacto en cards, `format_money()` compacto en chat
+- `docs/ux/CONTEXTUAL_REFINEMENT_FILTERS.md` (G7D)
+
+### G7D — Documentation Consolidation (este sprint)
+
+**Estado:** COMPLETED ✅  
+**Commits:** `b7469d6` (pre), este commit
+
+**Entregables:**
+- `docs/decisions_log.md` — ADR-018 a ADR-022 agregados
+- `docs/DECISIONES.md` — vaciado a redirect stub
+- `docs/documento_tecnico_...md` §13 — vaciado a redirect, §13.1 actualizado
+- `docs/gazetteer/ENTITY_ECOSYSTEM_QUERY_BRIDGE.md` — doc nuevo
+- `docs/ux/CONTEXTUAL_REFINEMENT_FILTERS.md` — doc nuevo
+- `docs/planes/gazetteer-expansion-plan.md` — este archivo, actualizado
+- `docs/QUERY_CORPUS.md` — header actualizado a main
+
+---
+
+## Lecciones Aprendidas
+
+### SENA audit-first vs ICBF catálogo plano
+
+ICBF se resolvió con catálogo 1:1 (32 regionales → 32 entradas). SENA requirió audit contra SECOP II live antes de diseñar. El audit reveló 89 entidades en 7 tipos, con los `regional_admin_group` teniendo el doble de volumen que los `regional_parent`. Sin el audit, se habría diseñado un catálogo 1:1 incorrecto.
+
+**Lección:** Para ecosistemas institucionales complejos, audit-first antes de diseñar el catálogo.
+
+### Bug ICFB demostró valor de ecosystems
+
+El typo "icfb" → "icbf" (corregido en G7C.1) no se habría corregido fácilmente sin el bridge: antes, cada query "icfb magdalena" entraba como objeto literal, generando `LIKE '%icfb%'` que producía 0 resultados. Con el bridge, es una línea en `INSTITUTIONAL_ACRONYM_FIXES` que normaliza antes de cualquier resolución.
+
+**Lección:** Un punto único de normalización institucional es más valioso de lo que parece al diseñarlo.
+
+### query_router.py mantenido intacto (anti-monolito)
+
+El plan explícitamente prohibía tocar `query_router.py`. El bridge logró integrar ICBF + SENA + typo fix + hardening + corpus extension sin cambiar una línea del router. Esto valida el diseño anti-monolito.
+
+**Lección:** La disciplina de no tocar query_router.py forzó una mejor arquitectura.
+
+### 3 lugares de decisiones es 2 lugares de más
+
+Antes de G7D, las decisiones vivían en tres lugares: `docs/decisions_log.md` (ADR format), `docs/DECISIONES.md` (G7A-G7C.2) y `docs/documento_tecnico_...md §13` (D1-D21). Cada uno con numeración distinta. Consolidar en decisions_log.md elimina el drift.
+
+**Lección:** Un solo log de decisiones. Append-only. Sin mirror en otros docs.
+
+---
+
+## Próximos Pasos
+
+| Prioridad | Sprint | Descripción |
+|-----------|--------|-------------|
+| Alta | B1/B2 | Lotes 02-03 de expansión de gazetteer (top volumen + tipos estratégicos) |
+| Media | G7E | Gobernaciones como ecosistema (1:1 por depto, similar a ICBF) |
+| Media | G7F | Bridge SENA — validación contra SECOP live del patrón `contains_all` |
+| Baja | E | Regiones macro (caribe, pacífico, etc.) en catálogo geográfico separado |
+| Baja | C | SECOP I audit (postergado hasta tener SECOP II coverage estable) |
 
 ---
 

@@ -604,3 +604,156 @@ Cuando `_should_demote_objeto` dispara Y `len(rare_terms) >= 3`: fusionar todos 
 - Tests: 945 passed, 10 xfailed
 - Commit: múltiples commits en sesión de trabajo (no un commit único)
 - Documentación: DOGFOOD_2026-05-25.md, funnel-full-ux-fixes-2026-05-25.md
+
+---
+
+## ADR-018: ICBF Regional Catalog como dataset separado del gazetteer
+
+**Fecha:** 2026-05-26  
+**Commit:** `9bbe79b`  
+**Contexto:** ICBF tiene 32 regionales ~1:1 por departamento. Intentar meterlas en `aliases_db.json` habría inflado el gazetteer con entradas que no son entidades licitantes independientes (son subunidades del ICBF nacional). El gazetteer ya tenía 509 entidades y crecer con 32 regionales ICBF + 89 entidades SENA rompía el principio de "una entidad, una entrada".
+
+**Decisión:** `icbf_regionals.json` vive fuera del gazetteer, en `app/data/`, con su propio resolver puro (`icbf_resolver.py`). El resolver NO hace llamadas SECOP ni genera SoQL — solo retorna un `EcosystemResolution` con `resolution_type`, `department`, y `official_names`. El bridge (entity_ecosystem_router.py) se encarga de traducir la resolución a filtros SoQL.
+
+Relación 1:1 regional/depto significa que "icbf atlántico" resuelve exactamente a una regional, sin ambigüedad. Esto simplifica el alias matching vs SENA que requiere `contains_all`.
+
+ICBF fue primero porque era estructuralmente más sencillo — sirvió como prueba de concepto para el patrón ecosystem.
+
+**Alternativas descartadas:**
+- Meter las 32 regionales en `aliases_db.json` (infla gazetteer, rompe principio de entidad independiente).
+- Hacer el resolver con llamadas SECOP directas (latencia innecesaria, datos mutables).
+- Catálogo plano sin resolver dedicado (el scrub institucional y la lógica de `contains_all` requerían un punto de extensión).
+
+**Consecuencias:** El patrón ecosystem se validó con ICBF y se replicó a SENA. Todos los ecosistemas viven en `app/data/` como JSON separados, con resolver puro en `app/core/`.
+
+**Métricas al cierre:**
+- Tests: tests/test_icbf_regionals.py (47 tests) — todos PASS
+- Suite: 205 passed, 13 xfailed (ecosystem + gazetteer)
+- Corpus: 89/89 PASS
+- Lint: limpio
+
+---
+
+## ADR-019: SENA Entity Ecosystem — audit-first vs catálogo plano
+
+**Fecha:** 2026-05-26  
+**Commit:** `a73e741`  
+**Contexto:** SENA es estructuralmente más complejo que ICBF. Un audit contra SECOP II live reveló 89 entidades únicas SENA en 7 tipos distintos: `national_secretaria_general` (1), `national_direccion_general` (2), `regional_parent` (28), `regional_admin_group` (54), `training_center` (1), `intercentros` (2), `needs_review` (1). Volumen total: 616,210 procesos/contratos.
+
+Hallazgo clave del audit: los `regional_admin_group` (~395K) tienen **más del doble de volumen** que los `regional_parent` (~179K). La mayoría de registros SENA están bajo grupos administrativos, no bajo la entidad regional principal. Esto invalidaba el enfoque de catálogo 1:1 tipo ICBF.
+
+**Decisión:**
+1. **Audit-first:** ejecutar `scripts/audit_sena_entities.py` contra SECOP II live antes de diseñar el catálogo. Esto evitó diseñar sobre supuestos incorrectos.
+2. **Taxonomía:** 7 tipos con semántica distinta, documentados en `docs/gazetteer/SENA_ENTITY_AUDIT.md`.
+3. **Patrón `contains_all`:** en vez de resolver a una entidad específica (imposible cuando hay 54 admin groups y 28 parents por depto), el resolver devuelve filtros LIKE compuestos: `UPPER(entidad) LIKE '%SENA%' AND UPPER(entidad) LIKE '%MAGDALENA%'`. El consumidor downstream (SoQL builder) aplica el filtro compuesto.
+4. **Catálogo en `sena_units.json`:** no en `aliases_db.json`. Sigue el mismo patrón que ICBF (ecosistema fuera del gazetteer).
+
+**Alternativas descartadas:**
+- Catálogo plano 1:1 (no funciona — SENA no es ICBF, 54 admin groups no mapean 1:1 por depto).
+- Resolver a entidad específica con fuzzy matching (imposible: 54 grupos por ~28 deptos no tienen nombre departamental consistente).
+- Ignorar admin groups (pierde ~64% del volumen — los 395K registros).
+
+**Consecuencias:** SENA es el caso más complejo de ecosystem hasta ahora. El patrón `contains_all` se convirtió en el estándar para ecosistemas institucionales multi-entidad.
+
+**Métricas al cierre:**
+- Audit: 89 entidades únicas, 616K volumen total
+- Tests: tests/test_sena_resolver.py (41 tests)
+- Docs: SENA_ENTITY_AUDIT.md, SENA_ENTITY_MODEL.md
+
+---
+
+## ADR-020: Entity Ecosystem Bridge — capa fuera de query_router
+
+**Fecha:** 2026-05-26  
+**Commits:** `d78ebf3`, `9bd7dda`, `85b07cf`  
+**Contexto:** ICBF y SENA son ecosistemas institucionales que no encajan ni en el gazetteer (aliases_db.json) ni en el EntityResolver (que resuelve entidades únicas). Necesitaban un punto de integración en el pipeline que operara después del parser pero antes del SoQL builder. La alternativa era meter la lógica en `query_router.py`, que ya tenía 800+ líneas y el plan explícitamente prohibía tocar.
+
+**Decisión:** Crear `entity_ecosystem_router.py` como capa independiente que vive conceptualmente "después del parser y antes del resolver". El flujo completo:
+
+```
+raw_query → normalize_institutional_acronyms → resolve_entity_ecosystem
+→ build_entity_ecosystem_filter → scrub_institutional_tokens_from_objeto
+→ QueryPlan → SoQLBuilder
+```
+
+**Reglas críticas del bridge:**
+1. **No override:** `departamento_resolved` ni `entidad_resolved` existentes no se sobrescriben.
+2. **Filtros sustanciales:** `entidad_contains_all` e `entidad_in_candidates` cuentan como filtros válidos (evitan WHERE 1=1).
+3. **Normalización institucional:** `INSTITUTIONAL_ACRONYM_FIXES` con `\b` word boundary — reemplaza "icfb" → "icbf", no toca "bicfbtest".
+4. **Frontera léxica SENA:** `_is_sena_mention()` usa regex `\bsena\b` — rechaza "senado"/"senador".
+5. **Scrub institucional:** Cuando un ecosistema se activa, remueve vocabulario institucional (icbf, sena, bienestar, etc.) de `params["objeto"]` para que no contamine el `LIKE`.
+6. **Tipos ICFB (G7C.1):** `9bd7dda` — "icfb magdalena" → "icbf magdalena". Esto es un typo real documentado en SECOP queries. El fix demostró el valor del bridge: un solo punto de normalización para todos los ecosistemas.
+7. **Hardening post-ICFB (G7C.2):** `85b07cf` — `\b` en normalize + `\bsena\b` en is_sena + corpus evalúa ecosystem solo cuando entry lo declara.
+
+**Alternativas descartadas:**
+- Meter lógica en `query_router.py` (anti-monolito, prohibido por plan).
+- Fusionar ecosystems en `entity_resolver.py` (el resolver no sabe de ecosistemas multi-entidad).
+- Resolver ecosistemas en SoQL builder (el builder no debe tener lógica de negocio).
+
+**Consecuencias:**
+- `query_router.py` quedó intacto — zero cambios.
+- Cada ecosistema nuevo solo agrega un resolver puro + datos JSON, sin tocar el core.
+- Corpus runner ahora evalúa ecosystem como capa intermedia (`parser_plus_ecosystem`).
+- Regresión CORPUS-SM011 (corpus SMOKE) captura el flujo completo como prueba viva.
+
+**Métricas al cierre:**
+- Tests: tests/test_entity_ecosystem_router.py + tests/test_entity_ecosystem_query_bridge.py (59 tests)
+- Suite ecosystem + gazetteer: 205 passed, 13 xfailed
+- Corpus: 89/89 PASS
+- Lint: limpio
+
+---
+
+## ADR-021: Format de moneda doble — exacto en cards, compacto en chat
+
+**Fecha:** 2026-05-26  
+**Commit:** `30b6c7a` (parte del streamlit/UX commit)  
+**Contexto:** SECOPPAL mostraba valores monetarios con el mismo formato en tarjetas (cards) y en la narración del chat. En valores grandes (>1B), el formato exacto ($1,234,567,890) ocupaba demasiado espacio en las cards sin aportar legibilidad. En la narración, al revés: la notación compacta ($1,234M) perdía precisión para comparaciones.
+
+**Decisión:**
+1. **`format_cop()`** — formato exacto con separador de miles, usado en cards (detalle). No pierde precisión.
+2. **`format_money()`** — formato compacto usado en la narración del chat. Notación colombiana:
+   - M (10^6): valores entre 1M y 999M → "$500M"
+   - MM (10^9): valores entre 1MM y 999MM → "$1.2MM"
+   - B (10^12): valores ≥ 1B → "$2.5B"
+   - Por debajo de 1M: formato exacto "$800,000"
+3. **`_format_cop_compact()`** — función interna que implementa la compactación con umbrales alineados al ADR.
+
+**Alternativas descartadas:**
+- Un solo formato para ambos contextos (cards ilegibles en valores grandes).
+- Notación internacional (K/M/B): en Colombia se usa MM para miles de millones.
+- Ocultar valores pequeños en compacto: formato exacto es más informativo para montos <1M.
+
+**Consecuencias:** Cards legibles incluso con valores >1B. Chat con narración compacta sin perder precisión en detalle.
+
+---
+
+## ADR-022: Chips contextuales adaptativos
+
+**Fecha:** 2026-05-26  
+**Commit:** `30b6c7a` (streamlit/UX commit)  
+**Contexto:** Los chips de refinamiento (estado, fecha, monto, entidad, ciudad) existían desde el dogfooding fix (DOGFOOD-REFINE-004) pero tenían bugs críticos:
+1. Threshold de aparición en 20 resultados — muy alto para refinamientos sucesivos.
+2. Generación de montos con escalas fijas (1M, 5M, 10M, 50M, 100M, 500M, 1B) sin adaptarse al result set real.
+3. `uuid.uuid4()` en widget keys de Streamlit — cada render generaba keys nuevas, perdiendo el estado del click.
+4. No había sidebar sticky ni "Ver más" para chips que ocupaban mucho espacio.
+
+**Decisión:**
+1. **Thresholds adaptativos por percentil:** los montos se calculan de los valores reales del result set usando p33/p66/p90, redondeados a escala {1,2,3,5,7}×10^N con floor. Esto garantiza que los chips reflejen la distribución real de valores.
+2. **Threshold de aparición:** bajado de 20 a 5 resultados. Esto permite refinamientos sucesivos (cada chip reduce el universo, pero mientras haya ≥5 resultados, se muestran chips para seguir refinando).
+3. **Widget keys estables:** reemplazar `uuid.uuid4()` por identificadores basados en `msg_idx` + categoría. Esto preserva el estado del click entre renders.
+4. **Sidebar sticky + "Ver más":** los chips se despliegan en la sidebar con posición sticky. Cuando hay más de 8 chips, se colapsan bajo un botón "Ver más" que reusa el patrón `is_pagination_phrase`.
+5. **Flujo del click:** `_pending_refinement` → `apply_refinement()` → `seed_resolved_params` → `_run_refinement()` (bypass del parser). El bypass evita re-parsear la query natural; los params refinados se inyectan directamente al builder.
+
+**Alternativas descartadas:**
+- Escalas fijas sin percentiles (no reflejan la realidad del result set; un universo de 50-100M no necesita chips de 1B).
+- Mantener uuid como key (los clicks nunca funcionaban — bug histórico).
+- Sin sidebar sticky (los chips ocupaban demasiado espacio en el área principal).
+- Re-parsear la query natural en el click (pierde contexto del refinamiento previo).
+
+**Consecuencias:** El refinamiento por chips ahora funciona correctamente incluso en cadenas de refinamientos sucesivos. La sidebar sticky mejora la usabilidad en pantallas grandes. Los montos adaptativos evitan sugerir rangos irrelevantes.
+
+**Métricas al cierre:**
+- Tests: suite completa post-merge
+- Corpus: 89/89 PASS
+- Chips verificados funcionales en UI (no más uuid rotos)

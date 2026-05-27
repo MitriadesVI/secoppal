@@ -1,12 +1,12 @@
 # QUERY_CORPUS V1 — SECOPPAL
 
-## Estado actual canónico — 2026-05-26 (G7C.2)
+## Estado actual canónico — 2026-05-26 (G7D Documentation Consolidation)
 
 - **Corpus:** 89/89 PASS, 0 FAIL
 - **Runner:** `scripts/run_query_corpus.py` (modos `parser|workflow|all`)
-- **Suite:** 289 passed, 13 xfailed
+- **Suite:** 205 passed, 13 xfailed (ecosystem + gazetteer)
 - **Entity Ecosystem:** ICBF + SENA resolvers integrados en pipeline, con typo normalization y token scrub
-- **Rama activa:** `feature/gazetteer-append-manager`
+- **Rama activa:** `main` (feature/gazetteer-append-manager mergeda a main)
 
 ## Propósito
 Corpus vivo de **88 queries** reales para depuración sistemática, regresión y cobertura de casos edge en SECOPPAL. Sembrado con 31 queries marcadas `rating=0` en `feedback.jsonl` + 11 queries top-frecuentes + 7 casos manuales reportados directamente por el usuario en la última semana.
