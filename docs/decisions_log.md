@@ -832,4 +832,77 @@ app/core/
 **Deuda consciente:**
 - 3 tests legacy importan desde orchestrator (shim temporal).
 - `persist_trace_and_turn` no se adoptó en `normal_flow` ni `suggestion` porque requería extender la firma con `suggestions=` (cambio de comportamiento, no mecánico).
-- `tabular_result` no se adoptó en el camino exitoso de `suggestion` porque el código legacy mezcla `formatted_response`/`formatted_rows` (Burr-internal) con `response`/`rows` (canónico). Requiere golden test propio.
+|- `tabular_result` no se adoptó en el camino exitoso de `suggestion` porque el código legacy mezcla `formatted_response`/`formatted_rows` (Burr-internal) con `response`/`rows` (canónico). Requiere golden test propio.
+
+---
+
+## 2026-05-27 — Dogfooding: tres bugs hallados en sesión de pruebas manuales
+
+Tres bugs identificados durante dogfooding post-refactor. Ninguno introducido por el refactor — todos preexistentes, ahora documentados para priorización.
+
+---
+
+### DOGFOOD-FOLLOWUP-007: Follow-up poisoning sin invalidación cruzada
+
+**Observado:** El `followup_engine` hereda params del turno anterior sin validar compatibilidad entre ellos.
+
+**Caso (a) — cambio de departamento:**
+- Turno 1: "procesos del ICBF en Cundinamarca" → `departamento='Cundinamarca'`, `entidad_ecosystem=['ICBF', 'CUNDINAMARCA']`
+- Turno 2: "y en Cesar" → `departamento='Cesar'` (nuevo), pero `entidad_ecosystem` se hereda con `['ICBF', 'CUNDINAMARCA']`
+- Resultado: `WHERE departamento='Cesar' AND nombre_entidad LIKE '%CUNDINAMARCA%'` → 0 resultados lógicamente imposibles
+
+**Caso (b) — cambio de dataset:**
+- Turno 1: "procesos abiertos" → `dataset='procesos'`, `intent_type='opportunity_search'`, `estado_family='oferta_abierta'`
+- Turno 2: "muéstrame los contratos" → `dataset='contratos'` (nuevo), pero `intent_type` y `estado_family` se heredan
+- Resultado: se aplica `estado_family='oferta_abierta'` (válido solo para procesos) sobre dataset contratos → WHERE con estados inexistentes en contratos
+
+**Fix propuesto:** `invalidate_incompatible_inheritance()` en `followup_engine.py` que dropee claves dependientes cuando cambia el scope/dataset/período:
+- Si cambia `departamento` → invalidar `entidad_ecosystem`, `entidad_contains_all`, `entidad_in_candidates`, `ciudad`
+- Si cambia `dataset` → invalidar `intent_type` (si es opportunity_search), `estado_family` (si es oferta_abierta), `estado_de_apertura_del_proceso`
+- Si cambia `objeto` sustancialmente (nuevos tokens, no refinamiento) → invalidar `valor_min`, `valor_max` heredados
+
+**Prioridad:** Alta — afecta follow-ups geográficos y de dataset switch, los más frecuentes.
+
+---
+
+### DOGFOOD-RANGE-007: Parser incompleto en rangos compuestos "X y menos de Y"
+
+**Observado:** `"más de 350 millones y menos de 700"` captura solo `valor_min=350_000_000`. El upper bound (`menos de 700`) se ignora.
+
+**Análisis:** `query_router.py:_extract_amounts()` cubre:
+- `"entre X y Y"` → valor_min + valor_max (DOGFOOD-RANGE-005)
+- `"más de X"` → valor_min
+- `"menos de Y"` → valor_max
+
+Pero no cubre la secuencia `"más de X [conjunción] menos de Y"` donde ambos límites aparecen en la misma query.
+
+**Fix propuesto:** Extender `_extract_amounts()` para detectar patrones secuenciales:
+- `"más de N1 [y/e] menos de N2"` → valor_min=N1, valor_max=N2
+- `"mayor a N1 [y/e] menor a N2"` → valor_min=N1, valor_max=N2
+- `"por encima de N1 [y/e] por debajo de N2"` → valor_min=N1, valor_max=N2
+- `"al menos N1 [y/e] a lo sumo N2"` → valor_min=N1, valor_max=N2
+
+La conjunción debe estar dentro de una ventana de ~10 tokens del primer límite para evitar falsos positivos con queries tipo "más de 350 millones en Bogotá y menos en Cali" (que no es un rango).
+
+**Prioridad:** Media-Alta — el usuario asume que el rango funciona cuando dice "y menos de".
+
+---
+
+### DOGFOOD-MORPHO-007: Expansión morfológica demasiado ancha (software → tecnología)
+
+**Observado:** `morphological_variants.py` expande `"software"` a la raíz `"tecnología"`. Esto genera:
+- Query: "contratos de software en Atlántico"
+- Expansión: `objeto LIKE '%tecnología%'`
+- Resultados incluyen: "TECNOLOGIA HAMILTON" (equipo médico), "equipos biomédicos", "alcantarillado", etc.
+- El usuario buscaba software informático; recibe contratos de tecnología médica e infraestructura
+
+**Análisis:** No es substring contamination (como el caso Policarpa — "policía" matcheaba "Policarpa"). Es expansión semántica sin precisión: "software" es un subtipo de "tecnología", pero no toda "tecnología" es "software".
+
+**Fix propuesto:**
+1. **Opcional A:** Remover el mapeo `software → tecnología` de `morphological_variants.py`. Mantener "software" como token raro sin expandir.
+2. **Opcional B:** Crear una subcategoría `software_informatico` con aliases específicos ("software", "programa", "aplicación", "sistema informático") que NO expandan a "tecnología" genérica.
+3. **Validación:** Antes de aplicar cualquier fix, medir cuántos contratos matchean "software" exacto vs "tecnología" en SECOP II para confirmar que la pérdida de recall es aceptable.
+
+**Nota:** El mismo patrón puede afectar otros mapeos en `morphological_variants.py` donde la raíz es más genérica que los tokens hijos.
+
+**Prioridad:** Media — afecta precisión en queries técnicas, no es un crash.
