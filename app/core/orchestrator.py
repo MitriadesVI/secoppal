@@ -8,7 +8,7 @@ from dataclasses import asdict
 from datetime import date
 from typing import Any
 
-from burr.core import ApplicationBuilder, State, action, default, expr
+from burr.core import State, action
 
 from app.config import Settings
 from app.core._followup_constants import SCOPE_TOPIC_KEYS
@@ -32,6 +32,7 @@ from app.core.suggester import generate_suggestions, Suggestion
 from app.core.relevance import RelevanceScorer
 from app.core.workflow.context import HandlerContext
 from app.core.workflow.deps import WorkflowDeps
+from app.core.workflow.graph import build_application
 from app.core.workflow.helpers import (
     _build_timeout_suggestions,
     _elapsed_ms,
@@ -1216,76 +1217,12 @@ class SecopalWorkflow:
         followup = is_followup(user_query, last_turn)
         context_params = dict(last_turn.parsed_params) if (followup and last_turn) else {}
 
-        app = (
-            ApplicationBuilder()
-            .with_actions(
-                parse_query=parse_query.bind(query_router=self.query_router),
-                apply_context=apply_context,
-                llm_parse=llm_parse.bind(llm_handler=self.llm_handler),
-                plan_query=plan_query,
-                resolve_entities=resolve_entities.bind(entity_resolver=self.entity_resolver),
-                build_query=build_query.bind(soql_builder=self.soql_builder),
-                execute_query=execute_query.bind(secop_client=self.secop_client, soql_builder=self.soql_builder),
-                degrade_query=degrade_query.bind(secop_client=self.secop_client, soql_builder=self.soql_builder),
-                observe_universe=observe_universe.bind(secop_client=self.secop_client, soql_builder=self.soql_builder),
-                suggester_action=suggester_action,
-                format_response=format_response.bind(formatter=self.formatter),
-                clarify_query=clarify_query,
-            )
-            .with_transitions(
-                ("parse_query", "apply_context", expr("followup")),
-                ("parse_query", "llm_parse", expr("not followup and needs_llm")),
-                ("parse_query", "plan_query", expr("not followup and not needs_llm")),
-                ("apply_context", "clarify_query", expr("needs_clarification")),
-                ("apply_context", "llm_parse", expr("not needs_clarification and needs_llm")),
-                ("apply_context", "plan_query", expr("not needs_clarification and not needs_llm")),
-                ("llm_parse", "plan_query", default),
-                ("plan_query", "resolve_entities", default),
-                ("resolve_entities", "clarify_query", expr("needs_clarification")),
-                ("resolve_entities", "build_query", expr("not needs_clarification")),
-                ("build_query", "execute_query", default),
-                ("execute_query", "clarify_query", expr("needs_clarification")),
-                ("execute_query", "degrade_query", default),
-                ("degrade_query", "clarify_query", expr("needs_clarification")),
-                ("degrade_query", "observe_universe", expr("not needs_clarification")),
-                ("observe_universe", "suggester_action", default),
-                ("suggester_action", "format_response", default),
-            )
-            .with_state(
-                user_query=user_query,
-                raw_query=user_query,
-                channel=channel,
-                parsed_params={},
-                resolved_params={},
-                results=[],
-                formatted_rows=[],
-                formatted_response="",
-                soql_query="",
-                dataset_id="",
-                route_reason="",
-                query_error="",
-                query_plan={},
-                should_execute_decision=True,
-                needs_llm=False,
-                needs_clarification=False,
-                clarification_reason="",
-                total_count=0,
-                degraded=False,
-                degraded_hint="",
-                followup=followup,
-                context_params=context_params,
-                universe_insights=None,
-                suggestions=[],
-                timeout_suggestions=[],
-                risk_flag_timeout=False,
-                intent_type="",
-                followup_intent_type="",
-                analytical_response="",
-                analytical_intent="",
-                timings_ms={},
-            )
-            .with_entrypoint("parse_query")
-            .build()
+        app = build_application(
+            self.deps,
+            user_query=user_query,
+            channel=channel,
+            followup=followup,
+            context_params=context_params,
         )
 
         *_, state = app.run(halt_after=["format_response", "clarify_query"])
