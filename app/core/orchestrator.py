@@ -30,6 +30,8 @@ from app.core.secop_client import SecopClient
 from app.core.soql_builder import SoQLBuilder, UnsafeGlobalQueryError
 from app.core.suggester import generate_suggestions, Suggestion
 from app.core.relevance import RelevanceScorer
+from app.core.workflow.context import HandlerContext
+from app.core.workflow.deps import WorkflowDeps
 from app.core.workflow.helpers import (
     _build_timeout_suggestions,
     _elapsed_ms,
@@ -602,6 +604,55 @@ class SecopalWorkflow:
             api_key=settings.deepseek_api_key,
             model=settings.deepseek_model,
         )
+
+    @property
+    def deps(self) -> "WorkflowDeps":
+        """Fresh snapshot of collaborators for handler injection.
+
+        Built on every access so test-time reassignments such as
+        ``wf.conv_store = X`` or ``wf.secop_client = X`` are reflected in
+        the deps object handed to the next handler call. See
+        ``app/core/workflow/deps.py`` for the rationale.
+        """
+        return WorkflowDeps(
+            settings=self.settings,
+            entity_resolver=self.entity_resolver,
+            query_router=self.query_router,
+            llm_handler=self.llm_handler,
+            soql_builder=self.soql_builder,
+            secop_client=self.secop_client,
+            formatter=self.formatter,
+            feedback=self.feedback,
+            conv_store=self.conv_store,
+            narrator=self.narrator,
+        )
+
+    def _make_ctx(
+        self,
+        user_query: str,
+        *,
+        channel: str = "whatsapp",
+        chat_id: str | None = None,
+        user_identity: dict[str, Any] | None = None,
+        seed_resolved_params: dict | None = None,
+        run_started_at: float | None = None,
+    ) -> "HandlerContext":
+        """Build a HandlerContext from run_query's arguments.
+
+        ``run_started_at`` is accepted for tests/handlers that need to
+        share a clock; otherwise the context's default_factory captures
+        ``time.perf_counter()`` at construction.
+        """
+        kwargs: dict[str, Any] = {
+            "user_query": user_query,
+            "channel": channel,
+            "chat_id": chat_id,
+            "user_identity": user_identity,
+            "seed_resolved_params": seed_resolved_params,
+        }
+        if run_started_at is not None:
+            kwargs["run_started_at"] = run_started_at
+        return HandlerContext(**kwargs)
 
     def _run_refinement(
         self,
