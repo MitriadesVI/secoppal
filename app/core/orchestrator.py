@@ -24,21 +24,23 @@ from app.core.workflow.handlers.reset import handle_reset
 from app.core.workflow.handlers.suggestion import handle_suggestion_selection
 
 # ── Legacy compatibility shim ────────────────────────────────────────────
-# These actions moved to app.core.workflow.actions/* in Paso 5B-5E. Pre-
-# existing tests still import them from app.core.orchestrator
-# (test_degrade_query, test_guard_where_1_1_equivalence). Runtime composition
-# (workflow/graph.py) imports actions DIRECTLY from workflow/actions — the
-# re-exports below are NOT used by the graph, only by legacy test imports.
+# The 12 Burr actions and the private helpers below moved to
+# app.core.workflow.{actions,helpers} in Pasos 5 and 1 respectively.
+# Pre-existing tests still import them from app.core.orchestrator:
 #
-# tests/test_workflow_architecture.py enforces that graph.py and the action
-# modules themselves never import from orchestrator. Keeping these shim
-# imports in orchestrator.py does not violate those invariants.
+#   - test_degrade_query              → _relax_params, degrade_query
+#   - test_guard_where_1_1_equivalence → execute_query
+#   - test_count_lazy                  → _query_first_then_count
 #
-# TODO(refactor): migrate test_degrade_query.py and
-# test_guard_where_1_1_equivalence.py to import from
-# app.core.workflow.actions.{execution,parsing,planning,rendering} and
-# remove this block. Tracked as housekeeping after handler extraction
-# (Paso 7+) completes.
+# Runtime composition (workflow/graph.py + workflow/handlers/*) imports
+# from workflow/* directly — the re-exports below are ONLY consumed by
+# those legacy test files. tests/test_workflow_architecture.py enforces
+# that graph.py and the workflow modules never import from orchestrator;
+# keeping these aliases here does not violate that invariant.
+#
+# TODO(refactor): migrate the three test files above to import from
+# app.core.workflow.{actions.execution,actions.parsing,actions.planning,
+# actions.rendering,helpers} and delete this whole block.
 from app.core.workflow.actions.execution import (  # noqa: E402, F401
     degrade_query,
     execute_query,
@@ -58,6 +60,10 @@ from app.core.workflow.actions.rendering import (  # noqa: E402, F401
     clarify_query,
     format_response,
     suggester_action,
+)
+from app.core.workflow.helpers import (  # noqa: E402, F401
+    _query_first_then_count,
+    _relax_params,
 )
 
 
