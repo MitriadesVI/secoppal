@@ -34,6 +34,36 @@ from app.core.workflow.helpers import (
     _with_timings,
 )
 
+# ── Backward-compat re-exports ───────────────────────────────────────────
+# These actions moved to app.core.workflow.actions/* in Paso 5B-5E. Pre-
+# existing tests still import them from orchestrator (test_degrade_query,
+# test_guard_where_1_1_equivalence). The re-exports keep those imports
+# working without re-coupling graph.py to orchestrator (graph.py imports
+# directly from workflow.actions/*). To migrate a test, change its
+# `from app.core.orchestrator import X` to the matching workflow.actions
+# module — the tests/test_workflow_architecture.py invariants stay
+# satisfied either way.
+from app.core.workflow.actions.execution import (  # noqa: E402, F401
+    degrade_query,
+    execute_query,
+    observe_universe,
+)
+from app.core.workflow.actions.parsing import (  # noqa: E402, F401
+    apply_context,
+    llm_parse,
+    parse_query,
+)
+from app.core.workflow.actions.planning import (  # noqa: E402, F401
+    build_query,
+    plan_query,
+    resolve_entities,
+)
+from app.core.workflow.actions.rendering import (  # noqa: E402, F401
+    clarify_query,
+    format_response,
+    suggester_action,
+)
+
 
 logger = logging.getLogger(__name__)
 
