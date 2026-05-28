@@ -35,15 +35,22 @@ from app.core.workflow.helpers import (
     _with_timings,
 )
 
-# ── Backward-compat re-exports ───────────────────────────────────────────
+# ── Legacy compatibility shim ────────────────────────────────────────────
 # These actions moved to app.core.workflow.actions/* in Paso 5B-5E. Pre-
-# existing tests still import them from orchestrator (test_degrade_query,
-# test_guard_where_1_1_equivalence). The re-exports keep those imports
-# working without re-coupling graph.py to orchestrator (graph.py imports
-# directly from workflow.actions/*). To migrate a test, change its
-# `from app.core.orchestrator import X` to the matching workflow.actions
-# module — the tests/test_workflow_architecture.py invariants stay
-# satisfied either way.
+# existing tests still import them from app.core.orchestrator
+# (test_degrade_query, test_guard_where_1_1_equivalence). Runtime composition
+# (workflow/graph.py) imports actions DIRECTLY from workflow/actions — the
+# re-exports below are NOT used by the graph, only by legacy test imports.
+#
+# tests/test_workflow_architecture.py enforces that graph.py and the action
+# modules themselves never import from orchestrator. Keeping these shim
+# imports in orchestrator.py does not violate those invariants.
+#
+# TODO(refactor): migrate test_degrade_query.py and
+# test_guard_where_1_1_equivalence.py to import from
+# app.core.workflow.actions.{execution,parsing,planning,rendering} and
+# remove this block. Tracked as housekeeping after handler extraction
+# (Paso 7+) completes.
 from app.core.workflow.actions.execution import (  # noqa: E402, F401
     degrade_query,
     execute_query,
