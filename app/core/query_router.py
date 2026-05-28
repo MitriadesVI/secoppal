@@ -760,6 +760,28 @@ class QueryRouter:
 
         # Detect "entre X y Y" range BEFORE individual amount parsing so the
         # two numbers don't each get mis-classified by the generic loop below.
+        # ── Shared unit-inheritance helpers (used by range + compound block) ──
+        _any_unit_re = re.compile(
+            r"billon(?:es)?|mil\s+millones|millones?|palos?|\bmil\b",
+            re.IGNORECASE,
+        )
+        _compound_unit_re = re.compile(
+            r"mil\s+millones?|billon(?:es)?|millones?|palos?",
+            re.IGNORECASE,
+        )
+        _atomic_unit_re = re.compile(
+            r"billon(?:es)?|millones?|palos?",
+            re.IGNORECASE,
+        )
+        _has_digit_re = re.compile(r"\d")
+
+        def _inherit_unit(donor_text: str) -> str | None:
+            if _has_digit_re.search(donor_text):
+                m = _compound_unit_re.search(donor_text)
+            else:
+                m = _atomic_unit_re.search(donor_text)
+            return m.group(0) if m else None
+
         _range_re = re.compile(
             r"(?:entre|de|desde)\s+((?:\d+(?:[.,]\d+)?|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|mil)?(?:\s+de\s+pesos)?)(?:\s*[-–—]\s*|\s+y\s+|\s+a\s+|\s+hasta\s+)((?:\d+(?:[.,]\d+)?|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|mil)?(?:\s+de\s+pesos)?)",
             re.IGNORECASE,
@@ -775,29 +797,8 @@ class QueryRouter:
             #     hereda la unidad COMPUESTA ("mil millones") → "1" → 1 mil millones.
             #   - Si el otro lado es solo "mil millones" (sin número antes),
             #     hereda solo la unidad ATÓMICA ("millones") → "500" → 500 millones.
-            _any_unit_re = re.compile(
-                r"billon(?:es)?|mil\s+millones|millones?|palos?|\bmil\b",
-                re.IGNORECASE,
-            )
-            _compound_unit_re = re.compile(
-                r"mil\s+millones?|billon(?:es)?|millones?|palos?",
-                re.IGNORECASE,
-            )
-            _atomic_unit_re = re.compile(
-                r"billon(?:es)?|millones?|palos?",
-                re.IGNORECASE,
-            )
-            _has_digit_re = re.compile(r"\d")
-
             lo_has_unit = bool(_any_unit_re.search(lo_text))
             hi_has_unit = bool(_any_unit_re.search(hi_text))
-
-            def _inherit_unit(donor_text: str) -> str | None:
-                if _has_digit_re.search(donor_text):
-                    m = _compound_unit_re.search(donor_text)
-                else:
-                    m = _atomic_unit_re.search(donor_text)
-                return m.group(0) if m else None
 
             if not lo_has_unit and hi_has_unit:
                 u = _inherit_unit(hi_text)
@@ -815,7 +816,74 @@ class QueryRouter:
                 params["valor_min"] = min(amount_lo, amount_hi)
                 params["valor_max"] = max(amount_lo, amount_hi)
                 # Remove matched span so generic loop below doesn't re-parse it
+                span = normalized_query[range_match.start():range_match.end()]
+                consumed_spans.append(span)
                 normalized_query = normalized_query[: range_match.start()] + " " + normalized_query[range_match.end() :]
+
+        # Detect "N1-N2 unidad" pattern WITHOUT "entre"/"de"/"desde" prefix.
+        # e.g., "contratos 1000-3000 millones" where the hyphen acts as range
+        # separator and the unit follows both numbers.
+        # Only fires when the prefixed _range_re above did NOT match.
+        if not range_match:
+            _range_hyphen_re = re.compile(
+                r"(\d+(?:[.,]\d+)?)\s*[-–—]\s*(\d+(?:[.,]\d+)?)\s+"
+                r"((?:billon(?:es)?|mil\s+millones?|millones?|palos?))",
+                re.IGNORECASE,
+            )
+            h_match = _range_hyphen_re.search(normalized_query)
+            if h_match:
+                unit = h_match.group(3)
+                lo_text = h_match.group(1) + " " + unit
+                hi_text = h_match.group(2) + " " + unit
+
+                amount_lo = money_to_cop(lo_text)
+                amount_hi = money_to_cop(hi_text)
+
+                if amount_lo and amount_hi and amount_lo >= 1_000_000 and amount_hi >= 1_000_000:
+                    params["valor_min"] = min(amount_lo, amount_hi)
+                    params["valor_max"] = max(amount_lo, amount_hi)
+                    span = normalized_query[h_match.start():h_match.end()]
+                    consumed_spans.append(span)
+                    normalized_query = normalized_query[: h_match.start()] + " " + normalized_query[h_match.end() :]
+                range_match = h_match  # prevent polarity patterns from re-parsing
+
+        # Detect compound polarity ranges: "más de X y menos de Y"
+        # e.g., "más de 350 millones y menos de 700" → valor_min + valor_max
+        _compound_range_re = re.compile(
+            r"(?:m[aá]s\s+de|mayor(?:es)?\s+(?:a|de|que)|por\s+encima\s+de|al\s+menos|superior(?:es)?\s+(?:a|de|que))\s+"
+            r"((?:\d+(?:[.,]\d+)?|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|mil)?(?:\s+de\s+pesos)?)"
+            r"\s+(?:y|e)\s+"
+            r"(?:menos\s+de|menor(?:es)?\s+(?:a|de|que)|por\s+debajo\s+de|a\s+lo\s+sumo|inferior(?:es)?\s+(?:a|de|que))\s+"
+            r"((?:\d+(?:[.,]\d+)?|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|mil)?(?:\s+de\s+pesos)?)",
+            re.IGNORECASE,
+        )
+        cr_match = _compound_range_re.search(normalized_query)
+        if cr_match:
+            lo_text = cr_match.group(1)
+            hi_text = cr_match.group(2)
+
+            # Inherit monetary unit from one side to the other
+            lo_has_unit = bool(_any_unit_re.search(lo_text))
+            hi_has_unit = bool(_any_unit_re.search(hi_text))
+
+            if not lo_has_unit and hi_has_unit:
+                u = _inherit_unit(hi_text)
+                if u:
+                    lo_text = lo_text + " " + u
+            if not hi_has_unit and lo_has_unit:
+                u = _inherit_unit(lo_text)
+                if u:
+                    hi_text = hi_text + " " + u
+
+            amount_lo = money_to_cop(lo_text)
+            amount_hi = money_to_cop(hi_text)
+
+            if amount_lo and amount_hi and amount_lo >= 1_000_000 and amount_hi >= 1_000_000:
+                params["valor_min"] = min(amount_lo, amount_hi)
+                params["valor_max"] = max(amount_lo, amount_hi)
+                span = normalized_query[cr_match.start():cr_match.end()]
+                consumed_spans.append(span)
+                normalized_query = normalized_query[: cr_match.start()] + " " + normalized_query[cr_match.end() :]
 
         # Detect "X o más" / "X o mas" → valor_min only (before generic loop)
         _o_mas_re = re.compile(
