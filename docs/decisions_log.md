@@ -753,7 +753,83 @@ raw_query → normalize_institutional_acronyms → resolve_entity_ecosystem
 
 **Consecuencias:** El refinamiento por chips ahora funciona correctamente incluso en cadenas de refinamientos sucesivos. La sidebar sticky mejora la usabilidad en pantallas grandes. Los montos adaptativos evitan sugerir rangos irrelevantes.
 
+|**Métricas al cierre:**
+|- Tests: suite completa post-merge
+|- Corpus: 89/89 PASS
+|- Chips verificados funcionales en UI (no más uuid rotos)
+
+---
+
+## ADR-023: Orchestrator Split — de god module a fachada delgada con workflow/
+
+**Fecha:** 2026-05-27  
+**Commits:** `6fa8971` (foundation), `9ea83a8` (actions), `f537315` (refinement), `47c4a87` (handlers)  
+**Contexto:** `app/core/orchestrator.py` llegó a 1549 líneas con responsabilidades mezcladas: acciones Burr, construcción del grafo, handlers de casos especiales (reset, paginación, sugerencia, lookup directo, refinamiento), flujo normal Burr, persistencia, y helpers. Cada feature nueva tocaba orchestrator porque concentraba lógica que debería estar distribuida.
+
+**Decisión (en 8 pasos atómicos):**
+
+1. **Paso 0 — Golden safety net:** 9 tests de contrato que capturan el comportamiento observable de `run_query()` con mocks. Sirven como red de seguridad para todo el refactor.
+2. **Paso 1 — Helpers puros:** extraer `_relax_params`, `_best_date_for_row`, `_format_value`, `_safe_url`, etc. a `workflow/helpers.py` (177 LOC).
+3. **Paso 2 — WorkflowDeps + HandlerContext:** inyectar dependencias vía `WorkflowDeps` (property, no atributo) y pasar contexto inmutable vía `HandlerContext` (frozen dataclass).
+4. **Paso 3 — results.py + persistence.py (staged):** preparar `empty_result()`, `tabular_result()`, `persist_trace_and_turn()` sin consumirlos todavía.
+5. **Paso 4 — graph.py:** mover `ApplicationBuilder` y la definición del grafo Burr a `workflow/graph.py` (148 LOC).
+6. **Paso 5 — 12 acciones Burr a workflow/actions/:** parsing, planning, execution, rendering. Cada acción vive en su propio módulo. `graph.py` importa actions directamente desde `workflow/actions/`, no desde orchestrator.
+7. **Paso 6 — Refinement handler:** extraer `_run_refinement` a `workflow/handlers/refinement.py` (136 LOC).
+8. **Paso 7 — 5 handlers + colapso de run_query:** reset, pagination, suggestion, direct_lookup, normal_flow. `run_query()` se colapsa a chain-of-responsibility: prueba handlers en orden, el primero que retorna un resultado gana.
+
+**Estructura final:**
+
+```
+app/core/
+├── orchestrator.py              196 LOC  (fachada — solo run_query + init + shim)
+└── workflow/
+    ├── graph.py                 148 LOC  (Burr ApplicationBuilder)
+    ├── helpers.py               177 LOC  (helpers puros)
+    ├── deps.py                   56 LOC  (WorkflowDeps)
+    ├── context.py                42 LOC  (HandlerContext)
+    ├── persistence.py            87 LOC  (persist_trace_and_turn)
+    ├── results.py               211 LOC  (empty_result, tabular_result)
+    ├── actions/
+    │   ├── parsing.py            92 LOC
+    │   ├── planning.py          164 LOC
+    │   ├── execution.py         274 LOC
+    │   └── rendering.py         126 LOC
+    └── handlers/
+        ├── reset.py              47 LOC
+        ├── pagination.py        109 LOC
+        ├── suggestion.py        171 LOC
+        ├── direct_lookup.py     236 LOC
+        ├── refinement.py        136 LOC
+        └── normal_flow.py       236 LOC
+```
+
+**Reglas arquitectónicas (4 tests de lock-in):**
+1. `graph.py` NO importa de `orchestrator.py`
+2. `workflow/actions/*.py` NO importan de `orchestrator.py`
+3. `workflow/handlers/*.py` NO importan de `orchestrator.py`
+4. Los handlers solo reciben `WorkflowDeps` + `HandlerContext` (no `self` de `SecopalWorkflow`)
+
+**Shim legacy:** orchestrator.py mantiene re-exports de actions y helpers para 3 tests legacy (`test_degrade_query`, `test_guard_where_1_1_equivalence`, `test_count_lazy`). Marcado con `TODO(refactor)` explícito. El runtime no lo usa.
+
+**Alternativas descartadas:**
+- Partir en un solo commit (imposible — 1549 líneas, alto riesgo de regresión).
+- Mover todo a un paquete `actions/` plano sin `handlers/` (los handlers de casos especiales necesitan su propia capa para no mezclarse con acciones Burr).
+- Preservar `_run_refinement` como wrapper en orchestrator (añade ruido sin valor — ningún caller externo lo usaba).
+
+**Consecuencias:**
+- orchestrator.py: 1549 → 196 LOC (−87%).
+- Cada handler y action vive en su propio archivo con responsabilidad única.
+- Golden tests aseguran que el comportamiento observable no cambió.
+- Nuevo feature puede agregarse como handler nuevo sin tocar orchestrator.
+
 **Métricas al cierre:**
-- Tests: suite completa post-merge
+- Golden: 9/9 PASS
+- Architectural lock-in: 4/4 PASS
+- Suite: 1212 passed, 23 xfailed
 - Corpus: 89/89 PASS
-- Chips verificados funcionales en UI (no más uuid rotos)
+- lint-core: limpio
+
+**Deuda consciente:**
+- 3 tests legacy importan desde orchestrator (shim temporal).
+- `persist_trace_and_turn` no se adoptó en `normal_flow` ni `suggestion` porque requería extender la firma con `suggestions=` (cambio de comportamiento, no mecánico).
+- `tabular_result` no se adoptó en el camino exitoso de `suggestion` porque el código legacy mezcla `formatted_response`/`formatted_rows` (Burr-internal) con `response`/`rows` (canónico). Requiere golden test propio.

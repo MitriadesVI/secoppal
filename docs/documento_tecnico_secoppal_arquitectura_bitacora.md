@@ -5,16 +5,17 @@
 **Sistema:** SECOPPAL — asistente conversacional para consulta y análisis de contratación pública SECOP II  
 **Propósito del documento:** dejar una descripción comprensible para un tercero técnico o funcional sobre qué hace el sistema, cómo está construido, qué archivos lo componen, qué decisiones de arquitectura se han tomado, qué bugs relevantes se han detectado y cuál es el estado actual del proyecto.
 
-## Estado canónico actual — 2026-05-18
+## Estado canónico actual — 2026-05-27
 
 - **Main:** limpio, reconciliado desde worktree `claude/zealous-yalow-296fb6`
-- **Suite:** 579 passed, 3 xfailed
-- **Corpus:** 88/88 PASS, 0 FAIL
+- **Suite:** 1212 passed, 23 xfailed
+- **Corpus:** 89/89 PASS, 0 FAIL
 - **Torture matrix:** 12/12 invariantes
 - **feedback.jsonl:** intacto
+- **Orchestrator:** 196 LOC (desde 1549 LOC) — refactor a workflow/ completado
 - **Próximo sprint:** DEMO-BLOCKERS-001 (8 tareas UX/estado/scope, HIGH)
-- **Backlog:** VALUE-TYPO-001, REFERENCE-001
-- **Conteos históricos (424/466/534/596):** superados; referencia, no estado actual
+- **Backlog:** VALUE-TYPO-001, REFERENCE-001, migrar 3 tests legacy del shim
+- **Conteos históricos (424/466/534/596/1212):** superados; referencia, no estado actual
 
 ---
 
@@ -116,7 +117,8 @@ Respuesta asesora al usuario
 
 | Capa | Componente | Responsabilidad |
 |---|---|---|
-| Entrada | `orchestrator.py` | Dirige el flujo completo con Burr. |
+| Entrada | `orchestrator.py` | Fachada delgada: chain-of-responsibility de handlers. |
+| Workflow | `workflow/` | Acciones Burr, handlers de casos especiales, grafo, helpers, persistencia. |
 | Parsing | `query_router.py` | Extrae dataset, tema, fecha, valor, estado, ciudad, NIT, modalidad. |
 | Follow-up | `followup_engine.py` | Fusiona consulta actual con contexto anterior. |
 | Memoria corta | `conversation_store.py` | Guarda historial por `chat_id` y sugerencias. |
@@ -154,28 +156,51 @@ app/core/
 ├── response_policy.py
 ├── secop_client.py
 ├── soql_builder.py
-└── suggester.py
+├── suggester.py
+└── workflow/
+    ├── actions/
+    │   ├── parsing.py
+    │   ├── planning.py
+    │   ├── execution.py
+    │   └── rendering.py
+    ├── handlers/
+    │   ├── reset.py
+    │   ├── pagination.py
+    │   ├── suggestion.py
+    │   ├── direct_lookup.py
+    │   ├── refinement.py
+    │   └── normal_flow.py
+    ├── graph.py
+    ├── helpers.py
+    ├── deps.py
+    ├── context.py
+    ├── persistence.py
+    └── results.py
 ```
 
 ### 5.1 `orchestrator.py`
 
-Es el director general del flujo.
+Es la **fachada delgada** del flujo. Antes era un god module de 1549 líneas; ahora es una chain-of-responsibility de 196 líneas.
 
-Responsabilidades:
+Responsabilidades actuales:
 
-- Detecta comandos de reset.
-- Detecta paginación directa.
-- Ejecuta sugerencias numéricas `1`, `2`, `3`.
-- Construye pipeline Burr.
-- Coordina parseo, resolución, query, ejecución, observación y formato.
-- Persiste el turno conversacional.
-- Llama a `build_advisor_response()` para construir la respuesta final.
+- Inicializar `WorkflowDeps` (inyección de dependencias).
+- Construir `HandlerContext` para cada turno.
+- Ejecutar `run_query()` como chain-of-responsibility:
+  1. `handle_refinement` (seed_resolved_params)
+  2. `handle_reset` (comandos /reset, nueva, limpiar)
+  3. `handle_pagination` ("más", "siguiente", números de página)
+  4. `handle_suggestion_selection` (selección 1-5 de sugerencias)
+  5. `handle_direct_lookup` (ID CO1.XXX.YYY, URL, referencia de entidad)
+  6. `handle_normal_flow` (pipeline Burr completo: parse → plan → execute → observe → render)
+- Mantener shim de backward-compat para tests legacy (re-exports de actions/helpers).
 
 Puntos relevantes:
 
-- La paginación pura no pasa por todo el pipeline.
-- El follow-up se gestiona mediante `followup_engine.detect_and_merge()`.
-- El guard anti `WHERE 1=1` evita consultas sin filtro base.
+- La paginación pura no pasa por todo el pipeline — la captura `handle_pagination` antes del Burr graph.
+- El follow-up se gestiona dentro de `workflow/actions/parsing.py` vía `apply_context`.
+- El guard anti `WHERE 1=1` vive en `workflow/actions/execution.py` (`execute_query`).
+- Cada handler vive en `workflow/handlers/` y recibe `(WorkflowDeps, HandlerContext)` — no accede a `self` de `SecopalWorkflow`.
 
 ### 5.2 `query_router.py`
 
@@ -1071,3 +1096,49 @@ trabajo con tests 945 passed.
 **Validación:** 945 passed, 10 xfailed.
 **Documentación:** ADR-017, DOGFOOD_2026-05-25.md, funnel-full-ux-fixes-2026-05-25.md.
 **Pendientes post-dogfooding:** F (trace vacío follow-up), G (gramática "5 resultados").
+
+### 2026-05-27 — Orchestrator Split: de god module (1549 LOC) a fachada delgada (196 LOC)
+
+**Problema:** `app/core/orchestrator.py` concentraba 1549 líneas con acciones Burr, grafo, handlers de casos especiales, flujo normal, persistencia y helpers. Cada feature nueva tocaba orchestrator.
+
+**Solución:** Refactor en 8 pasos atómicos con golden tests (9 contratos de comportamiento observable) como red de seguridad:
+
+1. **Paso 0:** Golden safety net (9 tests de contrato para `run_query()`).
+2. **Paso 1:** Extraer helpers puros a `workflow/helpers.py`.
+3. **Paso 2:** Introducir `WorkflowDeps` + `HandlerContext` (inyección + contexto inmutable).
+4. **Paso 3:** Staging de `workflow/results.py` + `workflow/persistence.py`.
+5. **Paso 4:** Mover grafo Burr a `workflow/graph.py`.
+6. **Paso 5:** Extraer 12 acciones Burr a `workflow/actions/` (parsing, planning, execution, rendering).
+7. **Paso 6:** Extraer handler de refinamiento a `workflow/handlers/refinement.py`.
+8. **Paso 7:** Extraer 5 handlers (reset, pagination, suggestion, direct_lookup, normal_flow) y colapsar `run_query()` a chain-of-responsibility.
+
+**Estructura resultante:**
+- `orchestrator.py`: 196 LOC (fachada — init + run_query + shim backward-compat).
+- `workflow/actions/`: 656 LOC en 4 módulos (parsing, planning, execution, rendering).
+- `workflow/handlers/`: 945 LOC en 6 módulos (reset, pagination, suggestion, direct_lookup, refinement, normal_flow).
+- `workflow/graph.py`: 148 LOC (ApplicationBuilder Burr).
+- `workflow/helpers.py`: 177 LOC (helpers puros).
+- `workflow/deps.py`: 56 LOC (WorkflowDeps).
+- `workflow/context.py`: 42 LOC (HandlerContext).
+- `workflow/persistence.py`: 87 LOC (persist_trace_and_turn, extract_result_ids).
+- `workflow/results.py`: 211 LOC (empty_result, tabular_result, CANONICAL_KEYS).
+
+**Invariantes arquitectónicas (4 tests de lock-in):**
+- `graph.py` NO importa de `orchestrator.py`.
+- `workflow/actions/*.py` NO importan de `orchestrator.py`.
+- `workflow/handlers/*.py` NO importan de `orchestrator.py`.
+- Los handlers solo reciben `(WorkflowDeps, HandlerContext)` — no `self` de `SecopalWorkflow`.
+
+**Deuda consciente:**
+- 3 tests legacy importan actions/helpers desde orchestrator (shim temporal con `TODO(refactor)`).
+- `persist_trace_and_turn` no se adoptó en `normal_flow` ni `suggestion` (requería extender firma con `suggestions=`).
+- `tabular_result` no se adoptó en el camino exitoso de `suggestion` (quirk legacy Burr-internal vs canónico).
+
+**Validación:**
+- Golden: 9/9 PASS
+- Architectural lock-in: 4/4 PASS
+- Suite: 1212 passed, 23 xfailed
+- Corpus: 89/89 PASS
+- lint-core: limpio
+
+**Documentación:** ADR-023.
