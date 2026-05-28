@@ -24,6 +24,7 @@ from app.core.relevance import RelevanceScorer
 from app.core.workflow.context import HandlerContext
 from app.core.workflow.deps import WorkflowDeps
 from app.core.workflow.graph import build_application
+from app.core.workflow.handlers.refinement import handle_refinement
 from app.core.workflow.helpers import (
     _build_timeout_suggestions,
     _elapsed_ms,
@@ -34,15 +35,22 @@ from app.core.workflow.helpers import (
     _with_timings,
 )
 
-# ── Backward-compat re-exports ───────────────────────────────────────────
+# ── Legacy compatibility shim ────────────────────────────────────────────
 # These actions moved to app.core.workflow.actions/* in Paso 5B-5E. Pre-
-# existing tests still import them from orchestrator (test_degrade_query,
-# test_guard_where_1_1_equivalence). The re-exports keep those imports
-# working without re-coupling graph.py to orchestrator (graph.py imports
-# directly from workflow.actions/*). To migrate a test, change its
-# `from app.core.orchestrator import X` to the matching workflow.actions
-# module — the tests/test_workflow_architecture.py invariants stay
-# satisfied either way.
+# existing tests still import them from app.core.orchestrator
+# (test_degrade_query, test_guard_where_1_1_equivalence). Runtime composition
+# (workflow/graph.py) imports actions DIRECTLY from workflow/actions — the
+# re-exports below are NOT used by the graph, only by legacy test imports.
+#
+# tests/test_workflow_architecture.py enforces that graph.py and the action
+# modules themselves never import from orchestrator. Keeping these shim
+# imports in orchestrator.py does not violate those invariants.
+#
+# TODO(refactor): migrate test_degrade_query.py and
+# test_guard_where_1_1_equivalence.py to import from
+# app.core.workflow.actions.{execution,parsing,planning,rendering} and
+# remove this block. Tracked as housekeeping after handler extraction
+# (Paso 7+) completes.
 from app.core.workflow.actions.execution import (  # noqa: E402, F401
     degrade_query,
     execute_query,
@@ -143,103 +151,6 @@ class SecopalWorkflow:
             kwargs["run_started_at"] = run_started_at
         return HandlerContext(**kwargs)
 
-    def _run_refinement(
-        self,
-        user_query: str,
-        channel: str,
-        chat_id: str | None,
-        user_identity: dict[str, Any] | None,
-        seed_resolved_params: dict,
-    ) -> dict | None:
-        """Ejecuta una refinement bar mergeada con contexto previo.
-
-        Toma los params ya resueltos del turno anterior + el filtro recién aplicado,
-        construye SoQL y ejecuta sin pasar por el parser. Retorna None si no se
-        puede ejecutar (sin scope/topic) para que el caller caiga al flujo normal.
-        """
-        params = dict(seed_resolved_params)
-        # offset/limit deben empezar de cero porque es una nueva búsqueda
-        params.pop("offset", None)
-        params.setdefault("limit", 50)
-
-        # Guard anti-WHERE 1=1
-        has_scope_or_topic = any(
-            params.get(k) and params.get(k) not in (None, [], "", {}, False)
-            for k in SCOPE_TOPIC_KEYS
-        )
-        if not has_scope_or_topic:
-            return None
-
-        ds_id = SoQLBuilder.dataset_id_for(params.get("dataset"))
-        try:
-            soql = self.soql_builder.build(ds_id, params)
-            count_soql = self.soql_builder.build_count(ds_id, params)
-            total, results, _t, approx = _query_first_then_count(
-                self.secop_client, ds_id, count_soql, soql,
-                limit=int(params.get("limit", 50) or 50),
-            )
-        except Exception as exc:
-            logger.warning("refinement failed: %s", exc)
-            return None
-
-        response, rows = self.formatter.format_for_channel(
-            results, ds_id, channel,
-            params=params, total_count=total,
-            total_count_approximate=approx,
-        )
-        header = "🎚️ Refinamiento aplicado\n\n"
-        result = {
-            "response": header + response,
-            "rows": rows,
-            "results": results,
-            "dataset_id": ds_id,
-            "soql_query": soql,
-            "parsed_params": params,
-            "resolved_params": params,
-            "needs_llm": False,
-            "needs_clarification": False,
-            "route_reason": "refinement",
-            "degraded": False, "degraded_hint": "",
-            "total_count": total,
-            "total_count_approximate": approx,
-            "universe_insights": None,
-            "suggestions": [], "timeout_suggestions": [],
-            "intent_type": "refinement",
-            "followup": True,
-            "trace_id": "", "narrated": False,
-            "contextual_filters": {},
-        }
-
-        # Contextual filters (mismo threshold que flujo normal: ≥5)
-        if results and total >= 5:
-            try:
-                from app.core.contextual_suggestions import compute_contextual_filters
-                result["contextual_filters"] = compute_contextual_filters(
-                    results, ds_id, params,
-                )
-            except Exception:
-                pass
-
-        trace_id = self.feedback.log_trace(user_query, channel, result, user_identity=user_identity)
-        result["trace_id"] = trace_id
-
-        if chat_id:
-            result_ids = [
-                rid for rid in (
-                    str(r.get("referencia_del_proceso") or r.get("id_contrato") or "")
-                    for r in results[:10]
-                ) if rid
-            ]
-            self.conv_store.append_turn(
-                chat_id=chat_id,
-                user_query=user_query,
-                response=result["response"],
-                parsed_params=params,
-                result_ids=result_ids,
-                trace_id=trace_id,
-            )
-        return result
-
     def run_query(
         self,
         user_query: str,
@@ -256,16 +167,17 @@ class SecopalWorkflow:
         # un texto sintético como "filtrando por X" sea malinterpretado y que
         # el contexto previo se pierda.
         if seed_resolved_params:
-            res = self._run_refinement(
-                user_query=user_query,
+            ctx = self._make_ctx(
+                user_query,
                 channel=channel,
                 chat_id=chat_id,
                 user_identity=user_identity,
                 seed_resolved_params=seed_resolved_params,
             )
+            res = handle_refinement(self.deps, ctx, seed_resolved_params)
             if res is not None:
                 return res
-            # si _run_refinement no pudo, caer al flujo normal
+            # si el handler no pudo (sin scope/topic), caer al flujo normal
         # ── Reset command ────────────────────────────────────────────────
         if chat_id and is_reset_command(user_query):
             self.conv_store.clear(chat_id)

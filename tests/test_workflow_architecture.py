@@ -58,6 +58,25 @@ def test_actions_do_not_import_orchestrator():
     )
 
 
+def test_handlers_do_not_import_orchestrator():
+    """Handler modules must be leaves too: SecopalWorkflow.run_query
+    depends on handlers, never the other way around. A handler that
+    imports orchestrator (or even SecopalWorkflow) is a cycle waiting
+    to happen."""
+    handlers_dir = _REPO_ROOT / "app" / "core" / "workflow" / "handlers"
+    offenders: list[str] = []
+    for py in handlers_dir.glob("*.py"):
+        if py.name == "__init__.py":
+            continue
+        src = py.read_text()
+        if "app.core.orchestrator" in src:
+            offenders.append(py.name)
+    assert not offenders, (
+        f"These handler modules import from orchestrator: {offenders}. "
+        f"Handlers must be leaves in the dependency tree."
+    )
+
+
 def test_orchestrator_does_not_import_burr_actions():
     """After Paso 5 orchestrator.py contains no @action and no direct
     Burr imports — those moved to workflow/actions/ and workflow/graph.py.
