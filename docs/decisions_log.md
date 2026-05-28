@@ -886,6 +886,8 @@ La conjunción debe estar dentro de una ventana de ~10 tokens del primer límite
 
 **Prioridad:** Media-Alta — el usuario asume que el rango funciona cuando dice "y menos de".
 
+**Cerrado 2026-05-27:** Implementado en `ecf94de`. Tres fixes: (1) range span agregado a consumed_spans para evitar leak de "desde"/"hasta"/"entre" a objeto, (2) rangos con guión sin prefijo ("1000-3000 millones") ahora detectados, (3) rangos compuestos de polaridad inversa ("más de X y menos de Y", "mayor a X y menor a Y", "por encima de X y por debajo de Y", "al menos X y a lo sumo Y") detectados con herencia de unidad. 21 tests en test_value_ranges.py. Corpus 89/89 verde.
+
 ---
 
 ### DOGFOOD-MORPHO-007: Expansión morfológica demasiado ancha (software → tecnología)
