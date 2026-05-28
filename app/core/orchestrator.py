@@ -5,8 +5,6 @@ import logging
 import time
 from typing import Any
 
-from burr.core import State, action
-
 from app.config import Settings
 from app.core._followup_constants import SCOPE_TOPIC_KEYS
 from app.core.conversation_store import ConversationStore, is_followup, is_reset_command, is_pagination_phrase
@@ -21,11 +19,12 @@ from app.core.query_router import QueryRouter
 from app.core.response_policy import build_advisor_response, build_clarification_response
 from app.core.secop_client import SecopClient
 from app.core.soql_builder import SoQLBuilder
-from app.core.suggester import generate_suggestions, Suggestion
+from app.core.suggester import generate_suggestions
 from app.core.relevance import RelevanceScorer
 from app.core.workflow.actions.execution import degrade_query, execute_query, observe_universe
 from app.core.workflow.actions.parsing import apply_context, llm_parse, parse_query
 from app.core.workflow.actions.planning import build_query, plan_query, resolve_entities
+from app.core.workflow.actions.rendering import clarify_query, format_response, suggester_action
 from app.core.workflow.context import HandlerContext
 from app.core.workflow.deps import WorkflowDeps
 from app.core.workflow.graph import build_application
@@ -41,106 +40,6 @@ from app.core.workflow.helpers import (
 
 
 logger = logging.getLogger(__name__)
-
-@action(
-    reads=["resolved_params", "universe_insights", "total_count", "dataset_id", "results", "timings_ms"],
-    writes=["suggestions", "timings_ms"],
-)
-def suggester_action(state: State) -> State:
-    start = time.perf_counter()
-    suggestions = generate_suggestions(
-        params=state.get("resolved_params", {}),
-        universe_insights=state.get("universe_insights"),
-        total_count=state.get("total_count") or 0,
-        rows=state.get("results", []),
-        dataset_id=state.get("dataset_id", ""),
-        intent_type=state.get("intent_type", ""),
-    )
-    return _with_timing(state, "suggest_ms", start, suggestions=suggestions)
-
-
-@action(reads=["results", "dataset_id", "channel", "query_error", "risk_flag_timeout", "resolved_params", "degraded", "degraded_hint", "total_count", "universe_insights", "suggestions", "timeout_suggestions", "analytical_response", "timings_ms"], writes=["formatted_response", "formatted_rows", "timings_ms"])
-def format_response(state: State, formatter: Formatter) -> State:
-    start = time.perf_counter()
-    # Modo analítico: la respuesta ya viene formateada desde execute_query.
-    # No pasar por formatter (no hay rows tabulares que renderizar).
-    analytical = state.get("analytical_response")
-    if analytical:
-        return _with_timing(
-            state,
-            "format_ms",
-            start,
-            formatted_response=analytical,
-            formatted_rows=[],
-        )
-    if state.get("query_error"):
-        err = str(state.get("query_error") or "")
-        err_lower = err.lower()
-        # DOGFOOD-ERRMSG-007: distinguir 4xx (bug del builder) de timeout real
-        if "400" in err or "bad request" in err_lower or "unexpected character" in err_lower:
-            message = (
-                "⚠️ Error interno: la consulta SoQL generada fue rechazada por SECOP "
-                "(400 Bad Request). Este es un bug del builder, no de SECOP — "
-                "el equipo ya tiene el trace para revisar."
-            )
-        elif "404" in err:
-            message = "SECOP devolvió 404 — el dataset no respondió. Reintenta."
-        elif "5" in err[:3] or "server error" in err_lower:
-            message = "SECOP tuvo un error interno (5xx). Reintenta en unos segundos."
-        elif state.get("risk_flag_timeout"):
-            message = (
-                "⏱️ SECOP no respondió a tiempo. "
-                "No puedo confirmar si hay o no resultados."
-            )
-        else:
-            message = "⏱️ SECOP no respondió a tiempo. Intenta de nuevo en unos segundos."
-        return _with_timing(
-            state,
-            "format_ms",
-            start,
-            formatted_response=message,
-            formatted_rows=[],
-        )
-    params = state.get("resolved_params") or {}
-    total_count = state.get("total_count", 0)
-    universe_insights = state.get("universe_insights")
-    suggestions = state.get("suggestions", [])
-    approximate = state.get("total_count_approximate", False)
-    response, rows = formatter.format_for_channel(
-        state["results"], state["dataset_id"], state["channel"],
-        params=params, total_count=total_count, universe_insights=universe_insights,
-        suggestions=suggestions, total_count_approximate=approximate,
-    )
-    if state.get("degraded") and state.get("degraded_hint"):
-        note = f"No encontre resultados exactos. Te muestro resultados {state['degraded_hint']}:\n\n"
-        response = note + response
-    # Timeout retry: avisar que se cambió la estrategia
-    if state.get("timeout_suggestions"):
-        note = (
-            "Entendi la busqueda, pero SECOP se demoro al ordenar todos los historicos por valor. "
-            "Cambie a orden por fecha mas reciente.\n\n"
-        )
-        response = note + response
-    return _with_timing(state, "format_ms", start, formatted_response=response, formatted_rows=rows)
-
-
-@action(reads=["clarification_reason", "timings_ms"], writes=["formatted_response", "formatted_rows", "timings_ms"])
-def clarify_query(state: State) -> State:
-    start = time.perf_counter()
-    plan = state.get("query_plan", {}) or {}
-    if plan.get("clarification_question"):
-        cr = build_clarification_response(plan)
-        msg = cr["response"]
-    else:
-        msg = state["clarification_reason"] or "Necesito un poco mas de contexto para buscar en SECOP."
-    return _with_timing(
-        state,
-        "clarify_ms",
-        start,
-        formatted_response=msg,
-        formatted_rows=[],
-    )
-
 
 class SecopalWorkflow:
     """High-level workflow facade around Burr."""
