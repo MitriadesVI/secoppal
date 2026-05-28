@@ -24,6 +24,7 @@ from app.core.relevance import RelevanceScorer
 from app.core.workflow.context import HandlerContext
 from app.core.workflow.deps import WorkflowDeps
 from app.core.workflow.graph import build_application
+from app.core.workflow.handlers.pagination import handle_pagination
 from app.core.workflow.handlers.refinement import handle_refinement
 from app.core.workflow.handlers.reset import handle_reset
 from app.core.workflow.helpers import (
@@ -186,82 +187,10 @@ class SecopalWorkflow:
             return reset_result
 
         # ── Pagination detection ──────────────────────────────────────────
-        if chat_id and is_pagination_phrase(user_query):
-            history = self.conv_store.get_history(chat_id, last_n=1)
-            if history:
-                prev_params = dict(history[-1].parsed_params)
-                prev_offset = int(prev_params.get("offset", 0))
-                prev_limit = int(prev_params.get("limit", 10))
-                new_offset = prev_offset + prev_limit
-                pag_params = {**prev_params, "offset": new_offset, "limit": prev_limit}
-                ds_id = SoQLBuilder.dataset_id_for(pag_params.get("dataset"))
-                soql = self.soql_builder.build(ds_id, pag_params)
-                try:
-                    total, results, _secop_timings, _approx = _query_first_then_count(
-                        self.secop_client,
-                        ds_id,
-                        self.soql_builder.build_count(ds_id, pag_params),
-                        soql,
-                    )
-                    response, rows = self.formatter.format_for_channel(
-                        results, ds_id, channel,
-                        params=pag_params, total_count=total,
-                    )
-                    display_from = new_offset + 1
-                    display_to = new_offset + len(results)
-                    ordering_label = "de mayor valor" if pag_params.get("ordering_signal") == "valor_desc" else "más recientes"
-                    header = f"📄 Resultados {display_from}-{display_to} de {total} (manteniendo orden por {ordering_label})\n\n"
-                    result = {
-                        "response": header + response,
-                        "rows": rows,
-                        "results": results,
-                        "dataset_id": ds_id,
-                        "soql_query": soql,
-                        "parsed_params": pag_params,
-                        "resolved_params": pag_params,
-                        "needs_llm": False,
-                        "needs_clarification": False,
-                        "route_reason": "pagination_more",
-                        "degraded": False, "degraded_hint": "",
-                        "total_count": total,
-                        "universe_insights": None,
-                        "suggestions": [], "timeout_suggestions": [],
-                        "intent_type": "pagination_more",
-                        "followup": True,
-                        "trace_id": "", "narrated": False,
-                    }
-                    # Persist turn for next pagination
-                    result_ids = [
-                        rid for rid in (
-                            str(r.get("referencia_del_proceso") or r.get("id_contrato") or "")
-                            for r in results[:10]
-                        ) if rid
-                    ]
-                    trace_id = self.feedback.log_trace(user_query, channel, result, user_identity=user_identity)
-                    result["trace_id"] = trace_id
-                    self.conv_store.append_turn(
-                        chat_id=chat_id,
-                        user_query=user_query,
-                        response=result["response"],
-                        parsed_params=pag_params,
-                        result_ids=result_ids,
-                        trace_id=trace_id,
-                    )
-                    return result
-                except Exception:
-                    pass
-            # Sin historial – pedir contexto (NO caer a flujo normal WHERE 1=1)
-            return {
-                "response": pagination_no_history_response(),
-                "rows": [], "results": [], "dataset_id": "", "soql_query": "",
-                "parsed_params": {}, "resolved_params": {},
-                "needs_llm": False, "needs_clarification": True,
-                "route_reason": "pagination_no_context",
-                "degraded": False, "degraded_hint": "", "total_count": 0,
-                "universe_insights": None, "suggestions": [],
-                "timeout_suggestions": [], "intent_type": "pagination_more",
-                "followup": False, "trace_id": "", "narrated": False,
-            }
+        pag_ctx = self._make_ctx(user_query, channel=channel, chat_id=chat_id, user_identity=user_identity)
+        pag_result = handle_pagination(self.deps, pag_ctx)
+        if pag_result is not None:
+            return pag_result
 
         # ── Suggestion selection ─────────────────────────────────────────
         suggestion_applied = False
