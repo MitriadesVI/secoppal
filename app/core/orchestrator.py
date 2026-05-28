@@ -21,8 +21,6 @@ from app.core.formatter import Formatter
 from app.core.llm_handler import LLMHandler
 from app.core.narrator import NarratorHandler
 from app.core.observer import observe as observe_universe_fn, UniverseInsights
-from app.core.followup_engine import detect_and_merge, FollowupGuards
-from app.core.query_frame import frame_from_params
 from app.core.query_router import QueryRouter
 from app.core.query_plan import compute_query_plan
 from app.core.response_policy import build_advisor_response, build_clarification_response
@@ -30,6 +28,7 @@ from app.core.secop_client import SecopClient
 from app.core.soql_builder import SoQLBuilder, UnsafeGlobalQueryError
 from app.core.suggester import generate_suggestions, Suggestion
 from app.core.relevance import RelevanceScorer
+from app.core.workflow.actions.parsing import apply_context, llm_parse, parse_query
 from app.core.workflow.context import HandlerContext
 from app.core.workflow.deps import WorkflowDeps
 from app.core.workflow.graph import build_application
@@ -49,29 +48,6 @@ logger = logging.getLogger(__name__)
 # ── Sprint 2A rule activation — expanded per sub-block B4.x ──────────────
 # B4.1: {\"P3\", \"P9\"}  → B4.2: +P4  → B4.3: +P5+P6+P7  → B4.4: all  → B4.5: None
 ENABLED_RULES_SPRINT_2A: set[str] | None = None  # B4.5: None = all rules (default)
-
-@action(reads=["user_query", "timings_ms"], writes=["parsed_params", "needs_llm", "route_reason", "timings_ms"])
-def parse_query(state: State, query_router: QueryRouter) -> State:
-    start = time.perf_counter()
-    result = query_router.parse(state["user_query"])
-    return _with_timing(
-        state,
-        "parse_ms",
-        start,
-        parsed_params=result.params,
-        needs_llm=result.needs_llm,
-        route_reason=result.route_reason,
-    )
-
-
-@action(reads=["user_query", "needs_llm", "parsed_params", "timings_ms"], writes=["parsed_params", "timings_ms"])
-def llm_parse(state: State, llm_handler: LLMHandler) -> State:
-    start = time.perf_counter()
-    if not state["needs_llm"]:
-        return _with_timing(state, "llm_parse_ms", start)
-    parsed = llm_handler.parse(state["user_query"], existing_params=state["parsed_params"])
-    return _with_timing(state, "llm_parse_ms", start, parsed_params=parsed)
-
 
 @action(
     reads=["parsed_params", "raw_query", "prev_params", "turn_index"],
@@ -515,50 +491,6 @@ def format_response(state: State, formatter: Formatter) -> State:
         )
         response = note + response
     return _with_timing(state, "format_ms", start, formatted_response=response, formatted_rows=rows)
-
-
-@action(reads=["parsed_params", "context_params", "followup", "user_query", "timings_ms"], writes=["parsed_params", "needs_llm", "needs_clarification", "clarification_reason", "intent_type", "followup_intent_type", "timings_ms"])
-def apply_context(state: State) -> State:
-    """Fusiona context_params del turno anterior con parsed_params del parse actual.
-    Usa followup_engine.detect_and_merge para clasificar la intención granular
-    y aplicar políticas de merge por tipo de follow-up.
-
-    Solo corre cuando followup=True.
-    """
-    start = time.perf_counter()
-    if not state.get("followup"):
-        return _with_timing(state, "apply_context_ms", start)
-
-    previous_frame = frame_from_params(state.get("context_params", {}))
-    intent, merged = detect_and_merge(
-        text=state.get("user_query", ""),
-        current_params=state.get("parsed_params", {}),
-        previous_frame=previous_frame,
-    )
-
-    # Guard contra WHERE 1=1 global
-    if not FollowupGuards.check_no_where_1_1(merged):
-        return _with_timing(
-            state,
-            "apply_context_ms",
-            start,
-            parsed_params=merged,
-            needs_llm=False,
-            needs_clarification=True,
-            clarification_reason=(
-                "Te entendi como refinamiento, pero perdi el contexto anterior. "
-                "Haz una busqueda base primero o usa reset."
-            ),
-            intent_type=intent,
-            followup_intent_type=intent,
-        )
-
-    # Si el merge produjo contexto suficiente, no necesita LLM
-    has_context = FollowupGuards.check_no_where_1_1(merged)
-    if has_context:
-        return _with_timing(state, "apply_context_ms", start, parsed_params=merged, needs_llm=False, intent_type=intent, followup_intent_type=intent)
-
-    return _with_timing(state, "apply_context_ms", start, parsed_params=merged, intent_type=intent, followup_intent_type=intent)
 
 
 @action(reads=["clarification_reason", "timings_ms"], writes=["formatted_response", "formatted_rows", "timings_ms"])
