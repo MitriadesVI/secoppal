@@ -25,6 +25,7 @@ from app.core.workflow.context import HandlerContext
 from app.core.workflow.deps import WorkflowDeps
 from app.core.workflow.graph import build_application
 from app.core.workflow.handlers.refinement import handle_refinement
+from app.core.workflow.handlers.reset import handle_reset
 from app.core.workflow.helpers import (
     _build_timeout_suggestions,
     _elapsed_ms,
@@ -179,30 +180,10 @@ class SecopalWorkflow:
                 return res
             # si el handler no pudo (sin scope/topic), caer al flujo normal
         # ── Reset command ────────────────────────────────────────────────
-        if chat_id and is_reset_command(user_query):
-            self.conv_store.clear(chat_id)
-            return {
-                "response": reset_response(),
-                "rows": [],
-                "results": [],
-                "dataset_id": "",
-                "soql_query": "",
-                "parsed_params": {},
-                "resolved_params": {},
-                "needs_llm": False,
-                "needs_clarification": False,
-                "route_reason": "reset",
-                "degraded": False,
-                "degraded_hint": "",
-                "total_count": 0,
-                "universe_insights": None,
-                "suggestions": [],
-                "timeout_suggestions": [],
-                "intent_type": "",
-                "followup": False,
-                "trace_id": "",
-                "narrated": False,
-            }
+        reset_ctx = self._make_ctx(user_query, channel=channel, chat_id=chat_id, user_identity=user_identity)
+        reset_result = handle_reset(self.deps, reset_ctx)
+        if reset_result is not None:
+            return reset_result
 
         # ── Pagination detection ──────────────────────────────────────────
         if chat_id and is_pagination_phrase(user_query):
