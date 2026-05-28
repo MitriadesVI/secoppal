@@ -8,7 +8,6 @@ from typing import Any
 from app.config import Settings
 from app.core._followup_constants import SCOPE_TOPIC_KEYS
 from app.core.conversation_store import ConversationStore, is_followup, is_reset_command, is_pagination_phrase
-from app.core.direct_responses import reset_response, pagination_no_history_response, suggestion_invalid_response, suggestion_selection_header
 from app.core.entity_resolver import EntityResolver
 from app.core.feedback import FeedbackStore
 from app.core.formatter import Formatter
@@ -27,6 +26,7 @@ from app.core.workflow.graph import build_application
 from app.core.workflow.handlers.pagination import handle_pagination
 from app.core.workflow.handlers.refinement import handle_refinement
 from app.core.workflow.handlers.reset import handle_reset
+from app.core.workflow.handlers.suggestion import handle_suggestion_selection
 from app.core.workflow.helpers import (
     _build_timeout_suggestions,
     _elapsed_ms,
@@ -193,140 +193,10 @@ class SecopalWorkflow:
             return pag_result
 
         # ── Suggestion selection ─────────────────────────────────────────
-        suggestion_applied = False
-        suggestion_label = ""
-        if chat_id:
-            q = user_query.strip()
-            if q in ("1", "2", "3"):
-                last_suggestions = self.conv_store.get_last_suggestions(chat_id)
-                if last_suggestions and len(last_suggestions) >= int(q):
-                    idx = int(q) - 1
-                    sug = last_suggestions[idx]
-                    sug_params = sug.get("modified_params", {})
-                    suggestion_label = sug.get("label", "")
-                    sug_dataset_id = SoQLBuilder.dataset_id_for(sug_params.get("dataset"))
-                    # Build SoQL and execute directly
-                    soql = self.soql_builder.build(sug_dataset_id, sug_params)
-                    try:
-                        count_soql = self.soql_builder.build_count(sug_dataset_id, sug_params)
-                        total, results, _secop_timings, _approx = _query_first_then_count(
-                            self.secop_client,
-                            sug_dataset_id,
-                            count_soql,
-                            soql,
-                        )
-                        # Generate insights + suggestions for this new result
-                        ui = observe_universe_fn(
-                            results=results, total_count=total,
-                            dataset_id=sug_dataset_id, params=sug_params,
-                            secop_client=self.secop_client,
-                            soql_builder=self.soql_builder,
-                        )
-                        new_suggestions = generate_suggestions(
-                            params=sug_params, universe_insights=ui,
-                            total_count=total, rows=results, dataset_id=sug_dataset_id,
-                            intent_type=sug_params.get("intent_type", ""),
-                        )
-                        response, rows = self.formatter.format_for_channel(
-                            results, sug_dataset_id, channel,
-                            params=sug_params, total_count=total,
-                            universe_insights=ui,
-                            suggestions=[dataclasses.asdict(s) if hasattr(s, '__dataclass_fields__') else s for s in new_suggestions],
-                        )
-                        suggestion_applied = True
-                        state_for_result = {
-                            "formatted_response": response,
-                            "formatted_rows": rows,
-                            "results": results,
-                            "dataset_id": sug_dataset_id,
-                            "soql_query": soql,
-                            "parsed_params": sug_params,
-                            "resolved_params": sug_params,
-                            "needs_llm": False,
-                            "needs_clarification": False,
-                            "route_reason": "suggestion",
-                            "degraded": False,
-                            "degraded_hint": "",
-                            "total_count": total,
-                            "universe_insights": ui,
-                            "suggestions": new_suggestions,
-                        }
-                    except Exception as exc:
-                        # Fallback: sugerencia no disponible
-                        return {
-                            "response": f"No pude ejecutar esa sugerencia en este momento: {exc}",
-                            "rows": [],
-                            "results": [],
-                            "dataset_id": "",
-                            "soql_query": "",
-                            "parsed_params": {},
-                            "resolved_params": {},
-                            "needs_llm": False,
-                            "needs_clarification": False,
-                            "route_reason": "suggestion_error",
-                            "degraded": False,
-                            "degraded_hint": "",
-                            "total_count": 0,
-                            "universe_insights": None,
-                            "suggestions": [],
-                            "timeout_suggestions": [],
-                            "followup": False,
-                            "trace_id": "",
-                            "narrated": False,
-                        }
-                else:
-                    # Hay sugerencia pero el numero no coincide
-                    return {
-                        "response": suggestion_invalid_response(3, q),
-                        "rows": [],
-                        "results": [],
-                        "dataset_id": "",
-                        "soql_query": "",
-                        "parsed_params": {},
-                        "resolved_params": {},
-                        "needs_llm": False,
-                        "needs_clarification": False,
-                        "route_reason": "suggestion_invalid",
-                        "degraded": False,
-                        "degraded_hint": "",
-                        "total_count": 0,
-                        "universe_insights": None,
-                        "suggestions": [],
-                        "timeout_suggestions": [],
-                        "followup": False,
-                        "trace_id": "",
-                        "narrated": False,
-                    }
-
-        if suggestion_applied:
-            # Construct result from direct execution
-            result = state_for_result
-            # Add fields that run_query normally computes
-            raw_results = result.get("results", [])
-            result_ids = [
-                rid for rid in (
-                    str(r.get("referencia_del_proceso") or r.get("id_contrato") or "")
-                    for r in raw_results[:10]
-                ) if rid
-            ]
-            trace_id = self.feedback.log_trace(user_query, channel, result, user_identity=user_identity)
-            result["trace_id"] = trace_id
-
-            # Suggestion response
-            result["response"] = suggestion_selection_header(suggestion_label) + result.get("response", "")
-
-            # Persist turn
-            if chat_id:
-                self.conv_store.append_turn(
-                    chat_id=chat_id,
-                    user_query=user_query,
-                    response=result["response"],
-                    parsed_params=result.get("resolved_params", {}),
-                    result_ids=result_ids,
-                    trace_id=trace_id,
-                    suggestions=[dataclasses.asdict(s) if hasattr(s, '__dataclass_fields__') else s for s in result.get("suggestions", [])],
-                )
-            return result
+        sug_ctx = self._make_ctx(user_query, channel=channel, chat_id=chat_id, user_identity=user_identity)
+        sug_result = handle_suggestion_selection(self.deps, sug_ctx)
+        if sug_result is not None:
+            return sug_result
 
         # ── Direct lookup (Feature A1) ────────────────────────────────────
         from app.core.direct_lookup import (
