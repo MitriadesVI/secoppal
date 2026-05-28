@@ -8,13 +8,9 @@ build_query → execute_query → degrade_query → observe_universe →
 suggester_action → format_response (with clarify_query as the escape
 hatch on any branch that sets needs_clarification).
 
-What it does NOT own
---------------------
-The actions themselves still live in ``app/core/orchestrator.py``.
-They will be moved into ``app/core/workflow/actions/`` in Paso 5; until
-then ``build_application`` imports them lazily (inside the function
-body) so that this module loads before the actions are defined without
-triggering a circular import at module-load time.
+Imports the action functions directly from ``workflow/actions/*`` —
+``orchestrator.py`` is no longer in the import chain (Paso 5F broke the
+last coupling).
 
 Why a function, not a class
 ---------------------------
@@ -25,9 +21,30 @@ keyword arguments is the right shape.
 """
 from __future__ import annotations
 
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
 from burr.core import ApplicationBuilder, default, expr
+
+from app.core.workflow.actions.execution import (
+    degrade_query,
+    execute_query,
+    observe_universe,
+)
+from app.core.workflow.actions.parsing import (
+    apply_context,
+    llm_parse,
+    parse_query,
+)
+from app.core.workflow.actions.planning import (
+    build_query,
+    plan_query,
+    resolve_entities,
+)
+from app.core.workflow.actions.rendering import (
+    clarify_query,
+    format_response,
+    suggester_action,
+)
 
 if TYPE_CHECKING:
     from burr.core import Application
@@ -52,24 +69,6 @@ def build_application(
     - ``followup``: drives the parse_query → apply_context transition.
     - ``context_params``: previous-turn parsed_params for follow-up merging.
     """
-    # Lazy import to avoid a circular dependency with orchestrator.py
-    # where these actions still live (Paso 5 will move them under
-    # workflow/actions/ and this import will become direct).
-    from app.core.orchestrator import (
-        apply_context,
-        build_query,
-        clarify_query,
-        degrade_query,
-        execute_query,
-        format_response,
-        llm_parse,
-        observe_universe,
-        parse_query,
-        plan_query,
-        resolve_entities,
-        suggester_action,
-    )
-
     return (
         ApplicationBuilder()
         .with_actions(
