@@ -1,0 +1,236 @@
+"""Normal-flow handler — the default pipeline through the Burr graph.
+
+Catches every request that didn't match an earlier handler in the chain
+(refinement, reset, pagination, suggestion-selection, direct_lookup).
+This is the broadest path and the one that does the full work:
+
+1. **Follow-up detection** — pull last_n=5 history, ask
+   ``is_followup()`` whether the current query is a continuation.
+2. **Burr application** — ``build_application`` then ``app.run`` until
+   format_response or clarify_query halts.
+3. **Result canonicalization** — collect the final Burr state into a
+   contract-shaped result dict.
+4. **Contextual filters** — best-effort post-process for the refinement
+   bar (5+ results threshold).
+5. **Entity-ecosystem expansion** — Sprint 6 Fase 3.
+6. **Relevance scoring** — BM25 re-rank when objeto has ≥3 tokens.
+7. **Advisor response** — wrap state in the human-facing response unless
+   query_plan blocked execution.
+8. **Persistence** — log trace, append conversation turn (with the
+   suggestion list so the next turn can select).
+
+Moved here in Paso 7E from the inline ``# ── Normal flow`` block in
+``SecopalWorkflow.run_query``. Behavior preserving: the body is the
+exact same sequence of steps, with ``self.X`` becoming ``deps.X`` and
+the per-request args coming from ``ctx``.
+
+Why not adopt ``persist_trace_and_turn`` here?
+----------------------------------------------
+The normal-flow turn append passes ``suggestions=`` to the conversation
+store so the next turn's suggestion handler can read them back.
+``persist_trace_and_turn`` doesn't take that argument (yet). Extending
+the persistence helper is out of scope for Paso 7E — preserved
+verbatim. TODO follow-up: widen persist_trace_and_turn and migrate.
+"""
+from __future__ import annotations
+
+import dataclasses
+import logging
+import time
+from typing import TYPE_CHECKING
+
+from app.core.conversation_store import is_followup
+from app.core.relevance import RelevanceScorer
+from app.core.response_policy import build_advisor_response
+from app.core.workflow.graph import build_application
+from app.core.workflow.helpers import _elapsed_ms
+
+if TYPE_CHECKING:
+    from app.core.workflow.context import HandlerContext
+    from app.core.workflow.deps import WorkflowDeps
+
+
+logger = logging.getLogger(__name__)
+
+
+def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
+    """Run the full Burr pipeline and post-process the resulting state."""
+    # Follow-up detection
+    history = deps.conv_store.get_history(ctx.chat_id, last_n=5) if ctx.chat_id else []
+    last_turn = history[-1] if history else None
+    followup = is_followup(ctx.user_query, last_turn)
+    context_params = dict(last_turn.parsed_params) if (followup and last_turn) else {}
+
+    app = build_application(
+        deps,
+        user_query=ctx.user_query,
+        channel=ctx.channel,
+        followup=followup,
+        context_params=context_params,
+    )
+
+    *_, state = app.run(halt_after=["format_response", "clarify_query"])
+
+    # Extraer IDs de resultados (prerrequisito de callbacks 2.9)
+    raw_results = state.get("results", [])
+    result_ids = [
+        rid for rid in (
+            str(r.get("referencia_del_proceso") or r.get("id_contrato") or "")
+            for r in raw_results[:10]
+        ) if rid
+    ]
+
+    result = {
+        "response": state["formatted_response"],
+        "rows": state["formatted_rows"],
+        "results": state["results"],
+        "dataset_id": state["dataset_id"],
+        "soql_query": state["soql_query"],
+        "parsed_params": state["parsed_params"],
+        "resolved_params": state["resolved_params"],
+        "needs_llm": state["needs_llm"],
+        "needs_clarification": state["needs_clarification"],
+        "route_reason": state["route_reason"],
+        "degraded": state.get("degraded", False),
+        "degraded_hint": state.get("degraded_hint", ""),
+        "total_count": state.get("total_count", 0),
+        "universe_insights": state.get("universe_insights"),
+        "suggestions": state.get("suggestions", []),
+        "timeout_suggestions": state.get("timeout_suggestions", []),
+        "risk_flag_timeout": state.get("risk_flag_timeout", False),
+        "query_error": state.get("query_error", ""),
+        "intent_type": state.get("intent_type", ""),
+        "followup_intent_type": state.get("followup_intent_type", ""),
+        "analytical_intent": state.get("analytical_intent", ""),
+        "analytical_response": state.get("analytical_response", ""),
+        "clarification_reason": state.get("clarification_reason", ""),
+        "total_count_approximate": state.get("total_count_approximate", False),
+        "query_plan": state.get("query_plan", {}),
+        "followup": followup,
+        "timings_ms": dict(state.get("timings_ms", {}) or {}),
+        "contextual_filters": {},
+    }
+
+    # ── Contextual filters (Feature: refinement bar) ──────────────────
+    raw_results = result.get("results", [])
+    total_count = result.get("total_count", 0)
+    threshold = 5
+    if raw_results and total_count >= threshold:
+        try:
+            from app.core.contextual_suggestions import compute_contextual_filters
+            computed = compute_contextual_filters(
+                raw_results,
+                result["dataset_id"],
+                result.get("resolved_params", {}),
+            )
+            result["contextual_filters"] = computed
+        except Exception:
+            pass  # best-effort, never block the main flow
+
+    # ── Política de respuesta asesora (Bloque 3) ───────────────────────
+    advisor_start = time.perf_counter()
+
+    # ── Entity ecosystem expansion (Sprint 6 Fase 3) ─────────────────
+    # Si no hay entidad explícita pero sí ciudad/departamento, expandir
+    resolved_post = state.get("resolved_params", {})
+    if resolved_post and not resolved_post.get("entidad_resolved") and not resolved_post.get("entidad_like"):
+        from app.core.entity_ecosystem import get_ecosystem_entities, should_expand_ecosystem
+        if should_expand_ecosystem(resolved_post):
+            ecosys = get_ecosystem_entities(
+                ciudad=str(resolved_post.get("ciudad", "")),
+                departamento=str(resolved_post.get("departamento_resolved", "")),
+            )
+            if ecosys:
+                resolved_post = dict(resolved_post)
+                resolved_post["entidad_ecosystem"] = ecosys
+                # Rebuild SoQL with ecosystem entities
+                try:
+                    new_soql = deps.soql_builder.build(state["dataset_id"], resolved_post)
+                    state = state.update(soql_query=new_soql, resolved_params=resolved_post)
+                except Exception:
+                    pass  # ecosystem is best-effort
+
+    # ── Relevance scoring (Sprint 6 Fase 1 — BM25 post-ranking) ───
+    resolved = state.get("resolved_params", {})
+    objeto_terms = resolved.get("objeto", []) or []
+    if objeto_terms and len(state.get("results", [])) > 0:
+        try:
+            scorer = RelevanceScorer()
+            topic_flat: list[str] = []
+            for t in objeto_terms:
+                if isinstance(t, list):
+                    topic_flat.extend(t)
+                else:
+                    topic_flat.append(str(t))
+            if len(topic_flat) >= 3:
+                field = "objeto_del_contrato" if state.get("dataset_id") == "jbjy-vk9h" else "nombre_del_procedimiento"
+                scored = scorer.score_rows(topic_flat, state["results"], field=field)
+                state = state.update(
+                    results=[r for r, _ in scored],
+                    relevance_classes=[s.classification for _, s in scored],
+                    relevance_scores=[s.bm25_score for _, s in scored],
+                )
+        except Exception as exc:
+            logger.warning("relevance scoring failed: %s", exc)
+
+    advisor_response = build_advisor_response({
+        "user_query": ctx.user_query,
+        "resolved_params": state.get("resolved_params", {}),
+        "total_count": state.get("total_count", 0),
+        "total_count_approximate": state.get("total_count_approximate", False),
+        "rows": state.get("formatted_rows", []),
+        "universe_insights": state.get("universe_insights"),
+        "suggestions": state.get("suggestions", []),
+        "dataset_id": state.get("dataset_id", ""),
+        "channel": ctx.channel,
+        "query_error": state.get("query_error", ""),
+        "risk_flag_timeout": state.get("risk_flag_timeout", False),
+        "timeout_suggestions": state.get("timeout_suggestions", []),
+        "needs_clarification": state.get("needs_clarification", False),
+        "clarification_reason": state.get("clarification_reason", ""),
+        "degraded": state.get("degraded", False),
+        "degraded_hint": state.get("degraded_hint", ""),
+        "analytical_response": state.get("analytical_response", ""),
+    }, narrator=deps.narrator)
+    qp = result.get("query_plan", {}) or {}
+    if qp.get("should_execute") is False:
+        result["response"] = state.get("formatted_response", "") or (
+            qp.get("clarification_question") or "Necesito más información."
+        )
+        result["needs_clarification"] = True
+    else:
+        result["response"] = advisor_response
+    result["should_execute_decision"] = state.get("should_execute_decision")
+    result["timings_ms"]["advisor_response_ms"] = _elapsed_ms(advisor_start)
+    result["timings_ms"]["total_ms"] = _elapsed_ms(ctx.run_started_at)
+
+    trace_id = deps.feedback.log_trace(
+        ctx.user_query, ctx.channel, result, user_identity=ctx.user_identity,
+    )
+    result["trace_id"] = trace_id
+    logger.info(
+        "secoppal_query trace_id=%s route=%s dataset=%s total_count=%s results_count=%s total_ms=%s",
+        trace_id,
+        result.get("route_reason", ""),
+        result.get("dataset_id", ""),
+        result.get("total_count", 0),
+        len(result.get("results", [])),
+        result["timings_ms"].get("total_ms"),
+    )
+
+    # Persistir turno conversacional
+    if ctx.chat_id:
+        deps.conv_store.append_turn(
+            chat_id=ctx.chat_id,
+            user_query=ctx.user_query,
+            response=result["response"],
+            parsed_params=state.get("resolved_params", {}),
+            result_ids=result_ids,
+            trace_id=trace_id,
+            suggestions=[
+                dataclasses.asdict(s) if hasattr(s, '__dataclass_fields__') else s
+                for s in result.get("suggestions", [])
+            ],
+        )
+
+    return result
