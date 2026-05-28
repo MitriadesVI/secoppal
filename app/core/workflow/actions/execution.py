@@ -1,0 +1,274 @@
+"""Execution actions — hit SECOP, degrade on failure, observe the universe.
+
+Three Burr nodes that issue the actual HTTP requests:
+
+- ``execute_query``      — analytical fast path + count/query orchestration
+                          + retry-without-ordering + degraded fallback +
+                          timeout transparency.
+- ``degrade_query``      — if zero rows, try one relaxed query.
+- ``observe_universe``   — compute insights when the sample is large enough.
+
+Moved here verbatim from ``app/core/orchestrator.py`` in Paso 5D. No
+behavior changes; the @action decorators, ``reads``/``writes`` and
+bodies are byte-for-byte identical. Retry/timeout/degraded/count-lazy
+semantics MUST remain bit-for-bit identical — the golden suite verifies
+this end-to-end and several tests in tests/test_timeout_transparency.py,
+tests/test_count_lazy.py, tests/test_degrade_query.py guard the corners.
+"""
+from __future__ import annotations
+
+import time
+
+from burr.core import State, action
+
+from app.core._followup_constants import SCOPE_TOPIC_KEYS
+from app.core.analytics import maybe_handle_analytical_query
+from app.core.observer import observe as observe_universe_fn
+from app.core.secop_client import SecopClient
+from app.core.soql_builder import SoQLBuilder
+from app.core.workflow.helpers import (
+    _build_timeout_suggestions,
+    _elapsed_ms,
+    _is_timeout_exception,
+    _query_first_then_count,
+    _relax_params,
+    _with_timing,
+    _with_timings,
+)
+
+
+@action(reads=["resolved_params", "dataset_id", "soql_query", "user_query", "timings_ms"], writes=["results", "query_error", "total_count", "timeout_suggestions", "risk_flag_timeout", "needs_clarification", "clarification_reason", "analytical_response", "analytical_intent", "route_reason", "timings_ms"])
+def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBuilder) -> State:
+    """Execute SECOP count + query with graceful error handling.
+    On timeout for heavy ordering queries, retry without ordering_signal.
+    Guards against WHERE 1=1 — requires at least one scope/topic filter.
+    """
+    start_total = time.perf_counter()
+    params = state.get("resolved_params", {})
+
+    # ── Ruta analítica (aggregate_sum) ─────────────────────────────
+    # Si maybe_handle_analytical_query atiende la consulta, NO se ejecuta el
+    # camino tabular. La respuesta queda en analytical_response y se propaga
+    # intacta por degrade_query/format_response/build_advisor_response.
+    analytics = maybe_handle_analytical_query(
+        user_query=state.get("user_query", ""),
+        params=params,
+        dataset_id=state.get("dataset_id", ""),
+        secop_client=secop_client,
+        soql_builder=soql_builder,
+    )
+    if analytics:
+        return _with_timing(
+            state,
+            "execute_total_ms",
+            start_total,
+            results=[],
+            query_error="",
+            total_count=int(analytics.get("total_count", 0) or 0),
+            timeout_suggestions=[],
+            risk_flag_timeout=False,
+            needs_clarification=bool(analytics.get("needs_clarification", False)),
+            clarification_reason=analytics.get("clarification_reason", ""),
+            analytical_response=analytics.get("response", ""),
+            analytical_intent=analytics.get("analytical_intent", ""),
+            route_reason=analytics.get("route_reason", state.get("route_reason", "")),
+        )
+
+    # ── Guard anti-WHERE 1=1 ─────────────────────────────────────────────
+    # Fuente: app/core/_followup_constants.py (H9: unificada con FollowupGuards)
+    has_scope_or_topic = any(
+        params.get(k) and params.get(k) not in (None, [], "", {}, False)
+        for k in SCOPE_TOPIC_KEYS
+    )
+    if not has_scope_or_topic:
+        return _with_timing(
+            state,
+            "execute_total_ms",
+            start_total,
+            results=[], query_error="", total_count=0, timeout_suggestions=[],
+            risk_flag_timeout=False,
+            needs_clarification=True,
+            clarification_reason=(
+                "Necesito al menos un filtro de entidad, lugar, tema o contratista "
+                "para buscar. Sobre qué quieres saber?"
+            ),
+        )
+
+    try:
+        count_soql = soql_builder.build_count(state["dataset_id"], state["resolved_params"])
+        limit = int(state.get("resolved_params", {}).get("limit", 50) or 50)
+        total, results, secop_timings, approximate = _query_first_then_count(
+            secop_client,
+            state["dataset_id"],
+            count_soql,
+            state["soql_query"],
+            limit=limit,
+        )
+        return _with_timings(
+            state,
+            {**secop_timings, "execute_total_ms": _elapsed_ms(start_total)},
+            results=results, query_error="", total_count=total,
+            total_count_approximate=approximate, timeout_suggestions=[],
+            risk_flag_timeout=False,
+        )
+    except Exception as exc:
+        params = state.get("resolved_params", {})
+        # Retry for heavy ordering queries: quitar ordering_signal
+        if params.get("ordering_signal") == "valor_desc" and not params.get("fecha_desde"):
+            try:
+                relaxed = dict(params)
+                relaxed.pop("ordering_signal", None)
+                did = state["dataset_id"]
+                soql = soql_builder.build(did, relaxed)
+                count_soql = soql_builder.build_count(did, relaxed)
+                limit = int(relaxed.get("limit", 50) or 50)
+                total, results, secop_timings, approximate = _query_first_then_count(
+                    secop_client,
+                    did,
+                    count_soql,
+                    soql,
+                    limit=limit,
+                )
+                if results:
+                    timeout_suggestions = _build_timeout_suggestions(params, total)
+                    return _with_timings(
+                        state,
+                        {**secop_timings, "execute_total_ms": _elapsed_ms(start_total)},
+                        results=results, query_error="", total_count=total,
+                        total_count_approximate=approximate,
+                        timeout_suggestions=timeout_suggestions,
+                        risk_flag_timeout=False,
+                        soql_query=soql,
+                        resolved_params=relaxed,
+                    )
+            except Exception:
+                pass
+
+        # B5: Tras 1er fallo, degradar (ampliar ventana o quitar AND menos crítico)
+        try:
+            degraded, hint = _relax_params(dict(params))
+            if degraded:
+                did = state["dataset_id"]
+                soql = soql_builder.build(did, degraded)
+                count_soql = soql_builder.build_count(did, degraded)
+                limit = int(degraded.get("limit", 50) or 50)
+                total, results, secop_timings, approximate = _query_first_then_count(
+                    secop_client, did, count_soql, soql,
+                    limit=limit,
+                )
+                if results:
+                    return _with_timings(
+                        state,
+                        {**secop_timings, "execute_total_ms": _elapsed_ms(start_total)},
+                        results=results, query_error="", total_count=total,
+                        total_count_approximate=approximate,
+                        timeout_suggestions=[], risk_flag_timeout=False,
+                        degraded=True, degraded_hint=hint,
+                        soql_query=soql, resolved_params=degraded,
+                    )
+        except Exception:
+            pass
+
+        if _is_timeout_exception(exc):
+            return _with_timing(
+                state,
+                "execute_total_ms",
+                start_total,
+                results=[],
+                query_error=str(exc),
+                total_count=None,
+                timeout_suggestions=[],
+                risk_flag_timeout=True,
+            )
+        return _with_timing(
+            state,
+            "execute_total_ms",
+            start_total,
+            results=[],
+            query_error=str(exc),
+            total_count=0,
+            timeout_suggestions=[],
+            risk_flag_timeout=False,
+        )
+
+
+@action(
+    reads=["results", "query_error", "resolved_params", "dataset_id", "followup", "analytical_response", "timings_ms"],
+    writes=["results", "total_count", "degraded", "degraded_hint", "query_error", "needs_clarification", "clarification_reason", "timings_ms"],
+)
+def degrade_query(state: State, secop_client: SecopClient, soql_builder: SoQLBuilder) -> State:
+    """If zero results, try one relaxed query. Marks state degraded=True on success.
+
+    En follow-ups conversacionales, NO relaja automáticamente — sugiere alternativas.
+    En modo analítico (analytical_response presente), no degrada nunca.
+    """
+    start = time.perf_counter()
+    # Modo analítico: la respuesta ya está construida, no hay nada que degradar.
+    if state.get("analytical_response"):
+        return _with_timing(state, "degrade_ms", start, degraded=False, degraded_hint="")
+    if state["results"] or state.get("query_error"):
+        return _with_timing(state, "degrade_ms", start, degraded=False, degraded_hint="")
+
+    # En contexto conversacional (follow-up), no relajar filtrar scope/fecha automáticamente
+    if state.get("followup"):
+        return _with_timing(
+            state,
+            "degrade_ms",
+            start,
+            degraded=False, degraded_hint="",
+            needs_clarification=True,
+            clarification_reason=(
+                "No encontre resultados con esos filtros. Puedo intentar:\n"
+                "1. quitar el filtro de fecha\n"
+                "2. ampliar el tema\n"
+                "3. buscar en procesos"
+            ),
+        )
+
+    relaxed, hint = _relax_params(dict(state["resolved_params"]))
+    if relaxed is None:
+        return _with_timing(state, "degrade_ms", start, degraded=False, degraded_hint="")
+
+    try:
+        soql = soql_builder.build(state["dataset_id"], relaxed)
+        count_soql = soql_builder.build_count(state["dataset_id"], relaxed)
+        total, results, _timings, _approx = _query_first_then_count(
+            secop_client, state["dataset_id"], count_soql, soql
+        )
+        if results:
+            return _with_timing(
+                state,
+                "degrade_ms",
+                start,
+                results=results,
+                total_count=total,
+                degraded=True,
+                degraded_hint=hint,
+                query_error="",
+            )
+    except Exception:
+        pass
+
+    return _with_timing(state, "degrade_ms", start, degraded=False, degraded_hint="")
+
+
+@action(
+    reads=["results", "total_count", "dataset_id", "resolved_params", "query_error", "timings_ms"],
+    writes=["universe_insights", "timings_ms"],
+)
+def observe_universe(state: State, secop_client: SecopClient, soql_builder: SoQLBuilder) -> State:
+    start = time.perf_counter()
+    # Early exit: no correr observer si la query falló, no tiene resultados, o la muestra es trivial
+    if state.get("query_error") or not state.get("results"):
+        return _with_timing(state, "observe_ms", start, universe_insights=None)
+    if state.get("total_count", 0) < 10:
+        return _with_timing(state, "observe_ms", start, universe_insights=None)
+    insights = observe_universe_fn(
+        results=state["results"],
+        total_count=state["total_count"],
+        dataset_id=state["dataset_id"],
+        params=state["resolved_params"],
+        secop_client=secop_client,
+        soql_builder=soql_builder,
+    )
+    return _with_timing(state, "observe_ms", start, universe_insights=insights)
