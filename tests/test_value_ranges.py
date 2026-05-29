@@ -84,14 +84,10 @@ def test_range_007_explicit_prefix(query, expected):
         assert params.get(key) == value
 
 
-# NOTE: money_to_cop() treats 'billon' as 10^9 (mil millones), not 10^12.
-# Fixing this requires touching money.py which is out of scope per constraints.
-# The test documents current behaviour; adjust expectation when money.py is fixed.
 def test_range_entre_1_y_2_billones():
     params = router.parse("contratos entre 1 y 2 billones en Santander").params
-    # Current money_to_cop returns 10^9 for billon, not 10^12
-    assert params.get("valor_min") == 1_000_000_000
-    assert params.get("valor_max") == 2_000_000_000
+    assert params.get("valor_min") == 1_000_000_000_000
+    assert params.get("valor_max") == 2_000_000_000_000
 
 
 # ── Compound polarity ranges (original DOGFOOD-RANGE-007) ──────────────────

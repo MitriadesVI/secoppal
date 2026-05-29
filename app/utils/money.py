@@ -46,7 +46,7 @@ def money_to_cop(raw_text: str) -> int | None:
     multiplier = 1
 
     if "billon" in text:
-        multiplier = 1_000_000_000
+        multiplier = 1_000_000_000_000
     elif "mil millones" in text:
         multiplier = 1_000_000_000
     elif "millon" in text:
