@@ -5,15 +5,17 @@
 **Sistema:** SECOPPAL — asistente conversacional para consulta y análisis de contratación pública SECOP II  
 **Propósito del documento:** dejar una descripción comprensible para un tercero técnico o funcional sobre qué hace el sistema, cómo está construido, qué archivos lo componen, qué decisiones de arquitectura se han tomado, qué bugs relevantes se han detectado y cuál es el estado actual del proyecto.
 
-## Estado canónico actual — 2026-05-27
+## Estado canónico actual — 2026-06-03
 
 - **Main:** limpio, reconciliado desde worktree `claude/zealous-yalow-296fb6`
 - **Suite:** 1212 passed, 23 xfailed
 - **Corpus:** 89/89 PASS, 0 FAIL
 - **Torture matrix:** 12/12 invariantes
-- **feedback.jsonl:** intacto
-- **Orchestrator:** 196 LOC (desde 1549 LOC) — refactor a workflow/ completado
-- **Próximo sprint:** DEMO-BLOCKERS-001 (8 tareas UX/estado/scope, HIGH)
+- **Eval harness:** `scripts/eval_rated.py` sobre 70 queries calificadas reales (SQLite). Parser-tier 33/39 = 85%. Pipeline-tier 26 entradas etiquetadas para `--live`. 6 bugs de parser aislados con ID RATED-XXX.
+- **feedback:** SQLite 70 calificadas (18👍/52👎), JSONL 42 (divergencia documentada en `eval_rated.py`). Dual-store: SQLite primario, JSONL append-only.
+- **Orchestrator:** 196 LOC (desde 1549 LOC) — refactor a workflow/ completado (ADR-023)
+- **Decisions log:** 23 ADRs (ADR-001 a ADR-023) en `docs/decisions_log.md`
+- **Próximo foco:** sellar frame leak del follow-up (raw_params merge ciego), shadow LLM para follow-up, liquidar 6 bugs parser (RATED-016/040/041/059/067/069)
 - **Backlog:** VALUE-TYPO-001, REFERENCE-001, migrar 3 tests legacy del shim
 - **Conteos históricos (424/466/534/596/1212):** superados; referencia, no estado actual
 
@@ -625,7 +627,7 @@ Contratos de esten
 
 ---
 
-## 10. Tests y matriz de regresión
+## 10. Tests y evaluación de calidad
 
 ### 10.1 Suite general
 
@@ -635,13 +637,52 @@ Comando:
 pytest -q
 ```
 
-Estado reportado al cierre de la corrección de estados:
+Estado actual:
 
 ```text
-424/424 tests passed
+1212 passed, 23 xfailed
 ```
 
-### 10.2 Matriz mínima de follow-up
+### 10.2 Eval harness sobre queries reales calificadas
+
+**Problema que resuelve:** La métrica histórica "26% de precisión" mezclaba parser, orden, follow-up y timeouts de red en una sola cifra no accionable. No había forma de saber si un fix mejoraba o empeoraba el sistema sobre las queries que el usuario realmente calificó.
+
+**Solución:** `scripts/eval_rated.py` — harness que corre las 70 queries calificadas reales (desde SQLite `data/secoppal.db`) contra el pipeline y compara contra comportamiento esperado etiquetado en `tests/fixtures/rated_eval_v1.yaml`. Dos tiers:
+
+| Tier | Descripción | Modo | Entradas | Precisión |
+|---|---|---|---|---|
+| **Parser** | Extracción de params sin follow-up ni red | `--mode parser` (default) | 39 | 33/39 = 85% |
+| **Pipeline** | Follow-up + ejecución real contra SECOP | `--mode pipeline --live` | 26 | Pendiente medición |
+
+**Hallazgo clave — re-encuadre de precisión:**
+
+El 26% era end-to-end histórico. Separando tiers:
+- **Parser-tier 85%:** De 25 bugs calificados 👎, 19 ya estaban arreglados (rangos compuestos, `filtra`, saludos, `esten`). Nadie lo sabía por falta de medición.
+- **Pipeline-tier:** El desplome real está en follow-up poisoning y recencia ("priorizó procesos viejos"). Ahí se concentran los 👎 restantes.
+
+**6 bugs de parser aislados (todos regresión-objetivo):**
+
+| ID | Bug | Tipo |
+|---|---|---|
+| RATED-016 | `oferta` se cuela en objeto | scrub señal-oportunidad |
+| RATED-040 | `vias` se pierde con "...teusaquillo sobre vias" | scrub/entity |
+| RATED-041 | `oficial` del `(oficial)` de UI se cuela en objeto | scrub |
+| RATED-059 | `software` expande a `tecnología` (trae alcantarillado) | expansión morfológica |
+| RATED-067 | `o similares` inyecta `valor_max=1.000.000` | parser rango |
+| RATED-069 | `El Banco` (municipio de Magdalena) leído como tema `banco` | gazetteer |
+
+**Piso de regresión:** `tests/test_rated_eval.py` — el piso parser-tier no puede bajar de 33/39 ni las 👍 pueden regresar.
+
+**Divergencia SQLite/JSONL:** El dashboard lee de SQLite (70 calificadas). El JSONL (`data/feedback.jsonl`) tiene solo 42. El harness usa SQLite como fuente de verdad. Ver `scripts/eval_rated.py` para detalles.
+
+### 10.3 Corpus de regresión del parser
+
+- `tests/fixtures/query_corpus_v1.yaml` — 88 entradas.
+- `scripts/run_query_corpus.py` — runner con modos `parser|workflow|all` y filtros por severidad.
+- Convenciones en `docs/QUERY_CORPUS.md`.
+- Estado: 89/89 PASS (incluye corpus dialogue 61/61).
+
+### 10.4 Matriz mínima de follow-up
 
 | # | Consulta base | Follow-up | Esperado |
 |---:|---|---|---|
@@ -656,7 +697,7 @@ Estado reportado al cierre de la corrección de estados:
 | 9 | sin historial | muéstrame más | pide contexto |
 | 10 | cualquier búsqueda | reset | limpia historial |
 
-### 10.3 Test crítico de estados
+### 10.5 Test crítico de estados
 
 ```text
 Base:
@@ -718,30 +759,46 @@ grep -R "classify_turn\|merge_query_frames" -n app/core/orchestrator.py
 
 ---
 
-## 12. Riesgos conocidos
+## 12. Riesgos conocidos y causas raíz estructurales
+
+### 12.1 Riesgos operativos
 
 | Riesgo | Impacto | Mitigación |
-|---|---|---|
+|---|---|---|---|
 | Confundir estados SECOP | Respuestas jurídicamente equivocadas | Política de estados documentada + tests E2E |
-| Tokens basura en objeto | Consultas irrelevantes con `LIKE '%basura%'` | Stopwords + tests de encabezado |
+| Tokens basura en objeto | Consultas irrelevantes con `LIKE '%basura%'` | Stopwords + dialogue_policy (reglas P6/P7) |
 | Follow-up hereda parcialmente | Resultados fuera de intención | `followup_engine` + matriz regresión |
-| Versiones paralelas en `app/core` | Agente edita archivo equivocado | Archivar versiones fuera de core |
-| Consulta global accidental | Miles de resultados irrelevantes | Guard anti `WHERE 1=1` |
+| Versiones paralelas en `app/core` | Agente edita archivo equivocado | `make lint-core` + archive/ |
+| Consulta global accidental | Miles de resultados irrelevantes | Guard anti `WHERE 1=1` en builder + orchestrator |
 | Relajación automática excesiva | Resultados fuera de alcance | En follow-up, sugerir opciones antes de relajar |
-| Timeout SECOP | Mala UX | Retry controlado + aviso de estrategia |
+| Timeout SECOP | Mala UX | Retry controlado + count-lazy (ADR-008) |
 | LLM alucina narrativa | Lectura rápida inventa cifras | Validación de grounding monetario en `narrator.py` |
+
+### 12.2 Causas raíz estructurales (revisión integral junio 2026)
+
+La revisión integral de arquitectura identificó 5 causas raíz que explican por qué los bugs del Bucket B (semánticos) siguen apareciendo a pesar de 1212 tests en verde:
+
+**Causa 1 — El gate `_needs_llm` apaga el LLM de facto.** `query_router.py` solo dispara el LLM en 2 casos: (a) lugar no resuelto que choca con objeto, y (b) palabra tipo-entidad en objeto. Resultado: 17 de 2437 queries usaron LLM (0.7%). El resto va por heurística pura — incluyendo `banco magdalena`, `aires acondicionados`, `o similares`, `celebraron`. El LLM (DeepSeek, JSON estructurado) está construido y conectado, pero gateado detrás de un `if` que casi nunca es verdadero.
+
+**Causa 2 — `QueryFrame.raw_params` con merge ciego (frame leak).** Las políticas de merge en `followup_engine.py` hacen `raw_params={**prev.raw_params, **curr.raw_params}`. El QueryFrame tiene campos tipados (`scope`, `topic`, `dataset`) que las políticas cuidan, pero `raw_params` es un canal paralelo no tipado que arrastra TODO (`entidad_ecosystem`, `intent_type`, `estado_family`) por la puerta de atrás. Resultado: `WHERE departamento='Cesar' AND nombre_entidad LIKE '%CUNDINAMARCA%'` — lógicamente imposible. Dos representaciones del estado sincronizadas a mano = el bug.
+
+**Causa 3 — El objeto es bag-of-tokens con AND por defecto.** `_extract_object_terms` parte el texto en tokens, filtra stopwords y los une con AND. `aires acondicionados` → `%aires% AND %acondicionados%` → 0 resultados. No hay noción de frase ni relevancia. `test_multi_and_demotion.py` congela este comportamiento como correcto (ver ADR-014 para el refinamiento parcial con OR merge).
+
+**Causa 4 — Sin capa de relevancia/sanity semántico.** `QueryPlan` valida estructura (¿falta slot?, ¿WHERE 1=1?), no semántica. Nada pregunta "¿`banco` aquí es lugar o tema?", "¿`valor_max=1.000.000` para 'parques' tiene sentido?". El propio `SECOPPAL_ROBUSTECIMIENTO_SISTEMICO.md` (mayo 18) ya lo diagnosticó: "Relevance layer: No existe."
+
+**Causa 5 — Los tests prueban la implementación, no el producto.** 1212 tests verdes con 26% de precisión real. Eso solo es posible si los tests no miden lo que importa. Ejemplos: `test_module_size_limits.py` (disciplina de proceso, no corrección), `test_multi_and_demotion.py` (congela comportamiento defectuoso), decenas de tests que validan rutas internas con params sintéticos. El eval harness (`scripts/eval_rated.py`) cierra esta brecha al medir sobre queries reales calificadas.
 
 ---
 
 ## 13. Decisiones de diseño vigentes
 
-El registro completo de decisiones está en [docs/decisions_log.md](../decisions_log.md) (formato ADR, numeración continua ADR-001 a ADR-022).
+El registro completo de decisiones está en [docs/decisions_log.md](../decisions_log.md) (formato ADR, numeración continua ADR-001 a ADR-023).
 
 Esta sección antes contenía un mirror (D1–D21) que se eliminó para evitar drift entre las dos numeraciones. El log de decisiones es ahora la fuente única de verdad.
 
 ---
 
-## 14. Roadmap inmediato
+## 14. Roadmap
 
 ### Fase A — P0 hardening post-auditoría
 
@@ -754,40 +811,41 @@ Esta sección antes contenía un mirror (D1–D21) que se eliminó para evitar d
 
 ### Fase B — OBS-001 logger semántico / telemetría operacional
 
-**Dependencia:** solo ejecutar después de P0 verde.
+**Estado:** pendiente.
 
 - Añadir `trace_id` a logs y JSONL.
 - Registrar tiempos por etapa: parse, resolve, SoQL build, count, query, observe, narrate, total.
 - Medir tasa LLM, tasa de degradación, timeout/retry y distribución de `intent_type` / `followup_intent_type`.
 - Crear `scripts/analyze_traces.py` para rollups semanales.
 
-### Fase C — Matriz de regresión follow-up
+### Fase C — Frame leak: sellar la fuga del follow-up (Causa 2)
 
-- Asegurar tests para los 10 escenarios mínimos.
-- Agregar fixtures de historial conversacional.
-- Verificar `intent_type` / `followup_intent_type`.
+**Estado:** próximo foco. Derivado de la revisión integral junio 2026.
 
-### Fase D — Limpieza imports legacy
+- Eliminar el merge ciego `{**prev.raw_params, **curr.raw_params}` en `followup_engine.py`.
+- Derivar `raw_params` de campos tipados o whitelistear claves que sobreviven a cada intent.
+- Extender eval harness a tier pipeline (`--live`, multi-turno) para medir el fix.
+- Bugs objetivo: DOGFOOD-FOLLOWUP-007 (Cundinamarca→Cesar poisoning), RATED-043/050/056/058/062.
 
-- Revisar imports no usados en `orchestrator.py`.
-- No borrar helpers legacy mientras los tests los usen.
-- Marcar `query_frame.classify_turn()` como legacy si ya no opera en producción.
+### Fase D — Shadow LLM para follow-up
 
-### Fase E — Arranque local de desarrollo
+**Estado:** diseño, no implementado.
 
-**Estado:** resuelto mediante `make dev`.
+- Ejecutar LLM en paralelo (async, no bloquea) sobre follow-ups.
+- Comparar output LLM vs determinístico → medir divergencia.
+- Acumular evidencia antes de flipear el default.
+- Columna `shadow_llm_params` en trazas para almacenar.
 
-El proyecto ya cuenta con un comando único para levantar el entorno local de desarrollo.
+### Fase E — Liquidar 6 bugs de parser
 
-Comando esperado:
+**Estado:** aislados por eval harness, listos para fix.
 
-```bash
-make dev
-```
-
-Este comando debe encargarse de iniciar backend y frontend de desarrollo, evitando tener que abrir manualmente dos terminales para `uvicorn` y `streamlit`.
-
-**Decisión:** no crear `scripts/dev.sh` mientras `make dev` sea suficiente. Mantener una sola entrada de arranque reduce confusión.
+- RATED-016: `oferta` se cuela en objeto.
+- RATED-040: `vias` se pierde con "...teusaquillo sobre vias".
+- RATED-041: `oficial` del `(oficial)` de UI se cuela.
+- RATED-059: `software` expande a `tecnología`.
+- RATED-067: `o similares` inyecta `valor_max=1.000.000`.
+- RATED-069: `El Banco` (municipio) leído como tema `banco`.
 
 ### Fase F — Relevancia y ranking
 
@@ -796,6 +854,19 @@ Después del follow-up:
 - Mejorar ranking por relevancia textual.
 - Separar coincidencia directa vs coincidencia probable.
 - Evitar que resultados de baja pertinencia aparezcan arriba solo por fecha/valor.
+
+### Fase G — Limpieza imports legacy
+
+- Revisar imports no usados en `orchestrator.py`.
+- Migrar 3 tests legacy del shim.
+- Marcar `query_frame.classify_turn()` como legacy si ya no opera en producción.
+
+### Completado recientemente
+
+- **ADR-023 Orchestrator Split:** 1549 → 196 LOC, workflow/ extraído (2026-05-27).
+- **ADR-022 Chips contextuales adaptativos:** thresholds por percentil, sidebar sticky (2026-05-26).
+- **ADR-020 Entity Ecosystem Bridge:** ICBF + SENA fuera del gazetteer (2026-05-26).
+- **ADR-017 Dogfooding UX fixes:** URLs, fechas, refinamiento, rangos, CASE WHEN (2026-05-25).
 
 ---
 
@@ -816,92 +887,55 @@ Después del follow-up:
 
 ---
 
-## 16. Apéndice: estado actual resumido
+## 16. Apéndice A: Hitos históricos (2026-05-15 a 2026-06-03)
 
-```text
-Sistema: SECOPPAL
-Fecha: 2026-05-15
-Estado: MVP funcional en hardening semántico/conversacional
-Tests reportados: 424/424 passed
-Último bug crítico cerrado: INV-005 en camino LLM + limpieza app/core post-auditoría
-Core limpio: confirmado con make lint-core
-Follow-up engine: integrado como política principal de seguimiento
-Política de estados: corregida; firmado no es estado, es selección de dataset contratos
-Próximo bloque recomendado: OBS-001 logger semántico / telemetría operacional
-```
+### 2026-06-03 — Revisión integral de arquitectura + eval harness
 
+**Revisión integral:** Se identificaron 5 causas raíz estructurales que explican el "parche infinito" (documentadas en §12.2). Hallazgo principal: el parser está en 85% de precisión (33/39 sobre queries reales calificadas), no en 26% como sugería el dashboard end-to-end. El desplome real está en el pipeline (follow-up poisoning, recencia).
 
----
+**Eval harness:** Creado `scripts/eval_rated.py` + `tests/fixtures/rated_eval_v1.yaml` (65 entradas etiquetadas) + `tests/test_rated_eval.py` (piso de regresión). Corre las 70 queries calificadas desde SQLite. Dos tiers: parser (85%) y pipeline (pendiente --live). 6 bugs de parser aislados con ID RATED-XXX.
 
-## 10. Estado actual y cierre de auditoría (Mayo 2026)
+**Documento técnico actualizado:** Consolidación de secciones duplicadas, header con métricas reales, §12 ampliado con causas raíz, §14 roadmap actualizado con foco en frame leak + shadow LLM.
 
-**Última actualización:** 2026-05-16
+### 2026-05-27 — Orchestrator Split (ADR-023)
 
-### Auditoría P0 cerrada
+`orchestrator.py`: 1549 → 196 LOC (−87%). Refactor en 8 pasos atómicos con golden tests. Workflow extraído a `workflow/` (actions, handlers, graph, helpers, deps, context, persistence, results). Suite: 1212 passed, 23 xfailed. Corpus: 89/89 PASS. Ver ADR-023 y §5.1 para estructura resultante.
 
-Se completó el micro-sprint de corrección de los 4 bugs de alta prioridad identificados en la segunda auditoría holística:
+### 2026-05-27 — Dogfooding: 3 bugs documentados
 
-| Bug | Descripción | Estado |
-|-----|-------------|--------|
-| **B1** | `/chat` no propagaba `chat_id` (memoria conversacional muerta vía HTTP) | ✅ Cerrado |
-| **B2** | `degrade_query` no recalculaba `total_count` | ✅ Cerrado |
-| **B3** | Regex de entidades del narrator con `re.IGNORECASE` generaba falsos positivos | ✅ Cerrado |
-| **B9** | `_is_signed_query` actuaba como kill-switch y borraba estados reales ("firmados o en ejecución") | ✅ Cerrado |
+DOGFOOD-FOLLOWUP-007 (follow-up poisoning Cundinamarca→Cesar), DOGFOOD-RANGE-007 (rangos "más de X y menos de Y"), DOGFOOD-MORPHO-007 (software→tecnología). RANGE-007 cerrado en `ecf94de`. Los otros dos vivos como Causa 2 y RATED-059 respectivamente.
 
-### Regla semántica vigente (ADR-008)
+### 2026-05-26 — Entity Ecosystems: ICBF + SENA (ADR-018/019/020)
 
-- `"firmados"`, `"suscritos"`, `"celebrados"` → solo fuerzan `dataset = "contratos"`.
-- Nunca borran filtros de estado válidos.
-- Si el usuario combina “firmados” + un estado real (“en ejecución”, “activos”, “vigentes”), se aplica la familia correspondiente.
-- Si no hay estado real explícito, queda universo completo de contratos.
+ICBF (32 regionales, 1:1 por depto) y SENA (89 entidades, 7 tipos, 616K volumen) como ecosistemas institucionales fuera del gazetteer. `entity_ecosystem_router.py` como capa independiente post-parser, pre-resolver. Patrón `contains_all` para SENA multi-entidad. Corpus: 89/89 PASS. Suite ecosystem: 205 passed, 13 xfailed.
 
-**Test principal que defiende esta regla:**
-```python
-"contratos firmados que estén en ejecución de mantenimiento en Bogotá"
-→ dataset == "contratos"
-→ estado_contrato contiene ["En ejecución", "Modificado", "Prorrogado"]
-```
+### 2026-05-25 — Dogfooding UX fixes (ADR-017)
 
-### Métricas actuales
+6 fixes en sesión de trabajo: URLs CO1.REQ vs CO1.NTC (URL-005), fechas con cascada de fallback (DATE-002), refinement buttons funcionales (REFINE-004), rangos "entre X y Y" con herencia de unidad (RANGE-005), "celebrar" como action verb (ACTION-005B), eliminación de CASE WHEN en ORDER BY (SOQL-006). 945 passed, 10 xfailed.
 
-- **Tests:** 466 pasando
-- **feedback.jsonl:** sin modificaciones desde el cierre
-- **Cobertura de invariantes semánticas:** alta (estados, firmados, follow-up, degradación)
+### 2026-05-24 — Sprint 6 Fase 5: smoke gate (ADR-013/014)
 
-El sistema se encuentra en estado **Verde-Amarillo** y listo para exposición controlada a usuarios internos.
+ENTITY-MULTI-REGIONAL-002: `unaccent()` obligatorio en todas las cláusulas LIKE de entidad. MULTI-AND-DEMOTION: OR merge para 3+ rare terms en objeto. Suite: 830 passed. Ambos validados contra API real.
 
+### 2026-05-18 — Robustecimiento sistémico (en pausa)
 
----
+Plan aprobado en `docs/SECOPPAL_ROBUSTECIMIENTO_SISTEMICO.md`. Baseline M0: 579 passed, corpus 88/88. Bloqueado por falta de queries humanas para `dialogue_policy_corpus.yaml`. Ver ADR-006.
 
-## 11. Decisiones arquitectónicas relevantes (D21)
+### 2026-05-18 — Reconciliación main + cierre CORPUS-002-HIGH
 
-### D21: Analytical queries determinísticas antes de LLM classifier (2026-05-17)
+Main reconciliado desde worktree vía cherry-picks quirúrgicos. Corpus: 88/88 PASS. Suite: 579 passed, 3 xfailed. Torture matrix: 12/12. Pendiente: DEMO-BLOCKERS-001.
 
-**Contexto:** Antes de implementar comparativas, distribuciones o top-N, se priorizó una ruta analítica simple y determinística para responder preguntas de agregación básica.
+### 2026-05-17 — Query Corpus V1 + analytical queries (AQ-001A, ADR-005)
 
-**Decisión:**
-- El LLM nunca genera SoQL.
-- `analytics.py` detecta intent analítico de forma determinística.
-- `aggregate_sum` exige al menos un scope/topic (guard anti-global).
-- `analytical_response` no puede ser sobrescrita por `format_response` ni `build_advisor_response`.
-- `top_entities`, `top_contractors` y distribuciones quedan diferidos para fases posteriores (AQ-001B).
+Corpus de 88 queries vivas. Ruta analítica determinística (`aggregate_sum`). `detect_value_anomaly()` para valores atípicos en fuente (Luruaco $250MM vs $250B). Bidder intent: "para presentarme", "quiero vender X". Suite: 596 passed, 1 xfailed.
 
-**Reglas vigentes:**
-- Ruta analítica → antes que clasificador LLM.
-- Solo `aggregate_sum` en esta fase.
-- Guard + short-circuit en múltiples puntos del grafo Burr.
+### 2026-05-16 — Auditoría P0 cerrada
 
----
+4 bugs críticos: `/chat` sin chat_id, `degrade_query` sin recalcular count, regex narrator con falsos positivos, `_is_signed_query` borraba estados reales. Suite: 466 passed. Regla semántica: "firmados" solo fuerza dataset contratos, nunca borra filtros de estado (ADR-008).
 
-## 12. Roadmap próximo bloque recomendado (actualizado 2026-05-17)
+### 2026-05-15 — Documento técnico creado
 
-Después del cierre de AQ-001A, el orden recomendado es:
-
-1. **OPP-001** — Opportunity Hunting Audit (revisión de oportunidades de mejora de producto)
-2. **AQ-001B** — `top_entities` / `top_contractors` (agregaciones de ranking)
-3. **OBS-001** — Observabilidad operativa (queda pendiente si el foco es análisis de negocio)
-
-No se recomienda activar H10 ni LLM classifier para queries analíticas mientras la ruta determinística funcione bien.
+Primera versión de este documento. Auditoría H1: bug `firmado=Celebrado` vivo en camino LLM. ADR-006 erosionada (archivos `.bak` en `app/core/`). Limpieza + `make lint-core` + tests de integridad.
 
 ### 2026-05-17 — Oportunidades SECOP: estado, dedupe y presentación
 

@@ -206,9 +206,9 @@ class TestLlmStatePolicy:
 
     def test_llm_celebrado_se_limpia(self):
         """E1: LLM intenta devolver Celebrado → se limpia."""
-        from app.core.llm_handler import _INVALID_CONTRACT_STATES
-        assert "Celebrado" in _INVALID_CONTRACT_STATES
-        assert "Firmado" in _INVALID_CONTRACT_STATES
+        from app.core.contract_invariants import INVALID_CONTRACT_STATES
+        assert "celebrado" in INVALID_CONTRACT_STATES
+        assert "firmado" in INVALID_CONTRACT_STATES
 
     def test_llm_en_ejecucion_valid(self):
         """E4: 'En ejecución' es estado válido en SECOP."""

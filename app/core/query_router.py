@@ -119,6 +119,12 @@ STOPWORDS = {
     # Commercial bidder verbs (BIDDER-INTENT-003)
     "vender", "vendo", "vendemos", "venderle", "venderles",
     "ofrezco", "ofrecer", "ofrecemos", "ofrecen",
+    # Bidder opportunity signals (not contractual topics — RATED-016)
+    "oferta", "ofertas",
+    # Institutional labels (not contractual topics — RATED-041)
+    "oficial",
+    # OR-expansion noise (not contractual topics — RATED-067)
+    "similares", "similar",
     "comercializo", "comercializar", "comercializamos",
     "proveedor", "proveedores",
     # States (extracted separately)
@@ -1022,7 +1028,7 @@ class QueryRouter:
                 )
 
         matches = list(re.finditer(
-            r"(?:(?:mas|mayor(?:es)?|superior(?:es)?|superen?)\s+(?:de|a)|(?:menos|menor(?:es)?)\s+(?:de|a)|hasta|por|de|desde)?\s*((?:\d+(?:[.,]\d+)?)|mil|un)\s*(?:billon(?:es)?|mil millones|millones?|palos?|mil)?(?:\s+de\s+pesos)?",
+            r"(?:(?:mas|mayor(?:es)?|superior(?:es)?|superen?)\s+(?:de|a)|(?:menos|menor(?:es)?)\s+(?:de|a)|hasta|por|de|desde)?\s*((?:\d+(?:[.,]\d+)?)|\bmil\b|\bun\b)\s*(?:billon(?:es)?|mil millones|millones?|palos?|\bmil\b)?(?:\s+de\s+pesos)?",
             normalized_query,
         ))
 

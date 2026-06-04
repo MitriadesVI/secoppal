@@ -1,0 +1,2469 @@
+{
+  "model": "EntityCrosswalk",
+  "version": "0.2.0",
+  "description": "Maps SECOP I entity names to canonical entities, differentiated by source dataset",
+  "principle": "One canonical entity + aliases per source — no separate gazetteers",
+  "entities": [
+    {
+      "secop1_name": "NARIÑO - ALCALDiA MUNICIPIO DE SAN ANDReS DE TUMACO",
+      "secop1_normalized": "NARINO - ALCALDIA MUNICIPIO DE SAN ANDRES DE TUMACO",
+      "total_2026_count": 7433,
+      "sources": {
+        "f789-7hwg": 3911,
+        "rpmr-utcd": 851,
+        "convocado": 2671
+      },
+      "classification": "matched_existing",
+      "canonical_name": "NARIÑO - ALCALDiA MUNICIPIO DE SAN ANDReS DE TUMACO",
+      "canonical_nit": null,
+      "canonical_id": "municipio_san_andres_de_tumaco_narino",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE SAN ANDRES DE TUMACO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE SAN ANDRES DE TUMACO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE SAN ANDRES DE TUMACO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "SAN ANDRES DE TUMACO NARINO",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "SANTANDER - CAMARA DE COMERCIO DE BUCARAMANGA",
+      "secop1_normalized": "SANTANDER - CAMARA DE COMERCIO DE BUCARAMANGA",
+      "total_2026_count": 2670,
+      "sources": {
+        "f789-7hwg": 1360,
+        "rpmr-utcd": 1310
+      },
+      "classification": "matched_existing",
+      "canonical_name": "SANTANDER - CAMARA DE COMERCIO DE BUCARAMANGA",
+      "canonical_nit": null,
+      "canonical_id": "camara_comercio_bucaramanga_santander",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "CAMARA DE COMERCIO BUCARAMANGA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CAMARA DE COMERCIO DE BUCARAMANGA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CC DE BUCARAMANGA",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "SAN ANDReS; PROVIDENCIA Y SANTA CATALINA - ALCALDiA MUN",
+      "secop1_normalized": "SAN ANDRES; PROVIDENCIA Y SANTA CATALINA - ALCALDIA MUN",
+      "total_2026_count": 2592,
+      "sources": {
+        "f789-7hwg": 2592
+      },
+      "classification": "needs_review",
+      "canonical_name": null,
+      "canonical_nit": null,
+      "canonical_id": "san_andres_providencia_y_santa_catalina_alcaldia_mun",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA MUN",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": false,
+      "exclusion_reason": "needs_review: requiere verificación manual"
+    },
+    {
+      "secop1_name": "RISARALDA - CaMARA DE COMERCIO DE PEREIRA",
+      "secop1_normalized": "RISARALDA - CAMARA DE COMERCIO DE PEREIRA",
+      "total_2026_count": 2438,
+      "sources": {
+        "f789-7hwg": 1245,
+        "rpmr-utcd": 1193
+      },
+      "classification": "matched_existing",
+      "canonical_name": "RISARALDA - CaMARA DE COMERCIO DE PEREIRA",
+      "canonical_nit": null,
+      "canonical_id": "camara_comercio_pereira_risaralda",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "CAMARA DE COMERCIO DE PEREIRA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CAMARA DE COMERCIO PEREIRA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CC DE PEREIRA",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "NARIÑO - E.S.E. CENTRO HOSPITAL DIVINO NIÑO - TUMACO",
+      "secop1_normalized": "NARINO - E.S.E. CENTRO HOSPITAL DIVINO NINO - TUMACO",
+      "total_2026_count": 2010,
+      "sources": {
+        "f789-7hwg": 1005,
+        "convocado": 1005
+      },
+      "classification": "needs_review",
+      "canonical_name": null,
+      "canonical_nit": null,
+      "canonical_id": "ese_ese_centro_hospital_divino_nino_tumaco_narino",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "E.S.E. CENTRO HOSPITAL DIVINO NINO - TUMACO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "NARINO - E.S.E. CENTRO HOSPITAL DIVINO NINO",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": false,
+      "exclusion_reason": "needs_review: requiere verificación manual"
+    },
+    {
+      "secop1_name": "GUAINiA - GOBERNACIoN",
+      "secop1_normalized": "GUAINIA - GOBERNACION",
+      "total_2026_count": 1760,
+      "sources": {
+        "f789-7hwg": 917,
+        "rpmr-utcd": 843
+      },
+      "classification": "secop1_only",
+      "canonical_name": "GUAINiA - GOBERNACIoN",
+      "canonical_nit": null,
+      "canonical_id": "gobernacion_guainia",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "GOBERNACION DE GUAINIA",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "SAN ANDRÉS PROVIDENCIA Y SANTA CATALINA - ALCALDÍA MUNI",
+      "secop1_normalized": "SAN ANDRES PROVIDENCIA Y SANTA CATALINA - ALCALDIA MUNI",
+      "total_2026_count": 1606,
+      "sources": {
+        "rpmr-utcd": 1606
+      },
+      "classification": "bad_name",
+      "canonical_name": null,
+      "canonical_nit": null,
+      "canonical_id": "san_andres_providencia_y_santa_catalina_alcaldia_muni",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA MUNI",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": false,
+      "exclusion_reason": "bad_name: nombre truncado o malformado"
+    },
+    {
+      "secop1_name": "GUAVIARE - GOBERNACIoN",
+      "secop1_normalized": "GUAVIARE - GOBERNACION",
+      "total_2026_count": 1405,
+      "sources": {
+        "f789-7hwg": 763,
+        "rpmr-utcd": 642
+      },
+      "classification": "secop1_only",
+      "canonical_name": "GUAVIARE - GOBERNACIoN",
+      "canonical_nit": null,
+      "canonical_id": "gobernacion_guaviare",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "GOBERNACION DE GUAVIARE",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "VAUPeS - GOBERNACIoN",
+      "secop1_normalized": "VAUPES - GOBERNACION",
+      "total_2026_count": 1342,
+      "sources": {
+        "f789-7hwg": 744,
+        "rpmr-utcd": 598
+      },
+      "classification": "secop1_only",
+      "canonical_name": "VAUPeS - GOBERNACIoN",
+      "canonical_nit": null,
+      "canonical_id": "gobernacion_vaupes",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "GOBERNACION DE VAUPES",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "ATLaNTICO - ALCALDiA MUNICIPIO DE SABANALARGA",
+      "secop1_normalized": "ATLANTICO - ALCALDIA MUNICIPIO DE SABANALARGA",
+      "total_2026_count": 1240,
+      "sources": {
+        "f789-7hwg": 623,
+        "convocado": 617
+      },
+      "classification": "matched_existing",
+      "canonical_name": "ATLaNTICO - ALCALDiA MUNICIPIO DE SABANALARGA",
+      "canonical_nit": null,
+      "canonical_id": "municipio_sabanalarga_atlantico",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE SABANALARGA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE SABANALARGA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE SABANALARGA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "SABANALARGA ATLANTICO",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "GUAVIARE - E.S.E. HOSPITAL SAN JOSe DEL GUAVIARE",
+      "secop1_normalized": "GUAVIARE - E.S.E. HOSPITAL SAN JOSE DEL GUAVIARE",
+      "total_2026_count": 1222,
+      "sources": {
+        "f789-7hwg": 614,
+        "rpmr-utcd": 608
+      },
+      "classification": "secop1_only",
+      "canonical_name": "GUAVIARE - E.S.E. HOSPITAL SAN JOSe DEL GUAVIARE",
+      "canonical_nit": null,
+      "canonical_id": "ese_ese_hospital_san_jose_del_guaviare_guaviare",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "E.S.E. HOSPITAL SAN JOSE DEL GUAVIARE",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "VICHADA - GOBERNACIoN",
+      "secop1_normalized": "VICHADA - GOBERNACION",
+      "total_2026_count": 1176,
+      "sources": {
+        "f789-7hwg": 633,
+        "rpmr-utcd": 543
+      },
+      "classification": "secop1_only",
+      "canonical_name": "VICHADA - GOBERNACIoN",
+      "canonical_nit": null,
+      "canonical_id": "gobernacion_vichada",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "GOBERNACION DE VICHADA",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "ANTIOQUIA - TECNOLoGICO DE ANTIOQUIA - MEDELLiN",
+      "secop1_normalized": "ANTIOQUIA - TECNOLOGICO DE ANTIOQUIA - MEDELLIN",
+      "total_2026_count": 1171,
+      "sources": {
+        "f789-7hwg": 608,
+        "rpmr-utcd": 563
+      },
+      "classification": "matched_existing",
+      "canonical_name": "ANTIOQUIA - TECNOLoGICO DE ANTIOQUIA - MEDELLiN",
+      "canonical_nit": null,
+      "canonical_id": "antioquia_tecnologico_de_antioquia_medellin",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ANTIOQUIA - TECNOLOGICO DE ANTIOQUIA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "TECNOLOGICO DE ANTIOQUIA - MEDELLIN",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "ATLaNTICO - CaMARA DE COMERCIO DE BARRANQUILLA",
+      "secop1_normalized": "ATLANTICO - CAMARA DE COMERCIO DE BARRANQUILLA",
+      "total_2026_count": 903,
+      "sources": {
+        "f789-7hwg": 471,
+        "rpmr-utcd": 432
+      },
+      "classification": "matched_existing",
+      "canonical_name": "ATLaNTICO - CaMARA DE COMERCIO DE BARRANQUILLA",
+      "canonical_nit": null,
+      "canonical_id": "camara_comercio_barranquilla_atlantico",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "CAMARA DE COMERCIO BARRANQUILLA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CAMARA DE COMERCIO DE BARRANQUILLA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CC DE BARRANQUILLA",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "CoRDOBA - CaMARA DE COMERCIO DE MONTERiA",
+      "secop1_normalized": "CORDOBA - CAMARA DE COMERCIO DE MONTERIA",
+      "total_2026_count": 871,
+      "sources": {
+        "f789-7hwg": 507,
+        "convocado": 364
+      },
+      "classification": "matched_existing",
+      "canonical_name": "CoRDOBA - CaMARA DE COMERCIO DE MONTERiA",
+      "canonical_nit": null,
+      "canonical_id": "camara_comercio_monteria_cordoba",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "CAMARA DE COMERCIO DE MONTERIA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CAMARA DE COMERCIO MONTERIA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CC DE MONTERIA",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "ASOCIACIoN HORTIFRUTiCOLA DE COLOMBIA - ASOHOFRUCOL",
+      "secop1_normalized": "ASOCIACION HORTIFRUTICOLA DE COLOMBIA - ASOHOFRUCOL",
+      "total_2026_count": 841,
+      "sources": {
+        "f789-7hwg": 427,
+        "rpmr-utcd": 414
+      },
+      "classification": "secop1_only",
+      "canonical_name": "ASOCIACIoN HORTIFRUTiCOLA DE COLOMBIA - ASOHOFRUCOL",
+      "canonical_nit": null,
+      "canonical_id": "asociacion_hortifruticola_de_colombia_asohofrucol",
+      "source_aliases": [],
+      "user_aliases": [],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "ESCUELA NACIONAL DEL DEPORTE",
+      "secop1_normalized": "ESCUELA NACIONAL DEL DEPORTE",
+      "total_2026_count": 753,
+      "sources": {
+        "f789-7hwg": 391,
+        "rpmr-utcd": 362
+      },
+      "classification": "matched_existing",
+      "canonical_name": "ESCUELA NACIONAL DEL DEPORTE",
+      "canonical_nit": null,
+      "canonical_id": "escuela_nacional_del_deporte",
+      "source_aliases": [],
+      "user_aliases": [],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "NARIÑO - ALCALDiA MUNICIPIO DE EL CHARCO",
+      "secop1_normalized": "NARINO - ALCALDIA MUNICIPIO DE EL CHARCO",
+      "total_2026_count": 745,
+      "sources": {
+        "f789-7hwg": 418,
+        "rpmr-utcd": 327
+      },
+      "classification": "secop1_only",
+      "canonical_name": "NARIÑO - ALCALDiA MUNICIPIO DE EL CHARCO",
+      "canonical_nit": null,
+      "canonical_id": "municipio_el_charco_narino",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE EL CHARCO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE EL CHARCO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "EL CHARCO NARINO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE EL CHARCO",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "VICHADA - ALCALDiA MUNICIPIO DE PUERTO CARREÑO",
+      "secop1_normalized": "VICHADA - ALCALDIA MUNICIPIO DE PUERTO CARRENO",
+      "total_2026_count": 744,
+      "sources": {
+        "f789-7hwg": 409,
+        "convocado": 335
+      },
+      "classification": "secop1_only",
+      "canonical_name": "VICHADA - ALCALDiA MUNICIPIO DE PUERTO CARREÑO",
+      "canonical_nit": null,
+      "canonical_id": "municipio_puerto_carreno_vichada",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE PUERTO CARRENO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE PUERTO CARRENO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE PUERTO CARRENO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "PUERTO CARRENO VICHADA",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "BOLiVAR - CaMARA DE COMERCIO DE CARTAGENA",
+      "secop1_normalized": "BOLIVAR - CAMARA DE COMERCIO DE CARTAGENA",
+      "total_2026_count": 721,
+      "sources": {
+        "f789-7hwg": 369,
+        "rpmr-utcd": 352
+      },
+      "classification": "matched_existing",
+      "canonical_name": "BOLiVAR - CaMARA DE COMERCIO DE CARTAGENA",
+      "canonical_nit": null,
+      "canonical_id": "camara_comercio_cartagena_bolivar",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "CAMARA DE COMERCIO CARTAGENA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CAMARA DE COMERCIO DE CARTAGENA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CC DE CARTAGENA",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "NORTE DE SANTANDER - ALCALDiA MUNICIPIO DE EL CARMEN",
+      "secop1_normalized": "NORTE DE SANTANDER - ALCALDIA MUNICIPIO DE EL CARMEN",
+      "total_2026_count": 720,
+      "sources": {
+        "f789-7hwg": 405,
+        "rpmr-utcd": 315
+      },
+      "classification": "matched_existing",
+      "canonical_name": "NORTE DE SANTANDER - ALCALDiA MUNICIPIO DE EL CARMEN",
+      "canonical_nit": null,
+      "canonical_id": "municipio_el_carmen_norte_de_santander",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE EL CARMEN",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE EL CARMEN",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "EL CARMEN NORTE DE SANTANDER",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE EL CARMEN",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "NARIÑO - ALCALDiA MUNICIPIO DE BARBACOAS",
+      "secop1_normalized": "NARINO - ALCALDIA MUNICIPIO DE BARBACOAS",
+      "total_2026_count": 718,
+      "sources": {
+        "f789-7hwg": 385,
+        "rpmr-utcd": 333
+      },
+      "classification": "secop1_only",
+      "canonical_name": "NARIÑO - ALCALDiA MUNICIPIO DE BARBACOAS",
+      "canonical_nit": null,
+      "canonical_id": "municipio_barbacoas_narino",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE BARBACOAS",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE BARBACOAS",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "BARBACOAS NARINO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE BARBACOAS",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "HUILA - ALCALDiA MUNICIPIO DE AIPE",
+      "secop1_normalized": "HUILA - ALCALDIA MUNICIPIO DE AIPE",
+      "total_2026_count": 702,
+      "sources": {
+        "f789-7hwg": 395,
+        "rpmr-utcd": 307
+      },
+      "classification": "matched_existing",
+      "canonical_name": "HUILA - ALCALDiA MUNICIPIO DE AIPE",
+      "canonical_nit": null,
+      "canonical_id": "municipio_aipe_huila",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "AIPE HUILA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA DE AIPE",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE AIPE",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE AIPE",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "VALLE DEL CAUCA - CAMARA DE COMERCIO DE TULUA",
+      "secop1_normalized": "VALLE DEL CAUCA - CAMARA DE COMERCIO DE TULUA",
+      "total_2026_count": 691,
+      "sources": {
+        "f789-7hwg": 387,
+        "rpmr-utcd": 304
+      },
+      "classification": "matched_existing",
+      "canonical_name": "VALLE DEL CAUCA - CAMARA DE COMERCIO DE TULUA",
+      "canonical_nit": null,
+      "canonical_id": "camara_comercio_tulua_valle_del_cauca",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "CAMARA DE COMERCIO DE TULUA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CAMARA DE COMERCIO TULUA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CC DE TULUA",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "PUTUMAYO - CaMARA DE COMERCIO DEL PUTUMAYO",
+      "secop1_normalized": "PUTUMAYO - CAMARA DE COMERCIO DEL PUTUMAYO",
+      "total_2026_count": 676,
+      "sources": {
+        "f789-7hwg": 348,
+        "rpmr-utcd": 328
+      },
+      "classification": "matched_existing",
+      "canonical_name": "PUTUMAYO - CaMARA DE COMERCIO DEL PUTUMAYO",
+      "canonical_nit": null,
+      "canonical_id": "camara_comercio_del_putumayo_putumayo",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "CAMARA DE COMERCIO DEL PUTUMAYO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CC DEL PUTUMAYO",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "ANTIOQUIA - CaMARA DE COMERCIO DE MEDELLiN",
+      "secop1_normalized": "ANTIOQUIA - CAMARA DE COMERCIO DE MEDELLIN",
+      "total_2026_count": 675,
+      "sources": {
+        "f789-7hwg": 349,
+        "rpmr-utcd": 326
+      },
+      "classification": "matched_existing",
+      "canonical_name": "ANTIOQUIA - CaMARA DE COMERCIO DE MEDELLiN",
+      "canonical_nit": null,
+      "canonical_id": "camara_comercio_medellin_antioquia",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "CAMARA DE COMERCIO DE MEDELLIN",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CAMARA DE COMERCIO MEDELLIN",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CC DE MEDELLIN",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "CoRDOBA - ALCALDiA MUNICIPIO DE CIENAGA DE ORO",
+      "secop1_normalized": "CORDOBA - ALCALDIA MUNICIPIO DE CIENAGA DE ORO",
+      "total_2026_count": 668,
+      "sources": {
+        "f789-7hwg": 348,
+        "convocado": 320
+      },
+      "classification": "secop1_only",
+      "canonical_name": "CoRDOBA - ALCALDiA MUNICIPIO DE CIENAGA DE ORO",
+      "canonical_nit": null,
+      "canonical_id": "municipio_cienaga_de_oro_cordoba",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE CIENAGA DE ORO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE CIENAGA DE ORO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CIENAGA DE ORO CORDOBA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE CIENAGA DE ORO",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "NORTE DE SANTANDER - CAMARA DE COMERCIO DE CUCUTA",
+      "secop1_normalized": "NORTE DE SANTANDER - CAMARA DE COMERCIO DE CUCUTA",
+      "total_2026_count": 642,
+      "sources": {
+        "f789-7hwg": 336,
+        "rpmr-utcd": 306
+      },
+      "classification": "matched_existing",
+      "canonical_name": "NORTE DE SANTANDER - CAMARA DE COMERCIO DE CUCUTA",
+      "canonical_nit": null,
+      "canonical_id": "camara_comercio_cucuta_norte_de_santander",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "CAMARA DE COMERCIO CUCUTA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CAMARA DE COMERCIO DE CUCUTA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CC DE CUCUTA",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "HUILA - E.S.E. HOSPITAL DEPARTAMENTAL SAN ANTONIO DE PI",
+      "secop1_normalized": "HUILA - E.S.E. HOSPITAL DEPARTAMENTAL SAN ANTONIO DE PI",
+      "total_2026_count": 639,
+      "sources": {
+        "f789-7hwg": 345,
+        "rpmr-utcd": 294
+      },
+      "classification": "matched_existing",
+      "canonical_name": "HUILA - E.S.E. HOSPITAL DEPARTAMENTAL SAN ANTONIO DE PI",
+      "canonical_nit": null,
+      "canonical_id": "ese_ese_hospital_departamental_san_antonio_de_pi_huila",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "E.S.E. HOSPITAL DEPARTAMENTAL SAN ANTONIO DE PI",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "META - ALCALDiA MUNICIPIO DE GRANADA",
+      "secop1_normalized": "META - ALCALDIA MUNICIPIO DE GRANADA",
+      "total_2026_count": 627,
+      "sources": {
+        "f789-7hwg": 326,
+        "rpmr-utcd": 301
+      },
+      "classification": "matched_existing",
+      "canonical_name": "META - ALCALDiA MUNICIPIO DE GRANADA",
+      "canonical_nit": null,
+      "canonical_id": "municipio_granada_meta",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE GRANADA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE GRANADA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "GRANADA META",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE GRANADA",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "VALLE DEL CAUCA - CaMARA DE COMERCIO DE CALI",
+      "secop1_normalized": "VALLE DEL CAUCA - CAMARA DE COMERCIO DE CALI",
+      "total_2026_count": 594,
+      "sources": {
+        "f789-7hwg": 303,
+        "rpmr-utcd": 291
+      },
+      "classification": "matched_existing",
+      "canonical_name": "VALLE DEL CAUCA - CaMARA DE COMERCIO DE CALI",
+      "canonical_nit": null,
+      "canonical_id": "camara_comercio_cali_valle_del_cauca",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "CAMARA DE COMERCIO CALI",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CAMARA DE COMERCIO DE CALI",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CC DE CALI",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "NARIÑO - ALCALDiA MUNICIPIO DE FRANCISCO PIZARRO",
+      "secop1_normalized": "NARINO - ALCALDIA MUNICIPIO DE FRANCISCO PIZARRO",
+      "total_2026_count": 583,
+      "sources": {
+        "f789-7hwg": 308,
+        "rpmr-utcd": 275
+      },
+      "classification": "secop1_only",
+      "canonical_name": "NARIÑO - ALCALDiA MUNICIPIO DE FRANCISCO PIZARRO",
+      "canonical_nit": null,
+      "canonical_id": "municipio_francisco_pizarro_narino",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE FRANCISCO PIZARRO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE FRANCISCO PIZARRO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "FRANCISCO PIZARRO NARINO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE FRANCISCO PIZARRO",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "NARIÑO - E.S.E. CENTRO DE SALUD SAN JUAN BAUTISTA - TAM",
+      "secop1_normalized": "NARINO - E.S.E. CENTRO DE SALUD SAN JUAN BAUTISTA - TAM",
+      "total_2026_count": 571,
+      "sources": {
+        "f789-7hwg": 360,
+        "rpmr-utcd": 211
+      },
+      "classification": "needs_review",
+      "canonical_name": null,
+      "canonical_nit": null,
+      "canonical_id": "ese_ese_centro_de_salud_san_juan_bautista_tam_narino",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "E.S.E. CENTRO DE SALUD SAN JUAN BAUTISTA - TAM",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "NARINO - E.S.E. CENTRO DE SALUD SAN JUAN BAUTISTA",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": false,
+      "exclusion_reason": "needs_review: requiere verificación manual"
+    },
+    {
+      "secop1_name": "CASANARE - CAMARA DE COMERCIO",
+      "secop1_normalized": "CASANARE - CAMARA DE COMERCIO",
+      "total_2026_count": 560,
+      "sources": {
+        "f789-7hwg": 286,
+        "rpmr-utcd": 274
+      },
+      "classification": "matched_existing",
+      "canonical_name": "CASANARE - CAMARA DE COMERCIO",
+      "canonical_nit": null,
+      "canonical_id": "camara_comercio_camara_de_comercio_casanare",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "CAMARA DE COMERCIO",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "CAUCA - CaMARA DE COMERCIO DEL CAUCA",
+      "secop1_normalized": "CAUCA - CAMARA DE COMERCIO DEL CAUCA",
+      "total_2026_count": 551,
+      "sources": {
+        "f789-7hwg": 347,
+        "rpmr-utcd": 204
+      },
+      "classification": "matched_existing",
+      "canonical_name": "CAUCA - CaMARA DE COMERCIO DEL CAUCA",
+      "canonical_nit": null,
+      "canonical_id": "camara_comercio_del_cauca_cauca",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "CAMARA DE COMERCIO DEL CAUCA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CC DEL CAUCA",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "BOYACa - CAMARA DE COMERCIO - DUITAMA",
+      "secop1_normalized": "BOYACA - CAMARA DE COMERCIO - DUITAMA",
+      "total_2026_count": 551,
+      "sources": {
+        "f789-7hwg": 287,
+        "rpmr-utcd": 264
+      },
+      "classification": "matched_existing",
+      "canonical_name": "BOYACa - CAMARA DE COMERCIO - DUITAMA",
+      "canonical_nit": null,
+      "canonical_id": "camara_comercio_duitama_boyaca",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "BOYACA - CAMARA DE COMERCIO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CAMARA DE COMERCIO - DUITAMA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CC - DUITAMA",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "NARIÑO - ALCALDiA MUNICIPIO DE LA TOLA",
+      "secop1_normalized": "NARINO - ALCALDIA MUNICIPIO DE LA TOLA",
+      "total_2026_count": 534,
+      "sources": {
+        "f789-7hwg": 292,
+        "rpmr-utcd": 242
+      },
+      "classification": "secop1_only",
+      "canonical_name": "NARIÑO - ALCALDiA MUNICIPIO DE LA TOLA",
+      "canonical_nit": null,
+      "canonical_id": "municipio_la_tola_narino",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE LA TOLA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE LA TOLA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "LA TOLA NARINO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE LA TOLA",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "GUAVIARE - ALCALDiA MUNICIPIO DE SAN JOSe DEL GUAVIARE",
+      "secop1_normalized": "GUAVIARE - ALCALDIA MUNICIPIO DE SAN JOSE DEL GUAVIARE",
+      "total_2026_count": 529,
+      "sources": {
+        "f789-7hwg": 280,
+        "rpmr-utcd": 249
+      },
+      "classification": "secop1_only",
+      "canonical_name": "GUAVIARE - ALCALDiA MUNICIPIO DE SAN JOSe DEL GUAVIARE",
+      "canonical_nit": null,
+      "canonical_id": "municipio_san_jose_del_guaviare_guaviare",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE SAN JOSE DEL GUAVIARE",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE SAN JOSE DEL GUAVIARE",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE SAN JOSE DEL GUAVIARE",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "SAN JOSE DEL GUAVIARE GUAVIARE",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "BOLiVAR - ALCALDiA MUNICIPIO DE CANTAGALLO",
+      "secop1_normalized": "BOLIVAR - ALCALDIA MUNICIPIO DE CANTAGALLO",
+      "total_2026_count": 526,
+      "sources": {
+        "f789-7hwg": 326,
+        "rpmr-utcd": 200
+      },
+      "classification": "secop1_only",
+      "canonical_name": "BOLiVAR - ALCALDiA MUNICIPIO DE CANTAGALLO",
+      "canonical_nit": null,
+      "canonical_id": "municipio_cantagallo_bolivar",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE CANTAGALLO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE CANTAGALLO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CANTAGALLO BOLIVAR",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE CANTAGALLO",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "NARIÑO - ALCALDiA MUNICIPIO DE RICAURTE",
+      "secop1_normalized": "NARINO - ALCALDIA MUNICIPIO DE RICAURTE",
+      "total_2026_count": 521,
+      "sources": {
+        "f789-7hwg": 293,
+        "rpmr-utcd": 228
+      },
+      "classification": "secop1_only",
+      "canonical_name": "NARIÑO - ALCALDiA MUNICIPIO DE RICAURTE",
+      "canonical_nit": null,
+      "canonical_id": "municipio_ricaurte_narino",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE RICAURTE",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE RICAURTE",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE RICAURTE",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "RICAURTE NARINO",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "TOLIMA - ALCALDiA MUNICIPIO DE COYAIMA",
+      "secop1_normalized": "TOLIMA - ALCALDIA MUNICIPIO DE COYAIMA",
+      "total_2026_count": 501,
+      "sources": {
+        "f789-7hwg": 277,
+        "rpmr-utcd": 224
+      },
+      "classification": "matched_existing",
+      "canonical_name": "TOLIMA - ALCALDiA MUNICIPIO DE COYAIMA",
+      "canonical_nit": null,
+      "canonical_id": "municipio_coyaima_tolima",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE COYAIMA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE COYAIMA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "COYAIMA TOLIMA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE COYAIMA",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "ANTIOQUIA - CORPORACIoN HOSPITAL INFANTIL CONCEJO DE ME",
+      "secop1_normalized": "ANTIOQUIA - CORPORACION HOSPITAL INFANTIL CONCEJO DE ME",
+      "total_2026_count": 382,
+      "sources": {
+        "f789-7hwg": 382
+      },
+      "classification": "bad_name",
+      "canonical_name": null,
+      "canonical_nit": null,
+      "canonical_id": "ese_corporacion_hospital_infantil_concejo_de_me_antioquia",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "CORPORACION HOSPITAL INFANTIL CONCEJO DE ME",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": false,
+      "exclusion_reason": "bad_name: nombre truncado o malformado"
+    },
+    {
+      "secop1_name": "FIDUCIARIA COLOMBIANA DE COMERCIO EXTERIOR S.A",
+      "secop1_normalized": "FIDUCIARIA COLOMBIANA DE COMERCIO EXTERIOR S.A",
+      "total_2026_count": 378,
+      "sources": {
+        "f789-7hwg": 378
+      },
+      "classification": "matched_existing",
+      "canonical_name": "FIDUCIARIA COLOMBIANA DE COMERCIO EXTERIOR S.A",
+      "canonical_nit": null,
+      "canonical_id": "fiduciaria_colombiana_de_comercio_exterior_sa",
+      "source_aliases": [],
+      "user_aliases": [],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "MAGDALENA - INSTITUCION UNIVERSITARIA DEL CARIBE",
+      "secop1_normalized": "MAGDALENA - INSTITUCION UNIVERSITARIA DEL CARIBE",
+      "total_2026_count": 374,
+      "sources": {
+        "f789-7hwg": 374
+      },
+      "classification": "matched_existing",
+      "canonical_name": "MAGDALENA - INSTITUCION UNIVERSITARIA DEL CARIBE",
+      "canonical_nit": null,
+      "canonical_id": "magdalena_institucion_universitaria_del_caribe",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "INSTITUCION UNIVERSITARIA DEL CARIBE",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "META - ALCALDiA MUNICIPIO DE SAN CARLOS DE GUAROA",
+      "secop1_normalized": "META - ALCALDIA MUNICIPIO DE SAN CARLOS DE GUAROA",
+      "total_2026_count": 360,
+      "sources": {
+        "f789-7hwg": 360
+      },
+      "classification": "secop1_only",
+      "canonical_name": "META - ALCALDiA MUNICIPIO DE SAN CARLOS DE GUAROA",
+      "canonical_nit": null,
+      "canonical_id": "municipio_san_carlos_de_guaroa_meta",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE SAN CARLOS DE GUAROA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE SAN CARLOS DE GUAROA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE SAN CARLOS DE GUAROA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "SAN CARLOS DE GUAROA META",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "GUAVIARE - E.S.E. RED DE SERVICIOS DE SALUD DE PRIMER N",
+      "secop1_normalized": "GUAVIARE - E.S.E. RED DE SERVICIOS DE SALUD DE PRIMER N",
+      "total_2026_count": 341,
+      "sources": {
+        "f789-7hwg": 341
+      },
+      "classification": "secop1_only",
+      "canonical_name": "GUAVIARE - E.S.E. RED DE SERVICIOS DE SALUD DE PRIMER N",
+      "canonical_nit": null,
+      "canonical_id": "ese_ese_red_de_servicios_de_salud_de_primer_n_guaviare",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "E.S.E. RED DE SERVICIOS DE SALUD DE PRIMER N",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "GUAVIARE - E.S.E. RED DE SERVICIOS DE SALUD DE PRIMER NIVEL",
+      "secop1_normalized": "GUAVIARE - E.S.E. RED DE SERVICIOS DE SALUD DE PRIMER NIVEL",
+      "total_2026_count": 341,
+      "sources": {
+        "convocado": 341
+      },
+      "classification": "secop1_only",
+      "canonical_name": "GUAVIARE - E.S.E. RED DE SERVICIOS DE SALUD DE PRIMER NIVEL",
+      "canonical_nit": null,
+      "canonical_id": "ese_ese_red_de_servicios_de_salud_de_primer_nivel_guaviare",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "E.S.E. RED DE SERVICIOS DE SALUD DE PRIMER NIVEL",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "TOLIMA - ALCALDiA MUNICIPIO DE CARMEN DE APICALa",
+      "secop1_normalized": "TOLIMA - ALCALDIA MUNICIPIO DE CARMEN DE APICALA",
+      "total_2026_count": 334,
+      "sources": {
+        "f789-7hwg": 334
+      },
+      "classification": "secop1_only",
+      "canonical_name": "TOLIMA - ALCALDiA MUNICIPIO DE CARMEN DE APICALa",
+      "canonical_nit": null,
+      "canonical_id": "municipio_carmen_de_apicala_tolima",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE CARMEN DE APICALA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE CARMEN DE APICALA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CARMEN DE APICALA TOLIMA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE CARMEN DE APICALA",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "HUILA - E.S.E. HOSPITAL SAN FRANCISCO JAVIER - ACEVEDO",
+      "secop1_normalized": "HUILA - E.S.E. HOSPITAL SAN FRANCISCO JAVIER - ACEVEDO",
+      "total_2026_count": 304,
+      "sources": {
+        "f789-7hwg": 304
+      },
+      "classification": "needs_review",
+      "canonical_name": null,
+      "canonical_nit": null,
+      "canonical_id": "ese_ese_hospital_san_francisco_javier_acevedo_huila",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "E.S.E. HOSPITAL SAN FRANCISCO JAVIER - ACEVEDO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "HUILA - E.S.E. HOSPITAL SAN FRANCISCO JAVIER",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": false,
+      "exclusion_reason": "needs_review: requiere verificación manual"
+    },
+    {
+      "secop1_name": "CAUCA - ALCALDiA MUNICIPIO DE LOPEZ DE MICAY",
+      "secop1_normalized": "CAUCA - ALCALDIA MUNICIPIO DE LOPEZ DE MICAY",
+      "total_2026_count": 293,
+      "sources": {
+        "f789-7hwg": 293
+      },
+      "classification": "secop1_only",
+      "canonical_name": "CAUCA - ALCALDiA MUNICIPIO DE LOPEZ DE MICAY",
+      "canonical_nit": null,
+      "canonical_id": "municipio_lopez_de_micay_cauca",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE LOPEZ DE MICAY",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE LOPEZ DE MICAY",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "LOPEZ DE MICAY CAUCA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE LOPEZ DE MICAY",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "BOLiVAR - E.S.E. HOSPITAL LOCAL SAN SEBASTIaN DE MORALE",
+      "secop1_normalized": "BOLIVAR - E.S.E. HOSPITAL LOCAL SAN SEBASTIAN DE MORALE",
+      "total_2026_count": 282,
+      "sources": {
+        "f789-7hwg": 282
+      },
+      "classification": "needs_review",
+      "canonical_name": null,
+      "canonical_nit": null,
+      "canonical_id": "ese_ese_hospital_local_san_sebastian_de_morale_bolivar",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "E.S.E. HOSPITAL LOCAL SAN SEBASTIAN DE MORALE",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": false,
+      "exclusion_reason": "needs_review: requiere verificación manual"
+    },
+    {
+      "secop1_name": "MAGDALENA - CAMARA DE COMERCIO DE SANTA MARTA ¿ SANTA M",
+      "secop1_normalized": "MAGDALENA - CAMARA DE COMERCIO DE SANTA MARTA ¿ SANTA M",
+      "total_2026_count": 280,
+      "sources": {
+        "f789-7hwg": 280
+      },
+      "classification": "bad_name",
+      "canonical_name": null,
+      "canonical_nit": null,
+      "canonical_id": "camara_comercio_santa_marta_santa_m_magdalena",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "CAMARA DE COMERCIO DE SANTA MARTA ¿ SANTA M",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CAMARA DE COMERCIO SANTA MARTA ¿ SANTA M",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CC DE SANTA MARTA ¿ SANTA M",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": false,
+      "exclusion_reason": "bad_name: nombre truncado o malformado"
+    },
+    {
+      "secop1_name": "MAGDALENA - CAMARA DE COMERCIO DE SANTA MARTA",
+      "secop1_normalized": "MAGDALENA - CAMARA DE COMERCIO DE SANTA MARTA",
+      "total_2026_count": 267,
+      "sources": {
+        "rpmr-utcd": 267
+      },
+      "classification": "matched_existing",
+      "canonical_name": "MAGDALENA - CAMARA DE COMERCIO DE SANTA MARTA",
+      "canonical_nit": null,
+      "canonical_id": "camara_comercio_santa_marta_magdalena",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "CAMARA DE COMERCIO DE SANTA MARTA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CAMARA DE COMERCIO SANTA MARTA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CC DE SANTA MARTA",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "NARIÑO - CENTRO DE SALUD SEÑOR DEL MAR - FRANCISCO PIZARRO",
+      "secop1_normalized": "NARINO - CENTRO DE SALUD SENOR DEL MAR - FRANCISCO PIZARRO",
+      "total_2026_count": 257,
+      "sources": {
+        "convocado": 257
+      },
+      "classification": "secop1_only",
+      "canonical_name": "NARIÑO - CENTRO DE SALUD SEÑOR DEL MAR - FRANCISCO PIZARRO",
+      "canonical_nit": null,
+      "canonical_id": "narino_centro_de_salud_senor_del_mar_francisco_pizarro",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "CENTRO DE SALUD SENOR DEL MAR - FRANCISCO PIZARRO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "NARINO - CENTRO DE SALUD SENOR DEL MAR",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "BOGOTÁ - CÁMARA DE COMERCIO DE BOGOTÁ",
+      "secop1_normalized": "BOGOTA - CAMARA DE COMERCIO DE BOGOTA",
+      "total_2026_count": 227,
+      "sources": {
+        "rpmr-utcd": 227
+      },
+      "classification": "matched_existing",
+      "canonical_name": "BOGOTÁ - CÁMARA DE COMERCIO DE BOGOTÁ",
+      "canonical_nit": null,
+      "canonical_id": "camara_comercio_bogota_bogota",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "CAMARA DE COMERCIO BOGOTA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CAMARA DE COMERCIO DE BOGOTA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CC DE BOGOTA",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "CESAR - E.S.E. HOSPITAL SAN MARTÍN - ASTREA",
+      "secop1_normalized": "CESAR - E.S.E. HOSPITAL SAN MARTIN - ASTREA",
+      "total_2026_count": 227,
+      "sources": {
+        "rpmr-utcd": 227
+      },
+      "classification": "secop1_only",
+      "canonical_name": "CESAR - E.S.E. HOSPITAL SAN MARTÍN - ASTREA",
+      "canonical_nit": null,
+      "canonical_id": "ese_ese_hospital_san_martin_astrea_cesar",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "CESAR - E.S.E. HOSPITAL SAN MARTIN",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "E.S.E. HOSPITAL SAN MARTIN - ASTREA",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "CÓRDOBA - ALCALDÍA MUNICIPIO DE SANTA CRUZ DE LORICA",
+      "secop1_normalized": "CORDOBA - ALCALDIA MUNICIPIO DE SANTA CRUZ DE LORICA",
+      "total_2026_count": 224,
+      "sources": {
+        "rpmr-utcd": 224
+      },
+      "classification": "secop1_only",
+      "canonical_name": "CÓRDOBA - ALCALDÍA MUNICIPIO DE SANTA CRUZ DE LORICA",
+      "canonical_nit": null,
+      "canonical_id": "municipio_santa_cruz_de_lorica_cordoba",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE SANTA CRUZ DE LORICA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE SANTA CRUZ DE LORICA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE SANTA CRUZ DE LORICA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "SANTA CRUZ DE LORICA CORDOBA",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "NARIÑO - ALCALDÍA MUNICIPIO DE TANGUA",
+      "secop1_normalized": "NARINO - ALCALDIA MUNICIPIO DE TANGUA",
+      "total_2026_count": 222,
+      "sources": {
+        "rpmr-utcd": 222
+      },
+      "classification": "secop1_only",
+      "canonical_name": "NARIÑO - ALCALDÍA MUNICIPIO DE TANGUA",
+      "canonical_nit": null,
+      "canonical_id": "municipio_tangua_narino",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE TANGUA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE TANGUA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE TANGUA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "TANGUA NARINO",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "CHOCo - ALCALDiA MUNICIPIO DE NOVITA",
+      "secop1_normalized": "CHOCO - ALCALDIA MUNICIPIO DE NOVITA",
+      "total_2026_count": 220,
+      "sources": {
+        "convocado": 220
+      },
+      "classification": "secop1_only",
+      "canonical_name": "CHOCo - ALCALDiA MUNICIPIO DE NOVITA",
+      "canonical_nit": null,
+      "canonical_id": "municipio_novita_choco",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE NOVITA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE NOVITA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE NOVITA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "NOVITA CHOCO",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "CESAR - ALCALDÍA MUNICIPIO DE CHIRIGUANÁ",
+      "secop1_normalized": "CESAR - ALCALDIA MUNICIPIO DE CHIRIGUANA",
+      "total_2026_count": 219,
+      "sources": {
+        "rpmr-utcd": 219
+      },
+      "classification": "needs_review",
+      "canonical_name": null,
+      "canonical_nit": null,
+      "canonical_id": "municipio_chiriguana_cesar",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE CHIRIGUANA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE CHIRIGUANA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CHIRIGUANA CESAR",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE CHIRIGUANA",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": false,
+      "exclusion_reason": "needs_review: requiere verificación manual"
+    },
+    {
+      "secop1_name": "HUILA - CAMARA DE COMERCIO DE NEIVA",
+      "secop1_normalized": "HUILA - CAMARA DE COMERCIO DE NEIVA",
+      "total_2026_count": 218,
+      "sources": {
+        "rpmr-utcd": 218
+      },
+      "classification": "matched_existing",
+      "canonical_name": "HUILA - CAMARA DE COMERCIO DE NEIVA",
+      "canonical_nit": null,
+      "canonical_id": "camara_comercio_neiva_huila",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "CAMARA DE COMERCIO DE NEIVA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CAMARA DE COMERCIO NEIVA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CC DE NEIVA",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "BOLiVAR - EMPRESA SOCIAL DEL ESTADO HOSPITAL LOCAL SAN PABLO",
+      "secop1_normalized": "BOLIVAR - EMPRESA SOCIAL DEL ESTADO HOSPITAL LOCAL SAN PABLO",
+      "total_2026_count": 218,
+      "sources": {
+        "convocado": 218
+      },
+      "classification": "needs_review",
+      "canonical_name": null,
+      "canonical_nit": null,
+      "canonical_id": "ese_empresa_social_del_estado_hospital_local_san_pablo_bolivar",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "EMPRESA SOCIAL DEL ESTADO HOSPITAL LOCAL SAN PABLO",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": false,
+      "exclusion_reason": "needs_review: requiere verificación manual"
+    },
+    {
+      "secop1_name": "CAUCA - ALCALDÍA MUNICIPIO DE VILLA RICA",
+      "secop1_normalized": "CAUCA - ALCALDIA MUNICIPIO DE VILLA RICA",
+      "total_2026_count": 213,
+      "sources": {
+        "rpmr-utcd": 213
+      },
+      "classification": "needs_review",
+      "canonical_name": null,
+      "canonical_nit": null,
+      "canonical_id": "municipio_villa_rica_cauca",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE VILLA RICA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE VILLA RICA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE VILLA RICA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "VILLA RICA CAUCA",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": false,
+      "exclusion_reason": "needs_review: requiere verificación manual"
+    },
+    {
+      "secop1_name": "CAUCA - ALCALDÍA MUNICIPIO DE GUACHENÉ",
+      "secop1_normalized": "CAUCA - ALCALDIA MUNICIPIO DE GUACHENE",
+      "total_2026_count": 211,
+      "sources": {
+        "rpmr-utcd": 211
+      },
+      "classification": "needs_review",
+      "canonical_name": null,
+      "canonical_nit": null,
+      "canonical_id": "municipio_guachene_cauca",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE GUACHENE",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE GUACHENE",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "GUACHENE CAUCA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE GUACHENE",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": false,
+      "exclusion_reason": "needs_review: requiere verificación manual"
+    },
+    {
+      "secop1_name": "CÓRDOBA - ALCALDÍA MUNICIPIO DE SAHAGÚN",
+      "secop1_normalized": "CORDOBA - ALCALDIA MUNICIPIO DE SAHAGUN",
+      "total_2026_count": 210,
+      "sources": {
+        "rpmr-utcd": 210
+      },
+      "classification": "needs_review",
+      "canonical_name": null,
+      "canonical_nit": null,
+      "canonical_id": "municipio_sahagun_cordoba",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE SAHAGUN",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE SAHAGUN",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE SAHAGUN",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "SAHAGUN CORDOBA",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": false,
+      "exclusion_reason": "needs_review: requiere verificación manual"
+    },
+    {
+      "secop1_name": "NORTE DE SANTANDER - ALCALDÍA MUNICIPIO DE TIBÚ",
+      "secop1_normalized": "NORTE DE SANTANDER - ALCALDIA MUNICIPIO DE TIBU",
+      "total_2026_count": 209,
+      "sources": {
+        "rpmr-utcd": 209
+      },
+      "classification": "needs_review",
+      "canonical_name": null,
+      "canonical_nit": null,
+      "canonical_id": "municipio_tibu_norte_de_santander",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE TIBU",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE TIBU",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE TIBU",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "TIBU NORTE DE SANTANDER",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": false,
+      "exclusion_reason": "needs_review: requiere verificación manual"
+    },
+    {
+      "secop1_name": "META - ALCALDÍA MUNICIPIO DE CABUYARO",
+      "secop1_normalized": "META - ALCALDIA MUNICIPIO DE CABUYARO",
+      "total_2026_count": 209,
+      "sources": {
+        "rpmr-utcd": 209
+      },
+      "classification": "secop1_only",
+      "canonical_name": "META - ALCALDÍA MUNICIPIO DE CABUYARO",
+      "canonical_nit": null,
+      "canonical_id": "municipio_cabuyaro_meta",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE CABUYARO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE CABUYARO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CABUYARO META",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE CABUYARO",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "MAGDALENA - ALCALDiA MUNICIPIO DE PIJINO DEL CARMEN",
+      "secop1_normalized": "MAGDALENA - ALCALDIA MUNICIPIO DE PIJINO DEL CARMEN",
+      "total_2026_count": 204,
+      "sources": {
+        "convocado": 204
+      },
+      "classification": "secop1_only",
+      "canonical_name": "MAGDALENA - ALCALDiA MUNICIPIO DE PIJINO DEL CARMEN",
+      "canonical_nit": null,
+      "canonical_id": "municipio_pijino_del_carmen_magdalena",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE PIJINO DEL CARMEN",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE PIJINO DEL CARMEN",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE PIJINO DEL CARMEN",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "PIJINO DEL CARMEN MAGDALENA",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "CHOCo - ALCALDiA MUNICIPIO DE BOJAYa - BELLAVISTA",
+      "secop1_normalized": "CHOCO - ALCALDIA MUNICIPIO DE BOJAYA - BELLAVISTA",
+      "total_2026_count": 204,
+      "sources": {
+        "convocado": 204
+      },
+      "classification": "secop1_only",
+      "canonical_name": "CHOCo - ALCALDiA MUNICIPIO DE BOJAYa - BELLAVISTA",
+      "canonical_nit": null,
+      "canonical_id": "municipio_bojaya_bellavista_choco",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE BOJAYA - BELLAVISTA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE BOJAYA - BELLAVISTA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "BOJAYA - BELLAVISTA CHOCO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CHOCO - ALCALDIA MUNICIPIO DE BOJAYA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE BOJAYA - BELLAVISTA",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "RISARALDA - ALCALDÍA MUNICIPIO DE PUEBLO RICO",
+      "secop1_normalized": "RISARALDA - ALCALDIA MUNICIPIO DE PUEBLO RICO",
+      "total_2026_count": 202,
+      "sources": {
+        "rpmr-utcd": 202
+      },
+      "classification": "secop1_only",
+      "canonical_name": "RISARALDA - ALCALDÍA MUNICIPIO DE PUEBLO RICO",
+      "canonical_nit": null,
+      "canonical_id": "municipio_pueblo_rico_risaralda",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE PUEBLO RICO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE PUEBLO RICO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE PUEBLO RICO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "PUEBLO RICO RISARALDA",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "CORPOCHIVOR - CORPORACIÓN AUTÓNOMA REGIONAL DE CHIVOR",
+      "secop1_normalized": "CORPOCHIVOR - CORPORACION AUTONOMA REGIONAL DE CHIVOR",
+      "total_2026_count": 192,
+      "sources": {
+        "rpmr-utcd": 192
+      },
+      "classification": "secop1_only",
+      "canonical_name": "CORPOCHIVOR - CORPORACIÓN AUTÓNOMA REGIONAL DE CHIVOR",
+      "canonical_nit": null,
+      "canonical_id": "corpochivor_corporacion_autonoma_regional_de_chivor",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "CORPORACION AUTONOMA REGIONAL DE CHIVOR",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "NORTE DE SANTANDER - ALCALDÍA MUNICIPIO DE CUCUTILLA",
+      "secop1_normalized": "NORTE DE SANTANDER - ALCALDIA MUNICIPIO DE CUCUTILLA",
+      "total_2026_count": 191,
+      "sources": {
+        "rpmr-utcd": 191
+      },
+      "classification": "secop1_only",
+      "canonical_name": "NORTE DE SANTANDER - ALCALDÍA MUNICIPIO DE CUCUTILLA",
+      "canonical_nit": null,
+      "canonical_id": "municipio_cucutilla_norte_de_santander",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE CUCUTILLA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE CUCUTILLA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CUCUTILLA NORTE DE SANTANDER",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE CUCUTILLA",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "CESAR - ALCALDiA MUNICIPIO DE PUEBLO BELLO",
+      "secop1_normalized": "CESAR - ALCALDIA MUNICIPIO DE PUEBLO BELLO",
+      "total_2026_count": 181,
+      "sources": {
+        "convocado": 181
+      },
+      "classification": "secop1_only",
+      "canonical_name": "CESAR - ALCALDiA MUNICIPIO DE PUEBLO BELLO",
+      "canonical_nit": null,
+      "canonical_id": "municipio_pueblo_bello_cesar",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE PUEBLO BELLO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE PUEBLO BELLO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE PUEBLO BELLO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "PUEBLO BELLO CESAR",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "ATLaNTICO - ALCALDiA MUNICIPIO DE SANTA LUCIA",
+      "secop1_normalized": "ATLANTICO - ALCALDIA MUNICIPIO DE SANTA LUCIA",
+      "total_2026_count": 178,
+      "sources": {
+        "convocado": 178
+      },
+      "classification": "secop1_only",
+      "canonical_name": "ATLaNTICO - ALCALDiA MUNICIPIO DE SANTA LUCIA",
+      "canonical_nit": null,
+      "canonical_id": "municipio_santa_lucia_atlantico",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE SANTA LUCIA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE SANTA LUCIA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE SANTA LUCIA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "SANTA LUCIA ATLANTICO",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "MAGDALENA - ALCALDiA MUNICIPIO DE SAN SEBASTIaN DE BUENAVISTA",
+      "secop1_normalized": "MAGDALENA - ALCALDIA MUNICIPIO DE SAN SEBASTIAN DE BUENAVISTA",
+      "total_2026_count": 174,
+      "sources": {
+        "convocado": 174
+      },
+      "classification": "needs_review",
+      "canonical_name": null,
+      "canonical_nit": null,
+      "canonical_id": "municipio_san_sebastian_de_buenavista_magdalena",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE SAN SEBASTIAN DE BUENAVISTA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE SAN SEBASTIAN DE BUENAVISTA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE SAN SEBASTIAN DE BUENAVISTA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "SAN SEBASTIAN DE BUENAVISTA MAGDALENA",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": false,
+      "exclusion_reason": "needs_review: requiere verificación manual"
+    },
+    {
+      "secop1_name": "NARIÑO - ALCALDiA MUNICIPIO DE ROBERTO PAYaN",
+      "secop1_normalized": "NARINO - ALCALDIA MUNICIPIO DE ROBERTO PAYAN",
+      "total_2026_count": 169,
+      "sources": {
+        "convocado": 169
+      },
+      "classification": "secop1_only",
+      "canonical_name": "NARIÑO - ALCALDiA MUNICIPIO DE ROBERTO PAYaN",
+      "canonical_nit": null,
+      "canonical_id": "municipio_roberto_payan_narino",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE ROBERTO PAYAN",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE ROBERTO PAYAN",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE ROBERTO PAYAN",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ROBERTO PAYAN NARINO",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "CHOCo - ALCALDiA MUNICIPIO DE CONDOTO",
+      "secop1_normalized": "CHOCO - ALCALDIA MUNICIPIO DE CONDOTO",
+      "total_2026_count": 169,
+      "sources": {
+        "convocado": 169
+      },
+      "classification": "secop1_only",
+      "canonical_name": "CHOCo - ALCALDiA MUNICIPIO DE CONDOTO",
+      "canonical_nit": null,
+      "canonical_id": "municipio_condoto_choco",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE CONDOTO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE CONDOTO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "CONDOTO CHOCO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE CONDOTO",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "CHOCo - ALCALDiA MUNICIPIO DE LLORO",
+      "secop1_normalized": "CHOCO - ALCALDIA MUNICIPIO DE LLORO",
+      "total_2026_count": 164,
+      "sources": {
+        "convocado": 164
+      },
+      "classification": "secop1_only",
+      "canonical_name": "CHOCo - ALCALDiA MUNICIPIO DE LLORO",
+      "canonical_nit": null,
+      "canonical_id": "municipio_lloro_choco",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE LLORO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE LLORO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "LLORO CHOCO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE LLORO",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "ANTIOQUIA - E.S.E. HOSPITAL LA MISERICORDIA - NECHi",
+      "secop1_normalized": "ANTIOQUIA - E.S.E. HOSPITAL LA MISERICORDIA - NECHI",
+      "total_2026_count": 160,
+      "sources": {
+        "convocado": 160
+      },
+      "classification": "needs_review",
+      "canonical_name": null,
+      "canonical_nit": null,
+      "canonical_id": "ese_ese_hospital_la_misericordia_nechi_antioquia",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ANTIOQUIA - E.S.E. HOSPITAL LA MISERICORDIA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "E.S.E. HOSPITAL LA MISERICORDIA - NECHI",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": false,
+      "exclusion_reason": "needs_review: requiere verificación manual"
+    },
+    {
+      "secop1_name": "BOGOTA  - MAPFRE COLOMBIA VIDA SEGUROS S.A.",
+      "secop1_normalized": "BOGOTA  - MAPFRE COLOMBIA VIDA SEGUROS S.A.",
+      "total_2026_count": 160,
+      "sources": {
+        "convocado": 160
+      },
+      "classification": "secop1_only",
+      "canonical_name": "BOGOTA  - MAPFRE COLOMBIA VIDA SEGUROS S.A.",
+      "canonical_nit": null,
+      "canonical_id": "bogota_mapfre_colombia_vida_seguros_sa",
+      "source_aliases": [],
+      "user_aliases": [],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "HUILA - ALCALDiA MUNICIPIO DE VILLAVIEJA",
+      "secop1_normalized": "HUILA - ALCALDIA MUNICIPIO DE VILLAVIEJA",
+      "total_2026_count": 157,
+      "sources": {
+        "convocado": 157
+      },
+      "classification": "secop1_only",
+      "canonical_name": "HUILA - ALCALDiA MUNICIPIO DE VILLAVIEJA",
+      "canonical_nit": null,
+      "canonical_id": "municipio_villavieja_huila",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE VILLAVIEJA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE VILLAVIEJA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE VILLAVIEJA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "VILLAVIEJA HUILA",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "NARIÑO - ALCALDiA MUNICIPIO DE OLAYA HERRERA",
+      "secop1_normalized": "NARINO - ALCALDIA MUNICIPIO DE OLAYA HERRERA",
+      "total_2026_count": 155,
+      "sources": {
+        "convocado": 155
+      },
+      "classification": "secop1_only",
+      "canonical_name": "NARIÑO - ALCALDiA MUNICIPIO DE OLAYA HERRERA",
+      "canonical_nit": null,
+      "canonical_id": "municipio_olaya_herrera_narino",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE OLAYA HERRERA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE OLAYA HERRERA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE OLAYA HERRERA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "OLAYA HERRERA NARINO",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "ATLaNTICO - ALCALDiA MUNICIPIO DE PONEDERA",
+      "secop1_normalized": "ATLANTICO - ALCALDIA MUNICIPIO DE PONEDERA",
+      "total_2026_count": 147,
+      "sources": {
+        "convocado": 147
+      },
+      "classification": "secop1_only",
+      "canonical_name": "ATLaNTICO - ALCALDiA MUNICIPIO DE PONEDERA",
+      "canonical_nit": null,
+      "canonical_id": "municipio_ponedera_atlantico",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE PONEDERA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE PONEDERA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE PONEDERA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "PONEDERA ATLANTICO",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "MAGDALENA - ALCALDiA MUNICIPIO DE EL BANCO",
+      "secop1_normalized": "MAGDALENA - ALCALDIA MUNICIPIO DE EL BANCO",
+      "total_2026_count": 142,
+      "sources": {
+        "convocado": 142
+      },
+      "classification": "needs_review",
+      "canonical_name": null,
+      "canonical_nit": null,
+      "canonical_id": "municipio_el_banco_magdalena",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE EL BANCO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE EL BANCO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "EL BANCO MAGDALENA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE EL BANCO",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": false,
+      "exclusion_reason": "needs_review: requiere verificación manual"
+    },
+    {
+      "secop1_name": "ATLaNTICO - ALCALDiA MUNICIPIO DE POLONUEVO",
+      "secop1_normalized": "ATLANTICO - ALCALDIA MUNICIPIO DE POLONUEVO",
+      "total_2026_count": 139,
+      "sources": {
+        "convocado": 139
+      },
+      "classification": "secop1_only",
+      "canonical_name": "ATLaNTICO - ALCALDiA MUNICIPIO DE POLONUEVO",
+      "canonical_nit": null,
+      "canonical_id": "municipio_polonuevo_atlantico",
+      "source_aliases": [],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE POLONUEVO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE POLONUEVO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE POLONUEVO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "POLONUEVO ATLANTICO",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    },
+    {
+      "secop1_name": "TOLIMA - ALCALDIA MUNICIPIO DE ATACO",
+      "secop1_normalized": "TOLIMA - ALCALDIA MUNICIPIO DE ATACO",
+      "total_2026_count": 2,
+      "sources": {
+        "f789-7hwg": 2,
+        "convocado": 1
+      },
+      "classification": "matched_existing",
+      "canonical_name": "ALCALDIA MUNICIPIO DE ATACO",
+      "canonical_nit": null,
+      "canonical_id": "municipio_ataco_tolima",
+      "source_aliases": [
+        {
+          "name": "TOLIMA - ALCALDIA MUNICIPIO DE ATACO",
+          "source": "f789-7hwg",
+          "normalization": "TOLIMA - ALCALDIA MUNICIPIO DE ATACO"
+        },
+        {
+          "name": "ALCALDIA MUNICIPIO DE ATACO",
+          "source": "heuristic",
+          "normalization": "ALCALDIA MUNICIPIO DE ATACO"
+        },
+        {
+          "name": "ALCALDIA DE ATACO",
+          "source": "heuristic",
+          "normalization": "ALCALDIA DE ATACO"
+        }
+      ],
+      "user_aliases": [
+        {
+          "alias": "ALCALDIA DE ATACO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ALCALDIA MUNICIPIO DE ATACO",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "ATACO TOLIMA",
+          "generated_by": "auto_rules_c1a1"
+        },
+        {
+          "alias": "MUNICIPIO DE ATACO",
+          "generated_by": "auto_rules_c1a1"
+        }
+      ],
+      "integration_ready": true
+    }
+  ],
+  "classifications_legend": {
+    "matched_existing": "Entity exists in SECOPPAL gazetteer (both platforms)",
+    "secop1_only": "Entity only appears in SECOP I — new to gazetteer",
+    "ambiguous": "Name could match multiple entities",
+    "bad_name": "Name is truncated or malformed in source data",
+    "needs_review": "Requires manual verification"
+  },
+  "_c1a1_changes": {
+    "added_canonical_id": true,
+    "separated_source_user_aliases": true,
+    "filtered_bad_name_and_needs_review": true,
+    "auto_generated_user_aliases": 249
+  },
+  "_stats": {
+    "total_entities": 86,
+    "integration_ready": 69,
+    "excluded_bad_name": 3,
+    "excluded_needs_review": 14
+  }
+}

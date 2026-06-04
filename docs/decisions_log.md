@@ -908,3 +908,63 @@ La conjunción debe estar dentro de una ventana de ~10 tokens del primer límite
 **Nota:** El mismo patrón puede afectar otros mapeos en `morphological_variants.py` donde la raíz es más genérica que los tokens hijos.
 
 **Prioridad:** Media — afecta precisión en queries técnicas, no es un crash.
+
+---
+
+## ADR-024: QueryPlan invariants consolidation
+
+**Fecha:** 2026-06-03
+**Estado:** Accepted
+
+**Decisión:** Consolidar las invariantes jurídicas/semánticas de contratación en
+`app/core/contract_invariants.py` y aplicarlas desde `QueryPlan` como P10-P13,
+manteniendo `QueryPlan` puro y bajo el límite G8 de 300 LOC.
+
+**Invariantes consolidadas:**
+- `firmado`/`celebrado`/`suscrito` seleccionan `dataset=contratos`, pero no son
+  valores válidos de `estado_contrato`.
+- `Firmado` y `Celebrado` se purgan como estados inválidos sin borrar estados
+  reales como `En ejecución`, `Modificado`, `Prorrogado` o `Cerrado`.
+- Intención de ofertar/presentarse fuerza búsqueda de oportunidades:
+  `dataset=procesos`, `intent_type=opportunity_search`,
+  `estado_family=oferta_abierta`.
+- `oferta_abierta` no aplica a contratos.
+- El check pasivo P13 usa `SCOPE_TOPIC_KEYS` para detectar candidatos globales
+  sin bloquear en `QueryPlan`.
+
+**Corrección de alcance INV-6:** `SCOPE_TOPIC_KEYS` y `NONEMPTY_WHERE_KEYS`
+responden preguntas distintas y se mantienen separadas:
+- `SCOPE_TOPIC_KEYS` pregunta si hay base útil para ejecutar
+  (entidad/lugar/tema/contratista). Estado y modalidad no cuentan.
+- `NONEMPTY_WHERE_KEYS` pregunta si el builder puede emitir un `WHERE` no
+  tautológico. Estado y modalidad sí cuentan porque evitan `WHERE 1=1`.
+
+Por eso `"contratos en ejecución"` puede construir SoQL con
+`estado_contrato = 'En ejecución'`, pero `execute_query` todavía pide un filtro
+de entidad, lugar, tema o contratista. Ese comportamiento queda congelado por
+test y P13 queda pasivo; activar el bloqueo en `QueryPlan` queda como plan
+futuro `QP-SAFETY-ACTIVATION`.
+
+**Guardrails agregados:**
+- `tests/test_contract_invariants.py`: unidad pura de invariantes.
+- `tests/test_invariants_characterization.py`: caracterización del pipeline
+  offline `parse -> llm_policy opcional -> compute_query_plan`.
+- `tests/test_invariants_lock.py`: falla si se reintroducen listas/frases
+  consolidadas fuera de `contract_invariants.py`.
+- `tests/test_plan_query_node.py` congela la diferencia intencional entre
+  builder anti-tautología y guard de ejecución.
+
+**Deudas conscientes descubiertas:**
+- El mapeo parser-level `firmado -> Aprobado` en `app/data/estados.py` se
+  preserva por 0 regresiones, pero no se declara verdad de dominio. Requiere
+  experimento de producto para medir cuánto oculta otros estados firmados.
+- P13 sigue pasivo porque `execute_query` ya bloquea correctamente las búsquedas
+  sin base útil. Activarlo en `QueryPlan` cambia razón/ruta/mensaje y requiere
+  prueba de equivalencia de respuesta.
+
+**Métricas al cierre:**
+- Suite: 1306 passed, 23 xfailed
+- `query_plan.py`: 275 LOC
+- `make lint-core`: limpio
+- Grep de duplicados (`_INVALID_CONTRACT_STATES`, `_CLOSED_STATES`,
+  `_BIDDER_PHRASES`, `_SUBSTANTIAL_FILTER_KEYS`): vacío

@@ -4,6 +4,7 @@ import json
 import logging
 import unicodedata
 
+from app.core.contract_invariants import FIRMADO_TOKENS, INVALID_CONTRACT_STATES
 from app.core.estado_families import CONTRACT_STATE_VALUES, LLM_ESTADO_VALUES, resolve_estado
 from app.core.opportunity_policy import enforce_bidder_opportunity_policy
 
@@ -98,22 +99,8 @@ REGEX_PRIORITY_KEYS = {"departamento", "estado", "valor_min", "valor_max", "fech
 # Timeout for DeepSeek API calls (seconds)
 LLM_TIMEOUT_SECONDS = 15
 
-_SIGNED_QUERY_TOKENS = (
-    "firmado",
-    "firmados",
-    "firmada",
-    "firmadas",
-    "suscrito",
-    "suscritos",
-    "suscrita",
-    "suscritas",
-    "celebrado",
-    "celebrados",
-    "celebrada",
-    "celebradas",
-)
+_SIGNED_QUERY_TOKENS = tuple(sorted(FIRMADO_TOKENS))
 _ESTADO_KEYS = ("estado", "estado_field", "estado_contrato", "estado_contrato_adicional")
-_INVALID_CONTRACT_STATES = {"Firmado", "Celebrado"}
 
 
 def _normalize(text: str) -> str:
@@ -126,6 +113,10 @@ def _is_signed_query(user_query: str) -> bool:
     return any(token in normalized for token in _SIGNED_QUERY_TOKENS)
 
 
+def _is_invalid_contract_state(value: object) -> bool:
+    return _normalize(str(value)) in INVALID_CONTRACT_STATES
+
+
 def _drop_estado_keys(params: dict) -> None:
     for key in _ESTADO_KEYS:
         params.pop(key, None)
@@ -134,13 +125,13 @@ def _drop_estado_keys(params: dict) -> None:
 def _drop_invalid_contract_states(params: dict) -> None:
     estado_contrato = params.get("estado_contrato")
     if isinstance(estado_contrato, list):
-        cleaned = [state for state in estado_contrato if state not in _INVALID_CONTRACT_STATES]
+        cleaned = [state for state in estado_contrato if not _is_invalid_contract_state(state)]
         if cleaned:
             params["estado_contrato"] = cleaned
         else:
             params.pop("estado_contrato", None)
 
-    if params.get("estado") in _INVALID_CONTRACT_STATES:
+    if params.get("estado") and _is_invalid_contract_state(params["estado"]):
         params.pop("estado", None)
         if params.get("estado_field") == "estado_contrato":
             params.pop("estado_field", None)

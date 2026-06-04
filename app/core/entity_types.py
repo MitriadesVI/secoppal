@@ -16,11 +16,11 @@ from typing import Callable
 # to try against the gazetteer, in priority order.
 ENTITY_REWRITES: list[tuple[re.Pattern, Callable]] = [
     # ── Alcaldía variants ──
-    # Stop capture at: para|donde|por\b|con\b|en\b|del\b|de\b|$
+    # Stop capture at: para|donde|por\b|con\b|en\b|del\b|de\b|sobre\b|$
     # Use \b to prevent "concordia" matching "con"
     (
         re.compile(
-            r"\balcald[ií]a\s+(?:municipal\s+)?de\s+(.+?)(?=\s*(?:para|donde|por\b|con\b|en\b|del\b|de\b|$))",
+            r"\balcald[ií]a\s+(?:municipal\s+)?de\s+(.+?)(?=\s*(?:para|donde|por\b|con\b|en\b|del\b|de\b|sobre\b|$))",
             re.IGNORECASE,
         ),
         lambda m: [
@@ -32,7 +32,7 @@ ENTITY_REWRITES: list[tuple[re.Pattern, Callable]] = [
     # ── Gobernación variants ──
     (
         re.compile(
-            r"\bgobernaci[oó]n\s+de\s+(.+?)(?=\s*(?:para|donde|por\b|con\b|en\b|del\b|de\b|$))",
+            r"\bgobernaci[oó]n\s+de\s+(.+?)(?=\s*(?:para|donde|por\b|con\b|en\b|del\b|de\b|sobre\b|$))",
             re.IGNORECASE,
         ),
         lambda m: [
@@ -43,7 +43,7 @@ ENTITY_REWRITES: list[tuple[re.Pattern, Callable]] = [
     # ── ESE / Empresa Social del Estado ──
     (
         re.compile(
-            r"\bese\s+(.+?)(?=\s*(?:para|donde|por\b|con\b|en\b|del\b|de\b|$))",
+            r"\bese\s+(.+?)(?=\s*(?:para|donde|por\b|con\b|en\b|del\b|de\b|sobre\b|$))",
             re.IGNORECASE,
         ),
         lambda m: [
@@ -54,7 +54,7 @@ ENTITY_REWRITES: list[tuple[re.Pattern, Callable]] = [
     # ── Hospital variants ──
     (
         re.compile(
-            r"\b(?:el\s+)?hospital\s+(.+?)(?=\s*(?:para|donde|por\b|con\b|en\b|del\b|de\b|$))",
+            r"\b(?:el\s+)?hospital\s+(.+?)(?=\s*(?:para|donde|por\b|con\b|en\b|del\b|de\b|sobre\b|$))",
             re.IGNORECASE,
         ),
         lambda m: [
@@ -65,7 +65,7 @@ ENTITY_REWRITES: list[tuple[re.Pattern, Callable]] = [
     # ── Universidad ──
     (
         re.compile(
-            r"\b(?:la\s+)?universidad\s+(.+?)(?=\s*(?:para|donde|por\b|con\b|en\b|del\b|de\b|$))",
+            r"\b(?:la\s+)?universidad\s+(.+?)(?=\s*(?:para|donde|por\b|con\b|en\b|del\b|de\b|sobre\b|$))",
             re.IGNORECASE,
         ),
         lambda m: [
@@ -75,7 +75,7 @@ ENTITY_REWRITES: list[tuple[re.Pattern, Callable]] = [
     # ── Municipio de X → keep as-is but also try Alcaldía ──
     (
         re.compile(
-            r"\bmunicipio\s+de\s+(.+?)(?=\s*(?:para|donde|por\b|con\b|en\b|del\b|de\b|$))",
+            r"\bmunicipio\s+de\s+(.+?)(?=\s*(?:para|donde|por\b|con\b|en\b|del\b|de\b|sobre\b|$))",
             re.IGNORECASE,
         ),
         lambda m: [

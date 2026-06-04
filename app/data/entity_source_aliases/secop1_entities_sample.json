@@ -1,0 +1,834 @@
+{
+  "total_entities": 86,
+  "classifications": {
+    "matched_existing": 28,
+    "needs_review": 14,
+    "secop1_only": 41,
+    "bad_name": 3
+  },
+  "entities": [
+    {
+      "name": "NARIÑO - ALCALDiA MUNICIPIO DE SAN ANDReS DE TUMACO",
+      "count": 7433,
+      "sources": {
+        "f789-7hwg": 3911,
+        "rpmr-utcd": 851,
+        "convocado": 2671
+      },
+      "classification": "matched_existing",
+      "canonical_id": "municipio_san_andres_de_tumaco_narino"
+    },
+    {
+      "name": "SANTANDER - CAMARA DE COMERCIO DE BUCARAMANGA",
+      "count": 2670,
+      "sources": {
+        "f789-7hwg": 1360,
+        "rpmr-utcd": 1310
+      },
+      "classification": "matched_existing",
+      "canonical_id": "camara_comercio_bucaramanga_santander"
+    },
+    {
+      "name": "SAN ANDReS; PROVIDENCIA Y SANTA CATALINA - ALCALDiA MUN",
+      "count": 2592,
+      "sources": {
+        "f789-7hwg": 2592
+      },
+      "classification": "needs_review",
+      "canonical_id": "san_andres_providencia_y_santa_catalina_alcaldia_mun"
+    },
+    {
+      "name": "RISARALDA - CaMARA DE COMERCIO DE PEREIRA",
+      "count": 2438,
+      "sources": {
+        "f789-7hwg": 1245,
+        "rpmr-utcd": 1193
+      },
+      "classification": "matched_existing",
+      "canonical_id": "camara_comercio_pereira_risaralda"
+    },
+    {
+      "name": "NARIÑO - E.S.E. CENTRO HOSPITAL DIVINO NIÑO - TUMACO",
+      "count": 2010,
+      "sources": {
+        "f789-7hwg": 1005,
+        "convocado": 1005
+      },
+      "classification": "needs_review",
+      "canonical_id": "ese_ese_centro_hospital_divino_nino_tumaco_narino"
+    },
+    {
+      "name": "GUAINiA - GOBERNACIoN",
+      "count": 1760,
+      "sources": {
+        "f789-7hwg": 917,
+        "rpmr-utcd": 843
+      },
+      "classification": "secop1_only",
+      "canonical_id": "gobernacion_guainia"
+    },
+    {
+      "name": "SAN ANDRÉS PROVIDENCIA Y SANTA CATALINA - ALCALDÍA MUNI",
+      "count": 1606,
+      "sources": {
+        "rpmr-utcd": 1606
+      },
+      "classification": "bad_name",
+      "canonical_id": "san_andres_providencia_y_santa_catalina_alcaldia_muni"
+    },
+    {
+      "name": "GUAVIARE - GOBERNACIoN",
+      "count": 1405,
+      "sources": {
+        "f789-7hwg": 763,
+        "rpmr-utcd": 642
+      },
+      "classification": "secop1_only",
+      "canonical_id": "gobernacion_guaviare"
+    },
+    {
+      "name": "VAUPeS - GOBERNACIoN",
+      "count": 1342,
+      "sources": {
+        "f789-7hwg": 744,
+        "rpmr-utcd": 598
+      },
+      "classification": "secop1_only",
+      "canonical_id": "gobernacion_vaupes"
+    },
+    {
+      "name": "ATLaNTICO - ALCALDiA MUNICIPIO DE SABANALARGA",
+      "count": 1240,
+      "sources": {
+        "f789-7hwg": 623,
+        "convocado": 617
+      },
+      "classification": "matched_existing",
+      "canonical_id": "municipio_sabanalarga_atlantico"
+    },
+    {
+      "name": "GUAVIARE - E.S.E. HOSPITAL SAN JOSe DEL GUAVIARE",
+      "count": 1222,
+      "sources": {
+        "f789-7hwg": 614,
+        "rpmr-utcd": 608
+      },
+      "classification": "secop1_only",
+      "canonical_id": "ese_ese_hospital_san_jose_del_guaviare_guaviare"
+    },
+    {
+      "name": "VICHADA - GOBERNACIoN",
+      "count": 1176,
+      "sources": {
+        "f789-7hwg": 633,
+        "rpmr-utcd": 543
+      },
+      "classification": "secop1_only",
+      "canonical_id": "gobernacion_vichada"
+    },
+    {
+      "name": "ANTIOQUIA - TECNOLoGICO DE ANTIOQUIA - MEDELLiN",
+      "count": 1171,
+      "sources": {
+        "f789-7hwg": 608,
+        "rpmr-utcd": 563
+      },
+      "classification": "matched_existing",
+      "canonical_id": "antioquia_tecnologico_de_antioquia_medellin"
+    },
+    {
+      "name": "ATLaNTICO - CaMARA DE COMERCIO DE BARRANQUILLA",
+      "count": 903,
+      "sources": {
+        "f789-7hwg": 471,
+        "rpmr-utcd": 432
+      },
+      "classification": "matched_existing",
+      "canonical_id": "camara_comercio_barranquilla_atlantico"
+    },
+    {
+      "name": "CoRDOBA - CaMARA DE COMERCIO DE MONTERiA",
+      "count": 871,
+      "sources": {
+        "f789-7hwg": 507,
+        "convocado": 364
+      },
+      "classification": "matched_existing",
+      "canonical_id": "camara_comercio_monteria_cordoba"
+    },
+    {
+      "name": "ASOCIACIoN HORTIFRUTiCOLA DE COLOMBIA - ASOHOFRUCOL",
+      "count": 841,
+      "sources": {
+        "f789-7hwg": 427,
+        "rpmr-utcd": 414
+      },
+      "classification": "secop1_only",
+      "canonical_id": "asociacion_hortifruticola_de_colombia_asohofrucol"
+    },
+    {
+      "name": "ESCUELA NACIONAL DEL DEPORTE",
+      "count": 753,
+      "sources": {
+        "f789-7hwg": 391,
+        "rpmr-utcd": 362
+      },
+      "classification": "matched_existing",
+      "canonical_id": "escuela_nacional_del_deporte"
+    },
+    {
+      "name": "NARIÑO - ALCALDiA MUNICIPIO DE EL CHARCO",
+      "count": 745,
+      "sources": {
+        "f789-7hwg": 418,
+        "rpmr-utcd": 327
+      },
+      "classification": "secop1_only",
+      "canonical_id": "municipio_el_charco_narino"
+    },
+    {
+      "name": "VICHADA - ALCALDiA MUNICIPIO DE PUERTO CARREÑO",
+      "count": 744,
+      "sources": {
+        "f789-7hwg": 409,
+        "convocado": 335
+      },
+      "classification": "secop1_only",
+      "canonical_id": "municipio_puerto_carreno_vichada"
+    },
+    {
+      "name": "BOLiVAR - CaMARA DE COMERCIO DE CARTAGENA",
+      "count": 721,
+      "sources": {
+        "f789-7hwg": 369,
+        "rpmr-utcd": 352
+      },
+      "classification": "matched_existing",
+      "canonical_id": "camara_comercio_cartagena_bolivar"
+    },
+    {
+      "name": "NORTE DE SANTANDER - ALCALDiA MUNICIPIO DE EL CARMEN",
+      "count": 720,
+      "sources": {
+        "f789-7hwg": 405,
+        "rpmr-utcd": 315
+      },
+      "classification": "matched_existing",
+      "canonical_id": "municipio_el_carmen_norte_de_santander"
+    },
+    {
+      "name": "NARIÑO - ALCALDiA MUNICIPIO DE BARBACOAS",
+      "count": 718,
+      "sources": {
+        "f789-7hwg": 385,
+        "rpmr-utcd": 333
+      },
+      "classification": "secop1_only",
+      "canonical_id": "municipio_barbacoas_narino"
+    },
+    {
+      "name": "HUILA - ALCALDiA MUNICIPIO DE AIPE",
+      "count": 702,
+      "sources": {
+        "f789-7hwg": 395,
+        "rpmr-utcd": 307
+      },
+      "classification": "matched_existing",
+      "canonical_id": "municipio_aipe_huila"
+    },
+    {
+      "name": "VALLE DEL CAUCA - CAMARA DE COMERCIO DE TULUA",
+      "count": 691,
+      "sources": {
+        "f789-7hwg": 387,
+        "rpmr-utcd": 304
+      },
+      "classification": "matched_existing",
+      "canonical_id": "camara_comercio_tulua_valle_del_cauca"
+    },
+    {
+      "name": "PUTUMAYO - CaMARA DE COMERCIO DEL PUTUMAYO",
+      "count": 676,
+      "sources": {
+        "f789-7hwg": 348,
+        "rpmr-utcd": 328
+      },
+      "classification": "matched_existing",
+      "canonical_id": "camara_comercio_del_putumayo_putumayo"
+    },
+    {
+      "name": "ANTIOQUIA - CaMARA DE COMERCIO DE MEDELLiN",
+      "count": 675,
+      "sources": {
+        "f789-7hwg": 349,
+        "rpmr-utcd": 326
+      },
+      "classification": "matched_existing",
+      "canonical_id": "camara_comercio_medellin_antioquia"
+    },
+    {
+      "name": "CoRDOBA - ALCALDiA MUNICIPIO DE CIENAGA DE ORO",
+      "count": 668,
+      "sources": {
+        "f789-7hwg": 348,
+        "convocado": 320
+      },
+      "classification": "secop1_only",
+      "canonical_id": "municipio_cienaga_de_oro_cordoba"
+    },
+    {
+      "name": "NORTE DE SANTANDER - CAMARA DE COMERCIO DE CUCUTA",
+      "count": 642,
+      "sources": {
+        "f789-7hwg": 336,
+        "rpmr-utcd": 306
+      },
+      "classification": "matched_existing",
+      "canonical_id": "camara_comercio_cucuta_norte_de_santander"
+    },
+    {
+      "name": "HUILA - E.S.E. HOSPITAL DEPARTAMENTAL SAN ANTONIO DE PI",
+      "count": 639,
+      "sources": {
+        "f789-7hwg": 345,
+        "rpmr-utcd": 294
+      },
+      "classification": "matched_existing",
+      "canonical_id": "ese_ese_hospital_departamental_san_antonio_de_pi_huila"
+    },
+    {
+      "name": "META - ALCALDiA MUNICIPIO DE GRANADA",
+      "count": 627,
+      "sources": {
+        "f789-7hwg": 326,
+        "rpmr-utcd": 301
+      },
+      "classification": "matched_existing",
+      "canonical_id": "municipio_granada_meta"
+    },
+    {
+      "name": "VALLE DEL CAUCA - CaMARA DE COMERCIO DE CALI",
+      "count": 594,
+      "sources": {
+        "f789-7hwg": 303,
+        "rpmr-utcd": 291
+      },
+      "classification": "matched_existing",
+      "canonical_id": "camara_comercio_cali_valle_del_cauca"
+    },
+    {
+      "name": "NARIÑO - ALCALDiA MUNICIPIO DE FRANCISCO PIZARRO",
+      "count": 583,
+      "sources": {
+        "f789-7hwg": 308,
+        "rpmr-utcd": 275
+      },
+      "classification": "secop1_only",
+      "canonical_id": "municipio_francisco_pizarro_narino"
+    },
+    {
+      "name": "NARIÑO - E.S.E. CENTRO DE SALUD SAN JUAN BAUTISTA - TAM",
+      "count": 571,
+      "sources": {
+        "f789-7hwg": 360,
+        "rpmr-utcd": 211
+      },
+      "classification": "needs_review",
+      "canonical_id": "ese_ese_centro_de_salud_san_juan_bautista_tam_narino"
+    },
+    {
+      "name": "CASANARE - CAMARA DE COMERCIO",
+      "count": 560,
+      "sources": {
+        "f789-7hwg": 286,
+        "rpmr-utcd": 274
+      },
+      "classification": "matched_existing",
+      "canonical_id": "camara_comercio_camara_de_comercio_casanare"
+    },
+    {
+      "name": "CAUCA - CaMARA DE COMERCIO DEL CAUCA",
+      "count": 551,
+      "sources": {
+        "f789-7hwg": 347,
+        "rpmr-utcd": 204
+      },
+      "classification": "matched_existing",
+      "canonical_id": "camara_comercio_del_cauca_cauca"
+    },
+    {
+      "name": "BOYACa - CAMARA DE COMERCIO - DUITAMA",
+      "count": 551,
+      "sources": {
+        "f789-7hwg": 287,
+        "rpmr-utcd": 264
+      },
+      "classification": "matched_existing",
+      "canonical_id": "camara_comercio_duitama_boyaca"
+    },
+    {
+      "name": "NARIÑO - ALCALDiA MUNICIPIO DE LA TOLA",
+      "count": 534,
+      "sources": {
+        "f789-7hwg": 292,
+        "rpmr-utcd": 242
+      },
+      "classification": "secop1_only",
+      "canonical_id": "municipio_la_tola_narino"
+    },
+    {
+      "name": "GUAVIARE - ALCALDiA MUNICIPIO DE SAN JOSe DEL GUAVIARE",
+      "count": 529,
+      "sources": {
+        "f789-7hwg": 280,
+        "rpmr-utcd": 249
+      },
+      "classification": "secop1_only",
+      "canonical_id": "municipio_san_jose_del_guaviare_guaviare"
+    },
+    {
+      "name": "BOLiVAR - ALCALDiA MUNICIPIO DE CANTAGALLO",
+      "count": 526,
+      "sources": {
+        "f789-7hwg": 326,
+        "rpmr-utcd": 200
+      },
+      "classification": "secop1_only",
+      "canonical_id": "municipio_cantagallo_bolivar"
+    },
+    {
+      "name": "NARIÑO - ALCALDiA MUNICIPIO DE RICAURTE",
+      "count": 521,
+      "sources": {
+        "f789-7hwg": 293,
+        "rpmr-utcd": 228
+      },
+      "classification": "secop1_only",
+      "canonical_id": "municipio_ricaurte_narino"
+    },
+    {
+      "name": "TOLIMA - ALCALDiA MUNICIPIO DE COYAIMA",
+      "count": 501,
+      "sources": {
+        "f789-7hwg": 277,
+        "rpmr-utcd": 224
+      },
+      "classification": "matched_existing",
+      "canonical_id": "municipio_coyaima_tolima"
+    },
+    {
+      "name": "ANTIOQUIA - CORPORACIoN HOSPITAL INFANTIL CONCEJO DE ME",
+      "count": 382,
+      "sources": {
+        "f789-7hwg": 382
+      },
+      "classification": "bad_name",
+      "canonical_id": "ese_corporacion_hospital_infantil_concejo_de_me_antioquia"
+    },
+    {
+      "name": "FIDUCIARIA COLOMBIANA DE COMERCIO EXTERIOR S.A",
+      "count": 378,
+      "sources": {
+        "f789-7hwg": 378
+      },
+      "classification": "matched_existing",
+      "canonical_id": "fiduciaria_colombiana_de_comercio_exterior_sa"
+    },
+    {
+      "name": "MAGDALENA - INSTITUCION UNIVERSITARIA DEL CARIBE",
+      "count": 374,
+      "sources": {
+        "f789-7hwg": 374
+      },
+      "classification": "matched_existing",
+      "canonical_id": "magdalena_institucion_universitaria_del_caribe"
+    },
+    {
+      "name": "META - ALCALDiA MUNICIPIO DE SAN CARLOS DE GUAROA",
+      "count": 360,
+      "sources": {
+        "f789-7hwg": 360
+      },
+      "classification": "secop1_only",
+      "canonical_id": "municipio_san_carlos_de_guaroa_meta"
+    },
+    {
+      "name": "GUAVIARE - E.S.E. RED DE SERVICIOS DE SALUD DE PRIMER N",
+      "count": 341,
+      "sources": {
+        "f789-7hwg": 341
+      },
+      "classification": "secop1_only",
+      "canonical_id": "ese_ese_red_de_servicios_de_salud_de_primer_n_guaviare"
+    },
+    {
+      "name": "GUAVIARE - E.S.E. RED DE SERVICIOS DE SALUD DE PRIMER NIVEL",
+      "count": 341,
+      "sources": {
+        "convocado": 341
+      },
+      "classification": "secop1_only",
+      "canonical_id": "ese_ese_red_de_servicios_de_salud_de_primer_nivel_guaviare"
+    },
+    {
+      "name": "TOLIMA - ALCALDiA MUNICIPIO DE CARMEN DE APICALa",
+      "count": 334,
+      "sources": {
+        "f789-7hwg": 334
+      },
+      "classification": "secop1_only",
+      "canonical_id": "municipio_carmen_de_apicala_tolima"
+    },
+    {
+      "name": "HUILA - E.S.E. HOSPITAL SAN FRANCISCO JAVIER - ACEVEDO",
+      "count": 304,
+      "sources": {
+        "f789-7hwg": 304
+      },
+      "classification": "needs_review",
+      "canonical_id": "ese_ese_hospital_san_francisco_javier_acevedo_huila"
+    },
+    {
+      "name": "CAUCA - ALCALDiA MUNICIPIO DE LOPEZ DE MICAY",
+      "count": 293,
+      "sources": {
+        "f789-7hwg": 293
+      },
+      "classification": "secop1_only",
+      "canonical_id": "municipio_lopez_de_micay_cauca"
+    },
+    {
+      "name": "BOLiVAR - E.S.E. HOSPITAL LOCAL SAN SEBASTIaN DE MORALE",
+      "count": 282,
+      "sources": {
+        "f789-7hwg": 282
+      },
+      "classification": "needs_review",
+      "canonical_id": "ese_ese_hospital_local_san_sebastian_de_morale_bolivar"
+    },
+    {
+      "name": "MAGDALENA - CAMARA DE COMERCIO DE SANTA MARTA ¿ SANTA M",
+      "count": 280,
+      "sources": {
+        "f789-7hwg": 280
+      },
+      "classification": "bad_name",
+      "canonical_id": "camara_comercio_santa_marta_santa_m_magdalena"
+    },
+    {
+      "name": "MAGDALENA - CAMARA DE COMERCIO DE SANTA MARTA",
+      "count": 267,
+      "sources": {
+        "rpmr-utcd": 267
+      },
+      "classification": "matched_existing",
+      "canonical_id": "camara_comercio_santa_marta_magdalena"
+    },
+    {
+      "name": "NARIÑO - CENTRO DE SALUD SEÑOR DEL MAR - FRANCISCO PIZARRO",
+      "count": 257,
+      "sources": {
+        "convocado": 257
+      },
+      "classification": "secop1_only",
+      "canonical_id": "narino_centro_de_salud_senor_del_mar_francisco_pizarro"
+    },
+    {
+      "name": "BOGOTÁ - CÁMARA DE COMERCIO DE BOGOTÁ",
+      "count": 227,
+      "sources": {
+        "rpmr-utcd": 227
+      },
+      "classification": "matched_existing",
+      "canonical_id": "camara_comercio_bogota_bogota"
+    },
+    {
+      "name": "CESAR - E.S.E. HOSPITAL SAN MARTÍN - ASTREA",
+      "count": 227,
+      "sources": {
+        "rpmr-utcd": 227
+      },
+      "classification": "secop1_only",
+      "canonical_id": "ese_ese_hospital_san_martin_astrea_cesar"
+    },
+    {
+      "name": "CÓRDOBA - ALCALDÍA MUNICIPIO DE SANTA CRUZ DE LORICA",
+      "count": 224,
+      "sources": {
+        "rpmr-utcd": 224
+      },
+      "classification": "secop1_only",
+      "canonical_id": "municipio_santa_cruz_de_lorica_cordoba"
+    },
+    {
+      "name": "NARIÑO - ALCALDÍA MUNICIPIO DE TANGUA",
+      "count": 222,
+      "sources": {
+        "rpmr-utcd": 222
+      },
+      "classification": "secop1_only",
+      "canonical_id": "municipio_tangua_narino"
+    },
+    {
+      "name": "CHOCo - ALCALDiA MUNICIPIO DE NOVITA",
+      "count": 220,
+      "sources": {
+        "convocado": 220
+      },
+      "classification": "secop1_only",
+      "canonical_id": "municipio_novita_choco"
+    },
+    {
+      "name": "CESAR - ALCALDÍA MUNICIPIO DE CHIRIGUANÁ",
+      "count": 219,
+      "sources": {
+        "rpmr-utcd": 219
+      },
+      "classification": "needs_review",
+      "canonical_id": "municipio_chiriguana_cesar"
+    },
+    {
+      "name": "HUILA - CAMARA DE COMERCIO DE NEIVA",
+      "count": 218,
+      "sources": {
+        "rpmr-utcd": 218
+      },
+      "classification": "matched_existing",
+      "canonical_id": "camara_comercio_neiva_huila"
+    },
+    {
+      "name": "BOLiVAR - EMPRESA SOCIAL DEL ESTADO HOSPITAL LOCAL SAN PABLO",
+      "count": 218,
+      "sources": {
+        "convocado": 218
+      },
+      "classification": "needs_review",
+      "canonical_id": "ese_empresa_social_del_estado_hospital_local_san_pablo_bolivar"
+    },
+    {
+      "name": "CAUCA - ALCALDÍA MUNICIPIO DE VILLA RICA",
+      "count": 213,
+      "sources": {
+        "rpmr-utcd": 213
+      },
+      "classification": "needs_review",
+      "canonical_id": "municipio_villa_rica_cauca"
+    },
+    {
+      "name": "CAUCA - ALCALDÍA MUNICIPIO DE GUACHENÉ",
+      "count": 211,
+      "sources": {
+        "rpmr-utcd": 211
+      },
+      "classification": "needs_review",
+      "canonical_id": "municipio_guachene_cauca"
+    },
+    {
+      "name": "CÓRDOBA - ALCALDÍA MUNICIPIO DE SAHAGÚN",
+      "count": 210,
+      "sources": {
+        "rpmr-utcd": 210
+      },
+      "classification": "needs_review",
+      "canonical_id": "municipio_sahagun_cordoba"
+    },
+    {
+      "name": "NORTE DE SANTANDER - ALCALDÍA MUNICIPIO DE TIBÚ",
+      "count": 209,
+      "sources": {
+        "rpmr-utcd": 209
+      },
+      "classification": "needs_review",
+      "canonical_id": "municipio_tibu_norte_de_santander"
+    },
+    {
+      "name": "META - ALCALDÍA MUNICIPIO DE CABUYARO",
+      "count": 209,
+      "sources": {
+        "rpmr-utcd": 209
+      },
+      "classification": "secop1_only",
+      "canonical_id": "municipio_cabuyaro_meta"
+    },
+    {
+      "name": "MAGDALENA - ALCALDiA MUNICIPIO DE PIJINO DEL CARMEN",
+      "count": 204,
+      "sources": {
+        "convocado": 204
+      },
+      "classification": "secop1_only",
+      "canonical_id": "municipio_pijino_del_carmen_magdalena"
+    },
+    {
+      "name": "CHOCo - ALCALDiA MUNICIPIO DE BOJAYa - BELLAVISTA",
+      "count": 204,
+      "sources": {
+        "convocado": 204
+      },
+      "classification": "secop1_only",
+      "canonical_id": "municipio_bojaya_bellavista_choco"
+    },
+    {
+      "name": "RISARALDA - ALCALDÍA MUNICIPIO DE PUEBLO RICO",
+      "count": 202,
+      "sources": {
+        "rpmr-utcd": 202
+      },
+      "classification": "secop1_only",
+      "canonical_id": "municipio_pueblo_rico_risaralda"
+    },
+    {
+      "name": "CORPOCHIVOR - CORPORACIÓN AUTÓNOMA REGIONAL DE CHIVOR",
+      "count": 192,
+      "sources": {
+        "rpmr-utcd": 192
+      },
+      "classification": "secop1_only",
+      "canonical_id": "corpochivor_corporacion_autonoma_regional_de_chivor"
+    },
+    {
+      "name": "NORTE DE SANTANDER - ALCALDÍA MUNICIPIO DE CUCUTILLA",
+      "count": 191,
+      "sources": {
+        "rpmr-utcd": 191
+      },
+      "classification": "secop1_only",
+      "canonical_id": "municipio_cucutilla_norte_de_santander"
+    },
+    {
+      "name": "CESAR - ALCALDiA MUNICIPIO DE PUEBLO BELLO",
+      "count": 181,
+      "sources": {
+        "convocado": 181
+      },
+      "classification": "secop1_only",
+      "canonical_id": "municipio_pueblo_bello_cesar"
+    },
+    {
+      "name": "ATLaNTICO - ALCALDiA MUNICIPIO DE SANTA LUCIA",
+      "count": 178,
+      "sources": {
+        "convocado": 178
+      },
+      "classification": "secop1_only",
+      "canonical_id": "municipio_santa_lucia_atlantico"
+    },
+    {
+      "name": "MAGDALENA - ALCALDiA MUNICIPIO DE SAN SEBASTIaN DE BUENAVISTA",
+      "count": 174,
+      "sources": {
+        "convocado": 174
+      },
+      "classification": "needs_review",
+      "canonical_id": "municipio_san_sebastian_de_buenavista_magdalena"
+    },
+    {
+      "name": "NARIÑO - ALCALDiA MUNICIPIO DE ROBERTO PAYaN",
+      "count": 169,
+      "sources": {
+        "convocado": 169
+      },
+      "classification": "secop1_only",
+      "canonical_id": "municipio_roberto_payan_narino"
+    },
+    {
+      "name": "CHOCo - ALCALDiA MUNICIPIO DE CONDOTO",
+      "count": 169,
+      "sources": {
+        "convocado": 169
+      },
+      "classification": "secop1_only",
+      "canonical_id": "municipio_condoto_choco"
+    },
+    {
+      "name": "CHOCo - ALCALDiA MUNICIPIO DE LLORO",
+      "count": 164,
+      "sources": {
+        "convocado": 164
+      },
+      "classification": "secop1_only",
+      "canonical_id": "municipio_lloro_choco"
+    },
+    {
+      "name": "ANTIOQUIA - E.S.E. HOSPITAL LA MISERICORDIA - NECHi",
+      "count": 160,
+      "sources": {
+        "convocado": 160
+      },
+      "classification": "needs_review",
+      "canonical_id": "ese_ese_hospital_la_misericordia_nechi_antioquia"
+    },
+    {
+      "name": "BOGOTA  - MAPFRE COLOMBIA VIDA SEGUROS S.A.",
+      "count": 160,
+      "sources": {
+        "convocado": 160
+      },
+      "classification": "secop1_only",
+      "canonical_id": "bogota_mapfre_colombia_vida_seguros_sa"
+    },
+    {
+      "name": "HUILA - ALCALDiA MUNICIPIO DE VILLAVIEJA",
+      "count": 157,
+      "sources": {
+        "convocado": 157
+      },
+      "classification": "secop1_only",
+      "canonical_id": "municipio_villavieja_huila"
+    },
+    {
+      "name": "NARIÑO - ALCALDiA MUNICIPIO DE OLAYA HERRERA",
+      "count": 155,
+      "sources": {
+        "convocado": 155
+      },
+      "classification": "secop1_only",
+      "canonical_id": "municipio_olaya_herrera_narino"
+    },
+    {
+      "name": "ATLaNTICO - ALCALDiA MUNICIPIO DE PONEDERA",
+      "count": 147,
+      "sources": {
+        "convocado": 147
+      },
+      "classification": "secop1_only",
+      "canonical_id": "municipio_ponedera_atlantico"
+    },
+    {
+      "name": "MAGDALENA - ALCALDiA MUNICIPIO DE EL BANCO",
+      "count": 142,
+      "sources": {
+        "convocado": 142
+      },
+      "classification": "needs_review",
+      "canonical_id": "municipio_el_banco_magdalena"
+    },
+    {
+      "name": "ATLaNTICO - ALCALDiA MUNICIPIO DE POLONUEVO",
+      "count": 139,
+      "sources": {
+        "convocado": 139
+      },
+      "classification": "secop1_only",
+      "canonical_id": "municipio_polonuevo_atlantico"
+    },
+    {
+      "name": "TOLIMA - ALCALDIA MUNICIPIO DE ATACO",
+      "count": 2,
+      "sources": {
+        "f789-7hwg": 2,
+        "convocado": 1
+      },
+      "classification": "matched_existing",
+      "canonical_id": "municipio_ataco_tolima"
+    }
+  ],
+  "_includes": [
+    "top50_f789_2026",
+    "top50_rpmr_secopi_2026",
+    "top25_convocado_2026",
+    "ataco_tolima"
+  ],
+  "_ataco_tolima_case": "AMA-IMC-024-2026 — TOLIMA - ALCALDIA MUNICIPIO DE ATACO — CONVOCADO — Minima Cuantia — COP 49.000.000 — 2026-05-20",
+  "_c1a1_changes": "added canonical_id"
+}

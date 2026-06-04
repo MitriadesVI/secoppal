@@ -2,6 +2,7 @@
 
 import json
 import subprocess
+import uuid
 
 from app.config import Settings
 from app.core.orchestrator import SecopalWorkflow
@@ -50,6 +51,30 @@ def test_b3_does_not_modify_parsed_params():
     assert plan["params"].get("ciudad") == "Ipiales", (
         "B4.1 should extract Ipiales from objeto into ciudad"
     )
+
+
+def test_state_only_builds_where_but_execution_requests_scope_or_topic():
+    """Estado evita WHERE 1=1, pero no es base suficiente para ejecutar."""
+    wf = _wf()
+    wf.secop_client.query = lambda ds, soql: (_ for _ in ()).throw(
+        AssertionError("SECOP query should not run without scope/topic")
+    )
+    wf.secop_client.count = lambda ds, soql: (_ for _ in ()).throw(
+        AssertionError("SECOP count should not run without scope/topic")
+    )
+
+    result = wf.run_query(
+        "contratos en ejecución",
+        chat_id=f"test_state_only_guard_{uuid.uuid4().hex}",
+    )
+
+    assert "estado_contrato = 'En ejecución'" in result.get("soql_query", "")
+    assert result.get("needs_clarification") is True
+    assert "filtro de entidad, lugar, tema o contratista" in result.get(
+        "clarification_reason", ""
+    )
+    assert result.get("results") == []
+    assert result.get("query_plan", {}).get("risk_flags") == ["unsafe_global_candidate"]
 
 
 def test_corpus_v1_unaffected():

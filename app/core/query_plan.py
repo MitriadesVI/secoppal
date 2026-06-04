@@ -14,10 +14,19 @@ from copy import deepcopy
 from dataclasses import dataclass, field
 from datetime import date as Date
 
+from app.core.contract_invariants import (
+    apply_opportunity_invariant,
+    apply_signed_dataset_invariant,
+    enforce_oferta_abierta_not_contracts,
+    has_substantial_filter,
+)
 from app.core.dialogue_policy import classify, DialogueSignal
 
 # ── All known rules — used as default when enabled_rules is None ──────────────
-ALL_RULES = {"P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9"}
+ALL_RULES = {
+    "P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9",
+    "P10", "P11", "P12", "P13",
+}
 
 # ── Entity markers that preserve entity when present in raw_query (P9) ───────
 _ENTITY_MARKERS = (
@@ -233,6 +242,25 @@ def compute_query_plan(
                 reason="invalid_value_range",
                 signals=all_signals,
             )
+
+    # ── P10: signed dataset / invalid contract states ───────────────────
+    if "P10" in rules_to_apply:
+        working_params, flags = apply_signed_dataset_invariant(raw_query, working_params)
+        risk_flags.extend(flags)
+
+    # ── P11: opportunity invariant, idempotent with P4 ──────────────────
+    if "P11" in rules_to_apply:
+        working_params, flags = apply_opportunity_invariant(raw_query, working_params)
+        risk_flags.extend(flags)
+
+    # ── P12: oferta_abierta cannot target contracts ─────────────────────
+    if "P12" in rules_to_apply:
+        working_params, flags = enforce_oferta_abierta_not_contracts(working_params)
+        risk_flags.extend(flags)
+
+    # ── P13: passive substantial-filter risk flag ───────────────────────
+    if "P13" in rules_to_apply and not has_substantial_filter(working_params):
+        risk_flags.append("unsafe_global_candidate")
 
     # ── Default: valid query ──────────────────────────────────────────────
     if not reason_parts:

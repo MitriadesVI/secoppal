@@ -223,7 +223,7 @@ MORPHOLOGICAL_VARIANTS: dict[str, str] = {
     "informatica": "tecnologia",
     "informática": "tecnologia",
     "sistemas": "tecnologia",
-    "software": "tecnologia",
+    "software": "software",
     "computo": "tecnologia",
     "cómputo": "tecnologia",
     # agricultura (0→6 variantes)

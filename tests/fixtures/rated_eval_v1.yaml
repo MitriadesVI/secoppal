@@ -1,0 +1,666 @@
+# SECOPPAL — Eval set sobre queries REALES calificadas por el usuario.
+#
+# Fuente: data/feedback.jsonl (42 entradas con rating 👍/👎 al 2026-05-25).
+# A diferencia de query_corpus_v1.yaml (queries sintéticas), aquí cada query
+# la escribió un usuario real y la calificó. El bloque `expected` codifica el
+# comportamiento CORRECTO (autoría nuestra, leyendo el comentario), no el
+# comportamiento que se registró.
+#
+# Esquema por entrada:
+#   id               — RATED-NNN, estable.
+#   query            — texto literal del usuario.
+#   recorded_rating  — 0 (👎) / 1 (👍) que dejó el usuario. Las de 0 son
+#                      "regresiones-objetivo": recuperarlas sube la precisión.
+#   tier             — parser (offline, CI) | pipeline (red/multi-turno, --live).
+#   tags             — categoría del fallo, para precision por tag.
+#   comment          — comentario textual del usuario (trazabilidad).
+#   expected         — aserciones sobre params parseados. Directivas:
+#       <campo>: valor                  → igualdad
+#       <campo>_contains: [..]          → membresía en lista (objeto, etc.)
+#       objeto_must_not_contain: [..]   → blocklist en objeto
+#       absent: [..]                    → estas claves deben estar vacías
+#
+# Correr:  python scripts/eval_rated.py            (parser-tier)
+#          python scripts/eval_rated.py --regressions --verbose
+#          python scripts/eval_rated.py --sync      (regenerar esqueletos)
+
+queries:
+  # ── objeto: ruido / frases / pureza ──────────────────────────────────────
+  - id: RATED-000
+    query: "contratos de limpieza y destronque en 2026"
+    recorded_rating: 0
+    tier: parser
+    tags: [objeto, date]
+    comment: "objeto DESTRONQUE Y LIMPIEZA; query sin entidad explícita"
+    expected:
+      dataset: contratos
+      objeto_contains: [limpieza, destronque]
+      fecha_desde: "2026-01-01"
+      fecha_hasta: "2026-12-31"
+
+  - id: RATED-002
+    query: "convocatorias abiertas para limpiar?"
+    recorded_rating: 0
+    tier: parser
+    tags: [objeto, opportunity]
+    comment: "desorden en los tiempos; default debería ser más reciente"
+    expected:
+      dataset: procesos
+      objeto_contains: [limpieza]
+      intent_type: opportunity_search
+      estado_family: oferta_abierta
+      objeto_must_not_contain: [abiertas, convocatorias, convocatoria]
+
+  - id: RATED-003
+    query: "procesos convocatoria de MOBILIARIO DE OFICINA"
+    recorded_rating: 0
+    tier: parser
+    tags: [objeto, opportunity]
+    comment: "priorizó procesos viejos; objeto OK"
+    expected:
+      dataset: procesos
+      objeto_contains: [mobiliario, oficina]
+      objeto_must_not_contain: [convocatoria, procesos]
+      intent_type: opportunity_search
+
+  - id: RATED-004
+    query: "procesos de reparaciones convocatoria"
+    recorded_rating: 1
+    tier: parser
+    tags: [objeto, opportunity]
+    comment: "no estuvo mal, detecto objeto y orden por fecha"
+    expected:
+      dataset: procesos
+      objeto_contains: [reparacion]
+      objeto_must_not_contain: [convocatoria]
+      intent_type: opportunity_search
+
+  - id: RATED-005
+    query: "licitaciones de construccion convocadas"
+    recorded_rating: 0
+    tier: parser
+    tags: [objeto, opportunity]
+    comment: "en objeto está 'convocadas'; no detectó construcción"
+    expected:
+      dataset: procesos
+      objeto_contains: [construccion]
+      objeto_must_not_contain: [convocadas, licitaciones]
+      intent_type: opportunity_search
+
+  - id: RATED-006
+    query: "que convocatoria de alimentacion hay?"
+    recorded_rating: 1
+    tier: parser
+    tags: [objeto, opportunity]
+    expected:
+      dataset: procesos
+      objeto_contains: [alimentacion]
+      objeto_must_not_contain: [convocatoria]
+      intent_type: opportunity_search
+
+  - id: RATED-016
+    query: "alguna oferta para contratos de MANTENIMIENTO DE TRAMPAS DE GRASAS ?"
+    recorded_rating: 0
+    tier: parser
+    tags: [objeto]
+    comment: "sena atlantico tiene MC-ATL-CNCA-0023-2026; 'oferta' contamina objeto"
+    expected:
+      objeto_contains: [mantenimiento, trampas]
+      objeto_must_not_contain: [oferta, alguna]
+
+  - id: RATED-017
+    query: "holaa muestrame contratos de primera infancia de la alcaldia de barranquilla"
+    recorded_rating: 0
+    tier: parser
+    tags: [objeto, greeting, entity]
+    comment: "holaaa en objeto? que clase de idea es esa"
+    expected:
+      dataset: contratos
+      entidad_resolved: "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"
+      objeto_contains: [primera, infancia]
+      objeto_must_not_contain: [holaa, hola, muestrame]
+
+  # ── entidad / geo ────────────────────────────────────────────────────────
+  - id: RATED-007
+    query: "cuales han sido los contratos mas altos celebrados por la alcaldia de barranquilla en 2026"
+    recorded_rating: 0
+    tier: parser
+    tags: [entity, objeto, ordering]
+    comment: "creyó que objeto es 'sido'; no mostró contratos"
+    expected:
+      dataset: contratos
+      entidad_resolved: "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"
+      ordering_signal: valor_desc
+      objeto_must_not_contain: [sido, celebrados, altos, cuales]
+
+  - id: RATED-008
+    query: "contratos mas caros alcaldia bucaramanga en 2025"
+    recorded_rating: 1
+    tier: parser
+    tags: [entity, ordering, date]
+    expected:
+      dataset: contratos
+      entidad_resolved: "MUNICIPIO DE BUCARAMANGA"
+      ordering_signal: valor_desc
+      fecha_desde: "2025-01-01"
+      fecha_hasta: "2025-12-31"
+
+  - id: RATED-009
+    query: "contrato de construccion de centros de vida gobernacion atlantico"
+    recorded_rating: 0
+    tier: parser
+    tags: [entity, objeto]
+    comment: "priorizó procesos viejos (orden); parse de entidad/objeto OK"
+    expected:
+      dataset: contratos
+      entidad_resolved: "DEPARTAMENTO DEL ATLANTICO**"
+      objeto_contains: [construccion, centros]
+
+  - id: RATED-010
+    query: "contratos mas grandes gobernacion de atlantico en 2024"
+    recorded_rating: 1
+    tier: parser
+    tags: [entity, ordering, date]
+    expected:
+      dataset: contratos
+      entidad_resolved: "DEPARTAMENTO DEL ATLANTICO**"
+      ordering_signal: valor_desc
+      fecha_desde: "2024-01-01"
+      fecha_hasta: "2024-12-31"
+
+  - id: RATED-011
+    query: "contratos dotacion mas grandes de la gobernacion de atlantico"
+    recorded_rating: 0
+    tier: parser
+    tags: [entity, objeto, ordering]
+    expected:
+      dataset: contratos
+      entidad_resolved: "DEPARTAMENTO DEL ATLANTICO**"
+      objeto_contains: [dotacion]
+      ordering_signal: valor_desc
+      objeto_must_not_contain: [grandes]
+
+  - id: RATED-012
+    query: "procesos abiertos departamento del choco"
+    recorded_rating: 1
+    tier: parser
+    tags: [geo, opportunity]
+    expected:
+      dataset: procesos
+      departamento_resolved: "Chocó"
+      intent_type: opportunity_search
+      estado_family: oferta_abierta
+
+  - id: RATED-040
+    query: "procesos de alcaldia de teusaquillo sobre vias"
+    recorded_rating: 0
+    tier: parser
+    tags: [entity, objeto]
+    comment: "no tiene la entidad; además 'vias' se perdió"
+    expected:
+      dataset: procesos
+      objeto_contains: [vias]
+
+  - id: RATED-041
+    query: "buscar procesos de vias de  ALCALDIA LOCAL DE TEUSAQUILLO (oficial) en 2026?"
+    recorded_rating: 0
+    tier: parser
+    tags: [entity, objeto]
+    comment: "incorrectooooo; '(oficial)' se cuela en objeto"
+    expected:
+      dataset: procesos
+      objeto_contains: [vias]
+      objeto_must_not_contain: [oficial]
+      fecha_desde: "2026-01-01"
+      fecha_hasta: "2026-12-31"
+
+  # ── rangos de valor ────────────────────────────────────────────────────--
+  - id: RATED-013
+    query: "muestrame procesos donde me pueda presentar en mantenimientos por mas de 2000 millones"
+    recorded_rating: 0
+    tier: parser
+    tags: [objeto, range, opportunity]
+    expected:
+      dataset: procesos
+      objeto_contains: [mantenimiento]
+      valor_min: 2000000000
+      intent_type: opportunity_search
+      objeto_must_not_contain: [presentar, pueda, muestrame]
+
+  - id: RATED-038
+    query: "muestrame contratos de adulto mayor en 2025 con valor superior a 500 millones"
+    recorded_rating: 0
+    tier: parser
+    tags: [objeto, range, date]
+    comment: "no muestra nada (resultado), parse esperado correcto"
+    expected:
+      dataset: contratos
+      objeto_contains: [adulto_mayor]
+      valor_min: 500000000
+      fecha_desde: "2025-01-01"
+      fecha_hasta: "2025-12-31"
+
+  - id: RATED-039
+    query: "contratos de mantenimiento entre 500 y 600 millones en cundinamarca"
+    recorded_rating: 0
+    tier: parser
+    tags: [range, geo, objeto]
+    comment: "REGRESIÓN ARREGLADA — guardar: rango compuesto 'entre X y Y millones'"
+    expected:
+      dataset: contratos
+      departamento_resolved: "Cundinamarca"
+      objeto_contains: [mantenimiento]
+      valor_min: 500000000
+      valor_max: 600000000
+
+  - id: RATED-036
+    query: "algun proceso abierto en la guajira por menos de 1000 millones de pesos?"
+    recorded_rating: 1
+    tier: parser
+    tags: [geo, range, opportunity]
+    expected:
+      dataset: procesos
+      departamento_resolved: "La Guajira"
+      valor_max: 1000000000
+      intent_type: opportunity_search
+
+  # ── grupos OR / oportunidad PAE ────────────────────────────────────────--
+  - id: RATED-031
+    query: "que oportunidades hay para construccion de canchas o parques"
+    recorded_rating: 1
+    tier: parser
+    tags: [objeto, or_group, opportunity]
+    comment: "ya mejoró; dudas con el orden"
+    expected:
+      dataset: procesos
+      objeto_contains: [construccion, canchas, parques]
+      intent_type: opportunity_search
+
+  - id: RATED-029
+    query: "Quiero presentarme o licitar en el pae, alguna oportunidad?"
+    recorded_rating: 0
+    tier: parser
+    tags: [objeto, opportunity, pae]
+    comment: "nada de resultados"
+    expected:
+      dataset: procesos
+      objeto_contains: [alimentacion_escolar]
+      intent_type: opportunity_search
+      objeto_must_not_contain: [presentarme, licitar, oportunidad, pae]
+
+  - id: RATED-032
+    query: "quiero presentarme o licitar en el pae alguna oportunidad en 2026?"
+    recorded_rating: 1
+    tier: parser
+    tags: [objeto, opportunity, pae, date]
+    comment: "mejoró ostensiblemente"
+    expected:
+      dataset: procesos
+      objeto_contains: [alimentacion_escolar]
+      intent_type: opportunity_search
+      fecha_desde: "2026-01-01"
+      fecha_hasta: "2026-12-31"
+
+  # ── follow-up: requieren contexto del turno previo (tier pipeline) ────────-
+  - id: RATED-001
+    query: "que procesos tiene en convocatoria la alcaldia de ocaña?"
+    recorded_rating: 0
+    tier: pipeline
+    tags: [recency, entity, opportunity]
+    comment: "procesos viejos, no distingue convocatoria/abiertos"
+
+  - id: RATED-014
+    query: "que tiene la alcadia de puerto concordia para presentarme ?"
+    recorded_rating: 0
+    tier: pipeline
+    tags: [entity, opportunity]
+    comment: "no leyó entidad, no leyó intención"
+
+  - id: RATED-015
+    query: "que oportunidades de diplomado hay abiertas o convocatoria?"
+    recorded_rating: 0
+    tier: pipeline
+    tags: [results, opportunity]
+    comment: "no detectó MIC-043-2026 de manizales"
+
+  - id: RATED-018
+    query: "contratos de primera infancia alcaldia de barranquilla"
+    recorded_rating: 0
+    tier: pipeline
+    tags: [narration]
+    comment: "no veo la parte conversacional/asesoría"
+
+  - id: RATED-019
+    query: "muestrame los de mayor valor de 2026"
+    recorded_rating: 0
+    tier: pipeline
+    tags: [followup, ordering]
+    comment: "no siguió la línea de primera infancia"
+
+  - id: RATED-021
+    query: "quiero ver los de mayor valor"
+    recorded_rating: 0
+    tier: pipeline
+    tags: [followup, ordering]
+    comment: "metió todo lo de mayor valor sin años"
+
+  - id: RATED-024
+    query: "OK AHORA MUESTRAME PRIMERA INFANCIA 2025, LOS MAS COSTOSOS"
+    recorded_rating: 0
+    tier: pipeline
+    tags: [followup]
+    comment: "FOLLOW UP FALLÓ — estábamos hablando de Barranquilla"
+
+  - id: RATED-026
+    query: "muestrame mas"
+    recorded_rating: 0
+    tier: pipeline
+    tags: [followup, pagination]
+    comment: "un desastre, metió de todo"
+
+  - id: RATED-035
+    query: "muestrame mas contratos que esten firmados o en ejecucion"
+    recorded_rating: 0
+    tier: pipeline
+    tags: [followup, estado]
+
+  - id: RATED-037
+    query: "ahora filtra por entre 100-500 millones"
+    recorded_rating: 0
+    tier: pipeline
+    tags: [followup, range]
+    comment: "'filtra' se guardó objeto (en el merge del follow-up)"
+    # Nota: single-turn el parser ya extrae valor_min/max bien; el bug vive
+    # en la herencia de objeto del FollowupMerger. Se valida con --live.
+
+  - id: RATED-033
+    query: "contratos de adulto mayor mas caros del distrito de barranquilla entre 2025 y 2026"
+    recorded_rating: 0
+    tier: pipeline
+    tags: [date, results, narration]
+    comment: "no incluyó nada de 2026 (resultado/narración)"
+
+  # ── ya calificadas 👍, se mantienen como guardia anti-regresión ──────────--
+  - id: RATED-020
+    query: "hola muestrame contratos de primera infancia de barranquilla en 2026"
+    recorded_rating: 1
+    tier: parser
+    tags: [objeto, greeting, entity, date]
+    expected:
+      dataset: contratos
+      entidad_resolved: "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"
+      objeto_contains: [primera, infancia]
+      objeto_must_not_contain: [hola, muestrame]
+      fecha_desde: "2026-01-01"
+
+  - id: RATED-025
+    query: "HOLA QUIERO VER CONTRATOS DE ADULTO MAYOR DE ALCALDIA DE BARRANQUILLA DE 2026"
+    recorded_rating: 1
+    tier: parser
+    tags: [objeto, greeting, entity, date]
+    expected:
+      dataset: contratos
+      entidad_resolved: "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"
+      objeto_contains: [adulto_mayor]
+      objeto_must_not_contain: [hola, quiero]
+      fecha_desde: "2026-01-01"
+      fecha_hasta: "2026-12-31"
+
+  # ══ Lote 2 (sesión dogfood 2026-06-01) — RATED-042..069 ═════════════════--
+  # Las queries 42..69 de SQLite. Excluidas: RATED-060 y RATED-064 (clics de
+  # chip de UI "🎚️ Tunja (33)" / "🎚️ >500M (7)", no son lenguaje natural).
+
+  - id: RATED-042
+    query: "hola Cuántos procesos hay abiertos hoy en Cundinamarca por mas de 1000 millones"
+    recorded_rating: 0
+    tier: parser
+    tags: [geo, range, greeting, analytical]
+    comment: "valores no parecen >1000M; no veo fechas"
+    expected:
+      departamento_resolved: "Cundinamarca"
+      valor_min: 1000000000
+      objeto_must_not_contain: [hola, cuantos, procesos, hoy]
+
+  - id: RATED-046
+    query: "que contratos de prevencion de enfermedad se celebraron en atlantico en 2025?"
+    recorded_rating: 0
+    tier: parser
+    tags: [objeto, geo, date, verb]
+    comment: "celebraron en objeto? no detecta nada"
+    expected:
+      dataset: contratos
+      departamento_resolved: "Atlántico"
+      objeto_contains: [prevencion, enfermedad]
+      objeto_must_not_contain: [celebraron, contratos]
+      fecha_desde: "2025-01-01"
+      fecha_hasta: "2025-12-31"
+
+  - id: RATED-047
+    query: "procesos de alimentacion de mas de 1000 millones en mayo de 2026?"
+    recorded_rating: 0
+    tier: parser
+    tags: [objeto, range, date, month]
+    comment: "o no hay o no detecta (resultado); parse correcto"
+    expected:
+      objeto_contains: [alimentacion]
+      valor_min: 1000000000
+      fecha_desde: "2026-05-01"
+      fecha_hasta: "2026-05-31"
+
+  - id: RATED-048
+    query: "procesos de alimentacion para presentarme?"
+    recorded_rating: 0
+    tier: parser
+    tags: [objeto, opportunity]
+    comment: "botones con billones / error out-of-range (UI), parse OK"
+    expected:
+      dataset: procesos
+      objeto_contains: [alimentacion]
+      intent_type: opportunity_search
+      objeto_must_not_contain: [presentarme]
+
+  - id: RATED-049
+    query: "hola quiero ver contratos de suministro entre 100-550 millones en santander"
+    recorded_rating: 0
+    tier: parser
+    tags: [range, geo, objeto, greeting]
+    comment: "terrible (probable downstream); parse de rango/geo/objeto correcto"
+    expected:
+      dataset: contratos
+      departamento_resolved: "Santander"
+      objeto_contains: [suministro]
+      valor_min: 100000000
+      valor_max: 550000000
+      objeto_must_not_contain: [hola, quiero]
+
+  - id: RATED-055
+    query: "holaa contratos de dotacion en magdalena en 2025 por 500 millones o menos"
+    recorded_rating: 0
+    tier: parser
+    tags: [range, geo, objeto, greeting]
+    comment: "dije menos de 500M; UI puso límites 400-600 (narración/botones)"
+    expected:
+      dataset: contratos
+      departamento_resolved: "Magdalena"
+      objeto_contains: [dotacion]
+      valor_max: 500000000
+      fecha_desde: "2025-01-01"
+      fecha_hasta: "2025-12-31"
+      objeto_must_not_contain: [holaa]
+
+  - id: RATED-057
+    query: "alguna oportunidad de la gobernacion de atlantico en mayo?"
+    recorded_rating: 1
+    tier: parser
+    tags: [entity, opportunity]
+    comment: "excelente"
+    expected:
+      dataset: procesos
+      entidad_resolved: "DEPARTAMENTO DEL ATLANTICO**"
+      intent_type: opportunity_search
+
+  - id: RATED-059
+    query: "muestrame procesos contratos en boyaca por mas de 500 millones y menos de 600 en software"
+    recorded_rating: 0
+    tier: parser
+    tags: [morphology, objeto, range, geo]
+    comment: "REGRESIÓN-OBJETIVO: morfología expande software→tecnología (trae alcantarillado/biomédico)"
+    expected:
+      departamento_resolved: "Boyacá"
+      valor_min: 500000000
+      valor_max: 600000000
+      objeto_contains: [software]
+      objeto_must_not_contain: [tecnologia]
+
+  - id: RATED-061
+    query: "contratos de adulto mayor por mas de 2000 millones entre 2024 y 2025 en cundinamarca"
+    recorded_rating: 1
+    tier: parser
+    tags: [objeto, range, date, geo]
+    comment: "parece que bien"
+    expected:
+      dataset: contratos
+      departamento_resolved: "Cundinamarca"
+      objeto_contains: [adulto_mayor]
+      valor_min: 2000000000
+      fecha_desde: "2024-01-01"
+      fecha_hasta: "2025-12-31"
+
+  - id: RATED-063
+    query: "contratos de temas culturales en cesar en 2025?"
+    recorded_rating: 1
+    tier: parser
+    tags: [objeto, geo, date]
+    comment: "parece que bien (tras reset)"
+    expected:
+      dataset: contratos
+      departamento_resolved: "Cesar"
+      objeto_contains: [cultura]
+      fecha_desde: "2025-01-01"
+      fecha_hasta: "2025-12-31"
+
+  - id: RATED-065
+    query: "algun proceso de dotacion abierto por mas de 350 millones y menos de 700?"
+    recorded_rating: 0
+    tier: parser
+    tags: [range, objeto, opportunity]
+    comment: "REGRESIÓN ARREGLADA — guardar: rango compuesto 'mas de X y menos de Y'"
+    expected:
+      objeto_contains: [dotacion]
+      valor_min: 350000000
+      valor_max: 700000000
+      intent_type: opportunity_search
+
+  - id: RATED-067
+    query: "que procesos tiene barranquilla en concurso para licitaciones en construccion de parques o similares"
+    recorded_rating: 0
+    tier: parser
+    tags: [objeto, or_group, value_bug]
+    comment: "REGRESIÓN-OBJETIVO: 'o similares' inyectó valor_max=1.000.000 (disparate)"
+    expected:
+      objeto_contains: [construccion, parques]
+      objeto_must_not_contain: [similares, concurso, licitaciones]
+      absent: [valor_max]
+
+  - id: RATED-068
+    query: "procesos de barranquilla en parques 2026"
+    recorded_rating: 1
+    tier: parser
+    tags: [objeto, date]
+    expected:
+      dataset: procesos
+      objeto_contains: [parques]
+      fecha_desde: "2026-01-01"
+      fecha_hasta: "2026-12-31"
+
+  - id: RATED-069
+    query: "contratos mas altos del banco magdalena en 2025"
+    recorded_rating: 0
+    tier: pipeline
+    tags: [llm_disambiguation, gazetteer]
+    comment: >-
+      'El Banco' es municipio de Magdalena, no tema. PERO 'banco' es polisémico
+      (Banco Agrario, Banco de Bogotá, Banco Mundial, banco de alimentos/maquinaria
+      son entidades/temas legítimos). Un fix regex 'del banco'→ciudad rompe toda esa
+      clase. Caso de manual para la capa de desambiguación LLM, NO para el parser.
+      Fuera de alcance parser-tier a propósito.
+
+  # ── follow-up nuevos: requieren contexto previo (tier pipeline, --live) ────
+  - id: RATED-043
+    query: "alguno en convocatoria?"
+    recorded_rating: 0
+    tier: pipeline
+    tags: [followup, opportunity]
+
+  - id: RATED-044
+    query: '"procesos abiertos hoy en Cundinamarca por mas de 1000 millones"'
+    recorded_rating: 0
+    tier: pipeline
+    tags: [ui]
+    comment: "los botones no funcionan (filtrar últimos 30 días sin efecto)"
+
+  - id: RATED-045
+    query: "ok quiero ver aquellos entre 500 y mil millones"
+    recorded_rating: 0
+    tier: pipeline
+    tags: [followup, range, ui]
+    comment: "link del primero: error out-of-range"
+
+  - id: RATED-050
+    query: "en 2026?"
+    recorded_rating: 0
+    tier: pipeline
+    tags: [followup, date]
+
+  - id: RATED-051
+    query: "contratos de mantenimiento en santander en 2026?"
+    recorded_rating: 0
+    tier: pipeline
+    tags: [followup, objeto, geo, date]
+
+  - id: RATED-052
+    query: "contratos suministro en cesar en 2026?"
+    recorded_rating: 0
+    tier: pipeline
+    tags: [followup, objeto, geo, date]
+
+  - id: RATED-053
+    query: "ok de alcaldia de bucaramanga hay algo? no importa el rangio"
+    recorded_rating: 0
+    tier: pipeline
+    tags: [followup, entity]
+
+  - id: RATED-054
+    query: "algun proceso de suministro en santander para poder presentarme? de 500 millones"
+    recorded_rating: 0
+    tier: pipeline
+    tags: [followup, objeto, opportunity]
+    comment: "'adelante' en objeto; hasta cuándo seguiremos viendo variaciones"
+
+  - id: RATED-056
+    query: "muestrame de 500 millones en adelante"
+    recorded_rating: 0
+    tier: pipeline
+    tags: [followup, range]
+    comment: "ni el valor en cuenta; 'adelante' en objeto"
+
+  - id: RATED-058
+    query: "en abril que contratos por mas de 200 millones celebraron?"
+    recorded_rating: 0
+    tier: pipeline
+    tags: [followup, verb, intent]
+    comment: "celebraron no es objeto; intent no debería ser opportunity_search; scope atlántico debía mantenerse"
+
+  - id: RATED-062
+    query: "contratos de temas culturales en cesar en 2025?"
+    recorded_rating: 0
+    tier: pipeline
+    tags: [followup]
+    comment: "error de follow up (contaminó con ecosystem Cundinamarca del turno previo)"
+
+  - id: RATED-066
+    query: "contratos de aires acondicionados del distrito de barranquilla"
+    recorded_rating: 0
+    tier: pipeline
+    tags: [soql, objeto_phrase]
+    comment: "objeto=['aires','acondicionados'] → AND en SoQL → 0 resultados; debería ser frase. Bug a nivel SoQL, no params."

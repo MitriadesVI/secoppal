@@ -168,6 +168,107 @@ def test_invalid_value_range_blocks():
 
 
 # ═══════════════════════════════════════════════════════════════════════════
+# P10 — signed dataset / invalid contract states
+# ═══════════════════════════════════════════════════════════════════════════
+
+def test_p10_signed_query_forces_contracts_and_purges_invalid_state():
+    plan = compute_query_plan(
+        {"dataset": "procesos", "estado": "Firmado", "objeto": ["aseo"]},
+        "contratos firmados de aseo",
+        None,
+    )
+    assert plan.params.get("dataset") == "contratos"
+    assert "estado" not in plan.params
+    assert "firmado_dataset_forced" in plan.risk_flags
+    assert "invalid_estado_purged" in plan.risk_flags
+
+
+def test_p10_firmados_en_ejecucion_preserves_active_states():
+    plan = compute_query_plan(
+        {
+            "dataset": "contratos",
+            "estado_contrato": ["Firmado", "En ejecución", "Modificado"],
+            "estado_field": "estado_contrato",
+            "objeto": ["mantenimiento"],
+        },
+        "contratos firmados en ejecución de mantenimiento",
+        None,
+    )
+    assert plan.params.get("estado_contrato") == ["En ejecución", "Modificado"]
+    assert plan.params.get("estado_field") == "estado_contrato"
+    assert "invalid_estado_purged" in plan.risk_flags
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# P11 — opportunity invariant
+# ═══════════════════════════════════════════════════════════════════════════
+
+def test_p11_bidder_query_forces_process_opportunity_and_purges_closed_state():
+    plan = compute_query_plan(
+        {"dataset": "contratos", "estado_contrato": ["Cerrado"], "objeto": ["obras"]},
+        "quiero presentarme a obras",
+        None,
+    )
+    assert plan.params.get("dataset") == "procesos"
+    assert plan.params.get("intent_type") == "opportunity_search"
+    assert plan.params.get("estado_family") == "oferta_abierta"
+    assert "estado_contrato" not in plan.params
+    assert "opportunity_enforced" in plan.risk_flags
+
+
+def test_p11_is_idempotent_with_existing_opportunity_params():
+    params = {
+        "dataset": "procesos",
+        "intent_type": "opportunity_search",
+        "estado_family": "oferta_abierta",
+        "objeto": ["mantenimiento"],
+    }
+    once = compute_query_plan(params, "quiero presentarme", None)
+    twice = compute_query_plan(once.params, "quiero presentarme", None)
+    assert twice.params == once.params
+    assert "opportunity_enforced" not in twice.risk_flags
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# P12 — oferta_abierta not contracts
+# ═══════════════════════════════════════════════════════════════════════════
+
+def test_p12_oferta_abierta_not_contracts_selects_processes():
+    plan = compute_query_plan(
+        {"dataset": "contratos", "estado_family": "oferta_abierta"},
+        "procesos abiertos",
+        None,
+        enabled_rules={"P12"},
+    )
+    assert plan.params.get("dataset") == "procesos"
+    assert plan.params.get("intent_type") == "opportunity_search"
+    assert "oferta_abierta_not_contracts" in plan.risk_flags
+
+
+# ═══════════════════════════════════════════════════════════════════════════
+# P13 — substantial filter passive flag
+# ═══════════════════════════════════════════════════════════════════════════
+
+def test_p13_passively_flags_unsafe_global_candidate_without_blocking():
+    plan = compute_query_plan(
+        {"dataset": "procesos", "valor_min": 30_000_000},
+        "procesos de más de 30 millones",
+        None,
+    )
+    assert plan.should_execute is True
+    assert "unsafe_global_candidate" in plan.risk_flags
+
+
+def test_p13_does_not_flag_queries_with_scope_or_topic():
+    plan = compute_query_plan(
+        {"dataset": "procesos", "objeto": ["aseo"]},
+        "procesos de aseo",
+        None,
+    )
+    assert "unsafe_global_candidate" not in plan.risk_flags
+
+
+# ═══════════════════════════════════════════════════════════════════════════
 # Default — valid query
 # ═══════════════════════════════════════════════════════════════════════════
 

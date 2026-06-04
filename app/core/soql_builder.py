@@ -7,22 +7,23 @@ logger = logging.getLogger(__name__)
 
 
 class UnsafeGlobalQueryError(RuntimeError):
-    """Raised when SoQLBuilder would emit a query with no substantial filter.
+    """Raised when SoQLBuilder would emit a query with no WHERE predicate.
 
-    A "substantial" filter is one of: scope (departamento, ciudad, entidad,
-    contratista), topic (objeto), estado-family fields, or modalidad. Date
-    ranges, value ranges and ordering signals alone are NOT substantial —
-    they narrow nothing without a scope or topic and would otherwise produce
-    a tautological WHERE 1=1 across the full SECOP universe.
+    This guard is intentionally broader than the execution guard: estado and
+    modalidad are enough to avoid WHERE 1=1, but they are not enough to run a
+    useful user search across SECOP. Execution authority stays with
+    _followup_constants.SCOPE_TOPIC_KEYS.
 
     Callers that genuinely need a global query (admin/diagnostic tools)
     must opt in explicitly with ``allow_global=True``.
     """
 
 
-# Filtros que cuentan como "base suficiente" para una consulta a SECOP.
-# fecha/valor/orden/dataset/intent_type por sí solos NO cuentan.
-_SUBSTANTIAL_FILTER_KEYS: frozenset[str] = frozenset({
+# Filtros que hacen que el WHERE no sea tautologico. Esto NO responde
+# "hay base util para ejecutar?" (autoridad: SCOPE_TOPIC_KEYS en execution).
+# Estado/modalidad pueden producir millones de filas y aun requerir aclaracion
+# aguas abajo, pero si evitan que el builder emita WHERE 1=1.
+NONEMPTY_WHERE_KEYS: frozenset[str] = frozenset({
     # scope
     "departamento_resolved", "ciudad",
     "entidad_resolved", "entidad_like",
@@ -39,8 +40,8 @@ _SUBSTANTIAL_FILTER_KEYS: frozenset[str] = frozenset({
 })
 
 
-def _has_substantial_filter(params: dict) -> bool:
-    for key in _SUBSTANTIAL_FILTER_KEYS:
+def _has_nonempty_where_filter(params: dict) -> bool:
+    for key in NONEMPTY_WHERE_KEYS:
         value = params.get(key)
         if value in (None, "", [], {}, False):
             continue
@@ -214,12 +215,11 @@ class SoQLBuilder:
 
         Raises UnsafeGlobalQueryError if the resulting clause would collapse to
         a tautology (``1=1``) and the caller has not opted in via
-        ``allow_global=True``. Date/value/order alone are not substantial
-        filters — they narrow nothing without a scope or topic.
+        ``allow_global=True``. Date/value/order alone create no WHERE predicate.
         """
-        if not allow_global and not _has_substantial_filter(params):
+        if not allow_global and not _has_nonempty_where_filter(params):
             raise UnsafeGlobalQueryError(
-                "SoQL build refused: no substantial filter (scope/topic/estado/modalidad). "
+                "SoQL build refused: no WHERE predicate (scope/topic/estado/modalidad). "
                 "Pass allow_global=True only if a global query is intentional."
             )
         where_clauses: list[str] = []
