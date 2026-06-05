@@ -97,6 +97,10 @@ def params_from_frame(frame: QueryFrame) -> dict:
     # Cualquier refinamiento/follow-up semántico debe arrancar desde la primera página.
     if frame.intent_type != "pagination_more":
         params.pop("offset", None)
+        # Estado interno A-buffer: nunca debe heredarse a una búsqueda nueva,
+        # o el siguiente "muestrame mas" saltaría filas (cursor de display viejo).
+        params.pop("_display_offset", None)
+        params.pop("_shown_total", None)
     return params
 
 

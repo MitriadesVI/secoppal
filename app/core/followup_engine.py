@@ -630,6 +630,8 @@ def _merge_new_search(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
     # Asegurarse que offset NO se herede
     raw = dict(curr.raw_params)
     raw.pop("offset", None)
+    raw.pop("_display_offset", None)
+    raw.pop("_shown_total", None)
     return QueryFrame(
         dataset=curr.dataset,
         dataset_explicit=curr.dataset_explicit,

@@ -157,6 +157,45 @@ def _dedupe_results(results: list[dict], dataset_id: str) -> list[dict]:
     return deduped
 
 
+def rank_and_dedupe(results: list[dict], dataset_id: str, params: dict | None = None) -> list[dict]:
+    """Pipeline de display SIN el corte a max_results.
+
+    Reproduce, en un solo lugar, el orden que el usuario ve en el primer
+    turno: BM25 (cuando el objeto tiene ≥3 tokens) → activos primero → dedupe.
+    Es el mismo orden que ``normal_flow`` (BM25) + ``to_rows`` (reorder+dedupe)
+    producen, pero devuelve la lista COMPLETA en vez de los primeros 25.
+
+    La paginación A-buffer lo usa para re-pescar la misma ventana SECOP,
+    reconstruir determinísticamente el bloque ordenado y cortar la siguiente
+    rebanada (``[display_offset : display_offset+25]``) sin solaparse con lo ya
+    mostrado. Determinista por construcción: BM25, ``_reorder_active_first``
+    (sort estable) y ``_dedupe_results`` no dependen de estado externo.
+    """
+    out = list(results or [])
+    if not out:
+        return out
+    params = params or {}
+    objeto_terms = params.get("objeto", []) or []
+    topic_flat: list[str] = []
+    for t in objeto_terms:
+        if isinstance(t, list):
+            topic_flat.extend(t)
+        else:
+            topic_flat.append(str(t))
+    # BM25 re-rank — misma condición que normal_flow (≥3 tokens de objeto).
+    if len(topic_flat) >= 3:
+        try:
+            from app.core.relevance import RelevanceScorer
+            field = "objeto_del_contrato" if dataset_id == "jbjy-vk9h" else "nombre_del_procedimiento"
+            scored = RelevanceScorer().score_rows(topic_flat, out, field=field)
+            out = [r for r, _ in scored]
+        except Exception:
+            pass  # best-effort, igual que en normal_flow
+    out = _reorder_active_first(out, dataset_id, params)
+    out = _dedupe_results(out, dataset_id)
+    return out
+
+
 def build_no_results_message(params: dict | None, dataset_id: str | None = None) -> str:
     """Generate a helpful 'no results' message with specific relaxation suggestions.
 

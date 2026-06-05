@@ -1,6 +1,8 @@
 """Tests: new_search completo + paginación robusta + anti-WHERE 1=1."""
 from __future__ import annotations
 
+import re
+
 from app.config import Settings
 from app.core.orchestrator import SecopalWorkflow
 from app.core.conversation_store import ConversationStore, is_followup, is_pagination_phrase, normalize_pagination_text, Turn
@@ -108,17 +110,54 @@ class TestPaginationPhrase:
 
 # ── E2E: paginación persistente ──────────────────────────────────────────
 
+def _pag_row(i: int) -> dict:
+    """Fila con identidad única por posición absoluta ``i`` (ambos datasets)."""
+    return {
+        "nombre_del_procedimiento": f"Proceso numero {i}",
+        "objeto_del_contrato": f"Proceso numero {i}",
+        "entidad": "ALCALDIA DE BARRANQUILLA",
+        "nombre_entidad": "ALCALDIA DE BARRANQUILLA",
+        "precio_base": str(1_000_000 + i),
+        "valor_del_contrato": str(1_000_000 + i),
+        "estado_de_apertura_del_proceso": "Publicado",
+        "estado_contrato": "En ejecución",
+        "fecha_de_publicacion_del": "2026-06-01T00:00:00.000",
+        "fecha_de_firma": "2026-06-01T00:00:00.000",
+        "urlproceso": f"https://secop.gov.co/p/{i}",
+        "referencia_del_proceso": f"REF-{i}",
+        "id_del_proceso": f"PID-{i}",
+        "referencia_del_contrato": f"REF-{i}",
+        "id_contrato": f"CID-{i}",
+    }
+
+
+def _pag_query(total: int = 120):
+    """Mock de SECOP: devuelve filas distintas [offset, offset+limit)."""
+
+    def query(_ds: str, soql: str) -> list[dict]:
+        mo = re.search(r"OFFSET (\d+)", soql)
+        ml = re.search(r"LIMIT (\d+)", soql)
+        off = int(mo.group(1)) if mo else 0
+        lim = int(ml.group(1)) if ml else 50
+        return [_pag_row(i) for i in range(off, min(off + lim, total))]
+
+    return query
+
+
+def _pag_idx(result: dict) -> list[int]:
+    """Índices realmente mostrados, leídos del título de cada row."""
+    out: list[int] = []
+    for row in result.get("rows", []):
+        m = re.search(r"Proceso numero (\d+)", str(row.get("titulo", "")))
+        if m:
+            out.append(int(m.group(1)))
+    return out
+
+
 class TestPaginationE2E:
     def _wf(self, tmp_path):
         wf = SecopalWorkflow(Settings())
-        wf.secop_client.query = lambda ds, soql: [{
-            "nombre_del_procedimiento": "Atencion adulto mayor",
-            "entidad": "ALCALDIA DE BARRANQUILLA",
-            "precio_base": "500000000",
-            "fecha_de_publicacion_del": "2026-06-01T00:00:00.000",
-            "urlproceso": "https://secop.gov.co/test",
-            "referencia_del_proceso": "REF-1",
-        }]
+        wf.secop_client.query = _pag_query()
         wf.secop_client.count = lambda ds, soql: 50
         wf.narrator.narrate_with_grounding = lambda **kw: None
         wf.conv_store = ConversationStore(base_path=tmp_path / "conv")
@@ -126,23 +165,27 @@ class TestPaginationE2E:
 
     def test_pagination_por_favor_with_context(self, tmp_path):
         wf = self._wf(tmp_path)
-        wf.run_query("contratos de adulto mayor de alcaldia de barranquilla de 2026",
-                     channel="streamlit", chat_id="st_p")
+        r1 = wf.run_query("contratos de adulto mayor de alcaldia de barranquilla de 2026",
+                          channel="streamlit", chat_id="st_p")
         r2 = wf.run_query("muestrame mas por favor", channel="streamlit", chat_id="st_p")
         assert r2.get("route_reason") == "pagination_more", f"route={r2.get('route_reason')}"
-        soql = r2.get("soql_query", "")
-        assert "OFFSET 10" in soql, f"SoQL={soql[:300]}"
-        assert "WHERE 1=1" not in soql
+        assert "WHERE 1=1" not in r2.get("soql_query", "")
+        # A-buffer: la página 2 muestra filas NUEVAS, sin solaparse con la 1.
+        assert _pag_idx(r1) and _pag_idx(r2)
+        assert not (set(_pag_idx(r1)) & set(_pag_idx(r2)))
 
     def test_pagination_increments_offset(self, tmp_path):
         wf = self._wf(tmp_path)
-        wf.run_query("contratos de adulto mayor de alcaldia de barranquilla de 2026",
-                     channel="streamlit", chat_id="st_p2")
+        r1 = wf.run_query("contratos de adulto mayor de alcaldia de barranquilla de 2026",
+                          channel="streamlit", chat_id="st_p2")
         r2 = wf.run_query("muestrame mas", channel="streamlit", chat_id="st_p2")
         assert r2.get("route_reason") == "pagination_more"
-        assert "OFFSET 10" in r2.get("soql_query", "")
         r3 = wf.run_query("muestrame mas", channel="streamlit", chat_id="st_p2")
-        assert "OFFSET 20" in r3.get("soql_query", ""), f"SoQL={r3.get('soql_query')[:300]}"
+        assert r3.get("route_reason") == "pagination_more"
+        # Tres páginas con índices disjuntos y contiguos (sin saltos).
+        p1, p2, p3 = _pag_idx(r1), _pag_idx(r2), _pag_idx(r3)
+        union = sorted(set(p1) | set(p2) | set(p3))
+        assert union == list(range(len(union))), f"huecos o solapamiento: {p1=} {p2=} {p3=}"
 
     def test_pagination_no_context_asks_primero(self, tmp_path):
         wf = self._wf(tmp_path)
@@ -192,7 +235,8 @@ class TestPaginationE2E:
         )
         page_2 = wf.run_query("muestrame mas", channel="streamlit", chat_id=chat_id)
         assert page_2.get("route_reason") == "pagination_more"
-        assert page_2.get("resolved_params", {}).get("offset") == 10
+        # A-buffer: la página 2 avanzó el cursor de display dentro de la ventana.
+        assert page_2.get("resolved_params", {}).get("_display_offset") == 25
 
         refined = wf.run_query(
             "muestrame mas contratos de adulto mayor de 2026",
@@ -200,9 +244,11 @@ class TestPaginationE2E:
             chat_id=chat_id,
         )
 
+        # El refinamiento es una búsqueda nueva: resetea la paginación.
         assert refined.get("route_reason") != "pagination_more"
         assert refined.get("resolved_params", {}).get("offset", 0) == 0
-        assert "OFFSET 10" not in refined.get("soql_query", "")
+        assert refined.get("resolved_params", {}).get("_display_offset", 0) == 0
+        assert "OFFSET" not in refined.get("soql_query", "")
         assert "fecha_de_firma >= '2026-01-01'" in refined.get("soql_query", "")
 
 
