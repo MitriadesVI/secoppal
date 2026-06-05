@@ -12,8 +12,8 @@ import re
 from typing import Callable
 
 # Each entry: (compiled_regex, replacer_fn)
-# replacer_fn receives the match and returns list[str] of canonical candidates
-# to try against the gazetteer, in priority order.
+# replacer_fn receives the captured entity name (str) and returns list[str] of
+# canonical candidates to try against the gazetteer, in priority order.
 ENTITY_REWRITES: list[tuple[re.Pattern, Callable]] = [
     # ── Alcaldía variants ──
     # Stop capture at: para|donde|por\b|con\b|en\b|del\b|de\b|sobre\b|$
@@ -23,10 +23,10 @@ ENTITY_REWRITES: list[tuple[re.Pattern, Callable]] = [
             r"\balcald[ií]a\s+(?:municipal\s+)?de\s+(.+?)(?=\s*(?:para|donde|por\b|con\b|en\b|del\b|de\b|sobre\b|$))",
             re.IGNORECASE,
         ),
-        lambda m: [
-            f"Municipio de {m.group(1).strip()}",
-            f"Alcaldía de {m.group(1).strip()}",
-            f"Alcaldía Municipal de {m.group(1).strip()}",
+        lambda x: [
+            f"Municipio de {x}",
+            f"Alcaldía de {x}",
+            f"Alcaldía Municipal de {x}",
         ],
     ),
     # ── Gobernación variants ──
@@ -35,9 +35,9 @@ ENTITY_REWRITES: list[tuple[re.Pattern, Callable]] = [
             r"\bgobernaci[oó]n\s+de\s+(.+?)(?=\s*(?:para|donde|por\b|con\b|en\b|del\b|de\b|sobre\b|$))",
             re.IGNORECASE,
         ),
-        lambda m: [
-            f"Departamento de {m.group(1).strip()}",
-            f"Gobernación de {m.group(1).strip()}",
+        lambda x: [
+            f"Departamento de {x}",
+            f"Gobernación de {x}",
         ],
     ),
     # ── ESE / Empresa Social del Estado ──
@@ -46,9 +46,9 @@ ENTITY_REWRITES: list[tuple[re.Pattern, Callable]] = [
             r"\bese\s+(.+?)(?=\s*(?:para|donde|por\b|con\b|en\b|del\b|de\b|sobre\b|$))",
             re.IGNORECASE,
         ),
-        lambda m: [
-            f"Empresa Social del Estado {m.group(1).strip()}",
-            f"ESE {m.group(1).strip()}",
+        lambda x: [
+            f"Empresa Social del Estado {x}",
+            f"ESE {x}",
         ],
     ),
     # ── Hospital variants ──
@@ -57,9 +57,9 @@ ENTITY_REWRITES: list[tuple[re.Pattern, Callable]] = [
             r"\b(?:el\s+)?hospital\s+(.+?)(?=\s*(?:para|donde|por\b|con\b|en\b|del\b|de\b|sobre\b|$))",
             re.IGNORECASE,
         ),
-        lambda m: [
-            f"Hospital {m.group(1).strip()}",
-            f"ESE Hospital {m.group(1).strip()}",
+        lambda x: [
+            f"Hospital {x}",
+            f"ESE Hospital {x}",
         ],
     ),
     # ── Universidad ──
@@ -68,8 +68,8 @@ ENTITY_REWRITES: list[tuple[re.Pattern, Callable]] = [
             r"\b(?:la\s+)?universidad\s+(.+?)(?=\s*(?:para|donde|por\b|con\b|en\b|del\b|de\b|sobre\b|$))",
             re.IGNORECASE,
         ),
-        lambda m: [
-            f"Universidad {m.group(1).strip()}",
+        lambda x: [
+            f"Universidad {x}",
         ],
     ),
     # ── Municipio de X → keep as-is but also try Alcaldía ──
@@ -78,17 +78,34 @@ ENTITY_REWRITES: list[tuple[re.Pattern, Callable]] = [
             r"\bmunicipio\s+de\s+(.+?)(?=\s*(?:para|donde|por\b|con\b|en\b|del\b|de\b|sobre\b|$))",
             re.IGNORECASE,
         ),
-        lambda m: [
-            f"Municipio de {m.group(1).strip()}",
-            f"Alcaldía de {m.group(1).strip()}",
+        lambda x: [
+            f"Municipio de {x}",
+            f"Alcaldía de {x}",
         ],
     ),
 ]
 
+# Cuántos tokens trailing como máximo se intentan descartar al hacer shrink.
+# Cubre "este mes" (1) / "pavimentacion" (1) / "este mes pasado" (2) y sobra;
+# acota el costo cuando la captura agarra una cola larga de basura.
+_MAX_SHRINK_LEVELS = 5
+
 
 def rewrite_entity(query: str) -> list[tuple[str, str, str]]:
     """Scan query for entity-type patterns and generate canonical candidates.
+
     Skips temporal/measure phrases that look like entities (e.g., "ese año").
+
+    Shrink-fallback (ENTITY-TRAILING-001): la captura ``(.+?)`` es greedy hasta
+    el siguiente conector o el fin de línea, así que se traga tokens trailing
+    que NO son parte del nombre de la entidad ("este mes", "pavimentacion",
+    basura). Para tolerarlo, por cada match generamos candidatos con la captura
+    progresivamente más corta — del span MÁS LARGO al más corto — cada uno con
+    su propio ``consumed_span``. El caller (query_router 4.6) prueba en orden y
+    se queda con el primero que resuelve = el prefijo válido más largo. Esto:
+      - NO regresa casos que hoy resuelven (el span completo se prueba primero),
+      - evita over-shrink (longest-prefix-that-matches),
+      - deja el leftover (p.ej. "pavimentacion") libre para fluir al objeto.
     """
     # Words that should NOT trigger entity rewrite after ESE/patterns
     _EXCLUSION_CAPTURES = frozenset({
@@ -99,14 +116,23 @@ def rewrite_entity(query: str) -> list[tuple[str, str, str]]:
 
     for pattern, replacer in ENTITY_REWRITES:
         match = pattern.search(query)
-        if match:
-            consumed_span = match.group(0).strip()
-            captured = match.group(1).strip().lower()
-            # Skip if captured text is a non-entity phrase (temporal, measure)
-            if captured in _EXCLUSION_CAPTURES:
+        if not match:
+            continue
+        words = match.group(1).split()
+        if not words:
+            continue
+        # Prefijo literal entre el inicio del match y el inicio de la captura
+        # (ej. "alcaldía de "), preservado tal cual aparece en `query` para que
+        # `consumed_span` sea siempre un substring exacto de la entrada.
+        prefix = query[match.start(0):match.start(1)]
+        rewrite_type = pattern.pattern.split(r"\b")[1].split(r"\s")[0].lower()
+        lowest_k = max(1, len(words) - _MAX_SHRINK_LEVELS + 1)
+        for k in range(len(words), lowest_k - 1, -1):
+            captured = " ".join(words[:k]).strip()
+            if not captured or captured.lower() in _EXCLUSION_CAPTURES:
                 continue
-            rewrite_type = pattern.pattern.split(r"\b")[1].split(r"\s")[0].lower()
-            for candidate in replacer(match):
+            consumed_span = (prefix + captured).strip()
+            for candidate in replacer(captured):
                 results.append((candidate, consumed_span, rewrite_type))
 
     return results

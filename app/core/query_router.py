@@ -158,6 +158,9 @@ STOPWORDS = {
     "actualmente", "ahora", "hoy", "recientemente", "momento",
     # Temporal week/day (not contractual objects)
     "semana", "dia", "dias", "día", "días", "ayer",
+    "mes", "meses",
+    # Interrogative verbs ("qué ha hecho/hizo/gastó X") — no son objetos
+    "hecho", "hizo", "hace", "hacen", "haciendo", "gastado",
     # Indefinite pronouns
     "algun", "alguna", "algunos", "algunas", "alguno", "algunos", "ningun", "ninguna",
     "otro", "otra", "otros", "otras",
