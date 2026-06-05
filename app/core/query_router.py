@@ -131,7 +131,7 @@ STOPWORDS = {
     "abierta", "abiertas", "abierto", "abiertos",
     "adjudicado", "adjudicados",
     "celebrado", "celebrados",
-    "firmado", "firmados",
+    "firmado", "firmados", "firmada", "firmadas",
     "liquidado", "liquidados",
     "cerrado", "cerrados",
     # Search types

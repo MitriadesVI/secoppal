@@ -85,9 +85,13 @@ ESTADO_CONTRATO_SYNONYMS = {
     "terminados": "terminado",
     "finalizado": "terminado",
     "finalizada": "terminado",
-    "firmado": "Aprobado",  # "firmado" → closest match is Aprobado
-    "firmada": "Aprobado",
-    "firmados": "Aprobado",
+    # NOTA: "firmado" NO mapea a ningún estado. En SECOP un contrato existe
+    # PORQUE se firmó — "firmado" ⇔ fecha_de_firma not null, no un estado_contrato.
+    # Validado contra datos: los 8 estados con firma (En ejecución, Cerrado,
+    # Modificado, terminado, Aprobado, cedido, Suspendido, Prorrogado) son ~100%
+    # firmados; mapear "firmado"→"Aprobado" tiraba el 97% del recall (Aprobado es
+    # 184K de ~5.6M firmados). "firmado" solo fuerza dataset=contratos
+    # (query_router._select_dataset) + filtra fecha_de_firma si hay rango.
     "aprobado": "Aprobado",
     "aprobada": "Aprobado",
     "cancelado": "Cancelado",

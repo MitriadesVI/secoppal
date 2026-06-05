@@ -44,7 +44,11 @@ def build_where(params: dict) -> str:
 
 
 @pytest.mark.parametrize("simulate_llm", [False, True])
-def test_signed_contracts_current_baseline_keeps_legacy_aprobado(simulate_llm):
+def test_signed_contracts_apply_no_state_filter(simulate_llm):
+    # "firmado" ⇔ fecha_de_firma not null, NO un valor de estado_contrato.
+    # Validado contra datos: los 8 estados con firma son ~100% firmados; el
+    # mapeo legacy "firmado"→"Aprobado" tiraba ~97% del recall (Aprobado es
+    # 184K de ~5.6M firmados). "firmado" solo fuerza dataset=contratos.
     snap = run_offline_invariant_pipeline(
         "contratos firmados de mantenimiento",
         simulate_llm=simulate_llm,
@@ -52,8 +56,8 @@ def test_signed_contracts_current_baseline_keeps_legacy_aprobado(simulate_llm):
 
     assert snap["after_plan"]["dataset"] == "contratos"
     assert snap["after_plan"]["objeto"] == ["mantenimiento"]
-    assert snap["after_plan"]["estado"] == "Aprobado"
-    assert snap["after_plan"]["estado_field"] == "estado_contrato"
+    assert snap["after_plan"].get("estado") is None
+    assert snap["after_plan"].get("estado_field") is None
     assert "estado_contrato" not in snap["after_plan"]
     assert snap["should_execute"] is True
     assert snap["risk_flags"] == []
