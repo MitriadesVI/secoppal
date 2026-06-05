@@ -24,7 +24,7 @@ from app.core.dialogue_policy import classify, DialogueSignal
 
 # ── All known rules — used as default when enabled_rules is None ──────────────
 ALL_RULES = {
-    "P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8", "P9",
+    "P1", "P2", "P3", "P4", "P5", "P5b", "P6", "P7", "P8", "P9",
     "P10", "P11", "P12", "P13",
 }
 
@@ -197,6 +197,22 @@ def compute_query_plan(
                     working_params["fecha_desde"] = desde
                     working_params["fecha_hasta"] = hasta
                     reason_parts.append(f"temporal_month_{month:02d}_{year}")
+                break
+
+    # ── P5b: temporal_range (week/day) ────────────────────────────────────
+    if "P5b" in rules_to_apply:
+        for sig in all_signals:
+            if sig.kind == "temporal_range":
+                p = sig.payload
+                desde = p["desde"]
+                hasta = p["hasta"]
+
+                if working_params.get("fecha_desde") or working_params.get("fecha_hasta"):
+                    risk_flags.append("temporal_conflict")
+                else:
+                    working_params["fecha_desde"] = desde
+                    working_params["fecha_hasta"] = hasta
+                    reason_parts.append(f"temporal_range_{p['phrase'].replace(' ', '_')}")
                 break
 
     # ── P6: number_phrase_scrub ───────────────────────────────────────────

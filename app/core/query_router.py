@@ -156,6 +156,8 @@ STOPWORDS = {
     "vigente", "vigentes", "sobre", "todos", "todas", "todo", "toda",
     # Temporal adverbs (not contractual objects)
     "actualmente", "ahora", "hoy", "recientemente", "momento",
+    # Temporal week/day (not contractual objects)
+    "semana", "dia", "dias", "día", "días", "ayer",
     # Indefinite pronouns
     "algun", "alguna", "algunos", "algunas", "alguno", "algunos", "ningun", "ninguna",
     "otro", "otra", "otros", "otras",
@@ -191,7 +193,7 @@ STOPWORDS = {
     "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre",
     # More temporal
     "semestre", "trimestre", "bimestre", "periodo", "anual", "mensual",
-    "pasado", "anterior", "siguiente", "proximo",
+    "pasado", "pasada", "anterior", "siguiente", "proximo",
     # Semantic-layer scrubbed terms (should already be consumed, safety net)
     "departamento", "departamentos",
     "oportunidades", "oportunidad",

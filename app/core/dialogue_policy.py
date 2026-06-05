@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass, field
-from datetime import date as Date
+from datetime import date as Date, timedelta
 from typing import Literal
 
 # ── Signal kinds ─────────────────────────────────────────────────────────────
@@ -20,6 +20,7 @@ DialogueSignalKind = Literal[
     "implicit_opportunity",     # "algún proceso para X" / "alguna oferta del Y"
     "discourse_filler",         # "hola, estoy interesado", quejas, verbos
     "temporal_month",           # "en mayo", "este mes", "el mes pasado"
+    "temporal_range",           # "hoy", "ayer", "esta semana", "últimos N días"
     "number_phrase_scrub",      # "supere", "exceda" cuando ya hay valor numérico
     "city_mention_as_topic",    # token geográfico atrapado en objeto
     "non_query_followup",       # queja/comentario tras query previa
@@ -114,6 +115,13 @@ _R4_ESTE_MES = re.compile(r"\beste\s+mes\b", re.IGNORECASE)
 _R4_MES_PASADO = re.compile(r"\bel\s+mes\s+pasado\b", re.IGNORECASE)
 _R4_HACE_MESES = re.compile(r"\bhace\s+(\d+)\s+meses\b", re.IGNORECASE)
 
+# R4b: temporal week/day patterns
+_R4_HOY = re.compile(r"\bhoy\b", re.IGNORECASE)
+_R4_AYER = re.compile(r"\bayer\b", re.IGNORECASE)
+_R4_ESTA_SEMANA = re.compile(r"\besta\s+semana\b", re.IGNORECASE)
+_R4_SEMANA_PASADA = re.compile(r"\b(?:la\s+)?semana\s+pasada\b", re.IGNORECASE)
+_R4_ULTIMOS_DIAS = re.compile(r"\b(?:ultimos|últimos)\s+(\d+)\s+(?:dias|días)\b", re.IGNORECASE)
+
 # R5: number phrase scrub catalog
 SCRUB_CATALOG = frozenset({
     "supere", "exceda", "supera", "alcance", "rebase", "llegue",
@@ -175,6 +183,9 @@ def classify(
 
     # ── R4: temporal_month ──
     _detect_temporal_month(query_lower, today, signals)
+
+    # ── R4b: temporal_range (week/day) ──
+    _detect_temporal_range(query_lower, today, signals)
 
     # ── R5: number_phrase_scrub ──
     _detect_number_phrase_scrub(params, signals)
@@ -336,6 +347,81 @@ def _detect_temporal_month(
             kind="temporal_month",
             payload={"month": month, "year": year, "phrase": m.group(0)},
         ))
+
+
+def _detect_temporal_range(
+    query_lower: str,
+    today: Date,
+    signals: list[DialogueSignal],
+) -> None:
+    """Emit kind='temporal_range' for week/day relative expressions.
+
+    Semantics:
+      - "hoy"                       → desde = hasta = today
+      - "ayer"                      → desde = hasta = today - 1
+      - "esta semana"               → desde = lunes ISO, hasta = today
+      - "la semana pasada" / "semana pasada" → desde = lunes previo, hasta = domingo previo
+      - "últimos N días"            → desde = today - N, hasta = today
+    """
+    if _R4_HOY.search(query_lower):
+        iso = today.isoformat()
+        signals.append(DialogueSignal(
+            kind="temporal_range",
+            payload={"desde": iso, "hasta": iso, "phrase": "hoy"},
+        ))
+        return
+
+    if _R4_AYER.search(query_lower):
+        yesterday = today - timedelta(days=1)
+        iso = yesterday.isoformat()
+        signals.append(DialogueSignal(
+            kind="temporal_range",
+            payload={"desde": iso, "hasta": iso, "phrase": "ayer"},
+        ))
+        return
+
+    if _R4_ESTA_SEMANA.search(query_lower):
+        # ISO weekday: 1=Monday, 7=Sunday
+        weekday = today.isocalendar().weekday
+        monday = today - timedelta(days=weekday - 1)
+        signals.append(DialogueSignal(
+            kind="temporal_range",
+            payload={
+                "desde": monday.isoformat(),
+                "hasta": today.isoformat(),
+                "phrase": "esta semana",
+            },
+        ))
+        return
+
+    if _R4_SEMANA_PASADA.search(query_lower):
+        weekday = today.isocalendar().weekday
+        this_monday = today - timedelta(days=weekday - 1)
+        last_monday = this_monday - timedelta(days=7)
+        last_sunday = last_monday + timedelta(days=6)
+        signals.append(DialogueSignal(
+            kind="temporal_range",
+            payload={
+                "desde": last_monday.isoformat(),
+                "hasta": last_sunday.isoformat(),
+                "phrase": "semana pasada",
+            },
+        ))
+        return
+
+    m = _R4_ULTIMOS_DIAS.search(query_lower)
+    if m:
+        n = int(m.group(1))
+        if 1 <= n <= 365:
+            desde = today - timedelta(days=n)
+            signals.append(DialogueSignal(
+                kind="temporal_range",
+                payload={
+                    "desde": desde.isoformat(),
+                    "hasta": today.isoformat(),
+                    "phrase": m.group(0),
+                },
+            ))
 
 
 def _detect_number_phrase_scrub(
