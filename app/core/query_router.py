@@ -937,6 +937,7 @@ class QueryRouter:
                     rf"""
                     \b(?:
                         no\s+(?:sea|sean)?\s*menor(?:es)?\s+(?:a|de|que)
+                        |no\s+(?:sea|sean)?\s*(?:por\s+)?menos\s+de
                         |que\s+no\s+baje(?:n)?\s+de
                         |no\s+baje(?:n)?\s+de
                     )\s+{amount_text}

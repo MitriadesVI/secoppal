@@ -597,11 +597,23 @@ def test_mas_de_sin_negacion_sigue_valor_min__adversarial(router: QueryRouter) -
     assert result.params.get("valor_max") is None
 
 
-def test_no_menos_de_comportamiento_actual__adversarial(router: QueryRouter) -> None:
-    """'no menos de 500 millones' → valor_max (bug separado: 'menos' ≠ 'menor').
-    Mi fix para 'no sea por más de' NO debe interceptar este caso."""
+def test_no_menos_de_es_valor_min(router: QueryRouter) -> None:
+    """'no menos de 500 millones' → valor_min (piso), simétrico a 'no más de'."""
     result = router.parse("no menos de 500 millones")
-    # Comportamiento actual (no ideal, pero fuera de scope de este fix):
+    assert result.params.get("valor_min") == 500_000_000
+    assert result.params.get("valor_max") is None
+
+
+def test_no_sea_por_menos_de_es_valor_min(router: QueryRouter) -> None:
+    """'no sea(n) por menos de X' (con 'sea por' intercalado) también es valor_min."""
+    result = router.parse("contratos que no sean por menos de 800 millones")
+    assert result.params.get("valor_min") == 800_000_000
+    assert result.params.get("valor_max") is None
+
+
+def test_menos_de_sin_negacion_sigue_valor_max__adversarial(router: QueryRouter) -> None:
+    """'menos de 500 millones' SIN negación debe seguir siendo valor_max."""
+    result = router.parse("contratos de menos de 500 millones")
     assert result.params.get("valor_max") == 500_000_000
     assert result.params.get("valor_min") is None
 
