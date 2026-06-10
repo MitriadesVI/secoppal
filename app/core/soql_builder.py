@@ -229,7 +229,7 @@ class SoQLBuilder:
 
         if params.get("ciudad") and spec.city:
             where_clauses.append(
-                f"UPPER({spec.city}) LIKE UPPER('%{self._escape(str(params['ciudad']))}%')"
+                self._accent_fold_like(spec.city, self._escape(str(params['ciudad'])))
             )
         entidad_value = params.get("entidad_like") or params.get("entidad_resolved")
         entidad_ecosystem = params.get("entidad_ecosystem")
