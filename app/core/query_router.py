@@ -925,7 +925,7 @@ class QueryRouter:
                         no\s+(?:sea|sean)?\s*(?:mayor(?:es)?|superior(?:es)?)\s+(?:a|de|que)
                         |que\s+no\s+(?:supere|superen|exceda|excedan|rebase|rebasen)(?:\s+los?)?
                         |no\s+(?:supere|superen|exceda|excedan|rebase|rebasen)(?:\s+los?)?
-                        |no\s+m[aá]s\s+de
+                        |no\s+(?:sea|sean)?\s*(?:por\s+)?m[aá]s\s+de
                     )\s+{amount_text}
                     """,
                     re.IGNORECASE | re.VERBOSE,
