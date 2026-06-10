@@ -5,17 +5,17 @@
 **Sistema:** SECOPPAL — asistente conversacional para consulta y análisis de contratación pública SECOP II  
 **Propósito del documento:** dejar una descripción comprensible para un tercero técnico o funcional sobre qué hace el sistema, cómo está construido, qué archivos lo componen, qué decisiones de arquitectura se han tomado, qué bugs relevantes se han detectado y cuál es el estado actual del proyecto.
 
-## Estado canónico actual — 2026-06-03
+## Estado canónico actual — 2026-06-04
 
-- **Main:** limpio, reconciliado desde worktree `claude/zealous-yalow-296fb6`
-- **Suite:** 1212 passed, 23 xfailed
+- **Main:** 4 commits sin push (paginación A-buffer, fechas relativas semana/día, entidad robusta, firmado fix)
+- **Suite:** 1338 passed, 23 xfailed
 - **Corpus:** 89/89 PASS, 0 FAIL
 - **Torture matrix:** 12/12 invariantes
-- **Eval harness:** `scripts/eval_rated.py` sobre 70 queries calificadas reales (SQLite). Parser-tier 33/39 = 85%. Pipeline-tier 26 entradas etiquetadas para `--live`. 6 bugs de parser aislados con ID RATED-XXX.
+- **Eval harness:** `scripts/eval_rated.py` sobre 70 queries calificadas reales (SQLite). Parser-tier 38/38 = 100% (5 bugs silenciosamente resueltos por sprints mayo 2026). Pipeline-tier 26 entradas etiquetadas para `--live`. 1 bug remanente: RATED-069 (`El Banco` municipio Magdalena) — reclasificado pipeline-tier, requiere desambiguación LLM.
 - **feedback:** SQLite 70 calificadas (18👍/52👎), JSONL 42 (divergencia documentada en `eval_rated.py`). Dual-store: SQLite primario, JSONL append-only.
 - **Orchestrator:** 196 LOC (desde 1549 LOC) — refactor a workflow/ completado (ADR-023)
-- **Decisions log:** 23 ADRs (ADR-001 a ADR-023) en `docs/decisions_log.md`
-- **Próximo foco:** sellar frame leak del follow-up (raw_params merge ciego), shadow LLM para follow-up, liquidar 6 bugs parser (RATED-016/040/041/059/067/069)
+- **Decisions log:** 26 ADRs (ADR-001 a ADR-026) en `docs/decisions_log.md`
+- **Próximo foco:** sellar frame leak del follow-up (raw_params merge ciego), shadow LLM para follow-up, RATED-069 (desambiguación banco=municipio vs banco=tema, requiere LLM)
 - **Backlog:** VALUE-TYPO-001, REFERENCE-001, migrar 3 tests legacy del shim
 - **Conteos históricos (424/466/534/596/1212):** superados; referencia, no estado actual
 
@@ -651,7 +651,7 @@ Estado actual:
 
 | Tier | Descripción | Modo | Entradas | Precisión |
 |---|---|---|---|---|
-| **Parser** | Extracción de params sin follow-up ni red | `--mode parser` (default) | 39 | 33/39 = 85% |
+| **Parser** | Extracción de params sin follow-up ni red | `--mode parser` (default) | 38 | 38/38 = 100% |
 | **Pipeline** | Follow-up + ejecución real contra SECOP | `--mode pipeline --live` | 26 | Pendiente medición |
 
 **Hallazgo clave — re-encuadre de precisión:**
@@ -660,18 +660,20 @@ El 26% era end-to-end histórico. Separando tiers:
 - **Parser-tier 85%:** De 25 bugs calificados 👎, 19 ya estaban arreglados (rangos compuestos, `filtra`, saludos, `esten`). Nadie lo sabía por falta de medición.
 - **Pipeline-tier:** El desplome real está en follow-up poisoning y recencia ("priorizó procesos viejos"). Ahí se concentran los 👎 restantes.
 
-**6 bugs de parser aislados (todos regresión-objetivo):**
+**6 bugs de parser — 5 resueltos, 1 reclasificado (verificación 2026-06-03):**
 
-| ID | Bug | Tipo |
-|---|---|---|
-| RATED-016 | `oferta` se cuela en objeto | scrub señal-oportunidad |
-| RATED-040 | `vias` se pierde con "...teusaquillo sobre vias" | scrub/entity |
-| RATED-041 | `oficial` del `(oficial)` de UI se cuela en objeto | scrub |
-| RATED-059 | `software` expande a `tecnología` (trae alcantarillado) | expansión morfológica |
-| RATED-067 | `o similares` inyecta `valor_max=1.000.000` | parser rango |
-| RATED-069 | `El Banco` (municipio de Magdalena) leído como tema `banco` | gazetteer |
+| ID | Bug | Tipo | Estado |
+|---|---|---|---|
+| RATED-016 | `oferta` se cuela en objeto | scrub | ✅ Resuelto (stopwords) |
+| RATED-040 | `vias` se pierde con "...teusaquillo sobre vias" | scrub/entity | ✅ Resuelto (word boundary) |
+| RATED-041 | `oficial` del `(oficial)` de UI se cuela | scrub | ✅ Resuelto (stopwords) |
+| RATED-059 | `software` expande a `tecnología` | morfología | ✅ Resuelto (morpho fix) |
+| RATED-067 | `o similares` inyecta `valor_max=1.000.000` | parser rango | ✅ Resuelto (regex \b + stopwords) |
+| RATED-069 | `El Banco` (municipio) → tema `banco` | gazetteer/LLM | 🔄 Reclasificado pipeline-tier |
 
-**Piso de regresión:** `tests/test_rated_eval.py` — el piso parser-tier no puede bajar de 33/39 ni las 👍 pueden regresar.
+RATED-069 no se puede resolver con regex (rompería "Banco Agrario", "Banco de Bogotá", "Banco Mundial"). Es caso canónico para la capa de desambiguación LLM.
+
+**Piso de regresión:** `tests/test_rated_eval.py` — el piso parser-tier no puede bajar de 38/38 ni las 👍 pueden regresar.
 
 **Divergencia SQLite/JSONL:** El dashboard lee de SQLite (70 calificadas). El JSONL (`data/feedback.jsonl`) tiene solo 42. El harness usa SQLite como fuente de verdad. Ver `scripts/eval_rated.py` para detalles.
 
@@ -836,16 +838,14 @@ Esta sección antes contenía un mirror (D1–D21) que se eliminó para evitar d
 - Acumular evidencia antes de flipear el default.
 - Columna `shadow_llm_params` en trazas para almacenar.
 
-### Fase E — Liquidar 6 bugs de parser
+### Fase E — RATED-069: desambiguación banco=municipio (requiere LLM)
 
-**Estado:** aislados por eval harness, listos para fix.
+**Estado:** único bug parser-tier remanente, reclasificado pipeline-tier.
 
-- RATED-016: `oferta` se cuela en objeto.
-- RATED-040: `vias` se pierde con "...teusaquillo sobre vias".
-- RATED-041: `oficial` del `(oficial)` de UI se cuela.
-- RATED-059: `software` expande a `tecnología`.
-- RATED-067: `o similares` inyecta `valor_max=1.000.000`.
-- RATED-069: `El Banco` (municipio) leído como tema `banco`.
+- `El Banco` es municipio de Magdalena, pero "banco" es polisémico (Banco Agrario, Banco de Bogotá, Banco Mundial, banco de alimentos).
+- Un fix regex `del banco`→ciudad rompe toda esa clase.
+- Caso canónico para shadow LLM: desambiguar entidad geográfica vs tema contractual.
+- Los otros 5 bugs parser (RATED-016/040/041/059/067) fueron resueltos silenciosamente por sprints mayo 2026.
 
 ### Fase F — Relevancia y ranking
 
@@ -887,13 +887,25 @@ Después del follow-up:
 
 ---
 
-## 16. Apéndice A: Hitos históricos (2026-05-15 a 2026-06-03)
+## 16. Apéndice A: Hitos históricos (2026-05-15 a 2026-06-04)
 
-### 2026-06-03 — Revisión integral de arquitectura + eval harness
+### 2026-06-04 — Fechas relativas semana/día + Entidad robusta + Firmado fix + Paginación A-buffer
 
-**Revisión integral:** Se identificaron 5 causas raíz estructurales que explican el "parche infinito" (documentadas en §12.2). Hallazgo principal: el parser está en 85% de precisión (33/39 sobre queries reales calificadas), no en 26% como sugería el dashboard end-to-end. El desplome real está en el pipeline (follow-up poisoning, recencia).
+**Fechas relativas (ADR-025, commit `4ac717c`):** Extendida la capa temporal de DialoguePolicy + QueryPlan para soportar expresiones de semana/día: "hoy", "ayer", "esta semana", "la semana pasada", "últimos N días". Nueva señal `temporal_range` + regla P5b (espejo de P5). 15 tests. +7 tokens a STOPWORDS. Sin tocar P5/temporal_month.
 
-**Eval harness:** Creado `scripts/eval_rated.py` + `tests/fixtures/rated_eval_v1.yaml` (65 entradas etiquetadas) + `tests/test_rated_eval.py` (piso de regresión). Corre las 70 queries calificadas desde SQLite. Dos tiers: parser (85%) y pipeline (pendiente --live). 6 bugs de parser aislados con ID RATED-XXX.
+**Entidad robusta a trailing tokens (commit `91a7e61`):** Shrink-fallback en `rewrite_entity()` de `entity_types.py`. Cuando la captura completa no resuelve en el gazetteer, se reintenta con spans progresivamente más cortos (prefijo válido más largo). Robusto a CUALQUIER token trailing (temporal, tema, basura). 10 tests. + STOPWORDS: `mes, meses, hecho, hizo, hace, hacen, haciendo, gastado`.
+
+**Firmado fix (ADR-026, commit `a745ac8`):** Corregida la semántica de "firmado" que mapeaba erróneamente a `estado=Aprobado` (tiraba ~97% del recall). Validado contra SECOP real: 8 estados tienen ~100% de fecha_de_firma, 4 tienen <0.5%. "Firmado" = `fecha_de_firma IS NOT NULL`, no un valor de estado. Quitado el synonym falso de `estados.py`. 15 tests. + `firmada/firmadas` a STOPWORDS.
+
+**Paginación A-buffer (commit `994337b`):** Eliminados duplicados entre páginas de resultados con buffer de IDs ya vistos.
+
+### 2026-06-03 — Revisión integral de arquitectura + eval harness + verificación de bugs
+
+**Revisión integral:** Se identificaron 5 causas raíz estructurales que explican el "parche infinito" (documentadas en §12.2). Hallazgo principal: el parser está en 100% de precisión (38/38 sobre queries reales calificadas).
+
+**Eval harness:** Creado `scripts/eval_rated.py` + `tests/fixtures/rated_eval_v1.yaml` (65 entradas etiquetadas) + `tests/test_rated_eval.py` (piso de regresión). Corre las 70 queries calificadas desde SQLite. Dos tiers: parser (100%) y pipeline (pendiente --live).
+
+**Verificación de bugs:** 5 de 6 bugs parser-tier ya estaban resueltos por sprints mayo 2026 (RATED-016/040/041/059/067). RATED-069 (`El Banco` municipio) reclasificado a pipeline-tier — requiere desambiguación LLM. Parser-tier: 38/38 = 100%.
 
 **Documento técnico actualizado:** Consolidación de secciones duplicadas, header con métricas reales, §12 ampliado con causas raíz, §14 roadmap actualizado con foco en frame leak + shadow LLM.
 

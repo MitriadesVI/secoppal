@@ -103,10 +103,11 @@ queries:
     recorded_rating: 0
     tier: parser
     tags: [objeto]
-    comment: "sena atlantico tiene MC-ATL-CNCA-0023-2026; 'oferta' contamina objeto"
+    comment: "RESUELTO 2026-06-03: 'oferta' ya no contamina objeto. sena atlantico tiene MC-ATL-CNCA-0023-2026."
     expected:
-      objeto_contains: [mantenimiento, trampas]
+      objeto_contains: [mantenimiento, trampas de grasas]
       objeto_must_not_contain: [oferta, alguna]
+      dataset: contratos
 
   - id: RATED-017
     query: "holaa muestrame contratos de primera infancia de la alcaldia de barranquilla"
@@ -196,21 +197,23 @@ queries:
     recorded_rating: 0
     tier: parser
     tags: [entity, objeto]
-    comment: "no tiene la entidad; además 'vias' se perdió"
+    comment: "RESUELTO 2026-06-03: 'vias' ya no se pierde, entidad se resuelve correctamente a ALCALDIA LOCAL DE TEUSAQUILLO."
     expected:
       dataset: procesos
       objeto_contains: [vias]
+      entidad_resolved: "ALCALDIA LOCAL DE TEUSAQUILLO(oficial)"
 
   - id: RATED-041
     query: "buscar procesos de vias de  ALCALDIA LOCAL DE TEUSAQUILLO (oficial) en 2026?"
     recorded_rating: 0
     tier: parser
     tags: [entity, objeto]
-    comment: "incorrectooooo; '(oficial)' se cuela en objeto"
+    comment: "RESUELTO 2026-06-03: '(oficial)' ya no se cuela en objeto, 'buscar' ya no contamina, entidad+fechas OK."
     expected:
       dataset: procesos
       objeto_contains: [vias]
-      objeto_must_not_contain: [oficial]
+      objeto_must_not_contain: [oficial, buscar]
+      entidad_resolved: "ALCALDIA LOCAL DE TEUSAQUILLO(oficial)"
       fecha_desde: "2026-01-01"
       fecha_hasta: "2026-12-31"
 
@@ -504,7 +507,7 @@ queries:
     recorded_rating: 0
     tier: parser
     tags: [morphology, objeto, range, geo]
-    comment: "REGRESIÓN-OBJETIVO: morfología expande software→tecnología (trae alcantarillado/biomédico)"
+    comment: "RESUELTO 2026-06-03: 'software' ya no expande a 'tecnología' (no trae alcantarillado/biomédico). Rango compuesto + depto OK."
     expected:
       departamento_resolved: "Boyacá"
       valor_min: 500000000
@@ -556,11 +559,12 @@ queries:
     recorded_rating: 0
     tier: parser
     tags: [objeto, or_group, value_bug]
-    comment: "REGRESIÓN-OBJETIVO: 'o similares' inyectó valor_max=1.000.000 (disparate)"
+    comment: "RESUELTO 2026-06-03: 'o similares' ya no inyecta valor_max=1.000.000. 'concurso' y 'licitaciones' ya no contaminan objeto. Entidad Barranquilla OK."
     expected:
       objeto_contains: [construccion, parques]
       objeto_must_not_contain: [similares, concurso, licitaciones]
       absent: [valor_max]
+      entidad_resolved: "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"
 
   - id: RATED-068
     query: "procesos de barranquilla en parques 2026"

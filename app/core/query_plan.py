@@ -21,11 +21,12 @@ from app.core.contract_invariants import (
     has_substantial_filter,
 )
 from app.core.dialogue_policy import classify, DialogueSignal
+from app.core.semantic_sanity import compute_sanity_flags
 
 # ── All known rules — used as default when enabled_rules is None ──────────────
 ALL_RULES = {
     "P1", "P2", "P3", "P4", "P5", "P5b", "P6", "P7", "P8", "P9",
-    "P10", "P11", "P12", "P13",
+    "P10", "P11", "P12", "P13", "P14",
 }
 
 # ── Entity markers that preserve entity when present in raw_query (P9) ───────
@@ -277,6 +278,10 @@ def compute_query_plan(
     # ── P13: passive substantial-filter risk flag ───────────────────────
     if "P13" in rules_to_apply and not has_substantial_filter(working_params):
         risk_flags.append("unsafe_global_candidate")
+
+    # ── P14: passive semantic sanity flags (fail-open, never mutates) ────
+    if "P14" in rules_to_apply:
+        risk_flags.extend(compute_sanity_flags(working_params))
 
     # ── Default: valid query ──────────────────────────────────────────────
     if not reason_parts:
