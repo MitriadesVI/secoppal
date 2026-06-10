@@ -416,6 +416,8 @@ class Formatter:
                 lines.append(f"⚠️ valor atípico en datos abiertos{ref_str}")
             if row.get("url"):
                 lines.append(f"🔗 {row['url']}")
+            else:
+                lines.append("🔒 Vista pública no disponible (proceso pre-publicación)")
             lines.append("")
         result = "\n".join(lines).strip()
         sug_text = self._format_suggestions(suggestions)
@@ -462,6 +464,8 @@ class Formatter:
                 lines.append(f"⚠️ valor atípico en datos abiertos{ref_str}")
             if row.get("url"):
                 lines.append(str(row["url"]))
+            else:
+                lines.append("🔒 Vista pública no disponible (proceso pre-publicación)")
             lines.append("")
         result = "\n".join(lines).strip()
         sug_text = self._format_suggestions(suggestions)

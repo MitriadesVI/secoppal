@@ -30,6 +30,12 @@ class Settings(BaseSettings):
     telegram_bot_token: str | None = Field(default=None, alias="TELEGRAM_BOT_TOKEN")
     telegram_webhook_secret: str | None = Field(default=None, alias="TELEGRAM_WEBHOOK_SECRET")
     twilio_whatsapp_number: str | None = Field(default=None, alias="TWILIO_WHATSAPP_NUMBER")
+    # OpenWA — gateway self-hosted de WhatsApp Web (https://github.com/rmyndharis/OpenWA).
+    # Patrón JSON-in / REST-out (espeja Telegram), NO TwiML como Twilio.
+    openwa_base_url: str = Field(default="http://localhost:2785", alias="OPENWA_BASE_URL")
+    openwa_session_id: str | None = Field(default=None, alias="OPENWA_SESSION_ID")
+    openwa_api_key: str | None = Field(default=None, alias="OPENWA_API_KEY")
+    openwa_webhook_secret: str | None = Field(default=None, alias="OPENWA_WEBHOOK_SECRET")
     log_level: str = Field(default="INFO", alias="LOG_LEVEL")
     secop_feedback_path: Path = Field(default=Path("data/feedback.jsonl"), alias="SECOP_FEEDBACK_PATH")
     secop_feedback_db_path: Path = Field(default=Path("data/secoppal.db"), alias="SECOP_FEEDBACK_DB_PATH")

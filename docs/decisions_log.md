@@ -1084,3 +1084,64 @@ firmados).
 - Suite: 1338 passed, 23 xfailed
 - Commit: `a745ac8`
 - `make lint-core`: limpio
+
+---
+
+## ADR-027: Procesos sin URL pública — señalizar, no omitir; paridad entre canales
+
+**Fecha:** 2026-06-10
+**Estado:** Accepted
+
+**Contexto:** Un usuario reportó "en Streamlit salen los links de los contratos,
+en Telegram no". La hipótesis natural (Telegram pierde/rompe URLs) era falsa. La
+construcción de URL es **compartida** por todos los canales vía
+`Formatter._safe_url` → `to_rows`, así que el campo `url` es idéntico en Streamlit,
+Telegram y WhatsApp. Medido sobre la query real "oportunidades en adulto mayor":
+de 25 resultados, **solo 6 tenían URL**. Las otras 19 son procesos con
+`id_del_proceso = CO1.REQ.*` y `urlproceso` vacío.
+
+`CO1.REQ.*` = requisiciones pre-publicación / régimen especial (ESAL). Su página
+`OpportunityDetail` devuelve "argument out of range" → un fix previo
+(FIX-URL-FREEFORM-001 / DOGFOOD-URL-005) ya los suprime a propósito en `_safe_url`
+(no se muestra un link roto). La diferencia real entre canales NO estaba en los
+datos sino en la **señalización**:
+- **Streamlit** (`streamlit_app.py:139`) mostraba la nota
+  `🔒 Vista pública no disponible (proceso pre-publicación)`.
+- **Telegram / WhatsApp** **omitían la línea en silencio** → parecía que "faltan
+  los links" cuando en realidad el proceso no es consultable públicamente.
+
+**Decisión:**
+1. **No omitir en silencio: señalizar.** Cuando una fila no tiene `url`, los tres
+   canales muestran la misma nota de cortesía
+   `🔒 Vista pública no disponible (proceso pre-publicación)`. Se añadió la rama
+   `else` en `format_telegram` y `format_whatsapp` (`formatter.py`), igualando lo
+   que Streamlit ya hacía.
+2. **La política de resolución de URL sigue centralizada en `_safe_url`** (fuente
+   única; los formatters por canal solo deciden cómo *presentar* el resultado, no
+   lo recalculan). Streamlit no se modificó.
+
+**Alternativas descartadas:**
+- *Fabricar un link igual para CO1.REQ* (p.ej. `OpportunityDetail?noticeUID=CO1.REQ…`):
+  da error en SECOP; mostrar un link roto es peor que señalizar la ausencia.
+- *Filtrar/ocultar los procesos sin URL*: pierden visibilidad oportunidades reales
+  (varios ESAL "Abierto" de alto valor); el usuario debe verlos aunque no sean
+  consultables online.
+- *Resolver la nota por canal con texto distinto en cada formatter*: rompería la
+  paridad; se reusó la redacción exacta de Streamlit.
+
+**Tests:**
+- Nuevo `tests/test_url_fallback_channel_parity.py` (5 tests): CO1.REQ → nota en
+  Telegram y WhatsApp; CO1.NTC → link real; conteo de notas = filas sin url;
+  blindaje de que `_safe_url` deja `url=""` para CO1.REQ y URL válida para CO1.NTC
+  (Streamlit intacto).
+
+**Consecuencias:** Los tres canales explican por qué un proceso no tiene link, en
+vez de dejar un hueco confuso. Útil para Radar (futuro): un proceso pre-publicación
+es señal de oportunidad temprana y ahora el sistema lo distingue explícitamente.
+Nota de producto pendiente (no es bug): muchos resultados "Abierto" de adulto mayor
+son ESAL sin página pública — evaluar si etiquetarlos o priorizarlos distinto.
+
+**Métricas al cierre:**
+- Suite: 1415 passed, 23 xfailed (incluye +5 de `test_url_fallback_channel_parity.py`)
+- Fix en `app/core/formatter.py` (`format_telegram`, `format_whatsapp`)
+- Streamlit (`streamlit_app.py`) NO modificado
