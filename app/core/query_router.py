@@ -505,8 +505,26 @@ class QueryRouter:
                 }
                 scrubbed = entity_scan.remaining_text
 
-        # ── 6. GAZETTEER SCAN: Department (on remaining text) ───────────
-        #    Runs AFTER entity scan so "de santander" can't be stolen
+        # ── 6. GAZETTEER SCAN: Region/zone (BEFORE department) ──────────
+        #    Runs before the department scan so a multi-word zone whose head
+        #    is a department name ("tolima grande") is captured WHOLE before
+        #    the department scan can steal "tolima". Sets departamentos_in for
+        #    the builder to emit `departamento IN (...)`.
+        if self.entity_resolver:
+            region_scan = self.entity_resolver.scan_region(scrubbed)
+            if region_scan:
+                from app.data.colombia_geography import ZONES_BY_NAME
+                zone = region_scan.official_name
+                depts = ZONES_BY_NAME.get(zone, [])
+                if depts:
+                    params["region"] = zone
+                    params["departamentos_in"] = depts
+                    scrubbed = region_scan.remaining_text
+
+        # ── 6.2 GAZETTEER SCAN: Department (on remaining text) ──────────
+        #    Runs AFTER entity scan so "de santander" can't be stolen.
+        #    A specific department wins over a broader zone: if one resolves,
+        #    drop any zone captured in step 6.
         if self.entity_resolver:
             dept_scan = self.entity_resolver.scan_departamento(scrubbed)
             if dept_scan:
@@ -520,6 +538,8 @@ class QueryRouter:
                     "metadata": {},
                 }
                 scrubbed = dept_scan.remaining_text
+                params.pop("region", None)
+                params.pop("departamentos_in", None)
 
         # ── 6.5 MULTI-REGIONAL ENTITY RESOLUTION (ENTITY-MULTI-REGIONAL-001) ──
         # Si la entidad resuelta es multi-regional (SENA, ICBF, etc.) y hay
