@@ -4,10 +4,16 @@ SECOPPAL — Streamlit UI
 from __future__ import annotations
 
 import re
+import time
 import uuid
+from datetime import datetime, timezone
 
 import streamlit as st
 
+from app.core.radar.builder import has_scope_or_topic, save_radar_from_params
+from app.core.radar.commands import radar_owner
+from app.core.radar.runner import run_radar
+from app.core.radar.store import RadarExistsError
 from app.service import get_workflow
 
 # ---------------------------------------------------------------------------
@@ -335,7 +341,17 @@ if "chat_id" not in st.session_state:
     st.session_state.chat_id = "st_default"
 
 if "anonymous_user_id" not in st.session_state:
-    st.session_state.anonymous_user_id = uuid.uuid4().hex[:12]
+    # Persistir el id anónimo en la URL (query_params): Streamlit crea una
+    # sesión nueva en cada refresco de página (F5), perdiendo session_state.
+    # Sin esto, el owner del usuario cambia al refrescar y sus radares
+    # (guardados bajo el owner anterior) "desaparecen".
+    _qp_uid = st.query_params.get("uid")
+    if _qp_uid:
+        st.session_state.anonymous_user_id = _qp_uid
+    else:
+        _new_uid = uuid.uuid4().hex[:12]
+        st.session_state.anonymous_user_id = _new_uid
+        st.query_params["uid"] = _new_uid
 
 if "user_name" not in st.session_state:
     st.session_state.user_name = ""
@@ -412,89 +428,426 @@ with st.sidebar:
     show_cards = st.toggle("Tarjetas en vez de tabla", value=True)
 
 # ═══════════════════════════════════════════════════════════════════════════
+# Radar tab
+# ═══════════════════════════════════════════════════════════════════════════
+
+def _render_radar_detail(store, radar) -> None:
+    """Vista de detalle: timeline de corridas con digests expandibles."""
+    if st.button("← Volver a mis radares", key="radar_back"):
+        del st.session_state["_open_radar"]
+        st.rerun()
+
+    estado = "● activo" if radar.is_enabled else "⏸ pausado"
+    st.subheader(f"📡 {radar.name}")
+    st.caption(f"{estado} · dataset: {radar.dataset or 'procesos'} · "
+               f"última revisión: {radar.last_run_at[:16] if radar.last_run_at else 'nunca'}")
+    if radar.last_error_message:
+        st.warning(f"Último error: {radar.last_error_message}")
+
+    c1, c2 = st.columns(2)
+    if c1.button("▶ Ejecutar ahora", key="radar_detail_run", use_container_width=True):
+        with st.spinner("Revisando SECOP..."):
+            run_radar(workflow.deps, store, radar)
+        st.rerun()
+    toggle_label = "⏸ Pausar" if radar.is_enabled else "● Reactivar"
+    if c2.button(toggle_label, key="radar_detail_toggle", use_container_width=True):
+        store.set_enabled(radar.id, not radar.is_enabled)
+        st.rerun()
+
+    st.divider()
+    runs = store.get_runs(radar.id, limit=50)
+    if not runs:
+        st.info("Este radar no se ha ejecutado todavía. Pulsa «Ejecutar ahora».")
+        return
+
+    st.markdown("#### Línea de tiempo")
+    for i, run in enumerate(runs):
+        digest = run.digest()
+        when = run.started_at[:16].replace("T", " ")
+        if run.status == "error":
+            label = f"⚠️ {when} · error"
+        elif run.new_count or run.changed_count:
+            label = f"🆕 {when} · {run.new_count} nuevos · {run.changed_count} cambios"
+        else:
+            label = f"✓ {when} · sin novedades"
+        with st.expander(label, expanded=(i == 0)):
+            st.text(digest.get("text", "(sin digest)"))
+
+
+_FREQ_LABELS = {
+    "manual": "Manual (solo cuando pulso Actualizar)",
+    "cada_6h": "Cada 6 horas",
+    "diaria": "Diaria",
+    "semanal": "Semanal",
+}
+
+
+def _do_crear_radar(store, owner, nombre, consulta, dataset, tema, departamento,
+                    entidad, valor_min, valor_max, fecha_desde, fecha_hasta,
+                    frequency) -> None:
+    """Resuelve la búsqueda vía el pipeline, guarda el radar y lo corre una vez."""
+    nombre = (nombre or "").strip()
+    if not nombre:
+        st.error("Ponle un nombre al radar.")
+        return
+
+    # Construir la query en lenguaje natural para resolución (reusa el parser
+    # y el entity_resolver del pipeline). Prioriza la búsqueda rápida; si no
+    # hay, compone desde los campos estructurados de texto.
+    base = (consulta or "").strip()
+    if not base:
+        parts = []
+        parts.append(tema.strip() if tema.strip()
+                     else ("contratos" if dataset == "contratos" else "procesos"))
+        if departamento.strip():
+            parts.append(f"en {departamento.strip()}")
+        if entidad.strip():
+            parts.append(f"de {entidad.strip()}")
+        base = " ".join(parts).strip()
+        if dataset == "contratos" and "contrato" not in base.lower():
+            base = "contratos de " + base
+
+    has_text = bool(consulta.strip() or tema.strip() or departamento.strip()
+                    or entidad.strip())
+    if not has_text:
+        st.error("Agrega una búsqueda rápida, o al menos temática / departamento / entidad.")
+        return
+
+    with st.spinner("Resolviendo búsqueda contra SECOP..."):
+        result = workflow.run_query(
+            base, channel="streamlit", chat_id=f"_radarcreate_{owner}",
+            user_identity={"channel": "streamlit", "channel_user_key": owner},
+        )
+    params = dict(result.get("resolved_params") or {})
+    if not has_scope_or_topic(params):
+        st.error("No pude resolver esa búsqueda (sin alcance ni tema). Sé más específico.")
+        return
+
+    # Overlay de los campos estructurados exactos (no necesitan resolución).
+    if valor_min and valor_min > 0:
+        params["valor_min"] = int(valor_min)
+    if valor_max and valor_max > 0:
+        params["valor_max"] = int(valor_max)
+    if fecha_desde:
+        params["fecha_desde"] = fecha_desde.isoformat()
+    if fecha_hasta:
+        params["fecha_hasta"] = fecha_hasta.isoformat()
+
+    try:
+        rid = save_radar_from_params(store, owner=owner, name=nombre, params=params,
+                                     channel="web", frequency=frequency)
+    except RadarExistsError:
+        st.error(f"Ya tienes un radar llamado «{nombre}».")
+        return
+
+    # Ejecutar la primera revisión ya, para que el feed y el timeline no queden
+    # vacíos tras crear (establece la línea base).
+    radar = store.get_radar(rid)
+    with st.spinner("Ejecutando primera revisión..."):
+        run_radar(workflow.deps, store, radar)
+    st.session_state["_radar_refresh_ts"] = time.time()
+    st.success(f"📡 Radar «{nombre}» creado y revisado. Mira sus movimientos abajo.")
+    st.rerun()
+
+
+def _render_crear_radar(store, owner) -> None:
+    """Formulario «➕ Crear radar»: búsqueda rápida o por campos."""
+    with st.expander("➕ Crear radar nuevo", expanded=False):
+        nombre = st.text_input("Nombre del radar", key="cr_nombre",
+                               placeholder="ej: Mantenimiento Costa Atlántica")
+        st.markdown("**Forma rápida** — descríbelo en una frase:")
+        consulta = st.text_input(
+            "Búsqueda", key="cr_consulta", label_visibility="collapsed",
+            placeholder="ej: oportunidades de mantenimiento en costa atlántica",
+        )
+
+        st.markdown("**O por campos** — se combinan con la frase (o la reemplazan):")
+        c1, c2 = st.columns(2)
+        dataset = c1.selectbox("Dataset", ["procesos", "contratos"], key="cr_ds")
+        tema = c2.text_input("Temática / objeto", key="cr_tema",
+                             placeholder="ej: mantenimiento")
+        departamento = c1.text_input("Región / departamento", key="cr_dep",
+                                     placeholder="ej: Atlántico, Costa Atlántica")
+        entidad = c2.text_input("Entidad (opcional)", key="cr_ent",
+                                placeholder="ej: Gobernación del Cesar")
+        valor_min = c1.number_input("Monto mínimo (0 = sin mínimo)", min_value=0,
+                                    value=0, step=1_000_000, key="cr_vmin")
+        valor_max = c2.number_input("Monto máximo (0 = sin máximo)", min_value=0,
+                                    value=0, step=1_000_000, key="cr_vmax")
+        fecha_desde = c1.date_input("Desde (opcional)", value=None, key="cr_fd")
+        fecha_hasta = c2.date_input("Hasta (opcional)", value=None, key="cr_fh")
+
+        freq = st.selectbox(
+            "Tiempo del radar (frecuencia de revisión)",
+            options=list(_FREQ_LABELS.keys()),
+            format_func=lambda k: _FREQ_LABELS[k], key="cr_freq",
+        )
+        if freq != "manual":
+            st.caption("⏳ La revisión automática llega con el scheduler (roadmap). "
+                       "Por ahora se revisa cuando pulsas 🔄 Actualizar.")
+
+        if st.button("Crear radar", key="cr_submit", type="primary"):
+            _do_crear_radar(store, owner, nombre, consulta, dataset, tema,
+                            departamento, entidad, valor_min, valor_max,
+                            fecha_desde, fecha_hasta, freq)
+
+
+def _fmt_money_feed(raw) -> str:
+    if not raw:
+        return "s/d"
+    try:
+        return f"${float(raw):,.0f}".replace(",", ".")
+    except (ValueError, TypeError):
+        return str(raw)
+
+
+def _fmt_feed_ts(ts) -> str:
+    """Tiempo relativo tipo feed: 'hace 3 min', 'hace 2 h', 'ayer'."""
+    if ts is None:
+        return ""
+    try:
+        if isinstance(ts, (int, float)):
+            dt = datetime.fromtimestamp(ts, tz=timezone.utc)
+        else:
+            dt = datetime.fromisoformat(str(ts))
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=timezone.utc)
+    except (ValueError, TypeError):
+        return str(ts)[:16]
+    delta = datetime.now(timezone.utc) - dt
+    secs = int(delta.total_seconds())
+    if secs < 60:
+        return "hace un momento"
+    if secs < 3600:
+        return f"hace {secs // 60} min"
+    if secs < 86400:
+        return f"hace {secs // 3600} h"
+    if secs < 172800:
+        return "ayer"
+    return f"hace {secs // 86400} d"
+
+
+_EVENT_META = {
+    "baseline": ("📡", "empezó a vigilar"),
+    "new": ("🆕", "nuevo"),
+    "changed_state": ("🔁", "cambio de estado"),
+    "changed_value": ("💰", "cambio de valor"),
+    "disappeared": ("⬇️", "ya no aparece"),
+}
+
+
+def _render_event_card(ev: dict) -> None:
+    icon, label = _EVENT_META.get(ev.get("kind", ""), ("•", ""))
+    with st.container(border=True):
+        st.markdown(
+            f"{icon} **{ev.get('radar_name', '')}** · {label} · "
+            f"{_fmt_feed_ts(ev.get('ts'))}"
+        )
+        title = (ev.get("title") or "").strip()
+        kind = ev.get("kind")
+        if kind == "baseline":
+            st.caption(title)
+            return
+        if title:
+            st.markdown(title)
+        entity = ev.get("entity") or ""
+        if kind == "changed_state":
+            st.caption(f"{entity}")
+            st.markdown(f"Estado: *{ev.get('prev_status') or 's/d'} → "
+                        f"{ev.get('status') or 's/d'}*")
+        elif kind == "changed_value":
+            st.caption(f"{entity}")
+            st.markdown(f"Valor: *{_fmt_money_feed(ev.get('prev_value'))} → "
+                        f"{_fmt_money_feed(ev.get('value'))}*")
+        else:  # new
+            st.caption(f"{entity} · {_fmt_money_feed(ev.get('value'))} · "
+                       f"{ev.get('status') or 's/d'}")
+        if ev.get("urlproceso"):
+            st.markdown(f"[🔗 Ver en SECOP]({ev['urlproceso']})")
+
+
+def _refresh_all_radares(store, owner) -> None:
+    """Corre todos los radares activos (pull-to-refresh) con barra de progreso."""
+    radars = [r for r in store.list_radars(owner) if r.is_enabled]
+    if not radars:
+        st.warning("No tienes radares activos para actualizar.")
+        return
+    prog = st.progress(0.0, text="Actualizando radares...")
+    for i, radar in enumerate(radars):
+        prog.progress(i / len(radars), text=f"Actualizando: {radar.name}")
+        try:
+            run_radar(workflow.deps, store, radar)
+        except Exception:
+            pass  # un radar que falla no debe tumbar el refresco global
+    prog.empty()
+    st.session_state["_radar_refresh_ts"] = time.time()
+
+
+def _render_manage_row(store, radar) -> None:
+    estado = "● activo" if radar.is_enabled else "⏸ pausado"
+    last = radar.last_run_at[:16].replace("T", " ") if radar.last_run_at else "nunca"
+    st.markdown(f"**📡 {radar.name}** — {estado} · última revisión: {last}")
+    c1, c2, c3, c4 = st.columns(4)
+    if c1.button("Abrir", key=f"mng_open_{radar.id}", use_container_width=True):
+        st.session_state["_open_radar"] = radar.id
+        st.rerun()
+    if c2.button("Ejecutar", key=f"mng_run_{radar.id}", use_container_width=True):
+        with st.spinner("Revisando SECOP..."):
+            run_radar(workflow.deps, store, radar)
+        st.rerun()
+    toggle = "Pausar" if radar.is_enabled else "Reactivar"
+    if c3.button(toggle, key=f"mng_toggle_{radar.id}", use_container_width=True):
+        store.set_enabled(radar.id, not radar.is_enabled)
+        st.rerun()
+    if c4.button("Eliminar", key=f"mng_del_{radar.id}", use_container_width=True):
+        store.delete_radar(radar.id)
+        st.rerun()
+    st.divider()
+
+
+def _render_radares() -> None:
+    """Pestaña 📡 Radares: feed de movimientos + gestión → detalle (timeline)."""
+    store = getattr(workflow, "radar_store", None)
+    if store is None:
+        st.info("El módulo de radares no está disponible.")
+        return
+
+    identity = _current_user_identity()
+    owner = radar_owner(identity, st.session_state.get("chat_id"))
+
+    # Vista de detalle si hay un radar abierto.
+    open_id = st.session_state.get("_open_radar")
+    if open_id:
+        radar = store.get_radar(open_id)
+        if radar is not None:
+            _render_radar_detail(store, radar)
+            return
+        del st.session_state["_open_radar"]
+
+    _render_crear_radar(store, owner)
+
+    radars = store.list_radars(owner)
+
+    # Barra de refresco (pull-to-refresh). El feed muestra movimientos ya
+    # persistidos al instante; este botón corre los radares para traer nuevos.
+    c1, c2 = st.columns([1, 3])
+    if c1.button("🔄 Actualizar", key="radar_refresh_all",
+                 type="primary", use_container_width=True,
+                 disabled=not radars):
+        _refresh_all_radares(store, owner)
+        st.rerun()
+    activos = sum(1 for r in radars if r.is_enabled)
+    last_ts = st.session_state.get("_radar_refresh_ts")
+    last_txt = f" · actualizado {_fmt_feed_ts(last_ts)}" if last_ts else ""
+    c2.caption(f"{len(radars)} radares · {activos} activos{last_txt}. "
+               "Baja para ver movimientos; pulsa Actualizar para traer nuevos.")
+
+    # Feed de movimientos (todos los radares juntos, cronológico).
+    feed = store.get_feed(owner, limit=80)
+    if not feed:
+        st.info("Sin movimientos todavía. Crea un radar y pulsa 🔄 Actualizar.")
+    else:
+        st.markdown("#### Movimientos")
+        for ev in feed:
+            _render_event_card(ev)
+
+    # Gestión de radares (secundario): pausar, abrir detalle, eliminar.
+    if radars:
+        with st.expander(f"⚙️ Gestionar radares ({len(radars)})"):
+            for radar in radars:
+                _render_manage_row(store, radar)
+
+
+# ═══════════════════════════════════════════════════════════════════════════
 # Main area
 # ═══════════════════════════════════════════════════════════════════════════
 
 st.title("SECOPPAL")
 st.caption("Busqueda conversacional sobre contratacion publica colombiana — SECOP II")
 
-# Onboarding cuando no hay historial
-if not st.session_state.history:
-    st.info(
-        "👋 **Bienvenido a SECOPPAL** — tu asistente para buscar oportunidades "
-        "y contratos en SECOP II.\n\n"
-        "**Ejemplos de consultas:**\n"
-        "• contratos de obra en Bogotá\n"
-        "• procesos abiertos en INVIAS\n"
-        "• contratos mayores a 500M en Antioquia\n\n"
-        "Haz clic en un ejemplo de la barra lateral o escribe tu consulta abajo."
+tab_buscar, tab_radares = st.tabs(["🔎 Buscar", "📡 Radares"])
+
+with tab_buscar:
+    # Onboarding cuando no hay historial
+    if not st.session_state.history:
+        st.info(
+            "👋 **Bienvenido a SECOPPAL** — tu asistente para buscar oportunidades "
+            "y contratos en SECOP II.\n\n"
+            "**Ejemplos de consultas:**\n"
+            "• contratos de obra en Bogotá\n"
+            "• procesos abiertos en INVIAS\n"
+            "• contratos mayores a 500M en Antioquia\n\n"
+            "Haz clic en un ejemplo de la barra lateral o escribe tu consulta abajo."
+        )
+
+    # ═══════════════════════════════════════════════════════════════════════
+    # Render chat history
+    # ═══════════════════════════════════════════════════════════════════════
+
+    # Índice del último mensaje assistant — usado para mostrar "Ver más"
+    # solo en el turno actual y evitar botones obsoletos en turnos viejos.
+    _last_assistant_idx = next(
+        (i for i in range(len(st.session_state.history) - 1, -1, -1)
+         if st.session_state.history[i].get("role") == "assistant"),
+        -1,
     )
 
-# ═══════════════════════════════════════════════════════════════════════════
-# Render chat history
-# ═══════════════════════════════════════════════════════════════════════════
+    for idx, item in enumerate(st.session_state.history):
+        if item["role"] == "user":
+            with st.chat_message("user"):
+                st.markdown(item["content"])
+            continue
 
-# Índice del último mensaje assistant — usado para mostrar "Ver más"
-# solo en el turno actual y evitar botones obsoletos en turnos viejos.
-_last_assistant_idx = next(
-    (i for i in range(len(st.session_state.history) - 1, -1, -1)
-     if st.session_state.history[i].get("role") == "assistant"),
-    -1,
-)
-
-for idx, item in enumerate(st.session_state.history):
-    if item["role"] == "user":
-        with st.chat_message("user"):
+        with st.chat_message("assistant"):
             st.markdown(item["content"])
-        continue
 
-    with st.chat_message("assistant"):
-        st.markdown(item["content"])
+            # Contextual filter bar — aparece incluso con pocos resultados (≥5)
+            # para que los refinamientos sucesivos sigan teniendo opciones visibles.
+            contextual_filters = item.get("contextual_filters", {})
+            total_count = item.get("total_count", 0)
+            if contextual_filters and total_count >= 5:
+                _render_contextual_filters(contextual_filters, f"inline_{idx}")
 
-        # Contextual filter bar — aparece incluso con pocos resultados (≥5)
-        # para que los refinamientos sucesivos sigan teniendo opciones visibles.
-        contextual_filters = item.get("contextual_filters", {})
-        total_count = item.get("total_count", 0)
-        if contextual_filters and total_count >= 5:
-            _render_contextual_filters(contextual_filters, f"inline_{idx}")
+            rows = item.get("rows", [])
+            route_reason = item.get("debug", {}).get("route_reason", "")
+            dataset_id = item.get("debug", {}).get("dataset_id", "")
+            is_direct_lookup = route_reason.startswith("direct_lookup")
 
-        rows = item.get("rows", [])
-        route_reason = item.get("debug", {}).get("route_reason", "")
-        dataset_id = item.get("debug", {}).get("dataset_id", "")
-        is_direct_lookup = route_reason.startswith("direct_lookup")
+            if is_direct_lookup and rows:
+                _render_detail_card(rows[0], dataset_id=dataset_id)
+            elif rows and show_cards:
+                _render_cards(rows)
+            elif rows:
+                st.dataframe(rows, use_container_width=True)
 
-        if is_direct_lookup and rows:
-            _render_detail_card(rows[0], dataset_id=dataset_id)
-        elif rows and show_cards:
-            _render_cards(rows)
-        elif rows:
-            st.dataframe(rows, use_container_width=True)
-
-        # Botón "Ver más resultados" — solo en el turno actual, cuando hay
-        # más resultados de los mostrados y no es un direct lookup.
-        if (
-            idx == _last_assistant_idx
-            and not is_direct_lookup
-            and rows
-            and total_count > len(rows)
-        ):
-            remaining = total_count - len(rows)
-            if st.button(
-                f"📄 Ver más resultados ({remaining} restantes)",
-                key=f"paginate_{idx}",
-                use_container_width=True,
+            # Botón "Ver más resultados" — solo en el turno actual, cuando hay
+            # más resultados de los mostrados y no es un direct lookup.
+            if (
+                idx == _last_assistant_idx
+                and not is_direct_lookup
+                and rows
+                and total_count > len(rows)
             ):
-                st.session_state._pending_pagination = True
-                st.rerun()
+                remaining = total_count - len(rows)
+                if st.button(
+                    f"📄 Ver más resultados ({remaining} restantes)",
+                    key=f"paginate_{idx}",
+                    use_container_width=True,
+                ):
+                    st.session_state._pending_pagination = True
+                    st.rerun()
 
-        debug = item.get("debug")
-        if debug and show_trace:
-            _render_trace(debug)
+            debug = item.get("debug")
+            if debug and show_trace:
+                _render_trace(debug)
 
-        trace_id = item.get("trace_id")
-        rating = item.get("rating")
-        if trace_id:
-            _render_rating(trace_id, rating, idx)
+            trace_id = item.get("trace_id")
+            rating = item.get("rating")
+            if trace_id:
+                _render_rating(trace_id, rating, idx)
+
+with tab_radares:
+    _render_radares()
 
 # ═══════════════════════════════════════════════════════════════════════════
 # Chat input — handle pending refinement and examples

@@ -18,14 +18,102 @@ contract suite (``tests/test_orchestrator_golden.py``).
 from __future__ import annotations
 
 import time
+from dataclasses import dataclass
+from typing import TYPE_CHECKING
 
 from burr.core import State
 
+from app.core._followup_constants import SCOPE_TOPIC_KEYS
 from app.core.secop_client import SecopClient
+from app.core.soql_builder import SoQLBuilder
+
+if TYPE_CHECKING:
+    from app.core.workflow.deps import WorkflowDeps
 
 
 def _elapsed_ms(start: float) -> float:
     return round((time.perf_counter() - start) * 1000, 2)
+
+
+# ---------------------------------------------------------------------------
+# execute_resolved_params — núcleo de búsqueda CONVERSACIONALMENTE PURO
+# ---------------------------------------------------------------------------
+
+@dataclass(frozen=True)
+class ResolvedExecution:
+    """Resultado de ejecutar params ya resueltos contra SECOP.
+
+    Es la salida del núcleo compartido por ``handle_refinement`` y el
+    Radar (y, a futuro, export Excel / jobs async). No contiene ningún
+    efecto conversacional: ni trace de feedback, ni turno de historial.
+    """
+
+    results: list[dict]
+    rows: list[dict]
+    response: str
+    total: int
+    soql: str
+    dataset_id: str
+    approximate: bool
+
+
+def execute_resolved_params(
+    deps: "WorkflowDeps",
+    params: dict,
+    *,
+    channel: str = "whatsapp",
+) -> ResolvedExecution | None:
+    """Ejecuta params ya resueltos: params → SoQL → guard → query → format.
+
+    **Núcleo puro en términos conversacionales.** Hace exactamente:
+    build SoQL + count → guard anti-WHERE-1=1 → ``_query_first_then_count``
+    → ``format_for_channel``. **No** hace ``append_turn``, **no** registra
+    feedback/trace, **no** muta contexto ni escribe historial. Esa es la
+    regla que permite que el Radar reutilice la búsqueda sin contaminar la
+    conversación.
+
+    Retorna ``None`` cuando el guard anti-1=1 falla (sin scope/topic) o la
+    consulta lanza excepción, señalando al caller que caiga a otro flujo.
+    Nunca muta ``params`` recibido (trabaja sobre una copia).
+    """
+    params = dict(params)
+    # offset/limit deben empezar de cero: es una búsqueda nueva, no paginación.
+    params.pop("offset", None)
+    params.setdefault("limit", 50)
+
+    # Guard anti-WHERE 1=1: sin scope ni topic no se ejecuta.
+    has_scope_or_topic = any(
+        params.get(k) and params.get(k) not in (None, [], "", {}, False)
+        for k in SCOPE_TOPIC_KEYS
+    )
+    if not has_scope_or_topic:
+        return None
+
+    ds_id = SoQLBuilder.dataset_id_for(params.get("dataset"))
+    try:
+        soql = deps.soql_builder.build(ds_id, params)
+        count_soql = deps.soql_builder.build_count(ds_id, params)
+        total, results, _t, approx = _query_first_then_count(
+            deps.secop_client, ds_id, count_soql, soql,
+            limit=int(params.get("limit", 50) or 50),
+        )
+    except Exception:
+        return None
+
+    response, rows = deps.formatter.format_for_channel(
+        results, ds_id, channel,
+        params=params, total_count=total,
+        total_count_approximate=approx,
+    )
+    return ResolvedExecution(
+        results=results,
+        rows=rows,
+        response=response,
+        total=total,
+        soql=soql,
+        dataset_id=ds_id,
+        approximate=approx,
+    )
 
 
 def _with_timing(state: State, key: str, start: float, **updates) -> State:

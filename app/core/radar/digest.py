@@ -1,0 +1,164 @@
+"""digest.py — convierte un RadarDiff en lectura asesora.
+
+No manda 50 filas: manda una lectura (sección 3, Nivel 3 del doc de producto).
+Plantilla en español, tono asesor. Incluye:
+
+- conteo de novedades (nuevos / cambios de estado / cambios de valor / desaparecidos);
+- top 3 resultados nuevos con valor y estado;
+- bandera de valor atípico (heurística simple sobre el rango ya observado);
+- ``risk_flag`` de ventana: si el universo excede la ventana revisada, avisa que
+  puede haber novedades fuera de los N resultados más recientes (evita certeza falsa).
+
+Devuelve un dict con ``text`` (lo que ve el usuario) + estructura para auditoría.
+"""
+from __future__ import annotations
+
+from app.core.radar.diff import DiffItem, RadarDiff
+
+
+def _fmt_money(raw: str) -> str:
+    if not raw:
+        return "s/d"
+    try:
+        n = float(raw)
+    except (ValueError, TypeError):
+        return raw
+    return f"${n:,.0f}".replace(",", ".")
+
+
+def _to_float(raw: str) -> float | None:
+    try:
+        return float(raw)
+    except (ValueError, TypeError):
+        return None
+
+
+def _atypical_threshold(seen_map: dict[str, dict]) -> float | None:
+    """Umbral simple de valor atípico: 2× el máximo valor ya observado.
+
+    Devuelve ``None`` si no hay valores previos suficientes para comparar.
+    """
+    values = [
+        v for v in (_to_float(rec.get("value", "")) for rec in seen_map.values())
+        if v and v > 0
+    ]
+    if len(values) < 3:
+        return None
+    return max(values) * 2.0
+
+
+def _format_item(item: DiffItem) -> str:
+    title = item.fields.get("title") or "(sin título)"
+    if len(title) > 90:
+        title = title[:87] + "…"
+    entity = item.fields.get("entity") or ""
+    value = _fmt_money(item.fields.get("value", ""))
+    status = item.fields.get("status") or "s/d"
+    line = f"• {title}"
+    if entity:
+        line += f"\n  {entity}"
+    line += f"\n  Valor: {value} · Estado: {status}"
+    if item.contractor_new and item.fields.get("contractor"):
+        line += f"\n  🆕 Operador nuevo: {item.fields['contractor']}"
+    return line
+
+
+def build_digest(
+    radar_name: str,
+    diff: RadarDiff,
+    run_meta: dict,
+    seen_map: dict[str, dict] | None = None,
+) -> dict:
+    """Construye el digest asesor de una corrida.
+
+    ``run_meta`` espera: ``total``, ``approx_total``, ``window_limit``,
+    ``approximate``. ``seen_map`` es el estado PREVIO (antes del upsert),
+    usado para el umbral de valor atípico.
+    """
+    seen_map = seen_map or {}
+    lines: list[str] = [f"🔔 Radar {radar_name}"]
+    risk_flags: list[str] = []
+
+    # Bandera de ventana: el universo supera lo que se alcanzó a revisar.
+    window_limit = int(run_meta.get("window_limit", 100))
+    total = int(run_meta.get("total", 0) or 0)
+    approximate = bool(run_meta.get("approximate"))
+    if approximate or total > window_limit:
+        risk_flags.append(
+            f"⚠️ Radar amplio: se revisaron los {window_limit} resultados más "
+            "recientes. Puede haber novedades fuera de esta ventana."
+        )
+
+    if not diff.has_novelty:
+        lines.append("")
+        lines.append("Sin novedades frente a la última revisión.")
+        for flag in risk_flags:
+            lines.append("")
+            lines.append(flag)
+        return _result(lines, diff, risk_flags, atypical=[])
+
+    # Resumen de conteos.
+    parts: list[str] = []
+    if diff.new:
+        parts.append(f"{len(diff.new)} nuevos")
+    if diff.changed_state:
+        parts.append(f"{len(diff.changed_state)} cambios de estado")
+    if diff.changed_value:
+        parts.append(f"{len(diff.changed_value)} cambios de valor")
+    if diff.disappeared:
+        parts.append(f"{len(diff.disappeared)} desaparecidos")
+    total_nov = diff.new_count + diff.changed_count + len(diff.disappeared)
+    lines.append("")
+    lines.append(f"Desde la última revisión encontré {total_nov} novedades: "
+                 + ", ".join(parts) + ".")
+
+    # Valor atípico entre los nuevos.
+    atypical: list[str] = []
+    threshold = _atypical_threshold(seen_map)
+    if threshold is not None:
+        for item in diff.new:
+            v = _to_float(item.fields.get("value", ""))
+            if v and v >= threshold:
+                atypical.append(item.key)
+        if atypical:
+            risk_flags.append(
+                f"⚠️ {len(atypical)} resultado(s) con valor atípico frente al "
+                "rango observado — conviene revisar."
+            )
+
+    # Top 3 nuevos.
+    if diff.new:
+        lines.append("")
+        lines.append("Nuevos (top 3):")
+        for item in diff.new[:3]:
+            lines.append(_format_item(item))
+
+    # Cambios de estado.
+    if diff.changed_state:
+        lines.append("")
+        lines.append("Cambios de estado:")
+        for item in diff.changed_state[:3]:
+            title = (item.fields.get("title") or "(sin título)")[:80]
+            lines.append(
+                f"• {title}\n  {item.prev_status or 's/d'} → "
+                f"{item.fields.get('status') or 's/d'}"
+            )
+
+    for flag in risk_flags:
+        lines.append("")
+        lines.append(flag)
+
+    return _result(lines, diff, risk_flags, atypical)
+
+
+def _result(lines: list[str], diff: RadarDiff, risk_flags: list[str],
+            atypical: list[str]) -> dict:
+    return {
+        "text": "\n".join(lines),
+        "new_count": diff.new_count,
+        "changed_count": diff.changed_count,
+        "disappeared_count": len(diff.disappeared),
+        "risk_flags": risk_flags,
+        "atypical_keys": atypical,
+        "has_novelty": diff.has_novelty,
+    }

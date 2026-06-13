@@ -31,6 +31,7 @@ from app.core.formatter import Formatter
 from app.core.llm_handler import LLMHandler
 from app.core.narrator import NarratorHandler
 from app.core.query_router import QueryRouter
+from app.core.radar.store import RadarStore
 from app.core.secop_client import SecopClient
 from app.core.soql_builder import SoQLBuilder
 
@@ -54,3 +55,4 @@ class WorkflowDeps:
     feedback: FeedbackStore
     conv_store: ConversationStore
     narrator: NarratorHandler
+    radar_store: RadarStore | None = None
