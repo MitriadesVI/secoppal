@@ -35,6 +35,11 @@ SECOPPAL es un chatbot conversacional que permite buscar **procesos de contratac
 
 **Diferenciador clave:** interfaz conversacional *zero-friction* — sin registro, sin app, sin curva de aprendizaje. El canal inicial es WhatsApp, que ya tienen todos.
 
+> **Search encuentra · Advisor interpreta · Radar vigila.** Además de buscar,
+> SECOPPAL permite **guardar una búsqueda como Radar** y hacerle seguimiento:
+> detecta novedades (procesos nuevos, cambios de estado/valor) y las muestra en
+> un feed de movimientos. Ver [Radar](#radar--búsquedas-guardadas-con-seguimiento).
+
 **Datasets que consulta (SECOP II / Socrata):**
 
 | Dataset | ID Socrata | Descripción |
@@ -270,6 +275,49 @@ Base de datos de aliases: mapea formas naturales de referirse a entidades al nom
 ```
 
 Se construye combinando `fetch_top_entities.py` + `generate_aliases.py`.
+
+---
+
+## Radar — búsquedas guardadas con seguimiento
+
+Un **Radar** es un `QueryFrame` guardado al que se le hace seguimiento: en cada
+corrida se reconstruye la búsqueda, se compara contra la última revisión y se
+detectan **novedades** (procesos/contratos nuevos, cambios de estado, cambios de
+valor, desaparecidos). El resultado es una **lectura asesora** (digest), no 50 filas.
+
+**Cómo se crea** (un radar = la búsqueda que el usuario ya vio):
+- Desde el chat: «guardar esta búsqueda como Radar PAE Atlántico».
+- Desde la pestaña 📡 Radares: formulario con frase rápida **o** por campos
+  (región/entidad, temática, monto, fechas, frecuencia).
+
+**Comandos conversacionales:** `guardar … como radar <nombre>`, `mis radares`,
+`ejecutar radar <nombre>`.
+
+**UI (pestaña 📡 Radares):** feed cronológico de movimientos de todos los radares
+(estilo timeline social), con *pull-to-refresh* (🔄 Actualizar). Al abrir un radar,
+su línea de tiempo de corridas con el digest de cada una.
+
+### Componentes (`app/core/radar/`)
+
+| Módulo | Rol |
+|--------|-----|
+| `store.py` | SQLite: `radars`, `radar_runs` (auditoría: soql/params/execution_ms), `radar_events` (feed), `radar_seen_results` (memoria del diff) |
+| `keys.py` | Clave estable de resultado + snapshot hash (estado+valor) |
+| `diff.py` | Clasifica nuevo / cambio de estado / cambio de valor / desaparecido + operador nuevo |
+| `runner.py` | Ejecuta el radar reutilizando el núcleo **puro** `execute_resolved_params` (sin contaminar conversación), persiste y emite eventos |
+| `digest.py` | Lectura asesora + bandera de "radar amplio" (universo > ventana de 100) |
+| `builder.py` | Guardado compartido (chat + formulario); sanitiza params no replayables |
+
+> **Reutilización clave:** `execute_resolved_params` (en
+> `app/core/workflow/helpers.py`) es el motor de búsqueda **puro en términos
+> conversacionales** — sin `append_turn`, sin feedback, sin mutar contexto.
+> Lo comparten la barra de refinamiento y el Radar.
+
+**Estado:** v1.0 manual (corre cuando el usuario pulsa Actualizar / ejecuta).
+La ejecución automática en background (scheduler push + notificación por canal)
+está diseñada en
+[`docs/planes/radar-produccion-scheduler-push.md`](docs/planes/radar-produccion-scheduler-push.md).
+Visión y casos de uso: [`docs/ideas/secoppal-radar.md`](docs/ideas/secoppal-radar.md).
 
 ---
 

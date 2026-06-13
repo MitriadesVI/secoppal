@@ -1,5 +1,13 @@
 # SECOPPAL Radar — notas iniciales de producto
 
+> **Estado (jun 2026): v1.0 implementado.** El MVP de este documento (búsqueda
+> guardada + ejecución + detección de novedades + digest) está en código bajo
+> `app/core/radar/`, con feed de movimientos y pestaña 📡 Radares en Streamlit.
+> La ejecución automática (cron/push) sigue pendiente — ver
+> [`radar-produccion-scheduler-push.md`](../planes/radar-produccion-scheduler-push.md).
+> Resumen de uso en el [README](../../README.md#radar--búsquedas-guardadas-con-seguimiento).
+> Lo que sigue son las notas de producto originales (visión completa).
+
 ## Frase clave
 
 SECOPPAL Search encuentra.  
