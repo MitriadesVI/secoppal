@@ -24,19 +24,13 @@ Moved here verbatim from ``SecopalWorkflow._run_refinement`` in Paso 6B.
 """
 from __future__ import annotations
 
-import logging
 from typing import TYPE_CHECKING
 
-from app.core._followup_constants import SCOPE_TOPIC_KEYS
-from app.core.soql_builder import SoQLBuilder
-from app.core.workflow.helpers import _query_first_then_count
+from app.core.workflow.helpers import execute_resolved_params
 
 if TYPE_CHECKING:
     from app.core.workflow.context import HandlerContext
     from app.core.workflow.deps import WorkflowDeps
-
-
-logger = logging.getLogger(__name__)
 
 
 def handle_refinement(
@@ -49,37 +43,28 @@ def handle_refinement(
     Toma los params ya resueltos del turno anterior + el filtro recién aplicado,
     construye SoQL y ejecuta sin pasar por el parser. Retorna None si no se
     puede ejecutar (sin scope/topic) para que el caller caiga al flujo normal.
+
+    La ejecución de búsqueda (build → guard → query → format) vive ahora en
+    ``execute_resolved_params``; este handler añade el header, los filtros
+    contextuales y la persistencia conversacional (trace + turno).
     """
     params = dict(seed_resolved_params)
     # offset/limit deben empezar de cero porque es una nueva búsqueda
     params.pop("offset", None)
     params.setdefault("limit", 50)
 
-    # Guard anti-WHERE 1=1
-    has_scope_or_topic = any(
-        params.get(k) and params.get(k) not in (None, [], "", {}, False)
-        for k in SCOPE_TOPIC_KEYS
-    )
-    if not has_scope_or_topic:
+    execution = execute_resolved_params(deps, params, channel=ctx.channel)
+    if execution is None:
         return None
 
-    ds_id = SoQLBuilder.dataset_id_for(params.get("dataset"))
-    try:
-        soql = deps.soql_builder.build(ds_id, params)
-        count_soql = deps.soql_builder.build_count(ds_id, params)
-        total, results, _t, approx = _query_first_then_count(
-            deps.secop_client, ds_id, count_soql, soql,
-            limit=int(params.get("limit", 50) or 50),
-        )
-    except Exception as exc:
-        logger.warning("refinement failed: %s", exc)
-        return None
+    results = execution.results
+    rows = execution.rows
+    response = execution.response
+    total = execution.total
+    soql = execution.soql
+    ds_id = execution.dataset_id
+    approx = execution.approximate
 
-    response, rows = deps.formatter.format_for_channel(
-        results, ds_id, ctx.channel,
-        params=params, total_count=total,
-        total_count_approximate=approx,
-    )
     header = "🎚️ Refinamiento aplicado\n\n"
     result = {
         "response": header + response,
