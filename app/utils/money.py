@@ -53,6 +53,8 @@ def money_to_cop(raw_text: str) -> int | None:
         multiplier = 1_000_000
     elif "palo" in text:
         multiplier = 1_000_000
+    elif "barra" in text:
+        multiplier = 1_000_000
     elif "mil" in text:
         multiplier = 1_000
 

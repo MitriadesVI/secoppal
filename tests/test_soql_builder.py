@@ -88,14 +88,28 @@ def test_build_contract_query_with_ordering_signal_uses_value_first() -> None:
 
 
 def test_ciudad_filter_procesos() -> None:
-    """Ciudad filter should use ciudad_entidad for procesos."""
+    """Ciudad filter should use ciudad_entidad for procesos with accent folding."""
     builder = SoQLBuilder()
     soql = builder.build(
         "p6dx-8zbt",
         {"objeto": ["ampliacion"], "ciudad": "Puerto Salgar"},
     )
-    assert "UPPER(ciudad_entidad) LIKE UPPER('%Puerto Salgar%')" in soql
+    assert "unaccent(UPPER(ciudad_entidad)) LIKE unaccent(UPPER('%Puerto Salgar%'))" in soql
     assert "ampliacion" in soql
+
+
+def test_ciudad_filter_unaccent_acentuada() -> None:
+    """Ciudad con tilde (Medellín, Bogotá) debe usar unaccent para matchear."""
+    builder = SoQLBuilder()
+    soql = builder.build(
+        "p6dx-8zbt",
+        {"objeto": ["construccion"], "ciudad": "Medellín"},
+    )
+    assert "unaccent(UPPER(ciudad_entidad)) LIKE unaccent(UPPER('%Medellín%'))" in soql
+    # Adversarial: otros filtros no deben romperse
+    assert "construccion" in soql
+    # El departamento sigue sin unaccent (usa igualdad exacta, no LIKE)
+    assert "WHERE" in soql
 
 
 def test_build_count_produces_count_star_no_limit() -> None:
@@ -146,13 +160,13 @@ def test_build_count_empty_params() -> None:
 
 
 def test_ciudad_filter_contratos() -> None:
-    """Ciudad filter should use ciudad for contratos."""
+    """Ciudad filter should use ciudad for contratos with accent folding."""
     builder = SoQLBuilder()
     soql = builder.build(
         "jbjy-vk9h",
         {"objeto": ["cuidado"], "ciudad": "Barranquilla"},
     )
-    assert "UPPER(ciudad) LIKE UPPER('%Barranquilla%')" in soql
+    assert "unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Barranquilla%'))" in soql
 
 
 def test_or_group_generates_or_in_soql() -> None:

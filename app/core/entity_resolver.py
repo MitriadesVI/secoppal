@@ -8,6 +8,7 @@ from pathlib import Path
 
 from rapidfuzz import fuzz, process
 
+from app.data.colombia_geography import REGION_ALIASES
 from app.data.departamentos import DEPARTAMENTOS, DEPARTAMENTOS_OFICIALES
 from app.utils.money import normalize_text
 
@@ -152,8 +153,12 @@ class EntityResolver:
         # Department scan index: same structure
         self._dept_scan_index: dict[str, list[tuple[str, str]]] = {}
 
+        # Region scan index: alias → región canónica
+        self._region_scan_index: dict[str, list[tuple[str, str]]] = {}
+
         self._load_aliases()
         self._build_dept_scan_index()
+        self._build_region_scan_index()
 
     # Words that qualify a department name as an entity reference
     # "gobernación DE santander" → entity, "en santander" → department
@@ -287,6 +292,15 @@ class EntityResolver:
         Should be called AFTER scan_entity on the remaining text.
         """
         return self._scan_against_index(normalized_text, self._dept_scan_index)
+
+    def scan_region(self, normalized_text: str) -> ScanResult | None:
+        """
+        Scan text for known region aliases (Caribe, Andina, Pacífica, ...).
+        Returns the LONGEST match; ``official_name`` carries the canonical
+        region. Should be called AFTER scan_departamento on the remaining text
+        so a specific department always wins over a broader region.
+        """
+        return self._scan_against_index(normalized_text, self._region_scan_index)
 
     def _scan_against_index(
         self,
@@ -513,6 +527,15 @@ class EntityResolver:
             if len(alias) >= 3:
                 entries.append((alias, official))
         self._dept_scan_index = self._build_scan_index(entries)
+
+    def _build_region_scan_index(self) -> None:
+        """Build scan index for regions from REGION_ALIASES (alias → región)."""
+        entries = [
+            (alias, region)
+            for alias, region in REGION_ALIASES.items()
+            if len(alias) >= 3
+        ]
+        self._region_scan_index = self._build_scan_index(entries)
 
     @staticmethod
     def _build_scan_index(entries: list[tuple[str, str]]) -> dict[str, list[tuple[str, str]]]:

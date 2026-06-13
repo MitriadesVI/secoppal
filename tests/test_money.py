@@ -32,3 +32,10 @@ def test_billon_no_regression_on_other_units():
 def test_money_to_cop_edge_cases():
     assert money_to_cop("hola") is None
     assert money_to_cop("10 pesos") == 10
+
+
+def test_barras_money_to_cop():
+    """'barras' es jerga colombiana para millones, como 'palos'."""
+    assert money_to_cop("1000 barras") == 1_000_000_000
+    assert money_to_cop("1 barra") == 1_000_000
+    assert money_to_cop("500 barras") == 500_000_000

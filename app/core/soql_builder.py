@@ -25,7 +25,7 @@ class UnsafeGlobalQueryError(RuntimeError):
 # aguas abajo, pero si evitan que el builder emita WHERE 1=1.
 NONEMPTY_WHERE_KEYS: frozenset[str] = frozenset({
     # scope
-    "departamento_resolved", "ciudad",
+    "departamento_resolved", "departamentos_in", "ciudad",
     "entidad_resolved", "entidad_like",
     "contratista",
     # topic
@@ -226,10 +226,14 @@ class SoQLBuilder:
 
         if params.get("departamento_resolved"):
             where_clauses.append(f"{spec.department} = '{self._escape(params['departamento_resolved'])}'")
+        elif params.get("departamentos_in"):
+            # Region search: filter across every department of a region.
+            # _add_estado_clause emits `field IN ('a','b',...)` for lists.
+            self._add_estado_clause(where_clauses, spec.department, params["departamentos_in"])
 
         if params.get("ciudad") and spec.city:
             where_clauses.append(
-                f"UPPER({spec.city}) LIKE UPPER('%{self._escape(str(params['ciudad']))}%')"
+                self._accent_fold_like(spec.city, self._escape(str(params['ciudad'])))
             )
         entidad_value = params.get("entidad_like") or params.get("entidad_resolved")
         entidad_ecosystem = params.get("entidad_ecosystem")

@@ -968,3 +968,180 @@ futuro `QP-SAFETY-ACTIVATION`.
 - `make lint-core`: limpio
 - Grep de duplicados (`_INVALID_CONTRACT_STATES`, `_CLOSED_STATES`,
   `_BIDDER_PHRASES`, `_SUBSTANTIAL_FILTER_KEYS`): vacío
+
+---
+
+## ADR-025: Soporte de fechas relativas semana/día en DialoguePolicy + QueryPlan
+
+**Fecha:** 2026-06-04
+**Estado:** Accepted
+
+**Contexto:** La capa temporal solo soportaba mes/año (`temporal_month` vía P5).
+Expresiones cotidianas como "esta semana", "ayer", "últimos 30 días" no producían
+rango de fechas. Peor: los tokens temporales ("semana", "dias") se colaban al
+objeto contractual, contaminando la búsqueda con un AND que mataba el recall.
+
+**Decisión:** Extender la capa temporal existente con un nuevo tipo de señal
+(`temporal_range`) que convive con `temporal_month` sin tocarlo:
+
+1. **Detección** (`dialogue_policy.py`): nueva función `_detect_temporal_range()`
+   con 5 regex R4b (hoy, ayer, esta semana, semana pasada, últimos N días).
+   Emite señales `kind="temporal_range"` con payload `{desde, hasta, phrase}`.
+   Se llama desde `classify()` justo después de `_detect_temporal_month`.
+
+2. **Aplicación** (`query_plan.py`): nueva regla P5b (espejo de P5) que consume
+   `temporal_range` y aplica `desde`/`hasta` a `working_params`. Mismo guard que
+   P5: si ya hay `fecha_desde`/`fecha_hasta` → `temporal_conflict`, no sobreescribe.
+
+3. **Scrub** (`query_router.py`): +7 tokens a STOPWORDS (`semana, dia, dias, día,
+   días, ayer, pasada`). "hoy" ya estaba. La detección lee el query crudo, no el
+   objeto → scrub y detección son independientes.
+
+**Semántica exacta** (usa el `today: Date` que `classify` recibe del contexto):
+| Expresión | desde | hasta |
+|-----------|-------|-------|
+| "hoy" | today | today |
+| "ayer" | today − 1 | today − 1 |
+| "esta semana" | lunes ISO | today |
+| "la semana pasada" / "semana pasada" | lunes previo | domingo previo |
+| "últimos N días" (1-365) | today − N | today |
+
+**Alternativas descartadas:** Meter la lógica en `temporal_month` existente
+(mezcla semánticas distintas: mes necesita `calendar.monthrange`, semana/día
+necesita `timedelta` + `isocalendar`). Usar `datetime.now()` en vez del `today`
+del contexto (rompe testabilidad, zona horaria inconsistente).
+
+**Guardrails:**
+- P5 (`temporal_month`) intacta — no se tocó ni una línea.
+- Detección sobre query crudo, no sobre objeto → inmune al scrub de STOPWORDS.
+- Conflicto con fechas preexistentes → `temporal_conflict` flag.
+- Zona horaria: usa el `today` que el contexto provee, sin `datetime.now()` nuevo.
+
+**Métricas al cierre:**
+- Suite: 1334 passed, 23 xfailed (1324 base + 10 tests Claude Code gap #2)
+- Tests propios: 15 en `tests/test_temporal_relative_characterization.py`
+- `query_plan.py`: 293 LOC (+18, bajo el límite G8 de 300)
+- `dialogue_policy.py`: +88 LOC (detección + regex + tipo literal)
+- `make lint-core`: limpio
+- Commit: `4ac717c`
+
+---
+
+## ADR-026: "Firmado" no es un estado — semántica correcta vía fecha_de_firma
+
+**Fecha:** 2026-06-04
+**Estado:** Accepted
+
+**Contexto:** `ESTADO_CONTRATO_SYNONYMS` en `estados.py` mapeaba
+`firmado/firmada/firmados → 'Aprobado'`. Esto violaba el invariante documentado
+en `estado_families.py:64` e `intent_vocabulary.py:69` ("firmado = sin filtro de
+estado, solo fuerza dataset=contratos"). El bug era grave: `estado=Aprobado`
+restringía a solo 184K contratos de ~5.6M realmente firmados, tirando ~97% del
+recall.
+
+**Validación empírica contra SECOP real** (dataset `jbjy-vk9h`, ~5.2M contratos):
+
+| estado_contrato | total | con fecha_de_firma | % firmado |
+|---|---|---|---|
+| En ejecución | 1,680,032 | 1,680,032 | 100% |
+| Cerrado | 1,567,172 | 1,567,172 | 100% |
+| Modificado | 1,031,720 | 1,031,720 | 100% |
+| terminado | 730,535 | 730,535 | 100% |
+| Aprobado | 184,033 | 184,031 | 100% |
+| cedido | 28,044 | 28,044 | 100% |
+| Suspendido | 6,428 | 6,428 | 100% |
+| Prorrogado | 121 | 121 | 100% |
+| Borrador | 234,448 | 437 | 0.2% |
+| Cancelado | 107,313 | 80 | 0.1% |
+| enviado Proveedor | 41,562 | 109 | 0.3% |
+| En aprobación | 21,659 | 84 | 0.4% |
+
+8 estados tienen ~100% de firma; 4 tienen <0.5%. "Firmado" NO es un valor de
+`estado_contrato` — es `fecha_de_firma IS NOT NULL`. Enumerar estados es frágil
+(¿qué pasa si SECOP agrega uno nuevo?); el filtro por `fecha_de_firma` es exacto
+y a prueba de futuro.
+
+**Decisión:** 
+1. Quitar `firmado/firmada/firmados → 'Aprobado'` de `ESTADO_CONTRATO_SYNONYMS`
+   en `estados.py`. Dejar nota explicando la semántica `fecha_de_firma`.
+2. Agregar `firmada/firmadas` a STOPWORDS (ya estaban `firmado/firmados`).
+3. Mantener la capa de `intent_vocabulary.py` que fuerza `dataset=contratos`
+   para "firmado" (eso sí es correcto).
+
+**Alternativas descartadas:** Enumerar explícitamente los 8 estados con firma
+(frágil — SECOP puede agregar/quitar estados). Mapear "firmado" a
+`estado_family=con_contrato` (incluye Borrador/En aprobación que NO están
+firmados).
+
+**Tests:**
+- Volteado `test_signed_contracts_current_baseline_keeps_legacy_aprobado` →
+  `test_signed_contracts_apply_no_state_filter` en `test_invariants_characterization.py`
+- Nuevo `tests/test_firmado_signed_semantics.py` (15 tests): caso real de la sesión
+  ("contratos de adulto mayor firmados en mayo" → sin estado, fecha_de_firma en mayo)
+  + regresión de estados explícitos (En ejecución, Cerrado, terminado, Aprobado legítimo)
+
+**Métricas al cierre:**
+- Suite: 1338 passed, 23 xfailed
+- Commit: `a745ac8`
+- `make lint-core`: limpio
+
+---
+
+## ADR-027: Procesos sin URL pública — señalizar, no omitir; paridad entre canales
+
+**Fecha:** 2026-06-10
+**Estado:** Accepted
+
+**Contexto:** Un usuario reportó "en Streamlit salen los links de los contratos,
+en Telegram no". La hipótesis natural (Telegram pierde/rompe URLs) era falsa. La
+construcción de URL es **compartida** por todos los canales vía
+`Formatter._safe_url` → `to_rows`, así que el campo `url` es idéntico en Streamlit,
+Telegram y WhatsApp. Medido sobre la query real "oportunidades en adulto mayor":
+de 25 resultados, **solo 6 tenían URL**. Las otras 19 son procesos con
+`id_del_proceso = CO1.REQ.*` y `urlproceso` vacío.
+
+`CO1.REQ.*` = requisiciones pre-publicación / régimen especial (ESAL). Su página
+`OpportunityDetail` devuelve "argument out of range" → un fix previo
+(FIX-URL-FREEFORM-001 / DOGFOOD-URL-005) ya los suprime a propósito en `_safe_url`
+(no se muestra un link roto). La diferencia real entre canales NO estaba en los
+datos sino en la **señalización**:
+- **Streamlit** (`streamlit_app.py:139`) mostraba la nota
+  `🔒 Vista pública no disponible (proceso pre-publicación)`.
+- **Telegram / WhatsApp** **omitían la línea en silencio** → parecía que "faltan
+  los links" cuando en realidad el proceso no es consultable públicamente.
+
+**Decisión:**
+1. **No omitir en silencio: señalizar.** Cuando una fila no tiene `url`, los tres
+   canales muestran la misma nota de cortesía
+   `🔒 Vista pública no disponible (proceso pre-publicación)`. Se añadió la rama
+   `else` en `format_telegram` y `format_whatsapp` (`formatter.py`), igualando lo
+   que Streamlit ya hacía.
+2. **La política de resolución de URL sigue centralizada en `_safe_url`** (fuente
+   única; los formatters por canal solo deciden cómo *presentar* el resultado, no
+   lo recalculan). Streamlit no se modificó.
+
+**Alternativas descartadas:**
+- *Fabricar un link igual para CO1.REQ* (p.ej. `OpportunityDetail?noticeUID=CO1.REQ…`):
+  da error en SECOP; mostrar un link roto es peor que señalizar la ausencia.
+- *Filtrar/ocultar los procesos sin URL*: pierden visibilidad oportunidades reales
+  (varios ESAL "Abierto" de alto valor); el usuario debe verlos aunque no sean
+  consultables online.
+- *Resolver la nota por canal con texto distinto en cada formatter*: rompería la
+  paridad; se reusó la redacción exacta de Streamlit.
+
+**Tests:**
+- Nuevo `tests/test_url_fallback_channel_parity.py` (5 tests): CO1.REQ → nota en
+  Telegram y WhatsApp; CO1.NTC → link real; conteo de notas = filas sin url;
+  blindaje de que `_safe_url` deja `url=""` para CO1.REQ y URL válida para CO1.NTC
+  (Streamlit intacto).
+
+**Consecuencias:** Los tres canales explican por qué un proceso no tiene link, en
+vez de dejar un hueco confuso. Útil para Radar (futuro): un proceso pre-publicación
+es señal de oportunidad temprana y ahora el sistema lo distingue explícitamente.
+Nota de producto pendiente (no es bug): muchos resultados "Abierto" de adulto mayor
+son ESAL sin página pública — evaluar si etiquetarlos o priorizarlos distinto.
+
+**Métricas al cierre:**
+- Suite: 1415 passed, 23 xfailed (incluye +5 de `test_url_fallback_channel_parity.py`)
+- Fix en `app/core/formatter.py` (`format_telegram`, `format_whatsapp`)
+- Streamlit (`streamlit_app.py`) NO modificado

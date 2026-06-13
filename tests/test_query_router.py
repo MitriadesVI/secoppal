@@ -570,3 +570,80 @@ def test_temas_deportivos_drops_structural_topic_word(router: QueryRouter) -> No
     result = router.parse("temas deportivos")
     objeto = result.params.get("objeto", [])
     assert "temas" not in objeto
+
+
+# ═════════════════════════════════════════════════════════════════════════════
+# BUG 2 — Polaridad: "no sea por más de X" debe ser valor_max (NO valor_min)
+# ═════════════════════════════════════════════════════════════════════════════
+
+def test_no_sea_por_mas_de_es_valor_max(router: QueryRouter) -> None:
+    """'no sea por más de 2000 millones' → valor_max=2MMM, sin valor_min."""
+    result = router.parse("oportunidades en antioquia que no sea por más de 2000 millones")
+    assert result.params.get("valor_max") == 2_000_000_000
+    assert result.params.get("valor_min") is None
+
+
+def test_no_mas_de_sigue_siendo_valor_max(router: QueryRouter) -> None:
+    """'no más de X' original no debe romperse."""
+    result = router.parse("contratos de no más de 500 millones")
+    assert result.params.get("valor_max") == 500_000_000
+    assert result.params.get("valor_min") is None
+
+
+def test_mas_de_sin_negacion_sigue_valor_min__adversarial(router: QueryRouter) -> None:
+    """'más de 2000 millones' SIN negación debe seguir siendo valor_min."""
+    result = router.parse("más de 2000 millones en Bogotá")
+    assert result.params.get("valor_min") == 2_000_000_000
+    assert result.params.get("valor_max") is None
+
+
+def test_no_menos_de_es_valor_min(router: QueryRouter) -> None:
+    """'no menos de 500 millones' → valor_min (piso), simétrico a 'no más de'."""
+    result = router.parse("no menos de 500 millones")
+    assert result.params.get("valor_min") == 500_000_000
+    assert result.params.get("valor_max") is None
+
+
+def test_no_sea_por_menos_de_es_valor_min(router: QueryRouter) -> None:
+    """'no sea(n) por menos de X' (con 'sea por' intercalado) también es valor_min."""
+    result = router.parse("contratos que no sean por menos de 800 millones")
+    assert result.params.get("valor_min") == 800_000_000
+    assert result.params.get("valor_max") is None
+
+
+def test_menos_de_sin_negacion_sigue_valor_max__adversarial(router: QueryRouter) -> None:
+    """'menos de 500 millones' SIN negación debe seguir siendo valor_max."""
+    result = router.parse("contratos de menos de 500 millones")
+    assert result.params.get("valor_max") == 500_000_000
+    assert result.params.get("valor_min") is None
+
+
+# ═════════════════════════════════════════════════════════════════════════════
+# BUG 3 — "barras" como jerga monetaria colombiana (⚠️ POLISEMIA)
+# ═════════════════════════════════════════════════════════════════════════════
+
+def test_barras_unidad_monetaria(router: QueryRouter) -> None:
+    """'menos de 1000 barras' → valor_max=1MMM, 'barras' NO en objeto."""
+    result = router.parse("mantenimiento de menos de 1000 barras")
+    assert result.params.get("valor_max") == 1_000_000_000
+    objeto = result.params.get("objeto", [])
+    assert "barras" not in objeto
+
+
+def test_barras_refuerzo_es_objeto__adversarial(router: QueryRouter) -> None:
+    """'barras de refuerzo' es un PRODUCTO, no debe interpretarse como monto."""
+    result = router.parse("contratos de barras de refuerzo en Antioquia")
+    objeto = result.params.get("objeto", [])
+    assert "barras" in objeto or "refuerzo" in objeto
+    # No debe generar valor monetary
+    assert result.params.get("valor_min") is None
+    assert result.params.get("valor_max") is None
+
+
+def test_barras_acero_es_objeto__adversarial(router: QueryRouter) -> None:
+    """'barras de acero' es un PRODUCTO, no debe interpretarse como monto."""
+    result = router.parse("suministro de barras de acero")
+    objeto = result.params.get("objeto", [])
+    assert "barras" in objeto or "acero" in objeto
+    assert result.params.get("valor_min") is None
+    assert result.params.get("valor_max") is None

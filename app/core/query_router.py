@@ -89,7 +89,7 @@ _NIT_SHAPE_RE = re.compile(
     (?:[.\- ]\d)?                 # DV opcional con separador
     |\d{8,11})                    # o secuencia continua de 8-11 dígitos
     (?!\d)                        # no seguido de dígito
-    (?!\s*(?:millones?|millon|mil\s+millones|billones?|palos?|pesos))  # no es monto
+    (?!\s*(?:millones?|millon|mil\s+millones|billones?|palos?|barras?|pesos))  # no es monto
     """,
     re.IGNORECASE | re.VERBOSE,
 )
@@ -410,7 +410,7 @@ class QueryRouter:
         # Lookahead negativo: no capturar años seguidos de unidades de dinero
         # (ej: "2000 millones" no es el año 2000)
         _year_re = re.compile(
-            r"\b(20\d{2})\b(?!\s*(?:millones?|millon|mil\s+millones|billones?|palos?|pesos))",
+            r"\b(20\d{2})\b(?!\s*(?:millones?|millon|mil\s+millones|billones?|palos?|barras?|pesos))",
             re.IGNORECASE,
         )
         for m in re.finditer(_year_re, scrubbed):
@@ -505,8 +505,26 @@ class QueryRouter:
                 }
                 scrubbed = entity_scan.remaining_text
 
-        # ── 6. GAZETTEER SCAN: Department (on remaining text) ───────────
-        #    Runs AFTER entity scan so "de santander" can't be stolen
+        # ── 6. GAZETTEER SCAN: Region/zone (BEFORE department) ──────────
+        #    Runs before the department scan so a multi-word zone whose head
+        #    is a department name ("tolima grande") is captured WHOLE before
+        #    the department scan can steal "tolima". Sets departamentos_in for
+        #    the builder to emit `departamento IN (...)`.
+        if self.entity_resolver:
+            region_scan = self.entity_resolver.scan_region(scrubbed)
+            if region_scan:
+                from app.data.colombia_geography import ZONES_BY_NAME
+                zone = region_scan.official_name
+                depts = ZONES_BY_NAME.get(zone, [])
+                if depts:
+                    params["region"] = zone
+                    params["departamentos_in"] = depts
+                    scrubbed = region_scan.remaining_text
+
+        # ── 6.2 GAZETTEER SCAN: Department (on remaining text) ──────────
+        #    Runs AFTER entity scan so "de santander" can't be stolen.
+        #    A specific department wins over a broader zone: if one resolves,
+        #    drop any zone captured in step 6.
         if self.entity_resolver:
             dept_scan = self.entity_resolver.scan_departamento(scrubbed)
             if dept_scan:
@@ -520,6 +538,8 @@ class QueryRouter:
                     "metadata": {},
                 }
                 scrubbed = dept_scan.remaining_text
+                params.pop("region", None)
+                params.pop("departamentos_in", None)
 
         # ── 6.5 MULTI-REGIONAL ENTITY RESOLUTION (ENTITY-MULTI-REGIONAL-001) ──
         # Si la entidad resuelta es multi-regional (SENA, ICBF, etc.) y hay
@@ -763,7 +783,7 @@ class QueryRouter:
         for val in date_params.values():
             year_tokens.add(val[:4])
         _year_money_re = re.compile(
-            r"\b(20\d{2})\b(?!\s*(?:millones?|millon|mil\s+millones|billones?|palos?|pesos))",
+            r"\b(20\d{2})\b(?!\s*(?:millones?|millon|mil\s+millones|billones?|palos?|barras?|pesos))",
             re.IGNORECASE,
         )
         for m in re.finditer(_year_money_re, normalized_query):
@@ -773,15 +793,15 @@ class QueryRouter:
         # two numbers don't each get mis-classified by the generic loop below.
         # ── Shared unit-inheritance helpers (used by range + compound block) ──
         _any_unit_re = re.compile(
-            r"billon(?:es)?|mil\s+millones|millones?|palos?|\bmil\b",
+            r"billon(?:es)?|mil\s+millones|millones?|palos?|barras?|\bmil\b",
             re.IGNORECASE,
         )
         _compound_unit_re = re.compile(
-            r"mil\s+millones?|billon(?:es)?|millones?|palos?",
+            r"mil\s+millones?|billon(?:es)?|millones?|palos?|barras?",
             re.IGNORECASE,
         )
         _atomic_unit_re = re.compile(
-            r"billon(?:es)?|millones?|palos?",
+            r"billon(?:es)?|millones?|palos?|barras?",
             re.IGNORECASE,
         )
         _has_digit_re = re.compile(r"\d")
@@ -794,7 +814,7 @@ class QueryRouter:
             return m.group(0) if m else None
 
         _range_re = re.compile(
-            r"(?:entre|de|desde)\s+((?:\d+(?:[.,]\d+)?|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|mil)?(?:\s+de\s+pesos)?)(?:\s*[-–—]\s*|\s+y\s+|\s+a\s+|\s+hasta\s+)((?:\d+(?:[.,]\d+)?|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|mil)?(?:\s+de\s+pesos)?)",
+            r"(?:entre|de|desde)\s+((?:\d+(?:[.,]\d+)?|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|barras?|mil)?(?:\s+de\s+pesos)?)(?:\s*[-–—]\s*|\s+y\s+|\s+a\s+|\s+hasta\s+)((?:\d+(?:[.,]\d+)?|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|barras?|mil)?(?:\s+de\s+pesos)?)",
             re.IGNORECASE,
         )
         range_match = _range_re.search(normalized_query)
@@ -838,7 +858,7 @@ class QueryRouter:
         if not range_match:
             _range_hyphen_re = re.compile(
                 r"(\d+(?:[.,]\d+)?)\s*[-–—]\s*(\d+(?:[.,]\d+)?)\s+"
-                r"((?:billon(?:es)?|mil\s+millones?|millones?|palos?))",
+                r"((?:billon(?:es)?|mil\s+millones?|millones?|palos?|barras?))",
                 re.IGNORECASE,
             )
             h_match = _range_hyphen_re.search(normalized_query)
@@ -862,10 +882,10 @@ class QueryRouter:
         # e.g., "más de 350 millones y menos de 700" → valor_min + valor_max
         _compound_range_re = re.compile(
             r"(?:m[aá]s\s+de|mayor(?:es)?\s+(?:a|de|que)|por\s+encima\s+de|al\s+menos|superior(?:es)?\s+(?:a|de|que))\s+"
-            r"((?:\d+(?:[.,]\d+)?|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|mil)?(?:\s+de\s+pesos)?)"
+            r"((?:\d+(?:[.,]\d+)?|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|barras?|mil)?(?:\s+de\s+pesos)?)"
             r"\s+(?:y|e)\s+"
             r"(?:menos\s+de|menor(?:es)?\s+(?:a|de|que)|por\s+debajo\s+de|a\s+lo\s+sumo|inferior(?:es)?\s+(?:a|de|que))\s+"
-            r"((?:\d+(?:[.,]\d+)?|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|mil)?(?:\s+de\s+pesos)?)",
+            r"((?:\d+(?:[.,]\d+)?|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|barras?|mil)?(?:\s+de\s+pesos)?)",
             re.IGNORECASE,
         )
         cr_match = _compound_range_re.search(normalized_query)
@@ -898,7 +918,7 @@ class QueryRouter:
 
         # Detect "X o más" / "X o mas" → valor_min only (before generic loop)
         _o_mas_re = re.compile(
-            r"((?:\d+(?:[.,]\d+)?|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|mil)?(?:\s+de\s+pesos)?)\s+o\s+m[aá]s",
+            r"((?:\d+(?:[.,]\d+)?|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|barras?|mil)?(?:\s+de\s+pesos)?)\s+o\s+m[aá]s",
             re.IGNORECASE,
         )
         om = _o_mas_re.search(normalized_query)
@@ -913,7 +933,7 @@ class QueryRouter:
 
         amount_text = (
             r"((?:\d+(?:[.,]\d+)?|un|mil)\s*"
-            r"(?:billon(?:es)?|mil\s+millones|millones?|palos?|mil)?"
+            r"(?:billon(?:es)?|mil\s+millones|millones?|palos?|barras?|mil)?"
             r"(?:\s+de\s+pesos)?)"
         )
         polarity_patterns = (
@@ -925,7 +945,7 @@ class QueryRouter:
                         no\s+(?:sea|sean)?\s*(?:mayor(?:es)?|superior(?:es)?)\s+(?:a|de|que)
                         |que\s+no\s+(?:supere|superen|exceda|excedan|rebase|rebasen)(?:\s+los?)?
                         |no\s+(?:supere|superen|exceda|excedan|rebase|rebasen)(?:\s+los?)?
-                        |no\s+m[aá]s\s+de
+                        |no\s+(?:sea|sean)?\s*(?:por\s+)?m[aá]s\s+de
                     )\s+{amount_text}
                     """,
                     re.IGNORECASE | re.VERBOSE,
@@ -937,6 +957,7 @@ class QueryRouter:
                     rf"""
                     \b(?:
                         no\s+(?:sea|sean)?\s*menor(?:es)?\s+(?:a|de|que)
+                        |no\s+(?:sea|sean)?\s*(?:por\s+)?menos\s+de
                         |que\s+no\s+baje(?:n)?\s+de
                         |no\s+baje(?:n)?\s+de
                     )\s+{amount_text}
@@ -1033,7 +1054,7 @@ class QueryRouter:
                 )
 
         matches = list(re.finditer(
-            r"(?:(?:mas|mayor(?:es)?|superior(?:es)?|superen?)\s+(?:de|a)|(?:menos|menor(?:es)?)\s+(?:de|a)|hasta|por|de|desde)?\s*((?:\d+(?:[.,]\d+)?)|\bmil\b|\bun\b)\s*(?:billon(?:es)?|mil millones|millones?|palos?|\bmil\b)?(?:\s+de\s+pesos)?",
+            r"(?:(?:mas|mayor(?:es)?|superior(?:es)?|superen?)\s+(?:de|a)|(?:menos|menor(?:es)?)\s+(?:de|a)|hasta|por|de|desde)?\s*((?:\d+(?:[.,]\d+)?)|\bmil\b|\bun\b)\s*(?:billon(?:es)?|mil millones|millones?|palos?|barras?|\bmil\b)?(?:\s+de\s+pesos)?",
             normalized_query,
         ))
 
@@ -1108,7 +1129,7 @@ class QueryRouter:
         for alias in MODALIDAD_KEYWORDS:
             cleaned = cleaned.replace(alias, " ")
         cleaned = re.sub(r"\b(?:\d+(?:[.,]\d+)?)\b", " ", cleaned)
-        cleaned = re.sub(r"\b(?:millon(?:es)?|mil|billon(?:es)?|palos?|pesos)\b", " ", cleaned)
+        cleaned = re.sub(r"\b(?:millon(?:es)?|mil|billon(?:es)?|palos?|barras?|pesos)\b", " ", cleaned)
         # Strip punctuation that can stick to tokens (e.g., "actualmente?")
         cleaned = re.sub(r"[?¿!¡.,;:\"'(){}[\]]", " ", cleaned)
         cleaned = re.sub(r"\s+", " ", cleaned).strip()
