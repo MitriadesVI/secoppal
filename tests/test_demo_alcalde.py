@@ -1,4 +1,14 @@
-"""Demo A — Perfil Alcalde (mock E2E, Sprint 3 fase 2)."""
+"""Demo A — Perfil Alcalde (mock E2E, Sprint 3 fase 2).
+
+Flujo actualizado tras OPP-SCOPE-001 / P15 (Opción A):
+  T1 "procesos abiertos en Barranquilla" → browse territorial sin rubro:
+     P15 BLOQUEA y pide rubro SIN tocar SECOP (evita el volcado que
+     generaba timeouts).
+  T2 "solo los de infraestructura vial" → recupera: hereda Barranquilla
+     (B5b), añade rubro, ejecuta. Aquí salen resultados + insights +
+     sugerencias.
+  T3 "ordena por mayor valor" → follow-up, ORDER BY DESC.
+"""
 from __future__ import annotations
 
 import pytest
@@ -26,23 +36,78 @@ def _mk_results(n: int, entidad: str, modality: str = "Licitacion Publica") -> l
 @pytest.fixture
 def wf(tmp_path):
     wf = SecopalWorkflow(Settings())
-    wf.secop_client.query = lambda dataset_id, soql_query: _mk_results(15, "ALCALDIA DE BARRANQUILLA")  # type: ignore[method-assign]
-    wf.secop_client.count = lambda dataset_id, soql_query: 15  # type: ignore[method-assign]
+    calls = {"query": 0, "count": 0}
+
+    def _query(dataset_id, soql_query):
+        calls["query"] += 1
+        return _mk_results(15, "ALCALDIA DE BARRANQUILLA")
+
+    def _count(dataset_id, soql_query):
+        calls["count"] += 1
+        return 15
+
+    wf.secop_client.query = _query  # type: ignore[method-assign]
+    wf.secop_client.count = _count  # type: ignore[method-assign]
     wf.narrator.narrate_with_grounding = lambda **kw: None  # type: ignore[method-assign]
     wf.conv_store = ConversationStore(base_path=tmp_path / "conversations")
+    wf._secop_calls = calls  # test hook
     return wf
 
 
 # ---------------------------------------------------------------------------
-# Pipeline funcional
+# T1 — browse territorial sin rubro: bloquea y pide rubro, sin tocar SECOP
 # ---------------------------------------------------------------------------
 
-def test_turno1_pipeline_devuelve_resultados(wf):
+def test_turno1_bloquea_y_pide_rubro(wf):
     r = wf.run_query("procesos abiertos en Barranquilla", channel="telegram", chat_id="demo_alc")
+    assert r["needs_clarification"] is True
     assert r["followup"] is False
-    assert len(r.get("results", [])) == 15
-    assert r["total_count"] == 15
+    assert len(r.get("results", [])) == 0
+    assert r.get("total_count") == 0
+    # Pide un rubro/objeto
+    resp = r["response"].lower()
+    assert "producto" in resp or "servicio" in resp or "obra" in resp
 
+
+def test_turno1_no_consulta_secop(wf):
+    """La garantía de Opción A: la consulta amplia NO se ejecuta."""
+    wf.run_query("procesos abiertos en Barranquilla", channel="telegram", chat_id="demo_alc")
+    assert wf._secop_calls == {"query": 0, "count": 0}
+
+
+# ---------------------------------------------------------------------------
+# T2 — recuperación: hereda Barranquilla, añade rubro, ejecuta
+# ---------------------------------------------------------------------------
+
+def test_turno2_recupera_y_devuelve_resultados(wf):
+    wf.run_query("procesos abiertos en Barranquilla", channel="telegram", chat_id="demo_alc")
+    r2 = wf.run_query("solo los de infraestructura vial", channel="telegram", chat_id="demo_alc")
+    assert r2["followup"] is True
+    assert r2["needs_clarification"] is False
+    assert len(r2.get("results", [])) == 15
+    assert r2["total_count"] == 15
+    assert wf._secop_calls["query"] == 1  # solo se consulta tras el rubro
+
+
+def test_turno2_contiene_insights_legacy(wf):
+    """Insights legacy (dominant_entity, temporal_concentration) se renderizan."""
+    wf.run_query("procesos abiertos en Barranquilla", channel="telegram", chat_id="demo_alc")
+    r2 = wf.run_query("solo los de infraestructura vial", channel="telegram", chat_id="demo_alc")
+    resp = r2["response"]
+    assert "El 100% son de" in resp or "La mayoria son de" in resp
+
+
+def test_turno2_contiene_sugerencias(wf):
+    wf.run_query("procesos abiertos en Barranquilla", channel="telegram", chat_id="demo_alc")
+    r2 = wf.run_query("solo los de infraestructura vial", channel="telegram", chat_id="demo_alc")
+    resp = r2["response"]
+    assert "Sugerencias:" in resp
+    assert "1." in resp
+
+
+# ---------------------------------------------------------------------------
+# Mecánica conversacional
+# ---------------------------------------------------------------------------
 
 def test_turno2_es_followup(wf):
     wf.run_query("procesos abiertos en Barranquilla", channel="telegram", chat_id="demo_alc")
@@ -59,43 +124,18 @@ def test_turno3_ordena_por_valor(wf):
 
 
 # ---------------------------------------------------------------------------
-# Observer insights (legacy verificados; 2.0 requiere mocks de agregacion)
+# Observer 2.0 (requiere mocks de agregacion adicionales) — sobre T2
 # ---------------------------------------------------------------------------
 
-def test_turno1_contiene_insights_legacy(wf):
-    """Insights legacy (dominant_entity, temporal_concentration) se renderizan."""
-    r = wf.run_query("procesos abiertos en Barranquilla", channel="telegram", chat_id="demo_alc")
-    resp = r["response"]
-    assert "El 100% son de" in resp or "La mayoria son de" in resp
+@pytest.mark.xfail(reason="Observer 2.0 signals requieren mock de aggregate() adicional", strict=False)
+def test_turno2_contiene_insights_entity_concentration(wf):
+    wf.run_query("procesos abiertos en Barranquilla", channel="telegram", chat_id="demo_alc")
+    r2 = wf.run_query("solo los de infraestructura vial", channel="telegram", chat_id="demo_alc")
+    assert "concentra" in r2["response"]
 
 
 @pytest.mark.xfail(reason="Observer 2.0 signals requieren mock de aggregate() adicional", strict=False)
-def test_turno1_contiene_insights_entity_concentration(wf):
-    r = wf.run_query("procesos abiertos en Barranquilla", channel="telegram", chat_id="demo_alc")
-    resp = r["response"]
-    assert "concentra" in resp
-
-
-@pytest.mark.xfail(reason="Observer 2.0 signals requieren mock de aggregate() adicional", strict=False)
-def test_turno1_contiene_insights_modality_dominance(wf):
-    r = wf.run_query("procesos abiertos en Barranquilla", channel="telegram", chat_id="demo_alc")
-    resp = r["response"]
-    assert "Licitacion Publica" in resp or "domina" in resp
-
-
-@pytest.mark.xfail(reason="Observer 2.0 signals requieren mock de aggregate() adicional", strict=False)
-def test_turno1_contiene_insights_temporal_skew(wf):
-    r = wf.run_query("procesos abiertos en Barranquilla", channel="telegram", chat_id="demo_alc")
-    resp = r["response"]
-    assert "Q1 2026" in resp or "Concentrado" in resp
-
-
-# ---------------------------------------------------------------------------
-# Sugerencias presentes
-# ---------------------------------------------------------------------------
-
-def test_turno1_contiene_sugerencias(wf):
-    r = wf.run_query("procesos abiertos en Barranquilla", channel="telegram", chat_id="demo_alc")
-    resp = r["response"]
-    assert "Sugerencias:" in resp
-    assert "1." in resp
+def test_turno2_contiene_insights_modality_dominance(wf):
+    wf.run_query("procesos abiertos en Barranquilla", channel="telegram", chat_id="demo_alc")
+    r2 = wf.run_query("solo los de infraestructura vial", channel="telegram", chat_id="demo_alc")
+    assert "Licitacion Publica" in r2["response"] or "domina" in r2["response"]

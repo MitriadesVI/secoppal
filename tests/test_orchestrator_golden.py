@@ -300,8 +300,10 @@ def test_golden_direct_lookup_id_not_found(wf, tmp_path):
 # ─── 7. Normal flow — first turn ─────────────────────────────────────────────
 
 def test_golden_normal_flow_first_turn(wf, tmp_path):
+    # Lleva rubro ("mantenimiento") para ser una búsqueda ejecutable: un
+    # browse territorial sin rubro lo bloquea P15 (ver test_demo_alcalde).
     result = wf.run_query(
-        "procesos abiertos en Barranquilla",
+        "procesos abiertos de mantenimiento en Barranquilla",
         channel="streamlit",
         chat_id="golden_normal",
     )
