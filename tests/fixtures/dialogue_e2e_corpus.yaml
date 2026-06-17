@@ -1,0 +1,239 @@
+metadata:
+  version: "1.0"
+  created: "2026-06-13"
+  purpose: >
+    Corpus de diálogo E2E multi-turno. Maneja el workflow REAL
+    (SecopalWorkflow.run_query) con el parser REAL y round-trip de
+    persistencia; SECOP mockeado. Las aserciones son INVARIANTES
+    (propiedades que cualquier sistema correcto debe cumplir), NO salidas
+    elegidas a mano — para evitar el "síndrome del sastre" (tests cortados
+    a la medida del output actual).
+
+  annotations: >
+    Cada turno declara la INTENCIÓN del usuario (ground truth), no la
+    salida esperada del sistema:
+      text            : lo que escribe el usuario
+      says_territory  : territorio que el usuario nombra ESTE turno (resuelto)
+      says_date       : el usuario menciona una fecha/año este turno
+      changes_dataset : el usuario pivota de dataset este turno
+      expect          : "block" | "execute"  (resultado esperado a alto nivel)
+
+  invariants: >
+    Aplicadas automáticamente a TODAS las secuencias:
+      I1 expect=block   ⇒ needs_clarification y CERO llamadas a SECOP y sin SoQL
+      I2 expect=execute ⇒ no needs_clarification y SoQL no vacío
+      I3 persistencia de territorio: el último territorio que el usuario nombró
+         debe seguir en los params de cada turno posterior hasta que nombre otro
+      I4 no-alucinación de fecha: tras un cambio de dataset sin fecha nueva,
+         fecha_desde debe ser None (una fecha de otro dataset no se hereda)
+
+sequences:
+  # ── Regresión de los 2 bugs hallados en testeo manual ──────────────────
+  - id: DLG-PIVOT-DATE-AND-CONTEXT
+    note: "bug #1 (fecha cruza dataset) + bug #2 (contexto se pierde)"
+    turns:
+      - text: "contratos en barranquilla 2026"
+        says_territory: Barranquilla
+        says_date: true
+        expect: execute
+      - text: "procesos para presentarme en antioquia"
+        says_territory: Antioquia
+        changes_dataset: true
+        expect: block
+      - text: "quiero ver todo"
+        expect: block
+      - text: "mantenimiento"
+        expect: execute
+
+  - id: DLG-CONTENTLESS-CHAIN
+    note: "varios turnos vacíos no deben borrar el contexto"
+    turns:
+      - text: "procesos para presentarme en bolivar"
+        says_territory: Bolívar
+        expect: block
+      - text: "muéstrame"
+        expect: block
+      - text: "a ver"
+        expect: block
+      - text: "dotación escolar"
+        expect: execute
+
+  # ── Sondas independientes (NO diseñadas alrededor de mis fixes) ─────────
+  - id: DLG-TOPIC-CHANGE-KEEPS-SCOPE
+    note: "cambiar de tema conserva el territorio"
+    turns:
+      - text: "procesos de mantenimiento en bolivar"
+        says_territory: Bolívar
+        expect: execute
+      - text: "ahora alimentación escolar"
+        expect: execute
+
+  - id: DLG-SCOPE-CHANGE-KEEPS-TOPIC
+    note: "cambiar de territorio conserva el tema"
+    turns:
+      - text: "procesos de mantenimiento en bolivar"
+        says_territory: Bolívar
+        expect: execute
+      - text: "ahora en sucre"
+        says_territory: Sucre
+        expect: execute
+
+  - id: DLG-VALUE-PERSISTS-ON-ORDER
+    note: "ordenar no debe perder el filtro de valor ni el territorio"
+    turns:
+      - text: "procesos de obra en atlantico mayores a 1000 millones"
+        says_territory: Atlántico
+        expect: execute
+      - text: "ordena por fecha"
+        expect: execute
+
+  - id: DLG-BIDDER-HAPPY-RECOVERY
+    note: "P15: bloquea bidder sin rubro, recupera con rubro"
+    turns:
+      - text: "quiero presentarme en bolivar"
+        says_territory: Bolívar
+        expect: block
+      - text: "vendo uniformes escolares"
+        expect: execute
+
+  - id: DLG-UNRELATED-PIVOT-NO-LEAK
+    note: "pivote a una búsqueda distinta NO debe arrastrar el territorio viejo"
+    turns:
+      - text: "procesos de mantenimiento en bolivar"
+        says_territory: Bolívar
+        expect: execute
+      - text: "contratos firmados del sena en antioquia"
+        says_territory: Antioquia
+        changes_dataset: true
+        expect: execute
+
+  # ═══════════ 11 secuencias ADVERSARIALES (buscan romper) ═══════════
+  - id: DLG-DOUBLE-DATASET-PIVOT
+    note: "la fecha no debe sobrevivir a DOS pivotes de dataset"
+    turns:
+      - text: "contratos de obra en bolivar 2025"
+        says_territory: Bolívar
+        says_date: true
+        expect: execute
+      - text: "procesos abiertos de obra en bolivar"
+        says_territory: Bolívar
+        changes_dataset: true
+        expect: execute
+      - text: "y contratos firmados de obra en bolivar"
+        says_territory: Bolívar
+        changes_dataset: true
+        expect: execute
+
+  - id: DLG-BLOCK-RECOVER-BY-DATE
+    note: "P15 se recupera con una ventana de fecha estrecha como qualifier"
+    turns:
+      - text: "procesos para presentarme en cundinamarca"
+        says_territory: Cundinamarca
+        expect: block
+      - text: "los publicados en los últimos 30 días"
+        says_date: true
+        expect: execute
+
+  - id: DLG-BLOCK-RECOVER-BY-VALUE
+    note: "P15 se recupera con piso de valor alto (>=1000M)"
+    turns:
+      - text: "quiero presentarme en huila"
+        says_territory: Huila
+        expect: block
+      - text: "los mayores a 1000 millones"
+        expect: execute
+
+  - id: DLG-BLOCK-RECOVER-BY-MODALITY
+    note: "P15 se recupera con modalidad como qualifier"
+    turns:
+      - text: "procesos para presentarme en narino"
+        says_territory: Nariño
+        expect: block
+      - text: "por mínima cuantía"
+        expect: execute
+
+  - id: DLG-LOW-VALUE-STILL-BLOCKS
+    note: "valor por debajo del piso (50M < 1000M) NO es qualifier; sigue bloqueado"
+    turns:
+      - text: "procesos para presentarme en cesar"
+        says_territory: Cesar
+        expect: block
+      - text: "los mayores a 50 millones"
+        expect: block
+
+  - id: DLG-ENTITY-THEN-CONTENTLESS
+    note: "entidad concreta + 'ver todo' debe seguir ejecutando (entidad es qualifier)"
+    turns:
+      - text: "procesos abiertos de la gobernación del atlántico"
+        says_territory: Atlántico
+        expect: execute
+      - text: "quiero ver todo"
+        expect: execute
+
+  - id: DLG-EXPLICIT-NEW-SEARCH-RESETS
+    note: >
+      Un verbo de búsqueda nueva NO debe heredar el territorio viejo.
+      (Se usa 'aseo' y no 'salud' a propósito: 'salud en' dispara un bug
+      pre-existente del detector direct_lookup — ver test_known_bug_*.)
+    turns:
+      - text: "procesos de mantenimiento en bolivar"
+        says_territory: Bolívar
+        expect: execute
+      - text: "busca contratos de aseo en huila"
+        says_territory: Huila
+        changes_dataset: true
+        expect: execute
+
+  - id: DLG-CITY-TO-DEPT
+    note: "cambiar de ciudad a departamento (cambio de clave de scope)"
+    turns:
+      - text: "procesos de aseo en barranquilla"
+        says_territory: Barranquilla
+        expect: execute
+      - text: "ahora en todo el atlantico"
+        says_territory: Atlántico
+        expect: execute
+
+  - id: DLG-PAGINATION-KEEPS-CONTEXT
+    note: "'muéstrame más' conserva todo el contexto"
+    turns:
+      - text: "procesos de obra en bolivar"
+        says_territory: Bolívar
+        expect: execute
+      - text: "muéstrame más"
+        expect: execute
+
+  - id: DLG-REPEAT-IDENTICAL
+    note: "repetir la misma consulta es estable"
+    turns:
+      - text: "procesos de mantenimiento en sucre"
+        says_territory: Sucre
+        expect: execute
+      - text: "procesos de mantenimiento en sucre"
+        says_territory: Sucre
+        expect: execute
+
+  - id: DLG-NO-TERRITORY-BLOCK-KEEPS-ASKING
+    note: >
+      Bloqueo SIN territorio ni rubro: un follow-up de solo-ordering NO debe
+      caer en el genérico "perdí el contexto" — debe seguir pidiendo rubro
+      (P15), y recordar el orden cuando por fin llega el rubro.
+    turns:
+      - text: "licitaciones abiertas ahora"
+        expect: block
+        expect_reason_contains: "producto"
+      - text: "muéstrame las más caras"
+        expect: block
+        expect_reason_contains: "producto"
+      - text: "mantenimiento"
+        expect: execute
+
+  - id: DLG-BIDDER-THEN-HISTORY-PIVOT
+    note: "bidder bloqueado → pivote a contratos firmados debe conservar territorio"
+    turns:
+      - text: "quiero presentarme en bolivar"
+        says_territory: Bolívar
+        expect: block
+      - text: "contratos firmados de mantenimiento"
+        changes_dataset: true
+        expect: execute

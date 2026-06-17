@@ -1,0 +1,229 @@
+metadata:
+  version: "1.0"
+  created: "2026-06-13"
+  purpose: >
+    Catálogo de consultas amplias / abiertas que pueden provocar timeout,
+    error o universo desbordado en SECOP. Sirve para (a) endurecer guards y
+    (b) medir latencia real contra datos.gov.co cuando el API esté arriba.
+    NO es un corpus de parser: cada caso describe el modo de fallo y el
+    comportamiento defensivo esperado.
+  related:
+    - OPP-SCOPE-001  # P15 — bloqueo de oportunidades sin scope
+    - docs/CORPUS_BACKLOG.md
+  coverage_legend:
+    covered: "Un guard existente ya neutraliza el caso"
+    partial: "Mitigado pero sin garantía / requiere verificación"
+    gap: "Sin protección — preparar guard o ruteo"
+  failure_modes:
+    timeout: "ORDER BY / scan / LIKE sobre el universo completo agota el plazo"
+    oversized: "El universo resultante es enorme aunque no agote el plazo"
+    bad_filter: "El filtro no poda (valor string, null-heavy, fuzzy explosion)"
+    soql_error: "SoQL malformado → HTTP 400"
+    wrong_universe: "Se consulta el dataset/scope equivocado"
+    where_1_1: "No hay scope ni topic → barrido total"
+
+cases:
+  # ═══════════ 1. Oportunidad sin scope (target de P15) ═══════════
+  - id: STRESS-OPP-001
+    query: "licitaciones abiertas"
+    category: opportunity_no_scope
+    failure_mode: timeout
+    expected_guard: block_clarify          # P15 → opportunity_scope_too_broad
+    current_coverage: covered
+    notes: "P15 nuevo. Pide rubro/recencia."
+
+  - id: STRESS-OPP-002
+    query: "qué oportunidades hay"
+    category: opportunity_no_scope
+    failure_mode: where_1_1
+    expected_guard: block_clarify
+    current_coverage: covered
+
+  - id: STRESS-OPP-003
+    query: "procesos abiertos en Bolívar"
+    category: opportunity_territory_only
+    failure_mode: oversized
+    expected_guard: block_clarify          # territorio no es qualifier (P15)
+    current_coverage: covered
+    notes: "Recuperable en turno 2 vía B5b (hereda Bolívar)."
+
+  - id: STRESS-OPP-004
+    query: "en bolívar"                   # follow-up tras bloqueo de P15
+    category: opportunity_territory_only_followup
+    failure_mode: oversized
+    expected_guard: block_clarify
+    current_coverage: covered
+    notes: >
+      CERRADO: el clasificador trata "mismo scope sin contenido nuevo" como
+      continuación (refine_filter), no new_search, así que intent_type=
+      opportunity_search sobrevive y P15 sigue gobernando. Verificado en
+      test_p15_recovery_seam::test_blocked_then_territory_only_followup_still_blocks.
+
+  # ═══════════ 2. ORDER BY valor sobre todo ═══════════
+  - id: STRESS-SORT-001
+    query: "los contratos más grandes de Colombia"
+    category: order_by_value_global
+    failure_mode: timeout
+    expected_guard: degrade_or_block       # retry: ORDER BY valor → fecha
+    current_coverage: partial
+    notes: "Existe retry a orden por fecha; verificar que dispare aquí."
+
+  - id: STRESS-SORT-002
+    query: "ordéname todo por valor de mayor a menor"
+    category: order_by_value_global
+    failure_mode: timeout
+    expected_guard: degrade_or_block
+    current_coverage: partial
+
+  # ═══════════ 3. Superlativo sin ancla ═══════════
+  - id: STRESS-SUP-001
+    query: "el contrato más caro de la historia"
+    category: superlative_no_anchor
+    failure_mode: timeout
+    expected_guard: block_clarify          # pedir scope o rutear a analytics
+    current_coverage: gap
+    notes: "Candidato a guard hermano de P15."
+
+  - id: STRESS-SUP-002
+    query: "qué entidad contrata más en Colombia"
+    category: superlative_no_anchor
+    failure_mode: timeout
+    expected_guard: route_analytics
+    current_coverage: gap
+
+  # ═══════════ 4. Agregación nacional ═══════════
+  - id: STRESS-AGG-001
+    query: "cuánto se ha gastado en salud en Colombia"
+    category: aggregation_global
+    failure_mode: timeout
+    expected_guard: route_analytics_or_block
+    current_coverage: partial
+    notes: "¿maybe_handle_analytical_query exige scope? Verificar."
+
+  - id: STRESS-AGG-002
+    query: "valor total contratado por departamento"
+    category: aggregation_global
+    failure_mode: timeout
+    expected_guard: route_analytics_or_block
+    current_coverage: gap
+
+  # ═══════════ 5. Texto libre sin territorio ═══════════
+  - id: STRESS-TEXT-001
+    query: "contratos de software"
+    category: free_text_global
+    failure_mode: timeout
+    expected_guard: degrade_or_clarify     # LIKE objeto sobre millones
+    current_coverage: partial
+    notes: "history_search con objeto pero sin scope. ¿P13 solo flaggea?"
+
+  # ═══════════ 6. Ventana anual / multi-año ═══════════
+  - id: STRESS-DATE-001
+    query: "contratos de 2022, 2023 y 2024"
+    category: multi_year_window
+    failure_mode: oversized
+    expected_guard: degrade_or_clarify
+    current_coverage: gap
+    notes: "No cuenta como ventana estrecha (>60d) pero no bloquea."
+
+  # ═══════════ 7. Valor que no poda (value-resolution) ═══════════
+  - id: STRESS-VAL-001
+    query: "contratos de más de mil millones"
+    category: value_no_prune
+    failure_mode: bad_filter
+    expected_guard: execute_clean          # valor_min debe podar de verdad
+    current_coverage: partial
+    notes: "Cuello conocido: valor como string / escala. Medir."
+
+  - id: STRESS-VAL-002
+    query: "contratos pequeños en Bolívar"
+    category: value_undefined_threshold
+    failure_mode: bad_filter
+    expected_guard: clarify                # "pequeño" sin umbral
+    current_coverage: gap
+
+  # ═══════════ 8. Entidad ambigua / fuzzy explosion ═══════════
+  - id: STRESS-ENT-001
+    query: "contratos de la alcaldía"
+    category: entity_ambiguous
+    failure_mode: bad_filter
+    expected_guard: clarify                # ¿cuál alcaldía? entidad_like explota
+    current_coverage: gap
+
+  - id: STRESS-ENT-002
+    query: "secretaría de salud"
+    category: entity_ambiguous
+    failure_mode: oversized
+    expected_guard: clarify
+    current_coverage: gap
+    notes: "Cada depto tiene una. entidad_like → OR gigante."
+
+  # ═══════════ 9. OR de muchos temas ═══════════
+  - id: STRESS-OR-001
+    query: "construcción o aseo o vigilancia o dotación o transporte o salud"
+    category: wide_or_topic
+    failure_mode: oversized
+    expected_guard: execute_capped         # tope de términos en objeto_or
+    current_coverage: partial
+
+  # ═══════════ 10. Paginación profunda ═══════════
+  - id: STRESS-PAGE-001
+    query: "muéstrame más"               # repetido hasta offset alto
+    category: deep_pagination
+    failure_mode: timeout
+    expected_guard: cap_offset
+    current_coverage: partial
+    notes: "Verificar límite de offset en Socrata."
+
+  # ═══════════ 11. Comparativa / tendencia ═══════════
+  - id: STRESS-CMP-001
+    query: "compara Bolívar vs Atlántico en obras 2020 a 2025"
+    category: comparative_multi_query
+    failure_mode: timeout
+    expected_guard: route_analytics_or_block
+    current_coverage: gap
+
+  # ═══════════ 12. Vago sin nada estructurado ═══════════
+  - id: STRESS-VAGUE-001
+    query: "buenas oportunidades"
+    category: vague_no_structure
+    failure_mode: where_1_1
+    expected_guard: block_clarify          # check_no_where_1_1 / UnsafeGlobalQueryError
+    current_coverage: covered
+
+  - id: STRESS-VAGUE-002
+    query: "negocios interesantes"
+    category: vague_no_structure
+    failure_mode: where_1_1
+    expected_guard: block_clarify
+    current_coverage: covered
+
+  # ═══════════ 13. Caracteres especiales / escaping ═══════════
+  - id: STRESS-CHAR-001
+    query: "contratos de O'Brien & Asociados S.A.S"
+    category: special_chars
+    failure_mode: soql_error
+    expected_guard: execute_clean          # escaping de comilla simple
+    current_coverage: partial
+
+  # ═══════════ 14. Ambigüedad geográfica ═══════════
+  - id: STRESS-GEO-001
+    query: "contratos en Sucre"
+    category: geo_ambiguous
+    failure_mode: wrong_universe           # depto vs municipio
+    expected_guard: clarify_or_prefer_depto
+    current_coverage: partial
+
+  - id: STRESS-GEO-002
+    query: "procesos en Soledad"
+    category: geo_ambiguous
+    failure_mode: wrong_universe
+    expected_guard: resolve_city
+    current_coverage: partial
+
+  # ═══════════ 15. Dataset equivocado ═══════════
+  - id: STRESS-DS-001
+    query: "quiero presentarme a contratos firmados en Bolívar"
+    category: dataset_conflict
+    failure_mode: wrong_universe
+    expected_guard: execute_clean          # P10/P12 corrigen oferta→procesos
+    current_coverage: covered
