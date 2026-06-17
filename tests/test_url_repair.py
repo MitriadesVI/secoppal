@@ -23,7 +23,7 @@ class TestNormalizeRowUrl:
     def test_url_empty_for_co1_req_pre_publicacion(self):
         """DOGFOOD-URL-005: CO1.REQ.X son requisiciones pre-publicación;
         OpportunityDetail devuelve 'argument out of range'. La política es
-        no mostrar link roto; UI muestra 'Vista pública no disponible'."""
+        no mostrar link roto; UI muestra 'Sin enlace público disponible'."""
         client = SecopClient(domain="www.datos.gov.co", app_token=None)
         row = {
             "urlproceso": "",

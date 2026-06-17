@@ -29,17 +29,19 @@ def _proc(estado="Publicado", apertura="Abierto", fase="Presentación de oferta"
 def test_counts_are_correct():
     rows = [
         _proc(fase="Presentación de oferta"),               # offer_phase_indicated
-        _proc(fase="Presentación de observaciones"),         # pre_offer_signal
+        _proc(fase="Presentación de observaciones"),         # published_pre_offer_signal
+        _proc("Borrador", fase=None),                        # unpublished_draft_signal
         _proc(fase="Selección de ofertas"),                  # post_offer_signal
         _proc(apertura="Cerrado", fase="Presentación de oferta"),  # conflicting
         _proc(fase="Estimate Phase"),                        # unknown
     ]
     s = summarize_opportunity_stages(rows, total_count=99999)
     assert s["counts"] == {
-        "offer_phase_indicated": 1, "pre_offer_signal": 1,
-        "post_offer_signal": 1, "conflicting_signals": 1, "unknown": 1,
+        "offer_phase_indicated": 1, "published_pre_offer_signal": 1,
+        "unpublished_draft_signal": 1, "post_offer_signal": 1,
+        "conflicting_signals": 1, "unknown": 1,
     }
-    assert s["classified_count"] == 5
+    assert s["classified_count"] == 6
     assert s["total_count"] == 99999
     assert s["computed_from"] == "current_result_set"
     assert s["classifier_version"] == CLASSIFIER_VERSION

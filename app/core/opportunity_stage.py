@@ -27,7 +27,8 @@ CLASSIFIER_VERSION = "0.1"
 
 OpportunityStage = Literal[
     "offer_phase_indicated",
-    "pre_offer_signal",
+    "published_pre_offer_signal",   # público pero temprano (observaciones/manifestación)
+    "unpublished_draft_signal",     # borrador interno sin señales de publicación
     "post_offer_signal",
     "conflicting_signals",
     "unknown",
@@ -107,6 +108,7 @@ def classify_opportunity_stage(row: Mapping[str, Any]) -> OpportunityStageAssess
     apertura = _norm(row.get("estado_de_apertura_del_proceso"))
     raw_phase = row.get("fase")
     phase = _PHASE_ALIASES.get(_norm(raw_phase))  # offer|observations|interest|selection|None
+    has_pub_date = bool(str(row.get("fecha_de_publicacion_del") or "").strip())
 
     estado_published = estado == "publicado"
     estado_pre = estado in _PRE_OFFER_ESTADOS
@@ -172,19 +174,36 @@ def classify_opportunity_stage(row: Mapping[str, Any]) -> OpportunityStageAssess
             "offer_phase_indicated", conf, reasons=tuple(reasons), raw_phase=raw_phase,
         )
 
-    # 4) PRE-OFERTA (alerta temprana). OR: borradores suelen tener fase NULL.
-    if estado_pre or phase in ("observations", "interest"):
-        reasons = []
-        if estado_pre:
-            reasons.append("procedure_state_draft")
+    # 4) PRE-OFERTA PÚBLICA — proceso publicado pero en etapa temprana
+    # (observaciones/manifestación). Es inteligencia comercial valiosa.
+    if estado in _OFFER_COMPATIBLE_ESTADOS and phase in ("observations", "interest"):
+        reasons = [phase_reason]
+        reasons.append("procedure_state_published" if estado_published else "procedure_state_open")
+        return OpportunityStageAssessment(
+            "published_pre_offer_signal", "high", reasons=tuple(reasons), raw_phase=raw_phase,
+        )
+
+    # 5) BORRADOR NO PUBLICADO — requisición/borrador interno sin señales de
+    # publicación. NO es "oportunidad temprana": puede no publicarse nunca.
+    if estado_pre:
+        reasons = ["procedure_state_draft"]
+        if not has_pub_date:
+            reasons.append("no_publication_date")
         if phase in ("observations", "interest"):
             reasons.append(phase_reason)
         return OpportunityStageAssessment(
-            "pre_offer_signal", "high" if estado_pre else "medium",
+            "unpublished_draft_signal", "high" if not has_pub_date else "medium",
             reasons=tuple(reasons), raw_phase=raw_phase,
         )
 
-    # 5) DESCONOCIDO — low reservado para insuficiencia/contradicción no resuelta
+    # 6) Señal pública temprana sin estado claro (fase observaciones/manifestación)
+    if phase in ("observations", "interest"):
+        return OpportunityStageAssessment(
+            "published_pre_offer_signal", "medium",
+            reasons=(phase_reason,), raw_phase=raw_phase,
+        )
+
+    # 7) DESCONOCIDO — low reservado para insuficiencia/contradicción no resuelta
     reasons = []
     if estado_published:
         reasons.append("procedure_state_published")
@@ -202,8 +221,8 @@ def classify_opportunity_stage(row: Mapping[str, Any]) -> OpportunityStageAssess
 # un payload serializable para el trace. No muta filas, no consulta nada.
 
 _STAGE_ORDER = (
-    "offer_phase_indicated", "pre_offer_signal", "post_offer_signal",
-    "conflicting_signals", "unknown",
+    "offer_phase_indicated", "published_pre_offer_signal", "unpublished_draft_signal",
+    "post_offer_signal", "conflicting_signals", "unknown",
 )
 _CONFIDENCE_ORDER = ("high", "medium", "low")
 

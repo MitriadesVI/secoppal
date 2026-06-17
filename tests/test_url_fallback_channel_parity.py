@@ -12,7 +12,7 @@ import pytest
 from app.core.formatter import Formatter
 
 F = Formatter()
-_NOTE = "Vista pública no disponible"
+_NOTE = "Sin enlace público disponible"
 
 # Fila SIN url (CO1.REQ pre-publicación) y fila CON url (CO1.NTC publicado).
 _RESULTS = [

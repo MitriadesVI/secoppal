@@ -42,19 +42,30 @@ def test_selected_state_but_offer_phase_is_conflict():
     assert "offer_phase_but_state_post_offer" in a.conflicts
 
 
-# 4 — borradores suelen tener fase NULL → igual deben ser pre-oferta (OR)
-def test_draft_with_null_phase_is_pre_offer():
+# 4 — borrador sin fase/fecha/url = borrador NO publicado (no "oportunidad temprana")
+def test_draft_with_null_phase_is_unpublished_draft():
     a = classify_opportunity_stage(_row("Borrador", fase=None))
-    assert a.stage == "pre_offer_signal"
+    assert a.stage == "unpublished_draft_signal"
     assert a.confidence == "high"
     assert "procedure_state_draft" in a.reasons
+    assert "no_publication_date" in a.reasons
 
 
-# 5
-def test_published_observations_is_pre_offer():
+# 5 — público en observaciones = pre-oferta PÚBLICA (inteligencia valiosa)
+def test_published_observations_is_published_pre_offer():
     a = classify_opportunity_stage(_row("Publicado", "Abierto", "Presentación de observaciones"))
-    assert a.stage == "pre_offer_signal"
+    assert a.stage == "published_pre_offer_signal"
     assert "phase_observations" in a.reasons
+
+
+# Split: borrador CON fecha de publicación → confianza media (señal mixta)
+def test_draft_with_pub_date_is_medium():
+    a = classify_opportunity_stage(
+        _row("Borrador", fase=None, fecha_de_publicacion_del="2026-06-01")
+    )
+    assert a.stage == "unpublished_draft_signal"
+    assert a.confidence == "medium"
+    assert "no_publication_date" not in a.reasons
 
 
 # 6
