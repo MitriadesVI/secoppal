@@ -67,8 +67,13 @@ def apply_context(state: State) -> State:
         previous_frame=previous_frame,
     )
 
-    # Guard contra WHERE 1=1 global
-    if not FollowupGuards.check_no_where_1_1(merged):
+    # Guard contra WHERE 1=1 global.
+    # Excepción: una opportunity_search sin scope/topic NO es "contexto
+    # perdido" — es una oportunidad demasiado amplia que aún necesita rubro.
+    # Dejamos que P15 (plan_query) la gobierne, que da una aclaración mucho
+    # mejor ("¿qué producto/servicio buscas?") que el genérico de abajo.
+    is_opportunity = merged.get("intent_type") == "opportunity_search"
+    if not is_opportunity and not FollowupGuards.check_no_where_1_1(merged):
         return _with_timing(
             state,
             "apply_context_ms",

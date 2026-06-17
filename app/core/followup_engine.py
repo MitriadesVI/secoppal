@@ -327,6 +327,16 @@ class FollowupClassifier:
         if current_frame.scope:
             if cls._scope_differs(current_frame.scope, previous_frame.scope):
                 return "change_scope"
+            # Mismo scope sin contenido nuevo (p. ej. el usuario re-menciona
+            # el ámbito tras una aclaración): NO es búsqueda nueva. Heredar
+            # todo para no perder la clasificación previa (intent/oportunidad),
+            # de modo que un guard como P15 siga gobernando el turno y no se
+            # cuele una consulta territorial amplia. (STRESS-OPP-004)
+            if (not current_frame.topic
+                    and not current_frame.modifiers
+                    and not has_year
+                    and not has_order):
+                return "refine_filter"
 
         # 6. Refinamiento: "más" + filtro nuevo, o solo modificadores
         has_mas = bool(re.search(r"\bm[áa]s\b", norm_text))
@@ -357,6 +367,15 @@ class FollowupClassifier:
 
         # 7. Solo modified params sin contexto — refine
         if current_frame.modifiers:
+            return "refine_filter"
+
+        # 7.5. Follow-up sin contenido nuevo real (sin topic/scope/modifiers ni
+        # dataset explícito, p. ej. "quiero ver todo"): es continuación dentro
+        # del contexto, NO búsqueda nueva. Heredar evita destruir el contexto
+        # —que envenenaría los turnos siguientes— y deja que P15 re-evalúe el
+        # frame heredado (re-pregunta el rubro en vez de un WHERE 1=1).
+        if (not current_frame.scope
+                and not current_frame.dataset_explicit):
             return "refine_filter"
 
         # 8. Tiene parámetros significativos — new_search
@@ -476,6 +495,42 @@ class FollowupMerger:
         return policy(previous_frame, current_frame)
 
 
+# ── Política de merge por campo para raw_params ─────────────────────────────
+# raw_params transporta las claves que NO viven en los campos tipados
+# (scope/topic/modifiers). Antes se fusionaban a ciegas ({**prev, **curr}),
+# lo que dejaba que clasificación y topic viejos contaminaran el turno nuevo
+# (follow-up poisoning). Cada clave declara aquí cómo sobrevive un follow-up:
+#   topic-class          → atada al topic; expira cuando el topic se reemplaza
+#   classification-class  → atada al intent; resetea cuando el intent cambia
+# Las claves no listadas conservan el comportamiento legacy: heredan, gana
+# el turno actual (seguro para force_dataset, fecha_de_firma, dataset, etc.).
+_RAW_TOPIC_KEYS = ("objeto_or",)
+_RAW_CLASSIFICATION_KEYS = ("opportunity_mode", "filter_active_only")
+
+
+def _merge_raw(prev_raw: dict, curr_raw: dict, *, topic_inherited: bool) -> dict:
+    """Fusiona raw_params por política explícita en vez de unión ciega."""
+    merged = {**prev_raw, **curr_raw}
+
+    # topic-class: si el topic se reemplazó, las claves de topic heredadas
+    # quedan obsoletas (a menos que el turno actual las traiga).
+    if not topic_inherited:
+        for key in _RAW_TOPIC_KEYS:
+            if key not in curr_raw:
+                merged.pop(key, None)
+
+    # classification-class: si el intent cambió, los sub-flags de la
+    # clasificación previa no aplican al nuevo intent.
+    prev_intent = prev_raw.get("intent_type")
+    curr_intent = curr_raw.get("intent_type")
+    if curr_intent and prev_intent and curr_intent != prev_intent:
+        for key in _RAW_CLASSIFICATION_KEYS:
+            if key not in curr_raw:
+                merged.pop(key, None)
+
+    return merged
+
+
 def _merge_pagination_more(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
     """Hereda TODO. Solo incrementa offset."""
     offset = prev.raw_params.get("offset", 0)
@@ -504,18 +559,15 @@ def _merge_refine_filter(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
     Esto evita que "muestrame solo aquellos que sean por mas de 100 millones"
     reemplace el topic real (ej. "construccion") con ["solo", "aquellos"].
     """
-    inherited_topic = (
-        list(prev.topic)
-        if FollowupClassifier._is_weak_topic(curr.topic)
-        else list(curr.topic)
-    )
+    topic_inherited = FollowupClassifier._is_weak_topic(curr.topic)
+    inherited_topic = list(prev.topic) if topic_inherited else list(curr.topic)
     return QueryFrame(
         dataset=prev.dataset,
         dataset_explicit=prev.dataset_explicit,
         scope=dict(prev.scope),
         topic=inherited_topic,
         modifiers={**prev.modifiers, **curr.modifiers},
-        raw_params={**prev.raw_params, **curr.raw_params},
+        raw_params=_merge_raw(prev.raw_params, curr.raw_params, topic_inherited=topic_inherited),
         intent_type="refine_filter",
     )
 
@@ -528,7 +580,7 @@ def _merge_change_year(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
         scope=dict(prev.scope),
         topic=list(prev.topic),
         modifiers={**prev.modifiers, **curr.modifiers},
-        raw_params={**prev.raw_params, **curr.raw_params},
+        raw_params=_merge_raw(prev.raw_params, curr.raw_params, topic_inherited=True),
         intent_type="change_year",
     )
 
@@ -545,7 +597,7 @@ def _merge_change_order(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
         scope=dict(prev.scope),
         topic=list(prev.topic),
         modifiers=modifiers,
-        raw_params={**prev.raw_params, **curr.raw_params},
+        raw_params=_merge_raw(prev.raw_params, curr.raw_params, topic_inherited=True),
         intent_type="change_order",
     )
 
@@ -557,18 +609,15 @@ def _merge_change_scope(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
     se hereda el topic previo. Mantiene la cadena conversacional intacta
     en secuencias tipo T1 topic+scope → T2 change_scope → T3 modifier+débil.
     """
-    inherited_topic = (
-        list(prev.topic)
-        if FollowupClassifier._is_weak_topic(curr.topic)
-        else list(curr.topic)
-    )
+    topic_inherited = FollowupClassifier._is_weak_topic(curr.topic)
+    inherited_topic = list(prev.topic) if topic_inherited else list(curr.topic)
     return QueryFrame(
         dataset=prev.dataset,
         dataset_explicit=prev.dataset_explicit,
         scope=dict(curr.scope) if curr.scope else dict(prev.scope),
         topic=inherited_topic,
         modifiers={**prev.modifiers, **curr.modifiers},
-        raw_params={**prev.raw_params, **curr.raw_params},
+        raw_params=_merge_raw(prev.raw_params, curr.raw_params, topic_inherited=topic_inherited),
         intent_type="change_scope",
     )
 
@@ -578,18 +627,21 @@ def _merge_change_dataset(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
 
     Topic: misma defensa que change_scope contra topics débiles del current.
     """
-    inherited_topic = (
-        list(prev.topic)
-        if FollowupClassifier._is_weak_topic(curr.topic)
-        else list(curr.topic)
-    )
+    topic_inherited = FollowupClassifier._is_weak_topic(curr.topic)
+    inherited_topic = list(prev.topic) if topic_inherited else list(curr.topic)
+    # Pivot de dataset: la semántica de fecha difiere entre datasets
+    # (fecha_de_firma en contratos vs fecha_de_publicacion en procesos), así
+    # que un rango de fecha del dataset anterior no debe heredarse — sería un
+    # filtro que el usuario no pidió para el nuevo dataset.
+    inherited_mods = {k: v for k, v in prev.modifiers.items()
+                      if k not in ("fecha_desde", "fecha_hasta")}
     return QueryFrame(
         dataset=curr.dataset,
         dataset_explicit=True,
         scope=dict(curr.scope) if curr.scope else dict(prev.scope),
         topic=inherited_topic,
-        modifiers={**prev.modifiers, **curr.modifiers},
-        raw_params={**prev.raw_params, **curr.raw_params},
+        modifiers={**inherited_mods, **curr.modifiers},
+        raw_params=_merge_raw(prev.raw_params, curr.raw_params, topic_inherited=topic_inherited),
         intent_type="change_dataset",
     )
 
@@ -600,10 +652,8 @@ def _merge_contextual_requery(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
     Si el current.topic es vacío o sólo tokens débiles (pronombres/anáforas),
     se hereda el topic previo en lugar de reemplazarlo.
     """
-    if FollowupClassifier._is_weak_topic(curr.topic):
-        merged_topic = list(prev.topic)
-    else:
-        merged_topic = list(curr.topic)
+    topic_inherited = FollowupClassifier._is_weak_topic(curr.topic)
+    merged_topic = list(prev.topic) if topic_inherited else list(curr.topic)
     # OPP-004: preserve objeto when follow-up only adds value/scope
     if prev.intent_type == "opportunity_search" and not any(k in curr.modifiers for k in ["objeto"]):
         # BIDDER-INTENT-002: strong bidder intent overrides previous dataset
@@ -620,7 +670,7 @@ def _merge_contextual_requery(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
         scope=dict(prev.scope),
         topic=merged_topic,
         modifiers={**prev.modifiers, **curr.modifiers},
-        raw_params={**prev.raw_params, **curr.raw_params},
+        raw_params=_merge_raw(prev.raw_params, curr.raw_params, topic_inherited=topic_inherited),
         intent_type="contextual_requery",
     )
 
