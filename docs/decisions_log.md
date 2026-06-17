@@ -1207,12 +1207,25 @@ llamó a `SoQLBuilder.build()` con `estado_family` crudo sin expandir → SoQL s
 filtro de estado → se colaron estados post-cierre. Deuda de tooling: helper canónico
 de params para diagnósticos (tarea aparte).
 
-**Bugs de recall descubiertos (fuera de OPP-STAGE, tareas aparte).**
-- Entidad con punto final en el gazetteer ("MUNICIPIO DE GALAPA.") → `LIKE` literal
-  pierde la misma entidad guardada sin punto.
-- Filtro de año sobre `fecha_de_publicacion_del` (NULL en fases tempranas) descarta
-  procesos actuales (caso real: "semáforos en Galapa 2026" → 0 pese a existir el
-  proceso abierto).
+**Hallazgo de recall — HUECO DE COBERTURA (corregido tras diagnóstico).** El caso
+"semáforos en Galapa 2026" → 0 resultados se atribuyó primero a dos bugs; el dato
+los refutó:
+- "Entidad con punto final" REFUTADO: las 4.083 filas de Galapa Y el gazetteer
+  tienen ambos "MUNICIPIO DE GALAPA." → coinciden, el `LIKE` no descarta nada.
+- Filtro de año sobre `fecha_de_publicacion_del` NULL: bug latente real, pero NO
+  fue la causa aquí (la fila no está).
+- **Causa real, confirmada por NIT (890102472, clave estable):** el proceso 2026
+  (`SA-006-2026` / `CO1.NTC.10384092`, Published, fase observaciones) **NO está en
+  `datos.gov.co` p6dx-8zbt** (solo 4 filas Galapa+semáforo, todas 2025), pese a
+  estar vivo en `community.secop.gov.co` y a que el dataset está fresco (máx
+  publicación 2026-06-14).
+
+**Limitación conocida.** El techo de recall de SECOPPAL = lo exportado a
+datos.gov.co. Un proceso vivo y publicado en el portal transaccional puede estar
+ausente del open-data; ningún filtro/ranking lo recupera. Mitigación futura:
+consultar la API transaccional de `community.secop.gov.co` y/o datasets SECOP
+adicionales como fuente complementaria para procesos actuales (feature, no fix).
+Bug latente independiente aún en cola: filtro de año sobre fecha NULL.
 
 **Tests:** `tests/test_opportunity_stage.py` + `tests/test_opportunity_stage_shadow.py`.
 Suite al cierre: 1611+ passed, solo el fallo de entorno preexistente.
