@@ -76,11 +76,16 @@ def resolve_entities(state: State, entity_resolver: EntityResolver) -> State:
     qp = state.get("query_plan", {}) or {}
     if not qp.get("should_execute", True):
         cr = build_clarification_response(qp)
+        # Persist the (post-rules) parsed params as resolved_params so the
+        # clarified turn's scope survives into the next turn. Without this
+        # the blocked frame is stored empty and a follow-up like
+        # "mantenimiento" loses the territory we already understood.
         return state.update(
             formatted_response=cr["response"],
             formatted_rows=[],
             needs_clarification=True,
             clarification_reason=qp.get("reason", ""),
+            resolved_params=dict(state.get("parsed_params", {})),
         )
 
     start = time.perf_counter()

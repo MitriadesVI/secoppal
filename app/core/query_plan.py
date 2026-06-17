@@ -21,12 +21,13 @@ from app.core.contract_invariants import (
     has_substantial_filter,
 )
 from app.core.dialogue_policy import classify, DialogueSignal
+from app.core.opportunity_scope_policy import evaluate_opportunity_scope
 from app.core.semantic_sanity import compute_sanity_flags
 
 # ── All known rules — used as default when enabled_rules is None ──────────────
 ALL_RULES = {
     "P1", "P2", "P3", "P4", "P5", "P5b", "P6", "P7", "P8", "P9",
-    "P10", "P11", "P12", "P13", "P14",
+    "P10", "P11", "P12", "P15", "P13", "P14",
 }
 
 # ── Entity markers that preserve entity when present in raw_query (P9) ───────
@@ -274,6 +275,22 @@ def compute_query_plan(
     if "P12" in rules_to_apply:
         working_params, flags = enforce_oferta_abierta_not_contracts(working_params)
         risk_flags.extend(flags)
+
+    # ── P15: opportunity scope — block topic-less opportunity searches ──
+    # Runs after P11/P12 so intent_type is already classified as
+    # opportunity_search. Stricter than P13: territory alone is not scope.
+    if "P15" in rules_to_apply:
+        scope = evaluate_opportunity_scope(raw_query, working_params, ctx)
+        if not scope.should_execute:
+            return QueryPlan(
+                should_execute=False,
+                params=working_params,
+                missing_slots=list(scope.missing_slots),
+                risk_flags=risk_flags + list(scope.risk_flags),
+                clarification_question=scope.clarification_question,
+                reason=scope.reason,
+                signals=all_signals,
+            )
 
     # ── P13: passive substantial-filter risk flag ───────────────────────
     if "P13" in rules_to_apply and not has_substantial_filter(working_params):
