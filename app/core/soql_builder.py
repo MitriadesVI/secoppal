@@ -114,6 +114,7 @@ class SoQLBuilder:
                 "precio_base",
                 "estado_de_apertura_del_proceso",
                 "estado_del_procedimiento",
+                "fase",
                 "fecha_de_publicacion_del",
                 "urlproceso",
             ),
