@@ -1146,6 +1146,192 @@ son ESAL sin página pública — evaluar si etiquetarlos o priorizarlos distint
 - Fix en `app/core/formatter.py` (`format_telegram`, `format_whatsapp`)
 - Streamlit (`streamlit_app.py`) NO modificado
 
+---
+
+## ADR-028: Búsqueda por regiones geográficas (Caribe, Pacífico, Llanos...)
+
+**Fecha:** 2026-06-10
+**Estado:** Accepted
+
+**Contexto:** Los usuarios preguntan naturalmente por zonas: "contratos en la costa
+caribe", "obras en el pacífico", "oportunidades en los llanos". El parser solo
+entendía departamentos individuales. "Caribe" no matchea con ningún departamento
+y la búsqueda fallaba o devolvía resultados irrelevantes.
+
+**Decisión:**
+1. Crear `app/data/colombia_geography.py` con:
+   - `DEPARTAMENTOS_BY_REGION`: 6 regiones mapeadas a sus departamentos oficiales
+     SECOP (con tilde correcta: Atlántico, Bolívar, Cesar, Córdoba, La Guajira,
+     Magdalena, Sucre para Caribe; Cauca, Chocó, Nariño, Valle del Cauca para
+     Pacífico; etc.)
+   - `REGION_ALIASES`: aliases coloquiales → región canónica ("costa caribe" →
+     "Caribe", "pacífico colombiano" → "Pacífico", "llanos orientales" →
+     "Llanos", etc.)
+2. Agregar `scan_region()` en `EntityResolver` — simétrico a `scan_departamento`,
+   con índice de primer-token para detección O(1).
+3. Rama 6.4 en `QueryRouter`: detectar región SOLO si no hay departamento
+   específico (precedencia: "bolívar" explícito gana sobre región Caribe aunque
+   Bolívar pertenezca al Caribe). Setea `region` + `departamentos_in`.
+4. `SoQLBuilder`: nueva rama `departamento IN (...)` cuando hay `departamentos_in`.
+   Se agregó a `NONEMPTY_WHERE_KEYS` para que el guard anti-global reconozca el
+   scope regional como filtro válido.
+
+**Trampas de diseño cubiertas:**
+- **Colisión Amazonas/Amazonía:** "amazonas" (departamento) vs "amazonia" (región).
+  El scan de departamento corre primero; si matchea "Amazonas", no se busca región.
+  "Amazonia" solo matchea como región.
+- **Precedencia departamento > región:** un departamento explícito ("bolívar")
+  gana sobre la región aunque pertenezca a una.
+- **Timeout en regiones grandes:** Andina = 11 departamentos genera `IN` con 11
+  valores. El path count-first existente absorbe el riesgo (mismo comportamiento
+  que un departamento grande hoy).
+
+**Tests:** `tests/test_regiones.py` (10 tests): cobertura de datos, detección,
+builder, colisión Amazonas/Amazonía, precedencia departamento > región.
+
+**Fuera de alcance (deferido):** hint en respuesta ("región Caribe: 7
+departamentos"), relajación dirigida por región en `degrade_query`, subregiones
+finas (Costa Atlántica vs. Caribe continental).
+
+**Métricas al cierre:**
+- Suite: 1425 passed, 23 xfailed
+- Commit: `95dbf59`
+
+---
+
+## ADR-029: SECOPPAL Radar v1.0 — Búsquedas guardadas con feed de movimientos
+
+**Fecha:** 2026-06-11
+**Estado:** Accepted (commiteado en `main`, pendiente de merge a feature branch)
+
+**Contexto:** Los usuarios repiten consultas periódicas ("¿qué hay de nuevo en
+mantenimiento vial en Cundinamarca?"). Volver a formular la misma búsqueda cada
+vez es tedioso y no hay forma de saber qué cambió desde la última consulta.
+
+**Decisión:** Construir Radar como sistema de búsquedas guardadas + diff entre
+ejecuciones, en dos sprints:
+
+**Sprint 1 — Backend puro (`app/core/radar/`):**
+- `store.py`: `RadarStore` con 3 tablas SQLite (`radars`, `radar_runs`,
+  `radar_seen_results`). Auditoría completa: soql, params_json, execution_ms,
+  created_from_trace_id, relevance_label.
+- `keys.py`: clave estable (`radar_key`) + snapshot hash de resultados,
+  leyendo los campos de `SoQLBuilder.SPECS`.
+- `diff.py`: clasifica resultados como nuevos / cambio de estado / cambio de
+  valor / desaparecidos + operador `nuevo` que omite los ya vistos.
+- `runner.py`: ventana `limit=100`, mide `execution_ms`, persiste lo visto,
+  registra corrida.
+- `digest.py`: lectura asesora con `risk_flag` "Radar amplio" cuando el
+  universo supera la ventana.
+- **Bisagra:** `helpers.py` — `execute_resolved_params` extraído
+  conversacionalmente puro (sin `append_turn`, sin feedback, sin mutar
+  contexto). `refinement.py` lo reusa; el golden pasa idéntico.
+
+**Sprint 2 — Integración:**
+- `commands.py` + `handlers/radar.py`: comandos guardar/listar/ejecutar radar,
+  registrados en la cadena antes de `handle_normal_flow` (orchestrator.py).
+- `streamlit_app.py`: pestaña 📡 Radares con tarjetas clicables → timeline de
+  corridas con digests expandibles + botón "Ejecutar ahora".
+
+**Alternativas descartadas:**
+- *Cron/scheduler automático*: diferido a v1.1. La v1.0 es manual (el usuario
+  dispara la ejecución).
+- *Polling server-side*: requeriría proceso persistente; SQLite local es
+  suficiente para el MVP manual.
+- *Almacenar resultados completos*: solo se guarda snapshot hash + diff;
+  ligero y rápido.
+
+**Consecuencias:** El usuario puede guardar una búsqueda, volver días después,
+ejecutar el radar y ver exactamente qué procesos/servicios/contratos son nuevos,
+cuáles cambiaron de estado y cuáles cambiaron de valor. La pestaña Streamlit da
+visibilidad completa del timeline.
+
+**Tests:** `tests/test_radar_commands.py` (29 casos) + suite radar/golden (72
+passed en criterio de cierre Sprint 2).
+
+**Métricas al cierre:**
+- Suite completa: 1425 passed, 23 xfailed, 1 failure (ambiental:
+  test_corpus_v1_unaffected — venv path hardcodeado en worktree)
+- Commits: `9c1e9c0` a `1a7e1df` (main)
+
+---
+
+## ADR-030: Analytics — Paquete modular con registry de analyzers
+
+**Fecha:** 2026-06-09
+**Estado:** Accepted
+
+**Contexto:** La primera ruta analítica (AQ-001A aggregate_sum, ADR sin número)
+estaba hardcodeada en el orchestrator como un if-else. Agregar más analyzers
+(top_entities, top_contractors, distribuciones, comparativas) requería un
+mecanismo extensible, no más ramas condicionales.
+
+**Decisión:**
+1. Crear `app/core/analytics/` como paquete Python con:
+   - `registry.py`: registro central de analyzers con `@register_analyzer`.
+     Cada analyzer declara su `intent`, `guard` y `execute`.
+   - `base.py`: `BaseAnalyzer` con interfaz común.
+   - `aggregate_sum.py`: primer analyzer migrado desde orchestrator.
+   - `contratado_pagado.py`: analyzer de ejecución presupuestal (comparativa
+     valor contratado vs. pagado).
+2. `AnalyticsEngine` en orchestrator: itera el registry, ejecuta el primer
+   analyzer cuyo guard se active. Si ningún guard activa, cae a búsqueda normal.
+3. El analyzer retorna `AnalyticalResult` con `response_text` y metadatos; el
+   orchestrator lo propaga sin que `degrade_query` ni `format_response` lo
+   sobrescriban.
+
+**Alternativas descartadas:**
+- *Seguir con if-else en orchestrator*: no escala; cada analyzer nuevo requería
+  tocar el orchestrator.
+- *LLM para clasificar intención analítica*: overkill para queries deterministas
+  como "cuánto se contrató".
+
+**Consecuencias:** Agregar un analyzer nuevo es una clase + decorator, sin tocar
+orchestrator. El registry permite descubribilidad y testing aislado.
+
+**Tests:** `tests/test_analytical_queries.py` (existente, extendido con
+contratado/pagado).
+
+**Métricas al cierre:**
+- Suite: 1338 passed, 23 xfailed
+- Commit: `3150cbf`
+
+---
+
+## ADR-031: Adaptador OpenWA + robustez Telegram y paridad de links
+
+**Fecha:** 2026-06-10
+**Estado:** Accepted
+
+**Contexto:** SECOPPAL usaba solo el adaptador Telegram nativo. Se necesitaba
+soportar WhatsApp vía OpenWA (API abierta) sin duplicar lógica de formatting.
+Además, se detectó que Telegram/WhatsApp omitían en silencio los procesos sin
+URL pública (CO1.REQ.*), creando la falsa impresión de que "faltaban links".
+
+**Decisión:**
+1. **OpenWA adapter** (`app/channels/openwa_adapter.py`): implementa la interfaz
+   de canal existente, reusa `Formatter.format_whatsapp()` para el formatting
+   (cero duplicación). Soporta envío de mensajes y recepción de comandos vía
+   webhook.
+2. **Paridad de señalización** (ADR-027): los tres canales (Telegram, WhatsApp,
+   Streamlit) ahora muestran `🔒 Vista pública no disponible (proceso
+   pre-publicación)` para procesos sin URL, en vez de omitir la línea en
+   silencio.
+3. **Robustez Telegram**: reintentos con backoff, manejo de floods, mensajes
+   largos fragmentados automáticamente.
+
+**Alternativas descartadas:**
+- *Adaptador separado con lógica duplicada*: cada canal tendría su propio
+  formatter; divergencia inevitable.
+- *Usar Twilio/MessageBird*: costo recurrente; OpenWA es self-hosted y gratuito.
+
+**Tests:** `tests/test_url_fallback_channel_parity.py` (5 tests) para la
+señalización; tests de integración del adaptador en `test_openwa_adapter.py`.
+
+**Métricas al cierre:**
+- Suite: 1415 passed, 23 xfailed
+- Commit: `bcf4a2d`
+
 
 ## ADR-032: Clasificación de etapa de oportunidad en SECOP II (OPP-STAGE-001)
 

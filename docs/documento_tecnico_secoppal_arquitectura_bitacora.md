@@ -5,18 +5,19 @@
 **Sistema:** SECOPPAL — asistente conversacional para consulta y análisis de contratación pública SECOP II  
 **Propósito del documento:** dejar una descripción comprensible para un tercero técnico o funcional sobre qué hace el sistema, cómo está construido, qué archivos lo componen, qué decisiones de arquitectura se han tomado, qué bugs relevantes se han detectado y cuál es el estado actual del proyecto.
 
-## Estado canónico actual — 2026-06-04
+## Estado canónico actual — 2026-06-13
 
-- **Main:** 4 commits sin push (paginación A-buffer, fechas relativas semana/día, entidad robusta, firmado fix)
-- **Suite:** 1338 passed, 23 xfailed
+- **Branch:** `feature/analytics-modular-registry` (main tiene Radar v1.0 mergeado)
+- **Suite:** 1452 collected (~1425 passed, 23 xfailed)
 - **Corpus:** 89/89 PASS, 0 FAIL
 - **Torture matrix:** 12/12 invariantes
 - **Eval harness:** `scripts/eval_rated.py` sobre 70 queries calificadas reales (SQLite). Parser-tier 38/38 = 100% (5 bugs silenciosamente resueltos por sprints mayo 2026). Pipeline-tier 26 entradas etiquetadas para `--live`. 1 bug remanente: RATED-069 (`El Banco` municipio Magdalena) — reclasificado pipeline-tier, requiere desambiguación LLM.
 - **feedback:** SQLite 70 calificadas (18👍/52👎), JSONL 42 (divergencia documentada en `eval_rated.py`). Dual-store: SQLite primario, JSONL append-only.
 - **Orchestrator:** 196 LOC (desde 1549 LOC) — refactor a workflow/ completado (ADR-023)
-- **Decisions log:** 26 ADRs (ADR-001 a ADR-026) en `docs/decisions_log.md`
-- **Próximo foco:** sellar frame leak del follow-up (raw_params merge ciego), shadow LLM para follow-up, RATED-069 (desambiguación banco=municipio vs banco=tema, requiere LLM)
-- **Backlog:** VALUE-TYPO-001, REFERENCE-001, migrar 3 tests legacy del shim
+- **Decisions log:** 31 ADRs (ADR-001 a ADR-031) en `docs/decisions_log.md`
+- **Features nuevas (junio 2026):** búsqueda por regiones (ADR-028), Radar v1.0 — búsquedas guardadas con feed de movimientos (ADR-029), paquete modular de analytics con registry (ADR-030), adaptador OpenWA + robustez Telegram + paridad de links (ADR-027, ADR-031)
+- **Parser fixes (junio 2026):** unaccent en ciudad (BUG 1), polaridad "no sea por más de" (BUG 2), "barras" como jerga monetaria (BUG 3), "no menos de" como valor_min (fix simétrico a BUG 2)
+- **Próximo foco:** sellar frame leak del follow-up (raw_params merge ciego), shadow LLM para follow-up, RATED-069 (desambiguación banco=municipio vs banco=tema), merge main → feature branch (Radar + costura regiones)
 - **Conteos históricos (424/466/534/596/1212):** superados; referencia, no estado actual
 
 ---
