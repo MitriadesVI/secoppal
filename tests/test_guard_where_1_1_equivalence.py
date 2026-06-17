@@ -86,6 +86,6 @@ class TestGuardEquivalence:
         """Sanity: las keys son exactamente las esperadas."""
         expected = frozenset({
             "objeto", "entidad_resolved", "entidad_like",
-            "departamento_resolved", "ciudad", "contratista",
+            "departamento_resolved", "departamentos_in", "ciudad", "contratista",
         })
         assert SCOPE_TOPIC_KEYS == expected
