@@ -58,6 +58,15 @@ def test_published_observations_is_published_pre_offer():
     assert "phase_observations" in a.reasons
 
 
+# Sub-estado del borrador conservado como razón (no todos valen igual)
+def test_draft_substate_reason_distinguishes_approved():
+    a = classify_opportunity_stage(_row("Aprobado", fase=None))
+    assert a.stage == "unpublished_draft_signal"
+    assert "procedure_state_approved_unpublished" in a.reasons
+    b = classify_opportunity_stage(_row("En aprobación", fase=None))
+    assert "procedure_state_in_approval" in b.reasons
+
+
 # Split: borrador CON fecha de publicación → confianza media (señal mixta)
 def test_draft_with_pub_date_is_medium():
     a = classify_opportunity_stage(

@@ -1145,3 +1145,74 @@ son ESAL sin página pública — evaluar si etiquetarlos o priorizarlos distint
 - Suite: 1415 passed, 23 xfailed (incluye +5 de `test_url_fallback_channel_parity.py`)
 - Fix en `app/core/formatter.py` (`format_telegram`, `format_whatsapp`)
 - Streamlit (`streamlit_app.py`) NO modificado
+
+
+## ADR-032: Clasificación de etapa de oportunidad en SECOP II (OPP-STAGE-001)
+
+> Numeración: en la rama principal existen ADR-028 a ADR-031 sin mergear; este se
+> numera ADR-032 para evitar colisión. Reconciliar al merge.
+
+**Contexto.** SECOP parte el ciclo de vida en DOS ejes desalineados:
+`estado_del_procedimiento` (grueso) y `fase` (etapa real). Un mismo `Publicado`
+abarca varias fases. Además el dataset de procesos mezcla **requisiciones internas
+en borrador** (id `CO1.REQ.*`, sin publicar) con procesos publicados, y el usuario
+lo interpreta todo como "procesos para presentarme". Se deriva una noción propia
+de accionabilidad.
+
+**Decisiones confirmadas (con evidencia).**
+1. `estado`, `apertura` y `fase` son dimensiones distintas; NO se colapsan en
+   `ESTADO_FAMILIES`. `OpportunityStage` vive en módulo puro
+   (`app/core/opportunity_stage.py`), hermano de `opportunity_scope_policy.py`.
+2. **No existe campo de fecha de vigencia poblado.** Auditadas las 11 columnas de
+   fecha: solo las de publicación (~99%); recepción/apertura/adjudicación ~0%. → el
+   clasificador NO recibe fecha y NO afirma vigencia.
+3. **No afirmar "puede ofertar ahora"** → `offer_phase_indicated`, no "accionable".
+4. **La URL no determina publicación** → etiqueta "Sin enlace público disponible
+   en datos abiertos" (antes "proceso pre-publicación").
+5. El clasificador opera en **shadow** (Fase 2B): trace `opportunity_stage_shadow`
+   con `computed_from=current_result_set`, sin cambiar orden/filtro/respuesta/Radar.
+   Flag `OPPORTUNITY_STAGE_SHADOW_ENABLED`.
+6. Seis etapas: `offer_phase_indicated`, `published_pre_offer_signal`,
+   `unpublished_draft_signal`, `post_offer_signal`, `conflicting_signals`,
+   `unknown`. El sub-estado del borrador (Borrador/En aprobación/Aprobado) se
+   conserva como razón (no valen igual).
+7. `confidence` del acuerdo de señales (high=alineadas, medium=parcial,
+   unknown=low); nunca "low" sobre una etapa fuerte.
+
+**Hallazgos empíricos (shadow).** 125 filas de 5 consultas (funnel correcto):
+`offer_phase_indicated` ~29%, `unpublished_draft_signal` ~69%,
+`published_pre_offer_signal` ~2%. **La muestra está sesgada por el orden actual**
+(`fecha_de_publicacion_del DESC`), que sube los registros con fecha NULL —los
+borradores— al inicio. Prueba que *la primera página está contaminada por
+borradores no publicados*, NO que el 69% del universo lo sea.
+
+**Hipótesis NO demostradas (no afirmar como hechos).**
+- que los borradores nunca se publiquen;
+- que reaparezcan con otro identificador;
+- que todo `Aprobado` sin URL sea ruido;
+- que la distribución observada represente el universo;
+- que un proceso sin enlace no tenga versión pública relacionada;
+- que un `offer_phase_indicated` no haya producido ya un contrato en otro dataset.
+
+**Decisión diferida (Fase 3).** No se decide aún entre filtro / boost / consultas
+separadas / sección colapsada / Radar. Antes se requiere: distribución de
+`unpublished_draft_signal` por sub-estado y por profundidad (top 25/100/500), en
+más sectores y regiones, para distinguir problema de ordenamiento de NULL vs funnel
+amplio vs señal temprana útil. Apuesta probable: dos carriles (búsqueda pública =
+offer + published_pre_offer; inteligencia temprana separada). NO un simple boost
+sobre 50 (los públicos relevantes pueden quedar fuera del lote por el orden actual).
+
+**Errores corregidos en el proceso.** El primer experimento shadow fue INVÁLIDO:
+llamó a `SoQLBuilder.build()` con `estado_family` crudo sin expandir → SoQL sin
+filtro de estado → se colaron estados post-cierre. Deuda de tooling: helper canónico
+de params para diagnósticos (tarea aparte).
+
+**Bugs de recall descubiertos (fuera de OPP-STAGE, tareas aparte).**
+- Entidad con punto final en el gazetteer ("MUNICIPIO DE GALAPA.") → `LIKE` literal
+  pierde la misma entidad guardada sin punto.
+- Filtro de año sobre `fecha_de_publicacion_del` (NULL en fases tempranas) descarta
+  procesos actuales (caso real: "semáforos en Galapa 2026" → 0 pese a existir el
+  proceso abierto).
+
+**Tests:** `tests/test_opportunity_stage.py` + `tests/test_opportunity_stage_shadow.py`.
+Suite al cierre: 1611+ passed, solo el fallo de entorno preexistente.

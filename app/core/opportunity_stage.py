@@ -71,6 +71,12 @@ _PHASE_ALIASES: dict[str, str] = {
 # conflicto por la regla offer_phase_but_opening_closed.)
 _OFFER_COMPATIBLE_ESTADOS = frozenset({"publicado", "abierto"})
 _PRE_OFFER_ESTADOS = frozenset({"borrador", "en aprobacion", "aprobado"})
+# Sub-estado del borrador, conservado como razón (no todos valen igual en Fase 3).
+_DRAFT_STATE_REASON = {
+    "borrador": "procedure_state_draft",
+    "en aprobacion": "procedure_state_in_approval",
+    "aprobado": "procedure_state_approved_unpublished",
+}
 _POST_OFFER_ESTADOS = frozenset({"evaluacion", "seleccionado", "cancelado", "suspendido"})
 
 _PHASE_REASON = {
@@ -185,8 +191,10 @@ def classify_opportunity_stage(row: Mapping[str, Any]) -> OpportunityStageAssess
 
     # 5) BORRADOR NO PUBLICADO — requisición/borrador interno sin señales de
     # publicación. NO es "oportunidad temprana": puede no publicarse nunca.
+    # El sub-estado se conserva como razón porque NO todos valen igual:
+    # Borrador (muy débil) < En aprobación < Aprobado (señal temprana más fuerte).
     if estado_pre:
-        reasons = ["procedure_state_draft"]
+        reasons = [_DRAFT_STATE_REASON.get(estado, "procedure_state_draft")]
         if not has_pub_date:
             reasons.append("no_publication_date")
         if phase in ("observations", "interest"):
