@@ -52,6 +52,10 @@ if TYPE_CHECKING:
 
 logger = logging.getLogger(__name__)
 
+# Fase 2B: registra el clasificador de etapa de oportunidad en el trace como
+# OBSERVACIÓN (shadow). No cambia orden, filtro, respuesta ni Radar.
+OPPORTUNITY_STAGE_SHADOW_ENABLED = True
+
 
 def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
     """Run the full Burr pipeline and post-process the resulting state."""
@@ -203,6 +207,24 @@ def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
     result["should_execute_decision"] = state.get("should_execute_decision")
     result["timings_ms"]["advisor_response_ms"] = _elapsed_ms(advisor_start)
     result["timings_ms"]["total_ms"] = _elapsed_ms(ctx.run_started_at)
+
+    # ── Opportunity stage shadow (Fase 2B) — observación, no afecta resultados.
+    # Solo procesos + opportunity_search. Best-effort: un fallo aquí nunca
+    # rompe la respuesta; no reordena, no filtra, no consulta SECOP.
+    if OPPORTUNITY_STAGE_SHADOW_ENABLED:
+        try:
+            rp = state.get("resolved_params", {}) or {}
+            from app.core.soql_builder import SoQLBuilder
+            if (state.get("dataset_id") == SoQLBuilder.PROCESOS_DATASET
+                    and rp.get("intent_type") == "opportunity_search"):
+                from app.core.opportunity_stage import summarize_opportunity_stages
+                result["opportunity_stage_shadow"] = summarize_opportunity_stages(
+                    state.get("results", []),
+                    total_count=result.get("total_count"),
+                    displayed_count=len(result.get("formatted_rows", []) or []),
+                )
+        except Exception as exc:  # best-effort: nunca rompe la respuesta
+            logger.warning("opportunity_stage shadow failed: %s", exc)
 
     trace_id = deps.feedback.log_trace(
         ctx.user_query, ctx.channel, result, user_identity=ctx.user_identity,

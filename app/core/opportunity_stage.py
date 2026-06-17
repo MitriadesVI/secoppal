@@ -19,9 +19,11 @@ contrato firmado; eso no es detectable desde aquí.
 from __future__ import annotations
 
 import unicodedata
-from collections.abc import Mapping
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from typing import Any, Literal
+
+CLASSIFIER_VERSION = "0.1"
 
 OpportunityStage = Literal[
     "offer_phase_indicated",
@@ -193,3 +195,90 @@ def classify_opportunity_stage(row: Mapping[str, Any]) -> OpportunityStageAssess
     return OpportunityStageAssessment(
         "unknown", "low", reasons=tuple(reasons), raw_phase=raw_phase,
     )
+
+
+# ── Shadow summarizer (Fase 2B): agrega el clasificador sobre un lote ────────
+# PURO: recibe el conjunto de resultados RECUPERADO (no el universo) y devuelve
+# un payload serializable para el trace. No muta filas, no consulta nada.
+
+_STAGE_ORDER = (
+    "offer_phase_indicated", "pre_offer_signal", "post_offer_signal",
+    "conflicting_signals", "unknown",
+)
+_CONFIDENCE_ORDER = ("high", "medium", "low")
+
+
+def _reference(row: Mapping[str, Any]) -> str | None:
+    for key in ("referencia_del_proceso", "id_del_proceso"):
+        value = row.get(key)
+        if value:
+            return str(value)
+    return None
+
+
+def summarize_opportunity_stages(
+    results: Sequence[Mapping[str, Any]],
+    *,
+    total_count: int | None = None,
+    displayed_count: int | None = None,
+    classifier_version: str = CLASSIFIER_VERSION,
+    sample_limit: int = 10,
+) -> dict:
+    """Resumen shadow del lote clasificado. Determinístico y serializable.
+
+    ``computed_from="current_result_set"``: las cifras describen el lote
+    RECUPERADO (p. ej. 50 filas), NUNCA el universo del WHERE.
+    """
+    rows = list(results or [])
+    assessed = [(r, classify_opportunity_stage(r)) for r in rows]
+
+    counts = {s: 0 for s in _STAGE_ORDER}
+    conf_counts = {c: 0 for c in _CONFIDENCE_ORDER}
+    unknown_phases: dict[str, list] = {}   # norm -> [count, raw_example]
+    conflict_patterns: dict[str, int] = {}
+
+    for _, a in assessed:
+        counts[a.stage] = counts.get(a.stage, 0) + 1
+        conf_counts[a.confidence] = conf_counts.get(a.confidence, 0) + 1
+        if a.stage == "unknown" and a.raw_phase and str(a.raw_phase).strip():
+            key = _norm(a.raw_phase)
+            slot = unknown_phases.setdefault(key, [0, str(a.raw_phase)])
+            slot[0] += 1
+        for code in a.conflicts:
+            conflict_patterns[code] = conflict_patterns.get(code, 0) + 1
+
+    def _entry(row: Mapping[str, Any], a: OpportunityStageAssessment) -> dict:
+        return {
+            "reference": _reference(row),
+            "stage": a.stage,
+            "confidence": a.confidence,
+            "reasons": list(a.reasons),
+            "conflicts": list(a.conflicts),
+        }
+
+    # Sample determinista: prioriza conflictos → unknown → representativos,
+    # preservando el orden original; acotado.
+    conflicts_s = [_entry(r, a) for r, a in assessed if a.stage == "conflicting_signals"][:5]
+    unknown_s = [_entry(r, a) for r, a in assessed if a.stage == "unknown"][:3]
+    rep_s = [_entry(r, a) for r, a in assessed
+             if a.stage not in ("conflicting_signals", "unknown")][:2]
+    sample = (conflicts_s + unknown_s + rep_s)[:sample_limit]
+
+    return {
+        "classifier_version": classifier_version,
+        "computed_from": "current_result_set",
+        "classified_count": len(rows),
+        "displayed_count": len(rows) if displayed_count is None else displayed_count,
+        "total_count": total_count,
+        "counts": {s: counts[s] for s in _STAGE_ORDER if counts[s]},
+        "confidence_counts": {c: conf_counts[c] for c in _CONFIDENCE_ORDER if conf_counts[c]},
+        "unknown_phases": sorted(
+            ([raw, n] for n, raw in unknown_phases.values()),
+            key=lambda x: (-x[1], x[0]),
+        ),
+        "conflict_patterns": sorted(
+            ([code, n] for code, n in conflict_patterns.items()),
+            key=lambda x: (-x[1], x[0]),
+        ),
+        "sample": sample,
+    }
