@@ -1415,3 +1415,49 @@ Bug latente independiente aún en cola: filtro de año sobre fecha NULL.
 
 **Tests:** `tests/test_opportunity_stage.py` + `tests/test_opportunity_stage_shadow.py`.
 Suite al cierre: 1611+ passed, solo el fallo de entorno preexistente.
+
+---
+
+## ADR-033: Gestión de usuarios — autenticación email+contraseña en SQLite, roles y sesión persistente
+
+**Fecha:** 2026-06-18
+**Contexto:** La UI Streamlit no tenía autenticación: la "identidad" era un
+`user_email`/`user_name` de texto libre en el sidebar (`_current_user_identity()`) más un
+id anónimo en la URL. No había forma de distinguir un administrador del resto, ni de
+ocultar nada. Se necesitaba: (1) login real, (2) un rol admin que pueda todo —incluido
+dar de alta cuentas— mientras los demás conservan toda la búsqueda, (3) ocultar el bloque
+"Métricas" (estadísticas de acierto) a los no-admin, (4) registrar el uso por usuario,
+(5) desplegar en un VPS.
+
+**Decisión:** Nuevo módulo `app/core/auth.py` con tabla `app_accounts` en la misma SQLite
+del feedback (`data/secoppal.db`), separada de la tabla analítica `users` y enlazada por
+email. Hashing **PBKDF2-HMAC-SHA256 de la stdlib** (salt por cuenta, `hmac.compare_digest`)
+para no añadir `bcrypt`. Dos roles (`admin`/`user`). El admin inicial se siembra desde
+env vars (`SECOPPAL_ADMIN_EMAIL`/`_PASSWORD`/`_NAME`) vía `ensure_admin_seed()` idempotente;
+las altas posteriores solo las hace el admin desde un panel en la UI. `streamlit_app.py`
+gana un gate de login (`_require_login()` + `st.stop()`); el bloque "Métricas" y el panel
+"👤 Gestión de usuarios" quedan tras `if _is_admin`. La identidad autenticada alimenta el
+cableado existente → cada trace queda atada al `user_id` real (la tabla `traces` ES el
+registro de uso; se expone `get_usage_by_user()`). **Sesión persistente** ("recordarme")
+con cookie `secoppal_session` (token opaco) respaldada por tabla `app_sessions` (TTL 30
+días, revocable), usando `extra-streamlit-components`. Despliegue objetivo: **Contabo VPS**
+(systemd + nginx HTTPS + backup de `secoppal.db`).
+
+**Alternativas descartadas:** OIDC/Google `st.login` (exige registrar app OAuth + IdP +
+dominio; sobredimensionado para un equipo pequeño). Magic link passwordless (requiere SMTP).
+`bcrypt`/`streamlit-authenticator` (dependencia evitable; PBKDF2 stdlib basta). Registro
+abierto o por código de invitación (se prefirió control total: solo el admin crea cuentas).
+**Netlify / serverless** (no corre un servidor Streamlit persistente ni SQLite en disco
+persistente). Token de sesión firmado sin tabla (no permitiría revocación al cerrar sesión
+ni al desactivar cuentas).
+
+**Consecuencias:** La cookie de sesión viaja en claro sobre HTTP → el deploy **debe** ser
+HTTPS. El "recordarme" resuelve la pérdida de sesión en F5 (Streamlit crea sesión nueva por
+refresco); sin marcarlo, se reingresa tras refresh. Se protege contra desactivar/degradar al
+último admin activo. Nueva dependencia `extra-streamlit-components>=0.1.71` en
+`requirements.txt`. `SECOPPAL_AUTH_ENABLED=false` desactiva el gate para dev/tests
+(conserva el comportamiento legacy de identidad por texto libre).
+
+**Tests:** `tests/test_auth.py` (17 passed) — hashing, create/authenticate, unicidad,
+cuenta inactiva, reset, roles, protección del último admin, seed idempotente y
+sesiones (crear/resolver/revocar/expirar/cuenta desactivada).

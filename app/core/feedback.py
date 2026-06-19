@@ -343,6 +343,51 @@ class FeedbackStore:
         traces = self._read_all()
         return traces[-limit:]
 
+    def get_usage_by_user(self) -> list[dict]:
+        """Uso agregado por usuario (para el panel admin).
+
+        Devuelve una fila por usuario con nº de consultas, calificadas,
+        positivas y última actividad. Solo SQLite; lista vacía si está
+        deshabilitado o aún no hay base.
+        """
+        if not self.sqlite_enabled or not self.db_path.exists():
+            return []
+        try:
+            with self._connect() as conn:
+                ensure_feedback_schema(conn)
+                rows = conn.execute(
+                    """
+                    SELECT
+                        COALESCE(u.email, '(anónimo)') AS email,
+                        u.name AS name,
+                        t.channel AS channel,
+                        COUNT(*) AS queries,
+                        SUM(CASE WHEN t.rating IS NOT NULL THEN 1 ELSE 0 END) AS rated,
+                        SUM(CASE WHEN t.rating = 1 THEN 1 ELSE 0 END) AS good,
+                        MAX(t.timestamp) AS last_activity
+                    FROM traces t
+                    LEFT JOIN users u ON u.user_id = t.user_id
+                    GROUP BY t.user_id
+                    ORDER BY queries DESC
+                    """
+                ).fetchall()
+            return [
+                {
+                    "email": r["email"],
+                    "name": r["name"],
+                    "channel": r["channel"],
+                    "queries": int(r["queries"]),
+                    "rated": int(r["rated"]),
+                    "good": int(r["good"]),
+                    "precision": (int(r["good"]) / int(r["rated"])) if r["rated"] else None,
+                    "last_activity": r["last_activity"],
+                }
+                for r in rows
+            ]
+        except sqlite3.Error:
+            logger.exception("failed to compute usage by user from sqlite")
+            return []
+
     def _connect(self) -> sqlite3.Connection:
         return connect_sqlite(self.db_path)
 

@@ -206,3 +206,6 @@ class SecopalWorkflow:
 
     def get_feedback_stats(self) -> dict:
         return self.feedback.get_stats()
+
+    def get_usage_by_user(self) -> list[dict]:
+        return self.feedback.get_usage_by_user()

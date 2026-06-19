@@ -327,8 +327,57 @@ Visión y casos de uso: [`docs/ideas/secoppal-radar.md`](docs/ideas/secoppal-rad
 Interfaz web con historial de conversación, tabla de resultados y panel de debug con `route_reason`, parámetros extraídos y SoQL generado.
 
 ```bash
-streamlit run app/streamlit_app.py
+streamlit run streamlit_app.py
 ```
+
+#### Autenticación y gestión de usuarios
+
+La UI requiere login (email + contraseña). Las credenciales viven en la tabla
+`app_accounts` de `data/secoppal.db` (hash PBKDF2-HMAC-SHA256 con salt por cuenta;
+ver `app/core/auth.py`). Hay dos roles:
+
+- **`admin`**: ve el bloque "Métricas" (estadísticas de acierto) y el panel
+  **👤 Gestión de usuarios** (crear cuentas, activar/desactivar, resetear
+  contraseña, cambiar rol, uso por usuario). No se puede desactivar/degradar al
+  último admin activo.
+- **`user`**: tiene todas las funcionalidades de búsqueda pero **no** ve las
+  métricas ni el panel de administración.
+
+Cada consulta queda registrada en la tabla `traces` atada al usuario autenticado
+(estadísticas de uso en SQLite, sin configuración adicional).
+
+**Primer arranque** — el admin inicial se crea con variables de entorno (solo se
+usa una vez; cambia la contraseña tras el primer login):
+
+```bash
+SECOPPAL_ADMIN_EMAIL=tu@correo.com
+SECOPPAL_ADMIN_PASSWORD=cambia-esto
+SECOPPAL_ADMIN_NAME="Tu Nombre"   # opcional
+SECOPPAL_AUTH_ENABLED=true        # false desactiva el login (solo dev/tests)
+```
+
+**Sesión persistente ("recordarme")** — al marcar la casilla en el login se guarda
+una cookie (`secoppal_session`) con un token opaco respaldado por la tabla
+`app_sessions` (TTL 30 días). Así la sesión sobrevive a refrescos (F5) y cierres del
+navegador. Al cerrar sesión se revoca el token y se borra la cookie; desactivar una
+cuenta invalida sus sesiones. Requiere `extra-streamlit-components` (en
+`requirements.txt`).
+
+#### Despliegue en Contabo (VPS)
+
+Streamlit es un servidor persistente (WebSocket) y SQLite necesita disco
+persistente, por lo que **plataformas serverless tipo Netlify no sirven**. En un
+VPS (Contabo):
+
+1. Correr Streamlit detrás de localhost:
+   `streamlit run streamlit_app.py --server.port 8501 --server.address 127.0.0.1`
+   (idealmente como servicio **systemd**).
+2. **nginx** como reverse proxy con **HTTPS** (Let's Encrypt). Habilitar el
+   upgrade de WebSocket (`proxy_set_header Upgrade $http_upgrade; Connection "upgrade"`).
+3. Definir las variables de entorno en el `.env` del servidor (admin semilla,
+   `DEEPSEEK_API_KEY`, tokens SECOP, etc.).
+4. Mantener `data/` en disco persistente y hacer **backup periódico de
+   `data/secoppal.db`** (cron con `sqlite3 data/secoppal.db ".backup ..."`).
 
 ### FastAPI + Twilio (WhatsApp)
 El webhook `/webhooks/twilio/whatsapp` recibe mensajes de Twilio, los procesa y responde en el mismo hilo de WhatsApp.

@@ -6,14 +6,17 @@ from __future__ import annotations
 import re
 import time
 import uuid
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
+import extra_streamlit_components as stx
 import streamlit as st
 
 from app.core.radar.builder import has_scope_or_topic, save_radar_from_params
 from app.core.radar.commands import radar_owner
 from app.core.radar.runner import run_radar
 from app.core.radar.store import RadarExistsError
+from app.config import get_settings
+from app.core.auth import AccountError, AccountExistsError, AccountStore
 from app.service import get_workflow
 
 # ---------------------------------------------------------------------------
@@ -23,6 +26,30 @@ from app.service import get_workflow
 st.set_page_config(page_title="SECOPPAL", page_icon="📋", layout="wide")
 
 workflow = get_workflow()
+
+
+@st.cache_resource
+def get_account_store() -> AccountStore:
+    """AccountStore singleton + seed del admin inicial (idempotente)."""
+    settings = get_settings()
+    store = AccountStore(settings.secop_feedback_db_path)
+    store.ensure_admin_seed(
+        settings.secoppal_admin_email,
+        settings.secoppal_admin_password,
+        settings.secoppal_admin_name,
+    )
+    return store
+
+
+_COOKIE_NAME = "secoppal_session"
+_REMEMBER_DAYS = 30
+
+
+def get_cookie_manager() -> stx.CookieManager:
+    """Una instancia de CookieManager por sesión (evita keys duplicadas)."""
+    if "_cookie_mgr" not in st.session_state:
+        st.session_state["_cookie_mgr"] = stx.CookieManager(key="secoppal_cookies")
+    return st.session_state["_cookie_mgr"]
 
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -331,6 +358,144 @@ def _current_user_identity() -> dict:
 
 
 # ═══════════════════════════════════════════════════════════════════════════
+# Autenticación
+# ═══════════════════════════════════════════════════════════════════════════
+
+
+def _activate_session(acc) -> None:
+    """Marca la cuenta como autenticada en session_state.
+
+    Atar email/nombre → cada trace queda a nombre del usuario real.
+    """
+    st.session_state.account = {"email": acc.email, "name": acc.name, "role": acc.role}
+    st.session_state.user_email = acc.email
+    st.session_state.user_name = acc.name or ""
+
+
+def _render_login_form(cookies: stx.CookieManager) -> None:
+    st.title("📋 SECOPPAL")
+    st.caption("Inicia sesión para continuar")
+    store = get_account_store()
+    with st.form("login_form"):
+        email = st.text_input("Email")
+        password = st.text_input("Contraseña", type="password")
+        remember = st.checkbox("Recordarme en este equipo", value=True)
+        submitted = st.form_submit_button("Entrar", use_container_width=True)
+    if submitted:
+        acc = store.authenticate(email, password)
+        if acc is None:
+            st.error("Credenciales inválidas o cuenta desactivada.")
+        else:
+            _activate_session(acc)
+            if remember:
+                token = store.create_session(acc.email, ttl_days=_REMEMBER_DAYS)
+                st.session_state["_session_token"] = token
+                cookies.set(
+                    _COOKIE_NAME,
+                    token,
+                    expires_at=datetime.now(timezone.utc) + timedelta(days=_REMEMBER_DAYS),
+                    key="set_login_cookie",
+                )
+            st.rerun()
+
+
+def _require_login() -> dict | None:
+    """Bloquea la app hasta que haya sesión. Devuelve la cuenta o detiene.
+
+    Orden: sesión en memoria → cookie "recordarme" → formulario de login.
+    Con ``SECOPPAL_AUTH_ENABLED=false`` (dev/tests) no bloquea y devuelve None.
+    """
+    if not get_settings().secoppal_auth_enabled:
+        return st.session_state.get("account")
+    if st.session_state.get("account"):
+        return st.session_state["account"]
+
+    cookies = get_cookie_manager()
+    cookies.get_all()  # fuerza al componente a reportar las cookies del navegador
+    token = cookies.get(_COOKIE_NAME)
+    if token:
+        acc = get_account_store().resolve_session(token)
+        if acc is not None:
+            _activate_session(acc)
+            st.session_state["_session_token"] = token
+            return st.session_state["account"]
+
+    # Primera pasada: el componente de cookies aún puede no haber respondido.
+    # Damos un rerun para evitar el "flash" del formulario cuando sí hay cookie.
+    if not st.session_state.get("_cookie_probed"):
+        st.session_state["_cookie_probed"] = True
+        st.rerun()
+
+    _render_login_form(cookies)
+    st.stop()
+
+
+def _render_admin_panel() -> None:
+    store = get_account_store()
+    with st.expander("👤 Gestión de usuarios", expanded=False):
+        with st.form("create_user_form", clear_on_submit=True):
+            st.caption("Crear usuario")
+            new_email = st.text_input("Email", key="admin_new_email")
+            new_name = st.text_input("Nombre", key="admin_new_name")
+            new_pw = st.text_input("Contraseña", type="password", key="admin_new_pw")
+            new_role = st.selectbox("Rol", ["user", "admin"], key="admin_new_role")
+            create = st.form_submit_button("Crear", use_container_width=True)
+        if create:
+            try:
+                store.create_account(new_email, new_pw, name=new_name, role=new_role)
+                st.success(f"Usuario {new_email} creado.")
+                st.rerun()
+            except AccountExistsError:
+                st.error("Ese email ya está registrado.")
+            except AccountError as exc:
+                st.error(str(exc))
+
+        st.divider()
+        st.caption("Cuentas")
+        for acc in store.list_accounts():
+            cols = st.columns([3, 1, 1])
+            estado = "🟢" if acc.is_active else "⚪"
+            rol_badge = " 👑" if acc.is_admin else ""
+            cols[0].write(f"{estado} {acc.email}{rol_badge}")
+            toggle_label = "Desactivar" if acc.is_active else "Activar"
+            if cols[1].button(toggle_label, key=f"toggle_{acc.email}"):
+                try:
+                    store.set_active(acc.email, not acc.is_active)
+                    st.rerun()
+                except AccountError as exc:
+                    st.error(str(exc))
+            with cols[2].popover("🔑"):
+                rp = st.text_input("Nueva contraseña", type="password", key=f"rp_{acc.email}")
+                if st.button("Resetear", key=f"rpbtn_{acc.email}"):
+                    if rp:
+                        store.reset_password(acc.email, rp)
+                        st.success("Contraseña actualizada.")
+                    else:
+                        st.error("La contraseña no puede estar vacía.")
+
+        usage = workflow.get_usage_by_user()
+        if usage:
+            st.divider()
+            st.caption("Uso por usuario")
+            st.dataframe(
+                [
+                    {
+                        "Email": u["email"],
+                        "Consultas": u["queries"],
+                        "Calificadas": u["rated"],
+                        "Precisión": (
+                            f"{u['precision']:.0%}" if u["precision"] is not None else "—"
+                        ),
+                        "Última actividad": (u["last_activity"] or "")[:10],
+                    }
+                    for u in usage
+                ],
+                use_container_width=True,
+                hide_index=True,
+            )
+
+
+# ═══════════════════════════════════════════════════════════════════════════
 # Session state
 # ═══════════════════════════════════════════════════════════════════════════
 
@@ -360,6 +525,15 @@ if "user_email" not in st.session_state:
     st.session_state.user_email = ""
 
 # ═══════════════════════════════════════════════════════════════════════════
+# Gate de autenticación — bloquea todo lo que sigue hasta iniciar sesión
+# ═══════════════════════════════════════════════════════════════════════════
+
+_account = _require_login()
+_auth_enabled = get_settings().secoppal_auth_enabled
+# Sin auth (dev/tests) se ve todo; con auth, solo el rol admin ve métricas/panel.
+_is_admin = (not _auth_enabled) or bool(_account and _account.get("role") == "admin")
+
+# ═══════════════════════════════════════════════════════════════════════════
 # Sidebar
 # ═══════════════════════════════════════════════════════════════════════════
 
@@ -368,27 +542,45 @@ with st.sidebar:
     st.caption("Buscador conversacional SECOP II")
     st.divider()
 
-    # Feedback metrics
-    st.subheader("Metricas")
-    stats = workflow.get_feedback_stats()
+    # Feedback metrics — solo admin (estadísticas de acierto)
+    if _is_admin:
+        st.subheader("Metricas")
+        stats = workflow.get_feedback_stats()
 
-    c1, c2 = st.columns(2)
-    c1.metric("Queries", stats["total_queries"])
-    c2.metric("Precision", f"{stats['precision']:.0%}" if stats["rated"] else "—")
+        c1, c2 = st.columns(2)
+        c1.metric("Queries", stats["total_queries"])
+        c2.metric("Precision", f"{stats['precision']:.0%}" if stats["rated"] else "—")
 
-    c3, c4 = st.columns(2)
-    c3.metric("Calificadas", stats["rated"])
-    c4.metric("Sin resultado", stats["no_results"])
+        c3, c4 = st.columns(2)
+        c3.metric("Calificadas", stats["rated"])
+        c4.metric("Sin resultado", stats["no_results"])
 
-    c5, c6 = st.columns(2)
-    c5.metric("Solo regex", stats["heuristic_only"])
-    c6.metric("Con LLM", stats["with_llm"])
+        c5, c6 = st.columns(2)
+        c5.metric("Solo regex", stats["heuristic_only"])
+        c6.metric("Con LLM", stats["with_llm"])
 
-    st.divider()
+        st.divider()
 
-    st.subheader("Usuario")
-    st.text_input("Nombre", key="user_name")
-    st.text_input("Email", key="user_email")
+    st.subheader("Sesión")
+    if _auth_enabled and _account:
+        st.write(f"**{_account['email']}**")
+        st.caption(f"Rol: {_account['role']}")
+        if st.button("Cerrar sesión", use_container_width=True):
+            get_account_store().revoke_session(st.session_state.get("_session_token"))
+            try:
+                get_cookie_manager().delete(_COOKIE_NAME, key="del_login_cookie")
+            except Exception:
+                pass  # la cookie puede no existir (sesión sin "recordarme")
+            for _k in ("account", "user_email", "user_name", "_session_token", "_cookie_probed"):
+                st.session_state.pop(_k, None)
+            st.rerun()
+    else:
+        # Modo sin auth: identidad de texto libre (comportamiento legacy).
+        st.text_input("Nombre", key="user_name")
+        st.text_input("Email", key="user_email")
+
+    if _is_admin and _auth_enabled:
+        _render_admin_panel()
 
     st.divider()
 

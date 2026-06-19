@@ -41,6 +41,11 @@ class Settings(BaseSettings):
     secop_feedback_db_path: Path = Field(default=Path("data/secoppal.db"), alias="SECOP_FEEDBACK_DB_PATH")
     secop_feedback_sqlite_enabled: bool = Field(default=True, alias="SECOP_FEEDBACK_SQLITE_ENABLED")
     secop_feedback_jsonl_dual_write: bool = Field(default=True, alias="SECOP_FEEDBACK_JSONL_DUAL_WRITE")
+    # ── Autenticación de la UI ───────────────────────────────────────────────
+    secoppal_auth_enabled: bool = Field(default=True, alias="SECOPPAL_AUTH_ENABLED")
+    secoppal_admin_email: str | None = Field(default=None, alias="SECOPPAL_ADMIN_EMAIL")
+    secoppal_admin_password: str | None = Field(default=None, alias="SECOPPAL_ADMIN_PASSWORD")
+    secoppal_admin_name: str | None = Field(default=None, alias="SECOPPAL_ADMIN_NAME")
 
     @property
     def llm_enabled(self) -> bool:
