@@ -1,0 +1,16 @@
+[Unit]
+Description=SECOPPAL — pasada del scheduler de radares (refresca el feed)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+# Ajusta estas 3 líneas a tu instalación en el VPS:
+User=secoppal
+WorkingDirectory=/opt/secoppal
+EnvironmentFile=/opt/secoppal/.env
+ExecStart=/opt/secoppal/.venv/bin/python -m scripts.run_radar_scheduler
+
+# Endurecimiento básico (opcional pero recomendado)
+NoNewPrivileges=true
+PrivateTmp=true

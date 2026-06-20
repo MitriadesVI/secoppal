@@ -379,6 +379,34 @@ VPS (Contabo):
 4. Mantener `data/` en disco persistente y hacer **backup periódico de
    `data/secoppal.db`** (cron con `sqlite3 data/secoppal.db ".backup ..."`).
 
+#### Scheduler de radares (systemd timer)
+
+El Radar es **pull**: por sí solo no se actualiza. Un timer de systemd corre los
+radares activos según su `frequency` (`cada_6h` | `diaria` | `semanal`; `manual`
+nunca corre solo) y **refresca el feed** — al abrir la app ya está al día. Hoy
+solo refresca; la notificación por WhatsApp/email (a elección del usuario) es un
+paso futuro, pero el scheduler ya expone el digest y los conteos para enchufarla.
+
+Entrypoint: `scripts/run_radar_scheduler.py` (núcleo en `app/core/radar/scheduler.py`).
+
+```bash
+# Probar localmente (no requiere systemd):
+python -m scripts.run_radar_scheduler --dry-run   # lista qué correría
+python -m scripts.run_radar_scheduler --force     # corre todos los activos ya
+
+# Instalar en el VPS (ajusta User/paths en el .service de deploy/):
+sudo cp deploy/secoppal-radar.service /etc/systemd/system/
+sudo cp deploy/secoppal-radar.timer   /etc/systemd/system/
+sudo systemctl daemon-reload
+sudo systemctl enable --now secoppal-radar.timer
+
+systemctl list-timers secoppal-radar      # próximo disparo
+journalctl -u secoppal-radar -n 20        # resumen de la última pasada
+```
+
+El timer corre cada 6 h con `Persistent=true`: si el VPS estuvo apagado, dispara
+la corrida pendiente al volver (no se pierden ventanas).
+
 ### FastAPI + Twilio (WhatsApp)
 El webhook `/webhooks/twilio/whatsapp` recibe mensajes de Twilio, los procesa y responde en el mismo hilo de WhatsApp.
 

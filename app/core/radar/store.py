@@ -265,6 +265,17 @@ class RadarStore:
             conn.close()
         return [Radar.from_row(r) for r in rows]
 
+    def list_all_enabled_radars(self) -> list[Radar]:
+        """Todos los radares activos de todos los dueños (para el scheduler)."""
+        conn = self._connect()
+        try:
+            rows = conn.execute(
+                "SELECT * FROM radars WHERE enabled = 1 ORDER BY owner, created_at"
+            ).fetchall()
+        finally:
+            conn.close()
+        return [Radar.from_row(r) for r in rows]
+
     def set_enabled(self, radar_id: str, enabled: bool) -> None:
         conn = self._connect()
         try:

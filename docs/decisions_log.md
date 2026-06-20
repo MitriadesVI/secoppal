@@ -1461,3 +1461,43 @@ refresco); sin marcarlo, se reingresa tras refresh. Se protege contra desactivar
 **Tests:** `tests/test_auth.py` (17 passed) — hashing, create/authenticate, unicidad,
 cuenta inactiva, reset, roles, protección del último admin, seed idempotente y
 sesiones (crear/resolver/revocar/expirar/cuenta desactivada).
+
+---
+
+## ADR-034: Scheduler de radares — systemd timer + script (pull programado), refresh-only
+
+**Fecha:** 2026-06-19
+**Contexto:** El Radar v1.0 era pull **manual**: `run_radar` solo se dispara cuando el
+usuario pulsa "Ejecutar/Actualizar" en la UI. El campo `frequency` (`manual`/`cada_6h`/
+`diaria`/`semanal`) se guardaba pero nada lo consumía. Consecuencia: "volver días después"
+muestra el feed de la última corrida manual, no las novedades reales. Se necesitaba que los
+radares activos corrieran solos según su frecuencia. Disparador: revisión de robustez del
+Radar tras añadir usuarios autenticados (el `owner` ahora es `email:` estable, así que un
+scheduler multi-usuario es viable y seguro).
+
+**Decisión:** Núcleo reusable en `app/core/radar/scheduler.py` — `is_due(radar, now)`
+(mapa `FREQUENCY_INTERVALS`; `manual`/desconocida nunca corre; sin `last_run_at` siempre;
+tolerancia de 10 min para el jitter del timer) y `run_due_radars(deps, store, *, force=False)`
+que itera `RadarStore.list_all_enabled_radars()` (nuevo) y ejecuta los que toquen vía el
+`run_radar` existente, **aislando el error por radar** (uno que falle no tumba la pasada).
+Entrypoint `scripts/run_radar_scheduler.py` (reusa `get_workflow()`, que es `lru_cache` y por
+tanto headless; flags `--dry-run`/`--force`). Disparo por **systemd timer** (`deploy/
+secoppal-radar.{service,timer}`): cada 6 h con `Persistent=true` (recupera corridas perdidas
+tras apagón). **Alcance v1.1 = solo refrescar el feed**, sin notificación.
+
+**Alternativas descartadas:** APScheduler/hilo dentro del proceso Streamlit (atado al ciclo
+de vida del proceso, compite con los reruns, reloj se reinicia con la app). Cron crudo del
+sistema (systemd timer da `Persistent=true`, logs en journald y reinicio gestionado). Notificar
+ahora por Telegram/WhatsApp (el `owner` es un email; no hay mapeo web→chat id — se difiere).
+
+**Consecuencias:** `frequency` pasa de decorativo a funcional. El scheduler corre como proceso
+aparte (no necesita la app Streamlit arriba). **Costura para notificación futura:**
+`run_due_radars` devuelve por radar `{owner, digest, new_count, changed_count}`; un futuro
+`notifier` + tabla `notification_prefs(owner, canal, dirección, on/off)` permitirán WhatsApp/
+email a elección del usuario sin refactor. Cadencia fija de 6 h → un radar `diaria` puede
+correr hasta ~5 h tarde (irrelevante para SECOP). Ventana de 100 resultados de `run_radar`
+sigue vigente (radares muy amplios pueden no ver novedades fuera del top-100).
+
+**Tests:** `tests/test_radar_scheduler.py` (12 passed) — `is_due` (manual, sin run, intervalos,
+tolerancia, timestamp naive) y `run_due_radars` (corre solo los due, salta manual/no-due/
+deshabilitado, `force` corre todos, un fallo no detiene a los demás, `status="error"` cuenta).

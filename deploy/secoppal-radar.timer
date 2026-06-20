@@ -1,0 +1,14 @@
+[Unit]
+Description=SECOPPAL — dispara el scheduler de radares cada 6 horas
+
+[Timer]
+# Primera corrida 10 min tras el arranque, luego cada 6 h.
+OnBootSec=10min
+OnUnitActiveSec=6h
+# Persistent=true dispara la corrida perdida si el VPS estuvo apagado
+# (clave para "volver días después" y no perder ventanas).
+Persistent=true
+Unit=secoppal-radar.service
+
+[Install]
+WantedBy=timers.target
