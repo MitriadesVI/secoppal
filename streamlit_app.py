@@ -11,8 +11,10 @@ from datetime import datetime, timedelta, timezone
 import extra_streamlit_components as stx
 import streamlit as st
 
+from app.core.radar import follows
 from app.core.radar.builder import has_scope_or_topic, save_radar_from_params
 from app.core.radar.commands import radar_owner
+from app.core.radar.keys import radar_result_key
 from app.core.radar.runner import run_radar
 from app.core.radar.store import RadarExistsError
 from app.config import get_settings
@@ -127,13 +129,23 @@ def _render_contextual_filters(
                         st.rerun()
 
 
-def _render_cards(rows: list[dict]) -> None:
-    """Render results as compact cards with SECOP links."""
+def _render_cards(rows: list[dict], owner: str | None = None, idx: int = 0) -> None:
+    """Render results as compact cards with SECOP links + botón 'seguir'."""
     estado_icons = {
         "Abierto": "🟢", "Publicado": "🔵", "Cerrado": "🔴",
         "Adjudicado": "🟡", "Celebrado": "🟢", "En ejecucion": "🔵",
         "Liquidado": "⚪", "Desierto": "🔴", "Cancelado": "🚫",
     }
+
+    # Conjunto de claves ya seguidas (una sola lectura para todas las tarjetas).
+    store = getattr(workflow, "radar_store", None)
+    followed_keys: set[str] = set()
+    if store is not None and owner:
+        try:
+            radar = follows.get_or_create_follows_radar(store, owner)
+            followed_keys = set(store.get_seen(radar.id))
+        except Exception:
+            followed_keys = set()
 
     for i, row in enumerate(rows, 1):
         titulo = row.get("titulo", "Sin titulo")[:120]
@@ -171,8 +183,21 @@ def _render_cards(rows: list[dict]) -> None:
         else:
             parts.append("🔒 _Vista pública no disponible (proceso pre-publicación)_")
 
-        st.markdown("  \n".join(parts))
-        st.divider()
+        with st.container(border=True):
+            st.markdown("  \n".join(parts))
+            # Botón "seguir proceso" (solo si hay identidad estable y sesión).
+            if store is not None and owner:
+                key = radar_result_key(row, row.get("dataset_id", ""))
+                if key:
+                    siguiendo = key in followed_keys
+                    label = "✓ Siguiendo" if siguiendo else "👁 Seguir"
+                    if st.button(label, key=f"follow_{idx}_{i}",
+                                 help="Vigila cambios de estado/valor de este proceso"):
+                        if siguiendo:
+                            follows.unfollow(store, owner, key)
+                        else:
+                            follows.follow(store, owner, row)
+                        st.rerun()
 
 
 def _render_detail_card(row: dict, dataset_id: str = "") -> None:
@@ -532,6 +557,8 @@ _account = _require_login()
 _auth_enabled = get_settings().secoppal_auth_enabled
 # Sin auth (dev/tests) se ve todo; con auth, solo el rol admin ve métricas/panel.
 _is_admin = (not _auth_enabled) or bool(_account and _account.get("role") == "admin")
+# Owner estable del usuario (email:... autenticado) para radares y procesos seguidos.
+_owner = radar_owner(_current_user_identity(), st.session_state.get("chat_id"))
 
 # ═══════════════════════════════════════════════════════════════════════════
 # Sidebar
@@ -825,6 +852,7 @@ _EVENT_META = {
     "changed_state": ("🔁", "cambio de estado"),
     "changed_value": ("💰", "cambio de valor"),
     "disappeared": ("⬇️", "ya no aparece"),
+    "followed": ("👁", "empezaste a seguir"),
 }
 
 
@@ -859,18 +887,23 @@ def _render_event_card(ev: dict) -> None:
 
 
 def _refresh_all_radares(store, owner) -> None:
-    """Corre todos los radares activos (pull-to-refresh) con barra de progreso."""
-    radars = [r for r in store.list_radars(owner) if r.is_enabled]
-    if not radars:
-        st.warning("No tienes radares activos para actualizar.")
-        return
-    prog = st.progress(0.0, text="Actualizando radares...")
+    """Corre todos los radares de búsqueda activos + refresca los seguidos."""
+    # El radar sintético de seguidos no es una búsqueda: se refresca aparte.
+    radars = [r for r in store.list_radars(owner)
+              if r.is_enabled and r.frequency != follows.FOLLOWS_FREQUENCY]
+    total_steps = len(radars) + 1  # +1 por el refresco de seguidos
+    prog = st.progress(0.0, text="Actualizando...")
     for i, radar in enumerate(radars):
-        prog.progress(i / len(radars), text=f"Actualizando: {radar.name}")
+        prog.progress(i / total_steps, text=f"Actualizando: {radar.name}")
         try:
             run_radar(workflow.deps, store, radar)
         except Exception:
             pass  # un radar que falla no debe tumbar el refresco global
+    prog.progress((total_steps - 1) / total_steps, text="Revisando procesos seguidos...")
+    try:
+        follows.refresh_follows(workflow.deps, store, owner)
+    except Exception:
+        pass
     prog.empty()
     st.session_state["_radar_refresh_ts"] = time.time()
 
@@ -897,6 +930,33 @@ def _render_manage_row(store, radar) -> None:
     st.divider()
 
 
+def _render_follows_section(store, owner) -> None:
+    """Sección '📌 Procesos seguidos': lista con estado + dejar de seguir."""
+    seguidos = follows.list_follows(store, owner)
+    with st.expander(f"📌 Procesos seguidos ({len(seguidos)})",
+                     expanded=bool(seguidos)):
+        if not seguidos:
+            st.caption("Sigue un proceso desde el botón 👁 en su tarjeta de resultados.")
+            return
+        for rec in seguidos:
+            key = rec.get("result_key")
+            titulo = (rec.get("title") or "(sin título)")[:100]
+            entidad = rec.get("entity") or ""
+            estado = rec.get("status") or "s/d"
+            valor = _fmt_money_feed(rec.get("value"))
+            url = rec.get("urlproceso") or ""
+            with st.container(border=True):
+                st.markdown(f"**{titulo}**")
+                st.caption(f"{entidad} · {valor} · {estado}")
+                c1, c2 = st.columns([3, 1])
+                if url:
+                    c1.markdown(f"[🔗 Ver en SECOP]({url})")
+                if c2.button("Dejar de seguir", key=f"unfollow_{key}",
+                             use_container_width=True):
+                    follows.unfollow(store, owner, key)
+                    st.rerun()
+
+
 def _render_radares() -> None:
     """Pestaña 📡 Radares: feed de movimientos + gestión → detalle (timeline)."""
     store = getattr(workflow, "radar_store", None)
@@ -917,15 +977,17 @@ def _render_radares() -> None:
         del st.session_state["_open_radar"]
 
     _render_crear_radar(store, owner)
+    _render_follows_section(store, owner)
 
-    radars = store.list_radars(owner)
+    # Excluir el radar sintético de "procesos seguidos" del listado de búsquedas.
+    radars = [r for r in store.list_radars(owner)
+              if r.frequency != follows.FOLLOWS_FREQUENCY]
 
     # Barra de refresco (pull-to-refresh). El feed muestra movimientos ya
     # persistidos al instante; este botón corre los radares para traer nuevos.
     c1, c2 = st.columns([1, 3])
     if c1.button("🔄 Actualizar", key="radar_refresh_all",
-                 type="primary", use_container_width=True,
-                 disabled=not radars):
+                 type="primary", use_container_width=True):
         _refresh_all_radares(store, owner)
         st.rerun()
     activos = sum(1 for r in radars if r.is_enabled)
@@ -1008,7 +1070,7 @@ with tab_buscar:
             if is_direct_lookup and rows:
                 _render_detail_card(rows[0], dataset_id=dataset_id)
             elif rows and show_cards:
-                _render_cards(rows)
+                _render_cards(rows, owner=_owner, idx=idx)
             elif rows:
                 st.dataframe(rows, use_container_width=True)
 

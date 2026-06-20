@@ -421,6 +421,17 @@ class RadarStore:
 
     # -- seen results ------------------------------------------------------
 
+    def delete_seen(self, radar_id: str, result_key: str) -> None:
+        """Borra un resultado seguido (para 'dejar de seguir')."""
+        conn = self._connect()
+        try:
+            conn.execute(
+                "DELETE FROM radar_seen_results WHERE radar_id = ? AND result_key = ?",
+                (radar_id, result_key),
+            )
+        finally:
+            conn.close()
+
     def get_seen(self, radar_id: str) -> dict[str, dict]:
         conn = self._connect()
         try:

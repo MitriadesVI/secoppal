@@ -18,6 +18,7 @@ from dataclasses import dataclass, field
 from datetime import datetime, timedelta, timezone
 from typing import TYPE_CHECKING
 
+from app.core.radar import follows
 from app.core.radar.runner import run_radar
 from app.core.radar.store import Radar, RadarStore
 
@@ -65,13 +66,15 @@ class SchedulerSummary:
     errors: int = 0
     new_total: int = 0
     changed_total: int = 0
+    follows: int = 0
     outcomes: list[RadarOutcome] = field(default_factory=list)
 
     def as_line(self) -> str:
         return (
             f"radares revisados={self.checked} corridos={self.ran} "
             f"saltados={self.skipped} errores={self.errors} "
-            f"nuevos={self.new_total} cambios={self.changed_total}"
+            f"nuevos={self.new_total} cambios={self.changed_total} "
+            f"seguidos_refrescados={self.follows}"
         )
 
 
@@ -119,6 +122,28 @@ def run_due_radars(
 
     for radar in store.list_all_enabled_radars():
         summary.checked += 1
+
+        # Radar sintético de "procesos seguidos": no es una búsqueda, se refresca
+        # siempre (chequea el estado actual de cada proceso seguido).
+        if radar.frequency == follows.FOLLOWS_FREQUENCY:
+            try:
+                res = follows.refresh_follows(deps, store, radar.owner)
+            except Exception as exc:
+                logger.exception("radar scheduler: falló refresh_follows owner=%s",
+                                 radar.owner)
+                summary.errors += 1
+                summary.outcomes.append(
+                    RadarOutcome(radar=radar, status="error", error=str(exc))
+                )
+                continue
+            changed = res["changed_state"] + res["changed_value"]
+            summary.follows += 1
+            summary.changed_total += changed
+            summary.outcomes.append(
+                RadarOutcome(radar=radar, status="follows", changed_count=changed)
+            )
+            continue
+
         if not force and not is_due(radar, now):
             summary.skipped += 1
             summary.outcomes.append(RadarOutcome(radar=radar, status="skipped"))

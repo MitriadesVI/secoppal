@@ -297,6 +297,17 @@ valor, desaparecidos). El resultado es una **lectura asesora** (digest), no 50 f
 (estilo timeline social), con *pull-to-refresh* (🔄 Actualizar). Al abrir un radar,
 su línea de tiempo de corridas con el digest de cada una.
 
+### Seguir un proceso (watchlist individual)
+
+Además de los radares de *búsqueda*, el usuario puede **seguir un proceso concreto**
+desde el botón **👁 Seguir** en su tarjeta de resultados — para vigilar SUS cambios de
+estado/valor aunque no haga match con ninguna búsqueda. Todos los seguidos caen en una
+lista única **«📌 Procesos seguidos»** por usuario y sus cambios aparecen en el mismo
+feed. Implementación (`app/core/radar/follows.py`): se modela como un **radar sintético**
+por usuario (`frequency='follows'`) para reutilizar `radar_seen_results`, `radar_events`,
+`keys.py` y el feed. El scheduler lo salta en el lado *query* y lo refresca por separado
+(`refresh_follows`: trae el estado actual por id en lote y diffea estado/valor).
+
 ### Componentes (`app/core/radar/`)
 
 | Módulo | Rol |

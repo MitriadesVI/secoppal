@@ -320,6 +320,11 @@ class Formatter:
                         "fecha": fecha_iso,
                         "fecha_label": fecha_label,
                         "url": url,
+                        # Identidad estable para "seguir proceso" (radar/follows).
+                        # Campos aditivos: no afectan el render de la tarjeta.
+                        "id_del_proceso": item.get("id_del_proceso", ""),
+                        "referencia_del_proceso": item.get("referencia_del_proceso", ""),
+                        "dataset_id": dataset_id,
                     }
                 )
             else:
@@ -333,6 +338,10 @@ class Formatter:
                     "fecha_label": fecha_label,
                     "contratista": item.get("proveedor_adjudicado", ""),
                     "url": url,
+                    # Identidad estable para "seguir proceso" (radar/follows).
+                    "id_contrato": item.get("id_contrato", ""),
+                    "referencia_del_contrato": item.get("referencia_del_contrato", ""),
+                    "dataset_id": dataset_id,
                 }
                 if anomaly:
                     row_data.update(anomaly)

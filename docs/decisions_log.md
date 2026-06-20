@@ -1501,3 +1501,43 @@ sigue vigente (radares muy amplios pueden no ver novedades fuera del top-100).
 **Tests:** `tests/test_radar_scheduler.py` (12 passed) — `is_due` (manual, sin run, intervalos,
 tolerancia, timestamp naive) y `run_due_radars` (corre solo los due, salta manual/no-due/
 deshabilitado, `force` corre todos, un fallo no detiene a los demás, `status="error"` cuenta).
+
+---
+
+## ADR-035: "Seguir proceso" — watchlist individual sobre un radar sintético
+
+**Fecha:** 2026-06-20
+**Contexto:** El Radar rastrea **búsquedas** (query → resultados que matchean). Faltaba poder
+seguir un **proceso concreto** desde su tarjeta para vigilar SUS cambios de estado/valor, aunque
+no haga match con ninguna búsqueda. Decisión de producto: una **lista única "📌 Procesos
+seguidos"** por usuario, con los cambios visibles en el mismo feed del radar. Restricción
+técnica hallada: las filas de tarjeta del formatter (`_to_card_rows`) eran **solo de display**
+(sin `id_del_proceso`/`referencia`), por lo que no había clave estable para seguir.
+
+**Decisión:** Modelar la watchlist como un **radar sintético** por usuario (`frequency='follows'`,
+nombre `📌 Procesos seguidos`) en vez de tablas nuevas — reutiliza intactos `radar_seen_results`
+(los seguidos), `radar_events` (feed, FK a `radars` satisfecha), `keys.py` (clave + hash) y el
+render del feed. Nuevo módulo `app/core/radar/follows.py` (`follow`/`unfollow`/`is_following`/
+`list_follows`/`refresh_follows` + `get_or_create_follows_radar`). El formatter ahora **enriquece**
+cada fila de tarjeta con `id_del_proceso`/`id_contrato`, `referencia_*` y `dataset_id` (campos
+aditivos). Al seguir, el snapshot queda vacío → la **1ª** corrida de `refresh_follows` fija la
+línea base en silencio; después, cambios de estado/valor emiten `changed_state`/`changed_value`.
+El scheduler (ADR-034) **salta** el radar follows en el lado query (`is_due` False para 'follows')
+y lo refresca aparte en cada pasada. UI: botón **👁 Seguir/✓ Siguiendo** por tarjeta + sección
+"Procesos seguidos" en la pestaña Radares + `store.delete_seen()` para dejar de seguir.
+
+**Alternativas descartadas:** Tablas dedicadas `followed_results`/`followed_events` (duplicaría
+feed y diff ya existentes). Hacer `radar_id` nullable en `radar_events` para colgar eventos sin
+radar (migración de columna NOT NULL en SQLite, frágil; el radar sintético satisface la FK sin
+tocar el esquema). Re-consultar SECOP al pulsar "Seguir" (lento; se prefiere seguir instantáneo
+con los datos de la tarjeta y fijar baseline en el primer refresh).
+
+**Consecuencias:** El radar sintético aparece en `list_radars(owner)`; se **filtra** del listado
+de búsquedas y de `_refresh_all_radares` por `frequency=='follows'`. El valor mostrado del seguido
+pasa de formateado (tarjeta) a crudo (SECOP) tras el primer refresh → la UI lo formatea con
+`_fmt_money_feed`. Un cambio ocurrido entre seguir y el primer refresh no se reporta (baseline).
+Procesos sin id ni referencia no se pueden seguir (`follow` devuelve False).
+
+**Tests:** `tests/test_radar_follows.py` (10 passed) — follow idempotente/sin-clave/aislado por
+owner, unfollow, refresh (baseline silenciosa, cambio de estado, cambio de valor, sin cambios,
+missing) y que el scheduler no corre el radar follows como búsqueda.
