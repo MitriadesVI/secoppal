@@ -110,6 +110,9 @@ def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
             results=results, query_error="", total_count=total,
             total_count_approximate=approximate, timeout_suggestions=[],
             risk_flag_timeout=False,
+            # Commit 6A: observabilidad del pool de candidatos (distinto del display).
+            candidate_count=len(results),
+            candidate_truncated=bool(len(results) >= limit),
         )
     except Exception as exc:
         params = state.get("resolved_params", {})
