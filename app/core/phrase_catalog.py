@@ -21,12 +21,20 @@ from app.core.phrase_spec import PhraseSpec
 from app.core.retrieval_text import normalize_retrieval_text
 
 # Catálogo de dominio. Formas ya normalizadas (minúsculas, sin tildes).
+# Ampliar cobertura = AÑADIR una entrada aquí. Cero código especial: la detección,
+# el WHERE recall-first, el validador y el ranking son genéricos sobre PhraseSpec.
 PHRASE_CATALOG: tuple[PhraseSpec, ...] = (
     PhraseSpec(
         canonical="manual de contratacion",
         ordered_anchors=("manual", "contratacion"),
         variants=("manuales de contratacion",),
         max_gap_tokens=2,
+    ),
+    PhraseSpec(  # SIP-049: prueba de generalidad — solo datos, sin if especial.
+        canonical="aire acondicionado",
+        ordered_anchors=("aire", "acondicionado"),
+        variants=("aires acondicionados",),
+        max_gap_tokens=1,
     ),
 )
 
