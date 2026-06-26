@@ -185,6 +185,24 @@ def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
         result["needs_clarification"] = True
     else:
         result["response"] = advisor_response
+
+    # ── Commit 6C-UX: header determinístico + trace honesto para frases ──
+    # No pasa por el narrator: la línea de conteo es la autoridad, así el LLM no
+    # confunde total_count (universo SECOP) con validated_count (confirmadas).
+    phrase_counts = state.get("phrase_counts")
+    if phrase_counts and not result.get("needs_clarification"):
+        from app.core.phrase_presentation import build_phrase_header, build_phrase_trace
+        displayed = len(result.get("formatted_rows", []) or [])
+        candidate_count = int(state.get("candidate_count", 0) or 0)
+        pool_full = bool(state.get("candidate_pool_full", False))
+        secop_total = int(state.get("total_count", 0) or 0)
+        approximate = bool(state.get("total_count_approximate", False))
+        header = build_phrase_header(phrase_counts, candidate_count, pool_full, secop_total, displayed)
+        result["response"] = header + "\n\n" + (result.get("response") or "")
+        result["phrase_trace"] = build_phrase_trace(
+            phrase_counts, candidate_count, pool_full, secop_total, approximate, displayed
+        )
+
     result["should_execute_decision"] = state.get("should_execute_decision")
     result["timings_ms"]["advisor_response_ms"] = _elapsed_ms(advisor_start)
     result["timings_ms"]["total_ms"] = _elapsed_ms(ctx.run_started_at)
