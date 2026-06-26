@@ -1616,3 +1616,53 @@ pasó de "no solapar" a "el catálogo detecta y consume" — permite migrar fras
 + benchmark offline reproducible (`scripts/exp_phrase_retrieval.py`, corpus silver con split
 dev/holdout). Suite 1714 passed. Informe completo: `docs/SEMANTIC_RETRIEVAL_SPRINT_2026-06.md`.
 Para extender: `docs/PHRASE_RETRIEVAL_RUNBOOK.md`.
+
+## ADR-037: Los parámetros explícitos del turno prevalecen sobre estado/framing heredado (FRAME-LEAK-ESTADO)
+
+**Fecha:** 2026-06-26 · **Estado:** Accepted
+
+> Numeración: rescatado del prototipo paralelo `claude/trusting-heisenberg` (que lo numeró
+> ADR-036, en colisión con el ADR-036 phrase-aware ya mergeado y tagueado en main). Se
+> renumera **ADR-037** y se reescribe para documentar SOLO lo que se portó. La rama prototipo
+> NO se fusionó; se usó como documentación ejecutable (su canary + algoritmo). El phrase-first
+> alternativo de esa rama se DESCARTÓ por redundante con `semantic-retrieval-v1` (ADR-036).
+
+**Contexto:** En un follow-up que pivota el estado ("procesos abiertos…" → "y los cerrados?"),
+el filtro anterior sobrevivía por la puerta de atrás. Doble causa: (1) el estado se representa
+con **varias claves hermanas** (`estado`, `estado_field`, `estado_family`,
+`estado_contrato`, `estado_de_apertura_del_proceso`, `estado_del_procedimiento`); el turno nuevo
+trae solo un subconjunto, y el `{**prev, **curr}` ciego dejaba en pie las claves viejas, que
+ganan por precedencia en el builder. (2) El framing `intent_type=opportunity_search` heredado
+sobrevivía y la invariante de oportunidad aguas abajo **re-imponía** `oferta_abierta`, purgando
+el estado pedido y devolviendo en silencio a "abiertos". Es la "Causa 2" (merge ciego del frame)
+del documento técnico y el **Paso 1 (sellar fuga del frame)** del roadmap. El sello previo en
+main (`_merge_raw` con expiración de `_RAW_CLASSIFICATION_KEYS` al cambiar `intent_type`) era
+**parcial**: no trataba el estado como cluster ni soltaba el framing de oportunidad.
+
+**Decisión:** **Los parámetros expresados en el turno actual prevalecen sobre clasificaciones,
+familias y filtros heredados incompatibles** — por clusters atómicos, no por borrado
+indiscriminado. Dos mecanismos en `followup_engine.py`:
+1. **`_merge_modifiers`** (cluster atómico de estado): si el turno actual trae CUALQUIER clave de
+   `_ESTADO_KEYS`, el estado heredado se reemplaza por completo (las hermanas obsoletas no
+   coexisten). El resto de modifiers conserva el merge legacy. Aplicado en las políticas
+   `refine_filter`, `change_year`, `change_scope`, `change_dataset`, `contextual_requery`.
+2. **Sello en `detect_and_merge`**: si el turno fija un estado explícito que NO es
+   `estado_family=oferta_abierta`, se sueltan `intent_type=opportunity_search`, `estado_family`,
+   `opportunity_mode`, `filter_active_only` del merge.
+Se conservan tema, entidad, lugar, fechas y valores compatibles (el cluster solo toca estado).
+
+**Alternativas descartadas:** Borrado indiscriminado de todo lo heredado al pivotar (rompería la
+continuidad legítima: cambiar año no debe borrar tema ni estado). Resolver solo en el builder
+(el frame ya llega contaminado; hay que sellarlo en el merge). Fusionar la rama prototipo entera
+(traería un segundo motor de phrase-first).
+
+**Consecuencias:** Correctitud conversacional: "y los cerrados?" ya no revierte a abiertos;
+ningún pivote (entidad/ciudad/fecha/dataset/estado) fuga el valor anterior. Es invariante
+transversal (afecta cualquier búsqueda, no solo dual-dataset) → cimiento para construir
+dual-dataset sobre un merge confiable. Deuda residual: las uniones en `query_frame.py` y la
+paginación siguen siendo merge legacy; cubiertas por el canary como deuda observable, no refactor
+preventivo.
+
+**Tests:** `tests/test_frame_leak_canary.py` (5 vectores: entidad/ciudad/fecha/dataset/estado;
+el de estado sella esta decisión). Suite 1719 passed. Sin cambios a phrase-retrieval/ranking/
+dual-dataset.
