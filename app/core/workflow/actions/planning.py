@@ -39,6 +39,16 @@ from app.core.workflow.helpers import _with_timing
 ENABLED_RULES_SPRINT_2A: set[str] | None = None  # B4.5: None = all rules (default)
 
 
+# Commit 6A: candidate_limit (filas traídas de SECOP) ≠ display_limit (mostradas, 25).
+# El display_limit NO debe filtrarse al builder; vive en el formatter aguas abajo.
+_DEFAULT_LIMIT = 50
+_PHRASE_CANDIDATE_LIMIT = 200
+
+
+def _candidate_limit(params: dict) -> int:
+    return _PHRASE_CANDIDATE_LIMIT if params.get("objeto_phrases") else _DEFAULT_LIMIT
+
+
 @action(
     reads=["parsed_params", "raw_query", "prev_params", "turn_index"],
     writes=["query_plan", "parsed_params", "should_execute_decision"],
@@ -142,6 +152,11 @@ def resolve_entities(state: State, entity_resolver: EntityResolver) -> State:
                 resolution.clarification_hint
                 or f"No pude ubicar la entidad '{params['entidad']}'."
             )
+
+    # Commit 6A: pool de candidatos amplio cuando hay frase recall-first (anclas
+    # co-ocurrentes traen los positivos hoy perdidos), para que el validador (6B)
+    # los vea más allá del puesto 50. El display (25) se recorta aguas abajo, intacto.
+    resolved.setdefault("limit", _candidate_limit(resolved))
 
     dataset_id = SoQLBuilder.dataset_id_for(str(params.get("dataset")))
     return _with_timing(

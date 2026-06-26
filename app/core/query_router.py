@@ -656,8 +656,17 @@ class QueryRouter:
             scrubbed = _CITY_PATTERN_RE.sub(" ", scrubbed)
             scrubbed = re.sub(r"\s+", " ", scrubbed).strip()
 
-        # ── 11. Object terms (whatever remains after all extractions) ───
-        object_terms = self._extract_object_terms(scrubbed)
+        # ── 11. Phrase detection BEFORE token scrub (objeto_phrases) ────
+        #    Preserva colocaciones de dominio ("manual de contratación") como
+        #    unidad antes de que "de" se descarte y la frase se pierda. Consume
+        #    el span para que sus tokens NO recreen el objeto roto (no duplicar).
+        from app.core.phrase_catalog import detect_phrases
+        objeto_phrases, objeto_text = detect_phrases(scrubbed)
+        if objeto_phrases:
+            params["objeto_phrases"] = objeto_phrases
+
+        # ── 12. Object terms (whatever remains after all extractions) ───
+        object_terms = self._extract_object_terms(objeto_text)
         if object_terms:
             params["objeto"] = object_terms
 

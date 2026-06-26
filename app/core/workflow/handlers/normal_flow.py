@@ -40,7 +40,6 @@ import time
 from typing import TYPE_CHECKING
 
 from app.core.conversation_store import is_followup
-from app.core.relevance import RelevanceScorer
 from app.core.response_policy import build_advisor_response
 from app.core.workflow.graph import build_application
 from app.core.workflow.helpers import _elapsed_ms
@@ -154,28 +153,10 @@ def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
                 except Exception:
                     pass  # ecosystem is best-effort
 
-    # ── Relevance scoring (Sprint 6 Fase 1 — BM25 post-ranking) ───
-    resolved = state.get("resolved_params", {})
-    objeto_terms = resolved.get("objeto", []) or []
-    if objeto_terms and len(state.get("results", [])) > 0:
-        try:
-            scorer = RelevanceScorer()
-            topic_flat: list[str] = []
-            for t in objeto_terms:
-                if isinstance(t, list):
-                    topic_flat.extend(t)
-                else:
-                    topic_flat.append(str(t))
-            if len(topic_flat) >= 3:
-                field = "objeto_del_contrato" if state.get("dataset_id") == "jbjy-vk9h" else "nombre_del_procedimiento"
-                scored = scorer.score_rows(topic_flat, state["results"], field=field)
-                state = state.update(
-                    results=[r for r, _ in scored],
-                    relevance_classes=[s.classification for _, s in scored],
-                    relevance_scores=[s.bm25_score for _, s in scored],
-                )
-        except Exception as exc:
-            logger.warning("relevance scoring failed: %s", exc)
+    # NOTA (Commit 6D): el BM25 post-ranking vivía AQUÍ pero corría DESPUÉS de que
+    # format_response ya había congelado formatted_rows (bug RELEVANCE-RANKING-AFTER-
+    # FORMAT-001) → nunca afectaba el display. El ranking real ahora es la acción
+    # `rank_results`, ANTES de format_response. Este bloque se eliminó a propósito.
 
     advisor_response = build_advisor_response({
         "user_query": ctx.user_query,
@@ -204,6 +185,24 @@ def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
         result["needs_clarification"] = True
     else:
         result["response"] = advisor_response
+
+    # ── Commit 6C-UX: header determinístico + trace honesto para frases ──
+    # No pasa por el narrator: la línea de conteo es la autoridad, así el LLM no
+    # confunde total_count (universo SECOP) con validated_count (confirmadas).
+    phrase_counts = state.get("phrase_counts")
+    if phrase_counts and not result.get("needs_clarification"):
+        from app.core.phrase_presentation import build_phrase_header, build_phrase_trace
+        displayed = len(result.get("formatted_rows", []) or [])
+        candidate_count = int(state.get("candidate_count", 0) or 0)
+        pool_full = bool(state.get("candidate_pool_full", False))
+        secop_total = int(state.get("total_count", 0) or 0)
+        approximate = bool(state.get("total_count_approximate", False))
+        header = build_phrase_header(phrase_counts, candidate_count, pool_full, secop_total, displayed)
+        result["response"] = header + "\n\n" + (result.get("response") or "")
+        result["phrase_trace"] = build_phrase_trace(
+            phrase_counts, candidate_count, pool_full, secop_total, approximate, displayed
+        )
+
     result["should_execute_decision"] = state.get("should_execute_decision")
     result["timings_ms"]["advisor_response_ms"] = _elapsed_ms(advisor_start)
     result["timings_ms"]["total_ms"] = _elapsed_ms(ctx.run_started_at)

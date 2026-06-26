@@ -504,7 +504,7 @@ class FollowupMerger:
 #   classification-class  → atada al intent; resetea cuando el intent cambia
 # Las claves no listadas conservan el comportamiento legacy: heredan, gana
 # el turno actual (seguro para force_dataset, fecha_de_firma, dataset, etc.).
-_RAW_TOPIC_KEYS = ("objeto_or",)
+_RAW_TOPIC_KEYS = ("objeto_or", "objeto_phrases")
 _RAW_CLASSIFICATION_KEYS = ("opportunity_mode", "filter_active_only")
 
 

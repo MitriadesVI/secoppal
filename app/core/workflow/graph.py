@@ -40,6 +40,7 @@ from app.core.workflow.actions.planning import (
     plan_query,
     resolve_entities,
 )
+from app.core.workflow.actions.ranking import rank_results
 from app.core.workflow.actions.rendering import (
     clarify_query,
     format_response,
@@ -88,6 +89,7 @@ def build_application(
                 secop_client=deps.secop_client, soql_builder=deps.soql_builder,
             ),
             suggester_action=suggester_action,
+            rank_results=rank_results,
             format_response=format_response.bind(formatter=deps.formatter),
             clarify_query=clarify_query,
         )
@@ -108,7 +110,8 @@ def build_application(
             ("degrade_query", "clarify_query", expr("needs_clarification")),
             ("degrade_query", "observe_universe", expr("not needs_clarification")),
             ("observe_universe", "suggester_action", default),
-            ("suggester_action", "format_response", default),
+            ("suggester_action", "rank_results", default),
+            ("rank_results", "format_response", default),
         )
         .with_state(
             user_query=user_query,
@@ -117,6 +120,7 @@ def build_application(
             parsed_params={},
             resolved_params={},
             results=[],
+            ranked_results=[],
             formatted_rows=[],
             formatted_response="",
             soql_query="",

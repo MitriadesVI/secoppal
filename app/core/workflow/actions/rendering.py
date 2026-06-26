@@ -90,8 +90,13 @@ def format_response(state: State, formatter: Formatter) -> State:
     universe_insights = state.get("universe_insights")
     suggestions = state.get("suggestions", [])
     approximate = state.get("total_count_approximate", False)
+
+    # Commit 6D: rendering SOLO presenta. El orden ya lo decidió `rank_results`
+    # (acción previa); aquí solo consumimos ranked_results y el formatter corta a 25.
+    rows_to_format = state.get("ranked_results", state["results"])
+
     response, rows = formatter.format_for_channel(
-        state["results"], state["dataset_id"], state["channel"],
+        rows_to_format, state["dataset_id"], state["channel"],
         params=params, total_count=total_count, universe_insights=universe_insights,
         suggestions=suggestions, total_count_approximate=approximate,
     )
