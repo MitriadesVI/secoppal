@@ -85,7 +85,7 @@ class TestGuardEquivalence:
     def test_sco_topic_keys_frozenset_matches(self):
         """Sanity: las keys son exactamente las esperadas."""
         expected = frozenset({
-            "objeto", "entidad_resolved", "entidad_like",
+            "objeto", "objeto_phrases", "entidad_resolved", "entidad_like",
             "departamento_resolved", "departamentos_in", "ciudad", "contratista",
         })
         assert SCOPE_TOPIC_KEYS == expected
