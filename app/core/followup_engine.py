@@ -531,6 +531,33 @@ def _merge_raw(prev_raw: dict, curr_raw: dict, *, topic_inherited: bool) -> dict
     return merged
 
 
+# ── Cluster de estado (FRAME-LEAK-ESTADO) ───────────────────────────────────
+# El estado se representa con varias claves hermanas. Un follow-up suele traer
+# solo un subconjunto ("y los cerrados?" → estado='Cerrado' + estado_field), así
+# que las claves del estado anterior (estado_family, estado_del_procedimiento)
+# sobreviven a {**prev, **curr} y ganan por precedencia en el builder, dejando el
+# filtro viejo en pie. Por eso el estado debe fusionarse como unidad atómica.
+_ESTADO_KEYS = (
+    "estado", "estado_field", "estado_family",
+    "estado_contrato", "estado_de_apertura_del_proceso", "estado_del_procedimiento",
+)
+
+
+def _merge_modifiers(prev_mods: dict, curr_mods: dict) -> dict:
+    """Fusiona modifiers tratando el estado como cluster atómico.
+
+    Si el turno actual trae CUALQUIER clave de estado, el estado heredado se
+    reemplaza por completo (las claves hermanas obsoletas no deben coexistir).
+    El resto de modifiers conserva el merge legacy (hereda, gana el actual).
+    """
+    merged = {**prev_mods, **curr_mods}
+    if any(k in curr_mods for k in _ESTADO_KEYS):
+        for key in _ESTADO_KEYS:
+            if key not in curr_mods:
+                merged.pop(key, None)
+    return merged
+
+
 def _merge_pagination_more(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
     """Hereda TODO. Solo incrementa offset."""
     offset = prev.raw_params.get("offset", 0)
@@ -566,7 +593,7 @@ def _merge_refine_filter(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
         dataset_explicit=prev.dataset_explicit,
         scope=dict(prev.scope),
         topic=inherited_topic,
-        modifiers={**prev.modifiers, **curr.modifiers},
+        modifiers=_merge_modifiers(prev.modifiers, curr.modifiers),
         raw_params=_merge_raw(prev.raw_params, curr.raw_params, topic_inherited=topic_inherited),
         intent_type="refine_filter",
     )
@@ -579,7 +606,7 @@ def _merge_change_year(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
         dataset_explicit=prev.dataset_explicit,
         scope=dict(prev.scope),
         topic=list(prev.topic),
-        modifiers={**prev.modifiers, **curr.modifiers},
+        modifiers=_merge_modifiers(prev.modifiers, curr.modifiers),
         raw_params=_merge_raw(prev.raw_params, curr.raw_params, topic_inherited=True),
         intent_type="change_year",
     )
@@ -616,7 +643,7 @@ def _merge_change_scope(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
         dataset_explicit=prev.dataset_explicit,
         scope=dict(curr.scope) if curr.scope else dict(prev.scope),
         topic=inherited_topic,
-        modifiers={**prev.modifiers, **curr.modifiers},
+        modifiers=_merge_modifiers(prev.modifiers, curr.modifiers),
         raw_params=_merge_raw(prev.raw_params, curr.raw_params, topic_inherited=topic_inherited),
         intent_type="change_scope",
     )
@@ -640,7 +667,7 @@ def _merge_change_dataset(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
         dataset_explicit=True,
         scope=dict(curr.scope) if curr.scope else dict(prev.scope),
         topic=inherited_topic,
-        modifiers={**inherited_mods, **curr.modifiers},
+        modifiers=_merge_modifiers(inherited_mods, curr.modifiers),
         raw_params=_merge_raw(prev.raw_params, curr.raw_params, topic_inherited=topic_inherited),
         intent_type="change_dataset",
     )
@@ -669,7 +696,7 @@ def _merge_contextual_requery(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
         dataset_explicit=prev.dataset_explicit,
         scope=dict(prev.scope),
         topic=merged_topic,
-        modifiers={**prev.modifiers, **curr.modifiers},
+        modifiers=_merge_modifiers(prev.modifiers, curr.modifiers),
         raw_params=_merge_raw(prev.raw_params, curr.raw_params, topic_inherited=topic_inherited),
         intent_type="contextual_requery",
     )
@@ -774,6 +801,26 @@ def detect_and_merge(
     merged_frame = FollowupMerger.merge(previous_frame, current_frame, intent)
     merged_params = params_from_frame(merged_frame)
     _purge_stale_inherited_params(merged_params, previous_frame, current_frame)
+
+    # FRAME-LEAK-ESTADO: si el turno actual fija un estado explícito que NO es la
+    # familia de oportunidad (ej. "y los cerrados?"), el usuario abandonó la
+    # búsqueda de oportunidades. El framing heredado (intent_type=opportunity_search)
+    # debe soltarse: si sobrevive, la invariante de oportunidad aguas abajo re-impone
+    # oferta_abierta y PURGA el estado pedido, devolviendo silenciosamente a
+    # 'abiertos'. _merge_modifiers ya limpió el cluster de estado en modifiers; aquí
+    # cae el intent de oportunidad que lo re-derivaría. Regla: explícito vence heredado.
+    _curr_estado_explicit = any(
+        current_frame.modifiers.get(k)
+        for k in ("estado", "estado_contrato",
+                  "estado_de_apertura_del_proceso", "estado_del_procedimiento")
+    )
+    _curr_open_family = current_frame.modifiers.get("estado_family") == "oferta_abierta"
+    if _curr_estado_explicit and not _curr_open_family:
+        if merged_params.get("intent_type") == "opportunity_search":
+            merged_params.pop("intent_type", None)
+        merged_params.pop("estado_family", None)
+        merged_params.pop("opportunity_mode", None)
+        merged_params.pop("filter_active_only", None)
 
     # B4 — FOLLOWUP-NIT-LEAK-001: purga herencia en contratista-only pivot
     if _is_contratista_only_query(current_frame):
