@@ -29,7 +29,7 @@ NONEMPTY_WHERE_KEYS: frozenset[str] = frozenset({
     "entidad_resolved", "entidad_like",
     "contratista",
     # topic
-    "objeto", "objeto_or",
+    "objeto", "objeto_or", "objeto_phrases",
     # estado
     "estado", "estado_de_apertura_del_proceso", "estado_del_procedimiento",
     "estado_contrato", "estado_contrato_adicional",
@@ -197,7 +197,11 @@ class SoQLBuilder:
             order_expr = f"{spec.value} DESC, {spec.date} DESC"
         else:
             order_expr = f"{spec.date} DESC, {spec.value} DESC"
-        limit = int(params.get("limit", 50))
+        # Commit 5: con frase recall-first ampliamos el POOL de candidatos (no el
+        # display, que recorta aguas abajo). Permite que el validador (Commit 6) vea
+        # los positivos hoy perdidos sin que LIMIT los trunque.
+        candidate_limit = 200 if (params.get("objeto_phrases")) else 50
+        limit = int(params.get("limit", candidate_limit))
         offset = int(params.get("offset", 0))
         limit_clause = f"LIMIT {limit}"
         if offset:
@@ -312,6 +316,19 @@ class SoQLBuilder:
             for term in objeto_or:
                 term_conditions.extend(self._object_term_conditions(spec, str(term)))
             where_clauses.append(f"({' OR '.join(term_conditions)})")
+
+        # Phrase recall-first (Commit 5): cada PhraseSpec en objeto_phrases aporta una
+        # cláusula amplia = anclas co-ocurrentes en el MISMO campo, OR entre campos.
+        # Subsume la frase exacta (substring) sin rama redundante. NO cruza objeto con
+        # descripcion. La clasificación direct/probable y el ranking son Commit 6.
+        from app.core.phrase_catalog import spec_for_canonical
+
+        for canonical in params.get("objeto_phrases") or []:
+            phrase_spec = spec_for_canonical(str(canonical))
+            if phrase_spec:
+                clause = self._phrase_recall_conditions(spec, phrase_spec)
+                if clause:
+                    where_clauses.append(clause)
 
         if params.get("valor_min") is not None:
             where_clauses.append(f"{spec.value} >= {int(params['valor_min'])}")
@@ -470,6 +487,23 @@ class SoQLBuilder:
             else:
                 conditions.append(self._accent_fold_like(spec.object_name, esc))
         return conditions
+
+    def _phrase_recall_conditions(self, spec: DatasetSpec, phrase_spec) -> str:
+        """Cláusula recall-first de una frase: anclas co-ocurrentes en el MISMO campo.
+
+        ( (objeto LIKE %a1% AND objeto LIKE %a2%) OR (desc LIKE %a1% AND desc LIKE %a2%) )
+        Substring → cubre singular y plural y subsume la frase exacta. Misión: traer
+        candidatos; la precisión fina (gap/orden/validador) es Commit 6.
+        """
+        anchors = [self._escape(a) for a in phrase_spec.ordered_anchors]
+        if not anchors:
+            return ""
+        fields = [spec.object_name] + ([spec.description] if spec.description else [])
+        field_clauses = [
+            "(" + " AND ".join(self._accent_fold_like(field, a) for a in anchors) + ")"
+            for field in fields
+        ]
+        return "(" + " OR ".join(field_clauses) + ")"
 
     @staticmethod
     def _accent_fold_expr(expr: str) -> str:

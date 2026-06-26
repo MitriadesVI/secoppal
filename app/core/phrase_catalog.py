@@ -31,6 +31,14 @@ PHRASE_CATALOG: tuple[PhraseSpec, ...] = (
 )
 
 
+_CANONICAL_TO_SPEC: dict[str, PhraseSpec] = {s.canonical: s for s in PHRASE_CATALOG}
+
+
+def spec_for_canonical(canonical: str) -> PhraseSpec | None:
+    """Resuelve un canonical de `objeto_phrases` a su PhraseSpec (anclas/variantes)."""
+    return _CANONICAL_TO_SPEC.get(canonical)
+
+
 def _match_spec(words: list[str], spec: PhraseSpec) -> tuple[int, int] | None:
     """Span (inicio, fin) del primer match de `spec` en `words`, o None.
 

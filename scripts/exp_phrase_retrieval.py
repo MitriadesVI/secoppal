@@ -28,6 +28,8 @@ import sys
 import unicodedata
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # repo root (para app.*)
+
 FIXDIR = Path(__file__).resolve().parents[1] / "tests/fixtures/phrase_retrieval"
 RECALL_GATE = 0.95
 PRECISION_GATE = 0.95
@@ -49,7 +51,24 @@ def baseline_tokens(row: dict) -> bool:
     return "MANUALES" in blob(row)
 
 
-PREDICATES = {"baseline_tokens": baseline_tokens}
+def anchor_cooccurrence(row: dict) -> bool:
+    """Commit 5: simula el WHERE recall-first (anclas co-ocurrentes mismo campo).
+
+    Espera recall ALTO (recupera los hoy perdidos) y precision MENOR (entra ruido).
+    Bajar el ruido es trabajo del validador en Commit 6 — no de este predicado.
+    """
+    from app.core.phrase_catalog import PHRASE_CATALOG
+    from app.core.retrieval_text import normalize_retrieval_text
+
+    anchors = PHRASE_CATALOG[0].ordered_anchors
+    for field in ("objeto", "descripcion"):
+        text = normalize_retrieval_text(row.get(field, ""))
+        if all(a in text for a in anchors):
+            return True
+    return False
+
+
+PREDICATES = {"baseline_tokens": baseline_tokens, "anchor_cooccurrence": anchor_cooccurrence}
 
 
 def active_snapshot() -> Path:
