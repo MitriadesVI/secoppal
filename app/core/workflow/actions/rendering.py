@@ -91,24 +91,9 @@ def format_response(state: State, formatter: Formatter) -> State:
     suggestions = state.get("suggestions", [])
     approximate = state.get("total_count_approximate", False)
 
-    # Commit 6B: validar y rankear candidatos por frase ANTES de formatear, para que
-    # el display (25) muestre direct>probable>weak y no el ruido del WHERE recall-first.
-    # Regla de seguridad: si TODO queda none, no destruir recall — mostrar el pool.
-    rows_to_format = state["results"]
-    phrase_counts = None
-    unvalidated_candidates: list[dict] = []
-    objeto_phrases = params.get("objeto_phrases") or []
-    if objeto_phrases and rows_to_format:
-        from app.core.phrase_catalog import spec_for_canonical
-        from app.core.phrase_ranking import rank_by_phrase
-
-        specs = [s for s in (spec_for_canonical(str(c)) for c in objeto_phrases) if s]
-        if specs:
-            ranked, phrase_counts, unvalidated_candidates = rank_by_phrase(
-                rows_to_format, specs, state["dataset_id"]
-            )
-            if ranked:
-                rows_to_format = ranked
+    # Commit 6D: rendering SOLO presenta. El orden ya lo decidió `rank_results`
+    # (acción previa); aquí solo consumimos ranked_results y el formatter corta a 25.
+    rows_to_format = state.get("ranked_results", state["results"])
 
     response, rows = formatter.format_for_channel(
         rows_to_format, state["dataset_id"], state["channel"],
@@ -125,12 +110,7 @@ def format_response(state: State, formatter: Formatter) -> State:
             "Cambie a orden por fecha mas reciente.\n\n"
         )
         response = note + response
-    return _with_timing(
-        state, "format_ms", start,
-        formatted_response=response, formatted_rows=rows, phrase_counts=phrase_counts,
-        # cuarentena: los none NO se borran; quedan para trace/backfill/análisis futuro.
-        unvalidated_candidates=unvalidated_candidates,
-    )
+    return _with_timing(state, "format_ms", start, formatted_response=response, formatted_rows=rows)
 
 
 @action(reads=["clarification_reason", "timings_ms"], writes=["formatted_response", "formatted_rows", "timings_ms"])

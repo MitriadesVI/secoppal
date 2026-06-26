@@ -40,7 +40,6 @@ import time
 from typing import TYPE_CHECKING
 
 from app.core.conversation_store import is_followup
-from app.core.relevance import RelevanceScorer
 from app.core.response_policy import build_advisor_response
 from app.core.workflow.graph import build_application
 from app.core.workflow.helpers import _elapsed_ms
@@ -154,28 +153,10 @@ def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
                 except Exception:
                     pass  # ecosystem is best-effort
 
-    # ── Relevance scoring (Sprint 6 Fase 1 — BM25 post-ranking) ───
-    resolved = state.get("resolved_params", {})
-    objeto_terms = resolved.get("objeto", []) or []
-    if objeto_terms and len(state.get("results", [])) > 0:
-        try:
-            scorer = RelevanceScorer()
-            topic_flat: list[str] = []
-            for t in objeto_terms:
-                if isinstance(t, list):
-                    topic_flat.extend(t)
-                else:
-                    topic_flat.append(str(t))
-            if len(topic_flat) >= 3:
-                field = "objeto_del_contrato" if state.get("dataset_id") == "jbjy-vk9h" else "nombre_del_procedimiento"
-                scored = scorer.score_rows(topic_flat, state["results"], field=field)
-                state = state.update(
-                    results=[r for r, _ in scored],
-                    relevance_classes=[s.classification for _, s in scored],
-                    relevance_scores=[s.bm25_score for _, s in scored],
-                )
-        except Exception as exc:
-            logger.warning("relevance scoring failed: %s", exc)
+    # NOTA (Commit 6D): el BM25 post-ranking vivía AQUÍ pero corría DESPUÉS de que
+    # format_response ya había congelado formatted_rows (bug RELEVANCE-RANKING-AFTER-
+    # FORMAT-001) → nunca afectaba el display. El ranking real ahora es la acción
+    # `rank_results`, ANTES de format_response. Este bloque se eliminó a propósito.
 
     advisor_response = build_advisor_response({
         "user_query": ctx.user_query,
