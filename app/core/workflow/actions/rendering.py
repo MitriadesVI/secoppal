@@ -90,8 +90,25 @@ def format_response(state: State, formatter: Formatter) -> State:
     universe_insights = state.get("universe_insights")
     suggestions = state.get("suggestions", [])
     approximate = state.get("total_count_approximate", False)
+
+    # Commit 6B: validar y rankear candidatos por frase ANTES de formatear, para que
+    # el display (25) muestre direct>probable>weak y no el ruido del WHERE recall-first.
+    # Regla de seguridad: si TODO queda none, no destruir recall — mostrar el pool.
+    rows_to_format = state["results"]
+    phrase_counts = None
+    objeto_phrases = params.get("objeto_phrases") or []
+    if objeto_phrases and rows_to_format:
+        from app.core.phrase_catalog import spec_for_canonical
+        from app.core.phrase_ranking import rank_by_phrase
+
+        specs = [s for s in (spec_for_canonical(str(c)) for c in objeto_phrases) if s]
+        if specs:
+            ranked, phrase_counts = rank_by_phrase(rows_to_format, specs, state["dataset_id"])
+            if ranked:
+                rows_to_format = ranked
+
     response, rows = formatter.format_for_channel(
-        state["results"], state["dataset_id"], state["channel"],
+        rows_to_format, state["dataset_id"], state["channel"],
         params=params, total_count=total_count, universe_insights=universe_insights,
         suggestions=suggestions, total_count_approximate=approximate,
     )
@@ -105,7 +122,10 @@ def format_response(state: State, formatter: Formatter) -> State:
             "Cambie a orden por fecha mas reciente.\n\n"
         )
         response = note + response
-    return _with_timing(state, "format_ms", start, formatted_response=response, formatted_rows=rows)
+    return _with_timing(
+        state, "format_ms", start,
+        formatted_response=response, formatted_rows=rows, phrase_counts=phrase_counts,
+    )
 
 
 @action(reads=["clarification_reason", "timings_ms"], writes=["formatted_response", "formatted_rows", "timings_ms"])
