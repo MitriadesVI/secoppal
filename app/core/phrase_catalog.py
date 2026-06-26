@@ -16,6 +16,7 @@ sobre FILAS (validador tolerante) es Commit 4.
 """
 from __future__ import annotations
 
+from app.core.phrase_match import find_subseq, locate_anchors
 from app.core.phrase_spec import PhraseSpec
 from app.core.retrieval_text import normalize_retrieval_text
 
@@ -30,49 +31,21 @@ PHRASE_CATALOG: tuple[PhraseSpec, ...] = (
 )
 
 
-def _find_subseq(words: list[str], seq: list[str]) -> tuple[int, int] | None:
-    """Primera ocurrencia de `seq` como tokens consecutivos; (inicio, fin) inclusive."""
-    n, m = len(words), len(seq)
-    for i in range(n - m + 1):
-        if words[i : i + m] == seq:
-            return (i, i + m - 1)
-    return None
-
-
-def _find_anchors(words: list[str], anchors: tuple[str, ...], max_gap: int) -> tuple[int, int] | None:
-    """Anclas en orden, con hasta `max_gap` tokens entre cada par consecutivo.
+def _match_spec(words: list[str], spec: PhraseSpec) -> tuple[int, int] | None:
+    """Span (inicio, fin) del primer match de `spec` en `words`, o None.
 
     `max_gap_tokens` = nº máximo de tokens intermedios entre anclas vecinas tras
     normalizar. "manual de contratacion" → gap 1 ('de'); "manual interno de
     contratacion" → gap 2 ('interno de').
     """
-    n = len(words)
-    for start in range(n):
-        if words[start] != anchors[0]:
-            continue
-        pos, ok = start, True
-        for anchor in anchors[1:]:
-            nxt = -1
-            for j in range(pos + 1, min(pos + 2 + max_gap, n)):
-                if words[j] == anchor:
-                    nxt = j
-                    break
-            if nxt < 0:
-                ok = False
-                break
-            pos = nxt
-        if ok:
-            return (start, pos)
-    return None
-
-
-def _match_spec(words: list[str], spec: PhraseSpec) -> tuple[int, int] | None:
-    """Span (inicio, fin) del primer match de `spec` en `words`, o None."""
     for variant in spec.variants:
-        span = _find_subseq(words, variant.split())
+        span = find_subseq(words, variant.split())
         if span:
             return span
-    return _find_anchors(words, spec.ordered_anchors, spec.max_gap_tokens)
+    loc = locate_anchors(words, list(spec.ordered_anchors))
+    if loc and loc[2] <= spec.max_gap_tokens:
+        return (loc[0], loc[1])
+    return None
 
 
 def detect_phrases(text: str) -> tuple[list[str], str]:
