@@ -5,7 +5,27 @@
 **Sistema:** SECOPPAL — asistente conversacional para consulta y análisis de contratación pública SECOP II  
 **Propósito del documento:** dejar una descripción comprensible para un tercero técnico o funcional sobre qué hace el sistema, cómo está construido, qué archivos lo componen, qué decisiones de arquitectura se han tomado, qué bugs relevantes se han detectado y cuál es el estado actual del proyecto.
 
-## Estado canónico actual — 2026-06-13
+## Estado canónico actual — 2026-06-26
+
+- **Main:** `f683c2b` — mergeada la **capa de retrieval phrase-aware** (ADR-036, tag
+  `semantic-retrieval-v1-2026-06`). Arco de 12 commits.
+- **Suite:** 1714 passed, 23 xfailed.
+- **Qué cambió:** el significado de la consulta sobrevive de punta a punta. Pipeline nuevo:
+  `parse → PhraseSpec/objeto_phrases → WHERE recall-first → candidate_limit 200 → phrase_validator
+  → rank_results (nivel + BM25) → display_limit 25 → formatter`.
+- **Resultado (manual de contratación):** candidate recall 5/100→100/100, validación 96/100,
+  Precision@25 52%→100%. Reutilizable: un concepto = un `PhraseSpec` (probado con "aire
+  acondicionado"/SIP-049).
+- **Bug histórico resuelto:** `RELEVANCE-RANKING-AFTER-FORMAT-001` — el BM25 reordenaba después del
+  formateo y nunca afectaba el display; ahora hay etapa formal `rank_results` antes del render.
+- **Docs:** ADR-036 en `decisions_log.md`; informe `docs/SEMANTIC_RETRIEVAL_SPRINT_2026-06.md`;
+  runbook `docs/PHRASE_RETRIEVAL_RUNBOOK.md`.
+- **Próximo foco:** día de dogfooding (40-50 consultas no diseñadas), corpus v2 (4 falsos negativos),
+  feature "por qué apareció este resultado".
+
+> El bloque siguiente (2026-06-13) queda como histórico.
+
+## Estado canónico — 2026-06-13 (histórico)
 
 - **Branch:** `feature/analytics-modular-registry` (main tiene Radar v1.0 mergeado)
 - **Suite:** 1452 collected (~1425 passed, 23 xfailed)
@@ -195,7 +215,7 @@ Responsabilidades actuales:
   3. `handle_pagination` ("más", "siguiente", números de página)
   4. `handle_suggestion_selection` (selección 1-5 de sugerencias)
   5. `handle_direct_lookup` (ID CO1.XXX.YYY, URL, referencia de entidad)
-  6. `handle_normal_flow` (pipeline Burr completo: parse → plan → execute → observe → render)
+  6. `handle_normal_flow` (pipeline Burr completo: parse → plan → execute → observe → **rank** → render)
 - Mantener shim de backward-compat para tests legacy (re-exports de actions/helpers).
 
 Puntos relevantes:

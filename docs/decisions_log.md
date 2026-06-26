@@ -1541,3 +1541,78 @@ Procesos sin id ni referencia no se pueden seguir (`follow` devuelve False).
 **Tests:** `tests/test_radar_follows.py` (10 passed) — follow idempotente/sin-clave/aislado por
 owner, unfollow, refresh (baseline silenciosa, cambio de estado, cambio de valor, sin cambios,
 missing) y que el scheduler no corre el radar follows como búsqueda.
+
+## ADR-036: Phrase-aware retrieval — recuperación amplia, validación local y ranking previo al render
+
+**Fecha:** 2026-06-26 · **Estado:** Accepted · **Tag:** `semantic-retrieval-v1-2026-06`
+
+**Contexto:** Para "elaboración o actualización de **manuales de contratación** en 2024" el
+sistema mostraba 138 resultados de los que **solo 5 eran del tema** (precisión ~3.6%) y perdía
+95 de 100 contratos relevantes conocidos (recall ~5%). El diagnóstico por capas reveló que el
+problema NO era comprensión sino aguas abajo, en cinco puntos encadenados: (1) el extractor
+partía "manual de contratación" en tokens y descartaba "contratación", buscando `%MANUALES%`
+plural suelto → perdía todos los singulares y traía cualquier "manuales de [otra cosa]"; (2) el
+`WHERE` estricto eliminaba documentos pertinentes antes de que ninguna capa los viera —
+**el ranking no rescata filas que nunca llegaron**; (3) `LIMIT 50` con `ORDER BY fecha DESC`
+ocultaba 52 de 100 positivos conocidos (medido live: 48/100 → 100/100 al subir a 200); (4) el
+BM25 histórico corría **después** de que el formatter ya había congelado las filas, así que
+nunca afectaba el display (`RELEVANCE-RANKING-AFTER-FORMAT-001`) — esto explica por qué la
+democión AND→OR, que confiaba en un BM25 posterior, nunca recuperó precisión visible; (5) el
+texto de SECOP es sucio (saltos de línea, puntuación) y la frase exacta literal perdía positivos
+por formato, no por semántica. Validado además con A/B de juez en sprints previos: el extractor
+LLM NO sube precisión → el cuello no es comprensión. Ver [[project_secoppal_arquitectura_y_eval]].
+
+**Decisión:** Una capa **phrase-aware** donde el significado sobrevive de la consulta al display:
+`parse → preservar PhraseSpec (objeto_phrases) → WHERE recall-first → candidate pool → validación
+local → ranking formal → display`. Reglas que la componen, cada una protegida por tests:
+- **Frase como unidad:** `phrase_catalog` (datos) + `detect_phrases` consume la frase ANTES del
+  scrub de tokens y la emite como `objeto_phrases` (JSON-safe); el `WHERE` la consume.
+- **Recall-first con anclas en el MISMO campo:** `(obj LIKE %a1% AND obj LIKE %a2%) OR (desc …)`;
+  substring (cubre singular/plural), subsume la frase exacta sin rama redundante. Nunca cruza
+  objeto con descripción.
+- **`candidate_limit` (200) ≠ `display_limit` (25):** el pool de fetch se amplía solo con frase;
+  el display recorta aguas abajo, jamás se filtra al builder.
+- **Validación local tolerante** (`phrase_validator`): normaliza (tildes/`\n`/puntuación) y
+  clasifica `direct/probable/weak/none` con gate de mismo-campo y orden.
+- **Ranking formal ANTES del render** (`rank_results`, acción del grafo): orden = nivel
+  (direct>probable>weak) → BM25 **dentro** del nivel → orden original. `rendering.py` solo
+  presenta y corta a 25.
+- **`none` en cuarentena**, no borrado (auditable; falso negativo no desaparece).
+- **Conceptos nuevos = una entrada de datos** (`PhraseSpec`), cero `if` especial (probado con
+  "aire acondicionado" / SIP-049, live 25/25 direct).
+- **Header determinístico** (no LLM) que distingue total_count / candidate_count / validated_count.
+
+**Alternativas descartadas:** (a) Solo `LIKE` de frase exacta — pierde "manual interno de
+contratación" y los rotos por `\n`. (b) Tokenizar y unir con AND — el bug original. (c) Arreglarlo
+solo con morfología (`morphological_variants`) — eso es forma superficial, no detección de unidad;
+además ese archivo ya mezcla mal morfología + semántica de dominio. (d) Mejorar el ranking antes
+que el recall — inútil: el ranking no rescata filas ausentes. (e) LLM como solución principal —
+A/B con juez mostró que no sube precisión; +4s latencia. (f) Borrar definitivamente los `none` —
+perdía 4 positivos en silencio. (g) Un solo `limit` para consulta y pantalla — `LIMIT 50` mataba
+52 positivos.
+
+**Consecuencias:** Positivas: recall 5/100→100/100 (pool), validación 96/100, Precision@25
+52%→100% (dev); arquitectura **reutilizable** (un concepto = un PhraseSpec); explicación auditable;
+**punto formal único** para futuros rerankers (BGE/spaCy) que SÍ llegarán a pantalla. Costos: pool
+descargado mayor (200 vs 50); validación local por fila; **4% de falsos negativos v1** (4 positivos
+en cuarentena, congelados para corpus v2, NO se tunean mirando holdout v1); conceptos con jerga/
+siglas (PAE, POT) requieren enriquecimiento curado (aliases/exclusiones), fuera de PhraseSpec;
+el pool de 200 puede saturarse en conceptos de baja selectividad; métricas deben reportarse
+**separadas por etapa** (entrar al pool ≠ sobrevivir validación ≠ aparecer en página 1).
+
+**Invariantes que no deben romperse** (este ADR es la protección contra futuras "simplificaciones"
+que vuelvan a poner `LIMIT 50` o el ranking dentro del formatter): `candidate_count = validated +
+unvalidated`; `validated = direct + probable + weak`; `displayed ≤ validated`; `candidate_limit ≠
+display_limit`; el ranking ocurre ANTES del formatting; anclas solo en el mismo campo; `none` no
+significa irrelevante definitivo.
+
+**Guard de precedencia (no ∅):** `phrase_catalog` es dueño de sus frases por orden de ejecución
+(detecta y consume antes que `KNOWN_BIGRAMS`, y el `WHERE` consume `objeto_phrases`). El guard
+pasó de "no solapar" a "el catálogo detecta y consume" — permite migrar frases legacy.
+
+**Tests:** 11 archivos nuevos (`test_phrase_spec`, `_retrieval_text`, `_objeto_phrases`,
+`_phrase_validator`, `_soql_builder_phrase`, `_candidate_limit_wiring`, `_phrase_ranking`,
+`_rank_results`, `_phrase_catalog_collisions`, `_sip049_aire_acondicionado`, `_phrase_presentation`)
++ benchmark offline reproducible (`scripts/exp_phrase_retrieval.py`, corpus silver con split
+dev/holdout). Suite 1714 passed. Informe completo: `docs/SEMANTIC_RETRIEVAL_SPRINT_2026-06.md`.
+Para extender: `docs/PHRASE_RETRIEVAL_RUNBOOK.md`.
