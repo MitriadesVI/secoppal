@@ -38,6 +38,16 @@ if TYPE_CHECKING:
 DATASET_PROCESOS = "procesos"
 DATASET_CONTRATOS = "contratos"
 
+# Dual-dataset: el usuario pide procesos Y contratos en el mismo turno.
+# Conjunción explícita ("contratos o procesos", "procesos y contratos") o un
+# marcador de cobertura total ("ambos", "todo lo relacionado con").
+_DUAL_DATASET_PATTERNS = (
+    r"\bcontratos?\s+(?:o|y|e)\s+procesos?\b",
+    r"\bprocesos?\s+(?:o|y|e)\s+contratos?\b",
+    r"\bambos\b",
+    r"\btodo lo relacionado\b",
+)
+
 # Values are EXACT strings from SECOP — verified via discover_secop.py
 MODALIDAD_KEYWORDS = {
     "minima cuantia": "Mínima cuantía",
@@ -388,6 +398,16 @@ class QueryRouter:
         })
         dataset_explicit = any(kw in normalized for kw in _DATASET_KEYWORDS)
         if dataset_explicit:
+            params["dataset_explicit"] = True
+
+        # ── 1.b Dataset SCOPE: "procesos o contratos" / "ambos" → los DOS ───
+        # El usuario pide AMBOS conjuntos. `dataset` sigue ESCALAR (primario =
+        # procesos, el universo más amplio) por compatibilidad; el ejecutor (Commit 2)
+        # corre cada hijo con su propio {"dataset": ...} y agrupa. dataset_scope NO
+        # debe llegar al SoQLBuilder: es señal de orquestación, no de filtro.
+        if any(re.search(p, normalized) for p in _DUAL_DATASET_PATTERNS):
+            params["dataset_scope"] = ["procesos", "contratos"]
+            params["dataset"] = "procesos"
             params["dataset_explicit"] = True
 
         # ── 1.5. NIT detection (shape-based, before year/amount stripping) ──
