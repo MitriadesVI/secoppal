@@ -1,0 +1,55 @@
+# Generado por scripts/build_phrase_corpus.py — NO editar a mano.
+query_original: "contratos para elaboracion o actualizacion de manuales de contratacion en 2024"
+strict_query_actions: [elaboracion, actualizacion]
+curated_action_expansions: [ajuste]
+
+provenance:
+  dataset_id: jbjy-vk9h
+  retrieved_at: 2026-06-26T03:08:44+00:00
+  year_filter: "2024"
+  generator_version: 1
+  deduplication_key: referencia_del_contrato
+  snapshot: manual_contratacion_2024_v1.jsonl
+  row_count: 146
+  content_sha256: 7e05de123aa0459381f2d0ee0bf5ea6eee9f96978f43bdbf9e12544549c18624
+
+coverage_status: high_confidence
+synonym_probe: no_additional_hits_found  # red lexica reglamento/estatuto/regimen/politica -> 0 reales 2024
+
+# Poblacion 1: lo que SECOPPAL devuelve HOY de la query estricta real (defecto en produccion).
+live_baseline:
+  population: secop_query_2024_strict   # (elaboracion OR actualizacion) AND MANUALES
+  known_relevant: 100     # silver core (solo elaboracion/actualizacion)
+  returned: 138
+  true_positives: 5
+  false_positives: 133
+  false_negatives: 95
+  candidate_recall: 0.0500     # 5/100
+  candidate_precision: 0.0362   # 5/138
+
+# Poblacion 2: el fixture inmutable. La matriz se calcula SOLO sobre estas filas.
+offline_fixture:
+  rows: 146
+  core_positives: 100
+  expansion_positives: 4    # solo via 'ajuste'; NO entran al gate estricto
+  negatives: 42               # 16 anchor_fp + 26 hard_negatives
+  positives_by_match_type:
+    dirty_newline: 3
+    exact_plural: 5
+    exact_singular: 91
+    intercalated: 5
+  baseline_tokens_offline:        # predicado actual recalculado sobre el fixture
+    tp_core: 5
+    fn_core: 95
+    fp: 18
+    tn: 24
+    # invariantes (gate duro del generador): tp_core+fn_core==core_positives ; fp+tn==negatives
+  split:
+    development: {core: 76, expansion: 3, negatives: 33}
+    holdout:     {core: 24, expansion: 1, negatives: 9}
+
+gates_offline:
+  critical_format_variants: 1.0      # dirty_newline/intercalated/singular/plural deben PASAR
+  anchor_false_positive: rejected    # todos los anchor_fp deben quedar fuera
+  candidate_pool_max: 400
+  # los % globales del holdout son INFORMATIVOS hasta ampliar el corpus (9 negativos = volatil)
