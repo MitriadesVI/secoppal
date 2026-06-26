@@ -100,7 +100,10 @@ def main() -> int:
         for split in ("dev", "holdout"):
             m = metrics(rows, pred, split)
             ok = m["recall"] >= RECALL_GATE and m["precision"] >= PRECISION_GATE
-            print(f"  {split:8} core={m['core']:3} neg={m['neg']:3} | TP={m['tp']:3} FP={m['fp']:3} FN={m['fn']:3} | "
+            # el benchmark es el árbitro: declara SIEMPRE su scope, población y predicado.
+            print(f"  evaluation_scope=offline_{split:7} predicate={name} "
+                  f"rows={m['core'] + m['neg']:3} positives={m['core']:3} negatives={m['neg']:3} | "
+                  f"TP={m['tp']:2} FP={m['fp']:2} FN={m['fn']:2} | "
                   f"recall={m['recall']:6.2%} precision={m['precision']:6.2%}  [{'PASS' if ok else 'FAIL'}]")
             if split == "holdout" and not ok:
                 holdout_ok = False
@@ -112,6 +115,9 @@ def main() -> int:
                 crit_ok = False
         print()
 
+    print("NOTA: live_baseline (scope=live_full: recall 5.00% / precision 3.62%) vive en el")
+    print("      manifest — es población y predicado DISTINTOS de estos splits offline.")
+    print("      No comparar 5.00/3.62 con 5.26/4.17 como si fueran la misma métrica.\n")
     print(f"Gates: recall>=%.0f%% y precision>=%.0f%% en holdout; crítics PASS." % (RECALL_GATE*100, PRECISION_GATE*100))
     passed = holdout_ok and crit_ok
     if not args.enforce_gates:
