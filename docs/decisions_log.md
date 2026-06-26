@@ -1666,3 +1666,54 @@ preventivo.
 **Tests:** `tests/test_frame_leak_canary.py` (5 vectores: entidad/ciudad/fecha/dataset/estado;
 el de estado sella esta decisión). Suite 1719 passed. Sin cambios a phrase-retrieval/ranking/
 dual-dataset.
+
+## ADR-038: Ejecución agrupada sobre ambos datasets (procesos + contratos)
+
+**Fecha:** 2026-06-26 · **Estado:** Accepted
+
+> Rescatado del prototipo `claude/trusting-heisenberg` (ver ADR-037 para el contexto de la
+> colisión de ADRs). Solo se portó dual-dataset; su phrase-first se descartó por redundante con
+> `semantic-retrieval-v1` (ADR-036). Reimplementado sobre la arquitectura actual de main, no
+> fusionado. Construido en 4 commits por etapas (`4f15a04` parsing, `7e2da30` ejecución,
+> `c2b6086` presentación, `542ac72` conversación).
+
+**Contexto:** "procesos **o** contratos de automatización" colapsaba a UN solo dataset (contratos)
+y perdía la mitad del pedido — el "o" no existía en el modelo. Procesos (`p6dx-8zbt`) y contratos
+(`jbjy-vk9h`) son recursos de Socrata SEPARADOS, con esquemas distintos (estados, fechas, campos):
+no se pueden `UNION` en un SoQL, y son **momentos jurídicos distintos** (un proceso es una
+convocatoria; un contrato es una adjudicación) que no deben mezclarse en un ranking único.
+
+**Decisión:** **Una consulta explícita sobre ambos datasets se ejecuta como dos búsquedas
+HERMANAS, con validación, ranking, conteos y presentación independientes.**
+- **Parsing:** una conjunción/cobertura ("procesos o contratos", "ambos") marca
+  `dataset_scope=["procesos","contratos"]`; `dataset` sigue escalar (primario=procesos) por
+  compatibilidad. `dataset_scope` es señal de orquestación, NO llega al `SoQLBuilder`.
+- **Ejecución:** `rank_candidate_pool` se extrajo como núcleo de ranking ÚNICO (un algoritmo, dos
+  consumidores: la acción `rank_results` para el primario y `execute_dataset_child` para el
+  secundario). `params_for_dataset` purga los campos de estado exclusivos del otro esquema (dual
+  frame-leak). El primario sale del estado del pipeline (NO se re-ejecuta); el secundario corre por
+  un helper PURO (sin persistir, sin follow-up, sin formatear, sin recursión del workflow).
+- **Presentación:** `Formatter.format_grouped` expresa cada grupo por separado con los campos de SU
+  dataset; SIN suma global de conteos; sugerencias una sola vez. `empty` ≠ `error`; fallo parcial
+  conserva el grupo exitoso.
+- **Conversación:** `dataset_scope` se hereda en follow-ups compatibles (año/orden conservan
+  "ambos"); un turno con dataset explícito lo suelta ("solo procesos"/"ahora contratos"), con
+  **dual-collapse** para heredar el tema; "más" tras dual pregunta cuál grupo.
+
+**Alternativas descartadas:** Convertir `dataset` en lista en todo el sistema (invasivo, rompería
+el builder y mil sitios). Mezclar filas en un único ranking (procesos y contratos no son
+comparables). Ejecutar recursivamente el workflow completo para el secundario (doble persistencia/
+follow-up/observer, traces incoherentes). Tratar "ambos" como contratos y sugerir cambiar a procesos
+(el bug original). Fallar toda la respuesta si un solo dataset hace timeout (all-or-nothing).
+
+**Consecuencias:** El usuario por fin puede pedir ambos universos en un turno. Cada grupo tiene sus
+conteos honestos (entran ≠ validan ≠ muestran), sin sumar universos heterogéneos. Costo: una
+consulta dual hace 2 fetches (hasta ~400 filas con `candidate_limit=200` por hijo) — NO reducir por
+intuición; medir `latencia_*`/`timeout` por grupo primero. Deuda: paginación real por grupo ("más
+procesos"/"más contratos") es follow-on; hoy "más" solo pregunta cuál. La herencia de `dataset_scope`
+es legacy-raw; cubierta por el seal inverso + dual-collapse + tests, no refactor del frame.
+
+**Tests:** `test_dual_dataset_scope` (parsing/round-trip/herencia), `test_dual_dataset_execution`
+(ejecución/sanitización/fallo parcial/conteos/cero pérdida), `test_dual_dataset_presentation`
+(4 casos de salida + cero re-ejecución del primario), `test_dual_dataset_conversation` (collapse/
+herencia/más). Suite 1744 passed. Cero cambios a `semantic-retrieval-v1`.
