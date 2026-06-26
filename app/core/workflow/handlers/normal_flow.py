@@ -207,18 +207,32 @@ def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
     result["timings_ms"]["advisor_response_ms"] = _elapsed_ms(advisor_start)
     result["timings_ms"]["total_ms"] = _elapsed_ms(ctx.run_started_at)
 
-    # ── Dual-dataset (Commit 2): si el turno pidió ambos, ejecuta el hijo secundario
-    # y agrupa los resultados en `dataset_groups`. NO presenta (eso es Commit 3): aún
-    # no toca `response`. Best-effort: un fallo aquí nunca rompe la respuesta primaria.
+    # ── Dual-dataset (Commit 2+3): ejecuta el hijo secundario, agrupa y PRESENTA.
+    # El primario NO se re-ejecuta (sale del estado del pipeline). Best-effort: un
+    # fallo aquí nunca rompe la respuesta del dataset primario.
     try:
-        from dataclasses import asdict
-
         from app.core.workflow.dual_dataset import build_dataset_groups
         groups = build_dataset_groups(deps, result, state)
         if groups is not None:
-            result["dataset_groups"] = {name: asdict(g) for name, g in groups.items()}
+            response, displayed = deps.formatter.format_grouped(
+                groups, ctx.channel, params=state.get("resolved_params"),
+            )
+            result["response"] = response
+            result["dataset_scope"] = list(groups.keys())
+            result["dataset_groups"] = {
+                name: {
+                    "status": g.status,
+                    "candidate_count": g.counts.get("candidate_count", 0),
+                    "validated_count": g.counts.get("validated_count", 0),
+                    "displayed_count": displayed.get(name, 0),
+                    "candidate_pool_full": g.counts.get("candidate_pool_full", False),
+                    "total_count": g.counts.get("total_count", 0),
+                    "error": g.error,
+                }
+                for name, g in groups.items()
+            }
     except Exception as exc:  # best-effort
-        logger.warning("dual dataset execution failed: %s", exc)
+        logger.warning("dual dataset expansion failed: %s", exc)
 
     # ── Opportunity stage shadow (Fase 2B) — observación, no afecta resultados.
     # Solo procesos + opportunity_search. Best-effort: un fallo aquí nunca

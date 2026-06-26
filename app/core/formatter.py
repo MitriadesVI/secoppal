@@ -270,6 +270,68 @@ class Formatter:
             return self.format_streamlit(rows, params=params, dataset_id=dataset_id, total_count=total_count, universe_insights=universe_insights, suggestions=suggestions, total_count_approximate=total_count_approximate), rows
         return self.format_whatsapp(rows, params=params, dataset_id=dataset_id, total_count=total_count, universe_insights=universe_insights, suggestions=suggestions, total_count_approximate=total_count_approximate), rows
 
+    # Dual-dataset Commit 3: presentación agrupada. Recibe dataset_groups YA
+    # resueltos (DatasetGroupResult). NO construye SoQL, NO ejecuta, NO rankea —
+    # solo expresa. Cada grupo se formatea con los campos de SU dataset; sin suma
+    # global de conteos (procesos y contratos son universos/etapas distintos).
+    _GROUP_META = {
+        "procesos": ("🔎", "Procesos", "p6dx-8zbt"),
+        "contratos": ("📄", "Contratos", "jbjy-vk9h"),
+    }
+
+    @staticmethod
+    def _grouped_card_lines(rows: list[dict]) -> list[str]:
+        lines: list[str] = []
+        for i, row in enumerate(rows, start=1):
+            lines.append(f"{i}. {row['titulo'][:90]}")
+            seg = f"🏛️ {row['entidad']}  💰 {row['valor']}"
+            if row.get("estado"):
+                seg += f"  ⚪ {row['estado']}"
+            fecha = (row.get("fecha") or "")[:10]
+            if fecha:
+                seg += f"  📅 {fecha}"
+            lines.append(seg)
+            if row.get("contratista"):
+                lines.append(f"🤝 {row['contratista']}")
+            lines.append(f"🔗 {row['url']}" if row.get("url") else "🔒 Sin enlace público")
+        return lines
+
+    def format_grouped(self, groups: dict, channel: str, params: dict | None = None) -> tuple[str, dict]:
+        """Devuelve (texto agrupado, displayed_count por grupo)."""
+        if all(getattr(g, "status", "error") == "error" for g in groups.values()):
+            return ("Ni procesos ni contratos respondieron a tiempo. "
+                    "Intenta de nuevo en unos segundos.", {})
+
+        parts = ["📚 Resultados en Procesos y Contratos"]
+        displayed: dict[str, int] = {}
+        for name in ("procesos", "contratos"):
+            g = groups.get(name)
+            if g is None:
+                continue
+            emoji, label, ds_id = self._GROUP_META[name]
+            parts.append(f"\n{emoji} {label}")
+            if g.status == "error":
+                parts.append(f"La consulta de {label.lower()} no respondió a tiempo. "
+                             "Los resultados del otro grupo siguen disponibles.")
+                displayed[name] = 0
+                continue
+            cards = self.to_rows(g.rows, ds_id, params)
+            if not cards:
+                parts.append("No encontré coincidencias.")
+                displayed[name] = 0
+                continue
+            total = int(g.counts.get("total_count", 0) or 0)
+            n = len(cards)
+            coinc = "coincidencia" if total == 1 else "coincidencias"
+            shown = f"la {n} mejor clasificada" if n == 1 else f"las {n} mejor clasificadas"
+            parts.append(f"Encontré {total:,} {coinc}. Te muestro {shown}.")
+            parts.extend(self._grouped_card_lines(cards))
+            displayed[name] = len(cards)
+
+        parts += ["\n💡 Sugerencias", "- Ver solo procesos", "- Ver solo contratos",
+                  "- Ordenar ambos por mayor valor", "- Filtrar ambos por año"]
+        return "\n".join(parts), displayed
+
     @staticmethod
     def _best_date_for_row(item: dict, dataset_id: str) -> tuple[str, str]:
         """Cascada de fechas disponibles en p6dx-8zbt cuando publicación está vacía.
