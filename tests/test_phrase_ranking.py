@@ -19,10 +19,13 @@ def test_invariant_counts_sum_to_total():
         _row("manual de funciones y procesos de contratacion"),  # weak
         _row("pavimentacion de vias"),                        # none
     ]
-    ranked, counts = rank_by_phrase(rows, [SPEC], DS)
+    ranked, counts, unvalidated = rank_by_phrase(rows, [SPEC], DS)
     assert counts["direct"] + counts["probable"] + counts["weak"] + counts["none"] == len(rows)
     assert len(ranked) == counts["direct"] + counts["probable"] + counts["weak"]
-    assert counts["none"] == 1  # la de pavimentacion se descarta
+    assert counts["none"] == 1
+    # cuarentena: el none NO se borra, queda recuperable
+    assert len(unvalidated) == 1
+    assert len(ranked) + len(unvalidated) == len(rows)
 
 
 def test_order_direct_before_weak_then_stable():
@@ -31,7 +34,7 @@ def test_order_direct_before_weak_then_stable():
         _row("manual de contratacion municipal"),                   # direct (idx 1)
         _row("actualizacion del manual de contratacion"),           # direct (idx 2)
     ]
-    ranked, _ = rank_by_phrase(rows, [SPEC], DS)
+    ranked, _, _ = rank_by_phrase(rows, [SPEC], DS)
     objs = [r["_o"] for r in ranked]
     # los dos direct primero, en su orden original; el weak al final
     assert objs[0].startswith("manual de contratacion")
@@ -39,8 +42,9 @@ def test_order_direct_before_weak_then_stable():
     assert "funciones" in objs[2]
 
 
-def test_none_dropped_but_all_none_returns_empty():
+def test_none_quarantined_not_deleted():
     rows = [_row("pavimentacion"), _row("alumbrado publico")]
-    ranked, counts = rank_by_phrase(rows, [SPEC], DS)
+    ranked, counts, unvalidated = rank_by_phrase(rows, [SPEC], DS)
     assert ranked == []
-    assert counts["none"] == 2  # el caller (rendering) aplica el fallback de no-vaciar
+    assert counts["none"] == 2
+    assert len(unvalidated) == 2  # quedan en cuarentena, no se pierden

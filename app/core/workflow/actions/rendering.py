@@ -96,6 +96,7 @@ def format_response(state: State, formatter: Formatter) -> State:
     # Regla de seguridad: si TODO queda none, no destruir recall — mostrar el pool.
     rows_to_format = state["results"]
     phrase_counts = None
+    unvalidated_candidates: list[dict] = []
     objeto_phrases = params.get("objeto_phrases") or []
     if objeto_phrases and rows_to_format:
         from app.core.phrase_catalog import spec_for_canonical
@@ -103,7 +104,9 @@ def format_response(state: State, formatter: Formatter) -> State:
 
         specs = [s for s in (spec_for_canonical(str(c)) for c in objeto_phrases) if s]
         if specs:
-            ranked, phrase_counts = rank_by_phrase(rows_to_format, specs, state["dataset_id"])
+            ranked, phrase_counts, unvalidated_candidates = rank_by_phrase(
+                rows_to_format, specs, state["dataset_id"]
+            )
             if ranked:
                 rows_to_format = ranked
 
@@ -125,6 +128,8 @@ def format_response(state: State, formatter: Formatter) -> State:
     return _with_timing(
         state, "format_ms", start,
         formatted_response=response, formatted_rows=rows, phrase_counts=phrase_counts,
+        # cuarentena: los none NO se borran; quedan para trace/backfill/análisis futuro.
+        unvalidated_candidates=unvalidated_candidates,
     )
 
 
