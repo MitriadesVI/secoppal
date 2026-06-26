@@ -90,6 +90,25 @@ def handle_pagination(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict | Non
     history = deps.conv_store.get_history(ctx.chat_id, last_n=1)
     if history:
         prev_params = dict(history[-1].parsed_params)
+
+        # Dual-dataset: "más" tras una búsqueda dual es ambiguo. No paginar uno solo
+        # en silencio: preguntar cuál (primera versión; "más procesos"/"más contratos"
+        # colapsan vía el dual-collapse del follow-up).
+        scope = prev_params.get("dataset_scope")
+        if isinstance(scope, list) and len(scope) >= 2:
+            return persist_trace_and_turn(deps, ctx, empty_result(
+                response=("Esta búsqueda trae dos grupos. ¿Quieres ver más "
+                          "*procesos* o más *contratos*?"),
+                route_reason="pagination_dual_clarify",
+                intent_type="pagination_more",
+                parsed_params=prev_params,
+                resolved_params=prev_params,
+                soql_query="",
+                dataset_id="",
+                total_count=0,
+                followup=True,
+            ))
+
         display_count = max(1, int(deps.formatter.max_results or 25))
         secop_offset = int(prev_params.get("offset", 0) or 0)
         secop_limit = int(prev_params.get("limit", _DEFAULT_SECOP_LIMIT) or _DEFAULT_SECOP_LIMIT)

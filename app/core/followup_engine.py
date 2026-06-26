@@ -788,6 +788,26 @@ def detect_and_merge(
         tuple[str, dict]: (intent_type, merged_params_dict)
     """
     current_frame = frame_from_params(current_params)
+
+    # Dual-collapse: turno anterior dual + turno actual pide UN dataset explícito
+    # sin tema nuevo ("solo procesos", "ahora contratos") → refinamiento "quédate
+    # con ese grupo": hereda tema/scope/filtros previos, fija el dataset elegido y
+    # suelta dataset_scope. Sin esto, "solo procesos" cae a new_search (el dataset
+    # no cambió vs el primario dual) y pierde el tema, mostrando TODO el universo.
+    if (previous_frame is not None
+            and previous_frame.raw_params.get("dataset_scope")
+            and current_params.get("dataset_explicit")
+            and "dataset_scope" not in current_params
+            and not current_frame.topic
+            and current_params.get("dataset") in ("procesos", "contratos")):
+        merged = params_from_frame(previous_frame)
+        merged.pop("dataset_scope", None)
+        merged["dataset"] = current_params["dataset"]
+        merged["dataset_explicit"] = True
+        for key in _ESTADO_KEYS:  # las columnas de estado difieren por dataset
+            merged.pop(key, None)
+        return "change_dataset", merged
+
     intent = FollowupClassifier.classify_followup(
         text=text,
         current_frame=current_frame,
@@ -821,6 +841,14 @@ def detect_and_merge(
         merged_params.pop("estado_family", None)
         merged_params.pop("opportunity_mode", None)
         merged_params.pop("filter_active_only", None)
+
+    # Dual-dataset: dataset_scope se hereda en follow-ups COMPATIBLES ("solo 2025",
+    # "los de mayor valor" conservan "ambos"). Pero si el turno PIVOTA a un dataset
+    # explícito sin pedir dual ("solo procesos", "ahora contratos"), el usuario se
+    # restringió a uno → soltar el scope heredado. Si el turno vuelve a pedir dual
+    # ("otra vez en ambos"), su propio dataset_scope manda y no se cae aquí.
+    if current_params.get("dataset_explicit") and "dataset_scope" not in current_params:
+        merged_params.pop("dataset_scope", None)
 
     # B4 — FOLLOWUP-NIT-LEAK-001: purga herencia en contratista-only pivot
     if _is_contratista_only_query(current_frame):
