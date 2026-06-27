@@ -104,6 +104,7 @@ def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
         "query_error": state.get("query_error", ""),
         "intent_type": state.get("intent_type", ""),
         "followup_intent_type": state.get("followup_intent_type", ""),
+        "followup_mutation": state.get("followup_mutation", {}),
         "analytical_intent": state.get("analytical_intent", ""),
         "analytical_response": state.get("analytical_response", ""),
         "clarification_reason": state.get("clarification_reason", ""),
@@ -252,6 +253,54 @@ def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
         except Exception as exc:  # best-effort: nunca rompe la respuesta
             logger.warning("opportunity_stage shadow failed: %s", exc)
 
+    # ── Outcome bidimensional + recuperación de refinamiento (Etapa 4) ─────
+    # Separa ambigüedad genuina (P15) de "0 tras refinamiento" (las falsas
+    # clarificaciones del dogfood). Un count aproximado es PARTIAL, no SUCCESS.
+    from app.core.outcome import Outcome, OutcomeReason, classify_outcome
+    from app.core.query_fingerprint import query_fingerprint
+    from app.core.refinement_recovery import build_recovery_message, refinement_delta
+
+    resolved = state.get("resolved_params", {}) or {}
+    qp_should_execute = (result.get("query_plan", {}) or {}).get("should_execute")
+    previous_had_results = bool(followup and last_turn and last_turn.had_results())
+    rows_returned = len(result.get("results", []) or [])
+    # Las consultas analíticas (sum/aggregate) no son tabulares: tienen su propia
+    # respuesta y 0 filas NO es vacío. No las pasamos por el modelo de recall.
+    if result.get("analytical_response"):
+        outcome, outcome_reason = Outcome.SUCCESS, OutcomeReason.RESULTS_FOUND
+    else:
+        outcome, outcome_reason = classify_outcome(
+            clarification_requested=(qp_should_execute is False),
+            query_failed=bool(result.get("query_error")),
+            query_timed_out=bool(result.get("risk_flag_timeout")),
+            count_approximate=bool(result.get("total_count_approximate")),
+            rows_returned=rows_returned,
+            previous_had_results=previous_had_results,
+        )
+    result["outcome"] = outcome
+    result["outcome_reason"] = outcome_reason
+    result["query_fingerprint"] = query_fingerprint(resolved)
+
+    # zero-after-refinement → honestidad + recuperación, NO falsa clarificación.
+    if outcome == Outcome.EMPTY and outcome_reason == OutcomeReason.ZERO_AFTER_REFINEMENT:
+        last_ok = deps.conv_store.last_successful_turn(ctx.chat_id) if ctx.chat_id else None
+        if last_ok is not None:
+            delta = refinement_delta(last_ok.parsed_params, resolved)
+            result["recovery_delta"] = delta
+            result["response"] = build_recovery_message(delta)
+            result["needs_clarification"] = False
+            # Auditoría de recall (Etapa 3) on-demand, solo bajo flag: localiza el
+            # predicado asesino sin penalizar latencia en producción por defecto.
+            import os
+            if os.getenv("SECOPPAL_RECALL_AUDIT") == "1":
+                try:
+                    from app.core.recall_audit import build_predicate_waterfall, waterfall_to_dict
+                    result["recall_audit"] = waterfall_to_dict(
+                        build_predicate_waterfall(resolved, deps.secop_client)
+                    )
+                except Exception as exc:  # best-effort: diagnóstico nunca rompe la respuesta
+                    logger.warning("recall audit failed: %s", exc)
+
     trace_id = deps.feedback.log_trace(
         ctx.user_query, ctx.channel, result, user_identity=ctx.user_identity,
     )
@@ -279,6 +328,10 @@ def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
                 dataclasses.asdict(s) if hasattr(s, '__dataclass_fields__') else s
                 for s in result.get("suggestions", [])
             ],
+            outcome=outcome,
+            outcome_reason=outcome_reason,
+            result_count=rows_returned,
+            query_fingerprint=result["query_fingerprint"],
         )
 
     return result

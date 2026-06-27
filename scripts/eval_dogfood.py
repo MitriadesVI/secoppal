@@ -12,6 +12,9 @@ empties = []
 clarifs = []
 slow = []
 ref_checks = []
+waterfalls = []
+outcome_counts = {}
+false_clarifs = []
 
 for r in recs:
     s = r.get("summary", {})
@@ -23,6 +26,14 @@ for r in recs:
     ret = s.get("result_count_returned")
     clar = s.get("needs_clarification")
     ms = r.get("elapsed_ms", 0)
+
+    # Etapa 4: outcome bidimensional. Si está presente, manda sobre needs_clarification.
+    outcome = s.get("outcome") or r.get("outcome") or ""
+    oreason = s.get("outcome_reason") or r.get("outcome_reason") or ""
+    outcome_counts[outcome or "(sin outcome)"] = outcome_counts.get(outcome or "(sin outcome)", 0) + 1
+    # Falsa clarificación: el sistema viejo lo mostraría como menú, pero es un vacío.
+    if clar and outcome == "empty":
+        false_clarifs.append((r, oreason))
 
     if clar:
         by_suite[suite]["clarif"] += 1
@@ -42,6 +53,12 @@ for r in recs:
         hit_ref = ref and ref in blob
         hit_uid = uid and uid in blob
         ref_checks.append((r, ref, uid, hit_ref, hit_uid))
+
+    # Etapa 3: auditoría diferencial de recall. Se persiste cuando el path de
+    # zero-results la engancha (Etapa 4); aquí solo se reporta si está presente.
+    wf = s.get("predicate_waterfall") or r.get("predicate_waterfall")
+    if wf:
+        waterfalls.append((r, wf, s.get("killer_predicate") or r.get("killer_predicate")))
 
 print("=" * 70)
 print("RESUMEN POR SUITE")
@@ -81,3 +98,25 @@ n = len(mss)
 print(f"  p50={mss[n//2]/1000:.1f}s  p90={mss[int(n*0.9)]/1000:.1f}s  max={mss[-1]/1000:.1f}s")
 for ms, r in sorted(slow, reverse=True)[:8]:
     print(f"  {ms/1000:5.1f}s  [{r['suite_id']}/{r['scenario_id']} t{r['turn_index']}] {r['query'][:55]}")
+
+print("\n" + "=" * 70)
+print("OUTCOMES (Etapa 4: bidimensional)")
+print("=" * 70)
+for k, v in sorted(outcome_counts.items(), key=lambda kv: -kv[1]):
+    print(f"  {k:14} {v}")
+print(f"\n  Falsas clarificaciones (clar=True pero outcome=empty): {len(false_clarifs)}")
+for r, oreason in false_clarifs:
+    print(f"    [{r['suite_id']}/{r['scenario_id']} t{r['turn_index']}] {r['query'][:55]} → {oreason}")
+
+print("\n" + "=" * 70)
+print(f"AUDITORÍA DE RECALL (predicate waterfall): {len(waterfalls)}")
+print("=" * 70)
+if not waterfalls:
+    print("  (sin waterfalls persistidos — se cablea en Etapa 4; usa build_predicate_waterfall on-demand)")
+for r, wf, killer in waterfalls:
+    print(f"  [{r['suite_id']}/{r['scenario_id']} t{r['turn_index']}] {r['query'][:60]}")
+    for step in wf:
+        mark = "✗ KILLER" if step.get("killer_predicate") else ("·" if step.get("exists") else "✗")
+        cnt = f" count={step['count']}" if step.get("count") is not None else ""
+        print(f"        {mark:9} {step.get('predicate'):10} exists={step.get('exists')}{cnt}")
+    print(f"        → killer_predicate: {killer}")

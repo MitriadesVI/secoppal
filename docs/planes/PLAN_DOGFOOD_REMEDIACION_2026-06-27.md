@@ -258,6 +258,16 @@ contaminó; canary de persistencia verde.
 
 **Verificación:** `pytest tests/test_followup*.py tests/test_frame_leak_canary.py tests/test_dogfood_regressions.py -q`
 
+**ESTADO: ✅ COMPLETA** (Codex `dcd22f4`→amend + cleanup). `followup_mutations.py`
+(MutationPolicy set/clear/cleanup) + `followup_control_tokens.py` (gramáticas) +
+gate en `detect_and_merge` (alimenta el FollowupMerger con frames saneados) +
+`validate_mutation_invariants` (INV-1/2/4/8 post-aplicación) + defensa doble
+`is_control_only_turn` (verificada: bloquea topic aun con intent=contextual_requery) +
+`objeto_exclude` end-to-end (parser→frame→gate→SoQL `NOT(...)`→trace) + trace
+`followup_mutation`. 5 xfail retirados (geo intacto). Cleanup: eliminado
+`_purge_stale_inherited_params` (código muerto tras formalizar purgas en
+`transition_cleanup`).
+
 ---
 
 ### Etapa 3 — Auditoría diferencial de recall *(NUEVA — el mayor hueco del plan v1)*
@@ -299,6 +309,20 @@ enganche en el path de zero-results (Etapa 4).
 recall y se documenta la corrección (o se confirma "dato ausente en la fuente").
 
 **Verificación:** `python scripts/run_dogfood.py --scenario ascensores_scope_value ... && python scripts/eval_dogfood.py <jsonl>`
+
+**ESTADO: ✅ COMPLETA.** `app/core/recall_audit.py` (`build_predicate_waterfall`,
+existencia `LIMIT 1`, `deep` opcional) + `tests/test_recall_audit.py` (8, mock que
+inspecciona el SoQL real) + reporte en `eval_dogfood.py`. **Diagnóstico live de los 2
+casos (2026-06-27):** killer_predicate = **None en ambos** — todos los predicados
+(tema→scope→estado, tema→estado→valor) tienen ≥1 fila HOY; la query completa existe.
+Conclusión **cautelosa** (no afirmar más de lo probado): **no se reproduce un defecto
+estructural de recall del WHERE**; el cero histórico parece transitorio o propio de la
+ejecución (timeout, lag de Socrata, count/render tras el fetch, o estado conversacional
+distinto en la corrida original). Las **Etapas 4–6 identifican la causa exacta**: Etapa 4
+distingue `count_timeout`/`fetch_timeout` de `zero_results` genuino; Etapa 5 instrumenta
+para ver dónde se va el tiempo; Etapa 6 evita convertir lentitud en falso "no encontré".
+El waterfall queda como herramienta para cuando un cero SÍ sea de predicado. Cableado al
+path de zero-results: Etapa 4 (bajo flag).
 
 ---
 
@@ -355,6 +379,40 @@ tenía. ¿Deshacer ese filtro o ampliar?" + opciones.
 **Aceptación:** `false_clarifications ≈ 0`; "deshacer" funciona vía snapshot.
 
 **Verificación:** `pytest -k "exit_reason or snapshot or rollback or clarif" -q`
+
+**ESTADO: core conversacional ✅ COMPLETO · propagación a rutas auxiliares = pendiente
+controlado (Opus).** El outcome se clasifica y persiste en el flujo conversacional
+principal (`normal_flow`). **Rutas que aún NO emiten `outcome`** (lo harán cuando se
+necesite, no ahora): `refinement.py` (refinement bar UI), `handle_pagination`,
+`handle_direct_lookup` (usa su propio `direct_lookup_status`), errores previos a
+`normal_flow`, y respuestas anticipadas del grafo. `last_successful_turn`/`had_results`
+usan el **outcome** (SUCCESS/PARTIAL), no `result_count` — una respuesta analítica con 0
+filas tabulares cuenta como éxito. Las señales que alimentan `classify_outcome` son
+**booleanas explícitas** (no se infieren del texto del error); la Etapa 5 las convertirá
+en `FetchStatus`/`CountStatus` estructurados desde la instrumentación. Inmutabilidad del
+snapshot **probada agresivamente** (mutar frame original / mutar copia leída no altera el
+histórico). Módulos pequeños nuevos: `app/core/outcome.py`
+(`Outcome`/`OutcomeReason` + `classify_outcome` puro: PARTIAL/COUNT_TIMEOUT cuando hay
+filas pero el count falló; ERROR/FETCH_TIMEOUT cuando el fetch falla — nunca EMPTY;
+EMPTY/ZERO_AFTER_REFINEMENT cuando el turno previo sí tenía), `app/core/query_fingerprint.py`
+(`sha256(canonical_json)`, reutilizable Etapa 8), `app/core/refinement_recovery.py`
+(`refinement_delta` por diff + `build_recovery_message` deshacer/ampliar). Snapshot =
+el **Turn** extendido (outcome/outcome_reason/result_count/query_fingerprint), persistido
+a JSONL → inmutable de facto (cada `get_history` reconstruye copias frescas, sin 2ª
+fuente de verdad); `last_successful_turn()` es la referencia para el rollback;
+`failed_refinement_delta` se calcula (no se guarda). Enganche en `normal_flow.py` (post-
+grafo, sin tocar el Burr graph): clasifica outcome, persiste en `append_turn`, y en
+zero-after-refinement reemplaza la respuesta por el mensaje de recuperación (NO falsa
+clarificación). Guard: las consultas analíticas (con `analytical_response`) no pasan por
+el modelo de recall. `results.py` re-incorpora `outcome`/`outcome_reason` al contrato
+global + `query_fingerprint`/`recovery_delta`/`recall_audit`. Waterfall de Etapa 3
+cableado al path zero-results bajo flag `SECOPPAL_RECALL_AUDIT=1` (off por defecto, no
+penaliza latencia). `eval_dogfood.py` reporta outcomes y cuenta falsas clarificaciones
+(clar=True pero outcome=empty). Tests: outcome(10) + query_fingerprint(5) +
+refinement_recovery(5) + conversation_snapshot(5) = 25 nuevos; e2e/analítica/followup
+250 passed. Pendiente menor: la ruta `refinement.py` (refinement bar UI) aún no clasifica
+outcome — solo el flujo conversacional principal; se puede extender cuando esa ruta lo
+requiera.
 
 ---
 

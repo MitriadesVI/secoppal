@@ -62,6 +62,7 @@ CANONICAL_KEYS: frozenset[str] = frozenset({
     "followup",
     "trace_id",
     "narrated",
+    "followup_mutation",
     # Optional / per-branch additions documented in the constructor
     # signatures below.
     "contextual_filters",
@@ -73,6 +74,12 @@ CANONICAL_KEYS: frozenset[str] = frozenset({
     "failed_sources",
     "search_attempts",
     "source_partial",
+    # Etapa 4: outcome bidimensional + recuperación de refinamiento.
+    "outcome",
+    "outcome_reason",
+    "query_fingerprint",
+    "recovery_delta",
+    "recall_audit",
 })
 
 
@@ -103,6 +110,7 @@ class WorkflowResult(TypedDict, total=False):
     followup: bool
     trace_id: str
     narrated: bool
+    followup_mutation: dict
     contextual_filters: dict
     total_count_approximate: bool
     risk_flag_timeout: bool
@@ -112,6 +120,11 @@ class WorkflowResult(TypedDict, total=False):
     failed_sources: list[str]
     search_attempts: list[dict]
     source_partial: bool
+    outcome: str
+    outcome_reason: str
+    query_fingerprint: str
+    recovery_delta: dict
+    recall_audit: dict
 
 
 # ─────────────────────────────────────────────────────────────────────────────
