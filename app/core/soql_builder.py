@@ -317,6 +317,14 @@ class SoQLBuilder:
                 term_conditions.extend(self._object_term_conditions(spec, str(term)))
             where_clauses.append(f"({' OR '.join(term_conditions)})")
 
+        # Exclusiones temáticas son predicados negativos independientes. Cada
+        # término se excluye tanto de objeto como de descripción, de forma
+        # simétrica a las condiciones positivas.
+        for term in params.get("objeto_exclude") or []:
+            conditions = self._object_term_conditions(spec, str(term))
+            if conditions:
+                where_clauses.append(f"NOT ({' OR '.join(conditions)})")
+
         # Phrase recall-first (Commit 5): cada PhraseSpec en objeto_phrases aporta una
         # cláusula amplia = anclas co-ocurrentes en el MISMO campo, OR entre campos.
         # Subsume la frase exacta (substring) sin rama redundante. NO cruza objeto con

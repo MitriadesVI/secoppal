@@ -680,6 +680,19 @@ class QueryRouter:
         #    Preserva colocaciones de dominio ("manual de contratación") como
         #    unidad antes de que "de" se descarte y la frase se pierda. Consume
         #    el span para que sus tokens NO recreen el objeto roto (no duplicar).
+        # Exclusión temática explícita. Se extrae como campo negativo propio;
+        # nunca se deja que el verbo ni sus términos entren al objeto positivo.
+        exclusion_match = re.search(
+            r"\b(?:excluye|excluir|excepto)\s+(.+?)\s*$",
+            scrubbed,
+            flags=re.IGNORECASE,
+        )
+        if exclusion_match:
+            excluded = self._extract_object_terms(exclusion_match.group(1))
+            if excluded:
+                params["objeto_exclude"] = excluded
+            scrubbed = scrubbed[:exclusion_match.start()].strip()
+
         from app.core.phrase_catalog import detect_phrases
         objeto_phrases, objeto_text = detect_phrases(scrubbed)
         if objeto_phrases:

@@ -143,6 +143,7 @@ def build_application(
             risk_flag_timeout=False,
             intent_type="",
             followup_intent_type="",
+            followup_mutation={},
             analytical_response="",
             analytical_intent="",
             timings_ms={},

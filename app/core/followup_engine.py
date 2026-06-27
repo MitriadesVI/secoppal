@@ -25,6 +25,15 @@ from datetime import datetime, timezone
 from typing import Any
 
 from app.core.query_frame import QueryFrame, frame_from_params, params_from_frame
+from app.core.followup_mutations import (
+    calculate_delta,
+    gate_delta,
+    validate_mutation_invariants,
+)
+from app.core.followup_control_tokens import (
+    classify_control_intent,
+    is_contextual_topic_request,
+)
 from app.core._followup_constants import (
     FOLLOWUP_WINDOW_MINUTES,
     CONTINUATION_WORDS,
@@ -45,6 +54,7 @@ from app.core._followup_constants import (
 FOLLOWUP_INTENTS = frozenset({
     "pagination_more", "refine_filter", "change_year",
     "change_order", "change_scope", "change_dataset",
+    "remove_filter", "replace_topic", "refine_topic", "exclude_topic",
     "contextual_requery", "suggestion_selection", "explain_result",
     "new_search", "unclear",
 })
@@ -265,6 +275,14 @@ class FollowupClassifier:
         if previous_frame is None:
             return "new_search"
 
+        current_params = params_from_frame(current_frame)
+        control_intent = classify_control_intent(text, current_params)
+        if control_intent:
+            return control_intent
+
+        if current_frame.topic and is_contextual_topic_request(text):
+            return "replace_topic"
+
         # 0. Verbo de búsqueda nueva explícito (H8: evita contaminación de contexto)
         #    Si el usuario empieza con "busca", "necesito", "encuentra", etc.,
         #    quiere una búsqueda nueva, no un follow-up.
@@ -295,6 +313,13 @@ class FollowupClassifier:
                 and current_frame.dataset
                 and previous_frame.dataset
                 and current_frame.dataset != previous_frame.dataset):
+            # Una consulta completa que además cambia dataset no es un simple
+            # switch: scope explícito reinicia contexto; topic explícito hace
+            # un reemplazo temático conservando el scope previo.
+            if current_frame.scope:
+                return "new_search"
+            if current_frame.topic:
+                return "replace_topic"
             return "change_dataset"
 
         # 3. Solo cambio de año (sin topic nuevo, sin scope nuevo)
@@ -491,7 +516,7 @@ class FollowupMerger:
         intent: str,
     ) -> QueryFrame:
         """Fusiona dos frames según la intención del follow-up."""
-        policy = _MERGE_POLICIES.get(intent, _merge_new_search)
+        policy = _MERGE_POLICIES.get(intent, _merge_refine_filter)
         return policy(previous_frame, current_frame)
 
 
@@ -509,25 +534,18 @@ _RAW_CLASSIFICATION_KEYS = ("opportunity_mode", "filter_active_only")
 
 
 def _merge_raw(prev_raw: dict, curr_raw: dict, *, topic_inherited: bool) -> dict:
-    """Fusiona raw_params por política explícita en vez de unión ciega."""
+    """Une frames ya gateados; conserva compatibilidad para uso unitario."""
     merged = {**prev_raw, **curr_raw}
-
-    # topic-class: si el topic se reemplazó, las claves de topic heredadas
-    # quedan obsoletas (a menos que el turno actual las traiga).
     if not topic_inherited:
         for key in _RAW_TOPIC_KEYS:
             if key not in curr_raw:
                 merged.pop(key, None)
-
-    # classification-class: si el intent cambió, los sub-flags de la
-    # clasificación previa no aplican al nuevo intent.
     prev_intent = prev_raw.get("intent_type")
     curr_intent = curr_raw.get("intent_type")
     if curr_intent and prev_intent and curr_intent != prev_intent:
         for key in _RAW_CLASSIFICATION_KEYS:
             if key not in curr_raw:
                 merged.pop(key, None)
-
     return merged
 
 
@@ -544,18 +562,8 @@ _ESTADO_KEYS = (
 
 
 def _merge_modifiers(prev_mods: dict, curr_mods: dict) -> dict:
-    """Fusiona modifiers tratando el estado como cluster atómico.
-
-    Si el turno actual trae CUALQUIER clave de estado, el estado heredado se
-    reemplaza por completo (las claves hermanas obsoletas no deben coexistir).
-    El resto de modifiers conserva el merge legacy (hereda, gana el actual).
-    """
-    merged = {**prev_mods, **curr_mods}
-    if any(k in curr_mods for k in _ESTADO_KEYS):
-        for key in _ESTADO_KEYS:
-            if key not in curr_mods:
-                merged.pop(key, None)
-    return merged
+    """Une modifiers ya validados; el cluster de estado se limpia en el gate."""
+    return {**prev_mods, **curr_mods}
 
 
 def _merge_pagination_more(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
@@ -567,6 +575,7 @@ def _merge_pagination_more(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
         dataset_explicit=prev.dataset_explicit,
         scope=dict(prev.scope),
         topic=list(prev.topic),
+        objeto_exclude=list(prev.objeto_exclude),
         modifiers=dict(prev.modifiers),
         raw_params={
             **prev.raw_params,
@@ -593,6 +602,7 @@ def _merge_refine_filter(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
         dataset_explicit=prev.dataset_explicit,
         scope=dict(prev.scope),
         topic=inherited_topic,
+        objeto_exclude=list(dict.fromkeys([*prev.objeto_exclude, *curr.objeto_exclude])),
         modifiers=_merge_modifiers(prev.modifiers, curr.modifiers),
         raw_params=_merge_raw(prev.raw_params, curr.raw_params, topic_inherited=topic_inherited),
         intent_type="refine_filter",
@@ -606,6 +616,7 @@ def _merge_change_year(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
         dataset_explicit=prev.dataset_explicit,
         scope=dict(prev.scope),
         topic=list(prev.topic),
+        objeto_exclude=list(prev.objeto_exclude),
         modifiers=_merge_modifiers(prev.modifiers, curr.modifiers),
         raw_params=_merge_raw(prev.raw_params, curr.raw_params, topic_inherited=True),
         intent_type="change_year",
@@ -623,6 +634,7 @@ def _merge_change_order(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
         dataset_explicit=prev.dataset_explicit,
         scope=dict(prev.scope),
         topic=list(prev.topic),
+        objeto_exclude=list(prev.objeto_exclude),
         modifiers=modifiers,
         raw_params=_merge_raw(prev.raw_params, curr.raw_params, topic_inherited=True),
         intent_type="change_order",
@@ -643,6 +655,7 @@ def _merge_change_scope(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
         dataset_explicit=prev.dataset_explicit,
         scope=dict(curr.scope) if curr.scope else dict(prev.scope),
         topic=inherited_topic,
+        objeto_exclude=list(prev.objeto_exclude),
         modifiers=_merge_modifiers(prev.modifiers, curr.modifiers),
         raw_params=_merge_raw(prev.raw_params, curr.raw_params, topic_inherited=topic_inherited),
         intent_type="change_scope",
@@ -656,18 +669,13 @@ def _merge_change_dataset(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
     """
     topic_inherited = FollowupClassifier._is_weak_topic(curr.topic)
     inherited_topic = list(prev.topic) if topic_inherited else list(curr.topic)
-    # Pivot de dataset: la semántica de fecha difiere entre datasets
-    # (fecha_de_firma en contratos vs fecha_de_publicacion en procesos), así
-    # que un rango de fecha del dataset anterior no debe heredarse — sería un
-    # filtro que el usuario no pidió para el nuevo dataset.
-    inherited_mods = {k: v for k, v in prev.modifiers.items()
-                      if k not in ("fecha_desde", "fecha_hasta")}
     return QueryFrame(
         dataset=curr.dataset,
         dataset_explicit=True,
         scope=dict(curr.scope) if curr.scope else dict(prev.scope),
         topic=inherited_topic,
-        modifiers=_merge_modifiers(inherited_mods, curr.modifiers),
+        objeto_exclude=list(prev.objeto_exclude),
+        modifiers=_merge_modifiers(prev.modifiers, curr.modifiers),
         raw_params=_merge_raw(prev.raw_params, curr.raw_params, topic_inherited=topic_inherited),
         intent_type="change_dataset",
     )
@@ -692,10 +700,11 @@ def _merge_contextual_requery(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
     if getattr(prev, "intent_type", None) == "opportunity_search" and not curr.topic:
         merged_topic = list(prev.topic)
     return QueryFrame(
-        dataset=prev.dataset,
-        dataset_explicit=prev.dataset_explicit,
+        dataset=curr.dataset if curr.dataset_explicit else prev.dataset,
+        dataset_explicit=curr.dataset_explicit or prev.dataset_explicit,
         scope=dict(prev.scope),
         topic=merged_topic,
+        objeto_exclude=list(curr.objeto_exclude) if curr.objeto_exclude else list(prev.objeto_exclude),
         modifiers=_merge_modifiers(prev.modifiers, curr.modifiers),
         raw_params=_merge_raw(prev.raw_params, curr.raw_params, topic_inherited=topic_inherited),
         intent_type="contextual_requery",
@@ -729,8 +738,13 @@ _MERGE_POLICIES: dict[str, callable] = {
     "change_order":         _merge_change_order,
     "change_scope":         _merge_change_scope,
     "change_dataset":       _merge_change_dataset,
+    "remove_filter":        _merge_refine_filter,
+    "replace_topic":        _merge_contextual_requery,
+    "refine_topic":         _merge_contextual_requery,
+    "exclude_topic":        _merge_refine_filter,
     "contextual_requery":   _merge_contextual_requery,
     "new_search":           _merge_new_search,
+    "unclear":              _merge_refine_filter,
 }
 
 
@@ -774,6 +788,7 @@ def detect_and_merge(
     text: str,
     current_params: dict,
     previous_frame: QueryFrame | None,
+    mutation_trace: dict | None = None,
 ) -> tuple[str, dict]:
     """Detecta la intención y aplica merge, retornando (intent_type, merged_params).
 
@@ -794,104 +809,50 @@ def detect_and_merge(
     # con ese grupo": hereda tema/scope/filtros previos, fija el dataset elegido y
     # suelta dataset_scope. Sin esto, "solo procesos" cae a new_search (el dataset
     # no cambió vs el primario dual) y pierde el tema, mostrando TODO el universo.
-    if (previous_frame is not None
+    is_dual_collapse = (previous_frame is not None
             and previous_frame.raw_params.get("dataset_scope")
             and current_params.get("dataset_explicit")
             and "dataset_scope" not in current_params
             and not current_frame.topic
-            and current_params.get("dataset") in ("procesos", "contratos")):
-        merged = params_from_frame(previous_frame)
-        merged.pop("dataset_scope", None)
-        merged["dataset"] = current_params["dataset"]
-        merged["dataset_explicit"] = True
-        for key in _ESTADO_KEYS:  # las columnas de estado difieren por dataset
-            merged.pop(key, None)
-        return "change_dataset", merged
+            and current_params.get("dataset") in ("procesos", "contratos"))
 
-    intent = FollowupClassifier.classify_followup(
+    intent = "change_dataset" if is_dual_collapse else FollowupClassifier.classify_followup(
+        text=text, current_frame=current_frame, previous_frame=previous_frame,
+    )
+
+    previous_params: dict = {}
+    if previous_frame is not None:
+        previous_params = params_from_frame(previous_frame)
+        # params_from_frame intentionally hides stale cursors for execution;
+        # the mutation gate still needs to see them so a transition can clear
+        # and trace them before a fresh frame is built.
+        for key, value in previous_frame.raw_params.items():
+            previous_params.setdefault(key, value)
+
+    delta = calculate_delta(current_params, intent)
+    gated = gate_delta(
+        intent=intent,
         text=text,
-        current_frame=current_frame,
-        previous_frame=previous_frame,
+        delta=delta,
+        previous_params=previous_params,
     )
-    current_frame.intent_type = intent
+    if mutation_trace is not None:
+        mutation_trace.clear()
+        mutation_trace.update(gated.trace(intent))
 
+    gated_current = frame_from_params(gated.accepted_delta)
+    gated_current.intent_type = intent
     if previous_frame is None:
-        return intent, params_from_frame(current_frame)
+        return intent, params_from_frame(gated_current)
 
-    merged_frame = FollowupMerger.merge(previous_frame, current_frame, intent)
+    cleaned_previous = frame_from_params(gated.cleaned_previous)
+    merged_frame = FollowupMerger.merge(cleaned_previous, gated_current, intent)
     merged_params = params_from_frame(merged_frame)
-    _purge_stale_inherited_params(merged_params, previous_frame, current_frame)
-
-    # FRAME-LEAK-ESTADO: si el turno actual fija un estado explícito que NO es la
-    # familia de oportunidad (ej. "y los cerrados?"), el usuario abandonó la
-    # búsqueda de oportunidades. El framing heredado (intent_type=opportunity_search)
-    # debe soltarse: si sobrevive, la invariante de oportunidad aguas abajo re-impone
-    # oferta_abierta y PURGA el estado pedido, devolviendo silenciosamente a
-    # 'abiertos'. _merge_modifiers ya limpió el cluster de estado en modifiers; aquí
-    # cae el intent de oportunidad que lo re-derivaría. Regla: explícito vence heredado.
-    _curr_estado_explicit = any(
-        current_frame.modifiers.get(k)
-        for k in ("estado", "estado_contrato",
-                  "estado_de_apertura_del_proceso", "estado_del_procedimiento")
+    validate_mutation_invariants(
+        intent=intent,
+        previous_params=previous_params,
+        merged_params=merged_params,
+        gated=gated,
     )
-    _curr_open_family = current_frame.modifiers.get("estado_family") == "oferta_abierta"
-    if _curr_estado_explicit and not _curr_open_family:
-        if merged_params.get("intent_type") == "opportunity_search":
-            merged_params.pop("intent_type", None)
-        merged_params.pop("estado_family", None)
-        merged_params.pop("opportunity_mode", None)
-        merged_params.pop("filter_active_only", None)
-
-    # Dual-dataset: dataset_scope se hereda en follow-ups COMPATIBLES ("solo 2025",
-    # "los de mayor valor" conservan "ambos"). Pero si el turno PIVOTA a un dataset
-    # explícito sin pedir dual ("solo procesos", "ahora contratos"), el usuario se
-    # restringió a uno → soltar el scope heredado. Si el turno vuelve a pedir dual
-    # ("otra vez en ambos"), su propio dataset_scope manda y no se cae aquí.
-    if current_params.get("dataset_explicit") and "dataset_scope" not in current_params:
-        merged_params.pop("dataset_scope", None)
-
-    # B4 — FOLLOWUP-NIT-LEAK-001: purga herencia en contratista-only pivot
-    if _is_contratista_only_query(current_frame):
-        for key in (
-            "objeto", "objeto_or", "fecha_desde", "fecha_hasta",
-            "valor_min", "valor_max", "entidad", "entidad_resolved",
-            "entidad_resolution", "entidad_like", "ciudad",
-            "departamento", "departamento_resolved", "modalidad",
-            "estado_family", "estado", "estado_field",
-            "estado_de_apertura_del_proceso", "estado_del_procedimiento",
-            "estado_contrato", "estado_contrato_adicional",
-        ):
-            merged_params.pop(key, None)
 
     return intent, merged_params
-
-
-def _purge_stale_inherited_params(
-    merged_params: dict,
-    previous_frame: QueryFrame,
-    current_frame: QueryFrame,
-) -> None:
-    if (
-        current_frame.topic
-        and not FollowupClassifier._is_weak_topic(current_frame.topic)
-        and previous_frame.topic
-        and not FollowupClassifier._topics_overlap(
-            current_frame.topic, previous_frame.topic
-        )
-    ):
-        for key in ("valor_min", "valor_max", "modalidad"):
-            merged_params.pop(key, None)
-
-    if (
-        current_frame.scope
-        and FollowupClassifier._scope_differs(
-            current_frame.scope, previous_frame.scope
-        )
-        and "entidad_resolved" not in current_frame.scope
-        and (
-            "ciudad" in current_frame.scope
-            or "departamento_resolved" in current_frame.scope
-        )
-    ):
-        for key in ("entidad", "entidad_resolved", "entidad_resolution", "entidad_like"):
-            merged_params.pop(key, None)

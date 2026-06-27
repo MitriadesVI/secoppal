@@ -22,9 +22,7 @@
       "expected_params": {
         "ordering_signal": "valor_desc"
       },
-      "note_observed_intent": "contextual_requery (debería ser change_order)",
-      "xfail": true,
-      "xfail_reason": "Etapa 2 — 'ordena' contamina objeto; debe heredar el tema previo y solo cambiar ordering_signal (INV-1)."
+      "note_observed_intent": "contextual_requery (debería ser change_order)"
     },
     {
       "case_id": "control_token_ordenalos",
@@ -42,9 +40,7 @@
       "expected_params": {
         "ordering_signal": "valor_desc"
       },
-      "note_observed_intent": "contextual_requery (debería ser change_order)",
-      "xfail": true,
-      "xfail_reason": "Etapa 2 — verbo imperativo 'ordénalos' contamina objeto (INV-1)."
+      "note_observed_intent": "contextual_requery (debería ser change_order)"
     },
     {
       "case_id": "control_token_vuelve_dataset",
@@ -61,9 +57,7 @@
       "expected_params": {
         "dataset": "contratos"
       },
-      "note_observed_intent": "change_dataset (intent correcto, objeto contaminado con 'vuelve')",
-      "xfail": true,
-      "xfail_reason": "Etapa 2 — 'vuelve' contamina objeto en un change_dataset; debe cambiar solo dataset (INV-2)."
+      "note_observed_intent": "change_dataset (intent correcto, objeto contaminado con 'vuelve')"
     },
     {
       "case_id": "control_token_quita_rango",
@@ -85,9 +79,7 @@
         "valor_min": null,
         "valor_max": null
       },
-      "note_observed_intent": "contextual_requery (debería ser remove_filter)",
-      "xfail": true,
-      "xfail_reason": "Etapa 2 — 'quita el rango de valor' debe eliminar valor_min/valor_max y no añadir quita/rango a objeto (INV-4)."
+      "note_observed_intent": "contextual_requery (debería ser remove_filter)"
     },
     {
       "case_id": "control_token_todavia_reciben",
@@ -105,9 +97,7 @@
       "expected_params": {
         "estado_family": "oferta_abierta"
       },
-      "note_observed_intent": "contextual_requery (debería ser refine_filter de estado)",
-      "xfail": true,
-      "xfail_reason": "Etapa 2 — 'solo las que todavía reciben ofertas' es filtro de estado; objeto debe heredar adulto_mayor, no 'todavia/reciben'."
+      "note_observed_intent": "contextual_requery (debería ser refine_filter de estado)"
     },
     {
       "case_id": "direct_lookup_leticia_lp005",

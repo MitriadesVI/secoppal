@@ -28,6 +28,9 @@ class QueryFrame:
     # Topic: objeto contractual
     topic: list[str] = field(default_factory=list)
 
+    # Exclusiones temáticas: condiciones negativas, nunca mezcladas con topic.
+    objeto_exclude: list[str] = field(default_factory=list)
+
     # Modifiers: fecha, estado, valor, orden, contratista, modalidad
     modifiers: dict = field(default_factory=dict)
 
@@ -45,7 +48,7 @@ class QueryFrame:
 _SCOPE_KEYS = frozenset({
     "entidad", "entidad_resolved", "entidad_resolution",
     "departamento", "departamento_resolved", "departamento_resolution",
-    "ciudad",
+    "departamentos_in", "ciudad", "ciudad_resolved", "region",
 })
 
 _MODIFIER_KEYS = frozenset({
@@ -53,6 +56,7 @@ _MODIFIER_KEYS = frozenset({
     "valor_min", "valor_max",
     "estado", "estado_field", "estado_family",
     "estado_contrato", "estado_de_apertura_del_proceso", "estado_del_procedimiento",
+    "estado_contrato_adicional",
     "ordering_signal", "modalidad", "contratista",
 })
 
@@ -62,11 +66,13 @@ def frame_from_params(params: dict) -> QueryFrame:
     p = params or {}
     scope = {k: v for k, v in p.items() if k in _SCOPE_KEYS and v not in (None, [], "", {}, False)}
     topic = list(p.get("objeto", []) or [])
+    objeto_exclude = list(p.get("objeto_exclude", []) or [])
     modifiers = {k: v for k, v in p.items()
                  if k in _MODIFIER_KEYS and v not in (None, [], "", {}, False)}
     # Excluir scope y modifier keys de raw_params para no duplicar
     raw = {k: v for k, v in p.items()
            if k not in _SCOPE_KEYS and k not in _MODIFIER_KEYS
+           and k not in {"objeto", "objeto_exclude", "dataset", "dataset_explicit"}
            and v not in (None, [], "", {}, False)}
     raw["objeto"] = topic  # siempre incluir objeto en raw
 
@@ -75,6 +81,7 @@ def frame_from_params(params: dict) -> QueryFrame:
         dataset_explicit=bool(p.get("dataset_explicit")),
         scope=scope,
         topic=topic,
+        objeto_exclude=objeto_exclude,
         modifiers=modifiers,
         raw_params=raw,
     )
@@ -88,6 +95,8 @@ def params_from_frame(frame: QueryFrame) -> dict:
     params.update(frame.scope)
     if frame.topic:
         params["objeto"] = list(frame.topic)
+    if frame.objeto_exclude:
+        params["objeto_exclude"] = list(frame.objeto_exclude)
     params.update(frame.modifiers)
     # raw_params va por último para no sobreescribir campos estructurados
     for k, v in frame.raw_params.items():
