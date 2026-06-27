@@ -8,6 +8,7 @@ try:
 except ImportError:  # pragma: no cover - guarded for environments without deps
     Socrata = None
 
+from app.core.instrumentation import http_span, record_http
 from app.utils.logging import get_logger
 
 logger = get_logger(__name__)
@@ -46,8 +47,10 @@ class SecopClient:
 
     def aggregate(self, dataset_id: str, soql: str) -> list[dict]:
         """Execute a single aggregation query. No retries — best-effort for observer."""
-        rows = self.client.get(dataset_id, query=soql)
-        return list(rows)
+        with http_span("aggregate", dataset_id, soql) as span:
+            rows = list(self.client.get(dataset_id, query=soql))
+            span["rows_received"] = len(rows)
+        return rows
 
     def count(self, dataset_id: str, soql_count_query: str) -> int:
         """Execute a SELECT count(*) query and return the integer result."""
@@ -55,7 +58,9 @@ class SecopClient:
 
         for attempt in range(self.max_retries):
             try:
-                rows = self.client.get(dataset_id, query=soql_count_query)
+                with http_span("count", dataset_id, soql_count_query, attempt=attempt + 1) as span:
+                    rows = self.client.get(dataset_id, query=soql_count_query)
+                    span["rows_received"] = len(rows)
                 if rows:
                     raw = list(rows[0].values())[0]
                     return int(raw)
@@ -64,7 +69,13 @@ class SecopClient:
                 last_error = exc
                 logger.warning("SECOP count failed on attempt %s/%s: %s", attempt + 1, self.max_retries, exc)
                 if attempt < self.max_retries - 1:
-                    time.sleep(2**attempt)
+                    delay = 2**attempt
+                    record_http({
+                        "operation": "retry_delay", "dataset": dataset_id,
+                        "attempt": attempt + 1, "duration_ms": float(delay * 1000),
+                        "status": "completed", "rows_received": 0,
+                    })
+                    time.sleep(delay)
 
         raise RuntimeError(f"Unable to count SECOP dataset {dataset_id}") from last_error
 
@@ -74,13 +85,21 @@ class SecopClient:
         for attempt in range(self.max_retries):
             try:
                 logger.info("Executing SECOP query against %s", dataset_id)
-                rows = self.client.get(dataset_id, query=soql_query)
+                with http_span("query", dataset_id, soql_query, attempt=attempt + 1) as span:
+                    rows = self.client.get(dataset_id, query=soql_query)
+                    span["rows_received"] = len(rows)
                 return [self._normalize_row(dataset_id, row) for row in rows]
             except Exception as exc:  # pragma: no cover - network/runtime path
                 last_error = exc
                 logger.warning("SECOP query failed on attempt %s/%s: %s", attempt + 1, self.max_retries, exc)
                 if attempt < self.max_retries - 1:
-                    time.sleep(2**attempt)
+                    delay = 2**attempt
+                    record_http({
+                        "operation": "retry_delay", "dataset": dataset_id,
+                        "attempt": attempt + 1, "duration_ms": float(delay * 1000),
+                        "status": "completed", "rows_received": 0,
+                    })
+                    time.sleep(delay)
 
         raise RuntimeError(f"Unable to query SECOP dataset {dataset_id}") from last_error
 

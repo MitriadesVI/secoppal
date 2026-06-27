@@ -2,6 +2,7 @@
 """Evalúa el JSONL de dogfood: recall de referencias, vacíos, latencias, clarificaciones."""
 import json
 import sys
+from collections import defaultdict
 from pathlib import Path
 
 path = Path(sys.argv[1]) if len(sys.argv) > 1 else Path("artifacts/dogfood/dogfood_dogfood_20260627.jsonl")
@@ -15,6 +16,8 @@ ref_checks = []
 waterfalls = []
 outcome_counts = {}
 false_clarifs = []
+stage_timings = defaultdict(list)
+http_durations = []
 
 for r in recs:
     s = r.get("summary", {})
@@ -53,6 +56,16 @@ for r in recs:
         hit_ref = ref and ref in blob
         hit_uid = uid and uid in blob
         ref_checks.append((r, ref, uid, hit_ref, hit_uid))
+
+    # Etapa 5: timings por etapa + métricas HTTP (si la corrida los trae).
+    res = r.get("result", {}) or {}
+    tm = res.get("timings_ms") or s.get("timings_ms") or {}
+    for k, v in tm.items():
+        if isinstance(v, (int, float)):
+            stage_timings[k].append(v)
+    for m in (res.get("http_metrics") or []):
+        if isinstance(m.get("duration_ms"), (int, float)):
+            http_durations.append(m["duration_ms"])
 
     # Etapa 3: auditoría diferencial de recall. Se persiste cuando el path de
     # zero-results la engancha (Etapa 4); aquí solo se reporta si está presente.
@@ -98,6 +111,22 @@ n = len(mss)
 print(f"  p50={mss[n//2]/1000:.1f}s  p90={mss[int(n*0.9)]/1000:.1f}s  max={mss[-1]/1000:.1f}s")
 for ms, r in sorted(slow, reverse=True)[:8]:
     print(f"  {ms/1000:5.1f}s  [{r['suite_id']}/{r['scenario_id']} t{r['turn_index']}] {r['query'][:55]}")
+
+print("\n" + "=" * 70)
+print("INSTRUMENTACIÓN — timings por etapa (Etapa 5)")
+print("=" * 70)
+if not stage_timings:
+    print("  (sin timings_ms — corrida previa a Etapa 5)")
+for stage, vals in sorted(stage_timings.items()):
+    v = sorted(vals)
+    n = len(v)
+    p50 = v[n // 2]
+    p90 = v[min(int(n * 0.9), n - 1)]
+    print(f"  {stage:22} p50={p50/1000:6.2f}s  p90={p90/1000:6.2f}s  max={v[-1]/1000:6.2f}s  n={n}")
+if http_durations:
+    plateaus = {f"~{b}s": sum(1 for d in http_durations if abs(d - b * 1000) < 2000) for b in (15, 30, 45, 60)}
+    print(f"  HTTP ops={len(http_durations)}  mesetas (±2s, posible retry/timeout): "
+          + " ".join(f"{k}={v}" for k, v in plateaus.items() if v))
 
 print("\n" + "=" * 70)
 print("OUTCOMES (Etapa 4: bidimensional)")

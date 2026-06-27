@@ -182,6 +182,32 @@ class SecopalWorkflow:
             run_started_at=time.perf_counter(),
         )
 
+        # Etapa 5: la recolección de telemetría es por-turno = por-run_query. begin
+        # aquí + end en finally garantiza el cierre del ContextVar en TODA salida
+        # (early return de cualquier handler, excepción). El attach es CENTRALIZADO:
+        # todos los handlers exponen http_metrics, no solo normal_flow. El token hace
+        # segura la anidación (un run_query dentro de otro restaura el buffer externo).
+        from app.core.instrumentation import attach_telemetry, begin_collection, end_collection
+        token = begin_collection()
+        try:
+            result = self._dispatch(ctx, seed_resolved_params)
+        except BaseException:
+            # El turno abortó sin result: cerramos el collector y NO perdemos la
+            # evidencia del error (un timeout es justo donde más importa). El attach
+            # no aplica porque no hay result; la telemetría va al log estructurado.
+            metrics = end_collection(token)
+            if metrics:
+                logger.warning(
+                    "run_query abortado tras capturar %d métricas HTTP: %s",
+                    len(metrics), [dict(m) for m in metrics],
+                )
+            raise
+        metrics = end_collection(token)
+        attach_telemetry(result, metrics)
+        return result
+
+    def _dispatch(self, ctx: HandlerContext, seed_resolved_params: dict | None) -> dict:
+        """Chain of responsibility — first non-None handler result wins."""
         if seed_resolved_params:
             res = handle_refinement(self.deps, ctx, seed_resolved_params)
             if res is not None:

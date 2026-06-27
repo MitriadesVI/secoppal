@@ -58,6 +58,8 @@ OPPORTUNITY_STAGE_SHADOW_ENABLED = True
 
 def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
     """Run the full Burr pipeline and post-process the resulting state."""
+    # Etapa 5: la recolección se inicia/cierra en run_query (por-turno); aquí solo se
+    # lee lo capturado.
     # Follow-up detection
     history = deps.conv_store.get_history(ctx.chat_id, last_n=5) if ctx.chat_id else []
     last_turn = history[-1] if history else None
@@ -280,6 +282,10 @@ def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
     result["outcome"] = outcome
     result["outcome_reason"] = outcome_reason
     result["query_fingerprint"] = query_fingerprint(resolved)
+
+    # Etapa 5: las métricas HTTP y los timings agregados (fetch/count/pipeline_self)
+    # los adjunta run_query de forma CENTRALIZADA (attach_telemetry), para que TODOS
+    # los handlers — no solo este — expongan telemetría.
 
     # zero-after-refinement → honestidad + recuperación, NO falsa clarificación.
     if outcome == Outcome.EMPTY and outcome_reason == OutcomeReason.ZERO_AFTER_REFINEMENT:

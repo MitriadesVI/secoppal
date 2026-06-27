@@ -447,6 +447,71 @@ fetch_results, count, observe, rank, render, total`. **Reloj monotónico
 
 **Verificación:** corrida completa + `eval_dogfood.py <jsonl>`.
 
+**ESTADO: ✅ COMPLETA (Opus). Estrictamente observacional — no cambia comportamiento.**
+Módulo nuevo `app/core/instrumentation.py`: recolección **pasiva** vía `ContextVar`
+(si un turno no llama `begin_collection`, `record_http` es no-op → costo nulo, gate de
+overhead cumplido); reloj **inyectable** (`perf_counter`, falso en tests, sin `sleep`);
+`http_span` cronometra y registra en **`finally`** (captura el dato incluso en timeout);
+`query_hash` (telemetría guarda hash, no el SoQL completo); `is_timeout_exception`
+recorre la cadena causal. `secop_client.py` instrumenta `query`/`count`/`aggregate` con
+`http_span` envolviendo SOLO la llamada de red (retry/returns intactos). `normal_flow.py`
+activa la recolección (`begin_collection`) y al final `end_collection` → adjunta
+`http_metrics` al result y deriva `timings_ms[fetch_results_ms/count_ms/http_attempts]`
+de ellas, sin instrumentar cada acción del grafo. `results.py` +`http_metrics`.
+`eval_dogfood.py` reporta p50/p90 por etapa + **mesetas HTTP** (±2s de 15/30/45/60s =
+posible retry/timeout). **GATE observacional verificado**: `client.query` devuelve lo
+mismo con y sin recolección activa (test). Tests: `test_instrumentation.py` (8: no-op sin
+collection, duración con reloj falso, timeout capturado en finally + re-propagado,
+query_hash, cadena causal, gate, count, timeout del cliente). Suite e2e/conversation 248
+passed. **NO optimiza nada** (si `count` tarda 60s, solo lo registra; cortarlo es Etapa 6).
+**Hardening tras revisión del asesor (2026-06-28):**
+- **Lifecycle del ContextVar movido a `run_query`** (`begin_collection` + `finally:
+  end_collection`): cubre TODA salida (early return de cualquier handler, excepción,
+  short-circuit), no solo el camino feliz de `normal_flow` (que ahora solo *lee* con
+  `collected_http`). Test: una excepción en el flujo deja el collector cerrado (el
+  siguiente turno del mismo worker no hereda métricas).
+- **Retries como métricas independientes** + `retry_delay` (backoff) registrado aparte:
+  distingue "una llamada de 60s" de "30 + backoff + 30". Test con `max_retries=2`.
+- **Desglose por etapa: ya existía en el grafo** (`parse_ms, apply_context_ms,
+  resolve_ms, build_soql_ms, observe_ms, rank_ms, format_ms, total_ms`). La Etapa 5
+  añadió la capa HTTP (`fetch_results_ms, count_ms, retry_delay_ms, http_wall_ms,
+  http_attempts`) + `total_wall_ms` + **`pipeline_self_ms`** (= total − HTTP, responde
+  "¿Socrata o nosotros?"). No hizo falta instrumentar más acciones.
+- **Overhead medido honestamente** (no "nulo"): +0.14 µs/query en absoluto con
+  recolección activa (microbench 50k); frente a una query SECOP real (cientos de ms) es
+  despreciable. Inactiva: no-op de un `ContextVar.get`.
+
+**2ª ronda de hardening (asesor, 2026-06-28):**
+- **Attach CENTRALIZADO en `run_query`** (no solo `normal_flow`): cerrar el collector no
+  bastaba — los handlers alternos (lookup, paginación, dual, analítico) cerraban pero no
+  exponían `http_metrics`. Ahora `run_query` hace `_dispatch()` (un solo punto de retorno)
+  → `end_collection(token)` en finally → `attach_telemetry(result, metrics)`. Todos los
+  handlers exponen telemetría. Test: un handler alterno monkeypatcheado obtiene
+  `http_metrics` + `pipeline_self_ms` vía run_query.
+- **`ContextVar` con token (anidación segura)**: `begin_collection` devuelve token;
+  `end_collection(token)` **restaura** el buffer previo (no lo deja en None). Un
+  `run_query` anidado conserva las métricas del externo; protege workers concurrentes.
+  Test de anidación (externo conserva sus métricas tras cerrar el interno).
+Tests de instrumentación: 12. Suite e2e/conversation: 287 passed.
+
+**3ª ronda de hardening (asesor, 2026-06-28):**
+- **(A) Evidencia del error no se pierde**: si `_dispatch` lanza sin result,
+  `attach_telemetry` no aplica; `run_query` captura las métricas en el `except`,
+  las registra en log estructurado y re-propaga. Test con `caplog`.
+- **(B) Copia defensiva**: `attach_telemetry` adjunta `[dict(m) for m in metrics]`, no
+  el buffer mutable del collector (importa con anidación/reutilización de workers).
+- **(C) Anidación no contamina spans**: el test de anidación confirma que el buffer
+  externo conserva solo sus métricas tras cerrar el interno (token restore).
+
+**PERFIL LIVE (Etapa 5 → insumo de Etapa 6):** `docs/PERFIL_LATENCIA_2026-06-28.md`.
+Corrida dirigida limpia (22 turnos, delay 1.5). Hallazgos: **count es el mayor ofensor
+evitable** (p50 22s, completed, bloquea); **timeouts son llamadas únicas de 60s** (no
+retries); daño concentrado en `procesos` + `air_conditioning`/`paginación`; **dual ~2×
+secuencial**; pipeline propio ~4.5s determinista + 3s narrator (no es el cuello). Dos
+cohortes: fuente sana p50 4.8s, degradada 60s hasta error honesto (14% turnos). PENDIENTE
+antes de fijar cifras de Etapa 6: corrida de 48 turnos ×2 (no construir la política sobre
+una tarde mala de Socrata).
+
 ---
 
 ### Etapa 6 — Política de latencia (SLO separado, no gate rígido sobre SECOP)

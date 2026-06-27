@@ -80,6 +80,8 @@ CANONICAL_KEYS: frozenset[str] = frozenset({
     "query_fingerprint",
     "recovery_delta",
     "recall_audit",
+    # Etapa 5: telemetría observacional.
+    "http_metrics",
 })
 
 
@@ -125,6 +127,7 @@ class WorkflowResult(TypedDict, total=False):
     query_fingerprint: str
     recovery_delta: dict
     recall_audit: dict
+    http_metrics: list[dict]
 
 
 # ─────────────────────────────────────────────────────────────────────────────
