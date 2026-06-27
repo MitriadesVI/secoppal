@@ -64,7 +64,7 @@ def _detected_entity(detection) -> str | None:
     if isinstance(detection, (tuple, list)) and len(detection) >= 3:
         cand = detection[2]
         return str(cand) if cand else None
-    for attr in ("entity", "entidad", "entidad_resolved"):
+    for attr in ("entity_qualifier_raw", "entidad", "entidad_resolved"):
         cand = getattr(detection, attr, None)
         if cand:
             return str(cand)

@@ -156,5 +156,5 @@ def test_dialogue_invariants(seq_id, seq, tmp_path):
 )
 def test_known_bug_detect_direct_lookup_false_positive():
     from app.core.workflow.handlers.direct_lookup import detect_direct_lookup
-    value, kind = detect_direct_lookup("contratos de salud en huila")
-    assert value is None, f"misclasificó como referencia {value!r} ({kind})"
+    request = detect_direct_lookup("contratos de salud en huila")
+    assert request is None, f"misclasificó como referencia {request!r}"

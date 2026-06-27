@@ -67,6 +67,12 @@ CANONICAL_KEYS: frozenset[str] = frozenset({
     "contextual_filters",
     "total_count_approximate",
     "risk_flag_timeout",
+    "direct_lookup_status",
+    "direct_lookup_reason",
+    "successful_sources",
+    "failed_sources",
+    "search_attempts",
+    "source_partial",
 })
 
 
@@ -100,6 +106,12 @@ class WorkflowResult(TypedDict, total=False):
     contextual_filters: dict
     total_count_approximate: bool
     risk_flag_timeout: bool
+    direct_lookup_status: str
+    direct_lookup_reason: str
+    successful_sources: list[str]
+    failed_sources: list[str]
+    search_attempts: list[dict]
+    source_partial: bool
 
 
 # ─────────────────────────────────────────────────────────────────────────────

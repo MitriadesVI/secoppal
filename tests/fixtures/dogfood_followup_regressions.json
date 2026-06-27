@@ -118,9 +118,7 @@
       "query": "busca el proceso LP-005-2026 de la Alcaldía de Leticia",
       "expected_ref": "LP-005-2026",
       "expected_entity_contains": "LETICIA",
-      "note": "HUECO PROFUNDO: scan_entity('...leticia') devuelve None hoy — la entidad ni se detecta. Etapa 1 debe lograr que el lookup directo aplique la entidad (fuzzy/qualifier si scan falla).",
-      "xfail": true,
-      "xfail_reason": "Etapa 1 — detect_direct_lookup no expone la entidad; el lookup devuelve procesos de otras entidades (INV-5)."
+      "note": "HUECO PROFUNDO: scan_entity('...leticia') devuelve None hoy — la entidad ni se detecta. Etapa 1 debe lograr que el lookup directo aplique la entidad (fuzzy/qualifier si scan falla)."
     },
     {
       "case_id": "direct_lookup_la_estrella_samc001",
@@ -131,9 +129,7 @@
       "query": "busca el proceso SAMC 001 2026 de La Estrella",
       "expected_ref": "SAMC-001-2026",
       "expected_entity_contains": "ESTRELLA",
-      "note": "scan_entity SÍ resuelve 'MUNICIPIO DE LA ESTRELLA' hoy, pero el lookup no la usa.",
-      "xfail": true,
-      "xfail_reason": "Etapa 1 — detect_direct_lookup no expone la entidad aunque el resolver la conoce (INV-5)."
+      "note": "scan_entity SÍ resuelve 'MUNICIPIO DE LA ESTRELLA' hoy, pero el lookup no la usa."
     },
     {
       "case_id": "geo_vs_entity_atlantico_gobernacion",
