@@ -8,7 +8,44 @@
 > percentiles: el delay agresivo causó 26 `ConnectionError` (throttling), no un fallo
 > del pipeline.
 
-## Por operación HTTP
+## Corrida completa Run 1 (48 turnos · `profile_full_01` · commit 676aa35 · delay 1.5)
+
+**Evidencia principal** (el perfil dirigido de abajo fue exploratorio). Metadata en
+`artifacts/dogfood/profile_full_01.meta.json`. Pendiente Run 2 (otra franja horaria,
+mismo commit) para variabilidad.
+
+**Cohortes de 3 niveles:**
+
+| cohorte | turnos | total p50 | p90 | max |
+|---------|--------|-----------|-----|-----|
+| 1 · SANA (≤15s, sin fallo) | 31/48 (**65%**) | 4.1s | 10.4s | 12.8s |
+| 2 · LENTA-COMPLETA (>15s, respondió) | 10/48 (**21%**) | 40.5s | 80.8s | 80.8s |
+| 3 · DEGRADADA (timeout/connErr) | 7/48 (**15%**) | 60.3s | 120.6s | 120.6s |
+
+→ **65% sano; 35% problemático** (lento o fallo). `turnos>15s: 15/48 (31%)`.
+
+**`post_fetch_blocking` (count + narrator) — el premio de Etapa 6:**
+`p50=1.7s · p90=28.1s · max=62.6s`. En el 10% peor, el usuario espera **28s después de
+tener filas**. Sacar `count` de la ruta crítica (H1) recupera eso.
+
+| operación | n | p50 | p90 | max | timeouts |
+|-----------|---|-----|-----|-----|----------|
+| **count** | 19 | **13.5s** | 60.0s | 60.0s | 2 |
+| query | 76 | 1.7s | 58.8s | 60.3s | 7 |
+
+`count>10s: 10/19` (más de la mitad). Mesetas: `60s=10`, 45s=1, 30s=2, 15s=2 → el
+timeout de 60s confirmado a escala. Reparto: HTTP domina (~100%; pipeline propio ~10%).
+
+**Variabilidad confirmada (por qué hace falta Run 2):** aquí **contratos (jbjy) tuvo más
+timeouts (6) que procesos (3)** — al revés que en el dirigido. La franja horaria mueve
+qué dataset sufre; no fijar cifras sobre una sola tanda.
+
+Outcomes: `success 26 · empty/zero 10 · None/None 4 · error/fetch_timeout 4 ·
+zero_after_refinement 3 · partial/count_timeout 1`.
+
+---
+
+## (Exploratorio) Perfil dirigido — por operación HTTP
 
 | operación | n | p50 | p90 | max | timeouts |
 |-----------|---|-----|-----|-----|----------|
