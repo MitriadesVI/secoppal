@@ -122,6 +122,31 @@ def test_response_does_not_claim_order_on_sample():
     assert "4,321" in sample or "4321" in sample
 
 
+# ── 2b. (E2E advisor) build_advisor_response no afirma orden sobre muestra ───
+
+def test_advisor_response_no_ranking_claim_on_sample():
+    from app.core.response_policy import build_advisor_response
+    ctx = {
+        "user_query": "contratos de aire acondicionado",
+        "resolved_params": {"dataset": "contratos", "objeto": ["aire"]},
+        "total_count": 4321, "total_count_approximate": True,
+        "rows": [{"titulo": "x", "entidad": "E", "valor": "$1", "fecha": "2026-01-01"}] * 25,
+        "universe_insights": None, "suggestions": [], "dataset_id": DS,
+        "channel": "streamlit", "query_error": "", "risk_flag_timeout": False,
+        "timeout_suggestions": [], "needs_clarification": False,
+        "clarification_reason": "", "degraded": False, "degraded_hint": "",
+        "analytical_response": "",
+        "result_order_guarantee": "unordered_sample",
+    }
+    resp = build_advisor_response(ctx, narrator=None).lower()
+    for claim in ["más recientes", "mas recientes", "de mayor valor", "los primeros"]:
+        assert claim not in resp, f"ranking falso sobre muestra: {claim!r}"
+    assert "muestra" in resp and "sin orden garantizado" in resp
+    # baseline: con orden exacto, SÍ aparece el claim (prueba que el gate discrimina).
+    ctx["result_order_guarantee"] = "exact_order"
+    assert "más recientes" in build_advisor_response(ctx, narrator=None).lower()
+
+
 # ── 3. semántico bloquea el fallback (valor) ─────────────────────────────────
 
 def test_semantic_value_order_blocks_fallback():

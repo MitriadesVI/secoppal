@@ -96,6 +96,7 @@ def build_advisor_response(
         channel=channel,
         degraded=context.get("degraded", False),
         degraded_hint=context.get("degraded_hint", ""),
+        order_guarantee=context.get("result_order_guarantee", "exact_order"),
     )
     # Timeout retry: aviso de estrategia cambiada
     if timeout_suggestions:
@@ -253,12 +254,23 @@ def _build_clear_response(
     channel: str,
     degraded: bool,
     degraded_hint: str,
+    order_guarantee: str = "exact_order",
 ) -> str:
     """Construye respuesta completa con 5 secciones."""
     sections: list[str] = []
 
-    # Nota de degradación si aplica
-    if degraded and degraded_hint:
+    # H4: muestra recuperada por el fallback (sin ORDER BY). La respuesta NO debe afirmar
+    # orden ("más recientes"/"de mayor valor"): serían rankings falsos sobre filas
+    # arbitrarias. El conteo total es un eje independiente y se conserva.
+    is_sample = order_guarantee == "unordered_sample"
+
+    # Nota de degradación / muestra sin orden garantizado
+    if is_sample:
+        sections.append(
+            "⚠️ La búsqueda se demoró; recuperé una muestra de coincidencias, pero no "
+            "pude garantizar el orden por fecha ni por valor.\n"
+        )
+    elif degraded and degraded_hint:
         sections.append(f"⚠️ No encontre resultados exactos. Te muestro resultados {degraded_hint}:\n")
 
     # 1. Interpretación
@@ -267,20 +279,32 @@ def _build_clear_response(
 
     # 2. Universo
     shown = len(rows)
-    ordering = _build_ordering_label(resolved)
-    if total_count > shown:
-        remaining = total_count - shown
-        sections.append(
-            f"Encontre {total_count:,} resultados. "
-            f"Te muestro los {shown} {ordering}; hay {remaining:,} mas.\n"
-        )
-    elif total_count_approximate and shown == total_count:
-        sections.append(
-            f"Encontre {shown}+ resultados. "
-            f"Te muestro los {shown} {ordering}.\n"
-        )
+    if is_sample:
+        # Sin afirmación de orden: "muestra" en vez de "los N más recientes/de mayor valor".
+        if total_count > shown:
+            sections.append(
+                f"Encontre {total_count:,} coincidencias. "
+                f"Te muestro una muestra de {shown} (sin orden garantizado).\n"
+            )
+        else:
+            sections.append(
+                f"Te muestro una muestra de {shown} coincidencias (sin orden garantizado).\n"
+            )
     else:
-        sections.append(f"Encontre {shown} resultados {ordering}:\n")
+        ordering = _build_ordering_label(resolved)
+        if total_count > shown:
+            remaining = total_count - shown
+            sections.append(
+                f"Encontre {total_count:,} resultados. "
+                f"Te muestro los {shown} {ordering}; hay {remaining:,} mas.\n"
+            )
+        elif total_count_approximate and shown == total_count:
+            sections.append(
+                f"Encontre {shown}+ resultados. "
+                f"Te muestro los {shown} {ordering}.\n"
+            )
+        else:
+            sections.append(f"Encontre {shown} resultados {ordering}:\n")
 
     # 3. Lectura rápida
     lectura = _build_lectura_rapida(insights, narrator, rows, query, channel, resolved, total_count)

@@ -188,6 +188,7 @@ def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
         "degraded": state.get("degraded", False),
         "degraded_hint": state.get("degraded_hint", ""),
         "analytical_response": state.get("analytical_response", ""),
+        "result_order_guarantee": state.get("result_order_guarantee", "exact_order"),
     }, narrator=deps.narrator)
     qp = result.get("query_plan", {}) or {}
     if qp.get("should_execute") is False:
@@ -202,7 +203,11 @@ def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
     # No pasa por el narrator: la línea de conteo es la autoridad, así el LLM no
     # confunde total_count (universo SECOP) con validated_count (confirmadas).
     phrase_counts = state.get("phrase_counts")
-    if phrase_counts and not result.get("needs_clarification"):
+    # H4: en una muestra de fallback (sin orden garantizado) la validación de frases sobre
+    # esa muestra no es significativa → el header "N mejor clasificadas" confundiría. El
+    # disclaimer del advisor ya explica que es una muestra sin orden.
+    is_sample = state.get("result_order_guarantee") == "unordered_sample"
+    if phrase_counts and not result.get("needs_clarification") and not is_sample:
         from app.core.phrase_presentation import build_phrase_header, build_phrase_trace
         displayed = len(result.get("formatted_rows", []) or [])
         candidate_count = int(state.get("candidate_count", 0) or 0)
