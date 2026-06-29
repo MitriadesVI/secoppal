@@ -8,6 +8,54 @@
 > percentiles: el delay agresivo causó 26 `ConnectionError` (throttling), no un fallo
 > del pipeline.
 
+## CIERRE Etapa 6 — gate final 48 turnos (2026-06-29, commit `6a3792d`)
+
+Corrida `etapa6_final_01` (fixture `fa6a848b`, delay 1.5) tras cablear el deadline en
+direct_lookup. **No queda ningún path conocido sin presupuesto** (confirmado en corrida
+completa, no solo smoke).
+
+| criterio del gate | resultado |
+|-------------------|-----------|
+| p50 estable | **7.9s** (= H2) ✅ |
+| p90 < 15s | **11.6s** ✅ |
+| max ~deadline | **15.5s** (H2: 63.4s) ✅ |
+| turnos >15s = 0 o explicado | **1, explicado** ✅ |
+| falsos EMPTY = 0 | **0** ✅ |
+| rankings falsos = 0 | **0** ✅ |
+| **direct_lookup >15s = 0** | **0** (max 12.1s) ✅ |
+
+**El único turno >15s (15.5s) está explicado:** es un turno con fallback H4 — la query
+principal se acota a 8s (cap), el fallback sin ORDER BY añade ~2s y el count (H1) ~3s →
+15.5s. El deadline acota cada llamada; un turno con fallback las APILA (primary+fallback+
+count). Palanca opcional futura si molesta: omitir el count en el fallback (el total ya es
+aproximado en una muestra). No se hizo: 15.5s es marginal y el conteo exacto es útil.
+
+**Inspección de los 3 turnos de referencia (direct_lookup):**
+- `leticia_lp005` — 2 probes, **match exacto**, 4.5s → recall de referencias PRESERVADO.
+- `la_estrella_samc001` — 9 probes, **`budget_cut` disparó**, honesto "⏱️ en el tiempo
+  disponible", 12.1s.
+- `ascensores_scope_value` — 12 probes (1 acotada/falló), honesto "una fuente no respondió",
+  11.6s.
+→ El recorte de latencia NO dañó el recall: la referencia encontrable se halla; las
+no-confirmadas se reportan honesto sin colgar 60s.
+
+**Inconclusas sin filas:** 12 → **7** en esta corrida (12→4 en `h4_02`). El recall recuperado
+es real pero VARIABLE con la franja de Socrata (5–8 turnos recuperados según la velocidad
+de la fuente; cuando Socrata está lenta, también el fallback se corta).
+
+### Decisión de cierre — H3/H5 DEFERRED (no implementar por inercia)
+
+La evidencia no justifica seguir con todas las hipótesis:
+- **H3 (dual concurrente) — DEFERRED.** H4 recuperó la mayoría (8/12 en la mejor franja);
+  H3 solo tocaría los pocos duales. Beneficio/costo no justificado hoy.
+- **H5 (narrador fallback) — DEFERRED.** El narrador no aparece como ofensor; el flujo
+  normal quedó en p90 11–12s. Reabrir solo si la telemetría lo señala.
+
+**Etapa 6 CERRADA:** H1 ✅ H2 ✅ H2.1 ✅ H4 ✅ + direct_lookup acotado ✅. p90/max colapsados
+(60s→11.6s/15.5s), 0 falsos EMPTY, 0 rankings falsos, recall de referencias intacto.
+
+---
+
 ## H4 (fallback degradado sin ORDER BY) — validación 48 turnos (2026-06-29)
 
 Corridas `dogfood_profile_h4_01` (`3a2b3ad`) y `_h4_02` (`be8fb37`, fixture `fa6a848b`,

@@ -98,6 +98,22 @@ def main():
     for ti, sc, hits in false_rank:
         print(f"   [{ti}] {sc}: {hits}")
 
+    # ── Gate direct_lookup: ningún turno de referencia > 15s ─────────────────
+    dl_turns = [t for t in h4 if str(t["result"].get("route_reason", "")).startswith("direct_lookup")
+                or str(t["result"].get("route_reason", "")) == "entity_ref_disambiguation"]
+    dl_over15 = [t for t in dl_turns if (t.get("elapsed_ms") or 0) / 1000 > 15]
+    print(f"\n## direct_lookup: {len(dl_turns)} turnos | >15s (debe ser 0): {len(dl_over15)}")
+    for t in dl_turns:
+        r = t["result"]
+        attempts = r.get("search_attempts") or []
+        statuses = [a["status"] for a in attempts]
+        cut = any(a.get("skipped_due_to_budget") for a in attempts)
+        print(f"  [{t['turn_index']}] {t['scenario_id'][:22]:22} {t['elapsed_ms']/1000:5.1f}s "
+              f"probes={len(attempts)} ({statuses.count('completed')}ok/"
+              f"{statuses.count('failed')}fail/{statuses.count('skipped')}skip) "
+              f"budget_cut={cut} status={r.get('direct_lookup_status')}/{r.get('direct_lookup_reason')}")
+        print(f"       resp: {(r.get('response') or '')[:110]}")
+
     # ── Inspección manual: TODOS los turnos con fallback usado ───────────────
     print("\n## Inspección manual — turnos con fallback usado")
     for t in used:
