@@ -11,7 +11,9 @@ import json
 from typing import Any
 
 # Claves transitorias que NO definen la consulta (cursor/paginación/límites display).
-_TRANSIENT = frozenset({"offset", "limit", "_display_offset", "_shown_total"})
+_TRANSIENT = frozenset({
+    "offset", "limit", "_display_offset", "_shown_total", "_page_fingerprint",
+})
 
 _EMPTY = (None, [], "", {}, False)
 

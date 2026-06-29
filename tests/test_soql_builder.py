@@ -19,7 +19,8 @@ def test_build_process_query_with_ordering_signal_uses_price_only() -> None:
     assert "departamento_entidad = 'ATLANTICO'" in soql
     assert "precio_base >= 500000000" in soql
     assert "estado_de_apertura_del_proceso = 'Abierto'" in soql
-    assert "ORDER BY precio_base DESC, fecha_de_publicacion_del DESC LIMIT" in soql
+    # Etapa 8A: desempate estable por id al final del ORDER BY.
+    assert "ORDER BY precio_base DESC, fecha_de_publicacion_del DESC, id_del_proceso DESC LIMIT" in soql
 
 
 def test_build_process_query_default_orders_by_date_then_price() -> None:

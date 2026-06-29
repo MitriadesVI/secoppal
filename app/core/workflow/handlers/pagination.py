@@ -35,6 +35,7 @@ from typing import TYPE_CHECKING
 from app.core.conversation_store import is_pagination_phrase
 from app.core.direct_responses import pagination_no_history_response
 from app.core.formatter import rank_and_dedupe
+from app.core.query_fingerprint import query_fingerprint
 from app.core.soql_builder import SoQLBuilder
 from app.core.workflow.helpers import _query_first_then_count
 from app.core.workflow.persistence import persist_trace_and_turn
@@ -48,8 +49,23 @@ if TYPE_CHECKING:
 # SECOP (SoQL/observer las ignoran). Se quitan antes de construir el SoQL.
 _DISPLAY_OFFSET_KEY = "_display_offset"
 _SHOWN_TOTAL_KEY = "_shown_total"
+_PAGE_FP_KEY = "_page_fingerprint"
 # Tamaño de ventana SECOP por defecto (coincide con el default de SoQLBuilder).
 _DEFAULT_SECOP_LIMIT = 50
+
+# Etapa 8A: versión del CONTRATO de paginación (orden + ranking + validación). Si cambia
+# la semántica de cómo se ordena/valida/rankea una página, BUMPEAR → el fingerprint del
+# cursor cambia → un cursor de un deploy anterior NO se reutiliza (se reinicia desde la
+# página 1). Protege contra "continuar una página vieja" tras un cambio de código.
+_PAGINATION_CONTRACT_VERSION = "e8a-1"
+_PAGINATION_CURSOR_KEYS = (_DISPLAY_OFFSET_KEY, _SHOWN_TOTAL_KEY, _PAGE_FP_KEY)
+
+
+def _page_fingerprint(params: dict) -> str:
+    """Huella de la consulta que define la página (sin claves de cursor), versionada por
+    el contrato de paginación. Dos turnos con MISMA consulta y MISMO contrato comparten
+    huella; un cambio de consulta/dataset/orden/contrato la cambia → cursor incompatible."""
+    return query_fingerprint(params, extra={"pagination_contract": _PAGINATION_CONTRACT_VERSION})
 
 
 def _fetch_window(deps: "WorkflowDeps", params: dict) -> tuple[str, str, int, list[dict]]:
@@ -119,26 +135,42 @@ def handle_pagination(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict | Non
         # ventana SECOP explícita del turno previo.
         fetch_params = {
             k: v for k, v in prev_params.items()
-            if k not in (_DISPLAY_OFFSET_KEY, _SHOWN_TOTAL_KEY)
+            if k not in _PAGINATION_CURSOR_KEYS
         }
         fetch_params["offset"] = secop_offset
         fetch_params["limit"] = secop_limit
 
+        # Etapa 8A — FINGERPRINT GUARD: si el cursor previo trae una huella y NO coincide
+        # con la de la consulta actual (cambió consulta/dataset/orden/contrato de
+        # paginación, p.ej. tras un deploy), el cursor es INCOMPATIBLE → no se continúa la
+        # página vieja: se reinicia desde la página 1.
+        current_fp = _page_fingerprint(fetch_params)
+        prev_fp = prev_params.get(_PAGE_FP_KEY)
+        cursor_incompatible = bool(prev_fp) and prev_fp != current_fp
+        if cursor_incompatible:
+            secop_offset = 0
+            fetch_params["offset"] = 0
+
         try:
             ds_id, soql, total, ranked = _fetch_window(deps, fetch_params)
 
-            if prev_shown_total is None:
-                # El turno previo fue la búsqueda inicial: mostró bloque[0:25].
-                prev_shown_total = min(len(ranked), display_count)
-                prev_display_offset = 0
-
-            next_display_offset = prev_display_offset + display_count
-            if next_display_offset >= len(ranked):
-                # Bloque agotado → avanzar a la siguiente ventana SECOP.
-                secop_offset += secop_limit
-                fetch_params["offset"] = secop_offset
-                ds_id, soql, total, ranked = _fetch_window(deps, fetch_params)
+            if cursor_incompatible:
+                # Cursor de otro contrato/consulta: re-mostrar la página 1 desde cero.
                 next_display_offset = 0
+                prev_shown_total = 0
+            else:
+                if prev_shown_total is None:
+                    # El turno previo fue la búsqueda inicial: mostró bloque[0:25].
+                    prev_shown_total = min(len(ranked), display_count)
+                    prev_display_offset = 0
+
+                next_display_offset = prev_display_offset + display_count
+                if next_display_offset >= len(ranked):
+                    # Bloque agotado → avanzar a la siguiente ventana SECOP.
+                    secop_offset += secop_limit
+                    fetch_params["offset"] = secop_offset
+                    ds_id, soql, total, ranked = _fetch_window(deps, fetch_params)
+                    next_display_offset = 0
 
             slice_rows = ranked[next_display_offset:next_display_offset + display_count]
             if not slice_rows:
@@ -177,6 +209,7 @@ def handle_pagination(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict | Non
                 **fetch_params,
                 _DISPLAY_OFFSET_KEY: next_display_offset,
                 _SHOWN_TOTAL_KEY: prev_shown_total + len(rows),
+                _PAGE_FP_KEY: current_fp,   # E8A: huella para validar el próximo "más"
             }
             result = tabular_result(
                 response=header + response,

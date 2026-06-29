@@ -198,6 +198,12 @@ class SoQLBuilder:
             order_expr = f"{spec.value} DESC, {spec.date} DESC"
         else:
             order_expr = f"{spec.date} DESC, {spec.value} DESC"
+        # Etapa 8A: desempate ESTABLE por identificador. Sin esto, filas con misma fecha
+        # y mismo valor quedan en orden no determinista entre llamadas → páginas que se
+        # solapan/saltan al cruzar la ventana SECOP. El id es único y la columna final
+        # rompe todos los empates de forma reproducible entre procesos.
+        id_field = "id_contrato" if dataset_id == self.CONTRATOS_DATASET else "id_del_proceso"
+        order_expr = f"{order_expr}, {id_field} DESC"
         # Commit 5: con frase recall-first ampliamos el POOL de candidatos (no el
         # display, que recorta aguas abajo). Permite que el validador (Commit 6) vea
         # los positivos hoy perdidos sin que LIMIT los trunque.
