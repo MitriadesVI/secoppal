@@ -82,8 +82,18 @@ una fuente responde, otra no  → PARTIAL / partial_source_failure → conservar
 Gate de no-regresión: las invariantes de outcome y los xfail de regresión siguen verdes;
 recall conocido (referencias) no empeora.
 
-## Cifras a fijar tras la corrida 48×2
+## Cifras fijadas (tras corrida 48×2 — Run1 y Run2)
 
-Candidato de trabajo (NO definitivo): deadline total 15s · fetch inicial 8-10s · count
-≤2-3s del presupuesto restante · narrator presupuesto propio o fallback. Se ajustan con
-los percentiles reales de las dos corridas (Run1 ahora, Run2 otra franja horaria).
+Evidencia: el `count` lento es **estructural** (10-11 counts >10s en ambas corridas);
+los timeouts de fuente son **muy variables** (contratos 60s↔5s, dual 120s↔9s); ~25-31%
+de turnos >15s en ambas; total p50 estable ~7.5s. Detalle en
+`docs/PERFIL_LATENCIA_2026-06-28.md` (tabla Run1 vs Run2).
+
+- **Deadline total por turno: 15s** (la cohorte sana de Run1 cabe en <12.8s; 15s la
+  captura y corta la cola lenta/degradada). Revisable a 12s tras validar H1-H5.
+- **fetch inicial:** acotado bien por debajo de 60s (ej. 8-10s del presupuesto).
+- **count:** no bloqueante; solo con presupuesto restante (ej. ≤2-3s); si no, aproximado.
+- **narrator:** presupuesto propio o fallback determinista cuando queda poco presupuesto.
+
+Estas cifras son el punto de partida de la implementación; los criterios de aceptación
+son las hipótesis H1-H5 (medidas con una 3ª corrida tras implementar).

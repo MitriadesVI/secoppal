@@ -8,6 +8,45 @@
 > percentiles: el delay agresivo causó 26 `ConnectionError` (throttling), no un fallo
 > del pipeline.
 
+## Run 1 vs Run 2 — qué es ESTRUCTURAL y qué es de la franja
+
+Dos corridas de 48 turnos, mismo código (`676aa35`) y fixture (`986aef58070c`), ~7h de
+diferencia (Run1 18:54 UTC, Run2 01:49 UTC). Esto es lo que el asesor buscaba: separar el
+defecto estructural del ruido de Socrata.
+
+| métrica | Run 1 | Run 2 | lectura |
+|---------|-------|-------|---------|
+| **count >10s** | 10/19 | 11/? | **ESTRUCTURAL** — el count lento no depende de la franja |
+| turnos >15s | 15 | 12 | ESTRUCTURAL (~25-31%) |
+| total p50 | 7.6s | 7.4s | ESTRUCTURAL (muy estable) |
+| post_fetch_blocking p90 | 28.1s | 22.8s | **ESTRUCTURAL** (~23-28s ganables) |
+| zero_after_refinement | 3 | 3 | ESTRUCTURAL |
+| query timeout | 7 | 3 | variable (franja) |
+| count timeout | 2 | 0 | variable |
+| degradada | 7 (15%) | 3 (6%) | variable |
+| contratos p90 | 60.0s | 4.9s | **MUY variable** (Run1 degradado, Run2 sano) |
+| contratos timeouts | 6 | 1 | muy variable |
+| dual p90 | 120.3s | 8.7s | **MUY variable** (sigue al dataset degradado de la franja) |
+| total p90 | 60.3s | 45.1s | variable (cola de fuente lenta) |
+
+**Conclusión:**
+- **El `count` lento es un defecto estructural** (10-11 counts >10s en AMBAS) → **H1
+  (count fuera de la ruta crítica) es la decisión más sólida**, válida en cualquier franja.
+- **`post_fetch_blocking` ~23-28s p90 en ambas** → el premio de H1 es real y estable.
+- **Los timeouts de fuente y el dual son MUY variables** (contratos 60s↔5s, dual 120s↔9s):
+  **no se puede fijar el deadline mirando una sola corrida** — exactamente por esto se
+  pidieron dos. Pero AMBAS tienen ~25-31% de turnos >15s → **el deadline total (H2) hace
+  falta en cualquier franja**.
+- **`total p50` ~7.5s estable** → la mayoría de turnos ya responde bien; el daño está en
+  la cola (count + fuente lenta), no en el caso típico.
+
+**Cifras fijadas (con evidencia de las 2 corridas):** deadline total **15s** (la cohorte
+sana de Run1 cabe en <12.8s; 15s la captura y corta la cola); `count` no bloqueante
+(filas primero, count solo con presupuesto restante); fetch acotado bien por debajo de
+60s. Margen para bajar a 12s tras validar H1-H5.
+
+---
+
 ## Corrida completa Run 1 (48 turnos · `profile_full_01` · commit 676aa35 · delay 1.5)
 
 **Evidencia principal** (el perfil dirigido de abajo fue exploratorio). Metadata en
