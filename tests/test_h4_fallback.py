@@ -286,3 +286,66 @@ def test_deadline_exhausted_skips_request_no_false_empty():
     assert out["results"] == []                              # vacío honesto…
     assert out["query_error"] == ""                          # …NO un error/timeout falso
     assert out["fallback_attempted"] is False                # sin excepción → sin fallback
+
+
+# ── PREFLIGHT conversacional de ordering_signal (gate del asesor antes del perfil) ──
+
+import pytest  # noqa: E402
+
+from app.config import Settings  # noqa: E402
+from app.core.orchestrator import SecopalWorkflow  # noqa: E402
+
+
+def _conv_workflow(timeout=False):
+    wf = SecopalWorkflow(Settings())
+    if timeout:
+        def _q(ds, soql):
+            raise TimeoutError("SECOP timeout")
+        wf.secop_client.query = _q  # type: ignore[method-assign]
+    else:
+        wf.secop_client.query = lambda ds, soql: [{  # type: ignore[method-assign]
+            "nombre_del_procedimiento": "T", "entidad": "E", "precio_base": "100",
+            "fecha_de_publicacion_del": "2026-06-01T00:00:00.000", "urlproceso": "u",
+            "referencia_del_proceso": "R", "valor_del_contrato": "100"}]
+    wf.secop_client.count = lambda ds, soql: 1  # type: ignore[method-assign]
+    wf.narrator.narrate_with_grounding = lambda **kw: None  # type: ignore[method-assign]
+    return wf
+
+
+def test_followup_caros_propagates_semantic_order():
+    """DIRECCIÓN PELIGROSA (debe ser segura): general → "ahora los más caros" DEBE fijar
+    ordering_signal=valor_desc. Si no se propagara, H4 leería el orden como presentacional
+    y podría retirar el ORDER BY ante una petición de ranking. (El bloqueo del fallback con
+    valor_desc lo cubre test_semantic_value_order_blocks_fallback a nivel execute_query.)"""
+    wf = _conv_workflow(timeout=False)            # turno 1 responde → guarda contexto
+    wf.run_query("contratos de adulto mayor en cartagena", channel="streamlit", chat_id="pf_danger")
+    r2 = wf.run_query("ahora los mas caros", channel="streamlit", chat_id="pf_danger")
+
+    assert r2.get("resolved_params", {}).get("ordering_signal") == "valor_desc"
+    # nunca se presentó una muestra sin orden como ranking:
+    assert r2.get("result_order_guarantee") != ORDER_SAMPLE
+
+
+def test_inherited_ordering_signal_is_conservative_never_lies():
+    """FUGA SEGURA: una nueva búsqueda hereda valor_desc (no se limpia). El efecto es
+    conservador — el gate lo trata como semántico y BLOQUEA el fallback. Pierde recall,
+    pero NUNCA produce un ranking falso (la dirección peligrosa)."""
+    wf = _conv_workflow(timeout=True)
+    wf.run_query("los contratos mas caros de adulto mayor en cartagena", channel="streamlit", chat_id="pf_leak")
+    r2 = wf.run_query("muestrame contratos de educacion en cali", channel="streamlit", chat_id="pf_leak")
+
+    # invariante de seguridad: con valor_desc presente, jamás un fallback sin orden.
+    if r2.get("resolved_params", {}).get("ordering_signal") == "valor_desc":
+        assert r2.get("fallback_used") is False
+        assert r2.get("result_order_guarantee") != ORDER_SAMPLE
+
+
+@pytest.mark.xfail(strict=True, reason=(
+    "Etapa 2 (mutaciones): un cambio de tema/scope no limpia ordering_signal heredado. "
+    "Fuga SEGURA (pierde recall, no miente). Al arreglarse, este xfail pasa a XPASS."
+))
+def test_new_topic_should_clear_inherited_ordering_signal():
+    wf = _conv_workflow(timeout=False)
+    wf.run_query("los contratos mas caros de adulto mayor en cartagena", channel="streamlit", chat_id="pf_clear")
+    r2 = wf.run_query("muestrame contratos de educacion en cali", channel="streamlit", chat_id="pf_clear")
+    assert r2.get("resolved_params", {}).get("ordering_signal") is None
