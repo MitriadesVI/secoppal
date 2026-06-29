@@ -82,6 +82,12 @@ CANONICAL_KEYS: frozenset[str] = frozenset({
     "recall_audit",
     # Etapa 5: telemetría observacional.
     "http_metrics",
+    # Etapa 6 H1: estado del conteo no bloqueante.
+    "count_status",
+    "count_error_type",
+    "count_used_in_response",
+    "count_completed_before_rows",
+    "result_row_count",
 })
 
 
@@ -128,6 +134,11 @@ class WorkflowResult(TypedDict, total=False):
     recovery_delta: dict
     recall_audit: dict
     http_metrics: list[dict]
+    count_status: str
+    count_error_type: str | None
+    count_used_in_response: bool
+    count_completed_before_rows: bool
+    result_row_count: int
 
 
 # ─────────────────────────────────────────────────────────────────────────────

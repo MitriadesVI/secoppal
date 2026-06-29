@@ -108,6 +108,24 @@ def attach_telemetry(result, metrics: list[dict]) -> None:
         tm["pipeline_self_ms"] = round(max(total - http, 0.0), 1)
     result["timings_ms"] = tm
 
+    # Etapa 6 H1: estado del conteo (filas mandan; el count nunca bloquea ni fabrica 0).
+    counts = [m for m in metrics if m.get("operation") == "count"]
+    if not counts:
+        cs, cerr = "skipped", None          # no se consultó count → total = filas (exacto)
+    else:
+        last = counts[-1]
+        if last.get("status") == "completed":
+            cs, cerr = "exact", None
+        elif last.get("timeout"):
+            cs, cerr = "timed_out", last.get("exception_type")
+        else:
+            cs, cerr = "error", last.get("exception_type")
+    result["count_status"] = cs
+    result["count_error_type"] = cerr
+    result["count_used_in_response"] = cs in ("exact", "skipped")
+    result["count_completed_before_rows"] = False  # ejecución secuencial (query → count)
+    result["result_row_count"] = len(result.get("results") or result.get("rows") or [])
+
 
 # ── Utilidades ───────────────────────────────────────────────────────────────
 

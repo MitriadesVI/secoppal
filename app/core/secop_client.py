@@ -31,11 +31,25 @@ class SecopClient:
         self.domain = domain
         self.app_token = app_token
         self.timeout = timeout
+        self._injected_client = client  # None salvo en tests / clientes custom
         self.client = client or Socrata(domain, app_token=app_token, timeout=timeout)
         self.max_retries = max_retries
 
     def with_timeout(self, timeout: int) -> "SecopClient":
-        """Return a new SecopClient with a different timeout, sharing nothing mutable."""
+        """Return a new SecopClient with a different transport timeout.
+
+        Preserva el cliente inyectado (tests/custom): cambiar el timeout no debe
+        descartar un cliente mockeado ni abrir un Socrata real. Solo se crea un
+        Socrata nuevo cuando este cliente usa uno propio.
+        """
+        if self._injected_client is not None:
+            return SecopClient(
+                domain=self.domain,
+                app_token=self.app_token,
+                timeout=timeout,
+                client=self._injected_client,
+                max_retries=self.max_retries,
+            )
         if Socrata is None:
             raise RuntimeError("sodapy is required for with_timeout.")
         return SecopClient(

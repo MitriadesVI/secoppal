@@ -19,6 +19,7 @@ def _fake_workflow(tmp_path=None):
         }
     ]
     workflow.secop_client.count = lambda dataset_id, soql_query: 1  # type: ignore[method-assign]
+    workflow.secop_client.with_timeout = lambda t: workflow.secop_client  # H1: cliente acotado = mismo mock
     if tmp_path:
         workflow.conv_store = ConversationStore(base_path=tmp_path / "conversations")
     return workflow
@@ -37,6 +38,7 @@ def test_workflow_runs_end_to_end_with_fake_secop_response() -> None:
         }
     ]
     workflow.secop_client.count = lambda dataset_id, soql_query: 1  # type: ignore[method-assign]
+    workflow.secop_client.with_timeout = lambda t: workflow.secop_client  # H1: cliente acotado = mismo mock
     workflow.narrator.narrate_with_grounding = lambda **kw: None  # type: ignore[method-assign] # disable narrator
 
     result = workflow.run_query(
@@ -66,6 +68,7 @@ def test_workflow_exposes_total_count_when_universe_is_larger() -> None:
         for i in range(50)
     ]
     workflow.secop_client.count = lambda dataset_id, soql_query: 347  # type: ignore[method-assign]
+    workflow.secop_client.with_timeout = lambda t: workflow.secop_client  # H1: cliente acotado = mismo mock
     workflow.narrator.narrate_with_grounding = lambda **kw: None  # type: ignore[method-assign] # disable narrator
 
     result = workflow.run_query("pavimentacion en Cordoba", channel="telegram")

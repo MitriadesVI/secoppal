@@ -128,48 +128,51 @@ def _with_timings(state: State, timings_update: dict[str, float], **updates) -> 
     return state.update(**updates, timings_ms=timings)
 
 
+# Etapa 6 H1: presupuesto corto para el count. Las filas mandan; el conteo exacto
+# NO puede bloquear la entrega de resultados. Valor de la spec (count ≤ 2-3s).
+COUNT_BUDGET_SECONDS = 3
+
+
 def _query_first_then_count(
     secop_client: SecopClient,
     dataset_id: str,
     count_soql: str,
     soql_query: str,
     limit: int = 50,
+    count_budget_s: int = COUNT_BUDGET_SECONDS,
 ) -> tuple[int, list[dict], dict[str, float], bool]:
-    """Run query first; skip count if <limit rows. If ==limit, count with short timeout.
+    """Run query first; skip count if <limit rows. If ==limit, count within a short
+    budget so it never blocks the delivery of valid rows (Etapa 6 H1).
 
     Returns (total, results, timings, approximate).
-    approximate=True when count failed but query returned limit rows.
+    approximate=True when count failed/timed out but query returned limit rows.
     """
-    start = time.perf_counter()
-
-    # Step 1: query first
+    # Step 1: query first — las filas determinan la respuesta.
     query_start = time.perf_counter()
     results = secop_client.query(dataset_id, soql_query)
     query_ms = _elapsed_ms(query_start)
+    # rows_ready_ms: momento en que las filas están disponibles (alias de query_ms).
+    base_timings = {"secop_query_ms": query_ms, "rows_ready_ms": query_ms, "secop_count_ms": 0}
 
     shown = len(results)
     if shown < limit:
-        # Exact count known; no need to hit SECOP count
-        return shown, results, {
-            "secop_count_ms": 0,
-            "secop_query_ms": query_ms,
-        }, False
+        # Conteo exacto conocido (= filas); no se consulta count.
+        return shown, results, base_timings, False
 
-    # Step 2: count — if it fails we show "X+"
+    # Step 2: count ACOTADO. Si excede el presupuesto, falla o da timeout, devolvemos
+    # las filas con total aproximado ("X+") — NUNCA cero, NUNCA EMPTY.
+    try:
+        count_client = secop_client.with_timeout(count_budget_s)
+    except Exception:
+        count_client = secop_client  # sin sodapy real (tests): usa el inyectado
     count_start = time.perf_counter()
     try:
-        total = secop_client.count(dataset_id, count_soql)
-        count_ms = _elapsed_ms(count_start)
-        return total, results, {
-            "secop_count_ms": count_ms,
-            "secop_query_ms": query_ms,
-        }, False
+        total = count_client.count(dataset_id, count_soql)
+        base_timings["secop_count_ms"] = _elapsed_ms(count_start)
+        return total, results, base_timings, False
     except Exception:
-        count_ms = _elapsed_ms(count_start)
-        return shown, results, {
-            "secop_count_ms": count_ms,
-            "secop_query_ms": query_ms,
-        }, True
+        base_timings["secop_count_ms"] = _elapsed_ms(count_start)
+        return shown, results, base_timings, True
 
 
 def _is_timeout_exception(exc: BaseException) -> bool:
