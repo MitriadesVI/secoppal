@@ -8,6 +8,40 @@
 > percentiles: el delay agresivo causó 26 `ConnectionError` (throttling), no un fallo
 > del pipeline.
 
+## H2.1 — cierre: seguridad concurrente + desglose de los 14 timeouts
+
+**Bloqueo concurrente (RESUELTO).** `get_workflow()` es `@lru_cache` (singleton → un
+`SecopClient` compartido) y FastAPI sirve con `run_in_executor` (ThreadPool) → turnos
+**concurrentes** sobre la misma instancia. La mutación in-place del timeout
+(`temporary_timeout`) tenía race real. Sustituida por `SecopClient.derived_for_timeout`:
+cliente **derivado por llamada**, no muta el compartido (en prod Socrata propio por
+turno; preserva mocks de instancia devolviendo `self`; reutiliza fakes inyectados).
+Test concurrente: dos turnos con budgets 3s y 11s no se alteran entre sí ni al original.
+
+**Desglose de los 14 timeouts (utilidad de la respuesta):**
+
+| dimensión | valor |
+|-----------|-------|
+| inconclusas SIN filas (ERROR/FETCH_TIMEOUT) | **12** |
+| parciales CON filas | 0 |
+| falsos EMPTY | 0 |
+| otros (None/None) | 2 |
+| simples vs duales | **10 simples / 4 duales** |
+| procesos vs contratos | 5 procesos / 7 contratos (2 s/d) |
+
+**Lectura para producto:** el costo de H2 es real — 12/48 (~25%) quedan **inconclusos
+sin ninguna fila** (no "parcial con 25 resultados"). No es falso EMPTY (honesto), pero es
+recall perdido: queries que antes esperaban 30-60s y *a veces* completaban, ahora se
+cortan a ~11s. Recuperación:
+- **10 son simples** → la mayor palanca es **H4** (recuperación degradada: si la consulta
+  precisa falla pronto y queda presupuesto, intentar una variante más barata, marcada).
+- **4 son duales** → **H3** (concurrencia) los ayuda: ejecutar procesos+contratos en
+  paralelo dentro del deadline en vez de gastar el presupuesto secuencialmente.
+
+→ Predominan las **simples** (10 vs 4): la prioridad de recall es **H4**, no H3.
+
+---
+
 ## H2 (deadline total) — validación antes/después
 
 Corrida `profile_h2_01` (commit `3dd647d`) cierra la cadena de optimización:

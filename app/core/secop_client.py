@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import time
-from contextlib import contextmanager
 from typing import Any
 
 try:
@@ -36,32 +35,25 @@ class SecopClient:
         self.client = client or Socrata(domain, app_token=app_token, timeout=timeout)
         self.max_retries = max_retries
 
-    @contextmanager
-    def temporary_timeout(self, timeout_s: int):
-        """Acota el timeout de transporte SOLO durante el bloque, sobre ESTA instancia.
+    def derived_for_timeout(self, timeout_s: int) -> "SecopClient":
+        """Cliente derivado acotado a ``timeout_s``, **thread-safe** (no muta esta
+        instancia ni su transporte compartido).
 
-        A diferencia de ``with_timeout`` (crea un cliente nuevo), preserva la instancia
-        y por tanto cualquier método mockeado en tests. En producción ajusta el timeout
-        del Socrata subyacente para esa llamada. Nota (H3): mutar el timeout in-place no
-        es seguro bajo concurrencia real sobre un cliente compartido; la coordinación
-        concurrente del dual/turnos se aborda en H3.
+        - Si ``query``/``count`` fueron mockeados en ESTA instancia (monkeypatch de
+          tests), devuelve ``self`` para preservar esos métodos — sin mutar nada.
+        - Si hay un cliente inyectado (tests con fake), reutiliza ese mismo transporte
+          en un SecopClient nuevo (el fake es inmutable respecto al timeout).
+        - En producción crea un Socrata propio con el timeout acotado: cada turno/llamada
+          obtiene su transporte, sin race sobre el singleton compartido.
         """
-        target = self.client
-        had = hasattr(target, "timeout")
-        old = getattr(target, "timeout", None)
-        try:
-            if had:
-                try:
-                    target.timeout = timeout_s
-                except Exception:
-                    had = False
-            yield self
-        finally:
-            if had:
-                try:
-                    target.timeout = old
-                except Exception:
-                    pass
+        if "query" in self.__dict__ or "count" in self.__dict__:
+            return self  # métodos mockeados en la instancia: preservarlos, no mutar
+        if self._injected_client is not None:
+            return SecopClient(
+                domain=self.domain, app_token=self.app_token, timeout=timeout_s,
+                client=self._injected_client, max_retries=self.max_retries,
+            )
+        return self.with_timeout(timeout_s)
 
     def with_timeout(self, timeout: int) -> "SecopClient":
         """Return a new SecopClient with a different transport timeout.

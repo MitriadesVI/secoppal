@@ -17,7 +17,6 @@ contract suite (``tests/test_orchestrator_golden.py``).
 """
 from __future__ import annotations
 
-import contextlib
 import time
 from dataclasses import dataclass
 from typing import TYPE_CHECKING
@@ -134,20 +133,15 @@ def _with_timings(state: State, timings_update: dict[str, float], **updates) -> 
 COUNT_BUDGET_SECONDS = 3
 
 
-@contextlib.contextmanager
-def _bounded(client, timeout_s):
-    """Ejecuta el bloque con el timeout de transporte acotado, SOBRE la misma instancia.
+def _client_for(client, timeout_s):
+    """Devuelve el cliente acotado al presupuesto (thread-safe, no muta el compartido).
 
-    Solo aplica sobre un ``SecopClient`` real (su ``temporary_timeout`` es un CM genuino).
-    Para mocks/fakes hace bypass: un ``temporary_timeout`` autogenerado por MagicMock
-    tendría ``__exit__`` truthy y suprimiría excepciones. No crea clientes nuevos →
-    preserva métodos mockeados en tests.
+    Sin presupuesto o cliente no-SecopClient (fakes) → el mismo cliente. Sobre un
+    ``SecopClient`` real usa ``derived_for_timeout`` (cliente derivado por llamada).
     """
     if timeout_s is None or not isinstance(client, SecopClient):
-        yield
-    else:
-        with client.temporary_timeout(timeout_s):
-            yield
+        return client
+    return client.derived_for_timeout(timeout_s)
 
 
 def _query_first_then_count(
@@ -193,8 +187,7 @@ def _query_first_then_count(
 
     query_start = time.perf_counter()
     try:
-        with _bounded(secop_client, query_budget):
-            results = secop_client.query(dataset_id, soql_query)
+        results = _client_for(secop_client, query_budget).query(dataset_id, soql_query)
     except Exception as exc:
         if dl is not None:
             record_deadline(
@@ -226,8 +219,8 @@ def _query_first_then_count(
 
     count_start = time.perf_counter()
     try:
-        with _bounded(secop_client, max(1, math.ceil(effective_count_budget))):
-            total = secop_client.count(dataset_id, count_soql)
+        count_client = _client_for(secop_client, max(1, math.ceil(effective_count_budget)))
+        total = count_client.count(dataset_id, count_soql)
         base_timings["secop_count_ms"] = _elapsed_ms(count_start)
         return total, results, base_timings, False
     except Exception:

@@ -69,23 +69,33 @@ def test_empty_fetch_does_not_invent_total():
     assert c.count_calls == 0  # 0 real (sin filas), no un count fallido inventado
 
 
-def test_temporary_timeout_mutates_and_restores_same_instance():
-    # El acote NO crea cliente nuevo: muta el timeout del transporte y lo restaura,
-    # preservando la instancia (y sus métodos mockeados).
+def test_derived_for_timeout_is_thread_safe_no_mutation():
+    # El acote NO muta la instancia compartida: devuelve un cliente derivado.
     from app.core.secop_client import SecopClient
 
     class FakeSocrata:
-        def __init__(self):
-            self.timeout = 30
+        def __init__(self, timeout=30):
+            self.timeout = timeout
 
         def get(self, dataset_id, query=None):
             return []
 
-    sc = SecopClient("d", None, client=FakeSocrata())
-    assert sc.client.timeout == 30
-    with sc.temporary_timeout(3):
-        assert sc.client.timeout == 3  # acotado durante el bloque
-    assert sc.client.timeout == 30     # restaurado al salir
+    shared = SecopClient("d", None, client=FakeSocrata())
+    a = shared.derived_for_timeout(3)
+    b = shared.derived_for_timeout(11)
+    # Dos turnos solapados con presupuestos distintos: ninguno altera al otro ni al original.
+    assert a.timeout == 3 and b.timeout == 11
+    assert shared.timeout == 30  # el compartido NO se mutó
+
+
+def test_derived_preserves_monkeypatched_instance():
+    # Si los métodos están mockeados en la instancia, el derivado es la MISMA instancia
+    # (preserva el mock; no abre transporte real).
+    from app.core.secop_client import SecopClient
+
+    sc = SecopClient("d", None, client=object())
+    sc.query = lambda dataset_id, soql: [{"x": 1}]  # monkeypatch de instancia
+    assert sc.derived_for_timeout(5) is sc
 
 
 # ── count_status derivado (attach_telemetry) ─────────────────────────────────
