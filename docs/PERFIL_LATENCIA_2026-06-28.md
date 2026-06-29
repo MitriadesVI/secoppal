@@ -8,6 +8,30 @@
 > percentiles: el delay agresivo causó 26 `ConnectionError` (throttling), no un fallo
 > del pipeline.
 
+## H4 (fallback degradado sin ORDER BY) — validación 48 turnos (2026-06-29)
+
+Corridas `dogfood_profile_h4_01` (`3a2b3ad`) y `_h4_02` (`be8fb37`, fixture `fa6a848b`,
+delay 1.5). Diagnóstico H4.0: los 12 timeouts comparten `ORDER BY` compuesto + `LIKE`, pero
+esa forma está también en el 100% de los éxitos → el diferenciador es el universo, no la
+sintaxis. H4 = UN fallback sin ORDER BY (LIMIT≤50), gate semántico, reparto 8/3/4.
+
+| métrica | H2 | **H4 (h4_02)** |
+|---------|----|----|
+| total p50 | 7.9s | 8.0s |
+| total p90 | 11.3s | **11.6s** |
+| inconclusas sin filas (error/fetch_timeout) | 12 | **4** |
+| success/results_found | 15 | **21** |
+| falsos EMPTY | 0 | **0** |
+| rankings falsos sobre muestra | — | **0** |
+| fallback ante orden semántico | — | **0** |
+
+Fallbacks: intentados 5, exitosos 3 (todos `substantive_filters_preserved`, WHERE idéntico
+a la principal). **max=67s NO es H4**: es un turno `direct_lookup` (12 variantes de
+referencia en serie, una de 52s) que NO pasa por el deadline — fuga preexistente (H2 igual
+a 63s), fuera del alcance de H4. Tarea aparte: cablear el deadline en direct_lookup.
+
+---
+
 ## H2.1 — cierre: seguridad concurrente + desglose de los 14 timeouts
 
 **Bloqueo concurrente (RESUELTO).** `get_workflow()` es `@lru_cache` (singleton → un

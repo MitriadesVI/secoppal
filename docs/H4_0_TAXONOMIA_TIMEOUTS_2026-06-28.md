@@ -168,9 +168,33 @@ Implementado tras la revisión del asesor (8 ajustes aplicados). Suite: **1900 p
 5. **Preservación estructural**: el WHERE del fallback es idéntico al de la principal
    (solo cambian ORDER BY y LIMIT) — verificado byte-a-byte en tests.
 
-**Pendiente de cierre (gate del asesor):** perfil de 48 turnos con H4, medir fallbacks
-intentados/exitosos, filas recuperadas, inconclusas restantes, p50/p90/max, 0 falsos EMPTY,
-0 afirmaciones falsas de ranking; inspección manual de los turnos que usaron fallback.
+**Cierre del gate (2026-06-29) — perfil de 48 turnos H4 vs H2, suite 1903 passed.**
+Corridas `dogfood_profile_h4_01` (commit `3a2b3ad`) y `_h4_02` (commit `be8fb37`, tras el
+fix de respuesta). Resultados E2E (h4_02 vs h2_01):
+
+| criterio | objetivo | resultado |
+|----------|----------|-----------|
+| inconclusas sin filas | 12 → ≤4 | **12 → 4** ✅ |
+| falsos EMPTY | 0 | **0** ✅ |
+| rankings falsos sobre muestra | 0 | **0** ✅ (ver abajo) |
+| fallback ante orden semántico | 0 | **0** ✅ |
+| filtros sustantivos preservados | siempre | **WHERE idéntico** en los 3 fallbacks ✅ |
+| p50 sin empeorar | ~igual | 7.9s → **8.0s** ✅ |
+| p90 | < 15s | **11.6s** ✅ |
+| success | — | 15 → **21** |
+
+**Bug capturado por la inspección manual (la razón del gate).** En `_h4_01` los 3 fallbacks
+exitosos AÚN decían "más recientes": el fix del formatter era insuficiente —
+`response_policy.build_advisor_response` es el generador visible real y tenía su propio
+`_build_ordering_label`. Arreglado (commit `be8fb37`): recibe `result_order_guarantee`,
+antepone el disclaimer y no afirma orden; el header de frases se suprime en muestras de
+fallback. `_h4_02` confirma **0 rankings falsos** E2E.
+
+**max=67s NO es H4 (fuga preexistente, fuera de alcance).** El outlier es un turno
+`direct_lookup` ("busca la referencia SAMC 001 2026"): prueba 12 variantes de referencia
+en SERIE, una tardó 52s; ese path NO pasa por el deadline (H2 solo se cableó en el fetch
+normal). H2 tenía el mismo turno a 63s. Dentro del path que H4 toca, max ≈ 14.8s. Tarea
+separada: cablear el deadline en `direct_lookup` + acotar las variantes seriales.
 
 **Fuera de alcance de H4 (anotado):** la posible *fuga* de `ordering_signal` entre turnos
 ("los más caros" → nueva búsqueda) es territorio de la política de mutaciones (Etapa 2). El
