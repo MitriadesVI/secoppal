@@ -19,6 +19,32 @@ continuar un cursor de otra consulta/contrato). PERO:
    entren PhraseSpec complejas / nodos semánticos.
 3. **Un solo "total"** ambiguo (universo SECOP) — no se distingue de validados/mostrados.
 
+## Precisión de implementación — UNIFICAR antes de CACHEAR (crítico)
+
+> Añadido 2026-06-29. "Buffer canónico" se puede malinterpretar como "añadir caché". **El
+> buffer NO es el arreglo; es la consecuencia.** El defecto raíz son DOS rutas de ranking
+> (página 1 = `rank_results`/`rank_candidate_pool` + validador de frases; "más" =
+> `rank_and_dedupe` del formatter, sin validación). Cachear sin unificar solo CACHEA la
+> inconsistencia: la página 2 seguiría con distinta calidad, ahora persistida.
+
+**Orden obligatorio dentro de E8B:**
+```
+1. UNIFICAR: handle_pagination usa la MISMA ruta de validación+ranking que normal_flow
+   (rank_candidate_pool / rank_results), NO rank_and_dedupe. Verificable de inmediato:
+   la concatenación de páginas == la secuencia validada+rankeada completa de la fuente.
+2. CACHEAR: recién entonces, guardar esa salida única en validated_ranked_buffer + cursores
+   (lo demás de esta spec). El buffer es caché de la ruta unificada, no un segundo camino.
+```
+Si se hace al revés (buffer primero), el invariante "P1 ≡ PN" no se cumple aunque las
+páginas no se repitan.
+
+## Riesgo de primer orden — dual-dataset (diseñar, no descubrir)
+
+El buffer es **por grupo** (procesos y contratos tienen rankings independientes; no hay
+ranking global — ADR-038). Un buffer único global mezclaría universos y totales. El guard
+dual actual ("más" tras dual pregunta cuál grupo) debe integrarse: el buffer se asocia a
+`(fingerprint, grupo)`, y "más procesos"/"más contratos" avanzan cursores distintos.
+
 ## Modelo de estado (a persistir por conversación)
 
 ```
@@ -72,6 +98,16 @@ PaginationBuffer:
   ocurre al agotar el buffer validado.
 - Tests: validación idéntica P1≡PN, dedup al fusionar lotes, 3 totales coherentes,
   expiración por TTL, reanudación, consultas duales (buffer por grupo).
+
+## Gate de aceptación (no "aprobar en falso")
+
+No basta con "las páginas no se repiten". El gate clave —el más fácil de aprobar en
+falso— es **P1 ≡ PN**: la **concatenación de todas las páginas** mostradas debe ser
+**idéntica** (mismas filas, mismo orden) al prefijo de la **secuencia validada+rankeada
+completa** que produce la ruta única sobre la fuente. El test debe construir ambas y
+comparar la lista, no solo verificar disjunción. Perfil dirigido de paginación que cierra
+E8B: literal simple · PhraseSpec · exclusiones · empates fecha+valor · agotamiento y
+ampliación del buffer · dual. Solo con eso se declara **Etapa 8 cerrada**.
 
 ## Qué NO hacer
 
