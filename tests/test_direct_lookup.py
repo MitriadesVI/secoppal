@@ -4,12 +4,20 @@ from __future__ import annotations
 import pytest
 
 from app.core.direct_lookup import (
-    detect_direct_lookup,
+    detect_direct_lookup as _detect_direct_lookup,
     dataset_for_id,
     normalize_entity_ref,
     build_entity_ref_soql,
     PREFIX_DATASET,
 )
+
+
+def detect_direct_lookup(raw_query: str):
+    """Adapta expectativas históricas sin contaminar el dataclass de producción."""
+    request = _detect_direct_lookup(raw_query)
+    if request is None:
+        return None, None
+    return request.lookup_value, request.lookup_kind
 
 
 class TestDetection:

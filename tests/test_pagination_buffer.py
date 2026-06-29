@@ -146,3 +146,47 @@ def test_rank_and_dedupe_collapses_versions_without_cutting():
     out = rank_and_dedupe(rows, "p6dx-8zbt", {})
     ids = [r["id_del_proceso"] for r in out]
     assert len(ids) == len(set(ids)) == 30, f"esperaba 30 únicos, hubo {len(ids)}"
+
+
+# ── Etapa 8A: orden estable por id + fingerprint guard ───────────────────────
+
+def test_order_has_stable_id_tiebreak():
+    """El ORDER BY termina en el id (desempate reproducible de fecha+valor empatados)."""
+    from app.core.soql_builder import SoQLBuilder
+    b = SoQLBuilder()
+    soql_p = b.build("p6dx-8zbt", {"objeto": ["aseo"]})
+    soql_c = b.build("jbjy-vk9h", {"objeto": ["aseo"]})
+    assert "ORDER BY" in soql_p and soql_p.split("ORDER BY")[1].split("LIMIT")[0].strip().endswith("id_del_proceso DESC")
+    assert soql_c.split("ORDER BY")[1].split("LIMIT")[0].strip().endswith("id_contrato DESC")
+
+
+def test_page_fingerprint_stable_and_change_sensitive():
+    from app.core.workflow.handlers.pagination import _page_fingerprint
+    a = _page_fingerprint({"objeto": ["aseo"], "dataset": "contratos", "_display_offset": 25})
+    b = _page_fingerprint({"objeto": ["aseo"], "dataset": "contratos", "_display_offset": 50})
+    # El cursor (_display_offset) NO cambia la huella: misma consulta.
+    assert a == b
+    # Cambiar la consulta o el dataset SÍ la cambia.
+    assert a != _page_fingerprint({"objeto": ["vias"], "dataset": "contratos"})
+    assert a != _page_fingerprint({"objeto": ["aseo"], "dataset": "procesos"})
+
+
+def test_pagination_resets_on_incompatible_cursor(tmp_path, monkeypatch):
+    """Si el contrato de paginación cambia (deploy), el cursor previo es incompatible
+    (huella distinta) → 'más' NO continúa la página vieja: reinicia desde la página 1."""
+    import app.core.workflow.handlers.pagination as pag
+    wf = _wf(tmp_path, monkeypatch)
+    chat = "buf_fp"
+    wf.run_query(
+        "procesos de adulto mayor de alcaldia de barranquilla de 2026",
+        channel="streamlit", chat_id=chat,
+    )
+    r2 = wf.run_query("muestrame mas", channel="streamlit", chat_id=chat)
+    p2 = _shown_indices(r2)
+    assert p2 and min(p2) >= 25, f"la página 2 debería empezar tras la 1: {p2}"
+
+    # Simular un deploy que cambia el contrato de orden/ranking/validación.
+    monkeypatch.setattr(pag, "_PAGINATION_CONTRACT_VERSION", "e8a-CHANGED")
+    r3 = wf.run_query("muestrame mas", channel="streamlit", chat_id=chat)
+    p3 = _shown_indices(r3)
+    assert 0 in p3, f"cursor incompatible → debió reiniciar en la página 1: {p3}"

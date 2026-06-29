@@ -157,7 +157,8 @@ class SoQLBuilder:
     def dataset_id_for(cls, dataset_name: str | None) -> str:
         return cls.CONTRATOS_DATASET if dataset_name == "contratos" else cls.PROCESOS_DATASET
 
-    def build(self, dataset_id: str, params: dict, *, allow_global: bool = False) -> str:
+    def build(self, dataset_id: str, params: dict, *, allow_global: bool = False,
+              include_order: bool = True) -> str:
         spec = self.SPECS[dataset_id]
         where_clause = self._build_where(spec, params, allow_global=allow_global)
 
@@ -197,6 +198,12 @@ class SoQLBuilder:
             order_expr = f"{spec.value} DESC, {spec.date} DESC"
         else:
             order_expr = f"{spec.date} DESC, {spec.value} DESC"
+        # Etapa 8A: desempate ESTABLE por identificador. Sin esto, filas con misma fecha
+        # y mismo valor quedan en orden no determinista entre llamadas → páginas que se
+        # solapan/saltan al cruzar la ventana SECOP. El id es único y la columna final
+        # rompe todos los empates de forma reproducible entre procesos.
+        id_field = "id_contrato" if dataset_id == self.CONTRATOS_DATASET else "id_del_proceso"
+        order_expr = f"{order_expr}, {id_field} DESC"
         # Commit 5: con frase recall-first ampliamos el POOL de candidatos (no el
         # display, que recorta aguas abajo). Permite que el validador (Commit 6) vea
         # los positivos hoy perdidos sin que LIMIT los trunque.
@@ -206,6 +213,12 @@ class SoQLBuilder:
         limit_clause = f"LIMIT {limit}"
         if offset:
             limit_clause += f" OFFSET {offset}"
+
+        # H4: el fallback degradado retira el ORDER BY costoso (sort server-side sobre el
+        # universo filtrado es el cuello). Solo permitido cuando el orden es presentacional;
+        # el caller reordena la página localmente y marca result_order_guarantee.
+        if not include_order:
+            return f"SELECT {select_clause} WHERE {where_clause} {limit_clause}"
 
         return f"SELECT {select_clause} WHERE {where_clause} ORDER BY {order_expr} {limit_clause}"
 
@@ -316,6 +329,14 @@ class SoQLBuilder:
             for term in objeto_or:
                 term_conditions.extend(self._object_term_conditions(spec, str(term)))
             where_clauses.append(f"({' OR '.join(term_conditions)})")
+
+        # Exclusiones temáticas son predicados negativos independientes. Cada
+        # término se excluye tanto de objeto como de descripción, de forma
+        # simétrica a las condiciones positivas.
+        for term in params.get("objeto_exclude") or []:
+            conditions = self._object_term_conditions(spec, str(term))
+            if conditions:
+                where_clauses.append(f"NOT ({' OR '.join(conditions)})")
 
         # Phrase recall-first (Commit 5): cada PhraseSpec en objeto_phrases aporta una
         # cláusula amplia = anclas co-ocurrentes en el MISMO campo, OR entre campos.

@@ -48,7 +48,7 @@ def llm_parse(state: State, llm_handler: LLMHandler) -> State:
     return _with_timing(state, "llm_parse_ms", start, parsed_params=parsed)
 
 
-@action(reads=["parsed_params", "context_params", "followup", "user_query", "timings_ms"], writes=["parsed_params", "needs_llm", "needs_clarification", "clarification_reason", "intent_type", "followup_intent_type", "timings_ms"])
+@action(reads=["parsed_params", "context_params", "followup", "user_query", "timings_ms"], writes=["parsed_params", "needs_llm", "needs_clarification", "clarification_reason", "intent_type", "followup_intent_type", "followup_mutation", "timings_ms"])
 def apply_context(state: State) -> State:
     """Fusiona context_params del turno anterior con parsed_params del parse actual.
     Usa followup_engine.detect_and_merge para clasificar la intención granular
@@ -61,10 +61,12 @@ def apply_context(state: State) -> State:
         return _with_timing(state, "apply_context_ms", start)
 
     previous_frame = frame_from_params(state.get("context_params", {}))
+    mutation_trace: dict = {}
     intent, merged = detect_and_merge(
         text=state.get("user_query", ""),
         current_params=state.get("parsed_params", {}),
         previous_frame=previous_frame,
+        mutation_trace=mutation_trace,
     )
 
     # Guard contra WHERE 1=1 global.
@@ -87,11 +89,12 @@ def apply_context(state: State) -> State:
             ),
             intent_type=intent,
             followup_intent_type=intent,
+            followup_mutation=mutation_trace,
         )
 
     # Si el merge produjo contexto suficiente, no necesita LLM
     has_context = FollowupGuards.check_no_where_1_1(merged)
     if has_context:
-        return _with_timing(state, "apply_context_ms", start, parsed_params=merged, needs_llm=False, intent_type=intent, followup_intent_type=intent)
+        return _with_timing(state, "apply_context_ms", start, parsed_params=merged, needs_llm=False, intent_type=intent, followup_intent_type=intent, followup_mutation=mutation_trace)
 
-    return _with_timing(state, "apply_context_ms", start, parsed_params=merged, intent_type=intent, followup_intent_type=intent)
+    return _with_timing(state, "apply_context_ms", start, parsed_params=merged, intent_type=intent, followup_intent_type=intent, followup_mutation=mutation_trace)

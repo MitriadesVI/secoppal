@@ -58,6 +58,8 @@ OPPORTUNITY_STAGE_SHADOW_ENABLED = True
 
 def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
     """Run the full Burr pipeline and post-process the resulting state."""
+    # Etapa 5: la recolección se inicia/cierra en run_query (por-turno); aquí solo se
+    # lee lo capturado.
     # Follow-up detection
     history = deps.conv_store.get_history(ctx.chat_id, last_n=5) if ctx.chat_id else []
     last_turn = history[-1] if history else None
@@ -104,10 +106,20 @@ def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
         "query_error": state.get("query_error", ""),
         "intent_type": state.get("intent_type", ""),
         "followup_intent_type": state.get("followup_intent_type", ""),
+        "followup_mutation": state.get("followup_mutation", {}),
         "analytical_intent": state.get("analytical_intent", ""),
         "analytical_response": state.get("analytical_response", ""),
         "clarification_reason": state.get("clarification_reason", ""),
         "total_count_approximate": state.get("total_count_approximate", False),
+        # H4 — contrato de orden + telemetría del fallback degradado.
+        "result_order_guarantee": state.get("result_order_guarantee", "exact_order"),
+        "fallback_attempted": state.get("fallback_attempted", False),
+        "fallback_used": state.get("fallback_used", False),
+        "fallback_strategy": state.get("fallback_strategy", ""),
+        "fallback_query_status": state.get("fallback_query_status", "not_attempted"),
+        "primary_query_status": state.get("primary_query_status", ""),
+        "transformations_applied": state.get("transformations_applied", []),
+        "substantive_filters_preserved": state.get("substantive_filters_preserved", True),
         "query_plan": state.get("query_plan", {}),
         "followup": followup,
         "timings_ms": dict(state.get("timings_ms", {}) or {}),
@@ -176,6 +188,7 @@ def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
         "degraded": state.get("degraded", False),
         "degraded_hint": state.get("degraded_hint", ""),
         "analytical_response": state.get("analytical_response", ""),
+        "result_order_guarantee": state.get("result_order_guarantee", "exact_order"),
     }, narrator=deps.narrator)
     qp = result.get("query_plan", {}) or {}
     if qp.get("should_execute") is False:
@@ -190,7 +203,11 @@ def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
     # No pasa por el narrator: la línea de conteo es la autoridad, así el LLM no
     # confunde total_count (universo SECOP) con validated_count (confirmadas).
     phrase_counts = state.get("phrase_counts")
-    if phrase_counts and not result.get("needs_clarification"):
+    # H4: en una muestra de fallback (sin orden garantizado) la validación de frases sobre
+    # esa muestra no es significativa → el header "N mejor clasificadas" confundiría. El
+    # disclaimer del advisor ya explica que es una muestra sin orden.
+    is_sample = state.get("result_order_guarantee") == "unordered_sample"
+    if phrase_counts and not result.get("needs_clarification") and not is_sample:
         from app.core.phrase_presentation import build_phrase_header, build_phrase_trace
         displayed = len(result.get("formatted_rows", []) or [])
         candidate_count = int(state.get("candidate_count", 0) or 0)
@@ -252,6 +269,58 @@ def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
         except Exception as exc:  # best-effort: nunca rompe la respuesta
             logger.warning("opportunity_stage shadow failed: %s", exc)
 
+    # ── Outcome bidimensional + recuperación de refinamiento (Etapa 4) ─────
+    # Separa ambigüedad genuina (P15) de "0 tras refinamiento" (las falsas
+    # clarificaciones del dogfood). Un count aproximado es PARTIAL, no SUCCESS.
+    from app.core.outcome import Outcome, OutcomeReason, classify_outcome
+    from app.core.query_fingerprint import query_fingerprint
+    from app.core.refinement_recovery import build_recovery_message, refinement_delta
+
+    resolved = state.get("resolved_params", {}) or {}
+    qp_should_execute = (result.get("query_plan", {}) or {}).get("should_execute")
+    previous_had_results = bool(followup and last_turn and last_turn.had_results())
+    rows_returned = len(result.get("results", []) or [])
+    # Las consultas analíticas (sum/aggregate) no son tabulares: tienen su propia
+    # respuesta y 0 filas NO es vacío. No las pasamos por el modelo de recall.
+    if result.get("analytical_response"):
+        outcome, outcome_reason = Outcome.SUCCESS, OutcomeReason.RESULTS_FOUND
+    else:
+        outcome, outcome_reason = classify_outcome(
+            clarification_requested=(qp_should_execute is False),
+            query_failed=bool(result.get("query_error")),
+            query_timed_out=bool(result.get("risk_flag_timeout")),
+            count_approximate=bool(result.get("total_count_approximate")),
+            rows_returned=rows_returned,
+            previous_had_results=previous_had_results,
+        )
+    result["outcome"] = outcome
+    result["outcome_reason"] = outcome_reason
+    result["query_fingerprint"] = query_fingerprint(resolved)
+
+    # Etapa 5: las métricas HTTP y los timings agregados (fetch/count/pipeline_self)
+    # los adjunta run_query de forma CENTRALIZADA (attach_telemetry), para que TODOS
+    # los handlers — no solo este — expongan telemetría.
+
+    # zero-after-refinement → honestidad + recuperación, NO falsa clarificación.
+    if outcome == Outcome.EMPTY and outcome_reason == OutcomeReason.ZERO_AFTER_REFINEMENT:
+        last_ok = deps.conv_store.last_successful_turn(ctx.chat_id) if ctx.chat_id else None
+        if last_ok is not None:
+            delta = refinement_delta(last_ok.parsed_params, resolved)
+            result["recovery_delta"] = delta
+            result["response"] = build_recovery_message(delta)
+            result["needs_clarification"] = False
+            # Auditoría de recall (Etapa 3) on-demand, solo bajo flag: localiza el
+            # predicado asesino sin penalizar latencia en producción por defecto.
+            import os
+            if os.getenv("SECOPPAL_RECALL_AUDIT") == "1":
+                try:
+                    from app.core.recall_audit import build_predicate_waterfall, waterfall_to_dict
+                    result["recall_audit"] = waterfall_to_dict(
+                        build_predicate_waterfall(resolved, deps.secop_client)
+                    )
+                except Exception as exc:  # best-effort: diagnóstico nunca rompe la respuesta
+                    logger.warning("recall audit failed: %s", exc)
+
     trace_id = deps.feedback.log_trace(
         ctx.user_query, ctx.channel, result, user_identity=ctx.user_identity,
     )
@@ -279,6 +348,10 @@ def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
                 dataclasses.asdict(s) if hasattr(s, '__dataclass_fields__') else s
                 for s in result.get("suggestions", [])
             ],
+            outcome=outcome,
+            outcome_reason=outcome_reason,
+            result_count=rows_returned,
+            query_fingerprint=result["query_fingerprint"],
         )
 
     return result

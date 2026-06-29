@@ -142,6 +142,9 @@ NATURAL_TO_FAMILY = {
     # ── multi-word tokens ──
     "en convocatoria": "oferta_abierta",
     "en borrador": "oferta_abierta",
+    # Follow-up de control semántico: describe disponibilidad, no un objeto.
+    "todavia reciben ofertas": "oferta_abierta",
+    "reciben ofertas": "oferta_abierta",
     # ── contrato_activo ──
     # Nota: "firmado/firmados" NO están aquí. "Firmado" no tiene estado_contrato
     # en SECOP; solo fuerza dataset='contratos' vía intent_vocabulary.py.

@@ -62,11 +62,56 @@ CANONICAL_KEYS: frozenset[str] = frozenset({
     "followup",
     "trace_id",
     "narrated",
+    "followup_mutation",
     # Optional / per-branch additions documented in the constructor
     # signatures below.
     "contextual_filters",
     "total_count_approximate",
     "risk_flag_timeout",
+    "direct_lookup_status",
+    "direct_lookup_reason",
+    "successful_sources",
+    "failed_sources",
+    "search_attempts",
+    "source_partial",
+    # Etapa 4: outcome bidimensional + recuperación de refinamiento.
+    "outcome",
+    "outcome_reason",
+    "query_fingerprint",
+    "recovery_delta",
+    "recall_audit",
+    # Etapa 5: telemetría observacional.
+    "http_metrics",
+    # Etapa 6 H1: estado del conteo no bloqueante.
+    "count_status",
+    "count_error_type",
+    "count_used_in_response",
+    "count_completed_before_rows",
+    "result_row_count",
+    # Etapa 6 H2: deadline total del turno.
+    "turn_deadline_ms",
+    "turn_elapsed_ms",
+    "time_remaining_before_fetch_ms",
+    "fetch_budget_ms",
+    "fetch_elapsed_ms",
+    "fetch_status",
+    "deadline_exhausted",
+    "deadline_stage",
+    "request_attempted",
+    "request_skipped_due_to_budget",
+    "count_skipped_due_to_budget",
+    "source_partial",
+    # Etapa 6 H4: fallback degradado sin ORDER BY + contrato de orden.
+    "result_order_guarantee",
+    "fallback_attempted",
+    "fallback_used",
+    "fallback_strategy",
+    "fallback_rows",
+    "fallback_elapsed_ms",
+    "substantive_filters_preserved",
+    "transformations_applied",
+    "primary_query_status",
+    "fallback_query_status",
 })
 
 
@@ -97,9 +142,39 @@ class WorkflowResult(TypedDict, total=False):
     followup: bool
     trace_id: str
     narrated: bool
+    followup_mutation: dict
     contextual_filters: dict
     total_count_approximate: bool
     risk_flag_timeout: bool
+    direct_lookup_status: str
+    direct_lookup_reason: str
+    successful_sources: list[str]
+    failed_sources: list[str]
+    search_attempts: list[dict]
+    source_partial: bool
+    outcome: str
+    outcome_reason: str
+    query_fingerprint: str
+    recovery_delta: dict
+    recall_audit: dict
+    http_metrics: list[dict]
+    count_status: str
+    count_error_type: str | None
+    count_used_in_response: bool
+    count_completed_before_rows: bool
+    result_row_count: int
+    turn_deadline_ms: float
+    turn_elapsed_ms: float
+    time_remaining_before_fetch_ms: float
+    fetch_budget_ms: float
+    fetch_elapsed_ms: float
+    fetch_status: str
+    deadline_exhausted: bool
+    deadline_stage: str
+    request_attempted: bool
+    request_skipped_due_to_budget: bool
+    count_skipped_due_to_budget: bool
+    source_partial: bool
 
 
 # ─────────────────────────────────────────────────────────────────────────────

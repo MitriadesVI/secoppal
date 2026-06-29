@@ -71,6 +71,13 @@ class Turn:
     result_ids: list[str] = field(default_factory=list)
     trace_id: str = ""
     suggestions: list[dict] = field(default_factory=list)
+    # Etapa 4: el Turn ES el ExecutionSnapshot. Persistido a JSONL y releído como
+    # copia fresca en cada get_history → inmutable de facto (un frame futuro no puede
+    # mutar el histórico). created_at_utc = timestamp; la duración se mide aparte.
+    outcome: str = ""
+    outcome_reason: str = ""
+    result_count: int = 0
+    query_fingerprint: str = ""
 
     def to_dict(self) -> dict:
         return {
@@ -83,6 +90,10 @@ class Turn:
             "result_ids": self.result_ids,
             "trace_id": self.trace_id,
             "suggestions": self.suggestions,
+            "outcome": self.outcome,
+            "outcome_reason": self.outcome_reason,
+            "result_count": self.result_count,
+            "query_fingerprint": self.query_fingerprint,
         }
 
     @classmethod
@@ -97,7 +108,18 @@ class Turn:
             result_ids=d.get("result_ids", []),
             trace_id=d.get("trace_id", ""),
             suggestions=d.get("suggestions", []),
+            outcome=d.get("outcome", ""),
+            outcome_reason=d.get("outcome_reason", ""),
+            result_count=d.get("result_count", 0),
+            query_fingerprint=d.get("query_fingerprint", ""),
         )
+
+    def had_results(self) -> bool:
+        """True si este turno entregó resultados (para detectar zero-after-refinement)."""
+        from app.core.outcome import Outcome
+        if self.outcome:
+            return self.outcome in (Outcome.SUCCESS, Outcome.PARTIAL)
+        return bool(self.result_ids)  # compat con turnos previos a Etapa 4
 
     def age_minutes(self) -> float:
         """Minutos transcurridos desde este turno. Retorna inf si timestamp invalido."""
@@ -131,6 +153,10 @@ class ConversationStore:
         result_ids: list[str] | None = None,
         trace_id: str = "",
         suggestions: list[dict] | None = None,
+        outcome: str = "",
+        outcome_reason: str = "",
+        result_count: int = 0,
+        query_fingerprint: str = "",
     ) -> str:
         """Agrega un turno al historial. Retorna turn_id."""
         turn = Turn(
@@ -143,6 +169,10 @@ class ConversationStore:
             result_ids=list(result_ids or []),
             trace_id=trace_id,
             suggestions=suggestions or [],
+            outcome=outcome,
+            outcome_reason=outcome_reason,
+            result_count=result_count,
+            query_fingerprint=query_fingerprint,
         )
         path = self._path_for(chat_id)
         with path.open("a", encoding="utf-8") as f:
@@ -173,6 +203,17 @@ class ConversationStore:
             return None
         last = history[-1]
         return last.suggestions or None
+
+    def last_successful_turn(self, chat_id: str, *, window: int = 10) -> "Turn | None":
+        """Último turno con resultados (referencia para deshacer/ampliar un refinamiento).
+
+        No es una copia paralela de params: es una referencia al snapshot ya
+        persistido. ``failed_refinement_delta`` se calcula como diff contra su frame.
+        """
+        for turn in reversed(self.get_history(chat_id, last_n=window)):
+            if turn.had_results():
+                return turn
+        return None
 
     def clear(self, chat_id: str) -> None:
         """Elimina el historial del chat_id. No falla si no existe."""

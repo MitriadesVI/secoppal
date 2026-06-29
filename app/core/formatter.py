@@ -262,13 +262,14 @@ class Formatter:
                            params: dict | None = None, total_count: int = 0,
                            universe_insights: Any = None,
                            suggestions: list | None = None,
-                           total_count_approximate: bool = False) -> tuple[str, list[dict]]:
+                           total_count_approximate: bool = False,
+                           order_guarantee: str = "exact_order") -> tuple[str, list[dict]]:
         rows = self.to_rows(results, dataset_id, params=params)
         if channel == "telegram":
-            return self.format_telegram(rows, params=params, dataset_id=dataset_id, total_count=total_count, universe_insights=universe_insights, suggestions=suggestions, total_count_approximate=total_count_approximate), rows
+            return self.format_telegram(rows, params=params, dataset_id=dataset_id, total_count=total_count, universe_insights=universe_insights, suggestions=suggestions, total_count_approximate=total_count_approximate, order_guarantee=order_guarantee), rows
         if channel == "streamlit":
-            return self.format_streamlit(rows, params=params, dataset_id=dataset_id, total_count=total_count, universe_insights=universe_insights, suggestions=suggestions, total_count_approximate=total_count_approximate), rows
-        return self.format_whatsapp(rows, params=params, dataset_id=dataset_id, total_count=total_count, universe_insights=universe_insights, suggestions=suggestions, total_count_approximate=total_count_approximate), rows
+            return self.format_streamlit(rows, params=params, dataset_id=dataset_id, total_count=total_count, universe_insights=universe_insights, suggestions=suggestions, total_count_approximate=total_count_approximate, order_guarantee=order_guarantee), rows
+        return self.format_whatsapp(rows, params=params, dataset_id=dataset_id, total_count=total_count, universe_insights=universe_insights, suggestions=suggestions, total_count_approximate=total_count_approximate, order_guarantee=order_guarantee), rows
 
     # Dual-dataset Commit 3: presentación agrupada. Recibe dataset_groups YA
     # resueltos (DatasetGroupResult). NO construye SoQL, NO ejecuta, NO rankea —
@@ -448,21 +449,20 @@ class Formatter:
             )
         return ""
 
-    def format_whatsapp(self, rows: list[dict], params: dict | None = None, dataset_id: str | None = None, total_count: int = 0, universe_insights: Any = None, suggestions: list | None = None, total_count_approximate: bool = False) -> str:
+    def format_whatsapp(self, rows: list[dict], params: dict | None = None, dataset_id: str | None = None, total_count: int = 0, universe_insights: Any = None, suggestions: list | None = None, total_count_approximate: bool = False, order_guarantee: str = "exact_order") -> str:
         if not rows:
             return build_no_results_message(params, dataset_id)
 
         shown = len(rows)
         if total_count > shown:
-            ordering_label = self._ordering_label(params)
             remaining = total_count - shown
             header = (
                 f"📋 Encontre {total_count:,} {_resultado(total_count)} en SECOP. "
-                f"Te muestro los {shown} {ordering_label}; hay {remaining:,} mas:\n"
+                f"Te muestro {self._shown_phrase(shown, params, order_guarantee)}; hay {remaining:,} mas:\n"
             )
         elif total_count_approximate and shown == total_count:
             header = f"📋 Encontre {shown}+ {_resultado(shown)} en SECOP. " \
-                     f"Te muestro los {shown} {self._ordering_label(params)}:\n"
+                     f"Te muestro {self._shown_phrase(shown, params, order_guarantee)}:\n"
         else:
             header = f"📋 Encontre {shown} {_resultado(shown)}:\n"
         insights = self._insights_summary(universe_insights, params)
@@ -499,21 +499,20 @@ class Formatter:
             result = "⚠️ El mayor valor mostrado tiene inconsistencia de fuente; verificar SECOP.\n\n" + result
         return result
 
-    def format_telegram(self, rows: list[dict], params: dict | None = None, dataset_id: str | None = None, total_count: int = 0, universe_insights: Any = None, suggestions: list | None = None, total_count_approximate: bool = False) -> str:
+    def format_telegram(self, rows: list[dict], params: dict | None = None, dataset_id: str | None = None, total_count: int = 0, universe_insights: Any = None, suggestions: list | None = None, total_count_approximate: bool = False, order_guarantee: str = "exact_order") -> str:
         if not rows:
             return build_no_results_message(params, dataset_id)
 
         shown = len(rows)
         if total_count > shown:
-            ordering_label = self._ordering_label(params)
             remaining = total_count - shown
             header = (
                 f"Encontre {total_count:,} {_resultado(total_count)} en SECOP. "
-                f"Te muestro los {shown} {ordering_label}; hay {remaining:,} mas:\n"
+                f"Te muestro {self._shown_phrase(shown, params, order_guarantee)}; hay {remaining:,} mas:\n"
             )
         elif total_count_approximate and shown == total_count:
             header = f"Encontre {shown}+ {_resultado(shown)} en SECOP. " \
-                     f"Te muestro los {shown} {self._ordering_label(params)}:\n"
+                     f"Te muestro {self._shown_phrase(shown, params, order_guarantee)}:\n"
         else:
             header = f"Encontre {shown} {_resultado(shown)}:\n"
         insights = self._insights_summary(universe_insights, params)
@@ -547,22 +546,21 @@ class Formatter:
             result = "⚠️ El mayor valor mostrado tiene inconsistencia de fuente; verificar SECOP.\n\n" + result
         return result
 
-    def format_streamlit(self, rows: list[dict], params: dict | None = None, dataset_id: str | None = None, total_count: int = 0, universe_insights: Any = None, suggestions: list | None = None, total_count_approximate: bool = False) -> str:
+    def format_streamlit(self, rows: list[dict], params: dict | None = None, dataset_id: str | None = None, total_count: int = 0, universe_insights: Any = None, suggestions: list | None = None, total_count_approximate: bool = False, order_guarantee: str = "exact_order") -> str:
         if not rows:
             return build_no_results_message(params, dataset_id)
         shown = len(rows)
         if total_count > shown:
-            ordering_label = self._ordering_label(params)
             remaining = total_count - shown
             base = (
                 f"Encontre {total_count:,} {_resultado(total_count)} en SECOP. "
-                f"Te muestro los {shown} {ordering_label}; hay {remaining:,} mas "
+                f"Te muestro {self._shown_phrase(shown, params, order_guarantee)}; hay {remaining:,} mas "
                 "listos para explorar en tabla y tarjetas."
             )
         elif total_count_approximate and shown == total_count:
             base = (
                 f"Encontre {shown}+ {_resultado(shown)} en SECOP. "
-                f"Te muestro los {shown} {self._ordering_label(params)} "
+                f"Te muestro {self._shown_phrase(shown, params, order_guarantee)} "
                 "listos para explorar en tabla y tarjetas."
             )
         else:
@@ -671,3 +669,16 @@ class Formatter:
         if params and params.get("ordering_signal") == "valor_desc":
             return "de mayor valor"
         return "más recientes"
+
+    def _shown_phrase(self, shown: int, params: dict | None,
+                      order_guarantee: str = "exact_order") -> str:
+        """Frase de la cabecera para las filas mostradas.
+
+        H4: cuando el resultado es una MUESTRA sin garantía de orden (el fallback retiró
+        el ORDER BY), NO afirmar orden ("los más recientes" / "de mayor valor") — eso sería
+        una afirmación falsa de ranking sobre filas arbitrarias. El conteo total es un eje
+        independiente (puede ser exacto) y se conserva en el resto del header.
+        """
+        if order_guarantee == "unordered_sample":
+            return f"{shown} coincidencias (muestra sin orden garantizado)"
+        return f"los {shown} {self._ordering_label(params)}"

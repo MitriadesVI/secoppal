@@ -128,48 +128,111 @@ def _with_timings(state: State, timings_update: dict[str, float], **updates) -> 
     return state.update(**updates, timings_ms=timings)
 
 
+# Etapa 6 H1: presupuesto corto para el count. Las filas mandan; el conteo exacto
+# NO puede bloquear la entrega de resultados. Valor de la spec (count ≤ 2-3s).
+COUNT_BUDGET_SECONDS = 3
+
+
+def _client_for(client, timeout_s):
+    """Devuelve el cliente acotado al presupuesto (thread-safe, no muta el compartido).
+
+    Sin presupuesto o cliente no-SecopClient (fakes) → el mismo cliente. Sobre un
+    ``SecopClient`` real usa ``derived_for_timeout`` (cliente derivado por llamada).
+    """
+    if timeout_s is None or not isinstance(client, SecopClient):
+        return client
+    return client.derived_for_timeout(timeout_s)
+
+
 def _query_first_then_count(
     secop_client: SecopClient,
     dataset_id: str,
     count_soql: str,
     soql_query: str,
     limit: int = 50,
+    count_budget_s: int = COUNT_BUDGET_SECONDS,
+    fetch_cap_s: float | None = None,
 ) -> tuple[int, list[dict], dict[str, float], bool]:
-    """Run query first; skip count if <limit rows. If ==limit, count with short timeout.
+    """Run query first; skip count if <limit rows. If ==limit, count within a short
+    budget so it never blocks the delivery of valid rows (Etapa 6 H1).
+
+    ``fetch_cap_s`` topa el presupuesto de la query (H4): por defecto la principal usa
+    ``PRIMARY_FETCH_SECONDS`` (8s) para reservar sitio a un fallback; el fallback pasa
+    ``FALLBACK_FETCH_SECONDS`` (3s).
 
     Returns (total, results, timings, approximate).
-    approximate=True when count failed but query returned limit rows.
+    approximate=True when count failed/timed out but query returned limit rows.
     """
-    start = time.perf_counter()
+    import math
 
-    # Step 1: query first
+    from app.core.deadline import (
+        MIN_USEFUL_FETCH_SECONDS,
+        PRIMARY_FETCH_SECONDS,
+        current_deadline,
+        record_deadline,
+    )
+
+    dl = current_deadline()
+    cap = PRIMARY_FETCH_SECONDS if fetch_cap_s is None else fetch_cap_s
+
+    # Step 1: query first — las filas determinan la respuesta. ACOTADO al deadline (H2):
+    # ninguna llamada puede usar más que (restante − reserva), topado por la fase (H4).
+    query_budget = None
+    if dl is not None:
+        fb = dl.fetch_budget_s(getattr(secop_client, "timeout", 15) or 15, cap_s=cap)
+        record_deadline(
+            time_remaining_before_fetch_ms=round(max(dl.remaining_s(), 0.0) * 1000, 1),
+            fetch_budget_ms=round(max(fb, 0.0) * 1000, 1),
+        )
+        if fb < MIN_USEFUL_FETCH_SECONDS:
+            # Sin presupuesto para una llamada que pueda terminar: no se inicia.
+            record_deadline(deadline_exhausted=True, deadline_stage="fetch",
+                            fetch_status="skipped", request_skipped_due_to_budget=True)
+            return 0, [], {"secop_query_ms": 0, "rows_ready_ms": 0, "secop_count_ms": 0}, False
+        query_budget = max(1, math.ceil(fb))
+        record_deadline(request_attempted=True)
+
     query_start = time.perf_counter()
-    results = secop_client.query(dataset_id, soql_query)
+    try:
+        results = _client_for(secop_client, query_budget).query(dataset_id, soql_query)
+    except Exception as exc:
+        if dl is not None:
+            record_deadline(
+                fetch_elapsed_ms=round(_elapsed_ms(query_start), 1),
+                fetch_status="timed_out" if _is_timeout_exception(exc) else "error",
+                deadline_stage="fetch",
+            )
+        raise
     query_ms = _elapsed_ms(query_start)
+    if dl is not None:
+        record_deadline(fetch_elapsed_ms=round(query_ms, 1), fetch_status="completed")
+    # rows_ready_ms: momento en que las filas están disponibles (alias de query_ms).
+    base_timings = {"secop_query_ms": query_ms, "rows_ready_ms": query_ms, "secop_count_ms": 0}
 
     shown = len(results)
     if shown < limit:
-        # Exact count known; no need to hit SECOP count
-        return shown, results, {
-            "secop_count_ms": 0,
-            "secop_query_ms": query_ms,
-        }, False
+        # Conteo exacto conocido (= filas); no se consulta count.
+        return shown, results, base_timings, False
 
-    # Step 2: count — if it fails we show "X+"
+    # Step 2: count ACOTADO por min(budget H1, restante − reserva). Si el deadline ya no
+    # alcanza, se OMITE el count → filas + total aproximado ("X+"). NUNCA cero, NUNCA EMPTY.
+    effective_count_budget = count_budget_s
+    if dl is not None:
+        effective_count_budget = min(count_budget_s, dl.remaining_s() - dl.reserve_s)
+        if effective_count_budget < MIN_USEFUL_FETCH_SECONDS:
+            record_deadline(count_skipped_due_to_budget=True, deadline_exhausted=True,
+                            deadline_stage="count")
+            return shown, results, base_timings, True
+
     count_start = time.perf_counter()
     try:
-        total = secop_client.count(dataset_id, count_soql)
-        count_ms = _elapsed_ms(count_start)
-        return total, results, {
-            "secop_count_ms": count_ms,
-            "secop_query_ms": query_ms,
-        }, False
+        count_client = _client_for(secop_client, max(1, math.ceil(effective_count_budget)))
+        total = count_client.count(dataset_id, count_soql)
+        base_timings["secop_count_ms"] = _elapsed_ms(count_start)
+        return total, results, base_timings, False
     except Exception:
-        count_ms = _elapsed_ms(count_start)
-        return shown, results, {
-            "secop_count_ms": count_ms,
-            "secop_query_ms": query_ms,
-        }, True
+        base_timings["secop_count_ms"] = _elapsed_ms(count_start)
+        return shown, results, base_timings, True
 
 
 def _is_timeout_exception(exc: BaseException) -> bool:

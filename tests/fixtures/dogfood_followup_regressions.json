@@ -1,0 +1,170 @@
+{
+  "schema_version": "1.0",
+  "description": "Etapa 0 del PLAN_DOGFOOD_REMEDIACION_2026-06-27. Congela como regresiones permanentes los fallos DETERMINISTAS de la corrida dogfood_20260627 (params/SoQL, sin red). Los casos rotos se marcan xfail con la etapa que los arregla; cuando una etapa los repare, se quita el xfail y deben quedar verdes. Los casos de recall vivo (params correctos, fallo de ejecución) se marcan skip: se miden con run_dogfood.py + eval_dogfood.py, no aquí.",
+  "source_run": "dogfood_20260627",
+  "assertion_philosophy": "Asertar SUSTANCIA (objeto/params/SoQL), no etiquetas de intent. El intent observado se guarda en note_observed_intent solo como documentación; el test NO lo asercta, para no acoplar el fix a un nombre de intent.",
+  "cases": [
+    {
+      "case_id": "control_token_ordena_dual",
+      "category": "control_token_contamination",
+      "stage": 2,
+      "harness": "followup",
+      "source": "dual_dataset/dual_adulto_mayor_cartagena turno 2",
+      "query": "ordena los contratos por mayor valor",
+      "prev_params": {
+        "objeto": ["adulto mayor"],
+        "dataset": "contratos",
+        "ciudad": "Cartagena",
+        "dataset_scope": ["procesos", "contratos"]
+      },
+      "forbidden_objeto_tokens": ["ordena"],
+      "expected_objeto": ["adulto mayor"],
+      "expected_params": {
+        "ordering_signal": "valor_desc"
+      },
+      "note_observed_intent": "contextual_requery (debería ser change_order)"
+    },
+    {
+      "case_id": "control_token_ordenalos",
+      "category": "control_token_contamination",
+      "stage": 2,
+      "harness": "followup",
+      "source": "followup_long/cartagena_long_conversation turno 4",
+      "query": "ordénalos por mayor valor",
+      "prev_params": {
+        "objeto": ["atencion", "integral"],
+        "dataset": "contratos"
+      },
+      "forbidden_objeto_tokens": ["ordenalos", "ordena", "ordénalos"],
+      "expected_objeto": ["atencion", "integral"],
+      "expected_params": {
+        "ordering_signal": "valor_desc"
+      },
+      "note_observed_intent": "contextual_requery (debería ser change_order)"
+    },
+    {
+      "case_id": "control_token_vuelve_dataset",
+      "category": "control_token_contamination",
+      "stage": 2,
+      "harness": "followup",
+      "source": "followup_long/cartagena_long_conversation turno 8",
+      "query": "ahora vuelve a contratos",
+      "prev_params": {
+        "objeto": ["resultados"],
+        "dataset": "procesos"
+      },
+      "forbidden_objeto_tokens": ["vuelve"],
+      "expected_params": {
+        "dataset": "contratos"
+      },
+      "note_observed_intent": "change_dataset (intent correcto, objeto contaminado con 'vuelve')"
+    },
+    {
+      "case_id": "control_token_quita_rango",
+      "category": "control_token_contamination",
+      "stage": 2,
+      "harness": "followup",
+      "source": "followup_long/ascensores_scope_value turno 5",
+      "query": "quita el rango de valor",
+      "prev_params": {
+        "objeto": ["mantenimiento", "ascensores"],
+        "dataset": "procesos",
+        "valor_min": 100000000,
+        "valor_max": 150000000,
+        "estado_family": "oferta_abierta"
+      },
+      "forbidden_objeto_tokens": ["quita", "rango", "valor"],
+      "expected_objeto": ["mantenimiento", "ascensores"],
+      "expected_params": {
+        "valor_min": null,
+        "valor_max": null
+      },
+      "note_observed_intent": "contextual_requery (debería ser remove_filter)"
+    },
+    {
+      "case_id": "control_token_todavia_reciben",
+      "category": "control_token_contamination",
+      "stage": 2,
+      "harness": "followup",
+      "source": "current_opportunities/adulto_mayor_now turno 3",
+      "query": "solo las que todavía reciben ofertas",
+      "prev_params": {
+        "objeto": ["adulto_mayor"],
+        "dataset": "procesos"
+      },
+      "forbidden_objeto_tokens": ["todavia", "reciben", "todavía"],
+      "expected_objeto": ["adulto_mayor"],
+      "expected_params": {
+        "estado_family": "oferta_abierta"
+      },
+      "note_observed_intent": "contextual_requery (debería ser refine_filter de estado)"
+    },
+    {
+      "case_id": "direct_lookup_leticia_lp005",
+      "category": "direct_lookup_entity",
+      "stage": 1,
+      "harness": "direct_lookup",
+      "source": "known_references/leticia_lp005 turno 1",
+      "query": "busca el proceso LP-005-2026 de la Alcaldía de Leticia",
+      "expected_ref": "LP-005-2026",
+      "expected_entity_contains": "LETICIA",
+      "note": "HUECO PROFUNDO: scan_entity('...leticia') devuelve None hoy — la entidad ni se detecta. Etapa 1 debe lograr que el lookup directo aplique la entidad (fuzzy/qualifier si scan falla)."
+    },
+    {
+      "case_id": "direct_lookup_la_estrella_samc001",
+      "category": "direct_lookup_entity",
+      "stage": 1,
+      "harness": "direct_lookup",
+      "source": "known_references/la_estrella_samc001 turno 1",
+      "query": "busca el proceso SAMC 001 2026 de La Estrella",
+      "expected_ref": "SAMC-001-2026",
+      "expected_entity_contains": "ESTRELLA",
+      "note": "scan_entity SÍ resuelve 'MUNICIPIO DE LA ESTRELLA' hoy, pero el lookup no la usa."
+    },
+    {
+      "case_id": "geo_vs_entity_atlantico_gobernacion",
+      "category": "geo_vs_entity",
+      "stage": 7,
+      "harness": "parse",
+      "source": "geography_entity/atlantico_geo_vs_governor turno 2",
+      "query": "ahora solo de la Gobernación del Atlántico",
+      "expected_param_contains": {
+        "entidad_resolved": "DEPARTAMENTO DEL ATLANTICO"
+      },
+      "expected_params": {
+        "departamento_resolved": null
+      },
+      "note": "Etapa 7 (resolución tipada): 'Gobernación de X' = buyer_entity → entidad_resolved al COMPRADOR REAL en SECOP (Atlántico se registra como 'DEPARTAMENTO DEL ATLANTICO**', no 'GOBERNACION'). NO debe poner departamento_resolved (eso es territorio). El invariante es que difiere de 'departamento del Atlántico', no que el valor contenga la palabra del usuario."
+    },
+    {
+      "case_id": "live_recall_solo_medellin",
+      "category": "live_recall",
+      "stage": 5,
+      "harness": "followup",
+      "source": "followup_long/ascensores_scope_value turno 2",
+      "query": "solo en Medellín",
+      "prev_params": {
+        "objeto": ["mantenimiento", "ascensores"],
+        "dataset": "procesos"
+      },
+      "note": "PARAMS CORRECTOS (objeto heredado bien, ciudad=Medellin, change_scope). total=0 es fallo de EJECUCIÓN/recall vivo, no de parsing. Se mide con run_dogfood + eval_dogfood, no offline.",
+      "skip": true,
+      "skip_reason": "Recall vivo (Etapa 5): no asertable sin red; los params ya son correctos."
+    },
+    {
+      "case_id": "live_recall_entre_100_150_millones",
+      "category": "live_recall",
+      "stage": 5,
+      "harness": "followup",
+      "source": "followup_long/ascensores_scope_value turno 4",
+      "query": "entre 100 y 150 millones",
+      "prev_params": {
+        "objeto": ["mantenimiento", "ascensores"],
+        "dataset": "procesos"
+      },
+      "note": "PARAMS CORRECTOS (objeto intacto, valor_min/max 100M/150M, refine_filter). total=0 es recall vivo / value-resolution, no parsing.",
+      "skip": true,
+      "skip_reason": "Recall vivo (Etapa 5): no asertable sin red; los params ya son correctos."
+    }
+  ]
+}

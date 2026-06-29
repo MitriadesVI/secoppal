@@ -1717,3 +1717,105 @@ es legacy-raw; cubierta por el seal inverso + dual-collapse + tests, no refactor
 (ejecución/sanitización/fallo parcial/conteos/cero pérdida), `test_dual_dataset_presentation`
 (4 casos de salida + cero re-ejecución del primario), `test_dual_dataset_conversation` (collapse/
 herencia/más). Suite 1744 passed. Cero cambios a `semantic-retrieval-v1`.
+
+## ADR-039: Latencia acotada por un deadline de turno + recuperación degradada (Sprint A / Etapa 6)
+
+**Fecha:** 2026-06-29 · **Estado:** Accepted
+
+> Sprint A de remediación (rama `sprint-a-dogfood-remediation`). Plan en
+> `docs/planes/PLAN_DOGFOOD_REMEDIACION_2026-06-27.md`; perfiles en
+> `docs/PERFIL_LATENCIA_2026-06-28.md`; diagnóstico de fallback en
+> `docs/H4_0_TAXONOMIA_TIMEOUTS_2026-06-28.md`. Hipótesis H3/H5 DEFERRED (evidencia no las
+> justifica). Construido por etapas: H1 `bea06ff`, H2 `3dd647d`, H2.1 `9665971`, H4 `3a2b3ad`+
+> `be8fb37`, direct_lookup `6a3792d`.
+
+**Contexto:** la cola de latencia (p90 45–60s, max 120s, ~25–31% de turnos >15s) NO era
+comprensión lenta sino **operaciones externas que secuestraban el turno entero**: el `count`
+bloqueaba 22–60s, y un `fetch`/`query` con `ORDER BY` costoso sobre un universo amplio hacía
+timeout de 60s. El p50 (~7.5s) era sano: el daño estaba en la cola.
+
+**Decisión:** **un turno tiene un presupuesto monotónico compartido (15s) y NINGUNA llamada
+externa puede exceder el tiempo restante menos una reserva de cierre.** Propagado por
+`ContextVar` (sin cambiar firmas), reloj `perf_counter` inyectable para tests.
+- **H1 — count no bloqueante:** las filas mandan; el `count` solo corre con presupuesto
+  restante y nunca fabrica 0/EMPTY (filas + count fallido → `PARTIAL`/`COUNT_TIMEOUT`, total "X+").
+- **H2 — fetch acotado:** `fetch_budget = min(timeout_fuente, restante − reserva)`; si no hay
+  presupuesto útil, la llamada NO se inicia (corte honesto, no se cuelga).
+- **H2.1 — seguridad concurrente:** el singleton `SecopClient` (`@lru_cache`) bajo ThreadPool no
+  se muta in-place; `derived_for_timeout` devuelve un cliente derivado por llamada (preserva mocks
+  de instancia, no abre transporte real en tests).
+- **H4 — recuperación degradada sin ORDER BY:** ante timeout RECUPERABLE y orden PRESENTACIONAL,
+  UN fallback que retira el `ORDER BY` costoso (LIMIT≤50) y reordena la página localmente; reparto
+  **8/3/4** (principal/fallback/reserva). Si el orden es SEMÁNTICO ("más caros", "últimos" →
+  `ordering_signal`) NO se degrada (no afirmar ranking sobre una muestra). Orden y conteo son ejes
+  independientes (`result_order_guarantee` ∈ exact_order/unordered_sample/unavailable). La respuesta
+  visible no afirma orden sobre una muestra — **dos generadores** (`formatter` Y
+  `response_policy.build_advisor_response`) debieron parchearse.
+- **direct_lookup:** el path de búsqueda por referencia probaba ~12 variantes en serie SIN deadline
+  (un turno llegó a 67s); ahora cada probe se acota al presupuesto y la cadena serial se corta
+  honestamente al agotarlo.
+
+**Alternativas descartadas:** timeout por llamada (no acota la SUMA de un turno con múltiples
+fetches); subir el techo a 18–20s (reabre la cola); relajar filtros sustantivos en el fallback
+(`_relax_params` — responde otra pregunta); forzar `total` aproximado en el fallback (el conteo es
+independiente del orden); LLM-first (ADR previo: el extractor no es la palanca).
+
+**Consecuencias:** p90/max 60s→11.6s/15.5s, turnos>15s ~28%→1 (explicado: turno con fallback apila
+primary+fallback+count), 0 falsos EMPTY, 0 rankings falsos, recall de referencias intacto.
+inconclusas sin filas 12→4–7 (recuperación real pero VARIABLE con la velocidad de Socrata).
+El único turno >15s y la variabilidad del recall quedan como observaciones honestas, no como cierre
+falso. Guía operativa: `docs/LATENCY_DEADLINE_RUNBOOK.md`.
+
+## ADR-040: Resolución geo TIPADA — territorio vs comprador (Etapa 7)
+
+**Fecha:** 2026-06-29 · **Estado:** Accepted · commits `85a4fa9`+`f07cd57`
+
+**Contexto:** el gazetteer COLAPSABA territorio y comprador: "del departamento del Atlántico"
+(territorio = todas las entidades del depto) y "de la Gobernación del Atlántico" (comprador = la
+gobernación) resolvían ambos a `entidad_resolved='DEPARTAMENTO DEL ATLANTICO**'` → mismo WHERE.
+La causa: frases territoriales figuran como ALIAS del comprador en `aliases_db.json`.
+
+**Decisión:** la resolución lleva un **`kind` semántico** y patrones sintácticos mapean a campos
+distintos. "departamento de X" (con X = departamento reconocido) → `kind=territorial_department`
+→ campo `departamento`; toda entidad resuelta → `kind=buyer_entity` → campo `entidad`/
+`nombre_entidad`. Un paso sintáctico (query_router 4.55) intercepta "departamento de X" ANTES del
+scan de entidades y lo enruta a territorio, consumiendo el span. **INV-7: "Gobernación de X" ≠
+"departamento de X" → WHERE distintos.**
+
+**Hallazgo de datos (manda el dato, no la expectativa):** SECOP nombra las gobernaciones de forma
+inconsistente — Atlántico se registra como `DEPARTAMENTO DEL ATLANTICO**`, Nariño como
+`GOBERNACION DE NARIÑO`. El invariante correcto NO es "el valor contiene GOBERNACION" (la aserción
+vieja del fixture era falsa para Atlántico → corregida) sino que comprador y territorio generan
+campos/WHERE distintos. El comprador resuelve a su valor REAL en SECOP aunque difiera de la frase
+humana.
+
+**Alternativas descartadas:** forzar que "Gobernación de X" contenga "GOBERNACION" (no matchea el
+comprador real de Atlántico → pierde resultados); limpiar aliases territoriales del gazetteer (559
+entradas, riesgo amplio). **Fuera de alcance (anotado):** "Departamento de Policía del Atlántico"→
+territorial es PREEXISTENTE (scan de departamento, cobertura de gazetteer), no del patrón E7.
+
+## ADR-041: Paginación canónica dividida en E8A (hecha) y E8B (pendiente)
+
+**Fecha:** 2026-06-29 · **Estado:** Accepted (proceso) · E8A `54710e7`, spec E8B `a4a3dda`
+
+**Contexto:** el OFFSET de Socrata ≠ offset de los resultados validados/rankeados; y la página 1
+(`normal_flow`→`rank_results`+validación de frases) y "más" (`pagination`→`rank_and_dedupe`) NO
+pasan por la MISMA ruta de ranking → con PhraseSpec/exclusiones la página 2 puede tener distinta
+calidad. El rework completo es stateful (estado conversacional, TTL, memoria).
+
+**Decisión:** **dividir Etapa 8.** *E8A (hecha):* orden fuente estable con desempate por id
+(`ORDER BY … , id DESC`) + fingerprint guard (no continuar una paginación bajo consulta/contrato
+incompatible; `query_fingerprint` = `sha256(canonical_json)`, versionable vía `extra`). *E8B
+(pendiente, spec en `docs/ESPEC_ETAPA8B_BUFFER_CANONICO.md`):* buffer canónico
+(candidate/validated_ranked) + cursores display/source + dedup + TTL + 3 totales separados. **No se
+declara Etapa 8 cerrada hasta E8B.**
+
+**Precisión de diseño para E8B (registrada para no perderla):** el buffer es la CONSECUENCIA, no el
+arreglo — primero **unificar** la ruta de validación/ranking en `handle_pagination` (la misma de
+página 1), recién luego CACHEARLA; el gate es **P1≡PN** (la concatenación de páginas == la
+secuencia validada completa, no solo "no se repiten"); dual = buffer por `(fingerprint, grupo)`.
+
+**Por qué dividir:** una etapa stateful con varios invariantes simultáneos no se implementa al final
+de una sesión larga; un error produce síntomas sutiles (duplicados, filas faltantes, páginas de otra
+consulta, totales contradictorios), peores que un crash. Mejor base estable + frontera clara que
+medio buffer.

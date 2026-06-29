@@ -8,6 +8,7 @@ try:
 except ImportError:  # pragma: no cover - guarded for environments without deps
     Socrata = None
 
+from app.core.instrumentation import http_span, record_http
 from app.utils.logging import get_logger
 
 logger = get_logger(__name__)
@@ -30,11 +31,45 @@ class SecopClient:
         self.domain = domain
         self.app_token = app_token
         self.timeout = timeout
+        self._injected_client = client  # None salvo en tests / clientes custom
         self.client = client or Socrata(domain, app_token=app_token, timeout=timeout)
         self.max_retries = max_retries
 
+    def derived_for_timeout(self, timeout_s: int) -> "SecopClient":
+        """Cliente derivado acotado a ``timeout_s``, **thread-safe** (no muta esta
+        instancia ni su transporte compartido).
+
+        - Si ``query``/``count`` fueron mockeados en ESTA instancia (monkeypatch de
+          tests), devuelve ``self`` para preservar esos métodos — sin mutar nada.
+        - Si hay un cliente inyectado (tests con fake), reutiliza ese mismo transporte
+          en un SecopClient nuevo (el fake es inmutable respecto al timeout).
+        - En producción crea un Socrata propio con el timeout acotado: cada turno/llamada
+          obtiene su transporte, sin race sobre el singleton compartido.
+        """
+        if "query" in self.__dict__ or "count" in self.__dict__:
+            return self  # métodos mockeados en la instancia: preservarlos, no mutar
+        if self._injected_client is not None:
+            return SecopClient(
+                domain=self.domain, app_token=self.app_token, timeout=timeout_s,
+                client=self._injected_client, max_retries=self.max_retries,
+            )
+        return self.with_timeout(timeout_s)
+
     def with_timeout(self, timeout: int) -> "SecopClient":
-        """Return a new SecopClient with a different timeout, sharing nothing mutable."""
+        """Return a new SecopClient with a different transport timeout.
+
+        Preserva el cliente inyectado (tests/custom): cambiar el timeout no debe
+        descartar un cliente mockeado ni abrir un Socrata real. Solo se crea un
+        Socrata nuevo cuando este cliente usa uno propio.
+        """
+        if self._injected_client is not None:
+            return SecopClient(
+                domain=self.domain,
+                app_token=self.app_token,
+                timeout=timeout,
+                client=self._injected_client,
+                max_retries=self.max_retries,
+            )
         if Socrata is None:
             raise RuntimeError("sodapy is required for with_timeout.")
         return SecopClient(
@@ -46,8 +81,10 @@ class SecopClient:
 
     def aggregate(self, dataset_id: str, soql: str) -> list[dict]:
         """Execute a single aggregation query. No retries — best-effort for observer."""
-        rows = self.client.get(dataset_id, query=soql)
-        return list(rows)
+        with http_span("aggregate", dataset_id, soql) as span:
+            rows = list(self.client.get(dataset_id, query=soql))
+            span["rows_received"] = len(rows)
+        return rows
 
     def count(self, dataset_id: str, soql_count_query: str) -> int:
         """Execute a SELECT count(*) query and return the integer result."""
@@ -55,7 +92,9 @@ class SecopClient:
 
         for attempt in range(self.max_retries):
             try:
-                rows = self.client.get(dataset_id, query=soql_count_query)
+                with http_span("count", dataset_id, soql_count_query, attempt=attempt + 1) as span:
+                    rows = self.client.get(dataset_id, query=soql_count_query)
+                    span["rows_received"] = len(rows)
                 if rows:
                     raw = list(rows[0].values())[0]
                     return int(raw)
@@ -64,7 +103,13 @@ class SecopClient:
                 last_error = exc
                 logger.warning("SECOP count failed on attempt %s/%s: %s", attempt + 1, self.max_retries, exc)
                 if attempt < self.max_retries - 1:
-                    time.sleep(2**attempt)
+                    delay = 2**attempt
+                    record_http({
+                        "operation": "retry_delay", "dataset": dataset_id,
+                        "attempt": attempt + 1, "duration_ms": float(delay * 1000),
+                        "status": "completed", "rows_received": 0,
+                    })
+                    time.sleep(delay)
 
         raise RuntimeError(f"Unable to count SECOP dataset {dataset_id}") from last_error
 
@@ -74,13 +119,21 @@ class SecopClient:
         for attempt in range(self.max_retries):
             try:
                 logger.info("Executing SECOP query against %s", dataset_id)
-                rows = self.client.get(dataset_id, query=soql_query)
+                with http_span("query", dataset_id, soql_query, attempt=attempt + 1) as span:
+                    rows = self.client.get(dataset_id, query=soql_query)
+                    span["rows_received"] = len(rows)
                 return [self._normalize_row(dataset_id, row) for row in rows]
             except Exception as exc:  # pragma: no cover - network/runtime path
                 last_error = exc
                 logger.warning("SECOP query failed on attempt %s/%s: %s", attempt + 1, self.max_retries, exc)
                 if attempt < self.max_retries - 1:
-                    time.sleep(2**attempt)
+                    delay = 2**attempt
+                    record_http({
+                        "operation": "retry_delay", "dataset": dataset_id,
+                        "attempt": attempt + 1, "duration_ms": float(delay * 1000),
+                        "status": "completed", "rows_received": 0,
+                    })
+                    time.sleep(delay)
 
         raise RuntimeError(f"Unable to query SECOP dataset {dataset_id}") from last_error
 

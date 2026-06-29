@@ -35,15 +35,25 @@ which mirrors letting run_query continue to the normal pipeline).
 from __future__ import annotations
 
 import logging
+import math
 from typing import TYPE_CHECKING
 
+from app.core.deadline import (
+    MIN_USEFUL_FETCH_SECONDS,
+    current_deadline,
+    record_deadline,
+)
 from app.core.direct_lookup import (
+    DirectLookupRequest,
+    DirectLookupResolution,
     build_entity_ref_soql,
     dataset_for_id,
+    deduplicate_lookup_candidates,
     detect_direct_lookup,
-    normalize_entity_ref,
+    resolve_reference_candidates,
 )
 from app.core.soql_builder import SoQLBuilder
+from app.core.workflow.helpers import _client_for
 from app.core.workflow.results import empty_result, tabular_result
 
 if TYPE_CHECKING:
@@ -66,14 +76,16 @@ def _log_trace(deps: "WorkflowDeps", ctx: "HandlerContext", result: dict) -> dic
 def handle_direct_lookup(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict | None:
     """Try to resolve user_query as a SECOP id/URL/entity_ref. Returns
     None to fall through to the normal pipeline."""
-    lookup_value, lookup_kind = detect_direct_lookup(ctx.user_query)
-    if lookup_value is None:
+    request = detect_direct_lookup(ctx.user_query)
+    if not isinstance(request, DirectLookupRequest):
         return None
+    lookup_value = request.lookup_value
+    lookup_kind = request.lookup_kind
 
     try:
         # ── Branch: entity_ref → LIKE query across both datasets ─
         if lookup_kind == "entity_ref":
-            return _handle_entity_ref(deps, ctx, lookup_value)
+            return _handle_entity_ref(deps, ctx, request)
 
         # ── Branch: id or url → equality query ──────────────────
         return _handle_id_or_url(deps, ctx, lookup_value, lookup_kind)
@@ -83,42 +95,240 @@ def handle_direct_lookup(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict | 
         return None
 
 
-def _handle_entity_ref(deps: "WorkflowDeps", ctx: "HandlerContext", lookup_value: str) -> dict:
-    normalized = normalize_entity_ref(lookup_value)
-    datasets_to_search = [SoQLBuilder.PROCESOS_DATASET, SoQLBuilder.CONTRATOS_DATASET]
-    all_results: list[dict] = []
+_DATASETS = (SoQLBuilder.PROCESOS_DATASET, SoQLBuilder.CONTRATOS_DATASET)
+_POOL_LIMITS = (10, 20, 40)
+
+
+def _probe_budget_s(deps: "WorkflowDeps") -> float | None:
+    """Presupuesto para la PRÓXIMA probe de direct_lookup (Etapa 6 H2).
+
+    Igual que el fetch normal: ``min(timeout fuente, restante − reserva)``. Devuelve
+    ``None`` cuando no hay deadline activo (tests/legacy) → sin acotar. Antes, este path
+    probaba hasta 12 variantes en serie SIN presupuesto → un turno llegó a 67s.
+    """
+    dl = current_deadline()
+    if dl is None:
+        return None
+    src = getattr(deps.secop_client, "timeout", 15) or 15
+    return dl.fetch_budget_s(src)
+
+
+def _is_timeout(exc: Exception) -> bool:
+    current: BaseException | None = exc
+    seen: set[int] = set()
+    while current is not None and id(current) not in seen:
+        seen.add(id(current))
+        detail = f"{type(current).__name__} {current}".lower()
+        if isinstance(current, TimeoutError) or "timeout" in detail or "timed out" in detail:
+            return True
+        current = current.__cause__ or current.__context__
+    return False
+
+
+def _query_attempt(
+    deps: "WorkflowDeps",
+    dataset: str,
+    mode: str,
+    soql: str,
+    limit: int,
+    budget_s: float | None = None,
+) -> tuple[list[dict] | None, dict]:
+    attempt = {
+        "dataset": dataset,
+        "mode": mode,
+        "status": "completed",
+        "error_type": None,
+        "timeout": False,
+        "limit": limit,
+        "row_count": 0,
+    }
+    try:
+        # Acotado al presupuesto restante del turno (H2): el probe no puede colgar 60s.
+        client = (
+            _client_for(deps.secop_client, max(1, math.ceil(budget_s)))
+            if budget_s is not None else deps.secop_client
+        )
+        rows = client.query(dataset, soql)
+        attempt["row_count"] = len(rows)
+        return rows, attempt
+    except Exception as exc:
+        attempt.update({
+            "status": "failed",
+            "error_type": type(exc).__name__,
+            "timeout": _is_timeout(exc),
+        })
+        return None, attempt
+
+
+def _budget_skipped_attempt(dataset: str, mode: str, limit: int) -> dict:
+    """Probe NO iniciada por presupuesto agotado (corte honesto, no es fallo de fuente)."""
+    return {
+        "dataset": dataset, "mode": mode, "status": "skipped",
+        "error_type": None, "timeout": False, "limit": limit,
+        "row_count": 0, "skipped_due_to_budget": True,
+    }
+
+
+def _attach_lookup_metadata(
+    result: dict,
+    status: str,
+    reason: str,
+    attempts: list[dict],
+) -> dict:
+    successful = [
+        dataset for dataset in _DATASETS
+        if any(a["dataset"] == dataset and a["status"] == "completed" for a in attempts)
+    ]
+    failed = [
+        dataset for dataset in _DATASETS
+        if any(a["dataset"] == dataset and a["status"] == "failed" for a in attempts)
+    ]
+    result.update({
+        "direct_lookup_status": status,
+        "direct_lookup_reason": reason,
+        "successful_sources": successful,
+        "failed_sources": failed,
+        "search_attempts": attempts,
+        "source_partial": bool(successful and failed),
+    })
+    return result
+
+
+def _finish(
+    deps: "WorkflowDeps",
+    ctx: "HandlerContext",
+    result: dict,
+    status: str,
+    reason: str,
+    attempts: list[dict],
+) -> dict:
+    return _log_trace(
+        deps, ctx, _attach_lookup_metadata(result, status, reason, attempts),
+    )
+
+
+def _terminal_absence(
+    deps: "WorkflowDeps",
+    ctx: "HandlerContext",
+    *,
+    lookup_value: str,
+    route_reason: str,
+    soql: str,
+    attempts: list[dict],
+    confirmed_reason: str,
+    budget_cut: bool = False,
+) -> dict:
+    completed = any(a["status"] == "completed" for a in attempts)
+    failed = any(a["status"] == "failed" for a in attempts)
+    if budget_cut:
+        # Se agotó el presupuesto del turno antes de descartar todas las variantes: NO se
+        # puede afirmar "no encontré" (no se exploró todo) — corte honesto por tiempo.
+        status, reason = "not_confirmed", "deadline_exhausted"
+        response = (
+            f"⏱️ No pude confirmar la referencia `{lookup_value}` en el tiempo disponible. "
+            "Intenta de nuevo o pega el ID CO1.XXX.YYY para una búsqueda directa."
+        )
+    elif not completed:
+        status, reason = "source_unavailable", "all_sources_failed"
+        response = "⚠️ No pude consultar SECOP II en este momento. Intenta de nuevo más tarde."
+    elif failed:
+        status, reason = "not_confirmed", "partial_source_failure"
+        response = (
+            f"⚠️ No pude confirmar la referencia `{lookup_value}` porque una fuente de "
+            "SECOP II no respondió. Intenta de nuevo más tarde."
+        )
+    else:
+        status, reason = "not_found", confirmed_reason
+        response = (
+            f"🔍 No encontré la referencia `{lookup_value}` en las fuentes consultadas de SECOP II."
+        )
+    return _finish(deps, ctx, empty_result(
+        response=response,
+        route_reason=route_reason,
+        intent_type="direct_lookup",
+        soql_query=soql,
+    ), status, reason, attempts)
+
+
+def _search_reference(
+    deps: "WorkflowDeps", request: DirectLookupRequest,
+) -> tuple[DirectLookupResolution, list[dict], str, bool]:
+    pools: dict[str, dict[str, list[dict]]] = {"exact": {}, "tolerant": {}}
+    attempts: list[dict] = []
     soql = ""
-    for ds_id in datasets_to_search:
-        soql = build_entity_ref_soql(ds_id, normalized, limit=5)
-        try:
-            rows = deps.secop_client.query(ds_id, soql)
-            for r in rows:
-                r["_dataset_id"] = ds_id
-            all_results.extend(rows)
-        except Exception:
-            continue
+    budget_cut = False
+    resolution = resolve_reference_candidates(request, [])
 
-    match_count = len(all_results)
+    for mode in ("exact", "tolerant"):
+        active = set(_DATASETS)
+        limits = _POOL_LIMITS if request.entity_qualifier_raw else _POOL_LIMITS[:1]
+        for limit in limits:
+            for dataset in _DATASETS:
+                if dataset not in active:
+                    continue
+                # H2: cortar las variantes seriales cuando el presupuesto del turno se agota.
+                budget = _probe_budget_s(deps)
+                if budget is not None and budget < MIN_USEFUL_FETCH_SECONDS:
+                    attempts.append(_budget_skipped_attempt(dataset, mode, limit))
+                    record_deadline(
+                        direct_lookup_skipped_due_to_budget=True,
+                        deadline_exhausted=True, deadline_stage="direct_lookup",
+                    )
+                    budget_cut = True
+                    return resolution, attempts, soql, budget_cut
+                soql = build_entity_ref_soql(
+                    dataset,
+                    request.reference_normalized,
+                    limit=limit,
+                    exact=mode == "exact",
+                )
+                rows, attempt = _query_attempt(deps, dataset, mode, soql, limit, budget_s=budget)
+                attempts.append(attempt)
+                if rows is None:
+                    active.remove(dataset)
+                    continue
+                pools[mode][dataset] = [
+                    {**row, "_dataset_id": dataset} for row in rows
+                ]
+                if len(rows) < limit:
+                    active.remove(dataset)
 
-    # 0 results — friendly message
+            candidates = [
+                row
+                for search_mode in ("exact", "tolerant")
+                for dataset in _DATASETS
+                for row in pools[search_mode].get(dataset, [])
+            ]
+            resolution = resolve_reference_candidates(request, candidates)
+            if resolution.candidates:
+                return resolution, attempts, soql, budget_cut
+            if not active:
+                break
+
+    return resolution, attempts, soql, budget_cut
+
+
+def _handle_entity_ref(
+    deps: "WorkflowDeps", ctx: "HandlerContext", request: DirectLookupRequest,
+) -> dict:
+    lookup_value = request.reference_raw
+    resolution, attempts, soql, budget_cut = _search_reference(deps, request)
+    match_count = len(resolution.candidates)
+
     if match_count == 0:
-        return _log_trace(deps, ctx, empty_result(
-            response=(
-                f"🔍 No encontré la referencia `{lookup_value}` en SECOP II.\n\n"
-                f"Puede que:\n"
-                f"• La referencia esté mal escrita.\n"
-                f"• El proceso sea de SECOP I (anterior a 2019).\n"
-                f"• El proceso aún no esté publicado en datos.gov.co.\n\n"
-                f"💡 Intenta con el número electrónico CO1.XXX.YYY si lo tienes."
-            ),
+        return _terminal_absence(
+            deps, ctx,
+            lookup_value=lookup_value,
             route_reason="direct_lookup_entity_ref",
-            intent_type="direct_lookup",
-            soql_query=soql,
-        ))
+            soql=soql,
+            attempts=attempts,
+            confirmed_reason=resolution.outcome_reason,
+            budget_cut=budget_cut,
+        )
 
     # 1 result — rich detail (same as id/url lookup)
     if match_count == 1:
-        hit = all_results[0]
+        hit = dict(resolution.candidates[0])
         ds = hit.pop("_dataset_id")
         hit_results = [hit]
         response, rows = deps.formatter.format_for_channel(
@@ -126,7 +336,7 @@ def _handle_entity_ref(deps: "WorkflowDeps", ctx: "HandlerContext", lookup_value
             params={"intent_type": "direct_lookup", "route_reason": "direct_lookup_entity_ref"},
             total_count=1,
         )
-        return _log_trace(deps, ctx, tabular_result(
+        return _finish(deps, ctx, tabular_result(
             response=response,
             rows=rows,
             results=hit_results,
@@ -137,11 +347,11 @@ def _handle_entity_ref(deps: "WorkflowDeps", ctx: "HandlerContext", lookup_value
             route_reason="direct_lookup_entity_ref",
             total_count=1,
             intent_type="direct_lookup",
-        ))
+        ), resolution.outcome, resolution.outcome_reason, attempts)
 
     # 2+ results — disambiguation list
     candidates: list[str] = []
-    for i, r in enumerate(all_results[:5], 1):
+    for i, r in enumerate(resolution.candidates[:5], 1):
         ds = r.get("_dataset_id")
         id_ = r.get("id_del_proceso") or r.get("id_contrato", "")
         entidad = (r.get("entidad") or r.get("nombre_entidad", "") or "?")[:60]
@@ -159,7 +369,7 @@ def _handle_entity_ref(deps: "WorkflowDeps", ctx: "HandlerContext", lookup_value
         + f"\n\nResponde con el número (1-{min(match_count, 5)}) o pega el ID CO1.XXX.YYY para ver el detalle completo."
     )
 
-    return _log_trace(deps, ctx, empty_result(
+    return _finish(deps, ctx, empty_result(
         response=disambig_response,
         route_reason="entity_ref_disambiguation",
         intent_type="direct_lookup",
@@ -167,65 +377,79 @@ def _handle_entity_ref(deps: "WorkflowDeps", ctx: "HandlerContext", lookup_value
         parsed_params={"direct_lookup_ref": lookup_value, "route_reason": "entity_ref_disambiguation"},
         resolved_params={"direct_lookup_ref": lookup_value},
         total_count=match_count,
-    ))
+    ), resolution.outcome, resolution.outcome_reason, attempts)
 
 
 def _handle_id_or_url(
     deps: "WorkflowDeps", ctx: "HandlerContext", lookup_value: str, lookup_kind: str,
 ) -> dict:
     lookup_dataset = dataset_for_id(lookup_value)
-    datasets_to_try: list[str] = (
-        [lookup_dataset] if lookup_dataset
-        else [SoQLBuilder.PROCESOS_DATASET, SoQLBuilder.CONTRATOS_DATASET]
-    )
+    datasets_to_try = list(_DATASETS)
+    if lookup_dataset in datasets_to_try:
+        datasets_to_try.remove(lookup_dataset)
+        datasets_to_try.insert(0, lookup_dataset)
 
     hit_results: list[dict] = []
-    hit_dataset = ""
+    attempts: list[dict] = []
     soql = ""
-    for ds_id in datasets_to_try:
-        spec = SoQLBuilder.SPECS[ds_id]
-        id_field = "id_del_proceso" if ds_id == SoQLBuilder.PROCESOS_DATASET else "id_contrato"
+    budget_cut = False
+    for dataset in datasets_to_try:
+        budget = _probe_budget_s(deps)
+        if budget is not None and budget < MIN_USEFUL_FETCH_SECONDS:
+            attempts.append(_budget_skipped_attempt(dataset, "uid", 1))
+            record_deadline(
+                direct_lookup_skipped_due_to_budget=True,
+                deadline_exhausted=True, deadline_stage="direct_lookup",
+            )
+            budget_cut = True
+            break
+        spec = SoQLBuilder.SPECS[dataset]
+        id_field = "id_del_proceso" if dataset == SoQLBuilder.PROCESOS_DATASET else "id_contrato"
         fields = ", ".join(spec.select_fields)
         soql = (
             f"SELECT {fields} "
             f"WHERE {id_field} = '{SoQLBuilder._escape(lookup_value)}' "
             f"LIMIT 1"
         )
-        try:
-            rows = deps.secop_client.query(ds_id, soql)
-            if rows:
-                hit_results = rows
-                hit_dataset = ds_id
-                break
-        except Exception:
-            continue
+        rows, attempt = _query_attempt(deps, dataset, "uid", soql, 1, budget_s=budget)
+        attempts.append(attempt)
+        if rows:
+            hit_results.extend({**row, "_dataset_id": dataset} for row in rows)
 
     route_reason = f"direct_lookup_{lookup_kind}"
 
     if not hit_results:
-        return _log_trace(deps, ctx, empty_result(
-            response=(
-                f"🔍 No encontré el proceso con ID `{lookup_value}` en SECOP II.\n\n"
-                f"Puede que:\n"
-                f"• El ID esté mal escrito.\n"
-                f"• El proceso sea de SECOP I (anterior a 2019).\n"
-                f"• El proceso aún no esté publicado en datos.gov.co."
-            ),
+        return _terminal_absence(
+            deps, ctx,
+            lookup_value=lookup_value,
             route_reason=route_reason,
-            intent_type="direct_lookup",
-            soql_query=soql,
-        ))
+            soql=soql,
+            attempts=attempts,
+            confirmed_reason="uid_not_found",
+            budget_cut=budget_cut,
+        )
+
+    unique_hits = deduplicate_lookup_candidates(hit_results)
+    hit = dict(unique_hits[0])
+    hit_dataset = hit.pop("_dataset_id")
+    hit.update({
+        "match_type": "exact_uid",
+        "reference_match": "uid",
+        "entity_match": "not_requested",
+        "confidence": "high",
+    })
+    formatted_results = [hit]
 
     # Format result with rich detail
     response, rows = deps.formatter.format_for_channel(
-        hit_results, hit_dataset, ctx.channel,
+        formatted_results, hit_dataset, ctx.channel,
         params={"intent_type": "direct_lookup", "route_reason": route_reason},
         total_count=1,
     )
-    return _log_trace(deps, ctx, tabular_result(
+    return _finish(deps, ctx, tabular_result(
         response=response,
         rows=rows,
-        results=hit_results,
+        results=formatted_results,
         dataset_id=hit_dataset,
         soql_query=soql,
         parsed_params={"direct_lookup_id": lookup_value, "route_reason": route_reason},
@@ -233,4 +457,4 @@ def _handle_id_or_url(
         route_reason=route_reason,
         total_count=1,
         intent_type="direct_lookup",
-    ))
+    ), "exact", "uid_match", attempts)
