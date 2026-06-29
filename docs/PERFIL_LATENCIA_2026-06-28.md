@@ -8,6 +8,36 @@
 > percentiles: el delay agresivo causó 26 `ConnectionError` (throttling), no un fallo
 > del pipeline.
 
+## H1 (count no bloqueante) — validación antes/después
+
+Corrida `profile_h1_01` (commit `bea06ff`, 48 turnos, delay 1.5) vs Run 1/2 (pre-H1,
+`676aa35`). **H1 confirmado:**
+
+| métrica | Run 1 | Run 2 | **H1** |
+|---------|-------|-------|--------|
+| count >10s | 10 | 11 | **0** |
+| count max | 60.0s | 39.4s | **4.0s** |
+| **post_fetch_blocking p90** | 28.1s | 22.8s | **6.0s** |
+| post_fetch_blocking max | 62.6s | 39.4s | **6.6s** |
+| **turnos >15s** | 15 | 12 | **3** |
+| total p50 | 7.6s | 7.4s | 6.4s |
+| **total p90** | 60.3s | 45.1s | **13.1s** |
+| total max | 120.6s | 70.5s | 60.4s |
+| falsos EMPTY | 0 | 0 | **0** |
+
+`count_status` H1: skipped 26 · exact 10 · **timed_out 12** (los que antes bloqueaban
+22-60s, ahora cortados al presupuesto de 3s y devueltos con filas + total aproximado).
+
+**Lectura:**
+- **H1 cumplió su hipótesis**: `count >10s` 10-11 → **0**; `post_fetch_blocking` p90
+  28s → **6s**; turnos >15s ~25-31% → **6%**; `total p90` 45-60s → **13.1s** (ya bajo el
+  objetivo de 15s) — **solo con H1, sin tocar deadline/fetch/dual/narrator**.
+- **Sin regresión de recall**: 0 falsos EMPTY (Etapa 4 lo garantiza).
+- **El `total max` residual (60.4s) NO es count** sino un `query/fetch` que aún hace
+  timeout de 60s → es trabajo de **H2 (deadline total + fetch acotado)**, no de H1.
+
+---
+
 ## Run 1 vs Run 2 — qué es ESTRUCTURAL y qué es de la franja
 
 Dos corridas de 48 turnos, mismo código (`676aa35`) y fixture (`986aef58070c`), ~7h de
