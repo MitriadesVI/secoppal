@@ -124,16 +124,17 @@
     {
       "case_id": "geo_vs_entity_atlantico_gobernacion",
       "category": "geo_vs_entity",
-      "stage": 6,
+      "stage": 7,
       "harness": "parse",
       "source": "geography_entity/atlantico_geo_vs_governor turno 2",
       "query": "ahora solo de la Gobernación del Atlántico",
       "expected_param_contains": {
-        "entidad_resolved": "GOBERNACION"
+        "entidad_resolved": "DEPARTAMENTO DEL ATLANTICO"
       },
-      "note": "El resolver colapsa 'Gobernación del Atlántico' al mismo valor que 'departamento del Atlántico' (DEPARTAMENTO DEL ATLANTICO**). La entidad (Gobernación) debe resolver distinto del departamento.",
-      "xfail": true,
-      "xfail_reason": "Etapa 6 — gazetteer no distingue gobernación (entidad) de departamento (territorio)."
+      "expected_params": {
+        "departamento_resolved": null
+      },
+      "note": "Etapa 7 (resolución tipada): 'Gobernación de X' = buyer_entity → entidad_resolved al COMPRADOR REAL en SECOP (Atlántico se registra como 'DEPARTAMENTO DEL ATLANTICO**', no 'GOBERNACION'). NO debe poner departamento_resolved (eso es territorio). El invariante es que difiere de 'departamento del Atlántico', no que el valor contenga la palabra del usuario."
     },
     {
       "case_id": "live_recall_solo_medellin",

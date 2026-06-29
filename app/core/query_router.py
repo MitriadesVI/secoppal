@@ -466,6 +466,42 @@ class QueryRouter:
             scrubbed = _TEMPORAL_ANAPHORA_RE.sub(" ", scrubbed)
             scrubbed = re.sub(r"\s+", " ", scrubbed).strip()
 
+        # ── 4.55. TYPED GEO: "departamento de X" → TERRITORIO, no comprador (Etapa 7) ──
+        #    "departamento de X" = el TERRITORIO (todas las entidades del depto). El
+        #    gazetteer de entidades lista frases territoriales ("departamento del
+        #    atlantico") como ALIAS del comprador "DEPARTAMENTO DEL ATLANTICO**" → colapsa
+        #    territorio y comprador. Interceptamos el patrón ANTES del scan de entidades y
+        #    lo enrutamos a departamento_resolved (kind=territorial_department). En cambio
+        #    "Gobernación de X" NO trae el keyword "departamento" → cae al scan de entidades
+        #    y resuelve al comprador real (kind=buyer_entity). Así INV-7: ambos generan
+        #    WHERE distintos (departamento vs entidad).
+        if "departamento_resolved" not in params:
+            from app.core.entity_resolver import geo_mention_resolution
+            _km = re.search(
+                r"\b(?:departamento|depto\.?)\s+de(?:l)?\s+(.+)", scrubbed, re.IGNORECASE,
+            )
+            if _km:
+                _rest = _km.group(1).split()
+                for _n in (3, 2, 1):
+                    _cand = " ".join(_rest[:_n])
+                    _geo = geo_mention_resolution(_cand)
+                    if _geo.kind == "department" and _geo.canonical:
+                        params["departamento"] = _cand
+                        params["departamento_resolved"] = _geo.canonical
+                        params["departamento_resolution"] = {
+                            "value": _geo.canonical,
+                            "method": "territorial_pattern",
+                            "kind": "territorial_department",
+                            "confidence": "high",
+                            "like_value": None,
+                            "metadata": {},
+                        }
+                        _consumed = scrubbed[_km.start():_km.start(1) + len(_cand)]
+                        consumed_spans.append(_consumed)
+                        scrubbed = scrubbed.replace(_consumed, " ", 1)
+                        scrubbed = re.sub(r"\s+", " ", scrubbed).strip()
+                        break
+
         # ── 4.6. ENTITY REWRITE: try canonical variants for entity patterns ──
         #    "alcaldía de X" → "Municipio de X" / "Alcaldía de X"
         #    Runs BEFORE gazetteer scan so variants feed into alias matching.
@@ -488,6 +524,7 @@ class QueryRouter:
                 params["entidad_resolution"] = {
                     "value": match.value,
                     "method": f"rewrite_{rtype}",
+                    "kind": "buyer_entity",
                     "confidence": "high",
                     "like_value": None,
                     "metadata": {"rewritten_from": consumed},
@@ -519,6 +556,7 @@ class QueryRouter:
                 params["entidad_resolution"] = {
                     "value": entity_scan.official_name,
                     "method": entity_scan.method,
+                    "kind": "buyer_entity",
                     "confidence": "high",
                     "like_value": None,
                     "metadata": {},
@@ -553,6 +591,7 @@ class QueryRouter:
                 params["departamento_resolution"] = {
                     "value": dept_scan.official_name,
                     "method": dept_scan.method,
+                    "kind": "territorial_department",
                     "confidence": "high",
                     "like_value": None,
                     "metadata": {},
