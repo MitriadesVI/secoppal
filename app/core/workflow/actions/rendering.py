@@ -95,12 +95,20 @@ def format_response(state: State, formatter: Formatter) -> State:
     # (acción previa); aquí solo consumimos ranked_results y el formatter corta a 25.
     rows_to_format = state.get("ranked_results", state["results"])
 
+    order_guarantee = state.get("result_order_guarantee", "exact_order")
     response, rows = formatter.format_for_channel(
         rows_to_format, state["dataset_id"], state["channel"],
         params=params, total_count=total_count, universe_insights=universe_insights,
         suggestions=suggestions, total_count_approximate=approximate,
+        order_guarantee=order_guarantee,
     )
-    if state.get("degraded") and state.get("degraded_hint"):
+    # H4: muestra recuperada por el fallback (sin ORDER BY) → avisar que NO hay garantía de
+    # orden, para que el usuario no lea las filas como un ranking ("más caros"/"más recientes").
+    if order_guarantee == "unordered_sample":
+        note = ("⚠️ La búsqueda se demoró; recuperé una muestra de coincidencias, pero "
+                "no pude garantizar el orden por fecha ni por valor:\n\n")
+        response = note + response
+    elif state.get("degraded") and state.get("degraded_hint"):
         note = f"No encontre resultados exactos. Te muestro resultados {state['degraded_hint']}:\n\n"
         response = note + response
     # Timeout retry: avisar que se cambió la estrategia

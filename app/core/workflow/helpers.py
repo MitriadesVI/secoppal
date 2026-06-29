@@ -151,9 +151,14 @@ def _query_first_then_count(
     soql_query: str,
     limit: int = 50,
     count_budget_s: int = COUNT_BUDGET_SECONDS,
+    fetch_cap_s: float | None = None,
 ) -> tuple[int, list[dict], dict[str, float], bool]:
     """Run query first; skip count if <limit rows. If ==limit, count within a short
     budget so it never blocks the delivery of valid rows (Etapa 6 H1).
+
+    ``fetch_cap_s`` topa el presupuesto de la query (H4): por defecto la principal usa
+    ``PRIMARY_FETCH_SECONDS`` (8s) para reservar sitio a un fallback; el fallback pasa
+    ``FALLBACK_FETCH_SECONDS`` (3s).
 
     Returns (total, results, timings, approximate).
     approximate=True when count failed/timed out but query returned limit rows.
@@ -162,17 +167,19 @@ def _query_first_then_count(
 
     from app.core.deadline import (
         MIN_USEFUL_FETCH_SECONDS,
+        PRIMARY_FETCH_SECONDS,
         current_deadline,
         record_deadline,
     )
 
     dl = current_deadline()
+    cap = PRIMARY_FETCH_SECONDS if fetch_cap_s is None else fetch_cap_s
 
     # Step 1: query first — las filas determinan la respuesta. ACOTADO al deadline (H2):
-    # ninguna llamada puede usar más que (restante − reserva).
+    # ninguna llamada puede usar más que (restante − reserva), topado por la fase (H4).
     query_budget = None
     if dl is not None:
-        fb = dl.fetch_budget_s(getattr(secop_client, "timeout", 15) or 15)
+        fb = dl.fetch_budget_s(getattr(secop_client, "timeout", 15) or 15, cap_s=cap)
         record_deadline(
             time_remaining_before_fetch_ms=round(max(dl.remaining_s(), 0.0) * 1000, 1),
             fetch_budget_ms=round(max(fb, 0.0) * 1000, 1),

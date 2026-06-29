@@ -24,6 +24,13 @@ TURN_DEADLINE_SECONDS = 15.0
 CLOSING_RESERVE_SECONDS = 4.0       # margen post-fetch: count (≤3s) + formato/cierre
 MIN_USEFUL_FETCH_SECONDS = 1.0      # por debajo, una llamada no alcanzaría a terminar
 
+# H4 — reparto interno del deadline (8 + 3 + 4 = 15, aprobado por el asesor). La query
+# PRINCIPAL se acota a 8s (no a `restante − reserva` ≈ 11s) para DEJAR sitio a UN fallback
+# sin ORDER BY de ≤3s dentro de los mismos 15s. Sin este tope, un timeout de la principal
+# consume todo y el fallback nunca corre (lo que mostró H4.0: 8 turnos "skipped").
+PRIMARY_FETCH_SECONDS = 8.0
+FALLBACK_FETCH_SECONDS = 3.0
+
 # Reloj monotónico inyectable (perf_counter en prod; reloj falso en tests, sin sleep).
 _clock = {"now": time.perf_counter}
 
@@ -52,9 +59,16 @@ class Deadline:
     def remaining_s(self) -> float:
         return self.budget_s - self.elapsed_s()
 
-    def fetch_budget_s(self, source_timeout_s: float) -> float:
-        """Presupuesto para una llamada: min(timeout fuente, restante − reserva)."""
-        return min(float(source_timeout_s), self.remaining_s() - self.reserve_s)
+    def fetch_budget_s(self, source_timeout_s: float, cap_s: float | None = None) -> float:
+        """Presupuesto para una llamada: min(timeout fuente, restante − reserva[, cap]).
+
+        ``cap_s`` aplica el tope de la fase (H4): ``PRIMARY_FETCH_SECONDS`` para la query
+        principal, ``FALLBACK_FETCH_SECONDS`` para el fallback sin ORDER BY.
+        """
+        budget = min(float(source_timeout_s), self.remaining_s() - self.reserve_s)
+        if cap_s is not None:
+            budget = min(budget, float(cap_s))
+        return budget
 
     def can_afford(self, min_s: float = MIN_USEFUL_FETCH_SECONDS) -> bool:
         return self.fetch_budget_s(float("inf")) >= min_s

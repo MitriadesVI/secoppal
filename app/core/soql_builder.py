@@ -157,7 +157,8 @@ class SoQLBuilder:
     def dataset_id_for(cls, dataset_name: str | None) -> str:
         return cls.CONTRATOS_DATASET if dataset_name == "contratos" else cls.PROCESOS_DATASET
 
-    def build(self, dataset_id: str, params: dict, *, allow_global: bool = False) -> str:
+    def build(self, dataset_id: str, params: dict, *, allow_global: bool = False,
+              include_order: bool = True) -> str:
         spec = self.SPECS[dataset_id]
         where_clause = self._build_where(spec, params, allow_global=allow_global)
 
@@ -206,6 +207,12 @@ class SoQLBuilder:
         limit_clause = f"LIMIT {limit}"
         if offset:
             limit_clause += f" OFFSET {offset}"
+
+        # H4: el fallback degradado retira el ORDER BY costoso (sort server-side sobre el
+        # universo filtrado es el cuello). Solo permitido cuando el orden es presentacional;
+        # el caller reordena la página localmente y marca result_order_guarantee.
+        if not include_order:
+            return f"SELECT {select_clause} WHERE {where_clause} {limit_clause}"
 
         return f"SELECT {select_clause} WHERE {where_clause} ORDER BY {order_expr} {limit_clause}"
 

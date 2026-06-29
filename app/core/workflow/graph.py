@@ -135,6 +135,11 @@ def build_application(
             total_count=0,
             degraded=False,
             degraded_hint="",
+            # H4 — fallback degradado sin ORDER BY (defaults presentacionales).
+            result_order_guarantee="exact_order",
+            fallback_attempted=False,
+            fallback_used=False,
+            fallback_strategy="",
             followup=followup,
             context_params=context_params,
             universe_insights=None,

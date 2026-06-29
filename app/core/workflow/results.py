@@ -101,6 +101,17 @@ CANONICAL_KEYS: frozenset[str] = frozenset({
     "request_skipped_due_to_budget",
     "count_skipped_due_to_budget",
     "source_partial",
+    # Etapa 6 H4: fallback degradado sin ORDER BY + contrato de orden.
+    "result_order_guarantee",
+    "fallback_attempted",
+    "fallback_used",
+    "fallback_strategy",
+    "fallback_rows",
+    "fallback_elapsed_ms",
+    "substantive_filters_preserved",
+    "transformations_applied",
+    "primary_query_status",
+    "fallback_query_status",
 })
 
 

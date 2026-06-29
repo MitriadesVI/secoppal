@@ -9,29 +9,18 @@ from app.config import Settings
 from app.core.orchestrator import SecopalWorkflow
 
 
-def test_timeout_with_ordering_retries_without_ordering(tmp_path):
-    """
-    Input: "muestrame los contratos mas altos del distrito de barranquilla de primera infancia"
-    Mock: secop_client.query lanza TimeoutError en el primer intento, funciona en el segundo.
-    Verify: response dice "SECOP se demoro", timeout_suggestions contiene sugerencias.
+def test_timeout_with_semantic_order_does_not_fallback(tmp_path):
+    """H4: orden SEMÁNTICO ("mas altos" → valor_desc) NO degrada a muestra sin orden.
+
+    Devolver 50 filas arbitrarias para "los más altos" respondería otra pregunta. El
+    contrato correcto: una sola llamada (sin fallback) y timeout honesto, SIN afirmar
+    ranking. (Reemplaza el contrato viejo que sí reintentaba sin ordenar.)
     """
     call_count = {"n": 0}
 
     def _query(*args, **kwargs):
         call_count["n"] += 1
-        if call_count["n"] == 1:
-            raise TimeoutError("SECOP timeout")
-        return [
-            {
-                "nombre_del_procedimiento": "Atencion integral primera infancia",
-                "entidad": "ALCALDIA DE BARRANQUILLA",
-                "precio_base": "500000000",
-                "estado_de_apertura_del_proceso": "Celebrado",
-                "fecha_de_publicacion_del": "2025-06-01T00:00:00.000",
-                "urlproceso": "https://secop.gov.co/test",
-                "referencia_del_proceso": "REF-TEST-1",
-            }
-        ]
+        raise TimeoutError("SECOP timeout")
 
     workflow = SecopalWorkflow(Settings())
     workflow.secop_client.query = _query  # type: ignore[method-assign]
@@ -43,23 +32,12 @@ def test_timeout_with_ordering_retries_without_ordering(tmp_path):
         channel="streamlit",
     )
 
-    # Debió reintentar (2 llamadas a query: 1 timeout + 1 exitosa)
-    assert call_count["n"] == 2, f"Expected 2 calls (timeout + retry), got {call_count['n']}"
-
-    # Response debe mencionar que se cambió la estrategia
-    response = result.get("response", "")
-    assert "SECOP se demoro" in response or "se demoro" in response.lower() or "cambie" in response.lower(), (
-        f"Response should mention timeout retry: {response[:200]}"
-    )
-
-    # Debe tener timeout_suggestions
-    ts = result.get("timeout_suggestions", [])
-    assert len(ts) > 0, f"Expected timeout_suggestions, got {ts}"
-
-    # Debe incluir sugerencia de filtrar por 2026
-    labels = [s.get("label", "") for s in ts]
-    assert any("2026" in l for l in labels), f"Expected '2026' suggestion, got {labels}"
-    assert any("3" in l for l in labels) or any("anos" in l.lower() for l in labels), f"Expected time range suggestion, got {labels}"
+    # Orden semántico → SIN fallback: una sola llamada (no se intenta sin ORDER BY).
+    assert call_count["n"] == 1, f"Expected 1 call (no fallback for semantic order), got {call_count['n']}"
+    assert result.get("result_order_guarantee") == "unavailable"
+    # Timeout honesto, sin muestra ni afirmación de "los más altos".
+    resp = result.get("response", "").lower()
+    assert "no respondio" in resp or "se demoro" in resp or "demoró" in resp
 
 
 def test_normal_query_no_timeout_has_no_timeout_suggestions(tmp_path):
@@ -84,8 +62,13 @@ def test_normal_query_no_timeout_has_no_timeout_suggestions(tmp_path):
     assert ts == [], f"Expected empty timeout_suggestions, got {ts}"
 
 
-def test_timeout_without_ordering_no_retry(tmp_path):
-    """Timeout sin ordering_signal no debe reintentar."""
+def test_timeout_presentational_attempts_one_fallback(tmp_path):
+    """H4: orden PRESENTACIONAL (sin ordering_signal) SÍ intenta UN fallback sin ORDER BY.
+
+    Si el fallback también hace timeout, cae a un timeout honesto. Verifica que se intentó
+    exactamente una vez más (2 llamadas), no una cascada. (Reemplaza el contrato viejo de
+    "sin retry": antes no se recuperaba nada; ahora se intenta una variante más barata.)
+    """
     call_count = {"n": 0}
 
     def _query(*args, **kwargs):
@@ -98,6 +81,9 @@ def test_timeout_without_ordering_no_retry(tmp_path):
     workflow.narrator.narrate_with_grounding = lambda **kw: None  # type: ignore[method-assign]
 
     result = workflow.run_query("contratos de mantenimiento", channel="streamlit")
-    # Solo 1 llamada (sin retry)
-    assert call_count["n"] == 1, f"Expected 1 call (no retry), got {call_count['n']}"
-    assert "no respondio" in result.get("response", "").lower() or "se demoro" in result.get("response", "").lower()
+    # 2 llamadas: principal (con ORDER BY) + UN fallback (sin ORDER BY). Máximo uno.
+    assert call_count["n"] == 2, f"Expected 2 calls (primary + 1 fallback), got {call_count['n']}"
+    # Ambas fallaron → timeout honesto, sin falso EMPTY ni ranking.
+    assert result.get("result_order_guarantee") == "unavailable"
+    resp = result.get("response", "").lower()
+    assert "no respondio" in resp or "se demoro" in resp or "demoró" in resp

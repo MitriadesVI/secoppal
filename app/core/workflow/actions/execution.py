@@ -17,6 +17,7 @@ tests/test_count_lazy.py, tests/test_degrade_query.py guard the corners.
 """
 from __future__ import annotations
 
+import re
 import time
 
 from burr.core import State, action
@@ -26,8 +27,15 @@ from app.core.analytics import maybe_handle_analytical_query
 from app.core.observer import observe as observe_universe_fn
 from app.core.secop_client import SecopClient
 from app.core.soql_builder import SoQLBuilder
+from app.core.deadline import FALLBACK_FETCH_SECONDS
+from app.core.order_semantics import (
+    ORDER_EXACT,
+    ORDER_SAMPLE,
+    ORDER_UNAVAILABLE,
+    order_is_presentational,
+    sort_page_presentational,
+)
 from app.core.workflow.helpers import (
-    _build_timeout_suggestions,
     _elapsed_ms,
     _is_timeout_exception,
     _query_first_then_count,
@@ -110,6 +118,9 @@ def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
             results=results, query_error="", total_count=total,
             total_count_approximate=approximate, timeout_suggestions=[],
             risk_flag_timeout=False,
+            # H4: la query honró el ORDER BY → orden exacto, sin fallback.
+            result_order_guarantee=ORDER_EXACT,
+            fallback_attempted=False, fallback_used=False,
             # Commit 6A/6C: observabilidad del pool (distinto del display). `pool_full`
             # solo afirma que se llenó el límite (posible truncamiento), NO que el total
             # lo exceda — para eso habría que comparar contra total_count.
@@ -118,63 +129,80 @@ def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
         )
     except Exception as exc:
         params = state.get("resolved_params", {})
-        # Retry for heavy ordering queries: quitar ordering_signal
-        if params.get("ordering_signal") == "valor_desc" and not params.get("fecha_desde"):
+        # Solo errores RECUPERABLES disparan el fallback (timeout / connErr transitorio).
+        # Un 400 de SoQL, esquema, columna inexistente, auth o bug interno NO es recuperable:
+        # quitar el ORDER BY ahí solo ocultaría el defecto → camino honesto sin fallback.
+        is_timeout = _is_timeout_exception(exc)
+        fallback_attempted = False
+        fallback_query_status = "not_attempted"
+
+        # ── H4: UN fallback controlado sin ORDER BY ──────────────────────────────
+        # SOLO ante timeout Y orden presentacional (default del sistema). Si el usuario
+        # pidió un orden explícito ("más caros", "últimos") el orden es SEMÁNTICO: retirarlo
+        # cambiaría la pregunta → no se degrada (result_order_guarantee=unavailable). El
+        # fallback PRESERVA todos los filtros sustantivos (entidad/territorio/fechas/estado/
+        # valor/exclusiones/dataset): solo retira el ORDER BY y recorta LIMIT a ≤50, luego
+        # ordena la página localmente (muestra sin garantía de orden global). Máximo UNO.
+        if is_timeout and order_is_presentational(params):
+            fallback_attempted = True
+            fb_start = time.perf_counter()
             try:
-                relaxed = dict(params)
-                relaxed.pop("ordering_signal", None)
                 did = state["dataset_id"]
-                soql = soql_builder.build(did, relaxed)
-                count_soql = soql_builder.build_count(did, relaxed)
-                limit = int(relaxed.get("limit", 50) or 50)
-                total, results, secop_timings, approximate = _query_first_then_count(
-                    secop_client,
-                    did,
-                    count_soql,
-                    soql,
-                    limit=limit,
+                # El LIMIT efectivo de la principal lo decide el builder (200 con
+                # objeto_phrases). Se lee del SoQL ya construido para detectar la reducción.
+                m = re.search(r"LIMIT (\d+)", state.get("soql_query", "") or "")
+                primary_limit = int(m.group(1)) if m else 50
+                fb_params = dict(params)
+                fb_params["limit"] = 50  # WIDE_LIMIT: el fallback acota a ≤50
+                fb_soql = soql_builder.build(did, fb_params, include_order=False)
+                fb_count_soql = soql_builder.build_count(did, fb_params)
+                fb_total, fb_results, fb_timings, fb_count_approx = _query_first_then_count(
+                    secop_client, did, fb_count_soql, fb_soql,
+                    limit=int(fb_params["limit"]),
+                    fetch_cap_s=FALLBACK_FETCH_SECONDS,
                 )
-                if results:
-                    timeout_suggestions = _build_timeout_suggestions(params, total)
-                    return _with_timings(
-                        state,
-                        {**secop_timings, "execute_total_ms": _elapsed_ms(start_total)},
-                        results=results, query_error="", total_count=total,
-                        total_count_approximate=approximate,
-                        timeout_suggestions=timeout_suggestions,
-                        risk_flag_timeout=False,
-                        soql_query=soql,
-                        resolved_params=relaxed,
+                if fb_results:
+                    spec = soql_builder.SPECS[did]
+                    fb_results = sort_page_presentational(
+                        fb_results, spec.date, spec.value,
                     )
-            except Exception:
-                pass
-
-        # B5: Tras 1er fallo, degradar (ampliar ventana o quitar AND menos crítico)
-        try:
-            degraded, hint = _relax_params(dict(params))
-            if degraded:
-                did = state["dataset_id"]
-                soql = soql_builder.build(did, degraded)
-                count_soql = soql_builder.build_count(did, degraded)
-                limit = int(degraded.get("limit", 50) or 50)
-                total, results, secop_timings, approximate = _query_first_then_count(
-                    secop_client, did, count_soql, soql,
-                    limit=limit,
-                )
-                if results:
+                    transformations = ["removed_order_by"]
+                    if primary_limit > 50:
+                        transformations.append("reduced_limit")
                     return _with_timings(
                         state,
-                        {**secop_timings, "execute_total_ms": _elapsed_ms(start_total)},
-                        results=results, query_error="", total_count=total,
-                        total_count_approximate=approximate,
+                        {**fb_timings, "execute_total_ms": _elapsed_ms(start_total)},
+                        results=fb_results, query_error="",
+                        # El conteo es un EJE INDEPENDIENTE del orden: si el count terminó,
+                        # el total es exacto aunque la muestra no tenga orden garantizado.
+                        total_count=fb_total, total_count_approximate=fb_count_approx,
                         timeout_suggestions=[], risk_flag_timeout=False,
-                        degraded=True, degraded_hint=hint,
-                        soql_query=soql, resolved_params=degraded,
+                        degraded=True, degraded_hint="recuperado sin orden garantizado",
+                        soql_query=fb_soql,
+                        # H4 — contrato de orden + telemetría del fallback.
+                        result_order_guarantee=ORDER_SAMPLE,
+                        fallback_attempted=True,
+                        fallback_used=True,
+                        fallback_strategy="removed_order_by",
+                        fallback_rows=len(fb_results),
+                        fallback_elapsed_ms=_elapsed_ms(fb_start),
+                        substantive_filters_preserved=True,
+                        transformations_applied=transformations,
+                        primary_query_status="timed_out",
+                        fallback_query_status="completed",
                     )
-        except Exception:
-            pass
+                fallback_query_status = "empty"
+            except Exception as fb_exc:
+                fallback_query_status = (
+                    "timed_out" if _is_timeout_exception(fb_exc) else "error"
+                )
 
-        if _is_timeout_exception(exc):
+        # ── Sin recuperación: timeout/error honesto ──────────────────────────────
+        # Orden semántico no satisfecho, sin presupuesto para el fallback, o el fallback
+        # también falló/vacío. result_order_guarantee=unavailable → el formateo NO afirma
+        # máximos/mínimos/posiciones sobre una muestra. NO se usa _relax_params (quitar
+        # filtros sustantivos cambiaría la pregunta).
+        if is_timeout:
             return _with_timing(
                 state,
                 "execute_total_ms",
@@ -184,6 +212,11 @@ def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
                 total_count=None,
                 timeout_suggestions=[],
                 risk_flag_timeout=True,
+                result_order_guarantee=ORDER_UNAVAILABLE,
+                fallback_attempted=fallback_attempted,
+                fallback_used=False,
+                fallback_query_status=fallback_query_status,
+                primary_query_status="timed_out",
             )
         return _with_timing(
             state,
@@ -194,6 +227,11 @@ def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
             total_count=0,
             timeout_suggestions=[],
             risk_flag_timeout=False,
+            result_order_guarantee=ORDER_UNAVAILABLE,
+            fallback_attempted=False,
+            fallback_used=False,
+            fallback_query_status="not_attempted",
+            primary_query_status="error",
         )
 
 
