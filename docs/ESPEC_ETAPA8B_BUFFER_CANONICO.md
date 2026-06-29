@@ -101,6 +101,13 @@ PaginationBuffer:
 - Dual mantiene cursores separados para procesos y contratos; “más” pregunta el grupo y
   “más procesos/contratos” avanza únicamente el buffer seleccionado.
 
+## Deuda operativa explícita
+
+`PAGINATION-CONCURRENCY-001`: el snapshot usa reemplazo atómico de archivo, pero la
+operación completa `leer → avanzar → guardar` todavía no tiene compare-and-swap ni lock
+distribuido. Hasta incorporar serialización por conversación o un backend transaccional,
+el supuesto operativo es una sola operación activa por `chat_id`.
+
 ## Plan de migración
 
 - Reusar `query_fingerprint` (ya versiona vía `extra`) y el orden estable de E8A.

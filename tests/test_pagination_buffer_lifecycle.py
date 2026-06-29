@@ -31,8 +31,13 @@ def _buffer(*, now: datetime | None = None, ttl_seconds: int = 900) -> Paginatio
     )
 
 
+def _seed(store: ConversationStore, chat_id: str = "chat-1") -> None:
+    store.append_turn(chat_id, "consulta", "respuesta", {"dataset": "procesos"})
+
+
 def test_create_read_advance_and_restart(tmp_path):
     store = ConversationStore(base_path=tmp_path / "conv")
+    _seed(store)
     original = _buffer()
     store.save_pagination_buffer("chat-1", original)
 
@@ -72,6 +77,7 @@ def test_expand_deduplicates_candidates_and_validated_rows():
 
 def test_fingerprint_mismatch_invalidates_persisted_buffer(tmp_path):
     store = ConversationStore(base_path=tmp_path / "conv")
+    _seed(store)
     store.save_pagination_buffer("chat-1", _buffer())
 
     assert store.get_pagination_buffer("chat-1", "procesos", "other-fp") is None
@@ -81,6 +87,7 @@ def test_fingerprint_mismatch_invalidates_persisted_buffer(tmp_path):
 def test_expired_buffer_is_evicted(tmp_path):
     now = datetime(2026, 6, 29, 12, 0, tzinfo=timezone.utc)
     store = ConversationStore(base_path=tmp_path / "conv")
+    _seed(store)
     store.save_pagination_buffer("chat-1", _buffer(now=now, ttl_seconds=60))
 
     assert store.get_pagination_buffer(
@@ -91,6 +98,7 @@ def test_expired_buffer_is_evicted(tmp_path):
 
 def test_group_isolation_delete_and_clear(tmp_path):
     store = ConversationStore(base_path=tmp_path / "conv")
+    _seed(store)
     procesos = _buffer()
     contratos = PaginationBuffer.create(
         query_fingerprint="fp-2", group="contratos", dataset_id="jbjy-vk9h",
@@ -109,3 +117,12 @@ def test_group_isolation_delete_and_clear(tmp_path):
 
     store.clear("chat-1")
     assert store.get_pagination_buffer("chat-1", "contratos", "fp-2") is None
+
+
+def test_orphan_buffer_without_conversation_is_evicted_on_read(tmp_path):
+    store = ConversationStore(base_path=tmp_path / "conv")
+    store.save_pagination_buffer("orphan", _buffer())
+    assert store._pagination_path_for("orphan").exists()
+
+    assert store.get_pagination_buffer("orphan", "procesos", "fp-1") is None
+    assert not store._pagination_path_for("orphan").exists()

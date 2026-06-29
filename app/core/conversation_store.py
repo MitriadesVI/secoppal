@@ -21,6 +21,7 @@ Uso:
 from __future__ import annotations
 
 import json
+import os
 import re
 import threading
 import uuid
@@ -135,11 +136,23 @@ class Turn:
             return float("inf")
 
 
+DEFAULT_CONVERSATION_PATH = Path("data/conversations")
+
+
 class ConversationStore:
     """Almacena turnos conversacionales en JSONL, un archivo por chat_id."""
 
-    def __init__(self, base_path: str | Path = "data/conversations"):
-        self.base_path = Path(base_path)
+    def __init__(self, base_path: str | Path | None = None):
+        configured = os.getenv("CONVERSATION_STORE_DIR")
+        self.base_path = Path(base_path or configured or DEFAULT_CONVERSATION_PATH)
+        if (
+            os.getenv("PYTEST_CURRENT_TEST")
+            and self.base_path.resolve() == DEFAULT_CONVERSATION_PATH.resolve()
+        ):
+            raise RuntimeError(
+                "Tests may not write to data/conversations; set CONVERSATION_STORE_DIR "
+                "or inject base_path=tmp_path."
+            )
         self.base_path.mkdir(parents=True, exist_ok=True)
         self._pagination_lock = threading.RLock()
 
@@ -219,13 +232,14 @@ class ConversationStore:
         return None
 
     def clear(self, chat_id: str) -> None:
-        """Elimina el historial del chat_id. No falla si no existe."""
-        path = self._path_for(chat_id)
-        if path.exists():
-            path.unlink()
-        pagination_path = self._pagination_path_for(chat_id)
-        if pagination_path.exists():
-            pagination_path.unlink()
+        """Elimina buffer primero y luego historial (orden seguro ante crash)."""
+        with self._pagination_lock:
+            pagination_path = self._pagination_path_for(chat_id)
+            if pagination_path.exists():
+                pagination_path.unlink()
+            path = self._path_for(chat_id)
+            if path.exists():
+                path.unlink()
 
     def save_pagination_buffer(self, chat_id: str, buffer: PaginationBuffer) -> None:
         """Persiste atomicamente un snapshot por grupo, conservando sus hermanos."""
@@ -249,6 +263,11 @@ class ConversationStore:
             payload = self._read_pagination_payload(path)
             raw = payload.get(group)
             if not isinstance(raw, dict):
+                return None
+            # Un sidecar sin conversación solo puede provenir de un crash entre
+            # save_pagination_buffer y append_turn. Es inerte y se elimina al leer.
+            if not self.get_history(chat_id, last_n=1):
+                self._delete_pagination_group(path, payload, group)
                 return None
             try:
                 buffer = PaginationBuffer.from_dict(raw)

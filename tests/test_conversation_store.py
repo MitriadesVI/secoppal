@@ -10,6 +10,7 @@ from pathlib import Path
 import pytest
 
 from app.core.conversation_store import (
+    DEFAULT_CONVERSATION_PATH,
     FOLLOWUP_WINDOW_MINUTES,
     ConversationStore,
     Turn,
@@ -95,6 +96,19 @@ def test_clear_vacia_archivo(store):
 
 def test_clear_no_falla_si_no_existe(store):
     store.clear("tg_no_existe")  # no debe lanzar excepcion
+
+
+def test_default_path_honors_isolated_environment(tmp_path, monkeypatch):
+    isolated = tmp_path / "isolated-conversations"
+    monkeypatch.setenv("CONVERSATION_STORE_DIR", str(isolated))
+    assert ConversationStore().base_path == isolated
+
+
+def test_pytest_guard_rejects_project_conversation_directory(monkeypatch):
+    monkeypatch.delenv("CONVERSATION_STORE_DIR", raising=False)
+    monkeypatch.setenv("PYTEST_CURRENT_TEST", "guard")
+    with pytest.raises(RuntimeError, match="Tests may not write"):
+        ConversationStore(base_path=DEFAULT_CONVERSATION_PATH)
 
 
 def test_corrupt_line_skipped(store, tmp_path):
