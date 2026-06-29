@@ -56,6 +56,31 @@ logger = logging.getLogger(__name__)
 OPPORTUNITY_STAGE_SHADOW_ENABLED = True
 
 
+def _initial_pagination_buffer(
+    *, group: str, dataset_id: str, params: dict, candidates: list[dict],
+    validated: list[dict], displayed: int, source_total: int,
+    source_total_approximate: bool = False,
+):
+    from app.core.pagination_buffer import PaginationBuffer, pagination_fingerprint
+
+    clean = dict(params)
+    clean.pop("entidad_ecosystem", None)  # se inyecta post-query; no fue parte del fetch
+    limit = int(clean.get("limit", 50) or 50)
+    offset = int(clean.get("offset", 0) or 0)
+    return PaginationBuffer.create(
+        query_fingerprint=pagination_fingerprint(clean),
+        group=group,
+        dataset_id=dataset_id,
+        query_params=clean,
+        candidate_buffer=candidates,
+        validated_ranked_buffer=validated,
+        display_cursor=displayed,
+        source_cursor=offset + limit,
+        source_candidate_total=max(int(source_total or 0), len(candidates)),
+        source_total_approximate=source_total_approximate,
+    )
+
+
 def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
     """Run the full Burr pipeline and post-process the resulting state."""
     # Etapa 5: la recolección se inicia/cierra en run_query (por-turno); aquí solo se
@@ -227,6 +252,7 @@ def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
     # ── Dual-dataset (Commit 2+3): ejecuta el hijo secundario, agrupa y PRESENTA.
     # El primario NO se re-ejecuta (sale del estado del pipeline). Best-effort: un
     # fallo aquí nunca rompe la respuesta del dataset primario.
+    groups = None
     try:
         from app.core.workflow.dual_dataset import build_dataset_groups
         groups = build_dataset_groups(deps, result, state)
@@ -250,6 +276,67 @@ def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
             }
     except Exception as exc:  # best-effort
         logger.warning("dual dataset expansion failed: %s", exc)
+
+    # ── E8B.2: cachear la UNICA salida canonica ya producida ────────────────
+    # No revalida ni reordena: solo persiste candidatos + secuencia visible para
+    # que "mas" lea del mismo snapshot. En dual se guarda un buffer por grupo.
+    try:
+        if groups is not None:
+            from app.core.workflow.dual_dataset import params_for_dataset
+
+            common = result.get("resolved_params", {}) or {}
+            for name, group_result in groups.items():
+                if group_result.status != "ok":
+                    continue
+                group_params = params_for_dataset(common, name)
+                displayed = int(
+                    (result.get("dataset_groups", {}).get(name, {}) or {}).get("displayed_count", 0)
+                )
+                buffer = _initial_pagination_buffer(
+                    group=name,
+                    dataset_id=("p6dx-8zbt" if name == "procesos" else "jbjy-vk9h"),
+                    params=group_params,
+                    candidates=group_result.candidate_rows,
+                    validated=group_result.rows,
+                    displayed=displayed,
+                    source_total=int(group_result.counts.get("total_count", 0) or 0),
+                    source_total_approximate=bool(
+                        group_result.counts.get("total_count_approximate", False)
+                    ),
+                )
+                if ctx.chat_id:
+                    deps.conv_store.save_pagination_buffer(ctx.chat_id, buffer)
+                result["dataset_groups"][name].update({
+                    "source_candidate_total": buffer.source_candidate_total,
+                    "validated_total_known": buffer.validated_total_known,
+                    "displayed_so_far": buffer.displayed_so_far,
+                    "source_total_approximate": buffer.source_total_approximate,
+                })
+        elif result.get("dataset_id") and not result.get("needs_clarification"):
+            dataset_id = result["dataset_id"]
+            name = "contratos" if dataset_id == "jbjy-vk9h" else "procesos"
+            validated = list(state.get("ranked_results") or state.get("results") or [])
+            candidates = list(state.get("results") or [])
+            buffer = _initial_pagination_buffer(
+                group=name,
+                dataset_id=dataset_id,
+                params=result.get("resolved_params", {}) or {},
+                candidates=candidates,
+                validated=validated,
+                displayed=len(result.get("rows", []) or []),
+                source_total=int(result.get("total_count", 0) or 0),
+                source_total_approximate=bool(result.get("total_count_approximate", False)),
+            )
+            if ctx.chat_id:
+                deps.conv_store.save_pagination_buffer(ctx.chat_id, buffer)
+            result.update({
+                "source_candidate_total": buffer.source_candidate_total,
+                "validated_total_known": buffer.validated_total_known,
+                "displayed_so_far": buffer.displayed_so_far,
+                "source_total_approximate": buffer.source_total_approximate,
+            })
+    except Exception as exc:  # cache best-effort: nunca rompe la primera pagina
+        logger.warning("pagination buffer initialization failed: %s", exc)
 
     # ── Opportunity stage shadow (Fase 2B) — observación, no afecta resultados.
     # Solo procesos + opportunity_search. Best-effort: un fallo aquí nunca

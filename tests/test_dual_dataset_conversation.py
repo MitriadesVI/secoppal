@@ -79,3 +79,49 @@ def test_mas_after_dual_asks_which(tmp_path):
     resp = r2.get("response", "").lower()
     assert "procesos" in resp and "contratos" in resp   # pregunta por ambos grupos
     assert "más" in resp or "mas" in resp
+
+
+def test_dual_buffers_advance_groups_independently(tmp_path):
+    wf = SecopalWorkflow(Settings())
+
+    def proc(i):
+        return {"id_del_proceso": f"PID-{i}", "referencia_del_proceso": f"P-{i}",
+                "nombre_del_procedimiento": f"AUTOMATIZACION P {i}", "entidad": "E",
+                "precio_base": "1", "estado_de_apertura_del_proceso": "Abierto",
+                "fecha_de_publicacion_del": "2026-01-01T00:00:00.000", "urlproceso": "u"}
+
+    def con(i):
+        return {"id_contrato": f"CID-{i}", "referencia_del_contrato": f"C-{i}",
+                "objeto_del_contrato": f"AUTOMATIZACION C {i}", "nombre_entidad": "E",
+                "valor_del_contrato": "1", "estado_contrato": "En ejecución",
+                "fecha_de_firma": "2026-01-01T00:00:00.000", "urlproceso": "u"}
+
+    calls = {"p6dx-8zbt": 0, "jbjy-vk9h": 0}
+
+    def query(ds, _soql):
+        calls[ds] += 1
+        return [proc(i) for i in range(30)] if ds == "p6dx-8zbt" else [con(i) for i in range(30)]
+
+    wf.secop_client.query = query
+    wf.secop_client.count = lambda _ds, _soql: 30
+    wf.narrator.narrate_with_grounding = lambda **kw: None
+    wf.conv_store = ConversationStore(base_path=tmp_path / "conv")
+    chat = "dual_independent"
+
+    first = wf.run_query(
+        "procesos o contratos de automatizacion", channel="streamlit", chat_id=chat,
+    )
+    assert first["dataset_groups"]["procesos"]["displayed_so_far"] == 25
+    assert first["dataset_groups"]["contratos"]["displayed_so_far"] == 25
+    initial_calls = dict(calls)
+
+    clarify = wf.run_query("muestrame mas", channel="streamlit", chat_id=chat)
+    assert clarify["route_reason"] == "pagination_dual_clarify"
+    more_proc = wf.run_query("muestrame mas procesos", channel="streamlit", chat_id=chat)
+    more_con = wf.run_query("muestrame mas contratos", channel="streamlit", chat_id=chat)
+
+    assert [r["id_del_proceso"] for r in more_proc["rows"]] == [f"PID-{i}" for i in range(25, 30)]
+    assert [r["id_contrato"] for r in more_con["rows"]] == [f"CID-{i}" for i in range(25, 30)]
+    assert more_proc["displayed_so_far"] == 30
+    assert more_con["displayed_so_far"] == 30
+    assert calls == initial_calls  # ambos salen de sus buffers; cero repesca

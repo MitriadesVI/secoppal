@@ -11,7 +11,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 
-from app.core.phrase_ranking import rank_candidate_pool
+from app.core.phrase_ranking import validate_rank_and_dedupe
 from app.core.soql_builder import SoQLBuilder
 from app.core.workflow.helpers import _query_first_then_count
 
@@ -55,6 +55,7 @@ class DatasetGroupResult:
     soql: str
     error: str | None
     timings_ms: dict = field(default_factory=dict)
+    candidate_rows: list[dict] = field(default_factory=list)
 
 
 def _counts(rows: list[dict], ranked, candidate_count: int, limit: int, total: int, approx: bool) -> dict:
@@ -85,10 +86,11 @@ def execute_dataset_child(dataset_name: str, common_params: dict, deps) -> Datas
         )
     except Exception as exc:
         return DatasetGroupResult(dataset_name, "error", [], [], {}, "", str(exc)[:120], {})
-    ranked = rank_candidate_pool(rows, child, dataset_id)
+    ranked = validate_rank_and_dedupe(rows, child, dataset_id)
     return DatasetGroupResult(
         dataset_name, "ok", ranked.ranked_results, ranked.unvalidated_candidates,
         _counts(rows, ranked, len(rows), limit, total, approx), soql, None, timings,
+        list(rows),
     )
 
 
@@ -112,6 +114,7 @@ def _primary_group_from_state(name: str, result: dict, state) -> DatasetGroupRes
     return DatasetGroupResult(
         name, "error" if err else "ok", rows, unval, counts,
         state.get("soql_query", "") or "", (str(err)[:120] if err else None), {},
+        list(state.get("results") or []),
     )
 
 

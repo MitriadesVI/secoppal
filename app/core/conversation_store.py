@@ -22,6 +22,7 @@ from __future__ import annotations
 
 import json
 import re
+import threading
 import uuid
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -34,6 +35,7 @@ from app.core._followup_constants import (
     NOISE_PREFIXES,
     RESET_COMMANDS,
 )
+from app.core.pagination_buffer import PaginationBuffer, pagination_fingerprint
 
 
 # ---------------------------------------------------------------------------
@@ -139,6 +141,7 @@ class ConversationStore:
     def __init__(self, base_path: str | Path = "data/conversations"):
         self.base_path = Path(base_path)
         self.base_path.mkdir(parents=True, exist_ok=True)
+        self._pagination_lock = threading.RLock()
 
     # ------------------------------------------------------------------
     # API publica
@@ -220,6 +223,49 @@ class ConversationStore:
         path = self._path_for(chat_id)
         if path.exists():
             path.unlink()
+        pagination_path = self._pagination_path_for(chat_id)
+        if pagination_path.exists():
+            pagination_path.unlink()
+
+    def save_pagination_buffer(self, chat_id: str, buffer: PaginationBuffer) -> None:
+        """Persiste atomicamente un snapshot por grupo, conservando sus hermanos."""
+        with self._pagination_lock:
+            path = self._pagination_path_for(chat_id)
+            payload = self._read_pagination_payload(path)
+            payload[buffer.group] = buffer.to_dict()
+            self._write_pagination_payload(path, payload)
+
+    def get_pagination_buffer(
+        self,
+        chat_id: str,
+        group: str,
+        query_fingerprint: str | None,
+        *,
+        now: datetime | None = None,
+    ) -> PaginationBuffer | None:
+        """Lee un buffer vigente; mismatch o TTL vencido lo invalidan y eliminan."""
+        with self._pagination_lock:
+            path = self._pagination_path_for(chat_id)
+            payload = self._read_pagination_payload(path)
+            raw = payload.get(group)
+            if not isinstance(raw, dict):
+                return None
+            try:
+                buffer = PaginationBuffer.from_dict(raw)
+            except (KeyError, TypeError, ValueError):
+                self._delete_pagination_group(path, payload, group)
+                return None
+            expected_fingerprint = query_fingerprint or pagination_fingerprint(buffer.query_params)
+            if buffer.query_fingerprint != expected_fingerprint or buffer.is_expired(now):
+                self._delete_pagination_group(path, payload, group)
+                return None
+            return buffer
+
+    def delete_pagination_buffer(self, chat_id: str, group: str) -> None:
+        with self._pagination_lock:
+            path = self._pagination_path_for(chat_id)
+            payload = self._read_pagination_payload(path)
+            self._delete_pagination_group(path, payload, group)
 
     # ------------------------------------------------------------------
     # Internos
@@ -228,6 +274,37 @@ class ConversationStore:
     def _path_for(self, chat_id: str) -> Path:
         safe = _sanitize_chat_id(chat_id)
         return self.base_path / f"{safe}.jsonl"
+
+    def _pagination_path_for(self, chat_id: str) -> Path:
+        safe = _sanitize_chat_id(chat_id)
+        return self.base_path / f"{safe}.pagination.json"
+
+    @staticmethod
+    def _read_pagination_payload(path: Path) -> dict:
+        if not path.exists():
+            return {}
+        try:
+            value = json.loads(path.read_text(encoding="utf-8"))
+            return value if isinstance(value, dict) else {}
+        except (OSError, json.JSONDecodeError):
+            return {}
+
+    @staticmethod
+    def _write_pagination_payload(path: Path, payload: dict) -> None:
+        tmp = path.with_suffix(path.suffix + ".tmp")
+        tmp.write_text(
+            json.dumps(payload, ensure_ascii=False, default=str), encoding="utf-8",
+        )
+        tmp.replace(path)
+
+    def _delete_pagination_group(self, path: Path, payload: dict, group: str) -> None:
+        if group not in payload:
+            return
+        payload.pop(group, None)
+        if payload:
+            self._write_pagination_payload(path, payload)
+        elif path.exists():
+            path.unlink()
 
 
 # ---------------------------------------------------------------------------

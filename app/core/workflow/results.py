@@ -112,6 +112,16 @@ CANONICAL_KEYS: frozenset[str] = frozenset({
     "transformations_applied",
     "primary_query_status",
     "fallback_query_status",
+    # Etapa 8B.2: estado explicito del buffer canonico.
+    "source_candidate_total",
+    "validated_total_known",
+    "displayed_so_far",
+    "source_total_approximate",
+    "pagination_buffer_hit",
+    "pagination_validation_ms",
+    "candidate_count",
+    "validated_count",
+    "quarantined_count",
 })
 
 
@@ -152,6 +162,15 @@ class WorkflowResult(TypedDict, total=False):
     failed_sources: list[str]
     search_attempts: list[dict]
     source_partial: bool
+    source_candidate_total: int
+    validated_total_known: int
+    displayed_so_far: int
+    source_total_approximate: bool
+    pagination_buffer_hit: bool
+    pagination_validation_ms: float
+    candidate_count: int
+    validated_count: int
+    quarantined_count: int
     outcome: str
     outcome_reason: str
     query_fingerprint: str

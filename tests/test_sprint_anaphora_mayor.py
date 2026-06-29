@@ -70,10 +70,10 @@ class TestPagination:
             channel="streamlit", chat_id="st_pag",
         )
         r2 = wf.run_query("muestrame mas", channel="streamlit", chat_id="st_pag")
-        assert r2.get("route_reason") == "pagination_more", f"route={r2.get('route_reason')}"
+        assert r2.get("route_reason") == "pagination_exhausted", f"route={r2.get('route_reason')}"
         assert r2.get("intent_type") == "pagination_more"
         soql = r2.get("soql_query", "")
-        assert "OFFSET" in soql, f"SoQL missing OFFSET: {soql[:300]}"
+        assert soql and "WHERE 1=1" not in soql
 
     def test_muestrame_mas_without_context(self, tmp_path):
         wf = self._workflow(tmp_path)

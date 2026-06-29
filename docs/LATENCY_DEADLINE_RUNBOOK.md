@@ -84,5 +84,5 @@ falsos EMPTY=0 · rankings falsos=0 · direct_lookup>15s=0 · filtros sustantivo
 
 ## Pendiente
 
-H3/H5 DEFERRED (evidencia no los justifica). Etapa 8B (buffer canónico de paginación) PENDIENTE
-— ver `docs/ESPEC_ETAPA8B_BUFFER_CANONICO.md` (unificar la ruta de ranking ANTES de cachear).
+H3/H5 DEFERRED (evidencia no los justifica). Etapa 8B (buffer canónico de paginación)
+cerrada el 2026-06-29; ver `docs/ESPEC_ETAPA8B_BUFFER_CANONICO.md`.

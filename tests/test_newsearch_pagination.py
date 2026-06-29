@@ -158,7 +158,7 @@ class TestPaginationE2E:
     def _wf(self, tmp_path):
         wf = SecopalWorkflow(Settings())
         wf.secop_client.query = _pag_query()
-        wf.secop_client.count = lambda ds, soql: 50
+        wf.secop_client.count = lambda ds, soql: 120
         wf.narrator.narrate_with_grounding = lambda **kw: None
         wf.conv_store = ConversationStore(base_path=tmp_path / "conv")
         return wf

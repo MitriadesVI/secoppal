@@ -333,10 +333,15 @@ def test_combined_phrase_levels_dedupe_ties_and_three_page_prefix(tmp_path, monk
     assert canonical.phrase_counts == {"direct": 50, "probable": 35, "weak": 0, "none": 15}
     assert len(expected_ids) == 80  # 85 validados menos cinco versiones duplicadas
     assert displayed_ids == expected_ids[:75]
-    assert pages[1]["candidate_count"] == 100
+    assert pages[1]["candidate_count"] == 95  # candidatos unicos persistidos
     assert pages[1]["validated_count"] == 80
     assert pages[1]["quarantined_count"] == 15
     assert pages[1]["pagination_validation_ms"] >= 0
+    assert pages[0]["source_candidate_total"] == 100
+    assert pages[0]["validated_total_known"] == 80
+    assert pages[0]["displayed_so_far"] == 25
+    assert pages[1]["displayed_so_far"] == 50
+    assert pages[2]["displayed_so_far"] == 75
     assert [row["id_contrato"] for row in repeated.ranked_results] == expected_ids
     assert source == source_before and params == params_before
 
@@ -379,9 +384,151 @@ def test_pagination_drops_post_query_ecosystem_to_refetch_same_source(tmp_path, 
     page_2 = wf.run_query("muestrame mas", channel="streamlit", chat_id=chat)
 
     assert page_2["route_reason"] == "pagination_more"
-    assert len(seen_soql) == 2
-    assert seen_soql[1] == seen_soql[0]
-    assert "ENTIDAD INYECTADA" not in seen_soql[1]
+    assert len(seen_soql) == 1  # pagina 2 sale del buffer, sin repesca
+    assert page_2["pagination_buffer_hit"] is True
+    assert "ENTIDAD INYECTADA" not in seen_soql[0]
+
+
+def test_refill_deduplicates_boundary_row_between_source_batches(tmp_path, monkeypatch):
+    """El ultimo id del lote anterior no reaparece si SECOP lo repite al ampliar."""
+    source = _rows(74)
+    for row in source:
+        row["estado_de_apertura_del_proceso"] = "Publicado"
+
+    def query(_ds: str, soql: str) -> list[dict]:
+        m_off = re.search(r"OFFSET (\d+)", soql)
+        off = int(m_off.group(1)) if m_off else 0
+        if off == 0:
+            return source[:50]
+        if off == 50:
+            return [source[49], *source[50:74]]
+        return []
+
+    monkeypatch.setattr(
+        "app.core.workflow.actions.execution.observe_universe_fn",
+        lambda *a, **k: None,
+    )
+    wf = SecopalWorkflow(Settings())
+    wf.secop_client.query = query
+    wf.secop_client.count = lambda _ds, _soql: 75
+    wf.narrator.narrate_with_grounding = lambda **kw: None
+    wf.conv_store = ConversationStore(base_path=tmp_path / "conv")
+
+    chat = "e8b_refill_dedupe"
+    pages = [wf.run_query(
+        "procesos de aseo de 2026", channel="streamlit", chat_id=chat,
+    )]
+    pages.append(wf.run_query("muestrame mas", channel="streamlit", chat_id=chat))
+    pages.append(wf.run_query("muestrame mas", channel="streamlit", chat_id=chat))
+    ids = [
+        row["id_del_proceso"]
+        for page in pages
+        for row in page.get("rows", [])
+    ]
+    assert ids == [f"PID-{i}" for i in range(74)]
+    assert len(ids) == len(set(ids))
+
+
+def test_buffer_survives_workflow_restart_without_refetch(tmp_path, monkeypatch):
+    calls = 0
+    data_query = _make_query(total=40)
+
+    def query(ds: str, soql: str) -> list[dict]:
+        nonlocal calls
+        calls += 1
+        return data_query(ds, soql)
+
+    monkeypatch.setattr(
+        "app.core.workflow.actions.execution.observe_universe_fn",
+        lambda *a, **k: None,
+    )
+    base = tmp_path / "conv"
+    first = SecopalWorkflow(Settings())
+    first.secop_client.query = query
+    first.secop_client.count = lambda _ds, _soql: 40
+    first.narrator.narrate_with_grounding = lambda **kw: None
+    first.conv_store = ConversationStore(base_path=base)
+    first.run_query("procesos de aseo de 2026", channel="streamlit", chat_id="restart")
+    assert calls == 1
+
+    restarted = SecopalWorkflow(Settings())
+    restarted.secop_client.query = query
+    restarted.secop_client.count = lambda _ds, _soql: 40
+    restarted.narrator.narrate_with_grounding = lambda **kw: None
+    restarted.conv_store = ConversationStore(base_path=base)
+    page_2 = restarted.run_query("muestrame mas", channel="streamlit", chat_id="restart")
+
+    assert page_2["pagination_buffer_hit"] is True
+    assert calls == 1
+
+
+def test_expired_buffer_refetches_from_page_one(tmp_path, monkeypatch):
+    from dataclasses import replace
+    from datetime import datetime, timedelta, timezone
+
+    from app.core.workflow.handlers.pagination import _page_fingerprint
+
+    calls = 0
+    data_query = _make_query(total=40)
+
+    def query(ds: str, soql: str) -> list[dict]:
+        nonlocal calls
+        calls += 1
+        return data_query(ds, soql)
+
+    monkeypatch.setattr(
+        "app.core.workflow.actions.execution.observe_universe_fn",
+        lambda *a, **k: None,
+    )
+    wf = SecopalWorkflow(Settings())
+    wf.secop_client.query = query
+    wf.secop_client.count = lambda _ds, _soql: 40
+    wf.narrator.narrate_with_grounding = lambda **kw: None
+    wf.conv_store = ConversationStore(base_path=tmp_path / "conv")
+    first = wf.run_query("procesos de aseo de 2026", channel="streamlit", chat_id="expired")
+    params = first["resolved_params"]
+    fp = _page_fingerprint(params)
+    buffer = wf.conv_store.get_pagination_buffer("expired", "procesos", fp)
+    expired = replace(
+        buffer,
+        expires_at_utc=(datetime.now(timezone.utc) - timedelta(seconds=1)).isoformat(),
+    )
+    wf.conv_store.save_pagination_buffer("expired", expired)
+
+    restarted = wf.run_query("muestrame mas", channel="streamlit", chat_id="expired")
+    assert restarted["pagination_buffer_hit"] is False
+    assert calls == 2
+    assert _shown_indices(restarted) == _shown_indices(first)
+
+
+def test_approximate_source_total_does_not_stop_refill(tmp_path, monkeypatch):
+    """Un count fallido produce X+; no significa que la primera ventana sea todo."""
+    calls = 0
+    data_query = _make_query(total=120)
+
+    def query(ds: str, soql: str) -> list[dict]:
+        nonlocal calls
+        calls += 1
+        return data_query(ds, soql)
+
+    monkeypatch.setattr(
+        "app.core.workflow.actions.execution.observe_universe_fn",
+        lambda *a, **k: None,
+    )
+    wf = SecopalWorkflow(Settings())
+    wf.secop_client.query = query
+    wf.secop_client.count = lambda _ds, _soql: (_ for _ in ()).throw(TimeoutError("count"))
+    wf.narrator.narrate_with_grounding = lambda **kw: None
+    wf.conv_store = ConversationStore(base_path=tmp_path / "conv")
+    chat = "e8b_approx_total"
+
+    first = wf.run_query("procesos de aseo de 2026", channel="streamlit", chat_id=chat)
+    second = wf.run_query("muestrame mas", channel="streamlit", chat_id=chat)
+    third = wf.run_query("muestrame mas", channel="streamlit", chat_id=chat)
+
+    assert first["source_total_approximate"] is True
+    assert second["pagination_buffer_hit"] is True and calls == 2
+    assert _shown_indices(first) + _shown_indices(second) + _shown_indices(third) == list(range(75))
 
 
 # ── Compatibilidad de consumidores legados de rank_and_dedupe ────────────────

@@ -1,10 +1,9 @@
-# Etapa 8B — Buffer canónico de paginación (SPEC, pendiente de implementar)
+# Etapa 8B — Buffer canónico de paginación
 
-> **Estado:** Etapa 8 dividida (asesor, 2026-06-29). **E8A HECHA** (orden estable por id +
-> fingerprint guard); **E8B PENDIENTE** — esta spec. **Etapa 8 NO está cerrada** hasta E8B.
-> E8B es stateful (estado conversacional, memoria, TTL) → merece sesión fresca y enfocada.
+> **Estado:** **E8A ✅ · E8B.1 ✅ · E8B.2 ✅** (2026-06-29). Etapa 8 cerrada con
+> ruta canónica única, buffer persistido por grupo, refill, TTL y tres totales.
 
-## Problema que E8A NO resuelve
+## Problema histórico que E8A no resolvía por sí sola
 
 El modelo actual re-pesca la ventana SECOP en cada "más" y la rebanada es determinista
 (E8A añadió el desempate por id → sin empates no deterministas; el fingerprint guard evita
@@ -88,6 +87,19 @@ PaginationBuffer:
 - `candidate_buffer` acotado (p.ej. ≤ 600 filas o N lotes), TTL corto (minutos), payload
   recortado a los campos que el display/validador necesitan (no guardar filas crudas
   enormes indefinidamente). Evicción por TTL y por tamaño.
+
+## Implementación cerrada (E8B.2)
+
+- Snapshot JSON lateral y atómico por conversación; una entrada independiente por grupo.
+- TTL: 15 minutos. Un buffer vencido o con fingerprint incompatible se elimina y reinicia
+  desde la página 1.
+- Límite: 600 candidatos y 600 validados; al alcanzarlo se informa capacidad agotada, no
+  se afirma falsamente que se terminó el universo.
+- `source_total_approximate` conserva la semántica `X+`: un count fallido no bloquea refill.
+- `source_candidate_total`, `validated_total_known` y `displayed_so_far` viajan separados.
+- Reset elimina historial y buffers; una nueva instancia del workflow reanuda el snapshot.
+- Dual mantiene cursores separados para procesos y contratos; “más” pregunta el grupo y
+  “más procesos/contratos” avanza únicamente el buffer seleccionado.
 
 ## Plan de migración
 

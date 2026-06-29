@@ -33,8 +33,12 @@ from __future__ import annotations
 import time
 from typing import TYPE_CHECKING
 
-from app.core.conversation_store import is_pagination_phrase
+from app.core.conversation_store import is_pagination_phrase, normalize_pagination_text
 from app.core.direct_responses import pagination_no_history_response
+from app.core.pagination_buffer import (
+    MAX_CANDIDATE_ROWS,
+    PaginationBuffer,
+)
 from app.core.phrase_ranking import validate_rank_and_dedupe
 from app.core.query_fingerprint import query_fingerprint
 from app.core.soql_builder import SoQLBuilder
@@ -62,7 +66,7 @@ _DEFAULT_SECOP_LIMIT = 50
 # la semántica de cómo se ordena/valida/rankea una página, BUMPEAR → el fingerprint del
 # cursor cambia → un cursor de un deploy anterior NO se reutiliza (se reinicia desde la
 # página 1). Protege contra "continuar una página vieja" tras un cambio de código.
-_PAGINATION_CONTRACT_VERSION = "e8b.1-1"
+_PAGINATION_CONTRACT_VERSION = "e8b.2-1"
 _PAGINATION_CURSOR_KEYS = (_DISPLAY_OFFSET_KEY, _SHOWN_TOTAL_KEY, _PAGE_FP_KEY)
 
 
@@ -75,7 +79,7 @@ def _page_fingerprint(params: dict) -> str:
 
 def _fetch_window(
     deps: "WorkflowDeps", params: dict,
-) -> tuple[str, str, int, list[dict], dict[str, float | int]]:
+) -> tuple[str, str, int, bool, list[dict], list[dict], dict[str, float | int]]:
     """Pesca la ventana SECOP de ``params`` y reconstruye el bloque ordenado.
 
     Devuelve (dataset_id, soql, total_count, bloque_rankeado). El bloque es la
@@ -84,7 +88,7 @@ def _fetch_window(
     """
     ds_id = SoQLBuilder.dataset_id_for(params.get("dataset"))
     soql = deps.soql_builder.build(ds_id, params)
-    total, results, _timings, _approx = _query_first_then_count(
+    total, results, _timings, approximate = _query_first_then_count(
         deps.secop_client,
         ds_id,
         deps.soql_builder.build_count(ds_id, params),
@@ -99,7 +103,37 @@ def _fetch_window(
         "validated_count": len(ranked.ranked_results),
         "quarantined_count": len(ranked.unvalidated_candidates),
     }
-    return ds_id, soql, total, ranked.ranked_results, metrics
+    return ds_id, soql, total, approximate, results, ranked.ranked_results, metrics
+
+
+def _requested_group(text: str) -> str | None:
+    """Reconoce solo paginacion con selector de grupo, sin filtros nuevos."""
+    normalized = normalize_pagination_text(text)
+    patterns = {
+        "procesos": {"mas procesos", "muestrame mas procesos", "otros procesos"},
+        "contratos": {"mas contratos", "muestrame mas contratos", "otros contratos"},
+    }
+    for group, values in patterns.items():
+        if normalized in values:
+            return group
+    return None
+
+
+def _clean_fetch_params(params: dict) -> dict:
+    return {
+        key: value for key, value in params.items()
+        if key not in _PAGINATION_CURSOR_KEYS and key not in _POST_QUERY_ONLY_KEYS
+    }
+
+
+def _group_for_params(params: dict) -> str:
+    return "contratos" if params.get("dataset") == "contratos" else "procesos"
+
+
+def _sum_metrics(
+    current: dict[str, float | int], update: dict[str, float | int],
+) -> dict[str, float | int]:
+    return {key: current.get(key, 0) + update.get(key, 0) for key in set(current) | set(update)}
 
 
 def handle_pagination(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict | None:
@@ -114,7 +148,8 @@ def handle_pagination(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict | Non
     primer turno (observer/BM25/filtros) quedan intactos: se siguen calculando
     sobre las 50.
     """
-    if not ctx.chat_id or not is_pagination_phrase(ctx.user_query):
+    requested_group = _requested_group(ctx.user_query)
+    if not ctx.chat_id or not (is_pagination_phrase(ctx.user_query) or requested_group):
         return None
 
     history = deps.conv_store.get_history(ctx.chat_id, last_n=1)
@@ -125,7 +160,7 @@ def handle_pagination(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict | Non
         # en silencio: preguntar cuál (primera versión; "más procesos"/"más contratos"
         # colapsan vía el dual-collapse del follow-up).
         scope = prev_params.get("dataset_scope")
-        if isinstance(scope, list) and len(scope) >= 2:
+        if isinstance(scope, list) and len(scope) >= 2 and requested_group is None:
             return persist_trace_and_turn(deps, ctx, empty_result(
                 response=("Esta búsqueda trae dos grupos. ¿Quieres ver más "
                           "*procesos* o más *contratos*?"),
@@ -139,110 +174,177 @@ def handle_pagination(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict | Non
                 followup=True,
             ))
 
-        display_count = max(1, int(deps.formatter.max_results or 25))
-        secop_offset = int(prev_params.get("offset", 0) or 0)
-        secop_limit = int(prev_params.get("limit", _DEFAULT_SECOP_LIMIT) or _DEFAULT_SECOP_LIMIT)
-        prev_display_offset = int(prev_params.get(_DISPLAY_OFFSET_KEY, 0) or 0)
-        prev_shown_total = prev_params.get(_SHOWN_TOTAL_KEY)
-
-        # Params de fetch: copia limpia (sin las claves internas), con la
-        # ventana SECOP explícita del turno previo.
-        fetch_params = {
-            k: v for k, v in prev_params.items()
-            if k not in _PAGINATION_CURSOR_KEYS and k not in _POST_QUERY_ONLY_KEYS
-        }
-        fetch_params["offset"] = secop_offset
-        fetch_params["limit"] = secop_limit
-
-        # Etapa 8A — FINGERPRINT GUARD: si el cursor previo trae una huella y NO coincide
-        # con la de la consulta actual (cambió consulta/dataset/orden/contrato de
-        # paginación, p.ej. tras un deploy), el cursor es INCOMPATIBLE → no se continúa la
-        # página vieja: se reinicia desde la página 1.
-        current_fp = _page_fingerprint(fetch_params)
-        prev_fp = prev_params.get(_PAGE_FP_KEY)
-        cursor_incompatible = bool(prev_fp) and prev_fp != current_fp
-        if cursor_incompatible:
-            secop_offset = 0
-            fetch_params["offset"] = 0
-
         try:
-            ds_id, soql, total, ranked, ranking_metrics = _fetch_window(deps, fetch_params)
-
-            if cursor_incompatible:
-                # Cursor de otro contrato/consulta: re-mostrar la página 1 desde cero.
-                next_display_offset = 0
-                prev_shown_total = 0
+            display_count = max(1, int(deps.formatter.max_results or 25))
+            if requested_group:
+                group = requested_group
+                buffer = deps.conv_store.get_pagination_buffer(ctx.chat_id, group, None)
+                if buffer is not None:
+                    fetch_params = dict(buffer.query_params)
+                    current_fp = buffer.query_fingerprint
+                elif isinstance(scope, list) and len(scope) >= 2:
+                    from app.core.workflow.dual_dataset import params_for_dataset
+                    fetch_params = params_for_dataset(_clean_fetch_params(prev_params), group)
+                    current_fp = _page_fingerprint(fetch_params)
+                else:
+                    fetch_params = _clean_fetch_params(prev_params)
+                    if _group_for_params(fetch_params) != group:
+                        raise LookupError("no buffer for requested group")
+                    current_fp = _page_fingerprint(fetch_params)
             else:
-                if prev_shown_total is None:
-                    # El turno previo fue la búsqueda inicial: mostró bloque[0:25].
-                    prev_shown_total = min(len(ranked), display_count)
-                    prev_display_offset = 0
+                fetch_params = _clean_fetch_params(prev_params)
+                group = _group_for_params(fetch_params)
+                current_fp = _page_fingerprint(fetch_params)
+                buffer = deps.conv_store.get_pagination_buffer(
+                    ctx.chat_id, group, current_fp,
+                )
 
-                next_display_offset = prev_display_offset + display_count
-                if next_display_offset >= len(ranked):
-                    # Bloque agotado → avanzar a la siguiente ventana SECOP.
-                    secop_offset += secop_limit
-                    fetch_params["offset"] = secop_offset
-                    ds_id, soql, total, ranked, next_metrics = _fetch_window(deps, fetch_params)
-                    ranking_metrics = {
-                        key: ranking_metrics[key] + next_metrics[key]
-                        for key in ranking_metrics
-                    }
-                    next_display_offset = 0
+            ranking_metrics: dict[str, float | int] = {
+                "pagination_validation_ms": 0.0,
+                "candidate_count": 0,
+                "validated_count": 0,
+                "quarantined_count": 0,
+            }
+            buffer_hit = buffer is not None
+            soql = (
+                deps.soql_builder.build(buffer.dataset_id, buffer.query_params)
+                if buffer is not None else ""
+            )
 
-            slice_rows = ranked[next_display_offset:next_display_offset + display_count]
+            # TTL/fingerprint miss: reconstruir desde pagina 1, no continuar un cursor viejo.
+            if buffer is None:
+                fetch_params["offset"] = 0
+                fetch_params.setdefault("limit", _DEFAULT_SECOP_LIMIT)
+                ds_id, soql, total, approximate, candidates, ranked, ranking_metrics = _fetch_window(
+                    deps, fetch_params,
+                )
+                limit = int(fetch_params.get("limit", _DEFAULT_SECOP_LIMIT) or _DEFAULT_SECOP_LIMIT)
+                buffer = PaginationBuffer.create(
+                    query_fingerprint=current_fp,
+                    group=group,
+                    dataset_id=ds_id,
+                    query_params=fetch_params,
+                    candidate_buffer=candidates,
+                    validated_ranked_buffer=ranked,
+                    display_cursor=0,
+                    source_cursor=limit,
+                    source_candidate_total=max(int(total or 0), len(candidates)),
+                    source_total_approximate=approximate,
+                )
+
+            # Refill solo cuando el snapshot no alcanza para completar la pagina.
+            while (
+                len(buffer.validated_ranked_buffer) - buffer.display_cursor < display_count
+                and not buffer.source_exhausted
+                and len(buffer.candidate_buffer) < MAX_CANDIDATE_ROWS
+            ):
+                refill_params = dict(buffer.query_params)
+                limit = int(refill_params.get("limit", _DEFAULT_SECOP_LIMIT) or _DEFAULT_SECOP_LIMIT)
+                refill_params["offset"] = buffer.source_cursor
+                ds_id, soql, total, approximate, candidates, ranked, refill_metrics = _fetch_window(
+                    deps, refill_params,
+                )
+                ranking_metrics = _sum_metrics(ranking_metrics, refill_metrics)
+                next_cursor = buffer.source_cursor + limit
+                buffer = buffer.extend(
+                    candidate_rows=candidates,
+                    validated_rows=ranked,
+                    next_source_cursor=next_cursor,
+                    source_candidate_total=max(int(total or 0), buffer.source_candidate_total),
+                    source_total_approximate=(approximate and len(candidates) >= limit),
+                )
+                if not candidates:
+                    break
+
+            slice_rows, advanced = buffer.take(display_count)
             if not slice_rows:
-                # No hay más resultados en todo el universo.
-                return persist_trace_and_turn(deps, ctx, empty_result(
-                    response=(
-                        f"Ya te mostré los {prev_shown_total} resultados "
-                        "disponibles para esta búsqueda. No hay más."
-                    ),
-                    route_reason="pagination_exhausted",
+                capacity_reached = (
+                    not buffer.source_exhausted
+                    and len(buffer.candidate_buffer) >= MAX_CANDIDATE_ROWS
+                )
+                route_reason = (
+                    "pagination_capacity_reached" if capacity_reached else "pagination_exhausted"
+                )
+                message = (
+                    "Alcancé el límite temporal del buffer (600 candidatos). "
+                    "Refina la búsqueda para seguir sin mezclar resultados."
+                    if capacity_reached else
+                    f"Ya te mostré los {buffer.displayed_so_far} resultados "
+                    "disponibles para esta búsqueda. No hay más."
+                )
+                exhausted = empty_result(
+                    response=message,
+                    route_reason=route_reason,
                     intent_type="pagination_more",
                     parsed_params=prev_params,
                     resolved_params=prev_params,
                     soql_query=soql,
-                    dataset_id=ds_id,
-                    total_count=total,
+                    dataset_id=buffer.dataset_id,
+                    total_count=buffer.source_candidate_total,
                     followup=True,
-                ))
+                )
+                exhausted.update({
+                    "source_candidate_total": buffer.source_candidate_total,
+                    "validated_total_known": buffer.validated_total_known,
+                    "displayed_so_far": buffer.displayed_so_far,
+                    "source_total_approximate": buffer.source_total_approximate,
+                })
+                return persist_trace_and_turn(deps, ctx, exhausted)
 
             response, rows = deps.formatter.format_for_channel(
-                slice_rows, ds_id, ctx.channel,
-                params=fetch_params, total_count=total,
+                slice_rows, buffer.dataset_id, ctx.channel,
+                params=buffer.query_params, total_count=buffer.source_candidate_total,
             )
-            display_from = prev_shown_total + 1
-            display_to = prev_shown_total + len(rows)
+            display_from = buffer.displayed_so_far + 1
+            display_to = buffer.displayed_so_far + len(rows)
             ordering_label = (
                 "de mayor valor"
-                if fetch_params.get("ordering_signal") == "valor_desc"
+                if buffer.query_params.get("ordering_signal") == "valor_desc"
                 else "más recientes"
             )
+            source_label = (
+                f"{advanced.source_candidate_total}+"
+                if advanced.source_total_approximate
+                else str(advanced.source_candidate_total)
+            )
             header = (
-                f"📄 Resultados {display_from}-{display_to} de {total} "
+                f"📄 Resultados mostrados {display_from}-{display_to}; "
+                f"{advanced.validated_total_known} validados conocidos de "
+                f"{source_label} candidatos SECOP "
                 f"(manteniendo orden por {ordering_label})\n\n"
             )
             pag_params = {
-                **fetch_params,
-                _DISPLAY_OFFSET_KEY: next_display_offset,
-                _SHOWN_TOTAL_KEY: prev_shown_total + len(rows),
+                **advanced.query_params,
+                _DISPLAY_OFFSET_KEY: buffer.displayed_so_far,
+                _SHOWN_TOTAL_KEY: advanced.displayed_so_far,
                 _PAGE_FP_KEY: current_fp,   # E8A: huella para validar el próximo "más"
             }
+            deps.conv_store.save_pagination_buffer(ctx.chat_id, advanced)
             result = tabular_result(
                 response=header + response,
                 rows=rows,
                 results=slice_rows,
-                dataset_id=ds_id,
+                dataset_id=advanced.dataset_id,
                 soql_query=soql,
                 parsed_params=pag_params,
                 resolved_params=pag_params,
                 route_reason="pagination_more",
-                total_count=total,
+                total_count=advanced.source_candidate_total,
                 intent_type="pagination_more",
                 followup=True,
             )
-            result.update(ranking_metrics)
+            known_candidates = len(advanced.candidate_buffer)
+            result.update({
+                **ranking_metrics,
+                "candidate_count": known_candidates,
+                "validated_count": advanced.validated_total_known,
+                "quarantined_count": max(0, known_candidates - advanced.validated_total_known),
+                "source_candidate_total": advanced.source_candidate_total,
+                "validated_total_known": advanced.validated_total_known,
+                "displayed_so_far": advanced.displayed_so_far,
+                "pagination_buffer_hit": buffer_hit,
+                "source_total_approximate": advanced.source_total_approximate,
+            })
             return persist_trace_and_turn(deps, ctx, result)
         except Exception:
             # Fall through to the no-history clarification — the previous
