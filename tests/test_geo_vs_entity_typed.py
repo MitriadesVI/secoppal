@@ -60,6 +60,28 @@ def test_departamento_multiword_territorial():
     assert not p.get("entidad_resolved")
 
 
+# ── Canarios (asesor): el patrón territorial NO debe colapsar lateralmente ───
+
+def test_departamento_administrativo_is_not_territory():
+    # "Departamento Administrativo de la Presidencia" es una ENTIDAD, no territorio.
+    # El patrón territorial ("departamento de X") NO debe dispararse (no es "departamento de").
+    p = _parse("contratos del Departamento Administrativo de la Presidencia")
+    assert (p.get("departamento_resolution") or {}).get("method") != "territorial_pattern"
+    assert not p.get("departamento_resolved") or \
+        (p.get("departamento_resolution") or {}).get("method") == "scan_exact"
+    assert p.get("entidad_resolved")                                     # resuelve a entidad
+
+
+def test_territorial_pattern_only_fires_for_real_departments():
+    # Dispara con un departamento real…
+    p = _parse("contratos del departamento de Antioquia")
+    assert (p["departamento_resolution"]).get("method") == "territorial_pattern"
+    assert p["departamento_resolved"] == "Antioquia"
+    # …pero NO con tokens que no son un departamento reconocido.
+    q = _parse("contratos del departamento de cosas raras")
+    assert (q.get("departamento_resolution") or {}).get("method") != "territorial_pattern"
+
+
 # ── INV-7: gobernación ≠ departamento → WHERE distintos ──────────────────────
 
 def test_inv7_buyer_and_territory_produce_distinct_where():
