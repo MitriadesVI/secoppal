@@ -370,3 +370,68 @@ def test_qualified_pool_expands_past_first_ten_with_stable_absolute_limit():
     assert (PROCESOS, "exact", 10) in client.calls
     assert (PROCESOS, "exact", 20) in client.calls
     assert max(limit for _dataset, _mode, limit in client.calls) <= 40
+
+
+# ── H2 follow-up: direct_lookup acotado por el deadline del turno ─────────────
+
+class _SlowClock:
+    """Reloj falso monotónico; cada probe avanza el tiempo (probe lenta)."""
+
+    def __init__(self, step_s: float):
+        self.t = 0.0
+        self.step_s = step_s
+
+    def __call__(self):
+        return self.t
+
+
+class _SlowClient:
+    """Cada query avanza el reloj `step_s` segundos y devuelve [] (sin match)."""
+
+    timeout = 15
+
+    def __init__(self, clock: _SlowClock):
+        self.clock = clock
+        self.calls = []
+
+    def query(self, dataset, soql):
+        self.calls.append(dataset)
+        self.clock.t += self.clock.step_s
+        return []
+
+
+def test_direct_lookup_cuts_serial_probes_when_deadline_exhausted():
+    """Antes: hasta 12 probes en serie sin deadline (un turno llegó a 67s). Ahora: cada
+    probe se acota al presupuesto restante y se CORTA honestamente al agotarse — sin colgar.
+    """
+    from app.core import deadline as dl_mod
+
+    clock = _SlowClock(step_s=5.0)           # cada probe "tarda" 5s
+    dl_mod.set_clock(clock)
+    feedback = _Feedback()
+    deps = SimpleNamespace(
+        secop_client=_SlowClient(clock), formatter=_Formatter(), feedback=feedback,
+    )
+    try:
+        tokens = dl_mod.begin_deadline(0.0)   # budget 15, reserve 4 → 11s para fetch
+        result = handle_direct_lookup(
+            deps, HandlerContext(user_query="busca el proceso LP-005-2026 de la Alcaldía de Leticia"),
+        )
+    finally:
+        dl_mod.end_deadline(tokens)
+        dl_mod.reset_clock()
+
+    # SIN el corte habría hasta 12 probes; con presupuesto 11s y probes de 5s → ~3 y corta.
+    assert len(deps.secop_client.calls) <= 4
+    assert clock.t <= 15.0                     # el turno no se pasa del techo
+    assert result["direct_lookup_status"] == "not_confirmed"
+    assert result["direct_lookup_reason"] == "deadline_exhausted"
+    assert any(a.get("skipped_due_to_budget") for a in result["search_attempts"])
+    assert "tiempo disponible" in result["response"].lower()
+
+
+def test_direct_lookup_unbounded_without_deadline():
+    """Sin deadline activo (legacy/tests) el comportamiento previo se conserva: proba todo."""
+    result, client = _run("LP-005-2026 de Leticia", {})   # sin deadline activo
+    assert result["direct_lookup_status"] == "not_found"
+    assert not any(a.get("skipped_due_to_budget") for a in result["search_attempts"])

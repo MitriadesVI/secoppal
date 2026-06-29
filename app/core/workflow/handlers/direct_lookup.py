@@ -35,8 +35,14 @@ which mirrors letting run_query continue to the normal pipeline).
 from __future__ import annotations
 
 import logging
+import math
 from typing import TYPE_CHECKING
 
+from app.core.deadline import (
+    MIN_USEFUL_FETCH_SECONDS,
+    current_deadline,
+    record_deadline,
+)
 from app.core.direct_lookup import (
     DirectLookupRequest,
     DirectLookupResolution,
@@ -47,6 +53,7 @@ from app.core.direct_lookup import (
     resolve_reference_candidates,
 )
 from app.core.soql_builder import SoQLBuilder
+from app.core.workflow.helpers import _client_for
 from app.core.workflow.results import empty_result, tabular_result
 
 if TYPE_CHECKING:
@@ -92,6 +99,20 @@ _DATASETS = (SoQLBuilder.PROCESOS_DATASET, SoQLBuilder.CONTRATOS_DATASET)
 _POOL_LIMITS = (10, 20, 40)
 
 
+def _probe_budget_s(deps: "WorkflowDeps") -> float | None:
+    """Presupuesto para la PRÓXIMA probe de direct_lookup (Etapa 6 H2).
+
+    Igual que el fetch normal: ``min(timeout fuente, restante − reserva)``. Devuelve
+    ``None`` cuando no hay deadline activo (tests/legacy) → sin acotar. Antes, este path
+    probaba hasta 12 variantes en serie SIN presupuesto → un turno llegó a 67s.
+    """
+    dl = current_deadline()
+    if dl is None:
+        return None
+    src = getattr(deps.secop_client, "timeout", 15) or 15
+    return dl.fetch_budget_s(src)
+
+
 def _is_timeout(exc: Exception) -> bool:
     current: BaseException | None = exc
     seen: set[int] = set()
@@ -110,6 +131,7 @@ def _query_attempt(
     mode: str,
     soql: str,
     limit: int,
+    budget_s: float | None = None,
 ) -> tuple[list[dict] | None, dict]:
     attempt = {
         "dataset": dataset,
@@ -121,7 +143,12 @@ def _query_attempt(
         "row_count": 0,
     }
     try:
-        rows = deps.secop_client.query(dataset, soql)
+        # Acotado al presupuesto restante del turno (H2): el probe no puede colgar 60s.
+        client = (
+            _client_for(deps.secop_client, max(1, math.ceil(budget_s)))
+            if budget_s is not None else deps.secop_client
+        )
+        rows = client.query(dataset, soql)
         attempt["row_count"] = len(rows)
         return rows, attempt
     except Exception as exc:
@@ -131,6 +158,15 @@ def _query_attempt(
             "timeout": _is_timeout(exc),
         })
         return None, attempt
+
+
+def _budget_skipped_attempt(dataset: str, mode: str, limit: int) -> dict:
+    """Probe NO iniciada por presupuesto agotado (corte honesto, no es fallo de fuente)."""
+    return {
+        "dataset": dataset, "mode": mode, "status": "skipped",
+        "error_type": None, "timeout": False, "limit": limit,
+        "row_count": 0, "skipped_due_to_budget": True,
+    }
 
 
 def _attach_lookup_metadata(
@@ -180,10 +216,19 @@ def _terminal_absence(
     soql: str,
     attempts: list[dict],
     confirmed_reason: str,
+    budget_cut: bool = False,
 ) -> dict:
     completed = any(a["status"] == "completed" for a in attempts)
     failed = any(a["status"] == "failed" for a in attempts)
-    if not completed:
+    if budget_cut:
+        # Se agotó el presupuesto del turno antes de descartar todas las variantes: NO se
+        # puede afirmar "no encontré" (no se exploró todo) — corte honesto por tiempo.
+        status, reason = "not_confirmed", "deadline_exhausted"
+        response = (
+            f"⏱️ No pude confirmar la referencia `{lookup_value}` en el tiempo disponible. "
+            "Intenta de nuevo o pega el ID CO1.XXX.YYY para una búsqueda directa."
+        )
+    elif not completed:
         status, reason = "source_unavailable", "all_sources_failed"
         response = "⚠️ No pude consultar SECOP II en este momento. Intenta de nuevo más tarde."
     elif failed:
@@ -207,10 +252,11 @@ def _terminal_absence(
 
 def _search_reference(
     deps: "WorkflowDeps", request: DirectLookupRequest,
-) -> tuple[DirectLookupResolution, list[dict], str]:
+) -> tuple[DirectLookupResolution, list[dict], str, bool]:
     pools: dict[str, dict[str, list[dict]]] = {"exact": {}, "tolerant": {}}
     attempts: list[dict] = []
     soql = ""
+    budget_cut = False
     resolution = resolve_reference_candidates(request, [])
 
     for mode in ("exact", "tolerant"):
@@ -220,13 +266,23 @@ def _search_reference(
             for dataset in _DATASETS:
                 if dataset not in active:
                     continue
+                # H2: cortar las variantes seriales cuando el presupuesto del turno se agota.
+                budget = _probe_budget_s(deps)
+                if budget is not None and budget < MIN_USEFUL_FETCH_SECONDS:
+                    attempts.append(_budget_skipped_attempt(dataset, mode, limit))
+                    record_deadline(
+                        direct_lookup_skipped_due_to_budget=True,
+                        deadline_exhausted=True, deadline_stage="direct_lookup",
+                    )
+                    budget_cut = True
+                    return resolution, attempts, soql, budget_cut
                 soql = build_entity_ref_soql(
                     dataset,
                     request.reference_normalized,
                     limit=limit,
                     exact=mode == "exact",
                 )
-                rows, attempt = _query_attempt(deps, dataset, mode, soql, limit)
+                rows, attempt = _query_attempt(deps, dataset, mode, soql, limit, budget_s=budget)
                 attempts.append(attempt)
                 if rows is None:
                     active.remove(dataset)
@@ -245,18 +301,18 @@ def _search_reference(
             ]
             resolution = resolve_reference_candidates(request, candidates)
             if resolution.candidates:
-                return resolution, attempts, soql
+                return resolution, attempts, soql, budget_cut
             if not active:
                 break
 
-    return resolution, attempts, soql
+    return resolution, attempts, soql, budget_cut
 
 
 def _handle_entity_ref(
     deps: "WorkflowDeps", ctx: "HandlerContext", request: DirectLookupRequest,
 ) -> dict:
     lookup_value = request.reference_raw
-    resolution, attempts, soql = _search_reference(deps, request)
+    resolution, attempts, soql, budget_cut = _search_reference(deps, request)
     match_count = len(resolution.candidates)
 
     if match_count == 0:
@@ -267,6 +323,7 @@ def _handle_entity_ref(
             soql=soql,
             attempts=attempts,
             confirmed_reason=resolution.outcome_reason,
+            budget_cut=budget_cut,
         )
 
     # 1 result — rich detail (same as id/url lookup)
@@ -335,7 +392,17 @@ def _handle_id_or_url(
     hit_results: list[dict] = []
     attempts: list[dict] = []
     soql = ""
+    budget_cut = False
     for dataset in datasets_to_try:
+        budget = _probe_budget_s(deps)
+        if budget is not None and budget < MIN_USEFUL_FETCH_SECONDS:
+            attempts.append(_budget_skipped_attempt(dataset, "uid", 1))
+            record_deadline(
+                direct_lookup_skipped_due_to_budget=True,
+                deadline_exhausted=True, deadline_stage="direct_lookup",
+            )
+            budget_cut = True
+            break
         spec = SoQLBuilder.SPECS[dataset]
         id_field = "id_del_proceso" if dataset == SoQLBuilder.PROCESOS_DATASET else "id_contrato"
         fields = ", ".join(spec.select_fields)
@@ -344,7 +411,7 @@ def _handle_id_or_url(
             f"WHERE {id_field} = '{SoQLBuilder._escape(lookup_value)}' "
             f"LIMIT 1"
         )
-        rows, attempt = _query_attempt(deps, dataset, "uid", soql, 1)
+        rows, attempt = _query_attempt(deps, dataset, "uid", soql, 1, budget_s=budget)
         attempts.append(attempt)
         if rows:
             hit_results.extend({**row, "_dataset_id": dataset} for row in rows)
@@ -359,6 +426,7 @@ def _handle_id_or_url(
             soql=soql,
             attempts=attempts,
             confirmed_reason="uid_not_found",
+            budget_cut=budget_cut,
         )
 
     unique_hits = deduplicate_lookup_candidates(hit_results)
