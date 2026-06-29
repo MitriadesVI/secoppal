@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import time
+from contextlib import contextmanager
 from typing import Any
 
 try:
@@ -34,6 +35,33 @@ class SecopClient:
         self._injected_client = client  # None salvo en tests / clientes custom
         self.client = client or Socrata(domain, app_token=app_token, timeout=timeout)
         self.max_retries = max_retries
+
+    @contextmanager
+    def temporary_timeout(self, timeout_s: int):
+        """Acota el timeout de transporte SOLO durante el bloque, sobre ESTA instancia.
+
+        A diferencia de ``with_timeout`` (crea un cliente nuevo), preserva la instancia
+        y por tanto cualquier método mockeado en tests. En producción ajusta el timeout
+        del Socrata subyacente para esa llamada. Nota (H3): mutar el timeout in-place no
+        es seguro bajo concurrencia real sobre un cliente compartido; la coordinación
+        concurrente del dual/turnos se aborda en H3.
+        """
+        target = self.client
+        had = hasattr(target, "timeout")
+        old = getattr(target, "timeout", None)
+        try:
+            if had:
+                try:
+                    target.timeout = timeout_s
+                except Exception:
+                    had = False
+            yield self
+        finally:
+            if had:
+                try:
+                    target.timeout = old
+                except Exception:
+                    pass
 
     def with_timeout(self, timeout: int) -> "SecopClient":
         """Return a new SecopClient with a different transport timeout.

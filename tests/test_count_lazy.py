@@ -12,7 +12,6 @@ from app.core.orchestrator import _query_first_then_count
 def test_skips_count_when_under_limit():
     """When query returns < limit rows, count is skipped and total = len(rows)."""
     client = MagicMock()
-    client.with_timeout.return_value = client
     client.query.return_value = [{"id": i} for i in range(10)]
     client.count.return_value = 999  # should never be called
 
@@ -30,7 +29,6 @@ def test_skips_count_when_under_limit():
 def test_runs_count_when_at_limit():
     """When query returns exactly limit rows, count runs and total comes from count."""
     client = MagicMock()
-    client.with_timeout.return_value = client
     client.query.return_value = [{"id": i} for i in range(50)]
     client.count.return_value = 347
 
@@ -46,7 +44,6 @@ def test_runs_count_when_at_limit():
 def test_approximate_when_count_fails():
     """When count fails after query returned limit rows, total = limit and approximate=True."""
     client = MagicMock()
-    client.with_timeout.return_value = client
     client.query.return_value = [{"id": i} for i in range(50)]
     client.count.side_effect = Exception("timeout")
 
@@ -62,7 +59,6 @@ def test_approximate_when_count_fails():
 def test_query_failure_propagates():
     """If query itself fails, the exception propagates without calling count."""
     client = MagicMock()
-    client.with_timeout.return_value = client
     client.query.side_effect = Exception("query error")
 
     try:

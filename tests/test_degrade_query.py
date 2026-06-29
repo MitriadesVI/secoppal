@@ -88,7 +88,6 @@ class TestDegradeQueryAction:
         soql_builder.build_count.return_value = "SELECT count(*) WHERE ..."
 
         secop_client = MagicMock()
-        secop_client.with_timeout.return_value = secop_client
         secop_client.query.return_value = [{"nombre": f"test{i}"} for i in range(50)]
         secop_client.count.return_value = 5
 

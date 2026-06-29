@@ -69,25 +69,23 @@ def test_empty_fetch_does_not_invent_total():
     assert c.count_calls == 0  # 0 real (sin filas), no un count fallido inventado
 
 
-def test_count_uses_budget_client_when_available():
-    # with_timeout disponible → el count corre sobre el cliente acotado, no el original.
-    calls = {"budget": 0}
+def test_temporary_timeout_mutates_and_restores_same_instance():
+    # El acote NO crea cliente nuevo: muta el timeout del transporte y lo restaura,
+    # preservando la instancia (y sus métodos mockeados).
+    from app.core.secop_client import SecopClient
 
-    class BudgetClient(FakeClient):
-        def with_timeout(self, timeout):
-            inner = FakeClient(self.rows, count_value=999)
-            orig = inner.count
+    class FakeSocrata:
+        def __init__(self):
+            self.timeout = 30
 
-            def counted(d, s):
-                calls["budget"] += 1
-                return orig(d, s)
-            inner.count = counted
-            return inner
+        def get(self, dataset_id, query=None):
+            return []
 
-    c = BudgetClient(rows=[{}] * 50, count_value=1)
-    total, res, t, approx = _query_first_then_count(c, "ds", "cnt", "q", limit=50)
-    assert calls["budget"] == 1 and total == 999  # contó vía cliente acotado
-    assert c.count_calls == 0  # no usó el cliente original (sin presupuesto)
+    sc = SecopClient("d", None, client=FakeSocrata())
+    assert sc.client.timeout == 30
+    with sc.temporary_timeout(3):
+        assert sc.client.timeout == 3  # acotado durante el bloque
+    assert sc.client.timeout == 30     # restaurado al salir
 
 
 # ── count_status derivado (attach_telemetry) ─────────────────────────────────

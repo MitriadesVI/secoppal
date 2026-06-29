@@ -27,7 +27,6 @@ def test_execute_query_skips_count_when_under_limit(tmp_path):
     workflow = SecopalWorkflow(Settings(secop_feedback_path=tmp_path / "feedback.jsonl"))
     workflow.secop_client.query = _query  # type: ignore[method-assign]
     workflow.secop_client.count = lambda *a, **kw: 99  # type: ignore[method-assign]
-    workflow.secop_client.with_timeout = lambda t: workflow.secop_client  # H1: cliente acotado = mismo mock
     workflow.narrator.narrate_with_grounding = lambda **kwargs: None  # type: ignore[method-assign]
 
     result = workflow.run_query("procesos de mantenimiento", channel="streamlit")
@@ -66,7 +65,6 @@ def test_execute_query_runs_count_when_at_limit(tmp_path):
     workflow = SecopalWorkflow(Settings(secop_feedback_path=tmp_path / "feedback.jsonl"))
     workflow.secop_client.query = _query  # type: ignore[method-assign]
     workflow.secop_client.count = _count  # type: ignore[method-assign]
-    workflow.secop_client.with_timeout = lambda t: workflow.secop_client  # H1: cliente acotado = mismo mock
     workflow.narrator.narrate_with_grounding = lambda **kwargs: None  # type: ignore[method-assign]
 
     result = workflow.run_query("procesos de mantenimiento", channel="streamlit")

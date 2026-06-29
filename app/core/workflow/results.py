@@ -88,6 +88,19 @@ CANONICAL_KEYS: frozenset[str] = frozenset({
     "count_used_in_response",
     "count_completed_before_rows",
     "result_row_count",
+    # Etapa 6 H2: deadline total del turno.
+    "turn_deadline_ms",
+    "turn_elapsed_ms",
+    "time_remaining_before_fetch_ms",
+    "fetch_budget_ms",
+    "fetch_elapsed_ms",
+    "fetch_status",
+    "deadline_exhausted",
+    "deadline_stage",
+    "request_attempted",
+    "request_skipped_due_to_budget",
+    "count_skipped_due_to_budget",
+    "source_partial",
 })
 
 
@@ -139,6 +152,18 @@ class WorkflowResult(TypedDict, total=False):
     count_used_in_response: bool
     count_completed_before_rows: bool
     result_row_count: int
+    turn_deadline_ms: float
+    turn_elapsed_ms: float
+    time_remaining_before_fetch_ms: float
+    fetch_budget_ms: float
+    fetch_elapsed_ms: float
+    fetch_status: str
+    deadline_exhausted: bool
+    deadline_stage: str
+    request_attempted: bool
+    request_skipped_due_to_budget: bool
+    count_skipped_due_to_budget: bool
+    source_partial: bool
 
 
 # ─────────────────────────────────────────────────────────────────────────────

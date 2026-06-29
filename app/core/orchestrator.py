@@ -187,15 +187,18 @@ class SecopalWorkflow:
         # (early return de cualquier handler, excepción). El attach es CENTRALIZADO:
         # todos los handlers exponen http_metrics, no solo normal_flow. El token hace
         # segura la anidación (un run_query dentro de otro restaura el buffer externo).
+        from app.core.deadline import attach_deadline_telemetry, begin_deadline, end_deadline
         from app.core.instrumentation import attach_telemetry, begin_collection, end_collection
         token = begin_collection()
+        dl_tokens = begin_deadline(ctx.run_started_at)  # H2: deadline monotónico del turno
         try:
             result = self._dispatch(ctx, seed_resolved_params)
         except BaseException:
-            # El turno abortó sin result: cerramos el collector y NO perdemos la
-            # evidencia del error (un timeout es justo donde más importa). El attach
-            # no aplica porque no hay result; la telemetría va al log estructurado.
+            # El turno abortó sin result: cerramos collector + deadline y NO perdemos la
+            # evidencia del error (un timeout es justo donde más importa). El attach no
+            # aplica porque no hay result; la telemetría va al log estructurado.
             metrics = end_collection(token)
+            end_deadline(dl_tokens)
             if metrics:
                 logger.warning(
                     "run_query abortado tras capturar %d métricas HTTP: %s",
@@ -203,7 +206,9 @@ class SecopalWorkflow:
                 )
             raise
         metrics = end_collection(token)
+        dl_tel = end_deadline(dl_tokens)
         attach_telemetry(result, metrics)
+        attach_deadline_telemetry(result, dl_tel, ctx.run_started_at)
         return result
 
     def _dispatch(self, ctx: HandlerContext, seed_resolved_params: dict | None) -> dict:
