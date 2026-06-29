@@ -74,7 +74,7 @@ una fuente responde, otra no  → PARTIAL / partial_source_failure → conservar
 | # | Hipótesis | Cómo se verifica |
 |---|-----------|------------------|
 | **H1 ✅ VALIDADA** (commit `bea06ff`) | `count` sale de la ruta crítica | **CUMPLIDA**: count>10s 10→0, post_fetch_blocking p90 28→6s, turnos>15s ~28%→6%, total p90 45-60s→13.1s, 0 falsos EMPTY. Detalle en PERFIL_LATENCIA. |
-| **H2** | El deadline total elimina las esperas de 60s | 0 turnos con `total > deadline`; mesetas de 60s desaparecen |
+| **H2 ✅ VALIDADA** (commit `3dd647d`) | El deadline total elimina las esperas de 60s | **CUMPLIDA**: total MAX 60.4s→11.3s, p95 20.9→11.3s, turnos>15s 3→0, 0 falsos EMPTY. Trade-off: query timeouts 7→14 (cortes honestos a ~11s en vez de bloqueo). Detalle en PERFIL_LATENCIA. |
 | **H3** | `dual` concurrente reduce ~½ su latencia | dual p50 baja de ~11s a ~6s; resultado parcial si un hijo falla |
 | **H4** | Las respuestas parciales conservan recall | filas mostradas en PARTIAL == filas que se mostrarían sin el corte; sin falsos EMPTY |
 | **H5** | El fallback determinista mantiene el turno bajo presupuesto | en fuente degradada/poco presupuesto, `total ≤ deadline` y respuesta honesta |

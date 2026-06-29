@@ -8,6 +8,38 @@
 > percentiles: el delay agresivo causó 26 `ConnectionError` (throttling), no un fallo
 > del pipeline.
 
+## H2 (deadline total) — validación antes/después
+
+Corrida `profile_h2_01` (commit `3dd647d`) cierra la cadena de optimización:
+
+| métrica | Run 1 | Run 2 | H1 | **H2** |
+|---------|-------|-------|----|--------|
+| total p50 (s) | 7.6 | 7.4 | 6.4 | 7.5 |
+| total p90 (s) | 60.3 | 45.1 | 13.1 | **11.3** |
+| total p95 (s) | 80.8 | 60.0 | 20.9 | **11.3** |
+| **total MAX (s)** | 120.6 | 70.5 | 60.4 | **11.3** |
+| **turnos >15s** | 15 | 12 | 3 | **0** |
+| falsos EMPTY | 0 | 0 | 0 | **0** |
+
+H2 `count_status`: skipped 31 · timed_out 11 · exact 6. Nuevos: 8 turnos con
+`deadline_exhausted`/`fetch skipped due to budget` (los que antes bloqueaban 60s).
+
+**Criterios de aceptación (todos cumplidos):**
+- **Ningún fetch permanece bloqueado cerca de 60s** — total MAX 60.4s → **11.3s**.
+- **Cola acotada por el deadline + margen** — p90/p95/max colapsan a ~11s (< 15s).
+- **turnos >15s: 3 → 0.**
+- **p50 no empeora sensiblemente** (7.5s, ~igual a Run2 7.4s).
+- **0 falsos EMPTY**; los timeouts se representan como inconcluso/parcial.
+
+**Trade-off honesto (a vigilar):** `query timeouts` subió de ~7 a 14. NO es una
+regresión de bloqueo — es la conducta deseada: queries que antes esperaban 30-60s (y a
+veces completaban) ahora se **cortan a ~11s** y devuelven respuesta honesta inconclusa
+en vez de bloquear. El costo es que ~14/48 quedan inconclusos rápido en lugar de
+completar lento. H3 (concurrencia dual) y un eventual ajuste fino de la reserva (4s)
+pueden recuperar parte de ese recall sin reintroducir la cola de 60s.
+
+---
+
 ## H1 (count no bloqueante) — validación antes/después
 
 Corrida `profile_h1_01` (commit `bea06ff`, 48 turnos, delay 1.5) vs Run 1/2 (pre-H1,
