@@ -30,11 +30,12 @@ pass`` that effectively did the same.
 """
 from __future__ import annotations
 
+import time
 from typing import TYPE_CHECKING
 
 from app.core.conversation_store import is_pagination_phrase
 from app.core.direct_responses import pagination_no_history_response
-from app.core.formatter import rank_and_dedupe
+from app.core.phrase_ranking import validate_rank_and_dedupe
 from app.core.query_fingerprint import query_fingerprint
 from app.core.soql_builder import SoQLBuilder
 from app.core.workflow.helpers import _query_first_then_count
@@ -50,6 +51,10 @@ if TYPE_CHECKING:
 _DISPLAY_OFFSET_KEY = "_display_offset"
 _SHOWN_TOTAL_KEY = "_shown_total"
 _PAGE_FP_KEY = "_page_fingerprint"
+# ``normal_flow`` puede añadir esta clave DESPUES de ejecutar/rankear para la
+# respuesta asesora. No pertenecio a la fuente de pagina 1 y no debe cambiar la
+# repesca de pagina 2.
+_POST_QUERY_ONLY_KEYS = frozenset({"entidad_ecosystem"})
 # Tamaño de ventana SECOP por defecto (coincide con el default de SoQLBuilder).
 _DEFAULT_SECOP_LIMIT = 50
 
@@ -57,7 +62,7 @@ _DEFAULT_SECOP_LIMIT = 50
 # la semántica de cómo se ordena/valida/rankea una página, BUMPEAR → el fingerprint del
 # cursor cambia → un cursor de un deploy anterior NO se reutiliza (se reinicia desde la
 # página 1). Protege contra "continuar una página vieja" tras un cambio de código.
-_PAGINATION_CONTRACT_VERSION = "e8a-1"
+_PAGINATION_CONTRACT_VERSION = "e8b.1-1"
 _PAGINATION_CURSOR_KEYS = (_DISPLAY_OFFSET_KEY, _SHOWN_TOTAL_KEY, _PAGE_FP_KEY)
 
 
@@ -68,12 +73,14 @@ def _page_fingerprint(params: dict) -> str:
     return query_fingerprint(params, extra={"pagination_contract": _PAGINATION_CONTRACT_VERSION})
 
 
-def _fetch_window(deps: "WorkflowDeps", params: dict) -> tuple[str, str, int, list[dict]]:
+def _fetch_window(
+    deps: "WorkflowDeps", params: dict,
+) -> tuple[str, str, int, list[dict], dict[str, float | int]]:
     """Pesca la ventana SECOP de ``params`` y reconstruye el bloque ordenado.
 
     Devuelve (dataset_id, soql, total_count, bloque_rankeado). El bloque es la
-    lista COMPLETA tras BM25+reorder+dedupe (sin cortar a 25) — sobre ella se
-    cortan las rebanadas de cada página.
+    lista COMPLETA tras la ruta canonica de validacion+ranking+dedupe (sin
+    cortar a 25) — sobre ella se cortan las rebanadas de cada pagina.
     """
     ds_id = SoQLBuilder.dataset_id_for(params.get("dataset"))
     soql = deps.soql_builder.build(ds_id, params)
@@ -84,15 +91,22 @@ def _fetch_window(deps: "WorkflowDeps", params: dict) -> tuple[str, str, int, li
         soql,
         limit=int(params.get("limit", _DEFAULT_SECOP_LIMIT) or _DEFAULT_SECOP_LIMIT),
     )
-    ranked = rank_and_dedupe(results, ds_id, params)
-    return ds_id, soql, total, ranked
+    validation_started = time.perf_counter()
+    ranked = validate_rank_and_dedupe(results, params, ds_id)
+    metrics: dict[str, float | int] = {
+        "pagination_validation_ms": round((time.perf_counter() - validation_started) * 1000, 2),
+        "candidate_count": len(results),
+        "validated_count": len(ranked.ranked_results),
+        "quarantined_count": len(ranked.unvalidated_candidates),
+    }
+    return ds_id, soql, total, ranked.ranked_results, metrics
 
 
 def handle_pagination(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict | None:
     """Pagination bypass — next page when there's history, clarification when not.
 
     A-buffer: la página 1 (normal_flow) muestra ``bloque[0:25]`` de una ventana
-    SECOP de 50. Cada "muestrame mas" re-pesca la MISMA ventana, reconstruye el
+    SECOP. Cada "muestrame mas" re-pesca la MISMA ventana, reconstruye el
     bloque determinísticamente y corta ``bloque[display_offset : +25]``. Cuando
     el bloque se agota, salta a la siguiente ventana (``offset += limit``). Así
     no se solapan páginas (rebanadas disjuntas del mismo bloque) ni se pierden
@@ -135,7 +149,7 @@ def handle_pagination(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict | Non
         # ventana SECOP explícita del turno previo.
         fetch_params = {
             k: v for k, v in prev_params.items()
-            if k not in _PAGINATION_CURSOR_KEYS
+            if k not in _PAGINATION_CURSOR_KEYS and k not in _POST_QUERY_ONLY_KEYS
         }
         fetch_params["offset"] = secop_offset
         fetch_params["limit"] = secop_limit
@@ -152,7 +166,7 @@ def handle_pagination(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict | Non
             fetch_params["offset"] = 0
 
         try:
-            ds_id, soql, total, ranked = _fetch_window(deps, fetch_params)
+            ds_id, soql, total, ranked, ranking_metrics = _fetch_window(deps, fetch_params)
 
             if cursor_incompatible:
                 # Cursor de otro contrato/consulta: re-mostrar la página 1 desde cero.
@@ -169,7 +183,11 @@ def handle_pagination(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict | Non
                     # Bloque agotado → avanzar a la siguiente ventana SECOP.
                     secop_offset += secop_limit
                     fetch_params["offset"] = secop_offset
-                    ds_id, soql, total, ranked = _fetch_window(deps, fetch_params)
+                    ds_id, soql, total, ranked, next_metrics = _fetch_window(deps, fetch_params)
+                    ranking_metrics = {
+                        key: ranking_metrics[key] + next_metrics[key]
+                        for key in ranking_metrics
+                    }
                     next_display_offset = 0
 
             slice_rows = ranked[next_display_offset:next_display_offset + display_count]
@@ -224,6 +242,7 @@ def handle_pagination(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict | Non
                 intent_type="pagination_more",
                 followup=True,
             )
+            result.update(ranking_metrics)
             return persist_trace_and_turn(deps, ctx, result)
         except Exception:
             # Fall through to the no-history clarification — the previous

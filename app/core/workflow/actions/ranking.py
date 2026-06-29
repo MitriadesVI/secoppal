@@ -20,16 +20,15 @@ import time
 
 from burr.core import State, action
 
-from app.core.phrase_ranking import rank_candidate_pool
+from app.core.phrase_ranking import validate_rank_and_dedupe
 from app.core.workflow.helpers import _with_timing
 
 
 @action(reads=["results", "resolved_params", "dataset_id", "timings_ms"], writes=["ranked_results", "timings_ms"])
 def rank_results(state: State) -> State:
-    """Rankea el dataset PRIMARIO con `rank_candidate_pool` (mismo algoritmo que
-    usa `execute_dataset_child` para el secundario en dual-dataset)."""
+    """Aplica al dataset primario la ruta canonica de calidad de E8B.1."""
     start = time.perf_counter()
-    rr = rank_candidate_pool(
+    rr = validate_rank_and_dedupe(
         state.get("results") or [],
         state.get("resolved_params", {}) or {},
         state.get("dataset_id", ""),

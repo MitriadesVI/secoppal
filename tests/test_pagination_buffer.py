@@ -106,9 +106,285 @@ def test_pagination_no_overlap_no_skip_across_three_pages(tmp_path, monkeypatch)
     # Cero skip: la unión es un rango contiguo desde 0.
     union = sorted(set(p1) | set(p2) | set(p3))
     assert union == list(range(len(union))), f"hay huecos: {union}"
+    # Gate E8B.1: no basta la disjuncion; el orden concatenado debe ser el
+    # prefijo exacto de la secuencia completa (literal simple).
+    assert p1 + p2 + p3 == list(range(len(p1 + p2 + p3)))
 
 
-# ── Guard del invariante que sostiene A-buffer: rank_and_dedupe determinista ──
+def test_characterization_phrase_pagination_matches_validated_ranked_prefix(tmp_path, monkeypatch):
+    """E8B.1: ``mas`` debe continuar la secuencia que produjo la pagina 1.
+
+    El pool recall-first mezcla 30 coincidencias validadas con 30 candidatos que
+    solo comparten ruido. La ruta historica de paginacion no ejecutaba el
+    validador PhraseSpec y dejaba reaparecer ese ruido en la pagina 2.
+    """
+    from app.core.phrase_ranking import rank_candidate_pool
+
+    rows = []
+    for i in range(60):
+        valid = i < 30
+        objeto = (
+            f"Elaboracion del manual de contratacion {i}"
+            if valid
+            else f"Manual operativo para pavimentacion {i}"
+        )
+        rows.append({
+            "objeto_del_contrato": objeto,
+            "descripcion_del_proceso": "",
+            "nombre_entidad": "ALCALDIA DE BARRANQUILLA",
+            "valor_del_contrato": str(1_000_000 + i),
+            "estado_contrato": "En ejecucion",
+            "fecha_de_firma": "2026-06-01T00:00:00.000",
+            "urlproceso": f"https://secop.gov.co/c/{i}",
+            "referencia_del_contrato": f"REF-{i:03d}",
+            "id_contrato": f"CID-{i:03d}",
+        })
+
+    def query(_ds: str, soql: str) -> list[dict]:
+        m_off = re.search(r"OFFSET (\d+)", soql)
+        m_lim = re.search(r"LIMIT (\d+)", soql)
+        off = int(m_off.group(1)) if m_off else 0
+        lim = int(m_lim.group(1)) if m_lim else 50
+        return rows[off:off + lim]
+
+    monkeypatch.setattr(
+        "app.core.workflow.actions.execution.observe_universe_fn",
+        lambda *a, **k: None,
+    )
+    wf = SecopalWorkflow(Settings())
+    wf.secop_client.query = query
+    wf.secop_client.count = lambda _ds, _soql: len(rows)
+    wf.narrator.narrate_with_grounding = lambda **kw: None
+    wf.conv_store = ConversationStore(base_path=tmp_path / "conv")
+
+    chat = "e8b_phrase_characterization"
+    first = wf.run_query(
+        "contratos de manual de contratacion de 2026",
+        channel="streamlit", chat_id=chat,
+    )
+    second = wf.run_query("muestrame mas", channel="streamlit", chat_id=chat)
+
+    params = first["resolved_params"]
+    expected = rank_candidate_pool(rows, params, "jbjy-vk9h").ranked_results
+    expected_ids = [row["id_contrato"] for row in expected]
+    displayed_ids = [
+        row["id_contrato"]
+        for result in (first, second)
+        for row in result.get("rows", [])
+    ]
+
+    assert displayed_ids == expected_ids[:len(displayed_ids)]
+
+
+def test_exclusions_and_source_ties_keep_exact_concatenated_prefix(tmp_path, monkeypatch):
+    """Exclusiones sobreviven al refetch y el id desempata fecha+valor iguales."""
+    source = []
+    for i in reversed(range(65)):  # simula ORDER BY fecha, valor, id DESC
+        excluded = i % 6 == 0
+        title = f"Aseo con interventoria {i}" if excluded else f"Servicio de aseo {i}"
+        source.append({
+            "nombre_del_procedimiento": title,
+            "descripci_n_del_procedimiento": "",
+            "entidad": "ALCALDIA DE BARRANQUILLA",
+            "precio_base": "1000000",  # empate de valor
+            "estado_de_apertura_del_proceso": "Publicado",
+            "fecha_de_publicacion_del": "2026-06-01T00:00:00.000",  # empate de fecha
+            "urlproceso": f"https://secop.gov.co/p/{i}",
+            "referencia_del_proceso": f"REF-{i:03d}",
+            "id_del_proceso": f"PID-{i:03d}",
+        })
+
+    expected = [row for row in source if "interventoria" not in row["nombre_del_procedimiento"]]
+
+    def query(_ds: str, soql: str) -> list[dict]:
+        rows = expected if "NOT (" in soql else source
+        m_off = re.search(r"OFFSET (\d+)", soql)
+        m_lim = re.search(r"LIMIT (\d+)", soql)
+        off = int(m_off.group(1)) if m_off else 0
+        lim = int(m_lim.group(1)) if m_lim else 50
+        return rows[off:off + lim]
+
+    monkeypatch.setattr(
+        "app.core.workflow.actions.execution.observe_universe_fn",
+        lambda *a, **k: None,
+    )
+    wf = SecopalWorkflow(Settings())
+    wf.secop_client.query = query
+    wf.secop_client.count = lambda _ds, _soql: len(expected)
+    wf.narrator.narrate_with_grounding = lambda **kw: None
+    wf.conv_store = ConversationStore(base_path=tmp_path / "conv")
+
+    chat = "e8b_exclusions_ties"
+    pages = [wf.run_query(
+        "procesos de aseo excepto interventoria de 2026",
+        channel="streamlit", chat_id=chat,
+    )]
+    pages.append(wf.run_query("muestrame mas", channel="streamlit", chat_id=chat))
+    pages.append(wf.run_query("muestrame mas", channel="streamlit", chat_id=chat))
+
+    displayed_ids = [
+        row["id_del_proceso"]
+        for page in pages
+        for row in page.get("rows", [])
+    ]
+    expected_ids = [row["id_del_proceso"] for row in expected]
+
+    assert pages[0]["resolved_params"]["objeto_exclude"] == ["interventoria"]
+    assert displayed_ids == expected_ids[:len(displayed_ids)]
+    assert len(displayed_ids) == len(expected_ids)
+
+
+def test_canonical_route_preserves_first_page_rows_and_order():
+    """Aplicar la ruta canonica antes del formatter no cambia la pagina 1."""
+    from app.core.formatter import Formatter
+    from app.core.phrase_ranking import rank_candidate_pool, validate_rank_and_dedupe
+
+    rows = [
+        {
+            "objeto_del_contrato": "manual de contratacion",
+            "descripcion_del_proceso": "",
+            "nombre_entidad": "Entidad",
+            "estado_contrato": "Liquidado" if i % 2 else "En ejecucion",
+            "id_contrato": f"CID-{i}",
+            "referencia_del_contrato": f"REF-{i}",
+            "valor_del_contrato": str(i),
+        }
+        for i in range(30)
+    ]
+    rows += [dict(rows[0])]  # version duplicada: el display historico ya la colapsaba
+    params = {"objeto_phrases": ["manual de contratacion"]}
+    formatter = Formatter(max_results=25)
+
+    previous = formatter.to_rows(
+        rank_candidate_pool(rows, params, "jbjy-vk9h").ranked_results,
+        "jbjy-vk9h", params,
+    )
+    canonical = formatter.to_rows(
+        validate_rank_and_dedupe(rows, params, "jbjy-vk9h").ranked_results,
+        "jbjy-vk9h", params,
+    )
+
+    assert canonical == previous
+
+
+def test_combined_phrase_levels_dedupe_ties_and_three_page_prefix(tmp_path, monkeypatch):
+    """Gate combinado: 100 candidatos y tres paginas del mismo orden canonico."""
+    from copy import deepcopy
+
+    from app.core.phrase_ranking import validate_rank_and_dedupe
+
+    source = []
+    for i in range(100):
+        if i < 50:
+            objeto = f"Manual de contratacion {i}"  # direct
+        elif i < 85:
+            objeto = f"Manual para uso de contratacion {i}"  # probable (gap=3)
+        else:
+            objeto = f"Manual operativo de pavimentacion {i}"  # none
+        identity = i - 45 if 45 <= i < 50 else i  # cinco duplicados direct
+        source.append({
+            "objeto_del_contrato": objeto,
+            "descripcion_del_proceso": "",
+            "nombre_entidad": "ALCALDIA DE BARRANQUILLA",
+            "valor_del_contrato": "1000000",  # empate de valor
+            "estado_contrato": "En ejecución",
+            "fecha_de_firma": "2026-06-01T00:00:00.000",  # empate de fecha
+            "urlproceso": f"https://secop.gov.co/c/{i}",
+            "referencia_del_contrato": f"REF-{identity:03d}",
+            "id_contrato": f"CID-{identity:03d}",
+        })
+
+    def query(_ds: str, soql: str) -> list[dict]:
+        m_off = re.search(r"OFFSET (\d+)", soql)
+        m_lim = re.search(r"LIMIT (\d+)", soql)
+        off = int(m_off.group(1)) if m_off else 0
+        lim = int(m_lim.group(1)) if m_lim else 200
+        return source[off:off + lim]
+
+    monkeypatch.setattr(
+        "app.core.workflow.actions.execution.observe_universe_fn",
+        lambda *a, **k: None,
+    )
+    wf = SecopalWorkflow(Settings())
+    wf.secop_client.query = query
+    wf.secop_client.count = lambda _ds, _soql: len(source)
+    wf.narrator.narrate_with_grounding = lambda **kw: None
+    wf.conv_store = ConversationStore(base_path=tmp_path / "conv")
+
+    chat = "e8b_combined_100"
+    pages = [wf.run_query(
+        "contratos de manual de contratacion de 2026",
+        channel="streamlit", chat_id=chat,
+    )]
+    pages.append(wf.run_query("muestrame mas", channel="streamlit", chat_id=chat))
+    pages.append(wf.run_query("muestrame mas", channel="streamlit", chat_id=chat))
+
+    params = pages[0]["resolved_params"]
+    source_before, params_before = deepcopy(source), deepcopy(params)
+    canonical = validate_rank_and_dedupe(source, params, "jbjy-vk9h")
+    repeated = validate_rank_and_dedupe(source, params, "jbjy-vk9h")
+    expected_ids = [row["id_contrato"] for row in canonical.ranked_results]
+    displayed_ids = [
+        row["id_contrato"]
+        for page in pages
+        for row in page.get("rows", [])
+    ]
+
+    assert canonical.phrase_counts == {"direct": 50, "probable": 35, "weak": 0, "none": 15}
+    assert len(expected_ids) == 80  # 85 validados menos cinco versiones duplicadas
+    assert displayed_ids == expected_ids[:75]
+    assert pages[1]["candidate_count"] == 100
+    assert pages[1]["validated_count"] == 80
+    assert pages[1]["quarantined_count"] == 15
+    assert pages[1]["pagination_validation_ms"] >= 0
+    assert [row["id_contrato"] for row in repeated.ranked_results] == expected_ids
+    assert source == source_before and params == params_before
+
+
+def test_pagination_drops_post_query_ecosystem_to_refetch_same_source(tmp_path, monkeypatch):
+    """Una expansion asesora tardia no puede alterar la fuente de pagina 2."""
+    monkeypatch.setattr(
+        "app.core.workflow.actions.execution.observe_universe_fn",
+        lambda *a, **k: None,
+    )
+    monkeypatch.setattr(
+        "app.core.entity_ecosystem.should_expand_ecosystem",
+        lambda _params: True,
+    )
+    monkeypatch.setattr(
+        "app.core.entity_ecosystem.get_ecosystem_entities",
+        lambda **_kwargs: ["ENTIDAD INYECTADA DESPUES DEL FETCH"],
+    )
+    data_query = _make_query(total=30)
+    seen_soql: list[str] = []
+
+    def query(ds: str, soql: str) -> list[dict]:
+        seen_soql.append(soql)
+        return data_query(ds, soql)
+
+    wf = SecopalWorkflow(Settings())
+    wf.secop_client.query = query
+    wf.secop_client.count = lambda _ds, _soql: 30
+    wf.narrator.narrate_with_grounding = lambda **kw: None
+    wf.conv_store = ConversationStore(base_path=tmp_path / "conv")
+
+    chat = "e8b_post_query_params"
+    wf.run_query(
+        "procesos de mantenimiento en bogota de 2026",
+        channel="streamlit", chat_id=chat,
+    )
+    persisted = wf.conv_store.get_history(chat, last_n=1)[0].parsed_params
+    assert persisted["entidad_ecosystem"] == ["ENTIDAD INYECTADA DESPUES DEL FETCH"]
+
+    page_2 = wf.run_query("muestrame mas", channel="streamlit", chat_id=chat)
+
+    assert page_2["route_reason"] == "pagination_more"
+    assert len(seen_soql) == 2
+    assert seen_soql[1] == seen_soql[0]
+    assert "ENTIDAD INYECTADA" not in seen_soql[1]
+
+
+# ── Compatibilidad de consumidores legados de rank_and_dedupe ────────────────
 
 def _rows(n: int) -> list[dict]:
     return [
@@ -123,9 +399,7 @@ def _rows(n: int) -> list[dict]:
 
 
 def test_rank_and_dedupe_is_deterministic():
-    """Re-pescar y re-rankear la misma ventana debe dar SIEMPRE el mismo orden:
-    es lo que garantiza que bloque[0:25] (página 1) y bloque[25:50] (página 2)
-    sean rebanadas disjuntas del mismo orden estable."""
+    """El helper legado conserva orden determinista para sus otros consumidores."""
     from app.core.formatter import rank_and_dedupe
 
     params = {"objeto": ["construccion", "parques", "infantiles"]}  # ≥3 → activa BM25

@@ -3,6 +3,11 @@ from __future__ import annotations
 import re
 from typing import Any
 
+from app.core.phrase_ranking import (
+    _dedupe_results,
+    _reorder_active_first,
+    prepare_results_for_display,
+)
 from app.utils.money import format_cop, format_money
 from app.utils.value_sanity import detect_value_anomaly
 
@@ -87,89 +92,13 @@ def _fix_mojibake(text: str) -> str:
     return text
 
 
-_ACTIVE_STATES_PROCESOS = frozenset({"Abierto", "Publicado"})
-_ACTIVE_STATES_CONTRATOS = frozenset({"En ejecución", "Modificado", "Prorrogado"})
-
-
-def _reorder_active_first(results: list[dict], dataset_id: str, params: dict | None) -> list[dict]:
-    """DOGFOOD-SOQL-006: pone activos primero en Python.
-
-    Antes lo hacía SoQL con CASE WHEN IN (...), pero Socrata revienta con
-    strings acentuados ("En ejecución"). Sólo se aplica cuando el usuario
-    no filtró estado y no es búsqueda histórica/oportunidad — mismas
-    condiciones que el ORDER BY antes activaba.
-    """
-    if not results:
-        return results
-    params = params or {}
-    has_estado = bool(
-        params.get("estado") or params.get("estado_family")
-        or params.get("estado_de_apertura_del_proceso")
-        or params.get("estado_del_procedimiento")
-        or params.get("estado_contrato")
-    )
-    intent = (params.get("intent_type") or "").lower()
-    if has_estado or "historical" in intent or "analysis" in intent or intent == "opportunity_search":
-        return results
-
-    if dataset_id == "p6dx-8zbt":
-        active = _ACTIVE_STATES_PROCESOS
-        field = "estado_de_apertura_del_proceso"
-    else:
-        active = _ACTIVE_STATES_CONTRATOS
-        field = "estado_contrato"
-
-    def _key(idx_row: tuple[int, dict]) -> tuple[int, int]:
-        idx, row = idx_row
-        is_active = 0 if str(row.get(field, "") or "").strip() in active else 1
-        return (is_active, idx)  # estable: idx preserva orden por fecha del SoQL
-
-    return [r for _, r in sorted(enumerate(results), key=_key)]
-
-
-def _dedupe_results(results: list[dict], dataset_id: str) -> list[dict]:
-    """B1: deduplica por id estable conservando el primero encontrado.
-
-    SECOP entrega varias 'versiones' del mismo proceso/contrato cuando hay
-    modificaciones. Mostrar 10 versiones del mismo proceso ocupa el cupo de
-    la respuesta. Se conserva el primero (más reciente por ORDER BY del SoQL).
-    """
-    seen: set[str] = set()
-    deduped: list[dict] = []
-    if dataset_id == "p6dx-8zbt":
-        key_fields = ("id_del_proceso", "referencia_del_proceso")
-    else:
-        key_fields = ("id_contrato", "referencia_del_contrato")
-    for item in results:
-        key = ""
-        for f in key_fields:
-            v = item.get(f)
-            if v:
-                key = str(v)
-                break
-        if not key:
-            deduped.append(item)
-            continue
-        if key in seen:
-            continue
-        seen.add(key)
-        deduped.append(item)
-    return deduped
-
-
 def rank_and_dedupe(results: list[dict], dataset_id: str, params: dict | None = None) -> list[dict]:
-    """Pipeline de display SIN el corte a max_results.
+    """Pipeline legado BM25+display SIN el corte a max_results.
 
-    Reproduce, en un solo lugar, el orden que el usuario ve en el primer
-    turno: BM25 (cuando el objeto tiene ≥3 tokens) → activos primero → dedupe.
-    Es el mismo orden que ``normal_flow`` (BM25) + ``to_rows`` (reorder+dedupe)
-    producen, pero devuelve la lista COMPLETA en vez de los primeros 25.
-
-    La paginación A-buffer lo usa para re-pescar la misma ventana SECOP,
-    reconstruir determinísticamente el bloque ordenado y cortar la siguiente
-    rebanada (``[display_offset : display_offset+25]``) sin solaparse con lo ya
-    mostrado. Determinista por construcción: BM25, ``_reorder_active_first``
-    (sort estable) y ``_dedupe_results`` no dependen de estado externo.
+    Se conserva para consumidores que no tienen validacion PhraseSpec. No es la
+    ruta canonica de paginacion: E8B.1 usa ``validate_rank_and_dedupe`` para no
+    saltarse la cuarentena de candidatos ``none``. Sigue siendo determinista por
+    construccion: BM25, orden activo estable y dedupe no dependen de estado.
     """
     out = list(results or [])
     if not out:
@@ -191,9 +120,7 @@ def rank_and_dedupe(results: list[dict], dataset_id: str, params: dict | None = 
             out = [r for r, _ in scored]
         except Exception:
             pass  # best-effort, igual que en normal_flow
-    out = _reorder_active_first(out, dataset_id, params)
-    out = _dedupe_results(out, dataset_id)
-    return out
+    return prepare_results_for_display(out, dataset_id, params)
 
 
 def build_no_results_message(params: dict | None, dataset_id: str | None = None) -> str:
@@ -360,9 +287,9 @@ class Formatter:
 
     def to_rows(self, results: list[dict], dataset_id: str, params: dict | None = None) -> list[dict]:
         # DOGFOOD-SOQL-006: boost activos primero antes de dedupe/cut.
-        reordered = _reorder_active_first(results, dataset_id, params)
-        # B1: deduplicar ANTES de cortar al max_results.
-        deduped = _dedupe_results(reordered, dataset_id)
+        # B1: deduplicar ANTES de cortar al max_results. La funcion compartida
+        # tambien la usa la ruta canonica de ranking previa a paginacion.
+        deduped = prepare_results_for_display(results, dataset_id, params)
         # MOJIBAKE-DISPLAY-001: normalize malformed UTF-8 from SECOP
         # Only apply to string fields, not numeric/None values
         for r in deduped:
