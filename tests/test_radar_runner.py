@@ -13,7 +13,17 @@ import pytest
 
 from app.core.formatter import Formatter
 from app.core.query_frame import frame_from_params
-from app.core.radar.runner import MAX_SEEN_REFRESH, WINDOW_LIMIT, run_radar
+from app.core.radar.runner import (
+    MAX_SEEN_REFRESH,
+    RADAR_EMPTY,
+    RADAR_GUARD_BLOCKED,
+    RADAR_INVALID_FRAME,
+    RADAR_OK,
+    RADAR_TIMEOUT,
+    RADAR_TRANSIENT_ERROR,
+    WINDOW_LIMIT,
+    run_radar,
+)
 from app.core.radar.store import RadarStore
 from app.core.soql_builder import SoQLBuilder
 
@@ -21,11 +31,15 @@ from app.core.soql_builder import SoQLBuilder
 class FakeClient:
     """SecopClient fake: devuelve filas controlables, no toca red."""
 
-    def __init__(self, rows, count_value=None, lookup_rows=None, lookup_error=False):
+    def __init__(
+        self, rows, count_value=None, lookup_rows=None, lookup_error=False,
+        query_error=None,
+    ):
         self.rows = rows
         self.count_value = count_value
         self.lookup_rows = lookup_rows if lookup_rows is not None else []
         self.lookup_error = lookup_error
+        self.query_error = query_error
         self.queries = []
 
     def query(self, dataset_id, soql):
@@ -36,6 +50,8 @@ class FakeClient:
             if self.lookup_error:
                 raise RuntimeError("lookup timeout")
             return list(self.lookup_rows)
+        if self.query_error:
+            raise self.query_error
         return list(self.rows)
 
     def count(self, dataset_id, soql):
@@ -101,6 +117,7 @@ def test_first_run_all_new(store):
     res = run_radar(_deps(client), store, radar)
 
     assert res.status == "ok"
+    assert res.outcome == RADAR_OK
     assert res.diff.new_count == 2
     assert res.diff.changed_count == 0
     assert res.digest["has_novelty"] is True
@@ -124,6 +141,24 @@ def test_second_run_no_novelty(store):
     assert res.diff.changed_count == 0
     assert res.digest["has_novelty"] is False
     assert "Sin novedades" in res.digest["text"]
+
+
+def test_empty_radar_run_is_outcome_not_error(store):
+    radar = _make_radar(store)
+    client = FakeClient([])
+    res = run_radar(_deps(client), store, radar)
+
+    assert res.status == "ok"
+    assert res.outcome == RADAR_EMPTY
+    assert res.reason == "no_results"
+    assert res.diff.new_count == 0
+    assert res.digest["has_novelty"] is False
+    run = store.get_runs(radar.id)[0]
+    assert run.outcome == RADAR_EMPTY
+    assert run.reason == "no_results"
+    stored = store.get_radar(radar.id)
+    assert stored.failure_count == 0
+    assert stored.last_failure_reason is None
 
 
 def test_third_run_detects_state_change(store):
@@ -465,3 +500,101 @@ def test_phrase_aware_refresh_detects_valid_seen_change(store):
     assert len(res.diff.changed_state) == 1
     assert res.diff.changed_state[0].key == "P-old"
     assert store.get_seen(radar.id)["P-old"]["status"] == "Adjudicado"
+
+
+# ── Outcome / Reason + backoff ───────────────────────────────────────────
+
+def test_timeout_outcome_sets_backoff_without_events_or_seen_loss(store):
+    radar = _make_radar(store)
+    client = FakeClient([_proc("P-1")])
+    run_radar(_deps(client), store, radar)
+    before_seen = store.get_seen(radar.id)
+    before_feed = store.get_feed(radar.owner)
+
+    timeout_client = FakeClient([], query_error=TimeoutError("timed out"))
+    res = run_radar(_deps(timeout_client), store, store.get_radar(radar.id))
+
+    assert res.status == "error"
+    assert res.outcome == RADAR_TIMEOUT
+    assert res.reason == "socrata_timeout"
+    assert store.get_seen(radar.id) == before_seen
+    assert store.get_feed(radar.owner) == before_feed
+    stored = store.get_radar(radar.id)
+    assert stored.failure_count == 1
+    assert stored.last_failure_reason == "socrata_timeout"
+    assert stored.next_run_after
+    assert stored.is_enabled
+    run = store.get_runs(radar.id)[0]
+    assert run.outcome == RADAR_TIMEOUT
+    assert run.reason == "socrata_timeout"
+
+
+def test_transient_error_outcome_sets_backoff(store):
+    radar = _make_radar(store)
+    client = FakeClient([], query_error=RuntimeError("Socrata 503"))
+    res = run_radar(_deps(client), store, radar)
+
+    assert res.status == "error"
+    assert res.outcome == RADAR_TRANSIENT_ERROR
+    assert res.reason == "socrata_query_error"
+    stored = store.get_radar(radar.id)
+    assert stored.failure_count == 1
+    assert stored.next_run_after
+    assert stored.is_enabled
+
+
+def test_invalid_frame_outcome_counts_permanent_failure(store):
+    rid = store.create_radar(
+        name="Roto", owner="u1", query_frame_json="{no-json", dataset="procesos",
+    )
+    radar = store.get_radar(rid)
+    res = run_radar(_deps(FakeClient([])), store, radar)
+
+    assert res.status == "error"
+    assert res.outcome == RADAR_INVALID_FRAME
+    assert res.reason == "invalid_query_frame_json"
+    stored = store.get_radar(rid)
+    assert stored.failure_count == 1
+    assert stored.last_failure_reason == "invalid_query_frame_json"
+    assert stored.next_run_after
+
+
+def test_guard_blocked_outcome_counts_permanent_failure(store):
+    rid = store.create_radar(name="Global", owner="u1", query_frame_json="{}")
+    radar = store.get_radar(rid)
+    res = run_radar(_deps(FakeClient([])), store, radar)
+
+    assert res.status == "error"
+    assert res.outcome == RADAR_GUARD_BLOCKED
+    assert res.reason == "guard_no_scope_or_topic"
+    stored = store.get_radar(rid)
+    assert stored.failure_count == 1
+    assert stored.last_failure_reason == "guard_no_scope_or_topic"
+
+
+def test_repeated_permanent_failures_mark_attention_and_pause(store):
+    rid = store.create_radar(name="Global", owner="u1", query_frame_json="{}")
+
+    for _ in range(3):
+        run_radar(_deps(FakeClient([])), store, store.get_radar(rid))
+
+    stored = store.get_radar(rid)
+    assert stored.failure_count == 3
+    assert stored.needs_attention == 1
+    assert not stored.is_enabled
+
+
+def test_success_resets_failure_state(store):
+    radar = _make_radar(store)
+    run_radar(_deps(FakeClient([], query_error=RuntimeError("Socrata 503"))), store, radar)
+    failed = store.get_radar(radar.id)
+    assert failed.failure_count == 1
+
+    res = run_radar(_deps(FakeClient([_proc("P-1")])), store, failed)
+
+    assert res.status == "ok"
+    stored = store.get_radar(radar.id)
+    assert stored.failure_count == 0
+    assert stored.last_failure_reason is None
+    assert stored.next_run_after is None
+    assert stored.needs_attention == 0

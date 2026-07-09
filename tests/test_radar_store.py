@@ -73,7 +73,7 @@ def test_record_run_and_get(store):
         total_count=12, new_count=3, changed_count=1,
         digest_json=json.dumps({"text": "hola"}), soql="SELECT 1",
         params_json="{}", dataset_id="jbjy-vk9h", approx_total=None,
-        execution_ms=42,
+        execution_ms=42, outcome="radar_ok", reason="ok",
     )
     runs = store.get_runs(rid)
     assert len(runs) == 1
@@ -81,6 +81,8 @@ def test_record_run_and_get(store):
     assert runs[0].new_count == 3
     assert runs[0].soql == "SELECT 1"
     assert runs[0].execution_ms == 42
+    assert runs[0].outcome == "radar_ok"
+    assert runs[0].reason == "ok"
     assert runs[0].digest()["text"] == "hola"
 
 
@@ -94,11 +96,31 @@ def test_record_error(store):
 
 def test_update_last_run_clears_error(store):
     rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
-    store.record_error(rid, "boom")
+    store.record_failure(
+        rid, reason="socrata_timeout", message="boom",
+        next_run_after="2026-06-12T00:00:00+00:00",
+    )
     store.update_last_run(rid)
     radar = store.get_radar(rid)
     assert radar.last_run_at
     assert radar.last_error_message is None
+    assert radar.failure_count == 0
+    assert radar.last_failure_reason is None
+    assert radar.next_run_after is None
+
+
+def test_record_failure_and_backoff_filter(store):
+    rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+    count = store.record_failure(
+        rid, reason="socrata_timeout", message="timeout",
+        next_run_after="2999-01-01T00:00:00+00:00",
+    )
+    radar = store.get_radar(rid)
+    assert count == 1
+    assert radar.failure_count == 1
+    assert radar.last_failure_reason == "socrata_timeout"
+    assert radar.next_run_after == "2999-01-01T00:00:00+00:00"
+    assert store.list_all_enabled_radars() == []
 
 
 def test_upsert_seen_idempotent_keeps_first_seen(store):

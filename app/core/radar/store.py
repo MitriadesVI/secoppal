@@ -54,6 +54,10 @@ class Radar:
     created_from_trace_id: str | None = None
     last_error_at: str | None = None
     last_error_message: str | None = None
+    failure_count: int = 0
+    last_failure_reason: str | None = None
+    next_run_after: str | None = None
+    needs_attention: int = 0
 
     @classmethod
     def from_row(cls, row: sqlite3.Row) -> "Radar":
@@ -87,6 +91,8 @@ class RadarRun:
     dataset_id: str | None
     approx_total: int | None
     execution_ms: int | None
+    outcome: str | None = None
+    reason: str | None = None
 
     @classmethod
     def from_row(cls, row: sqlite3.Row) -> "RadarRun":
@@ -119,6 +125,10 @@ CREATE TABLE IF NOT EXISTS radars (
     created_from_trace_id  TEXT,
     last_error_at          TEXT,
     last_error_message     TEXT,
+    failure_count          INTEGER NOT NULL DEFAULT 0,
+    last_failure_reason    TEXT,
+    next_run_after         TEXT,
+    needs_attention        INTEGER NOT NULL DEFAULT 0,
     UNIQUE (owner, name)
 );
 
@@ -137,7 +147,9 @@ CREATE TABLE IF NOT EXISTS radar_runs (
     params_json   TEXT,
     dataset_id    TEXT,
     approx_total  INTEGER,
-    execution_ms  INTEGER
+    execution_ms  INTEGER,
+    outcome       TEXT,
+    reason        TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_radar_runs_radar ON radar_runs(radar_id, started_at DESC);
 
@@ -197,8 +209,26 @@ class RadarStore:
         conn = self._connect()
         try:
             conn.executescript(_SCHEMA)
+            self._ensure_columns(conn)
         finally:
             conn.close()
+
+    def _ensure_columns(self, conn: sqlite3.Connection) -> None:
+        """Migraciones aditivas para bases ya creadas."""
+        radar_cols = {row["name"] for row in conn.execute("PRAGMA table_info(radars)")}
+        for name, ddl in {
+            "failure_count": "INTEGER NOT NULL DEFAULT 0",
+            "last_failure_reason": "TEXT",
+            "next_run_after": "TEXT",
+            "needs_attention": "INTEGER NOT NULL DEFAULT 0",
+        }.items():
+            if name not in radar_cols:
+                conn.execute(f"ALTER TABLE radars ADD COLUMN {name} {ddl}")
+
+        run_cols = {row["name"] for row in conn.execute("PRAGMA table_info(radar_runs)")}
+        for name, ddl in {"outcome": "TEXT", "reason": "TEXT"}.items():
+            if name not in run_cols:
+                conn.execute(f"ALTER TABLE radar_runs ADD COLUMN {name} {ddl}")
 
     # -- radars ------------------------------------------------------------
 
@@ -270,7 +300,10 @@ class RadarStore:
         conn = self._connect()
         try:
             rows = conn.execute(
-                "SELECT * FROM radars WHERE enabled = 1 ORDER BY owner, created_at"
+                "SELECT * FROM radars WHERE enabled = 1 "
+                "AND (next_run_after IS NULL OR next_run_after <= ?) "
+                "ORDER BY owner, created_at",
+                (_now(),),
             ).fetchall()
         finally:
             conn.close()
@@ -291,7 +324,9 @@ class RadarStore:
         try:
             conn.execute(
                 "UPDATE radars SET last_run_at = ?, last_error_at = NULL, "
-                "last_error_message = NULL WHERE id = ?",
+                "last_error_message = NULL, failure_count = 0, "
+                "last_failure_reason = NULL, next_run_after = NULL, "
+                "needs_attention = 0 WHERE id = ?",
                 (ts or _now(), radar_id),
             )
         finally:
@@ -306,6 +341,47 @@ class RadarStore:
             )
         finally:
             conn.close()
+
+    def record_failure(
+        self,
+        radar_id: str,
+        *,
+        reason: str,
+        message: str,
+        next_run_after: str | None = None,
+        permanent: bool = False,
+        pause_after: int = 3,
+        ts: str | None = None,
+    ) -> int:
+        """Registra fallo operativo y devuelve el nuevo ``failure_count``.
+
+        Los fallos permanentes repetidos se marcan para atención y deshabilitan
+        el radar, evitando martillar definiciones rotas en el scheduler.
+        """
+        conn = self._connect()
+        try:
+            row = conn.execute(
+                "SELECT failure_count FROM radars WHERE id = ?", (radar_id,)
+            ).fetchone()
+            current = int(row["failure_count"] or 0) if row else 0
+            new_count = current + 1
+            should_pause = bool(permanent and new_count >= pause_after)
+            conn.execute(
+                """UPDATE radars
+                   SET last_error_at = ?, last_error_message = ?,
+                       failure_count = ?, last_failure_reason = ?,
+                       next_run_after = ?,
+                       needs_attention = CASE WHEN ? THEN 1 ELSE needs_attention END,
+                       enabled = CASE WHEN ? THEN 0 ELSE enabled END
+                   WHERE id = ?""",
+                (
+                    ts or _now(), message, new_count, reason, next_run_after,
+                    1 if should_pause else 0, 1 if should_pause else 0, radar_id,
+                ),
+            )
+        finally:
+            conn.close()
+        return new_count
 
     def delete_radar(self, radar_id: str) -> None:
         conn = self._connect()
@@ -332,6 +408,8 @@ class RadarStore:
         dataset_id: str | None = None,
         approx_total: int | None = None,
         execution_ms: int | None = None,
+        outcome: str | None = None,
+        reason: str | None = None,
         finished_at: str | None = None,
     ) -> str:
         run_id = _new_id()
@@ -341,11 +419,11 @@ class RadarStore:
                 """INSERT INTO radar_runs
                    (id, radar_id, started_at, finished_at, status, total_count,
                     new_count, changed_count, digest_json, error, soql, params_json,
-                    dataset_id, approx_total, execution_ms)
-                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+                    dataset_id, approx_total, execution_ms, outcome, reason)
+                   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)""",
                 (run_id, radar_id, started_at, finished_at or _now(), status,
                  total_count, new_count, changed_count, digest_json, error, soql,
-                 params_json, dataset_id, approx_total, execution_ms),
+                 params_json, dataset_id, approx_total, execution_ms, outcome, reason),
             )
         finally:
             conn.close()

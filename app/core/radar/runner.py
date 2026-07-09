@@ -2,9 +2,9 @@
 
 ``run_radar`` reconstruye los params desde el QueryFrame guardado, fuerza la
 ventana de seguimiento (los 100 resultados más recientes), ejecuta la búsqueda
-con el núcleo **puro** ``execute_resolved_params`` (sin contaminar conversación),
-deduplica, clasifica contra la última revisión, persiste lo visto, registra la
-corrida con auditoría y devuelve el digest asesor.
+sin contaminar conversación, valida/rankea por la ruta canónica, clasifica
+contra la última revisión, persiste lo visto, registra la corrida con auditoría
+de outcome/reason y devuelve el digest asesor.
 """
 from __future__ import annotations
 
@@ -13,9 +13,10 @@ import json
 import logging
 import time
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from typing import TYPE_CHECKING
 
+from app.core._followup_constants import SCOPE_TOPIC_KEYS
 from app.core.phrase_ranking import validate_rank_and_dedupe
 from app.core.query_frame import QueryFrame, params_from_frame
 from app.core.radar.diff import RadarDiff, classify
@@ -24,7 +25,7 @@ from app.core.radar.follows import fetch_current_rows_by_keys
 from app.core.radar.keys import radar_result_key
 from app.core.radar.store import Radar, RadarStore
 from app.core.soql_builder import SoQLBuilder
-from app.core.workflow.helpers import execute_resolved_params
+from app.core.workflow.helpers import _is_timeout_exception, _query_first_then_count
 
 if TYPE_CHECKING:
     from app.core.workflow.deps import WorkflowDeps
@@ -33,6 +34,17 @@ if TYPE_CHECKING:
 WINDOW_LIMIT = 100
 # Barrido por clave: máximo de vistos fuera de ventana que se refrescan por corrida.
 MAX_SEEN_REFRESH = 500
+TRANSIENT_BACKOFF_MINUTES = 30
+PERMANENT_BACKOFF_HOURS = 24
+PERMANENT_FAILURE_PAUSE_THRESHOLD = 3
+
+RADAR_OK = "radar_ok"
+RADAR_EMPTY = "radar_empty"
+RADAR_INVALID_FRAME = "radar_invalid_frame"
+RADAR_GUARD_BLOCKED = "radar_guard_blocked"
+RADAR_TIMEOUT = "radar_timeout"
+RADAR_TRANSIENT_ERROR = "radar_transient_error"
+RADAR_PERMANENT_ERROR = "radar_permanent_error"
 
 logger = logging.getLogger(__name__)
 
@@ -46,11 +58,74 @@ class RadarRunResult:
     digest: dict
     total: int
     execution_ms: int
+    outcome: str
+    reason: str | None = None
+    message: str | None = None
     error: str | None = None
+
+
+@dataclass(frozen=True)
+class _RadarExecution:
+    results: list[dict]
+    total: int
+    soql: str
+    dataset_id: str
+    approximate: bool
+
+
+@dataclass(frozen=True)
+class _RadarFailure:
+    outcome: str
+    reason: str
+    message: str
+    permanent: bool
+    next_run_after: str | None
 
 
 def _now() -> str:
     return datetime.now(timezone.utc).isoformat()
+
+
+def _after(**delta) -> str:
+    return (datetime.now(timezone.utc) + timedelta(**delta)).isoformat()
+
+
+def _error_digest(radar_name: str, message: str, outcome: str, reason: str) -> dict:
+    return {
+        "text": f"🔔 Radar {radar_name}\n\n⚠️ {message}",
+        "has_novelty": False,
+        "risk_flags": [],
+        "new_count": 0,
+        "changed_count": 0,
+        "disappeared_count": 0,
+        "window_churn_count": 0,
+        "seen_refresh_checked": 0,
+        "atypical_keys": [],
+        "outcome": outcome,
+        "reason": reason,
+    }
+
+
+def _validate_frame_json(radar: Radar) -> _RadarFailure | None:
+    try:
+        frame = json.loads(radar.query_frame_json)
+    except (json.JSONDecodeError, TypeError):
+        return _RadarFailure(
+            outcome=RADAR_INVALID_FRAME,
+            reason="invalid_query_frame_json",
+            message="El radar tiene un QueryFrame inválido; requiere revisión.",
+            permanent=True,
+            next_run_after=_after(hours=PERMANENT_BACKOFF_HOURS),
+        )
+    if not isinstance(frame, dict):
+        return _RadarFailure(
+            outcome=RADAR_INVALID_FRAME,
+            reason="invalid_query_frame_shape",
+            message="El radar tiene un QueryFrame inválido; requiere revisión.",
+            permanent=True,
+            next_run_after=_after(hours=PERMANENT_BACKOFF_HOURS),
+        )
+    return None
 
 
 def params_from_radar(radar: Radar) -> dict:
@@ -99,6 +174,67 @@ def _validated_rank_and_dedupe(rows: list[dict], params: dict, dataset_id: str) 
     if not unvalidated_ids:
         return ranked.ranked_results
     return [row for row in ranked.ranked_results if id(row) not in unvalidated_ids]
+
+
+def _execute_radar_window(deps: "WorkflowDeps", params: dict) -> _RadarExecution | _RadarFailure:
+    has_scope_or_topic = any(
+        params.get(k) and params.get(k) not in (None, [], "", {}, False)
+        for k in SCOPE_TOPIC_KEYS
+    )
+    if not has_scope_or_topic:
+        return _RadarFailure(
+            outcome=RADAR_GUARD_BLOCKED,
+            reason="guard_no_scope_or_topic",
+            message="El radar no tiene alcance o tema suficiente para ejecutarse.",
+            permanent=True,
+            next_run_after=_after(hours=PERMANENT_BACKOFF_HOURS),
+        )
+
+    ds_id = SoQLBuilder.dataset_id_for(params.get("dataset"))
+    try:
+        soql = deps.soql_builder.build(ds_id, params)
+        count_soql = deps.soql_builder.build_count(ds_id, params)
+    except Exception as exc:
+        return _RadarFailure(
+            outcome=RADAR_PERMANENT_ERROR,
+            reason="soql_build_error",
+            message=f"No se pudo construir la consulta del radar: {str(exc)[:160]}",
+            permanent=True,
+            next_run_after=_after(hours=PERMANENT_BACKOFF_HOURS),
+        )
+
+    try:
+        total, results, _timings, approximate = _query_first_then_count(
+            deps.secop_client,
+            ds_id,
+            count_soql,
+            soql,
+            limit=int(params.get("limit", WINDOW_LIMIT) or WINDOW_LIMIT),
+        )
+    except Exception as exc:
+        if _is_timeout_exception(exc):
+            return _RadarFailure(
+                outcome=RADAR_TIMEOUT,
+                reason="socrata_timeout",
+                message="La consulta agotó tiempo; se reintentará después.",
+                permanent=False,
+                next_run_after=_after(minutes=TRANSIENT_BACKOFF_MINUTES),
+            )
+        return _RadarFailure(
+            outcome=RADAR_TRANSIENT_ERROR,
+            reason="socrata_query_error",
+            message=f"No se pudo consultar SECOP temporalmente: {str(exc)[:160]}",
+            permanent=False,
+            next_run_after=_after(minutes=TRANSIENT_BACKOFF_MINUTES),
+        )
+
+    return _RadarExecution(
+        results=results,
+        total=total,
+        soql=soql,
+        dataset_id=ds_id,
+        approximate=approximate,
+    )
 
 
 def _refresh_seen_rows(
@@ -219,36 +355,54 @@ def run_radar(
 ) -> RadarRunResult:
     """Ejecuta un radar: búsqueda → diff → persistencia → digest."""
     started_at = _now()
-    params = _apply_window_policy(params_from_radar(radar))
-
-    t0 = time.perf_counter()
-    try:
-        execution = execute_resolved_params(deps, params, channel="web")
-    except Exception as exc:  # defensivo: el helper ya captura, esto es cinturón
-        execution = None
-        exec_error = str(exc)
-    else:
-        exec_error = None
-    execution_ms = int(round((time.perf_counter() - t0) * 1000))
-
-    if execution is None:
-        message = exec_error or (
-            "No se pudo ejecutar el radar (sin alcance/tema o error de consulta)."
+    frame_failure = _validate_frame_json(radar)
+    if frame_failure is not None:
+        execution_ms = 0
+        digest = _error_digest(
+            radar.name, frame_failure.message, frame_failure.outcome, frame_failure.reason
         )
         run_id = store.record_run(
             radar_id=radar.id, started_at=started_at, status="error",
-            error=message, params_json=json.dumps(params, ensure_ascii=False),
-            execution_ms=execution_ms,
+            error=frame_failure.message, digest_json=json.dumps(digest, ensure_ascii=False),
+            params_json=radar.query_frame_json, execution_ms=execution_ms,
+            outcome=frame_failure.outcome, reason=frame_failure.reason,
         )
-        store.record_error(radar.id, message)
+        store.record_failure(
+            radar.id, reason=frame_failure.reason, message=frame_failure.message,
+            next_run_after=frame_failure.next_run_after, permanent=frame_failure.permanent,
+            pause_after=PERMANENT_FAILURE_PAUSE_THRESHOLD,
+        )
         return RadarRunResult(
             run_id=run_id, radar_id=radar.id, status="error", diff=None,
-            digest={"text": f"🔔 Radar {radar.name}\n\n⚠️ {message}",
-                    "has_novelty": False, "risk_flags": [], "new_count": 0,
-                    "changed_count": 0, "disappeared_count": 0,
-                    "window_churn_count": 0, "seen_refresh_checked": 0,
-                    "atypical_keys": []},
-            total=0, execution_ms=execution_ms, error=message,
+            digest=digest, total=0, execution_ms=execution_ms,
+            outcome=frame_failure.outcome, reason=frame_failure.reason,
+            message=frame_failure.message, error=frame_failure.message,
+        )
+
+    params = _apply_window_policy(params_from_radar(radar))
+
+    t0 = time.perf_counter()
+    execution = _execute_radar_window(deps, params)
+    execution_ms = int(round((time.perf_counter() - t0) * 1000))
+
+    if isinstance(execution, _RadarFailure):
+        digest = _error_digest(radar.name, execution.message, execution.outcome, execution.reason)
+        run_id = store.record_run(
+            radar_id=radar.id, started_at=started_at, status="error",
+            error=execution.message, digest_json=json.dumps(digest, ensure_ascii=False),
+            params_json=json.dumps(params, ensure_ascii=False),
+            execution_ms=execution_ms, outcome=execution.outcome, reason=execution.reason,
+        )
+        store.record_failure(
+            radar.id, reason=execution.reason, message=execution.message,
+            next_run_after=execution.next_run_after, permanent=execution.permanent,
+            pause_after=PERMANENT_FAILURE_PAUSE_THRESHOLD,
+        )
+        return RadarRunResult(
+            run_id=run_id, radar_id=radar.id, status="error", diff=None,
+            digest=digest, total=0, execution_ms=execution_ms,
+            outcome=execution.outcome, reason=execution.reason,
+            message=execution.message, error=execution.message,
         )
 
     ds_id = execution.dataset_id
@@ -260,6 +414,8 @@ def run_radar(
     refreshed = _validated_rank_and_dedupe(refreshed_rows, params, ds_id)
     current_for_diff = deduped + refreshed
     diff = classify(current_for_diff, seen_map, ds_id, current_window_keys=current_keys)
+    outcome = RADAR_EMPTY if not execution.results and not refreshed and not diff.has_novelty else RADAR_OK
+    reason = "no_results" if outcome == RADAR_EMPTY else "ok"
 
     run_meta = {
         "total": execution.total,
@@ -268,6 +424,8 @@ def run_radar(
         **refresh_meta,
     }
     digest = build_digest(radar.name, diff, run_meta, seen_map)
+    digest["outcome"] = outcome
+    digest["reason"] = reason
 
     approx_total = execution.total if execution.approximate else None
     run_id = store.record_run(
@@ -277,6 +435,7 @@ def run_radar(
         digest_json=json.dumps(digest, ensure_ascii=False),
         soql=execution.soql, params_json=json.dumps(params, ensure_ascii=False),
         dataset_id=ds_id, approx_total=approx_total, execution_ms=execution_ms,
+        outcome=outcome, reason=reason,
     )
 
     # Persistir lo visto en esta corrida (todo lo presente: nuevos + cambios + iguales).
@@ -300,4 +459,5 @@ def run_radar(
     return RadarRunResult(
         run_id=run_id, radar_id=radar.id, status="ok", diff=diff,
         digest=digest, total=execution.total, execution_ms=execution_ms,
+        outcome=outcome, reason=reason, message=None,
     )
