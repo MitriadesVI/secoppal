@@ -80,6 +80,21 @@ def _make_radar(store):
     return store.get_radar(rid)
 
 
+def _make_phrase_radar(store):
+    params = {
+        "objeto": [["elaboracion", "actualizacion"]],
+        "objeto_phrases": ["manual de contratacion"],
+        "departamento_resolved": "ATLÁNTICO",
+        "dataset": "procesos",
+    }
+    frame_json = json.dumps(dataclasses.asdict(frame_from_params(params)))
+    rid = store.create_radar(
+        name="Radar Manuales", owner="u1",
+        query_frame_json=frame_json, dataset="procesos",
+    )
+    return store.get_radar(rid)
+
+
 def test_first_run_all_new(store):
     radar = _make_radar(store)
     client = FakeClient([_proc("P-1"), _proc("P-2")])
@@ -380,3 +395,73 @@ def test_seen_refresh_limit_is_explicit(store):
     assert res.digest["seen_refresh_checked"] == MAX_SEEN_REFRESH
     assert res.digest["seen_refresh_limited"] is True
     assert any("límite" in flag for flag in res.digest["risk_flags"])
+
+
+# ── PhraseSpec validation in radar runner ─────────────────────────────────
+
+def test_phrase_aware_radar_does_not_alert_unvalidated_window_candidates(store):
+    radar = _make_phrase_radar(store)
+    client = FakeClient([
+        _proc("P-valid", objeto="Manual de contratacion municipal"),
+        _proc("P-noise", objeto="Pavimentacion de vias urbanas"),
+    ])
+
+    res = run_radar(_deps(client), store, radar)
+
+    assert {item.key for item in res.diff.new} == {"P-valid"}
+    assert "P-noise" not in store.get_seen(radar.id)
+    assert res.digest["new_count"] == 1
+
+
+def test_phrase_aware_radar_keeps_validated_candidates(store):
+    radar = _make_phrase_radar(store)
+    client = FakeClient([
+        _proc("P-direct", objeto="Actualizacion del manual de contratacion"),
+    ])
+
+    res = run_radar(_deps(client), store, radar)
+
+    assert res.diff.new_count == 1
+    assert res.diff.new[0].key == "P-direct"
+    assert set(store.get_seen(radar.id)) == {"P-direct"}
+
+
+def test_phrase_aware_refresh_does_not_introduce_semantic_noise(store):
+    radar = _make_phrase_radar(store)
+    client = FakeClient([
+        _proc("P-old", estado="Abierto", objeto="Manual de contratacion municipal"),
+    ])
+    run_radar(_deps(client), store, radar)
+
+    client.rows = []
+    client.lookup_rows = [
+        _proc("P-old", estado="Adjudicado", objeto="Pavimentacion de vias urbanas"),
+    ]
+    res = run_radar(_deps(client), store, radar)
+
+    assert res.diff.changed_count == 0
+    assert len(res.diff.window_churn) == 1
+    assert res.digest["has_novelty"] is False
+    changed = [
+        e for e in store.get_feed(radar.owner)
+        if e["kind"] in {"changed_state", "changed_value"}
+    ]
+    assert changed == []
+
+
+def test_phrase_aware_refresh_detects_valid_seen_change(store):
+    radar = _make_phrase_radar(store)
+    client = FakeClient([
+        _proc("P-old", estado="Abierto", objeto="Manual de contratacion municipal"),
+    ])
+    run_radar(_deps(client), store, radar)
+
+    client.rows = []
+    client.lookup_rows = [
+        _proc("P-old", estado="Adjudicado", objeto="Manual de contratacion municipal"),
+    ]
+    res = run_radar(_deps(client), store, radar)
+
+    assert len(res.diff.changed_state) == 1
+    assert res.diff.changed_state[0].key == "P-old"
+    assert store.get_seen(radar.id)["P-old"]["status"] == "Adjudicado"

@@ -16,7 +16,7 @@ from dataclasses import dataclass
 from datetime import datetime, timezone
 from typing import TYPE_CHECKING
 
-from app.core.formatter import rank_and_dedupe
+from app.core.phrase_ranking import validate_rank_and_dedupe
 from app.core.query_frame import QueryFrame, params_from_frame
 from app.core.radar.diff import RadarDiff, classify
 from app.core.radar.digest import build_digest
@@ -90,6 +90,15 @@ def _current_window_keys(rows: list[dict], dataset_id: str) -> set[str]:
         key for row in rows
         if (key := radar_result_key(row, dataset_id)) is not None
     }
+
+
+def _validated_rank_and_dedupe(rows: list[dict], params: dict, dataset_id: str) -> list[dict]:
+    """Aplica la ruta canónica y excluye candidatos en cuarentena para Radar."""
+    ranked = validate_rank_and_dedupe(rows, params, dataset_id)
+    unvalidated_ids = {id(row) for row in ranked.unvalidated_candidates}
+    if not unvalidated_ids:
+        return ranked.ranked_results
+    return [row for row in ranked.ranked_results if id(row) not in unvalidated_ids]
 
 
 def _refresh_seen_rows(
@@ -243,12 +252,13 @@ def run_radar(
         )
 
     ds_id = execution.dataset_id
-    deduped = rank_and_dedupe(execution.results, ds_id, params)
+    deduped = _validated_rank_and_dedupe(execution.results, params, ds_id)
 
     seen_map = store.get_seen(radar.id)  # estado PREVIO (antes del upsert)
     current_keys = _current_window_keys(deduped, ds_id)
     refreshed_rows, refresh_meta = _refresh_seen_rows(deps, seen_map, current_keys, ds_id)
-    current_for_diff = deduped + refreshed_rows
+    refreshed = _validated_rank_and_dedupe(refreshed_rows, params, ds_id)
+    current_for_diff = deduped + refreshed
     diff = classify(current_for_diff, seen_map, ds_id, current_window_keys=current_keys)
 
     run_meta = {
