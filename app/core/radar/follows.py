@@ -111,8 +111,10 @@ def unfollow(store: RadarStore, owner: str, key: str) -> None:
     store.delete_seen(radar.id, key)
 
 
-def _fetch_current_rows(deps, dataset_id: str, keys: list[str]) -> list[dict]:
-    """Trae el estado actual de los procesos seguidos por id/referencia, en lote."""
+def _fetch_current_rows_batch(deps, dataset_id: str, keys: list[str]) -> list[dict]:
+    """Trae el estado actual por id/referencia para un lote pequeño de claves."""
+    if not keys:
+        return []
     spec = SoQLBuilder.SPECS[dataset_id]
     id_field = "id_del_proceso" if dataset_id == SoQLBuilder.PROCESOS_DATASET else "id_contrato"
     ref_field = spec.reference or id_field
@@ -124,6 +126,33 @@ def _fetch_current_rows(deps, dataset_id: str, keys: list[str]) -> list[dict]:
         f"LIMIT {max(len(keys) * 2, 50)}"
     )
     return list(deps.secop_client.query(dataset_id, soql) or [])
+
+
+def fetch_current_rows_by_keys(
+    deps,
+    dataset_id: str,
+    keys: list[str],
+    *,
+    batch_size: int = 100,
+) -> list[dict]:
+    """Trae filas actuales de SECOP por clave estable, en batches.
+
+    Reutilizado por ``refresh_follows`` y por radares de búsqueda para revisar
+    resultados ya vistos que salieron de la ventana reciente.
+    """
+    rows: list[dict] = []
+    clean_keys = [k for k in keys if k]
+    if not clean_keys:
+        return rows
+    batch_size = max(1, int(batch_size or 100))
+    for i in range(0, len(clean_keys), batch_size):
+        rows.extend(_fetch_current_rows_batch(deps, dataset_id, clean_keys[i:i + batch_size]))
+    return rows
+
+
+def _fetch_current_rows(deps, dataset_id: str, keys: list[str]) -> list[dict]:
+    """Compat wrapper: trae el estado actual de los procesos seguidos."""
+    return fetch_current_rows_by_keys(deps, dataset_id, keys)
 
 
 def refresh_follows(deps, store: RadarStore, owner: str) -> dict:

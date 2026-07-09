@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import dataclasses
 import json
+import logging
 import time
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -19,7 +20,10 @@ from app.core.formatter import rank_and_dedupe
 from app.core.query_frame import QueryFrame, params_from_frame
 from app.core.radar.diff import RadarDiff, classify
 from app.core.radar.digest import build_digest
+from app.core.radar.follows import fetch_current_rows_by_keys
+from app.core.radar.keys import radar_result_key
 from app.core.radar.store import Radar, RadarStore
+from app.core.soql_builder import SoQLBuilder
 from app.core.workflow.helpers import execute_resolved_params
 
 if TYPE_CHECKING:
@@ -27,6 +31,10 @@ if TYPE_CHECKING:
 
 # Ventana de seguimiento: cuántos resultados recientes revisa cada corrida.
 WINDOW_LIMIT = 100
+# Barrido por clave: máximo de vistos fuera de ventana que se refrescan por corrida.
+MAX_SEEN_REFRESH = 500
+
+logger = logging.getLogger(__name__)
 
 
 @dataclass
@@ -56,6 +64,98 @@ def params_from_radar(radar: Radar) -> dict:
     valid = {f.name for f in dataclasses.fields(QueryFrame)}
     frame = QueryFrame(**{k: v for k, v in frame_dict.items() if k in valid})
     return params_from_frame(frame)
+
+
+def _apply_window_policy(params: dict) -> dict:
+    """Fuerza la ventana de radar: 100 resultados por recencia."""
+    clean = dict(params)
+    clean.pop("ordering_signal", None)
+    clean["limit"] = WINDOW_LIMIT
+    return clean
+
+
+def _dataset_id_from_seen(raw_dataset: str | None, fallback_dataset_id: str) -> str:
+    """Normaliza dataset guardado como nombre conversacional o id Socrata."""
+    if raw_dataset in SoQLBuilder.SPECS:
+        return str(raw_dataset)
+    if raw_dataset == "contratos":
+        return SoQLBuilder.CONTRATOS_DATASET
+    if raw_dataset == "procesos":
+        return SoQLBuilder.PROCESOS_DATASET
+    return fallback_dataset_id
+
+
+def _current_window_keys(rows: list[dict], dataset_id: str) -> set[str]:
+    return {
+        key for row in rows
+        if (key := radar_result_key(row, dataset_id)) is not None
+    }
+
+
+def _refresh_seen_rows(
+    deps: "WorkflowDeps",
+    seen_map: dict[str, dict],
+    current_window_keys: set[str],
+    fallback_dataset_id: str,
+) -> tuple[list[dict], dict]:
+    """Refresca por clave vistos fuera de la ventana reciente.
+
+    Devuelve filas encontradas y metadatos de auditoría. Los errores de lookup
+    son transitorios para el radar: se registran en meta y no confirman
+    desapariciones.
+    """
+    candidates = [
+        (key, rec) for key, rec in seen_map.items()
+        if key not in current_window_keys
+    ]
+    candidates.sort(
+        key=lambda item: (
+            item[1].get("last_seen_at")
+            or item[1].get("first_seen_at")
+            or ""
+        ),
+        reverse=True,
+    )
+    limited = len(candidates) > MAX_SEEN_REFRESH
+    selected = candidates[:MAX_SEEN_REFRESH]
+
+    by_dataset: dict[str, list[str]] = {}
+    for key, rec in selected:
+        dataset_id = _dataset_id_from_seen(rec.get("dataset"), fallback_dataset_id)
+        if dataset_id != fallback_dataset_id:
+            continue
+        by_dataset.setdefault(dataset_id, []).append(key)
+
+    rows: list[dict] = []
+    errors = 0
+    requested_keys = {key for keys in by_dataset.values() for key in keys}
+    for dataset_id, keys in by_dataset.items():
+        try:
+            fetched = fetch_current_rows_by_keys(deps, dataset_id, keys)
+        except Exception:
+            errors += len(keys)
+            logger.exception(
+                "run_radar: fallo refresh por clave dataset=%s keys=%s",
+                dataset_id, len(keys),
+            )
+            continue
+        allowed = set(keys)
+        seen_fetched: set[str] = set()
+        for row in fetched:
+            key = radar_result_key(row, dataset_id)
+            if key in allowed and key not in seen_fetched:
+                rows.append(row)
+                seen_fetched.add(key)
+
+    meta = {
+        "seen_refresh_candidates": len(candidates),
+        "seen_refresh_checked": len(requested_keys),
+        "seen_refresh_found": len(_current_window_keys(rows, fallback_dataset_id)),
+        "seen_refresh_limited": limited,
+        "seen_refresh_limit": MAX_SEEN_REFRESH,
+        "seen_refresh_errors": errors,
+    }
+    return rows, meta
 
 
 def _emit_events(store, radar, run_id, dataset_name, diff, deduped, total,
@@ -110,10 +210,7 @@ def run_radar(
 ) -> RadarRunResult:
     """Ejecuta un radar: búsqueda → diff → persistencia → digest."""
     started_at = _now()
-    params = params_from_radar(radar)
-    # Ventana de seguimiento: forzar limit; el ordering por defecto del
-    # SoQLBuilder ya es fecha DESC (recencia primero), así que basta el límite.
-    params["limit"] = WINDOW_LIMIT
+    params = _apply_window_policy(params_from_radar(radar))
 
     t0 = time.perf_counter()
     try:
@@ -139,7 +236,9 @@ def run_radar(
             run_id=run_id, radar_id=radar.id, status="error", diff=None,
             digest={"text": f"🔔 Radar {radar.name}\n\n⚠️ {message}",
                     "has_novelty": False, "risk_flags": [], "new_count": 0,
-                    "changed_count": 0, "disappeared_count": 0, "atypical_keys": []},
+                    "changed_count": 0, "disappeared_count": 0,
+                    "window_churn_count": 0, "seen_refresh_checked": 0,
+                    "atypical_keys": []},
             total=0, execution_ms=execution_ms, error=message,
         )
 
@@ -147,12 +246,16 @@ def run_radar(
     deduped = rank_and_dedupe(execution.results, ds_id, params)
 
     seen_map = store.get_seen(radar.id)  # estado PREVIO (antes del upsert)
-    diff = classify(deduped, seen_map, ds_id)
+    current_keys = _current_window_keys(deduped, ds_id)
+    refreshed_rows, refresh_meta = _refresh_seen_rows(deps, seen_map, current_keys, ds_id)
+    current_for_diff = deduped + refreshed_rows
+    diff = classify(current_for_diff, seen_map, ds_id, current_window_keys=current_keys)
 
     run_meta = {
         "total": execution.total,
         "approximate": execution.approximate,
         "window_limit": WINDOW_LIMIT,
+        **refresh_meta,
     }
     digest = build_digest(radar.name, diff, run_meta, seen_map)
 

@@ -5,7 +5,8 @@ Radar X") y el formulario "➕ Crear radar" de Streamlit. Centraliza:
 
 - ``sanitize_for_save`` — quita campos derivados/contextuales que no replayean
   fielmente la búsqueda (sobre todo ``entidad_ecosystem``, que normal_flow
-  inyecta pero nunca aplica a los resultados, y los ``*_resolution`` de debug).
+  inyecta pero nunca aplica a los resultados, los ``*_resolution`` de debug y
+  órdenes conversacionales incompatibles con la ventana por recencia del radar).
 - ``save_radar_from_params`` — serializa el QueryFrame limpio y crea el radar.
 """
 from __future__ import annotations
@@ -27,6 +28,7 @@ if TYPE_CHECKING:
 # los resultados mostrados nunca lo aplicaron → guardarlo daría ≈0 resultados).
 RADAR_SAVE_DENY_KEYS = frozenset({
     "entidad_ecosystem",
+    "ordering_signal",
     "offset", "_display_offset", "_shown_total",
 })
 

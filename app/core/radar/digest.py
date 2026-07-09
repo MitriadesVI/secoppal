@@ -88,6 +88,19 @@ def build_digest(
             f"⚠️ Radar amplio: se revisaron los {window_limit} resultados más "
             "recientes. Puede haber novedades fuera de esta ventana."
         )
+    if run_meta.get("seen_refresh_limited"):
+        checked = int(run_meta.get("seen_refresh_checked", 0) or 0)
+        limit = int(run_meta.get("seen_refresh_limit", checked) or checked)
+        risk_flags.append(
+            f"⚠️ Radar con muchos resultados vistos: se refrescaron {checked} "
+            f"por clave en esta corrida (límite {limit})."
+        )
+    if run_meta.get("seen_refresh_errors"):
+        errors = int(run_meta.get("seen_refresh_errors", 0) or 0)
+        risk_flags.append(
+            f"⚠️ No se pudieron refrescar {errors} resultado(s) visto(s) por clave. "
+            "No se marcaron como desaparecidos."
+        )
 
     if not diff.has_novelty:
         lines.append("")
@@ -95,7 +108,7 @@ def build_digest(
         for flag in risk_flags:
             lines.append("")
             lines.append(flag)
-        return _result(lines, diff, risk_flags, atypical=[])
+        return _result(lines, diff, risk_flags, atypical=[], run_meta=run_meta)
 
     # Resumen de conteos.
     parts: list[str] = []
@@ -148,16 +161,21 @@ def build_digest(
         lines.append("")
         lines.append(flag)
 
-    return _result(lines, diff, risk_flags, atypical)
+    return _result(lines, diff, risk_flags, atypical, run_meta=run_meta)
 
 
 def _result(lines: list[str], diff: RadarDiff, risk_flags: list[str],
-            atypical: list[str]) -> dict:
+            atypical: list[str], run_meta: dict | None = None) -> dict:
+    run_meta = run_meta or {}
     return {
         "text": "\n".join(lines),
         "new_count": diff.new_count,
         "changed_count": diff.changed_count,
         "disappeared_count": len(diff.disappeared),
+        "window_churn_count": len(diff.window_churn),
+        "seen_refresh_checked": int(run_meta.get("seen_refresh_checked", 0) or 0),
+        "seen_refresh_found": int(run_meta.get("seen_refresh_found", 0) or 0),
+        "seen_refresh_limited": bool(run_meta.get("seen_refresh_limited")),
         "risk_flags": risk_flags,
         "atypical_keys": atypical,
         "has_novelty": diff.has_novelty,

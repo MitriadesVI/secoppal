@@ -186,6 +186,24 @@ def test_save_strips_ecosystem_and_resolution(env):
     assert radar.frame_dict()["topic"] == ["mantenimiento"]
 
 
+def test_save_strips_ordering_signal(env):
+    deps, store, conv = env
+    conv.append_turn(
+        chat_id="st_anon_test", user_query="procesos PAE de mayor valor",
+        response="...",
+        parsed_params={
+            "objeto": ["alimentacion_escolar"],
+            "departamento_resolved": "ATLÁNTICO",
+            "dataset": "procesos",
+            "ordering_signal": "valor_desc",
+        },
+        result_ids=[],
+    )
+    handle_radar_command(deps, _ctx("guarda esta busqueda como radar pae-reciente"))
+    radar = store.get_radar_by_name("anon:test", "pae-reciente")
+    assert "ordering_signal" not in radar.frame_dict().get("modifiers", {})
+
+
 def test_save_duplicate(env):
     deps, store, conv = env
     conv.append_turn(

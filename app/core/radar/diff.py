@@ -7,7 +7,8 @@ los reparte en:
 - ``new``            — clave nunca antes vista.
 - ``changed_state``  — misma clave, cambió el estado.
 - ``changed_value``  — misma clave, cambió el valor (pero no el estado).
-- ``disappeared``    — clave vista antes que ya no aparece en la corrida.
+- ``window_churn``   — clave vista antes que ya no aparece en la ventana actual.
+- ``disappeared``    — clave verificada explícitamente como desaparecida.
 - ``unchanged``      — misma clave, mismo snapshot.
 
 Marca además ``contractor_new`` en los resultados nuevos cuyo contratista no
@@ -42,6 +43,7 @@ class RadarDiff:
     new: list[DiffItem] = field(default_factory=list)
     changed_state: list[DiffItem] = field(default_factory=list)
     changed_value: list[DiffItem] = field(default_factory=list)
+    window_churn: list[DiffItem] = field(default_factory=list)
     disappeared: list[DiffItem] = field(default_factory=list)
     unchanged: list[DiffItem] = field(default_factory=list)
 
@@ -62,13 +64,25 @@ def classify(
     current_results: list[dict],
     seen_map: dict[str, dict],
     dataset_id: str,
+    *,
+    current_window_keys: set[str] | None = None,
+    confirmed_disappeared_keys: set[str] | None = None,
 ) -> RadarDiff:
     """Clasifica ``current_results`` (ya deduplicados) contra ``seen_map``.
 
     ``seen_map`` mapea ``result_key`` → registro guardado, que debe traer al
     menos ``snapshot_hash``, ``status``, ``value`` y ``contractor``.
+
+    ``current_results`` puede incluir filas de la ventana reciente y filas
+    refrescadas por lookup de clave. ``current_window_keys`` permite conservar
+    la señal de churn de ventana: si una clave vista no aparece en esa ventana,
+    se registra en ``window_churn`` aunque el refresh la haya encontrado.
+
+    La ausencia en la ventana no prueba desaparición en SECOP. ``disappeared``
+    solo se llena cuando el caller entrega claves verificadas explícitamente.
     """
     diff = RadarDiff()
+    confirmed_disappeared_keys = confirmed_disappeared_keys or set()
 
     # Contratistas conocidos de corridas previas (para detectar operador nuevo).
     known_contractors = {
@@ -113,25 +127,30 @@ def classify(
         else:
             diff.changed_value.append(item)
 
-    # Desaparecidos: claves vistas antes que ya no están en la corrida.
+    if current_window_keys is None:
+        current_window_keys = set(current_keys)
+
+    # Ausentes de la ventana: churn de ventana, no desaparición confirmada.
     for key, rec in seen_map.items():
-        if key in current_keys:
+        if key in current_window_keys:
             continue
-        diff.disappeared.append(
-            DiffItem(
-                key=key, row=dict(rec), fields={
-                    "title": rec.get("title", ""),
-                    "entity": rec.get("entity", ""),
-                    "value": rec.get("value", ""),
-                    "status": rec.get("status", ""),
-                    "urlproceso": rec.get("urlproceso", ""),
-                    "referencia": rec.get("referencia", ""),
-                    "contractor": rec.get("contractor", ""),
-                },
-                snapshot_hash=rec.get("snapshot_hash", ""),
-                prev_status=rec.get("status", ""),
-                prev_value=rec.get("value", ""),
-            )
+        item = DiffItem(
+            key=key, row=dict(rec), fields={
+                "title": rec.get("title", ""),
+                "entity": rec.get("entity", ""),
+                "value": rec.get("value", ""),
+                "status": rec.get("status", ""),
+                "urlproceso": rec.get("urlproceso", ""),
+                "referencia": rec.get("referencia", ""),
+                "contractor": rec.get("contractor", ""),
+            },
+            snapshot_hash=rec.get("snapshot_hash", ""),
+            prev_status=rec.get("status", ""),
+            prev_value=rec.get("value", ""),
         )
+        if key in confirmed_disappeared_keys and key not in current_keys:
+            diff.disappeared.append(item)
+        else:
+            diff.window_churn.append(item)
 
     return diff

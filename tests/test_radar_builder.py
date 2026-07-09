@@ -41,6 +41,24 @@ def test_sanitize_drops_cursor_keys():
     assert "_shown_total" not in clean
 
 
+def test_sanitize_drops_ordering_signal_for_radar_window():
+    params = {
+        "objeto": ["x"],
+        "departamento_resolved": "Cesar",
+        "estado": "Abierto",
+        "valor_min": 100,
+        "dataset": "procesos",
+        "ordering_signal": "valor_desc",
+    }
+    clean = sanitize_for_save(params)
+    assert "ordering_signal" not in clean
+    assert clean["objeto"] == ["x"]
+    assert clean["departamento_resolved"] == "Cesar"
+    assert clean["estado"] == "Abierto"
+    assert clean["valor_min"] == 100
+    assert clean["dataset"] == "procesos"
+
+
 def test_has_scope_or_topic():
     assert has_scope_or_topic({"objeto": ["x"]})
     assert has_scope_or_topic({"departamento_resolved": "Cesar"})
@@ -55,6 +73,7 @@ def test_save_builds_clean_frame(store):
         "entidad_ecosystem": ["X"],
         "dataset": "contratos",
         "valor_min": 500000000,
+        "ordering_signal": "valor_desc",
     }
     rid = save_radar_from_params(store, owner="u1", name="Cultura Cesar", params=params)
     radar = store.get_radar(rid)
@@ -63,6 +82,7 @@ def test_save_builds_clean_frame(store):
     assert radar.frame_dict()["scope"]["departamento_resolved"] == "Cesar"
     assert radar.frame_dict()["topic"] == ["cultura"]
     assert radar.frame_dict()["modifiers"]["valor_min"] == 500000000
+    assert "ordering_signal" not in radar.frame_dict()["modifiers"]
     assert radar.dataset == "contratos"
 
 

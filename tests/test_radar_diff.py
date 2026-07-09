@@ -69,12 +69,35 @@ def test_changed_value_only():
     assert not diff.changed_state
 
 
-def test_disappeared():
+def test_seen_missing_from_current_window_is_churn_not_novelty():
     old = _row("C-1")
     seen = {"C-1": _seen_from_row(old)}
     diff = classify([], seen, CONT)
+    assert not diff.disappeared
+    assert len(diff.window_churn) == 1
+    assert diff.window_churn[0].key == "C-1"
+    assert diff.has_novelty is False
+
+
+def test_refreshed_out_of_window_changed_state_keeps_churn_marker():
+    old = _row("C-1", estado="En ejecución")
+    new = _row("C-1", estado="Terminado")
+    seen = {"C-1": _seen_from_row(old)}
+    diff = classify([new], seen, CONT, current_window_keys=set())
+    assert len(diff.changed_state) == 1
+    assert len(diff.window_churn) == 1
+    assert not diff.disappeared
+    assert diff.has_novelty is True
+
+
+def test_disappeared_requires_explicit_confirmation():
+    old = _row("C-1")
+    seen = {"C-1": _seen_from_row(old)}
+    diff = classify([], seen, CONT, confirmed_disappeared_keys={"C-1"})
     assert len(diff.disappeared) == 1
     assert diff.disappeared[0].key == "C-1"
+    assert not diff.window_churn
+    assert diff.has_novelty is True
 
 
 def test_contractor_new_flagged():
