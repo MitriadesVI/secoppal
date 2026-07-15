@@ -1,20 +1,42 @@
 """Tests de app/core/radar/store.py — persistencia del Radar."""
 from __future__ import annotations
 
+import ast
+import dataclasses
+import inspect
 import json
 import sqlite3
+import textwrap
 import threading
 from datetime import datetime, timedelta, timezone
+from pathlib import Path
 
 import pytest
 
+from app.core.radar import store as store_module
 from app.core.radar.lease import (
     LEASE_ACQUIRED,
     LEASE_ALREADY_RUNNING,
     LEASE_DURATION,
     LEASE_RADAR_NOT_FOUND,
 )
-from app.core.radar.store import RadarExistsError, RadarStore
+from app.core.radar.store import (
+    PHASE_AFTER_BEGIN,
+    PHASE_AFTER_EVENT_INSERTS,
+    PHASE_AFTER_FAILURE_UPDATE,
+    PHASE_AFTER_LEASE_FENCE,
+    PHASE_AFTER_RADAR_UPDATE,
+    PHASE_AFTER_RUN_INSERT,
+    PHASE_AFTER_SEEN_UPSERTS,
+    PHASE_BEFORE_COMMIT,
+    EventRecord,
+    FailureRecord,
+    RadarExistsError,
+    RadarStore,
+    RunRecord,
+    SeenRecord,
+    new_run_id,
+)
 
 
 @pytest.fixture
@@ -624,3 +646,548 @@ def test_legacy_radar_can_record_failure_after_migration(tmp_path):
     assert count == 1
     assert radar.failure_count == 1
     assert radar.permanent_failure_streak == 0
+
+
+# ── P1B-Preflight 1 · materialización atómica de la corrida ──────────────
+#
+# El bug original: run, seen, events y estado del radar se escribían en
+# conexiones autocommit separadas. Un crash entre los upsert_seen y los
+# INSERT de eventos dejaba los resultados marcados como vistos sin haber
+# anunciado su novedad — y como la corrida siguiente ya los ve "vistos", esa
+# novedad se pierde para siempre. Estos tests verifican el estado con sqlite3
+# crudo (no con el store) para no leer una caché ni una transacción abierta.
+
+class _Boom(RuntimeError):
+    """Fallo inyectado en una fase concreta de la transacción."""
+
+
+def _hook_at(phase: str):
+    """Hook de fault injection: revienta exactamente en ``phase``."""
+    def hook(current: str) -> None:
+        if current == phase:
+            raise _Boom(f"fallo inyectado en {phase}")
+    return hook
+
+
+def _read_state(db_path, radar_id: str) -> dict:
+    """Estado real en disco, leído por fuera del store."""
+    conn = sqlite3.connect(db_path)
+    conn.row_factory = sqlite3.Row
+    try:
+        radar = conn.execute(
+            "SELECT * FROM radars WHERE id = ?", (radar_id,)
+        ).fetchone()
+        return {
+            "runs": [
+                dict(r) for r in conn.execute(
+                    "SELECT * FROM radar_runs WHERE radar_id = ?", (radar_id,)
+                )
+            ],
+            "seen": {
+                r["result_key"]: dict(r) for r in conn.execute(
+                    "SELECT * FROM radar_seen_results WHERE radar_id = ?", (radar_id,)
+                )
+            },
+            "events": [
+                dict(r) for r in conn.execute(
+                    "SELECT * FROM radar_events WHERE radar_id = ?", (radar_id,)
+                )
+            ],
+            "radar": dict(radar) if radar else None,
+        }
+    finally:
+        conn.close()
+
+
+def _run(**over) -> RunRecord:
+    base = dict(
+        id=new_run_id(), started_at="2026-07-15T00:00:00+00:00", status="ok",
+        total_count=2, new_count=1, changed_count=1, digest_json='{"text": "d"}',
+        soql="SELECT 1", params_json="{}", dataset_id="jbjy-vk9h",
+        execution_ms=10, outcome="radar_ok", reason="ok",
+    )
+    return RunRecord(**{**base, **over})
+
+
+def _seen_rec(key: str, *, status: str = "Abierto", snap: str = "h2") -> SeenRecord:
+    return SeenRecord(
+        result_key=key, dataset="procesos",
+        fields={"title": f"T-{key}", "entity": "ALCALDIA", "value": "100",
+                "status": status, "urlproceso": "u", "referencia": "R",
+                "contractor": "ACME"},
+        snapshot_hash=snap, last_snapshot_json="{}",
+    )
+
+
+def _event(*, kind: str = "new", key: str = "K-new") -> EventRecord:
+    """Sin radar_id/run_id/owner/radar_name: EventRecord no los expone."""
+    return EventRecord(
+        kind=kind, ts="2026-07-15T00:00:00+00:00", result_key=key,
+        dataset="procesos", title="T", entity="E", value="100", status="Abierto",
+    )
+
+
+@pytest.fixture
+def leased(store):
+    """Radar con un seen previo y el lease ya tomado por nosotros."""
+    rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+    store.upsert_seen(
+        radar_id=rid, result_key="K-old", dataset="procesos",
+        fields={"status": "Abierto", "value": "100"}, snapshot_hash="h1",
+        run_id="run-seed", seen_at="2026-01-01T00:00:00+00:00",
+    )
+    claim = store.try_acquire_run_lease(rid)
+    assert claim.acquired
+    return rid, claim.token
+
+
+def _materialize_success(store, rid, token, *, hook=None, now=None):
+    run = _run()
+    return store.materialize_successful_run(
+        radar_id=rid, token=token, run=run,
+        seen=[_seen_rec("K-old", status="Adjudicado"), _seen_rec("K-new")],
+        events=[_event(kind="changed_state", key="K-old"),
+                _event(kind="new", key="K-new")],
+        now=now, _fault_hook=hook,
+    )
+
+
+# 1 · éxito feliz
+
+def test_materialize_success_persists_run_seen_events_and_state(store, leased):
+    rid, token = leased
+    store.record_failure(rid, reason="socrata_timeout", message="previo")
+
+    result = _materialize_success(store, rid, token)
+
+    assert result.lease_lost is False
+    assert result.run_id
+    state = _read_state(store.db_path, rid)
+    assert len(state["runs"]) == 1
+    assert state["runs"][0]["outcome"] == "radar_ok"
+    assert set(state["seen"]) == {"K-old", "K-new"}
+    assert state["seen"]["K-old"]["status"] == "Adjudicado"
+    assert state["seen"]["K-old"]["first_seen_at"] == "2026-01-01T00:00:00+00:00"
+    assert {e["kind"] for e in state["events"]} == {"changed_state", "new"}
+    # estado limpio
+    assert state["radar"]["last_run_at"]
+    assert state["radar"]["failure_count"] == 0
+    assert state["radar"]["permanent_failure_streak"] == 0
+    assert state["radar"]["last_error_message"] is None
+    assert state["radar"]["next_run_after"] is None
+    # el lease sigue siendo nuestro hasta que el caller lo libere
+    assert state["radar"]["run_lease_token"] == token
+
+
+def test_materialize_success_extends_lease_window(store, leased):
+    """El fence no solo valida: extiende la ventana para la fase de escritura.
+
+    ``renew_at`` se deriva del ``run_lease_acquired_at`` real (no de un reloj
+    fijo ajeno a cuándo se tomó el lease), así el test es autoconsistente sin
+    importar cuándo corre de verdad.
+    """
+    rid, token = leased
+    radar_before = store.get_radar(rid)
+    before = radar_before.run_lease_expires_at
+    acquired_at = datetime.fromisoformat(radar_before.run_lease_acquired_at)
+    renew_at = acquired_at + timedelta(seconds=60)
+
+    _materialize_success(store, rid, token, now=renew_at)
+
+    after = store.get_radar(rid).run_lease_expires_at
+    assert after > before
+    assert after == (renew_at + LEASE_DURATION).isoformat()
+
+
+def test_materialize_success_clears_needs_attention_characterization(store, leased):
+    """Caracterización: hoy una corrida OK limpia needs_attention.
+
+    Preflight 3 cambiará esto (una corrida OK no debería borrar la necesidad
+    de revisión humana). El test congela la semántica actual para que ese
+    cambio sea deliberado y visible, no un efecto colateral de este refactor.
+    """
+    rid, token = leased
+    for _ in range(3):
+        store.record_failure(rid, reason="guard_no_scope_or_topic",
+                             message="p", permanent=True)
+    assert store.get_radar(rid).needs_attention == 1
+    store.set_enabled(rid, True)
+    claim = store.try_acquire_run_lease(rid)  # re-tomar: record_failure no toca lease
+    token = claim.token if claim.acquired else token
+
+    _materialize_success(store, rid, token)
+
+    radar = store.get_radar(rid)
+    assert radar.needs_attention == 0        # semántica actual, cambia en Preflight 3
+    assert radar.is_enabled                  # no se toca enabled aquí
+
+
+# ── identidad de eventos: derivada de la transacción, no del caller ───────
+#
+# materialize_successful_run valida el lease de radar_id, pero antes del fix
+# insertaba eventos confiando en radar_id/run_id/owner/radar_name aportados
+# dentro de cada dict — una llamada autorizada sobre A podía declarar un
+# evento como perteneciente a B. Ahora EventRecord no expone esos campos: la
+# operación los deriva del lease ya renovado y de la fila de radars leída
+# justo después del fence.
+
+def test_event_record_does_not_expose_identity_fields():
+    """EventRecord no puede llevar radar_id/run_id/owner/radar_name."""
+    fields = {f.name for f in dataclasses.fields(EventRecord)}
+    assert not fields & {"radar_id", "run_id", "owner", "radar_name"}
+
+
+def test_materialized_events_carry_the_real_identity_of_radar_a(store, leased):
+    """Los eventos insertados llevan radar_id/run_id/owner/radar_name reales."""
+    rid, token = leased
+    radar_a = store.get_radar(rid)
+
+    result = _materialize_success(store, rid, token)
+
+    state = _read_state(store.db_path, rid)
+    assert state["events"]
+    for ev in state["events"]:
+        assert ev["radar_id"] == radar_a.id
+        assert ev["run_id"] == result.run_id
+        assert ev["owner"] == radar_a.owner
+        assert ev["radar_name"] == radar_a.name
+
+
+def test_event_identity_cannot_be_forged_via_the_record(store, leased):
+    """EventRecord no tiene dónde poner una identidad ajena — ni por error.
+
+    Antes del fix, un dict de evento con ``radar_id``/``owner`` propios de otro
+    radar se insertaba tal cual. Ahora ni siquiera es representable: construir
+    un EventRecord con esos kwargs falla en el constructor, y lo que sí se
+    persiste ignora cualquier campo que no sea parte del dataclass.
+    """
+    rid, token = leased
+    radar_a = store.get_radar(rid)
+    other = store.create_radar(name="B", owner="u-ajeno", query_frame_json=_frame_json())
+
+    with pytest.raises(TypeError):
+        EventRecord(kind="new", result_key="K-forged", radar_id=other,
+                   owner="u-ajeno", radar_name="B", run_id="run-ajeno")
+
+    # y la vía real (constructor válido) igual termina con la identidad de A.
+    result = _materialize_success(store, rid, token)
+    state = _read_state(store.db_path, rid)
+    assert all(ev["radar_id"] == radar_a.id for ev in state["events"])
+    assert all(ev["owner"] == radar_a.owner for ev in state["events"])
+    assert store.get_seen(other) == {}          # el radar B, intacto
+
+
+# 2-5 · rollback total en cada fase
+
+@pytest.mark.parametrize("phase", [
+    PHASE_AFTER_BEGIN,
+    PHASE_AFTER_LEASE_FENCE,
+    PHASE_AFTER_RUN_INSERT,
+    PHASE_AFTER_SEEN_UPSERTS,
+    PHASE_AFTER_EVENT_INSERTS,
+    PHASE_AFTER_RADAR_UPDATE,
+    PHASE_BEFORE_COMMIT,
+])
+def test_exception_in_any_phase_rolls_back_everything(store, leased, phase):
+    rid, token = leased
+    before = _read_state(store.db_path, rid)
+
+    with pytest.raises(_Boom):
+        _materialize_success(store, rid, token, hook=_hook_at(phase))
+
+    after = _read_state(store.db_path, rid)
+    assert after["runs"] == []
+    assert after["events"] == []
+    assert after["seen"] == before["seen"]
+    assert after["radar"] == before["radar"]
+
+
+def test_exception_after_seen_upserts_does_not_lose_novelty(store, leased):
+    """El bug original, aislado: seen no puede adelantarse a los eventos.
+
+    Si el upsert de K-old (Abierto → Adjudicado) sobreviviera al crash sin su
+    evento, la corrida siguiente vería el snapshot ya actualizado, no
+    detectaría cambio, y el cambio de estado no se anunciaría nunca.
+    """
+    rid, token = leased
+
+    with pytest.raises(_Boom):
+        _materialize_success(store, rid, token, hook=_hook_at(PHASE_AFTER_SEEN_UPSERTS))
+
+    state = _read_state(store.db_path, rid)
+    assert set(state["seen"]) == {"K-old"}                  # K-new no entró
+    assert state["seen"]["K-old"]["snapshot_hash"] == "h1"  # seen NO se adelantó
+    assert state["seen"]["K-old"]["status"] == "Abierto"
+    assert state["events"] == []                            # ningún evento perdido
+    assert state["runs"] == []                              # sin run parcial
+
+
+def test_autocommit_mutation_proves_the_test_would_catch_the_bug(store, leased):
+    """Mutación: con las llamadas autocommit separadas, el estado sí se parte.
+
+    Reproduce la secuencia anterior al refactor (record_run + upsert_seen y
+    luego un fallo antes de los eventos) para demostrar que el test de arriba
+    no pasa por vacuidad: detecta exactamente la diferencia entre escribir por
+    separado y escribir en una transacción.
+    """
+    rid, _token = leased
+
+    store.record_run(radar_id=rid, started_at="t", status="ok", outcome="radar_ok")
+    store.upsert_seen(
+        radar_id=rid, result_key="K-old", dataset="procesos",
+        fields={"status": "Adjudicado", "value": "100"}, snapshot_hash="h2",
+        run_id="run-x",
+    )
+    # aquí caía el proceso, antes de record_events
+
+    state = _read_state(store.db_path, rid)
+    assert len(state["runs"]) == 1                          # run huérfano persistido
+    assert state["seen"]["K-old"]["snapshot_hash"] == "h2"  # seen adelantado
+    assert state["events"] == []                            # y la novedad, perdida
+
+
+# 6 · crash después del COMMIT
+
+def test_crash_after_commit_leaves_complete_state(store, leased):
+    """El caller muere justo después de materializar: nada queda a medias."""
+    rid, token = leased
+
+    result = _materialize_success(store, rid, token)
+    with pytest.raises(_Boom):
+        raise _Boom("el proceso muere después del commit")
+
+    state = _read_state(store.db_path, rid)
+    assert len(state["runs"]) == 1
+    assert state["runs"][0]["id"] == result.run_id
+    assert set(state["seen"]) == {"K-old", "K-new"}
+    assert len(state["events"]) == 2
+    assert state["radar"]["last_run_at"]
+
+
+# 7-8 · fencing del lease dentro de la transacción
+
+def test_stolen_lease_before_materialize_writes_nothing(store, leased):
+    """B se queda con el radar mientras A tenía datos en la mano."""
+    rid, token = leased
+    before = _read_state(store.db_path, rid)
+    expired = datetime.now(timezone.utc) + LEASE_DURATION + timedelta(seconds=1)
+    b = store.try_acquire_run_lease(rid, now=expired)
+    assert b.acquired
+
+    result = _materialize_success(store, rid, token)
+
+    assert result.lease_lost is True
+    assert result.run_id is None
+    after = _read_state(store.db_path, rid)
+    assert after["runs"] == []
+    assert after["events"] == []
+    assert after["seen"] == before["seen"]
+    assert after["radar"]["failure_count"] == before["radar"]["failure_count"]
+    assert after["radar"]["last_run_at"] == before["radar"]["last_run_at"]
+    assert after["radar"]["run_lease_token"] == b.token   # el token de B, intacto
+    # y A tampoco le corrió la ventana a B
+    assert after["radar"]["run_lease_expires_at"] == (expired + LEASE_DURATION).isoformat()
+
+
+def test_expired_owner_without_successor_cannot_materialize(store, leased):
+    """Sin sucesor, el dueño vencido tampoco escribe: no se auto-renueva."""
+    rid, token = leased
+    before = _read_state(store.db_path, rid)
+    too_late = datetime.now(timezone.utc) + LEASE_DURATION + timedelta(seconds=1)
+
+    result = _materialize_success(store, rid, token, now=too_late)
+
+    assert result.lease_lost is True
+    after = _read_state(store.db_path, rid)
+    assert after["runs"] == []
+    assert after["events"] == []
+    assert after["seen"] == before["seen"]
+    assert after["radar"] == before["radar"]   # ni siquiera se extendió el lease
+
+
+# 9 · dos materializadores concurrentes
+
+def test_two_concurrent_materializers_only_owner_writes(tmp_path):
+    """Conexiones distintas, arranque sincronizado por Barrier: un solo ganador."""
+    db_path = tmp_path / "materialize_race.db"
+    seed = RadarStore(db_path)
+    rid = seed.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+    owner = seed.try_acquire_run_lease(rid)
+    assert owner.acquired
+
+    barrier = threading.Barrier(2)
+    results: dict = {}
+    lock = threading.Lock()
+
+    def materialize(label: str, token: str) -> None:
+        store = RadarStore(db_path)          # su propia conexión
+        run = _run()
+        barrier.wait()
+        res = store.materialize_successful_run(
+            radar_id=rid, token=token, run=run, seen=[_seen_rec(f"K-{label}")],
+            events=[_event(key=f"K-{label}")],
+        )
+        with lock:
+            results[label] = res
+
+    threads = [
+        threading.Thread(target=materialize, args=("owner", owner.token)),
+        threading.Thread(target=materialize, args=("stale", "token-vencido")),
+    ]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join(timeout=60)
+
+    assert results["owner"].lease_lost is False
+    assert results["stale"].lease_lost is True
+    state = _read_state(db_path, rid)
+    assert len(state["runs"]) == 1                     # una sola corrida
+    assert set(state["seen"]) == {"K-owner"}           # sin escrituras del perdedor
+    assert [e["result_key"] for e in state["events"]] == ["K-owner"]
+
+
+# 10-11 · materialización de fallo
+
+def _materialize_failure(store, rid, token, *, permanent: bool, hook=None, now=None):
+    run = _run(status="error", outcome="radar_timeout", reason="socrata_timeout",
+               error="timeout", total_count=0, new_count=0, changed_count=0)
+    return store.materialize_failed_run(
+        radar_id=rid, token=token, run=run,
+        failure=FailureRecord(
+            reason="socrata_timeout" if not permanent else "guard_no_scope_or_topic",
+            message="boom", next_run_after="2999-01-01T00:00:00+00:00",
+            permanent=permanent, pause_after=3,
+        ),
+        now=now, _fault_hook=hook,
+    )
+
+
+def test_materialize_failure_persists_run_and_backoff_together(store, leased):
+    rid, token = leased
+
+    result = _materialize_failure(store, rid, token, permanent=False)
+
+    assert result.lease_lost is False
+    state = _read_state(store.db_path, rid)
+    assert len(state["runs"]) == 1
+    assert state["runs"][0]["outcome"] == "radar_timeout"
+    assert state["radar"]["failure_count"] == 1
+    assert state["radar"]["permanent_failure_streak"] == 0
+    assert state["radar"]["last_failure_reason"] == "socrata_timeout"
+    assert state["radar"]["next_run_after"] == "2999-01-01T00:00:00+00:00"
+    assert state["radar"]["enabled"] == 1
+
+
+@pytest.mark.parametrize("phase", [
+    PHASE_AFTER_BEGIN,
+    PHASE_AFTER_LEASE_FENCE,
+    PHASE_AFTER_RUN_INSERT,
+    PHASE_AFTER_FAILURE_UPDATE,
+    PHASE_BEFORE_COMMIT,
+])
+def test_exception_in_failure_phase_rolls_back_run_and_counters(store, leased, phase):
+    """Ni la corrida ni el backoff quedan sin el otro."""
+    rid, token = leased
+    before = _read_state(store.db_path, rid)
+
+    with pytest.raises(_Boom):
+        _materialize_failure(store, rid, token, permanent=False, hook=_hook_at(phase))
+
+    after = _read_state(store.db_path, rid)
+    assert after["runs"] == []
+    assert after["radar"] == before["radar"]   # sin contador, sin backoff
+
+
+def test_permanent_failure_run_and_streak_are_written_together(store, leased):
+    rid, token = leased
+    for _ in range(2):
+        store.record_failure(rid, reason="guard_no_scope_or_topic",
+                             message="p", permanent=True)
+    assert store.get_radar(rid).permanent_failure_streak == 2
+
+    result = _materialize_failure(store, rid, token, permanent=True)
+
+    assert result.lease_lost is False
+    state = _read_state(store.db_path, rid)
+    assert len(state["runs"]) == 1                          # el 3er run existe…
+    assert state["radar"]["permanent_failure_streak"] == 3  # …junto a su racha
+    assert state["radar"]["needs_attention"] == 1
+    assert state["radar"]["enabled"] == 0                   # pausa de P0D.1 intacta
+
+
+def test_permanent_failure_rollback_leaves_streak_untouched(store, leased):
+    rid, token = leased
+    for _ in range(2):
+        store.record_failure(rid, reason="guard_no_scope_or_topic",
+                             message="p", permanent=True)
+
+    with pytest.raises(_Boom):
+        _materialize_failure(store, rid, token, permanent=True,
+                             hook=_hook_at(PHASE_BEFORE_COMMIT))
+
+    state = _read_state(store.db_path, rid)
+    assert state["runs"] == []
+    assert state["radar"]["permanent_failure_streak"] == 2  # no avanzó a 3
+    assert state["radar"]["needs_attention"] == 0
+    assert state["radar"]["enabled"] == 1
+
+
+def test_stolen_lease_on_failure_path_writes_nothing(store, leased):
+    rid, token = leased
+    before = _read_state(store.db_path, rid)
+    expired = datetime.now(timezone.utc) + LEASE_DURATION + timedelta(seconds=1)
+    b = store.try_acquire_run_lease(rid, now=expired)
+
+    result = _materialize_failure(store, rid, token, permanent=True)
+
+    assert result.lease_lost is True
+    after = _read_state(store.db_path, rid)
+    assert after["runs"] == []
+    assert after["radar"]["failure_count"] == before["radar"]["failure_count"]
+    assert after["radar"]["permanent_failure_streak"] == 0
+    assert after["radar"]["next_run_after"] is None
+    assert after["radar"]["run_lease_token"] == b.token
+
+
+# 14 · la materialización no puede hacer red
+
+@pytest.mark.parametrize("name", ["materialize_successful_run", "materialize_failed_run"])
+def test_materializers_take_no_network_dependencies(name):
+    """Estructural: la transacción no puede recibir ni alcanzar la red.
+
+    Si un materializador aceptara deps/secop_client, alguien podría hacer un
+    lookup con la transacción abierta y sostener el lock de escritura de
+    SQLite durante un timeout de Socrata.
+    """
+    method = getattr(RadarStore, name)
+    params = set(inspect.signature(method).parameters)
+    assert not params & {"deps", "secop_client", "client", "http", "session"}
+
+    tree = ast.parse(textwrap.dedent(inspect.getsource(method)))
+    called = {
+        node.func.id for node in ast.walk(tree)
+        if isinstance(node, ast.Call) and isinstance(node.func, ast.Name)
+    } | {
+        node.func.attr for node in ast.walk(tree)
+        if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)
+    }
+    assert "fetch_current_rows_by_keys" not in called
+    assert not called & {"query", "count", "get", "post", "sleep", "request"}
+    assert not any(isinstance(n, (ast.Await, ast.AsyncFor)) for n in ast.walk(tree))
+
+
+def test_store_module_imports_no_http_client():
+    """El store no conoce la red: ni cliente Socrata, ni HTTP, ni el runner."""
+    tree = ast.parse(Path(store_module.__file__).read_text(encoding="utf-8"))
+    imported: set[str] = set()
+    for node in ast.walk(tree):
+        if isinstance(node, ast.Import):
+            imported |= {a.name.split(".")[0] for a in node.names}
+        elif isinstance(node, ast.ImportFrom) and node.module:
+            imported.add(node.module.split(".")[0])
+            imported.add(node.module)
+    forbidden = {"requests", "httpx", "urllib", "http", "aiohttp", "socket", "asyncio"}
+    assert not imported & forbidden
+    assert "app.core.radar.follows" not in imported
+    assert "app.core.radar.runner" not in imported

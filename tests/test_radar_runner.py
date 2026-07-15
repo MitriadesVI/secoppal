@@ -5,8 +5,11 @@ Cubre el ciclo del MVP: 1ª corrida = todo nuevo; 2ª = 0 novedades;
 """
 from __future__ import annotations
 
+import ast
 import dataclasses
+import inspect
 import json
+import textwrap
 from datetime import datetime, timedelta, timezone
 from types import SimpleNamespace
 
@@ -16,6 +19,7 @@ from app.core.formatter import Formatter
 from app.core.query_frame import frame_from_params
 from app.core.radar import runner as runner_module
 from app.core.radar import scheduler
+from app.core.radar.diff import classify
 from app.core.radar.lease import LEASE_DURATION
 from app.core.radar.runner import (
     MAX_SEEN_REFRESH,
@@ -973,3 +977,204 @@ def test_scheduler_and_manual_share_the_same_claim(store):
     assert scheduler_client.reentrant_result.outcome == RADAR_ALREADY_RUNNING
     assert manual_client.queries == []             # el manual no tocó SECOP
     assert len(store.get_runs(radar.id)) == 1
+
+
+# ── P1B-Preflight 1 · la corrida se materializa entera o no se materializa ──
+
+class _Boom(RuntimeError):
+    """Fallo inyectado dentro de la transacción de materialización."""
+
+
+def _fail_at(store, method: str, phase: str, monkeypatch):
+    """Hace reventar la materialización en ``phase``, con el store real."""
+    original = getattr(store, method)
+
+    def hook(current: str) -> None:
+        if current == phase:
+            raise _Boom(f"crash en {phase}")
+
+    def patched(**kwargs):
+        return original(**kwargs, _fault_hook=hook)
+
+    monkeypatch.setattr(store, method, patched)
+
+
+def _all_state(store, radar):
+    return (
+        len(store.get_runs(radar.id)),
+        store.get_seen(radar.id),
+        store.get_feed(radar.owner),
+        dataclasses.asdict(store.get_radar(radar.id)),
+    )
+
+
+@pytest.mark.parametrize("phase", [
+    "after_run_insert", "after_seen_upserts", "after_event_inserts",
+    "after_radar_update", "before_commit",
+])
+def test_crash_while_materializing_run_leaves_no_trace(store, monkeypatch, phase):
+    """Una corrida real que revienta a mitad de la escritura no deja nada."""
+    radar = _make_radar(store)
+    client = FakeClient([_proc("P-1", estado="Abierto")])
+    run_radar(_deps(client), store, radar)          # baseline sólido
+    before = _all_state(store, radar)
+
+    client.rows = [_proc("P-1", estado="Adjudicado"), _proc("P-2")]
+    _fail_at(store, "materialize_successful_run", phase, monkeypatch)
+    with pytest.raises(_Boom):
+        run_radar(_deps(client), store, store.get_radar(radar.id))
+
+    assert _all_state(store, radar) == before
+    # y el lease quedó libre: el finally sigue haciendo su trabajo
+    assert store.get_radar(radar.id).run_lease_token is None
+
+
+def test_crash_after_seen_does_not_swallow_the_novelty(store, monkeypatch):
+    """El bug original visto desde el runner: la novedad sobrevive al crash.
+
+    Tras el rollback, la corrida siguiente vuelve a ver P-1 como cambio de
+    estado y lo anuncia. Con escrituras autocommit separadas, el seen habría
+    quedado en 'Adjudicado' y ese cambio no se habría anunciado nunca.
+    """
+    radar = _make_radar(store)
+    client = FakeClient([_proc("P-1", estado="Abierto")])
+    run_radar(_deps(client), store, radar)
+
+    client.rows = [_proc("P-1", estado="Adjudicado")]
+    _fail_at(store, "materialize_successful_run", "after_seen_upserts", monkeypatch)
+    with pytest.raises(_Boom):
+        run_radar(_deps(client), store, store.get_radar(radar.id))
+
+    assert store.get_seen(radar.id)["P-1"]["status"] == "Abierto"   # no se adelantó
+    monkeypatch.undo()
+
+    res = run_radar(_deps(client), store, store.get_radar(radar.id))
+
+    assert len(res.diff.changed_state) == 1                         # se vuelve a ver
+    assert res.diff.changed_state[0].key == "P-1"
+    changed = [e for e in store.get_feed(radar.owner) if e["kind"] == "changed_state"]
+    assert len(changed) == 1                                        # y se anuncia
+
+
+@pytest.mark.parametrize("phase", ["after_run_insert", "after_failure_update",
+                                   "before_commit"])
+def test_crash_while_materializing_failure_leaves_no_trace(store, monkeypatch, phase):
+    """Ni la corrida fallida ni su backoff sobreviven por separado."""
+    radar = _make_radar(store)
+    client = FakeClient([], query_error=TimeoutError("timed out"))
+    _fail_at(store, "materialize_failed_run", phase, monkeypatch)
+
+    with pytest.raises(_Boom):
+        run_radar(_deps(client), store, radar)
+
+    stored = store.get_radar(radar.id)
+    assert store.get_runs(radar.id) == []
+    assert stored.failure_count == 0
+    assert stored.last_failure_reason is None
+    assert stored.next_run_after is None
+    assert stored.run_lease_token is None
+
+
+def test_successful_run_is_materialized_in_one_transaction(store):
+    """Run, seen, eventos y estado quedan consistentes entre sí."""
+    radar = _make_radar(store)
+    client = FakeClient([_proc("P-1")])
+    run_radar(_deps(client), store, radar)                # baseline
+    client.rows = [_proc("P-1"), _proc("P-2")]
+
+    res = run_radar(_deps(client), store, store.get_radar(radar.id))
+
+    runs = store.get_runs(radar.id)
+    assert len(runs) == 2
+    seen = store.get_seen(radar.id)
+    assert set(seen) == {"P-1", "P-2"}
+    # el run_id del evento y el del seen nuevo son el de esta misma corrida
+    new_events = [e for e in store.get_feed(radar.owner) if e["kind"] == "new"]
+    assert [e["run_id"] for e in new_events] == [res.run_id]
+    assert seen["P-2"]["first_run_id"] == res.run_id
+    assert store.get_radar(radar.id).last_run_at
+
+
+def test_all_network_finishes_before_the_transaction_opens(store):
+    """Ninguna consulta a SECOP ocurre con la transacción abierta.
+
+    Si quedara red dentro, un timeout de Socrata sostendría el lock de
+    escritura de SQLite y bloquearía a todos los demás radares.
+    """
+    radar = _make_radar(store)
+    run_radar(_deps(FakeClient([_proc("P-1")])), store, radar)   # baseline + seen
+
+    client = FakeClient([_proc("P-2")], lookup_rows=[_proc("P-1", estado="Adjudicado")])
+    original = store.materialize_successful_run
+    seen_at_materialize: dict = {}
+
+    def spy(**kwargs):
+        seen_at_materialize["queries"] = len(client.queries)
+        return original(**kwargs)
+
+    store.materialize_successful_run = spy
+    run_radar(_deps(client), store, store.get_radar(radar.id))
+
+    assert client.queries                                     # hubo red…
+    assert seen_at_materialize["queries"] == len(client.queries)  # …toda antes
+
+
+def test_build_events_is_pure(store):
+    """La construcción de eventos no toca el store, radar ni run_id.
+
+    No recibe ``radar`` ni ``run_id``: los EventRecord que produce no llevan
+    identidad de radar/corrida/dueño, así que este caller no tiene ni cómo
+    aportarla — la deriva únicamente la transacción de materialización.
+    """
+    params = set(inspect.signature(runner_module._build_events).parameters)
+    assert not params & {"store", "conn", "deps", "secop_client", "radar", "run_id"}
+
+    tree = ast.parse(textwrap.dedent(inspect.getsource(runner_module._build_events)))
+    called = {
+        node.func.attr for node in ast.walk(tree)
+        if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)
+    }
+    assert not called & {"record_events", "record_run", "upsert_seen", "execute"}
+
+    # y de hecho devuelve los eventos en vez de escribirlos
+    radar = _make_radar(store)
+    events = runner_module._build_events(
+        "procesos", classify([], {}, "jbjy-vk9h"), [], 0, is_first_run=True,
+    )
+    assert [e.kind for e in events] == ["baseline"]
+    assert store.get_feed(radar.owner) == []          # nada persistido
+
+
+@pytest.mark.parametrize("state", ["already_running", "lease_lost", "not_found"])
+def test_control_states_persist_nothing(store, state):
+    """Los estados de control no son corridas: no dejan rastro alguno."""
+    radar = _make_radar(store)
+    run_radar(_deps(FakeClient([_proc("P-1")])), store, radar)   # baseline real
+    before = _all_state(store, radar)
+
+    if state == "already_running":
+        _acquire_foreign_lease(store, radar.id)
+        res = run_radar(_deps(FakeClient([_proc("P-2")])), store, radar)
+        expected = RADAR_ALREADY_RUNNING
+    elif state == "lease_lost":
+        def steal():
+            expired = datetime.now(timezone.utc) + LEASE_DURATION + timedelta(seconds=1)
+            return store.try_acquire_run_lease(radar.id, now=expired)
+        client = ReentrantClient([_proc("P-1"), _proc("P-2")], on_first_query=steal)
+        res = run_radar(_deps(client), store, radar)
+        expected = RADAR_LEASE_LOST
+    else:
+        store.delete_radar(radar.id)
+        res = run_radar(_deps(FakeClient([_proc("P-2")])), store, radar)
+        expected = RADAR_NOT_FOUND
+
+    assert res.outcome == expected
+    assert res.run_id == ""
+    if state == "not_found":
+        assert store.get_radar(radar.id) is None     # el borrado no resucita nada
+        return
+    runs, seen, feed, radar_state = _all_state(store, radar)
+    assert (runs, seen, feed) == before[:3]
+    for field_name in ("failure_count", "permanent_failure_streak", "next_run_after",
+                       "last_run_at", "needs_attention", "enabled"):
+        assert radar_state[field_name] == before[3][field_name]

@@ -24,7 +24,15 @@ from app.core.radar.diff import RadarDiff, classify
 from app.core.radar.digest import build_digest
 from app.core.radar.follows import fetch_current_rows_by_keys
 from app.core.radar.keys import radar_result_key
-from app.core.radar.store import Radar, RadarStore
+from app.core.radar.store import (
+    EventRecord,
+    FailureRecord,
+    Radar,
+    RadarStore,
+    RunRecord,
+    SeenRecord,
+    new_run_id,
+)
 from app.core.soql_builder import SoQLBuilder
 from app.core.workflow.helpers import _is_timeout_exception, _query_first_then_count
 
@@ -67,7 +75,7 @@ logger = logging.getLogger(__name__)
 class RadarRunResult:
     run_id: str
     radar_id: str
-    status: str  # "ok" | "error"
+    status: str  # "ok" | "error" | "skipped" | "not_found"
     diff: RadarDiff | None
     digest: dict
     total: int
@@ -318,49 +326,51 @@ def _refresh_seen_rows(
     return rows, meta
 
 
-def _emit_events(store, radar, run_id, dataset_name, diff, deduped, total,
-                 is_first_run) -> None:
-    """Construye y persiste los eventos del feed para esta corrida."""
+def _build_events(dataset_name, diff, deduped, total, is_first_run) -> list[EventRecord]:
+    """Construye los eventos del feed de esta corrida. Función pura.
+
+    No recibe store, conexión, radar ni run_id: ``EventRecord`` no lleva
+    identidad de radar/corrida/dueño a propósito (la deriva la transacción de
+    materialización, no este caller). Aporta solo lo propio del movimiento.
+    Se ejecuta antes de abrir la transacción, para que dentro de ella solo
+    queden escrituras.
+    """
     ts = _now()
-    base = {
-        "radar_id": radar.id, "owner": radar.owner, "radar_name": radar.name,
-        "run_id": run_id, "ts": ts, "dataset": dataset_name,
-    }
-    events: list[dict] = []
+    events: list[EventRecord] = []
     if is_first_run:
-        events.append({
-            **base, "kind": "baseline",
-            "title": f"Empezó a vigilar · {len(deduped)} resultados en seguimiento",
-            "value": str(total),
-        })
+        events.append(EventRecord(
+            kind="baseline", ts=ts, dataset=dataset_name,
+            title=f"Empezó a vigilar · {len(deduped)} resultados en seguimiento",
+            value=str(total),
+        ))
     else:
         for it in diff.new:
-            events.append({**base, "kind": "new", "result_key": it.key,
-                           "title": it.fields.get("title"),
-                           "entity": it.fields.get("entity"),
-                           "value": it.fields.get("value"),
-                           "status": it.fields.get("status"),
-                           "urlproceso": it.fields.get("urlproceso"),
-                           "referencia": it.fields.get("referencia")})
+            events.append(EventRecord(
+                kind="new", ts=ts, dataset=dataset_name, result_key=it.key,
+                title=it.fields.get("title"), entity=it.fields.get("entity"),
+                value=it.fields.get("value"), status=it.fields.get("status"),
+                urlproceso=it.fields.get("urlproceso"),
+                referencia=it.fields.get("referencia"),
+            ))
         for it in diff.changed_state:
-            events.append({**base, "kind": "changed_state", "result_key": it.key,
-                           "title": it.fields.get("title"),
-                           "entity": it.fields.get("entity"),
-                           "value": it.fields.get("value"),
-                           "status": it.fields.get("status"),
-                           "prev_status": it.prev_status,
-                           "urlproceso": it.fields.get("urlproceso"),
-                           "referencia": it.fields.get("referencia")})
+            events.append(EventRecord(
+                kind="changed_state", ts=ts, dataset=dataset_name, result_key=it.key,
+                title=it.fields.get("title"), entity=it.fields.get("entity"),
+                value=it.fields.get("value"), status=it.fields.get("status"),
+                prev_status=it.prev_status,
+                urlproceso=it.fields.get("urlproceso"),
+                referencia=it.fields.get("referencia"),
+            ))
         for it in diff.changed_value:
-            events.append({**base, "kind": "changed_value", "result_key": it.key,
-                           "title": it.fields.get("title"),
-                           "entity": it.fields.get("entity"),
-                           "value": it.fields.get("value"),
-                           "status": it.fields.get("status"),
-                           "prev_value": it.prev_value,
-                           "urlproceso": it.fields.get("urlproceso"),
-                           "referencia": it.fields.get("referencia")})
-    store.record_events(events)
+            events.append(EventRecord(
+                kind="changed_value", ts=ts, dataset=dataset_name, result_key=it.key,
+                title=it.fields.get("title"), entity=it.fields.get("entity"),
+                value=it.fields.get("value"), status=it.fields.get("status"),
+                prev_value=it.prev_value,
+                urlproceso=it.fields.get("urlproceso"),
+                referencia=it.fields.get("referencia"),
+            ))
+    return events
 
 
 def _lease_lost_result(radar: Radar) -> RadarRunResult:
@@ -393,6 +403,46 @@ def _not_found_result(radar: Radar) -> RadarRunResult:
     return _control_result(
         radar, status=STATUS_NOT_FOUND, outcome=RADAR_NOT_FOUND, reason=RADAR_NOT_FOUND,
         message="El radar ya no existe.",
+    )
+
+
+def _materialize_failure(
+    store: RadarStore,
+    radar: Radar,
+    token: str,
+    failure: _RadarFailure,
+    *,
+    started_at: str,
+    execution_ms: int,
+    params_json: str | None,
+) -> RadarRunResult:
+    """Registra un fallo real: corrida y backoff en una sola transacción.
+
+    Un run sin su backoff (o al revés) deja el radar mintiendo sobre su propio
+    estado, así que ambos comparten transacción y fence de lease.
+    """
+    digest = _error_digest(radar.name, failure.message, failure.outcome, failure.reason)
+    run = RunRecord(
+        id=new_run_id(), started_at=started_at, status="error",
+        error=failure.message, digest_json=json.dumps(digest, ensure_ascii=False),
+        params_json=params_json, execution_ms=execution_ms,
+        outcome=failure.outcome, reason=failure.reason,
+    )
+    materialized = store.materialize_failed_run(
+        radar_id=radar.id, token=token, run=run,
+        failure=FailureRecord(
+            reason=failure.reason, message=failure.message,
+            next_run_after=failure.next_run_after, permanent=failure.permanent,
+            pause_after=PERMANENT_FAILURE_PAUSE_THRESHOLD,
+        ),
+    )
+    if materialized.lease_lost:
+        return _lease_lost_result(radar)
+    return RadarRunResult(
+        run_id=run.id, radar_id=radar.id, status="error", diff=None,
+        digest=digest, total=0, execution_ms=execution_ms,
+        outcome=failure.outcome, reason=failure.reason,
+        message=failure.message, error=failure.message,
     )
 
 
@@ -430,16 +480,6 @@ def run_radar(
         store.release_run_lease(radar.id, claim.token)
 
 
-def _still_owner(store: RadarStore, radar_id: str, token: str) -> bool:
-    """Revalida el lease antes de persistir.
-
-    Entre la adquisición y este punto hubo red: el lease pudo vencer y otro
-    ejecutor pudo tomarlo. Renovar solo funciona si seguimos siendo dueños, y
-    de paso extiende la ventana para la fase de escritura.
-    """
-    return store.renew_run_lease(radar_id, token)
-
-
 def _run_radar_locked(
     deps: "WorkflowDeps",
     store: RadarStore,
@@ -450,31 +490,10 @@ def _run_radar_locked(
     started_at = _now()
     frame_failure = _validate_frame_json(radar)
     if frame_failure is not None:
-        # No hay red aquí, pero la validación es responsabilidad de un
-        # llamador (posible monkeypatch/futura extensión) y el mismo
-        # invariante aplica: nada se persiste sin revalidar el lease primero.
-        if not _still_owner(store, radar.id, token):
-            return _lease_lost_result(radar)
-        execution_ms = 0
-        digest = _error_digest(
-            radar.name, frame_failure.message, frame_failure.outcome, frame_failure.reason
-        )
-        run_id = store.record_run(
-            radar_id=radar.id, started_at=started_at, status="error",
-            error=frame_failure.message, digest_json=json.dumps(digest, ensure_ascii=False),
-            params_json=radar.query_frame_json, execution_ms=execution_ms,
-            outcome=frame_failure.outcome, reason=frame_failure.reason,
-        )
-        store.record_failure(
-            radar.id, reason=frame_failure.reason, message=frame_failure.message,
-            next_run_after=frame_failure.next_run_after, permanent=frame_failure.permanent,
-            pause_after=PERMANENT_FAILURE_PAUSE_THRESHOLD,
-        )
-        return RadarRunResult(
-            run_id=run_id, radar_id=radar.id, status="error", diff=None,
-            digest=digest, total=0, execution_ms=execution_ms,
-            outcome=frame_failure.outcome, reason=frame_failure.reason,
-            message=frame_failure.message, error=frame_failure.message,
+        return _materialize_failure(
+            store, radar, token, frame_failure,
+            started_at=started_at, execution_ms=0,
+            params_json=radar.query_frame_json,
         )
 
     params = _apply_window_policy(params_from_radar(radar))
@@ -486,25 +505,10 @@ def _run_radar_locked(
     if isinstance(execution, _RadarFailure):
         # Un fallo tras la red también persiste (run + failure/backoff): si
         # perdimos el lease, ese registro le corresponde al dueño actual.
-        if not _still_owner(store, radar.id, token):
-            return _lease_lost_result(radar)
-        digest = _error_digest(radar.name, execution.message, execution.outcome, execution.reason)
-        run_id = store.record_run(
-            radar_id=radar.id, started_at=started_at, status="error",
-            error=execution.message, digest_json=json.dumps(digest, ensure_ascii=False),
+        return _materialize_failure(
+            store, radar, token, execution,
+            started_at=started_at, execution_ms=execution_ms,
             params_json=json.dumps(params, ensure_ascii=False),
-            execution_ms=execution_ms, outcome=execution.outcome, reason=execution.reason,
-        )
-        store.record_failure(
-            radar.id, reason=execution.reason, message=execution.message,
-            next_run_after=execution.next_run_after, permanent=execution.permanent,
-            pause_after=PERMANENT_FAILURE_PAUSE_THRESHOLD,
-        )
-        return RadarRunResult(
-            run_id=run_id, radar_id=radar.id, status="error", diff=None,
-            digest=digest, total=0, execution_ms=execution_ms,
-            outcome=execution.outcome, reason=execution.reason,
-            message=execution.message, error=execution.message,
         )
 
     ds_id = execution.dataset_id
@@ -515,11 +519,8 @@ def _run_radar_locked(
     refreshed_rows, refresh_meta = _refresh_seen_rows(deps, seen_map, current_keys, ds_id)
     refreshed = _validated_rank_and_dedupe(refreshed_rows, params, ds_id)
 
-    # Última llamada remota hecha. A partir de aquí solo hay escrituras, así
-    # que este es el punto para revalidar la propiedad del lease.
-    if not _still_owner(store, radar.id, token):
-        return _lease_lost_result(radar)
-
+    # Última llamada remota hecha. A partir de aquí no hay red: solo se arma en
+    # memoria lo que se va a escribir, y la transacción final lo vuelca.
     current_for_diff = deduped + refreshed
     diff = classify(current_for_diff, seen_map, ds_id, current_window_keys=current_keys)
     outcome = RADAR_EMPTY if not execution.results and not refreshed and not diff.has_novelty else RADAR_OK
@@ -536,8 +537,9 @@ def _run_radar_locked(
     digest["reason"] = reason
 
     approx_total = execution.total if execution.approximate else None
-    run_id = store.record_run(
-        radar_id=radar.id, started_at=started_at, status="ok",
+    run_id = new_run_id()
+    run = RunRecord(
+        id=run_id, started_at=started_at, status="ok",
         total_count=execution.total, new_count=diff.new_count,
         changed_count=diff.changed_count,
         digest_json=json.dumps(digest, ensure_ascii=False),
@@ -546,23 +548,30 @@ def _run_radar_locked(
         outcome=outcome, reason=reason,
     )
 
-    # Persistir lo visto en esta corrida (todo lo presente: nuevos + cambios + iguales).
+    # Lo visto en esta corrida (todo lo presente: nuevos + cambios + iguales).
     dataset_name = params.get("dataset") or radar.dataset
     is_first_run = not seen_map  # seen_map es el estado PREVIO al upsert
-    for item in (diff.new + diff.changed_state + diff.changed_value + diff.unchanged):
-        store.upsert_seen(
-            radar_id=radar.id, result_key=item.key, dataset=dataset_name,
-            fields=item.fields, snapshot_hash=item.snapshot_hash, run_id=run_id,
+    seen_records = [
+        SeenRecord(
+            result_key=item.key, dataset=dataset_name, fields=item.fields,
+            snapshot_hash=item.snapshot_hash,
             last_snapshot_json=json.dumps(item.row, ensure_ascii=False),
         )
+        for item in (diff.new + diff.changed_state + diff.changed_value + diff.unchanged)
+    ]
 
-    # Emitir eventos al feed. En la PRIMERA corrida se establece la línea base
+    # Eventos del feed. En la PRIMERA corrida se establece la línea base
     # silenciosa (un solo evento "empezó a vigilar") para no inundar el feed con
     # N "nuevos" de backfill; a partir de ahí, un evento por movimiento real.
-    _emit_events(store, radar, run_id, dataset_name, diff, deduped,
-                 execution.total, is_first_run)
+    events = _build_events(dataset_name, diff, deduped, execution.total, is_first_run)
 
-    store.update_last_run(radar.id)
+    # Todo lo anterior fue construcción en memoria. Recién aquí se escribe, y
+    # se escribe entero o nada: vistos sin sus eventos perderían la novedad.
+    materialized = store.materialize_successful_run(
+        radar_id=radar.id, token=token, run=run, seen=seen_records, events=events,
+    )
+    if materialized.lease_lost:
+        return _lease_lost_result(radar)
 
     return RadarRunResult(
         run_id=run_id, radar_id=radar.id, status="ok", diff=diff,
