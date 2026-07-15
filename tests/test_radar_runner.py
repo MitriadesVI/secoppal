@@ -588,6 +588,7 @@ def test_repeated_permanent_failures_mark_attention_and_pause(store):
 
     stored = store.get_radar(rid)
     assert stored.failure_count == 3
+    assert stored.permanent_failure_streak == 3
     assert stored.needs_attention == 1
     assert not stored.is_enabled
 
@@ -603,6 +604,25 @@ def test_success_resets_failure_state(store):
     assert res.status == "ok"
     stored = store.get_radar(radar.id)
     assert stored.failure_count == 0
+    assert stored.permanent_failure_streak == 0
+    assert stored.last_failure_reason is None
+    assert stored.next_run_after is None
+    assert stored.needs_attention == 0
+
+
+def test_empty_outcome_resets_failure_state_after_prior_failure(store):
+    """radar_empty también reinicia ambos contadores (Política C del contrato)."""
+    radar = _make_radar(store)
+    run_radar(_deps(FakeClient([], query_error=RuntimeError("Socrata 503"))), store, radar)
+    failed = store.get_radar(radar.id)
+    assert failed.failure_count == 1
+
+    res = run_radar(_deps(FakeClient([])), store, failed)
+
+    assert res.outcome == RADAR_EMPTY
+    stored = store.get_radar(radar.id)
+    assert stored.failure_count == 0
+    assert stored.permanent_failure_streak == 0
     assert stored.last_failure_reason is None
     assert stored.next_run_after is None
     assert stored.needs_attention == 0
@@ -668,6 +688,7 @@ def test_already_running_leaves_no_trace(store):
     after = store.get_radar(radar.id)
     assert len(store.get_runs(radar.id)) == before_runs   # sin radar_run
     assert after.failure_count == before.failure_count    # sin failure_count
+    assert after.permanent_failure_streak == before.permanent_failure_streak
     assert after.next_run_after == before.next_run_after  # sin backoff
     assert after.last_run_at == before.last_run_at        # sin last_run_at
     assert after.needs_attention == before.needs_attention
@@ -854,6 +875,7 @@ def test_lost_lease_aborts_without_persisting(store):
     assert store.get_seen(radar.id) == before_seen
     assert store.get_feed(radar.owner) == before_feed
     assert after.failure_count == before.failure_count
+    assert after.permanent_failure_streak == before.permanent_failure_streak
     assert after.next_run_after == before.next_run_after
     assert after.last_run_at == before.last_run_at
     # y el lease de B sigue siendo de B: el finally de A no lo liberó
@@ -878,6 +900,7 @@ def test_lost_lease_on_failure_path_does_not_record_failure(store):
     after = store.get_radar(radar.id)
     assert store.get_runs(radar.id) == []
     assert after.failure_count == 0
+    assert after.permanent_failure_streak == 0
     assert after.next_run_after is None
     assert after.run_lease_token == stolen["token"]
 
@@ -912,6 +935,7 @@ def test_lost_lease_on_invalid_frame_path_does_not_persist(store, monkeypatch):
     after = store.get_radar(radar.id)
     assert store.get_runs(radar.id) == []          # sin radar_run
     assert after.failure_count == 0
+    assert after.permanent_failure_streak == 0
     assert after.next_run_after is None
     assert after.needs_attention == 0
     assert after.run_lease_token == stolen["token"]  # el lease de B sigue siendo de B

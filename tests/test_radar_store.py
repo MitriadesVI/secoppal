@@ -127,9 +127,126 @@ def test_record_failure_and_backoff_filter(store):
     radar = store.get_radar(rid)
     assert count == 1
     assert radar.failure_count == 1
+    assert radar.permanent_failure_streak == 0
     assert radar.last_failure_reason == "socrata_timeout"
     assert radar.next_run_after == "2999-01-01T00:00:00+00:00"
     assert store.list_all_enabled_radars() == []
+
+
+# ── P0D.1 · racha de fallos permanentes vs. failure_count general ─────────
+#
+# Bug: la pausa automática dependía de failure_count (cualquier fallo), no de
+# una racha de fallos *permanentes* consecutivos. Estos tests fijan el
+# contrato correcto directamente contra RadarStore.record_failure.
+
+def test_transient_transient_permanent_does_not_pause(store):
+    """Caso central del bug: dos transitorios + un permanente NO deben pausar.
+
+    failure_count llega a 3 (cualquier fallo cuenta), pero solo hubo UN
+    fallo permanente, así que permanent_failure_streak == 1 y el radar sigue
+    habilitado.
+    """
+    rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+    store.record_failure(rid, reason="socrata_timeout", message="t1", permanent=False)
+    store.record_failure(rid, reason="socrata_query_error", message="t2", permanent=False)
+    store.record_failure(rid, reason="guard_no_scope_or_topic", message="p1", permanent=True)
+
+    radar = store.get_radar(rid)
+    assert radar.failure_count == 3
+    assert radar.permanent_failure_streak == 1
+    assert radar.needs_attention == 0
+    assert radar.is_enabled
+
+
+def test_three_consecutive_permanent_failures_pause(store):
+    rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+
+    store.record_failure(rid, reason="guard_no_scope_or_topic", message="p1", permanent=True)
+    r1 = store.get_radar(rid)
+    assert (r1.failure_count, r1.permanent_failure_streak, r1.is_enabled) == (1, 1, True)
+
+    store.record_failure(rid, reason="guard_no_scope_or_topic", message="p2", permanent=True)
+    r2 = store.get_radar(rid)
+    assert (r2.failure_count, r2.permanent_failure_streak, r2.is_enabled) == (2, 2, True)
+
+    store.record_failure(rid, reason="guard_no_scope_or_topic", message="p3", permanent=True)
+    r3 = store.get_radar(rid)
+    assert r3.failure_count == 3
+    assert r3.permanent_failure_streak == 3
+    assert r3.needs_attention == 1
+    assert not r3.is_enabled
+
+
+def test_permanent_streak_reset_by_transient_between_permanents(store):
+    """permanente, transitorio, permanente, permanente → racha == 2, sin pausa."""
+    rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+    store.record_failure(rid, reason="guard_no_scope_or_topic", message="p1", permanent=True)
+    store.record_failure(rid, reason="socrata_timeout", message="t1", permanent=False)
+    store.record_failure(rid, reason="guard_no_scope_or_topic", message="p2", permanent=True)
+    store.record_failure(rid, reason="guard_no_scope_or_topic", message="p3", permanent=True)
+
+    radar = store.get_radar(rid)
+    assert radar.failure_count == 4
+    assert radar.permanent_failure_streak == 2
+    assert radar.is_enabled
+    assert radar.needs_attention == 0
+
+
+def test_success_resets_failure_count_and_permanent_streak(store):
+    rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+    store.record_failure(rid, reason="guard_no_scope_or_topic", message="p1", permanent=True)
+    store.record_failure(rid, reason="guard_no_scope_or_topic", message="p2", permanent=True)
+
+    store.update_last_run(rid)
+
+    radar = store.get_radar(rid)
+    assert radar.failure_count == 0
+    assert radar.permanent_failure_streak == 0
+    assert radar.last_failure_reason is None
+    assert radar.next_run_after is None
+    assert radar.needs_attention == 0
+
+
+def test_transient_resets_streak_not_failure_count(store):
+    rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+    store.record_failure(rid, reason="guard_no_scope_or_topic", message="p1", permanent=True)
+    store.record_failure(rid, reason="guard_no_scope_or_topic", message="p2", permanent=True)
+
+    store.record_failure(rid, reason="socrata_timeout", message="t1", permanent=False)
+
+    radar = store.get_radar(rid)
+    assert radar.failure_count == 3
+    assert radar.permanent_failure_streak == 0
+    assert radar.is_enabled
+
+
+def test_success_does_not_silently_reenable_disabled_radar(store):
+    rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+    store.record_failure(rid, reason="guard_no_scope_or_topic", message="p1", permanent=True)
+    store.record_failure(rid, reason="guard_no_scope_or_topic", message="p2", permanent=True)
+    store.record_failure(rid, reason="guard_no_scope_or_topic", message="p3", permanent=True)
+    assert not store.get_radar(rid).is_enabled
+
+    store.update_last_run(rid)
+
+    radar = store.get_radar(rid)
+    assert radar.failure_count == 0
+    assert radar.permanent_failure_streak == 0
+    assert radar.needs_attention == 0
+    assert not radar.is_enabled  # update_last_run no reactiva silenciosamente
+
+
+def test_permanent_streak_counts_regardless_of_differing_reasons(store):
+    """Tres permanentes consecutivos pausan aunque el reason varíe entre ellos."""
+    rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+    store.record_failure(rid, reason="invalid_query_frame_json", message="p1", permanent=True)
+    store.record_failure(rid, reason="guard_no_scope_or_topic", message="p2", permanent=True)
+    store.record_failure(rid, reason="soql_build_error", message="p3", permanent=True)
+
+    radar = store.get_radar(rid)
+    assert radar.permanent_failure_streak == 3
+    assert radar.needs_attention == 1
+    assert not radar.is_enabled
 
 
 def test_upsert_seen_idempotent_keeps_first_seen(store):
@@ -310,6 +427,7 @@ def test_lease_does_not_touch_scheduling_policy(store):
     assert (after.enabled, after.needs_attention) == (before.enabled, before.needs_attention)
     assert after.next_run_after == before.next_run_after
     assert after.failure_count == before.failure_count
+    assert after.permanent_failure_streak == before.permanent_failure_streak
     assert after.last_run_at == before.last_run_at
 
 
@@ -475,3 +593,34 @@ def test_legacy_radar_can_take_lease_after_migration(tmp_path):
     claim = store.try_acquire_run_lease("old-1", now=_t())
     assert claim.acquired
     assert store.try_acquire_run_lease("old-1", now=_t(60)).status == LEASE_ALREADY_RUNNING
+
+
+# ── migración aditiva: permanent_failure_streak (P0D.1) ───────────────────
+
+def test_legacy_db_gets_permanent_failure_streak_without_losing_data(tmp_path):
+    db_path = tmp_path / "legacy_streak.db"
+    _seed_legacy_db(db_path)
+    assert "permanent_failure_streak" not in _columns(db_path)
+
+    store = RadarStore(db_path)
+
+    assert "permanent_failure_streak" in _columns(db_path)
+    radar = store.get_radar("old-1")
+    assert radar is not None
+    assert radar.name == "Radar viejo"
+    assert radar.permanent_failure_streak == 0
+
+
+def test_legacy_radar_can_record_failure_after_migration(tmp_path):
+    db_path = tmp_path / "legacy_failure.db"
+    _seed_legacy_db(db_path)
+    store = RadarStore(db_path)
+
+    count = store.record_failure(
+        "old-1", reason="socrata_timeout", message="boom",
+        next_run_after="2999-01-01T00:00:00+00:00",
+    )
+    radar = store.get_radar("old-1")
+    assert count == 1
+    assert radar.failure_count == 1
+    assert radar.permanent_failure_streak == 0

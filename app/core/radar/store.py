@@ -60,6 +60,7 @@ class Radar:
     last_failure_reason: str | None = None
     next_run_after: str | None = None
     needs_attention: int = 0
+    permanent_failure_streak: int = 0
     run_lease_token: str | None = None
     run_lease_acquired_at: str | None = None
     run_lease_expires_at: str | None = None
@@ -134,6 +135,7 @@ CREATE TABLE IF NOT EXISTS radars (
     last_failure_reason    TEXT,
     next_run_after         TEXT,
     needs_attention        INTEGER NOT NULL DEFAULT 0,
+    permanent_failure_streak INTEGER NOT NULL DEFAULT 0,
     run_lease_token        TEXT,
     run_lease_acquired_at  TEXT,
     run_lease_expires_at   TEXT,
@@ -229,6 +231,7 @@ class RadarStore:
             "last_failure_reason": "TEXT",
             "next_run_after": "TEXT",
             "needs_attention": "INTEGER NOT NULL DEFAULT 0",
+            "permanent_failure_streak": "INTEGER NOT NULL DEFAULT 0",
             "run_lease_token": "TEXT",
             "run_lease_acquired_at": "TEXT",
             "run_lease_expires_at": "TEXT",
@@ -337,7 +340,7 @@ class RadarStore:
                 "UPDATE radars SET last_run_at = ?, last_error_at = NULL, "
                 "last_error_message = NULL, failure_count = 0, "
                 "last_failure_reason = NULL, next_run_after = NULL, "
-                "needs_attention = 0 WHERE id = ?",
+                "needs_attention = 0, permanent_failure_streak = 0 WHERE id = ?",
                 (ts or _now(), radar_id),
             )
         finally:
@@ -366,33 +369,54 @@ class RadarStore:
     ) -> int:
         """Registra fallo operativo y devuelve el nuevo ``failure_count``.
 
-        Los fallos permanentes repetidos se marcan para atención y deshabilitan
-        el radar, evitando martillar definiciones rotas en el scheduler.
+        ``failure_count`` cuenta fallos consecutivos de cualquier clase desde
+        el último éxito; ``permanent_failure_streak`` cuenta solo la racha de
+        fallos *permanentes* consecutivos (un transitorio la reinicia a 0). La
+        pausa automática (``needs_attention``/``enabled=0``) depende
+        exclusivamente de esa racha, nunca de ``failure_count`` general — de
+        lo contrario, transitorio+transitorio+permanente pausaría el radar
+        con un solo fallo permanente real.
+
+        Toda la decisión ocurre en un único UPDATE (sin SELECT previo) para
+        que sea atómica respecto de corridas concurrentes.
         """
+        permanent_flag = 1 if permanent else 0
         conn = self._connect()
         try:
-            row = conn.execute(
-                "SELECT failure_count FROM radars WHERE id = ?", (radar_id,)
-            ).fetchone()
-            current = int(row["failure_count"] or 0) if row else 0
-            new_count = current + 1
-            should_pause = bool(permanent and new_count >= pause_after)
             conn.execute(
                 """UPDATE radars
                    SET last_error_at = ?, last_error_message = ?,
-                       failure_count = ?, last_failure_reason = ?,
+                       failure_count = failure_count + 1,
+                       permanent_failure_streak = CASE
+                           WHEN ? THEN permanent_failure_streak + 1
+                           ELSE 0
+                       END,
+                       last_failure_reason = ?,
                        next_run_after = ?,
-                       needs_attention = CASE WHEN ? THEN 1 ELSE needs_attention END,
-                       enabled = CASE WHEN ? THEN 0 ELSE enabled END
+                       needs_attention = CASE
+                           WHEN ? AND permanent_failure_streak + 1 >= ?
+                           THEN 1 ELSE needs_attention
+                       END,
+                       enabled = CASE
+                           WHEN ? AND permanent_failure_streak + 1 >= ?
+                           THEN 0 ELSE enabled
+                       END
                    WHERE id = ?""",
                 (
-                    ts or _now(), message, new_count, reason, next_run_after,
-                    1 if should_pause else 0, 1 if should_pause else 0, radar_id,
+                    ts or _now(), message,
+                    permanent_flag,
+                    reason, next_run_after,
+                    permanent_flag, pause_after,
+                    permanent_flag, pause_after,
+                    radar_id,
                 ),
             )
+            row = conn.execute(
+                "SELECT failure_count FROM radars WHERE id = ?", (radar_id,)
+            ).fetchone()
         finally:
             conn.close()
-        return new_count
+        return int(row["failure_count"]) if row else 0
 
     # -- run lease (exclusión mutua interproceso) --------------------------
     #
