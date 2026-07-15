@@ -7,18 +7,26 @@ from __future__ import annotations
 
 import dataclasses
 import json
+from datetime import datetime, timedelta, timezone
 from types import SimpleNamespace
 
 import pytest
 
 from app.core.formatter import Formatter
 from app.core.query_frame import frame_from_params
+from app.core.radar import runner as runner_module
+from app.core.radar import scheduler
+from app.core.radar.lease import LEASE_DURATION
 from app.core.radar.runner import (
     MAX_SEEN_REFRESH,
+    RADAR_ALREADY_RUNNING,
     RADAR_EMPTY,
     RADAR_GUARD_BLOCKED,
     RADAR_INVALID_FRAME,
+    RADAR_LEASE_LOST,
+    RADAR_NOT_FOUND,
     RADAR_OK,
+    RADAR_PERMANENT_ERROR,
     RADAR_TIMEOUT,
     RADAR_TRANSIENT_ERROR,
     WINDOW_LIMIT,
@@ -598,3 +606,346 @@ def test_success_resets_failure_state(store):
     assert stored.last_failure_reason is None
     assert stored.next_run_after is None
     assert stored.needs_attention == 0
+
+
+# ── P1A · exclusión mutua interproceso (run lease) ────────────────────────
+
+class ReentrantClient(FakeClient):
+    """Dispara un segundo ejecutor *mientras* el primero está en Socrata.
+
+    Es el escenario real (scheduler vs. «Ejecutar ahora») hecho determinista:
+    la reentrada ocurre dentro de la ventana del lease del primero, sin sleeps
+    ni carreras de reloj.
+    """
+
+    def __init__(self, rows, *, on_first_query):
+        super().__init__(rows)
+        self._on_first_query = on_first_query
+        self.reentrant_result = None
+        self._fired = False
+
+    def query(self, dataset_id, soql):
+        if not self._fired:
+            self._fired = True
+            self.reentrant_result = self._on_first_query()
+        return super().query(dataset_id, soql)
+
+
+def _acquire_foreign_lease(store, radar_id):
+    """Otro proceso ya corriendo este radar."""
+    claim = store.try_acquire_run_lease(radar_id)
+    assert claim.acquired
+    return claim.token
+
+
+def test_already_running_skips_without_touching_socrata(store):
+    radar = _make_radar(store)
+    _acquire_foreign_lease(store, radar.id)
+    client = FakeClient([_proc("P-1")])
+
+    res = run_radar(_deps(client), store, radar)
+
+    assert res.status == "skipped"
+    assert res.outcome == RADAR_ALREADY_RUNNING
+    assert res.reason == "already_running"
+    assert client.queries == []          # no consultó SECOP
+    assert res.digest["has_novelty"] is False
+
+
+def test_already_running_leaves_no_trace(store):
+    """No es un error: ni corrida, ni fallo, ni backoff, ni seen, ni eventos."""
+    radar = _make_radar(store)
+    run_radar(_deps(FakeClient([_proc("P-1")])), store, radar)  # baseline real
+    before = store.get_radar(radar.id)
+    before_seen = store.get_seen(radar.id)
+    before_feed = store.get_feed(radar.owner)
+    before_runs = len(store.get_runs(radar.id))
+
+    _acquire_foreign_lease(store, radar.id)
+    res = run_radar(_deps(FakeClient([_proc("P-1"), _proc("P-2")])), store, radar)
+
+    assert res.outcome == RADAR_ALREADY_RUNNING
+    after = store.get_radar(radar.id)
+    assert len(store.get_runs(radar.id)) == before_runs   # sin radar_run
+    assert after.failure_count == before.failure_count    # sin failure_count
+    assert after.next_run_after == before.next_run_after  # sin backoff
+    assert after.last_run_at == before.last_run_at        # sin last_run_at
+    assert after.needs_attention == before.needs_attention
+    assert after.is_enabled
+    assert store.get_seen(radar.id) == before_seen        # seen intacto
+    assert store.get_feed(radar.owner) == before_feed     # feed intacto
+
+
+def test_second_executor_during_first_run_gets_already_running(store):
+    """Dos ejecutores sobre el mismo radar: solo uno llega a Socrata."""
+    radar = _make_radar(store)
+    second_client = FakeClient([_proc("P-1")])
+
+    def second_executor():
+        return run_radar(_deps(second_client), store, store.get_radar(radar.id))
+
+    first_client = ReentrantClient([_proc("P-1")], on_first_query=second_executor)
+    first = run_radar(_deps(first_client), store, radar)
+    second = first_client.reentrant_result
+
+    assert first.status == "ok"
+    assert second.status == "skipped"
+    assert second.outcome == RADAR_ALREADY_RUNNING
+    assert second_client.queries == []              # el segundo no tocó SECOP
+    assert len(store.get_runs(radar.id)) == 1       # una sola corrida
+    assert store.get_radar(radar.id).failure_count == 0
+    # un solo evento baseline: el segundo no duplicó nada
+    feed = store.get_feed(radar.owner)
+    assert [e["kind"] for e in feed] == ["baseline"]
+
+
+def test_concurrent_executors_do_not_duplicate_events(store):
+    """El segundo ejecutor no reemite los 'new' que el primero está calculando."""
+    radar = _make_radar(store)
+    run_radar(_deps(FakeClient([_proc("P-1")])), store, radar)  # baseline
+
+    second_client = FakeClient([_proc("P-1"), _proc("P-2")])
+
+    def second_executor():
+        return run_radar(_deps(second_client), store, store.get_radar(radar.id))
+
+    first_client = ReentrantClient(
+        [_proc("P-1"), _proc("P-2")], on_first_query=second_executor,
+    )
+    run_radar(_deps(first_client), store, radar)
+
+    assert first_client.reentrant_result.outcome == RADAR_ALREADY_RUNNING
+    new_events = [e for e in store.get_feed(radar.owner) if e["kind"] == "new"]
+    assert len(new_events) == 1                     # P-2 anunciado una sola vez
+    assert new_events[0]["result_key"] == "P-2"
+
+
+def test_deleted_radar_yields_not_found_not_already_running(store):
+    """Carrera legítima: el llamador ya resolvió el Radar y luego se borró.
+
+    No hay ningún dueño con quien competir, así que no puede confundirse con
+    already_running: outcome, status y reason propios.
+    """
+    radar = _make_radar(store)
+    stale = store.get_radar(radar.id)   # snapshot antes del borrado
+    store.delete_radar(radar.id)
+    client = FakeClient([_proc("P-1")])
+
+    res = run_radar(_deps(client), store, stale)
+
+    assert res.status == "not_found"
+    assert res.outcome == RADAR_NOT_FOUND
+    assert res.reason == RADAR_NOT_FOUND
+    assert res.outcome != RADAR_ALREADY_RUNNING
+    assert client.queries == []                    # no llamó a Socrata
+    assert store.get_radar(radar.id) is None        # sigue borrado, nada resucitó
+
+
+def test_lease_released_after_successful_run(store):
+    radar = _make_radar(store)
+    run_radar(_deps(FakeClient([_proc("P-1")])), store, radar)
+
+    stored = store.get_radar(radar.id)
+    assert stored.run_lease_token is None
+    assert stored.run_lease_expires_at is None
+
+
+def test_lease_free_after_run_allows_next_executor(store):
+    radar = _make_radar(store)
+    run_radar(_deps(FakeClient([_proc("P-1")])), store, radar)
+    res = run_radar(_deps(FakeClient([_proc("P-1")])), store, radar)
+
+    assert res.status == "ok"           # la segunda corrida secuencial sí corre
+    assert res.outcome in (RADAR_OK, RADAR_EMPTY)
+
+
+def _lease_is_free(store, radar_id) -> bool:
+    return store.get_radar(radar_id).run_lease_token is None
+
+
+def test_lease_released_on_unexpected_exception(store, monkeypatch):
+    radar = _make_radar(store)
+
+    def boom(*a, **kw):
+        raise RuntimeError("fallo inesperado en el diff")
+
+    monkeypatch.setattr("app.core.radar.runner.classify", boom)
+    with pytest.raises(RuntimeError):
+        run_radar(_deps(FakeClient([_proc("P-1")])), store, radar)
+
+    assert _lease_is_free(store, radar.id)
+
+
+def test_lease_released_on_permanent_error(store, monkeypatch):
+    radar = _make_radar(store)
+    deps = _deps(FakeClient([_proc("P-1")]))
+
+    def boom(*a, **kw):
+        raise ValueError("campo desconocido")
+
+    monkeypatch.setattr(deps.soql_builder, "build", boom)
+    res = run_radar(deps, store, radar)
+
+    assert res.outcome == RADAR_PERMANENT_ERROR
+    assert _lease_is_free(store, radar.id)
+
+
+@pytest.mark.parametrize("scenario", ["ok", "empty", "invalid_frame", "guard_blocked",
+                                      "timeout", "transient_error"])
+def test_lease_released_on_every_outcome(store, scenario):
+    """Pase lo que pase, el radar queda libre para el siguiente ejecutor."""
+    expected = {
+        "ok": RADAR_OK,
+        "empty": RADAR_EMPTY,
+        "invalid_frame": RADAR_INVALID_FRAME,
+        "guard_blocked": RADAR_GUARD_BLOCKED,
+        "timeout": RADAR_TIMEOUT,
+        "transient_error": RADAR_TRANSIENT_ERROR,
+    }[scenario]
+
+    if scenario == "invalid_frame":
+        rid = store.create_radar(name="Roto", owner="u1", query_frame_json="{no-json")
+        radar, client = store.get_radar(rid), FakeClient([])
+    elif scenario == "guard_blocked":
+        rid = store.create_radar(name="Global", owner="u1", query_frame_json="{}")
+        radar, client = store.get_radar(rid), FakeClient([])
+    else:
+        radar = _make_radar(store)
+        client = {
+            "ok": FakeClient([_proc("P-1")]),
+            "empty": FakeClient([]),
+            "timeout": FakeClient([], query_error=TimeoutError("timed out")),
+            "transient_error": FakeClient([], query_error=RuntimeError("Socrata 503")),
+        }[scenario]
+
+    res = run_radar(_deps(client), store, radar)
+
+    assert res.outcome == expected
+    assert _lease_is_free(store, radar.id)
+
+
+def test_lost_lease_aborts_without_persisting(store):
+    """A pierde el lease durante el fetch: no escribe nada y no pisa a B."""
+    radar = _make_radar(store)
+    run_radar(_deps(FakeClient([_proc("P-1")])), store, radar)  # baseline
+    before = store.get_radar(radar.id)
+    before_seen = store.get_seen(radar.id)
+    before_feed = store.get_feed(radar.owner)
+    before_runs = len(store.get_runs(radar.id))
+    stolen: dict = {}
+
+    def steal_lease():
+        """B recupera el lease vencido de A mientras A está en Socrata."""
+        expired = datetime.now(timezone.utc) + LEASE_DURATION + timedelta(seconds=1)
+        claim = store.try_acquire_run_lease(radar.id, now=expired)
+        assert claim.acquired
+        stolen["token"] = claim.token
+        return claim
+
+    client = ReentrantClient([_proc("P-1"), _proc("P-2")], on_first_query=steal_lease)
+    res = run_radar(_deps(client), store, radar)
+
+    assert res.status == "skipped"
+    assert res.outcome == RADAR_LEASE_LOST
+    assert res.reason == "lease_lost"
+    # nada persistido por el dueño vencido
+    after = store.get_radar(radar.id)
+    assert len(store.get_runs(radar.id)) == before_runs
+    assert store.get_seen(radar.id) == before_seen
+    assert store.get_feed(radar.owner) == before_feed
+    assert after.failure_count == before.failure_count
+    assert after.next_run_after == before.next_run_after
+    assert after.last_run_at == before.last_run_at
+    # y el lease de B sigue siendo de B: el finally de A no lo liberó
+    assert after.run_lease_token == stolen["token"]
+
+
+def test_lost_lease_on_failure_path_does_not_record_failure(store):
+    """Un dueño vencido tampoco escribe fallos ni backoff sobre el radar de B."""
+    radar = _make_radar(store)
+    stolen: dict = {}
+
+    def steal_lease():
+        expired = datetime.now(timezone.utc) + LEASE_DURATION + timedelta(seconds=1)
+        claim = store.try_acquire_run_lease(radar.id, now=expired)
+        stolen["token"] = claim.token
+        raise TimeoutError("timed out")   # el fetch de A falla tras perder el lease
+
+    client = ReentrantClient([], on_first_query=steal_lease)
+    res = run_radar(_deps(client), store, radar)
+
+    assert res.outcome == RADAR_LEASE_LOST
+    after = store.get_radar(radar.id)
+    assert store.get_runs(radar.id) == []
+    assert after.failure_count == 0
+    assert after.next_run_after is None
+    assert after.run_lease_token == stolen["token"]
+
+
+def test_lost_lease_on_invalid_frame_path_does_not_persist(store, monkeypatch):
+    """El path de QueryFrame inválido también debe revalidar antes de escribir.
+
+    No hay red en este path, pero la validación es responsabilidad de un
+    llamador (aquí, un monkeypatch) — el mismo invariante de fencing aplica:
+    si A perdió el lease antes de llegar a record_run/record_failure, no
+    puede persistir ni pisar el lease de B.
+    """
+    rid = store.create_radar(name="Roto", owner="u1", query_frame_json="{no-json")
+    radar = store.get_radar(rid)
+    stolen: dict = {}
+    original_validate = runner_module._validate_frame_json
+
+    def steal_lease_then_validate(radar_arg):
+        """B recupera el lease vencido de A durante la validación del frame."""
+        expired = datetime.now(timezone.utc) + LEASE_DURATION + timedelta(seconds=1)
+        claim = store.try_acquire_run_lease(radar_arg.id, now=expired)
+        assert claim.acquired
+        stolen["token"] = claim.token
+        return original_validate(radar_arg)
+
+    monkeypatch.setattr(runner_module, "_validate_frame_json", steal_lease_then_validate)
+
+    res = run_radar(_deps(FakeClient([])), store, radar)
+
+    assert res.outcome == RADAR_LEASE_LOST
+    assert res.status == "skipped"
+    after = store.get_radar(radar.id)
+    assert store.get_runs(radar.id) == []          # sin radar_run
+    assert after.failure_count == 0
+    assert after.next_run_after is None
+    assert after.needs_attention == 0
+    assert after.run_lease_token == stolen["token"]  # el lease de B sigue siendo de B
+    assert after.is_enabled
+
+
+def test_force_manual_run_cannot_bypass_lease(store):
+    """force salta frecuencia/backoff, nunca la exclusión mutua."""
+    radar = _make_radar(store)
+    store.record_failure(
+        radar.id, reason="socrata_timeout", message="boom",
+        next_run_after="2999-01-01T00:00:00+00:00",
+    )
+    _acquire_foreign_lease(store, radar.id)
+    client = FakeClient([_proc("P-1")])
+
+    summary = scheduler.run_due_radars(_deps(client), store, force=True)
+
+    assert client.queries == []
+    assert summary.ran == 0
+
+
+def test_scheduler_and_manual_share_the_same_claim(store):
+    """El scheduler y «Ejecutar ahora» compiten por el mismo mecanismo."""
+    radar = _make_radar(store)
+    manual_client = FakeClient([_proc("P-1")])
+
+    def manual_executor():
+        return run_radar(_deps(manual_client), store, store.get_radar(radar.id))
+
+    scheduler_client = ReentrantClient([_proc("P-1")], on_first_query=manual_executor)
+    summary = scheduler.run_due_radars(_deps(scheduler_client), store, force=True)
+
+    assert summary.ran == 1                        # el scheduler corrió
+    assert scheduler_client.reentrant_result.outcome == RADAR_ALREADY_RUNNING
+    assert manual_client.queries == []             # el manual no tocó SECOP
+    assert len(store.get_runs(radar.id)) == 1

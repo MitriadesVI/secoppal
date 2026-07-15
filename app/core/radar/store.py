@@ -16,10 +16,12 @@ import json
 import sqlite3
 import uuid
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 from app.core.db import connect_sqlite
+from app.core.radar import lease
+from app.core.radar.lease import LeaseClaim
 
 
 def _now() -> str:
@@ -58,6 +60,9 @@ class Radar:
     last_failure_reason: str | None = None
     next_run_after: str | None = None
     needs_attention: int = 0
+    run_lease_token: str | None = None
+    run_lease_acquired_at: str | None = None
+    run_lease_expires_at: str | None = None
 
     @classmethod
     def from_row(cls, row: sqlite3.Row) -> "Radar":
@@ -129,6 +134,9 @@ CREATE TABLE IF NOT EXISTS radars (
     last_failure_reason    TEXT,
     next_run_after         TEXT,
     needs_attention        INTEGER NOT NULL DEFAULT 0,
+    run_lease_token        TEXT,
+    run_lease_acquired_at  TEXT,
+    run_lease_expires_at   TEXT,
     UNIQUE (owner, name)
 );
 
@@ -221,6 +229,9 @@ class RadarStore:
             "last_failure_reason": "TEXT",
             "next_run_after": "TEXT",
             "needs_attention": "INTEGER NOT NULL DEFAULT 0",
+            "run_lease_token": "TEXT",
+            "run_lease_acquired_at": "TEXT",
+            "run_lease_expires_at": "TEXT",
         }.items():
             if name not in radar_cols:
                 conn.execute(f"ALTER TABLE radars ADD COLUMN {name} {ddl}")
@@ -382,6 +393,58 @@ class RadarStore:
         finally:
             conn.close()
         return new_count
+
+    # -- run lease (exclusión mutua interproceso) --------------------------
+    #
+    # Política aparte de enabled/needs_attention/next_run_after: esos deciden
+    # *si toca* correr; el lease decide *quién* corre. Ver lease.py.
+
+    def try_acquire_run_lease(
+        self,
+        radar_id: str,
+        *,
+        now: datetime | None = None,
+        lease_duration: timedelta | None = None,
+    ) -> LeaseClaim:
+        conn = self._connect()
+        try:
+            return lease.try_acquire(
+                conn, radar_id, now=now, lease_duration=lease_duration
+            )
+        finally:
+            conn.close()
+
+    def renew_run_lease(
+        self,
+        radar_id: str,
+        token: str,
+        *,
+        now: datetime | None = None,
+        lease_duration: timedelta | None = None,
+    ) -> bool:
+        conn = self._connect()
+        try:
+            return lease.renew(
+                conn, radar_id, token, now=now, lease_duration=lease_duration
+            )
+        finally:
+            conn.close()
+
+    def release_run_lease(self, radar_id: str, token: str) -> bool:
+        conn = self._connect()
+        try:
+            return lease.release(conn, radar_id, token)
+        finally:
+            conn.close()
+
+    def is_run_lease_owned(
+        self, radar_id: str, token: str, *, now: datetime | None = None
+    ) -> bool:
+        conn = self._connect()
+        try:
+            return lease.is_owned(conn, radar_id, token, now=now)
+        finally:
+            conn.close()
 
     def delete_radar(self, radar_id: str) -> None:
         conn = self._connect()

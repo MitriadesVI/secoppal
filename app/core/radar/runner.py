@@ -19,6 +19,7 @@ from typing import TYPE_CHECKING
 from app.core._followup_constants import SCOPE_TOPIC_KEYS
 from app.core.phrase_ranking import validate_rank_and_dedupe
 from app.core.query_frame import QueryFrame, params_from_frame
+from app.core.radar import lease
 from app.core.radar.diff import RadarDiff, classify
 from app.core.radar.digest import build_digest
 from app.core.radar.follows import fetch_current_rows_by_keys
@@ -45,6 +46,19 @@ RADAR_GUARD_BLOCKED = "radar_guard_blocked"
 RADAR_TIMEOUT = "radar_timeout"
 RADAR_TRANSIENT_ERROR = "radar_transient_error"
 RADAR_PERMANENT_ERROR = "radar_permanent_error"
+
+# Estados de control: no son corridas. No se registran en radar_runs, no tocan
+# failure_count/backoff/seen/eventos y no consultan Socrata. Quedan fuera de la
+# taxonomía de outcomes de corrida (P0D) a propósito.
+RADAR_ALREADY_RUNNING = "radar_already_running"
+RADAR_LEASE_LOST = "radar_lease_lost"
+STATUS_SKIPPED = "skipped"
+
+# El radar fue borrado entre que el llamador lo resolvió y que se intentó
+# tomar el lease (carrera legítima con delete_radar). Es un estado propio,
+# no un caso de "already_running": no hay ningún dueño con quien competir.
+RADAR_NOT_FOUND = "radar_not_found"
+STATUS_NOT_FOUND = "not_found"
 
 logger = logging.getLogger(__name__)
 
@@ -90,9 +104,10 @@ def _after(**delta) -> str:
     return (datetime.now(timezone.utc) + timedelta(**delta)).isoformat()
 
 
-def _error_digest(radar_name: str, message: str, outcome: str, reason: str) -> dict:
+def _error_digest(radar_name: str, message: str, outcome: str, reason: str,
+                  icon: str = "⚠️") -> dict:
     return {
-        "text": f"🔔 Radar {radar_name}\n\n⚠️ {message}",
+        "text": f"🔔 Radar {radar_name}\n\n{icon} {message}",
         "has_novelty": False,
         "risk_flags": [],
         "new_count": 0,
@@ -348,15 +363,98 @@ def _emit_events(store, radar, run_id, dataset_name, diff, deduped, total,
     store.record_events(events)
 
 
+def _lease_lost_result(radar: Radar) -> RadarRunResult:
+    """El lease venció durante la corrida y otro ejecutor lo tomó.
+
+    Abortamos sin persistir: los datos que traemos ya no nos autorizan a
+    escribir, y el dueño actual está produciendo los suyos.
+    """
+    logger.warning("run_radar: lease perdido durante la corrida radar id=%s", radar.id)
+    return _control_result(
+        radar, status=STATUS_SKIPPED, outcome=RADAR_LEASE_LOST, reason="lease_lost",
+        message="La revisión perdió su turno de ejecución; no se guardaron cambios.",
+    )
+
+
+def _already_running_result(radar: Radar) -> RadarRunResult:
+    logger.info("run_radar: radar id=%s ya está ejecutándose; se omite", radar.id)
+    return _control_result(
+        radar, status=STATUS_SKIPPED, outcome=RADAR_ALREADY_RUNNING, reason="already_running",
+        message="El radar ya se está ejecutando; se omite esta revisión.",
+    )
+
+
+def _not_found_result(radar: Radar) -> RadarRunResult:
+    """El radar fue borrado entre la resolución del llamador y el intento de lease.
+
+    Distinto de already_running: aquí no hay ningún dueño con quien competir,
+    el registro simplemente ya no existe.
+    """
+    return _control_result(
+        radar, status=STATUS_NOT_FOUND, outcome=RADAR_NOT_FOUND, reason=RADAR_NOT_FOUND,
+        message="El radar ya no existe.",
+    )
+
+
+def _control_result(
+    radar: Radar, *, status: str, outcome: str, reason: str, message: str,
+) -> RadarRunResult:
+    """Resultado de control: no hubo corrida, no hay nada que auditar."""
+    digest = _error_digest(radar.name, message, outcome, reason, icon="⏳")
+    return RadarRunResult(
+        run_id="", radar_id=radar.id, status=status, diff=None,
+        digest=digest, total=0, execution_ms=0, outcome=outcome,
+        reason=reason, message=message,
+    )
+
+
 def run_radar(
     deps: "WorkflowDeps",
     store: RadarStore,
     radar: Radar,
 ) -> RadarRunResult:
+    """Ejecuta un radar bajo exclusión mutua interproceso.
+
+    Es la única puerta de entrada (scheduler, chat y UI pasan por aquí), así
+    que el lease se toma aquí: ningún ejecutor —ni uno manual con force— llega
+    a Socrata sin ser el dueño. El lease se libera pase lo que pase.
+    """
+    claim = store.try_acquire_run_lease(radar.id)
+    if not claim.acquired:
+        if claim.status == lease.LEASE_RADAR_NOT_FOUND:
+            return _not_found_result(radar)
+        return _already_running_result(radar)
+    try:
+        return _run_radar_locked(deps, store, radar, claim.token)
+    finally:
+        store.release_run_lease(radar.id, claim.token)
+
+
+def _still_owner(store: RadarStore, radar_id: str, token: str) -> bool:
+    """Revalida el lease antes de persistir.
+
+    Entre la adquisición y este punto hubo red: el lease pudo vencer y otro
+    ejecutor pudo tomarlo. Renovar solo funciona si seguimos siendo dueños, y
+    de paso extiende la ventana para la fase de escritura.
+    """
+    return store.renew_run_lease(radar_id, token)
+
+
+def _run_radar_locked(
+    deps: "WorkflowDeps",
+    store: RadarStore,
+    radar: Radar,
+    token: str,
+) -> RadarRunResult:
     """Ejecuta un radar: búsqueda → diff → persistencia → digest."""
     started_at = _now()
     frame_failure = _validate_frame_json(radar)
     if frame_failure is not None:
+        # No hay red aquí, pero la validación es responsabilidad de un
+        # llamador (posible monkeypatch/futura extensión) y el mismo
+        # invariante aplica: nada se persiste sin revalidar el lease primero.
+        if not _still_owner(store, radar.id, token):
+            return _lease_lost_result(radar)
         execution_ms = 0
         digest = _error_digest(
             radar.name, frame_failure.message, frame_failure.outcome, frame_failure.reason
@@ -386,6 +484,10 @@ def run_radar(
     execution_ms = int(round((time.perf_counter() - t0) * 1000))
 
     if isinstance(execution, _RadarFailure):
+        # Un fallo tras la red también persiste (run + failure/backoff): si
+        # perdimos el lease, ese registro le corresponde al dueño actual.
+        if not _still_owner(store, radar.id, token):
+            return _lease_lost_result(radar)
         digest = _error_digest(radar.name, execution.message, execution.outcome, execution.reason)
         run_id = store.record_run(
             radar_id=radar.id, started_at=started_at, status="error",
@@ -412,6 +514,12 @@ def run_radar(
     current_keys = _current_window_keys(deduped, ds_id)
     refreshed_rows, refresh_meta = _refresh_seen_rows(deps, seen_map, current_keys, ds_id)
     refreshed = _validated_rank_and_dedupe(refreshed_rows, params, ds_id)
+
+    # Última llamada remota hecha. A partir de aquí solo hay escrituras, así
+    # que este es el punto para revalidar la propiedad del lease.
+    if not _still_owner(store, radar.id, token):
+        return _lease_lost_result(radar)
+
     current_for_diff = deduped + refreshed
     diff = classify(current_for_diff, seen_map, ds_id, current_window_keys=current_keys)
     outcome = RADAR_EMPTY if not execution.results and not refreshed and not diff.has_novelty else RADAR_OK

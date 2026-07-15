@@ -77,14 +77,36 @@ def test_owner_prefers_channel_user_key():
 # ── Handler ──────────────────────────────────────────────────────────────
 
 class FakeClient:
-    def __init__(self, rows):
+    def __init__(self, rows, query_error=None):
         self.rows = rows
+        self.query_error = query_error
+        self.queries = []
 
     def query(self, dataset_id, soql):
+        self.queries.append((dataset_id, soql))
+        if self.query_error:
+            raise self.query_error
         return list(self.rows)
 
     def count(self, dataset_id, soql):
         return len(self.rows)
+
+
+class ReentrantClient(FakeClient):
+    """Dispara un segundo comando «ejecutar radar» mientras el primero está
+    en Socrata — reproduce la carrera scheduler-vs-chat a nivel de handler."""
+
+    def __init__(self, rows, *, on_first_query):
+        super().__init__(rows)
+        self._on_first_query = on_first_query
+        self.reentrant_result = None
+        self._fired = False
+
+    def query(self, dataset_id, soql):
+        if not self._fired:
+            self._fired = True
+            self.reentrant_result = self._on_first_query()
+        return super().query(dataset_id, soql)
 
 
 @pytest.fixture
@@ -248,3 +270,86 @@ def test_run_end_to_end(env):
     # segunda corrida: sin novedades
     res2 = handle_radar_command(deps, _ctx("ejecutar radar PAE Atlántico"))
     assert "Sin novedades" in res2["response"]
+
+
+# ── P1A · route_reason no confunde control con error ──────────────────────
+
+def _save_and_get(store, name="PAE Atlántico"):
+    store.create_radar(
+        name=name, owner="anon:test",
+        query_frame_json='{"dataset":"procesos","scope":{"departamento_resolved":"ATLÁNTICO"},'
+                         '"topic":["alimentacion_escolar"]}',
+        dataset="procesos",
+    )
+
+
+def _deps_with_client(base_deps, client):
+    return SimpleNamespace(
+        radar_store=base_deps.radar_store, conv_store=base_deps.conv_store,
+        soql_builder=base_deps.soql_builder, secop_client=client,
+        formatter=base_deps.formatter,
+    )
+
+
+def test_run_ok_route_reason_intact(env):
+    """radar_ok conserva su route_reason existente (no regresión)."""
+    deps, store, _ = env
+    _save_and_get(store)
+    res = handle_radar_command(deps, _ctx("ejecutar radar PAE Atlántico"))
+    assert res["route_reason"] == "radar_run_ok"
+
+
+def test_run_timeout_still_maps_to_error(env):
+    """Un fallo real de corrida (timeout) sigue siendo radar_run_error."""
+    deps, store, _ = env
+    _save_and_get(store)
+    timeout_deps = _deps_with_client(deps, FakeClient([], query_error=TimeoutError("timed out")))
+    res = handle_radar_command(timeout_deps, _ctx("ejecutar radar PAE Atlántico"))
+    assert res["route_reason"] == "radar_run_error"
+
+
+def test_run_permanent_error_still_maps_to_error(env):
+    """Fallo permanente (QueryFrame inválido) también es radar_run_error."""
+    deps, store, _ = env
+    store.create_radar(name="Roto", owner="anon:test", query_frame_json="{no-json")
+    res = handle_radar_command(deps, _ctx("ejecutar radar Roto"))
+    assert res["route_reason"] == "radar_run_error"
+
+
+def test_run_already_running_is_not_telemetrized_as_error(env):
+    """already_running es un skip de control, no un radar_run_error."""
+    deps, store, _ = env
+    _save_and_get(store)
+    second_client = FakeClient([])
+    second_deps = _deps_with_client(deps, second_client)
+
+    def second_call():
+        return handle_radar_command(second_deps, _ctx("ejecutar radar PAE Atlántico"))
+
+    first_client = ReentrantClient([], on_first_query=second_call)
+    first_deps = _deps_with_client(deps, first_client)
+    handle_radar_command(first_deps, _ctx("ejecutar radar PAE Atlántico"))
+    second_res = first_client.reentrant_result
+
+    assert second_res["route_reason"] == "radar_run_skipped"
+    assert second_res["route_reason"] != "radar_run_error"
+    assert second_client.queries == []          # el segundo no tocó SECOP
+    assert second_res["response"]               # conserva el texto de control
+
+
+def test_run_not_found_race_maps_to_dedicated_route_reason(env, monkeypatch):
+    """Radar borrado entre la resolución del handler y el lease del runner.
+
+    Distinto de 'radar_run_not_found' (miss por nombre, ya cubierto arriba):
+    aquí el handler SÍ encontró el radar, pero desapareció justo después.
+    """
+    deps, store, _ = env
+    _save_and_get(store)
+    stale = store.get_radar_by_name("anon:test", "PAE Atlántico")
+    store.delete_radar(stale.id)
+    monkeypatch.setattr(store, "get_radar_by_name", lambda owner, name: stale)
+
+    res = handle_radar_command(deps, _ctx("ejecutar radar PAE Atlántico"))
+
+    assert res["route_reason"] == "radar_not_found"
+    assert res["route_reason"] != "radar_run_not_found"

@@ -19,7 +19,7 @@ from typing import TYPE_CHECKING
 
 from app.core.radar.builder import has_scope_or_topic, save_radar_from_params
 from app.core.radar.commands import LIST, RUN, SAVE, parse_radar_command, radar_owner
-from app.core.radar.runner import run_radar
+from app.core.radar.runner import RADAR_NOT_FOUND, STATUS_SKIPPED, RadarRunResult, run_radar
 from app.core.radar.store import RadarExistsError
 from app.core.workflow.results import empty_result
 
@@ -143,6 +143,23 @@ def _do_list(store, owner) -> dict:
 # ejecutar
 # ---------------------------------------------------------------------------
 
+def _route_reason_for_run(result: RadarRunResult) -> str:
+    """Traduce el outcome de ``run_radar`` a ``route_reason`` sin mentir.
+
+    already_running/lease_lost (``status="skipped"``) y radar_not_found
+    (outcome propio, sin dueño con quien competir) son estados de control de
+    P1A, no fallos de la corrida: no pueden telemetrizarse como
+    ``radar_run_error`` ni confundirse entre sí.
+    """
+    if result.outcome == RADAR_NOT_FOUND:
+        return "radar_not_found"
+    if result.status == STATUS_SKIPPED:
+        return "radar_run_skipped"
+    if result.status == "ok":
+        return "radar_run_ok"
+    return "radar_run_error"
+
+
 def _do_run(deps, store, owner, name) -> dict:
     radar = store.get_radar_by_name(owner, name)
     if radar is None:
@@ -154,5 +171,4 @@ def _do_run(deps, store, owner, name) -> dict:
 
     result = run_radar(deps, store, radar)
     text = result.digest.get("text") or f"🔔 Radar {radar.name}: corrida completada."
-    route = "radar_run_ok" if result.status == "ok" else "radar_run_error"
-    return _resp(text, route_reason=route)
+    return _resp(text, route_reason=_route_reason_for_run(result))

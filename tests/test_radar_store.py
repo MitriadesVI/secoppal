@@ -2,9 +2,18 @@
 from __future__ import annotations
 
 import json
+import sqlite3
+import threading
+from datetime import datetime, timedelta, timezone
 
 import pytest
 
+from app.core.radar.lease import (
+    LEASE_ACQUIRED,
+    LEASE_ALREADY_RUNNING,
+    LEASE_DURATION,
+    LEASE_RADAR_NOT_FOUND,
+)
 from app.core.radar.store import RadarExistsError, RadarStore
 
 
@@ -155,3 +164,314 @@ def test_delete_cascades(store):
     assert store.get_radar(rid) is None
     assert store.get_runs(rid) == []
     assert store.get_seen(rid) == {}
+
+
+# ── run lease: exclusión mutua interproceso ───────────────────────────────
+
+def _t(seconds: int = 0) -> datetime:
+    """Reloj determinista: nada de sleeps, el tiempo se inyecta."""
+    return datetime(2026, 7, 14, 12, 0, 0, tzinfo=timezone.utc) + timedelta(seconds=seconds)
+
+
+def test_lease_acquire_on_free_radar(store):
+    rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+    claim = store.try_acquire_run_lease(rid, now=_t())
+
+    assert claim.status == LEASE_ACQUIRED
+    assert claim.acquired
+    assert claim.token
+    radar = store.get_radar(rid)
+    assert radar.run_lease_token == claim.token
+    assert radar.run_lease_acquired_at == _t().isoformat()
+    assert radar.run_lease_expires_at == (_t() + LEASE_DURATION).isoformat()
+
+
+def test_lease_second_attempt_before_expiry_is_already_running(store):
+    rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+    first = store.try_acquire_run_lease(rid, now=_t())
+    second = store.try_acquire_run_lease(rid, now=_t(60))
+
+    assert first.acquired
+    assert second.status == LEASE_ALREADY_RUNNING
+    assert second.token is None
+    # el lease del primero queda intacto
+    assert store.get_radar(rid).run_lease_token == first.token
+
+
+def test_lease_recovered_after_expiry(store):
+    """El proceso dueño murió sin liberar: el lease vence y otro lo recupera."""
+    rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+    dead = store.try_acquire_run_lease(rid, now=_t())
+    after = int(LEASE_DURATION.total_seconds()) + 1
+    recovered = store.try_acquire_run_lease(rid, now=_t(after))
+
+    assert recovered.acquired
+    assert recovered.token != dead.token
+    assert store.get_radar(rid).run_lease_token == recovered.token
+
+
+def test_lease_acquire_on_missing_radar(store):
+    claim = store.try_acquire_run_lease("no-existe", now=_t())
+    assert claim.status == LEASE_RADAR_NOT_FOUND
+    assert claim.token is None
+
+
+def test_lease_release_requires_owner_token(store):
+    rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+    claim = store.try_acquire_run_lease(rid, now=_t())
+
+    assert store.release_run_lease(rid, "token-ajeno") is False
+    assert store.get_radar(rid).run_lease_token == claim.token  # sigue tomado
+
+    assert store.release_run_lease(rid, claim.token) is True
+    radar = store.get_radar(rid)
+    assert radar.run_lease_token is None
+    assert radar.run_lease_acquired_at is None
+    assert radar.run_lease_expires_at is None
+
+
+def test_stale_token_cannot_release_new_lease(store):
+    """Fencing: A vence, B toma el lease, y el release tardío de A no lo pisa."""
+    rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+    a = store.try_acquire_run_lease(rid, now=_t())
+    after = int(LEASE_DURATION.total_seconds()) + 1
+    b = store.try_acquire_run_lease(rid, now=_t(after))
+
+    assert store.release_run_lease(rid, a.token) is False
+    assert store.get_radar(rid).run_lease_token == b.token
+
+
+def test_lease_renew_with_owner_token(store):
+    rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+    claim = store.try_acquire_run_lease(rid, now=_t())
+
+    assert store.renew_run_lease(rid, claim.token, now=_t(60)) is True
+    assert store.get_radar(rid).run_lease_expires_at == (_t(60) + LEASE_DURATION).isoformat()
+
+
+def test_lease_renew_with_wrong_token_fails(store):
+    rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+    claim = store.try_acquire_run_lease(rid, now=_t())
+    before = store.get_radar(rid).run_lease_expires_at
+
+    assert store.renew_run_lease(rid, "token-ajeno", now=_t(60)) is False
+    assert store.get_radar(rid).run_lease_expires_at == before
+
+
+def test_lease_renew_after_losing_lease_fails(store):
+    """A no puede resucitar su lease vencido ni robarle la ventana a B."""
+    rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+    a = store.try_acquire_run_lease(rid, now=_t())
+    after = int(LEASE_DURATION.total_seconds()) + 1
+    b = store.try_acquire_run_lease(rid, now=_t(after))
+    b_expires = store.get_radar(rid).run_lease_expires_at
+
+    assert store.renew_run_lease(rid, a.token, now=_t(after + 1)) is False
+    assert store.get_radar(rid).run_lease_token == b.token
+    assert store.get_radar(rid).run_lease_expires_at == b_expires
+
+
+def test_lease_renew_of_expired_own_lease_fails(store):
+    """Aun sin sucesor, un lease vencido no se renueva: hay que re-adquirirlo."""
+    rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+    claim = store.try_acquire_run_lease(rid, now=_t())
+    after = int(LEASE_DURATION.total_seconds()) + 1
+
+    assert store.renew_run_lease(rid, claim.token, now=_t(after)) is False
+
+
+def test_lease_is_owned(store):
+    rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+    claim = store.try_acquire_run_lease(rid, now=_t())
+    after = int(LEASE_DURATION.total_seconds()) + 1
+
+    assert store.is_run_lease_owned(rid, claim.token, now=_t(60)) is True
+    assert store.is_run_lease_owned(rid, "token-ajeno", now=_t(60)) is False
+    assert store.is_run_lease_owned(rid, claim.token, now=_t(after)) is False
+
+
+def test_lease_is_per_radar(store):
+    """La exclusión es por radar: tomar uno no bloquea al otro."""
+    a = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+    b = store.create_radar(name="B", owner="u1", query_frame_json=_frame_json())
+
+    assert store.try_acquire_run_lease(a, now=_t()).acquired
+    assert store.try_acquire_run_lease(b, now=_t()).acquired
+
+
+def test_lease_does_not_touch_scheduling_policy(store):
+    """El lease decide *quién* corre; enabled/next_run_after deciden *si toca*."""
+    rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+    before = store.get_radar(rid)
+    claim = store.try_acquire_run_lease(rid, now=_t())
+    store.release_run_lease(rid, claim.token)
+    after = store.get_radar(rid)
+
+    assert (after.enabled, after.needs_attention) == (before.enabled, before.needs_attention)
+    assert after.next_run_after == before.next_run_after
+    assert after.failure_count == before.failure_count
+    assert after.last_run_at == before.last_run_at
+
+
+def test_concurrent_acquire_from_two_connections_has_one_winner(tmp_path):
+    """Dos conexiones SQLite independientes compitiendo: exactamente un ganador.
+
+    Reproduce el caso real (scheduler systemd vs. «Ejecutar ahora»): procesos
+    distintos, conexiones distintas, mismo archivo. Una Barrier sincroniza el
+    arranque — sin sleeps ni ventanas de tiempo que adivinar.
+    """
+    db_path = tmp_path / "concurrent.db"
+    seed = RadarStore(db_path)
+    rid = seed.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+
+    workers = 8
+    barrier = threading.Barrier(workers)
+    results: list = []
+    errors: list = []
+    lock = threading.Lock()
+
+    def contend() -> None:
+        # Cada worker con su propio RadarStore => su propia conexión SQLite.
+        store = RadarStore(db_path)
+        try:
+            barrier.wait()
+            claim = store.try_acquire_run_lease(rid, now=_t())
+        except Exception as exc:  # incluye OperationalError / database is locked
+            with lock:
+                errors.append(exc)
+            return
+        with lock:
+            results.append(claim)
+
+    threads = [threading.Thread(target=contend) for _ in range(workers)]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join(timeout=60)
+
+    assert errors == [], f"errores de concurrencia sin manejar: {errors}"
+    assert len(results) == workers
+    winners = [c for c in results if c.status == LEASE_ACQUIRED]
+    losers = [c for c in results if c.status == LEASE_ALREADY_RUNNING]
+    assert len(winners) == 1
+    assert len(losers) == workers - 1
+    # el token persistido es el del único ganador
+    assert seed.get_radar(rid).run_lease_token == winners[0].token
+
+
+def test_concurrent_release_and_acquire_never_double_owns(tmp_path):
+    """Ciclo tomar→liberar desde conexiones distintas: nunca hay dos dueños."""
+    db_path = tmp_path / "cycle.db"
+    seed = RadarStore(db_path)
+    rid = seed.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+
+    workers = 6
+    barrier = threading.Barrier(workers)
+    acquired: list = []
+    lock = threading.Lock()
+
+    def cycle() -> None:
+        store = RadarStore(db_path)
+        barrier.wait()
+        for _ in range(5):
+            claim = store.try_acquire_run_lease(rid, now=_t())
+            if claim.acquired:
+                with lock:
+                    acquired.append(claim.token)
+                # solo el dueño puede liberar
+                assert store.release_run_lease(rid, claim.token) is True
+
+    threads = [threading.Thread(target=cycle) for _ in range(workers)]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join(timeout=60)
+
+    assert len(acquired) == len(set(acquired)), "un token se entregó dos veces"
+    assert seed.get_radar(rid).run_lease_token is None
+
+
+# ── migración aditiva sobre bases pre-P1A ─────────────────────────────────
+
+_PRE_P1A_RADARS = """
+CREATE TABLE radars (
+    id                     TEXT PRIMARY KEY,
+    name                   TEXT NOT NULL,
+    description            TEXT NOT NULL DEFAULT '',
+    query_frame_json       TEXT NOT NULL,
+    dataset                TEXT,
+    frequency              TEXT NOT NULL DEFAULT 'manual',
+    channel                TEXT NOT NULL DEFAULT 'web',
+    enabled                INTEGER NOT NULL DEFAULT 1,
+    owner                  TEXT NOT NULL,
+    created_at             TEXT NOT NULL,
+    last_run_at            TEXT,
+    created_from_trace_id  TEXT,
+    last_error_at          TEXT,
+    last_error_message     TEXT,
+    UNIQUE (owner, name)
+);
+"""
+
+_LEASE_COLUMNS = {"run_lease_token", "run_lease_acquired_at", "run_lease_expires_at"}
+
+
+def _columns(db_path, table="radars") -> set[str]:
+    conn = sqlite3.connect(db_path)
+    try:
+        return {r[1] for r in conn.execute(f"PRAGMA table_info({table})")}
+    finally:
+        conn.close()
+
+
+def _seed_legacy_db(db_path) -> None:
+    conn = sqlite3.connect(db_path)
+    try:
+        conn.executescript(_PRE_P1A_RADARS)
+        conn.execute(
+            "INSERT INTO radars (id, name, query_frame_json, owner, created_at, "
+            "last_run_at) VALUES (?, ?, ?, ?, ?, ?)",
+            ("old-1", "Radar viejo", _frame_json(), "u1", "2026-01-01T00:00:00+00:00",
+             "2026-01-02T00:00:00+00:00"),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def test_legacy_db_gets_lease_columns_without_losing_data(tmp_path):
+    db_path = tmp_path / "legacy.db"
+    _seed_legacy_db(db_path)
+    assert not (_LEASE_COLUMNS & _columns(db_path))
+
+    store = RadarStore(db_path)
+
+    assert _LEASE_COLUMNS <= _columns(db_path)
+    radar = store.get_radar("old-1")
+    assert radar is not None
+    assert radar.name == "Radar viejo"
+    assert radar.last_run_at == "2026-01-02T00:00:00+00:00"
+    assert radar.run_lease_token is None
+
+
+def test_migration_is_idempotent(tmp_path):
+    """Abrir la base N veces no falla ni recrea la tabla."""
+    db_path = tmp_path / "legacy_twice.db"
+    _seed_legacy_db(db_path)
+
+    RadarStore(db_path)
+    RadarStore(db_path)
+    store = RadarStore(db_path)
+
+    assert _LEASE_COLUMNS <= _columns(db_path)
+    assert store.get_radar("old-1") is not None
+
+
+def test_legacy_radar_can_take_lease_after_migration(tmp_path):
+    db_path = tmp_path / "legacy_lease.db"
+    _seed_legacy_db(db_path)
+    store = RadarStore(db_path)
+
+    claim = store.try_acquire_run_lease("old-1", now=_t())
+    assert claim.acquired
+    assert store.try_acquire_run_lease("old-1", now=_t(60)).status == LEASE_ALREADY_RUNNING
