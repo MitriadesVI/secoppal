@@ -140,30 +140,50 @@ def snapshot_from_row(
 def evaluate(snapshot: AuthorizationSnapshot | None) -> AuthorizationDecision:
     """La matriz. ``None`` = no hay preferencia: nunca hubo consentimiento.
 
-    El orden es el que ya tenía el selector y se conserva a propósito: es el contrato
-    observable de ``SelectionResult.skipped_reason``, y cambiarlo reordenaría razones
-    que P1B-3 ya reporta.
+    **Precedencia: security_blocked → terminal → hold → authorized.** El orden
+    anterior era el inverso —los hold por delante de los terminal, y el mismatch al
+    final— y no filtraba nada (ninguna rama envía), pero clasificaba mal dos cosas
+    que importan:
+
+    - Un endpoint sin verificar **y revocado** salía ``endpoint_unverified`` (hold):
+      la revocación quedaba tapada, el batch se reevaluaba cada quince minutos y
+      acababa muriendo ``expired``. El ledger afirmaba "se nos hizo tarde" sobre una
+      persona que había retirado el consentimiento. Un registro de auditoría que
+      miente sobre una revocación es peor que no tenerlo.
+    - Un ``principal_mismatch`` combinado con cualquier hold o cualquier terminal
+      salía con la etiqueta del otro: un fallo de aislamiento se registraba como
+      rutina y ninguna alerta podía verlo.
+
+    **``None`` va primero por necesidad, no por precedencia.** Sin fila de preferencia
+    no hay endpoint ni radar que comparar: no existe un mismatch que ocultar, porque
+    no hay dos partes que puedan discrepar.
+
+    **El mismatch exige poder probarlo.** Con ``owner_principal_id is None`` el radar
+    no tiene dueño conocido: eso no es "de otra persona", es "no se sabe de quién", y
+    cae en ``owner_not_linked`` (hold). Afirmar mismatch sin las dos partes sería
+    inventar la acusación; autorizar sería inventar el permiso.
     """
     if snapshot is None:
         return _PREFERENCE_NOT_FOUND
+    if (snapshot.owner_principal_id is not None
+            and snapshot.owner_principal_id != snapshot.principal_id):
+        return _PRINCIPAL_MISMATCH
+    if snapshot.endpoint_revoked:
+        return _ENDPOINT_REVOKED
     if not snapshot.preference_enabled:
         return _PREFERENCE_DISABLED
+    if snapshot.radar_archived:
+        return _RADAR_ARCHIVED
+    if snapshot.principal_status != PRINCIPAL_ACTIVE:
+        return _PRINCIPAL_SUSPENDED
     if not snapshot.endpoint_verified:
         return _ENDPOINT_UNVERIFIED
     if not (snapshot.external_recipient_id or "").strip():
         return _ENDPOINT_MISSING_RECIPIENT
     if not snapshot.endpoint_enabled:
         return _ENDPOINT_DISABLED
-    if snapshot.endpoint_revoked:
-        return _ENDPOINT_REVOKED
-    if snapshot.principal_status != PRINCIPAL_ACTIVE:
-        return _PRINCIPAL_SUSPENDED
-    if snapshot.radar_archived:
-        return _RADAR_ARCHIVED
     if snapshot.owner_principal_id is None:
         return _OWNER_NOT_LINKED
-    if snapshot.owner_principal_id != snapshot.principal_id:
-        return _PRINCIPAL_MISMATCH
     return _AUTHORIZED
 
 

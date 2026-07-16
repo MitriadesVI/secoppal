@@ -20,6 +20,8 @@ uno por proximidad sería inventar consentimiento.
 """
 from __future__ import annotations
 
+from collections.abc import Callable
+from datetime import datetime, timezone
 import re
 import sqlite3
 from dataclasses import dataclass
@@ -29,12 +31,27 @@ from app.core.db import connect_sqlite
 from app.core.notify.schema import (
     DEFAULT_MAX_ITEMS,
     DEFAULT_TIMEZONE,
+    DEFERRED_FREQUENCIES,
     FREQUENCIES,
     FREQUENCY_PER_RUN,
     ensure_schema,
     new_id,
     now_iso,
 )
+
+# Puntos de inyección de fallo, igual que el resto de notify: existen para probar que
+# el opt-in revierte por completo en cada paso; en runtime el hook siempre es None.
+# Están puestos donde el estado empieza a ser observable, no donde sería cómodo.
+PHASE_AFTER_CURSOR_UPSERT = "after_cursor_upsert"
+PHASE_AFTER_ENABLE = "after_enable"
+PHASE_BEFORE_COMMIT = "before_commit"
+
+_FaultHook = Callable[[str], None]
+
+
+def _fire(hook: _FaultHook | None, phase: str) -> None:
+    if hook is not None:
+        hook(phase)
 
 _HHMM_RE = re.compile(r"^([01]\d|2[0-3]):[0-5]\d$")
 
@@ -72,6 +89,19 @@ class OwnerNotLinkedError(PreferenceError):
 
 class PrincipalMismatchError(PreferenceError):
     """El endpoint pertenece a una persona distinta de la dueña del radar."""
+
+
+class EndpointRevokedError(PreferenceError):
+    """El endpoint fue revocado: no se puede consentir sobre un destino retirado."""
+
+
+class UnsupportedPreferenceError(PreferenceError):
+    """La preferencia es expresable pero el sistema todavía no sabe cumplirla.
+
+    Distinta de ``PreferenceError`` a secas a propósito: no es un dato inválido que
+    el usuario deba corregir, es una función que aún no existe. Quien la capture
+    debe decir "todavía no", no "escribiste mal".
+    """
 
 
 @dataclass(frozen=True)
@@ -135,9 +165,47 @@ def _validate_max_items(value: int) -> None:
 
 
 def _validate_frequency(value: str) -> None:
-    if value not in FREQUENCIES:
-        raise PreferenceError(
-            f"Frecuencia inválida '{value}'. Válidas: {', '.join(FREQUENCIES)}."
+    """``per_run`` o nada. ``daily``/``weekly`` tienen su propio mensaje.
+
+    Aceptarlas y no implementarlas es peor que rechazarlas: la persona cree que pidió
+    un resumen diario y recibe uno por corrida. El sistema no puede prometer una
+    cadencia que nadie ejecuta.
+    """
+    if value in FREQUENCIES:
+        return
+    # ``FREQUENCIES`` es la **única** fuente de verdad sobre qué se acepta;
+    # ``DEFERRED_FREQUENCIES`` solo elige el mensaje. Si la pertenencia se preguntara
+    # primero contra la lista de diferidas, esa lista se convertiría en una segunda
+    # definición de lo permitido y las dos podrían discrepar: añadir 'daily' a
+    # ``FREQUENCIES`` dejaría de tener efecto aquí y el rechazo dependería de que
+    # alguien recordara mantener 'daily' también en la otra lista.
+    if value in DEFERRED_FREQUENCIES:
+        raise UnsupportedPreferenceError(
+            f"La frecuencia '{value}' todavía no está implementada: no existe "
+            f"cadencia de digest, así que aceptarla entregaría un mensaje por "
+            f"corrida bajo una etiqueta que promete otra cosa. Única frecuencia "
+            f"soportada: '{FREQUENCY_PER_RUN}'."
+        )
+    raise PreferenceError(
+        f"Frecuencia inválida '{value}'. Válidas: {', '.join(FREQUENCIES)}."
+    )
+
+
+def _validate_include_disappeared(value) -> None:
+    """El interruptor existe en la tabla, pero encenderlo no entrega nada.
+
+    Tres capas lo impiden hoy: ``runner.py`` nunca emite ``disappeared``, ningún
+    caller pasa ``confirmed_disappeared_keys`` a ``compute_diff``, y ``radar_events``
+    no tiene columna que confirme la desaparición. Ofrecerlo como opción sería vender
+    una función inexistente; el rechazo es la única respuesta honesta hasta que las
+    tres capas existan.
+    """
+    if bool(value):
+        raise UnsupportedPreferenceError(
+            "include_disappeared todavía no está disponible: el radar no genera ni "
+            "persiste desapariciones confirmadas de punta a punta, así que activarlo "
+            "no entregaría ninguna notificación. Se rechaza en vez de fingir que "
+            "funciona."
         )
 
 
@@ -188,6 +256,7 @@ class PreferenceStore:
         _validate_timezone(timezone)
         _validate_max_items(max_items)
         _validate_quiet_hours(quiet_hours_start, quiet_hours_end)
+        _validate_include_disappeared(include_disappeared)
 
         preference_id = new_id()
         ts = now_iso()
@@ -255,6 +324,28 @@ class PreferenceStore:
                 "enviaría las búsquedas de alguien más."
             )
 
+    def _assert_endpoint_not_revoked(
+        self, conn: sqlite3.Connection, endpoint_id: str
+    ) -> None:
+        """Revocado = destino retirado. No se consiente sobre él.
+
+        Solo se comprueba la revocación, no ``verified_at`` ni ``enabled``: esos dos
+        son condiciones reversibles que la matriz de autorización trata como *hold*
+        —el batch espera a que se resuelvan—, así que encender la preferencia antes de
+        verificar el destino es un flujo legítimo. La revocación no se resuelve sola.
+        """
+        row = conn.execute(
+            "SELECT revoked_at FROM notification_endpoints WHERE endpoint_id = ?",
+            (endpoint_id,),
+        ).fetchone()
+        if row is None:
+            raise PreferenceError(f"No existe el endpoint '{endpoint_id}'.")
+        if row["revoked_at"] is not None:
+            raise EndpointRevokedError(
+                f"El endpoint '{endpoint_id}' está revocado: no se puede encender "
+                f"una preferencia sobre un destino que la persona ya retiró."
+            )
+
     def get_preference(self, preference_id: str) -> Preference | None:
         conn = self._connect()
         try:
@@ -290,18 +381,132 @@ class PreferenceStore:
             conn.close()
         return [Preference.from_row(r) for r in rows]
 
-    def set_enabled(self, preference_id: str, enabled: bool) -> None:
-        """El opt-in explícito. Es su propia operación, no un campo de update:
-        encender notificaciones no es lo mismo que ajustar cuántos ítems ver."""
+    def enable_without_backfill(
+        self,
+        preference_id: str,
+        *,
+        now: datetime | None = None,
+        _fault_hook: _FaultHook | None = None,
+    ) -> Preference:
+        """El opt-in explícito: enciende la preferencia **y** planta su cursor en el
+        presente, atómicamente.
+
+        Encender sin plantar el cursor deja ``last_examined_seq`` en 0, y la primera
+        selección barre la historia entera del radar: el primer mensaje de alguien que
+        acaba de aceptar notificaciones sería un volcado de eventos que nunca
+        consintió recibir. Consentir "avísame" no es consentir "cuéntame todo lo que
+        pasó antes de que dijera que sí".
+
+        **Las dos escrituras son una sola transacción, y esa es toda la operación.**
+        Si el cursor se plantara en una transacción y el ``enabled=1`` en otra, entre
+        ambas existiría una ventana: un fallo tras la primera dejaría un cursor
+        avanzado sobre una preferencia apagada —historia perdida en silencio si
+        alguien la enciende luego—, y un fallo tras la segunda dejaría la preferencia
+        encendida con cursor en 0, que es exactamente el volcado que esto evita.
+
+        **Linearización.** ``BEGIN IMMEDIATE`` toma el lock de escritor, y en WAL solo
+        hay uno. Reservar un ``event_seq`` es un INSERT en ``radar_event_seq``, o sea
+        también una escritura: mientras esta transacción tiene el lock, nadie puede
+        reservar. Por tanto todo evento cae inequívocamente de un lado del corte —si
+        reservó antes, su commit precede a nuestro ``MAX(event_seq)`` y es historia;
+        si reserva después, su seq es mayor que el cursor y se notifica—. No hay
+        tercera posibilidad, y por eso ``MAX(event_seq)`` y ``enabled=1`` no pueden
+        vivir en transacciones distintas.
+
+        Revalida dentro del lock —radar, owner, endpoint, principal— porque entre
+        crear la preferencia y encenderla pueden haber pasado meses: el radar pudo
+        archivarse, el owner desvincularse o el endpoint revocarse. El permiso se
+        comprueba contra el estado del instante en que se concede, no contra el del
+        día en que se pidió.
+        """
+        moment = now or datetime.now(timezone.utc)
+        if moment.tzinfo is None or moment.utcoffset() is None:
+            raise PreferenceError(
+                "now debe incluir zona horaria: una marca naive comparada contra "
+                "marcas UTC ordena mal."
+            )
+        ts = moment.astimezone(timezone.utc).isoformat()
+
+        conn = self._connect()
+        try:
+            conn.execute("BEGIN IMMEDIATE")
+            try:
+                row = conn.execute(
+                    "SELECT radar_id, endpoint_id FROM radar_notification_preferences "
+                    "WHERE preference_id = ?",
+                    (preference_id,),
+                ).fetchone()
+                if row is None:
+                    raise PreferenceError(
+                        f"No existe la preferencia '{preference_id}'."
+                    )
+                radar_id, endpoint_id = row["radar_id"], row["endpoint_id"]
+                self._assert_same_principal(conn, radar_id, endpoint_id)
+                self._assert_endpoint_not_revoked(conn, endpoint_id)
+
+                max_seq = conn.execute(
+                    "SELECT COALESCE(MAX(event_seq), 0) AS max_seq FROM radar_events "
+                    "WHERE radar_id = ?",
+                    (radar_id,),
+                ).fetchone()["max_seq"]
+                conn.execute(
+                    "INSERT INTO radar_notification_cursors "
+                    "(endpoint_id, radar_id, last_examined_seq, updated_at) "
+                    "VALUES (?, ?, ?, ?) "
+                    "ON CONFLICT(endpoint_id, radar_id) DO UPDATE SET "
+                    "last_examined_seq = MAX(last_examined_seq, excluded.last_examined_seq), "
+                    "updated_at = excluded.updated_at",
+                    (endpoint_id, radar_id, int(max_seq), ts),
+                )
+                _fire(_fault_hook, PHASE_AFTER_CURSOR_UPSERT)
+
+                conn.execute(
+                    "UPDATE radar_notification_preferences "
+                    "SET enabled = 1, updated_at = ? WHERE preference_id = ?",
+                    (ts, preference_id),
+                )
+                _fire(_fault_hook, PHASE_AFTER_ENABLE)
+                _fire(_fault_hook, PHASE_BEFORE_COMMIT)
+                conn.execute("COMMIT")
+            except BaseException:
+                conn.execute("ROLLBACK")
+                raise
+        finally:
+            conn.close()
+
+        preference = self.get_preference(preference_id)
+        assert preference is not None
+        return preference
+
+    def disable(self, preference_id: str) -> None:
+        """Apaga la preferencia y **conserva el cursor**.
+
+        No borra batches, ni intentos, ni historial: apagar es dejar de recibir, no
+        reescribir lo que pasó. El cursor se conserva porque re-encender más tarde
+        debe seguir sin arrastrar historia; borrarlo convertiría un opt-out temporal
+        en el volcado que ``enable_without_backfill`` existe para impedir.
+        """
         conn = self._connect()
         try:
             conn.execute(
                 "UPDATE radar_notification_preferences "
-                "SET enabled = ?, updated_at = ? WHERE preference_id = ?",
-                (1 if enabled else 0, now_iso(), preference_id),
+                "SET enabled = 0, updated_at = ? WHERE preference_id = ?",
+                (now_iso(), preference_id),
             )
         finally:
             conn.close()
+
+    def set_enabled(self, preference_id: str, enabled: bool) -> None:
+        """Compatibilidad: delega, no duplica.
+
+        Encender tiene **una** ruta. Si esta hiciera su propio UPDATE, existirían dos
+        formas de encender una preferencia y solo una plantaría el cursor: la que
+        alguien olvidara usar sería la que volcara la historia.
+        """
+        if enabled:
+            self.enable_without_backfill(preference_id)
+            return
+        self.disable(preference_id)
 
     def update_preference(self, preference_id: str, **fields) -> None:
         """Actualiza solo campos de la whitelist, validando igual que el alta."""
@@ -315,6 +520,8 @@ class PreferenceStore:
             return
         if "frequency" in fields:
             _validate_frequency(fields["frequency"])
+        if "include_disappeared" in fields:
+            _validate_include_disappeared(fields["include_disappeared"])
         if "timezone" in fields:
             _validate_timezone(fields["timezone"])
         if "max_items" in fields:

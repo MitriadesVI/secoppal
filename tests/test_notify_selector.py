@@ -437,8 +437,126 @@ def test_invalid_timezone_rolls_back_batch_and_cursor(env):
 
 
 def test_expiration_map_uses_real_frequency_names():
+    """R2B-1A · Solo ``per_run`` tiene expiración, porque solo ``per_run`` existe.
+
+    Antes este test afirmaba las tres frecuencias, y era la prueba de que la
+    frecuencia **solo** tocaba el TTL: no había ninguna otra aserción sobre ``daily``
+    en toda la suite. El mapa de expiración era la única implementación de la
+    cadencia diaria, que es como no tener ninguna.
+    """
     assert expires_at_for_frequency(NOW, "per_run") == "2026-07-16T03:00:00+00:00"
-    assert expires_at_for_frequency(NOW, "daily") == "2026-07-17T03:00:00+00:00"
-    assert expires_at_for_frequency(NOW, "weekly") == "2026-07-23T15:00:00+00:00"
+    for deferred in ("daily", "weekly"):
+        with pytest.raises(SelectorError):
+            expires_at_for_frequency(NOW, deferred)
     with pytest.raises(SelectorError):
         expires_at_for_frequency(NOW, "cada_6h")
+
+
+# ── R2B-1A · fail closed ──────────────────────────────────────────────────
+
+def _force_column(env, column, value):
+    """Escribe por SQL directo lo que el store ya no acepta.
+
+    Es la única forma de construir la fila heredada que este bloque debe defender:
+    el store la rechaza desde R2B-1A, así que sin esta puerta trasera el caso sería
+    inconstruible y el fail-closed no tendría prueba.
+    """
+    conn = connect_sqlite(env["db"])
+    try:
+        conn.execute(
+            f"UPDATE radar_notification_preferences SET {column} = ? "
+            f"WHERE preference_id = ?",
+            (value, env["preference"]),
+        )
+    finally:
+        conn.close()
+
+
+def _cursor_of(env):
+    conn = connect_sqlite(env["db"])
+    try:
+        row = conn.execute(
+            "SELECT last_examined_seq FROM radar_notification_cursors "
+            "WHERE endpoint_id = ? AND radar_id = ?",
+            (env["endpoint"], env["radar"]),
+        ).fetchone()
+    finally:
+        conn.close()
+    return None if row is None else row["last_examined_seq"]
+
+
+def test_legacy_include_disappeared_skips_without_advancing_cursor(env):
+    """12 · Preferencia heredada con include_disappeared=1 → ni batch ni cursor.
+
+    El peligro no es entregar una desaparición —``is_event_eligible`` ya las descarta
+    una a una—: es entregar **el resto** de los eventos y avanzar el cursor como si la
+    preferencia se hubiera cumplido. Eso enterraría para siempre la diferencia entre
+    "no hubo desapariciones" y "no sabemos verlas".
+    """
+    _events(env, ["new", "changed_state"])
+    _force_column(env, "include_disappeared", 1)
+    cursor_before = _cursor_of(env)
+
+    result = env["selector"].select_pair(env["endpoint"], env["radar"], now=NOW)
+
+    assert result.skipped_reason == "include_disappeared_unsupported"
+    assert (result.created, result.notification_id) == (False, None)
+    assert result.associated == 0
+    assert _cursor_of(env) == cursor_before
+    assert env["outbox"].count_batches(radar_id=env["radar"]) == 0
+
+
+def test_legacy_include_disappeared_resumes_once_cleared(env):
+    """El skip es por estado, no una lápida: apagarlo devuelve el flujo normal."""
+    _events(env, ["new"])
+    _force_column(env, "include_disappeared", 1)
+    assert env["selector"].select_pair(
+        env["endpoint"], env["radar"], now=NOW
+    ).created is False
+
+    _force_column(env, "include_disappeared", 0)
+
+    result = env["selector"].select_pair(env["endpoint"], env["radar"], now=NOW)
+    assert result.created is True
+    assert result.associated == 1
+
+
+def test_unsupported_frequency_fails_closed_without_touching_cursor(env):
+    """Una frecuencia que este código no implementa no materializa nada.
+
+    Solo alcanzable por SQL directo sobre una base heredada —el CHECK vigente y el
+    store la rechazan—, así que el estado es imposible, no inesperado: se levanta en
+    vez de degradar a per_run, porque degradar sería entregar por corrida a quien
+    pidió otra cosa.
+    """
+    _events(env, ["new"])
+    cursor_before = _cursor_of(env)
+    conn = connect_sqlite(env["db"])
+    try:
+        # El CHECK vigente rechaza 'daily', así que la fila heredada se fabrica
+        # recreando la tabla sin él: es exactamente la base que el preflight de
+        # schema.py detecta, vista desde el selector.
+        conn.execute("PRAGMA writable_schema=ON")
+        conn.execute(
+            "UPDATE sqlite_master SET sql = REPLACE(sql, \"frequency = 'per_run'\", "
+            "\"frequency IN ('per_run','daily')\") "
+            "WHERE type='table' AND name='radar_notification_preferences'"
+        )
+        conn.execute("PRAGMA writable_schema=OFF")
+    finally:
+        conn.close()
+    conn = connect_sqlite(env["db"])
+    try:
+        conn.execute(
+            "UPDATE radar_notification_preferences SET frequency='daily' "
+            "WHERE preference_id = ?",
+            (env["preference"],),
+        )
+    finally:
+        conn.close()
+
+    with pytest.raises(SelectorError, match="frecuencia"):
+        env["selector"].select_pair(env["endpoint"], env["radar"], now=NOW)
+
+    assert _cursor_of(env) == cursor_before
+    assert env["outbox"].count_batches(radar_id=env["radar"]) == 0

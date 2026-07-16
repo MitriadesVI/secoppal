@@ -346,3 +346,153 @@ def test_16c_decision_repr_carries_no_recipient():
     """16c · La decisión que viaja a logs y métricas solo lleva vocabulario cerrado."""
     decision = evaluate(_valid(external_recipient_id="chat-secreto-123"))
     assert "chat-secreto-123" not in repr(decision)
+
+
+# ── R2B-1A · precedencia combinada ───────────────────────────────────────────────
+#
+# Los tests de arriba degradan **un** hecho cada uno, y por eso ninguno vio el
+# problema: con una sola condición activa, cualquier orden de la cadena da la misma
+# respuesta. La precedencia solo se observa cuando dos condiciones son ciertas a la
+# vez, que es justo lo que pasa en producción. Estos son esos casos.
+
+def test_13_mismatch_beats_preference_disabled():
+    """13 · Un fallo de aislamiento no se registra como una baja rutinaria.
+
+    Antes salía ``opted_out`` (terminal): la etiqueta decía "se dio de baja" sobre un
+    endpoint que pertenece a otra persona. Ninguna alerta podía verlo.
+    """
+    decision = evaluate(_valid(owner_principal_id="otra-persona",
+                               preference_enabled=False))
+    assert (decision.category, decision.reason) == (SECURITY_BLOCKED,
+                                                    "principal_mismatch")
+
+
+def test_14_mismatch_beats_endpoint_disabled():
+    """14 · Tampoco lo tapa un hold."""
+    decision = evaluate(_valid(owner_principal_id="otra-persona",
+                               endpoint_enabled=False))
+    assert (decision.category, decision.reason) == (SECURITY_BLOCKED,
+                                                    "principal_mismatch")
+
+
+def test_14b_mismatch_beats_every_other_condition_at_once():
+    """14b · La precedencia no depende de cuántas condiciones acompañen."""
+    decision = evaluate(_valid(
+        owner_principal_id="otra-persona", preference_enabled=False,
+        endpoint_revoked=True, endpoint_enabled=False, endpoint_verified=False,
+        radar_archived=True, principal_status="suspended",
+        external_recipient_id=None,
+    ))
+    assert (decision.category, decision.reason) == (SECURITY_BLOCKED,
+                                                    "principal_mismatch")
+
+
+def test_14c_unlinked_owner_is_not_a_mismatch():
+    """14c · Sin dueño conocido no hay dos partes que puedan discrepar.
+
+    ``owner_principal_id is None`` no es "de otra persona", es "no se sabe de quién".
+    Acusar de mismatch sería inventar la acusación; autorizar sería inventar el
+    permiso. Se sostiene como hold.
+    """
+    decision = evaluate(_valid(owner_principal_id=None))
+    assert (decision.category, decision.reason) == (HOLD, "owner_not_linked")
+
+
+def test_15_revoked_beats_unverified():
+    """15 · **El caso que motivó todo el reordenamiento.**
+
+    Antes daba ``endpoint_unverified`` (hold): la revocación quedaba tapada, el batch
+    se reevaluaba cada quince minutos y acababa muriendo por TTL como ``expired``. El
+    ledger terminaba afirmando "se nos hizo tarde" sobre una persona que había
+    retirado el consentimiento.
+    """
+    decision = evaluate(_valid(endpoint_revoked=True, endpoint_verified=False))
+    assert (decision.category, decision.reason, decision.dead_reason) == (
+        TERMINAL, "endpoint_revoked", "endpoint_revoked",
+    )
+
+
+def test_15b_revocation_can_never_be_recorded_as_expired():
+    """15b · La regla, no el caso: con el endpoint revocado, **ninguna** combinación
+    de condiciones reversibles puede devolver algo que no sea terminal.
+
+    Un hold habría dejado el batch vivo hasta el TTL, y su lápida habría sido
+    ``expired``. Que la decisión sea terminal es lo que garantiza que la causa que se
+    registra es la revocación.
+    """
+    for extra in (
+        {"endpoint_verified": False},
+        {"endpoint_enabled": False},
+        {"principal_status": "suspended"},
+        {"external_recipient_id": None},
+        {"owner_principal_id": None},
+    ):
+        decision = evaluate(_valid(endpoint_revoked=True, **extra))
+        assert decision.category == TERMINAL, extra
+        assert decision.dead_reason == "endpoint_revoked", extra
+
+
+def test_16_revoked_beats_preference_disabled():
+    """16 · Ambas son retiro de consentimiento; se reporta la más amplia.
+
+    La revocación es a nivel de canal —afecta a todos los radares—; el opt-out es a
+    nivel de este radar.
+    """
+    decision = evaluate(_valid(endpoint_revoked=True, preference_enabled=False))
+    assert (decision.category, decision.reason, decision.dead_reason) == (
+        TERMINAL, "endpoint_revoked", "endpoint_revoked",
+    )
+
+
+def test_17_archived_beats_suspended():
+    """17 · Terminal por encima de hold: el radar archivado no vuelve solo."""
+    decision = evaluate(_valid(radar_archived=True, principal_status="suspended"))
+    assert (decision.category, decision.reason, decision.dead_reason) == (
+        TERMINAL, "radar_archived", "radar_archived",
+    )
+
+
+def test_18_suspended_beats_unverified():
+    """18 · Entre dos holds, el de la persona por delante del de su destino."""
+    decision = evaluate(_valid(principal_status="suspended",
+                               endpoint_verified=False))
+    assert (decision.category, decision.reason) == (HOLD, "principal_suspended")
+
+
+def test_19_unknown_category_cannot_authorize():
+    """19 · Exhaustividad: toda decisión cae en una de las cuatro categorías, y
+    ninguna que no sea ``authorized`` deja enviar.
+
+    Es lo que permite al worker hacer dispatch sin rama por defecto: una categoría
+    nueva —o un typo— no puede convertirse en permiso de envío por omisión.
+    """
+    from app.core.notify.authorization import CATEGORIES
+
+    for snapshot in (
+        None,
+        _valid(),
+        _valid(owner_principal_id="otra-persona"),
+        _valid(endpoint_revoked=True),
+        _valid(preference_enabled=False),
+        _valid(radar_archived=True),
+        _valid(principal_status="suspended"),
+        _valid(endpoint_verified=False),
+        _valid(external_recipient_id=None),
+        _valid(endpoint_enabled=False),
+        _valid(owner_principal_id=None),
+    ):
+        decision = evaluate(snapshot)
+        assert decision.category in CATEGORIES
+        if decision.category != AUTHORIZED:
+            assert decision.reason is not None
+
+
+def test_precedence_holds_against_the_real_join(env):
+    """La precedencia no es una propiedad de los snapshots de laboratorio: se
+    comprueba contra el mismo join que el selector y el worker ejecutan."""
+    _sql(env, "UPDATE notification_endpoints SET revoked_at = ?, verified_at = NULL "
+              "WHERE endpoint_id = ?", ("2026-07-15T00:00:00+00:00", env["endpoint"]))
+
+    decision = _decide(env)
+
+    assert (decision.category, decision.reason) == (TERMINAL, "endpoint_revoked")

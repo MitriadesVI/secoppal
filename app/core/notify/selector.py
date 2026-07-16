@@ -30,7 +30,7 @@ from app.core.notify.outbox_store import (
     _create_batch_on_connection,
 )
 from app.core.notify.render import build_payload, render_payload
-from app.core.notify.schema import ensure_schema
+from app.core.notify.schema import FREQUENCIES, ensure_schema
 
 
 PHASE_AFTER_WINDOW_READ = "after_window_read"
@@ -143,11 +143,18 @@ def quiet_hours_not_before(
     return local_end.astimezone(timezone.utc).isoformat()
 
 
+# Solo ``per_run``. Las entradas ``daily``/``weekly`` que vivían aquí eran el único
+# efecto que la frecuencia tenía en todo el sistema: elegir "diario" no cambiaba
+# cuándo se entregaba, solo estiraba el TTL de 12 h a 36 h. Con una sola frecuencia
+# soportada, la expiración vuelve a ser lo que debe ser —cuánto tiempo el mensaje
+# sigue valiendo la pena— y deja de poder disfrazarse de cadencia.
 _EXPIRATION = {
     "per_run": timedelta(hours=12),
-    "daily": timedelta(hours=36),
-    "weekly": timedelta(days=8),
 }
+
+# Razón estable de skip. No es consentimiento —la persona sí dijo que sí—, así que no
+# entra en la matriz compartida: es una función que el runtime todavía no sabe cumplir.
+SKIP_INCLUDE_DISAPPEARED_UNSUPPORTED = "include_disappeared_unsupported"
 
 
 def expires_at_for_frequency(now: datetime, frequency: str) -> str:
@@ -238,11 +245,34 @@ class NotificationSelector:
                 ).fetchone()
                 cursor_before = int(cursor_row["last_examined_seq"]) if cursor_row else 0
                 reason = _target_skip_reason(target)
+                if reason is None and bool(target["include_disappeared"]):
+                    # Fila heredada, o escrita por SQL directo: el store la rechaza
+                    # desde R2B-1A, pero el schema todavía admite la columna en 1 y
+                    # este módulo no puede confiar en que todo el mundo pasó por el
+                    # store. ``is_event_eligible`` ya descartaría cada evento
+                    # ``disappeared`` uno a uno —``disappeared_confirmed`` no existe
+                    # como columna, así que siempre lee False—, pero eso entregaría un
+                    # batch con el resto de los eventos y avanzaría el cursor como si
+                    # la preferencia se hubiera respetado. Callar la diferencia entre
+                    # "no había desapariciones" y "no sabemos verlas" es la mentira
+                    # que este skip impide.
+                    reason = SKIP_INCLUDE_DISAPPEARED_UNSUPPORTED
                 if reason is not None:
                     conn.execute("ROLLBACK")
                     return SelectionResult(
                         endpoint_id, radar_id, 0, 0, 0, None,
                         cursor_before, cursor_before, False, reason,
+                    )
+                # Fail closed antes de leer la ventana: una frecuencia que este código
+                # no sabe cumplir no puede materializar nada. Solo llega aquí por SQL
+                # directo sobre una base heredada —el CHECK vigente y el store la
+                # rechazan—, y en ese caso el estado es imposible, no inesperado.
+                if target["frequency"] not in FREQUENCIES:
+                    raise SelectorError(
+                        f"La preferencia ({endpoint_id}, {radar_id}) tiene frecuencia "
+                        f"{target['frequency']!r}, que este código no implementa. No se "
+                        f"materializa nada: entregar por corrida bajo una etiqueta que "
+                        f"promete otra cadencia sería incumplir lo que la persona eligió."
                     )
 
                 rows = conn.execute(
@@ -362,6 +392,7 @@ __all__ = [
     "PHASE_AFTER_WINDOW_READ",
     "PHASE_BEFORE_COMMIT",
     "PHASE_BEFORE_CURSOR_UPDATE",
+    "SKIP_INCLUDE_DISAPPEARED_UNSUPPORTED",
     "SelectionResult",
     "SelectionTarget",
     "SelectorError",
