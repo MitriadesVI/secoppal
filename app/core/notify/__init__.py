@@ -25,9 +25,22 @@ P1B-3 — selección shadow-only:
 - ``render``   — payload congelado y texto puro por canal.
 - ``selector`` — cursor, consentimiento, quiet hours y materialización atómica.
 
+P1B-4 R2A — núcleo transaccional del worker:
+
+- ``authorization`` — la única definición de "¿se puede entregar esto ahora?",
+  compartida por el selector y el worker.
+- ``retry``         — aritmética pura del tiempo del claim (funciones puras).
+- ``worker_store``  — reclamar, autorizar+abrir intento, reconciliar huérfanos y
+  barrer expirados. Todo transaccional, nada de red.
+
 Este paquete **todavía no envía nada**: no hay worker ni proveedor. El selector
-solo materializa intenciones reales en el outbox.
+materializa intenciones reales en el outbox y ``worker_store`` prepara el terreno
+para que, cuando exista un worker, no pueda mentir sobre lo que pasó.
 """
+from app.core.notify.authorization import (
+    AuthorizationDecision,
+    AuthorizationSnapshot,
+)
 from app.core.notify.claim import is_owned as claim_is_owned
 from app.core.notify.claim import release as claim_release
 from app.core.notify.claim import try_claim
@@ -97,13 +110,38 @@ from app.core.notify.preference_store import (
     PrincipalMismatchError,
     RadarNotAvailableError,
 )
+from app.core.notify.retry import (
+    DEFAULT_CLAIM_DURATION,
+    DEFAULT_RECONCILIATION_CLAIM_DURATION,
+    claim_duration,
+    reconciliation_claim_duration,
+)
 from app.core.notify.schema import CHANNELS, FREQUENCIES, ensure_schema
+from app.core.notify.worker_store import (
+    ClaimedCandidate,
+    DispatchAuthorization,
+    ReconciliationClaim,
+    WorkerStore,
+    WorkerStoreConsistencyError,
+    WorkerStoreError,
+    external_idempotency_key,
+)
 
 __all__ = [
     "NOTIFICATION_POLICY_VERSION",
     "CHANNELS",
+    "DEFAULT_CLAIM_DURATION",
+    "DEFAULT_RECONCILIATION_CLAIM_DURATION",
     "FREQUENCIES",
     "AttemptNotDispatchingError",
+    "AuthorizationDecision",
+    "AuthorizationSnapshot",
+    "ClaimedCandidate",
+    "DispatchAuthorization",
+    "ReconciliationClaim",
+    "WorkerStore",
+    "WorkerStoreConsistencyError",
+    "WorkerStoreError",
     "BatchEventRef",
     "BatchMaterialization",
     "ClaimLostError",
@@ -142,10 +180,13 @@ __all__ = [
     "SelectorError",
     "batch_key",
     "canonical_event_set",
+    "claim_duration",
     "claim_is_owned",
     "claim_release",
     "ensure_schema",
     "expires_at_for_frequency",
+    "external_idempotency_key",
+    "reconciliation_claim_duration",
     "group_events",
     "idempotency_key",
     "is_event_eligible",

@@ -3,6 +3,10 @@
 La unidad central es ``select_pair(endpoint_id, radar_id)``. Cursor, lectura,
 batch, asociaciones y watermark comparten una conexión y un ``BEGIN IMMEDIATE``.
 No reclama batches, no crea intentos y no llama proveedores.
+
+El SQL del par y la matriz de consentimiento viven en ``authorization.py`` y se
+importan: el worker (P1B-4) revalida con exactamente los mismos, así que no puede
+enviar lo que este módulo no habría creado.
 """
 from __future__ import annotations
 
@@ -15,6 +19,8 @@ import sqlite3
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 from app.core.db import connect_sqlite
+from app.core.notify.authorization import TARGET_SQL as _TARGET_SQL
+from app.core.notify.authorization import skip_reason as _target_skip_reason
 from app.core.notify.grouping import SelectableRadarEvent, group_events
 from app.core.notify.outbox_store import (
     BatchEventRef,
@@ -154,20 +160,6 @@ def expires_at_for_frequency(now: datetime, frequency: str) -> str:
     return (now.astimezone(timezone.utc) + ttl).isoformat()
 
 
-_TARGET_SQL = """
-SELECT pref.*, e.principal_id, e.channel, e.verified_at,
-       e.external_recipient_id, e.enabled AS endpoint_enabled, e.revoked_at,
-       p.status AS principal_status,
-       r.name AS radar_name, r.archived_at, r.owner,
-       pok.principal_id AS owner_principal_id
-  FROM radar_notification_preferences pref
-  JOIN notification_endpoints e ON e.endpoint_id = pref.endpoint_id
-  JOIN principals p ON p.principal_id = e.principal_id
-  JOIN radars r ON r.id = pref.radar_id
-  LEFT JOIN principal_owner_keys pok ON pok.owner_key = r.owner
- WHERE pref.endpoint_id = ? AND pref.radar_id = ?
-"""
-
 _WINDOW_SQL = """
 SELECT e.*
   FROM radar_events e
@@ -181,30 +173,6 @@ SELECT e.*
  ORDER BY e.event_seq ASC
  LIMIT ?
 """
-
-
-def _target_skip_reason(row: sqlite3.Row | None) -> str | None:
-    if row is None:
-        return "preference_not_found"
-    if not row["enabled"]:
-        return "preference_disabled"
-    if row["verified_at"] is None:
-        return "endpoint_unverified"
-    if not (row["external_recipient_id"] or "").strip():
-        return "endpoint_missing_recipient"
-    if not row["endpoint_enabled"]:
-        return "endpoint_disabled"
-    if row["revoked_at"] is not None:
-        return "endpoint_revoked"
-    if row["principal_status"] != "active":
-        return "principal_suspended"
-    if row["archived_at"] is not None:
-        return "radar_archived"
-    if row["owner_principal_id"] is None:
-        return "owner_not_linked"
-    if row["owner_principal_id"] != row["principal_id"]:
-        return "principal_mismatch"
-    return None
 
 
 def _event_from_row(row: Mapping) -> SelectableRadarEvent:

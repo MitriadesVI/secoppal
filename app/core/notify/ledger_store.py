@@ -67,6 +67,55 @@ def _fire(hook: _FaultHook | None, phase: str) -> None:
         hook(phase)
 
 
+def _insert_dispatching_attempt_on_connection(
+    conn: sqlite3.Connection,
+    *,
+    notification_id: str,
+    started_at: str,
+    _fault_hook: _FaultHook | None = None,
+) -> str:
+    """Abre un intento ``dispatching`` sobre una transacción que es del caller.
+
+    Mismo patrón que ``outbox_store._create_batch_on_connection``: no abre conexión,
+    no ejecuta BEGIN, COMMIT ni ROLLBACK, y no revierte nada — si falla, revierte el
+    caller, que es quien tiene la transacción. Existe porque ``begin_attempt`` (P1B-2)
+    y ``worker_store.authorize_and_begin_dispatch`` (P1B-4) tienen que producir
+    exactamente el mismo intento: dos INSERT distintos del mismo hecho acabarían
+    numerando distinto, y ``attempt_count`` dejaría de contar llamadas al proveedor.
+
+    **No valida autorización ni claim**, a propósito: el caller ya decidió que puede
+    escribir, y meter aquí esa validación daría dos reglas de propiedad —la del ledger
+    y la del worker— que podrían discrepar. Por eso tampoco es público: no debe existir
+    una puerta que inserte intentos sin que alguien haya comprobado el claim antes.
+    """
+    row = conn.execute(
+        "SELECT attempt_count FROM radar_notification_batches "
+        "WHERE notification_id = ?",
+        (notification_id,),
+    ).fetchone()
+    if row is None:
+        raise LedgerError(
+            f"El batch '{notification_id}' no existe: no se puede abrir un intento "
+            f"sobre una intención de entrega que no está registrada."
+        )
+    attempt_number = row["attempt_count"] + 1
+    conn.execute(
+        "UPDATE radar_notification_batches SET attempt_count = ? "
+        "WHERE notification_id = ?",
+        (attempt_number, notification_id),
+    )
+    _fire(_fault_hook, PHASE_AFTER_ATTEMPT_COUNT_UPDATE)
+    attempt_id = _new_id()
+    conn.execute(
+        "INSERT INTO radar_delivery_attempts "
+        "(attempt_id, notification_id, attempt_number, phase, started_at) "
+        "VALUES (?, ?, ?, 'dispatching', ?)",
+        (attempt_id, notification_id, attempt_number, started_at),
+    )
+    _fire(_fault_hook, PHASE_AFTER_ATTEMPT_INSERT)
+    return attempt_id
+
+
 @dataclass(frozen=True)
 class DeliveryAttempt:
     attempt_id: str
@@ -127,14 +176,13 @@ class LedgerStore:
         defecto usa el reloj real.
         """
         conn = self._connect()
-        attempt_id = _new_id()
         now_iso = (now or datetime.now(timezone.utc)).astimezone(timezone.utc).isoformat()
         try:
             conn.execute("BEGIN IMMEDIATE")
             try:
                 _fire(_fault_hook, PHASE_AFTER_BEGIN)
                 row = conn.execute(
-                    "SELECT status, claim_token, claim_until, attempt_count FROM "
+                    "SELECT status, claim_token, claim_until FROM "
                     "radar_notification_batches WHERE notification_id = ?",
                     (notification_id,),
                 ).fetchone()
@@ -147,21 +195,12 @@ class LedgerStore:
                         f"(vigente) por este token: no se puede abrir un "
                         f"intento sin claim vigente."
                     )
-                attempt_number = row["attempt_count"] + 1
-                conn.execute(
-                    "UPDATE radar_notification_batches SET attempt_count = ? "
-                    "WHERE notification_id = ?",
-                    (attempt_number, notification_id),
+                attempt_id = _insert_dispatching_attempt_on_connection(
+                    conn,
+                    notification_id=notification_id,
+                    started_at=started_at or _now_iso(),
+                    _fault_hook=_fault_hook,
                 )
-                _fire(_fault_hook, PHASE_AFTER_ATTEMPT_COUNT_UPDATE)
-                conn.execute(
-                    "INSERT INTO radar_delivery_attempts "
-                    "(attempt_id, notification_id, attempt_number, phase, "
-                    " started_at) VALUES (?, ?, ?, 'dispatching', ?)",
-                    (attempt_id, notification_id, attempt_number,
-                     started_at or _now_iso()),
-                )
-                _fire(_fault_hook, PHASE_AFTER_ATTEMPT_INSERT)
                 _fire(_fault_hook, PHASE_BEFORE_COMMIT)
                 conn.execute("COMMIT")
             except BaseException:

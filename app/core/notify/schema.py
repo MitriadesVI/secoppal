@@ -151,6 +151,28 @@ CREATE INDEX IF NOT EXISTS idx_batches_claimable
 CREATE INDEX IF NOT EXISTS idx_batches_key
     ON radar_notification_batches(batch_key);
 
+-- P1B-4. Ambos aditivos: ningún ALTER TABLE, ninguna tabla recreada, ningún
+-- backfill. Las filas existentes conservan ``external_idempotency_key`` NULL y el
+-- índice único parcial las ignora todas.
+--
+-- La unicidad de la clave externa la hace cumplir la base, no el worker: es la
+-- afirmación "esta clave identifica un solo batch" y, si algún día la fórmula
+-- dejara de ser inyectiva, queremos un IntegrityError, no dos mensajes que el
+-- proveedor cree el mismo. El ``WHERE ... IS NOT NULL`` es obligatorio: sin él,
+-- SQLite trataría cada NULL como distinto en un índice único —cierto— pero el
+-- índice cargaría con todas las filas aún no autorizadas sin decir nada de ellas.
+CREATE UNIQUE INDEX IF NOT EXISTS idx_batches_external_idem
+    ON radar_notification_batches(external_idempotency_key)
+    WHERE external_idempotency_key IS NOT NULL;
+
+-- El sweep y la búsqueda de candidatos filtran por estado y comparan expiración.
+-- ``idx_batches_claimable(status, not_before)`` no sirve para eso: su segunda
+-- columna es la equivocada. No se añade ``claim_until`` como tercera columna: el
+-- sweep ya llega a la fila por este índice y el resto del predicado se resuelve
+-- sobre ella.
+CREATE INDEX IF NOT EXISTS idx_batches_expiry
+    ON radar_notification_batches(status, expires_at);
+
 -- Asociación evento↔batch: la cadena de trazabilidad. ``event_id`` sin FK
 -- (``radar_events`` se borra en CASCADE con su radar; el ledger no). La
 -- UNIQUE(endpoint_id, event_id) es la que cierra el doble notificador: la PK
