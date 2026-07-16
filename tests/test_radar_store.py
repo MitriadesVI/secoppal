@@ -248,20 +248,9 @@ def test_transient_resets_streak_not_failure_count(store):
     assert radar.is_enabled
 
 
-def test_success_does_not_silently_reenable_disabled_radar(store):
-    rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
-    store.record_failure(rid, reason="guard_no_scope_or_topic", message="p1", permanent=True)
-    store.record_failure(rid, reason="guard_no_scope_or_topic", message="p2", permanent=True)
-    store.record_failure(rid, reason="guard_no_scope_or_topic", message="p3", permanent=True)
-    assert not store.get_radar(rid).is_enabled
-
-    store.update_last_run(rid)
-
-    radar = store.get_radar(rid)
-    assert radar.failure_count == 0
-    assert radar.permanent_failure_streak == 0
-    assert radar.needs_attention == 0
-    assert not radar.is_enabled  # update_last_run no reactiva silenciosamente
+# El escenario "update_last_run sobre radar pausado" vive ahora en el bloque de
+# Preflight 3 (test_update_last_run_preserves_attention_and_enabled): mismo
+# montaje, y además cubre la alerta, los errores y el backoff.
 
 
 def test_permanent_streak_counts_regardless_of_differing_reasons(store):
@@ -805,27 +794,142 @@ def test_materialize_success_extends_lease_window(store, leased):
     assert after == (renew_at + LEASE_DURATION).isoformat()
 
 
-def test_materialize_success_clears_needs_attention_characterization(store, leased):
-    """Caracterización: hoy una corrida OK limpia needs_attention.
+# ── P1B-Preflight 3 · needs_attention es sticky ───────────────────────────
+#
+# Un éxito prueba recuperación *técnica*: que SECOP respondió y la consulta
+# corrió. No prueba que alguien entendiera ni corrigiera la causa que exigió
+# revisión. Por eso el camino de éxito reinicia contadores/errores/backoff y
+# deja intactos los dos ejes que son decisión humana: needs_attention (la
+# alerta) y enabled (la autorización a correr solo).
 
-    Preflight 3 cambiará esto (una corrida OK no debería borrar la necesidad
-    de revisión humana). El test congela la semántica actual para que ese
-    cambio sea deliberado y visible, no un efecto colateral de este refactor.
+
+def _alerted_and_paused(store, rid) -> None:
+    """Deja el radar en el estado del contrato: 3 permanentes → alerta + pausa."""
+    for i in range(3):
+        store.record_failure(
+            rid, reason="guard_no_scope_or_topic", message=f"p{i}", permanent=True,
+            next_run_after="2999-01-01T00:00:00+00:00",
+        )
+    radar = store.get_radar(rid)
+    assert (radar.needs_attention, radar.enabled) == (1, 0)
+    assert (radar.failure_count, radar.permanent_failure_streak) == (3, 3)
+
+
+def _release_and_reacquire(store, rid, token: str) -> str:
+    """record_failure no toca el lease, pero sí lo consume el fixture."""
+    claim = store.try_acquire_run_lease(rid)
+    return claim.token if claim.acquired else token
+
+
+def test_materialize_success_preserves_needs_attention_on_paused_radar(store, leased):
+    """Contrato central: éxito sobre radar pausado NO reactiva ni reconoce.
+
+    Antes de Preflight 3 la corrida OK borraba needs_attention, así que el
+    radar quedaba pausado *sin* el indicador que explicaba por qué. Ahora el
+    éxito limpia solo el estado técnico.
     """
     rid, token = leased
-    for _ in range(3):
-        store.record_failure(rid, reason="guard_no_scope_or_topic",
-                             message="p", permanent=True)
-    assert store.get_radar(rid).needs_attention == 1
-    store.set_enabled(rid, True)
-    claim = store.try_acquire_run_lease(rid)  # re-tomar: record_failure no toca lease
-    token = claim.token if claim.acquired else token
+    _alerted_and_paused(store, rid)
+    token = _release_and_reacquire(store, rid, token)
 
     _materialize_success(store, rid, token)
 
     radar = store.get_radar(rid)
-    assert radar.needs_attention == 0        # semántica actual, cambia en Preflight 3
-    assert radar.is_enabled                  # no se toca enabled aquí
+    assert radar.needs_attention == 1        # la alerta humana sobrevive al éxito
+    assert radar.enabled == 0                # sin reactivación silenciosa
+    assert radar.failure_count == 0
+    assert radar.permanent_failure_streak == 0
+    assert radar.last_error_at is None
+    assert radar.last_error_message is None
+    assert radar.last_failure_reason is None
+    assert radar.next_run_after is None
+    assert radar.last_run_at
+
+
+def test_materialize_success_after_explicit_reactivation_keeps_attention(store, leased):
+    """Reactivar y reconocer son decisiones distintas.
+
+    El operador habilitó el radar a propósito; eso no dice que haya revisado
+    la causa. La alerta sigue en pie hasta que exista una acción explícita que
+    la reconozca (deuda de P1B).
+    """
+    rid, token = leased
+    _alerted_and_paused(store, rid)
+    store.set_enabled(rid, True)
+    token = _release_and_reacquire(store, rid, token)
+
+    _materialize_success(store, rid, token)
+
+    radar = store.get_radar(rid)
+    assert radar.enabled == 1                # lo puso el operador, no el éxito
+    assert radar.needs_attention == 1        # y el éxito tampoco lo reconoce
+    assert radar.failure_count == 0
+    assert radar.permanent_failure_streak == 0
+    assert radar.last_failure_reason is None
+    assert radar.next_run_after is None
+
+
+def test_materialize_success_leaves_unalerted_radar_unalerted(store, leased):
+    """La contracara: preservar no es *encender*. Sin alerta previa, sigue en 0."""
+    rid, token = leased
+    store.record_failure(rid, reason="socrata_timeout", message="t", permanent=False)
+    assert store.get_radar(rid).needs_attention == 0
+    token = _release_and_reacquire(store, rid, token)
+
+    _materialize_success(store, rid, token)
+
+    radar = store.get_radar(rid)
+    assert radar.needs_attention == 0
+    assert radar.enabled == 1
+    assert radar.failure_count == 0
+
+
+def test_update_last_run_preserves_attention_and_enabled(store):
+    """update_last_run comparte la sentencia, luego comparte la semántica.
+
+    Es la otra puerta a _mark_success; si divergiera, existirían dos
+    definiciones de "corrida OK" y una de ellas borraría la alerta.
+    """
+    rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+    _alerted_and_paused(store, rid)
+
+    store.update_last_run(rid)
+
+    radar = store.get_radar(rid)
+    assert radar.needs_attention == 1
+    assert radar.enabled == 0            # tampoco reactiva silenciosamente
+    assert radar.failure_count == 0
+    assert radar.permanent_failure_streak == 0
+    assert radar.last_error_message is None
+    assert radar.last_failure_reason is None
+    assert radar.next_run_after is None
+    assert radar.last_run_at
+
+
+def test_transient_failure_after_attention_does_not_clear_it(store):
+    """Un fallo no reconoce la alerta: solo el transitorio corta la racha."""
+    rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+    _alerted_and_paused(store, rid)
+
+    store.record_failure(rid, reason="socrata_timeout", message="t", permanent=False)
+
+    radar = store.get_radar(rid)
+    assert radar.needs_attention == 1
+    assert radar.permanent_failure_streak == 0   # el transitorio sí corta la racha
+    assert radar.failure_count == 4
+
+
+def test_mark_success_sql_writes_neither_attention_nor_enabled():
+    """Estructural: la sentencia de éxito no menciona los ejes humanos.
+
+    El test de estado prueba el resultado; este prueba que no hay forma de
+    llegar a él por accidente —ni con un CASE condicionado a enabled, que
+    haría que un radar reactivado se auto-reconociera.
+    """
+    sql = store_module._MARK_SUCCESS_SQL
+    assert "needs_attention" not in sql
+    assert "enabled" not in sql
+    assert "permanent_failure_streak = 0" in sql
 
 
 # ── identidad de eventos: derivada de la transacción, no del caller ───────
@@ -906,6 +1010,30 @@ def test_exception_in_any_phase_rolls_back_everything(store, leased, phase):
     assert after["events"] == []
     assert after["seen"] == before["seen"]
     assert after["radar"] == before["radar"]
+
+
+def test_rollback_of_success_leaves_alerted_state_untouched(store, leased):
+    """Preflight 1 + 3: el todo-o-nada tampoco puede tocar los ejes humanos.
+
+    El parametrizado de arriba corre sobre un radar limpio, donde preservar y
+    revertir se ven igual. Aquí el estado previo es el del contrato (alerta +
+    pausa + racha), así que un rollback parcial sería visible.
+    """
+    rid, token = leased
+    _alerted_and_paused(store, rid)
+    token = _release_and_reacquire(store, rid, token)
+    before = _read_state(store.db_path, rid)
+
+    with pytest.raises(_Boom):
+        _materialize_success(store, rid, token, hook=_hook_at(PHASE_BEFORE_COMMIT))
+
+    after = _read_state(store.db_path, rid)
+    assert after["runs"] == []
+    assert after["events"] == []
+    assert after["radar"] == before["radar"]              # racha y alerta intactas
+    assert after["radar"]["needs_attention"] == 1
+    assert after["radar"]["enabled"] == 0
+    assert after["radar"]["permanent_failure_streak"] == 3
 
 
 def test_exception_after_seen_upserts_does_not_lose_novelty(store, leased):
@@ -1271,6 +1399,32 @@ def test_follows_refresh_writes_no_run_and_no_radar_state(store, follows_leased)
     assert after["radar"]["needs_attention"] == before["needs_attention"]
     assert after["radar"]["last_run_at"] == before["last_run_at"]
     assert after["radar"]["next_run_after"] == before["next_run_after"]
+
+
+def test_follows_refresh_does_not_apply_search_radar_success(store, follows_leased):
+    """Regresión de Preflight 3: follows sigue sin tocar el estado del radar.
+
+    El test de arriba parte de un radar sin alerta, donde "no aplicar la
+    semántica de éxito" y "aplicarla" difieren poco. Con alerta y pausa puestas,
+    un _MARK_SUCCESS_SQL colado aquí se vería en failure_count y last_run_at.
+    """
+    rid, token = follows_leased
+    _alerted_and_paused(store, rid)
+    before = _read_state(store.db_path, rid)["radar"]
+    token = _release_and_reacquire(store, rid, token)
+
+    result = store.materialize_follows_refresh(
+        radar_id=rid, token=token, updates=[_follows_update("K-1")],
+    )
+
+    assert result.lease_lost is False
+    after = _read_state(store.db_path, rid)["radar"]
+    assert after["failure_count"] == before["failure_count"] == 3
+    assert after["permanent_failure_streak"] == before["permanent_failure_streak"] == 3
+    assert after["needs_attention"] == before["needs_attention"] == 1
+    assert after["enabled"] == before["enabled"] == 0
+    assert after["last_run_at"] == before["last_run_at"]
+    assert after["next_run_after"] == before["next_run_after"]
 
 
 def test_follows_refresh_events_use_null_run_id_but_seen_gets_the_sentinel(

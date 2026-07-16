@@ -504,15 +504,23 @@ UPDATE radar_seen_results
    AND first_seen_at = ?
 """
 
-# Éxito: limpia error y ambos contadores. No toca enabled ni resucita un radar
-# pausado a mano. needs_attention = 0 es la semántica *actual*; Preflight 3 la
-# cambiará (una corrida OK no debe borrar la necesidad de revisión humana), y
-# hay un test de caracterización que la congela hasta entonces.
+# Éxito: limpia error y ambos contadores. Deliberadamente NO toca dos columnas
+# que no son estado técnico (P1B-Preflight 3):
+#
+# - ``enabled``: reactivar es decisión del operador, no consecuencia de que
+#   SECOP volviera a responder. Un radar pausado sigue pausado.
+# - ``needs_attention``: es una alerta *humana*. Una corrida OK prueba que la
+#   consulta se pudo ejecutar, no que alguien entendiera ni corrigiera la causa
+#   que exigía revisión. Solo una acción explícita de reconocimiento puede
+#   bajarla; esa acción todavía no existe (deuda de P1B).
+#
+# Los dos ejes son independientes: needs_attention se preserva igual con
+# enabled=0 que con enabled=1, sin CASE ni condicional de por medio.
 _MARK_SUCCESS_SQL = """
 UPDATE radars
    SET last_run_at = ?, last_error_at = NULL, last_error_message = NULL,
        failure_count = 0, last_failure_reason = NULL, next_run_after = NULL,
-       needs_attention = 0, permanent_failure_streak = 0
+       permanent_failure_streak = 0
  WHERE id = ?
 """
 
@@ -554,11 +562,15 @@ def _insert_run(conn: sqlite3.Connection, radar_id: str, run: RunRecord) -> str:
 def _insert_event_dicts(conn: sqlite3.Connection, events: list[dict]) -> None:
     """Inserta eventos ya armados como dicts completos (todas las columnas).
 
-    Usado por el registro genérico (``record_events``, consumido hoy por
-    ``follows.py``): ahí el caller es dueño legítimo de todos los campos,
-    incluida la identidad, porque no hay una transacción de por medio que
-    pueda validarla. La materialización transaccional NO llama a esta
-    función directamente — ver ``_insert_events`` abajo.
+    Usada por el registro genérico (``record_events``), donde el caller es dueño
+    de todos los campos —incluida la identidad— porque no hay transacción que
+    pueda derivarla. ``follows.py`` fue su último consumidor y dejó de serlo en
+    P1B-Preflight 2: sus dos rutas van por ``materialize_follow_if_absent`` y
+    ``materialize_follows_refresh``, que derivan la identidad dentro de su propia
+    transacción. Hoy ``record_events`` no tiene caller productivo.
+
+    La materialización de una corrida tampoco pasa por aquí: usa
+    ``_insert_events`` (abajo), que no acepta identidad del caller.
     """
     if not events:
         return
@@ -915,6 +927,13 @@ class RadarStore:
             conn.close()
 
     def update_last_run(self, radar_id: str, ts: str | None = None) -> None:
+        """Marca éxito fuera de una transacción de corrida.
+
+        Misma sentencia que usa ``materialize_successful_run`` (``_mark_success``),
+        para que no existan dos definiciones de "qué significa una corrida OK":
+        reinicia el estado técnico y deja intactos ``enabled`` y
+        ``needs_attention``.
+        """
         conn = self._connect()
         try:
             _mark_success(conn, radar_id, ts or _now())
@@ -1254,8 +1273,8 @@ class RadarStore:
 
         Operación propia y no ``materialize_successful_run`` porque follows no es
         una búsqueda: no tiene ``radar_run`` que insertar, y aquella limpiaría
-        ``failure_count``/``needs_attention`` y marcaría ``last_run_at``, que es
-        semántica de radar de búsqueda que este radar nunca tuvo.
+        ``failure_count``/``permanent_failure_streak`` y marcaría ``last_run_at``,
+        que es semántica de radar de búsqueda que este radar nunca tuvo.
 
         Comparte con ella lo que sí es común: el fence del lease como primera
         DML, la identidad de los eventos derivada dentro de la transacción, y el

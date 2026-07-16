@@ -597,6 +597,93 @@ def test_repeated_permanent_failures_mark_attention_and_pause(store):
     assert not stored.is_enabled
 
 
+# ── P1B-Preflight 3 · recuperación técnica ≠ reconocimiento humano ────────
+#
+# El ciclo completo por run_radar, no solo la sentencia: tres permanentes
+# alertan y pausan; el operador reactiva a mano; la corrida siguiente limpia
+# los contadores pero deja la alerta en pie, porque nadie confirmó todavía que
+# la causa se entendiera.
+
+
+def _broken_builder_deps(client):
+    """Deps cuyo SoQL revienta: fallo *permanente* (soql_build_error).
+
+    Un error del cliente nunca es permanente (timeout/503 son transitorios),
+    así que la vía para alternar permanente↔éxito sobre el mismo radar —sin
+    romper su frame, que lo dejaría permanentemente roto— es el builder.
+    """
+    deps = _deps(client)
+    deps.soql_builder = SimpleNamespace(
+        build=_raise_build_error, build_count=_raise_build_error,
+    )
+    return deps
+
+
+def _raise_build_error(*_args, **_kwargs):
+    raise ValueError("builder roto")
+
+
+def _alert_and_pause(store, rid) -> None:
+    for _ in range(3):
+        run_radar(_broken_builder_deps(FakeClient([])), store, store.get_radar(rid))
+    stored = store.get_radar(rid)
+    assert (stored.needs_attention, stored.is_enabled) == (1, False)
+    assert stored.permanent_failure_streak == 3
+
+
+def test_empty_run_after_reactivation_preserves_attention(store):
+    """Un radar_empty tampoco reconoce la alerta: no encontró nada, y ya."""
+    radar = _make_radar(store)
+    _alert_and_pause(store, radar.id)
+    store.set_enabled(radar.id, True)
+
+    res = run_radar(_deps(FakeClient([])), store, store.get_radar(radar.id))
+
+    stored = store.get_radar(radar.id)
+    assert res.outcome == RADAR_EMPTY
+    assert stored.needs_attention == 1
+    assert stored.is_enabled
+    assert stored.failure_count == 0
+    assert stored.permanent_failure_streak == 0
+    assert stored.next_run_after is None
+
+
+def test_permanent_failure_after_recovery_restarts_streak_from_zero(store):
+    """La racha se reinicia con el éxito, pero la alerta no vuelve a cero.
+
+    Un permanente aislado tras recuperarse no debe re-pausar el radar: el
+    umbral cuenta desde el último éxito, no desde la última alerta.
+    """
+    radar = _make_radar(store)
+    _alert_and_pause(store, radar.id)
+    store.set_enabled(radar.id, True)
+    run_radar(_deps(FakeClient([_proc("P-1")])), store, store.get_radar(radar.id))
+    assert store.get_radar(radar.id).permanent_failure_streak == 0
+
+    run_radar(_broken_builder_deps(FakeClient([])), store, store.get_radar(radar.id))
+
+    stored = store.get_radar(radar.id)
+    assert stored.failure_count == 1
+    assert stored.permanent_failure_streak == 1
+    assert stored.needs_attention == 1       # nunca se limpió
+    assert stored.is_enabled                 # 1 < 3: no alcanzó el umbral otra vez
+
+
+def test_transient_failure_after_attention_does_not_clear_it(store):
+    """Ningún fallo reconoce la alerta; tampoco el que corta la racha."""
+    radar = _make_radar(store)
+    _alert_and_pause(store, radar.id)
+    store.set_enabled(radar.id, True)
+
+    run_radar(_deps(FakeClient([], query_error=RuntimeError("Socrata 503"))),
+              store, store.get_radar(radar.id))
+
+    stored = store.get_radar(radar.id)
+    assert stored.needs_attention == 1
+    assert stored.permanent_failure_streak == 0   # el transitorio corta la racha
+    assert stored.failure_count == 4
+
+
 def test_success_resets_failure_state(store):
     radar = _make_radar(store)
     run_radar(_deps(FakeClient([], query_error=RuntimeError("Socrata 503"))), store, radar)
@@ -1027,6 +1114,36 @@ def test_crash_while_materializing_run_leaves_no_trace(store, monkeypatch, phase
     assert _all_state(store, radar) == before
     # y el lease quedó libre: el finally sigue haciendo su trabajo
     assert store.get_radar(radar.id).run_lease_token is None
+
+
+def test_crash_on_empty_run_preserves_alerted_state_and_frees_lease(store, monkeypatch):
+    """Preflight 1 × 3, extremo a extremo: el caso más fácil de romper.
+
+    Un ``radar_empty`` casi no escribe —ni seen ni eventos, solo el run y el
+    estado— así que es donde un UPDATE de éxito suelto fuera de la transacción
+    pasaría inadvertido: no habría novedad perdida que lo delatara, solo una
+    alerta humana borrada por una corrida que ni siquiera llegó a commitear.
+    El radar está reactivado (``enabled=1``) y alertado (``needs_attention=1``),
+    que es el estado exacto donde ambos ejes pueden corromperse por separado.
+    """
+    radar = _make_radar(store)
+    _alert_and_pause(store, radar.id)
+    store.set_enabled(radar.id, True)
+    before = _all_state(store, radar)
+    assert before[3]["needs_attention"] == 1
+    assert before[3]["enabled"] == 1
+    assert before[3]["permanent_failure_streak"] == 3
+
+    _fail_at(store, "materialize_successful_run", "before_commit", monkeypatch)
+    with pytest.raises(_Boom):
+        run_radar(_deps(FakeClient([])), store, store.get_radar(radar.id))
+
+    after = _all_state(store, radar)
+    assert after == before                       # rollback total: ni el run vacío
+    assert after[3]["needs_attention"] == 1      # la alerta no se fue con el crash
+    assert after[3]["enabled"] == 1              # ni la reactivación del operador
+    assert after[3]["failure_count"] == 3        # ni los contadores se limpiaron
+    assert store.get_radar(radar.id).run_lease_token is None  # lease libre
 
 
 def test_crash_after_seen_does_not_swallow_the_novelty(store, monkeypatch):
