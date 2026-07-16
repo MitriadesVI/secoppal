@@ -341,3 +341,81 @@ def test_variant_explosion_adulto_mayor_underscore_stripped() -> None:
     # Variantes distintas deben estar presentes
     assert "%persona mayor%" in lower, "Falta LIKE '%persona mayor%'"
     assert "%personas mayores%" in lower, "Falta LIKE '%personas mayores%'"
+
+
+# ── Proyección de evento del radar (R2B-1B1) ────────────────────────────────
+# El SELECT debe traer los datos que el radar congela en cada evento. Nada más:
+# la ampliación es aditiva y no puede tocar filtro, orden ni corte.
+
+_RADAR_PARAMS = {
+    "departamento_resolved": "ATLANTICO",
+    "objeto": ["alimentacion"],
+}
+
+
+def test_procesos_select_includes_closing_date_exactly_once() -> None:
+    """La columna real de recepción de ofertas (DOGFOOD-DATE-002), una sola vez."""
+    soql = SoQLBuilder().build("p6dx-8zbt", dict(_RADAR_PARAMS))
+    select_clause = soql.split(" WHERE ")[0]
+    assert select_clause.count("fecha_de_recepcion_de_respuestas_al_in") == 1
+
+
+def test_procesos_closing_date_is_reception_not_publication() -> None:
+    """Mapping exacto: publicación y cierre son hechos distintos. Si el spec
+    apuntara a publicación, el radar anunciaría un cierre que nadie fijó."""
+    spec = SoQLBuilder.SPECS["p6dx-8zbt"]
+    assert spec.closing_date == "fecha_de_recepcion_de_respuestas_al_in"
+    assert spec.closing_date != spec.date          # date = publicación
+    assert spec.signature_date is None             # un proceso no se firma
+
+
+def test_contratos_select_keeps_modality_and_signature() -> None:
+    soql = SoQLBuilder().build("jbjy-vk9h", {"contratista": "ACME"})
+    select_clause = soql.split(" WHERE ")[0]
+    assert "modalidad_de_contratacion" in select_clause
+    assert "fecha_de_firma" in select_clause
+    assert "proveedor_adjudicado" in select_clause
+
+
+def test_contratos_spec_maps_signature_and_no_closing() -> None:
+    spec = SoQLBuilder.SPECS["jbjy-vk9h"]
+    assert spec.signature_date == "fecha_de_firma"
+    assert spec.closing_date is None               # un contrato ya no recibe ofertas
+    assert spec.contractor == "proveedor_adjudicado"
+
+
+def test_closing_date_column_does_not_leak_into_where_order_or_limit() -> None:
+    """La columna nueva vive SOLO en el SELECT: no filtra, no ordena, no corta."""
+    soql = SoQLBuilder().build("p6dx-8zbt", dict(_RADAR_PARAMS))
+    _, rest = soql.split(" WHERE ", 1)
+    assert "fecha_de_recepcion_de_respuestas_al_in" not in rest
+
+
+def test_closing_date_absent_from_count_query() -> None:
+    """build_count no proyecta columnas: mismo WHERE, sin SELECT de campos."""
+    soql = SoQLBuilder().build_count("p6dx-8zbt", dict(_RADAR_PARAMS))
+    assert "fecha_de_recepcion_de_respuestas_al_in" not in soql
+    assert soql.startswith("SELECT count(*) WHERE ")
+
+
+def test_radar_projection_preserves_where_order_and_limit() -> None:
+    """El resto de la consulta queda idéntico salvo por la columna autorizada."""
+    soql = SoQLBuilder().build(
+        "p6dx-8zbt",
+        {"departamento_resolved": "ATLANTICO", "objeto": ["vial"],
+         "estado": "Abierto", "ordering_signal": "valor_desc"},
+    )
+    assert "departamento_entidad = 'ATLANTICO'" in soql
+    assert "estado_de_apertura_del_proceso = 'Abierto'" in soql
+    assert ("ORDER BY precio_base DESC, fecha_de_publicacion_del DESC, "
+            "id_del_proceso DESC LIMIT 50") in soql
+
+
+def test_anti_global_guard_still_refuses_query_without_predicate() -> None:
+    """La proyección no relaja el guard: sin WHERE útil sigue siendo error."""
+    import pytest
+
+    from app.core.soql_builder import UnsafeGlobalQueryError
+
+    with pytest.raises(UnsafeGlobalQueryError):
+        SoQLBuilder().build("p6dx-8zbt", {"limit": 10})

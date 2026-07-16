@@ -10,6 +10,9 @@ Tres piezas:
   radar persiste (title, entity, value, status, urlproceso, referencia,
   contractor). Lee los nombres de campo de ``SoQLBuilder.SPECS`` para no
   hardcodearlos por dataset.
+- ``extract_event_metadata`` — proyecta los datos que describen un evento ya
+  decidido (modalidad, cierre, contratista, firma). NO participa en la decisión
+  de cambio: ver su docstring.
 - ``snapshot_hash``     — sha1 de los campos sensibles a cambio (estado y
   valor). Si el hash difiere entre corridas, hubo un cambio que el diff
   clasifica como ``changed_state`` o ``changed_value``.
@@ -69,6 +72,62 @@ def extract_fields(row: dict, dataset_id: str) -> dict:
         "referencia": _as_str(row.get(spec.reference)) if spec.reference else "",
         "contractor": contractor,
     }
+
+
+def extract_event_metadata(row: dict, dataset_id: str) -> dict:
+    """Proyecta los datos que describen un evento ya decidido. Función PURA.
+
+    Vive separada de ``extract_fields`` a propósito, y la separación es la regla
+    de negocio, no una preferencia de estilo:
+
+    - ``extract_fields``          → campos que DECIDEN si hubo cambio. Los lee el
+      diff (``status``) y ``snapshot_hash`` (``status``+``value``). Ampliarla
+      metería estos cuatro campos en esa decisión y un cambio de modalidad o de
+      fecha de cierre fingiría un ``changed_state``/``changed_value``.
+    - ``extract_event_metadata``  → campos que DESCRIBEN mejor un evento que ya
+      fue decidido. Nadie los compara; solo se congelan.
+
+    Se congelan en el evento porque ``radar_seen_results`` es estado actual
+    mutable: completar una notificación leyéndolo mostraría el valor de HOY junto
+    al cambio de AYER. El evento es un hecho fechado (``radar_events.ts``).
+
+    Los nombres de columna salen de ``SoQLBuilder.SPECS`` —nunca se adivinan— y
+    un dataset que no expone el hecho devuelve ``None`` (procesos no tiene firma;
+    contratos no tiene cierre de ofertas).
+
+    Falla CERRADO ante un dataset desconocido, y por eso no usa ``_spec()``: ese
+    helper cae al spec de procesos, así que una fila ajena que por casualidad
+    traiga ``modalidad_de_contratacion`` se leería como si fuera un proceso. Para
+    ``extract_fields`` ese fallback es comportamiento heredado que este bloque no
+    toca; para un hecho que se congela y luego se le muestra a alguien, adivinar
+    el dataset es peor que no saber.
+    """
+    spec = SoQLBuilder.SPECS.get(dataset_id)
+    if spec is None:
+        return {
+            "modality": None, "closing_date": None,
+            "contractor": None, "signature_date": None,
+        }
+    return {
+        "modality": _or_none(row, spec.modality),
+        "closing_date": _or_none(row, spec.closing_date),
+        "contractor": _or_none(row, spec.contractor),
+        "signature_date": _or_none(row, spec.signature_date),
+    }
+
+
+def _or_none(row: dict, field_name: str | None) -> str | None:
+    """Texto fuente del campo, o ``None`` si el dataset no lo expone o viene vacío.
+
+    ``""`` y ``"   "`` colapsan a ``None``: "presente pero vacío" y "ausente" son
+    el mismo hecho —no sabemos el dato— y guardarlos distinto obligaría a cada
+    lector a tratar ambos casos. Solo se recortan los bordes; el texto fuente se
+    conserva sin interpretar (no se parsean fechas, no se traducen modalidades).
+    """
+    if not field_name:
+        return None
+    value = _as_str(row.get(field_name))
+    return value or None
 
 
 def _value_token(raw_value: str) -> str:

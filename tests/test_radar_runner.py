@@ -1296,7 +1296,7 @@ def test_build_events_is_pure(store):
     # y de hecho devuelve los eventos en vez de escribirlos
     radar = _make_radar(store)
     events = runner_module._build_events(
-        "procesos", classify([], {}, "jbjy-vk9h"), [], 0, is_first_run=True,
+        "procesos", "jbjy-vk9h", classify([], {}, "jbjy-vk9h"), [], 0, is_first_run=True,
     )
     assert [e.kind for e in events] == ["baseline"]
     assert store.get_feed(radar.owner) == []          # nada persistido
@@ -1335,3 +1335,197 @@ def test_control_states_persist_nothing(store, state):
     for field_name in ("failure_count", "permanent_failure_streak", "next_run_after",
                        "last_run_at", "needs_attention", "enabled"):
         assert radar_state[field_name] == before[3][field_name]
+
+
+# ── proyección inmutable del evento (R2B-1B1) ──────────────────────────────
+# Cada evento congela los datos de la fila TAL COMO SE OBSERVÓ al emitirlo. La
+# notificación los leerá de aquí y nunca de radar_seen_results, que para cuando
+# el mensaje se arma ya describe el estado de HOY, no el del evento.
+
+_MODALIDAD = "Licitación pública"
+_CIERRE = "2026-08-20T17:00:00.000"
+
+
+def _proc_meta(pid, estado="Abierto", valor="1000000",
+               modalidad=_MODALIDAD, cierre=_CIERRE):
+    """Proceso con la metadata que SECOP II expone para procesos."""
+    row = _proc(pid, estado=estado, valor=valor)
+    row["modalidad_de_contratacion"] = modalidad
+    row["fecha_de_recepcion_de_respuestas_al_in"] = cierre
+    return row
+
+
+def _cont(cid, estado="En ejecución", valor="5000000",
+          contratista="UNION TEMPORAL PAE 2026", firma="2026-03-11T00:00:00.000"):
+    """Fila cruda de contratos (jbjy-vk9h)."""
+    return {
+        "id_contrato": cid,
+        "referencia_del_contrato": f"RC-{cid}",
+        "objeto_del_contrato": "Suministro PAE escolar",
+        "nombre_entidad": "ALCALDIA DE BARRANQUILLA",
+        "departamento": "ATLÁNTICO",
+        "valor_del_contrato": valor,
+        "estado_contrato": estado,
+        "modalidad_de_contratacion": "Contratación directa",
+        "proveedor_adjudicado": contratista,
+        "fecha_de_firma": firma,
+        "urlproceso": f"http://secop/{cid}",
+    }
+
+
+def _make_contratos_radar(store):
+    params = {"objeto": ["alimentacion_escolar"],
+              "departamento_resolved": "ATLÁNTICO", "dataset": "contratos"}
+    frame_json = json.dumps(dataclasses.asdict(frame_from_params(params)))
+    rid = store.create_radar(
+        name="Radar contratos PAE", owner="u1",
+        query_frame_json=frame_json, dataset="contratos",
+    )
+    return store.get_radar(rid)
+
+
+def _event_by(feed, kind, key):
+    hits = [e for e in feed if e["kind"] == kind and e["result_key"] == key]
+    assert len(hits) == 1, f"esperaba 1 evento {kind}/{key}, hubo {len(hits)}"
+    return hits[0]
+
+
+def test_new_event_persists_modality_and_closing_date(store):
+    """15 · un 'new' de procesos congela modalidad y cierre."""
+    radar = _make_radar(store)
+    client = FakeClient([_proc_meta("P-1")])
+    run_radar(_deps(client), store, radar)              # baseline
+    client.rows = [_proc_meta("P-1"), _proc_meta("P-2")]
+    run_radar(_deps(client), store, radar)              # P-2 es nuevo
+
+    ev = _event_by(store.get_feed(radar.owner), "new", "P-2")
+    assert ev["modality"] == _MODALIDAD
+    assert ev["closing_date"] == _CIERRE
+    # Procesos no tiene estos dos hechos: se guardan como "no sabemos".
+    assert ev["contractor"] is None
+    assert ev["signature_date"] is None
+
+
+def test_changed_state_event_persists_current_metadata_and_prev_status(store):
+    """16 · el cambio de estado conserva prev_status y trae la metadata actual."""
+    radar = _make_radar(store)
+    client = FakeClient([_proc_meta("P-1", estado="Abierto")])
+    run_radar(_deps(client), store, radar)
+    client.rows = [_proc_meta("P-1", estado="Adjudicado", cierre="2026-09-30T17:00:00.000")]
+    run_radar(_deps(client), store, radar)
+
+    ev = _event_by(store.get_feed(radar.owner), "changed_state", "P-1")
+    assert ev["prev_status"] == "Abierto"
+    assert ev["status"] == "Adjudicado"
+    # La metadata describe la fila observada AHORA, no la anterior.
+    assert ev["closing_date"] == "2026-09-30T17:00:00.000"
+    assert ev["modality"] == _MODALIDAD
+
+
+def test_changed_value_event_persists_current_metadata_and_prev_value(store):
+    """17 · el cambio de valor conserva prev_value y trae la metadata actual."""
+    radar = _make_radar(store)
+    client = FakeClient([_proc_meta("P-1", valor="1000000")])
+    run_radar(_deps(client), store, radar)
+    client.rows = [_proc_meta("P-1", valor="1200000")]
+    run_radar(_deps(client), store, radar)
+
+    ev = _event_by(store.get_feed(radar.owner), "changed_value", "P-1")
+    assert ev["prev_value"] == "1000000"
+    assert ev["value"] == "1200000"
+    assert ev["modality"] == _MODALIDAD
+    assert ev["closing_date"] == _CIERRE
+
+
+def test_contratos_event_persists_contractor_and_signature_date(store):
+    """18 · un evento de contratos congela contratista y fecha de firma."""
+    radar = _make_contratos_radar(store)
+    client = FakeClient([_cont("C-1")])
+    run_radar(_deps(client), store, radar)              # baseline
+    client.rows = [_cont("C-1"), _cont("C-2", contratista="CONSORCIO ANDINO",
+                                       firma="2026-04-02T00:00:00.000")]
+    run_radar(_deps(client), store, radar)
+
+    ev = _event_by(store.get_feed(radar.owner), "new", "C-2")
+    assert ev["contractor"] == "CONSORCIO ANDINO"
+    assert ev["signature_date"] == "2026-04-02T00:00:00.000"
+    assert ev["modality"] == "Contratación directa"
+    # Un contrato ya no recibe ofertas: no hay cierre que congelar.
+    assert ev["closing_date"] is None
+
+
+def test_metadata_only_change_emits_no_event(store):
+    """23 · dos filas iguales en estado y valor, distintas solo en los cuatro
+    campos de presentación, NO producen changed_state ni changed_value: describir
+    mejor un proceso no es lo mismo que moverlo."""
+    radar = _make_radar(store)
+    client = FakeClient([_proc_meta("P-1", modalidad="Licitación pública",
+                                    cierre="2026-08-20T17:00:00.000")])
+    run_radar(_deps(client), store, radar)              # baseline
+
+    client.rows = [_proc_meta("P-1", modalidad="Selección abreviada",
+                              cierre="2026-12-31T17:00:00.000")]
+    run_radar(_deps(client), store, radar)
+
+    kinds = [e["kind"] for e in store.get_feed(radar.owner)]
+    assert kinds == ["baseline"]                       # nada más entró al feed
+
+
+def test_contractor_only_change_emits_no_event_in_contratos(store):
+    """23b · cambiar solo el contratista tampoco finge un changed_value."""
+    radar = _make_contratos_radar(store)
+    client = FakeClient([_cont("C-1", contratista="UT PAE")])
+    run_radar(_deps(client), store, radar)
+
+    client.rows = [_cont("C-1", contratista="CONSORCIO OTRO",
+                         firma="2027-01-01T00:00:00.000")]
+    run_radar(_deps(client), store, radar)
+
+    kinds = [e["kind"] for e in store.get_feed(radar.owner)]
+    assert kinds == ["baseline"]
+
+
+def test_snapshot_hash_ignores_event_metadata(store):
+    """24 · el hash mantiene su semántica: solo estado y valor lo mueven."""
+    from app.core.radar.keys import snapshot_hash
+
+    base = _proc_meta("P-1")
+    only_meta = _proc_meta("P-1", modalidad="Otra", cierre="2027-01-01")
+    real_change = _proc_meta("P-1", valor="9999999")
+
+    assert snapshot_hash(base, SoQLBuilder.PROCESOS_DATASET) == snapshot_hash(only_meta, SoQLBuilder.PROCESOS_DATASET)
+    assert snapshot_hash(base, SoQLBuilder.PROCESOS_DATASET) != snapshot_hash(real_change, SoQLBuilder.PROCESOS_DATASET)
+
+
+def test_real_change_still_fires_and_carries_latest_metadata(store):
+    """25 · un cambio real sigue generando evento y lleva la metadata más
+    reciente, aunque la metadata haya cambiado en la misma corrida."""
+    radar = _make_radar(store)
+    client = FakeClient([_proc_meta("P-1", valor="1000000",
+                                    modalidad="Licitación pública")])
+    run_radar(_deps(client), store, radar)
+
+    client.rows = [_proc_meta("P-1", valor="7000000",
+                              modalidad="Selección abreviada",
+                              cierre="2026-11-11T17:00:00.000")]
+    run_radar(_deps(client), store, radar)
+
+    ev = _event_by(store.get_feed(radar.owner), "changed_value", "P-1")
+    assert ev["prev_value"] == "1000000" and ev["value"] == "7000000"
+    assert ev["modality"] == "Selección abreviada"
+    assert ev["closing_date"] == "2026-11-11T17:00:00.000"
+
+
+def test_no_new_event_kinds_were_introduced(store):
+    """Los kinds del feed siguen siendo los de siempre: la metadata no creó
+    changed_deadline/changed_modality/changed_contractor."""
+    radar = _make_radar(store)
+    client = FakeClient([_proc_meta("P-1", estado="Abierto", valor="1000000")])
+    run_radar(_deps(client), store, radar)
+    client.rows = [_proc_meta("P-1", estado="Adjudicado", valor="2000000",
+                              modalidad="Otra", cierre="2027-01-01"),
+                   _proc_meta("P-2")]
+    run_radar(_deps(client), store, radar)
+
+    kinds = {e["kind"] for e in store.get_feed(radar.owner)}
+    assert kinds <= {"baseline", "new", "changed_state", "changed_value"}

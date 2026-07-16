@@ -23,7 +23,7 @@ from app.core.radar import lease
 from app.core.radar.diff import RadarDiff, classify
 from app.core.radar.digest import build_digest
 from app.core.radar.follows import fetch_current_rows_by_keys
-from app.core.radar.keys import radar_result_key
+from app.core.radar.keys import extract_event_metadata, radar_result_key
 from app.core.radar.store import (
     EventRecord,
     FailureRecord,
@@ -326,7 +326,7 @@ def _refresh_seen_rows(
     return rows, meta
 
 
-def _build_events(dataset_name, diff, deduped, total, is_first_run) -> list[EventRecord]:
+def _build_events(dataset_name, dataset_id, diff, deduped, total, is_first_run) -> list[EventRecord]:
     """Construye los eventos del feed de esta corrida. Función pura.
 
     No recibe store, conexión, radar ni run_id: ``EventRecord`` no lleva
@@ -334,6 +334,10 @@ def _build_events(dataset_name, diff, deduped, total, is_first_run) -> list[Even
     materialización, no este caller). Aporta solo lo propio del movimiento.
     Se ejecuta antes de abrir la transacción, para que dentro de ella solo
     queden escrituras.
+
+    ``dataset_id`` llega como argumento y no se re-deriva de ``dataset_name``:
+    quien ya lo resolvió fue la ejecución, y volver a resolverlo aquí crearía una
+    segunda respuesta posible a "¿qué dataset es este?".
     """
     ts = _now()
     events: list[EventRecord] = []
@@ -351,6 +355,7 @@ def _build_events(dataset_name, diff, deduped, total, is_first_run) -> list[Even
                 value=it.fields.get("value"), status=it.fields.get("status"),
                 urlproceso=it.fields.get("urlproceso"),
                 referencia=it.fields.get("referencia"),
+                **extract_event_metadata(it.row, dataset_id),
             ))
         for it in diff.changed_state:
             events.append(EventRecord(
@@ -360,6 +365,7 @@ def _build_events(dataset_name, diff, deduped, total, is_first_run) -> list[Even
                 prev_status=it.prev_status,
                 urlproceso=it.fields.get("urlproceso"),
                 referencia=it.fields.get("referencia"),
+                **extract_event_metadata(it.row, dataset_id),
             ))
         for it in diff.changed_value:
             events.append(EventRecord(
@@ -369,6 +375,7 @@ def _build_events(dataset_name, diff, deduped, total, is_first_run) -> list[Even
                 prev_value=it.prev_value,
                 urlproceso=it.fields.get("urlproceso"),
                 referencia=it.fields.get("referencia"),
+                **extract_event_metadata(it.row, dataset_id),
             ))
     return events
 
@@ -563,7 +570,7 @@ def _run_radar_locked(
     # Eventos del feed. En la PRIMERA corrida se establece la línea base
     # silenciosa (un solo evento "empezó a vigilar") para no inundar el feed con
     # N "nuevos" de backfill; a partir de ahí, un evento por movimiento real.
-    events = _build_events(dataset_name, diff, deduped, execution.total, is_first_run)
+    events = _build_events(dataset_name, ds_id, diff, deduped, execution.total, is_first_run)
 
     # Todo lo anterior fue construcción en memoria. Recién aquí se escribe, y
     # se escribe entero o nada: vistos sin sus eventos perderían la novedad.

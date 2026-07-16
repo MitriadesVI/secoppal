@@ -2620,3 +2620,121 @@ def test_store_module_imports_no_http_client():
     assert not imported & forbidden
     assert "app.core.radar.follows" not in imported
     assert "app.core.radar.runner" not in imported
+
+
+# ── proyección inmutable del evento (R2B-1B1) ──────────────────────────────
+# Las cuatro columnas son aditivas y nullable: congelan el dato observado al
+# emitir el evento para que la notificación no tenga que ir a buscarlo a
+# radar_seen_results (estado de HOY) para completar un hecho de AYER.
+
+_EVENT_META_COLUMNS = {"modality", "closing_date", "contractor", "signature_date"}
+
+
+def _event_columns(db_path) -> set[str]:
+    conn = sqlite3.connect(db_path)
+    try:
+        return {r[1] for r in conn.execute("PRAGMA table_info(radar_events)")}
+    finally:
+        conn.close()
+
+
+def test_fresh_db_has_the_four_event_metadata_columns(store):
+    """9 · base nueva trae las cuatro columnas."""
+    assert _EVENT_META_COLUMNS <= _event_columns(store.db_path)
+
+
+def test_legacy_db_gets_the_columns_with_null_on_old_rows(tmp_path):
+    """10 · base heredada migra y las filas viejas quedan en NULL (sin backfill:
+    rellenarlas inventaría un pasado que nadie observó)."""
+    db_path = tmp_path / "legacy_meta.db"
+    _seed_legacy_events_db(db_path)
+    assert not (_EVENT_META_COLUMNS & _event_columns(db_path))
+
+    RadarStore(db_path)
+
+    assert _EVENT_META_COLUMNS <= _event_columns(db_path)
+    conn = sqlite3.connect(db_path)
+    conn.row_factory = sqlite3.Row
+    rows = conn.execute(
+        "SELECT id, modality, closing_date, contractor, signature_date "
+        "FROM radar_events ORDER BY id"
+    ).fetchall()
+    conn.close()
+    assert len(rows) == 2
+    for r in rows:
+        assert (r["modality"], r["closing_date"],
+                r["contractor"], r["signature_date"]) == (None, None, None, None)
+
+
+def test_event_metadata_migration_is_idempotent(tmp_path):
+    """11 · abrir dos veces no falla ni duplica columnas."""
+    db_path = tmp_path / "legacy_meta_twice.db"
+    _seed_legacy_events_db(db_path)
+
+    RadarStore(db_path)
+    RadarStore(db_path)
+    store = RadarStore(db_path)
+
+    assert _EVENT_META_COLUMNS <= _event_columns(db_path)
+    assert store.get_radar("r1") is not None
+
+
+def test_insert_event_persists_the_four_metadata_fields(store, leased):
+    """12 · _INSERT_EVENT_SQL persiste los cuatro campos de punta a punta."""
+    rid, token = leased
+    event = dataclasses.replace(
+        _event(kind="new", key="K-meta"),
+        modality="Licitación pública",
+        closing_date="2026-08-20T17:00:00.000",
+        contractor="UT PAE 2026",
+        signature_date="2026-03-11T00:00:00.000",
+    )
+    result = store.materialize_successful_run(
+        radar_id=rid, token=token, run=_run(),
+        seen=[_seen_rec("K-meta")], events=[event],
+    )
+    assert result.lease_lost is False
+
+    state = _read_state(store.db_path, rid)
+    persisted = [e for e in state["events"] if e["result_key"] == "K-meta"]
+    assert len(persisted) == 1
+    row = persisted[0]
+    assert row["modality"] == "Licitación pública"
+    assert row["closing_date"] == "2026-08-20T17:00:00.000"
+    assert row["contractor"] == "UT PAE 2026"
+    assert row["signature_date"] == "2026-03-11T00:00:00.000"
+
+
+def test_event_metadata_defaults_to_null_when_not_supplied(store, leased):
+    """Un EventRecord sin metadata persiste NULL, no cadena vacía: 'no sabemos'
+    y 'sabemos que está vacío' no deben distinguirse aguas abajo."""
+    rid, token = leased
+    store.materialize_successful_run(
+        radar_id=rid, token=token, run=_run(),
+        seen=[_seen_rec("K-bare")], events=[_event(kind="new", key="K-bare")],
+    )
+    row = [e for e in _read_state(store.db_path, rid)["events"]
+           if e["result_key"] == "K-bare"][0]
+    assert (row["modality"], row["closing_date"],
+            row["contractor"], row["signature_date"]) == (None, None, None, None)
+
+
+def test_record_events_still_ignores_caller_supplied_event_seq(store):
+    """13 · la metadata nueva no abre una rendija: event_seq lo sigue reservando
+    el store, no el caller."""
+    rid = store.create_radar(name="C", owner="u1", query_frame_json=_frame_json())
+    store.record_events([{
+        "radar_id": rid, "owner": "u1", "kind": "new", "result_key": "K-x",
+        "ts": "2026-07-16T00:00:00+00:00", "event_seq": 999_999,
+        "modality": "Licitación pública",
+    }])
+    row = _read_state(store.db_path, rid)["events"][0]
+    assert row["event_seq"] != 999_999
+    assert row["modality"] == "Licitación pública"
+
+
+def test_event_record_still_has_no_transactional_identity_fields():
+    """14 · EventRecord sigue sin identidad: la metadata no la introdujo."""
+    field_names = {f.name for f in dataclasses.fields(EventRecord)}
+    assert not (field_names & {"radar_id", "owner", "radar_name", "run_id", "event_seq"})
+    assert _EVENT_META_COLUMNS <= field_names

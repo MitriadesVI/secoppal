@@ -234,6 +234,12 @@ class EventRecord:
     prev_value: str | None = None
     urlproceso: str | None = None
     referencia: str | None = None
+    # Datos del hecho, congelados al emitirlo (R2B-1B1). ``prev_*`` describe el
+    # estado ANTERIOR; estos cuatro describen la fila TAL COMO SE OBSERVÓ ahora.
+    modality: str | None = None
+    closing_date: str | None = None
+    contractor: str | None = None
+    signature_date: str | None = None
 
 
 @dataclass(frozen=True)
@@ -389,7 +395,15 @@ CREATE TABLE IF NOT EXISTS radar_events (
     prev_status  TEXT,
     prev_value   TEXT,
     urlproceso   TEXT,
-    referencia   TEXT
+    referencia   TEXT,
+    -- R2B-1B1: datos del evento congelados en su instante (``ts``). Nullable y
+    -- sin default: un dataset que no expone el hecho, o una fila heredada, se
+    -- quedan en NULL. No se completan leyendo ``radar_seen_results`` —esa tabla
+    -- es el estado de HOY y mostraría el valor actual junto al cambio de ayer.
+    modality       TEXT,
+    closing_date   TEXT,
+    contractor     TEXT,
+    signature_date TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_radar_events_owner ON radar_events(owner, ts DESC);
 
@@ -444,10 +458,12 @@ _INSERT_EVENT_SQL = """
 INSERT INTO radar_events
    (id, radar_id, owner, radar_name, run_id, ts, kind, result_key,
     dataset, title, entity, value, status, prev_status, prev_value,
-    urlproceso, referencia, event_seq)
+    urlproceso, referencia, event_seq,
+    modality, closing_date, contractor, signature_date)
    VALUES (:id, :radar_id, :owner, :radar_name, :run_id, :ts, :kind,
     :result_key, :dataset, :title, :entity, :value, :status,
-    :prev_status, :prev_value, :urlproceso, :referencia, :event_seq)
+    :prev_status, :prev_value, :urlproceso, :referencia, :event_seq,
+    :modality, :closing_date, :contractor, :signature_date)
 """
 
 _RESERVE_EVENT_SEQ_SQL = "INSERT INTO radar_event_seq (ts) VALUES (?)"
@@ -633,6 +649,10 @@ def _insert_event_dicts(conn: sqlite3.Connection, events: list[dict]) -> None:
                 "urlproceso": e.get("urlproceso"),
                 "referencia": e.get("referencia"),
                 "event_seq": event_seq,
+                "modality": e.get("modality"),
+                "closing_date": e.get("closing_date"),
+                "contractor": e.get("contractor"),
+                "signature_date": e.get("signature_date"),
             },
         )
 
@@ -665,6 +685,8 @@ def _insert_events(
             "entity": e.entity, "value": e.value, "status": e.status,
             "prev_status": e.prev_status, "prev_value": e.prev_value,
             "urlproceso": e.urlproceso, "referencia": e.referencia,
+            "modality": e.modality, "closing_date": e.closing_date,
+            "contractor": e.contractor, "signature_date": e.signature_date,
         }
         for e in events
     ])
@@ -850,6 +872,12 @@ class RadarStore:
         event_cols = {row["name"] for row in conn.execute("PRAGMA table_info(radar_events)")}
         if "event_seq" not in event_cols:
             conn.execute("ALTER TABLE radar_events ADD COLUMN event_seq INTEGER")
+        # R2B-1B1: aditivas y sin default. Las filas heredadas quedan en NULL y
+        # NO se rellenan: el dato de un evento viejo solo existe en el SECOP de
+        # hoy, y copiarlo ahí inventaría un pasado que nadie observó entonces.
+        for name in ("modality", "closing_date", "contractor", "signature_date"):
+            if name not in event_cols:
+                conn.execute(f"ALTER TABLE radar_events ADD COLUMN {name} TEXT")
         conn.execute(
             "CREATE UNIQUE INDEX IF NOT EXISTS idx_radar_events_seq "
             "ON radar_events(event_seq)"

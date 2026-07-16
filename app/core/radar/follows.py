@@ -28,7 +28,12 @@ from __future__ import annotations
 import logging
 from datetime import datetime, timezone
 
-from app.core.radar.keys import extract_fields, radar_result_key, snapshot_hash
+from app.core.radar.keys import (
+    extract_event_metadata,
+    extract_fields,
+    radar_result_key,
+    snapshot_hash,
+)
 from app.core.radar.store import (
     FOLLOWS_FREQUENCY,
     FOLLOWS_RADAR_NAME,
@@ -208,6 +213,17 @@ def follow(store: RadarStore, owner: str, row: dict) -> bool:
                        or row.get("referencia_del_contrato") or ""),
         "contractor": row.get("contratista", ""),
     }
+    # La tarjeta trae el contratista bajo su alias visible (``contratista``), no
+    # bajo el nombre crudo de SECOP (``proveedor_adjudicado``) que busca la
+    # proyección. Sin este rescate la membresía lo conserva y el evento —que es
+    # lo inmutable— lo perdería. Solo aplica al contratista: la tarjeta también
+    # trae ``fecha``, pero esa fecha puede ser publicación, apertura o recepción
+    # (formatter._best_date_for_row la elige por cascada), así que promoverla a
+    # ``closing_date`` afirmaría un cierre que nadie fijó. Ahí NULL es la verdad.
+    event_metadata = extract_event_metadata(row, dataset_id)
+    if event_metadata["contractor"] is None:
+        event_metadata["contractor"] = fields["contractor"].strip() or None
+
     # snapshot vacío → la 1ª refresh establece la línea base sin emitir cambio.
     # Solo se aplica al **alta**: si ya se seguía, la transacción no toca la
     # fila, así que un re-follow no borra la línea base ya fijada (lo que
@@ -222,6 +238,7 @@ def follow(store: RadarStore, owner: str, row: dict) -> bool:
             title=fields["title"], entity=fields["entity"], value=fields["value"],
             status=fields["status"], urlproceso=fields["urlproceso"],
             referencia=fields["referencia"],
+            **event_metadata,
         ),
         run_id=_FOLLOW_RUN_ID,
     )
@@ -330,6 +347,9 @@ def _build_updates(deps, seen: dict[str, dict], owner: str) -> tuple[list[Follow
             stored = seen[rk]
             new_hash = snapshot_hash(raw, dataset_id)
             new_fields = extract_fields(raw, dataset_id)
+            # Se proyecta una vez por fila y se congela en cada evento que salga
+            # de ella: describe la fila observada AHORA, no el estado guardado.
+            new_meta = extract_event_metadata(raw, dataset_id)
             old_hash = stored.get("snapshot_hash") or ""
 
             events: list[EventRecord] = []
@@ -347,7 +367,7 @@ def _build_updates(deps, seen: dict[str, dict], owner: str) -> tuple[list[Follow
                         title=new_fields["title"], entity=new_fields["entity"],
                         value=new_fields["value"], status=new_fields["status"],
                         prev_status=old_status, urlproceso=new_fields["urlproceso"],
-                        referencia=new_fields["referencia"],
+                        referencia=new_fields["referencia"], **new_meta,
                     ))
                 if new_fields["value"] != old_value:
                     events.append(EventRecord(
@@ -355,7 +375,7 @@ def _build_updates(deps, seen: dict[str, dict], owner: str) -> tuple[list[Follow
                         title=new_fields["title"], entity=new_fields["entity"],
                         value=new_fields["value"], status=new_fields["status"],
                         prev_value=old_value, urlproceso=new_fields["urlproceso"],
-                        referencia=new_fields["referencia"],
+                        referencia=new_fields["referencia"], **new_meta,
                     ))
             else:
                 continue  # sin cambio: nada que escribir

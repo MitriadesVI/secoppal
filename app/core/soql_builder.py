@@ -85,6 +85,12 @@ class DatasetSpec:
     date: str
     url: str
     modality: str = "modalidad_de_contratacion"
+    # Proyección de evento del radar (R2B-1B1). Declarados por dataset y no
+    # derivados de `date`: en procesos `date` es la fecha de PUBLICACIÓN, que no
+    # es ni cierre ni firma. Reusarla proyectaría publicación bajo la etiqueta
+    # equivocada. None = el dataset no expone ese hecho.
+    closing_date: str | None = None
+    signature_date: str | None = None
     reference: str | None = None
     contractor: str | None = None
     contractor_document: str | None = None
@@ -107,6 +113,11 @@ class SoQLBuilder:
             state="estado_de_apertura_del_proceso",
             date="fecha_de_publicacion_del",
             url="urlproceso",
+            # Única columna de recepción de ofertas que el repo ya reconoce
+            # (formatter._best_date_for_row, DOGFOOD-DATE-002). Auditoría previa
+            # (opportunity_stage.py): ~99% NULL en el dataset, así que el radar
+            # la proyecta como dato opcional, no como garantía de vigencia.
+            closing_date="fecha_de_recepcion_de_respuestas_al_in",
             reference="referencia_del_proceso",
             city="ciudad_entidad",
             select_fields=(
@@ -124,6 +135,7 @@ class SoQLBuilder:
                 "estado_del_procedimiento",
                 "fase",
                 "fecha_de_publicacion_del",
+                "fecha_de_recepcion_de_respuestas_al_in",
                 "urlproceso",
             ),
         ),
@@ -137,6 +149,10 @@ class SoQLBuilder:
             state="estado_contrato",
             date="fecha_de_firma",
             url="urlproceso",
+            # Contratos no publican cierre de ofertas (el proceso ya terminó);
+            # el hecho fechado equivalente es la firma. Coincide con `date`, pero
+            # se declara aparte: son dos contratos distintos que hoy convergen.
+            signature_date="fecha_de_firma",
             contractor="proveedor_adjudicado",
             contractor_document="documento_proveedor",
             reference="referencia_del_contrato",

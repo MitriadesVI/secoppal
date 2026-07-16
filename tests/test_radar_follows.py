@@ -868,3 +868,168 @@ def test_feed_keeps_its_items_kinds_and_semantics(store):
     assert seguidos[0]["status"] == "Adjudicado"
     follows.unfollow(store, OWNER, "P-1")
     assert follows.list_follows(store, OWNER) == []
+
+
+# ── proyección inmutable del evento (R2B-1B1) ──────────────────────────────
+# Los seguidos usan la MISMA proyección que el radar normal: un evento se
+# describe con lo observado al emitirlo, nunca releyendo el estado guardado.
+
+_MODALIDAD = "Licitación pública"
+_CIERRE = "2026-08-20T17:00:00.000"
+CONTRATOS = SoQLBuilder.CONTRATOS_DATASET
+
+
+def _raw_meta(pid="P-1", estado="Abierto", precio="1000000",
+              modalidad=_MODALIDAD, cierre=_CIERRE):
+    row = _raw(pid, estado=estado, precio=precio)
+    row["modalidad_de_contratacion"] = modalidad
+    row["fecha_de_recepcion_de_respuestas_al_in"] = cierre
+    return row
+
+
+def _raw_cont(cid="C-1", estado="En ejecución", valor="5000000",
+              contratista="UNION TEMPORAL PAE", firma="2026-03-11T00:00:00.000"):
+    return {
+        "id_contrato": cid, "referencia_del_contrato": f"RC-{cid}",
+        "objeto_del_contrato": "Suministro PAE escolar",
+        "nombre_entidad": "ALCALDIA DE BARRANQUILLA",
+        "valor_del_contrato": valor, "estado_contrato": estado,
+        "modalidad_de_contratacion": "Contratación directa",
+        "proveedor_adjudicado": contratista, "fecha_de_firma": firma,
+        "urlproceso": f"http://secop/{cid}",
+    }
+
+
+def _card_cont(cid="C-1", estado="En ejecución"):
+    return {
+        "titulo": "Suministro PAE escolar", "entidad": "ALCALDIA DE BARRANQUILLA",
+        "valor": "$5.000.000", "estado": estado, "url": f"http://secop/{cid}",
+        "id_contrato": cid, "referencia_del_contrato": f"RC-{cid}",
+        "contratista": "UNION TEMPORAL PAE", "dataset_id": CONTRATOS,
+    }
+
+
+def _only(feed, kind):
+    hits = [e for e in feed if e["kind"] == kind]
+    assert len(hits) == 1, f"esperaba 1 evento {kind}, hubo {len(hits)}"
+    return hits[0]
+
+
+def test_followed_event_has_the_metadata_shape(store):
+    """19 · el alta persiste los campos disponibles en la fila que trae el caller.
+
+    Una tarjeta de PROCESO no transporta ninguno de los cuatro (el formatter solo
+    le pone identidad y display), así que salen en NULL. La forma del evento sí
+    está completa, y no se rellena leyendo radar_seen_results.
+    """
+    follows.follow(store, OWNER, _card("P-1"))
+    ev = _only(store.get_feed(OWNER), "followed")
+    assert set(ev.keys()) >= {"modality", "closing_date", "contractor", "signature_date"}
+    assert (ev["modality"], ev["closing_date"],
+            ev["contractor"], ev["signature_date"]) == (None, None, None, None)
+
+
+def test_followed_contract_card_keeps_the_contractor(store):
+    """19c · la tarjeta de CONTRATO sí trae contratista, bajo su alias visible.
+
+    La membresía ya lo conservaba; el evento —que es lo inmutable, y lo que leerá
+    la notificación— lo perdía porque la proyección busca el nombre crudo
+    ``proveedor_adjudicado`` y la tarjeta lo llama ``contratista``.
+    """
+    follows.follow(store, OWNER, _card_cont("C-1"))
+    ev = _only(store.get_feed(OWNER), "followed")
+    assert ev["contractor"] == "UNION TEMPORAL PAE"
+    # La tarjeta trae `fecha`, pero puede ser publicación/apertura/recepción:
+    # promoverla a cierre afirmaría un hecho que nadie fijó.
+    assert ev["closing_date"] is None
+
+
+def test_followed_contract_card_contractor_matches_the_membership(store):
+    """El evento y la membresía cuentan lo mismo del alta: si divergen, la
+    notificación y la lista de seguidos se contradicen sobre el mismo hecho."""
+    card = _card_cont("C-2")
+    card["contratista"] = "CONSORCIO PAE"
+    follows.follow(store, OWNER, card)
+
+    ev = _only(store.get_feed(OWNER), "followed")
+    seguido = [s for s in follows.list_follows(store, OWNER)
+               if s["result_key"] == "C-2"][0]
+    assert ev["contractor"] == "CONSORCIO PAE" == seguido["contractor"]
+
+
+def test_followed_blank_contractor_stays_null(store):
+    """Un contratista en blanco en la tarjeta no se guarda como cadena vacía:
+    'no sabemos' y 'sabemos que está vacío' no deben distinguirse aguas abajo."""
+    card = _card_cont("C-3")
+    card["contratista"] = "   "
+    follows.follow(store, OWNER, card)
+    assert _only(store.get_feed(OWNER), "followed")["contractor"] is None
+
+
+def test_followed_event_projects_metadata_when_the_row_carries_it(store):
+    """19b · misma proyección que el resto del feed: si la fila trae las columnas
+    crudas, el alta las congela sin que haya que tocar follows.py."""
+    card = _card("P-9")
+    card["modalidad_de_contratacion"] = _MODALIDAD
+    card["fecha_de_recepcion_de_respuestas_al_in"] = _CIERRE
+
+    follows.follow(store, OWNER, card)
+    ev = _only(store.get_feed(OWNER), "followed")
+    assert ev["modality"] == _MODALIDAD
+    assert ev["closing_date"] == _CIERRE
+
+
+def test_refresh_state_change_persists_current_metadata(store):
+    """20 · refresh con cambio de estado congela la metadata observada ahora."""
+    follows.follow(store, OWNER, _card("P-1", estado="Abierto"))
+    follows.refresh_follows(_deps([_raw_meta("P-1", estado="Abierto")]), store, OWNER)
+    follows.refresh_follows(
+        _deps([_raw_meta("P-1", estado="Adjudicado", cierre="2026-09-30T17:00:00.000")]),
+        store, OWNER,
+    )
+    ev = _only(store.get_feed(OWNER), "changed_state")
+    assert ev["prev_status"] == "Abierto"
+    assert ev["modality"] == _MODALIDAD
+    assert ev["closing_date"] == "2026-09-30T17:00:00.000"
+
+
+def test_refresh_value_change_persists_current_metadata(store):
+    """21 · refresh con cambio de valor congela la metadata observada ahora."""
+    follows.follow(store, OWNER, _card("P-1"))
+    follows.refresh_follows(_deps([_raw_meta("P-1", precio="1000000")]), store, OWNER)
+    follows.refresh_follows(_deps([_raw_meta("P-1", precio="5000000")]), store, OWNER)
+
+    ev = _only(store.get_feed(OWNER), "changed_value")
+    assert ev["prev_value"] == "1000000" and ev["value"] == "5000000"
+    assert ev["modality"] == _MODALIDAD
+    assert ev["closing_date"] == _CIERRE
+
+
+def test_refresh_contratos_persists_contractor_and_signature(store):
+    """La misma proyección aplica a contratos seguidos."""
+    follows.follow(store, OWNER, _card_cont("C-1"))
+    follows.refresh_follows(_deps([_raw_cont("C-1", valor="5000000")]), store, OWNER)
+    follows.refresh_follows(
+        _deps([_raw_cont("C-1", valor="8000000", contratista="CONSORCIO ANDINO",
+                         firma="2026-04-02T00:00:00.000")]),
+        store, OWNER,
+    )
+    ev = _only(store.get_feed(OWNER), "changed_value")
+    assert ev["contractor"] == "CONSORCIO ANDINO"
+    assert ev["signature_date"] == "2026-04-02T00:00:00.000"
+    assert ev["modality"] == "Contratación directa"
+    assert ev["closing_date"] is None
+
+
+def test_refresh_metadata_only_change_emits_no_event(store):
+    """La metadata no decide el cambio tampoco en follows: cambiar modalidad y
+    cierre, con estado y valor intactos, no debe mover el feed."""
+    follows.follow(store, OWNER, _card("P-1"))
+    follows.refresh_follows(_deps([_raw_meta("P-1")]), store, OWNER)  # baseline
+
+    summary = follows.refresh_follows(
+        _deps([_raw_meta("P-1", modalidad="Selección abreviada", cierre="2027-01-01")]),
+        store, OWNER,
+    )
+    assert summary["changed_state"] == 0 and summary["changed_value"] == 0
+    assert [e["kind"] for e in store.get_feed(OWNER)] == ["followed"]
