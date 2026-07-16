@@ -19,8 +19,14 @@ P1B-2 — outbox, idempotencia, claim y ledger de intentos:
 - ``claim``         — exclusión mutua efímera sobre un batch (SQL puro).
 - ``ledger_store``  — intentos de entrega, write-ahead antes/después del envío.
 
-Este paquete **todavía no envía nada**: no hay selector, worker ni proveedor.
-P1B-2 prepara la infraestructura persistente; no la ejecuta.
+P1B-3 — selección shadow-only:
+
+- ``grouping`` — colapso puro por resultado y orden determinista.
+- ``render``   — payload congelado y texto puro por canal.
+- ``selector`` — cursor, consentimiento, quiet hours y materialización atómica.
+
+Este paquete **todavía no envía nada**: no hay worker ni proveedor. El selector
+solo materializa intenciones reales en el outbox.
 """
 from app.core.notify.claim import is_owned as claim_is_owned
 from app.core.notify.claim import release as claim_release
@@ -44,6 +50,11 @@ from app.core.notify.idempotency import (
     canonical_event_set,
     idempotency_key,
 )
+from app.core.notify.grouping import (
+    GroupedRadarEvent,
+    SelectableRadarEvent,
+    group_events,
+)
 from app.core.notify.ledger_store import (
     AttemptNotDispatchingError,
     ClaimLostError,
@@ -59,6 +70,23 @@ from app.core.notify.outbox_store import (
     NotificationBatch,
     OutboxError,
     OutboxStore,
+)
+from app.core.notify.render import (
+    PAYLOAD_VERSION,
+    RenderedMessage,
+    build_payload,
+    render_payload,
+    serialize_payload,
+)
+from app.core.notify.selector import (
+    EligibilityFlags,
+    NotificationSelector,
+    SelectionResult,
+    SelectionTarget,
+    SelectorError,
+    expires_at_for_frequency,
+    is_event_eligible,
+    quiet_hours_not_before,
 )
 from app.core.notify.preference_store import (
     OwnerNotLinkedError,
@@ -85,14 +113,18 @@ __all__ = [
     "EndpointError",
     "EndpointExistsError",
     "EndpointStore",
+    "EligibilityFlags",
+    "GroupedRadarEvent",
     "IdentityError",
     "IdentityStore",
     "LedgerError",
     "LedgerStore",
     "Masker",
+    "NotificationSelector",
     "NotificationBatch",
     "OutboxError",
     "OutboxStore",
+    "PAYLOAD_VERSION",
     "OwnerKeyConflictError",
     "OwnerNotLinkedError",
     "Preference",
@@ -103,12 +135,24 @@ __all__ = [
     "PrincipalExistsError",
     "PrincipalMismatchError",
     "RadarNotAvailableError",
+    "RenderedMessage",
+    "SelectableRadarEvent",
+    "SelectionResult",
+    "SelectionTarget",
+    "SelectorError",
     "batch_key",
     "canonical_event_set",
     "claim_is_owned",
     "claim_release",
     "ensure_schema",
+    "expires_at_for_frequency",
+    "group_events",
     "idempotency_key",
+    "is_event_eligible",
     "last4",
+    "build_payload",
+    "quiet_hours_not_before",
+    "render_payload",
+    "serialize_payload",
     "try_claim",
 ]

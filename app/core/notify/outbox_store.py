@@ -113,6 +113,87 @@ SELECT * FROM radar_notification_batches
 """
 
 
+def _fetch_by_idempotency(
+    conn: sqlite3.Connection, endpoint_id: str, key: str
+) -> NotificationBatch | None:
+    row = conn.execute(_FETCH_BY_IDEMPOTENCY_SQL, (endpoint_id, key)).fetchone()
+    return NotificationBatch.from_row(row) if row else None
+
+
+def _create_batch_on_connection(
+    conn: sqlite3.Connection,
+    *,
+    principal_id: str,
+    endpoint_id: str,
+    radar_id: str,
+    payload_json,
+    events: list[BatchEventRef],
+    created_at: str,
+    expires_at: str,
+    not_before: str | None = None,
+    policy_version: str = NOTIFICATION_POLICY_VERSION,
+    _fault_hook: _FaultHook | None = None,
+) -> BatchMaterialization:
+    """Materializa sobre una transacción que pertenece al caller.
+
+    No abre ni cierra transacciones y no hace rollback. Es el único lugar que
+    ejecuta los INSERT de batch/asociaciones; ``OutboxStore.create_batch`` y el
+    selector comparten así exactamente la misma idempotencia y constraints.
+    """
+    if not events:
+        raise OutboxError(
+            "Un batch necesita al menos un evento: sin eventos no hay "
+            "intención de entrega que materializar."
+        )
+    seen_ids: set[str] = set()
+    for ref in events:
+        if ref.event_id in seen_ids:
+            raise DuplicateEventAssociationError(
+                f"El evento '{ref.event_id}' aparece dos veces en el mismo batch."
+            )
+        seen_ids.add(ref.event_id)
+
+    if isinstance(payload_json, (dict, list)):
+        payload_json = json.dumps(payload_json, ensure_ascii=False, sort_keys=True)
+
+    key = _compute_idempotency_key(
+        endpoint_id=endpoint_id,
+        radar_id=radar_id,
+        event_seqs=[ref.event_seq for ref in events],
+        policy_version=policy_version,
+    )
+    bkey = _compute_batch_key(radar_id=radar_id, endpoint_id=endpoint_id)
+    notification_id = uuid.uuid4().hex
+    try:
+        conn.execute(
+            _INSERT_BATCH_SQL,
+            (notification_id, principal_id, endpoint_id, radar_id, bkey, key,
+             payload_json, not_before, created_at, expires_at),
+        )
+    except sqlite3.IntegrityError:
+        existing = _fetch_by_idempotency(conn, endpoint_id, key)
+        if existing is None:
+            raise OutboxError(
+                "Conflicto de idempotencia sin fila existente localizable: "
+                "estado inconsistente."
+            )
+        if existing.radar_id != radar_id or existing.endpoint_id != endpoint_id:
+            raise OutboxError(
+                f"El batch existente con idempotency_key='{key}' no corresponde "
+                "al radar/endpoint esperados."
+            )
+        return BatchMaterialization(existing.notification_id, created=False)
+
+    _fire(_fault_hook, PHASE_AFTER_BATCH_INSERT)
+    for ref in events:
+        conn.execute(
+            _INSERT_ASSOC_SQL,
+            (notification_id, endpoint_id, ref.event_id, ref.event_seq),
+        )
+    _fire(_fault_hook, PHASE_AFTER_ASSOC_INSERT)
+    return BatchMaterialization(notification_id, created=True)
+
+
 class OutboxStore:
     def __init__(self, db_path: str | Path) -> None:
         self.db_path = Path(db_path)
@@ -145,72 +226,24 @@ class OutboxStore:
         ese caso se serializa aquí, una sola vez, con claves ordenadas para
         que el mismo payload lógico produzca siempre el mismo texto.
         """
-        if not events:
-            raise OutboxError(
-                "Un batch necesita al menos un evento: sin eventos no hay "
-                "intención de entrega que materializar."
-            )
-        seen_ids: set[str] = set()
-        for ref in events:
-            if ref.event_id in seen_ids:
-                raise DuplicateEventAssociationError(
-                    f"El evento '{ref.event_id}' aparece dos veces en el "
-                    f"mismo batch."
-                )
-            seen_ids.add(ref.event_id)
-
-        if isinstance(payload_json, (dict, list)):
-            payload_json = json.dumps(
-                payload_json, ensure_ascii=False, sort_keys=True
-            )
-
-        key = _compute_idempotency_key(
-            endpoint_id=endpoint_id,
-            radar_id=radar_id,
-            event_seqs=[ref.event_seq for ref in events],
-            policy_version=policy_version,
-        )
-        bkey = _compute_batch_key(radar_id=radar_id, endpoint_id=endpoint_id)
-        notification_id = uuid.uuid4().hex
-
         conn = self._connect()
         result: BatchMaterialization | None = None
         try:
             conn.execute("BEGIN IMMEDIATE")
             try:
-                try:
-                    conn.execute(
-                        _INSERT_BATCH_SQL,
-                        (notification_id, principal_id, endpoint_id, radar_id,
-                         bkey, key, payload_json, not_before, created_at,
-                         expires_at),
-                    )
-                except sqlite3.IntegrityError:
-                    existing = self._fetch_by_idempotency(conn, endpoint_id, key)
-                    if existing is None:
-                        raise OutboxError(
-                            "Conflicto de idempotencia sin fila existente "
-                            "localizable: estado inconsistente."
-                        )
-                    if existing.radar_id != radar_id or existing.endpoint_id != endpoint_id:
-                        raise OutboxError(
-                            f"El batch existente con idempotency_key='{key}' "
-                            f"no corresponde al radar/endpoint esperados."
-                        )
-                    result = BatchMaterialization(
-                        notification_id=existing.notification_id, created=False
-                    )
-                else:
-                    _fire(_fault_hook, PHASE_AFTER_BATCH_INSERT)
-                    for ref in events:
-                        conn.execute(
-                            _INSERT_ASSOC_SQL,
-                            (notification_id, endpoint_id, ref.event_id, ref.event_seq),
-                        )
-                    _fire(_fault_hook, PHASE_AFTER_ASSOC_INSERT)
-                    result = BatchMaterialization(
-                        notification_id=notification_id, created=True
-                    )
+                result = _create_batch_on_connection(
+                    conn,
+                    principal_id=principal_id,
+                    endpoint_id=endpoint_id,
+                    radar_id=radar_id,
+                    payload_json=payload_json,
+                    events=events,
+                    created_at=created_at,
+                    expires_at=expires_at,
+                    not_before=not_before,
+                    policy_version=policy_version,
+                    _fault_hook=_fault_hook,
+                )
                 _fire(_fault_hook, PHASE_BEFORE_COMMIT)
                 conn.execute("COMMIT")
             except sqlite3.IntegrityError as exc:
@@ -229,8 +262,7 @@ class OutboxStore:
     def _fetch_by_idempotency(
         self, conn: sqlite3.Connection, endpoint_id: str, key: str
     ) -> NotificationBatch | None:
-        row = conn.execute(_FETCH_BY_IDEMPOTENCY_SQL, (endpoint_id, key)).fetchone()
-        return NotificationBatch.from_row(row) if row else None
+        return _fetch_by_idempotency(conn, endpoint_id, key)
 
     def get_batch(self, notification_id: str) -> NotificationBatch | None:
         conn = self._connect()

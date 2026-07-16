@@ -1,0 +1,403 @@
+"""Selector transaccional de intenciones de entrega (P1B-3, shadow-only).
+
+La unidad central es ``select_pair(endpoint_id, radar_id)``. Cursor, lectura,
+batch, asociaciones y watermark comparten una conexión y un ``BEGIN IMMEDIATE``.
+No reclama batches, no crea intentos y no llama proveedores.
+"""
+from __future__ import annotations
+
+from collections.abc import Callable, Mapping
+from dataclasses import dataclass
+from datetime import datetime, time, timedelta, timezone
+from pathlib import Path
+import re
+import sqlite3
+from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
+
+from app.core.db import connect_sqlite
+from app.core.notify.grouping import SelectableRadarEvent, group_events
+from app.core.notify.outbox_store import (
+    BatchEventRef,
+    DuplicateEventAssociationError,
+    PHASE_AFTER_ASSOC_INSERT as OUTBOX_AFTER_ASSOC_INSERT,
+    PHASE_AFTER_BATCH_INSERT as OUTBOX_AFTER_BATCH_INSERT,
+    _create_batch_on_connection,
+)
+from app.core.notify.render import build_payload, render_payload
+from app.core.notify.schema import ensure_schema
+
+
+PHASE_AFTER_WINDOW_READ = "after_window_read"
+PHASE_AFTER_BATCH_INSERT = "after_batch_insert"
+PHASE_AFTER_ASSOCIATIONS = "after_associations"
+PHASE_BEFORE_CURSOR_UPDATE = "before_cursor_update"
+PHASE_AFTER_CURSOR_UPDATE = "after_cursor_update"
+PHASE_BEFORE_COMMIT = "before_commit"
+
+_FaultHook = Callable[[str], None]
+
+
+def _fire(hook: _FaultHook | None, phase: str) -> None:
+    if hook is not None:
+        hook(phase)
+
+
+class SelectorError(Exception):
+    """Configuración o estado inconsistente durante la selección."""
+
+
+@dataclass(frozen=True)
+class SelectionResult:
+    endpoint_id: str
+    radar_id: str
+    examined: int
+    eligible: int
+    associated: int
+    notification_id: str | None
+    cursor_before: int
+    cursor_after: int
+    created: bool
+    skipped_reason: str | None
+
+
+@dataclass(frozen=True)
+class SelectionTarget:
+    endpoint_id: str
+    radar_id: str
+
+
+@dataclass(frozen=True)
+class EligibilityFlags:
+    include_new: bool = True
+    include_state_changes: bool = True
+    include_value_changes: bool = True
+    include_disappeared: bool = False
+
+
+_ELIGIBLE_KIND_FLAG = {
+    "new": "include_new",
+    "changed_state": "include_state_changes",
+    "changed_value": "include_value_changes",
+    "disappeared": "include_disappeared",
+}
+
+
+def is_event_eligible(event: SelectableRadarEvent, flags: EligibilityFlags) -> bool:
+    flag_name = _ELIGIBLE_KIND_FLAG.get(event.kind)
+    if flag_name is None or not getattr(flags, flag_name):
+        return False
+    if event.kind == "disappeared" and not event.disappeared_confirmed:
+        return False
+    return True
+
+
+_HHMM = re.compile(r"^([01]\d|2[0-3]):([0-5]\d)$")
+
+
+def _parse_hhmm(value: str, label: str) -> time:
+    match = _HHMM.fullmatch(value or "")
+    if match is None:
+        raise SelectorError(f"quiet_hours_{label} inválida: {value!r}; use HH:MM")
+    return time(int(match.group(1)), int(match.group(2)))
+
+
+def quiet_hours_not_before(
+    now: datetime,
+    *,
+    start: str | None,
+    end: str | None,
+    timezone_name: str,
+) -> str | None:
+    """Devuelve el próximo fin de silencio en UTC o ``None`` si puede salir."""
+    if now.tzinfo is None or now.utcoffset() is None:
+        raise SelectorError("now debe incluir zona horaria")
+    try:
+        zone = ZoneInfo(timezone_name)
+    except (ZoneInfoNotFoundError, ValueError) as exc:
+        raise SelectorError(f"Timezone inválida: {timezone_name!r}") from exc
+    if start is None and end is None:
+        return None
+    if (start is None) != (end is None):
+        raise SelectorError("quiet hours requiere inicio y fin")
+    assert start is not None and end is not None
+    start_t, end_t = _parse_hhmm(start, "start"), _parse_hhmm(end, "end")
+    if start_t == end_t:
+        return None
+    local = now.astimezone(zone)
+    current = local.timetz().replace(tzinfo=None)
+    if start_t < end_t:
+        inside = start_t <= current < end_t
+        end_date = local.date()
+    else:
+        inside = current >= start_t or current < end_t
+        end_date = local.date() + timedelta(days=1) if current >= start_t else local.date()
+    if not inside:
+        return None
+    local_end = datetime.combine(end_date, end_t, tzinfo=zone)
+    return local_end.astimezone(timezone.utc).isoformat()
+
+
+_EXPIRATION = {
+    "per_run": timedelta(hours=12),
+    "daily": timedelta(hours=36),
+    "weekly": timedelta(days=8),
+}
+
+
+def expires_at_for_frequency(now: datetime, frequency: str) -> str:
+    if now.tzinfo is None or now.utcoffset() is None:
+        raise SelectorError("now debe incluir zona horaria")
+    try:
+        ttl = _EXPIRATION[frequency]
+    except KeyError as exc:
+        raise SelectorError(f"Frecuencia inválida: {frequency!r}") from exc
+    return (now.astimezone(timezone.utc) + ttl).isoformat()
+
+
+_TARGET_SQL = """
+SELECT pref.*, e.principal_id, e.channel, e.verified_at,
+       e.external_recipient_id, e.enabled AS endpoint_enabled, e.revoked_at,
+       p.status AS principal_status,
+       r.name AS radar_name, r.archived_at, r.owner,
+       pok.principal_id AS owner_principal_id
+  FROM radar_notification_preferences pref
+  JOIN notification_endpoints e ON e.endpoint_id = pref.endpoint_id
+  JOIN principals p ON p.principal_id = e.principal_id
+  JOIN radars r ON r.id = pref.radar_id
+  LEFT JOIN principal_owner_keys pok ON pok.owner_key = r.owner
+ WHERE pref.endpoint_id = ? AND pref.radar_id = ?
+"""
+
+_WINDOW_SQL = """
+SELECT e.*
+  FROM radar_events e
+ WHERE e.radar_id = ?
+   AND e.event_seq IS NOT NULL
+   AND e.event_seq > ?
+   AND NOT EXISTS (
+       SELECT 1 FROM radar_notification_batch_events be
+        WHERE be.endpoint_id = ? AND be.event_id = e.id
+   )
+ ORDER BY e.event_seq ASC
+ LIMIT ?
+"""
+
+
+def _target_skip_reason(row: sqlite3.Row | None) -> str | None:
+    if row is None:
+        return "preference_not_found"
+    if not row["enabled"]:
+        return "preference_disabled"
+    if row["verified_at"] is None:
+        return "endpoint_unverified"
+    if not (row["external_recipient_id"] or "").strip():
+        return "endpoint_missing_recipient"
+    if not row["endpoint_enabled"]:
+        return "endpoint_disabled"
+    if row["revoked_at"] is not None:
+        return "endpoint_revoked"
+    if row["principal_status"] != "active":
+        return "principal_suspended"
+    if row["archived_at"] is not None:
+        return "radar_archived"
+    if row["owner_principal_id"] is None:
+        return "owner_not_linked"
+    if row["owner_principal_id"] != row["principal_id"]:
+        return "principal_mismatch"
+    return None
+
+
+def _event_from_row(row: Mapping) -> SelectableRadarEvent:
+    keys = set(row.keys())
+    return SelectableRadarEvent(
+        event_id=row["id"], event_seq=row["event_seq"], kind=row["kind"],
+        result_key=row["result_key"], dataset=row["dataset"], title=row["title"],
+        entity=row["entity"], value=row["value"], status=row["status"],
+        prev_status=row["prev_status"], prev_value=row["prev_value"],
+        urlproceso=row["urlproceso"], referencia=row["referencia"],
+        disappeared_confirmed=bool(row["disappeared_confirmed"])
+        if "disappeared_confirmed" in keys else False,
+    )
+
+
+class NotificationSelector:
+    def __init__(self, db_path: str | Path) -> None:
+        self.db_path = Path(db_path)
+        conn = self._connect()
+        try:
+            ensure_schema(conn)
+        finally:
+            conn.close()
+
+    def _connect(self) -> sqlite3.Connection:
+        return connect_sqlite(self.db_path)
+
+    def list_targets(self) -> list[SelectionTarget]:
+        """Pares configurados; ``select_pair`` revalida su elegibilidad."""
+        conn = self._connect()
+        try:
+            rows = conn.execute(
+                "SELECT endpoint_id, radar_id FROM radar_notification_preferences "
+                "ORDER BY endpoint_id, radar_id"
+            ).fetchall()
+        finally:
+            conn.close()
+        return [SelectionTarget(r["endpoint_id"], r["radar_id"]) for r in rows]
+
+    def select_pair(
+        self,
+        endpoint_id: str,
+        radar_id: str,
+        *,
+        now: datetime,
+        scan_limit: int = 500,
+        _fault_hook: _FaultHook | None = None,
+    ) -> SelectionResult:
+        if isinstance(scan_limit, bool) or not isinstance(scan_limit, int) or scan_limit <= 0:
+            raise ValueError("scan_limit debe ser un entero positivo")
+        if now.tzinfo is None or now.utcoffset() is None:
+            raise SelectorError("now debe incluir zona horaria")
+
+        conn = self._connect()
+        try:
+            conn.execute("BEGIN IMMEDIATE")
+            try:
+                target = conn.execute(_TARGET_SQL, (endpoint_id, radar_id)).fetchone()
+                cursor_row = conn.execute(
+                    "SELECT last_examined_seq FROM radar_notification_cursors "
+                    "WHERE endpoint_id = ? AND radar_id = ?",
+                    (endpoint_id, radar_id),
+                ).fetchone()
+                cursor_before = int(cursor_row["last_examined_seq"]) if cursor_row else 0
+                reason = _target_skip_reason(target)
+                if reason is not None:
+                    conn.execute("ROLLBACK")
+                    return SelectionResult(
+                        endpoint_id, radar_id, 0, 0, 0, None,
+                        cursor_before, cursor_before, False, reason,
+                    )
+
+                rows = conn.execute(
+                    _WINDOW_SQL, (radar_id, cursor_before, endpoint_id, scan_limit)
+                ).fetchall()
+                _fire(_fault_hook, PHASE_AFTER_WINDOW_READ)
+                if not rows:
+                    conn.execute("COMMIT")
+                    return SelectionResult(
+                        endpoint_id, radar_id, 0, 0, 0, None,
+                        cursor_before, cursor_before, False, "empty_window",
+                    )
+
+                cursor_after = int(rows[-1]["event_seq"])
+                flags = EligibilityFlags(
+                    include_new=bool(target["include_new"]),
+                    include_state_changes=bool(target["include_state_changes"]),
+                    include_value_changes=bool(target["include_value_changes"]),
+                    include_disappeared=bool(target["include_disappeared"]),
+                )
+                window = [_event_from_row(row) for row in rows]
+                eligible = [event for event in window if is_event_eligible(event, flags)]
+                notification_id: str | None = None
+                created = False
+                associated = 0
+
+                if eligible:
+                    created_at = now.astimezone(timezone.utc).isoformat()
+                    groups = group_events(eligible)
+                    payload = build_payload(
+                        groups,
+                        principal_id=target["principal_id"], endpoint_id=endpoint_id,
+                        radar_id=radar_id, radar_name=target["radar_name"],
+                        channel=target["channel"], created_at=created_at,
+                        max_items=int(target["max_items"]),
+                    )
+                    # Ejecutar el render puro aquí prueba que el payload congelado
+                    # representa exactamente un mensaje lógico antes de persistir.
+                    render_payload(payload, channel=target["channel"])
+                    refs = [BatchEventRef(e.event_id, e.event_seq) for e in eligible]
+
+                    def outbox_fault_bridge(phase: str) -> None:
+                        if phase == OUTBOX_AFTER_BATCH_INSERT:
+                            _fire(_fault_hook, PHASE_AFTER_BATCH_INSERT)
+                        elif phase == OUTBOX_AFTER_ASSOC_INSERT:
+                            _fire(_fault_hook, PHASE_AFTER_ASSOCIATIONS)
+
+                    materialized = _create_batch_on_connection(
+                        conn,
+                        principal_id=target["principal_id"], endpoint_id=endpoint_id,
+                        radar_id=radar_id, payload_json=payload, events=refs,
+                        created_at=created_at,
+                        expires_at=expires_at_for_frequency(now, target["frequency"]),
+                        not_before=quiet_hours_not_before(
+                            now, start=target["quiet_hours_start"],
+                            end=target["quiet_hours_end"],
+                            timezone_name=target["timezone"],
+                        ),
+                        _fault_hook=outbox_fault_bridge,
+                    )
+                    notification_id, created = materialized.notification_id, materialized.created
+                    represented = {
+                        (row["event_id"], row["event_seq"])
+                        for row in conn.execute(
+                            "SELECT event_id, event_seq "
+                            "FROM radar_notification_batch_events "
+                            "WHERE notification_id = ? AND endpoint_id = ?",
+                            (notification_id, endpoint_id),
+                        ).fetchall()
+                    }
+                    expected = {
+                        (event.event_id, event.event_seq) for event in eligible
+                    }
+                    if represented != expected:
+                        raise SelectorError(
+                            "El batch idempotente no representa todos los eventos elegibles"
+                        )
+                    associated = len(expected)
+
+                _fire(_fault_hook, PHASE_BEFORE_CURSOR_UPDATE)
+                conn.execute(
+                    "INSERT INTO radar_notification_cursors "
+                    "(endpoint_id, radar_id, last_examined_seq, updated_at) "
+                    "VALUES (?, ?, ?, ?) "
+                    "ON CONFLICT(endpoint_id, radar_id) DO UPDATE SET "
+                    "last_examined_seq=excluded.last_examined_seq, "
+                    "updated_at=excluded.updated_at",
+                    (endpoint_id, radar_id, cursor_after,
+                     now.astimezone(timezone.utc).isoformat()),
+                )
+                _fire(_fault_hook, PHASE_AFTER_CURSOR_UPDATE)
+                _fire(_fault_hook, PHASE_BEFORE_COMMIT)
+                conn.execute("COMMIT")
+            except sqlite3.IntegrityError as exc:
+                conn.execute("ROLLBACK")
+                raise DuplicateEventAssociationError(
+                    f"No se pudo materializar la selección: {exc}"
+                ) from exc
+            except BaseException:
+                conn.execute("ROLLBACK")
+                raise
+        finally:
+            conn.close()
+
+        return SelectionResult(
+            endpoint_id, radar_id, len(window), len(eligible), associated,
+            notification_id, cursor_before, cursor_after, created, None,
+        )
+
+
+__all__ = [
+    "EligibilityFlags",
+    "NotificationSelector",
+    "PHASE_AFTER_ASSOCIATIONS",
+    "PHASE_AFTER_BATCH_INSERT",
+    "PHASE_AFTER_CURSOR_UPDATE",
+    "PHASE_AFTER_WINDOW_READ",
+    "PHASE_BEFORE_COMMIT",
+    "PHASE_BEFORE_CURSOR_UPDATE",
+    "SelectionResult",
+    "SelectionTarget",
+    "SelectorError",
+    "expires_at_for_frequency",
+    "is_event_eligible",
+    "quiet_hours_not_before",
+]
