@@ -7,6 +7,7 @@ import pytest
 
 from app.core.conversation_store import ConversationStore
 from app.core.formatter import Formatter
+from app.core.radar import follows
 from app.core.radar.commands import (
     LIST,
     RUN,
@@ -235,6 +236,40 @@ def test_save_duplicate(env):
     handle_radar_command(deps, _ctx("guardar esto como Radar Dup"))
     res = handle_radar_command(deps, _ctx("guardar esto como Radar Dup"))
     assert res["route_reason"] == "radar_save_duplicate"
+
+
+def test_save_with_the_reserved_name_is_refused_with_its_own_reason(env):
+    """El nombre de la watchlist no es un duplicado del usuario ni un error.
+
+    Sin este catch, RadarReservedNameError subía como excepción no manejada.
+    Tiene route_reason propio para no contaminar la telemetría de duplicados.
+    """
+    deps, store, conv = env
+    conv.append_turn(
+        chat_id="st_anon_test", user_query="q", response="r",
+        parsed_params={"departamento_resolved": "ATLÁNTICO"}, result_ids=[],
+    )
+
+    res = handle_radar_command(
+        deps, _ctx(f"guardar esto como Radar {follows.FOLLOWS_NAME}"))
+
+    assert res["route_reason"] == "radar_save_reserved_name"
+    assert "procesos seguidos" in res["response"].lower()
+    # no se creó nada ni se tocó la watchlist
+    assert store.get_radar_by_name("anon:test", follows.FOLLOWS_NAME) is None
+
+
+def test_save_with_a_case_variant_of_the_reserved_name_is_refused(env):
+    deps, store, conv = env
+    conv.append_turn(
+        chat_id="st_anon_test", user_query="q", response="r",
+        parsed_params={"departamento_resolved": "ATLÁNTICO"}, result_ids=[],
+    )
+    variant = follows.FOLLOWS_NAME.replace("Procesos", "procesos")
+
+    res = handle_radar_command(deps, _ctx(f"guardar esto como Radar {variant}"))
+
+    assert res["route_reason"] == "radar_save_reserved_name"
 
 
 def test_list_empty_then_populated(env):

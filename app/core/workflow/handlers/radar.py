@@ -20,7 +20,7 @@ from typing import TYPE_CHECKING
 from app.core.radar.builder import has_scope_or_topic, save_radar_from_params
 from app.core.radar.commands import LIST, RUN, SAVE, parse_radar_command, radar_owner
 from app.core.radar.runner import RADAR_NOT_FOUND, STATUS_SKIPPED, RadarRunResult, run_radar
-from app.core.radar.store import RadarExistsError
+from app.core.radar.store import RadarExistsError, RadarReservedNameError
 from app.core.workflow.results import empty_result
 
 if TYPE_CHECKING:
@@ -83,6 +83,16 @@ def _do_save(deps, ctx, store, owner, name) -> dict:
     try:
         radar_id = save_radar_from_params(
             store, owner=owner, name=name, params=params, channel=ctx.channel,
+        )
+    except RadarReservedNameError:
+        # Nombre del radar sintético de "procesos seguidos": no es un duplicado
+        # del usuario ni un fallo, así que no puede telemetrizarse como tal.
+        return _resp(
+            f"«{name}» es el nombre que uso para tu lista de procesos seguidos, "
+            f"así que no puedo dárselo a un radar de búsqueda. Elige otro "
+            f"nombre, por ejemplo «guardar esta búsqueda como Radar "
+            f"{name} 2026».",
+            route_reason="radar_save_reserved_name",
         )
     except RadarExistsError:
         return _resp(

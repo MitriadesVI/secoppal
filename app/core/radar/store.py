@@ -56,6 +56,44 @@ class RadarExistsError(ValueError):
     """Ya existe un radar con ese (owner, name)."""
 
 
+class RadarReservedNameError(ValueError):
+    """El nombre pertenece a un radar sintético y no puede usarlo otro radar."""
+
+
+# El radar sintético de "procesos seguidos" (ADR-035) es una fila más de
+# ``radars``, distinguida por su ``frequency``. Las constantes viven aquí —y no
+# en ``follows.py``— porque describen una regla de integridad de *esta* tabla:
+# ``UNIQUE (owner, name)`` no alcanza para protegerla (ver ``_is_reserved_name``)
+# y este módulo no puede importar ``follows`` sin invertir la dependencia.
+# ``follows.py`` las re-exporta como su API pública.
+FOLLOWS_FREQUENCY = "follows"
+FOLLOWS_RADAR_NAME = "📌 Procesos seguidos"
+
+
+def _is_reserved_name(name: str) -> bool:
+    """¿``name`` colisiona con el nombre del radar sintético?
+
+    Compara igual que ``get_radar_by_name`` (que busca con ``COLLATE NOCASE``),
+    porque el ``UNIQUE (owner, name)`` es **binario**: sin esto, un radar normal
+    llamado "📌 procesos seguidos" pasa el UNIQUE y aun así hace NOCASE-match
+    con el canónico, dejando dos filas indistinguibles para la búsqueda.
+    ``casefold`` cubre todo lo que NOCASE considera igual, y algo más: en una
+    reserva, de más peca a favor.
+    """
+    return name.casefold() == FOLLOWS_RADAR_NAME.casefold()
+
+
+def is_canonical_follows_name(name: str) -> bool:
+    """¿Es *exactamente* el nombre canónico del radar sintético?
+
+    Exacto, no ``casefold``: la unicidad de un follows por owner la sostiene el
+    ``UNIQUE (owner, name)``, que es **binario**. Si se admitiera una variante
+    de caja, dos filas ``frequency='follows'`` del mismo owner pasarían el UNIQUE
+    y la watchlist se partiría en dos.
+    """
+    return name == FOLLOWS_RADAR_NAME
+
+
 # ---------------------------------------------------------------------------
 # Dataclasses de lectura
 # ---------------------------------------------------------------------------
@@ -195,6 +233,66 @@ class EventRecord:
     prev_value: str | None = None
     urlproceso: str | None = None
     referencia: str | None = None
+
+
+@dataclass(frozen=True)
+class FollowsSeenUpdate:
+    """El refresco de **una** fila ya seguida, con los eventos que se derivan.
+
+    Los eventos viajan **atados a su clave**, no en una lista aparte: si la fila
+    ya no existe (el owner hizo ``unfollow`` mientras corría la red), la clave no
+    se actualiza y sus eventos no se insertan, sin que ningún caller tenga que
+    acordarse de filtrarlos. La regla vive en la estructura, no en un ``if``.
+
+    ``expected_first_seen_at`` es la **versión de la membresía**: el
+    ``first_seen_at`` que tenía la fila en el snapshot que abrió este refresco.
+    Sin él, un ``unfollow`` + ``follow`` de la misma clave durante la red daría
+    una fila *nueva* con la *misma* clave, el UPDATE acertaría con rowcount 1 y
+    el refresco pisaría el ``snapshot_hash=''`` de esa membresía recién nacida
+    —matándole la línea base— y emitiría un evento que pertenece a la encarnación
+    muerta. La clave identifica *el proceso*; ``first_seen_at`` identifica *esta*
+    membresía. Es obligatorio a propósito: un default lo volvería olvidable.
+
+    No lleva ``first_run_id``: un refresco no crea membresía —eso es de
+    ``follow()``— y por tanto tampoco fija su origen.
+    """
+
+    result_key: str
+    expected_first_seen_at: str
+    fields: dict = field(default_factory=dict)
+    snapshot_hash: str = ""
+    last_snapshot_json: str | None = None
+    events: tuple[EventRecord, ...] = ()
+    is_baseline: bool = False
+
+
+@dataclass(frozen=True)
+class MaterializedFollowsRefresh:
+    """Resultado de materializar un refresco de seguidos.
+
+    Los conteos son de lo que **se escribió**, no de lo que se pensaba escribir:
+    una clave que un ``unfollow`` descartó a mitad de camino no puede contar como
+    cambio. Reportar el conteo construido haría que el scheduler —y mañana el
+    notifier— anunciaran un cambio que nunca entró al feed.
+
+    ``lease_lost`` no es error: es un estado de control.
+    """
+
+    updated: int = 0
+    events: int = 0
+    baseline: int = 0
+    changed_state: int = 0
+    changed_value: int = 0
+    lease_lost: bool = False
+    not_follows: bool = False
+
+
+@dataclass(frozen=True)
+class MaterializedFollow:
+    """Resultado de dar de alta un seguido. ``created=False`` = ya lo seguía."""
+
+    created: bool = False
+    not_follows: bool = False
 
 
 @dataclass(frozen=True)
@@ -358,6 +456,54 @@ INSERT INTO radar_seen_results
        contractor         = excluded.contractor
 """
 
+# Alta de membresía: INSERT que **no pisa** una fila existente. Re-seguir algo ya
+# seguido no debe reescribir snapshot_hash a '' —eso borraría la línea base y
+# haría que el refresco siguiente tratara un cambio real como baseline, es decir,
+# lo silenciaría—, ni mover first_seen_at, ni emitir otro evento 'followed'.
+# DO NOTHING deja la fila tal cual y delata por rowcount si hubo alta.
+_INSERT_SEEN_IF_ABSENT_SQL = """
+INSERT INTO radar_seen_results
+   (radar_id, result_key, dataset, urlproceso, referencia, title,
+    entity, value, status, contractor, first_seen_at, last_seen_at,
+    snapshot_hash, last_snapshot_json, first_run_id, last_run_id,
+    relevance_label)
+   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+   ON CONFLICT(radar_id, result_key) DO NOTHING
+"""
+
+# Refresco de un seguido: UPDATE, nunca UPSERT. La membresía la crea ``follow``;
+# un refresco que pudiera insertar resucitaría lo que ``unfollow`` borró mientras
+# había red — el usuario dejaría de seguir un proceso y el sistema se lo
+# devolvería en la pasada siguiente. Si la fila ya no está, rowcount 0 y listo.
+#
+# El `first_seen_at` del WHERE es un **fence de versión**, no un filtro de más:
+# (radar_id, result_key) identifica el proceso, pero no *esta* membresía. Un
+# unfollow+follow de la misma clave durante la red produce una fila nueva con la
+# misma clave, y sin este predicado el refresco la actualizaría —borrándole el
+# snapshot_hash='' que la deja pendiente de baseline— y emitiría un evento que
+# describe una membresía que ya no existe. `first_seen_at` es inmutable mientras
+# la membresía vive (ni este UPDATE ni el INSERT ... DO NOTHING lo tocan), así
+# que sirve de versión sin añadir una columna.
+#
+# No toca first_seen_at/first_run_id/dataset: refrescar no redefine identidad.
+_UPDATE_SEEN_SQL = """
+UPDATE radar_seen_results
+   SET last_seen_at       = ?,
+       last_run_id        = ?,
+       snapshot_hash      = ?,
+       last_snapshot_json = ?,
+       status             = ?,
+       value              = ?,
+       title              = ?,
+       entity             = ?,
+       urlproceso         = ?,
+       referencia         = ?,
+       contractor         = ?
+ WHERE radar_id = ?
+   AND result_key = ?
+   AND first_seen_at = ?
+"""
+
 # Éxito: limpia error y ambos contadores. No toca enabled ni resucita un radar
 # pausado a mano. needs_attention = 0 es la semántica *actual*; Preflight 3 la
 # cambiará (una corrida OK no debe borrar la necesidad de revisión humana), y
@@ -449,7 +595,7 @@ def _insert_events(
     radar_id: str,
     owner: str,
     radar_name: str | None,
-    run_id: str,
+    run_id: str | None,
     events: list[EventRecord],
 ) -> None:
     """Inserta los eventos de una corrida materializada.
@@ -490,6 +636,77 @@ def _upsert_seen(
     )
 
 
+def _insert_seen_if_absent(
+    conn: sqlite3.Connection,
+    radar_id: str,
+    rec: SeenRecord,
+    run_id: str | None,
+    ts: str,
+) -> int:
+    """Da de alta la membresía si no existía. Devuelve 1 si insertó, 0 si ya estaba."""
+    f = rec.fields
+    cur = conn.execute(
+        _INSERT_SEEN_IF_ABSENT_SQL,
+        (radar_id, rec.result_key, rec.dataset, f.get("urlproceso", ""),
+         f.get("referencia", ""), f.get("title", ""), f.get("entity", ""),
+         f.get("value", ""), f.get("status", ""), f.get("contractor", ""),
+         ts, ts, rec.snapshot_hash, rec.last_snapshot_json, run_id, run_id,
+         rec.relevance_label),
+    )
+    return cur.rowcount
+
+
+def _update_seen(
+    conn: sqlite3.Connection,
+    radar_id: str,
+    upd: FollowsSeenUpdate,
+    run_id: str | None,
+    ts: str,
+) -> int:
+    """Refresca una fila ya seguida.
+
+    Devuelve filas afectadas: 0 si la membresía desapareció (``unfollow``) **o
+    si fue reemplazada por otra encarnación** (``unfollow`` + ``follow`` de la
+    misma clave mientras había red).
+    """
+    f = upd.fields
+    cur = conn.execute(
+        _UPDATE_SEEN_SQL,
+        (ts, run_id, upd.snapshot_hash, upd.last_snapshot_json,
+         f.get("status", ""), f.get("value", ""), f.get("title", ""),
+         f.get("entity", ""), f.get("urlproceso", ""), f.get("referencia", ""),
+         f.get("contractor", ""), radar_id, upd.result_key,
+         upd.expected_first_seen_at),
+    )
+    return cur.rowcount
+
+
+def _read_canonical_follows(
+    conn: sqlite3.Connection, radar_id: str
+) -> sqlite3.Row | None:
+    """La fila del radar sintético si —y solo si— sigue siendo la watchlist.
+
+    Se lee **dentro** de la transacción: entre que el caller resolvió el radar y
+    esta escritura, la fila pudo borrarse, cambiar de ``frequency`` o perder el
+    nombre canónico. Exige las tres condiciones porque las tres sostienen el
+    invariante: existir, ser de tipo follows y llevar el nombre que el
+    ``UNIQUE (owner, name)`` protege —sin lo último, la unicidad de la watchlist
+    no está garantizada y escribir en ella sería adivinar.
+
+    ``None`` = no es una watchlist válida; el caller aborta sin escribir.
+    """
+    row = conn.execute(
+        "SELECT owner, name, frequency FROM radars WHERE id = ?", (radar_id,)
+    ).fetchone()
+    if row is None:
+        return None
+    if row["frequency"] != FOLLOWS_FREQUENCY:
+        return None
+    if not is_canonical_follows_name(row["name"]):
+        return None
+    return row
+
+
 def _mark_success(conn: sqlite3.Connection, radar_id: str, ts: str) -> None:
     conn.execute(_MARK_SUCCESS_SQL, (ts, radar_id))
 
@@ -515,6 +732,8 @@ PHASE_AFTER_BEGIN = "after_begin"
 PHASE_AFTER_LEASE_FENCE = "after_lease_fence"
 PHASE_AFTER_RUN_INSERT = "after_run_insert"
 PHASE_AFTER_SEEN_UPSERTS = "after_seen_upserts"
+PHASE_AFTER_SEEN_UPDATES = "after_seen_updates"
+PHASE_AFTER_MEMBERSHIP_INSERT = "after_membership_insert"
 PHASE_AFTER_EVENT_INSERTS = "after_event_inserts"
 PHASE_AFTER_RADAR_UPDATE = "after_radar_update"
 PHASE_AFTER_FAILURE_UPDATE = "after_failure_update"
@@ -579,6 +798,24 @@ class RadarStore:
         channel: str = "web",
         created_from_trace_id: str | None = None,
     ) -> str:
+        # El nombre del radar sintético está reservado: un radar de búsqueda que
+        # lo use sería resuelto como la watchlist del owner y recibiría sus
+        # ``radar_seen_results`` —marcando como "ya visto" lo que esa búsqueda
+        # nunca encontró, y silenciando su novedad para siempre.
+        if frequency != FOLLOWS_FREQUENCY and _is_reserved_name(name):
+            raise RadarReservedNameError(
+                f"El nombre '{name}' está reservado para la lista de procesos "
+                f"seguidos. Elige otro nombre para el radar."
+            )
+        # Y al revés: un follows con nombre alternativo pasaría el UNIQUE y
+        # crearía un segundo follows para el mismo owner. La unicidad de la
+        # watchlist se apoya en ese índice, así que el nombre canónico es parte
+        # del invariante, no decoración.
+        if frequency == FOLLOWS_FREQUENCY and not is_canonical_follows_name(name):
+            raise RadarReservedNameError(
+                f"El radar de procesos seguidos debe llamarse "
+                f"'{FOLLOWS_RADAR_NAME}', no '{name}'."
+            )
         radar_id = _new_id()
         conn = self._connect()
         try:
@@ -618,6 +855,29 @@ class RadarStore:
         finally:
             conn.close()
         return Radar.from_row(row) if row else None
+
+    def list_radars_by_frequency(
+        self, owner: str, frequency: str, *, limit: int = 2
+    ) -> list[Radar]:
+        """Radares de ese tipo del owner, hasta ``limit``.
+
+        Devuelve una **lista**, no "el primero": para el radar sintético, que
+        haya más de una fila es corrupción, y un ``LIMIT 1`` la escondería
+        eligiendo una al azar —justo el fallo silencioso que la watchlist no
+        puede permitirse—. El caller decide qué hacer con la cardinalidad; con
+        ``limit=2`` basta para distinguir "una" de "más de una" sin traerlas
+        todas.
+        """
+        conn = self._connect()
+        try:
+            rows = conn.execute(
+                "SELECT * FROM radars WHERE owner = ? AND frequency = ? "
+                "ORDER BY created_at, rowid LIMIT ?",
+                (owner, frequency, limit),
+            ).fetchall()
+        finally:
+            conn.close()
+        return [Radar.from_row(r) for r in rows]
 
     def list_radars(self, owner: str) -> list[Radar]:
         conn = self._connect()
@@ -822,9 +1082,12 @@ class RadarStore:
         """Inserta movimientos en el feed. Cada dict trae las columnas de
         ``radar_events`` (sin ``id``, que se genera). No-op si la lista vacía.
 
-        Genérico y de un solo hecho, sin transacción: lo usa ``follows.py``,
-        donde el caller sí es dueño de la identidad de cada evento. La
-        materialización de una corrida no pasa por aquí — ver
+        Genérico y de un solo hecho, sin transacción: el caller es dueño de la
+        identidad de cada evento porque no hay una transacción que la derive.
+        Ninguna ruta de follows pasa por aquí — ``follow()`` y
+        ``refresh_follows()`` van por ``materialize_follow_if_absent`` y
+        ``materialize_follows_refresh``, que derivan la identidad dentro de su
+        propia transacción. Tampoco la materialización de una corrida — ver
         ``materialize_successful_run``.
         """
         if not events:
@@ -975,6 +1238,172 @@ class RadarStore:
         finally:
             conn.close()
         return MaterializedRun(run_id=run.id)
+
+    def materialize_follows_refresh(
+        self,
+        *,
+        radar_id: str,
+        token: str,
+        updates: list[FollowsSeenUpdate],
+        seen_run_id: str = "follows_refresh",
+        now: datetime | None = None,
+        lease_duration: timedelta | None = None,
+        _fault_hook: _FaultHook | None = None,
+    ) -> MaterializedFollowsRefresh:
+        """Persiste el refresco de los seguidos: snapshot + eventos, o nada.
+
+        Operación propia y no ``materialize_successful_run`` porque follows no es
+        una búsqueda: no tiene ``radar_run`` que insertar, y aquella limpiaría
+        ``failure_count``/``needs_attention`` y marcaría ``last_run_at``, que es
+        semántica de radar de búsqueda que este radar nunca tuvo.
+
+        Comparte con ella lo que sí es común: el fence del lease como primera
+        DML, la identidad de los eventos derivada dentro de la transacción, y el
+        todo-o-nada entre snapshot y eventos —si el snapshot avanza sin que los
+        eventos lleguen al feed, el refresco siguiente ya ve el hash nuevo y el
+        cambio se pierde para siempre.
+
+        Dos identidades que **no son la misma**, y por eso van en parámetros
+        distintos:
+
+        - ``radar_seen_results.last_run_id`` sí necesita un valor: sin él, dos
+          refrescos consecutivos serían indistinguibles en el historial de la
+          fila. ``seen_run_id`` es el centinela ``'follows_refresh'``, coherente
+          con ``'follow_manual'`` en ``follow()`` — ambos declaran "esto no vino
+          de una corrida", no "no hay dato".
+        - ``radar_events.run_id`` es ``None`` **siempre**, sin excepción: no hay
+          ``radar_run`` que auditar, y un id que no resuelve a ninguna fila de
+          ``radar_runs`` miente. No se parametriza porque no hay caso en que
+          debiera ser otra cosa. Ver ``docs/radar/FOLLOWS_LEASE_INVESTIGATION.md``
+          §F.2.
+        """
+        conn = self._connect()
+        try:
+            conn.execute("BEGIN IMMEDIATE")
+            try:
+                _fire(_fault_hook, PHASE_AFTER_BEGIN)
+                if not lease.renew(
+                    conn, radar_id, token, now=now, lease_duration=lease_duration
+                ):
+                    conn.execute("ROLLBACK")
+                    return MaterializedFollowsRefresh(lease_lost=True)
+                _fire(_fault_hook, PHASE_AFTER_LEASE_FENCE)
+
+                # El lease ya probó que la fila existe; esto prueba que sigue
+                # siendo *la watchlist canónica* y no un radar de búsqueda: sus
+                # eventos y su seen tienen semántica distinta.
+                radar_row = _read_canonical_follows(conn, radar_id)
+                if radar_row is None:
+                    conn.execute("ROLLBACK")
+                    return MaterializedFollowsRefresh(not_follows=True)
+                owner, radar_name = radar_row["owner"], radar_row["name"]
+
+                ts = _now()
+                live: list[FollowsSeenUpdate] = []
+                for upd in updates:
+                    # rowcount 0 ⇒ un unfollow ganó la carrera mientras había
+                    # red. No se inserta la fila (sería resucitarla) ni se emite
+                    # su evento (sería anunciar algo que ya no se sigue).
+                    if _update_seen(conn, radar_id, upd, seen_run_id, ts) == 1:
+                        live.append(upd)
+                _fire(_fault_hook, PHASE_AFTER_SEEN_UPDATES)
+
+                events = [e for upd in live for e in upd.events]
+                _insert_events(
+                    conn, radar_id=radar_id, owner=owner, radar_name=radar_name,
+                    run_id=None, events=events,
+                )
+                _fire(_fault_hook, PHASE_AFTER_EVENT_INSERTS)
+
+                _fire(_fault_hook, PHASE_BEFORE_COMMIT)
+                conn.execute("COMMIT")
+            except BaseException:
+                conn.execute("ROLLBACK")
+                raise
+        finally:
+            conn.close()
+        # Conteos derivados de ``live``: lo escrito, no lo planeado.
+        return MaterializedFollowsRefresh(
+            updated=len(live),
+            events=len(events),
+            baseline=sum(1 for upd in live if upd.is_baseline),
+            changed_state=sum(1 for e in events if e.kind == "changed_state"),
+            changed_value=sum(1 for e in events if e.kind == "changed_value"),
+        )
+
+    def materialize_follow_if_absent(
+        self,
+        *,
+        radar_id: str,
+        seen: SeenRecord,
+        event: EventRecord,
+        run_id: str | None = None,
+        _fault_hook: _FaultHook | None = None,
+    ) -> MaterializedFollow:
+        """Da de alta un seguido y su evento ``followed``, o nada.
+
+        Sin lease: ``follow`` es una acción del usuario sobre **su** fila, no una
+        corrida, y el ganador de dos altas simultáneas lo decide la PRIMARY KEY
+        (radar_id, result_key) dentro de la transacción. Un lease aquí serializaría
+        clics que no compiten por nada.
+
+        Idempotente por construcción: el INSERT es ``DO NOTHING``, así que
+        re-seguir no reescribe el snapshot (no borra la línea base), no mueve
+        ``first_seen_at`` y —al depender el evento del rowcount— no emite un
+        segundo ``followed``. Membresía y evento comparten transacción: un alta
+        sin su evento dejaría el feed sin explicar de dónde salió el seguido.
+
+        ``event`` debe describir **esta** alta: se rechaza uno de otra clave, de
+        otro dataset o de otro tipo. El evento y la membresía son dos caras del
+        mismo hecho, y nada más abajo volvería a comprobar que coinciden.
+        """
+        if event.kind != "followed":
+            raise ValueError(
+                f"El evento de un alta debe ser 'followed', no '{event.kind}'."
+            )
+        if event.result_key != seen.result_key:
+            raise ValueError(
+                f"El evento describe la clave '{event.result_key}' pero la "
+                f"membresía es de '{seen.result_key}'."
+            )
+        if event.dataset != seen.dataset:
+            raise ValueError(
+                f"El evento es del dataset '{event.dataset}' pero la membresía "
+                f"es de '{seen.dataset}'."
+            )
+
+        conn = self._connect()
+        created = False
+        try:
+            conn.execute("BEGIN IMMEDIATE")
+            try:
+                _fire(_fault_hook, PHASE_AFTER_BEGIN)
+                radar_row = _read_canonical_follows(conn, radar_id)
+                if radar_row is None:
+                    conn.execute("ROLLBACK")
+                    return MaterializedFollow(not_follows=True)
+                owner, radar_name = radar_row["owner"], radar_row["name"]
+
+                created = _insert_seen_if_absent(
+                    conn, radar_id, seen, run_id, _now()
+                ) == 1
+                _fire(_fault_hook, PHASE_AFTER_MEMBERSHIP_INSERT)
+
+                if created:
+                    _insert_events(
+                        conn, radar_id=radar_id, owner=owner, radar_name=radar_name,
+                        run_id=run_id, events=[event],
+                    )
+                _fire(_fault_hook, PHASE_AFTER_EVENT_INSERTS)
+
+                _fire(_fault_hook, PHASE_BEFORE_COMMIT)
+                conn.execute("COMMIT")
+            except BaseException:
+                conn.execute("ROLLBACK")
+                raise
+        finally:
+            conn.close()
+        return MaterializedFollow(created=created)
 
     def materialize_failed_run(
         self,

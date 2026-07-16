@@ -6,14 +6,17 @@ que un radar que falla no detiene a los demás.
 """
 from __future__ import annotations
 
+import sqlite3
+import threading
 from datetime import datetime, timedelta, timezone
 from types import SimpleNamespace
 
 import pytest
 
-from app.core.radar import scheduler
+from app.core.radar import follows, scheduler
 from app.core.radar.scheduler import is_due, run_due_radars
 from app.core.radar.store import Radar, RadarStore
+from app.core.soql_builder import SoQLBuilder
 
 NOW = datetime(2026, 6, 19, 12, 0, 0, tzinfo=timezone.utc)
 
@@ -158,3 +161,159 @@ def test_summary_line_format(store, monkeypatch):
     summary = run_due_radars(deps=None, store=store, now=NOW)
     line = summary.as_line()
     assert "corridos=1" in line and "nuevos=3" in line and "cambios=1" in line
+
+
+# ── P1B-Preflight 2 · el scheduler distingue omisión de fallo ──────────────
+
+def _follows_radar(store, owner="u"):
+    return follows.get_or_create_follows_radar(store, owner)
+
+
+@pytest.mark.parametrize("status", sorted(follows.REFRESH_SKIPPED))
+def test_follows_skipped_by_concurrency_is_not_an_operational_error(
+    store, monkeypatch, status
+):
+    """Que otro proceso tenga el lease es normal, no una alarma.
+
+    Si contara como error, dos schedulers solapados harían que el radar de
+    seguidos pareciera roto en cada pasada.
+    """
+    _follows_radar(store)
+    monkeypatch.setattr(follows, "refresh_follows",
+                        lambda deps, st, owner: follows._summary(status))
+
+    summary = run_due_radars(deps=None, store=store, now=NOW)
+
+    assert summary.errors == 0
+    assert summary.skipped == 1
+    assert summary.follows == 0
+    assert [o.status for o in summary.outcomes] == ["skipped"]
+
+
+def test_follows_refreshed_counts_as_refreshed(store, monkeypatch):
+    _follows_radar(store)
+    monkeypatch.setattr(
+        follows, "refresh_follows",
+        lambda deps, st, owner: follows._summary(
+            follows.REFRESH_REFRESHED, checked=2, changed_state=1, changed_value=1),
+    )
+
+    summary = run_due_radars(deps=None, store=store, now=NOW)
+
+    assert summary.errors == 0 and summary.skipped == 0
+    assert summary.follows == 1
+    assert summary.changed_total == 2
+
+
+def test_follows_exception_still_counts_as_error(store, monkeypatch):
+    """Un fallo real sigue siendo error: el skip no lo enmascara."""
+    _follows_radar(store)
+
+    def boom(deps, st, owner):
+        raise RuntimeError("socrata caída")
+
+    monkeypatch.setattr(follows, "refresh_follows", boom)
+    summary = run_due_radars(deps=None, store=store, now=NOW)
+
+    assert summary.errors == 1 and summary.skipped == 0
+
+
+def test_not_follows_is_an_error_not_a_skip(store, monkeypatch):
+    """Que el radar deje de ser follows es un invariante roto, no concurrencia.
+
+    Contarlo como omisión haría que una watchlist corrupta pareciera sana en
+    cada pasada del scheduler.
+    """
+    _follows_radar(store)
+
+    def integrity_violation(deps, st, owner):
+        raise follows.FollowsRadarIntegrityError("ya no es follows")
+
+    monkeypatch.setattr(follows, "refresh_follows", integrity_violation)
+    summary = run_due_radars(deps=None, store=store, now=NOW)
+
+    assert summary.errors == 1
+    assert summary.skipped == 0
+    assert [o.status for o in summary.outcomes] == ["error"]
+
+
+def test_not_follows_is_not_in_the_skipped_set():
+    """Congela la decisión: REFRESH_SKIPPED es solo concurrencia legítima."""
+    assert follows.REFRESH_SKIPPED == {follows.REFRESH_ALREADY_RUNNING,
+                                       follows.REFRESH_LEASE_LOST}
+    assert not hasattr(follows, "REFRESH_NOT_FOLLOWS")
+
+
+def test_two_concurrent_schedulers_do_not_duplicate_follows_events(tmp_path):
+    """Dos pasadas del scheduler a la vez: un solo evento de seguidos.
+
+    Es el bug N15 end-to-end, por la puerta por la que entra de verdad
+    (``run_due_radars``), no llamando a ``refresh_follows`` a mano. La
+    sincronización es por Event: el scheduler B arranca cuando A ya está en la
+    red, así la ventana se reproduce sin sleeps.
+    """
+    db_path = tmp_path / "sched_race.db"
+    seed = RadarStore(db_path)
+    card = {"titulo": "PAE", "entidad": "ALC", "valor": "1000000",
+            "estado": "Abierto", "url": "u", "id_del_proceso": "P-1",
+            "referencia_del_proceso": "REF-P-1",
+            "dataset_id": SoQLBuilder.PROCESOS_DATASET}
+    follows.follow(seed, "u", card)
+
+    def _raw(estado):
+        return {"id_del_proceso": "P-1", "referencia_del_proceso": "REF-P-1",
+                "nombre_del_procedimiento": "PAE", "entidad": "ALC",
+                "precio_base": "1000000", "estado_de_apertura_del_proceso": estado,
+                "urlproceso": "u"}
+
+    def _deps(client):
+        return SimpleNamespace(soql_builder=SoQLBuilder(), secop_client=client)
+
+    # baseline
+    run_due_radars(
+        deps=_deps(SimpleNamespace(query=lambda d, s: [_raw("Abierto")])),
+        store=seed, now=NOW)
+
+    a_in_network = threading.Event()
+    b_done = threading.Event()
+
+    class GateClient:
+        def query(self, dataset_id, soql):
+            a_in_network.set()
+            b_done.wait(timeout=15)
+            return [_raw("Adjudicado")]
+
+    class BClient:
+        calls = 0
+
+        def query(self, dataset_id, soql):
+            BClient.calls += 1
+            return [_raw("Adjudicado")]
+
+    summaries: dict = {}
+
+    def run_a():
+        summaries["a"] = run_due_radars(
+            deps=_deps(GateClient()), store=RadarStore(db_path), now=NOW)
+
+    def run_b():
+        assert a_in_network.wait(timeout=15)
+        summaries["b"] = run_due_radars(
+            deps=_deps(BClient()), store=RadarStore(db_path), now=NOW)
+        b_done.set()
+
+    ta, tb = threading.Thread(target=run_a), threading.Thread(target=run_b)
+    ta.start(); tb.start()
+    ta.join(timeout=60); tb.join(timeout=60)
+
+    conn = sqlite3.connect(db_path)
+    events = conn.execute(
+        "SELECT kind FROM radar_events WHERE kind = 'changed_state'"
+    ).fetchall()
+    conn.close()
+
+    assert len(events) == 1, "dos schedulers duplicaron el evento de seguidos"
+    assert BClient.calls == 0, "el scheduler omitido consultó SECOP"
+    assert summaries["b"].errors == 0, "un skip por concurrencia no es un error"
+    assert summaries["b"].skipped == 1
+    assert summaries["a"].follows == 1

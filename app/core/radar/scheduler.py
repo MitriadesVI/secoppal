@@ -136,6 +136,13 @@ def run_due_radars(
                     RadarOutcome(radar=radar, status="error", error=str(exc))
                 )
                 continue
+            # Omitido por concurrencia (otro proceso tiene el lease, o lo
+            # perdimos durante la red): no escribió nada y no es un fallo
+            # operativo — no debe contar como error ni disparar alarmas.
+            if res.get("status") in follows.REFRESH_SKIPPED:
+                summary.skipped += 1
+                summary.outcomes.append(RadarOutcome(radar=radar, status="skipped"))
+                continue
             changed = res["changed_state"] + res["changed_value"]
             summary.follows += 1
             summary.changed_total += changed

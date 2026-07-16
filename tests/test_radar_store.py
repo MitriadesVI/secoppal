@@ -21,17 +21,23 @@ from app.core.radar.lease import (
     LEASE_RADAR_NOT_FOUND,
 )
 from app.core.radar.store import (
+    FOLLOWS_FREQUENCY,
+    FOLLOWS_RADAR_NAME,
     PHASE_AFTER_BEGIN,
     PHASE_AFTER_EVENT_INSERTS,
     PHASE_AFTER_FAILURE_UPDATE,
     PHASE_AFTER_LEASE_FENCE,
+    PHASE_AFTER_MEMBERSHIP_INSERT,
     PHASE_AFTER_RADAR_UPDATE,
     PHASE_AFTER_RUN_INSERT,
+    PHASE_AFTER_SEEN_UPDATES,
     PHASE_AFTER_SEEN_UPSERTS,
     PHASE_BEFORE_COMMIT,
     EventRecord,
     FailureRecord,
+    FollowsSeenUpdate,
     RadarExistsError,
+    RadarReservedNameError,
     RadarStore,
     RunRecord,
     SeenRecord,
@@ -1152,7 +1158,8 @@ def test_stolen_lease_on_failure_path_writes_nothing(store, leased):
 
 # 14 · la materialización no puede hacer red
 
-@pytest.mark.parametrize("name", ["materialize_successful_run", "materialize_failed_run"])
+@pytest.mark.parametrize("name", ["materialize_successful_run", "materialize_failed_run",
+                                  "materialize_follows_refresh"])
 def test_materializers_take_no_network_dependencies(name):
     """Estructural: la transacción no puede recibir ni alcanzar la red.
 
@@ -1175,6 +1182,706 @@ def test_materializers_take_no_network_dependencies(name):
     assert "fetch_current_rows_by_keys" not in called
     assert not called & {"query", "count", "get", "post", "sleep", "request"}
     assert not any(isinstance(n, (ast.Await, ast.AsyncFor)) for n in ast.walk(tree))
+
+
+# ── P1B-Preflight 2 · materializador del refresco de seguidos ─────────────
+#
+# El refresco de follows no es una corrida: no inserta radar_run, no toca
+# contadores de fallo ni needs_attention. Solo snapshot + eventos, atómicos, y
+# con UPDATE en vez de UPSERT para no resucitar lo que unfollow borró.
+
+# first_seen_at del fixture: es la "versión" de la membresía que los updates
+# declaran esperar. Un update con otro valor apunta a una encarnación distinta.
+_FIRST_SEEN = "2026-01-01T00:00:00+00:00"
+
+
+@pytest.fixture
+def follows_leased(store):
+    """Radar sintético con dos seguidos y el lease tomado por nosotros."""
+    rid = store.create_radar(
+        name=FOLLOWS_RADAR_NAME, owner="u1", query_frame_json="{}",
+        frequency=FOLLOWS_FREQUENCY,
+    )
+    for key in ("K-1", "K-2"):
+        store.upsert_seen(
+            radar_id=rid, result_key=key, dataset="procesos",
+            fields={"status": "Abierto", "value": "100", "title": f"T-{key}"},
+            snapshot_hash="h1", run_id="follow_manual",
+            seen_at=_FIRST_SEEN,
+        )
+    claim = store.try_acquire_run_lease(rid)
+    assert claim.acquired
+    return rid, claim.token
+
+
+def _follows_update(key: str, *, status="Adjudicado", snap="h2", with_event=True,
+                    first_seen=_FIRST_SEEN):
+    events = ()
+    if with_event:
+        events = (EventRecord(
+            kind="changed_state", ts="2026-07-15T00:00:00+00:00", result_key=key,
+            dataset="procesos", title=f"T-{key}", status=status,
+            prev_status="Abierto",
+        ),)
+    return FollowsSeenUpdate(
+        result_key=key, expected_first_seen_at=first_seen,
+        fields={"status": status, "value": "100", "title": f"T-{key}",
+                "entity": "ALC", "urlproceso": "u", "referencia": "R",
+                "contractor": ""},
+        snapshot_hash=snap, events=events,
+    )
+
+
+def test_follows_refresh_persists_snapshot_and_events(store, follows_leased):
+    rid, token = follows_leased
+
+    res = store.materialize_follows_refresh(
+        radar_id=rid, token=token, updates=[_follows_update("K-1")],
+    )
+
+    assert (res.updated, res.events, res.lease_lost) == (1, 1, False)
+    state = _read_state(store.db_path, rid)
+    assert state["seen"]["K-1"]["status"] == "Adjudicado"
+    assert state["seen"]["K-1"]["snapshot_hash"] == "h2"
+    assert state["seen"]["K-1"]["first_seen_at"] == "2026-01-01T00:00:00+00:00"
+    assert state["seen"]["K-2"]["status"] == "Abierto"       # intacto
+    assert [e["kind"] for e in state["events"]] == ["changed_state"]
+
+
+def test_follows_refresh_writes_no_run_and_no_radar_state(store, follows_leased):
+    """No es una corrida: no hay radar_run ni limpieza de contadores.
+
+    Es la razón de existir de este materializador: reusar el de la corrida
+    obligaría a inventar un radar_run y a aplicar semántica de radar de
+    búsqueda que follows nunca tuvo.
+    """
+    rid, token = follows_leased
+    store.record_failure(rid, reason="socrata_timeout", message="previo")
+    before = _read_state(store.db_path, rid)["radar"]
+    claim = store.try_acquire_run_lease(rid)
+    token = claim.token if claim.acquired else token
+
+    store.materialize_follows_refresh(
+        radar_id=rid, token=token, updates=[_follows_update("K-1")],
+    )
+
+    after = _read_state(store.db_path, rid)
+    assert after["runs"] == []                                  # sin radar_run ficticio
+    assert after["radar"]["failure_count"] == before["failure_count"]
+    assert after["radar"]["needs_attention"] == before["needs_attention"]
+    assert after["radar"]["last_run_at"] == before["last_run_at"]
+    assert after["radar"]["next_run_after"] == before["next_run_after"]
+
+
+def test_follows_refresh_events_use_null_run_id_but_seen_gets_the_sentinel(
+    store, follows_leased
+):
+    """Dos identidades, no una: run_id NULL en el evento, centinela en seen.
+
+    Antes se escribía ``radar.id`` como run_id de ambos — un identificador que
+    no resuelve a ninguna fila de radar_runs. Y el fix inicial de esa mentira
+    volcó el mismo parámetro (``None``) a los dos campos, dejando
+    ``radar_seen_results.last_run_id`` en NULL cuando debía llevar el
+    centinela: sin él, dos refrescos consecutivos son indistinguibles en el
+    historial de la fila. Ver la investigación, §F.2.
+    """
+    rid, token = follows_leased
+
+    store.materialize_follows_refresh(
+        radar_id=rid, token=token, updates=[_follows_update("K-1")],
+        seen_run_id="follows_refresh",
+    )
+
+    state = _read_state(store.db_path, rid)
+    assert state["events"][0]["run_id"] is None, "el evento no debe llevar run_id"
+    assert state["events"][0]["radar_id"] == rid
+    assert state["seen"]["K-1"]["last_run_id"] == "follows_refresh", (
+        "seen.last_run_id debe llevar el centinela, no NULL"
+    )
+
+
+def test_follows_refresh_seen_run_id_defaults_to_the_sentinel(store, follows_leased):
+    """El default del parámetro es el mismo centinela que usa follows.py."""
+    rid, token = follows_leased
+
+    store.materialize_follows_refresh(
+        radar_id=rid, token=token, updates=[_follows_update("K-1")],
+    )
+
+    assert _read_state(store.db_path, rid)["seen"]["K-1"]["last_run_id"] == "follows_refresh"
+
+
+def test_follows_refresh_update_does_not_resurrect_unfollowed_key(store, follows_leased):
+    """El bug de §E: la clave que unfollow borró no revive ni emite evento."""
+    rid, token = follows_leased
+    store.delete_seen(rid, "K-1")            # el owner dejó de seguirlo
+
+    res = store.materialize_follows_refresh(
+        radar_id=rid, token=token,
+        updates=[_follows_update("K-1"), _follows_update("K-2")],
+    )
+
+    state = _read_state(store.db_path, rid)
+    assert "K-1" not in state["seen"], "el refresco resucitó una fila borrada"
+    assert res.updated == 1
+    # ni un evento de la clave muerta: los eventos van atados a su UPDATE.
+    assert [e["result_key"] for e in state["events"]] == ["K-2"]
+
+
+def test_follows_refresh_upsert_mutation_proves_the_test_would_catch_it(store, follows_leased):
+    """Contraprueba: con UPSERT en vez de UPDATE, el test anterior falla.
+
+    Sin esto, ``test_..._does_not_resurrect_...`` podría pasar por accidente.
+    """
+    rid, token = follows_leased
+    store.delete_seen(rid, "K-1")
+
+    # Simula el comportamiento viejo: upsert autocommit de la clave borrada.
+    store.upsert_seen(
+        radar_id=rid, result_key="K-1", dataset="procesos",
+        fields={"status": "Adjudicado", "value": "100"}, snapshot_hash="h2",
+        run_id=rid,
+    )
+
+    state = _read_state(store.db_path, rid)
+    assert "K-1" in state["seen"], "el UPSERT debería resucitarla (comportamiento viejo)"
+
+
+def test_follows_refresh_rejects_a_search_radar(store):
+    """Defensa en profundidad: no materializa sobre un radar que no es follows."""
+    rid = store.create_radar(name="Búsqueda", owner="u1",
+                             query_frame_json=_frame_json(), frequency="diaria")
+    store.upsert_seen(radar_id=rid, result_key="K-1", dataset="procesos",
+                      fields={"status": "Abierto"}, snapshot_hash="h1", run_id="r")
+    claim = store.try_acquire_run_lease(rid)
+
+    res = store.materialize_follows_refresh(
+        radar_id=rid, token=claim.token, updates=[_follows_update("K-1")],
+    )
+
+    assert res.not_follows is True
+    state = _read_state(store.db_path, rid)
+    assert state["seen"]["K-1"]["status"] == "Abierto"    # sin tocar
+    assert state["events"] == []
+
+
+def test_follows_refresh_stolen_lease_writes_nothing(store, follows_leased):
+    """El lease se perdió durante la red: no se escribe y no se pisa al sucesor."""
+    rid, token = follows_leased
+    before = _read_state(store.db_path, rid)
+    # B recupera el lease (el de A ya venció).
+    future = datetime.now(timezone.utc) + LEASE_DURATION + timedelta(seconds=1)
+    b = store.try_acquire_run_lease(rid, now=future)
+    assert b.acquired
+
+    res = store.materialize_follows_refresh(
+        radar_id=rid, token=token, updates=[_follows_update("K-1")],
+    )
+
+    assert res.lease_lost is True
+    assert (res.updated, res.events) == (0, 0)
+    after = _read_state(store.db_path, rid)
+    assert after["seen"] == before["seen"]
+    assert after["events"] == []
+    assert after["radar"]["run_lease_token"] == b.token       # token de B intacto
+
+
+def test_follows_refresh_release_by_stale_owner_does_not_free_successor(store, follows_leased):
+    """El finally de A no puede liberar el lease de B: release es token-fenced."""
+    rid, token = follows_leased
+    future = datetime.now(timezone.utc) + LEASE_DURATION + timedelta(seconds=1)
+    b = store.try_acquire_run_lease(rid, now=future)
+
+    assert store.release_run_lease(rid, token) is False       # A intenta liberar
+    assert store.get_radar(rid).run_lease_token == b.token
+
+
+_FOLLOWS_PHASES = [
+    PHASE_AFTER_BEGIN,
+    PHASE_AFTER_LEASE_FENCE,
+    PHASE_AFTER_SEEN_UPDATES,
+    PHASE_AFTER_EVENT_INSERTS,
+    PHASE_BEFORE_COMMIT,
+]
+
+
+@pytest.mark.parametrize("phase", _FOLLOWS_PHASES)
+def test_follows_refresh_exception_in_any_phase_rolls_back_everything(
+    store, follows_leased, phase
+):
+    rid, token = follows_leased
+    before = _read_state(store.db_path, rid)
+
+    with pytest.raises(_Boom):
+        store.materialize_follows_refresh(
+            radar_id=rid, token=token, updates=[_follows_update("K-1")],
+            _fault_hook=_hook_at(phase),
+        )
+
+    after = _read_state(store.db_path, rid)
+    assert after["seen"] == before["seen"], f"snapshot movido pese al fallo en {phase}"
+    assert after["events"] == []
+    assert after["runs"] == []
+
+
+def test_follows_refresh_crash_between_seen_and_events_loses_no_change(store, follows_leased):
+    """El defecto de §D: si el snapshot avanza sin su evento, el cambio se pierde.
+
+    Tras el rollback el hash sigue siendo el viejo, así que el refresco
+    siguiente vuelve a detectar el cambio y lo emite **exactamente una vez**.
+    """
+    rid, token = follows_leased
+
+    with pytest.raises(_Boom):
+        store.materialize_follows_refresh(
+            radar_id=rid, token=token, updates=[_follows_update("K-1")],
+            _fault_hook=_hook_at(PHASE_AFTER_SEEN_UPDATES),
+        )
+
+    mid = _read_state(store.db_path, rid)
+    assert mid["seen"]["K-1"]["snapshot_hash"] == "h1"   # el cambio sigue pendiente
+    assert mid["events"] == []
+
+    store.materialize_follows_refresh(
+        radar_id=rid, token=token, updates=[_follows_update("K-1")],
+    )
+
+    end = _read_state(store.db_path, rid)
+    assert end["seen"]["K-1"]["snapshot_hash"] == "h2"
+    assert [e["kind"] for e in end["events"]] == ["changed_state"]  # una sola vez
+
+
+def test_follows_refresh_crash_after_commit_leaves_complete_state(store, follows_leased):
+    """Un fallo posterior al COMMIT no deshace nada: seen y eventos completos."""
+    rid, token = follows_leased
+    store.materialize_follows_refresh(
+        radar_id=rid, token=token, updates=[_follows_update("K-1")],
+    )
+
+    state = _read_state(store.db_path, rid)
+    assert state["seen"]["K-1"]["snapshot_hash"] == "h2"
+    assert len(state["events"]) == 1
+
+
+def test_follows_refresh_events_identity_cannot_be_forged(store, follows_leased):
+    """La identidad la deriva la transacción, no el caller."""
+    rid, token = follows_leased
+    intruder = store.create_radar(name="Otro", owner="atacante",
+                                  query_frame_json=_frame_json())
+
+    store.materialize_follows_refresh(
+        radar_id=rid, token=token, updates=[_follows_update("K-1")],
+    )
+
+    ev = _read_state(store.db_path, rid)["events"][0]
+    assert ev["radar_id"] == rid and ev["radar_id"] != intruder
+    assert ev["owner"] == "u1"
+    assert ev["radar_name"] == FOLLOWS_RADAR_NAME
+    assert _read_state(store.db_path, intruder)["events"] == []
+
+
+def test_two_concurrent_follows_materializers_only_owner_writes(tmp_path):
+    """Conexiones distintas, Barrier: el dueño escribe, el vencido no."""
+    db_path = tmp_path / "follows_race.db"
+    seed = RadarStore(db_path)
+    rid = seed.create_radar(name=FOLLOWS_RADAR_NAME, owner="u1",
+                            query_frame_json="{}", frequency=FOLLOWS_FREQUENCY)
+    seed.upsert_seen(radar_id=rid, result_key="K-1", dataset="procesos",
+                     fields={"status": "Abierto"}, snapshot_hash="h1", run_id="m",
+                     seen_at=_FIRST_SEEN)
+    owner = seed.try_acquire_run_lease(rid)
+    assert owner.acquired
+
+    barrier = threading.Barrier(2)
+    results: dict = {}
+    lock = threading.Lock()
+
+    def materialize(label: str, token: str) -> None:
+        store = RadarStore(db_path)
+        barrier.wait()
+        res = store.materialize_follows_refresh(
+            radar_id=rid, token=token, updates=[_follows_update("K-1")],
+        )
+        with lock:
+            results[label] = res
+
+    threads = [
+        threading.Thread(target=materialize, args=("owner", owner.token)),
+        threading.Thread(target=materialize, args=("stale", "token-vencido")),
+    ]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join(timeout=60)
+
+    assert results["owner"].lease_lost is False
+    assert results["stale"].lease_lost is True
+    state = _read_state(db_path, rid)
+    assert len(state["events"]) == 1          # sin duplicado del perdedor
+
+
+# ── alta de membresía atómica e idempotente ───────────────────────────────
+
+def _follow_args(key="K-9", *, status="Abierto", snap=""):
+    return dict(
+        seen=SeenRecord(
+            result_key=key, dataset="procesos", snapshot_hash=snap,
+            fields={"title": f"T-{key}", "entity": "ALC", "value": "100",
+                    "status": status, "urlproceso": "u", "referencia": "R",
+                    "contractor": ""},
+        ),
+        event=EventRecord(
+            kind="followed", ts="2026-07-15T00:00:00+00:00", result_key=key,
+            dataset="procesos", title=f"T-{key}", status=status,
+        ),
+        run_id="follow_manual",
+    )
+
+
+def test_follow_if_absent_creates_membership_and_event(store, follows_leased):
+    rid, _ = follows_leased
+
+    res = store.materialize_follow_if_absent(radar_id=rid, **_follow_args())
+
+    assert res.created is True
+    state = _read_state(store.db_path, rid)
+    assert state["seen"]["K-9"]["snapshot_hash"] == ""     # baseline pendiente
+    assert [e["kind"] for e in state["events"]] == ["followed"]
+    assert state["events"][0]["radar_id"] == rid
+    assert state["events"][0]["owner"] == "u1"
+
+
+def test_refollow_is_idempotent_and_preserves_the_baseline(store, follows_leased):
+    """Re-seguir no puede borrar la línea base ya fijada.
+
+    Con el UPSERT anterior, ``follow`` reescribía snapshot_hash a '': el
+    refresco siguiente veía baseline y **silenciaba el cambio real**.
+    """
+    rid, token = follows_leased
+    store.materialize_follow_if_absent(radar_id=rid, **_follow_args())
+    # el refresco fija la línea base
+    store.materialize_follow_if_absent(radar_id=rid, **_follow_args())  # ruido
+    conn = sqlite3.connect(store.db_path)
+    conn.execute(
+        "UPDATE radar_seen_results SET snapshot_hash='h-base', "
+        "first_seen_at='2026-01-01T00:00:00+00:00' WHERE result_key='K-9'"
+    )
+    conn.commit()
+    conn.close()
+
+    res = store.materialize_follow_if_absent(radar_id=rid, **_follow_args())
+
+    assert res.created is False
+    state = _read_state(store.db_path, rid)
+    assert state["seen"]["K-9"]["snapshot_hash"] == "h-base", "re-follow borró la baseline"
+    assert state["seen"]["K-9"]["first_seen_at"] == "2026-01-01T00:00:00+00:00"
+    assert len([e for e in state["events"] if e["kind"] == "followed"]) == 1
+
+
+def test_follow_if_absent_rejects_a_search_radar(store):
+    rid = store.create_radar(name="Búsqueda", owner="u1",
+                             query_frame_json=_frame_json(), frequency="diaria")
+
+    res = store.materialize_follow_if_absent(radar_id=rid, **_follow_args())
+
+    assert res.not_follows is True
+    state = _read_state(store.db_path, rid)
+    assert state["seen"] == {} and state["events"] == []
+
+
+@pytest.mark.parametrize("phase", [PHASE_AFTER_BEGIN, PHASE_AFTER_MEMBERSHIP_INSERT,
+                                   PHASE_AFTER_EVENT_INSERTS, PHASE_BEFORE_COMMIT])
+def test_follow_if_absent_rolls_back_everything_on_any_phase(store, follows_leased, phase):
+    """Crash tras la membresía y antes del evento: rollback total.
+
+    Media alta dejaría un seguido que el feed nunca explicó.
+    """
+    rid, _ = follows_leased
+
+    with pytest.raises(_Boom):
+        store.materialize_follow_if_absent(
+            radar_id=rid, **_follow_args(), _fault_hook=_hook_at(phase),
+        )
+
+    state = _read_state(store.db_path, rid)
+    assert "K-9" not in state["seen"]
+    assert state["events"] == []
+
+
+def test_eight_concurrent_follows_create_one_row_and_one_event(tmp_path):
+    """Ocho clics simultáneos: una fila, un evento. Lo decide la PRIMARY KEY."""
+    db_path = tmp_path / "follow_race.db"
+    seed = RadarStore(db_path)
+    rid = seed.create_radar(name=FOLLOWS_RADAR_NAME, owner="u1",
+                            query_frame_json="{}", frequency=FOLLOWS_FREQUENCY)
+
+    workers = 8
+    barrier = threading.Barrier(workers)
+    created: list = []
+    errors: list = []
+    lock = threading.Lock()
+
+    def contend() -> None:
+        store = RadarStore(db_path)
+        try:
+            barrier.wait()
+            res = store.materialize_follow_if_absent(radar_id=rid, **_follow_args())
+        except Exception as exc:
+            with lock:
+                errors.append(exc)
+            return
+        with lock:
+            created.append(res.created)
+
+    threads = [threading.Thread(target=contend) for _ in range(workers)]
+    for t in threads:
+        t.start()
+    for t in threads:
+        t.join(timeout=60)
+
+    assert errors == [], f"la carrera levantó excepciones: {errors}"
+    assert sum(created) == 1, "más de un alta ganó la carrera"
+    state = _read_state(db_path, rid)
+    assert list(state["seen"]) == ["K-9"]
+    assert len(state["events"]) == 1
+
+
+def test_follow_if_absent_rejects_an_event_of_another_key(store, follows_leased):
+    """El evento y la membresía son dos caras del mismo hecho."""
+    rid, _ = follows_leased
+    args = _follow_args("K-9")
+    args["event"] = EventRecord(kind="followed", result_key="K-OTRA",
+                                dataset="procesos", title="T")
+
+    with pytest.raises(ValueError, match="K-OTRA"):
+        store.materialize_follow_if_absent(radar_id=rid, **args)
+
+    assert _read_state(store.db_path, rid)["seen"].get("K-9") is None
+
+
+def test_follow_if_absent_rejects_an_event_of_another_dataset(store, follows_leased):
+    rid, _ = follows_leased
+    args = _follow_args("K-9")
+    args["event"] = EventRecord(kind="followed", result_key="K-9",
+                                dataset="contratos", title="T")
+
+    with pytest.raises(ValueError, match="contratos"):
+        store.materialize_follow_if_absent(radar_id=rid, **args)
+
+
+def test_follow_if_absent_rejects_a_non_followed_event(store, follows_leased):
+    rid, _ = follows_leased
+    args = _follow_args("K-9")
+    args["event"] = EventRecord(kind="changed_state", result_key="K-9",
+                                dataset="procesos", title="T")
+
+    with pytest.raises(ValueError, match="followed"):
+        store.materialize_follow_if_absent(radar_id=rid, **args)
+
+
+@pytest.mark.parametrize("mutate,label", [
+    ("DELETE FROM radars WHERE id = ?", "borrado"),
+    ("UPDATE radars SET frequency='diaria' WHERE id = ?", "ya no es follows"),
+    ("UPDATE radars SET name='otro' WHERE id = ?", "nombre no canónico"),
+])
+def test_follow_if_absent_refuses_a_radar_that_is_not_a_canonical_watchlist(
+    store, follows_leased, mutate, label
+):
+    """Se valida dentro de la transacción: existir, ser follows y ser canónico."""
+    rid, _ = follows_leased
+    conn = sqlite3.connect(store.db_path)
+    conn.execute("PRAGMA foreign_keys=ON")
+    conn.execute(mutate, (rid,))
+    conn.commit()
+    conn.close()
+
+    res = store.materialize_follow_if_absent(radar_id=rid, **_follow_args("K-9"))
+
+    assert res.not_follows is True, label
+    assert res.created is False
+
+
+@pytest.mark.parametrize("mutate,label", [
+    ("UPDATE radars SET frequency='diaria' WHERE id = ?", "ya no es follows"),
+    ("UPDATE radars SET name='otro' WHERE id = ?", "nombre no canónico"),
+])
+def test_follows_refresh_refuses_a_radar_that_is_not_canonical(
+    store, follows_leased, mutate, label
+):
+    rid, token = follows_leased
+    conn = sqlite3.connect(store.db_path)
+    conn.execute(mutate, (rid,))
+    conn.commit()
+    conn.close()
+
+    res = store.materialize_follows_refresh(
+        radar_id=rid, token=token, updates=[_follows_update("K-1")],
+    )
+
+    assert res.not_follows is True, label
+    state = _read_state(store.db_path, rid)
+    assert state["seen"]["K-1"]["status"] == "Abierto"    # sin tocar
+    assert state["events"] == []
+
+
+# ── fence de versión de la membresía ──────────────────────────────────────
+
+def test_update_skips_a_row_recreated_during_the_fetch(store, follows_leased):
+    """Misma clave, otra encarnación: el UPDATE no la toca.
+
+    (radar_id, result_key) identifica el proceso; first_seen_at identifica
+    **esta** membresía. Sin el fence, el refresco pisaría la fila nueva.
+    """
+    rid, token = follows_leased
+    # el owner deja de seguir K-1 y lo vuelve a seguir: fila nueva, misma clave
+    store.delete_seen(rid, "K-1")
+    store.upsert_seen(
+        radar_id=rid, result_key="K-1", dataset="procesos",
+        fields={"status": "Abierto", "value": "100"}, snapshot_hash="",
+        run_id="follow_manual", seen_at="2026-06-06T00:00:00+00:00",
+    )
+
+    res = store.materialize_follows_refresh(
+        radar_id=rid, token=token,
+        updates=[_follows_update("K-1"), _follows_update("K-2")],
+    )
+
+    state = _read_state(store.db_path, rid)
+    assert res.updated == 1                       # solo K-2
+    assert state["seen"]["K-1"]["snapshot_hash"] == "", "pisó la membresía nueva"
+    assert state["seen"]["K-1"]["first_seen_at"] == "2026-06-06T00:00:00+00:00"
+    assert [e["result_key"] for e in state["events"]] == ["K-2"]
+
+
+def test_update_without_version_fence_would_hit_the_new_row(store, follows_leased):
+    """Contraprueba: si el update declara el first_seen_at NUEVO, sí acierta.
+
+    Prueba que el test anterior no pasa por accidente (p. ej. porque el UPDATE
+    fallara por otra razón).
+    """
+    rid, token = follows_leased
+    store.delete_seen(rid, "K-1")
+    store.upsert_seen(
+        radar_id=rid, result_key="K-1", dataset="procesos",
+        fields={"status": "Abierto", "value": "100"}, snapshot_hash="",
+        run_id="follow_manual", seen_at="2026-06-06T00:00:00+00:00",
+    )
+
+    res = store.materialize_follows_refresh(
+        radar_id=rid, token=token,
+        updates=[_follows_update("K-1", first_seen="2026-06-06T00:00:00+00:00")],
+    )
+
+    assert res.updated == 1
+    assert _read_state(store.db_path, rid)["seen"]["K-1"]["snapshot_hash"] == "h2"
+
+
+# ── conteos materializados, no construidos ────────────────────────────────
+
+def test_refresh_counts_come_from_what_was_written(store, follows_leased):
+    """Una clave descartada por unfollow no puede contar como cambio."""
+    rid, token = follows_leased
+    store.delete_seen(rid, "K-1")
+
+    res = store.materialize_follows_refresh(
+        radar_id=rid, token=token,
+        updates=[_follows_update("K-1"), _follows_update("K-2")],
+    )
+
+    assert res.updated == 1
+    assert res.changed_state == 1        # solo K-2, no K-1
+    assert res.events == 1
+
+
+def test_refresh_counts_baseline_from_live_updates(store, follows_leased):
+    rid, token = follows_leased
+    store.delete_seen(rid, "K-1")
+    base_1 = FollowsSeenUpdate(result_key="K-1", expected_first_seen_at=_FIRST_SEEN,
+                               fields={"status": "Abierto"},
+                               snapshot_hash="h9", is_baseline=True)
+    base_2 = FollowsSeenUpdate(result_key="K-2", expected_first_seen_at=_FIRST_SEEN,
+                               fields={"status": "Abierto"},
+                               snapshot_hash="h9", is_baseline=True)
+
+    res = store.materialize_follows_refresh(
+        radar_id=rid, token=token, updates=[base_1, base_2],
+    )
+
+    assert res.baseline == 1             # K-1 ya no existe
+    assert res.updated == 1 and res.events == 0
+
+
+# ── nombre reservado del radar sintético ──────────────────────────────────
+
+def test_create_radar_rejects_the_reserved_name_for_a_search_radar(store):
+    """Un radar de búsqueda no puede llamarse como la watchlist.
+
+    Si pudiera, ``get_or_create_follows_radar`` lo resolvería como la watchlist
+    del owner y los seguidos entrarían en los radar_seen_results de esa
+    búsqueda, marcando como visto lo que nunca encontró.
+    """
+    with pytest.raises(RadarReservedNameError):
+        store.create_radar(name=FOLLOWS_RADAR_NAME, owner="u1",
+                           query_frame_json=_frame_json(), frequency="diaria")
+    assert store.list_radars("u1") == []
+
+
+def test_create_radar_rejects_case_variants_of_the_reserved_name(store):
+    """El UNIQUE(owner,name) es binario y el lookup NOCASE: la reserva cubre el hueco."""
+    variant = FOLLOWS_RADAR_NAME.replace("Procesos", "procesos")
+    with pytest.raises(RadarReservedNameError):
+        store.create_radar(name=variant, owner="u1",
+                           query_frame_json=_frame_json(), frequency="manual")
+
+
+def test_create_radar_allows_the_reserved_name_for_the_synthetic_radar(store):
+    """La reserva protege el nombre; no impide que el dueño legítimo lo use."""
+    rid = store.create_radar(name=FOLLOWS_RADAR_NAME, owner="u1",
+                             query_frame_json="{}", frequency=FOLLOWS_FREQUENCY)
+    assert store.get_radar(rid).frequency == FOLLOWS_FREQUENCY
+
+
+def test_list_radars_by_frequency_is_scoped_by_owner(store):
+    store.create_radar(name="Búsqueda", owner="u1",
+                       query_frame_json=_frame_json(), frequency="diaria")
+    rid = store.create_radar(name=FOLLOWS_RADAR_NAME, owner="u1",
+                             query_frame_json="{}", frequency=FOLLOWS_FREQUENCY)
+
+    assert [r.id for r in store.list_radars_by_frequency("u1", FOLLOWS_FREQUENCY)] == [rid]
+    assert store.list_radars_by_frequency("u2", FOLLOWS_FREQUENCY) == []
+
+
+def test_list_radars_by_frequency_does_not_hide_duplicates(store):
+    """La lectura debe **delatar** la cardinalidad, no elegir una fila.
+
+    Con LIMIT 1 la corrupción sería invisible: devolvería una watchlist
+    cualquiera y el owner vería la mitad de sus seguidos.
+    """
+    conn = sqlite3.connect(store.db_path)
+    for i in (1, 2):
+        conn.execute(
+            "INSERT INTO radars (id, name, description, query_frame_json, frequency,"
+            " channel, enabled, owner, created_at) VALUES (?,?,?,?,?,?,1,?,?)",
+            (f"dup-{i}", f"seguidos-{i}", "", "{}", FOLLOWS_FREQUENCY, "web", "u1",
+             f"2026-01-0{i}T00:00:00+00:00"),
+        )
+    conn.commit()
+    conn.close()
+
+    rows = store.list_radars_by_frequency("u1", FOLLOWS_FREQUENCY, limit=2)
+    assert [r.id for r in rows] == ["dup-1", "dup-2"]
+
+
+def test_create_radar_rejects_follows_with_a_non_canonical_name(store):
+    """Un follows con otro nombre pasaría el UNIQUE y sería un segundo follows."""
+    with pytest.raises(RadarReservedNameError):
+        store.create_radar(name="Mis seguidos", owner="u1",
+                           query_frame_json="{}", frequency=FOLLOWS_FREQUENCY)
+    with pytest.raises(RadarReservedNameError):
+        store.create_radar(name=FOLLOWS_RADAR_NAME.replace("Procesos", "procesos"),
+                           owner="u1", query_frame_json="{}",
+                           frequency=FOLLOWS_FREQUENCY)
+    assert store.list_radars("u1") == []
 
 
 def test_store_module_imports_no_http_client():
