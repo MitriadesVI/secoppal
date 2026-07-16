@@ -15,6 +15,7 @@ from app.core.notify.identity_store import IdentityStore
 from app.core.notify.masking import Masker
 from app.core.notify.outbox_store import BatchEventRef, OutboxStore
 from app.core.notify.preference_store import PreferenceStore
+from app.core.notify.render import render_payload
 from app.core.notify.selector import (
     EligibilityFlags,
     NotificationSelector,
@@ -64,12 +65,12 @@ def env(tmp_path):
 
 
 def _events(env, kinds, *, ts="2026-07-15T10:00:00+00:00", start=1,
-            same_key=False, values=None):
+            same_key=False, values=None, extra=None):
     values = values or {}
     rows = []
     for offset, kind in enumerate(kinds):
         number = start + offset
-        rows.append({
+        row = {
             "radar_id": env["radar"], "owner": env["owner"],
             "radar_name": "Radar PAE", "run_id": "run", "ts": ts,
             "kind": kind, "result_key": "SAME" if same_key else f"K-{number}",
@@ -78,7 +79,9 @@ def _events(env, kinds, *, ts="2026-07-15T10:00:00+00:00", start=1,
             "status": f"S-{number}", "prev_status": f"S-{number - 1}",
             "prev_value": str((number - 1) * 100),
             "urlproceso": f"https://secop/{number}", "referencia": f"REF-{number}",
-        })
+        }
+        row.update(extra or {})
+        rows.append(row)
     env["radars"].record_events(rows)
     conn = connect_sqlite(env["db"])
     try:
@@ -266,8 +269,77 @@ def test_max_items_only_limits_render_and_payload_keeps_all_groups(env):
     result = env["selector"].select_pair(env["endpoint"], env["radar"], now=NOW)
     batch = env["outbox"].get_batch(result.notification_id)
     payload = json.loads(batch.payload_json)
+    # Todos los eventos quedan asociados y congelados aunque el render muestre
+    # menos: cuántos se ven depende también del presupuesto del canal.
     assert len(env["outbox"].list_batch_events(result.notification_id)) == 10
-    assert (len(payload["items"]), payload["rendered_items"], payload["truncated_count"]) == (10, 3, 7)
+    assert (len(payload["items"]), payload["total_items"], payload["max_items"]) == (10, 10, 3)
+    rendered = render_payload(payload)
+    assert rendered.item_count <= 3
+    assert rendered.item_count + rendered.truncated_count == 10
+
+
+def test_process_event_materializes_v2_with_frozen_source_metadata(env):
+    _events(env, ["new"], ts="2026-07-16T15:30:00+00:00", extra={
+        "dataset": "procesos", "modality": "Licitación pública",
+        "closing_date": "2026-08-20T17:00:00",
+    })
+    result = env["selector"].select_pair(env["endpoint"], env["radar"], now=NOW)
+    payload = json.loads(env["outbox"].get_batch(result.notification_id).payload_json)
+    assert payload["version"] == "p1b-payload-v2"
+    item = payload["items"][0]
+    assert item["dataset"] == "procesos"
+    assert item["modality"] == "Licitación pública"
+    assert item["closing_date"] == "2026-08-20T17:00:00"
+    assert item["observed_at"] == "2026-07-16T15:30:00+00:00"
+    text = render_payload(payload).text
+    assert "Recepción de ofertas reportada: 20 ago 2026, 17:00" in text
+    assert "Observado: 16 jul 2026, 10:30" in text
+
+
+def test_contract_event_materializes_contractor_and_signature(env):
+    _events(env, ["changed_value"], extra={
+        "dataset": "contratos", "contractor": "UNION TEMPORAL ALIMENTAR 2026",
+        "signature_date": "2026-03-11", "prev_value": "900000000",
+        "value": "1350000000",
+    })
+    result = env["selector"].select_pair(env["endpoint"], env["radar"], now=NOW)
+    payload = json.loads(env["outbox"].get_batch(result.notification_id).payload_json)
+    item = payload["items"][0]
+    assert item["dataset"] == "contratos"
+    assert item["contractor"] == "UNION TEMPORAL ALIMENTAR 2026"
+    assert item["signature_date"] == "2026-03-11"
+    text = render_payload(payload).text
+    assert "Contratista reportado: UNION TEMPORAL ALIMENTAR 2026" in text
+    assert "Firma reportada: 11 mar 2026" in text
+    assert "Recepción de ofertas reportada" not in text
+
+
+def test_preference_timezone_is_frozen_into_the_payload(env):
+    _events(env, ["new"])
+    env["preferences"].update_preference(env["preference"], timezone="America/New_York")
+    result = env["selector"].select_pair(env["endpoint"], env["radar"], now=NOW)
+    payload = json.loads(env["outbox"].get_batch(result.notification_id).payload_json)
+    assert payload["timezone"] == "America/New_York"
+
+
+def test_render_failure_rolls_back_batch_associations_and_cursor(env, monkeypatch):
+    _events(env, ["new"] * 3)
+
+    def boom(*args, **kwargs):
+        raise ValueError("render v2 roto")
+
+    monkeypatch.setattr(selector_module, "render_payload", boom)
+    with pytest.raises(ValueError):
+        env["selector"].select_pair(env["endpoint"], env["radar"], now=NOW)
+    assert env["outbox"].count_batches() == 0
+    assert _cursor(env) == 0
+    conn = connect_sqlite(env["db"])
+    try:
+        assert conn.execute(
+            "SELECT COUNT(*) c FROM radar_notification_batch_events"
+        ).fetchone()["c"] == 0
+    finally:
+        conn.close()
 
 
 def test_same_result_key_is_one_payload_item_but_all_events_associated(env):

@@ -184,12 +184,25 @@ SELECT e.*
 
 def _event_from_row(row: Mapping) -> SelectableRadarEvent:
     keys = set(row.keys())
+
+    def optional(name: str):
+        # Filas heredadas (o sintéticas en pruebas) pueden no traer la columna.
+        # Ausencia es ``None``, no un valor inventado.
+        return row[name] if name in keys else None
+
     return SelectableRadarEvent(
         event_id=row["id"], event_seq=row["event_seq"], kind=row["kind"],
-        result_key=row["result_key"], dataset=row["dataset"], title=row["title"],
+        result_key=row["result_key"], dataset=optional("dataset"), title=row["title"],
         entity=row["entity"], value=row["value"], status=row["status"],
         prev_status=row["prev_status"], prev_value=row["prev_value"],
         urlproceso=row["urlproceso"], referencia=row["referencia"],
+        # ``ts`` es el instante en que el Radar observó el evento: es nuestro
+        # reloj, no el de la fuente. El resto lo congeló R2B-1B1 en su instante.
+        observed_at=optional("ts"),
+        modality=optional("modality"),
+        closing_date=optional("closing_date"),
+        contractor=optional("contractor"),
+        signature_date=optional("signature_date"),
         disappeared_confirmed=bool(row["disappeared_confirmed"])
         if "disappeared_confirmed" in keys else False,
     )
@@ -301,12 +314,22 @@ class NotificationSelector:
 
                 if eligible:
                     created_at = now.astimezone(timezone.utc).isoformat()
+                    # Antes de construir nada: ``quiet_hours_not_before`` valida la
+                    # zona horaria de la preferencia y falla con ``SelectorError``.
+                    # Es config inconsistente, no un payload roto, y así se sigue
+                    # reportando como lo que es.
+                    not_before = quiet_hours_not_before(
+                        now, start=target["quiet_hours_start"],
+                        end=target["quiet_hours_end"],
+                        timezone_name=target["timezone"],
+                    )
                     groups = group_events(eligible)
                     payload = build_payload(
                         groups,
                         principal_id=target["principal_id"], endpoint_id=endpoint_id,
                         radar_id=radar_id, radar_name=target["radar_name"],
-                        channel=target["channel"], created_at=created_at,
+                        channel=target["channel"], timezone=target["timezone"],
+                        created_at=created_at,
                         max_items=int(target["max_items"]),
                     )
                     # Ejecutar el render puro aquí prueba que el payload congelado
@@ -326,11 +349,7 @@ class NotificationSelector:
                         radar_id=radar_id, payload_json=payload, events=refs,
                         created_at=created_at,
                         expires_at=expires_at_for_frequency(now, target["frequency"]),
-                        not_before=quiet_hours_not_before(
-                            now, start=target["quiet_hours_start"],
-                            end=target["quiet_hours_end"],
-                            timezone_name=target["timezone"],
-                        ),
+                        not_before=not_before,
                         _fault_hook=outbox_fault_bridge,
                     )
                     notification_id, created = materialized.notification_id, materialized.created

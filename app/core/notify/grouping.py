@@ -19,6 +19,22 @@ KIND_PRIORITY = {
     "disappeared": 3,
 }
 
+# El mismo dataset llega con dos nombres según quién escribió el evento: el
+# alias humano o el id Socrata. Sin esta tabla, ``procesos`` y ``p6dx-8zbt``
+# serían dos identidades distintas —el mismo proceso partido en dos líneas— y
+# el id crudo terminaría impreso en el mensaje.
+_DATASET_ALIASES = {
+    "procesos": "procesos",
+    "p6dx-8zbt": "procesos",
+    "contratos": "contratos",
+    "jbjy-vk9h": "contratos",
+}
+
+
+def normalize_dataset(value: str | None) -> str:
+    clean = (value or "").strip()
+    return _DATASET_ALIASES.get(clean.casefold(), clean.casefold())
+
 
 @dataclass(frozen=True)
 class SelectableRadarEvent:
@@ -35,16 +51,25 @@ class SelectableRadarEvent:
     prev_value: str | None = None
     urlproceso: str | None = None
     referencia: str | None = None
+    observed_at: str | None = None
+    modality: str | None = None
+    closing_date: str | None = None
+    contractor: str | None = None
+    signature_date: str | None = None
     # ``radar_events`` todavía no tiene esta representación. El campo permite
     # expresar el contrato sin derivar confirmación de una mera ausencia.
     disappeared_confirmed: bool = False
 
     @property
-    def grouping_key(self) -> tuple[str, str]:
+    def grouping_key(self) -> tuple[str, str, str]:
+        # El ``dataset`` es parte de la identidad, no un adorno del item: un radar
+        # de procesos seguidos puede traer una fila de ``procesos`` y otra de
+        # ``contratos`` con el mismo ``result_key``. Colapsarlas mostraría el
+        # contrato como si fuera el estado del proceso.
         key = (self.result_key or "").strip()
         if key:
-            return ("result_key", key)
-        return ("event_id", self.event_id)
+            return ("result_key", normalize_dataset(self.dataset), key)
+        return ("event_id", "", self.event_id)
 
 
 @dataclass(frozen=True)
@@ -61,6 +86,12 @@ class GroupedRadarEvent:
     referencia: str | None
     event_ids: tuple[str, ...]
     event_seqs: tuple[int, ...]
+    dataset: str | None = None
+    observed_at: str | None = None
+    modality: str | None = None
+    closing_date: str | None = None
+    contractor: str | None = None
+    signature_date: str | None = None
 
     @property
     def representative_seq(self) -> int:
@@ -68,6 +99,7 @@ class GroupedRadarEvent:
 
     def as_payload_item(self) -> dict:
         return {
+            "dataset": self.dataset,
             "result_key": self.result_key,
             "kind": self.kind,
             "title": self.title,
@@ -76,6 +108,11 @@ class GroupedRadarEvent:
             "status": self.status,
             "prev_status": self.prev_status,
             "prev_value": self.prev_value,
+            "modality": self.modality,
+            "closing_date": self.closing_date,
+            "contractor": self.contractor,
+            "signature_date": self.signature_date,
+            "observed_at": self.observed_at,
             "urlproceso": self.urlproceso,
             "referencia": self.referencia,
             "event_ids": list(self.event_ids),
@@ -168,6 +205,18 @@ def group_events(events: Iterable[SelectableRadarEvent]) -> list[GroupedRadarEve
                 referencia=_latest_nonempty(bucket, "referencia"),
                 event_ids=tuple(e.event_id for e in bucket),
                 event_seqs=tuple(e.event_seq for e in bucket),
+                # ``or None``: un evento sin dataset sigue sin tenerlo. Ausencia
+                # es ``None`` en todo este módulo, no una cadena vacía.
+                dataset=normalize_dataset(last.dataset) or None,
+                observed_at=last.observed_at,
+                # Exactamente el último evento, sin ``_latest_nonempty``: si la
+                # fuente dejó de reportar el cierre, el grupo tampoco lo reporta.
+                # Rellenar con el dato viejo fingiría que la fuente todavía lo
+                # afirma —y esa fecha es justo la que la gente usaría para decidir.
+                modality=last.modality,
+                closing_date=last.closing_date,
+                contractor=last.contractor,
+                signature_date=last.signature_date,
             )
         )
     return sort_grouped_events(groups)
@@ -179,6 +228,7 @@ __all__ = [
     "SelectableRadarEvent",
     "group_events",
     "grouped_sort_key",
+    "normalize_dataset",
     "numeric_value",
     "sort_grouped_events",
 ]

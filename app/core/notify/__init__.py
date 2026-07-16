@@ -85,7 +85,10 @@ from app.core.notify.outbox_store import (
     OutboxStore,
 )
 from app.core.notify.render import (
+    CHANNEL_BYTE_BUDGETS,
     PAYLOAD_VERSION,
+    PAYLOAD_VERSION_V1,
+    PAYLOAD_VERSION_V2,
     RenderedMessage,
     build_payload,
     render_payload,
@@ -143,6 +146,7 @@ __all__ = [
     "BatchEventRef",
     "BatchMaterialization",
     "CHANNELS",
+    "CHANNEL_BYTE_BUDGETS",
     "ClaimLostError",
     "ClaimedCandidate",
     "DEFAULT_CLAIM_DURATION",
@@ -172,6 +176,8 @@ __all__ = [
     "OwnerKeyConflictError",
     "OwnerNotLinkedError",
     "PAYLOAD_VERSION",
+    "PAYLOAD_VERSION_V1",
+    "PAYLOAD_VERSION_V2",
     "Preference",
     "PreferenceError",
     "PreferenceExistsError",
