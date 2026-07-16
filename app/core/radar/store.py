@@ -413,6 +413,15 @@ CREATE TABLE IF NOT EXISTS radar_seen_results (
     relevance_label    TEXT,
     PRIMARY KEY (radar_id, result_key)
 );
+
+-- Generador de event_seq (P1B-2). Vive fuera de radar_events a propósito: una
+-- futura poda de radar_events no debe poder afectar la garantía de "nunca
+-- reutilizado" de la secuencia. AUTOINCREMENT asegura que el máximo histórico
+-- sobrevive aunque se borren filas de esta misma tabla.
+CREATE TABLE IF NOT EXISTS radar_event_seq (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    ts TEXT NOT NULL
+);
 """
 
 
@@ -435,11 +444,26 @@ _INSERT_EVENT_SQL = """
 INSERT INTO radar_events
    (id, radar_id, owner, radar_name, run_id, ts, kind, result_key,
     dataset, title, entity, value, status, prev_status, prev_value,
-    urlproceso, referencia)
+    urlproceso, referencia, event_seq)
    VALUES (:id, :radar_id, :owner, :radar_name, :run_id, :ts, :kind,
     :result_key, :dataset, :title, :entity, :value, :status,
-    :prev_status, :prev_value, :urlproceso, :referencia)
+    :prev_status, :prev_value, :urlproceso, :referencia, :event_seq)
 """
+
+_RESERVE_EVENT_SEQ_SQL = "INSERT INTO radar_event_seq (ts) VALUES (?)"
+
+
+def _reserve_event_seq(conn: sqlite3.Connection) -> int:
+    """Reserva el siguiente event_seq sobre esta conexión, en esta transacción.
+
+    ``cursor.lastrowid`` tras un INSERT en una tabla AUTOINCREMENT es un valor
+    de la conexión, no una consulta aparte — no hay ventana de carrera entre
+    reservar y leerlo. No se usa MAX(event_seq)+1 (se calcularía en memoria y
+    dos conexiones concurrentes podrían leer el mismo máximo) ni rowid de
+    ``radar_events`` (no sobrevive a un futuro borrado/retención de esa tabla).
+    """
+    cur = conn.execute(_RESERVE_EVENT_SEQ_SQL, (_now(),))
+    return cur.lastrowid
 
 _UPSERT_SEEN_SQL = """
 INSERT INTO radar_seen_results
@@ -577,12 +601,19 @@ def _insert_event_dicts(conn: sqlite3.Connection, events: list[dict]) -> None:
 
     La materialización de una corrida tampoco pasa por aquí: usa
     ``_insert_events`` (abajo), que no acepta identidad del caller.
+
+    ``event_seq`` (P1B-2) tampoco lo aporta el caller: cualquier clave
+    ``"event_seq"`` presente en ``e`` se ignora. Es el único punto de
+    convergencia real de las tres rutas productivas (``materialize_*``), así
+    que reservar aquí, uno a uno, es lo que garantiza secuencias distintas y
+    crecientes sin depender de que cada caller recuerde hacerlo.
     """
     if not events:
         return
-    conn.executemany(
-        _INSERT_EVENT_SQL,
-        [
+    for e in events:
+        event_seq = _reserve_event_seq(conn)
+        conn.execute(
+            _INSERT_EVENT_SQL,
             {
                 "id": _new_id(),
                 "radar_id": e.get("radar_id"),
@@ -601,10 +632,9 @@ def _insert_event_dicts(conn: sqlite3.Connection, events: list[dict]) -> None:
                 "prev_value": e.get("prev_value"),
                 "urlproceso": e.get("urlproceso"),
                 "referencia": e.get("referencia"),
-            }
-            for e in events
-        ],
-    )
+                "event_seq": event_seq,
+            },
+        )
 
 
 def _insert_events(
@@ -812,6 +842,18 @@ class RadarStore:
         for name, ddl in {"outcome": "TEXT", "reason": "TEXT"}.items():
             if name not in run_cols:
                 conn.execute(f"ALTER TABLE radar_runs ADD COLUMN {name} {ddl}")
+
+        # Aditiva y sin default: las filas heredadas quedan con event_seq=NULL
+        # (no se hace backfill — notificarlas sería un consentimiento retroactivo
+        # que nadie dio). SQLite trata cada NULL como distinto en un índice
+        # UNIQUE, así que múltiples filas heredadas en NULL no chocan entre sí.
+        event_cols = {row["name"] for row in conn.execute("PRAGMA table_info(radar_events)")}
+        if "event_seq" not in event_cols:
+            conn.execute("ALTER TABLE radar_events ADD COLUMN event_seq INTEGER")
+        conn.execute(
+            "CREATE UNIQUE INDEX IF NOT EXISTS idx_radar_events_seq "
+            "ON radar_events(event_seq)"
+        )
 
     # -- radars ------------------------------------------------------------
 

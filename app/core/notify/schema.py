@@ -118,9 +118,107 @@ CREATE TABLE IF NOT EXISTS radar_notification_preferences (
 
 CREATE INDEX IF NOT EXISTS idx_prefs_endpoint
     ON radar_notification_preferences(endpoint_id);
+
+-- Outbox (P1B-2): la intención de entrega. ``radar_id`` sin FK a propósito —el
+-- ledger debe sobrevivir al archivado del radar (y a una eventual retención de
+-- ``radar_events``): es un registro de auditoría, no una vista derivada.
+CREATE TABLE IF NOT EXISTS radar_notification_batches (
+    notification_id          TEXT PRIMARY KEY,
+    principal_id              TEXT NOT NULL,
+    endpoint_id               TEXT NOT NULL,
+    radar_id                  TEXT NOT NULL,
+    batch_key                 TEXT NOT NULL,
+    idempotency_key           TEXT NOT NULL,
+    external_idempotency_key  TEXT,
+    payload_json              TEXT NOT NULL,
+    status                    TEXT NOT NULL DEFAULT 'pending'
+                              CHECK (status IN ('pending','claimed','sent','ambiguous','dead')),
+    dead_reason               TEXT
+                              CHECK (dead_reason IS NULL OR dead_reason IN
+                              ('opted_out','endpoint_revoked','radar_archived',
+                               'expired','invalid_address')),
+    not_before                TEXT,
+    claim_token               TEXT,
+    claim_until               TEXT,
+    attempt_count             INTEGER NOT NULL DEFAULT 0,
+    created_at                TEXT NOT NULL,
+    expires_at                TEXT NOT NULL,
+    UNIQUE (endpoint_id, idempotency_key),
+    UNIQUE (notification_id, endpoint_id)
+);
+CREATE INDEX IF NOT EXISTS idx_batches_claimable
+    ON radar_notification_batches(status, not_before);
+CREATE INDEX IF NOT EXISTS idx_batches_key
+    ON radar_notification_batches(batch_key);
+
+-- Asociación evento↔batch: la cadena de trazabilidad. ``event_id`` sin FK
+-- (``radar_events`` se borra en CASCADE con su radar; el ledger no). La
+-- UNIQUE(endpoint_id, event_id) es la que cierra el doble notificador: la PK
+-- sola solo protege duplicados dentro de un mismo batch.
+CREATE TABLE IF NOT EXISTS radar_notification_batch_events (
+    notification_id TEXT NOT NULL,
+    endpoint_id     TEXT NOT NULL,
+    event_id        TEXT NOT NULL,
+    event_seq       INTEGER NOT NULL,
+    PRIMARY KEY (notification_id, event_id),
+    UNIQUE (endpoint_id, event_id),
+    FOREIGN KEY (notification_id, endpoint_id)
+        REFERENCES radar_notification_batches(notification_id, endpoint_id)
+        ON DELETE CASCADE
+);
+CREATE INDEX IF NOT EXISTS idx_batch_events_seq
+    ON radar_notification_batch_events(event_seq);
+
+-- Intentos: uno por llamada al proveedor. Write-ahead — ``dispatching`` antes
+-- de llamar al proveedor, ``finished`` después; nunca se registra solo al
+-- terminar. ``RESTRICT`` hacia el batch: un intento no se borra con su batch.
+CREATE TABLE IF NOT EXISTS radar_delivery_attempts (
+    attempt_id          TEXT PRIMARY KEY,
+    notification_id     TEXT NOT NULL REFERENCES radar_notification_batches(notification_id)
+                        ON DELETE RESTRICT,
+    attempt_number      INTEGER NOT NULL,
+    phase               TEXT NOT NULL DEFAULT 'dispatching'
+                        CHECK (phase IN ('dispatching','finished')),
+    started_at          TEXT NOT NULL,
+    finished_at         TEXT,
+    provider_message_id TEXT,
+    provider_status     TEXT,
+    error_class         TEXT CHECK (error_class IS NULL OR error_class IN
+                        ('rate_limited','invalid_address','provider_error',
+                         'timeout_after_send','network_error','auth_error')),
+    error_message_safe  TEXT,
+    retry_after         INTEGER,
+    outcome             TEXT CHECK (outcome IS NULL OR outcome IN
+                        ('sent','retry','ambiguous','dead')),
+    UNIQUE (notification_id, attempt_number),
+    CHECK (
+        (phase = 'dispatching' AND outcome IS NULL)
+        OR (phase = 'finished' AND outcome IS NOT NULL)
+    )
+);
+CREATE INDEX IF NOT EXISTS idx_attempts_notification
+    ON radar_delivery_attempts(notification_id);
+
+-- Cursor por endpoint/radar: watermark de lo examinado, no de lo entregado.
+-- P1B-2 solo define el schema; el selector y el avance del cursor son P1B-3.
+CREATE TABLE IF NOT EXISTS radar_notification_cursors (
+    endpoint_id       TEXT NOT NULL,
+    radar_id          TEXT NOT NULL,
+    last_examined_seq INTEGER NOT NULL DEFAULT 0,
+    updated_at        TEXT NOT NULL,
+    PRIMARY KEY (endpoint_id, radar_id)
+);
 """
 
 
 def ensure_schema(conn: sqlite3.Connection) -> None:
-    """Crea las cuatro tablas si faltan. Idempotente."""
+    """Crea las tablas de notify si faltan. Idempotente.
+
+    Identidad/endpoints/preferencias y el outbox (batches/asociación/intentos/
+    cursores) viven en el mismo ``executescript``: cualquier Store de
+    ``notify`` puede ser el primero en abrir la base sin dejar una tabla a
+    medias. Ninguna de las tablas de outbox tiene FK hacia ``radars`` ni hacia
+    ``radar_events``, así que —a diferencia de las preferencias— no dependen
+    de que ``RadarStore`` se haya inicializado antes.
+    """
     conn.executescript(_SCHEMA)

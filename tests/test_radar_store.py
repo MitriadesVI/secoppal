@@ -2419,6 +2419,193 @@ def test_create_radar_rejects_follows_with_a_non_canonical_name(store):
     assert store.list_radars("u1") == []
 
 
+# ── event_seq (P1B-2) ──────────────────────────────────────────────────────
+
+def test_first_new_event_gets_event_seq(store, leased):
+    """1 · primer evento nuevo recibe event_seq."""
+    rid, token = leased
+    _materialize_success(store, rid, token)
+    state = _read_state(store.db_path, rid)
+    seqs = [e["event_seq"] for e in state["events"]]
+    assert seqs and all(s is not None and s > 0 for s in seqs)
+
+
+def test_multiple_events_in_one_run_get_distinct_increasing_seqs(store, leased):
+    """2 · varios eventos de una misma corrida reciben secuencias distintas y
+    crecientes."""
+    rid, token = leased
+    _materialize_success(store, rid, token)  # dos eventos: K-old y K-new
+    state = _read_state(store.db_path, rid)
+    seqs = [e["event_seq"] for e in state["events"]]
+    assert len(seqs) == 2
+    assert len(set(seqs)) == 2
+    assert max(seqs) > min(seqs)
+
+
+def test_follows_refresh_and_manual_follow_events_get_event_seq(store, follows_leased):
+    """3 · follows refresh y follow manual también reciben event_seq."""
+    rid, token = follows_leased
+    store.materialize_follows_refresh(
+        radar_id=rid, token=token, updates=[_follows_update("K-1")],
+    )
+    refresh_state = _read_state(store.db_path, rid)
+    assert refresh_state["events"][0]["event_seq"] is not None
+
+    res = store.materialize_follow_if_absent(radar_id=rid, **_follow_args(key="K-9"))
+    assert res.created is True
+    state = _read_state(store.db_path, rid)
+    followed = [e for e in state["events"] if e["kind"] == "followed"]
+    assert followed and followed[0]["event_seq"] is not None
+    # secuencias del refresh y del alta manual, todas distintas
+    all_seqs = [e["event_seq"] for e in state["events"]]
+    assert len(all_seqs) == len(set(all_seqs))
+
+
+def _seed_legacy_events_db(db_path) -> None:
+    """Base 'pre-P1B-2': sin event_seq ni radar_event_seq, con eventos ya
+    existentes. Simula lo que RadarStore encontrará en producción al migrar."""
+    conn = sqlite3.connect(db_path)
+    conn.executescript(_PRE_P1A_RADARS)  # esquema completo pre-P1A de radars
+    conn.execute("""
+        CREATE TABLE radar_events (
+            id TEXT PRIMARY KEY, radar_id TEXT NOT NULL, owner TEXT NOT NULL,
+            radar_name TEXT, run_id TEXT, ts TEXT NOT NULL, kind TEXT NOT NULL,
+            result_key TEXT, dataset TEXT, title TEXT, entity TEXT, value TEXT,
+            status TEXT, prev_status TEXT, prev_value TEXT, urlproceso TEXT,
+            referencia TEXT
+        )
+    """)
+    conn.execute(
+        "INSERT INTO radars (id, name, description, query_frame_json, owner, "
+        "created_at) VALUES ('r1', 'A', '', '{}', 'u1', 'x')"
+    )
+    for eid in ("ev-legacy-1", "ev-legacy-2"):
+        conn.execute(
+            "INSERT INTO radar_events (id, radar_id, owner, ts, kind) "
+            "VALUES (?, 'r1', 'u1', 'x', 'new')",
+            (eid,),
+        )
+    conn.commit()
+    conn.close()
+
+
+def test_legacy_rows_keep_event_seq_null_after_migration(tmp_path):
+    """4 · eventos heredados quedan NULL tras migrar."""
+    db_path = tmp_path / "legacy.db"
+    _seed_legacy_events_db(db_path)
+
+    RadarStore(db_path)  # dispara la migración aditiva
+
+    conn = sqlite3.connect(db_path)
+    conn.row_factory = sqlite3.Row
+    rows = conn.execute(
+        "SELECT id, event_seq FROM radar_events ORDER BY id"
+    ).fetchall()
+    conn.close()
+    assert {r["id"]: r["event_seq"] for r in rows} == {
+        "ev-legacy-1": None, "ev-legacy-2": None,
+    }
+
+
+def test_new_event_after_migration_gets_a_sequence(tmp_path):
+    """5 · nuevo evento después de migrar recibe secuencia."""
+    db_path = tmp_path / "legacy_new.db"
+    _seed_legacy_events_db(db_path)
+
+    store = RadarStore(db_path)
+    rid = store.create_radar(name="B", owner="u1", query_frame_json=_frame_json())
+    claim = store.try_acquire_run_lease(rid)
+    result = store.materialize_successful_run(
+        radar_id=rid, token=claim.token, run=_run(),
+        seen=[_seen_rec("K-post")], events=[_event(key="K-post")],
+    )
+    assert result.lease_lost is False
+    state = _read_state(store.db_path, rid)
+    assert state["events"][0]["event_seq"] is not None
+    assert state["events"][0]["event_seq"] > 0
+
+
+def test_legacy_db_migration_preserves_all_existing_rows_and_columns(tmp_path):
+    """48 · base heredada con radar_events existentes conserva todos los datos."""
+    db_path = tmp_path / "legacy_preserve.db"
+    _seed_legacy_events_db(db_path)
+
+    RadarStore(db_path)
+
+    conn = sqlite3.connect(db_path)
+    conn.row_factory = sqlite3.Row
+    rows = conn.execute("SELECT * FROM radar_events ORDER BY id").fetchall()
+    conn.close()
+    assert [r["id"] for r in rows] == ["ev-legacy-1", "ev-legacy-2"]
+    assert all(r["kind"] == "new" and r["radar_id"] == "r1" for r in rows)
+    assert all(r["event_seq"] is None for r in rows)
+
+
+def test_deleting_event_does_not_reuse_its_seq(store, leased):
+    """6 · borrar directamente un radar_event y crear otro no reutiliza el
+    número."""
+    rid, token = leased
+    _materialize_success(store, rid, token)
+    state = _read_state(store.db_path, rid)
+    max_before = max(e["event_seq"] for e in state["events"])
+
+    conn = sqlite3.connect(store.db_path)
+    conn.execute("DELETE FROM radar_events WHERE radar_id = ?", (rid,))
+    conn.commit()
+    conn.close()
+
+    _materialize_success(store, rid, token)
+    state2 = _read_state(store.db_path, rid)
+    assert all(e["event_seq"] > max_before for e in state2["events"])
+
+
+def test_materializer_rollback_leaves_no_visible_event(store, leased):
+    """7 · rollback del materializador no deja radar_event visible; el hueco
+    de secuencia consumido es aceptable y no bloquea corridas siguientes."""
+    rid, token = leased
+
+    with pytest.raises(_Boom):
+        _materialize_success(store, rid, token, hook=_hook_at(PHASE_AFTER_EVENT_INSERTS))
+    state = _read_state(store.db_path, rid)
+    assert state["events"] == []
+
+    result = _materialize_success(store, rid, token)
+    assert result.lease_lost is False
+    state2 = _read_state(store.db_path, rid)
+    assert len(state2["events"]) == 2
+    assert all(e["event_seq"] is not None for e in state2["events"])
+
+
+def test_record_events_ignores_caller_supplied_event_seq(store):
+    """8 · ningún INSERT productivo permite event_seq aportado por caller."""
+    rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+    store.record_events([{
+        "radar_id": rid, "owner": "u1", "radar_name": "A", "run_id": "r",
+        "kind": "new", "result_key": "K1", "title": "t", "dataset": "c",
+        "event_seq": 999999,
+    }])
+    state = _read_state(store.db_path, rid)
+    assert state["events"][0]["event_seq"] != 999999
+    assert state["events"][0]["event_seq"] is not None
+
+
+def test_event_record_does_not_expose_event_seq_field():
+    """8 (complemento) · EventRecord no expone event_seq: el caller no tiene
+    ni el campo para intentar aportarlo."""
+    field_names = {f.name for f in dataclasses.fields(EventRecord)}
+    assert "event_seq" not in field_names
+
+
+def test_radar_store_generates_event_seq_without_any_notify_store(store, leased):
+    """50 · RadarStore puede generar event_seq sin haber instanciado ningún
+    Notify Store. Este módulo de test no importa app.core.notify en absoluto."""
+    rid, token = leased
+    result = _materialize_success(store, rid, token)
+    assert result.lease_lost is False
+    state = _read_state(store.db_path, rid)
+    assert all(e["event_seq"] is not None for e in state["events"])
+
+
 def test_store_module_imports_no_http_client():
     """El store no conoce la red: ni cliente Socrata, ni HTTP, ni el runner."""
     tree = ast.parse(Path(store_module.__file__).read_text(encoding="utf-8"))
