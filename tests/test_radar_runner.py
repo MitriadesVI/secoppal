@@ -853,6 +853,46 @@ def test_deleted_radar_yields_not_found_not_already_running(store):
     assert store.get_radar(radar.id) is None        # sigue borrado, nada resucitó
 
 
+# ── P1B-1 · un radar archivado no corre, ni siquiera a mitad de vuelo ─────
+
+def test_archived_radar_does_not_run_end_to_end(store):
+    """Extremo a extremo: archivar basta para que nadie lo ejecute.
+
+    El radar se archiva *después* de resolverse, que es el caso real: el
+    scheduler ya tiene su lista en memoria cuando el usuario archiva desde la UI.
+    """
+    radar = _make_radar(store)
+    stale = store.get_radar(radar.id)
+    store.archive_radar(radar.id)
+    client = FakeClient([_proc("P-1")])
+
+    res = run_radar(_deps(client), store, stale)
+
+    assert res.outcome == RADAR_NOT_FOUND
+    assert client.queries == []                     # no gastó una llamada a SECOP
+    assert store.get_runs(radar.id) == []
+
+
+def test_archiving_during_the_run_prevents_materialization(store):
+    """La carrera que motiva el fence, extremo a extremo.
+
+    El ejecutor ya tiene el lease y está dentro de Socrata cuando otro proceso
+    archiva. Un chequeo previo no habría visto nada: cuando miró, el radar estaba
+    vivo. Solo el predicado dentro del UPDATE de renovación lo detiene.
+    """
+    radar = _make_radar(store)
+    client = ReentrantClient(
+        [_proc("P-1")], on_first_query=lambda: store.archive_radar(radar.id)
+    )
+
+    res = run_radar(_deps(client), store, store.get_radar(radar.id))
+
+    assert res.outcome == RADAR_LEASE_LOST           # no disponible, sin taxonomía nueva
+    assert store.get_runs(radar.id) == []            # ni un run huérfano
+    assert store.get_seen(radar.id) == {}            # ni seen adelantado
+    assert store.get_feed(radar.owner) == []         # ni eventos a nadie
+
+
 def test_lease_released_after_successful_run(store):
     radar = _make_radar(store)
     run_radar(_deps(FakeClient([_proc("P-1")])), store, radar)

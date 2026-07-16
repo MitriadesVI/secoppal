@@ -32,6 +32,21 @@ LEASE_ACQUIRED = "acquired"
 LEASE_ALREADY_RUNNING = "already_running"
 LEASE_RADAR_NOT_FOUND = "radar_not_found"
 
+# Un radar archivado no está disponible para nadie: ni adquiere, ni renueva, ni
+# se le comprueba propiedad. El predicado va en el SQL del lease —y no en un
+# chequeo previo del runner— porque archivar es concurrente con correr: entre un
+# `SELECT archived_at` y el UPDATE cabe el archivado de otro proceso, y el
+# ejecutor viejo correría igual. Aquí la condición y la escritura son la misma
+# operación atómica, que es lo único que cierra la carrera:
+#
+#   ejecutor resuelve el radar → otro proceso lo archiva → el ejecutor intenta
+#   adquirir/renovar → 0 filas → no corre ni materializa.
+#
+# Se trata como "no disponible" reusando LEASE_RADAR_NOT_FOUND en vez de inventar
+# un estado nuevo: para quien pide correr, un radar archivado y uno inexistente
+# son indistinguibles, y una taxonomía nueva obligaría a runner/scheduler/UI a
+# manejar un caso que no cambia lo que hacen.
+
 # Libre = sin dueño, o con un lease ya vencido (el dueño murió sin liberar).
 _ACQUIRE_SQL = """
 UPDATE radars
@@ -39,6 +54,7 @@ UPDATE radars
        run_lease_acquired_at = :now,
        run_lease_expires_at  = :expires
  WHERE id = :radar_id
+   AND archived_at IS NULL
    AND (
         run_lease_token IS NULL
      OR run_lease_expires_at IS NULL
@@ -47,14 +63,25 @@ UPDATE radars
 """
 
 # Renovar exige token vigente: un dueño que ya perdió el lease no lo recupera.
+# Y exige radar vivo: el fence de renovación es lo que impide que una corrida ya
+# en vuelo materialice sobre un radar que se archivó mientras consultaba SECOP.
 _RENEW_SQL = """
 UPDATE radars
    SET run_lease_expires_at = :expires
  WHERE id = :radar_id
+   AND archived_at IS NULL
    AND run_lease_token = :token
    AND run_lease_expires_at > :now
 """
 
+# Liberar es la excepción deliberada: **no** filtra por archived_at. No porque el
+# ejecutor archivado necesite soltar su lease al terminar —no puede: archivar
+# (RadarStore.archive_radar) ya lo revocó en la misma sentencia, así que su
+# `release` tardío encuentra run_lease_token != token y devuelve False, sin
+# tocar nada—. La razón real es más simple: el filtro sobra porque el WHERE por
+# token ya lo hace seguro. Un token vencido nunca puede ser igual al token
+# vigente, así que este UPDATE jamás borra el lease de otro dueño, esté el radar
+# archivado o no. Añadir archived_at no cerraría ningún agujero adicional.
 _RELEASE_SQL = """
 UPDATE radars
    SET run_lease_token       = NULL,
@@ -67,11 +94,15 @@ UPDATE radars
 _OWNED_SQL = """
 SELECT 1 FROM radars
  WHERE id = :radar_id
+   AND archived_at IS NULL
    AND run_lease_token = :token
    AND run_lease_expires_at > :now
 """
 
-_EXISTS_SQL = "SELECT 1 FROM radars WHERE id = ?"
+# Solo afina el diagnóstico tras un rowcount 0. Un archivado responde "no
+# existe", que es lo que es para quien quería correrlo — decir
+# "already_running" mentiría e invitaría a reintentar para siempre.
+_EXISTS_SQL = "SELECT 1 FROM radars WHERE id = ? AND archived_at IS NULL"
 
 
 @dataclass(frozen=True)

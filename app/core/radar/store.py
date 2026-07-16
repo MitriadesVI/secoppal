@@ -122,6 +122,7 @@ class Radar:
     run_lease_token: str | None = None
     run_lease_acquired_at: str | None = None
     run_lease_expires_at: str | None = None
+    archived_at: str | None = None
 
     @classmethod
     def from_row(cls, row: sqlite3.Row) -> "Radar":
@@ -342,6 +343,11 @@ CREATE TABLE IF NOT EXISTS radars (
     run_lease_token        TEXT,
     run_lease_acquired_at  TEXT,
     run_lease_expires_at   TEXT,
+    archived_at            TEXT,
+    -- Sigue cubriendo a los archivados a propósito: un radar archivado conserva
+    -- su nombre reservado. Si el UNIQUE los excluyera, crear un radar con el
+    -- nombre de uno archivado dejaría dos filas homónimas del mismo owner, y
+    -- restaurar el viejo sería imposible sin renombrar a mano.
     UNIQUE (owner, name)
 );
 
@@ -699,16 +705,23 @@ def _read_canonical_follows(
     """La fila del radar sintético si —y solo si— sigue siendo la watchlist.
 
     Se lee **dentro** de la transacción: entre que el caller resolvió el radar y
-    esta escritura, la fila pudo borrarse, cambiar de ``frequency`` o perder el
-    nombre canónico. Exige las tres condiciones porque las tres sostienen el
-    invariante: existir, ser de tipo follows y llevar el nombre que el
-    ``UNIQUE (owner, name)`` protege —sin lo último, la unicidad de la watchlist
-    no está garantizada y escribir en ella sería adivinar.
+    esta escritura, la fila pudo archivarse, cambiar de ``frequency`` o perder el
+    nombre canónico. Exige las cuatro condiciones porque las cuatro sostienen el
+    invariante: estar vigente, existir, ser de tipo follows y llevar el nombre que
+    el ``UNIQUE (owner, name)`` protege —sin lo último, la unicidad de la
+    watchlist no está garantizada y escribir en ella sería adivinar.
+
+    El filtro de archivado va aquí y no solo en el lease porque este guardián
+    protege también a ``materialize_follow_if_absent``, que **no toma lease**: un
+    "seguir proceso" manual sobre una watchlist archivada escribiría en ella sin
+    que nada lo detuviera, y le diría al usuario que sigue algo que nadie vigila.
 
     ``None`` = no es una watchlist válida; el caller aborta sin escribir.
     """
     row = conn.execute(
-        "SELECT owner, name, frequency FROM radars WHERE id = ?", (radar_id,)
+        "SELECT owner, name, frequency FROM radars "
+        "WHERE id = ? AND archived_at IS NULL",
+        (radar_id,),
     ).fetchone()
     if row is None:
         return None
@@ -787,6 +800,10 @@ class RadarStore:
             "run_lease_token": "TEXT",
             "run_lease_acquired_at": "TEXT",
             "run_lease_expires_at": "TEXT",
+            # Aditiva y sin default: las filas existentes quedan con NULL, que es
+            # exactamente "no archivado". Ninguna base heredada cambia de
+            # comportamiento al migrar.
+            "archived_at": "TEXT",
         }.items():
             if name not in radar_cols:
                 conn.execute(f"ALTER TABLE radars ADD COLUMN {name} {ddl}")
@@ -847,11 +864,20 @@ class RadarStore:
             conn.close()
         return radar_id
 
+    # -- visibilidad ------------------------------------------------------
+    #
+    # Un radar archivado sigue en la tabla, con su historial intacto, pero no
+    # existe para nadie que pregunte por radares: los lectores lo filtran y el
+    # lease se lo niega (ver lease.py). El filtro se repite en cada lector, y no
+    # se centraliza en una vista, porque cada uno tiene su propio WHERE y una
+    # vista intermedia escondería el criterio justo donde hay que verlo.
+
     def get_radar(self, radar_id: str) -> Radar | None:
         conn = self._connect()
         try:
             row = conn.execute(
-                "SELECT * FROM radars WHERE id = ?", (radar_id,)
+                "SELECT * FROM radars WHERE id = ? AND archived_at IS NULL",
+                (radar_id,),
             ).fetchone()
         finally:
             conn.close()
@@ -861,7 +887,8 @@ class RadarStore:
         conn = self._connect()
         try:
             row = conn.execute(
-                "SELECT * FROM radars WHERE owner = ? AND name = ? COLLATE NOCASE",
+                "SELECT * FROM radars WHERE owner = ? AND name = ? COLLATE NOCASE "
+                "AND archived_at IS NULL",
                 (owner, name),
             ).fetchone()
         finally:
@@ -884,6 +911,7 @@ class RadarStore:
         try:
             rows = conn.execute(
                 "SELECT * FROM radars WHERE owner = ? AND frequency = ? "
+                "AND archived_at IS NULL "
                 "ORDER BY created_at, rowid LIMIT ?",
                 (owner, frequency, limit),
             ).fetchall()
@@ -895,7 +923,8 @@ class RadarStore:
         conn = self._connect()
         try:
             rows = conn.execute(
-                "SELECT * FROM radars WHERE owner = ? ORDER BY created_at DESC",
+                "SELECT * FROM radars WHERE owner = ? AND archived_at IS NULL "
+                "ORDER BY created_at DESC",
                 (owner,),
             ).fetchall()
         finally:
@@ -907,7 +936,7 @@ class RadarStore:
         conn = self._connect()
         try:
             rows = conn.execute(
-                "SELECT * FROM radars WHERE enabled = 1 "
+                "SELECT * FROM radars WHERE enabled = 1 AND archived_at IS NULL "
                 "AND (next_run_after IS NULL OR next_run_after <= ?) "
                 "ORDER BY owner, created_at",
                 (_now(),),
@@ -1040,12 +1069,87 @@ class RadarStore:
         finally:
             conn.close()
 
-    def delete_radar(self, radar_id: str) -> None:
+    def archive_radar(self, radar_id: str, ts: str | None = None) -> None:
+        """Retira el radar de circulación sin destruir nada.
+
+        ``radar_runs``, ``radar_events`` y ``radar_seen_results`` cuelgan de
+        ``radars`` con ``ON DELETE CASCADE``: borrar la fila se llevaba por
+        delante el historial completo —cada corrida, cada movimiento anunciado y
+        toda la memoria de lo visto—. Ese historial es el activo del producto y
+        la única forma de responder "¿por qué me avisaron de esto?".
+
+        Idempotente en la fecha vía ``COALESCE``: archivar dos veces conserva la
+        original, que es la que dice desde cuándo dejó de operar. La **revocación
+        del lease, en cambio, es incondicional** —sin ``WHERE archived_at IS
+        NULL``—, para que una segunda llamada repare una fila ya archivada que
+        arrastre un token residual (heredada de una versión anterior, de una
+        migración o de SQL a mano). Con el filtro puesto, ese estado roto no
+        habría forma de arreglarlo por esta puerta.
+
+        **Revoca en la misma sentencia**, no en un UPDATE aparte: entre "marqué
+        archivado" y "solté el lease" cabe la renovación del ejecutor en vuelo,
+        que volvería a extenderlo. Archivar y quedarse sin dueño son un solo
+        hecho, así que son una sola escritura. El dueño viejo se entera cuando su
+        ``renew`` afecta 0 filas —por token nulo y por archivado, dos candados
+        independientes.
+
+        Archivar es ortogonal a ``needs_attention`` y a ``enabled``: no reconoce
+        la alerta ni cambia lo que el usuario pidió. Si se restaura, el radar
+        vuelve tal como estaba, alerta incluida.
+        """
         conn = self._connect()
         try:
-            conn.execute("DELETE FROM radars WHERE id = ?", (radar_id,))
+            conn.execute(
+                "UPDATE radars "
+                "   SET archived_at = COALESCE(archived_at, ?), "
+                "       run_lease_token = NULL, run_lease_acquired_at = NULL, "
+                "       run_lease_expires_at = NULL "
+                " WHERE id = ?",
+                (ts or _now(), radar_id),
+            )
         finally:
             conn.close()
+
+    def restore_radar(self, radar_id: str) -> None:
+        """Devuelve a circulación la misma fila, con su historial intacto.
+
+        Limpia el lease aunque ``archive_radar`` ya lo haga: restaurar es la
+        puerta por la que un radar vuelve a ser ejecutable, y no puede confiar en
+        cómo llegó a estar archivado. Una fila archivada por una versión anterior,
+        por una migración o por SQL a mano puede traer un ``run_lease_token``
+        residual; restaurarla así devolvería un radar con un dueño que ya no
+        existe, y ningún ejecutor podría tomarlo hasta que el lease venciera solo.
+
+        Por eso mismo **solo actúa sobre filas archivadas**. Sin
+        ``archived_at IS NOT NULL``, restaurar un radar vivo —o repetir la llamada
+        sobre uno ya restaurado— le arrancaría el lease a un ejecutor que está
+        corriendo ahora mismo, y un segundo ejecutor podría tomarlo en paralelo:
+        justo la exclusión mutua que el lease existe para sostener. Limpiar un
+        lease solo es seguro cuando su dueño ya no puede estar vivo, y eso solo lo
+        garantiza el archivado.
+        """
+        conn = self._connect()
+        try:
+            conn.execute(
+                "UPDATE radars "
+                "   SET archived_at = NULL, run_lease_token = NULL, "
+                "       run_lease_acquired_at = NULL, run_lease_expires_at = NULL "
+                " WHERE id = ? AND archived_at IS NOT NULL",
+                (radar_id,),
+            )
+        finally:
+            conn.close()
+
+    def delete_radar(self, radar_id: str) -> None:
+        """Archiva. **No borra** — el nombre se conserva por compatibilidad.
+
+        Los callers piden "que el radar desaparezca", y archivar cumple eso: deja
+        de existir para todo lector y no puede correr. Lo que ya no hace es
+        destruir el historial. Se conserva el nombre en vez de migrar los callers
+        porque la intención que expresan sigue siendo válida; lo que estaba mal
+        era la implementación.
+        """
+        self.archive_radar(radar_id)
 
     # -- runs --------------------------------------------------------------
 

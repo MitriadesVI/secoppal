@@ -289,15 +289,396 @@ def test_upsert_seen_idempotent_keeps_first_seen(store):
     assert rec["status"] == "Terminado"
 
 
-def test_delete_cascades(store):
+def test_delete_radar_archives_and_keeps_history(store):
+    """P1B-1: ``delete_radar`` archiva; el CASCADE ya no se dispara.
+
+    Sustituye a ``test_delete_cascades``, que congelaba el contrato anterior
+    —borrar el radar destruía runs y seen por ``ON DELETE CASCADE``—. El cambio
+    es deliberado: el historial es el activo del producto, y "quitar un radar de
+    en medio" nunca quiso decir "borrar todo lo que se supo por él".
+    """
     rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
     store.record_run(radar_id=rid, started_at="t", status="ok")
     store.upsert_seen(radar_id=rid, result_key="K1", dataset="c",
                       fields={}, snapshot_hash="h", run_id="r")
+
     store.delete_radar(rid)
+
+    assert store.get_radar(rid) is None          # invisible, como antes
+    assert len(store.get_runs(rid)) == 1         # pero el historial sigue ahí
+    assert set(store.get_seen(rid)) == {"K1"}
+
+
+# ── P1B-1 · archivado: retirar de circulación sin destruir ────────────────
+#
+# radar_runs/radar_events/radar_seen_results cuelgan de radars con ON DELETE
+# CASCADE, así que el viejo DELETE se llevaba el historial entero. Archivar deja
+# la fila donde está: invisible para todo lector, inelegible para el lease, y
+# recuperable con su pasado intacto.
+
+
+def _raw_radar(store, radar_id: str) -> sqlite3.Row | None:
+    """La fila cruda, saltándose el filtro de archivado de los lectores."""
+    conn = sqlite3.connect(store.db_path)
+    conn.row_factory = sqlite3.Row
+    try:
+        return conn.execute(
+            "SELECT * FROM radars WHERE id = ?", (radar_id,)
+        ).fetchone()
+    finally:
+        conn.close()
+
+
+def test_archive_hides_the_radar_from_every_active_listing(store):
+    rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+
+    store.archive_radar(rid)
+
     assert store.get_radar(rid) is None
-    assert store.get_runs(rid) == []
-    assert store.get_seen(rid) == {}
+    assert store.get_radar_by_name("u1", "A") is None
+    assert store.list_radars("u1") == []
+    assert store.list_radars_by_frequency("u1", "manual") == []
+    assert [r.id for r in store.list_all_enabled_radars()] == []
+
+
+def test_archive_keeps_the_row_and_its_history(store):
+    rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+    store.record_run(radar_id=rid, started_at="t", status="ok")
+    store.upsert_seen(radar_id=rid, result_key="K1", dataset="c",
+                      fields={}, snapshot_hash="h", run_id="r")
+    store.record_events([{
+        "radar_id": rid, "owner": "u1", "radar_name": "A", "run_id": "r",
+        "kind": "new", "result_key": "K1", "title": "t", "dataset": "c",
+    }])
+
+    store.archive_radar(rid)
+
+    assert _raw_radar(store, rid) is not None          # la fila no se fue
+    assert len(store.get_runs(rid)) == 1
+    assert set(store.get_seen(rid)) == {"K1"}
+    assert len(store.get_feed("u1")) == 1
+
+
+def test_archive_is_idempotent_and_keeps_the_first_date(store):
+    """La fecha original dice desde cuándo dejó de operar."""
+    rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+    store.archive_radar(rid, ts="2026-01-01T00:00:00+00:00")
+
+    store.archive_radar(rid, ts="2026-06-01T00:00:00+00:00")
+
+    assert _raw_radar(store, rid)["archived_at"] == "2026-01-01T00:00:00+00:00"
+
+
+def test_rearchiving_repairs_a_residual_lease_without_moving_the_date(store, leased):
+    """Archivar de nuevo repara una fila archivada que arrastra un token.
+
+    La fila se archiva por SQL directo —como haría una versión anterior o una
+    migración—, dejando el lease intacto. Si ``archive_radar`` filtrara por
+    ``archived_at IS NULL``, esa fila rota no tendría forma de arreglarse por esta
+    puerta: la segunda llamada no haría nada.
+    """
+    rid, token = leased
+    conn = sqlite3.connect(store.db_path)
+    try:
+        conn.execute(
+            "UPDATE radars SET archived_at = '2026-01-01T00:00:00+00:00' WHERE id = ?",
+            (rid,),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+    assert _raw_radar(store, rid)["run_lease_token"] == token   # estado roto
+
+    store.archive_radar(rid, ts="2026-06-01T00:00:00+00:00")
+
+    row = _raw_radar(store, rid)
+    assert row["run_lease_token"] is None                        # reparado
+    assert row["archived_at"] == "2026-01-01T00:00:00+00:00"     # sin mover la fecha
+
+
+def test_archived_radar_still_reserves_its_name(store):
+    """Si liberara el nombre, restaurarlo chocaría con su reemplazo."""
+    rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+    store.archive_radar(rid)
+
+    with pytest.raises(RadarExistsError):
+        store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+
+
+def test_another_owner_can_still_use_that_name(store):
+    """La reserva es por owner, no global."""
+    rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+    store.archive_radar(rid)
+
+    other = store.create_radar(name="A", owner="u2", query_frame_json=_frame_json())
+
+    assert store.get_radar(other) is not None
+
+
+def test_restore_brings_back_the_same_row_with_its_history(store):
+    rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+    store.record_run(radar_id=rid, started_at="t", status="ok")
+    store.upsert_seen(radar_id=rid, result_key="K1", dataset="c",
+                      fields={}, snapshot_hash="h", run_id="r")
+    store.archive_radar(rid)
+
+    store.restore_radar(rid)
+
+    radar = store.get_radar(rid)
+    assert radar is not None
+    assert radar.id == rid                        # la misma fila, no una nueva
+    assert len(store.get_runs(rid)) == 1
+    assert set(store.get_seen(rid)) == {"K1"}
+    assert [r.id for r in store.list_radars("u1")] == [rid]
+
+
+def test_archive_does_not_acknowledge_attention_nor_change_enabled(store):
+    """Archivar es ortogonal a los ejes de Preflight 3.
+
+    Si archivar limpiara needs_attention, sería un reconocimiento humano por la
+    puerta de atrás; y restaurar debe devolver el radar tal como estaba, no
+    "arreglado".
+    """
+    rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+    for _ in range(3):
+        store.record_failure(rid, reason="guard_no_scope_or_topic",
+                             message="p", permanent=True)
+
+    store.archive_radar(rid)
+    row = _raw_radar(store, rid)
+    assert (row["needs_attention"], row["enabled"]) == (1, 0)
+
+    store.restore_radar(rid)
+    radar = store.get_radar(rid)
+    assert radar.needs_attention == 1
+    assert radar.enabled == 0
+    assert radar.permanent_failure_streak == 3
+
+
+# ── fence de archivado en el lease ────────────────────────────────────────
+
+def test_archived_radar_cannot_acquire_a_lease(store):
+    """Sin esto, archivar no impide correr: el lease no miraba archived_at."""
+    rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+    store.archive_radar(rid)
+
+    claim = store.try_acquire_run_lease(rid)
+
+    assert not claim.acquired
+    assert claim.status == LEASE_RADAR_NOT_FOUND   # no disponible, sin taxonomía nueva
+
+
+def test_archiving_mid_run_stops_the_old_token_from_materializing(store, leased):
+    """La carrera exacta: el ejecutor ya tenía el lease cuando se archivó.
+
+    Es el caso que un chequeo previo del runner no puede cerrar —entre el SELECT
+    y la escritura cabe el archivado—, y por eso el predicado vive en el UPDATE
+    del lease.
+    """
+    rid, token = leased
+
+    store.archive_radar(rid)
+
+    result = _materialize_success(store, rid, token)
+    assert result.lease_lost is True              # el fence de renew lo frena
+    assert _read_state(store.db_path, rid)["runs"] == []
+
+
+def test_archived_radar_is_not_owned_even_with_a_live_token(store, leased):
+    rid, token = leased
+    assert store.is_run_lease_owned(rid, token)
+
+    store.archive_radar(rid)
+
+    assert not store.is_run_lease_owned(rid, token)
+
+
+def test_archive_revokes_the_lease_in_the_same_statement(store, leased):
+    """Archivar y quedarse sin dueño son un solo hecho, luego una sola escritura.
+
+    Con dos UPDATEs, entre uno y otro cabe la renovación del ejecutor en vuelo:
+    marcaríamos archivado y él volvería a extender el lease.
+    """
+    rid, token = leased
+    assert _raw_radar(store, rid)["run_lease_token"] == token
+
+    store.archive_radar(rid)
+
+    row = _raw_radar(store, rid)
+    assert row["archived_at"] is not None
+    assert row["run_lease_token"] is None
+    assert row["run_lease_acquired_at"] is None
+    assert row["run_lease_expires_at"] is None
+
+
+def test_releasing_after_archive_is_a_harmless_no_op(store, leased):
+    """El ejecutor viejo llega a su ``finally`` y suelta un lease que ya no tiene.
+
+    Devuelve False —no había nada suyo que soltar— y no revienta ni toca la fila.
+    ``_RELEASE_SQL`` sigue sin filtrar por ``archived_at`` a propósito: soltar lo
+    propio nunca es peligroso, y el filtro solo serviría para dejar leases
+    clavados si alguna ruta archivara sin revocar.
+    """
+    rid, token = leased
+    store.archive_radar(rid)
+
+    assert store.release_run_lease(rid, token) is False
+    assert _raw_radar(store, rid)["run_lease_token"] is None
+
+
+def test_restore_on_a_live_radar_does_not_touch_a_running_lease(store, leased):
+    """Restaurar un radar que nunca se archivó no puede desalojar a quien corre.
+
+    Es el reverso de la limpieza defensiva: arrancarle el lease a un ejecutor
+    vivo dejaría que un segundo lo adquiriera en paralelo —dos corridas sobre el
+    mismo radar, duplicando eventos—, que es exactamente lo que el lease impide.
+    Limpiar solo es seguro cuando el dueño ya no puede estar vivo, y eso solo lo
+    garantiza el archivado.
+    """
+    rid, token = leased
+    before = _raw_radar(store, rid)
+
+    store.restore_radar(rid)                       # radar activo, no archivado
+
+    after = _raw_radar(store, rid)
+    assert after["run_lease_token"] == token       # A sigue siendo dueño
+    assert after["run_lease_acquired_at"] == before["run_lease_acquired_at"]
+    assert after["run_lease_expires_at"] == before["run_lease_expires_at"]
+    assert store.is_run_lease_owned(rid, token)
+    assert not store.try_acquire_run_lease(rid).acquired   # B no puede entrar
+
+
+def test_restore_twice_does_not_evict_the_new_owner(store):
+    """La segunda llamada llega cuando el radar ya está vivo y tomado por otro."""
+    rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+    store.archive_radar(rid)
+    store.restore_radar(rid)
+    claim = store.try_acquire_run_lease(rid)       # un ejecutor lo toma
+    assert claim.acquired
+
+    store.restore_radar(rid)                       # restore repetido
+
+    assert _raw_radar(store, rid)["run_lease_token"] == claim.token
+
+
+def test_restore_clears_a_residual_lease(store, leased):
+    """Defensivo: restaurar no puede confiar en cómo se archivó la fila.
+
+    Se archiva por SQL directo, sin revocar —como haría una versión anterior, una
+    migración o una mano en la consola—, para probar que ``restore_radar`` no
+    devuelve el radar con un dueño fantasma que lo bloquee hasta vencer.
+    """
+    rid, token = leased
+    conn = sqlite3.connect(store.db_path)
+    try:
+        conn.execute(
+            "UPDATE radars SET archived_at = '2026-01-01T00:00:00+00:00' WHERE id = ?",
+            (rid,),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+    assert _raw_radar(store, rid)["run_lease_token"] == token   # lease residual
+
+    store.restore_radar(rid)
+
+    assert _raw_radar(store, rid)["run_lease_token"] is None
+    assert store.try_acquire_run_lease(rid).acquired            # tomable de nuevo
+
+
+def test_archive_then_restore_leaves_the_old_token_powerless(store, leased):
+    """El ciclo completo: el token de antes del archivado no revive al restaurar.
+
+    Es el caso peligroso —el radar vuelve a estar vivo y sin fence—, así que lo
+    único que detiene al ejecutor viejo es haber perdido el lease. Si materializara
+    aquí, escribiría una corrida con datos de SECOP anteriores al archivado.
+    """
+    rid, token = leased
+    store.archive_radar(rid)
+
+    store.restore_radar(rid)
+
+    assert not store.is_run_lease_owned(rid, token)
+    result = _materialize_success(store, rid, token)
+    assert result.lease_lost is True
+    assert _read_state(store.db_path, rid)["runs"] == []
+
+
+def test_lease_fence_holds_even_if_a_row_is_archived_without_revoking(store, leased):
+    """El fence del lease es defensa en profundidad, y se prueba aparte.
+
+    ``archive_radar`` revoca el token, así que en el camino normal el ejecutor
+    viejo ya falla por token. Este test archiva por SQL directo —dejando el token
+    intacto— para que lo único que pueda detenerlo sea ``archived_at IS NULL`` en
+    el UPDATE de renovación. Sin él, este radar correría.
+    """
+    rid, token = leased
+    conn = sqlite3.connect(store.db_path)
+    try:
+        conn.execute(
+            "UPDATE radars SET archived_at = '2026-01-01T00:00:00+00:00' WHERE id = ?",
+            (rid,),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+    result = _materialize_success(store, rid, token)
+
+    assert result.lease_lost is True
+    assert _read_state(store.db_path, rid)["runs"] == []
+
+
+def test_restored_radar_can_run_again(store):
+    """Restaurar devuelve la capacidad de correr, no solo la visibilidad."""
+    rid = store.create_radar(name="A", owner="u1", query_frame_json=_frame_json())
+    store.archive_radar(rid)
+    assert not store.try_acquire_run_lease(rid).acquired
+
+    store.restore_radar(rid)
+
+    assert store.try_acquire_run_lease(rid).acquired
+
+
+# ── migración sobre base heredada ─────────────────────────────────────────
+
+def test_migration_on_a_legacy_db_is_idempotent_and_lossless(tmp_path):
+    """Una base sin archived_at migra sin perder datos y sin cambiar de conducta.
+
+    Se construye la tabla vieja a mano —sin la columna— porque el riesgo real es
+    una base en producción creada antes de este bloque, no una recién nacida.
+    """
+    db_path = tmp_path / "legacy.db"
+    conn = sqlite3.connect(db_path)
+    try:
+        conn.execute("""
+            CREATE TABLE radars (
+                id TEXT PRIMARY KEY, name TEXT NOT NULL, description TEXT DEFAULT '',
+                query_frame_json TEXT NOT NULL, dataset TEXT,
+                frequency TEXT NOT NULL DEFAULT 'manual',
+                channel TEXT NOT NULL DEFAULT 'web',
+                enabled INTEGER NOT NULL DEFAULT 1, owner TEXT NOT NULL,
+                created_at TEXT NOT NULL, last_run_at TEXT,
+                created_from_trace_id TEXT, last_error_at TEXT,
+                last_error_message TEXT, UNIQUE (owner, name)
+            )""")
+        conn.execute(
+            "INSERT INTO radars (id, name, query_frame_json, owner, created_at) "
+            "VALUES ('viejo', 'Heredado', '{}', 'u1', '2026-01-01T00:00:00+00:00')"
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+    store = RadarStore(db_path)          # migra al construir
+    RadarStore(db_path)                  # y es idempotente
+
+    radar = store.get_radar("viejo")
+    assert radar is not None             # el dato sobrevivió
+    assert radar.name == "Heredado"
+    assert radar.archived_at is None     # NULL = no archivado: misma conducta
+    assert store.list_radars("u1")[0].id == "viejo"
+    assert store.try_acquire_run_lease("viejo").acquired   # y puede correr
 
 
 # ── run lease: exclusión mutua interproceso ───────────────────────────────
