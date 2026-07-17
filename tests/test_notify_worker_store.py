@@ -1328,8 +1328,16 @@ def test_73_terminal_states_are_rejected(env, status):
 def test_74_multiple_open_dispatching_fails_closed_without_changes(env):
     """74 · Dos intentos abiertos: cada uno pudo llegar al proveedor. Escoger "el
     último" inventaría una respuesta que el estado no da, y cerrar uno dejaría el otro
-    afirmando en silencio que sigue en vuelo. Se falla cerrado, sin tocar nada."""
+    afirmando en silencio que sigue en vuelo. Se falla cerrado, sin tocar nada.
+
+    Desde R2B-1C-A este estado es **físicamente imposible** de crear: `idx_attempts_one_open`
+    lo rechaza. El test tira el índice a propósito para reconstruir una base heredada
+    —escrita antes de que existiera— y comprobar que el código sigue negándose por su
+    cuenta. Defensa en profundidad: el índice protege de quien no pase por esta puerta,
+    y esta comprobación protege de una base que llegó rota desde antes.
+    """
     nid = _batch(env)
+    _sql(env, "DROP INDEX idx_attempts_one_open")
     _open_dispatching(env, nid, now=NOW, duration=timedelta(seconds=10))
     _open_dispatching(env, nid, now=NOW + timedelta(seconds=20),
                       duration=timedelta(seconds=10))
@@ -2063,22 +2071,115 @@ def test_61e_expired_batch_never_reaches_the_provider_path(env):
     assert result.payload_json is None
 
 
-def test_61f_expiry_wins_over_consent_causes_and_both_refuse_to_send(env):
-    """Vencido *y* sin consentimiento: ambas causas son terminales y ninguna envía, así
-    que la precedencia solo elige la etiqueta. Se declara `expired` porque el reloj se
-    evalúa antes de leer el join — y el consentimiento sigue respetado: cero intento."""
+@pytest.mark.parametrize("mutation,dead_reason", [
+    ("UPDATE radar_notification_preferences SET enabled=0", "opted_out"),
+    ("UPDATE notification_endpoints SET revoked_at='2026-01-01T00:00:00+00:00'",
+     "endpoint_revoked"),
+    ("UPDATE radars SET archived_at='2026-01-01T00:00:00+00:00'", "radar_archived"),
+])
+def test_61f_consent_wins_over_expiry_because_the_label_is_the_record(
+    env, mutation, dead_reason
+):
+    """61f · **ADR-052.** Reemplaza deliberadamente la precedencia de R2A, que
+    declaraba `expired` porque el reloj se evaluaba antes del join y "la precedencia
+    solo elige la etiqueta".
+
+    La etiqueta *es* el registro. `dead_reason` es lo único que queda explicando por
+    qué el sistema no habría podido entregar, y marcar `expired` el batch de alguien
+    que se dio de baja afirma que el mensaje caducó cuando la verdad es que esa
+    persona ya no lo quería. Ninguna de las dos causas envía: lo que cambia es qué
+    queda escrito para quien audite.
+    """
     nid = _batch(env, expires_at=(NOW + timedelta(minutes=1)).isoformat())
     claimed = env["store"].claim_candidate(
         clock=_Clock(NOW), duration=timedelta(hours=2), notification_id=nid
     )
-    _sql(env, "UPDATE radar_notification_preferences SET enabled=0")
+    _sql(env, mutation)
     result = env["store"].authorize_and_begin_dispatch(
         nid, claimed.claim_token, clock=_Clock(NOW + timedelta(hours=1))
     )
     assert result.outcome == OUTCOME_DEAD
-    assert result.dead_reason == "expired"
+    assert result.dead_reason == dead_reason != "expired"
     assert _attempts(env, nid) == []
     assert _row(env, nid)["status"] == "dead"
+
+
+def test_61f2_expired_still_wins_when_consent_is_intact(env):
+    """El reloj solo decide cuando no hay nada más verdadero que decir."""
+    nid = _batch(env, expires_at=(NOW + timedelta(minutes=1)).isoformat())
+    claimed = env["store"].claim_candidate(
+        clock=_Clock(NOW), duration=timedelta(hours=2), notification_id=nid
+    )
+    result = env["store"].authorize_and_begin_dispatch(
+        nid, claimed.claim_token, clock=_Clock(NOW + timedelta(hours=1))
+    )
+    assert (result.outcome, result.dead_reason) == (OUTCOME_DEAD, "expired")
+    assert _attempts(env, nid) == []
+
+
+def test_61f3_security_block_is_an_outcome_not_a_persisted_dead_reason(env):
+    """61f3 · **ADR-052.** `security_blocked` gana en *esta* autorización, pero no es
+    hoy un `dead_reason`: el batch queda `pending` hasta su TTL y el sweep termina
+    registrándolo como `expired`.
+
+    Este test fija esa verdad incómoda en vez de afirmar "nunca expired", que sería
+    exactamente el tipo de promesa que ADR-052 existe para no hacer. El registro final
+    de un fallo de aislamiento sigue siendo menos verdadero de lo que el ADR exige
+    para las razones de consentimiento; corregirlo pide un `dead_reason` nuevo y
+    migración de schema, y se difiere explícitamente.
+    """
+    expires = (NOW + timedelta(minutes=1)).isoformat()
+    nid = _batch(env, expires_at=expires)
+    claimed = env["store"].claim_candidate(
+        clock=_Clock(NOW), duration=timedelta(hours=2), notification_id=nid
+    )
+    otra = env["identity"].create_principal("beto@example.com")
+    _sql(env, "UPDATE principal_owner_keys SET principal_id=?", (otra,))
+    later = NOW + timedelta(hours=1)
+
+    result = env["store"].authorize_and_begin_dispatch(
+        nid, claimed.claim_token, clock=_Clock(later)
+    )
+    assert result.outcome == OUTCOME_SECURITY_BLOCKED
+    assert result.reason == "principal_mismatch"
+    assert result.dead_reason is None       # el outcome no persiste como dead_reason
+    assert _attempts(env, nid) == []
+
+    row = _row(env, nid)
+    assert row["status"] == "pending"
+    assert row["dead_reason"] is None
+    assert row["not_before"] == expires     # una evaluación, no un bucle
+
+    # Y al llegar el TTL, el sweep lo cierra como `expired`: hoy es lo único que el
+    # schema sabe decir sobre este batch.
+    assert env["store"].sweep_expired(clock=_Clock(later)) == [nid]
+    swept = _row(env, nid)
+    assert (swept["status"], swept["dead_reason"]) == ("dead", "expired")
+    assert _attempts(env, nid) == [], "en ningún momento se llamó al proveedor"
+
+
+def test_61f4_dispatch_authorization_keeps_the_previous_positional_field_order():
+    """Insertar un campo en medio de un dataclass desplaza cada argumento posicional
+    siguiente: un caller que construyera esto por posición pasaría a poner su
+    `attempt_id` en `not_before`. El default protege de omitir el campo, no de eso.
+    `not_before` va al final, después de todos los campos que existían en f9a77e4."""
+    import dataclasses
+
+    names = [f.name for f in dataclasses.fields(DispatchAuthorization)]
+    previous = [
+        "outcome", "notification_id", "reason", "dead_reason", "attempt_id",
+        "channel", "external_idempotency_key", "claim_token", "payload_json",
+        "external_recipient_id",
+    ]
+    assert names[:len(previous)] == previous, "se desplazó un campo preexistente"
+    assert names == previous + ["not_before"], "not_before no es el último campo"
+
+    # Construcción posicional heredada: cada valor sigue cayendo donde caía.
+    legacy = DispatchAuthorization(
+        "dead", "nid-1", "preference_disabled", "opted_out", "att-1", "telegram",
+    )
+    assert (legacy.attempt_id, legacy.channel) == ("att-1", "telegram")
+    assert legacy.not_before is None
 
 
 @pytest.mark.parametrize("phase", [
@@ -2396,3 +2497,522 @@ def test_106_no_repr_ever_exposes_token_or_payload(env):
     for text in (repr(recon), str(recon)):
         assert recon.claim_token not in text, "ReconciliationClaim expone el token"
     assert recon.attempt_id in repr(recon)
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# R2B-1C-A · Frontera temporal de entrega
+# ══════════════════════════════════════════════════════════════════════════════
+
+BOGOTA = "America/Bogota"
+# 21:00 y 22:30 en Bogotá (UTC-5) el 15 de julio de 2026.
+EVENING = datetime(2026, 7, 16, 2, 0, tzinfo=timezone.utc)     # 21:00 local
+IN_QUIET = datetime(2026, 7, 16, 3, 30, tzinfo=timezone.utc)   # 22:30 local
+QUIET_END_UTC = "2026-07-16T12:00:00+00:00"                    # 07:00 local
+
+
+def _quiet(env, *, start="22:00", end="07:00", tz=BOGOTA):
+    _sql(env, "UPDATE radar_notification_preferences SET quiet_hours_start=?, "
+              "quiet_hours_end=?, timezone=?", (start, end, tz))
+
+
+def _claim_at(env, nid, moment, *, duration=timedelta(hours=2)):
+    claimed = env["store"].claim_candidate(
+        clock=_Clock(moment), duration=duration, notification_id=nid
+    )
+    assert claimed is not None, "el batch debía ser reclamable"
+    return claimed
+
+
+# ── Quiet hours reevaluado al despachar ───────────────────────────────────────
+
+def test_qh01_batch_created_outside_silence_and_claimed_inside_never_opens_attempt(env):
+    """El caso que justifica todo el bloque: el batch nació a las 21:00, cuando no
+    había silencio, y llega a la frontera a las 22:30. El `not_before` que congeló el
+    selector era una foto de entonces. Si el worker no reevalúa, suena el teléfono."""
+    nid = _batch(env)
+    _quiet(env)
+    claimed = _claim_at(env, nid, EVENING)
+
+    result = env["store"].authorize_and_begin_dispatch(
+        nid, claimed.claim_token, clock=_Clock(IN_QUIET)
+    )
+    assert result.outcome == OUTCOME_HOLD
+    assert result.reason == "quiet_hours"
+    assert result.not_before == QUIET_END_UTC
+    assert result.attempt_id is None
+    row = _row(env, nid)
+    assert row["status"] == "pending"
+    assert row["not_before"] == QUIET_END_UTC
+    assert row["claim_token"] is None and row["claim_until"] is None
+    assert _attempts(env, nid) == [], "cero intentos durante el silencio"
+
+
+def test_qh02_batch_claimed_after_the_window_ends_opens_the_attempt(env):
+    nid = _batch(env)
+    _quiet(env)
+    after = datetime(2026, 7, 16, 13, 0, tzinfo=timezone.utc)   # 08:00 local
+    claimed = _claim_at(env, nid, after)
+    result = env["store"].authorize_and_begin_dispatch(
+        nid, claimed.claim_token, clock=_Clock(after)
+    )
+    assert result.outcome == OUTCOME_AUTHORIZED
+    assert len(_attempts(env, nid)) == 1
+
+
+def test_qh03_exactly_at_the_window_end_may_open_an_attempt(env):
+    nid = _batch(env)
+    _quiet(env)
+    at_end = datetime.fromisoformat(QUIET_END_UTC)              # 07:00 local exacto
+    claimed = _claim_at(env, nid, at_end)
+    result = env["store"].authorize_and_begin_dispatch(
+        nid, claimed.claim_token, clock=_Clock(at_end)
+    )
+    assert result.outcome == OUTCOME_AUTHORIZED
+
+
+def test_qh04_retry_landing_inside_the_window_is_deferred_again(env):
+    """Un backoff que aterriza dentro del silencio no compra una excepción: la
+    frontera lo vuelve a diferir. Ningún retry puede colarse por la puerta de atrás."""
+    nid = _batch(env)
+    _quiet(env)
+    claimed = _claim_at(env, nid, EVENING)
+    auth = env["store"].authorize_and_begin_dispatch(
+        nid, claimed.claim_token, clock=_Clock(EVENING)
+    )
+    assert auth.outcome == OUTCOME_AUTHORIZED
+
+    # El intento 1 falla y pide reintento a las 22:30, ya dentro del silencio.
+    retry_at = IN_QUIET.isoformat()
+    env["ledger"].finish_attempt(
+        auth.attempt_id, nid, claimed.claim_token, outcome="retry",
+        next_not_before=retry_at, now=EVENING,
+    )
+    assert _row(env, nid)["not_before"] == retry_at
+
+    reclaimed = _claim_at(env, nid, IN_QUIET)
+    second = env["store"].authorize_and_begin_dispatch(
+        nid, reclaimed.claim_token, clock=_Clock(IN_QUIET)
+    )
+    assert second.outcome == OUTCOME_HOLD and second.reason == "quiet_hours"
+    assert second.not_before == QUIET_END_UTC
+    assert len(_attempts(env, nid)) == 1, "el retry abrió un segundo intento"
+
+
+def test_qh05_normal_window_not_crossing_midnight(env):
+    nid = _batch(env)
+    _quiet(env, start="01:00", end="07:00")
+    inside = datetime(2026, 7, 16, 8, 0, tzinfo=timezone.utc)   # 03:00 local
+    claimed = _claim_at(env, nid, inside)
+    result = env["store"].authorize_and_begin_dispatch(
+        nid, claimed.claim_token, clock=_Clock(inside)
+    )
+    assert result.outcome == OUTCOME_HOLD and result.reason == "quiet_hours"
+    assert result.not_before == QUIET_END_UTC
+
+
+def test_qh06_window_is_read_from_the_preference_timezone_not_the_server(env):
+    """Mismo instante UTC, dos zonas: en Bogotá son las 22:30 y en Madrid las 05:30.
+    Si se usara UTC (03:30) el silencio 22:00–07:00 se aplicaría a las dos por
+    casualidad, así que la ventana se estrecha para que solo una quede dentro."""
+    nid_bog = _batch(env)
+    _quiet(env, start="22:00", end="23:30", tz=BOGOTA)
+    claimed = _claim_at(env, nid_bog, IN_QUIET)
+    result = env["store"].authorize_and_begin_dispatch(
+        nid_bog, claimed.claim_token, clock=_Clock(IN_QUIET)
+    )
+    assert result.outcome == OUTCOME_HOLD, "22:30 en Bogotá está dentro"
+
+    nid_mad = _batch(env)
+    _quiet(env, start="22:00", end="23:30", tz="Europe/Madrid")
+    claimed = _claim_at(env, nid_mad, IN_QUIET)
+    result = env["store"].authorize_and_begin_dispatch(
+        nid_mad, claimed.claim_token, clock=_Clock(IN_QUIET)
+    )
+    assert result.outcome == OUTCOME_AUTHORIZED, "05:30 en Madrid está fuera"
+
+
+@pytest.mark.parametrize("start,end,tz", [
+    ("22:00", "07:00", "Marte/Olympus"),   # zona inválida
+    ("22:00", None, BOGOTA),               # media configuración
+    (None, "07:00", BOGOTA),
+    ("22:60", "07:00", BOGOTA),            # formato inválido
+])
+def test_qh07_unreadable_configuration_fails_closed_with_total_rollback(
+    env, start, end, tz
+):
+    """Fail closed: ni se abre intento ni se toca el batch. Caer a UTC convertiría un
+    error de datos en una llamada a las tres de la mañana."""
+    nid = _batch(env)
+    _quiet(env, start=start, end=end, tz=tz)
+    claimed = _claim_at(env, nid, IN_QUIET)
+    before = dict(_row(env, nid))
+
+    with pytest.raises(WorkerStoreError):
+        env["store"].authorize_and_begin_dispatch(
+            nid, claimed.claim_token, clock=_Clock(IN_QUIET)
+        )
+    assert dict(_row(env, nid)) == before, "el batch no quedó como estaba"
+    assert _attempts(env, nid) == []
+
+
+def test_qh08_window_ending_after_expiry_sleeps_until_expiry_not_beyond(env):
+    """Prometer una espera posterior al TTL sería programar una reevaluación que nunca
+    va a ocurrir. Se duerme hasta el vencimiento y lo recoge el sweep — pero todavía
+    no está vencido, así que no se marca `expired` por adelantado."""
+    expires = "2026-07-16T09:00:00+00:00"      # antes del fin del silencio (12:00Z)
+    nid = _batch(env, expires_at=expires)
+    _quiet(env)
+    claimed = _claim_at(env, nid, IN_QUIET)
+    result = env["store"].authorize_and_begin_dispatch(
+        nid, claimed.claim_token, clock=_Clock(IN_QUIET)
+    )
+    assert result.outcome == OUTCOME_HOLD and result.reason == "quiet_hours"
+    assert result.not_before == expires
+    row = _row(env, nid)
+    assert row["status"] == "pending", "no se mata por adelantado"
+    assert row["dead_reason"] is None
+    assert row["not_before"] == expires
+    assert _attempts(env, nid) == []
+
+
+# ── Combinación con holds de la matriz ────────────────────────────────────────
+
+@pytest.mark.parametrize("mutation,reason", [
+    ("UPDATE principals SET status='suspended'", "principal_suspended"),
+    ("UPDATE notification_endpoints SET verified_at=NULL", "endpoint_unverified"),
+    ("UPDATE notification_endpoints SET enabled=0", "endpoint_disabled"),
+])
+def test_qh09_hold_and_silence_combine_with_the_longest_wait(env, mutation, reason):
+    """El hold dura 15 minutos y el silencio nueve horas. Despertar a las 22:45 para
+    volver a chocar con el silencio es un bucle; se espera a que terminen los dos."""
+    nid = _batch(env)
+    _quiet(env)
+    claimed = _claim_at(env, nid, EVENING)
+    _sql(env, mutation)
+    result = env["store"].authorize_and_begin_dispatch(
+        nid, claimed.claim_token, clock=_Clock(IN_QUIET)
+    )
+    assert result.outcome == OUTCOME_HOLD
+    assert result.reason == reason, "la razón del consentimiento no se pierde"
+    assert result.not_before == QUIET_END_UTC       # max(22:45, 07:00) = 07:00
+    assert _row(env, nid)["not_before"] == QUIET_END_UTC
+    assert _attempts(env, nid) == []
+
+
+def test_qh10_hold_longer_than_the_silence_wins(env):
+    nid = _batch(env)
+    _quiet(env)
+    claimed = _claim_at(env, nid, EVENING)
+    _sql(env, "UPDATE principals SET status='suspended'")
+    long_hold = timedelta(hours=12)                 # termina a las 10:30Z+12 > 12:00Z
+    result = env["store"].authorize_and_begin_dispatch(
+        nid, claimed.claim_token, clock=_Clock(IN_QUIET), hold_duration=long_hold,
+    )
+    expected = (IN_QUIET + long_hold).isoformat()
+    assert result.outcome == OUTCOME_HOLD
+    assert result.not_before == expected > QUIET_END_UTC
+    assert _row(env, nid)["not_before"] == expected
+
+
+def test_qh11_hold_outside_silence_is_unchanged_by_the_window(env):
+    """Sin silencio activo el hold manda: la combinación no puede alargar de más."""
+    nid = _batch(env)
+    _quiet(env)
+    claimed = _claim_at(env, nid, EVENING)
+    _sql(env, "UPDATE principals SET status='suspended'")
+    result = env["store"].authorize_and_begin_dispatch(
+        nid, claimed.claim_token, clock=_Clock(EVENING)     # 21:00, fuera
+    )
+    assert result.not_before == (EVENING + DEFAULT_HOLD_DURATION).isoformat()
+
+
+def test_qh12_combined_wait_never_exceeds_expiry(env):
+    expires = "2026-07-16T04:00:00+00:00"        # 23:00 local: antes de todo
+    nid = _batch(env, expires_at=expires)
+    _quiet(env)
+    claimed = _claim_at(env, nid, EVENING)
+    _sql(env, "UPDATE principals SET status='suspended'")
+    result = env["store"].authorize_and_begin_dispatch(
+        nid, claimed.claim_token, clock=_Clock(IN_QUIET)
+    )
+    assert result.not_before == expires
+    assert _row(env, nid)["not_before"] == expires
+
+
+def test_qh13_security_block_ignores_the_window_and_evaluates_once(env):
+    """Un fallo de aislamiento no es una espera: no se reprograma al fin del silencio,
+    se evalúa una vez y muere por TTL."""
+    nid = _batch(env)
+    _quiet(env)
+    claimed = _claim_at(env, nid, EVENING)
+    otra = env["identity"].create_principal("beto@example.com")
+    _sql(env, "UPDATE principal_owner_keys SET principal_id=?", (otra,))
+    result = env["store"].authorize_and_begin_dispatch(
+        nid, claimed.claim_token, clock=_Clock(IN_QUIET)
+    )
+    assert result.outcome == OUTCOME_SECURITY_BLOCKED
+    assert result.not_before == _row(env, nid)["expires_at"]
+
+
+def test_qh14_terminal_consent_dies_during_silence_instead_of_waiting(env):
+    """Quien se dio de baja no necesita esperar al amanecer para que se registre."""
+    nid = _batch(env)
+    _quiet(env)
+    claimed = _claim_at(env, nid, EVENING)
+    _sql(env, "UPDATE radar_notification_preferences SET enabled=0")
+    result = env["store"].authorize_and_begin_dispatch(
+        nid, claimed.claim_token, clock=_Clock(IN_QUIET)
+    )
+    assert (result.outcome, result.dead_reason) == (OUTCOME_DEAD, "opted_out")
+    assert _row(env, nid)["status"] == "dead"
+
+
+# ── Precedencia: intento abierto y expiración ─────────────────────────────────
+
+def test_qh15_open_dispatching_plus_expired_is_a_consistency_error_state_intact(env):
+    """Marcar `expired` un batch con intento abierto afirmaría "nada salió" sobre un
+    mensaje que pudo entregarse, y dejaría el intento huérfano en un batch terminal
+    donde la reconciliación ya no lo alcanza."""
+    expires = (NOW + timedelta(minutes=1)).isoformat()
+    nid = _batch(env, expires_at=expires)
+    claimed = _claim_at(env, nid, NOW)
+    env["ledger"].begin_attempt(nid, claimed.claim_token, now=NOW)
+    before = dict(_row(env, nid))
+
+    with pytest.raises(WorkerStoreConsistencyError, match="dispatching"):
+        env["store"].authorize_and_begin_dispatch(
+            nid, claimed.claim_token, clock=_Clock(NOW + timedelta(hours=1))
+        )
+    row = _row(env, nid)
+    assert dict(row) == before, "el estado cambió pese al fallo cerrado"
+    assert row["dead_reason"] != "expired"
+    assert len(_attempts(env, nid)) == 1
+
+
+# ── Intento único ─────────────────────────────────────────────────────────────
+
+def test_qh16_second_dispatch_without_closing_the_first_is_refused(env):
+    nid = _batch(env)
+    claimed = _claim_at(env, nid, NOW)
+    first = env["store"].authorize_and_begin_dispatch(
+        nid, claimed.claim_token, clock=_Clock(NOW)
+    )
+    assert first.outcome == OUTCOME_AUTHORIZED
+    with pytest.raises(WorkerStoreConsistencyError):
+        env["store"].authorize_and_begin_dispatch(
+            nid, claimed.claim_token, clock=_Clock(NOW)
+        )
+    assert len(_attempts(env, nid)) == 1
+
+
+def test_qh17_closing_the_first_attempt_allows_a_second(env):
+    nid = _batch(env)
+    claimed = _claim_at(env, nid, NOW)
+    first = env["store"].authorize_and_begin_dispatch(
+        nid, claimed.claim_token, clock=_Clock(NOW)
+    )
+    env["ledger"].finish_attempt(
+        first.attempt_id, nid, claimed.claim_token, outcome="retry",
+        next_not_before=NOW.isoformat(), now=NOW,
+    )
+    reclaimed = _claim_at(env, nid, NOW)
+    second = env["store"].authorize_and_begin_dispatch(
+        nid, reclaimed.claim_token, clock=_Clock(NOW)
+    )
+    assert second.outcome == OUTCOME_AUTHORIZED
+    assert len(_attempts(env, nid)) == 2
+
+
+def test_qh18_direct_sql_cannot_insert_a_second_open_attempt(env):
+    """La defensa no depende de pasar por `worker_store`: la base la impone."""
+    nid = _batch(env)
+    claimed = _claim_at(env, nid, NOW)
+    env["ledger"].begin_attempt(nid, claimed.claim_token, now=NOW)
+    with pytest.raises(sqlite3.IntegrityError):
+        _sql(env, "INSERT INTO radar_delivery_attempts "
+                  "(attempt_id, notification_id, attempt_number, phase, started_at) "
+                  "VALUES ('a-directo', ?, 99, 'dispatching', ?)",
+             (nid, NOW.isoformat()))
+    assert len(_attempts(env, nid)) == 1
+
+
+def test_qh19_ledger_begin_attempt_cannot_open_a_second_either(env):
+    nid = _batch(env)
+    claimed = _claim_at(env, nid, NOW)
+    env["ledger"].begin_attempt(nid, claimed.claim_token, now=NOW)
+    with pytest.raises(sqlite3.IntegrityError):
+        env["ledger"].begin_attempt(nid, claimed.claim_token, now=NOW)
+    assert len(_attempts(env, nid)) == 1
+
+
+def test_qh20_reconciling_an_orphan_frees_the_partial_index(env):
+    nid = _batch(env)
+    token, attempt_id = _open_dispatching(env, nid, now=NOW, duration=timedelta(seconds=10))
+    later = NOW + timedelta(seconds=60)
+    recon = env["store"].claim_for_reconciliation(
+        clock=_Clock(later), duration=RECON_DURATION, notification_id=nid
+    )
+    env["ledger"].finish_attempt(
+        attempt_id, nid, recon.claim_token, outcome="ambiguous", now=later,
+    )
+    assert env["store"].count_open_dispatching(nid) == 0
+    # Con el índice libre, un intento nuevo cabe (sobre otro batch reclamado).
+    other = _batch(env)
+    claimed = _claim_at(env, other, later)
+    assert env["store"].authorize_and_begin_dispatch(
+        other, claimed.claim_token, clock=_Clock(later)
+    ).outcome == OUTCOME_AUTHORIZED
+
+
+def test_qh21_two_batches_can_each_hold_one_open_attempt(env):
+    for _ in range(2):
+        nid = _batch(env)
+        claimed = _claim_at(env, nid, NOW)
+        assert env["store"].authorize_and_begin_dispatch(
+            nid, claimed.claim_token, clock=_Clock(NOW)
+        ).outcome == OUTCOME_AUTHORIZED
+
+
+def test_qh22_four_threads_on_one_batch_open_exactly_one_attempt(env):
+    for iteration in range(RACE_ITERATIONS):
+        nid = _batch(env)
+        _sql(env, "UPDATE radar_notification_batches SET status='claimed', "
+                  "claim_token='shared', claim_until=? WHERE notification_id=?",
+             (FOREVER, nid))
+        barrier = threading.Barrier(4)
+        outcomes: list = []
+        lock = threading.Lock()
+
+        def worker():
+            barrier.wait()
+            try:
+                result = env["store"].authorize_and_begin_dispatch(
+                    nid, "shared", clock=_Clock(NOW)
+                )
+                outcome = result.outcome
+            except (WorkerStoreConsistencyError, sqlite3.IntegrityError,
+                    sqlite3.OperationalError) as exc:
+                outcome = type(exc).__name__
+            with lock:
+                outcomes.append(outcome)
+
+        threads = [threading.Thread(target=worker) for _ in range(4)]
+        for t in threads:
+            t.start()
+        for t in threads:
+            t.join(timeout=JOIN_TIMEOUT)
+            assert not t.is_alive(), f"hilo colgado en iteración {iteration}"
+
+        authorized = [o for o in outcomes if o == OUTCOME_AUTHORIZED]
+        assert len(authorized) == 1, f"iteración {iteration}: {outcomes}"
+        assert len(_attempts(env, nid)) == 1, f"iteración {iteration}"
+        assert env["store"].count_open_dispatching(nid) == 1
+
+
+# ── Rollback ──────────────────────────────────────────────────────────────────
+
+def test_qh23_failure_after_setting_not_before_leaves_the_claim_intact(env):
+    """El aplazamiento por silencio es tan atómico como la autorización: un batch a
+    medio diferir sería un `not_before` que nadie escribió."""
+    nid = _batch(env)
+    _quiet(env)
+    claimed = _claim_at(env, nid, EVENING)
+    before = dict(_row(env, nid))
+
+    def hook(phase):
+        if phase == PHASE_BEFORE_COMMIT:
+            raise RuntimeError("fallo tras fijar not_before y limpiar el claim")
+
+    with pytest.raises(RuntimeError):
+        env["store"].authorize_and_begin_dispatch(
+            nid, claimed.claim_token, clock=_Clock(IN_QUIET), _fault_hook=hook,
+        )
+    row = _row(env, nid)
+    assert dict(row) == before
+    assert row["status"] == "claimed"
+    assert row["claim_token"] == claimed.claim_token     # claim anterior intacto
+    assert row["not_before"] == before["not_before"]
+    assert _attempts(env, nid) == []
+
+
+@pytest.mark.parametrize("phase", [PHASE_AFTER_ATTEMPT_COUNT, PHASE_AFTER_ATTEMPT_INSERT])
+def test_qh24_failure_while_opening_the_attempt_leaves_no_orphan(env, phase):
+    nid = _batch(env)
+    claimed = _claim_at(env, nid, NOW)
+    before = dict(_row(env, nid))
+
+    def hook(fired):
+        if fired == phase:
+            raise RuntimeError(f"fallo inyectado en {phase}")
+
+    with pytest.raises(RuntimeError):
+        env["store"].authorize_and_begin_dispatch(
+            nid, claimed.claim_token, clock=_Clock(NOW), _fault_hook=hook,
+        )
+    row = _row(env, nid)
+    assert _attempts(env, nid) == [], "quedó un intento huérfano"
+    assert row["status"] == "claimed", "el batch dejó de estar reclamado"
+    assert row["attempt_count"] == before["attempt_count"] == 0
+    assert row["external_idempotency_key"] is None
+    assert env["store"].count_open_dispatching(nid) == 0
+
+
+def test_qh25_clock_is_captured_after_acquiring_the_lock(env):
+    """Determinista, sin carrera: el hook de `after_begin` adelanta el reloj. Si
+    `clock()` se leyera antes del `BEGIN IMMEDIATE`, el adelanto no se vería y el
+    batch se autorizaría en vez de diferirse — la ventana se mediría contra un
+    instante anterior al lock, que es justo lo que un lock disputado alarga."""
+    nid = _batch(env)
+    _quiet(env)
+    claimed = _claim_at(env, nid, EVENING)
+
+    class _MovingClock:
+        def __init__(self):
+            self.moment = EVENING          # 21:00 local: fuera del silencio
+
+        def __call__(self):
+            return self.moment
+
+    clock = _MovingClock()
+
+    def hook(phase):
+        if phase == PHASE_AFTER_BEGIN:
+            clock.moment = IN_QUIET        # 22:30 local: dentro
+
+    result = env["store"].authorize_and_begin_dispatch(
+        nid, claimed.claim_token, clock=clock, _fault_hook=hook,
+    )
+    assert result.outcome == OUTCOME_HOLD and result.reason == "quiet_hours"
+    assert _attempts(env, nid) == []
+
+
+def test_qh26_worker_store_never_opens_an_attempt_via_the_public_ledger_door():
+    """AST, no búsqueda textual: un comentario que mencione `begin_attempt` no debe
+    disparar esto, y un `begin_attempt` real no debe escaparse por formato.
+
+    `LedgerStore.begin_attempt` abre su propia transacción. Llamarla desde aquí
+    abriría el intento fuera del lock que sostiene la revalidación, y entre la
+    autorización y la apertura cabría una revocación. La única puerta válida es el
+    helper transaccional sobre la conexión ya bloqueada.
+    """
+    import ast
+    import pathlib
+
+    import app.core.notify.worker_store as worker_store_module
+
+    tree = ast.parse(pathlib.Path(worker_store_module.__file__).read_text())
+    offenders = [
+        node.lineno for node in ast.walk(tree)
+        if isinstance(node, ast.Call)
+        and ((isinstance(node.func, ast.Attribute) and node.func.attr == "begin_attempt")
+             or (isinstance(node.func, ast.Name) and node.func.id == "begin_attempt"))
+    ]
+    assert offenders == [], f"begin_attempt() llamado en las líneas {offenders}"
+
+    imported = {
+        alias.name
+        for node in ast.walk(tree) if isinstance(node, ast.ImportFrom)
+        for alias in node.names
+    }
+    assert "LedgerStore" not in imported, "worker_store no debe conocer la puerta pública"
+    assert "_insert_dispatching_attempt_on_connection" in imported

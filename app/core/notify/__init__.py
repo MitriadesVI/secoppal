@@ -29,6 +29,11 @@ P1B-4 R2A — núcleo transaccional del worker:
 
 - ``authorization`` — la única definición de "¿se puede entregar esto ahora?",
   compartida por el selector y el worker.
+- ``quiet_hours``   — la única definición de "¿se puede entregar *ahora mismo*?":
+  política pura de la ventana de silencio, compartida por el selector (que la
+  congela como optimización) y el worker (que la revalida bajo su lock, y es
+  quien decide). Dos copias podrían separarse y el silencio dejaría de ser una
+  propiedad del sistema.
 - ``retry``         — aritmética pura del tiempo del claim (funciones puras).
 - ``worker_store``  — reclamar, autorizar+abrir intento, reconciliar huérfanos y
   barrer expirados. Todo transaccional, nada de red.
@@ -84,6 +89,7 @@ from app.core.notify.outbox_store import (
     OutboxError,
     OutboxStore,
 )
+from app.core.notify.quiet_hours import QuietHoursError
 from app.core.notify.render import (
     CHANNEL_BYTE_BUDGETS,
     PAYLOAD_VERSION,
@@ -130,6 +136,7 @@ from app.core.notify.schema import (
     ensure_schema,
 )
 from app.core.notify.worker_store import (
+    REASON_QUIET_HOURS,
     ClaimedCandidate,
     DispatchAuthorization,
     ReconciliationClaim,
@@ -185,6 +192,8 @@ __all__ = [
     "Principal",
     "PrincipalExistsError",
     "PrincipalMismatchError",
+    "QuietHoursError",
+    "REASON_QUIET_HOURS",
     "RadarNotAvailableError",
     "ReconciliationClaim",
     "RenderedMessage",

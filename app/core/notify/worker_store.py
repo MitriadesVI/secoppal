@@ -43,11 +43,18 @@ from app.core.notify.ledger_store import (
     PHASE_AFTER_ATTEMPT_INSERT as _LEDGER_AFTER_ATTEMPT_INSERT,
     _insert_dispatching_attempt_on_connection,
 )
+from app.core.notify.quiet_hours import QuietHoursError
+from app.core.notify.quiet_hours import quiet_hours_not_before as _quiet_hours_not_before
 from app.core.notify.schema import ensure_schema
 
 EXTERNAL_IDEMPOTENCY_VERSION = "p1b-extid-v1"
 
 DEFAULT_HOLD_DURATION = timedelta(minutes=15)
+
+# Razón estable de un aplazamiento por silencio. **No** es una categoría de la matriz
+# de consentimiento: la persona sí dijo que sí, solo que no a estas horas. Meterla en
+# ``AuthorizationDecision`` mezclaría "no quiere esto" con "ahora no".
+REASON_QUIET_HOURS = "quiet_hours"
 
 # La expiración es terminal, pero **no** vive en la matriz compartida: es una regla
 # temporal del batch, no del consentimiento, y el selector no tiene nada que
@@ -193,6 +200,12 @@ class DispatchAuthorization:
     claim_token: str | None = field(default=None, repr=False)
     payload_json: str | None = field(default=None, repr=False)
     external_recipient_id: str | None = field(default=None, repr=False)
+    # Cuándo vuelve a ser evaluable. **Al final de todo**, y no junto a
+    # ``dead_reason`` donde encajaría mejor semánticamente: insertarlo en medio
+    # desplaza cada argumento posicional siguiente, así que un caller que
+    # construyera esto por posición pasaría a poner su ``attempt_id`` aquí. El
+    # default no protege de eso —solo de omitirlo—.
+    not_before: str | None = None
 
 
 @dataclass(frozen=True)
@@ -417,9 +430,33 @@ class WorkerStore:
         - ``claim_lost``: el claim ya no es nuestro. Cero cambios.
         - ``dead``: causa terminal — del consentimiento (matriz compartida) o del
           reloj (``expires_at`` vencido, §INV-W9). Sin intento, sin clave externa.
-        - ``hold``: causa reversible. Vuelve a ``pending`` con cuarentena.
+        - ``hold``: causa reversible. Vuelve a ``pending`` con cuarentena. Cubre
+          tanto un hold de la matriz como un aplazamiento por quiet hours
+          (``reason='quiet_hours'``): los dos son "ahora no", vuelven al mismo
+          estado y se combinan por la espera más larga.
         - ``security_blocked``: el endpoint es de otra persona que la dueña del radar.
         - ``authorized``: clave externa write-once + intento ``dispatching``.
+
+        Precedencia real (ADR-052):
+
+            claim válido → intento ``dispatching`` abierto → matriz → expiración
+            → quiet hours
+
+        El claim va primero a propósito: un intento abierto con el claim ya vencido
+        es un **huérfano**, el caso normal que ``claim_for_reconciliation`` existe
+        para resolver, y responder ``claim_lost`` es lo correcto. El estado imposible
+        —y por tanto el ``WorkerStoreConsistencyError``— es tener el claim *vigente*
+        y aun así encontrar un intento abierto.
+
+        La matriz va antes que el reloj porque ``dead_reason`` es el registro de por
+        qué no se entregó: ``opted_out``, ``endpoint_revoked`` y ``radar_archived``
+        ganan sobre ``expired`` y quedan persistidos.
+
+        ``security_blocked`` **no** es un ``dead_reason``: es el resultado de esta
+        autorización, pero el batch queda ``pending`` hasta su TTL y el sweep acaba
+        registrándolo como ``expired``. Ese registro final es hoy menos verdadero de
+        lo que nos gustaría; arreglarlo pide un estado persistente nuevo y migración
+        de schema, y no se hace aquí.
 
         El COMMIT es el punto de linearización. Si una revocación commitea antes, esta
         transacción la lee y sale por ``dead``; si commitea después, el intento ya está
@@ -479,31 +516,26 @@ class WorkerStore:
                     )
 
                 fence = {"nid": notification_id, "token": claim_token, "now": now_s}
-                row = None
-                if batch["expires_at"] <= now_s:
-                    # **INV-W9.** El batch expiró entre el claim y este instante: no se
-                    # inicia un envío que ya no vale. La ventana es estrecha
+                # **ADR-052.** La matriz primero, el reloj después. Ambas causas son
+                # terminales y ninguna envía, así que la precedencia solo elige la
+                # etiqueta —pero la etiqueta *es* el registro: ``dead_reason`` es lo
+                # único que queda explicando por qué no se entregó. Marcar ``expired``
+                # el batch de alguien que se dio de baja afirma que el mensaje caducó,
+                # cuando la verdad es que esa persona ya no lo quería. Cuesta un join
+                # dentro del lock en la rama de vencidos; el registro honesto lo vale.
+                row = authorization.fetch_target_row(
+                    conn, batch["endpoint_id"], batch["radar_id"]
+                )
+                decision = authorization.authorize_row(
+                    row, notification_id=notification_id
+                )
+                if (decision.category == authorization.AUTHORIZED
+                        and batch["expires_at"] <= now_s):
+                    # **INV-W9.** Solo aquí: el consentimiento está intacto y lo único
+                    # que falló fue el reloj. La ventana es estrecha
                     # —``claim_candidate`` exige ``expires_at > now``— pero existe, y
                     # es justo la que un proveedor lento o un lock disputado abren.
-                    #
-                    # Es una regla temporal del batch, no del consentimiento: no entra
-                    # en la matriz compartida porque el selector no tiene nada que
-                    # revalidar aquí (crea el batch fijando su propio TTL). Vive donde
-                    # está el dato.
-                    #
-                    # Se evalúa **antes** de leer la autorización: si el batch ya está
-                    # muerto por tiempo, el join no cambiaría el desenlace —no hay
-                    # envío en ninguna rama— y sí gastaría una lectura dentro del lock
-                    # de escritor. La precedencia solo decide la etiqueta: un batch
-                    # vencido *y* sin consentimiento muere ``expired``.
                     decision = _EXPIRED
-                else:
-                    row = authorization.fetch_target_row(
-                        conn, batch["endpoint_id"], batch["radar_id"]
-                    )
-                    decision = authorization.authorize_row(
-                        row, notification_id=notification_id
-                    )
                 _fire(_fault_hook, PHASE_AFTER_AUTHORIZATION_READ)
 
                 if decision.category == authorization.TERMINAL:
@@ -517,18 +549,27 @@ class WorkerStore:
                         reason=decision.reason, dead_reason=decision.dead_reason,
                     )
                 elif decision.category == authorization.HOLD:
+                    # Dos esperas simultáneas se combinan con la **más larga**: la
+                    # corta no puede liberar a la otra. Reevaluar un principal
+                    # suspendido a las 22:25 porque el hold dura 15 minutos volvería a
+                    # chocar con el silencio; y salir del silencio a las 07:00 no
+                    # resucita el consentimiento. Se espera a que ambas terminen.
+                    #
                     # Nunca prometer una espera posterior a la expiración: sería
                     # programar una reevaluación que jamás va a ocurrir y dejar el
                     # batch pareciendo "en espera" cuando en realidad ya murió. Si la
                     # espera desborda el TTL, se duerme hasta el TTL y decide el sweep.
-                    not_before = min(_stamp(now + hold_duration), batch["expires_at"])
+                    hold_until = _stamp(now + hold_duration)
+                    quiet_end = self._quiet_end(row, now, notification_id)
+                    candidate = max(hold_until, quiet_end) if quiet_end else hold_until
+                    not_before = min(candidate, batch["expires_at"])
                     self._fenced(
                         conn, _MARK_PENDING_SQL, {**fence, "not_before": not_before},
                         notification_id,
                     )
                     result = DispatchAuthorization(
                         outcome=OUTCOME_HOLD, notification_id=notification_id,
-                        reason=decision.reason,
+                        reason=decision.reason, not_before=not_before,
                     )
                 elif decision.category == authorization.SECURITY_BLOCKED:
                     # La condición no se resuelve sola: reevaluarla cada quince minutos
@@ -542,13 +583,31 @@ class WorkerStore:
                     result = DispatchAuthorization(
                         outcome=OUTCOME_SECURITY_BLOCKED,
                         notification_id=notification_id, reason=decision.reason,
+                        not_before=batch["expires_at"],
                     )
                 elif decision.category == authorization.AUTHORIZED:
-                    result = self._authorize(
-                        conn, batch, row, fence,
-                        notification_id=notification_id, now_s=now_s,
-                        _fault_hook=_fault_hook,
-                    )
+                    # Lo último antes de abrir el intento, y la única razón por la que
+                    # este bloque existe: el batch pudo crearse a las 21:00, fuera de
+                    # silencio, y llegar aquí a las 22:30. El ``not_before`` que congeló
+                    # el selector era una foto de entonces; quien decide es este
+                    # instante, ya bajo el lock.
+                    quiet_end = self._quiet_end(row, now, notification_id)
+                    if quiet_end is not None:
+                        not_before = min(quiet_end, batch["expires_at"])
+                        self._fenced(
+                            conn, _MARK_PENDING_SQL,
+                            {**fence, "not_before": not_before}, notification_id,
+                        )
+                        result = DispatchAuthorization(
+                            outcome=OUTCOME_HOLD, notification_id=notification_id,
+                            reason=REASON_QUIET_HOURS, not_before=not_before,
+                        )
+                    else:
+                        result = self._authorize(
+                            conn, batch, row, fence,
+                            notification_id=notification_id, now_s=now_s,
+                            _fault_hook=_fault_hook,
+                        )
                 else:
                     # Autorizar es la única rama que llama al proveedor, así que no
                     # puede ser el caso por defecto. Con un `else` genérico, una
@@ -570,6 +629,32 @@ class WorkerStore:
         _fire(_fault_hook, PHASE_AFTER_COMMIT)
         assert result is not None
         return result
+
+    def _quiet_end(
+        self, row: sqlite3.Row | None, now: datetime, notification_id: str
+    ) -> str | None:
+        """Fin del silencio en UTC, o ``None`` si se puede entregar ahora.
+
+        La ventana sale de la preferencia de la persona —nunca del reloj del sistema
+        operativo del servidor, que puede estar en otro continente—. Una configuración
+        ilegible falla cerrado: caer a UTC o a "sin silencio" convertiría un error de
+        datos en una llamada a las tres de la mañana.
+        """
+        if row is None:
+            return None
+        try:
+            return _quiet_hours_not_before(
+                now,
+                start=row["quiet_hours_start"],
+                end=row["quiet_hours_end"],
+                timezone_name=row["timezone"],
+            )
+        except QuietHoursError as exc:
+            raise WorkerStoreError(
+                f"El batch '{notification_id}' tiene quiet hours que no se pueden "
+                f"interpretar: {exc}. No se abre intento: entregar bajo una ventana "
+                f"desconocida es despertar a quien pidió silencio."
+            ) from exc
 
     def _fenced(
         self, conn: sqlite3.Connection, sql: str, params: dict, notification_id: str,

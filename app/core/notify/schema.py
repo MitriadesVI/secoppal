@@ -271,6 +271,18 @@ CREATE TABLE IF NOT EXISTS radar_delivery_attempts (
 CREATE INDEX IF NOT EXISTS idx_attempts_notification
     ON radar_delivery_attempts(notification_id);
 
+-- Como máximo un intento abierto por batch, garantizado por la base y no por el
+-- código que la usa. ``worker_store`` ya lo comprueba dentro de su transacción,
+-- pero esa comprobación solo protege a quien pasa por esa puerta: un script, un
+-- caller futuro, ``LedgerStore.begin_attempt`` o SQL directo abrirían el segundo
+-- sin que nadie se entere, y dos intentos abiertos significan dos llamadas
+-- posibles al proveedor por el mismo mensaje —un duplicado que ya no se puede
+-- distinguir de un reintento seguro—. Parcial a propósito: los ``finished`` se
+-- acumulan sin límite, que es justo el historial que queremos conservar.
+CREATE UNIQUE INDEX IF NOT EXISTS idx_attempts_one_open
+    ON radar_delivery_attempts(notification_id)
+    WHERE phase = 'dispatching';
+
 -- Cursor por endpoint/radar: watermark de lo examinado, no de lo entregado.
 -- P1B-2 solo define el schema; el selector y el avance del cursor son P1B-3.
 CREATE TABLE IF NOT EXISTS radar_notification_cursors (
@@ -389,6 +401,49 @@ def _preflight_preferences(conn: sqlite3.Connection) -> None:
     _rebuild_preferences_table(conn)
 
 
+_ATTEMPTS_TABLE = "radar_delivery_attempts"
+
+
+def _preflight_open_attempts(conn: sqlite3.Connection) -> None:
+    """Se niega a crear el índice único si la base ya viola lo que promete.
+
+    ``CREATE UNIQUE INDEX`` sobre datos duplicados falla con un ``IntegrityError``
+    de SQLite que no dice de qué batches habla. Peor: la tentación evidente sería
+    "arreglarlo" cerrando uno de los intentos abiertos, y eso es exactamente lo
+    que no se puede hacer. Cada intento abierto pudo haber llegado al proveedor;
+    elegir cuál sobrevive inventaría una verdad que la base no contiene, y el que
+    se cierre quedaría afirmando en silencio un desenlace que nadie observó.
+
+    Se enumera y se para. Un humano decide, con el historial delante.
+    """
+    exists = conn.execute(
+        "SELECT 1 FROM sqlite_master WHERE type='table' AND name = ?",
+        (_ATTEMPTS_TABLE,),
+    ).fetchone()
+    if exists is None:
+        # Base nueva: no hay filas que puedan violar nada.
+        return
+
+    duplicated = conn.execute(
+        f"SELECT notification_id, COUNT(*) AS open_count FROM {_ATTEMPTS_TABLE} "
+        f"WHERE phase = 'dispatching' GROUP BY notification_id "
+        f"HAVING COUNT(*) > 1 ORDER BY notification_id"
+    ).fetchall()
+    if not duplicated:
+        return
+
+    detail = ", ".join(
+        f"{row['notification_id']}={row['open_count']} intentos" for row in duplicated
+    )
+    raise SchemaIncompatibleError(
+        f"La base tiene {len(duplicated)} batch(es) con más de un intento "
+        f"'dispatching' abierto: {detail}. No se cierra ninguno automáticamente: "
+        f"cada intento abierto pudo haber llegado al proveedor, y elegir cuál "
+        f"sobrevivió inventaría una verdad que la base no contiene. Resuélvalo "
+        f"explícitamente y vuelva a abrir."
+    )
+
+
 def ensure_schema(conn: sqlite3.Connection) -> None:
     """Crea las tablas de notify si faltan. Idempotente.
 
@@ -399,10 +454,11 @@ def ensure_schema(conn: sqlite3.Connection) -> None:
     ``radar_events``, así que —a diferencia de las preferencias— no dependen
     de que ``RadarStore`` se haya inicializado antes.
 
-    El preflight de preferencias corre **antes** del script: si la base es heredada e
+    Los preflights corren **antes** del script: si la base es heredada e
     irreconciliable, no se crea nada y el error llega intacto al caller.
     """
     _preflight_preferences(conn)
+    _preflight_open_attempts(conn)
     conn.executescript(
         _SCHEMA.replace(
             "{preferences_table}", _preferences_ddl(_PREFERENCES_TABLE)

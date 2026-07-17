@@ -12,16 +12,16 @@ from __future__ import annotations
 
 from collections.abc import Callable, Mapping
 from dataclasses import dataclass
-from datetime import datetime, time, timedelta, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
-import re
 import sqlite3
-from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
 from app.core.db import connect_sqlite
 from app.core.notify.authorization import TARGET_SQL as _TARGET_SQL
 from app.core.notify.authorization import skip_reason as _target_skip_reason
 from app.core.notify.grouping import SelectableRadarEvent, group_events
+from app.core.notify.quiet_hours import QuietHoursError
+from app.core.notify.quiet_hours import quiet_hours_not_before as shared_quiet_hours_not_before
 from app.core.notify.outbox_store import (
     BatchEventRef,
     DuplicateEventAssociationError,
@@ -97,16 +97,6 @@ def is_event_eligible(event: SelectableRadarEvent, flags: EligibilityFlags) -> b
     return True
 
 
-_HHMM = re.compile(r"^([01]\d|2[0-3]):([0-5]\d)$")
-
-
-def _parse_hhmm(value: str, label: str) -> time:
-    match = _HHMM.fullmatch(value or "")
-    if match is None:
-        raise SelectorError(f"quiet_hours_{label} inválida: {value!r}; use HH:MM")
-    return time(int(match.group(1)), int(match.group(2)))
-
-
 def quiet_hours_not_before(
     now: datetime,
     *,
@@ -114,33 +104,19 @@ def quiet_hours_not_before(
     end: str | None,
     timezone_name: str,
 ) -> str | None:
-    """Devuelve el próximo fin de silencio en UTC o ``None`` si puede salir."""
-    if now.tzinfo is None or now.utcoffset() is None:
-        raise SelectorError("now debe incluir zona horaria")
+    """Wrapper de compatibilidad sobre la política compartida.
+
+    El algoritmo vive en ``quiet_hours.py`` y es el mismo que revalida el worker
+    al despachar: dos copias podrían separarse y el silencio dejaría de ser una
+    propiedad del sistema para ser una coincidencia entre dos módulos. Aquí solo
+    se traduce el error al vocabulario que los callers del selector ya manejan.
+    """
     try:
-        zone = ZoneInfo(timezone_name)
-    except (ZoneInfoNotFoundError, ValueError) as exc:
-        raise SelectorError(f"Timezone inválida: {timezone_name!r}") from exc
-    if start is None and end is None:
-        return None
-    if (start is None) != (end is None):
-        raise SelectorError("quiet hours requiere inicio y fin")
-    assert start is not None and end is not None
-    start_t, end_t = _parse_hhmm(start, "start"), _parse_hhmm(end, "end")
-    if start_t == end_t:
-        return None
-    local = now.astimezone(zone)
-    current = local.timetz().replace(tzinfo=None)
-    if start_t < end_t:
-        inside = start_t <= current < end_t
-        end_date = local.date()
-    else:
-        inside = current >= start_t or current < end_t
-        end_date = local.date() + timedelta(days=1) if current >= start_t else local.date()
-    if not inside:
-        return None
-    local_end = datetime.combine(end_date, end_t, tzinfo=zone)
-    return local_end.astimezone(timezone.utc).isoformat()
+        return shared_quiet_hours_not_before(
+            now, start=start, end=end, timezone_name=timezone_name
+        )
+    except QuietHoursError as exc:
+        raise SelectorError(str(exc)) from exc
 
 
 # Solo ``per_run``. Las entradas ``daily``/``weekly`` que vivían aquí eran el único
@@ -318,6 +294,13 @@ class NotificationSelector:
                     # zona horaria de la preferencia y falla con ``SelectorError``.
                     # Es config inconsistente, no un payload roto, y así se sigue
                     # reportando como lo que es.
+                    #
+                    # Este ``not_before`` es una optimización, **no** la autorización
+                    # final de entrega: evita que el worker reclame un batch que va a
+                    # tener que devolver. La ventana puede cambiar entre esta corrida
+                    # y el dispatch —o el batch puede envejecer hasta entrar en
+                    # silencio—, así que quien decide de verdad es
+                    # ``authorize_and_begin_dispatch``, que la reevalúa bajo su lock.
                     not_before = quiet_hours_not_before(
                         now, start=target["quiet_hours_start"],
                         end=target["quiet_hours_end"],

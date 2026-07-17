@@ -298,3 +298,207 @@ def test_deferred_frequencies_are_not_offered():
 
     assert set(DEFERRED_FREQUENCIES) == {"daily", "weekly"}
     assert set(DEFERRED_FREQUENCIES).isdisjoint(FREQUENCIES)
+
+
+# ── R2B-1C-A · idx_attempts_one_open ──────────────────────────────────────────
+#
+# El índice parcial es lo único que impide dos intentos abiertos por batch a un
+# caller que no pase por ``worker_store``: un script, ``LedgerStore.begin_attempt``
+# o SQL directo. Dos abiertos = dos llamadas posibles al proveedor por el mismo
+# mensaje, y ya no hay forma de distinguirlo de un reintento seguro.
+
+_ONE_OPEN_INDEX = "idx_attempts_one_open"
+
+
+def _batch_row(db_path, seeded, notification_id):
+    conn = connect_sqlite(db_path)
+    try:
+        conn.execute(
+            "INSERT INTO radar_notification_batches "
+            "(notification_id, principal_id, endpoint_id, radar_id, batch_key, "
+            " idempotency_key, payload_json, created_at, expires_at, status) "
+            "SELECT ?, e.principal_id, ?, ?, ?, ?, '{}', "
+            "       '2026-07-16T00:00:00+00:00', '2026-07-17T00:00:00+00:00', 'claimed' "
+            "  FROM notification_endpoints e WHERE e.endpoint_id = ?",
+            (notification_id, seeded["endpoint"], seeded["radar"],
+             f"key-{notification_id}", f"idem-{notification_id}", seeded["endpoint"]),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _insert_attempt(db_path, notification_id, number, phase, outcome=None):
+    conn = connect_sqlite(db_path)
+    try:
+        conn.execute(
+            "INSERT INTO radar_delivery_attempts "
+            "(attempt_id, notification_id, attempt_number, phase, started_at, "
+            " finished_at, outcome) VALUES (?, ?, ?, ?, ?, ?, ?)",
+            (f"att-{notification_id}-{number}", notification_id, number, phase,
+             "2026-07-16T00:00:00+00:00",
+             "2026-07-16T00:01:00+00:00" if phase == "finished" else None, outcome),
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def _indexes(db_path):
+    conn = connect_sqlite(db_path)
+    try:
+        return {
+            row["name"]: row["sql"]
+            for row in conn.execute(
+                "SELECT name, sql FROM sqlite_master WHERE type='index'"
+            ).fetchall()
+        }
+    finally:
+        conn.close()
+
+
+def _drop_one_open_index(db_path):
+    """Fabrica la base heredada: escrita antes de que el índice existiera."""
+    conn = connect_sqlite(db_path)
+    try:
+        conn.execute(f"DROP INDEX IF EXISTS {_ONE_OPEN_INDEX}")
+        conn.commit()
+    finally:
+        conn.close()
+
+
+def test_fresh_database_creates_the_partial_unique_index(seeded):
+    sql = _indexes(seeded["db"])[_ONE_OPEN_INDEX]
+    normalized = _normalized_ddl(sql)
+    assert "unique" in normalized
+    assert "wherephase='dispatching'" in normalized, "el índice debe ser parcial"
+
+
+def test_ensure_schema_is_idempotent_for_the_index(seeded):
+    before = _indexes(seeded["db"])
+    for _ in range(3):
+        conn = connect_sqlite(seeded["db"])
+        try:
+            ensure_schema(conn)
+        finally:
+            conn.close()
+    assert _indexes(seeded["db"]) == before
+
+
+def test_query_plan_confirms_the_index_is_partial_and_used(seeded):
+    conn = connect_sqlite(seeded["db"])
+    try:
+        plan = " ".join(
+            str(row[3]) for row in conn.execute(
+                "EXPLAIN QUERY PLAN SELECT notification_id FROM radar_delivery_attempts "
+                "WHERE phase = 'dispatching'"
+            ).fetchall()
+        )
+    finally:
+        conn.close()
+    assert _ONE_OPEN_INDEX in plan
+
+
+def test_one_open_attempt_per_batch_is_allowed(seeded):
+    _batch_row(seeded["db"], seeded, "n-1")
+    _insert_attempt(seeded["db"], "n-1", 1, "dispatching")
+    conn = connect_sqlite(seeded["db"])
+    try:
+        ensure_schema(conn)          # no rompe nada: una fila abierta es legal
+    finally:
+        conn.close()
+
+
+def test_second_open_attempt_is_physically_rejected(seeded):
+    _batch_row(seeded["db"], seeded, "n-1")
+    _insert_attempt(seeded["db"], "n-1", 1, "dispatching")
+    with pytest.raises(sqlite3.IntegrityError):
+        _insert_attempt(seeded["db"], "n-1", 2, "dispatching")
+
+
+def test_many_finished_attempts_for_the_same_batch_are_valid(seeded):
+    _batch_row(seeded["db"], seeded, "n-1")
+    for number in range(1, 5):
+        _insert_attempt(seeded["db"], "n-1", number, "finished", outcome="retry")
+    _insert_attempt(seeded["db"], "n-1", 5, "dispatching")   # una abierta + historial
+    conn = connect_sqlite(seeded["db"])
+    try:
+        ensure_schema(conn)
+    finally:
+        conn.close()
+
+
+def test_two_batches_can_each_have_one_open_attempt(seeded):
+    for nid in ("n-1", "n-2"):
+        _batch_row(seeded["db"], seeded, nid)
+        _insert_attempt(seeded["db"], nid, 1, "dispatching")
+
+
+def test_legacy_database_with_duplicate_open_attempts_refuses_to_open(seeded):
+    _drop_one_open_index(seeded["db"])
+    for nid in ("n-1", "n-2"):
+        _batch_row(seeded["db"], seeded, nid)
+        _insert_attempt(seeded["db"], nid, 1, "dispatching")
+        _insert_attempt(seeded["db"], nid, 2, "dispatching")
+    _batch_row(seeded["db"], seeded, "n-ok")
+    _insert_attempt(seeded["db"], "n-ok", 1, "dispatching")
+
+    conn = connect_sqlite(seeded["db"])
+    try:
+        with pytest.raises(SchemaIncompatibleError) as exc:
+            ensure_schema(conn)
+    finally:
+        conn.close()
+    message = str(exc.value)
+    assert "2 batch(es)" in message
+    assert "n-1=2 intentos" in message and "n-2=2 intentos" in message
+    assert "n-ok" not in message, "un batch sano no se denuncia"
+
+
+def test_refused_database_is_not_repaired_and_keeps_every_row(seeded):
+    _drop_one_open_index(seeded["db"])
+    _batch_row(seeded["db"], seeded, "n-1")
+    _insert_attempt(seeded["db"], "n-1", 1, "dispatching")
+    _insert_attempt(seeded["db"], "n-1", 2, "dispatching")
+
+    def snapshot():
+        conn = connect_sqlite(seeded["db"])
+        try:
+            return [
+                dict(row) for row in conn.execute(
+                    "SELECT * FROM radar_delivery_attempts ORDER BY attempt_id"
+                ).fetchall()
+            ]
+        finally:
+            conn.close()
+
+    before = snapshot()
+    conn = connect_sqlite(seeded["db"])
+    try:
+        with pytest.raises(SchemaIncompatibleError):
+            ensure_schema(conn)
+    finally:
+        conn.close()
+    # Cerrar uno inventaría cuál llegó al proveedor. No se toca ninguno.
+    assert snapshot() == before
+    assert len(before) == 2
+    assert _ONE_OPEN_INDEX not in _indexes(seeded["db"])
+
+
+def test_after_a_human_resolves_the_duplicate_the_index_is_created(seeded):
+    _drop_one_open_index(seeded["db"])
+    _batch_row(seeded["db"], seeded, "n-1")
+    _insert_attempt(seeded["db"], "n-1", 1, "dispatching")
+    _insert_attempt(seeded["db"], "n-1", 2, "dispatching")
+
+    conn = connect_sqlite(seeded["db"])
+    try:
+        conn.execute(
+            "UPDATE radar_delivery_attempts SET phase='finished', outcome='ambiguous', "
+            "finished_at='2026-07-16T00:05:00+00:00' WHERE attempt_id='att-n-1-2'"
+        )
+        conn.commit()
+        ensure_schema(conn)
+    finally:
+        conn.close()
+    assert _ONE_OPEN_INDEX in _indexes(seeded["db"])

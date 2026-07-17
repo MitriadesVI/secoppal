@@ -632,3 +632,47 @@ def test_unsupported_frequency_fails_closed_without_touching_cursor(env):
 
     assert _cursor_of(env) == cursor_before
     assert env["outbox"].count_batches(radar_id=env["radar"]) == 0
+
+
+# ── R2B-1C-A · una sola implementación de quiet hours ─────────────────────────
+
+def test_selector_delegates_quiet_hours_and_translates_the_error():
+    """El wrapper es lo único que puede vivir aquí: una segunda copia del algoritmo
+    se separaría de la del worker, y el silencio dejaría de ser una propiedad del
+    sistema para ser una coincidencia entre dos módulos."""
+    from app.core.notify.quiet_hours import QuietHoursError
+
+    with pytest.raises(SelectorError):
+        quiet_hours_not_before(
+            NOW, start="22:00", end="07:00", timezone_name="Marte/Olympus"
+        )
+    # Y sigue siendo la misma respuesta que la política compartida.
+    from app.core.notify.quiet_hours import quiet_hours_not_before as shared
+
+    for start, end in (("22:00", "07:00"), ("01:00", "07:00"), (None, None)):
+        assert quiet_hours_not_before(
+            NOW, start=start, end=end, timezone_name="America/Bogota"
+        ) == shared(NOW, start=start, end=end, timezone_name="America/Bogota")
+
+
+def test_selector_does_not_reimplement_the_window_algorithm():
+    """Estructural (AST): el selector no puede volver a tener su propio ZoneInfo ni su
+    propia aritmética de ventana. El wrapper sí; el algoritmo no."""
+    import ast
+    import pathlib
+
+    tree = ast.parse(pathlib.Path(selector_module.__file__).read_text())
+    names = {
+        node.id for node in ast.walk(tree) if isinstance(node, ast.Name)
+    } | {
+        node.attr for node in ast.walk(tree) if isinstance(node, ast.Attribute)
+    }
+    for forbidden in ("ZoneInfo", "ZoneInfoNotFoundError", "timetz", "_parse_hhmm"):
+        assert forbidden not in names, f"el selector reimplementa quiet hours: {forbidden}"
+
+    imported = {
+        alias.name
+        for node in ast.walk(tree) if isinstance(node, ast.ImportFrom)
+        for alias in node.names
+    }
+    assert "quiet_hours_not_before" in imported, "debe delegar en la política compartida"
