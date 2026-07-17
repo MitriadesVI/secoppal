@@ -65,6 +65,84 @@ DEFERRED_FREQUENCIES = ("daily", "weekly")
 DEFAULT_TIMEZONE = "America/Bogota"
 DEFAULT_MAX_ITEMS = 10
 
+# ── Vocabularios cerrados del ledger (ADR-053) ────────────────────────────────────
+#
+# Son la fuente única: el DDL se genera a partir de estas tuplas y ``ledger_store``
+# valida contra ellas. Escribirlos dos veces —una en el CHECK y otra en Python— es
+# como acaban divergiendo la regla que la base impone y la que el código cree.
+#
+# El orden es normativo, no estético: la huella que detecta una base heredada se
+# deriva del texto del CHECK, así que reordenar estas tuplas hace que toda base
+# vigente parezca heredada. El test de preflight lo comprueba contra el DDL real.
+
+DEAD_REASON_OPTED_OUT = "opted_out"
+DEAD_REASON_ENDPOINT_REVOKED = "endpoint_revoked"
+DEAD_REASON_RADAR_ARCHIVED = "radar_archived"
+DEAD_REASON_EXPIRED = "expired"
+# Reservado **exclusivamente** para una dirección inválida. No es el cajón de
+# sastre de los fallos permanentes: usarlo para un error de nuestro payload o de
+# nuestra política de reintentos afirmaría que la dirección de una persona real
+# está mal, y ``dead_reason`` es el único registro que explica por qué no se
+# entregó. Para esos dos casos existen ``render_error`` y ``retries_exhausted``.
+DEAD_REASON_INVALID_ADDRESS = "invalid_address"
+# Nuestro payload no se pudo decodificar, versionar o renderizar. El fallo es
+# nuestro y ocurre **antes** de cualquier llamada: cero efecto externo.
+DEAD_REASON_RENDER_ERROR = "render_error"
+# La política de reintentos se agotó. El último intento no tuvo efecto externo;
+# lo que murió es la paciencia, no el consentimiento ni el TTL.
+DEAD_REASON_RETRIES_EXHAUSTED = "retries_exhausted"
+# El proveedor rechazó de forma permanente antes de cualquier efecto externo, por
+# una causa que no es la dirección. ``error_class`` conserva la causa concreta.
+DEAD_REASON_PERMANENT_PROVIDER_ERROR = "permanent_provider_error"
+
+DEAD_REASONS = (
+    DEAD_REASON_OPTED_OUT,
+    DEAD_REASON_ENDPOINT_REVOKED,
+    DEAD_REASON_RADAR_ARCHIVED,
+    DEAD_REASON_EXPIRED,
+    DEAD_REASON_INVALID_ADDRESS,
+    DEAD_REASON_RENDER_ERROR,
+    DEAD_REASON_RETRIES_EXHAUSTED,
+    DEAD_REASON_PERMANENT_PROVIDER_ERROR,
+)
+
+ERROR_CLASSES = (
+    "rate_limited",
+    "invalid_address",
+    "provider_error",
+    "timeout_after_send",
+    "network_error",
+    "auth_error",
+    # Nuestro render falló. Es una clase de error del sistema, no del proveedor:
+    # el proveedor nunca llegó a verse.
+    "render_error",
+    # No hay proveedor registrado para el canal. Es un fallo de configuración
+    # nuestro y es reversible —registrar el proveedor lo resuelve—, así que su
+    # outcome normal es ``retry``, no ``dead``.
+    "provider_unavailable",
+)
+
+# Vocabularios con los que se creó la base anterior a ADR-053. Se nombran para poder
+# **reconocer** una base heredada, no para admitirla: sin esta constante, el preflight
+# no podría distinguir "base vieja que sé migrar" de "DDL que no reconozco", y esa
+# distinción es justo la que decide entre migrar y parar.
+_LEGACY_DEAD_REASONS = (
+    DEAD_REASON_OPTED_OUT,
+    DEAD_REASON_ENDPOINT_REVOKED,
+    DEAD_REASON_RADAR_ARCHIVED,
+    DEAD_REASON_EXPIRED,
+    DEAD_REASON_INVALID_ADDRESS,
+)
+
+_LEGACY_ERROR_CLASSES = (
+    "rate_limited",
+    "invalid_address",
+    "provider_error",
+    "timeout_after_send",
+    "network_error",
+    "auth_error",
+)
+
 
 class SchemaIncompatibleError(Exception):
     """La base persistida no admite el schema actual y nadie puede decidir por ella.
@@ -126,6 +204,157 @@ _PREFERENCE_COLUMNS = (
 )
 
 
+def _quoted(values: tuple[str, ...]) -> str:
+    return ",".join(f"'{value}'" for value in values)
+
+
+def _batches_ddl(table_name: str, dead_reasons: tuple[str, ...] = DEAD_REASONS) -> str:
+    """DDL del outbox, parametrizado por nombre de tabla y vocabulario.
+
+    Igual que ``_preferences_ddl``: existe como función porque el reconstructor tiene
+    que crear **exactamente** esta tabla bajo otro nombre, y dos literales del mismo
+    DDL divergen. ``dead_reasons`` es parámetro —y no la constante directamente— para
+    que los tests puedan fabricar la base heredada real con el vocabulario viejo; sin
+    eso, el caso que hay que defender sería inconstruible.
+
+    ``radar_id`` sin FK a propósito: el ledger debe sobrevivir al archivado del radar.
+    Es un registro de auditoría, no una vista derivada.
+    """
+    return f"""
+CREATE TABLE IF NOT EXISTS {table_name} (
+    notification_id           TEXT PRIMARY KEY,
+    principal_id              TEXT NOT NULL,
+    endpoint_id               TEXT NOT NULL,
+    radar_id                  TEXT NOT NULL,
+    batch_key                 TEXT NOT NULL,
+    idempotency_key           TEXT NOT NULL,
+    external_idempotency_key  TEXT,
+    payload_json              TEXT NOT NULL,
+    status                    TEXT NOT NULL DEFAULT 'pending'
+                              CHECK (status IN ('pending','claimed','sent','ambiguous','dead')),
+    dead_reason               TEXT
+                              CHECK (dead_reason IS NULL OR dead_reason IN
+                              ({_quoted(dead_reasons)})),
+    not_before                TEXT,
+    claim_token               TEXT,
+    claim_until               TEXT,
+    attempt_count             INTEGER NOT NULL DEFAULT 0,
+    created_at                TEXT NOT NULL,
+    expires_at                TEXT NOT NULL,
+    UNIQUE (endpoint_id, idempotency_key),
+    UNIQUE (notification_id, endpoint_id)
+);"""
+
+
+def _attempts_ddl(
+    table_name: str,
+    error_classes: tuple[str, ...] = ERROR_CLASSES,
+    batches_table: str = "radar_notification_batches",
+) -> str:
+    """DDL de los intentos. ``RESTRICT`` hacia el batch: un intento no se borra con él.
+
+    El ``CHECK`` compuesto de ``phase``/``outcome`` es lo que hace imposible un intento
+    ``finished`` sin desenlace o uno ``dispatching`` que ya afirme uno.
+    """
+    return f"""
+CREATE TABLE IF NOT EXISTS {table_name} (
+    attempt_id          TEXT PRIMARY KEY,
+    notification_id     TEXT NOT NULL REFERENCES {batches_table}(notification_id)
+                        ON DELETE RESTRICT,
+    attempt_number      INTEGER NOT NULL,
+    phase               TEXT NOT NULL DEFAULT 'dispatching'
+                        CHECK (phase IN ('dispatching','finished')),
+    started_at          TEXT NOT NULL,
+    finished_at         TEXT,
+    provider_message_id TEXT,
+    provider_status     TEXT,
+    error_class         TEXT CHECK (error_class IS NULL OR error_class IN
+                        ({_quoted(error_classes)})),
+    error_message_safe  TEXT,
+    retry_after         INTEGER,
+    outcome             TEXT CHECK (outcome IS NULL OR outcome IN
+                        ('sent','retry','ambiguous','dead')),
+    UNIQUE (notification_id, attempt_number),
+    CHECK (
+        (phase = 'dispatching' AND outcome IS NULL)
+        OR (phase = 'finished' AND outcome IS NOT NULL)
+    )
+);"""
+
+
+def _batches_indexes_ddl(table_name: str) -> tuple[str, ...]:
+    """Los índices del outbox, como sentencias sueltas y en una sola definición.
+
+    Existe por la misma razón que ``_batches_ddl``: la migración los recrea dentro de
+    su transacción y ``_SCHEMA`` los crea al abrir. Dos literales del mismo índice
+    divergen, y el que divergiera sería justo el que no protege nada.
+
+    ``idx_batches_external_idem`` es UNIQUE y **parcial**: el ``WHERE ... IS NOT
+    NULL`` es obligatorio. Sin él, SQLite trataría cada NULL como distinto —cierto—
+    pero el índice cargaría con todas las filas aún no autorizadas sin decir nada de
+    ellas. Su unicidad es la afirmación "esta clave identifica un solo batch": si
+    algún día la fórmula dejara de ser inyectiva, queremos un IntegrityError, no dos
+    mensajes que el proveedor cree el mismo.
+
+    ``idx_batches_expiry`` existe porque ``idx_batches_claimable(status, not_before)``
+    no sirve para el sweep: su segunda columna es la equivocada.
+    """
+    return (
+        f"CREATE INDEX IF NOT EXISTS idx_batches_claimable "
+        f"ON {table_name}(status, not_before)",
+        f"CREATE INDEX IF NOT EXISTS idx_batches_key ON {table_name}(batch_key)",
+        f"CREATE UNIQUE INDEX IF NOT EXISTS idx_batches_external_idem "
+        f"ON {table_name}(external_idempotency_key) "
+        f"WHERE external_idempotency_key IS NOT NULL",
+        f"CREATE INDEX IF NOT EXISTS idx_batches_expiry "
+        f"ON {table_name}(status, expires_at)",
+    )
+
+
+def _joined_indexes(statements: tuple[str, ...]) -> str:
+    """Las sentencias sueltas, unidas para ``executescript``. Es la única diferencia
+    entre cómo las consume el DDL de apertura y cómo las consume la migración, que las
+    ejecuta una a una dentro de su transacción."""
+    return "".join(f"{statement};\n" for statement in statements)
+
+
+def _attempts_indexes_ddl(table_name: str) -> tuple[str, ...]:
+    """Los índices de los intentos, en una sola definición.
+
+    ``idx_attempts_one_open`` **no es rendimiento**: es la restricción que hace
+    físicamente imposible un segundo intento abierto sobre el mismo batch, y por
+    tanto una segunda llamada al proveedor por el mismo mensaje. ``worker_store`` ya
+    lo comprueba dentro de su transacción, pero esa comprobación solo protege a quien
+    pasa por esa puerta: un script, un caller futuro, ``LedgerStore.begin_attempt`` o
+    SQL directo abrirían el segundo sin que nadie se entere. Parcial a propósito: los
+    ``finished`` se acumulan sin límite, que es el historial que queremos conservar.
+
+    Que esté aquí —y no solo en ``_SCHEMA``— es lo que permite recrearlo **dentro**
+    de la transacción de la migración. Dejarlo para el ``executescript`` posterior
+    abriría una ventana con las tablas ya confirmadas y el índice todavía ausente.
+    """
+    return (
+        f"CREATE INDEX IF NOT EXISTS idx_attempts_notification "
+        f"ON {table_name}(notification_id)",
+        f"CREATE UNIQUE INDEX IF NOT EXISTS idx_attempts_one_open "
+        f"ON {table_name}(notification_id) WHERE phase = 'dispatching'",
+    )
+
+
+_BATCH_COLUMNS = (
+    "notification_id", "principal_id", "endpoint_id", "radar_id", "batch_key",
+    "idempotency_key", "external_idempotency_key", "payload_json", "status",
+    "dead_reason", "not_before", "claim_token", "claim_until", "attempt_count",
+    "created_at", "expires_at",
+)
+
+_ATTEMPT_COLUMNS = (
+    "attempt_id", "notification_id", "attempt_number", "phase", "started_at",
+    "finished_at", "provider_message_id", "provider_status", "error_class",
+    "error_message_safe", "retry_after", "outcome",
+)
+
+
 # ``ON DELETE RESTRICT`` en todas las FK, no CASCADE: borrar una persona no puede
 # llevarse en silencio la prueba de a dónde se le escribió ni qué consintió. Si
 # algo debe desaparecer, es una decisión explícita, no un efecto colateral.
@@ -169,59 +398,12 @@ CREATE INDEX IF NOT EXISTS idx_endpoints_principal
 CREATE INDEX IF NOT EXISTS idx_prefs_endpoint
     ON radar_notification_preferences(endpoint_id);
 
--- Outbox (P1B-2): la intención de entrega. ``radar_id`` sin FK a propósito —el
--- ledger debe sobrevivir al archivado del radar (y a una eventual retención de
--- ``radar_events``): es un registro de auditoría, no una vista derivada.
-CREATE TABLE IF NOT EXISTS radar_notification_batches (
-    notification_id          TEXT PRIMARY KEY,
-    principal_id              TEXT NOT NULL,
-    endpoint_id               TEXT NOT NULL,
-    radar_id                  TEXT NOT NULL,
-    batch_key                 TEXT NOT NULL,
-    idempotency_key           TEXT NOT NULL,
-    external_idempotency_key  TEXT,
-    payload_json              TEXT NOT NULL,
-    status                    TEXT NOT NULL DEFAULT 'pending'
-                              CHECK (status IN ('pending','claimed','sent','ambiguous','dead')),
-    dead_reason               TEXT
-                              CHECK (dead_reason IS NULL OR dead_reason IN
-                              ('opted_out','endpoint_revoked','radar_archived',
-                               'expired','invalid_address')),
-    not_before                TEXT,
-    claim_token               TEXT,
-    claim_until               TEXT,
-    attempt_count             INTEGER NOT NULL DEFAULT 0,
-    created_at                TEXT NOT NULL,
-    expires_at                TEXT NOT NULL,
-    UNIQUE (endpoint_id, idempotency_key),
-    UNIQUE (notification_id, endpoint_id)
-);
-CREATE INDEX IF NOT EXISTS idx_batches_claimable
-    ON radar_notification_batches(status, not_before);
-CREATE INDEX IF NOT EXISTS idx_batches_key
-    ON radar_notification_batches(batch_key);
-
--- P1B-4. Ambos aditivos: ningún ALTER TABLE, ninguna tabla recreada, ningún
--- backfill. Las filas existentes conservan ``external_idempotency_key`` NULL y el
--- índice único parcial las ignora todas.
---
--- La unicidad de la clave externa la hace cumplir la base, no el worker: es la
--- afirmación "esta clave identifica un solo batch" y, si algún día la fórmula
--- dejara de ser inyectiva, queremos un IntegrityError, no dos mensajes que el
--- proveedor cree el mismo. El ``WHERE ... IS NOT NULL`` es obligatorio: sin él,
--- SQLite trataría cada NULL como distinto en un índice único —cierto— pero el
--- índice cargaría con todas las filas aún no autorizadas sin decir nada de ellas.
-CREATE UNIQUE INDEX IF NOT EXISTS idx_batches_external_idem
-    ON radar_notification_batches(external_idempotency_key)
-    WHERE external_idempotency_key IS NOT NULL;
-
--- El sweep y la búsqueda de candidatos filtran por estado y comparan expiración.
--- ``idx_batches_claimable(status, not_before)`` no sirve para eso: su segunda
--- columna es la equivocada. No se añade ``claim_until`` como tercera columna: el
--- sweep ya llega a la fila por este índice y el resto del predicado se resuelve
--- sobre ella.
-CREATE INDEX IF NOT EXISTS idx_batches_expiry
-    ON radar_notification_batches(status, expires_at);
+-- Outbox (P1B-2): la intención de entrega. Sus índices —y los de los intentos— se
+-- generan desde ``_batches_indexes_ddl``/``_attempts_indexes_ddl``, que es también
+-- lo que la migración ejecuta dentro de su propia transacción: una sola definición
+-- por índice, o el que divergiera sería el que no protege nada.
+{batches_table}
+{batches_indexes}
 
 -- Asociación evento↔batch: la cadena de trazabilidad. ``event_id`` sin FK
 -- (``radar_events`` se borra en CASCADE con su radar; el ledger no). La
@@ -243,45 +425,9 @@ CREATE INDEX IF NOT EXISTS idx_batch_events_seq
 
 -- Intentos: uno por llamada al proveedor. Write-ahead — ``dispatching`` antes
 -- de llamar al proveedor, ``finished`` después; nunca se registra solo al
--- terminar. ``RESTRICT`` hacia el batch: un intento no se borra con su batch.
-CREATE TABLE IF NOT EXISTS radar_delivery_attempts (
-    attempt_id          TEXT PRIMARY KEY,
-    notification_id     TEXT NOT NULL REFERENCES radar_notification_batches(notification_id)
-                        ON DELETE RESTRICT,
-    attempt_number      INTEGER NOT NULL,
-    phase               TEXT NOT NULL DEFAULT 'dispatching'
-                        CHECK (phase IN ('dispatching','finished')),
-    started_at          TEXT NOT NULL,
-    finished_at         TEXT,
-    provider_message_id TEXT,
-    provider_status     TEXT,
-    error_class         TEXT CHECK (error_class IS NULL OR error_class IN
-                        ('rate_limited','invalid_address','provider_error',
-                         'timeout_after_send','network_error','auth_error')),
-    error_message_safe  TEXT,
-    retry_after         INTEGER,
-    outcome             TEXT CHECK (outcome IS NULL OR outcome IN
-                        ('sent','retry','ambiguous','dead')),
-    UNIQUE (notification_id, attempt_number),
-    CHECK (
-        (phase = 'dispatching' AND outcome IS NULL)
-        OR (phase = 'finished' AND outcome IS NOT NULL)
-    )
-);
-CREATE INDEX IF NOT EXISTS idx_attempts_notification
-    ON radar_delivery_attempts(notification_id);
-
--- Como máximo un intento abierto por batch, garantizado por la base y no por el
--- código que la usa. ``worker_store`` ya lo comprueba dentro de su transacción,
--- pero esa comprobación solo protege a quien pasa por esa puerta: un script, un
--- caller futuro, ``LedgerStore.begin_attempt`` o SQL directo abrirían el segundo
--- sin que nadie se entere, y dos intentos abiertos significan dos llamadas
--- posibles al proveedor por el mismo mensaje —un duplicado que ya no se puede
--- distinguir de un reintento seguro—. Parcial a propósito: los ``finished`` se
--- acumulan sin límite, que es justo el historial que queremos conservar.
-CREATE UNIQUE INDEX IF NOT EXISTS idx_attempts_one_open
-    ON radar_delivery_attempts(notification_id)
-    WHERE phase = 'dispatching';
+-- terminar.
+{attempts_table}
+{attempts_indexes}
 
 -- Cursor por endpoint/radar: watermark de lo examinado, no de lo entregado.
 -- P1B-2 solo define el schema; el selector y el avance del cursor son P1B-3.
@@ -402,6 +548,330 @@ def _preflight_preferences(conn: sqlite3.Connection) -> None:
 
 
 _ATTEMPTS_TABLE = "radar_delivery_attempts"
+_BATCHES_TABLE = "radar_notification_batches"
+
+def _table_ddl(conn: sqlite3.Connection, table_name: str) -> str | None:
+    row = conn.execute(
+        "SELECT sql FROM sqlite_master WHERE type='table' AND name = ?",
+        (table_name,),
+    ).fetchone()
+    return None if row is None else row["sql"]
+
+
+def _canonical_form(ddl: str) -> str:
+    """Normaliza para comparar contra lo que ``sqlite_master.sql`` persiste realmente.
+
+    Tres diferencias, ninguna semántica, y cualquiera de ellas haría que ninguna
+    forma canónica generada coincidiera jamás con una base real —incluida la que este
+    mismo código acaba de migrar—:
+
+    - ``IF NOT EXISTS``: SQLite no lo conserva en el texto que guarda. Lo que se
+      ejecuta como ``CREATE TABLE IF NOT EXISTS foo (...)`` se lee después como
+      ``CREATE TABLE foo (...)``.
+    - El ``;`` final: los generadores (``_batches_ddl``/``_attempts_ddl``) terminan su
+      texto con él porque también producen el DDL que se ejecuta, pero
+      ``sqlite_master.sql`` guarda la sentencia sin su terminador.
+    - Comillas dobles alrededor del nombre: ``ALTER TABLE ... RENAME TO`` —el paso
+      final de ``_swap_table``— hace que SQLite reescriba el ``CREATE TABLE`` con el
+      nombre nuevo **entrecomillado** (``CREATE TABLE "radar_notification_batches"
+      (...)``), aunque el DDL original nunca las llevó. Ningún identificador de este
+      schema usa comillas dobles por otra razón, así que quitarlas todas es seguro.
+    """
+    return (
+        _normalized_ddl(ddl)
+        .replace("ifnotexists", "")
+        .replace('"', "")
+        .rstrip(";")
+    )
+
+
+# Las cuatro formas canónicas completas, derivadas de los mismos generadores que
+# escriben el DDL real. La comparación es del **texto entero** de la tabla —no de un
+# fragmento del CHECK—: si el vocabulario coincide pero se perdió un UNIQUE, un
+# ON DELETE RESTRICT o el CHECK compuesto de phase/outcome, ninguna de las cuatro
+# formas coincide, y eso es exactamente lo que tiene que pasar. Reconocer solo el
+# vocabulario dejaría clasificar como "vigente" una tabla que perdió cualquier otra
+# invariante, porque ``CREATE TABLE IF NOT EXISTS`` no repara lo que no reconoce.
+_BATCHES_CURRENT_DDL = _canonical_form(_batches_ddl(_BATCHES_TABLE, DEAD_REASONS))
+_BATCHES_LEGACY_DDL = _canonical_form(_batches_ddl(_BATCHES_TABLE, _LEGACY_DEAD_REASONS))
+_ATTEMPTS_CURRENT_DDL = _canonical_form(_attempts_ddl(_ATTEMPTS_TABLE, ERROR_CLASSES))
+_ATTEMPTS_LEGACY_DDL = _canonical_form(
+    _attempts_ddl(_ATTEMPTS_TABLE, _LEGACY_ERROR_CLASSES)
+)
+
+
+def _table_state(ddl: str, *, current: str, legacy: str, table_name: str) -> str:
+    """``'current'`` o ``'legacy'``. Cualquier otra cosa para en seco.
+
+    Fail-closed ante un DDL desconocido: si la tabla no coincide, carácter por
+    carácter una vez normalizada, ni con la forma vigente ni con la heredada que este
+    código sabe migrar, alguien la editó a mano, perdió una invariante que no es el
+    vocabulario, o viene de una versión que este código no conoce. Reconstruirla "por
+    si acaso" copiaría filas hacia un CHECK que quizá las rechace a medias, y seguir
+    adelante dejaría una base cuya estructura real nadie verificó. Se enumera y se
+    para: un humano decide.
+    """
+    normalized = _canonical_form(ddl)
+    if normalized == current:
+        return "current"
+    if normalized == legacy:
+        return "legacy"
+    raise SchemaIncompatibleError(
+        f"El DDL de '{table_name}' no coincide, completo, ni con la versión vigente "
+        f"ni con la heredada que este código sabe migrar. La tabla se creó con una "
+        f"versión desconocida, o perdió una restricción —una UNIQUE, una FK, un "
+        f"CHECK compuesto— que el vocabulario por sí solo no delata. No se reconstruye "
+        f"a ciegas: hacerlo copiaría filas hacia una estructura que nadie verificó. "
+        f"Revíselo y vuelva a abrir."
+    )
+
+
+def _reject_unknown_values(
+    conn: sqlite3.Connection, table_name: str, column: str, vocabulary: tuple[str, ...]
+) -> None:
+    """Se niega a migrar si la base ya contiene valores fuera del vocabulario nuevo.
+
+    El vocabulario nuevo es un superconjunto del heredado, así que llegar aquí con
+    filas fuera significa que algo escribió por un camino que no pasó por ningún
+    CHECK. Copiarlas al CHECK nuevo fallaría a mitad de la reconstrucción con un
+    IntegrityError que no dice de qué fila habla; y descartarlas silenciosamente
+    borraría el único registro de por qué no se entregó un mensaje.
+    """
+    placeholders = ",".join("?" * len(vocabulary))
+    rows = conn.execute(
+        f"SELECT DISTINCT {column} FROM {table_name} "
+        f"WHERE {column} IS NOT NULL AND {column} NOT IN ({placeholders}) "
+        f"ORDER BY {column}",
+        vocabulary,
+    ).fetchall()
+    if rows:
+        detail = ", ".join(repr(row[column]) for row in rows)
+        raise SchemaIncompatibleError(
+            f"La base tiene valores de '{table_name}.{column}' fuera del vocabulario "
+            f"que este código admite: {detail}. No se migran ni se descartan: son el "
+            f"registro de por qué no se entregó un mensaje. Decida explícitamente y "
+            f"vuelva a abrir."
+        )
+
+
+def _rebuild_ledger_tables(
+    conn: sqlite3.Connection, *, rebuild_batches: bool, rebuild_attempts: bool
+) -> None:
+    """Reconstruye outbox e intentos bajo el vocabulario vigente. Una sola migración.
+
+    Las dos tablas van en la **misma** transacción aunque solo una lo necesite: están
+    unidas por una FK, y dejar la base con el outbox nuevo y los intentos viejos —o al
+    revés— sería un estado que ningún preflight posterior sabría nombrar.
+
+    Solo estrecha o ensancha la regla que admite los datos; no convierte ninguno. Se
+    llega aquí con los valores fuera de vocabulario ya descartados por
+    ``_reject_unknown_values``, así que cada fila que entra sale idéntica.
+
+    ``PRAGMA foreign_keys`` es un no-op dentro de una transacción, así que se apaga
+    antes del BEGIN: sin eso, el DROP de una tabla referenciada falla.
+    ``legacy_alter_table=ON`` durante el RENAME es lo que impide que SQLite "ayude"
+    reescribiendo las FK de las tablas que apuntan a la que estamos reemplazando —es
+    el procedimiento que el propio manual de SQLite prescribe—. El
+    ``foreign_key_check`` de dentro devuelve la garantía que el PRAGMA apagado quitó,
+    y va antes del COMMIT para que una violación revierta en vez de quedar registrada.
+
+    **Los índices se recrean aquí dentro, no después.** ``DROP TABLE`` se lleva por
+    delante los de la tabla que reemplaza, y el ``executescript`` de ``ensure_schema``
+    solo corre cuando esta transacción ya commiteó. Dejarlos para entonces abriría una
+    ventana con las tablas nuevas ya confirmadas y ``idx_attempts_one_open`` todavía
+    ausente: un crash o un segundo proceso en ese instante encontrarían una base sin la
+    única restricción que impide físicamente dos intentos ``dispatching`` sobre el
+    mismo batch — y por tanto dos llamadas al proveedor por el mismo mensaje. La
+    migración es atómica o no lo es; "atómica salvo los índices" no significa nada.
+    """
+    conn.execute("PRAGMA foreign_keys=OFF")
+    conn.execute("PRAGMA legacy_alter_table=ON")
+    try:
+        conn.execute("BEGIN IMMEDIATE")
+        try:
+            if rebuild_batches:
+                _swap_table(
+                    conn, _BATCHES_TABLE, _BATCH_COLUMNS,
+                    _batches_ddl(f"{_BATCHES_TABLE}_rebuild"),
+                    _batches_indexes_ddl(_BATCHES_TABLE),
+                )
+            if rebuild_attempts:
+                _swap_table(
+                    conn, _ATTEMPTS_TABLE, _ATTEMPT_COLUMNS,
+                    _attempts_ddl(f"{_ATTEMPTS_TABLE}_rebuild"),
+                    _attempts_indexes_ddl(_ATTEMPTS_TABLE),
+                )
+            violations = conn.execute("PRAGMA foreign_key_check").fetchall()
+            if violations:
+                raise SchemaIncompatibleError(
+                    f"Migrar el ledger dejaría {len(violations)} violación(es) de "
+                    f"clave foránea. No se migra: la base ya era inconsistente antes "
+                    f"de este cambio."
+                )
+            integrity = conn.execute("PRAGMA integrity_check").fetchone()[0]
+            if integrity != "ok":
+                raise SchemaIncompatibleError(
+                    f"La verificación de integridad tras migrar el ledger no pasó: "
+                    f"{integrity}. Se revierte por completo."
+                )
+            conn.execute("COMMIT")
+        except BaseException:
+            conn.execute("ROLLBACK")
+            raise
+    finally:
+        conn.execute("PRAGMA legacy_alter_table=OFF")
+        conn.execute("PRAGMA foreign_keys=ON")
+
+
+def _swap_table(
+    conn: sqlite3.Connection,
+    table_name: str,
+    columns: tuple[str, ...],
+    ddl: str,
+    indexes: tuple[str, ...],
+) -> None:
+    """Crea la tabla nueva, copia fila a fila, la pone en el sitio de la vieja y
+    **recrea sus índices**, todo dentro de la transacción del caller.
+
+    Las columnas se nombran explícitamente en vez de ``SELECT *``: con ``*``, un
+    reordenamiento futuro del DDL copiaría ``claim_until`` dentro de ``claim_token``
+    sin que nada se queje. El recuento de filas se compara antes y después porque una
+    copia que pierde filas en silencio es exactamente el fallo que esta migración no
+    puede permitirse.
+
+    Los índices son parte del swap y no un paso posterior: quien reemplaza la tabla es
+    quien tiene que devolverle lo que el ``DROP`` le quitó, y tiene que hacerlo antes
+    de que nadie más pueda ver la tabla nueva. Se crean sobre ``table_name`` —ya
+    renombrada—, no sobre la temporal, para que sus nombres sean los definitivos.
+
+    ``execute``, no ``executescript``: este último emite un COMMIT antes de correr, lo
+    que cerraría la transacción que hace atómica la reconstrucción.
+    """
+    joined = ", ".join(columns)
+    temp = f"{table_name}_rebuild"
+    before = conn.execute(f"SELECT COUNT(*) FROM {table_name}").fetchone()[0]
+    conn.execute(f"DROP TABLE IF EXISTS {temp}")
+    conn.execute(ddl)
+    conn.execute(f"INSERT INTO {temp} ({joined}) SELECT {joined} FROM {table_name}")
+    copied = conn.execute(f"SELECT COUNT(*) FROM {temp}").fetchone()[0]
+    if copied != before:
+        raise SchemaIncompatibleError(
+            f"Migrar '{table_name}' copió {copied} de {before} filas. No se acepta "
+            f"una migración que pierde registros: se revierte entera."
+        )
+    conn.execute(f"DROP TABLE {table_name}")
+    conn.execute(f"ALTER TABLE {temp} RENAME TO {table_name}")
+    for statement in indexes:
+        conn.execute(statement)
+
+
+# Los dos índices que **no** son rendimiento: cada uno es una invariante de
+# corrección que la base hace cumplir y el código no puede.
+#
+# - ``idx_attempts_one_open``: como máximo un intento abierto por batch. Sin su
+#   UNIQUE, o sin su ``WHERE phase='dispatching'``, dos intentos abiertos coexisten y
+#   con ellos dos llamadas posibles al proveedor por el mismo mensaje.
+# - ``idx_batches_external_idem``: una clave externa identifica un solo batch. Sin su
+#   UNIQUE, dos batches podrían llevar la misma clave al proveedor.
+#
+# Se derivan de los mismos generadores que los crean: una sola definición por índice.
+_CRITICAL_INDEXES = {
+    "idx_attempts_one_open": next(
+        statement for statement in _attempts_indexes_ddl(_ATTEMPTS_TABLE)
+        if "idx_attempts_one_open" in statement
+    ),
+    "idx_batches_external_idem": next(
+        statement for statement in _batches_indexes_ddl(_BATCHES_TABLE)
+        if "idx_batches_external_idem" in statement
+    ),
+}
+
+
+def _index_ddl(conn: sqlite3.Connection, index_name: str) -> str | None:
+    row = conn.execute(
+        "SELECT sql FROM sqlite_master WHERE type='index' AND name = ?",
+        (index_name,),
+    ).fetchone()
+    return None if row is None else row["sql"]
+
+
+def _preflight_critical_indexes(conn: sqlite3.Connection) -> None:
+    """Se niega a abrir si un índice de corrección existe con la definición equivocada.
+
+    ``CREATE UNIQUE INDEX IF NOT EXISTS`` **no repara**: si ya hay un índice con ese
+    nombre, no hace nada, y da igual que el existente haya perdido su ``UNIQUE`` o su
+    cláusula parcial. El resto del preflight no lo ve, porque compara el DDL de las
+    *tablas* y el de la tabla sigue siendo el vigente: un índice no vive en el
+    ``CREATE TABLE``. La base quedaría aparentemente sana y aceptando dos intentos
+    abiertos sobre el mismo batch.
+
+    Ausente **sí** se permite: el ``executescript`` lo crea bien. Lo que no se permite
+    es el nombre ocupado por otra cosa. Y no se repara automáticamente —ni un DROP, ni
+    un CREATE encima—: recrear un índice único sobre datos que ya lo violan revienta
+    con un ``IntegrityError`` que no dice de qué habla, y hacerlo sobre datos que lo
+    cumplen dejaría sin explicar por qué el índice era otro. Se enumera y se para: un
+    humano decide, con las filas delante.
+
+    Solo estos dos. Un índice de rendimiento con la definición cambiada hace la base
+    lenta, no incorrecta, y parar el arranque por eso sería desproporcionado.
+    """
+    for name, expected in _CRITICAL_INDEXES.items():
+        actual = _index_ddl(conn, name)
+        if actual is None:
+            continue
+        if _canonical_form(actual) != _canonical_form(expected):
+            raise SchemaIncompatibleError(
+                f"El índice '{name}' existe con una definición que no es la vigente. "
+                f"No es un índice de rendimiento: es la restricción que la base hace "
+                f"cumplir para que el código no pueda saltársela, y con esta "
+                f"definición no la hace cumplir. 'CREATE ... IF NOT EXISTS' no lo "
+                f"repara —ya existe ese nombre—, y no se recrea automáticamente: si "
+                f"los datos ya violan la restricción, el DROP+CREATE reventaría sin "
+                f"decir sobre qué filas. Revíselo y vuelva a abrir.\n"
+                f"  esperado: {' '.join(expected.split())}\n"
+                f"  encontrado: {' '.join(actual.split())}"
+            )
+
+
+def _preflight_ledger_vocabulary(conn: sqlite3.Connection) -> None:
+    """Migra el ledger al vocabulario de ADR-053, o para en seco. **Antes** del DDL.
+
+    ``CREATE TABLE IF NOT EXISTS`` no toca una tabla que ya existe: sin este
+    preflight, una base creada con el vocabulario viejo seguiría rechazando
+    ``render_error`` y ``retries_exhausted`` en silencio, y el worker no podría
+    registrar honestamente por qué no entregó.
+
+    Es idempotente por construcción: sobre una base ya vigente, ambos estados dan
+    ``current`` y no se toca nada.
+    """
+    batches_ddl = _table_ddl(conn, _BATCHES_TABLE)
+    attempts_ddl = _table_ddl(conn, _ATTEMPTS_TABLE)
+    # Base nueva: no hay nada que migrar y el DDL vigente se crea solo.
+    if batches_ddl is None and attempts_ddl is None:
+        return
+
+    rebuild_batches = batches_ddl is not None and _table_state(
+        batches_ddl,
+        current=_BATCHES_CURRENT_DDL,
+        legacy=_BATCHES_LEGACY_DDL,
+        table_name=_BATCHES_TABLE,
+    ) == "legacy"
+    rebuild_attempts = attempts_ddl is not None and _table_state(
+        attempts_ddl,
+        current=_ATTEMPTS_CURRENT_DDL,
+        legacy=_ATTEMPTS_LEGACY_DDL,
+        table_name=_ATTEMPTS_TABLE,
+    ) == "legacy"
+    if not (rebuild_batches or rebuild_attempts):
+        return
+
+    if rebuild_batches:
+        _reject_unknown_values(conn, _BATCHES_TABLE, "dead_reason", DEAD_REASONS)
+    if rebuild_attempts:
+        _reject_unknown_values(conn, _ATTEMPTS_TABLE, "error_class", ERROR_CLASSES)
+    _rebuild_ledger_tables(
+        conn, rebuild_batches=rebuild_batches, rebuild_attempts=rebuild_attempts
+    )
 
 
 def _preflight_open_attempts(conn: sqlite3.Connection) -> None:
@@ -455,12 +925,35 @@ def ensure_schema(conn: sqlite3.Connection) -> None:
     de que ``RadarStore`` se haya inicializado antes.
 
     Los preflights corren **antes** del script: si la base es heredada e
-    irreconciliable, no se crea nada y el error llega intacto al caller.
+    irreconciliable, no se crea nada y el error llega intacto al caller. El
+    ``executescript`` de abajo **reafirma** el schema de forma idempotente; no repara
+    nada. Todo lo que ya existe con el nombre correcto y el contenido equivocado
+    —una tabla, un índice— tiene que haberlo cazado un preflight, porque el
+    ``IF NOT EXISTS`` lo dejará exactamente como está.
+
+    El orden es normativo:
+
+    1. ``_preflight_preferences`` — puede reconstruir la tabla de preferencias.
+    2. ``_preflight_ledger_vocabulary`` — puede migrar el ledger. Recrea los índices
+       de las tablas que reemplaza **dentro de su propia transacción**, no aquí
+       abajo: entre su COMMIT y este script no puede existir un instante con las
+       tablas nuevas confirmadas y ``idx_attempts_one_open`` ausente.
+    3. ``_preflight_critical_indexes`` — después de la migración a propósito: si la
+       base era heredada, la reconstrucción ya dejó los índices correctos y no hay
+       nada que objetar. Solo mira lo que sobrevive sin migrar.
+    4. ``_preflight_open_attempts`` — el último que lee ``radar_delivery_attempts``,
+       cuando ya nadie va a reemplazarla. Al revés leería una tabla a punto de
+       desaparecer.
     """
     _preflight_preferences(conn)
+    _preflight_ledger_vocabulary(conn)
+    _preflight_critical_indexes(conn)
     _preflight_open_attempts(conn)
     conn.executescript(
-        _SCHEMA.replace(
-            "{preferences_table}", _preferences_ddl(_PREFERENCES_TABLE)
-        )
+        _SCHEMA
+        .replace("{preferences_table}", _preferences_ddl(_PREFERENCES_TABLE))
+        .replace("{batches_table}", _batches_ddl(_BATCHES_TABLE))
+        .replace("{batches_indexes}", _joined_indexes(_batches_indexes_ddl(_BATCHES_TABLE)))
+        .replace("{attempts_table}", _attempts_ddl(_ATTEMPTS_TABLE))
+        .replace("{attempts_indexes}", _joined_indexes(_attempts_indexes_ddl(_ATTEMPTS_TABLE)))
     )

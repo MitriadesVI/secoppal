@@ -313,3 +313,65 @@ def test_fault_between_attempt_and_batch_update_rolls_back_everything(
     after_batch = _batch_row(db_path, nid)
     assert after_attempt == before_attempt
     assert dict(after_batch) == dict(before_batch)
+
+
+# ══ ADR-053 · Vocabulario ampliado del ledger ════════════════════════════════════
+
+@pytest.mark.parametrize("dead_reason", [
+    "render_error", "retries_exhausted", "permanent_provider_error",
+])
+def test_53_the_new_dead_reasons_close_a_batch(claimed, ledger, dead_reason):
+    """Los tres registran una causa que antes no se podía expresar. Sin ellos, un
+    payload corrupto o unos reintentos agotados solo podían cerrarse mintiendo:
+    'expired' (el TTL no venció) o 'invalid_address' (la dirección está bien)."""
+    db_path, nid, token = claimed
+    attempt_id = ledger.begin_attempt(nid, token, now=NOW)
+
+    ledger.finish_attempt(
+        attempt_id, nid, token, outcome="dead", dead_reason=dead_reason, now=NOW,
+    )
+
+    row = _batch_row(db_path, nid)
+    assert row["status"] == "dead"
+    assert row["dead_reason"] == dead_reason
+
+
+def test_53_render_error_is_a_valid_error_class(claimed, ledger):
+    """``render_error`` y ``provider_unavailable`` son clases de error del sistema, no
+    del proveedor: en un caso nunca se llegó a construir el mensaje, en el otro no
+    había a quién llamar."""
+    db_path, nid, token = claimed
+    attempt_id = ledger.begin_attempt(nid, token, now=NOW)
+
+    ledger.finish_attempt(
+        attempt_id, nid, token, outcome="dead", dead_reason="render_error",
+        error_class="render_error", error_message_safe="payload_render_failed",
+        now=NOW,
+    )
+
+    assert ledger.get_attempt(attempt_id).error_class == "render_error"
+
+
+def test_53_provider_unavailable_is_a_valid_error_class_on_retry(claimed, ledger):
+    db_path, nid, token = claimed
+    attempt_id = ledger.begin_attempt(nid, token, now=NOW)
+
+    ledger.finish_attempt(
+        attempt_id, nid, token, outcome="retry", error_class="provider_unavailable",
+        next_not_before="2026-07-15T12:30:00+00:00", now=NOW,
+    )
+
+    attempt = ledger.get_attempt(attempt_id)
+    assert (attempt.outcome, attempt.error_class) == ("retry", "provider_unavailable")
+    assert _batch_row(db_path, nid)["status"] == "pending"
+
+
+def test_53_invented_dead_reason_is_still_rejected(claimed, ledger):
+    """Ensanchar el vocabulario no es abrirlo."""
+    _, nid, token = claimed
+    attempt_id = ledger.begin_attempt(nid, token, now=NOW)
+
+    with pytest.raises(LedgerError, match="dead_reason inválido"):
+        ledger.finish_attempt(
+            attempt_id, nid, token, outcome="dead", dead_reason="inventado", now=NOW,
+        )

@@ -21,12 +21,14 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from app.core.db import connect_sqlite
-from app.core.notify.schema import ensure_schema
+from app.core.notify.schema import DEAD_REASONS, ensure_schema
 
 _VALID_OUTCOMES = frozenset({"sent", "retry", "ambiguous", "dead"})
-_VALID_DEAD_REASONS = frozenset({
-    "opted_out", "endpoint_revoked", "radar_archived", "expired", "invalid_address",
-})
+# Se deriva del vocabulario que el CHECK de la base impone, en vez de repetirlo: dos
+# listas del mismo vocabulario divergen, y la que está en Python es la que produce el
+# mensaje de error legible —si se quedara corta, el caller recibiría un IntegrityError
+# de SQLite en vez de una explicación—.
+_VALID_DEAD_REASONS = frozenset(DEAD_REASONS)
 
 
 class LedgerError(Exception):

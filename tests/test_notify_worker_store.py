@@ -1990,14 +1990,20 @@ def test_100_r2a_imports_no_provider_no_worker_no_network(env):
                 assert "provider" not in name, f"{path} importa {name}"
                 assert not name.endswith("worker"), f"{path} importa {name}"
 
-    # Y los módulos de envío no existen: R2A no los adelanta.
-    for absent in ("provider.py", "fake_provider.py", "worker.py"):
-        assert not pathlib.Path("app/core/notify", absent).exists(), (
-            f"app/core/notify/{absent} no debería existir en R2A"
-        )
-    # Ninguna de las tres primitivas dejó un módulo de red cargado.
-    assert "app.core.notify.provider" not in sys.modules
-    assert "app.core.notify.worker" not in sys.modules
+    # R2C ya creó ``provider``/``fake_provider``/``worker``, así que la afirmación
+    # original de este test —"esos módulos no existen"— cumplió su función y caducó:
+    # existía para que R2A no adelantara el envío, y R2A no lo adelantó. Lo que **no**
+    # caduca es la dirección de la dependencia: el worker conoce a las primitivas, y
+    # las primitivas no conocen al worker. Si se invirtiera, la revalidación del
+    # consentimiento pasaría a depender de quien envía, que es justo a quien tiene que
+    # poder decirle que no.
+    for module in modules:
+        source = pathlib.Path(module).read_text()
+        assert "notify.worker" not in source, f"{module} conoce al worker"
+        assert "notify.provider" not in source, f"{module} conoce al proveedor"
+    assert "app.core.notify.worker_store" in pathlib.Path(
+        "app/core/notify/worker.py"
+    ).read_text(), "el worker debe depender de las primitivas, no al revés"
 
 
 # ══ E-bis · expiración entre el claim y la autorización (INV-W9) ═════════════════

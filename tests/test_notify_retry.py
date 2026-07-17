@@ -17,8 +17,12 @@ from app.core.notify.retry import (
     DEFAULT_RECONCILIATION_SAFETY_MARGIN,
     DEFAULT_SAFETY_MARGIN,
     DEFAULT_SQLITE_BUSY_TIMEOUT,
+    RetryPolicy,
+    backoff_delay,
     claim_duration,
+    next_not_before,
     reconciliation_claim_duration,
+    should_retry,
 )
 
 
@@ -251,3 +255,114 @@ def test_21d_documented_busy_timeout_matches_the_real_pragma(tmp_path):
     finally:
         conn.close()
     assert timedelta(milliseconds=busy_ms) == DEFAULT_SQLITE_BUSY_TIMEOUT
+
+
+# ══ R2B · Política de reintentos ═════════════════════════════════════════════════
+
+_NOW = datetime(2026, 7, 16, 10, 0, tzinfo=timezone.utc)
+
+
+def test_22a_backoff_is_exponential_from_the_base():
+    policy = RetryPolicy(base=timedelta(seconds=30), factor=2.0,
+                         cap=timedelta(hours=1), jitter_ratio=0.0)
+    assert backoff_delay(attempt_number=1, policy=policy) == timedelta(seconds=30)
+    assert backoff_delay(attempt_number=2, policy=policy) == timedelta(seconds=60)
+    assert backoff_delay(attempt_number=3, policy=policy) == timedelta(seconds=120)
+
+
+def test_22b_backoff_is_capped():
+    """Sin techo, el octavo reintento esperaría más de una hora y el batch moriría de
+    viejo antes de volver a intentarse."""
+    policy = RetryPolicy(base=timedelta(seconds=30), factor=2.0,
+                         cap=timedelta(minutes=5), jitter_ratio=0.0)
+    assert backoff_delay(attempt_number=20, policy=policy) == timedelta(minutes=5)
+
+
+def test_22c_jitter_only_subtracts():
+    """El jitter nunca suma: sumar podría empujar el reintento más allá del TTL y
+    convertir una espera en una muerte silenciosa."""
+    policy = RetryPolicy(base=timedelta(seconds=100), factor=1.0,
+                         cap=timedelta(hours=1), jitter_ratio=0.2)
+    entero = backoff_delay(attempt_number=1, policy=policy, jitter=0.0)
+    máximo = backoff_delay(attempt_number=1, policy=policy, jitter=0.999)
+    assert entero == timedelta(seconds=100)
+    assert timedelta(seconds=80) <= máximo < entero
+
+
+def test_22d_jitter_out_of_range_is_rejected():
+    for bad in (-0.1, 1.0, 2.0):
+        with pytest.raises(ValueError, match="jitter debe estar"):
+            backoff_delay(attempt_number=1, jitter=bad)
+
+
+def test_22e_should_retry_exhausts_at_max_attempts():
+    policy = RetryPolicy(max_attempts=3)
+    assert should_retry(attempt_number=1, policy=policy) is True
+    assert should_retry(attempt_number=2, policy=policy) is True
+    assert should_retry(attempt_number=3, policy=policy) is False
+    assert should_retry(attempt_number=4, policy=policy) is False
+
+
+def test_22f_attempt_number_below_one_is_rejected():
+    """El ledger numera desde 1: un cero significaría un fallo que nunca se intentó."""
+    with pytest.raises(ValueError, match="al menos 1"):
+        should_retry(attempt_number=0)
+    with pytest.raises(TypeError):
+        should_retry(attempt_number=True)
+
+
+def test_22g_next_not_before_takes_the_latest():
+    """Manda el que espera más: obedecer solo al proveedor dejaría que un
+    ``retry_after`` de cero nos hiciera martillearlo; obedecer solo al nuestro
+    ignoraría un 429 explícito."""
+    policy = RetryPolicy(base=timedelta(seconds=30), jitter_ratio=0.0)
+    tarde = _NOW + timedelta(hours=2)
+    assert next_not_before(
+        attempt_number=1, now=_NOW, policy=policy, retry_after=tarde
+    ) == tarde
+    assert next_not_before(
+        attempt_number=1, now=_NOW, policy=policy,
+        retry_after=_NOW + timedelta(seconds=1),
+    ) == _NOW + timedelta(seconds=30)
+
+
+def test_22h_next_not_before_without_retry_after_uses_the_backoff():
+    policy = RetryPolicy(base=timedelta(seconds=30), jitter_ratio=0.0)
+    assert next_not_before(
+        attempt_number=1, now=_NOW, policy=policy
+    ) == _NOW + timedelta(seconds=30)
+
+
+def test_22i_naive_instants_are_rejected():
+    with pytest.raises(ValueError, match="zona horaria"):
+        next_not_before(attempt_number=1, now=datetime(2026, 7, 16, 10, 0))
+    with pytest.raises(ValueError, match="zona horaria"):
+        next_not_before(
+            attempt_number=1, now=_NOW, retry_after=datetime(2026, 7, 16, 11, 0)
+        )
+
+
+def test_22j_incoherent_policies_are_rejected_at_construction():
+    """Una política incoherente revienta donde se escribe, no tres capas más abajo
+    cuando alguien la usa."""
+    with pytest.raises(ValueError, match="max_attempts"):
+        RetryPolicy(max_attempts=0)
+    with pytest.raises(ValueError, match="cap"):
+        RetryPolicy(base=timedelta(minutes=10), cap=timedelta(seconds=30))
+    with pytest.raises(ValueError, match="factor"):
+        RetryPolicy(factor=0.5)
+    with pytest.raises(ValueError, match="jitter_ratio"):
+        RetryPolicy(jitter_ratio=1.0)
+    with pytest.raises(ValueError, match="base"):
+        RetryPolicy(base=timedelta(0))
+
+
+def test_22k_the_module_stays_pure(tmp_path):
+    """Sin base, sin reloj, sin ``random``: la aritmética se verifica sin parchear
+    nada. Si el jitter se sacara de dentro, este módulo dejaría de ser comprobable."""
+    import app.core.notify.retry as module
+
+    assert "random" not in dir(module)
+    backoff_delay(attempt_number=3)
+    next_not_before(attempt_number=3, now=_NOW)
+    assert not list(tmp_path.iterdir())
