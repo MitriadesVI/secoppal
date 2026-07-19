@@ -43,7 +43,11 @@ from app.core.notify.worker import (
     NotificationWorker,
     WorkerRunReport,
 )
-from app.core.notify.worker_store import WorkerStore, external_idempotency_key
+from app.core.notify.worker_store import (
+    WorkerStore,
+    WorkerStoreError,
+    external_idempotency_key,
+)
 from app.core.radar.store import RadarStore
 
 NOW = datetime(2026, 7, 15, 12, 0, tzinfo=timezone.utc)
@@ -796,6 +800,49 @@ def test_corrida_sin_trabajo_devuelve_reporte_vacio(env):
     estado normal en una alarma."""
     report = _worker(env, FakeProvider()).run_once()
     assert report == WorkerRunReport()
+
+
+def test_sweep_limit_int_cero_omite_el_barrido_sin_reventar(env):
+    """``sweep_limit=0`` (int exacto) es 'omití esta fase', igual que
+    ``reconcile_limit=0`` y ``dispatch_limit=0`` -que ya lo toleran vía
+    ``range(0)``-. ``sweep_expired`` se llama una sola vez fuera de todo bucle,
+    así que sin el guard en ``run_once`` el 0 llegaba directo a ``WorkerStore``,
+    que lo rechaza como bug de programación (ver ``scripts.telegram_pilot``, que
+    corre con los tres límites en 0 salvo ``dispatch_limit``). El batch expirado
+    NO se barre: quedarse ``pending`` prueba que la fase se omitió de verdad."""
+    nid = _batch(env, expires_at=(NOW - timedelta(seconds=1)).isoformat())
+    report = _worker(env, FakeProvider()).run_once(
+        dispatch_limit=0, reconcile_limit=0, sweep_limit=0
+    )
+
+    assert report == WorkerRunReport()
+    assert _row(env, nid)["status"] == "pending"
+
+
+@pytest.mark.parametrize("bad_limit", [-1, False, 0.0])
+def test_sweep_limit_no_es_int_cero_sigue_validando_en_worker_store(env, bad_limit):
+    """El guard trata como omisión **solo** el int 0 exacto. ``-1``, ``False`` y
+    ``0.0`` siguen llegando a ``sweep_expired`` para que ``WorkerStore`` los
+    rechace: debilitar esa validación dejaría pasar ``limit=True`` (que es 1) y
+    barrería un batch en silencio."""
+    _batch(env, expires_at=(NOW - timedelta(seconds=1)).isoformat())
+    with pytest.raises(WorkerStoreError, match="entero positivo"):
+        _worker(env, FakeProvider()).run_once(
+            dispatch_limit=0, reconcile_limit=0, sweep_limit=bad_limit
+        )
+
+
+def test_sweep_limit_positivo_barre_normalmente(env):
+    """Un límite positivo NO es omisión: el batch expirado se barre a
+    ``dead``/``expired`` como en cualquier corrida."""
+    nid = _batch(env, expires_at=(NOW - timedelta(seconds=1)).isoformat())
+    report = _worker(env, FakeProvider()).run_once(
+        dispatch_limit=0, reconcile_limit=0, sweep_limit=1
+    )
+
+    assert report.swept == 1
+    row = _row(env, nid)
+    assert (row["status"], row["dead_reason"]) == ("dead", "expired")
 
 
 def test_el_limite_de_dispatch_se_respeta(env):

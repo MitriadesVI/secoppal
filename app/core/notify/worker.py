@@ -188,12 +188,23 @@ class NotificationWorker:
         No lanza por no encontrar trabajo: una corrida sobre una base vacía devuelve
         un reporte en cero. El worker se ejecuta en bucle, y una excepción por "nada
         que hacer" convertiría el estado normal en una alarma.
+
+        El ``int`` ``0`` en cualquiera de los tres límites significa "omití esta
+        fase por completo" (así lo usa el piloto manual de Telegram). En
+        reconciliación y dispatch eso ya ocurre solo -``range(0)`` no itera-, pero
+        el barrido llama a ``sweep_expired`` una sola vez fuera de todo bucle, así
+        que necesita el guard explícito. Se trata como omisión **solo** el int 0
+        exacto: ``-1``, ``0.0`` y ``False`` siguen llegando a ``sweep_expired``
+        para que ``WorkerStore`` los rechace como el error de programación que son,
+        sin debilitar esa validación (su guard es la única defensa contra
+        ``limit=True`` barriendo un batch en silencio).
         """
         tally = _Tally()
         self._reconcile(tally, limit=reconcile_limit)
-        tally.bump("swept", len(self.store.sweep_expired(
-            clock=self.clock, limit=sweep_limit
-        )))
+        if not (type(sweep_limit) is int and sweep_limit == 0):
+            tally.bump("swept", len(self.store.sweep_expired(
+                clock=self.clock, limit=sweep_limit
+            )))
         self._dispatch(tally, limit=dispatch_limit, _fault_hook=_fault_hook)
         return tally.freeze()
 
