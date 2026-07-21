@@ -288,7 +288,7 @@ class Formatter:
             cascade = (
                 ("fecha_de_publicacion_del", "Publicación"),
                 ("fecha_de_publicacion_fase_3", "Publicación fase 3"),
-                ("fecha_de_recepcion_de_respuestas_al_in", "Recepción ofertas"),
+                ("fecha_de_recepcion_de", "Recepción ofertas"),
                 ("fecha_de_apertura_efectiva", "Apertura"),
             )
         else:

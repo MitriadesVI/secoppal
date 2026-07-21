@@ -883,7 +883,7 @@ def _raw_meta(pid="P-1", estado="Abierto", precio="1000000",
               modalidad=_MODALIDAD, cierre=_CIERRE):
     row = _raw(pid, estado=estado, precio=precio)
     row["modalidad_de_contratacion"] = modalidad
-    row["fecha_de_recepcion_de_respuestas_al_in"] = cierre
+    row["fecha_de_recepcion_de"] = cierre
     return row
 
 
@@ -971,7 +971,7 @@ def test_followed_event_projects_metadata_when_the_row_carries_it(store):
     crudas, el alta las congela sin que haya que tocar follows.py."""
     card = _card("P-9")
     card["modalidad_de_contratacion"] = _MODALIDAD
-    card["fecha_de_recepcion_de_respuestas_al_in"] = _CIERRE
+    card["fecha_de_recepcion_de"] = _CIERRE
 
     follows.follow(store, OWNER, card)
     ev = _only(store.get_feed(OWNER), "followed")

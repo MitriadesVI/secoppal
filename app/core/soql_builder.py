@@ -117,7 +117,7 @@ class SoQLBuilder:
             # (formatter._best_date_for_row, DOGFOOD-DATE-002). Auditoría previa
             # (opportunity_stage.py): ~99% NULL en el dataset, así que el radar
             # la proyecta como dato opcional, no como garantía de vigencia.
-            closing_date="fecha_de_recepcion_de_respuestas_al_in",
+            closing_date="fecha_de_recepcion_de",
             reference="referencia_del_proceso",
             city="ciudad_entidad",
             select_fields=(
@@ -135,7 +135,7 @@ class SoQLBuilder:
                 "estado_del_procedimiento",
                 "fase",
                 "fecha_de_publicacion_del",
-                "fecha_de_recepcion_de_respuestas_al_in",
+                "fecha_de_recepcion_de",
                 "urlproceso",
             ),
         ),

@@ -95,7 +95,7 @@ def test_event_metadata_procesos_projects_modality_and_closing():
     """Procesos aporta modalidad y cierre; firma/contratista no existen ahí."""
     row = {
         "modalidad_de_contratacion": "Licitación pública",
-        "fecha_de_recepcion_de_respuestas_al_in": "2026-08-20T17:00:00.000",
+        "fecha_de_recepcion_de": "2026-08-20T17:00:00.000",
         # Ruido: la fecha de publicación NO debe colarse como cierre.
         "fecha_de_publicacion_del": "2026-07-01T08:00:00.000",
     }
@@ -140,7 +140,7 @@ def test_event_metadata_preserves_source_text_without_interpreting():
     """Se recortan bordes; el texto fuente no se traduce ni se reformatea."""
     row = {
         "modalidad_de_contratacion": "  Selección abreviada  ",
-        "fecha_de_recepcion_de_respuestas_al_in": " 2026-08-20T17:00:00.000 ",
+        "fecha_de_recepcion_de": " 2026-08-20T17:00:00.000 ",
     }
     meta = extract_event_metadata(row, PROC)
     assert meta["modality"] == "Selección abreviada"
@@ -158,7 +158,7 @@ def test_unknown_dataset_with_process_shaped_fields_returns_no_metadata():
     """
     row = {
         "modalidad_de_contratacion": "Licitación pública",
-        "fecha_de_recepcion_de_respuestas_al_in": "2026-08-20",
+        "fecha_de_recepcion_de": "2026-08-20",
         "proveedor_adjudicado": "ACME",
         "fecha_de_firma": "2026-01-01",
     }
@@ -190,7 +190,7 @@ def test_event_metadata_is_not_part_of_the_diff_contract():
     entrarían al hash/diff y un cambio de modalidad fingiría un cambio real."""
     row = {
         "modalidad_de_contratacion": "Licitación pública",
-        "fecha_de_recepcion_de_respuestas_al_in": "2026-08-20",
+        "fecha_de_recepcion_de": "2026-08-20",
     }
     assert set(extract_fields(row, PROC)) == {
         "title", "entity", "value", "status", "urlproceso", "referencia",

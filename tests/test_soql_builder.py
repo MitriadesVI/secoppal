@@ -357,16 +357,43 @@ def test_procesos_select_includes_closing_date_exactly_once() -> None:
     """La columna real de recepción de ofertas (DOGFOOD-DATE-002), una sola vez."""
     soql = SoQLBuilder().build("p6dx-8zbt", dict(_RADAR_PARAMS))
     select_clause = soql.split(" WHERE ")[0]
-    assert select_clause.count("fecha_de_recepcion_de_respuestas_al_in") == 1
+    assert select_clause.count("fecha_de_recepcion_de") == 1
 
 
 def test_procesos_closing_date_is_reception_not_publication() -> None:
     """Mapping exacto: publicación y cierre son hechos distintos. Si el spec
     apuntara a publicación, el radar anunciaría un cierre que nadie fijó."""
     spec = SoQLBuilder.SPECS["p6dx-8zbt"]
-    assert spec.closing_date == "fecha_de_recepcion_de_respuestas_al_in"
+    assert spec.closing_date == "fecha_de_recepcion_de"
     assert spec.closing_date != spec.date          # date = publicación
     assert spec.signature_date is None             # un proceso no se firma
+
+
+def test_obsolete_reception_identifier_never_appears_in_procesos_soql() -> None:
+    """Guard de drift remoto: el identificador truncado que Socrata dejó de
+    exponer (``fecha_de_recepcion_de_respuestas_al_in``) devuelve 400
+    ``no-such-column``. Restaurarlo en el spec vuelve a meterlo en el SELECT y
+    esta prueba lo captura — es el mutation-check del fix de integración."""
+    obsolete = "fecha_de_recepcion_de_respuestas_al_in"
+    build_soql = SoQLBuilder().build("p6dx-8zbt", dict(_RADAR_PARAMS))
+    count_soql = SoQLBuilder().build_count("p6dx-8zbt", dict(_RADAR_PARAMS))
+    assert obsolete not in build_soql
+    assert obsolete not in count_soql
+    assert SoQLBuilder.SPECS["p6dx-8zbt"].closing_date != obsolete
+
+
+def test_procesos_reception_date_survives_projection_as_closing_date() -> None:
+    """Contrato interno estable: una fila cruda con la columna VIGENTE conserva
+    su fecha bajo la clave canónica ``closing_date`` (independiente del nombre
+    remoto). El fix cambió el identificador remoto, no este contrato."""
+    from app.core.radar.keys import extract_event_metadata
+
+    row = {
+        "modalidad_de_contratacion": "Licitación pública",
+        "fecha_de_recepcion_de": "2026-08-20T17:00:00.000",
+    }
+    meta = extract_event_metadata(row, "p6dx-8zbt")
+    assert meta["closing_date"] == "2026-08-20T17:00:00.000"
 
 
 def test_contratos_select_keeps_modality_and_signature() -> None:
@@ -388,13 +415,13 @@ def test_closing_date_column_does_not_leak_into_where_order_or_limit() -> None:
     """La columna nueva vive SOLO en el SELECT: no filtra, no ordena, no corta."""
     soql = SoQLBuilder().build("p6dx-8zbt", dict(_RADAR_PARAMS))
     _, rest = soql.split(" WHERE ", 1)
-    assert "fecha_de_recepcion_de_respuestas_al_in" not in rest
+    assert "fecha_de_recepcion_de" not in rest
 
 
 def test_closing_date_absent_from_count_query() -> None:
     """build_count no proyecta columnas: mismo WHERE, sin SELECT de campos."""
     soql = SoQLBuilder().build_count("p6dx-8zbt", dict(_RADAR_PARAMS))
-    assert "fecha_de_recepcion_de_respuestas_al_in" not in soql
+    assert "fecha_de_recepcion_de" not in soql
     assert soql.startswith("SELECT count(*) WHERE ")
 
 

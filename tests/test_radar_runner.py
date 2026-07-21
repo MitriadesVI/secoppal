@@ -1351,7 +1351,7 @@ def _proc_meta(pid, estado="Abierto", valor="1000000",
     """Proceso con la metadata que SECOP II expone para procesos."""
     row = _proc(pid, estado=estado, valor=valor)
     row["modalidad_de_contratacion"] = modalidad
-    row["fecha_de_recepcion_de_respuestas_al_in"] = cierre
+    row["fecha_de_recepcion_de"] = cierre
     return row
 
 
