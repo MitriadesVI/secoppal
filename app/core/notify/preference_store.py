@@ -104,6 +104,17 @@ class UnsupportedPreferenceError(PreferenceError):
     """
 
 
+class EventWatermarkChangedError(PreferenceError):
+    """``MAX(event_seq)`` cambió entre que el llamador lo leyó y este lock.
+
+    Alguien materializó eventos nuevos en la ventana entre el snapshot del
+    llamador y el ``BEGIN IMMEDIATE`` de ``enable_without_backfill``: plantar el
+    cursor sobre el ``MAX`` que se creía vigente lo dejaría por encima de eventos
+    que el llamador nunca vio ni validó. Toda la transacción se revierte —la
+    preferencia sigue apagada, el cursor no se toca— en vez de encender sobre un
+    historial que ya cambió bajo el lock."""
+
+
 @dataclass(frozen=True)
 class Preference:
     preference_id: str
@@ -386,6 +397,7 @@ class PreferenceStore:
         preference_id: str,
         *,
         now: datetime | None = None,
+        expected_max_event_seq: int | None = None,
         _fault_hook: _FaultHook | None = None,
     ) -> Preference:
         """El opt-in explícito: enciende la preferencia **y** planta su cursor en el
@@ -418,7 +430,28 @@ class PreferenceStore:
         archivarse, el owner desvincularse o el endpoint revocarse. El permiso se
         comprueba contra el estado del instante en que se concede, no contra el del
         día en que se pidió.
+
+        ``expected_max_event_seq``, si se da, convierte el encendido en un
+        **compare-and-enable**: exige que el ``MAX(event_seq)`` leído dentro de
+        **esta misma transacción** sea exactamente ese valor. Un llamador que
+        primero valida "el historial es baseline-only" y luego llama aquí en una
+        transacción separada tiene una ventana entre ambas: si algo materializó un
+        evento nuevo en esa ventana, el ``MAX`` que este método leería ya no es el
+        que el llamador validó, y plantar el cursor sobre él se tragaría ese evento
+        en silencio. Con el watermark esperado, el mismatch revierte la transacción
+        completa —preferencia apagada, cursor intacto— y levanta
+        ``EventWatermarkChangedError`` en vez de encender sobre un historial que ya
+        cambió bajo el lock. Sin este argumento (``None``), el comportamiento es
+        idéntico al de siempre.
         """
+        if expected_max_event_seq is not None and (
+            isinstance(expected_max_event_seq, bool)
+            or not isinstance(expected_max_event_seq, int)
+            or expected_max_event_seq < 0
+        ):
+            raise PreferenceError(
+                "expected_max_event_seq debe ser un entero mayor o igual que 0."
+            )
         moment = now or datetime.now(timezone.utc)
         if moment.tzinfo is None or moment.utcoffset() is None:
             raise PreferenceError(
@@ -449,6 +482,17 @@ class PreferenceStore:
                     "WHERE radar_id = ?",
                     (radar_id,),
                 ).fetchone()["max_seq"]
+                # Compare-and-enable: después de leer el MAX bajo el lock, pero
+                # antes de tocar el cursor. Un mismatch revierte todo — ni cursor
+                # ni ``enabled`` se escriben sobre un historial que ya cambió.
+                if (expected_max_event_seq is not None
+                        and int(max_seq) != expected_max_event_seq):
+                    raise EventWatermarkChangedError(
+                        f"El MAX(event_seq) del radar '{radar_id}' cambió de "
+                        f"{expected_max_event_seq} a {max_seq} entre el snapshot "
+                        f"del llamador y este lock; no se enciende sobre un "
+                        f"historial que ya no es el validado."
+                    )
                 conn.execute(
                     "INSERT INTO radar_notification_cursors "
                     "(endpoint_id, radar_id, last_examined_seq, updated_at) "

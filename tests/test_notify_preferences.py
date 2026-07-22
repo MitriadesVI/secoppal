@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 from datetime import datetime, timezone
+import inspect
 import json
 import sqlite3
 import threading
@@ -18,6 +19,7 @@ from app.core.notify.preference_store import (
     PHASE_AFTER_CURSOR_UPSERT,
     PHASE_AFTER_ENABLE,
     EndpointRevokedError,
+    EventWatermarkChangedError,
     OwnerNotLinkedError,
     PreferenceError,
     PreferenceExistsError,
@@ -821,3 +823,212 @@ def test_update_rejects_include_disappeared(preferences, radars, ana):
         preferences.update_preference(pref_id, include_disappeared=True)
 
     assert preferences.get_preference(pref_id).include_disappeared == 0
+
+
+# ── compare-and-enable (expected_max_event_seq) ───────────────────────────────
+
+def _max_seq(db_path, radar_id):
+    conn = connect_sqlite(db_path)
+    try:
+        row = conn.execute(
+            "SELECT MAX(event_seq) AS m FROM radar_events WHERE radar_id = ?",
+            (radar_id,),
+        ).fetchone()
+    finally:
+        conn.close()
+    return row["m"]
+
+
+def test_expected_max_event_seq_correcto_habilita_y_planta_ese_max(
+    preferences, radars, ana, db
+):
+    rid = _radar(radars, ana["owner"])
+    _seed_events(radars, rid, ana["owner"], 5)
+    pref_id = preferences.create_preference(
+        radar_id=rid, endpoint_id=ana["endpoint_id"]
+    )
+    expected = _max_seq(db, rid)
+
+    preferences.enable_without_backfill(pref_id, expected_max_event_seq=expected)
+
+    assert preferences.get_preference(pref_id).is_enabled
+    assert _cursor(db, ana["endpoint_id"], rid) == expected
+
+
+def test_evento_insertado_tras_tomar_expected_max_produce_mismatch(
+    preferences, radars, ana, db
+):
+    """El snapshot del llamador quedó desactualizado: un evento se materializó
+    después de leer ``expected_max_event_seq`` pero antes de llamar aquí."""
+    rid = _radar(radars, ana["owner"])
+    _seed_events(radars, rid, ana["owner"], 3)
+    pref_id = preferences.create_preference(
+        radar_id=rid, endpoint_id=ana["endpoint_id"]
+    )
+    stale_expected = _max_seq(db, rid)
+
+    _seed_events(radars, rid, ana["owner"], 1, start=99)  # evento concurrente
+
+    with pytest.raises(EventWatermarkChangedError):
+        preferences.enable_without_backfill(
+            pref_id, expected_max_event_seq=stale_expected
+        )
+
+
+def test_mismatch_deja_preference_apagada_y_cursor_ausente(
+    preferences, radars, ana, db
+):
+    rid = _radar(radars, ana["owner"])
+    _seed_events(radars, rid, ana["owner"], 3)
+    pref_id = preferences.create_preference(
+        radar_id=rid, endpoint_id=ana["endpoint_id"]
+    )
+    stale_expected = _max_seq(db, rid)
+    _seed_events(radars, rid, ana["owner"], 1, start=99)
+
+    with pytest.raises(EventWatermarkChangedError):
+        preferences.enable_without_backfill(
+            pref_id, expected_max_event_seq=stale_expected
+        )
+
+    assert preferences.get_preference(pref_id).enabled == 0
+    assert _cursor(db, ana["endpoint_id"], rid) is None
+
+
+def test_mismatch_no_muta_un_cursor_previamente_intacto(
+    preferences, radars, ana, db
+):
+    """Si ya existía un cursor plantado (p. ej. de un intento anterior exitoso
+    sobre otro endpoint del mismo par), el mismatch no debe tocarlo."""
+    rid = _radar(radars, ana["owner"])
+    _seed_events(radars, rid, ana["owner"], 3)
+    pref_id = preferences.create_preference(
+        radar_id=rid, endpoint_id=ana["endpoint_id"]
+    )
+    preferences.enable_without_backfill(pref_id)  # planta cursor real, sin CAS
+    intact_cursor = _cursor(db, ana["endpoint_id"], rid)
+    stale_expected = intact_cursor  # ya obsoleto en cuanto se agregue el próximo
+
+    _seed_events(radars, rid, ana["owner"], 1, start=99)
+
+    with pytest.raises(EventWatermarkChangedError):
+        preferences.enable_without_backfill(
+            pref_id, expected_max_event_seq=stale_expected
+        )
+    assert _cursor(db, ana["endpoint_id"], rid) == intact_cursor
+
+
+@pytest.mark.parametrize("bad_value", [True, 1.0, -1])
+def test_expected_max_event_seq_rechaza_no_entero_o_negativo(
+    preferences, radars, ana, bad_value
+):
+    rid = _radar(radars, ana["owner"])
+    pref_id = preferences.create_preference(
+        radar_id=rid, endpoint_id=ana["endpoint_id"]
+    )
+    with pytest.raises(PreferenceError):
+        preferences.enable_without_backfill(pref_id, expected_max_event_seq=bad_value)
+    assert preferences.get_preference(pref_id).enabled == 0
+
+
+def test_sin_expected_max_event_seq_comportamiento_historico_identico(
+    preferences, radars, ana, db
+):
+    """Sin el argumento (``None``), el método hace exactamente lo de siempre:
+    encender y plantar el cursor en el MAX vigente, sin comparar nada."""
+    rid = _radar(radars, ana["owner"])
+    _seed_events(radars, rid, ana["owner"], 4)
+    pref_id = preferences.create_preference(
+        radar_id=rid, endpoint_id=ana["endpoint_id"]
+    )
+
+    preferences.enable_without_backfill(pref_id)
+
+    assert preferences.get_preference(pref_id).is_enabled
+    assert _cursor(db, ana["endpoint_id"], rid) == _max_seq(db, rid)
+
+
+def test_expected_max_event_seq_no_deja_colarse_un_escritor_durante_el_lock(
+    preferences, radars, ana, db
+):
+    """El compare-and-enable es atómico frente a escritores concurrentes: un
+    escritor que intenta insertar mientras la transacción de
+    ``enable_without_backfill`` tiene el lock queda bloqueado hasta el commit
+    (mismo mecanismo que la prueba de linearización sin CAS). Su evento aparece
+    correctamente POR ENCIMA del cursor recién plantado —se notifica, no se
+    pierde—, y el ``expected_max_event_seq`` pasado (el estado previo a la
+    carrera) sigue coincidiendo con lo que la transacción ve bajo su propio lock."""
+    rid = _radar(radars, ana["owner"])
+    _seed_events(radars, rid, ana["owner"], 3)
+    pref_id = preferences.create_preference(
+        radar_id=rid, endpoint_id=ana["endpoint_id"]
+    )
+    expected = _max_seq(db, rid)
+
+    errors = []
+    started = threading.Event()
+    writer_done = threading.Event()
+    breaches = []
+
+    def insert_concurrently():
+        started.wait(timeout=5)
+        try:
+            _seed_events(radars, rid, ana["owner"], 1, start=99)
+        except BaseException as exc:  # pragma: no cover - solo si el lock falla
+            errors.append(exc)
+        finally:
+            writer_done.set()
+
+    writer = threading.Thread(target=insert_concurrently)
+
+    def hook(phase):
+        if phase == PHASE_AFTER_CURSOR_UPSERT:
+            writer.start()
+            started.set()
+            time.sleep(0.3)
+            if writer_done.is_set():
+                breaches.append(
+                    "el escritor concurrente commiteó mientras el compare-and-"
+                    "enable tenía el lock: la comparación no fue atómica"
+                )
+
+    try:
+        preferences.enable_without_backfill(
+            pref_id, expected_max_event_seq=expected, _fault_hook=hook
+        )
+    finally:
+        started.set()
+        writer.join(timeout=10)
+
+    assert breaches == []
+    assert errors == []
+    assert preferences.get_preference(pref_id).is_enabled
+    # El cursor quedó exactamente en el watermark validado, no en un MAX posterior
+    # que ya incluyera el evento concurrente.
+    assert _cursor(db, ana["endpoint_id"], rid) == expected
+    # El evento concurrente sí se insertó (tras liberarse el lock) y queda por
+    # encima del cursor: será notificado en la próxima selección, no perdido.
+    assert _max_seq(db, rid) > expected
+
+
+def test_watermark_compare_ocurre_dentro_de_begin_immediate_estructuralmente():
+    """Invariante de código, no de comportamiento: la ventana entre el snapshot
+    del llamador y el lock de escritor es de instrucciones, no de segundos, así
+    que ninguna prueba con threads puede forzarla de forma determinista si
+    alguien mueve la comparación fuera de la transacción. Se protege aquí como
+    invariante estructural — mismo patrón que ya usa
+    ``tests/test_radar_runner.py`` (``ast``/``inspect``) para el orden
+    normativo de ``try_acquire_run_lease`` → ``clock()``.
+
+    La comparación de ``expected_max_event_seq`` (y su ``EventWatermarkChangedError``)
+    debe aparecer, en el código fuente, DESPUÉS de ``BEGIN IMMEDIATE``: comparar
+    antes dejaría una ventana entre el snapshot del llamador y el lock en la que
+    un evento concurrente podría colarse sin ser detectado — el bug que este
+    parámetro existe para cerrar."""
+    source = inspect.getsource(PreferenceStore.enable_without_backfill)
+    begin_immediate_pos = source.index('"BEGIN IMMEDIATE"')
+    compare_pos = source.index("EventWatermarkChangedError(")
+    assert compare_pos > begin_immediate_pos, (
+        "expected_max_event_seq debe compararse DESPUÉS de BEGIN IMMEDIATE, "
+        "dentro del mismo lock de escritor — no antes de abrir la transacción."
+    )

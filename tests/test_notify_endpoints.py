@@ -438,3 +438,38 @@ def test_eligible_listing_is_scoped_to_the_principal(endpoints, identity, ana):
     assert [e.endpoint_id for e in endpoints.list_eligible_endpoints(beto)] == [
         beto_eid
     ]
+
+
+# ── find_endpoint — identidad exacta por address_hash (no last4) ──────────────
+
+def test_find_endpoint_devuelve_el_endpoint_exacto(endpoints, ana):
+    eid = endpoints.create_endpoint(
+        principal_id=ana, channel="telegram", address="chat-abcdef"
+    )
+    found = endpoints.find_endpoint(ana, "telegram", "chat-abcdef")
+    assert found is not None and found.endpoint_id == eid
+
+
+def test_find_endpoint_no_confunde_direcciones_con_mismo_last4(endpoints, ana):
+    """Dos chats con los mismos últimos cuatro dígitos son endpoints distintos:
+    el lookup por hash canónico no los mezcla (last4 sí lo haría)."""
+    a = "999990001234"
+    b = "111110001234"  # mismo last4 '1234', dirección distinta
+    assert last4(a) == last4(b)
+    eid_a = endpoints.create_endpoint(principal_id=ana, channel="telegram", address=a)
+    eid_b = endpoints.create_endpoint(principal_id=ana, channel="telegram", address=b)
+
+    assert endpoints.find_endpoint(ana, "telegram", a).endpoint_id == eid_a
+    assert endpoints.find_endpoint(ana, "telegram", b).endpoint_id == eid_b
+    assert eid_a != eid_b
+
+
+def test_find_endpoint_none_para_direccion_o_canal_ausente(endpoints, ana):
+    endpoints.create_endpoint(principal_id=ana, channel="telegram", address="chat-x")
+    assert endpoints.find_endpoint(ana, "telegram", "chat-otro") is None
+    assert endpoints.find_endpoint(ana, "whatsapp", "chat-x") is None
+
+
+def test_find_endpoint_rechaza_canal_invalido(endpoints, ana):
+    with pytest.raises(EndpointError):
+        endpoints.find_endpoint(ana, "no-existe", "chat-x")

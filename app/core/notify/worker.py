@@ -181,6 +181,7 @@ class NotificationWorker:
         dispatch_limit: int = DEFAULT_DISPATCH_LIMIT,
         reconcile_limit: int = DEFAULT_RECONCILE_LIMIT,
         sweep_limit: int = 100,
+        notification_id: str | None = None,
         _fault_hook: _FaultHook | None = None,
     ) -> WorkerRunReport:
         """Reconcilia, barre y despacha. En ese orden, que es normativo.
@@ -198,14 +199,34 @@ class NotificationWorker:
         para que ``WorkerStore`` los rechace como el error de programación que son,
         sin debilitar esa validación (su guard es la única defensa contra
         ``limit=True`` barriendo un batch en silencio).
+
+        ``notification_id`` convierte la corrida en un **dispatch dirigido**: solo se
+        intenta reclamar ese batch (vía ``claim_candidate(notification_id=...)``, con
+        los mismos predicados de siempre), y si no es reclamable no se cae a ningún
+        otro. Un dispatch dirigido exige ``dispatch_limit == 1``: apuntar a un ID y a
+        la vez pedir varios claims es una contradicción —el segundo claim ya no
+        tendría objetivo—, así que se rechaza en vez de adivinar.
         """
+        if notification_id is not None and not (
+            type(dispatch_limit) is int and dispatch_limit == 1
+        ):
+            # Igualdad estricta de tipo: en Python ``True == 1`` y ``1.0 == 1``, así
+            # que un ``!=`` simple dejaría pasar un ``bool``/``float`` disfrazado de
+            # "exactamente uno". El mismo criterio que ``sweep_limit`` ya aplica más
+            # arriba para el mismo motivo.
+            raise ValueError(
+                "un dispatch dirigido (notification_id) exige dispatch_limit == 1"
+            )
         tally = _Tally()
         self._reconcile(tally, limit=reconcile_limit)
         if not (type(sweep_limit) is int and sweep_limit == 0):
             tally.bump("swept", len(self.store.sweep_expired(
                 clock=self.clock, limit=sweep_limit
             )))
-        self._dispatch(tally, limit=dispatch_limit, _fault_hook=_fault_hook)
+        self._dispatch(
+            tally, limit=dispatch_limit, notification_id=notification_id,
+            _fault_hook=_fault_hook,
+        )
         return tally.freeze()
 
     # ── 1. Reconciliación ─────────────────────────────────────────────────────────
@@ -239,13 +260,19 @@ class NotificationWorker:
     # ── 3. Dispatch ───────────────────────────────────────────────────────────────
 
     def _dispatch(
-        self, tally: _Tally, *, limit: int, _fault_hook: _FaultHook | None
+        self, tally: _Tally, *, limit: int,
+        notification_id: str | None = None,
+        _fault_hook: _FaultHook | None = None,
     ) -> None:
         for _ in range(limit):
             candidate = self.store.claim_candidate(
-                clock=self.clock, duration=self.claim_duration
+                clock=self.clock, duration=self.claim_duration,
+                notification_id=notification_id,
             )
             if candidate is None:
+                # Dirigido o no, un claim vacío termina la fase: el dispatch
+                # dirigido no cae a otro batch porque ``claim_candidate`` solo
+                # devuelve el objetivo (o nada), nunca un sustituto.
                 return
             tally.bump("claimed")
             authorization = self.store.authorize_and_begin_dispatch(

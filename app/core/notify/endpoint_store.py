@@ -163,6 +163,33 @@ class EndpointStore:
             conn.close()
         return Endpoint.from_row(row) if row else None
 
+    def find_endpoint(
+        self, principal_id: str, channel: str, address: str
+    ) -> Endpoint | None:
+        """El endpoint **exacto** de esa persona para ese destino, o ``None``.
+
+        Compara por el ``address_hash`` canónico —el mismo digest que decide el
+        ``UNIQUE(channel, address_hash)`` del alta—, nunca por ``address_last4`` ni
+        por la dirección desenmascarada. ``last4`` colisiona (dos chats con los
+        mismos cuatro dígitos comparten sufijo) y la dirección cruda no se guarda:
+        un lookup por cualquiera de las dos confundiría destinos distintos o
+        obligaría a desenmascarar. El hash es la identidad, y es la que se consulta.
+        """
+        if channel not in CHANNELS:
+            raise EndpointError(
+                f"Canal inválido '{channel}'. Válidos: {', '.join(CHANNELS)}."
+            )
+        conn = self._connect()
+        try:
+            row = conn.execute(
+                "SELECT * FROM notification_endpoints "
+                "WHERE principal_id = ? AND channel = ? AND address_hash = ?",
+                (principal_id, channel, self._masker.address_hash(channel, address)),
+            ).fetchone()
+        finally:
+            conn.close()
+        return Endpoint.from_row(row) if row else None
+
     def list_endpoints(self, principal_id: str) -> list[Endpoint]:
         """Todos, incluidos revocados: es la vista de gestión, no la de envío."""
         conn = self._connect()

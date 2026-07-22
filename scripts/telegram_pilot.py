@@ -55,6 +55,8 @@ from app.core.notify.telegram_provider import (
 )
 from app.core.notify.worker import NotificationWorker, WorkerRunReport
 from app.core.radar.store import RadarStore
+from scripts import pilot_real
+from scripts.pilot_real import PilotRealError
 
 
 TEST_MESSAGE = "SECOPPAL Radar · prueba de conexión"
@@ -441,7 +443,57 @@ def _parser() -> argparse.ArgumentParser:
         ),
     )
     worker.add_argument("--db", type=Path, required=True)
+
+    # ── Piloto real Adulto Mayor (TG-P2D1) ──────────────────────────────────
+    # Todos exigen --db, que debe resolver (expanduser + resolve, siguiendo
+    # symlinks) exactamente a la ruta canónica REAL_PILOT_DB_PATH; rechazan
+    # data/secoppal.db y data/telegram_pilot.db antes de abrir nada.
+    setup_real = subparsers.add_parser(
+        "setup-real-pilot",
+        help="crea (idempotente) principal, endpoint verificado, radar Adulto "
+        "Mayor y preferencia per_run en data/telegram_p2_real.db",
+    )
+    setup_real.add_argument("--db", type=Path, required=True)
+
+    baseline_real = subparsers.add_parser(
+        "baseline-real-pilot",
+        help="materializa el baseline silencioso y avanza el cursor; exige 0 "
+        "batches y 0 attempts, nunca envía",
+    )
+    baseline_real.add_argument("--db", type=Path, required=True)
+
+    run_real = subparsers.add_parser(
+        "run-real-pilot",
+        help="corre el radar y previsualiza el batch nuevo sin enviar "
+        "(NO_NOVELTY si no hay novedad)",
+    )
+    run_real.add_argument("--db", type=Path, required=True)
+
+    send_real = subparsers.add_parser(
+        "send-ready-pilot",
+        help="despacha exactamente el batch ya congelado; solo con "
+        "--confirm-send",
+    )
+    send_real.add_argument("--db", type=Path, required=True)
+    send_real.add_argument("--confirm-send", action="store_true")
+
+    status_real = subparsers.add_parser(
+        "status-real-pilot",
+        help="preflight de solo lectura del piloto real; nunca muestra secretos",
+    )
+    status_real.add_argument("--db", type=Path, required=True)
     return parser
+
+
+def _live_deps() -> Any:
+    """Construye los ``WorkflowDeps`` reales (con SecopClient en vivo).
+
+    Import perezoso a propósito: solo el camino live de baseline/run lo necesita,
+    y las pruebas offline llaman a ``pilot_real`` directamente con deps falsos.
+    """
+    from app.service import get_workflow
+
+    return get_workflow().deps
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -462,9 +514,24 @@ def main(argv: list[str] | None = None) -> int:
             preview(args.db, args.notification_id)
         elif args.operation == "run-worker":
             run_worker(args.db)
+        elif args.operation == "setup-real-pilot":
+            pilot_real._require_db_matches(args.db)
+            pilot_real.setup_real_pilot()
+        elif args.operation == "baseline-real-pilot":
+            pilot_real._require_db_matches(args.db)
+            pilot_real.baseline_real_pilot(deps=_live_deps())
+        elif args.operation == "run-real-pilot":
+            pilot_real._require_db_matches(args.db)
+            pilot_real.run_real_pilot(deps=_live_deps())
+        elif args.operation == "send-ready-pilot":
+            pilot_real._require_db_matches(args.db)
+            pilot_real.send_ready_pilot(confirm_send=args.confirm_send)
+        elif args.operation == "status-real-pilot":
+            pilot_real._require_db_matches(args.db)
+            pilot_real.status_real_pilot()
         else:  # pragma: no cover - argparse cierra el vocabulario.
             raise AssertionError("unknown_telegram_pilot_operation")
-    except (TelegramError, TelegramPilotError) as exc:
+    except (TelegramError, TelegramPilotError, PilotRealError) as exc:
         print(str(exc), file=sys.stderr)
         return 1
     return 0

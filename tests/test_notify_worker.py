@@ -919,3 +919,108 @@ def test_el_intento_registra_la_version_congelada_del_payload(env):
     payload = json.loads(_row(env, nid)["payload_json"])
     assert payload["radar_name"] == "Radar Viejo"
     assert provider.calls[0].payload_version == "p1b-payload-v2"
+
+
+# ══ K · Dispatch dirigido (notification_id) ══════════════════════════════════════
+
+def test_dispatch_dirigido_solo_envia_el_id_pedido(env):
+    """Con un batch anterior también reclamable, el dispatch dirigido envía solo el
+    ID pedido y deja el otro intacto."""
+    other = _batch(env)          # anterior, también due
+    target = _batch(env)         # el objetivo
+    provider = FakeProvider(default_mode=MODE_ACCEPT)
+
+    report = _worker(env, provider).run_once(
+        dispatch_limit=1, reconcile_limit=0, sweep_limit=0, notification_id=target
+    )
+
+    assert _row(env, target)["status"] == "sent"
+    assert _row(env, other)["status"] == "pending"
+    assert provider.call_count == 1
+    assert report.sent == 1
+
+
+def test_dispatch_dirigido_no_cae_a_otro_si_target_no_reclamable(env):
+    """Target no due (not_before futuro): cero provider calls y no se envía otro,
+    aunque haya un batch reclamable disponible."""
+    ready = _batch(env)                       # reclamable
+    target = _batch(env, not_before=FOREVER)  # no due
+    provider = FakeProvider(default_mode=MODE_ACCEPT)
+
+    report = _worker(env, provider).run_once(
+        dispatch_limit=1, reconcile_limit=0, sweep_limit=0, notification_id=target
+    )
+
+    assert provider.call_count == 0
+    assert provider.external_effect_count == 0
+    assert _row(env, target)["status"] == "pending"
+    assert _row(env, ready)["status"] == "pending"
+    assert report.claimed == 0
+
+
+def test_dispatch_dirigido_target_terminal_no_hace_fallback(env):
+    """Target ya sent: el dispatch dirigido no cae a otro batch reclamable."""
+    target = _batch(env)
+    provider = FakeProvider(default_mode=MODE_ACCEPT)
+    _worker(env, provider).run_once(
+        dispatch_limit=1, reconcile_limit=0, sweep_limit=0, notification_id=target
+    )
+    assert _row(env, target)["status"] == "sent"
+
+    other = _batch(env)  # reclamable, pero no es el objetivo
+    provider2 = FakeProvider(default_mode=MODE_ACCEPT)
+    report = _worker(env, provider2).run_once(
+        dispatch_limit=1, reconcile_limit=0, sweep_limit=0, notification_id=target
+    )
+
+    assert provider2.call_count == 0
+    assert _row(env, other)["status"] == "pending"
+    assert report.claimed == 0
+
+
+def test_dispatch_dirigido_exige_dispatch_limit_uno(env):
+    provider = FakeProvider(default_mode=MODE_ACCEPT)
+    with pytest.raises(ValueError, match="dispatch_limit == 1"):
+        _worker(env, provider).run_once(dispatch_limit=2, notification_id="cualquiera")
+
+
+def test_sin_notification_id_el_comportamiento_es_identico(env):
+    """Sin dispatch dirigido, un batch reclamable se envía como siempre."""
+    nid = _batch(env)
+    provider = FakeProvider(default_mode=MODE_ACCEPT)
+    report = _worker(env, provider).run_once(
+        dispatch_limit=1, reconcile_limit=0, sweep_limit=0
+    )
+    assert _row(env, nid)["status"] == "sent"
+    assert report.sent == 1
+
+
+# ══ L · dispatch_limit dirigido: igualdad estricta de tipo (no ``!=``) ═══════
+
+@pytest.mark.parametrize("bad_limit", [True, 1.0, 0, 2])
+def test_dispatch_dirigido_rechaza_limit_no_entero_exacto(env, bad_limit):
+    """En Python ``True == 1`` y ``1.0 == 1``: un ``!=`` simple dejaría pasar un
+    bool/float disfrazado de "exactamente uno". La validación exige el tipo
+    ``int`` además del valor, y debe dispararse antes de reclamar nada."""
+    nid = _batch(env)
+    provider = FakeProvider(default_mode=MODE_ACCEPT)
+    worker = _worker(env, provider)
+
+    with pytest.raises(ValueError, match="dispatch_limit == 1"):
+        worker.run_once(dispatch_limit=bad_limit, notification_id=nid)
+
+    # No debe haberse reclamado nada: la validación es previa a cualquier I/O.
+    assert _row(env, nid)["status"] == "pending"
+    assert provider.call_count == 0
+
+
+def test_dispatch_dirigido_int_uno_exacto_si_pasa(env):
+    """``dispatch_limit=1`` (int puro) es el único valor que la validación acepta;
+    con él, el dispatch dirigido procede con normalidad."""
+    nid = _batch(env)
+    provider = FakeProvider(default_mode=MODE_ACCEPT)
+    report = _worker(env, provider).run_once(
+        dispatch_limit=1, reconcile_limit=0, sweep_limit=0, notification_id=nid
+    )
+    assert _row(env, nid)["status"] == "sent"
+    assert report.sent == 1
