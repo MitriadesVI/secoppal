@@ -205,6 +205,43 @@ def test_randomized_input_with_datasets_is_identical_one_hundred_times():
         assert group_events(shuffled) == expected
 
 
+# ---------------------------------------------------------------------------
+# object_excerpt (TG-P2C) — viaja del evento seleccionable al grupo.
+# ---------------------------------------------------------------------------
+
+def test_object_excerpt_reaches_the_group_as_payload_item_key():
+    group = group_events([_event(1, key="K", object_excerpt="Suministro de kits…")])[0]
+    assert group.object_excerpt == "Suministro de kits…"
+    assert group.as_payload_item()["object_excerpt"] == "Suministro de kits…"
+
+
+def test_object_excerpt_absent_stays_none_in_group_and_payload_item():
+    group = group_events([_event(1, key="K")])[0]
+    assert group.object_excerpt is None
+    assert group.as_payload_item()["object_excerpt"] is None
+
+
+def test_object_excerpt_is_latest_nonempty_unlike_closing_date():
+    """Descriptivo y estable (como title/entity/referencia): si un evento
+    posterior del mismo bucket no trae excerpt, no se pierde el que ya
+    explicaba la coincidencia. Distinto a ``closing_date``/``modality``, que
+    usan "solo el último" porque ausencia ahí es un hecho ("la fuente dejó de
+    reportarlo"), no un vacío accidental de este evento en particular."""
+    group = group_events([
+        _event(1, key="K", object_excerpt="Programas Adulto Mayor…"),
+        _event(2, key="K", kind="changed_state", object_excerpt=None),
+    ])[0]
+    assert group.object_excerpt == "Programas Adulto Mayor…"
+
+
+def test_object_excerpt_updates_when_a_later_event_provides_a_new_one():
+    group = group_events([
+        _event(1, key="K", object_excerpt="Excerpt viejo"),
+        _event(2, key="K", kind="changed_state", object_excerpt="Excerpt nuevo"),
+    ])[0]
+    assert group.object_excerpt == "Excerpt nuevo"
+
+
 def test_randomized_input_is_identical_one_hundred_times():
     base = [
         _event(i, key=f"K-{i // 3}", kind=("new", "changed_state", "changed_value")[i % 3],

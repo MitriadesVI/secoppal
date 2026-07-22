@@ -11,8 +11,8 @@ Tres piezas:
   contractor). Lee los nombres de campo de ``SoQLBuilder.SPECS`` para no
   hardcodearlos por dataset.
 - ``extract_event_metadata`` — proyecta los datos que describen un evento ya
-  decidido (modalidad, cierre, contratista, firma). NO participa en la decisión
-  de cambio: ver su docstring.
+  decidido (modalidad, cierre, contratista, firma, extracto del objeto). NO
+  participa en la decisión de cambio: ver su docstring.
 - ``snapshot_hash``     — sha1 de los campos sensibles a cambio (estado y
   valor). Si el hash difiere entre corridas, hubo un cambio que el diff
   clasifica como ``changed_state`` o ``changed_value``.
@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import hashlib
 
+from app.core.radar.object_excerpt import build_object_excerpt
 from app.core.soql_builder import SoQLBuilder
 
 PROCESOS_DATASET = SoQLBuilder.PROCESOS_DATASET  # "p6dx-8zbt"
@@ -101,18 +102,30 @@ def extract_event_metadata(row: dict, dataset_id: str) -> dict:
     ``extract_fields`` ese fallback es comportamiento heredado que este bloque no
     toca; para un hecho que se congela y luego se le muestra a alguien, adivinar
     el dataset es peor que no saber.
+
+    ``object_excerpt`` sale de ``spec.description`` — el mismo campo público que
+    ``select_fields`` YA recupera para ambos datasets (no se amplía ningún
+    SELECT). Se guarda YA normalizado y acotado a ~180 caracteres vía
+    ``build_object_excerpt`` (helper neutral de ``radar/object_excerpt.py``):
+    ``radar_events.object_excerpt`` nunca contiene la descripción completa, así
+    que la tabla no crece de forma impredecible y todo lector aguas abajo puede
+    asumir que ya es un extracto seguro. El render lo reaplica de forma
+    defensiva sobre payloads armados a mano, pero la fuente de verdad acotada es
+    esta. Es el texto del objeto contractual, no un ``match_reason``.
     """
     spec = SoQLBuilder.SPECS.get(dataset_id)
     if spec is None:
         return {
             "modality": None, "closing_date": None,
             "contractor": None, "signature_date": None,
+            "object_excerpt": None,
         }
     return {
         "modality": _or_none(row, spec.modality),
         "closing_date": _or_none(row, spec.closing_date),
         "contractor": _or_none(row, spec.contractor),
         "signature_date": _or_none(row, spec.signature_date),
+        "object_excerpt": build_object_excerpt(_or_none(row, spec.description)),
     }
 
 

@@ -179,6 +179,10 @@ def _event_from_row(row: Mapping) -> SelectableRadarEvent:
         closing_date=optional("closing_date"),
         contractor=optional("contractor"),
         signature_date=optional("signature_date"),
+        # Columna aditiva (TG-P2C): en bases migradas trae el dato real; en
+        # filas heredadas de antes de migrar, ausencia es ``None``, igual que
+        # el resto de metadata opcional de arriba.
+        object_excerpt=optional("object_excerpt"),
         disappeared_confirmed=bool(row["disappeared_confirmed"])
         if "disappeared_confirmed" in keys else False,
     )

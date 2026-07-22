@@ -43,6 +43,8 @@ from app.core.radar.store import (
     SeenRecord,
     new_run_id,
 )
+from app.core.radar.keys import extract_event_metadata, extract_fields, radar_result_key
+from app.core.soql_builder import SoQLBuilder
 
 
 @pytest.fixture
@@ -2738,3 +2740,160 @@ def test_event_record_still_has_no_transactional_identity_fields():
     field_names = {f.name for f in dataclasses.fields(EventRecord)}
     assert not (field_names & {"radar_id", "owner", "radar_name", "run_id", "event_seq"})
     assert _EVENT_META_COLUMNS <= field_names
+
+
+# ── object_excerpt (TG-P2C) — mismo patrón aditivo que las cuatro de arriba ──
+
+_OBJECT_EXCERPT_COLUMN = {"object_excerpt"}
+
+
+def test_fresh_db_has_the_object_excerpt_column(store):
+    """15 · base nueva trae la columna object_excerpt."""
+    assert _OBJECT_EXCERPT_COLUMN <= _event_columns(store.db_path)
+
+
+def test_legacy_db_gets_object_excerpt_with_null_on_old_rows(tmp_path):
+    """16 · base heredada (sin ninguna de las columnas R2B-1B1/TG-P2C) migra:
+    object_excerpt aparece y las filas viejas quedan en NULL, sin backfill."""
+    db_path = tmp_path / "legacy_excerpt.db"
+    _seed_legacy_events_db(db_path)
+    assert not (_OBJECT_EXCERPT_COLUMN & _event_columns(db_path))
+
+    RadarStore(db_path)  # dispara la migración aditiva
+
+    assert _OBJECT_EXCERPT_COLUMN <= _event_columns(db_path)
+    conn = sqlite3.connect(db_path)
+    conn.row_factory = sqlite3.Row
+    rows = conn.execute(
+        "SELECT id, object_excerpt FROM radar_events ORDER BY id"
+    ).fetchall()
+    conn.close()
+    assert len(rows) == 2  # las filas heredadas se conservan, ninguna se pierde
+    assert all(r["object_excerpt"] is None for r in rows)
+
+
+def test_object_excerpt_migration_is_idempotent(tmp_path):
+    """17 · abrir dos veces no falla ni duplica la columna."""
+    db_path = tmp_path / "legacy_excerpt_twice.db"
+    _seed_legacy_events_db(db_path)
+
+    RadarStore(db_path)
+    RadarStore(db_path)
+    store = RadarStore(db_path)
+
+    assert _OBJECT_EXCERPT_COLUMN <= _event_columns(db_path)
+    assert store.get_radar("r1") is not None
+
+
+def test_insert_event_persists_object_excerpt_end_to_end(store, leased):
+    """18 · _INSERT_EVENT_SQL persiste object_excerpt de punta a punta, y no
+    obligatorio: un evento sin él sigue insertándose (NULL)."""
+    rid, token = leased
+    event = dataclasses.replace(
+        _event(kind="new", key="K-excerpt"),
+        object_excerpt="Suministro de kits de apoyo nutricional para Adulto Mayor",
+    )
+    result = store.materialize_successful_run(
+        radar_id=rid, token=token, run=_run(),
+        seen=[_seen_rec("K-excerpt")], events=[event],
+    )
+    assert result.lease_lost is False
+
+    state = _read_state(store.db_path, rid)
+    persisted = [e for e in state["events"] if e["result_key"] == "K-excerpt"]
+    assert len(persisted) == 1
+    assert persisted[0]["object_excerpt"] == (
+        "Suministro de kits de apoyo nutricional para Adulto Mayor"
+    )
+
+
+def test_event_without_object_excerpt_still_persists_as_null(store, leased):
+    """19 · evento sin descripción sigue funcionando: NULL, no obligatorio."""
+    rid, token = leased
+    result = store.materialize_successful_run(
+        radar_id=rid, token=token, run=_run(),
+        seen=[_seen_rec("K-bare-excerpt")],
+        events=[_event(kind="new", key="K-bare-excerpt")],
+    )
+    assert result.lease_lost is False
+    row = [e for e in _read_state(store.db_path, rid)["events"]
+           if e["result_key"] == "K-bare-excerpt"][0]
+    assert row["object_excerpt"] is None
+
+
+# ── TG-P2C ajuste: la base guarda SOLO el extracto acotado ──────────────────
+# El tramo que faltaba: fila SECOP cruda → extract_event_metadata → EventRecord
+# → radar_events. No se inyecta object_excerpt a mano; se deriva de la fila.
+
+_PROC = SoQLBuilder.PROCESOS_DATASET
+
+
+def _event_from_raw_row(raw_row: dict, *, kind: str = "new") -> tuple[EventRecord, str]:
+    """Construye un EventRecord como lo hace el runner: campos + metadata,
+    ambos derivados de la fila cruda vía keys.py (nada hardcodeado)."""
+    fields = extract_fields(raw_row, _PROC)
+    meta = extract_event_metadata(raw_row, _PROC)
+    key = radar_result_key(raw_row, _PROC)
+    event = EventRecord(
+        kind=kind, ts="2026-07-15T00:00:00+00:00", dataset="procesos",
+        result_key=key, title=fields["title"], entity=fields["entity"],
+        value=fields["value"], status=fields["status"],
+        urlproceso=fields["urlproceso"], referencia=fields["referencia"],
+        **meta,
+    )
+    return event, key
+
+
+def test_db_stores_only_the_bounded_excerpt_from_a_raw_secop_row(store, leased):
+    """Regresión central del ajuste: una fila SECOP con descripción larguísima
+    persiste en radar_events.object_excerpt SOLO el extracto acotado (<=180),
+    normalizado, con el prefijo esperado — NUNCA la descripción completa."""
+    rid, token = leased
+    long_desc = (
+        "SUMINISTRO   DE  KITS DE APOYO NUTRICIONAL PARA POBLACION VULNERABLE "
+        "PROGRAMAS ADULTO MAYOR Y POBLACIÓN EN CONDICION DE DISCAPACIDAD DEL "
+        "MUNICIPIO DE RAQUIRA BOYACA PARA LA VIGENCIA 2026 "
+    ) + "TEXTO DE RELLENO MUY LARGO " * 40
+    raw_row = {
+        "id_del_proceso": "CO1.REQ.10686701",
+        "referencia_del_proceso": "MR- SASIP-002-2026",
+        "nombre_del_procedimiento": "MR- SASIP-002-2026",
+        "entidad": "ALCALDÍA MUNICIPAL DE RÁQUIRA",
+        "estado_de_apertura_del_proceso": "Abierto",
+        "precio_base": "186600000",
+        "descripci_n_del_procedimiento": long_desc,
+    }
+    event, key = _event_from_raw_row(raw_row)
+    store.materialize_successful_run(
+        radar_id=rid, token=token, run=_run(),
+        seen=[_seen_rec(key)], events=[event],
+    )
+
+    row = [e for e in _read_state(store.db_path, rid)["events"]
+           if e["result_key"] == key][0]
+    stored = row["object_excerpt"]
+    assert stored is not None
+    assert len(stored) <= 180
+    assert "  " not in stored  # normalizado, sin espacios dobles
+    assert stored.startswith("SUMINISTRO DE KITS DE APOYO NUTRICIONAL")
+    assert long_desc not in stored
+    assert stored.endswith("…")
+
+
+def test_db_stores_null_for_single_long_token_description(store, leased):
+    """Token único más largo que el límite → NULL persistido (no palabra
+    partida)."""
+    rid, token = leased
+    raw_row = {
+        "id_del_proceso": "CO1.NTC.999",
+        "estado_de_apertura_del_proceso": "Abierto", "precio_base": "1000",
+        "descripci_n_del_procedimiento": "A" * 500,
+    }
+    event, key = _event_from_raw_row(raw_row)
+    store.materialize_successful_run(
+        radar_id=rid, token=token, run=_run(),
+        seen=[_seen_rec(key)], events=[event],
+    )
+    row = [e for e in _read_state(store.db_path, rid)["events"]
+           if e["result_key"] == key][0]
+    assert row["object_excerpt"] is None

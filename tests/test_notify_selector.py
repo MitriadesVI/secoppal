@@ -278,14 +278,16 @@ def test_max_items_only_limits_render_and_payload_keeps_all_groups(env):
     assert rendered.item_count + rendered.truncated_count == 10
 
 
-def test_process_event_materializes_v2_with_frozen_source_metadata(env):
+def test_process_event_materializes_v3_with_frozen_source_metadata(env):
+    """build_payload produce v3 (TG-P2C, FASE1 regla 4) desde el camino real
+    select_pair -> build_payload -> outbox."""
     _events(env, ["new"], ts="2026-07-16T15:30:00+00:00", extra={
         "dataset": "procesos", "modality": "Licitación pública",
         "closing_date": "2026-08-20T17:00:00",
     })
     result = env["selector"].select_pair(env["endpoint"], env["radar"], now=NOW)
     payload = json.loads(env["outbox"].get_batch(result.notification_id).payload_json)
-    assert payload["version"] == "p1b-payload-v2"
+    assert payload["version"] == "p1b-payload-v3"
     item = payload["items"][0]
     assert item["dataset"] == "procesos"
     assert item["modality"] == "Licitación pública"
@@ -320,6 +322,129 @@ def test_preference_timezone_is_frozen_into_the_payload(env):
     result = env["selector"].select_pair(env["endpoint"], env["radar"], now=NOW)
     payload = json.loads(env["outbox"].get_batch(result.notification_id).payload_json)
     assert payload["timezone"] == "America/New_York"
+
+
+# ---------------------------------------------------------------------------
+# TG-P2C — dos alcances DISTINTOS, nombrados honestamente:
+#
+#  (a) store -> selector -> payload v3 -> render  (object_excerpt ya en la fila
+#      radar_events; este test NO cubre extract_event_metadata).
+#  (b) fila SECOP cruda -> extract_event_metadata -> EventRecord -> radar_events
+#      -> selector -> payload v3 -> render  (el tramo completo).
+# ---------------------------------------------------------------------------
+
+def test_store_to_selector_to_payload_to_render_v3(env):
+    """(a) Alcance store->selector->payload->render: object_excerpt entra ya
+    puesto en la fila radar_events (no se ejerce extract_event_metadata aquí).
+    Confirma render v3: Objeto, dinero formateado, referencia deduplicada,
+    re-render byte-idéntico."""
+    _events(env, ["new"], extra={
+        "dataset": "procesos",
+        "title": "MR- SASIP-002-2026 (Presentación de oferta)",
+        "referencia": "MR- SASIP-002-2026 (Presentación de oferta)",  # mismo código
+        "object_excerpt": (
+            "SUMINISTRO DE KITS DE APOYO NUTRICIONAL PARA POBLACION VULNERABLE "
+            "PROGRAMAS ADULTO MAYOR Y POBLACIÓN EN CONDICION DE DISCAPACIDAD"
+        ),
+        "value": "186600000",
+        "modality": "Selección abreviada subasta inversa",
+    })
+    result = env["selector"].select_pair(env["endpoint"], env["radar"], now=NOW)
+    payload = json.loads(env["outbox"].get_batch(result.notification_id).payload_json)
+    assert payload["version"] == "p1b-payload-v3"
+
+    rendered = render_payload(payload)
+    assert "Objeto: SUMINISTRO DE KITS DE APOYO NUTRICIONAL" in rendered.text
+    assert "Valor reportado: $186,600,000" in rendered.text
+    assert rendered.text.count("MR- SASIP-002-2026") == 1  # título, referencia NO repetida
+    assert "Referencia:" not in rendered.text
+
+    # Re-render del mismo payload (ej. reintento) -> byte-idéntico.
+    rerender = render_payload(json.loads(json.dumps(payload)))
+    assert rerender.text == rendered.text
+    assert rerender.byte_count == rendered.byte_count
+
+
+def test_full_chain_from_raw_secop_row_through_extract_to_render_v3(env):
+    """(b) El tramo COMPLETO que faltaba: arranca en una fila SECOP CRUDA (con
+    descripción larga y espacios múltiples), la proyecta con
+    extract_event_metadata/extract_fields (NO se inyecta object_excerpt a
+    mano), la persiste en radar_events reales, y verifica que lo guardado y lo
+    renderizado es SOLO el extracto acotado."""
+    from app.core.radar.keys import (
+        extract_event_metadata, extract_fields, radar_result_key,
+    )
+    from app.core.soql_builder import SoQLBuilder
+
+    dataset_id = SoQLBuilder.PROCESOS_DATASET
+    long_desc = (
+        "SUMINISTRO   DE  KITS DE APOYO NUTRICIONAL PARA POBLACION VULNERABLE "
+        "PROGRAMAS ADULTO MAYOR Y POBLACIÓN EN CONDICION DE DISCAPACIDAD DEL "
+        "MUNICIPIO DE RAQUIRA BOYACA PARA LA VIGENCIA 2026 "
+    ) + "TEXTO DE RELLENO MUY LARGO " * 40
+    raw_row = {
+        "id_del_proceso": "CO1.REQ.10686701",
+        "referencia_del_proceso": "MR- SASIP-002-2026",
+        "nombre_del_procedimiento": "MR- SASIP-002-2026",
+        "entidad": "ALCALDÍA MUNICIPAL DE RÁQUIRA",
+        "estado_de_apertura_del_proceso": "Abierto",
+        "precio_base": "186600000",
+        "descripci_n_del_procedimiento": long_desc,
+        "modalidad_de_contratacion": "Selección abreviada subasta inversa",
+    }
+    fields = extract_fields(raw_row, dataset_id)
+    meta = extract_event_metadata(raw_row, dataset_id)
+    key = radar_result_key(raw_row, dataset_id)
+
+    # El extracto YA está acotado al salir de extract_event_metadata.
+    assert len(meta["object_excerpt"]) <= 180
+    assert long_desc not in meta["object_excerpt"]
+
+    row = {
+        "radar_id": env["radar"], "owner": env["owner"], "radar_name": "Radar PAE",
+        "run_id": "run", "ts": "2026-07-15T10:00:00+00:00", "kind": "new",
+        "result_key": key, "dataset": "procesos",
+        "title": fields["title"], "entity": fields["entity"],
+        "value": fields["value"], "status": fields["status"],
+        "prev_status": None, "prev_value": None,
+        "urlproceso": fields["urlproceso"], "referencia": fields["referencia"],
+        **meta,
+    }
+    env["radars"].record_events([row])
+
+    # Lo GUARDADO en radar_events es el extracto acotado, no la descripción.
+    conn = connect_sqlite(env["db"])
+    try:
+        stored = conn.execute(
+            "SELECT object_excerpt FROM radar_events WHERE radar_id=? AND result_key=?",
+            (env["radar"], key),
+        ).fetchone()["object_excerpt"]
+    finally:
+        conn.close()
+    assert len(stored) <= 180
+    assert "  " not in stored
+    assert stored.startswith("SUMINISTRO DE KITS DE APOYO NUTRICIONAL")
+    assert long_desc not in stored
+
+    # Sobrevive selector -> payload v3 -> render.
+    result = env["selector"].select_pair(env["endpoint"], env["radar"], now=NOW)
+    payload = json.loads(env["outbox"].get_batch(result.notification_id).payload_json)
+    assert payload["version"] == "p1b-payload-v3"
+    assert payload["items"][0]["object_excerpt"] == stored  # idempotente, sin re-truncar
+    text = render_payload(payload).text
+    assert "Objeto: SUMINISTRO DE KITS DE APOYO NUTRICIONAL" in text
+    assert long_desc not in text
+
+
+def test_end_to_end_event_without_description_still_renders(env):
+    """Regresión: evento sin descripción sigue funcionando (sin línea Objeto,
+    sin crash)."""
+    _events(env, ["new"])  # sin object_excerpt en extra
+    result = env["selector"].select_pair(env["endpoint"], env["radar"], now=NOW)
+    payload = json.loads(env["outbox"].get_batch(result.notification_id).payload_json)
+    assert payload["items"][0]["object_excerpt"] is None
+    text = render_payload(payload).text
+    assert "Objeto:" not in text
 
 
 def test_render_failure_rolls_back_batch_associations_and_cursor(env, monkeypatch):

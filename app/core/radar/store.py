@@ -240,6 +240,11 @@ class EventRecord:
     closing_date: str | None = None
     contractor: str | None = None
     signature_date: str | None = None
+    # Extracto del objeto/descripción público (TG-P2C). YA normalizado y
+    # acotado a ~180 caracteres por radar/keys.py (build_object_excerpt) antes
+    # de llegar aquí: radar_events.object_excerpt nunca guarda la descripción
+    # completa. Nullable — un evento sin descripción queda en NULL.
+    object_excerpt: str | None = None
 
 
 @dataclass(frozen=True)
@@ -403,7 +408,10 @@ CREATE TABLE IF NOT EXISTS radar_events (
     modality       TEXT,
     closing_date   TEXT,
     contractor     TEXT,
-    signature_date TEXT
+    signature_date TEXT,
+    -- TG-P2C: extracto del objeto/descripción público. Aditiva y nullable,
+    -- mismo criterio que las cuatro de arriba: sin backfill sobre lo heredado.
+    object_excerpt TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_radar_events_owner ON radar_events(owner, ts DESC);
 
@@ -459,11 +467,11 @@ INSERT INTO radar_events
    (id, radar_id, owner, radar_name, run_id, ts, kind, result_key,
     dataset, title, entity, value, status, prev_status, prev_value,
     urlproceso, referencia, event_seq,
-    modality, closing_date, contractor, signature_date)
+    modality, closing_date, contractor, signature_date, object_excerpt)
    VALUES (:id, :radar_id, :owner, :radar_name, :run_id, :ts, :kind,
     :result_key, :dataset, :title, :entity, :value, :status,
     :prev_status, :prev_value, :urlproceso, :referencia, :event_seq,
-    :modality, :closing_date, :contractor, :signature_date)
+    :modality, :closing_date, :contractor, :signature_date, :object_excerpt)
 """
 
 _RESERVE_EVENT_SEQ_SQL = "INSERT INTO radar_event_seq (ts) VALUES (?)"
@@ -653,6 +661,7 @@ def _insert_event_dicts(conn: sqlite3.Connection, events: list[dict]) -> None:
                 "closing_date": e.get("closing_date"),
                 "contractor": e.get("contractor"),
                 "signature_date": e.get("signature_date"),
+                "object_excerpt": e.get("object_excerpt"),
             },
         )
 
@@ -687,6 +696,7 @@ def _insert_events(
             "urlproceso": e.urlproceso, "referencia": e.referencia,
             "modality": e.modality, "closing_date": e.closing_date,
             "contractor": e.contractor, "signature_date": e.signature_date,
+            "object_excerpt": e.object_excerpt,
         }
         for e in events
     ])
@@ -875,7 +885,11 @@ class RadarStore:
         # R2B-1B1: aditivas y sin default. Las filas heredadas quedan en NULL y
         # NO se rellenan: el dato de un evento viejo solo existe en el SECOP de
         # hoy, y copiarlo ahí inventaría un pasado que nadie observó entonces.
-        for name in ("modality", "closing_date", "contractor", "signature_date"):
+        for name in (
+            "modality", "closing_date", "contractor", "signature_date",
+            # TG-P2C: mismo patrón aditivo/nullable que las cuatro anteriores.
+            "object_excerpt",
+        ):
             if name not in event_cols:
                 conn.execute(f"ALTER TABLE radar_events ADD COLUMN {name} TEXT")
         conn.execute(

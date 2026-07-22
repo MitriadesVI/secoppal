@@ -104,6 +104,7 @@ def test_event_metadata_procesos_projects_modality_and_closing():
         "closing_date": "2026-08-20T17:00:00.000",
         "contractor": None,
         "signature_date": None,
+        "object_excerpt": None,
     }
 
 
@@ -119,6 +120,7 @@ def test_event_metadata_contratos_projects_contractor_and_signature():
         "closing_date": None,
         "contractor": "UNION TEMPORAL PAE 2026",
         "signature_date": "2026-03-11T00:00:00.000",
+        "object_excerpt": None,
     }
 
 
@@ -133,6 +135,7 @@ def test_event_metadata_missing_and_whitespace_normalize_to_none():
     assert extract_event_metadata(row, CONT) == {
         "modality": None, "closing_date": None,
         "contractor": None, "signature_date": None,
+        "object_excerpt": None,
     }
 
 
@@ -165,6 +168,7 @@ def test_unknown_dataset_with_process_shaped_fields_returns_no_metadata():
     assert extract_event_metadata(row, "dataset-desconocido") == {
         "modality": None, "closing_date": None,
         "contractor": None, "signature_date": None,
+        "object_excerpt": None,
     }
 
 
@@ -174,6 +178,7 @@ def test_event_metadata_unknown_dataset_with_foreign_row_also_empty():
     assert extract_event_metadata(foreign, "zzzz-9999") == {
         "modality": None, "closing_date": None,
         "contractor": None, "signature_date": None,
+        "object_excerpt": None,
     }
 
 
@@ -183,6 +188,85 @@ def test_extract_fields_keeps_its_inherited_procesos_fallback():
     no toca. Fijarlo aquí evita 'arreglarlo' por simetría y mover el diff."""
     row = {"nombre_del_procedimiento": "PAE", "precio_base": "1000"}
     assert extract_fields(row, "dataset-desconocido")["title"] == "PAE"
+
+
+# ---------------------------------------------------------------------------
+# object_excerpt (TG-P2C) — sale de spec.description, ya presente en
+# select_fields para ambos datasets (ningún SELECT nuevo).
+# ---------------------------------------------------------------------------
+
+def test_event_metadata_procesos_projects_object_excerpt_from_description():
+    row = {
+        "descripci_n_del_procedimiento": (
+            "SUMINISTRO DE KITS DE APOYO NUTRICIONAL PARA PROGRAMAS ADULTO MAYOR"
+        ),
+    }
+    meta = extract_event_metadata(row, PROC)
+    assert meta["object_excerpt"] == (
+        "SUMINISTRO DE KITS DE APOYO NUTRICIONAL PARA PROGRAMAS ADULTO MAYOR"
+    )
+
+
+def test_event_metadata_contratos_projects_object_excerpt_from_description():
+    row = {"descripcion_del_proceso": "Objeto del contrato de suministro"}
+    meta = extract_event_metadata(row, CONT)
+    assert meta["object_excerpt"] == "Objeto del contrato de suministro"
+
+
+def test_event_metadata_object_excerpt_absent_when_description_missing():
+    """Evento sin descripción sigue funcionando: None, no crash."""
+    row = {"modalidad_de_contratacion": "Licitación pública"}
+    assert extract_event_metadata(row, PROC)["object_excerpt"] is None
+
+
+def test_event_metadata_object_excerpt_is_bounded_at_extraction_not_at_render():
+    """TG-P2C ajuste: la proyección YA acota a <=180 caracteres. Una
+    descripción de miles de caracteres NO se guarda entera —el saneamiento
+    ocurre aquí, no recién en build_payload."""
+    long_desc = (
+        "SUMINISTRO DE KITS DE APOYO NUTRICIONAL PARA POBLACION VULNERABLE "
+        "PROGRAMAS ADULTO MAYOR Y POBLACIÓN EN CONDICION DE DISCAPACIDAD DEL "
+        "MUNICIPIO DE RAQUIRA BOYACA PARA LA VIGENCIA 2026 "
+    ) + "TEXTO DE RELLENO MUY LARGO " * 40
+    assert len(long_desc) > 1000
+    meta = extract_event_metadata({"descripci_n_del_procedimiento": long_desc}, PROC)
+    excerpt = meta["object_excerpt"]
+    assert excerpt is not None
+    assert len(excerpt) <= 180
+    assert excerpt.endswith("…")
+    assert excerpt.startswith("SUMINISTRO DE KITS DE APOYO NUTRICIONAL")
+    assert long_desc not in excerpt  # nunca la descripción completa
+
+
+def test_event_metadata_object_excerpt_normalizes_whitespace_before_persisting():
+    """Espacios múltiples se colapsan ANTES de que el dato llegue al evento."""
+    row = {"descripci_n_del_procedimiento": "  SUMINISTRO   DE\tKITS\n\nADULTO   MAYOR  "}
+    meta = extract_event_metadata(row, PROC)
+    assert meta["object_excerpt"] == "SUMINISTRO DE KITS ADULTO MAYOR"
+
+
+def test_event_metadata_object_excerpt_single_long_token_is_none():
+    """Token único más largo que el límite → None (no se parte una palabra)."""
+    row = {"descripci_n_del_procedimiento": "A" * 500}
+    assert extract_event_metadata(row, PROC)["object_excerpt"] is None
+
+
+def test_object_excerpt_source_does_not_affect_result_key_snapshot_or_fields():
+    """object_excerpt no participa en identidad ni en la decisión de cambio:
+    dos filas del MISMO proceso con descripciones distintas dan el mismo
+    result_key y el mismo snapshot_hash, y extract_fields ni la conoce."""
+    row_a = {
+        "id_del_proceso": "P-1", "referencia_del_proceso": "REF-1",
+        "estado_de_apertura_del_proceso": "Abierto", "precio_base": "1000",
+        "descripci_n_del_procedimiento": "Descripción original",
+    }
+    row_b = {
+        **row_a,
+        "descripci_n_del_procedimiento": "Descripción TOTALMENTE DISTINTA Adulto Mayor",
+    }
+    assert radar_result_key(row_a, PROC) == radar_result_key(row_b, PROC)
+    assert snapshot_hash(row_a, PROC) == snapshot_hash(row_b, PROC)
+    assert "object_excerpt" not in extract_fields(row_a, PROC)
 
 
 def test_event_metadata_is_not_part_of_the_diff_contract():

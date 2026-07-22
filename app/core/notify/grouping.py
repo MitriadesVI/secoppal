@@ -56,6 +56,10 @@ class SelectableRadarEvent:
     closing_date: str | None = None
     contractor: str | None = None
     signature_date: str | None = None
+    # Extracto breve del objeto/descripción contractual (dato público, no
+    # razonamiento generado ni "node signal"). Congelado tal cual lo entregue
+    # el caller — este módulo no decide qué fragmento mostrar.
+    object_excerpt: str | None = None
     # ``radar_events`` todavía no tiene esta representación. El campo permite
     # expresar el contrato sin derivar confirmación de una mera ausencia.
     disappeared_confirmed: bool = False
@@ -92,6 +96,7 @@ class GroupedRadarEvent:
     closing_date: str | None = None
     contractor: str | None = None
     signature_date: str | None = None
+    object_excerpt: str | None = None
 
     @property
     def representative_seq(self) -> int:
@@ -112,6 +117,7 @@ class GroupedRadarEvent:
             "closing_date": self.closing_date,
             "contractor": self.contractor,
             "signature_date": self.signature_date,
+            "object_excerpt": self.object_excerpt,
             "observed_at": self.observed_at,
             "urlproceso": self.urlproceso,
             "referencia": self.referencia,
@@ -203,6 +209,11 @@ def group_events(events: Iterable[SelectableRadarEvent]) -> list[GroupedRadarEve
                 prev_value=first.prev_value,
                 urlproceso=_latest_nonempty(bucket, "urlproceso"),
                 referencia=_latest_nonempty(bucket, "referencia"),
+                # Descriptivo y relativamente estable como title/entity/referencia
+                # (no un hecho volátil como closing_date/modality): si un evento
+                # posterior del mismo bucket no trae excerpt, no hay motivo para
+                # perder la explicación que un evento anterior sí trajo.
+                object_excerpt=_latest_nonempty(bucket, "object_excerpt"),
                 event_ids=tuple(e.event_id for e in bucket),
                 event_seqs=tuple(e.event_seq for e in bucket),
                 # ``or None``: un evento sin dataset sigue sin tenerlo. Ausencia
