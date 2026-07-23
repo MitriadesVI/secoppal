@@ -1,0 +1,413 @@
+# MOD-M2 — Lexicón lingüístico canónico V1 (declarativo).
+#
+# Separa el LENGUAJE DEL USUARIO de la VERDAD JURÍDICA. El catálogo M1
+# (modality_catalog_v1.yaml) es la verdad; este lexicón declara cómo habla el
+# usuario y referencia ÚNICAMENTE ids/familias existentes en M1.
+#
+# target_kind:
+#   retrieval_family → produce un ModalityMatch de familia (expansión de hijos).
+#   procedure        → produce un ModalityMatch de un procedimiento específico.
+#   qualifier        → efecto semántico polimórfico compuesto contra M1.
+#   ambiguity        → produce un ResolutionIssue de tipo ambiguity.
+#
+# Precedencia: clase semántica + fuerza + longitud + posición + rule_id.
+# Las ambigüedades son DECLARADAS, no accidentales.
+#
+# El loader (app/core/modality_lexicon.py) es FAIL-CLOSED.
+
+version: 1
+
+rules:
+  # ── Licitación pública ────────────────────────────────────────────────────
+  - rule_id: lic_publica_legal
+    phrases: ["licitación pública", "licitaciones públicas"]
+    target_kind: retrieval_family
+    target_id: licitacion_publica
+    match_strength: exact_legal
+    confidence: high
+    explicit_intent: false
+    assumption_code: null
+    notes: Familia jurídica de licitación pública (incluye obra; excluye acuerdo marco).
+
+  - rule_id: lic_colloquial
+    phrases: ["licitación", "licitaciones", "proceso licitatorio", "procesos licitatorios"]
+    target_kind: retrieval_family
+    target_id: licitacion_publica
+    match_strength: colloquial
+    confidence: medium
+    explicit_intent: false
+    assumption_code: COLLOQUIAL_LICITACION_AS_LEGAL_FAMILY
+    notes: >-
+      Coloquialmente "licitación" = licitación pública. Suposición explícita,
+      confianza media; no se oculta.
+
+  # ── Selección abreviada (familia + 3 hijos ordinarios) ────────────────────
+  - rule_id: sel_abr_family
+    phrases: ["selección abreviada", "selecciones abreviadas"]
+    target_kind: retrieval_family
+    target_id: seleccion_abreviada
+    match_strength: exact_legal
+    confidence: high
+    explicit_intent: false
+    assumption_code: null
+    notes: Familia de selección abreviada; expande a los 3 hijos ordinarios.
+
+  - rule_id: sel_abr_menor_cuantia
+    phrases:
+      - "menor cuantía"
+      - "selección abreviada de menor cuantía"
+      - "selección abreviada menor cuantía"
+      - "selecciones abreviadas de menor cuantía"
+    target_kind: procedure
+    target_id: seleccion_abreviada_menor_cuantia
+    match_strength: exact_legal
+    confidence: high
+    explicit_intent: false
+    assumption_code: null
+    notes: Subtipo menor cuantía. Específico gana sobre la familia.
+
+  - rule_id: sel_abr_subasta_inversa
+    phrases:
+      - "subasta inversa"
+      - "subastas inversas"
+      - "selección abreviada por subasta inversa"
+      - "selección abreviada de subasta inversa"
+      - "selección abreviada subasta inversa"
+      - "selecciones abreviadas por subasta inversa"
+    target_kind: procedure
+    target_id: seleccion_abreviada_subasta_inversa
+    match_strength: exact_legal
+    confidence: high
+    explicit_intent: false
+    assumption_code: null
+    notes: Subtipo subasta inversa. La frase compuesta gana sobre familia y bare subasta.
+
+  - rule_id: sel_abr_sin_manifestacion
+    phrases:
+      - "menor cuantía sin manifestación de interés"
+      - "menor cuantía sin manifestación"
+      - "selección abreviada sin manifestación de interés"
+      - "selección abreviada menor cuantía sin manifestación de interés"
+      - "selección abreviada de menor cuantía sin manifestación de interés"
+    target_kind: procedure
+    target_id: seleccion_abreviada_menor_cuantia_sin_manifestacion
+    match_strength: exact_legal
+    confidence: high
+    explicit_intent: false
+    assumption_code: null
+    notes: >-
+      Variante sin manifestación de interés. "sin manifestación" es parte del
+      nombre, NO una exclusión.
+
+  # ── Mínima cuantía ────────────────────────────────────────────────────────
+  - rule_id: minima_cuantia
+    phrases: ["mínima cuantía", "min cuantía"]
+    target_kind: procedure
+    target_id: minima_cuantia
+    match_strength: exact_legal
+    confidence: high
+    explicit_intent: false
+    assumption_code: null
+    notes: >-
+      Modalidad general de mínima cuantía. NO resolver "mínima", "cuantía
+      mínima", "valor mínimo" ni "monto mínimo" (no son frases del lexicón).
+
+  # ── Contratación directa (familia + modos) ────────────────────────────────
+  - rule_id: cd_family
+    phrases: ["contratación directa", "contrataciones directas", "modalidad directa"]
+    target_kind: retrieval_family
+    target_id: contratacion_directa
+    match_strength: exact_legal
+    confidence: high
+    explicit_intent: false
+    assumption_code: null
+    notes: Familia contratación directa (incluye standard + con ofertas).
+
+  - rule_id: cd_con_ofertas
+    phrases: ["contratación directa con ofertas", "contrataciones directas con ofertas"]
+    target_kind: procedure
+    target_id: contratacion_directa_con_ofertas
+    match_strength: exact_common
+    confidence: high
+    explicit_intent: false
+    assumption_code: null
+    notes: '"con ofertas" es qualifier de módulo de plataforma, no una negación.'
+
+  - rule_id: cd_sin_ofertas
+    phrases: ["contratación directa sin ofertas", "contrataciones directas sin ofertas"]
+    target_kind: procedure
+    target_id: contratacion_directa
+    match_strength: exact_common
+    confidence: high
+    explicit_intent: false
+    assumption_code: null
+    notes: '"sin ofertas" selecciona el hecho jurídico standard; NO es exclusión.'
+
+  - rule_id: qualifier_con_ofertas
+    phrases:
+      - "con ofertas"
+      - "que permita presentar ofertas"
+      - "que permita recibir ofertas"
+      - "en el que se reciban ofertas"
+      - "en la que se reciban ofertas"
+      - "donde se reciban ofertas"
+    target_kind: qualifier
+    allowed_retrieval_families: ["contratacion_directa", "regimen_especial"]
+    qualifier_type: submission_mode
+    qualifier_value: con_ofertas
+    attachment_direction: after
+    max_attachment_tokens: 10
+    match_strength: contextual
+    confidence: high
+    explicit_intent: false
+    notes: Efecto polimórfico; M1 determina el procedimiento concreto por familia.
+
+  - rule_id: qualifier_sin_ofertas
+    phrases:
+      - "sin ofertas"
+      - "sin recepción de ofertas"
+      - "sin que haya ofertas"
+      - "en el que no se presentan ofertas"
+      - "en la que no se presentan ofertas"
+    target_kind: qualifier
+    allowed_retrieval_families: ["contratacion_directa", "regimen_especial"]
+    qualifier_type: submission_mode
+    qualifier_value: standard
+    attachment_direction: after
+    max_attachment_tokens: 10
+    match_strength: contextual
+    confidence: high
+    explicit_intent: false
+    notes: Qualifier técnico protegido; nunca funciona como negación general.
+
+  - rule_id: cd_colloquial
+    phrases: ["compra directa", "compras directas"]
+    target_kind: retrieval_family
+    target_id: contratacion_directa
+    match_strength: colloquial
+    confidence: medium
+    explicit_intent: false
+    assumption_code: COMPRA_DIRECTA_AS_CONTRATACION_DIRECTA
+    notes: Coloquial "compra directa" = contratación directa. Suposición explícita.
+
+  # ── Concurso de méritos (familia + hijos + qualifier) ─────────────────────
+  - rule_id: cm_family
+    phrases: ["concurso de méritos", "concursos de méritos"]
+    target_kind: retrieval_family
+    target_id: concurso_de_meritos
+    match_strength: exact_legal
+    confidence: high
+    explicit_intent: false
+    assumption_code: null
+    notes: Familia concurso de méritos (abierto + precalificación).
+
+  - rule_id: cm_abierto
+    phrases: ["concurso de méritos abierto", "concursos de méritos abiertos"]
+    target_kind: procedure
+    target_id: concurso_meritos_abierto
+    match_strength: exact_legal
+    confidence: high
+    explicit_intent: false
+    assumption_code: null
+    notes: Subtipo abierto.
+
+  - rule_id: cm_precalificacion
+    phrases:
+      - "concurso de méritos con precalificación"
+      - "concursos de méritos con precalificación"
+      - "concurso con precalificación"
+      - "concursos con precalificación"
+    target_kind: procedure
+    target_id: concurso_meritos_precalificacion
+    match_strength: exact_legal
+    confidence: high
+    explicit_intent: false
+    assumption_code: null
+    notes: Subtipo con precalificación. Gana sobre familia y sobre qualifier suelto.
+
+  - rule_id: qualifier_precalificacion
+    phrases:
+      - "con precalificación"
+      - "precalificación"
+      - "que tenga precalificación"
+      - "que incluya precalificación"
+    target_kind: qualifier
+    allowed_retrieval_families: ["concurso_de_meritos"]
+    qualifier_type: procedure_variant
+    qualifier_value: con_precalificacion
+    attachment_direction: after
+    max_attachment_tokens: 8
+    match_strength: contextual
+    confidence: high
+    explicit_intent: false
+    notes: >-
+      Efecto de variante. Se adjunta primero al primario local y solo después se
+      valida que su familia sea concurso de méritos.
+
+  - rule_id: qualifier_sin_precalificacion
+    phrases:
+      - "sin precalificación"
+      - "sin ninguna precalificación"
+      - "sin que haya precalificación"
+      - "que no tenga precalificación"
+      - "que no tengan precalificación"
+      - "que no incluya precalificación"
+    target_kind: qualifier
+    allowed_retrieval_families: ["concurso_de_meritos"]
+    qualifier_type: procedure_variant
+    qualifier_value: abierto
+    attachment_direction: after
+    max_attachment_tokens: 8
+    match_strength: contextual
+    confidence: high
+    explicit_intent: false
+    notes: Qualifier negativo explícito; compone al concurso de méritos abierto.
+
+  # ── Régimen especial (familia + modos) ────────────────────────────────────
+  - rule_id: re_family
+    phrases: ["régimen especial"]
+    target_kind: retrieval_family
+    target_id: regimen_especial
+    match_strength: exact_legal
+    confidence: high
+    explicit_intent: false
+    assumption_code: null
+    notes: >-
+      Familia régimen especial (standard + con ofertas). NO confundir con
+      "régimen alimenticio especial" (no adyacente → no match).
+
+  - rule_id: re_con_ofertas
+    phrases: ["régimen especial con ofertas"]
+    target_kind: procedure
+    target_id: regimen_especial_con_ofertas
+    match_strength: exact_common
+    confidence: high
+    explicit_intent: false
+    assumption_code: null
+    notes: Modo con ofertas del régimen especial.
+
+  - rule_id: re_sin_ofertas
+    phrases: ["régimen especial sin ofertas"]
+    target_kind: procedure
+    target_id: regimen_especial
+    match_strength: exact_common
+    confidence: high
+    explicit_intent: false
+    assumption_code: null
+    notes: '"sin ofertas" selecciona el régimen especial standard; NO es exclusión.'
+
+  # ── Acuerdo marco (solo intención explícita) ──────────────────────────────
+  - rule_id: acuerdo_marco
+    phrases:
+      - "acuerdo marco"
+      - "acuerdos marco"
+      - "acuerdo marco de precios"
+      - "acuerdos marco de precios"
+      - "amp"
+      - "instrumento de agregación de demanda"
+      - "instrumentos de agregación de demanda"
+    target_kind: retrieval_family
+    target_id: acuerdo_marco
+    match_strength: exact_legal
+    confidence: high
+    explicit_intent: true
+    assumption_code: null
+    notes: >-
+      Categoría propia; recuperable solo por intención explícita. Diagnóstico
+      LEGAL_CLASSIFICATION_PENDING_REVIEW. No entra por alias de licitación ni
+      selección abreviada.
+
+  # ── Enajenación de bienes del Estado (venta de activos, intención explícita) ─
+  - rule_id: enaj_family
+    phrases:
+      - "enajenación de bienes"
+      - "enajenaciones de bienes"
+      - "venta de bienes del estado"
+      - "ventas de bienes del estado"
+      - "bienes que vende el estado"
+    target_kind: retrieval_family
+    target_id: enajenacion_bienes_estado
+    match_strength: exact_legal
+    confidence: high
+    explicit_intent: true
+    assumption_code: null
+    notes: Enajenación genérica → ambos mecanismos (subasta + sobre cerrado).
+
+  - rule_id: enaj_subasta
+    phrases:
+      - "enajenación con subasta"
+      - "enajenación de bienes con subasta"
+      - "subasta de bienes del estado"
+      - "subastas de bienes del estado"
+      - "remate del estado"
+      - "remates del estado"
+      - "remate de bienes del estado"
+    target_kind: procedure
+    target_id: enajenacion_subasta
+    match_strength: exact_legal
+    confidence: high
+    explicit_intent: true
+    assumption_code: null
+    notes: Enajenación con subasta (venta de activos del Estado).
+
+  - rule_id: enaj_sobre_cerrado
+    phrases:
+      - "enajenación por sobre cerrado"
+      - "enajenación con sobre cerrado"
+      - "enajenación de bienes con sobre cerrado"
+      - "enajenación de bienes por sobre cerrado"
+    target_kind: procedure
+    target_id: enajenacion_sobre_cerrado
+    match_strength: exact_legal
+    confidence: high
+    explicit_intent: true
+    assumption_code: null
+    notes: Enajenación por sobre cerrado.
+
+  # ── Subasta a secas (ambigüedad DECLARADA) ────────────────────────────────
+  - rule_id: amb_subasta
+    phrases: ["subasta", "subastas"]
+    target_kind: ambiguity
+    candidate_target_ids:
+      - seleccion_abreviada_subasta_inversa
+      - enajenacion_subasta
+    ambiguity_code: BARE_SUBASTA_MULTIPLE_LEGAL_MEANINGS
+    match_strength: contextual
+    confidence: low
+    explicit_intent: false
+    forbidden_context: ["privada", "arte"]
+    notes: >-
+      "subasta" a secas tiene múltiples significados jurídicos (subasta inversa
+      vs enajenación). Se suprime ante contexto no estatal (privada / arte).
+
+  # ── Subasta de prueba (artefacto de plataforma, NO buscable) ──────────────
+  - rule_id: subasta_prueba
+    phrases: ["subasta de prueba", "subastas de prueba"]
+    target_kind: procedure
+    target_id: subasta_de_prueba
+    match_strength: legacy_raw
+    confidence: low
+    explicit_intent: false
+    assumption_code: null
+    notes: Artefacto de plataforma. El resolver fuerza not_searchable.
+
+  # ── Solicitud de información a proveedores (planeación, intención explícita) ─
+  - rule_id: rfi_proveedores
+    phrases:
+      - "solicitud de información a proveedores"
+      - "solicitudes de información a proveedores"
+      - "solicitud de información a los proveedores"
+      - "solicitudes de información a los proveedores"
+      - "rfi de proveedores"
+      - "RFI"
+      - "sondeo de mercado en secop"
+      - "sondeo de mercado"
+    target_kind: procedure
+    target_id: solicitud_informacion_proveedores
+    match_strength: exact_legal
+    confidence: high
+    explicit_intent: true
+    assumption_code: null
+    notes: >-
+      Registro de planeación, NO modalidad jurídica. Diagnóstico
+      NON_CONTRACTUAL_PLANNING_RECORD. Ausente de contratos → dataset_inapplicable.

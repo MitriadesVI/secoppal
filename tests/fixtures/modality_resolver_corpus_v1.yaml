@@ -1,0 +1,4143 @@
+version: 1
+metrics:
+  corpus_rows: 245
+  unique_queries: 204
+  unique_normalized_queries: 183
+  new_unique_critical_cases: 58
+cases:
+- case_id: A01
+  query: licitación pública
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - licitacion_publica
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - licitacion_publica
+  - licitacion_publica_obra
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - licitación pública
+  expected_residual_text: ''
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: A02
+  query: licitaciones públicas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - licitacion_publica
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - licitacion_publica
+  - licitacion_publica_obra
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: A03
+  query: selección abreviada
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - seleccion_abreviada_menor_cuantia
+  - seleccion_abreviada_menor_cuantia_sin_manifestacion
+  - seleccion_abreviada_subasta_inversa
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - selección abreviada
+  expected_residual_text: ''
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: A04
+  query: selecciones abreviadas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - seleccion_abreviada_menor_cuantia
+  - seleccion_abreviada_menor_cuantia_sin_manifestacion
+  - seleccion_abreviada_subasta_inversa
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: A05
+  query: concurso de méritos
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_de_meritos
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_abierto
+  - concurso_meritos_precalificacion
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: A06
+  query: concursos de méritos
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_de_meritos
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_abierto
+  - concurso_meritos_precalificacion
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: A07
+  query: mínima cuantía
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - minima_cuantia
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - minima_cuantia
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: A08
+  query: contratación directa
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: A09
+  query: contrataciones directas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: A10
+  query: régimen especial
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - regimen_especial
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - regimen_especial
+  - regimen_especial_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: A11
+  query: selección abreviada de menor cuantía
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada_menor_cuantia
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - seleccion_abreviada_menor_cuantia
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - selección abreviada de menor cuantía
+  expected_residual_text: ''
+  notes: ''
+  expected_issues: []
+- case_id: A12
+  query: subasta inversa
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada_subasta_inversa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - seleccion_abreviada_subasta_inversa
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: A13
+  query: selección abreviada por subasta inversa
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada_subasta_inversa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - seleccion_abreviada_subasta_inversa
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - selección abreviada por subasta inversa
+  expected_residual_text: ''
+  notes: ''
+  expected_issues: []
+- case_id: A14
+  query: concurso de méritos abierto
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_meritos_abierto
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_abierto
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: A15
+  query: concurso de méritos con precalificación
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_meritos_precalificacion
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_precalificacion
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: A16
+  query: contratación directa con ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa_con_ofertas
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: A17
+  query: régimen especial con ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - regimen_especial_con_ofertas
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - regimen_especial_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: A18
+  query: acuerdo marco
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - acuerdo_marco
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - acuerdo_marco_precio_secop
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: A19
+  query: acuerdo marco de precios
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - acuerdo_marco
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - acuerdo_marco_precio_secop
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - acuerdo marco de precios
+  expected_residual_text: ''
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: A20
+  query: enajenación de bienes
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - enajenacion_bienes_estado
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - enajenacion_sobre_cerrado
+  - enajenacion_subasta
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: A21
+  query: enajenación con subasta
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - enajenacion_subasta
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - enajenacion_subasta
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: A22
+  query: enajenación por sobre cerrado
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - enajenacion_sobre_cerrado
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - enajenacion_sobre_cerrado
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: A23
+  query: solicitud de información a proveedores
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - solicitud_informacion_proveedores
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - solicitud_informacion_proveedores
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: A24
+  query: menor cuantía sin manifestación de interés
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada_menor_cuantia_sin_manifestacion
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - seleccion_abreviada_menor_cuantia_sin_manifestacion
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: A25
+  query: selección abreviada sin manifestación de interés
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada_menor_cuantia_sin_manifestacion
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - seleccion_abreviada_menor_cuantia_sin_manifestacion
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: A26
+  query: instrumentos de agregación de demanda
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - acuerdo_marco
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - acuerdo_marco_precio_secop
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: A27
+  query: concursos de méritos abiertos
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_meritos_abierto
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_abierto
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: A28
+  query: contratación directa sin ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: A29
+  query: régimen especial sin ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - regimen_especial
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - regimen_especial
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: A30
+  query: licitación pública de obra pública
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - licitacion_publica
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - licitacion_publica
+  - licitacion_publica_obra
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: obra se alcanza por expansión de familia, no por 'obra pública'
+  expected_issues: []
+- case_id: B01
+  query: LICITACIÓN PÚBLICA
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - licitacion_publica
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - licitacion_publica
+  - licitacion_publica_obra
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: B02
+  query: licitacion publica
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - licitacion_publica
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - licitacion_publica
+  - licitacion_publica_obra
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: B03
+  query: Selección Abreviada
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - seleccion_abreviada_menor_cuantia
+  - seleccion_abreviada_menor_cuantia_sin_manifestacion
+  - seleccion_abreviada_subasta_inversa
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: B04
+  query: ¿Hay SELECCIÓN-abreviada de aseo?
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - seleccion_abreviada_menor_cuantia
+  - seleccion_abreviada_menor_cuantia_sin_manifestacion
+  - seleccion_abreviada_subasta_inversa
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - SELECCIÓN-abreviada
+  expected_residual_text: ¿Hay de aseo?
+  notes: ''
+  expected_issues: []
+- case_id: B05
+  query: min. cuantía
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - minima_cuantia
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - minima_cuantia
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - min. cuantía
+  expected_residual_text: ''
+  notes: ''
+  expected_issues: []
+- case_id: B06
+  query: min cuantía para papelería
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - minima_cuantia
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - minima_cuantia
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: B07
+  query: mínima  cuantía
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - minima_cuantia
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - minima_cuantia
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: B08
+  query: MÍNIMA CUANTÍA
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - minima_cuantia
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - minima_cuantia
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: B09
+  query: concurso   de   méritos
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_de_meritos
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_abierto
+  - concurso_meritos_precalificacion
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: B10
+  query: contratación  directa
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: B11
+  query: ¿contratación directa?
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: B12
+  query: subasta inversa!
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada_subasta_inversa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - seleccion_abreviada_subasta_inversa
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: B13
+  query: selección/abreviada
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - seleccion_abreviada_menor_cuantia
+  - seleccion_abreviada_menor_cuantia_sin_manifestacion
+  - seleccion_abreviada_subasta_inversa
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: B14
+  query: régimen especial.
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - regimen_especial
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - regimen_especial
+  - regimen_especial_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: B15
+  query: acuerdo marco de precios,
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - acuerdo_marco
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - acuerdo_marco_precio_secop
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: B16
+  query: AMP
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - acuerdo_marco
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - acuerdo_marco_precio_secop
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: B17
+  query: amp
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - acuerdo_marco
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - acuerdo_marco_precio_secop
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: B18
+  query: Enajenación De Bienes
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - enajenacion_bienes_estado
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - enajenacion_sobre_cerrado
+  - enajenacion_subasta
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: B19
+  query: SUBASTAS INVERSAS
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada_subasta_inversa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - seleccion_abreviada_subasta_inversa
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: B20
+  query: concursos de méritos abiertos
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_meritos_abierto
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_abierto
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: B21
+  query: contrataciones directas con ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa_con_ofertas
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: B22
+  query: selecciones abreviadas de menor cuantía
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada_menor_cuantia
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - seleccion_abreviada_menor_cuantia
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: B23
+  query: proceso licitatorio
+  dataset: null
+  expected_status: resolved_with_assumption
+  expected_include_targets:
+  - licitacion_publica
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - licitacion_publica
+  - licitacion_publica_obra
+  expected_assumption_codes:
+  - COLLOQUIAL_LICITACION_AS_LEGAL_FAMILY
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: B24
+  query: procesos licitatorios
+  dataset: null
+  expected_status: resolved_with_assumption
+  expected_include_targets:
+  - licitacion_publica
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - licitacion_publica
+  - licitacion_publica_obra
+  expected_assumption_codes:
+  - COLLOQUIAL_LICITACION_AS_LEGAL_FAMILY
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: B25
+  query: compra directa
+  dataset: null
+  expected_status: resolved_with_assumption
+  expected_include_targets:
+  - contratacion_directa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes:
+  - COMPRA_DIRECTA_AS_CONTRATACION_DIRECTA
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: B26
+  query: compras directas
+  dataset: null
+  expected_status: resolved_with_assumption
+  expected_include_targets:
+  - contratacion_directa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes:
+  - COMPRA_DIRECTA_AS_CONTRATACION_DIRECTA
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: B27
+  query: sondeo de mercado en SECOP
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - solicitud_informacion_proveedores
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - solicitud_informacion_proveedores
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: B28
+  query: rfi de proveedores
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - solicitud_informacion_proveedores
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - solicitud_informacion_proveedores
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: B29
+  query: remates del Estado
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - enajenacion_subasta
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - enajenacion_subasta
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: B30
+  query: venta de bienes del Estado
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - enajenacion_bienes_estado
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - enajenacion_sobre_cerrado
+  - enajenacion_subasta
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: C01
+  query: selección abreviada
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - seleccion_abreviada_menor_cuantia
+  - seleccion_abreviada_menor_cuantia_sin_manifestacion
+  - seleccion_abreviada_subasta_inversa
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: C02
+  query: selección abreviada de menor cuantía de aseo
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada_menor_cuantia
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - seleccion_abreviada_menor_cuantia
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - selección abreviada de menor cuantía
+  expected_residual_text: de aseo
+  notes: ''
+  expected_issues: []
+- case_id: C03
+  query: selección abreviada por subasta inversa de alimentos
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada_subasta_inversa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - seleccion_abreviada_subasta_inversa
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - selección abreviada por subasta inversa
+  expected_residual_text: de alimentos
+  notes: ''
+  expected_issues: []
+- case_id: C04
+  query: selección abreviada sin manifestación de interés
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada_menor_cuantia_sin_manifestacion
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - seleccion_abreviada_menor_cuantia_sin_manifestacion
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: C05
+  query: concurso de méritos
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_de_meritos
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_abierto
+  - concurso_meritos_precalificacion
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: C06
+  query: concurso de méritos abierto
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_meritos_abierto
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_abierto
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: C07
+  query: concurso de méritos con precalificación
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_meritos_precalificacion
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_precalificacion
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: C08
+  query: concurso con precalificación
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_meritos_precalificacion
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_precalificacion
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: C09
+  query: contratación directa
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: C10
+  query: contratación directa con ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa_con_ofertas
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: C11
+  query: contratación directa sin ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: C12
+  query: régimen especial
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - regimen_especial
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - regimen_especial
+  - regimen_especial_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: C13
+  query: régimen especial con ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - regimen_especial_con_ofertas
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - regimen_especial_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: C14
+  query: régimen especial sin ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - regimen_especial
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - regimen_especial
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: C15
+  query: licitación pública
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - licitacion_publica
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - licitacion_publica
+  - licitacion_publica_obra
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: C16
+  query: enajenación de bienes
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - enajenacion_bienes_estado
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - enajenacion_sobre_cerrado
+  - enajenacion_subasta
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: C17
+  query: enajenación con subasta
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - enajenacion_subasta
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - enajenacion_subasta
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: C18
+  query: enajenación por sobre cerrado
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - enajenacion_sobre_cerrado
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - enajenacion_sobre_cerrado
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: C19
+  query: menor cuantía
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada_menor_cuantia
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - seleccion_abreviada_menor_cuantia
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: C20
+  query: subasta inversa
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada_subasta_inversa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - seleccion_abreviada_subasta_inversa
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: C21
+  query: selección abreviada menor cuantía
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada_menor_cuantia
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - seleccion_abreviada_menor_cuantia
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: C22
+  query: selección abreviada de menor cuantía sin manifestación de interés
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada_menor_cuantia_sin_manifestacion
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - seleccion_abreviada_menor_cuantia_sin_manifestacion
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: C23
+  query: concursos de méritos con precalificación
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_meritos_precalificacion
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_precalificacion
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: C24
+  query: selección abreviada de subasta inversa
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada_subasta_inversa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - seleccion_abreviada_subasta_inversa
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: C25
+  query: mínima cuantía
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - minima_cuantia
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - minima_cuantia
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: C26
+  query: menor cuantía sin manifestación
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada_menor_cuantia_sin_manifestacion
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - seleccion_abreviada_menor_cuantia_sin_manifestacion
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: C27
+  query: selecciones abreviadas por subasta inversa
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada_subasta_inversa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - seleccion_abreviada_subasta_inversa
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: C28
+  query: enajenación de bienes con subasta
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - enajenacion_subasta
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - enajenacion_subasta
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: C29
+  query: enajenación de bienes con sobre cerrado
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - enajenacion_sobre_cerrado
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - enajenacion_sobre_cerrado
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: C30
+  query: menor cuantía sin manifestación de interés de vías
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada_menor_cuantia_sin_manifestacion
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - seleccion_abreviada_menor_cuantia_sin_manifestacion
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: de vías
+  notes: ''
+  expected_issues: []
+- case_id: D01
+  query: licitación
+  dataset: null
+  expected_status: resolved_with_assumption
+  expected_include_targets:
+  - licitacion_publica
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - licitacion_publica
+  - licitacion_publica_obra
+  expected_assumption_codes:
+  - COLLOQUIAL_LICITACION_AS_LEGAL_FAMILY
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: D02
+  query: licitaciones
+  dataset: null
+  expected_status: resolved_with_assumption
+  expected_include_targets:
+  - licitacion_publica
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - licitacion_publica
+  - licitacion_publica_obra
+  expected_assumption_codes:
+  - COLLOQUIAL_LICITACION_AS_LEGAL_FAMILY
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: D03
+  query: proceso licitatorio
+  dataset: null
+  expected_status: resolved_with_assumption
+  expected_include_targets:
+  - licitacion_publica
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - licitacion_publica
+  - licitacion_publica_obra
+  expected_assumption_codes:
+  - COLLOQUIAL_LICITACION_AS_LEGAL_FAMILY
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: D04
+  query: procesos licitatorios
+  dataset: null
+  expected_status: resolved_with_assumption
+  expected_include_targets:
+  - licitacion_publica
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - licitacion_publica
+  - licitacion_publica_obra
+  expected_assumption_codes:
+  - COLLOQUIAL_LICITACION_AS_LEGAL_FAMILY
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: D05
+  query: compra directa
+  dataset: null
+  expected_status: resolved_with_assumption
+  expected_include_targets:
+  - contratacion_directa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes:
+  - COMPRA_DIRECTA_AS_CONTRATACION_DIRECTA
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: D06
+  query: compras directas
+  dataset: null
+  expected_status: resolved_with_assumption
+  expected_include_targets:
+  - contratacion_directa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes:
+  - COMPRA_DIRECTA_AS_CONTRATACION_DIRECTA
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: D07
+  query: licitaciones de alimentación en 2025 por más de 2000 palos
+  dataset: null
+  expected_status: resolved_with_assumption
+  expected_include_targets:
+  - licitacion_publica
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - licitacion_publica
+  - licitacion_publica_obra
+  expected_assumption_codes:
+  - COLLOQUIAL_LICITACION_AS_LEGAL_FAMILY
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - licitaciones
+  expected_residual_text: de alimentación en 2025 por más de 2000 palos
+  notes: ''
+  expected_issues: []
+- case_id: D08
+  query: una licitación de obras
+  dataset: null
+  expected_status: resolved_with_assumption
+  expected_include_targets:
+  - licitacion_publica
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - licitacion_publica
+  - licitacion_publica_obra
+  expected_assumption_codes:
+  - COLLOQUIAL_LICITACION_AS_LEGAL_FAMILY
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: D09
+  query: compra directa de insumos
+  dataset: null
+  expected_status: resolved_with_assumption
+  expected_include_targets:
+  - contratacion_directa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes:
+  - COMPRA_DIRECTA_AS_CONTRATACION_DIRECTA
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: D10
+  query: proceso licitatorio de vigilancia
+  dataset: null
+  expected_status: resolved_with_assumption
+  expected_include_targets:
+  - licitacion_publica
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - licitacion_publica
+  - licitacion_publica_obra
+  expected_assumption_codes:
+  - COLLOQUIAL_LICITACION_AS_LEGAL_FAMILY
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: D11
+  query: licitaciones en Bogotá 2025
+  dataset: null
+  expected_status: resolved_with_assumption
+  expected_include_targets:
+  - licitacion_publica
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - licitacion_publica
+  - licitacion_publica_obra
+  expected_assumption_codes:
+  - COLLOQUIAL_LICITACION_AS_LEGAL_FAMILY
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: D12
+  query: las licitaciones grandes
+  dataset: null
+  expected_status: resolved_with_assumption
+  expected_include_targets:
+  - licitacion_publica
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - licitacion_publica
+  - licitacion_publica_obra
+  expected_assumption_codes:
+  - COLLOQUIAL_LICITACION_AS_LEGAL_FAMILY
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: D13
+  query: compras directas de papelería
+  dataset: null
+  expected_status: resolved_with_assumption
+  expected_include_targets:
+  - contratacion_directa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes:
+  - COMPRA_DIRECTA_AS_CONTRATACION_DIRECTA
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: D14
+  query: licitación pública
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - licitacion_publica
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - licitacion_publica
+  - licitacion_publica_obra
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: 'control: legal alta NO lleva assumption'
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: D15
+  query: contratación directa
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: 'control: legal alta NO lleva assumption'
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: D16
+  query: licitaciones o mínima cuantía
+  dataset: null
+  expected_status: resolved_with_assumption
+  expected_include_targets:
+  - licitacion_publica
+  - minima_cuantia
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes:
+  - COLLOQUIAL_LICITACION_AS_LEGAL_FAMILY
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: D17
+  query: procesos licitatorios de aseo
+  dataset: null
+  expected_status: resolved_with_assumption
+  expected_include_targets:
+  - licitacion_publica
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - licitacion_publica
+  - licitacion_publica_obra
+  expected_assumption_codes:
+  - COLLOQUIAL_LICITACION_AS_LEGAL_FAMILY
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: D18
+  query: compra directa o licitación
+  dataset: null
+  expected_status: resolved_with_assumption
+  expected_include_targets:
+  - contratacion_directa
+  - licitacion_publica
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes:
+  - COLLOQUIAL_LICITACION_AS_LEGAL_FAMILY
+  - COMPRA_DIRECTA_AS_CONTRATACION_DIRECTA
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: D19
+  query: alguna licitación por ahí
+  dataset: null
+  expected_status: resolved_with_assumption
+  expected_include_targets:
+  - licitacion_publica
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - licitacion_publica
+  - licitacion_publica_obra
+  expected_assumption_codes:
+  - COLLOQUIAL_LICITACION_AS_LEGAL_FAMILY
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: D20
+  query: hágame una compra directa
+  dataset: null
+  expected_status: resolved_with_assumption
+  expected_include_targets:
+  - contratacion_directa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes:
+  - COMPRA_DIRECTA_AS_CONTRATACION_DIRECTA
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: E01
+  query: licitación pública o selección abreviada
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - licitacion_publica
+  - seleccion_abreviada
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: E02
+  query: licitación pública, mínima cuantía y concurso de méritos
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - licitacion_publica
+  - minima_cuantia
+  - concurso_de_meritos
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: E03
+  query: selección abreviada o mínima cuantía
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada
+  - minima_cuantia
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: E04
+  query: contratación directa y régimen especial
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa
+  - regimen_especial
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: E05
+  query: licitación pública o concurso de méritos abierto
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - licitacion_publica
+  - concurso_meritos_abierto
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: E06
+  query: oportunidades excepto contratación directa
+  dataset: null
+  expected_status: resolved
+  expected_include_targets: []
+  expected_exclude_targets:
+  - contratacion_directa
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: E07
+  query: que no sean de mínima cuantía
+  dataset: null
+  expected_status: resolved
+  expected_include_targets: []
+  expected_exclude_targets:
+  - minima_cuantia
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: E08
+  query: sin contratación directa
+  dataset: null
+  expected_status: resolved
+  expected_include_targets: []
+  expected_exclude_targets:
+  - contratacion_directa
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: E09
+  query: selección abreviada pero no subasta inversa
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada
+  expected_exclude_targets:
+  - seleccion_abreviada_subasta_inversa
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: E10
+  query: licitación pública excepto acuerdo marco
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - licitacion_publica
+  expected_exclude_targets:
+  - acuerdo_marco
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: E11
+  query: contratación directa excepto régimen especial
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa
+  expected_exclude_targets:
+  - regimen_especial
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: E12
+  query: mínima cuantía o licitación pública
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - minima_cuantia
+  - licitacion_publica
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: E13
+  query: selección abreviada, concurso de méritos o mínima cuantía
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada
+  - concurso_de_meritos
+  - minima_cuantia
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: E14
+  query: todo salvo contratación directa
+  dataset: null
+  expected_status: resolved
+  expected_include_targets: []
+  expected_exclude_targets:
+  - contratacion_directa
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: E15
+  query: licitación pública sin contratación directa
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - licitacion_publica
+  expected_exclude_targets:
+  - contratacion_directa
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: E16
+  query: concurso de méritos y selección abreviada de menor cuantía
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_de_meritos
+  - seleccion_abreviada_menor_cuantia
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: E17
+  query: licitación pública o subasta inversa
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - licitacion_publica
+  - seleccion_abreviada_subasta_inversa
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: E18
+  query: selección abreviada excluyendo subasta inversa
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada
+  expected_exclude_targets:
+  - seleccion_abreviada_subasta_inversa
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: E19
+  query: mínima cuantía diferentes de contratación directa
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - minima_cuantia
+  expected_exclude_targets:
+  - contratacion_directa
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: E20
+  query: contratación directa y no selección abreviada
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa
+  expected_exclude_targets:
+  - seleccion_abreviada
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: F01
+  query: subasta
+  dataset: null
+  expected_status: ambiguous
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: BARE_SUBASTA_MULTIPLE_LEGAL_MEANINGS
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues:
+  - issue_type: ambiguity
+    code: BARE_SUBASTA_MULTIPLE_LEGAL_MEANINGS
+    target_ids:
+    - seleccion_abreviada_subasta_inversa
+    - enajenacion_subasta
+    source_text: subasta
+- case_id: F02
+  query: subastas
+  dataset: null
+  expected_status: ambiguous
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: BARE_SUBASTA_MULTIPLE_LEGAL_MEANINGS
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues:
+  - issue_type: ambiguity
+    code: BARE_SUBASTA_MULTIPLE_LEGAL_MEANINGS
+    target_ids:
+    - seleccion_abreviada_subasta_inversa
+    - enajenacion_subasta
+    source_text: subastas
+- case_id: F03
+  query: subastas de alimentos
+  dataset: null
+  expected_status: ambiguous
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: BARE_SUBASTA_MULTIPLE_LEGAL_MEANINGS
+  expected_consumed_texts:
+  - subastas
+  expected_residual_text: de alimentos
+  notes: ''
+  expected_issues:
+  - issue_type: ambiguity
+    code: BARE_SUBASTA_MULTIPLE_LEGAL_MEANINGS
+    target_ids:
+    - seleccion_abreviada_subasta_inversa
+    - enajenacion_subasta
+    source_text: subastas
+- case_id: F04
+  query: hay alguna subasta
+  dataset: null
+  expected_status: ambiguous
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: BARE_SUBASTA_MULTIPLE_LEGAL_MEANINGS
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues:
+  - issue_type: ambiguity
+    code: BARE_SUBASTA_MULTIPLE_LEGAL_MEANINGS
+    target_ids:
+    - seleccion_abreviada_subasta_inversa
+    - enajenacion_subasta
+    source_text: subasta
+- case_id: F05
+  query: subasta de vigilancia
+  dataset: null
+  expected_status: ambiguous
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: BARE_SUBASTA_MULTIPLE_LEGAL_MEANINGS
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues:
+  - issue_type: ambiguity
+    code: BARE_SUBASTA_MULTIPLE_LEGAL_MEANINGS
+    target_ids:
+    - seleccion_abreviada_subasta_inversa
+    - enajenacion_subasta
+    source_text: subasta
+- case_id: F06
+  query: una subasta cualquiera
+  dataset: null
+  expected_status: ambiguous
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: BARE_SUBASTA_MULTIPLE_LEGAL_MEANINGS
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues:
+  - issue_type: ambiguity
+    code: BARE_SUBASTA_MULTIPLE_LEGAL_MEANINGS
+    target_ids:
+    - seleccion_abreviada_subasta_inversa
+    - enajenacion_subasta
+    source_text: subasta
+- case_id: F07
+  query: subasta inversa con precalificación
+  dataset: null
+  expected_status: conflict
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: qualifier precalificación incompatible con selección abreviada
+  expected_issues:
+  - issue_type: conflict
+    code: MODALITY_QUALIFIER_FAMILY_CONFLICT
+    target_ids:
+    - concurso_meritos_precalificacion
+    - seleccion_abreviada_subasta_inversa
+    source_text: subasta inversa con precalificación
+- case_id: F08
+  query: subasta inversa precalificación
+  dataset: null
+  expected_status: conflict
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: qualifier suelto precalificación + subasta inversa
+  expected_issues:
+  - issue_type: conflict
+    code: MODALITY_QUALIFIER_FAMILY_CONFLICT
+    target_ids:
+    - concurso_meritos_precalificacion
+    - seleccion_abreviada_subasta_inversa
+    source_text: subasta inversa precalificación
+- case_id: F09
+  query: concurso de méritos con precalificación
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_meritos_precalificacion
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_precalificacion
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: 'control: NO es conflicto (familia compatible por frase compuesta)'
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: F10
+  query: subasta de bienes del Estado
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - enajenacion_subasta
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - enajenacion_subasta
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: 'control: no ambiguo (frase más larga)'
+  expected_issues: []
+- case_id: F11
+  query: subasta inversa
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada_subasta_inversa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - seleccion_abreviada_subasta_inversa
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: 'control: específico, no ambiguo'
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: F12
+  query: precalificación
+  dataset: null
+  expected_status: no_match
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: qualifier sin primario → nada
+  expected_issues: []
+- case_id: F13
+  query: con precalificación
+  dataset: null
+  expected_status: no_match
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: qualifier sin primario → nada
+  expected_issues: []
+- case_id: F14
+  query: subasta de prueba
+  dataset: null
+  expected_status: not_searchable
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: 'control: platform_test gana sobre bare subasta'
+  expected_issues:
+  - issue_type: not_searchable
+    code: PLATFORM_TEST_NOT_USER_SEARCHABLE
+    target_ids:
+    - subasta_de_prueba
+    source_text: subasta de prueba
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: F15
+  query: remates del Estado
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - enajenacion_subasta
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - enajenacion_subasta
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: 'control: enajenación explícita'
+  expected_issues: []
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: G01
+  query: solicitud de información a proveedores
+  dataset: contratos
+  expected_status: dataset_inapplicable
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: RFI ausente de contratos
+  expected_issues:
+  - issue_type: dataset_inapplicable
+    code: MODALITY_DATASET_INAPPLICABLE
+    target_ids:
+    - solicitud_informacion_proveedores
+    source_text: solicitud de información a proveedores
+- case_id: G02
+  query: solicitud de información a proveedores
+  dataset: procesos
+  expected_status: resolved
+  expected_include_targets:
+  - solicitud_informacion_proveedores
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - solicitud_informacion_proveedores
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: G03
+  query: solicitud de información a proveedores de software
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - solicitud_informacion_proveedores
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - solicitud_informacion_proveedores
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: G04
+  query: subasta de prueba
+  dataset: null
+  expected_status: not_searchable
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues:
+  - issue_type: not_searchable
+    code: PLATFORM_TEST_NOT_USER_SEARCHABLE
+    target_ids:
+    - subasta_de_prueba
+    source_text: subasta de prueba
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: G05
+  query: subasta de prueba
+  dataset: procesos
+  expected_status: not_searchable
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues:
+  - issue_type: not_searchable
+    code: PLATFORM_TEST_NOT_USER_SEARCHABLE
+    target_ids:
+    - subasta_de_prueba
+    source_text: subasta de prueba
+- case_id: G06
+  query: subasta de prueba
+  dataset: contratos
+  expected_status: not_searchable
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues:
+  - issue_type: not_searchable
+    code: PLATFORM_TEST_NOT_USER_SEARCHABLE
+    target_ids:
+    - subasta_de_prueba
+    source_text: subasta de prueba
+- case_id: G07
+  query: licitación pública
+  dataset: procesos
+  expected_status: resolved
+  expected_include_targets:
+  - licitacion_publica
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - licitacion_publica
+  - licitacion_publica_obra
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: G08
+  query: licitación pública
+  dataset: contratos
+  expected_status: resolved
+  expected_include_targets:
+  - licitacion_publica
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - licitacion_publica
+  - licitacion_publica_obra
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: G09
+  query: sondeo de mercado en SECOP
+  dataset: contratos
+  expected_status: dataset_inapplicable
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues:
+  - issue_type: dataset_inapplicable
+    code: MODALITY_DATASET_INAPPLICABLE
+    target_ids:
+    - solicitud_informacion_proveedores
+    source_text: sondeo de mercado en SECOP
+- case_id: G10
+  query: rfi de proveedores
+  dataset: contratos
+  expected_status: dataset_inapplicable
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues:
+  - issue_type: dataset_inapplicable
+    code: MODALITY_DATASET_INAPPLICABLE
+    target_ids:
+    - solicitud_informacion_proveedores
+    source_text: rfi de proveedores
+- case_id: G11
+  query: selección abreviada
+  dataset: procesos
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - seleccion_abreviada_menor_cuantia
+  - seleccion_abreviada_menor_cuantia_sin_manifestacion
+  - seleccion_abreviada_subasta_inversa
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: G12
+  query: selección abreviada
+  dataset: contratos
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - seleccion_abreviada_menor_cuantia
+  - seleccion_abreviada_menor_cuantia_sin_manifestacion
+  - seleccion_abreviada_subasta_inversa
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: G13
+  query: acuerdo marco
+  dataset: contratos
+  expected_status: resolved
+  expected_include_targets:
+  - acuerdo_marco
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - acuerdo_marco_precio_secop
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: G14
+  query: enajenación de bienes
+  dataset: procesos
+  expected_status: resolved
+  expected_include_targets:
+  - enajenacion_bienes_estado
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - enajenacion_sobre_cerrado
+  - enajenacion_subasta
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: G15
+  query: mínima cuantía
+  dataset: contratos
+  expected_status: resolved
+  expected_include_targets:
+  - minima_cuantia
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - minima_cuantia
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: H01
+  query: directa al consumidor
+  dataset: null
+  expected_status: no_match
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: H02
+  query: proceso judicial abreviado
+  dataset: null
+  expected_status: no_match
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: H03
+  query: concurso de cocina
+  dataset: null
+  expected_status: no_match
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: H04
+  query: régimen alimenticio especial
+  dataset: null
+  expected_status: no_match
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: H05
+  query: obra pública
+  dataset: null
+  expected_status: no_match
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: H06
+  query: subasta privada de arte
+  dataset: null
+  expected_status: no_match
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: forbidden_context suprime bare subasta
+  expected_issues: []
+- case_id: H07
+  query: selección de personal
+  dataset: null
+  expected_status: no_match
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: H08
+  query: cuantía mínima del contrato
+  dataset: null
+  expected_status: no_match
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: H09
+  query: atención directa a usuarios
+  dataset: null
+  expected_status: no_match
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: H10
+  query: venta directa de productos
+  dataset: null
+  expected_status: no_match
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: H11
+  query: concurso público de belleza
+  dataset: null
+  expected_status: no_match
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: H12
+  query: régimen alimenticio especial para adultos mayores
+  dataset: null
+  expected_status: no_match
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: H13
+  query: tratamiento especial tributario
+  dataset: null
+  expected_status: no_match
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: H14
+  query: condición especial de pago
+  dataset: null
+  expected_status: no_match
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: H15
+  query: valor mínimo del contrato
+  dataset: null
+  expected_status: no_match
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: H16
+  query: monto mínimo requerido
+  dataset: null
+  expected_status: no_match
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: H17
+  query: proceso abreviado de tutela
+  dataset: null
+  expected_status: no_match
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: H18
+  query: selección de proveedores manual
+  dataset: null
+  expected_status: no_match
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: H19
+  query: concurso de talentos
+  dataset: null
+  expected_status: no_match
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: ''
+  expected_issues: []
+- case_id: H20
+  query: contratación directamente con el proveedor
+  dataset: null
+  expected_status: no_match
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: null
+  expected_residual_text: null
+  notes: '''directamente'' no es ''directa'''
+  expected_issues: []
+- case_id: I01
+  query: contratación directa que permita presentar ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa_con_ofertas
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - contratación directa que permita presentar ofertas
+  expected_residual_text: ''
+  expected_issues: []
+  notes: composición submission_mode=con_ofertas
+- case_id: I02
+  query: régimen especial en el que se reciban ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - regimen_especial_con_ofertas
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - regimen_especial_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - régimen especial en el que se reciban ofertas
+  expected_residual_text: ''
+  expected_issues: []
+  notes: qualifier polimórfico en régimen especial
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: I03
+  query: selección abreviada mediante una subasta inversa
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada_subasta_inversa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - seleccion_abreviada_subasta_inversa
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - selección abreviada mediante una subasta inversa
+  expected_residual_text: ''
+  expected_issues: []
+  notes: refinamiento local familia + procedimiento
+  duplicate_reason: comma-only regression variant; not counted as normalized diversity
+
+- case_id: I04
+  query: concurso de méritos que tenga precalificación
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_meritos_precalificacion
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_precalificacion
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - concurso de méritos que tenga precalificación
+  expected_residual_text: ''
+  expected_issues: []
+  notes: composición procedure_variant
+  duplicate_reason: comma-only regression variant; not counted as normalized diversity
+
+- case_id: I05
+  query: contratación directa en la que no se presentan ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - contratación directa en la que no se presentan ofertas
+  expected_residual_text: ''
+  expected_issues: []
+  notes: sin_ofertas técnico, no negación
+- case_id: I06
+  query: régimen especial sin que haya ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - regimen_especial
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - regimen_especial
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - régimen especial sin que haya ofertas
+  expected_residual_text: ''
+  expected_issues: []
+  notes: standard polimórfico
+- case_id: I07
+  query: contratación directa donde se reciban ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa_con_ofertas
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - contratación directa donde se reciban ofertas
+  expected_residual_text: ''
+  expected_issues: []
+  notes: variante composicional no literal
+- case_id: I08
+  query: régimen especial que permita recibir ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - regimen_especial_con_ofertas
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - regimen_especial_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - régimen especial que permita recibir ofertas
+  expected_residual_text: ''
+  expected_issues: []
+  notes: variante composicional no literal
+- case_id: I09
+  query: selección abreviada mediante subasta inversa para medicamentos
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada_subasta_inversa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - seleccion_abreviada_subasta_inversa
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - selección abreviada mediante subasta inversa
+  expected_residual_text: para medicamentos
+  expected_issues: []
+  notes: hull compuesto y residual
+- case_id: I10
+  query: concurso de méritos que incluya precalificación para diseños
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_meritos_precalificacion
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_precalificacion
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - concurso de méritos que incluya precalificación
+  expected_residual_text: para diseños
+  expected_issues: []
+  notes: hull compuesto y residual
+- case_id: J01
+  query: no solo contratación directa sino también mínima cuantía
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa
+  - minima_cuantia
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa
+  - contratacion_directa_con_ofertas
+  - minima_cuantia
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - contratación directa
+  - mínima cuantía
+  expected_residual_text: no solo sino también
+  expected_issues: []
+  notes: anti-negación no solo/sino también
+- case_id: J02
+  query: sin descartar la contratación directa
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - contratación directa
+  expected_residual_text: sin descartar la
+  expected_issues: []
+  notes: anti-negación sin descartar
+- case_id: J03
+  query: excepto contratación directa y mínima cuantía
+  dataset: null
+  expected_status: resolved
+  expected_include_targets: []
+  expected_exclude_targets:
+  - contratacion_directa
+  - minima_cuantia
+  expected_procedure_ids: []
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - contratación directa
+  - mínima cuantía
+  expected_residual_text: excepto y
+  expected_issues: []
+  notes: scope negativo coordinado
+- case_id: J04
+  query: licitación pública, no selección abreviada ni mínima cuantía
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - licitacion_publica
+  expected_exclude_targets:
+  - seleccion_abreviada
+  - minima_cuantia
+  expected_procedure_ids:
+  - licitacion_publica
+  - licitacion_publica_obra
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - licitación pública
+  - selección abreviada
+  - mínima cuantía
+  expected_residual_text: ', no ni'
+  expected_issues: []
+  notes: propagación por ni
+- case_id: J05
+  query: subasta de alimentos y exposición privada de arte
+  dataset: null
+  expected_status: ambiguous
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: []
+  expected_assumption_codes: []
+  expected_ambiguity_code: BARE_SUBASTA_MULTIPLE_LEGAL_MEANINGS
+  expected_consumed_texts:
+  - subasta
+  expected_residual_text: de alimentos y exposición privada de arte
+  expected_issues:
+  - issue_type: ambiguity
+    code: BARE_SUBASTA_MULTIPLE_LEGAL_MEANINGS
+    target_ids:
+    - seleccion_abreviada_subasta_inversa
+    - enajenacion_subasta
+    source_text: subasta
+  notes: forbidden_context local, no global
+- case_id: J06
+  query: subasta privada de arte y licitación pública
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - licitacion_publica
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - licitacion_publica
+  - licitacion_publica_obra
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - licitación pública
+  expected_residual_text: subasta privada de arte y
+  expected_issues: []
+  notes: suprime solo la subasta local
+- case_id: J07
+  query: no busco subasta privada de arte, sino subasta de bienes del Estado
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - enajenacion_subasta
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - enajenacion_subasta
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - subasta de bienes del Estado
+  expected_residual_text: no busco subasta privada de arte, sino
+  expected_issues: []
+  notes: sino reinicia scope
+- case_id: J08
+  query: salvo régimen especial o contratación directa
+  dataset: null
+  expected_status: resolved
+  expected_include_targets: []
+  expected_exclude_targets:
+  - regimen_especial
+  - contratacion_directa
+  expected_procedure_ids: []
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - régimen especial
+  - contratación directa
+  expected_residual_text: salvo o
+  expected_issues: []
+  notes: scope salvo propagado por o
+- case_id: J09
+  query: que no sean licitación pública ni concurso de méritos
+  dataset: null
+  expected_status: resolved
+  expected_include_targets: []
+  expected_exclude_targets:
+  - licitacion_publica
+  - concurso_de_meritos
+  expected_procedure_ids: []
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - licitación pública
+  - concurso de méritos
+  expected_residual_text: que no sean ni
+  expected_issues: []
+  notes: scope multiword propagado por ni
+- case_id: J10
+  query: no quiero excluir mínima cuantía
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - minima_cuantia
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - minima_cuantia
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - mínima cuantía
+  expected_residual_text: no quiero excluir
+  expected_issues: []
+  notes: anti-negación explícita
+- case_id: K01
+  query: concurso de méritos y subasta inversa con precalificación
+  dataset: null
+  expected_status: partial
+  expected_include_targets:
+  - concurso_de_meritos
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_abierto
+  - concurso_meritos_precalificacion
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - concurso de méritos
+  - subasta inversa con precalificación
+  expected_residual_text: y
+  expected_issues:
+  - issue_type: conflict
+    code: MODALITY_QUALIFIER_FAMILY_CONFLICT
+    target_ids:
+    - concurso_meritos_precalificacion
+    - seleccion_abreviada_subasta_inversa
+    source_text: subasta inversa con precalificación
+  notes: conflicto local conserva match sano
+- case_id: K02
+  query: licitación pública o subasta
+  dataset: null
+  expected_status: partial
+  expected_include_targets:
+  - licitacion_publica
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - licitacion_publica
+  - licitacion_publica_obra
+  expected_assumption_codes: []
+  expected_ambiguity_code: BARE_SUBASTA_MULTIPLE_LEGAL_MEANINGS
+  expected_consumed_texts:
+  - licitación pública
+  - subasta
+  expected_residual_text: o
+  expected_issues:
+  - issue_type: ambiguity
+    code: BARE_SUBASTA_MULTIPLE_LEGAL_MEANINGS
+    target_ids:
+    - seleccion_abreviada_subasta_inversa
+    - enajenacion_subasta
+    source_text: subasta
+  notes: ''
+- case_id: K03
+  query: mínima cuantía y subasta de prueba
+  dataset: null
+  expected_status: partial
+  expected_include_targets:
+  - minima_cuantia
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - minima_cuantia
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - mínima cuantía
+  - subasta de prueba
+  expected_residual_text: y
+  expected_issues:
+  - issue_type: not_searchable
+    code: PLATFORM_TEST_NOT_USER_SEARCHABLE
+    target_ids:
+    - subasta_de_prueba
+    source_text: subasta de prueba
+  notes: ''
+- case_id: K04
+  query: RFI o contratación directa
+  dataset: contratos
+  expected_status: partial
+  expected_include_targets:
+  - contratacion_directa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - RFI
+  - contratación directa
+  expected_residual_text: o
+  expected_issues:
+  - issue_type: dataset_inapplicable
+    code: MODALITY_DATASET_INAPPLICABLE
+    target_ids:
+    - solicitud_informacion_proveedores
+    source_text: RFI
+  notes: ''
+- case_id: K05
+  query: licitación pública y subasta de prueba
+  dataset: null
+  expected_status: partial
+  expected_include_targets:
+  - licitacion_publica
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - licitacion_publica
+  - licitacion_publica_obra
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - licitación pública
+  - subasta de prueba
+  expected_residual_text: y
+  expected_issues:
+  - issue_type: not_searchable
+    code: PLATFORM_TEST_NOT_USER_SEARCHABLE
+    target_ids:
+    - subasta_de_prueba
+    source_text: subasta de prueba
+  notes: ''
+- case_id: K06
+  query: RFI y mínima cuantía
+  dataset: contratos
+  expected_status: partial
+  expected_include_targets:
+  - minima_cuantia
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - minima_cuantia
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - RFI
+  - mínima cuantía
+  expected_residual_text: y
+  expected_issues:
+  - issue_type: dataset_inapplicable
+    code: MODALITY_DATASET_INAPPLICABLE
+    target_ids:
+    - solicitud_informacion_proveedores
+    source_text: RFI
+  notes: ''
+- case_id: K07
+  query: licitación pública y RFI
+  dataset: contratos
+  expected_status: partial
+  expected_include_targets:
+  - licitacion_publica
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - licitacion_publica
+  - licitacion_publica_obra
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - licitación pública
+  - RFI
+  expected_residual_text: y
+  expected_issues:
+  - issue_type: dataset_inapplicable
+    code: MODALITY_DATASET_INAPPLICABLE
+    target_ids:
+    - solicitud_informacion_proveedores
+    source_text: RFI
+  notes: ''
+- case_id: K08
+  query: subasta inversa con precalificación o mínima cuantía
+  dataset: null
+  expected_status: partial
+  expected_include_targets:
+  - minima_cuantia
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - minima_cuantia
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - subasta inversa con precalificación
+  - mínima cuantía
+  expected_residual_text: o
+  expected_issues:
+  - issue_type: conflict
+    code: MODALITY_QUALIFIER_FAMILY_CONFLICT
+    target_ids:
+    - concurso_meritos_precalificacion
+    - seleccion_abreviada_subasta_inversa
+    source_text: subasta inversa con precalificación
+  notes: ''
+- case_id: K09
+  query: subasta y contratación directa
+  dataset: null
+  expected_status: partial
+  expected_include_targets:
+  - contratacion_directa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: BARE_SUBASTA_MULTIPLE_LEGAL_MEANINGS
+  expected_consumed_texts:
+  - subasta
+  - contratación directa
+  expected_residual_text: y
+  expected_issues:
+  - issue_type: ambiguity
+    code: BARE_SUBASTA_MULTIPLE_LEGAL_MEANINGS
+    target_ids:
+    - seleccion_abreviada_subasta_inversa
+    - enajenacion_subasta
+    source_text: subasta
+  notes: ''
+- case_id: K10
+  query: subasta de prueba y RFI
+  dataset: contratos
+  expected_status: not_searchable
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: []
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - subasta de prueba
+  - RFI
+  expected_residual_text: y
+  expected_issues:
+  - issue_type: not_searchable
+    code: PLATFORM_TEST_NOT_USER_SEARCHABLE
+    target_ids:
+    - subasta_de_prueba
+    source_text: subasta de prueba
+  - issue_type: dataset_inapplicable
+    code: MODALITY_DATASET_INAPPLICABLE
+    target_ids:
+    - solicitud_informacion_proveedores
+    source_text: RFI
+  notes: precedencia heterogénea sin matches
+- case_id: L01
+  query: licitación pública
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - licitacion_publica
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - licitacion_publica
+  - licitacion_publica_obra
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - licitación pública
+  expected_residual_text: ''
+  expected_issues: []
+  notes: Unicode NFD
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: L02
+  query: contratación directa con ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa_con_ofertas
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - contratación directa con ofertas
+  expected_residual_text: ''
+  expected_issues: []
+  notes: NBSP
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: L03
+  query: régimen especial en el que se reciban ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - regimen_especial_con_ofertas
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - regimen_especial_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - régimen especial en el que se reciban ofertas
+  expected_residual_text: ''
+  expected_issues: []
+  notes: narrow no-break space
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+- case_id: L04
+  query: mínima cuantía
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - minima_cuantia
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - minima_cuantia
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - mínima cuantía
+  expected_residual_text: ''
+  expected_issues: []
+  notes: NBSP no altera offsets
+  duplicate_reason: intentional normalization, casing, punctuation, or regression coverage
+
+- case_id: J11
+  query: excepto contratación directa, mínima cuantía y licitación pública
+  dataset: null
+  expected_status: resolved
+  expected_include_targets: []
+  expected_exclude_targets:
+  - contratacion_directa
+  - minima_cuantia
+  - licitacion_publica
+  expected_procedure_ids: []
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - contratación directa
+  - mínima cuantía
+  - licitación pública
+  expected_residual_text: excepto , y
+  expected_issues: []
+  notes: Exclusión propagada por lista A, B y C.
+- case_id: J12
+  query: no contratación directa, mínima cuantía ni licitación pública
+  dataset: null
+  expected_status: resolved
+  expected_include_targets: []
+  expected_exclude_targets:
+  - contratacion_directa
+  - minima_cuantia
+  - licitacion_publica
+  expected_procedure_ids: []
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - contratación directa
+  - mínima cuantía
+  - licitación pública
+  expected_residual_text: no , ni
+  expected_issues: []
+  notes: Scope negativo con comas y coordinador ni.
+- case_id: J13
+  query: licitación pública, excepto contratación directa, mínima cuantía y concurso de méritos
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - licitacion_publica
+  expected_exclude_targets:
+  - contratacion_directa
+  - minima_cuantia
+  - concurso_de_meritos
+  expected_procedure_ids:
+  - licitacion_publica
+  - licitacion_publica_obra
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - licitación pública
+  - contratación directa
+  - mínima cuantía
+  - concurso de méritos
+  expected_residual_text: ', excepto , y'
+  expected_issues: []
+  notes: Inclusión previa y lista negativa coordinada con comas.
+- case_id: J14
+  query: salvo contratación directa, régimen especial o mínima cuantía
+  dataset: null
+  expected_status: resolved
+  expected_include_targets: []
+  expected_exclude_targets:
+  - contratacion_directa
+  - regimen_especial
+  - minima_cuantia
+  expected_procedure_ids: []
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - contratación directa
+  - régimen especial
+  - mínima cuantía
+  expected_residual_text: salvo , o
+  expected_issues: []
+  notes: Scope salvo propagado por coma y coordinador o.
+- case_id: I11
+  query: contratación directa, en la que se reciban ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa_con_ofertas
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - contratación directa, en la que se reciban ofertas
+  expected_residual_text: ''
+  expected_issues: []
+  notes: La coma penaliza pero no bloquea attachment.
+- case_id: I12
+  query: régimen especial, en el que se reciban ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - regimen_especial_con_ofertas
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - regimen_especial_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - régimen especial, en el que se reciban ofertas
+  expected_residual_text: ''
+  expected_issues: []
+  notes: Composición submission_mode a través de coma débil.
+  duplicate_reason: comma-only regression variant; not counted as normalized diversity
+
+- case_id: I13
+  query: concurso de méritos, que tenga precalificación
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_meritos_precalificacion
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_precalificacion
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - concurso de méritos, que tenga precalificación
+  expected_residual_text: ''
+  expected_issues: []
+  notes: Composición procedure_variant a través de coma débil.
+  duplicate_reason: comma-only regression variant; not counted as normalized diversity
+
+- case_id: I14
+  query: selección abreviada, mediante una subasta inversa
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada_subasta_inversa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - seleccion_abreviada_subasta_inversa
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - selección abreviada, mediante una subasta inversa
+  expected_residual_text: ''
+  expected_issues: []
+  notes: Refinamiento específico permitido con coma débil.
+  duplicate_reason: comma-only regression variant; not counted as normalized diversity
+
+- case_id: I15
+  query: selección abreviada concurso de méritos subasta inversa
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada
+  - concurso_de_meritos
+  - seleccion_abreviada_subasta_inversa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - seleccion_abreviada_menor_cuantia
+  - seleccion_abreviada_menor_cuantia_sin_manifestacion
+  - seleccion_abreviada_subasta_inversa
+  - concurso_meritos_abierto
+  - concurso_meritos_precalificacion
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - selección abreviada
+  - concurso de méritos
+  - subasta inversa
+  expected_residual_text: ''
+  expected_issues: []
+  notes: El refinamiento no puede cruzar la mención primaria intermedia.
+
+- case_id: K11
+  query: contratación directa con ofertas sin ofertas
+  dataset: null
+  expected_status: conflict
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: []
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - contratación directa con ofertas sin ofertas
+  expected_residual_text: ''
+  expected_issues:
+  - issue_type: conflict
+    code: MODALITY_QUALIFIER_VALUE_CONFLICT
+    target_ids:
+    - contratacion_directa
+    - contratacion_directa_con_ofertas
+    source_text: contratación directa con ofertas sin ofertas
+  notes: Qualifiers sucesivos incompatibles; el último no puede ganar.
+- case_id: K12
+  query: contratación directa sin ofertas con ofertas
+  dataset: null
+  expected_status: conflict
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: []
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - contratación directa sin ofertas con ofertas
+  expected_residual_text: ''
+  expected_issues:
+  - issue_type: conflict
+    code: MODALITY_QUALIFIER_VALUE_CONFLICT
+    target_ids:
+    - contratacion_directa
+    - contratacion_directa_con_ofertas
+    source_text: contratación directa sin ofertas con ofertas
+  notes: El conflicto es independiente del orden de los valores.
+- case_id: K13
+  query: régimen especial con ofertas sin ofertas
+  dataset: null
+  expected_status: conflict
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: []
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - régimen especial con ofertas sin ofertas
+  expected_residual_text: ''
+  expected_issues:
+  - issue_type: conflict
+    code: MODALITY_QUALIFIER_VALUE_CONFLICT
+    target_ids:
+    - regimen_especial
+    - regimen_especial_con_ofertas
+    source_text: régimen especial con ofertas sin ofertas
+  notes: Conflicto submission_mode en régimen especial.
+- case_id: K14
+  query: régimen especial sin ofertas donde se reciban ofertas
+  dataset: null
+  expected_status: conflict
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: []
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - régimen especial sin ofertas donde se reciban ofertas
+  expected_residual_text: ''
+  expected_issues:
+  - issue_type: conflict
+    code: MODALITY_QUALIFIER_VALUE_CONFLICT
+    target_ids:
+    - regimen_especial
+    - regimen_especial_con_ofertas
+    source_text: régimen especial sin ofertas donde se reciban ofertas
+  notes: Conflicto inverso submission_mode en régimen especial.
+- case_id: K15
+  query: concurso de méritos abierto con precalificación
+  dataset: null
+  expected_status: conflict
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: []
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - concurso de méritos abierto con precalificación
+  expected_residual_text: ''
+  expected_issues:
+  - issue_type: conflict
+    code: MODALITY_QUALIFIER_VALUE_CONFLICT
+    target_ids:
+    - concurso_meritos_abierto
+    - concurso_meritos_precalificacion
+    source_text: concurso de méritos abierto con precalificación
+  notes: Un procedure_variant específico no puede ser reemplazado silenciosamente.
+- case_id: K16
+  query: concurso de méritos con precalificación que tenga precalificación
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_meritos_precalificacion
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_precalificacion
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - concurso de méritos con precalificación que tenga precalificación
+  expected_residual_text: ''
+  expected_issues: []
+  notes: Repetir el mismo procedure_variant es idempotente.
+- case_id: K17
+  query: contratación directa con ofertas donde se reciban ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa_con_ofertas
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - contratación directa con ofertas donde se reciban ofertas
+  expected_residual_text: ''
+  expected_issues: []
+  notes: Repetir submission_mode=con_ofertas es idempotente.
+- case_id: K18
+  query: mínima cuantía y contratación directa con ofertas sin ofertas
+  dataset: null
+  expected_status: partial
+  expected_include_targets:
+  - minima_cuantia
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - minima_cuantia
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - mínima cuantía
+  - contratación directa con ofertas sin ofertas
+  expected_residual_text: y
+  expected_issues:
+  - issue_type: conflict
+    code: MODALITY_QUALIFIER_VALUE_CONFLICT
+    target_ids:
+    - contratacion_directa
+    - contratacion_directa_con_ofertas
+    source_text: contratación directa con ofertas sin ofertas
+  notes: El conflicto local conserva la modalidad sana y produce partial.
+- case_id: K19
+  query: mínima cuantía y contratación directa con ofertas sin ofertas y licitación pública
+  dataset: null
+  expected_status: partial
+  expected_include_targets:
+  - minima_cuantia
+  - licitacion_publica
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - licitacion_publica
+  - licitacion_publica_obra
+  - minima_cuantia
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - mínima cuantía
+  - contratación directa con ofertas sin ofertas
+  - licitación pública
+  expected_residual_text: y y
+  expected_issues:
+  - issue_type: conflict
+    code: MODALITY_QUALIFIER_VALUE_CONFLICT
+    target_ids:
+    - contratacion_directa
+    - contratacion_directa_con_ofertas
+    source_text: contratación directa con ofertas sin ofertas
+  notes: El qualifier técnico en conflicto no propaga negación a la modalidad posterior.
+- case_id: K20
+  query: mínima cuantía y contratación directa sin ofertas con ofertas y licitación pública
+  dataset: null
+  expected_status: partial
+  expected_include_targets:
+  - minima_cuantia
+  - licitacion_publica
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - licitacion_publica
+  - licitacion_publica_obra
+  - minima_cuantia
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - mínima cuantía
+  - contratación directa sin ofertas con ofertas
+  - licitación pública
+  expected_residual_text: y y
+  expected_issues:
+  - issue_type: conflict
+    code: MODALITY_QUALIFIER_VALUE_CONFLICT
+    target_ids:
+    - contratacion_directa
+    - contratacion_directa_con_ofertas
+    source_text: contratación directa sin ofertas con ofertas
+  notes: La variante inversa tampoco fuga el operador sin hacia la modalidad posterior.
+- case_id: K21
+  query: mínima cuantía y régimen especial con ofertas sin ofertas y licitación pública
+  dataset: null
+  expected_status: partial
+  expected_include_targets:
+  - minima_cuantia
+  - licitacion_publica
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - licitacion_publica
+  - licitacion_publica_obra
+  - minima_cuantia
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - mínima cuantía
+  - régimen especial con ofertas sin ofertas
+  - licitación pública
+  expected_residual_text: y y
+  expected_issues:
+  - issue_type: conflict
+    code: MODALITY_QUALIFIER_VALUE_CONFLICT
+    target_ids:
+    - regimen_especial
+    - regimen_especial_con_ofertas
+    source_text: régimen especial con ofertas sin ofertas
+  notes: El aislamiento de polaridad también aplica a régimen especial.
+- case_id: K22
+  query: mínima cuantía, contratación directa con ofertas sin ofertas, licitación pública
+  dataset: null
+  expected_status: partial
+  expected_include_targets:
+  - minima_cuantia
+  - licitacion_publica
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - licitacion_publica
+  - licitacion_publica_obra
+  - minima_cuantia
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - mínima cuantía
+  - contratación directa con ofertas sin ofertas
+  - licitación pública
+  expected_residual_text: ', ,'
+  expected_issues:
+  - issue_type: conflict
+    code: MODALITY_QUALIFIER_VALUE_CONFLICT
+    target_ids:
+    - contratacion_directa
+    - contratacion_directa_con_ofertas
+    source_text: contratación directa con ofertas sin ofertas
+  notes: Las comas no convierten el qualifier técnico en operador negativo.
+- case_id: K23
+  query: contratación directa sin ofertas y no licitación pública
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa
+  expected_exclude_targets:
+  - licitacion_publica
+  expected_procedure_ids:
+  - contratacion_directa
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - contratación directa sin ofertas
+  - licitación pública
+  expected_residual_text: y no
+  expected_issues: []
+  notes: El no externo permanece activo aunque sin ofertas sea qualifier técnico.
+- case_id: K24
+  query: mínima cuantía sin ofertas y licitación pública
+  dataset: null
+  expected_status: partial
+  expected_include_targets:
+  - licitacion_publica
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - licitacion_publica
+  - licitacion_publica_obra
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - mínima cuantía sin ofertas
+  - licitación pública
+  expected_residual_text: y
+  expected_issues:
+  - issue_type: conflict
+    code: MODALITY_QUALIFIER_FAMILY_CONFLICT
+    target_ids:
+    - contratacion_directa
+    - minima_cuantia
+    - regimen_especial
+    source_text: mínima cuantía sin ofertas
+  notes: El qualifier incompatible crea conflicto local sin negar la modalidad siguiente.
+- case_id: I16
+  query: concurso de méritos sin precalificación
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_meritos_abierto
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_abierto
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - concurso de méritos sin precalificación
+  expected_residual_text: ''
+  expected_issues: []
+  notes: Qualifier negativo explícito compone al procedimiento abierto.
+- case_id: I17
+  query: concurso de méritos sin ninguna precalificación
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_meritos_abierto
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_abierto
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - concurso de méritos sin ninguna precalificación
+  expected_residual_text: ''
+  expected_issues: []
+  notes: Variante enfática del qualifier negativo.
+- case_id: I18
+  query: concurso de méritos sin que haya precalificación
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_meritos_abierto
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_abierto
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - concurso de méritos sin que haya precalificación
+  expected_residual_text: ''
+  expected_issues: []
+  notes: Variante oracional del qualifier negativo.
+- case_id: I19
+  query: concursos de méritos que no tengan precalificación
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_meritos_abierto
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_abierto
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - concursos de méritos que no tengan precalificación
+  expected_residual_text: ''
+  expected_issues: []
+  notes: Concordancia plural del qualifier negativo.
+- case_id: K25
+  query: concurso de méritos con precalificación sin precalificación
+  dataset: null
+  expected_status: conflict
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: []
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - concurso de méritos con precalificación sin precalificación
+  expected_residual_text: ''
+  expected_issues:
+  - issue_type: conflict
+    code: MODALITY_QUALIFIER_VALUE_CONFLICT
+    target_ids:
+    - concurso_meritos_abierto
+    - concurso_meritos_precalificacion
+    source_text: concurso de méritos con precalificación sin precalificación
+  notes: Valores procedure_variant contradictorios producen conflicto.
+- case_id: K26
+  query: concurso de méritos sin precalificación con precalificación
+  dataset: null
+  expected_status: conflict
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: []
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - concurso de méritos sin precalificación con precalificación
+  expected_residual_text: ''
+  expected_issues:
+  - issue_type: conflict
+    code: MODALITY_QUALIFIER_VALUE_CONFLICT
+    target_ids:
+    - concurso_meritos_abierto
+    - concurso_meritos_precalificacion
+    source_text: concurso de méritos sin precalificación con precalificación
+  notes: El orden inverso conserva la misma huella de conflicto.
+- case_id: K27
+  query: concurso de méritos sin precalificación que no tenga precalificación
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_meritos_abierto
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_abierto
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - concurso de méritos sin precalificación que no tenga precalificación
+  expected_residual_text: ''
+  expected_issues: []
+  notes: Repetir el mismo qualifier negativo es idempotente.
+- case_id: J15
+  query: concurso de méritos no con precalificación
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_de_meritos
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_abierto
+  - concurso_meritos_precalificacion
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - concurso de méritos
+  expected_residual_text: no con precalificación
+  expected_issues: []
+  notes: Negación externa bloquea el qualifier positivo y conserva la familia.
