@@ -1,0 +1,76 @@
+{
+  "_meta": {
+    "purpose": "MOD-M1 raw snapshot of modalidad_de_contratacion across SECOP II datasets.",
+    "counts_are": "OBSERVATIONAL_METADATA_ONLY — NOT invariants. Counts drift daily; tests must never assert exact figures.",
+    "protocol": "Live probe under hard budget <=10 HTTP/dataset. Aggregates only (GROUP BY / COUNT). No full-row download.",
+    "snapshot_timestamp_utc": "2026-07-23T01:19:04.973159+00:00",
+    "domain": "www.datos.gov.co",
+    "app_token_present": false,
+    "budget_per_dataset": 10
+  },
+  "datasets": {
+    "procesos": {
+      "dataset_id": "p6dx-8zbt",
+      "modality_field": "modalidad_de_contratacion",
+      "field_confirmed": true,
+      "nulls": 0,
+      "http_calls": 2,
+      "raw_values": {
+        "Contratación directa": 3988026,
+        "Contratación régimen especial": 3463528,
+        "Mínima cuantía": 416431,
+        "Selección Abreviada de Menor Cuantía": 222904,
+        "Selección abreviada subasta inversa": 204676,
+        "Solicitud de información a los Proveedores": 167263,
+        "Contratación régimen especial (con ofertas)": 132920,
+        "Contratación Directa (con ofertas)": 111609,
+        "Licitación pública": 61577,
+        "Concurso de méritos abierto": 41926,
+        "Licitación pública Obra Publica": 30810,
+        "Licitación Pública Acuerdo Marco de Precios": 11230,
+        "Seleccion Abreviada Menor Cuantia Sin Manifestacion Interes": 4762,
+        "Subasta de prueba": 4691,
+        "Enajenación de bienes con subasta": 847,
+        "Enajenación de bienes con sobre cerrado": 789,
+        "Concurso de méritos con precalificación": 51
+      },
+      "call_log": [
+        {"call": 1, "soql": "SELECT modalidad_de_contratacion AS modalidad, count(*) AS n GROUP BY modalidad_de_contratacion ORDER BY n DESC LIMIT 100", "status": 200, "secs": 2.02, "rows": 17},
+        {"call": 2, "soql": "SELECT count(*) AS n WHERE modalidad_de_contratacion IS NULL", "status": 200, "secs": 0.4, "rows": 1}
+      ]
+    },
+    "contratos": {
+      "dataset_id": "jbjy-vk9h",
+      "modality_field": "modalidad_de_contratacion",
+      "field_confirmed": true,
+      "nulls": 0,
+      "http_calls": 2,
+      "raw_values": {
+        "Contratación directa": 4464127,
+        "Contratación régimen especial": 785713,
+        "Mínima cuantía": 326917,
+        "Contratación Directa (con ofertas)": 76298,
+        "Selección Abreviada de Menor Cuantía": 59207,
+        "Selección abreviada subasta inversa": 52231,
+        "Contratación régimen especial (con ofertas)": 51252,
+        "Concurso de méritos abierto": 16318,
+        "Licitación pública": 15337,
+        "Licitación pública Obra Publica": 9073,
+        "Licitación Pública Acuerdo Marco de Precios": 1734,
+        "Seleccion Abreviada Menor Cuantia Sin Manifestacion Interes": 1302,
+        "Enajenación de bienes con sobre cerrado": 324,
+        "Enajenación de bienes con subasta": 278,
+        "Concurso de méritos con precalificación": 10
+      },
+      "call_log": [
+        {"call": 1, "soql": "SELECT modalidad_de_contratacion AS modalidad, count(*) AS n GROUP BY modalidad_de_contratacion ORDER BY n DESC LIMIT 100", "status": 200, "secs": 1.83, "rows": 15},
+        {"call": 2, "soql": "SELECT count(*) AS n WHERE modalidad_de_contratacion IS NULL", "status": 200, "secs": 0.38, "rows": 1}
+      ]
+    }
+  },
+  "delta_procesos_minus_contratos": [
+    "Solicitud de información a los Proveedores",
+    "Subasta de prueba"
+  ],
+  "delta_explanation": "Both delta values are non-contractual record kinds (planning_rfi, platform_test) that never award a contract, hence absent from the contracts dataset. Confirms H-DELTA."
+}

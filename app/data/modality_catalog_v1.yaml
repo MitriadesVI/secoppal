@@ -1,0 +1,365 @@
+# MOD-M1 — Catálogo canónico de modalidad V1 (declarativo).
+#
+# Un registro por VALOR RAW de `modalidad_de_contratacion` observado en el
+# snapshot live (tests/fixtures/modality_raw_snapshot_v1.json). Este archivo NO
+# contiene resolver, parser ni builder — solo datos (M2+ los consumirán).
+#
+# Doble taxonomía (D4): `legal_selection_family` (dimensión jurídica) y
+# `retrieval_family` (dimensión de recuperación/UX) son campos SEPARADOS.
+#
+# El estado de clasificación jurídica es un campo PROPIO (`legal_classification_status`),
+# NO un sentinel dentro de legal_selection_family: cuando no hay familia jurídica
+# de selección, legal_selection_family es null y el estado lo explica.
+#
+# Decisiones de producto codificadas: D1 (acuerdo marco = categoría propia),
+# D2 (enajenación = venta de activos, intención explícita), D3 (padres generales
+# incluyen con/sin ofertas).
+#
+# Vocabularios controlados (validados en app/core/modality_models.py):
+#   legal_selection_family: licitacion_publica | seleccion_abreviada |
+#     concurso_de_meritos | minima_cuantia | contratacion_directa | null
+#   legal_classification_status: verified | pending_review | not_applicable
+#   record_kind: procurement | procurement_instrument | state_asset_sale |
+#     planning_rfi | platform_test
+#   submission_mode: standard | con_ofertas | no_aplica
+#   legal_regime: general | especial | no_aplica
+#   parent_expansion_policy: family_default | explicit_only | never
+#   evidence_confidence: alta | media | baja
+
+version: 1
+snapshot_ref: tests/fixtures/modality_raw_snapshot_v1.json
+
+procedures:
+  # ── Contratación directa (D3: padre incluye standard + con ofertas) ─────────
+  - procedure_id: contratacion_directa
+    display_name: Contratación directa
+    legal_selection_family: contratacion_directa
+    legal_classification_status: verified
+    retrieval_family: contratacion_directa
+    procedure_variant: null
+    legal_regime: general
+    record_kind: procurement
+    submission_mode: standard
+    user_searchable: true
+    explicit_intent_required: false
+    parent_expansion_policy: family_default
+    dataset_values:
+      procesos: ["Contratación directa"]
+      contratos: ["Contratación directa"]
+    evidence_confidence: alta
+    notes: Modalidad general (Ley 1150/2007 art. 2 num. 4).
+
+  - procedure_id: contratacion_directa_con_ofertas
+    display_name: Contratación Directa (con ofertas)
+    legal_selection_family: contratacion_directa
+    legal_classification_status: verified
+    retrieval_family: contratacion_directa
+    procedure_variant: null
+    legal_regime: general
+    record_kind: procurement
+    submission_mode: con_ofertas
+    user_searchable: true
+    explicit_intent_required: false
+    parent_expansion_policy: family_default
+    dataset_values:
+      procesos: ["Contratación Directa (con ofertas)"]
+      contratos: ["Contratación Directa (con ofertas)"]
+    evidence_confidence: media
+    notes: >-
+      D3/H5: mismo hecho jurídico que contratación directa; "(con ofertas)"
+      es el módulo de plataforma que recibe ofertas, no una modalidad distinta.
+
+  # ── Régimen especial (H2: régimen, no familia de selección; D3 modos) ───────
+  - procedure_id: regimen_especial
+    display_name: Contratación régimen especial
+    legal_selection_family: null
+    legal_classification_status: not_applicable
+    retrieval_family: regimen_especial
+    procedure_variant: null
+    legal_regime: especial
+    record_kind: procurement
+    submission_mode: standard
+    user_searchable: true
+    explicit_intent_required: false
+    parent_expansion_policy: family_default
+    dataset_values:
+      procesos: ["Contratación régimen especial"]
+      contratos: ["Contratación régimen especial"]
+    evidence_confidence: media
+    notes: >-
+      H2: régimen exceptuado del EGCAP — dimensión de régimen, no una sexta
+      modalidad general. legal_selection_family=null.
+
+  - procedure_id: regimen_especial_con_ofertas
+    display_name: Contratación régimen especial (con ofertas)
+    legal_selection_family: null
+    legal_classification_status: not_applicable
+    retrieval_family: regimen_especial
+    procedure_variant: null
+    legal_regime: especial
+    record_kind: procurement
+    submission_mode: con_ofertas
+    user_searchable: true
+    explicit_intent_required: false
+    parent_expansion_policy: family_default
+    dataset_values:
+      procesos: ["Contratación régimen especial (con ofertas)"]
+      contratos: ["Contratación régimen especial (con ofertas)"]
+    evidence_confidence: media
+    notes: D3/H5 sobre régimen especial (módulo de plataforma con ofertas).
+
+  # ── Mínima cuantía ──────────────────────────────────────────────────────────
+  - procedure_id: minima_cuantia
+    display_name: Mínima cuantía
+    legal_selection_family: minima_cuantia
+    legal_classification_status: verified
+    retrieval_family: minima_cuantia
+    procedure_variant: null
+    legal_regime: general
+    record_kind: procurement
+    submission_mode: standard
+    user_searchable: true
+    explicit_intent_required: false
+    parent_expansion_policy: family_default
+    dataset_values:
+      procesos: ["Mínima cuantía"]
+      contratos: ["Mínima cuantía"]
+    evidence_confidence: alta
+    notes: Modalidad general (Ley 1450/2011 art. 94, incorporada a Ley 1150 art. 2).
+
+  # ── Selección abreviada (familia con 3 hijos ordinarios) ────────────────────
+  - procedure_id: seleccion_abreviada_menor_cuantia
+    display_name: Selección Abreviada de Menor Cuantía
+    legal_selection_family: seleccion_abreviada
+    legal_classification_status: verified
+    retrieval_family: seleccion_abreviada
+    procedure_variant: menor_cuantia
+    legal_regime: general
+    record_kind: procurement
+    submission_mode: standard
+    user_searchable: true
+    explicit_intent_required: false
+    parent_expansion_policy: family_default
+    dataset_values:
+      procesos: ["Selección Abreviada de Menor Cuantía"]
+      contratos: ["Selección Abreviada de Menor Cuantía"]
+    evidence_confidence: alta
+    notes: Subtipo menor cuantía (Ley 1150 art. 2 num. 2).
+
+  - procedure_id: seleccion_abreviada_subasta_inversa
+    display_name: Selección abreviada subasta inversa
+    legal_selection_family: seleccion_abreviada
+    legal_classification_status: verified
+    retrieval_family: seleccion_abreviada
+    procedure_variant: subasta_inversa
+    legal_regime: general
+    record_kind: procurement
+    submission_mode: standard
+    user_searchable: true
+    explicit_intent_required: false
+    parent_expansion_policy: family_default
+    dataset_values:
+      procesos: ["Selección abreviada subasta inversa"]
+      contratos: ["Selección abreviada subasta inversa"]
+    evidence_confidence: alta
+    notes: Subtipo subasta inversa para bienes/servicios de características comunes.
+
+  - procedure_id: seleccion_abreviada_menor_cuantia_sin_manifestacion
+    display_name: Seleccion Abreviada Menor Cuantia Sin Manifestacion Interes
+    legal_selection_family: seleccion_abreviada
+    legal_classification_status: verified
+    retrieval_family: seleccion_abreviada
+    procedure_variant: menor_cuantia_sin_manifestacion
+    legal_regime: general
+    record_kind: procurement
+    submission_mode: standard
+    user_searchable: true
+    explicit_intent_required: false
+    parent_expansion_policy: family_default
+    dataset_values:
+      procesos: ["Seleccion Abreviada Menor Cuantia Sin Manifestacion Interes"]
+      contratos: ["Seleccion Abreviada Menor Cuantia Sin Manifestacion Interes"]
+    evidence_confidence: alta
+    notes: Variante procedimental de menor cuantía sin manifestación de interés.
+
+  # ── Licitación pública (D1: AMP NO pertenece a esta familia) ────────────────
+  - procedure_id: licitacion_publica
+    display_name: Licitación pública
+    legal_selection_family: licitacion_publica
+    legal_classification_status: verified
+    retrieval_family: licitacion_publica
+    procedure_variant: null
+    legal_regime: general
+    record_kind: procurement
+    submission_mode: standard
+    user_searchable: true
+    explicit_intent_required: false
+    parent_expansion_policy: family_default
+    dataset_values:
+      procesos: ["Licitación pública"]
+      contratos: ["Licitación pública"]
+    evidence_confidence: alta
+    notes: Regla general (Ley 1150/2007 art. 2 num. 1).
+
+  - procedure_id: licitacion_publica_obra
+    display_name: Licitación pública Obra Publica
+    legal_selection_family: licitacion_publica
+    legal_classification_status: verified
+    retrieval_family: licitacion_publica
+    procedure_variant: obra_publica
+    legal_regime: general
+    record_kind: procurement
+    submission_mode: standard
+    user_searchable: true
+    explicit_intent_required: false
+    parent_expansion_policy: family_default
+    dataset_values:
+      procesos: ["Licitación pública Obra Publica"]
+      contratos: ["Licitación pública Obra Publica"]
+    evidence_confidence: alta
+    notes: Licitación de obra pública (reglas específicas de pliego tipo obra).
+
+  # ── Acuerdo Marco (D1: categoría propia provisional, NO en padres) ──────────
+  - procedure_id: acuerdo_marco_precio_secop
+    display_name: Licitación Pública Acuerdo Marco de Precios
+    legal_selection_family: null
+    legal_classification_status: pending_review
+    retrieval_family: acuerdo_marco
+    procedure_variant: acuerdo_marco
+    legal_regime: general
+    record_kind: procurement_instrument
+    submission_mode: standard
+    user_searchable: true
+    explicit_intent_required: true
+    parent_expansion_policy: explicit_only
+    dataset_values:
+      procesos: ["Licitación Pública Acuerdo Marco de Precios"]
+      contratos: ["Licitación Pública Acuerdo Marco de Precios"]
+    evidence_confidence: baja
+    notes: >-
+      D1: instrumento de agregación de demanda operado por CCE. Jurídicamente
+      los AMP son selección abreviada (Ley 1150 art. 2 num. 2 lit. a; Decreto
+      1082), pero la plataforma los rotula licitación → legal_selection_family=
+      null con legal_classification_status=pending_review. Recuperable solo por
+      intención explícita (acuerdo marco / AMP); NO se incluye en
+      licitacion_publica ni seleccion_abreviada.
+
+  # ── Concurso de méritos (familia con 2 hijos) ───────────────────────────────
+  - procedure_id: concurso_meritos_abierto
+    display_name: Concurso de méritos abierto
+    legal_selection_family: concurso_de_meritos
+    legal_classification_status: verified
+    retrieval_family: concurso_de_meritos
+    procedure_variant: abierto
+    legal_regime: general
+    record_kind: procurement
+    submission_mode: standard
+    user_searchable: true
+    explicit_intent_required: false
+    parent_expansion_policy: family_default
+    dataset_values:
+      procesos: ["Concurso de méritos abierto"]
+      contratos: ["Concurso de méritos abierto"]
+    evidence_confidence: alta
+    notes: Subtipo abierto (Ley 1150 art. 2 num. 3; consultoría/interventoría).
+
+  - procedure_id: concurso_meritos_precalificacion
+    display_name: Concurso de méritos con precalificación
+    legal_selection_family: concurso_de_meritos
+    legal_classification_status: verified
+    retrieval_family: concurso_de_meritos
+    procedure_variant: con_precalificacion
+    legal_regime: general
+    record_kind: procurement
+    submission_mode: standard
+    user_searchable: true
+    explicit_intent_required: false
+    parent_expansion_policy: family_default
+    dataset_values:
+      procesos: ["Concurso de méritos con precalificación"]
+      contratos: ["Concurso de méritos con precalificación"]
+    evidence_confidence: alta
+    notes: Subtipo con precalificación.
+
+  # ── Solicitud de información a proveedores (H3: planeación, no modalidad) ────
+  - procedure_id: solicitud_informacion_proveedores
+    display_name: Solicitud de información a los Proveedores
+    legal_selection_family: null
+    legal_classification_status: not_applicable
+    retrieval_family: solicitud_informacion_proveedores
+    procedure_variant: null
+    legal_regime: general
+    record_kind: planning_rfi
+    submission_mode: no_aplica
+    user_searchable: true
+    explicit_intent_required: true
+    not_searchable_as_modality: true
+    parent_expansion_policy: explicit_only
+    dataset_values:
+      procesos: ["Solicitud de información a los Proveedores"]
+    evidence_confidence: alta
+    notes: >-
+      H3: instrumento de planeación / sondeo de mercado. No selecciona ni
+      adjudica; ausente del dataset de contratos (H-DELTA confirmada). No
+      buscable como modalidad.
+
+  # ── Subasta de prueba (H4: artefacto de plataforma, no visible) ─────────────
+  - procedure_id: subasta_de_prueba
+    display_name: Subasta de prueba
+    legal_selection_family: null
+    legal_classification_status: not_applicable
+    retrieval_family: platform_test
+    procedure_variant: null
+    legal_regime: no_aplica
+    record_kind: platform_test
+    submission_mode: no_aplica
+    user_searchable: false
+    explicit_intent_required: false
+    parent_expansion_policy: never
+    dataset_values:
+      procesos: ["Subasta de prueba"]
+    evidence_confidence: alta
+    notes: >-
+      H4: artefacto de plataforma (dummy). Ruido de datos; ausente del dataset
+      de contratos (H-DELTA confirmada). No visible a usuarios.
+
+  # ── Enajenación de bienes del Estado (D2: venta de activos) ─────────────────
+  - procedure_id: enajenacion_subasta
+    display_name: Enajenación de bienes con subasta
+    legal_selection_family: seleccion_abreviada
+    legal_classification_status: verified
+    retrieval_family: enajenacion_bienes_estado
+    procedure_variant: enajenacion_subasta
+    legal_regime: general
+    record_kind: state_asset_sale
+    submission_mode: standard
+    user_searchable: true
+    explicit_intent_required: true
+    parent_expansion_policy: explicit_only
+    dataset_values:
+      procesos: ["Enajenación de bienes con subasta"]
+      contratos: ["Enajenación de bienes con subasta"]
+    evidence_confidence: media
+    notes: >-
+      D2: el Estado VENDE bienes (no es procurement). Jurídicamente selección
+      abreviada (Ley 1150 art. 2 num. 2 lit. e; Decreto 1082), pero fuera de la
+      expansión ordinaria de "selección abreviada" y de búsquedas de oportunidad
+      para proveedores.
+
+  - procedure_id: enajenacion_sobre_cerrado
+    display_name: Enajenación de bienes con sobre cerrado
+    legal_selection_family: seleccion_abreviada
+    legal_classification_status: verified
+    retrieval_family: enajenacion_bienes_estado
+    procedure_variant: enajenacion_sobre_cerrado
+    legal_regime: general
+    record_kind: state_asset_sale
+    submission_mode: standard
+    user_searchable: true
+    explicit_intent_required: true
+    parent_expansion_policy: explicit_only
+    dataset_values:
+      procesos: ["Enajenación de bienes con sobre cerrado"]
+      contratos: ["Enajenación de bienes con sobre cerrado"]
+    evidence_confidence: media
+    notes: D2 (mecanismo de sobre cerrado). Ver enajenacion_subasta.
