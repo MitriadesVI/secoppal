@@ -18,7 +18,7 @@ from app.core.modality_text import normalize_phrase, normalize_with_map
 
 DEFAULT_LEXICON_PATH = Path(__file__).parent.parent / "data" / "modality_lexicon_v1.yaml"
 
-_TARGET_KINDS = frozenset({"retrieval_family", "procedure", "qualifier", "ambiguity"})
+_TARGET_KINDS = frozenset({"retrieval_family", "procedure", "qualifier", "qualifier_set", "ambiguity"})
 _MATCH_STRENGTHS = frozenset({
     "exact_legal", "exact_common", "colloquial", "contextual", "legacy_raw",
 })
@@ -36,6 +36,10 @@ _KIND_KEYS = {
     "procedure": frozenset({"target_id", "assumption_code"}),
     "qualifier": frozenset({
         "qualifier_type", "qualifier_value", "allowed_retrieval_families",
+        "attachment_direction", "max_attachment_tokens",
+    }),
+    "qualifier_set": frozenset({
+        "qualifier_type", "qualifier_values", "allowed_retrieval_families",
         "attachment_direction", "max_attachment_tokens",
     }),
     "ambiguity": frozenset({"candidate_target_ids", "ambiguity_code"}),
@@ -103,6 +107,7 @@ class LexiconRule:
     allowed_retrieval_families: tuple[str, ...]
     qualifier_type: str | None
     qualifier_value: str | None
+    qualifier_values: tuple[str, ...]
     attachment_direction: str | None
     max_attachment_tokens: int | None
     forbidden_context: tuple[str, ...]
@@ -117,6 +122,7 @@ class ModalityLexicon:
     rules: tuple[LexiconRule, ...]
     phrase_index: Mapping[str, LexiconRule]
     qualifier_targets: Mapping[tuple[str, str, str], str]
+    qualifier_set_targets: Mapping[tuple[str, str, tuple[str, ...]], tuple[str, ...]]
 
     def rule_count(self) -> int:
         return len(self.rules)
@@ -128,6 +134,12 @@ class ModalityLexicon:
         self, family: str, qualifier_type: str, qualifier_value: str,
     ) -> str | None:
         return self.qualifier_targets.get((family, qualifier_type, qualifier_value))
+
+    def composition_targets(
+        self, family: str, qualifier_type: str, qualifier_values: tuple[str, ...],
+    ) -> tuple[str, ...]:
+        key = (family, qualifier_type, tuple(sorted(qualifier_values)))
+        return self.qualifier_set_targets.get(key, ())
 
 
 # ── Helpers de validación ───────────────────────────────────────────────────
@@ -260,7 +272,11 @@ def _build_rule(
     index: int,
     catalog: ModalityCatalog,
     retrieval_families: frozenset[str],
-) -> tuple[LexiconRule, dict[tuple[str, str, str], str]]:
+) -> tuple[
+    LexiconRule,
+    dict[tuple[str, str, str], str],
+    dict[tuple[str, str, tuple[str, ...]], tuple[str, ...]],
+]:
     ctx = f"rules[{index}]"
     if not isinstance(record, dict):
         raise _fail(f"{ctx}: cada regla debe ser un mapping, no {type(record).__name__}")
@@ -311,9 +327,11 @@ def _build_rule(
     allowed_families: tuple[str, ...] = ()
     qualifier_type: str | None = None
     qualifier_value: str | None = None
+    qualifier_values: tuple[str, ...] = ()
     attachment_direction: str | None = None
     max_attachment_tokens: int | None = None
     composition_entries: dict[tuple[str, str, str], str] = {}
+    qualifier_set_entries: dict[tuple[str, str, tuple[str, ...]], tuple[str, ...]] = {}
 
     if target_kind == "retrieval_family":
         target_id = _required_nonempty_str(record, "target_id", ctx)
@@ -333,11 +351,18 @@ def _build_rule(
         if proc.explicit_intent_required and not explicit_intent:
             raise _fail(f"{ctx}: {target_id!r} exige explicit_intent=true")
 
-    elif target_kind == "qualifier":
+    elif target_kind in {"qualifier", "qualifier_set"}:
         qualifier_type = _required_nonempty_str(record, "qualifier_type", ctx)
         if qualifier_type not in _QUALIFIER_TYPES:
             raise _fail(f"{ctx}: qualifier_type desconocido {qualifier_type!r}")
-        qualifier_value = _required_nonempty_str(record, "qualifier_value", ctx)
+        if target_kind == "qualifier":
+            qualifier_value = _required_nonempty_str(record, "qualifier_value", ctx)
+        else:
+            qualifier_values = _string_list(
+                record, "qualifier_values", ctx, required=True,
+            )
+            if len(qualifier_values) < 2:
+                raise _fail(f"{ctx}: qualifier_values debe contener al menos dos valores")
         allowed_families = _string_list(
             record, "allowed_retrieval_families", ctx, required=True,
         )
@@ -356,10 +381,23 @@ def _build_rule(
         for family in allowed_families:
             if family not in retrieval_families:
                 raise _fail(f"{ctx}: allowed_retrieval_families inexistente {family!r}")
-            key = (family, qualifier_type, qualifier_value)
-            composition_entries[key] = _qualifier_target(
-                catalog, family, qualifier_type, qualifier_value, ctx,
-            )
+            if target_kind == "qualifier":
+                assert qualifier_value is not None
+                key = (family, qualifier_type, qualifier_value)
+                composition_entries[key] = _qualifier_target(
+                    catalog, family, qualifier_type, qualifier_value, ctx,
+                )
+            else:
+                values_key = tuple(sorted(qualifier_values))
+                targets = tuple(sorted(
+                    _qualifier_target(catalog, family, qualifier_type, value, ctx)
+                    for value in qualifier_values
+                ))
+                if len(set(targets)) != len(targets):
+                    raise _fail(
+                        f"{ctx}: qualifier_values deben resolver a procedimientos distintos"
+                    )
+                qualifier_set_entries[(family, qualifier_type, values_key)] = targets
 
     else:  # ambiguity
         candidate_ids = _string_list(
@@ -389,13 +427,14 @@ def _build_rule(
         allowed_retrieval_families=allowed_families,
         qualifier_type=qualifier_type,
         qualifier_value=qualifier_value,
+        qualifier_values=qualifier_values,
         attachment_direction=attachment_direction,
         max_attachment_tokens=max_attachment_tokens,
         forbidden_context=forbidden_context,
         required_context=required_context,
         notes=notes,
     )
-    return rule, composition_entries
+    return rule, composition_entries, qualifier_set_entries
 
 
 def build_lexicon(data: Any, catalog: ModalityCatalog) -> ModalityLexicon:
@@ -416,10 +455,13 @@ def build_lexicon(data: Any, catalog: ModalityCatalog) -> ModalityLexicon:
     rules: list[LexiconRule] = []
     phrase_index: dict[str, LexiconRule] = {}
     qualifier_targets: dict[tuple[str, str, str], str] = {}
+    qualifier_set_targets: dict[tuple[str, str, tuple[str, ...]], tuple[str, ...]] = {}
     seen_ids: set[str] = set()
 
     for index, raw_rule in enumerate(raw_rules):
-        rule, entries = _build_rule(raw_rule, index, catalog, retrieval_families)
+        rule, entries, set_entries = _build_rule(
+            raw_rule, index, catalog, retrieval_families
+        )
         if rule.rule_id in seen_ids:
             raise _fail(f"rule_id duplicado: {rule.rule_id!r}")
         seen_ids.add(rule.rule_id)
@@ -439,12 +481,21 @@ def build_lexicon(data: Any, catalog: ModalityCatalog) -> ModalityLexicon:
                     f"{previous!r} vs {procedure_id!r}"
                 )
             qualifier_targets[key] = procedure_id
+        for key, procedure_ids in set_entries.items():
+            previous = qualifier_set_targets.get(key)
+            if previous is not None and previous != procedure_ids:
+                raise _fail(
+                    f"composición qualifier_set conflictiva para {key}: "
+                    f"{previous!r} vs {procedure_ids!r}"
+                )
+            qualifier_set_targets[key] = procedure_ids
         rules.append(rule)
 
     return ModalityLexicon(
         rules=tuple(rules),
         phrase_index=MappingProxyType(phrase_index),
         qualifier_targets=MappingProxyType(qualifier_targets),
+        qualifier_set_targets=MappingProxyType(qualifier_set_targets),
     )
 
 

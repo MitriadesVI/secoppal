@@ -8,17 +8,24 @@ from __future__ import annotations
 
 from dataclasses import dataclass, replace
 
+from app.core.modality_alternatives import (
+    analyze_alternatives,
+    attachment_gap,
+    crosses_intervening_primary,
+    has_explicit_coordinator,
+    has_external_negative_operator,
+    span_hull,
+    structural_attachment_cost,
+)
 from app.core.modality_lexicon import LexiconRule, ModalityLexicon
 from app.core.modality_models import ModalityCatalog
 from app.core.modality_resolution_models import IssueType, ResolutionIssue
 from app.core.modality_text import (
     Clause,
     clause_for_span,
-    comma_count,
     contains_phrase,
     context_present_locally,
     find_occurrences,
-    token_distance,
 )
 
 _REFINEMENT_MAX_COST = 7
@@ -27,21 +34,13 @@ _REFINEMENT_BLOCKERS = (
     "excepto", "salvo", "no", "sin", "diferente de", "diferentes de",
     "distinto de", "distintos de", "excluyendo",
 )
-_EXTERNAL_NEGATIVE_OPERATORS = (
-    "que no sean", "que no sea", "diferentes de", "diferente de",
-    "distintos de", "distinto de", "excluyendo", "excepto", "salvo",
-    "no", "sin",
-)
-_ANTI_NEGATION_PATTERNS = (
-    "no solo", "sin descartar", "sin excluir",
-    "no quiero excluir", "no busco excluir",
-)
 _CODE_QUALIFIER_CONFLICT = "MODALITY_QUALIFIER_FAMILY_CONFLICT"
 _CODE_QUALIFIER_VALUE_CONFLICT = "MODALITY_QUALIFIER_VALUE_CONFLICT"
 
 _SEMANTIC_RANK = {
     "procedure": 0,
     "qualifier": 1,
+    "qualifier_set": 1,
     "retrieval_family": 2,
     "ambiguity": 3,
 }
@@ -90,6 +89,7 @@ class Mention:
     confidence: str
     explicit_intent: bool
     assumption_code: str | None
+    procedure_ids: tuple[str, ...] | None = None
 
 
 class CompositionEngine:
@@ -176,6 +176,57 @@ class CompositionEngine:
             candidate.norm_start, candidate.norm_end, candidate.rule.rule_id,
         ))
 
+    def analyze_alternatives(
+        self,
+        text: str,
+        norm: str,
+        candidates: list[Candidate],
+    ) -> tuple[list[Mention], tuple[ResolutionIssue, ...], tuple[tuple[int, int], ...]]:
+        analysis = analyze_alternatives(
+            text=text,
+            norm=norm,
+            candidates=candidates,
+            family_by_procedure=self._family_by_procedure,
+            qualifier_targets=self._lexicon.qualifier_targets,
+            qualifier_set_targets=self._lexicon.qualifier_set_targets,
+        )
+        mentions = [
+            Mention(
+                norm_start=item.norm_start,
+                norm_end=item.norm_end,
+                orig_start=item.orig_start,
+                orig_end=item.orig_end,
+                source_text=text[item.orig_start:item.orig_end],
+                normalized_alias=norm[item.norm_start:item.norm_end],
+                clause_index=item.primary.clause_index,
+                target_kind="retrieval_family",
+                target_id=item.family,
+                rule_id=(
+                    f"alternatives:{item.primary.rule.rule_id}+"
+                    + "+".join(item.qualifier_rule_ids)
+                ),
+                match_strength=item.primary.rule.match_strength,
+                confidence=item.primary.rule.confidence,
+                explicit_intent=item.primary.rule.explicit_intent,
+                assumption_code=item.primary.rule.assumption_code,
+                procedure_ids=item.procedure_ids,
+            )
+            for item in analysis.selections
+        ]
+        issues = tuple(
+            ResolutionIssue(
+                issue_type=IssueType.CONFLICT,
+                source_text=text[item.orig_start:item.orig_end],
+                original_start=item.orig_start,
+                original_end=item.orig_end,
+                target_ids=item.target_ids,
+                code=item.code,
+                explanation=item.explanation,
+            )
+            for item in analysis.conflicts
+        )
+        return mentions, issues, analysis.consumed_norm_spans
+
     def compose(
         self,
         text: str,
@@ -205,6 +256,7 @@ class CompositionEngine:
             confidence=candidate.rule.confidence,
             explicit_intent=candidate.rule.explicit_intent,
             assumption_code=candidate.rule.assumption_code,
+            procedure_ids=None,
         )
 
     def family_of(self, mention: Mention) -> str:
@@ -213,40 +265,8 @@ class CompositionEngine:
         return self._family_by_procedure[mention.target_id]
 
     @staticmethod
-    def _crosses_primary(left: Mention, right: Mention, mentions: list[Mention]) -> bool:
-        low = min(left.norm_end, right.norm_end)
-        high = max(left.norm_start, right.norm_start)
-        return any(
-            other is not left
-            and other is not right
-            and low <= other.norm_start
-            and other.norm_end <= high
-            for other in mentions
-        )
-
-    @staticmethod
     def _gap_has_any(norm_gap: str, phrases: tuple[str, ...]) -> bool:
         return any(contains_phrase(norm_gap, phrase) for phrase in phrases)
-
-    @staticmethod
-    def _mask_phrases(norm_text: str, phrases: tuple[str, ...]) -> str:
-        """Neutraliza frases completas preservando longitud y límites."""
-        chars = list(norm_text)
-        for phrase in phrases:
-            for start, end in find_occurrences(norm_text, phrase):
-                chars[start:end] = " " * (end - start)
-        return "".join(chars)
-
-    @classmethod
-    def _has_external_negative_operator(cls, norm_gap: str) -> bool:
-        """Detecta negación fuera del span del qualifier.
-
-        Las anti-negaciones se neutralizan primero. Un operador que forma parte
-        del propio alias técnico no aparece en ``norm_gap`` y, por tanto, no se
-        bloquea aquí.
-        """
-        operator_gap = cls._mask_phrases(norm_gap, _ANTI_NEGATION_PATTERNS)
-        return cls._gap_has_any(operator_gap, _EXTERNAL_NEGATIVE_OPERATORS)
 
     def _collapse_local_specific_refinements(
         self, text: str, norm: str, mentions: list[Mention],
@@ -270,14 +290,18 @@ class CompositionEngine:
                     continue
                 if general.target_id != family or general.norm_end > specific.norm_start:
                     continue
-                if self._crosses_primary(general, specific, active):
+                if crosses_intervening_primary(general, specific, active):
                     continue
                 norm_gap = norm[general.norm_end:specific.norm_start]
-                if self._gap_has_any(norm_gap, _COORDINATORS + _REFINEMENT_BLOCKERS):
+                if has_explicit_coordinator(norm_gap) or self._gap_has_any(
+                    norm_gap, _REFINEMENT_BLOCKERS
+                ):
                     continue
-                original_gap = text[general.orig_end:specific.orig_start]
-                token_cost = token_distance(norm, general.norm_end, specific.norm_start)
-                structural_cost = token_cost + comma_count(original_gap)
+                gap = (
+                    general.norm_end, specific.norm_start,
+                    general.orig_end, specific.orig_start,
+                )
+                structural_cost = structural_attachment_cost(text, norm, gap)
                 if structural_cost > _REFINEMENT_MAX_COST:
                     continue
                 candidates.append((
@@ -326,10 +350,7 @@ class CompositionEngine:
                 continue
             index, primary = attachment
             family = self.family_of(primary)
-            start = min(primary.orig_start, qualifier.orig_start)
-            end = max(primary.orig_end, qualifier.orig_end)
-            norm_start = min(primary.norm_start, qualifier.norm_start)
-            norm_end = max(primary.norm_end, qualifier.norm_end)
+            norm_start, norm_end, start, end = span_hull(primary, (qualifier,))
 
             if family not in qualifier.rule.allowed_retrieval_families:
                 qualifier_targets = tuple(sorted({
@@ -432,6 +453,7 @@ class CompositionEngine:
                 assumption_code=(
                     canonical_rule.assumption_code if canonical_rule else primary.assumption_code
                 ),
+                procedure_ids=None,
             )
 
         return (
@@ -453,20 +475,18 @@ class CompositionEngine:
         for index, mention in enumerate(mentions):
             if mention.clause_index != qualifier.clause_index:
                 continue
-            gap = self._attachment_gap(mention, qualifier)
+            gap = attachment_gap(mention, qualifier)
             if gap is None:
                 continue
-            gap_start, gap_end, original_start, original_end = gap
-            if self._crosses_candidate(mention, qualifier, mentions):
+            gap_start, gap_end, _, _ = gap
+            if crosses_intervening_primary(mention, qualifier, mentions):
                 continue
             norm_gap = norm[gap_start:gap_end]
-            if self._has_external_negative_operator(norm_gap):
+            if has_external_negative_operator(norm_gap):
                 continue
             if self._gap_has_any(norm_gap, _COORDINATORS):
                 continue
-            original_gap = text[original_start:original_end]
-            token_cost = token_distance(norm, gap_start, gap_end)
-            structural_cost = token_cost + comma_count(original_gap)
+            structural_cost = structural_attachment_cost(text, norm, gap)
             if structural_cost > (rule.max_attachment_tokens or 0):
                 continue
             char_distance = max(0, gap_end - gap_start)
@@ -475,49 +495,3 @@ class CompositionEngine:
             return None
         _, _, _, mention = min(candidates, key=lambda item: item[:3])
         return mentions.index(mention), mention
-
-    @staticmethod
-    def _attachment_gap(
-        mention: Mention, qualifier: Candidate,
-    ) -> tuple[int, int, int, int] | None:
-        direction = qualifier.rule.attachment_direction
-        if direction == "after":
-            if mention.norm_end > qualifier.norm_start:
-                return None
-            return (
-                mention.norm_end, qualifier.norm_start,
-                mention.orig_end, qualifier.orig_start,
-            )
-        if direction == "before":
-            if qualifier.norm_end > mention.norm_start:
-                return None
-            return (
-                qualifier.norm_end, mention.norm_start,
-                qualifier.orig_end, mention.orig_start,
-            )
-        if mention.norm_end <= qualifier.norm_start:
-            return (
-                mention.norm_end, qualifier.norm_start,
-                mention.orig_end, qualifier.orig_start,
-            )
-        if qualifier.norm_end <= mention.norm_start:
-            return (
-                qualifier.norm_end, mention.norm_start,
-                qualifier.orig_end, mention.orig_start,
-            )
-        return None
-
-    @staticmethod
-    def _crosses_candidate(
-        primary: Mention, qualifier: Candidate, mentions: list[Mention],
-    ) -> bool:
-        if primary.norm_end <= qualifier.norm_start:
-            low, high = primary.norm_end, qualifier.norm_start
-        else:
-            low, high = qualifier.norm_end, primary.norm_start
-        return any(
-            other is not primary
-            and low <= other.norm_start
-            and other.norm_end <= high
-            for other in mentions
-        )

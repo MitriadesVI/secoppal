@@ -1,9 +1,9 @@
 version: 1
 metrics:
-  corpus_rows: 245
-  unique_queries: 204
-  unique_normalized_queries: 183
-  new_unique_critical_cases: 58
+  corpus_rows: 301
+  unique_queries: 260
+  unique_normalized_queries: 239
+  new_unique_critical_cases: 114
 cases:
 - case_id: A01
   query: licitación pública
@@ -4141,3 +4141,957 @@ cases:
   expected_residual_text: no con precalificación
   expected_issues: []
   notes: Negación externa bloquea el qualifier positivo y conserva la familia.
+- case_id: M01
+  query: contratación directa con o sin ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - contratación directa con o sin ofertas
+  expected_residual_text: ''
+  notes: M2-R2 coordinated alternative
+  expected_issues: []
+- case_id: M02
+  query: contratación directa con ofertas o sin ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - contratación directa con ofertas o sin ofertas
+  expected_residual_text: ''
+  notes: M2-R2 coordinated alternative
+  expected_issues: []
+- case_id: M03
+  query: contratación directa sin ofertas o con ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - contratación directa sin ofertas o con ofertas
+  expected_residual_text: ''
+  notes: M2-R2 coordinated alternative
+  expected_issues: []
+- case_id: M04
+  query: contratación directa con ofertas y sin ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - contratación directa con ofertas y sin ofertas
+  expected_residual_text: ''
+  notes: M2-R2 coordinated alternative
+  expected_issues: []
+- case_id: M05
+  query: contratación directa tanto con ofertas como sin ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - contratación directa tanto con ofertas como sin ofertas
+  expected_residual_text: ''
+  notes: M2-R2 coordinated alternative
+  expected_issues: []
+- case_id: M06
+  query: régimen especial con o sin ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - regimen_especial
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - regimen_especial
+  - regimen_especial_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - régimen especial con o sin ofertas
+  expected_residual_text: ''
+  notes: M2-R2 coordinated alternative
+  expected_issues: []
+- case_id: M07
+  query: régimen especial con ofertas o sin ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - regimen_especial
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - regimen_especial
+  - regimen_especial_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - régimen especial con ofertas o sin ofertas
+  expected_residual_text: ''
+  notes: M2-R2 coordinated alternative
+  expected_issues: []
+- case_id: M08
+  query: concurso de méritos abierto o con precalificación
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_de_meritos
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_abierto
+  - concurso_meritos_precalificacion
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - concurso de méritos abierto o con precalificación
+  expected_residual_text: ''
+  notes: M2-R2 coordinated alternative
+  expected_issues: []
+- case_id: M09
+  query: concurso de méritos con precalificación y abierto
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_de_meritos
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_abierto
+  - concurso_meritos_precalificacion
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - concurso de méritos con precalificación y abierto
+  expected_residual_text: ''
+  notes: M2-R2 coordinated alternative
+  expected_issues: []
+- case_id: M10
+  query: concurso de méritos abierto y con precalificación
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_de_meritos
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_abierto
+  - concurso_meritos_precalificacion
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - concurso de méritos abierto y con precalificación
+  expected_residual_text: ''
+  notes: M2-R2 coordinated alternative
+  expected_issues: []
+- case_id: M11
+  query: contratación directa con ofertas y donde se reciban ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - contratación directa con ofertas y donde se reciban ofertas
+  expected_residual_text: ''
+  notes: M2-R2 coordinated alternative
+  expected_issues: []
+- case_id: M12
+  query: concurso de méritos abierto o sin precalificación
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_de_meritos
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_abierto
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - concurso de méritos abierto o sin precalificación
+  expected_residual_text: ''
+  notes: M2-R2 coordinated alternative
+  expected_issues: []
+- case_id: M13
+  query: contratación directa que permita presentar ofertas sin ofertas
+  dataset: null
+  expected_status: conflict
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: []
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - contratación directa que permita presentar ofertas sin ofertas
+  expected_residual_text: ''
+  notes: M2-R2 uncoordinated/contrast conflict
+  expected_issues:
+  - issue_type: conflict
+    code: MODALITY_QUALIFIER_VALUE_CONFLICT
+    target_ids:
+    - contratacion_directa
+    - contratacion_directa_con_ofertas
+    source_text: contratación directa que permita presentar ofertas sin ofertas
+- case_id: M14
+  query: concurso de méritos que tenga precalificación abierto
+  dataset: null
+  expected_status: conflict
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: []
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - concurso de méritos que tenga precalificación abierto
+  expected_residual_text: ''
+  notes: M2-R2 uncoordinated/contrast conflict
+  expected_issues:
+  - issue_type: conflict
+    code: MODALITY_QUALIFIER_VALUE_CONFLICT
+    target_ids:
+    - concurso_meritos_abierto
+    - concurso_meritos_precalificacion
+    source_text: concurso de méritos que tenga precalificación abierto
+- case_id: M15
+  query: régimen especial con ofertas pero sin ofertas
+  dataset: null
+  expected_status: conflict
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: []
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - régimen especial con ofertas pero sin ofertas
+  expected_residual_text: ''
+  notes: M2-R2 uncoordinated/contrast conflict
+  expected_issues:
+  - issue_type: conflict
+    code: MODALITY_QUALIFIER_VALUE_CONFLICT
+    target_ids:
+    - regimen_especial
+    - regimen_especial_con_ofertas
+    source_text: régimen especial con ofertas pero sin ofertas
+- case_id: M16
+  query: contratación directa sin ofertas pero con ofertas
+  dataset: null
+  expected_status: conflict
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: []
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - contratación directa sin ofertas pero con ofertas
+  expected_residual_text: ''
+  notes: M2-R2 uncoordinated/contrast conflict
+  expected_issues:
+  - issue_type: conflict
+    code: MODALITY_QUALIFIER_VALUE_CONFLICT
+    target_ids:
+    - contratacion_directa
+    - contratacion_directa_con_ofertas
+    source_text: contratación directa sin ofertas pero con ofertas
+- case_id: M17
+  query: concurso de méritos con precalificación pero abierto
+  dataset: null
+  expected_status: conflict
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: []
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - concurso de méritos con precalificación pero abierto
+  expected_residual_text: ''
+  notes: M2-R2 uncoordinated/contrast conflict
+  expected_issues:
+  - issue_type: conflict
+    code: MODALITY_QUALIFIER_VALUE_CONFLICT
+    target_ids:
+    - concurso_meritos_abierto
+    - concurso_meritos_precalificacion
+    source_text: concurso de méritos con precalificación pero abierto
+- case_id: M18
+  query: contratación directa que permita recibir ofertas y donde se reciban ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - contratación directa que permita recibir ofertas y donde se reciban ofertas
+  expected_residual_text: ''
+  notes: M2-R2 idempotent coordinated effects
+  expected_issues: []
+- case_id: M19
+  query: concursos de méritos abiertos o sin ninguna precalificación
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_de_meritos
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_abierto
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - concursos de méritos abiertos o sin ninguna precalificación
+  expected_residual_text: ''
+  notes: M2-R2 idempotent coordinated effects
+  expected_issues: []
+- case_id: M20
+  query: régimen especial sin ofertas o sin que haya ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - regimen_especial
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - regimen_especial
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - régimen especial sin ofertas o sin que haya ofertas
+  expected_residual_text: ''
+  notes: M2-R2 idempotent coordinated effects
+  expected_issues: []
+- case_id: M21
+  query: concurso de méritos con precalificación y que tenga precalificación
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_de_meritos
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_precalificacion
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - concurso de méritos con precalificación y que tenga precalificación
+  expected_residual_text: ''
+  notes: M2-R2 idempotent coordinated effects
+  expected_issues: []
+- case_id: M22
+  query: contratos de alimentación para adulto mayor de la Alcaldía de Barranquilla por más de 500 millones en 2025
+  dataset: null
+  expected_status: no_match
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: []
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: []
+  expected_residual_text: contratos de alimentación para adulto mayor de la Alcaldía de Barranquilla por más de 500 millones
+    en 2025
+  notes: M2-R2 modality optional
+  expected_issues: []
+- case_id: M23
+  query: procesos de alimentación en Barranquilla durante 2025
+  dataset: null
+  expected_status: no_match
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: []
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: []
+  expected_residual_text: procesos de alimentación en Barranquilla durante 2025
+  notes: M2-R2 modality optional
+  expected_issues: []
+- case_id: M24
+  query: contratos celebrados por el Distrito entre 200 y 500 millones
+  dataset: null
+  expected_status: no_match
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: []
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: []
+  expected_residual_text: contratos celebrados por el Distrito entre 200 y 500 millones
+  notes: M2-R2 modality optional
+  expected_issues: []
+- case_id: M25
+  query: oportunidades para atención de adultos mayores
+  dataset: null
+  expected_status: no_match
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: []
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: []
+  expected_residual_text: oportunidades para atención de adultos mayores
+  notes: M2-R2 modality optional
+  expected_issues: []
+- case_id: M26
+  query: entidades de Barranquilla con procesos abiertos durante 2025
+  dataset: null
+  expected_status: no_match
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: []
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts: []
+  expected_residual_text: entidades de Barranquilla con procesos abiertos durante 2025
+  notes: M2-R2 modality optional
+  expected_issues: []
+- case_id: M27
+  query: contratación directa con ofertas o régimen especial sin ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa_con_ofertas
+  - regimen_especial
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa_con_ofertas
+  - regimen_especial
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - contratación directa con ofertas
+  - régimen especial sin ofertas
+  expected_residual_text: o
+  notes: M2-R2 cross-primary isolation
+  expected_issues: []
+- case_id: M28
+  query: contratación directa con o sin ofertas y licitación pública
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa
+  - licitacion_publica
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa
+  - contratacion_directa_con_ofertas
+  - licitacion_publica
+  - licitacion_publica_obra
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - contratación directa con o sin ofertas
+  - licitación pública
+  expected_residual_text: y
+  notes: M2-R2 alternative plus second primary
+  expected_issues: []
+- case_id: M29
+  query: concurso de méritos abierto o contratación directa con ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_meritos_abierto
+  - contratacion_directa_con_ofertas
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_abierto
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - concurso de méritos abierto
+  - contratación directa con ofertas
+  expected_residual_text: o
+  notes: M2-R2 qualifiers never cross another primary
+  expected_issues: []
+- case_id: M30
+  query: mínima cuantía con o sin ofertas
+  dataset: null
+  expected_status: conflict
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: []
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - mínima cuantía con o sin ofertas
+  expected_residual_text: ''
+  notes: M2-R2 incompatible qualifier_set
+  expected_issues:
+  - issue_type: conflict
+    code: MODALITY_QUALIFIER_FAMILY_CONFLICT
+    target_ids:
+    - contratacion_directa
+    - contratacion_directa_con_ofertas
+    - minima_cuantia
+    - regimen_especial
+    - regimen_especial_con_ofertas
+    source_text: mínima cuantía con o sin ofertas
+- case_id: M31
+  query: licitación pública con o sin ofertas
+  dataset: null
+  expected_status: conflict
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: []
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - licitación pública con o sin ofertas
+  expected_residual_text: ''
+  notes: M2-R2 incompatible qualifier_set
+  expected_issues:
+  - issue_type: conflict
+    code: MODALITY_QUALIFIER_FAMILY_CONFLICT
+    target_ids:
+    - contratacion_directa
+    - contratacion_directa_con_ofertas
+    - licitacion_publica
+    - regimen_especial
+    - regimen_especial_con_ofertas
+    source_text: licitación pública con o sin ofertas
+- case_id: M32
+  query: acuerdo marco con o sin ofertas
+  dataset: null
+  expected_status: conflict
+  expected_include_targets: []
+  expected_exclude_targets: []
+  expected_procedure_ids: []
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - acuerdo marco con o sin ofertas
+  expected_residual_text: ''
+  notes: M2-R2 incompatible qualifier_set
+  expected_issues:
+  - issue_type: conflict
+    code: MODALITY_QUALIFIER_FAMILY_CONFLICT
+    target_ids:
+    - acuerdo_marco
+    - contratacion_directa
+    - contratacion_directa_con_ofertas
+    - regimen_especial
+    - regimen_especial_con_ofertas
+    source_text: acuerdo marco con o sin ofertas
+- case_id: M33
+  query: selecciones abreviadas celebradas por Barranquilla en 2025
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - seleccion_abreviada_menor_cuantia
+  - seleccion_abreviada_menor_cuantia_sin_manifestacion
+  - seleccion_abreviada_subasta_inversa
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - selecciones abreviadas
+  expected_residual_text: celebradas por Barranquilla en 2025
+  notes: M2-R2 family expansion excludes AMP/enajenation
+  expected_issues: []
+- case_id: M34
+  query: subastas inversas celebradas por Barranquilla
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - seleccion_abreviada_subasta_inversa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - seleccion_abreviada_subasta_inversa
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - subastas inversas
+  expected_residual_text: celebradas por Barranquilla
+  notes: M2-R2 specific zoom
+  expected_issues: []
+- case_id: M35
+  query: acuerdos marco de precios celebrados por Barranquilla
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - acuerdo_marco
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - acuerdo_marco_precio_secop
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - acuerdos marco de precios
+  expected_residual_text: celebrados por Barranquilla
+  notes: M2-R2 AMP isolated family
+  expected_issues: []
+- case_id: M36
+  query: contratación directa con ofertas y/o sin ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_residual_text: ''
+  notes: M2-R2 coordinated alternative
+  expected_issues: []
+  expected_consumed_texts:
+  - contratación directa con ofertas y/o sin ofertas
+- case_id: M37
+  query: contratación directa con y sin ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_residual_text: ''
+  notes: M2-R2 coordinated alternative
+  expected_issues: []
+  expected_consumed_texts:
+  - contratación directa con y sin ofertas
+- case_id: M38
+  query: concurso de méritos sin precalificación o abierto
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_de_meritos
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_abierto
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - concurso de méritos sin precalificación o abierto
+  expected_residual_text: ''
+  notes: M2-R2.1 nested qualifier precedence
+  expected_issues: []
+- case_id: M40
+  query: concurso de méritos sin precalificación o con precalificación
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_de_meritos
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_abierto
+  - concurso_meritos_precalificacion
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - concurso de méritos sin precalificación o con precalificación
+  expected_residual_text: ''
+  notes: M2-R2.1 nested qualifier precedence
+  expected_issues: []
+- case_id: M41
+  query: concurso de méritos con precalificación o sin precalificación
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_de_meritos
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_abierto
+  - concurso_meritos_precalificacion
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - concurso de méritos con precalificación o sin precalificación
+  expected_residual_text: ''
+  notes: M2-R2.1 nested qualifier precedence
+  expected_issues: []
+- case_id: M42
+  query: concurso de méritos sin precalificación o sin precalificación
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_de_meritos
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_abierto
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - concurso de méritos sin precalificación o sin precalificación
+  expected_residual_text: ''
+  notes: M2-R2.1 nested qualifier precedence
+  expected_issues: []
+- case_id: M43
+  query: concurso de méritos sin ninguna precalificación o abierto
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_de_meritos
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_abierto
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - concurso de méritos sin ninguna precalificación o abierto
+  expected_residual_text: ''
+  notes: M2-R2.1 nested qualifier precedence
+  expected_issues: []
+- case_id: M44
+  query: concurso de méritos que no tenga precalificación o abierto
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_de_meritos
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_abierto
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - concurso de méritos que no tenga precalificación o abierto
+  expected_residual_text: ''
+  notes: M2-R2.1 nested qualifier precedence
+  expected_issues: []
+- case_id: M45
+  query: concurso de méritos que no incluya precalificación o con precalificación
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_de_meritos
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_abierto
+  - concurso_meritos_precalificacion
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - concurso de méritos que no incluya precalificación o con precalificación
+  expected_residual_text: ''
+  notes: M2-R2.1 nested qualifier precedence
+  expected_issues: []
+- case_id: M46
+  query: concurso de méritos no con precalificación o abierto
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_de_meritos
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_abierto
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - concurso de méritos no con precalificación o abierto
+  expected_residual_text: ''
+  notes: M2-R2.2 external negation before first coordinated qualifier
+  expected_issues: []
+- case_id: M47
+  query: concurso de méritos abierto o no con precalificación
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_de_meritos
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_abierto
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - concurso de méritos abierto o no con precalificación
+  expected_residual_text: ''
+  notes: M2-R2.2 external negation before second coordinated qualifier
+  expected_issues: []
+- case_id: M48
+  query: concurso de méritos no con precalificación o sin precalificación
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_de_meritos
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_abierto
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - concurso de méritos no con precalificación o sin precalificación
+  expected_residual_text: ''
+  notes: M2-R2.2 technical negative remains eligible
+  expected_issues: []
+- case_id: M49
+  query: concurso de méritos sin precalificación o no con precalificación
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_de_meritos
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_abierto
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - concurso de méritos sin precalificación o no con precalificación
+  expected_residual_text: ''
+  notes: M2-R2.2 external negation in second member
+  expected_issues: []
+- case_id: M50
+  query: contratación directa no con ofertas o sin ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - contratación directa no con ofertas o sin ofertas
+  expected_residual_text: ''
+  notes: M2-R2.2 direct-contract external negation
+  expected_issues: []
+- case_id: M51
+  query: contratación directa sin ofertas o no con ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - contratación directa sin ofertas o no con ofertas
+  expected_residual_text: ''
+  notes: M2-R2.2 direct-contract external negation second member
+  expected_issues: []
+- case_id: M52
+  query: régimen especial no con ofertas o sin ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - regimen_especial
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - regimen_especial
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - régimen especial no con ofertas o sin ofertas
+  expected_residual_text: ''
+  notes: M2-R2.2 special-regime external negation
+  expected_issues: []
+- case_id: M53
+  query: contratación directa no con o sin ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - contratación directa
+  expected_residual_text: no con o sin ofertas
+  notes: M2-R2.2 externally negated qualifier_set remains residual
+  expected_issues: []
+- case_id: M54
+  query: no contratación directa con o sin ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets: []
+  expected_exclude_targets:
+  - contratacion_directa
+  expected_procedure_ids: null
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - contratación directa con o sin ofertas
+  expected_residual_text: 'no'
+  notes: M2-R2.2 full-family exclusion remains active
+  expected_issues: []
+- case_id: M55
+  query: concurso de méritos no solo con precalificación o abierto
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - concurso_de_meritos
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - concurso_meritos_abierto
+  - concurso_meritos_precalificacion
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - concurso de méritos no solo con precalificación o abierto
+  expected_residual_text: ''
+  notes: M2-R2.2 anti-negation no solo
+  expected_issues: []
+- case_id: M56
+  query: contratación directa sin descartar con ofertas o sin ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - contratacion_directa
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - contratacion_directa
+  - contratacion_directa_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - contratación directa sin descartar con ofertas o sin ofertas
+  expected_residual_text: ''
+  notes: M2-R2.2 anti-negation sin descartar
+  expected_issues: []
+- case_id: M57
+  query: régimen especial no busco excluir con ofertas o sin ofertas
+  dataset: null
+  expected_status: resolved
+  expected_include_targets:
+  - regimen_especial
+  expected_exclude_targets: []
+  expected_procedure_ids:
+  - regimen_especial
+  - regimen_especial_con_ofertas
+  expected_assumption_codes: []
+  expected_ambiguity_code: null
+  expected_consumed_texts:
+  - régimen especial no busco excluir con ofertas o sin ofertas
+  expected_residual_text: ''
+  notes: M2-R2.2 anti-negation no busco excluir
+  expected_issues: []

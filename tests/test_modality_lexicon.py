@@ -7,6 +7,7 @@ from types import MappingProxyType
 
 import pytest
 
+import app.core.modality_lexicon as modality_lexicon_module
 from app.core.modality_lexicon import (
     LexiconValidationError,
     ModalityLexicon,
@@ -76,6 +77,20 @@ def _valid_data() -> dict:
                 "explicit_intent": False,
                 "notes": "",
             },
+            {
+                "rule_id": "qset_ofertas",
+                "phrases": ["con o sin ofertas"],
+                "target_kind": "qualifier_set",
+                "allowed_retrieval_families": ["contratacion_directa"],
+                "qualifier_type": "submission_mode",
+                "qualifier_values": ["con_ofertas", "standard"],
+                "attachment_direction": "after",
+                "max_attachment_tokens": 6,
+                "match_strength": "contextual",
+                "confidence": "high",
+                "explicit_intent": False,
+                "notes": "",
+            },
         ],
     }
 
@@ -90,11 +105,14 @@ def _rule(data: dict, rule_id: str) -> dict:
 
 def test_valid_minimal_lexicon_builds(catalog) -> None:
     lexicon = _build(_valid_data(), catalog)
-    assert lexicon.rule_count() == 4
-    assert lexicon.phrase_count() == 5
+    assert lexicon.rule_count() == 5
+    assert lexicon.phrase_count() == 6
     assert lexicon.composition_target(
         "concurso_de_meritos", "procedure_variant", "con_precalificacion"
     ) == "concurso_meritos_precalificacion"
+    assert lexicon.composition_targets(
+        "contratacion_directa", "submission_mode", ("standard", "con_ofertas")
+    ) == ("contratacion_directa", "contratacion_directa_con_ofertas")
 
 
 def test_default_lexicon_loads_and_is_consistent(catalog) -> None:
@@ -117,6 +135,15 @@ def test_default_lexicon_loads_and_is_consistent(catalog) -> None:
                     family, rule.qualifier_type, rule.qualifier_value
                 )
                 assert catalog.by_id(target) is not None
+        elif rule.target_kind == "qualifier_set":
+            assert rule.target_id is None and rule.qualifier_value is None
+            assert len(rule.qualifier_values) >= 2
+            for family in rule.allowed_retrieval_families:
+                targets = lexicon.composition_targets(
+                    family, rule.qualifier_type, rule.qualifier_values
+                )
+                assert len(targets) == len(rule.qualifier_values)
+                assert all(catalog.by_id(target) is not None for target in targets)
         else:
             assert all(catalog.by_id(candidate) is not None for candidate in rule.candidate_target_ids)
 
@@ -130,6 +157,18 @@ def test_default_composition_matrix_is_exact(catalog) -> None:
         ("regimen_especial", "submission_mode", "standard"): "regimen_especial",
         ("concurso_de_meritos", "procedure_variant", "con_precalificacion"): "concurso_meritos_precalificacion",
         ("concurso_de_meritos", "procedure_variant", "abierto"): "concurso_meritos_abierto",
+    }
+
+
+def test_default_qualifier_set_matrix_is_exact(catalog) -> None:
+    lexicon = load_lexicon(catalog=catalog)
+    assert dict(lexicon.qualifier_set_targets) == {
+        (
+            "contratacion_directa", "submission_mode", ("con_ofertas", "standard")
+        ): ("contratacion_directa", "contratacion_directa_con_ofertas"),
+        (
+            "regimen_especial", "submission_mode", ("con_ofertas", "standard")
+        ): ("regimen_especial", "regimen_especial_con_ofertas"),
     }
 
 
@@ -148,10 +187,13 @@ def test_phrase_index_and_composition_index_are_immutable(catalog) -> None:
     lexicon = load_lexicon(catalog=catalog)
     assert isinstance(lexicon.phrase_index, MappingProxyType)
     assert isinstance(lexicon.qualifier_targets, MappingProxyType)
+    assert isinstance(lexicon.qualifier_set_targets, MappingProxyType)
     with pytest.raises(TypeError):
         lexicon.phrase_index["nuevo"] = lexicon.rules[0]
     with pytest.raises(TypeError):
         lexicon.qualifier_targets[("x", "y", "z")] = "id"
+    with pytest.raises(TypeError):
+        lexicon.qualifier_set_targets[("x", "y", ("a", "b"))] = ("id",)
 
 
 def test_phrase_index_is_bijective(catalog) -> None:
@@ -337,6 +379,106 @@ def test_mut_qualifier_composition_zero_results(catalog) -> None:
         _build(data, catalog)
 
 
+# ── Qualifier sets fail-closed ─────────────────────────────────────────────
+
+
+@pytest.mark.parametrize(
+    "field",
+    [
+        "qualifier_type", "qualifier_values", "allowed_retrieval_families",
+        "attachment_direction", "max_attachment_tokens",
+    ],
+)
+def test_mut_qualifier_set_missing_required_field(catalog, field) -> None:
+    data = _valid_data()
+    _rule(data, "qset_ofertas").pop(field)
+    with pytest.raises(LexiconValidationError, match=field):
+        _build(data, catalog)
+
+
+def test_mut_qualifier_set_values_not_list(catalog) -> None:
+    data = _valid_data()
+    _rule(data, "qset_ofertas")["qualifier_values"] = "standard"
+    with pytest.raises(LexiconValidationError, match="debe ser una lista"):
+        _build(data, catalog)
+
+
+def test_mut_qualifier_set_requires_two_values(catalog) -> None:
+    data = _valid_data()
+    _rule(data, "qset_ofertas")["qualifier_values"] = ["standard"]
+    with pytest.raises(LexiconValidationError, match="al menos dos"):
+        _build(data, catalog)
+
+
+def test_mut_qualifier_set_rejects_duplicate_value(catalog) -> None:
+    data = _valid_data()
+    _rule(data, "qset_ofertas")["qualifier_values"] = ["standard", "standard"]
+    with pytest.raises(LexiconValidationError, match="duplicado"):
+        _build(data, catalog)
+
+
+def test_mut_qualifier_set_combination_missing(catalog) -> None:
+    data = _valid_data()
+    _rule(data, "qset_ofertas")["qualifier_values"] = ["standard", "fantasma"]
+    with pytest.raises(LexiconValidationError, match="exactamente un procedimiento"):
+        _build(data, catalog)
+
+
+def test_mut_qualifier_set_same_procedure_rejected(
+    catalog, monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    data = _valid_data()
+    original = modality_lexicon_module._qualifier_target
+
+    def same_target(catalog_arg, family, qualifier_type, qualifier_value, ctx):
+        if family == "contratacion_directa" and qualifier_type == "submission_mode":
+            return "contratacion_directa"
+        return original(catalog_arg, family, qualifier_type, qualifier_value, ctx)
+
+    monkeypatch.setattr(modality_lexicon_module, "_qualifier_target", same_target)
+    with pytest.raises(LexiconValidationError, match="procedimientos distintos"):
+        _build(data, catalog)
+
+
+def test_mut_qualifier_set_family_nonexistent(catalog) -> None:
+    data = _valid_data()
+    _rule(data, "qset_ofertas")["allowed_retrieval_families"] = ["fantasma"]
+    with pytest.raises(LexiconValidationError, match="inexistente"):
+        _build(data, catalog)
+
+
+@pytest.mark.parametrize(
+    "field,value",
+    [
+        ("target_id", "contratacion_directa"),
+        ("candidate_target_ids", ["contratacion_directa"]),
+        ("ambiguity_code", "X"),
+        ("assumption_code", "X"),
+        ("qualifier_value", "standard"),
+    ],
+)
+def test_mut_qualifier_set_incompatible_fields(catalog, field, value) -> None:
+    data = _valid_data()
+    _rule(data, "qset_ofertas")[field] = value
+    with pytest.raises(LexiconValidationError, match="campos incompatibles"):
+        _build(data, catalog)
+
+
+@pytest.mark.parametrize("value", [True, 0, -1, 13])
+def test_mut_qualifier_set_bad_attachment_limit(catalog, value) -> None:
+    data = _valid_data()
+    _rule(data, "qset_ofertas")["max_attachment_tokens"] = value
+    with pytest.raises(LexiconValidationError, match="max_attachment_tokens"):
+        _build(data, catalog)
+
+
+def test_mut_qualifier_set_bad_direction(catalog) -> None:
+    data = _valid_data()
+    _rule(data, "qset_ofertas")["attachment_direction"] = "cerca"
+    with pytest.raises(LexiconValidationError, match="attachment_direction"):
+        _build(data, catalog)
+
+
 # ── Contextos y YAML estricto ───────────────────────────────────────────────
 
 
@@ -367,6 +509,18 @@ def test_mut_duplicate_yaml_key(catalog, tmp_path: Path) -> None:
     path = tmp_path / "duplicate.yaml"
     path.write_text(
         "version: 1\nrules:\n  - rule_id: r1\n    rule_id: r2\n",
+        encoding="utf-8",
+    )
+    with pytest.raises(LexiconValidationError, match="clave YAML duplicada"):
+        load_lexicon(path, catalog=catalog)
+
+
+
+
+def test_mut_duplicate_root_yaml_key(catalog, tmp_path: Path) -> None:
+    path = tmp_path / "duplicate_root.yaml"
+    path.write_text(
+        "version: 1\nversion: 2\nrules: []\n",
         encoding="utf-8",
     )
     with pytest.raises(LexiconValidationError, match="clave YAML duplicada"):

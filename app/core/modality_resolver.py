@@ -72,13 +72,28 @@ class ModalityResolver:
         qualifier_spans = tuple(
             (candidate.norm_start, candidate.norm_end)
             for candidate in detected_candidates
-            if candidate.rule.target_kind == "qualifier"
+            if candidate.rule.target_kind in {"qualifier", "qualifier_set"}
         )
-        candidates = self._composition.select_non_overlapping(detected_candidates)
+        alternative_mentions, alternative_issues, alternative_spans = (
+            self._composition.analyze_alternatives(text, norm, detected_candidates)
+        )
+        remaining_candidates = [
+            candidate for candidate in detected_candidates
+            if not any(
+                candidate.norm_start < span_end and span_start < candidate.norm_end
+                for span_start, span_end in alternative_spans
+            )
+        ]
+        candidates = self._composition.select_non_overlapping(remaining_candidates)
         primaries, qualifiers, ambiguities = self._partition_candidates(candidates)
         mentions, conflict_issues = self._composition.compose(
             text, norm, primaries, qualifiers,
         )
+        mentions.extend(alternative_mentions)
+        mentions.sort(key=lambda mention: (
+            mention.norm_start, mention.norm_end, mention.target_id,
+        ))
+        conflict_issues = tuple([*conflict_issues, *alternative_issues])
         polarities = assign_polarities(
             norm, mentions, clauses, qualifier_spans=qualifier_spans,
         )
@@ -211,16 +226,19 @@ class ModalityResolver:
         polarity: MatchPolarity,
         dataset: str | None,
     ) -> tuple[ModalityMatch | None, ResolutionIssue | None, tuple[str, ...]]:
-        expandable = [
-            child for child in self._catalog.retrieval_family(mention.target_id)
-            if child.user_searchable
-            and child.parent_expansion_policy != "never"
-            and (
-                child.parent_expansion_policy == "family_default"
-                or mention.explicit_intent
-            )
-        ]
-        procedure_ids = tuple(sorted(child.procedure_id for child in expandable))
+        if mention.procedure_ids is not None:
+            procedure_ids = tuple(sorted(set(mention.procedure_ids)))
+        else:
+            expandable = [
+                child for child in self._catalog.retrieval_family(mention.target_id)
+                if child.user_searchable
+                and child.parent_expansion_policy != "never"
+                and (
+                    child.parent_expansion_policy == "family_default"
+                    or mention.explicit_intent
+                )
+            ]
+            procedure_ids = tuple(sorted(child.procedure_id for child in expandable))
         if dataset is not None:
             procedure_ids = tuple(
                 procedure_id for procedure_id in procedure_ids
@@ -232,7 +250,10 @@ class ModalityResolver:
                 source_text=mention.source_text,
                 original_start=mention.orig_start,
                 original_end=mention.orig_end,
-                target_ids=(mention.target_id,),
+                target_ids=(
+                    mention.procedure_ids if mention.procedure_ids is not None
+                    else (mention.target_id,)
+                ),
                 code=_CODE_DATASET_INAPPLICABLE,
                 explanation=f"La familia no tiene procedimientos aplicables a dataset={dataset}.",
             )

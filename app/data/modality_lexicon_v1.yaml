@@ -180,6 +180,22 @@ rules:
     explicit_intent: false
     notes: Qualifier técnico protegido; nunca funciona como negación general.
 
+  - rule_id: qualifier_set_ofertas
+    phrases:
+      - "con o sin ofertas"
+      - "con y sin ofertas"
+      - "tanto con ofertas como sin ofertas"
+    target_kind: qualifier_set
+    allowed_retrieval_families: ["contratacion_directa", "regimen_especial"]
+    qualifier_type: submission_mode
+    qualifier_values: [con_ofertas, standard]
+    attachment_direction: after
+    max_attachment_tokens: 10
+    match_strength: contextual
+    confidence: high
+    explicit_intent: false
+    notes: Unión explícita de ambos modos de recepción de ofertas.
+
   - rule_id: cd_colloquial
     phrases: ["compra directa", "compras directas"]
     target_kind: retrieval_family
@@ -224,6 +240,21 @@ rules:
     explicit_intent: false
     assumption_code: null
     notes: Subtipo con precalificación. Gana sobre familia y sobre qualifier suelto.
+
+  - rule_id: qualifier_abierto
+    phrases:
+      - "abierto"
+      - "abiertos"
+    target_kind: qualifier
+    allowed_retrieval_families: ["concurso_de_meritos"]
+    qualifier_type: procedure_variant
+    qualifier_value: abierto
+    attachment_direction: after
+    max_attachment_tokens: 6
+    match_strength: contextual
+    confidence: high
+    explicit_intent: false
+    notes: Variante abierta; permite coordinación explícita con precalificación.
 
   - rule_id: qualifier_precalificacion
     phrases:

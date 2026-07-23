@@ -115,8 +115,9 @@ def test_corpus_distribution_gates() -> None:
     minima = {"A": 30, "B": 30, "C": 30, "D": 20, "E": 20, "F": 15, "G": 15, "H": 20}
     for category, minimum in minima.items():
         assert counts[category] >= minimum
-    for category in "IJKL":
+    for category in "IJKLM":
         assert counts[category] > 0
+    assert counts["M"] >= 35
 
 
 def test_corpus_metrics_are_exact_and_honest() -> None:
@@ -125,11 +126,18 @@ def test_corpus_metrics_are_exact_and_honest() -> None:
         "corpus_rows": len(CORPUS),
         "unique_queries": len({case["query"] for case in CORPUS}),
         "unique_normalized_queries": len({normalize_phrase(case["query"]) for case in CORPUS}),
-        "new_unique_critical_cases": len({
-            normalize_phrase(case["query"])
-            for case in CORPUS
-            if case["case_id"][0] in {"I", "J", "K"}
-        }),
+        "new_unique_critical_cases": len(
+            {
+                normalize_phrase(case["query"])
+                for case in CORPUS
+                if case["case_id"][0] in {"I", "J", "K", "L", "M"}
+            }
+            - {
+                normalize_phrase(case["query"])
+                for case in CORPUS
+                if case["case_id"][0] in set("ABCDEFGH")
+            }
+        ),
     }
     assert metrics == calculated
     assert metrics["corpus_rows"] >= 210
@@ -767,7 +775,7 @@ def test_all_output_procedure_ids_exist(case: dict, resolver: ModalityResolver) 
         for target_id in issue.target_ids:
             assert catalog.by_id(target_id) is not None or target_id in {
                 "licitacion_publica", "seleccion_abreviada", "concurso_de_meritos",
-                "contratacion_directa", "regimen_especial",
+                "contratacion_directa", "regimen_especial", "acuerdo_marco",
             }
 
 
@@ -793,21 +801,423 @@ def test_modular_import_graph_has_no_reverse_edges() -> None:
         name: (root / name).read_text(encoding="utf-8")
         for name in (
             "modality_text.py",
+            "modality_alternatives.py",
             "modality_composition.py",
             "modality_scope.py",
             "modality_lexicon.py",
         )
     }
     assert "modality_resolver" not in sources["modality_text.py"]
+    assert "modality_resolver" not in sources["modality_alternatives.py"]
     assert "modality_resolver" not in sources["modality_composition.py"]
     assert "modality_resolver" not in sources["modality_scope.py"]
     assert "modality_resolver" not in sources["modality_lexicon.py"]
     assert "modality_scope" not in sources["modality_composition.py"]
+    assert "modality_composition" not in sources["modality_alternatives.py"]
     assert "modality_composition" not in sources["modality_text.py"]
+    assert "modality_alternatives" in sources["modality_composition.py"]
 
 
 def test_module_facade_matches_instance(resolver: ModalityResolver) -> None:
     assert resolve("licitación pública") == resolver.resolve("licitación pública")
+
+
+# ── Alternativas coordinadas y modalidad opcional (M2-R2) ──────────────────
+
+
+@pytest.mark.parametrize(
+    "query,target,procedure_ids",
+    [
+        (
+            "contratación directa con o sin ofertas",
+            "contratacion_directa",
+            ("contratacion_directa", "contratacion_directa_con_ofertas"),
+        ),
+        (
+            "contratación directa con ofertas o sin ofertas",
+            "contratacion_directa",
+            ("contratacion_directa", "contratacion_directa_con_ofertas"),
+        ),
+        (
+            "contratación directa sin ofertas o con ofertas",
+            "contratacion_directa",
+            ("contratacion_directa", "contratacion_directa_con_ofertas"),
+        ),
+        (
+            "contratación directa con ofertas y sin ofertas",
+            "contratacion_directa",
+            ("contratacion_directa", "contratacion_directa_con_ofertas"),
+        ),
+        (
+            "contratación directa con ofertas y/o sin ofertas",
+            "contratacion_directa",
+            ("contratacion_directa", "contratacion_directa_con_ofertas"),
+        ),
+        (
+            "contratación directa con y sin ofertas",
+            "contratacion_directa",
+            ("contratacion_directa", "contratacion_directa_con_ofertas"),
+        ),
+        (
+            "régimen especial con o sin ofertas",
+            "regimen_especial",
+            ("regimen_especial", "regimen_especial_con_ofertas"),
+        ),
+        (
+            "concurso de méritos abierto o con precalificación",
+            "concurso_de_meritos",
+            ("concurso_meritos_abierto", "concurso_meritos_precalificacion"),
+        ),
+        (
+            "concurso de méritos con precalificación y abierto",
+            "concurso_de_meritos",
+            ("concurso_meritos_abierto", "concurso_meritos_precalificacion"),
+        ),
+    ],
+)
+def test_coordinated_alternatives_produce_exact_family_subset(
+    query: str,
+    target: str,
+    procedure_ids: tuple[str, ...],
+    resolver: ModalityResolver,
+) -> None:
+    result = resolver.resolve(query)
+    assert result.status is ResolutionStatus.RESOLVED
+    assert len(result.includes) == 1 and not result.issues
+    match = result.includes[0]
+    assert match.target_id == target
+    assert match.procedure_ids == procedure_ids
+    assert match.source_text == query
+    assert match.procedure_variant is None and match.submission_mode is None
+
+
+@pytest.mark.parametrize(
+    "query",
+    [
+        "contratación directa con ofertas sin ofertas",
+        "concurso de méritos abierto con precalificación",
+        "régimen especial con ofertas pero sin ofertas",
+    ],
+)
+def test_uncoordinated_or_contrastive_values_remain_conflicts(
+    query: str, resolver: ModalityResolver,
+) -> None:
+    result = resolver.resolve(query)
+    assert result.status is ResolutionStatus.CONFLICT
+    assert not result.includes and len(result.issues) == 1
+    assert result.issues[0].code == "MODALITY_QUALIFIER_VALUE_CONFLICT"
+
+
+@pytest.mark.parametrize(
+    "query,target,procedure_id",
+    [
+        (
+            "concurso de méritos abierto o sin precalificación",
+            "concurso_de_meritos",
+            "concurso_meritos_abierto",
+        ),
+        (
+            "contratación directa con ofertas y donde se reciban ofertas",
+            "contratacion_directa",
+            "contratacion_directa_con_ofertas",
+        ),
+    ],
+)
+def test_coordinated_equivalent_effects_are_idempotent(
+    query: str, target: str, procedure_id: str, resolver: ModalityResolver,
+) -> None:
+    result = resolver.resolve(query)
+    assert result.status is ResolutionStatus.RESOLVED
+    assert result.includes[0].target_id == target
+    assert result.includes[0].procedure_ids == (procedure_id,)
+    assert result.includes[0].source_text == query
+
+
+def _build_concurso_qualifier_alias_pairs() -> tuple[tuple[str, str, tuple[str, ...]], ...]:
+    catalog = load_catalog()
+    lexicon = load_lexicon(catalog=catalog)
+    aliases: list[tuple[str, str]] = []
+    for rule in lexicon.rules:
+        if (
+            rule.target_kind == "qualifier"
+            and rule.qualifier_type == "procedure_variant"
+            and "concurso_de_meritos" in rule.allowed_retrieval_families
+        ):
+            target = lexicon.composition_target(
+                "concurso_de_meritos",
+                rule.qualifier_type,
+                rule.qualifier_value or "",
+            )
+            assert target is not None
+            aliases.extend((phrase, target) for phrase in rule.phrases)
+
+    assert len(aliases) == 12
+    return tuple(
+        (left_alias, right_alias, tuple(sorted({left_target, right_target})))
+        for left_alias, left_target in aliases
+        for right_alias, right_target in aliases
+    )
+
+
+_CONCURSO_QUALIFIER_ALIAS_PAIRS = _build_concurso_qualifier_alias_pairs()
+
+
+@pytest.mark.parametrize(
+    "left_alias,right_alias,expected_procedure_ids",
+    _CONCURSO_QUALIFIER_ALIAS_PAIRS,
+    ids=[
+        f"{left_alias}__OR__{right_alias}"
+        for left_alias, right_alias, _ in _CONCURSO_QUALIFIER_ALIAS_PAIRS
+    ],
+)
+def test_nested_qualifier_alias_matrix_is_exact_and_commutative(
+    left_alias: str,
+    right_alias: str,
+    expected_procedure_ids: tuple[str, ...],
+    resolver: ModalityResolver,
+) -> None:
+    query = f"concurso de méritos {left_alias} o {right_alias}"
+    result = resolver.resolve(query)
+    assert result.status is ResolutionStatus.RESOLVED
+    assert not result.issues and not result.excludes
+    assert len(result.includes) == 1
+    match = result.includes[0]
+    assert match.target_id == "concurso_de_meritos"
+    assert match.procedure_ids == expected_procedure_ids
+    assert match.source_text == query
+
+
+def _build_external_negation_alias_matrix(
+) -> tuple[tuple[str, str, str, tuple[str, ...]], ...]:
+    """Pares donde A está negado externamente y B sigue siendo elegible.
+
+    Incluye ambos órdenes: ``no A o B`` y ``B o no A``. Los aliases técnicos
+    negativos (``sin precalificación`` y equivalentes) participan como B, pero
+    no como A: su operador pertenece al propio span y no es negación externa.
+    """
+    catalog = load_catalog()
+    lexicon = load_lexicon(catalog=catalog)
+    all_aliases: list[tuple[str, str]] = []
+    positive_aliases: list[tuple[str, str]] = []
+    for rule in lexicon.rules:
+        if not (
+            rule.target_kind == "qualifier"
+            and rule.qualifier_type == "procedure_variant"
+            and "concurso_de_meritos" in rule.allowed_retrieval_families
+        ):
+            continue
+        target = lexicon.composition_target(
+            "concurso_de_meritos",
+            rule.qualifier_type,
+            rule.qualifier_value or "",
+        )
+        assert target is not None
+        for phrase in rule.phrases:
+            all_aliases.append((phrase, target))
+            if rule.rule_id != "qualifier_sin_precalificacion":
+                positive_aliases.append((phrase, target))
+
+    assert len(positive_aliases) == 6
+    assert len(all_aliases) == 12
+    cases: list[tuple[str, str, str, tuple[str, ...]]] = []
+    for negated_alias, _ in positive_aliases:
+        for eligible_alias, eligible_target in all_aliases:
+            cases.append((
+                "negated_first", negated_alias, eligible_alias, (eligible_target,),
+            ))
+            cases.append((
+                "negated_second", negated_alias, eligible_alias, (eligible_target,),
+            ))
+    return tuple(cases)
+
+
+_EXTERNAL_NEGATION_ALIAS_MATRIX = _build_external_negation_alias_matrix()
+
+
+@pytest.mark.parametrize(
+    "order,negated_alias,eligible_alias,expected_procedure_ids",
+    _EXTERNAL_NEGATION_ALIAS_MATRIX,
+    ids=[
+        f"{order}__{negated_alias}__OR__{eligible_alias}"
+        for order, negated_alias, eligible_alias, _ in _EXTERNAL_NEGATION_ALIAS_MATRIX
+    ],
+)
+def test_external_negation_filters_only_the_local_alternative_member(
+    order: str,
+    negated_alias: str,
+    eligible_alias: str,
+    expected_procedure_ids: tuple[str, ...],
+    resolver: ModalityResolver,
+) -> None:
+    if order == "negated_first":
+        query = f"concurso de méritos no {negated_alias} o {eligible_alias}"
+    else:
+        query = f"concurso de méritos {eligible_alias} o no {negated_alias}"
+    result = resolver.resolve(query)
+    assert result.status is ResolutionStatus.RESOLVED
+    assert not result.issues and not result.excludes
+    assert len(result.includes) == 1
+    match = result.includes[0]
+    assert match.target_id == "concurso_de_meritos"
+    assert match.procedure_ids == expected_procedure_ids
+    assert match.source_text == query
+
+
+def test_externally_negated_qualifier_set_is_not_consumed_as_positive(
+    resolver: ModalityResolver,
+) -> None:
+    result = resolver.resolve("contratación directa no con o sin ofertas")
+    assert result.status is ResolutionStatus.RESOLVED
+    assert not result.issues and not result.excludes
+    assert result.includes[0].target_id == "contratacion_directa"
+    assert result.residual_text == "no con o sin ofertas"
+    assert result.includes[0].source_text == "contratación directa"
+
+
+def test_full_family_negation_precedes_qualifier_set(
+    resolver: ModalityResolver,
+) -> None:
+    result = resolver.resolve("no contratación directa con o sin ofertas")
+    assert result.status is ResolutionStatus.RESOLVED
+    assert not result.includes and not result.issues
+    assert len(result.excludes) == 1
+    assert result.excludes[0].target_id == "contratacion_directa"
+    assert result.excludes[0].procedure_ids == (
+        "contratacion_directa",
+        "contratacion_directa_con_ofertas",
+    )
+
+
+@pytest.mark.parametrize(
+    "query,target,procedure_ids",
+    [
+        (
+            "concurso de méritos no solo con precalificación o abierto",
+            "concurso_de_meritos",
+            ("concurso_meritos_abierto", "concurso_meritos_precalificacion"),
+        ),
+        (
+            "contratación directa sin descartar con ofertas o sin ofertas",
+            "contratacion_directa",
+            ("contratacion_directa", "contratacion_directa_con_ofertas"),
+        ),
+        (
+            "régimen especial no busco excluir con ofertas o sin ofertas",
+            "regimen_especial",
+            ("regimen_especial", "regimen_especial_con_ofertas"),
+        ),
+    ],
+)
+def test_anti_negation_keeps_alternative_members_eligible(
+    query: str,
+    target: str,
+    procedure_ids: tuple[str, ...],
+    resolver: ModalityResolver,
+) -> None:
+    result = resolver.resolve(query)
+    assert result.status is ResolutionStatus.RESOLVED
+    assert not result.issues and not result.excludes
+    assert result.includes[0].target_id == target
+    assert result.includes[0].procedure_ids == procedure_ids
+
+
+def test_incompatible_qualifier_set_is_local_conflict(resolver: ModalityResolver) -> None:
+    result = resolver.resolve("mínima cuantía con o sin ofertas")
+    assert result.status is ResolutionStatus.CONFLICT
+    assert not result.includes
+    assert result.issues[0].code == "MODALITY_QUALIFIER_FAMILY_CONFLICT"
+    assert "minima_cuantia" in result.issues[0].target_ids
+
+
+def test_alternatives_do_not_cross_another_primary(resolver: ModalityResolver) -> None:
+    result = resolver.resolve(
+        "contratación directa con ofertas o régimen especial sin ofertas"
+    )
+    assert [(match.target_id, match.procedure_ids) for match in result.includes] == [
+        ("contratacion_directa_con_ofertas", ("contratacion_directa_con_ofertas",)),
+        ("regimen_especial", ("regimen_especial",)),
+    ]
+
+
+def test_alternative_group_and_second_primary_are_isolated(
+    resolver: ModalityResolver,
+) -> None:
+    result = resolver.resolve(
+        "contratación directa con o sin ofertas y licitación pública"
+    )
+    assert [(match.target_id, match.procedure_ids) for match in result.includes] == [
+        (
+            "contratacion_directa",
+            ("contratacion_directa", "contratacion_directa_con_ofertas"),
+        ),
+        (
+            "licitacion_publica",
+            ("licitacion_publica", "licitacion_publica_obra"),
+        ),
+    ]
+
+
+_NO_MODALITY_QUERIES = [
+    (
+        "contratos de alimentación para adulto mayor de la Alcaldía de "
+        "Barranquilla por más de 500 millones en 2025"
+    ),
+    "procesos de alimentación en Barranquilla durante 2025",
+    "contratos celebrados por el Distrito entre 200 y 500 millones",
+    "oportunidades para atención de adultos mayores",
+]
+
+
+@pytest.mark.parametrize("query", _NO_MODALITY_QUERIES)
+def test_modality_is_optional_and_no_match_is_not_a_problem(
+    query: str, resolver: ModalityResolver,
+) -> None:
+    result = resolver.resolve(query)
+    assert result.status is ResolutionStatus.NO_MATCH
+    assert not result.includes and not result.excludes and not result.issues
+    assert result.needs_clarification is False
+    assert result.clarification_code is None
+    assert result.residual_text == query
+
+
+def test_family_child_and_amp_contract_is_frozen(resolver: ModalityResolver) -> None:
+    family = resolver.resolve("selecciones abreviadas celebradas por Barranquilla en 2025")
+    assert family.includes[0].target_id == "seleccion_abreviada"
+    assert family.includes[0].procedure_ids == (
+        "seleccion_abreviada_menor_cuantia",
+        "seleccion_abreviada_menor_cuantia_sin_manifestacion",
+        "seleccion_abreviada_subasta_inversa",
+    )
+    assert "acuerdo_marco_precio_secop" not in family.includes[0].procedure_ids
+
+    child = resolver.resolve("subastas inversas celebradas por Barranquilla")
+    assert child.includes[0].target_id == "seleccion_abreviada_subasta_inversa"
+    assert child.includes[0].procedure_ids == ("seleccion_abreviada_subasta_inversa",)
+
+    amp = resolver.resolve("acuerdos marco de precios celebrados por Barranquilla")
+    assert amp.includes[0].target_id == "acuerdo_marco"
+    assert amp.includes[0].procedure_ids == ("acuerdo_marco_precio_secop",)
+
+
+def test_alternative_coordination_is_commutative(resolver: ModalityResolver) -> None:
+    a = resolver.resolve("contratación directa con ofertas o sin ofertas")
+    b = resolver.resolve("contratación directa sin ofertas o con ofertas")
+    assert _semantic_fingerprint(a) == _semantic_fingerprint(b)
+
+
+def test_and_or_have_same_union_semantics(resolver: ModalityResolver) -> None:
+    with_or = resolver.resolve("contratación directa con ofertas o sin ofertas")
+    with_and = resolver.resolve("contratación directa con ofertas y sin ofertas")
+    assert _semantic_fingerprint(with_or) == _semantic_fingerprint(with_and)
+
+
+@pytest.mark.parametrize("case", CORPUS, ids=CASE_IDS)
+def test_procedure_ids_are_unique_inside_every_match(
+    case: dict, resolver: ModalityResolver,
+) -> None:
+    result = resolver.resolve(case["query"], case["dataset"])
+    for match in [*result.includes, *result.excludes]:
+        assert len(match.procedure_ids) == len(set(match.procedure_ids))
 
 
 def _semantic_fingerprint(result) -> tuple:
