@@ -13,6 +13,8 @@ from app.data.estados import (
     ESTADO_PROCEDIMIENTO_SYNONYMS,
     ESTADO_SYNONYMS,
 )
+from app.core.contract_invariants import contains_signed_token
+from app.core.modality_parser_integration import resolve_parser_modality
 from app.utils.money import money_to_cop, normalize_text
 from app.utils.spell_correction import correct_query
 
@@ -34,6 +36,7 @@ except ImportError as exc:
 
 if TYPE_CHECKING:
     from app.core.entity_resolver import EntityResolver
+    from app.core.modality_frame_adapter import ModalityInterpretation
 
 DATASET_PROCESOS = "procesos"
 DATASET_CONTRATOS = "contratos"
@@ -47,19 +50,6 @@ _DUAL_DATASET_PATTERNS = (
     r"\bambos\b",
     r"\btodo lo relacionado\b",
 )
-
-# Values are EXACT strings from SECOP — verified via discover_secop.py
-MODALIDAD_KEYWORDS = {
-    "minima cuantia": "Mínima cuantía",
-    "contratacion directa": "Contratación directa",
-    "licitacion publica": "Licitación pública",
-    "concurso de meritos": "Concurso de méritos abierto",
-    "seleccion abreviada": "Selección Abreviada de Menor Cuantía",
-    "menor cuantia": "Selección Abreviada de Menor Cuantía",
-    "subasta inversa": "Selección abreviada subasta inversa",
-    "regimen especial": "Contratación régimen especial",
-}
-
 
 _ORDERING_VALOR_RE = re.compile(
     r"""
@@ -151,7 +141,7 @@ STOPWORDS = {
     "publica", "publico",
     # Articles & prepositions
     "de", "del", "en", "el", "la", "las", "los",
-    "por", "para", "que", "se", "un", "una", "con",
+    "por", "para", "que", "se", "un", "una", "con", "excepto", "sin",
     # Comparators
     "mayor", "mayores", "menor", "menores",
     "superior", "superiores", "supere", "superen",
@@ -318,6 +308,7 @@ class ParsedQuery:
     route_reason: str
     dataset_explicit: bool = False
     consumed_spans: list[str] | None = None
+    modality_interpretation: ModalityInterpretation | None = None
 
 
 class QueryRouter:
@@ -341,7 +332,6 @@ class QueryRouter:
         normalized = normalize_text(user_query)
         normalized = correct_query(normalized)
         params: dict[str, object] = {}
-        scrubbed = normalized
 
         # ── 0. Semantic normalization layer (runs BEFORE existing extractors) ──
         #    This prevents tokens like "publicados", "departamento", "alcaldía"
@@ -358,7 +348,6 @@ class QueryRouter:
                 params["estado_family"] = intent_config["estado_family"]
             if intent_config.get("scrub_only") or "estado_family" in intent_config:
                 consumed_spans.append(intent_span)
-                scrubbed = scrubbed.replace(intent_span, " ", 1)
             # OPP-003 G1: si el intent del bidder activa la familia oferta_abierta
             # (ej. "para presentarme", "donde me pueda presentar"), también
             # marcar intent_type=opportunity_search para que el resto del
@@ -368,8 +357,21 @@ class QueryRouter:
                 params.setdefault("dataset", "procesos")
 
         # OPP-002: opportunity_search trigger (minimal, deterministic)
-        opportunity_keywords = ("oportunidad", "oportunidades", "convocatoria", "convocatorias",
-                                "licitación abierta", "licitaciones abiertas", "procesos abiertos")
+        opportunity_keywords = (
+            "oportunidad",
+            "oportunidades",
+            "convocatoria",
+            "convocatorias",
+            "licitacion abierta",
+            "licitaciones abiertas",
+            "licitacion abierto",
+            "licitaciones abiertos",
+            "licitacion publica abierta",
+            "licitacion publica abierto",
+            "licitaciones publicas abiertas",
+            "licitaciones publicas abiertos",
+            "procesos abiertos",
+        )
         if any(kw in normalized for kw in opportunity_keywords):
             params["intent_type"] = "opportunity_search"
             params.setdefault("dataset", "procesos")
@@ -409,6 +411,42 @@ class QueryRouter:
             params["dataset_scope"] = ["procesos", "contratos"]
             params["dataset"] = "procesos"
             params["dataset_explicit"] = True
+
+        # ── 1.c Modalidad M2: única autoridad lingüística ────────────────
+        # Los offsets se calculan y aplican sobre el mismo texto normalizado
+        # y corregido. Se anticipan únicamente los cambios determinísticos de
+        # dataset que QueryPlan aplicará después.
+        effective_dataset = str(params["dataset"])
+        if params.get("intent_type") == "opportunity_search":
+            effective_dataset = DATASET_PROCESOS
+        elif contains_signed_token(normalized):
+            effective_dataset = DATASET_CONTRATOS
+        dataset_scope = params.get("dataset_scope")
+        modality_result = resolve_parser_modality(
+            normalized,
+            dataset=effective_dataset,
+            dataset_scope=(
+                dataset_scope
+                if isinstance(dataset_scope, (list, tuple))
+                else None
+            ),
+        )
+        if modality_result.executable_params:
+            params.update(modality_result.executable_params)
+        scrubbed = modality_result.masked_text
+        consumed_spans.extend(
+            normalized[start:end]
+            for start, end in modality_result.interpretation.consumed_spans
+        )
+
+        # El intent se detectó antes para seleccionar dataset, pero se consume
+        # después del masking por offsets de M2.
+        if (
+            intent_config
+            and intent_span
+            and (intent_config.get("scrub_only") or "estado_family" in intent_config)
+        ):
+            scrubbed = scrubbed.replace(intent_span, " ", 1)
 
         # ── 1.5. NIT detection (shape-based, before year/amount stripping) ──
         # Detecta NITs colombianos por forma antes de cualquier otra extracción
@@ -646,6 +684,19 @@ class QueryRouter:
             span = estado_family_result["consumed_span"]
             consumed_spans.append(span)
             scrubbed = re.sub(r"\b" + re.escape(span) + r"\b", " ", scrubbed, flags=re.IGNORECASE)
+            secondary_state = self._extract_state(
+                scrubbed,
+                str(params["dataset"]),
+            )
+            if secondary_state and secondary_state.get("source_text"):
+                secondary_source = str(secondary_state["source_text"])
+                consumed_spans.append(secondary_source)
+                scrubbed = re.sub(
+                    rf"\b{re.escape(secondary_source)}\b",
+                    " ",
+                    scrubbed,
+                    flags=re.IGNORECASE,
+                )
             # CORPUS-F006/OC001: si la apertura del proceso quedó establecida
             # vía estado_family=oferta_abierta sobre dataset=procesos, esto es
             # equivalente a opportunity_search. Sincronizamos intent_type para
@@ -660,16 +711,34 @@ class QueryRouter:
                 )
         else:
             # ── 7b. OLD State extractor (dataset-aware keyword match) ────────
-            state_result = self._extract_state(normalized, str(params["dataset"]))
-            if state_result:
-                params["estado"] = state_result["value"]
-                if state_result.get("field"):
-                    params["estado_field"] = state_result["field"]
-
-        # ── 8. Modality ─────────────────────────────────────────────────
-        modality = self._extract_modality(normalized)
-        if modality:
-            params["modalidad"] = modality
+            state_scan_text = modality_result.masked_text
+            primary_state = True
+            while state_result := self._extract_state(
+                state_scan_text,
+                str(params["dataset"]),
+            ):
+                if primary_state:
+                    params["estado"] = state_result["value"]
+                    if state_result.get("field"):
+                        params["estado_field"] = state_result["field"]
+                source_text = state_result.get("source_text")
+                if not source_text:
+                    break
+                consumed_spans.append(source_text)
+                state_pattern = rf"\b{re.escape(source_text)}\b"
+                scrubbed = re.sub(
+                    state_pattern,
+                    " ",
+                    scrubbed,
+                    flags=re.IGNORECASE,
+                )
+                state_scan_text = re.sub(
+                    state_pattern,
+                    " ",
+                    state_scan_text,
+                    flags=re.IGNORECASE,
+                )
+                primary_state = False
 
         # ── 9. Amounts ──────────────────────────────────────────────────
         amount_params, amount_spans = self._extract_amounts(normalized, date_params)
@@ -757,7 +826,8 @@ class QueryRouter:
 
         return ParsedQuery(params=params, needs_llm=needs_llm, route_reason=route_reason,
                           dataset_explicit=dataset_explicit,
-                          consumed_spans=consumed_spans)
+                          consumed_spans=consumed_spans,
+                          modality_interpretation=modality_result.interpretation)
 
     # ─── Helper methods (only for non-entity extractions) ───────────────
 
@@ -781,20 +851,26 @@ class QueryRouter:
         if dataset == DATASET_CONTRATOS:
             for alias, official in sorted(ESTADO_CONTRATO_SYNONYMS.items(), key=lambda x: len(x[0]), reverse=True):
                 if re.search(rf"\b{re.escape(alias)}\b", normalized_query):
-                    return {"value": official, "field": "estado_contrato"}
+                    return {
+                        "value": official,
+                        "field": "estado_contrato",
+                        "source_text": alias,
+                    }
         else:
             for alias, official in sorted(ESTADO_APERTURA_SYNONYMS.items(), key=lambda x: len(x[0]), reverse=True):
                 if re.search(rf"\b{re.escape(alias)}\b", normalized_query):
-                    return {"value": official, "field": "estado_de_apertura_del_proceso"}
+                    return {
+                        "value": official,
+                        "field": "estado_de_apertura_del_proceso",
+                        "source_text": alias,
+                    }
             for alias, official in sorted(ESTADO_PROCEDIMIENTO_SYNONYMS.items(), key=lambda x: len(x[0]), reverse=True):
                 if re.search(rf"\b{re.escape(alias)}\b", normalized_query):
-                    return {"value": official, "field": "estado_del_procedimiento"}
-        return None
-
-    def _extract_modality(self, normalized_query: str) -> str | None:
-        for alias, official in sorted(MODALIDAD_KEYWORDS.items(), key=lambda x: len(x[0]), reverse=True):
-            if alias in normalized_query:
-                return official
+                    return {
+                        "value": official,
+                        "field": "estado_del_procedimiento",
+                        "source_text": alias,
+                    }
         return None
 
     def _extract_dates(self, normalized_query: str) -> dict[str, str]:
@@ -1207,8 +1283,6 @@ class QueryRouter:
         cleaned = scrubbed_query
         for alias in ESTADO_SYNONYMS:
             cleaned = re.sub(rf"\b{re.escape(alias)}\b", " ", cleaned)
-        for alias in MODALIDAD_KEYWORDS:
-            cleaned = cleaned.replace(alias, " ")
         cleaned = re.sub(r"\b(?:\d+(?:[.,]\d+)?)\b", " ", cleaned)
         cleaned = re.sub(r"\b(?:millon(?:es)?|mil|billon(?:es)?|palos?|barras?|pesos)\b", " ", cleaned)
         # Strip punctuation that can stick to tokens (e.g., "actualmente?")

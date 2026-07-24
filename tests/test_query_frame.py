@@ -113,6 +113,35 @@ class TestMergeFrames:
         assert restored.get("objeto") == ["primera", "infancia"]
         assert restored.get("ciudad") == "Barranquilla"
 
+    def test_canonical_modality_lists_roundtrip_without_envelope(self):
+        params = {
+            "dataset": "procesos",
+            "objeto": ["alimentacion"],
+            "modalidad_include_procedure_ids": [
+                "licitacion_publica",
+                "licitacion_publica_obra",
+            ],
+            "modalidad_exclude_procedure_ids": ["contratacion_directa"],
+        }
+        frame = frame_from_params(params)
+        restored = params_from_frame(frame)
+
+        assert restored["modalidad_include_procedure_ids"] == params[
+            "modalidad_include_procedure_ids"
+        ]
+        assert restored["modalidad_exclude_procedure_ids"] == params[
+            "modalidad_exclude_procedure_ids"
+        ]
+        assert isinstance(frame.modifiers["modalidad_include_procedure_ids"], list)
+        assert "modality_interpretation" not in frame.raw_params
+        assert "issues" not in frame.raw_params
+
+    def test_nonempty_legacy_modality_is_rejected(self):
+        with pytest.raises(
+            ValueError, match="legacy modality field 'modalidad' is not accepted"
+        ):
+            frame_from_params({"dataset": "procesos", "modalidad": "raw"})
+
 
 # ── Tests E2E con workflow completo ──────────────────────────────────────
 

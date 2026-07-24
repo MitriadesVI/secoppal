@@ -1,6 +1,8 @@
 """Tests para suggester.py — generación de sugerencias accionables."""
 from __future__ import annotations
 
+from types import SimpleNamespace
+
 import pytest
 
 from app.core.suggester import Suggestion, generate_suggestions
@@ -106,3 +108,45 @@ class TestGenerateSuggestions:
             rows=[], dataset_id="jbjy-vk9h",
         )
         assert isinstance(suggestions, list)
+
+    def test_known_raw_modality_suggestion_uses_canonical_id(self):
+        insights = SimpleNamespace(
+            modality_dominance_name="Licitación pública"
+        )
+        suggestions = generate_suggestions(
+            params={
+                "dataset": "procesos",
+                "objeto": ["obra"],
+                "modalidad_exclude_procedure_ids": ["licitacion_publica"],
+            },
+            universe_insights=insights,
+            total_count=20,
+            rows=[],
+            dataset_id="p6dx-8zbt",
+            intent_type="opportunity_search",
+        )
+        modality = next(
+            item for item in suggestions if item.label == "Filtrar por Licitación pública"
+        )
+        assert modality.modified_params[
+            "modalidad_include_procedure_ids"
+        ] == ["licitacion_publica"]
+        assert "modalidad_exclude_procedure_ids" not in modality.modified_params
+        assert "modalidad" not in modality.modified_params
+
+    def test_unknown_raw_does_not_emit_modality_suggestion(self):
+        insights = SimpleNamespace(
+            modality_dominance_name="Raw inexistente"
+        )
+        suggestions = generate_suggestions(
+            params={"dataset": "procesos", "objeto": ["obra"]},
+            universe_insights=insights,
+            total_count=20,
+            rows=[],
+            dataset_id="p6dx-8zbt",
+            intent_type="opportunity_search",
+        )
+        assert not any(
+            "modalidad_include_procedure_ids" in item.modified_params
+            for item in suggestions
+        )

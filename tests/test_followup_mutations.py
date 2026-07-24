@@ -218,3 +218,91 @@ def test_rejected_control_topic_does_not_persist_three_turns(
     assert third["objeto"] == first["objeto"]
     assert not ({"ordenalos", "regresa", "elimina", "rango"} & set(third["objeto"]))
     assert "objeto" in trace["rejected_fields"]
+
+
+def test_modality_refinement_replaces_the_whole_cluster(
+    router: QueryRouter,
+) -> None:
+    first = router.parse(
+        "contratación directa de alimentación en Barranquilla"
+    ).params
+    merged, trace = _followup(router, "ahora licitación pública", first)
+
+    assert merged["modalidad_include_procedure_ids"] == [
+        "licitacion_publica",
+        "licitacion_publica_obra",
+    ]
+    assert "contratacion_directa" not in str(merged)
+    assert "modalidad_exclude_procedure_ids" not in merged
+    assert "modalidad_include_procedure_ids" in trace[
+        "transition_cleared_fields"
+    ]
+
+
+def test_modality_exclude_replaces_previous_include_atomically() -> None:
+    gated = gate_delta(
+        intent="refine_filter",
+        text="excepto contratación directa",
+        delta={
+            "modalidad_exclude_procedure_ids": [
+                "contratacion_directa",
+                "contratacion_directa_con_ofertas",
+            ]
+        },
+        previous_params={
+            "dataset": "procesos",
+            "objeto": ["alimentacion"],
+            "modalidad_include_procedure_ids": ["licitacion_publica"],
+        },
+    )
+    assert "modalidad_include_procedure_ids" not in gated.cleaned_previous
+    assert gated.accepted_delta["modalidad_exclude_procedure_ids"]
+
+
+def test_change_dataset_preserves_procedure_ids(router: QueryRouter) -> None:
+    first = router.parse(
+        "subastas inversas de alimentación en procesos"
+    ).params
+    merged, trace = _followup(router, "ahora contratos", first)
+
+    assert merged["dataset"] == "contratos"
+    assert merged["modalidad_include_procedure_ids"] == [
+        "seleccion_abreviada_subasta_inversa"
+    ]
+    assert "modalidad_include_procedure_ids" not in trace[
+        "transition_cleared_fields"
+    ]
+
+
+def test_change_order_preserves_canonical_modality(router: QueryRouter) -> None:
+    first = router.parse(
+        "contratación directa de alimentación en Barranquilla"
+    ).params
+    merged, _trace = _followup(
+        router, "ordénalos por mayor valor", first
+    )
+
+    assert merged["modalidad_include_procedure_ids"] == first[
+        "modalidad_include_procedure_ids"
+    ]
+
+
+def test_topic_replacement_clears_both_modality_keys(
+    router: QueryRouter,
+) -> None:
+    previous = {
+        "dataset": "procesos",
+        "objeto": ["alimentacion"],
+        "modalidad_include_procedure_ids": ["licitacion_publica"],
+        "modalidad_exclude_procedure_ids": ["contratacion_directa"],
+    }
+    merged, trace = _followup(
+        router, "ahora mantenimiento de ascensores", previous
+    )
+
+    assert "modalidad_include_procedure_ids" not in merged
+    assert "modalidad_exclude_procedure_ids" not in merged
+    assert {
+        "modalidad_include_procedure_ids",
+        "modalidad_exclude_procedure_ids",
+    } <= set(trace["transition_cleared_fields"])

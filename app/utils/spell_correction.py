@@ -6,9 +6,85 @@ contratación pública terms.
 """
 from __future__ import annotations
 
+from pathlib import Path
 import re
 
-from rapidfuzz import fuzz, process
+import yaml
+from rapidfuzz.distance import DamerauLevenshtein
+
+from app.core.estado_families import NATURAL_TO_FAMILY
+from app.data.estados import (
+    ESTADO_APERTURA_SYNONYMS,
+    ESTADO_CONTRATO_SYNONYMS,
+    ESTADO_PROCEDIMIENTO_SYNONYMS,
+    ESTADO_SYNONYMS,
+)
+from app.utils.money import normalize_text
+
+_MODALITY_LEXICON_PATH = (
+    Path(__file__).resolve().parent.parent
+    / "data"
+    / "modality_lexicon_v1.yaml"
+)
+
+# Valid semantic forms not currently present in M2 phrases.  They remain
+# identity-protected without automatically becoming fuzzy destinations.
+_SEMANTIC_IDENTITY_FORMS = frozenset({
+    "proveedor",
+    "publico",
+    "publicos",
+    "publicado",
+    "publicada",
+    "publicados",
+    "publicadas",
+})
+
+
+def _load_modality_protected_tokens() -> frozenset[str]:
+    """Load normalized M2 phrase tokens once, without importing the resolver."""
+    with _MODALITY_LEXICON_PATH.open(encoding="utf-8") as handle:
+        payload = yaml.safe_load(handle)
+    rules = payload.get("rules", []) if isinstance(payload, dict) else []
+    phrases = (
+        phrase
+        for rule in rules
+        if isinstance(rule, dict)
+        for phrase in rule.get("phrases", [])
+        if isinstance(phrase, str)
+    )
+    return frozenset(
+        token
+        for phrase in phrases
+        for token in normalize_text(phrase).split()
+    )
+
+
+def _load_state_protected_tokens() -> frozenset[str]:
+    """Load normalized state aliases once as identity-only vocabulary."""
+    aliases = set(NATURAL_TO_FAMILY)
+    for mapping in (
+        ESTADO_APERTURA_SYNONYMS,
+        ESTADO_CONTRATO_SYNONYMS,
+        ESTADO_PROCEDIMIENTO_SYNONYMS,
+        ESTADO_SYNONYMS,
+    ):
+        aliases.update(mapping)
+    return frozenset(
+        token
+        for alias in aliases
+        for token in normalize_text(alias).split()
+    )
+
+
+# This set answers only "must this valid token remain identical?".  It is
+# deliberately separate from the fuzzy correction candidates below.
+PROTECTED_MODALITY_VOCABULARY = _load_modality_protected_tokens()
+PROTECTED_STATE_VOCABULARY = _load_state_protected_tokens()
+PROTECTED_VOCABULARY: frozenset[str] = (
+    PROTECTED_MODALITY_VOCABULARY
+    | PROTECTED_STATE_VOCABULARY
+    | _SEMANTIC_IDENTITY_FORMS
+)
 
 # ── Curated vocabulary of contratación pública terms ─────────────────────────
 VOCABULARY: set[str] = {
@@ -28,6 +104,8 @@ VOCABULARY: set[str] = {
     "concurso",
     "minima",
     "cuantia",
+    "directa",
+    "publica",
     # ── Entidades ────────────────────────────────────────────────────────────
     "alcaldia",
     "gobernacion",
@@ -41,6 +119,7 @@ VOCABULARY: set[str] = {
     "entidad",
     "contratista",
     "proveedor",
+    "proveedores",
     # ── Objetos de contrato frecuentes (feedback + SECOP) ────────────────────
     "construccion",
     "mantenimiento",
@@ -137,13 +216,6 @@ _VOCAB_LIST: tuple[str, ...] = tuple(sorted(VOCABULARY))
 # Characters that sometimes appear as typos inside words (keyboard accidents)
 _GARBAGE_CHARS_RE = re.compile(r"[=+\[\]{}<>|\\@#~^]")
 
-# Threshold for fuzzy matching (0-100 scale, rapidfuzz uses 0-100)
-_SCORE_THRESHOLD = 85
-
-# Maximum edit distance allowed (we use score threshold, but also cap length diff)
-_MAX_LEN_DIFF = 2
-
-
 def _clean_token(token: str) -> str:
     """Remove garbage characters embedded in a token (e.g. 'servid=cios' → 'servicios')."""
     return _GARBAGE_CHARS_RE.sub("", token)
@@ -159,40 +231,28 @@ def _correct_word(word: str) -> str:
 
     Rules:
     - Words of 3 or fewer chars → untouched
-    - Words already in vocabulary → untouched
+    - Protected or known words → untouched
     - Words with numbers or remaining special chars → untouched
-    - Otherwise, fuzzy-match and accept if score >= threshold
+    - Otherwise, correct only a unique Damerau-Levenshtein distance-1 match
     """
     # Don't correct very short words
     if len(word) <= 3:
         return word
 
-    # Already a known term
-    if word in VOCABULARY:
+    # Exact domain language must never be rewritten.
+    if word in PROTECTED_VOCABULARY or word in VOCABULARY:
         return word
 
     # Don't correct numeric or special-char tokens
     if _is_numeric_or_special(word):
         return word
 
-    # Fuzzy match against vocabulary
-    result = process.extractOne(
-        word,
-        _VOCAB_LIST,
-        scorer=fuzz.ratio,
-        score_cutoff=_SCORE_THRESHOLD,
-    )
-
-    if result is None:
-        return word
-
-    match, score, _idx = result
-
-    # Additional guard: don't correct if length difference is too large
-    if abs(len(word) - len(match)) > _MAX_LEN_DIFF:
-        return word
-
-    return match
+    matches = [
+        candidate
+        for candidate in _VOCAB_LIST
+        if DamerauLevenshtein.distance(word, candidate) == 1
+    ]
+    return matches[0] if len(matches) == 1 else word
 
 
 def correct_query(text: str) -> str:

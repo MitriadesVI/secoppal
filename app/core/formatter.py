@@ -3,6 +3,8 @@ from __future__ import annotations
 import re
 from typing import Any
 
+from app.core.modality_dataset_projection import project_modality_filter
+from app.core.modality_filter import ModalityFilter
 from app.core.phrase_ranking import (
     _dedupe_results,
     _reorder_active_first,
@@ -140,6 +142,21 @@ def build_no_results_message(params: dict | None, dataset_id: str | None = None)
     # Suggest relaxing estado — most common cause of zero results
     if params.get("estado") or params.get("estado_de_apertura_del_proceso") or params.get("estado_contrato"):
         suggestions.append("quita el filtro de estado (abierto/cerrado/adjudicado)")
+
+    modality_filter = ModalityFilter.from_params(params)
+    modality_dataset = (
+        "contratos"
+        if dataset_id == "jbjy-vk9h" or params.get("dataset") == "contratos"
+        else "procesos"
+    )
+    modality_projection = project_modality_filter(
+        modality_filter, modality_dataset
+    )
+    if (
+        modality_projection.include_requested
+        or modality_projection.exclude_raw_values
+    ):
+        suggestions.append("quita o cambia el filtro de modalidad")
 
     # Suggest relaxing date range
     if params.get("fecha_desde") or params.get("fecha_hasta"):
@@ -513,7 +530,9 @@ class Formatter:
         params = params or {}
         lines = []
         resolved_entity = (params.get("entidad_resolved") or "").lower()
-        resolved_modality = (params.get("modalidad") or "").lower()
+        has_modality_include = bool(
+            params.get("modalidad_include_procedure_ids")
+        )
         has_date_filter = bool(params.get("fecha_desde") or params.get("fecha_hasta"))
 
         # 1. Entidad concentración (Observer 2.0)
@@ -525,7 +544,7 @@ class Formatter:
         # 2. Modalidad dominancia (Observer 2.0)
         md_name = getattr(insights, "modality_dominance_name", None)
         md_pct = getattr(insights, "modality_dominance_pct", None)
-        if md_name and md_pct is not None and md_name.lower() not in resolved_modality:
+        if md_name and md_pct is not None and not has_modality_include:
             lines.append(f"{md_name} domina con el {md_pct:.0f}%.")
 
         # 3. Temporal skew por trimestre (Observer 2.0)

@@ -3,6 +3,12 @@ from __future__ import annotations
 import logging
 from dataclasses import dataclass
 
+from app.core.modality_dataset_projection import (
+    DatasetModalityProjection,
+    project_modality_filter,
+)
+from app.core.modality_filter import ModalityFilter
+
 logger = logging.getLogger(__name__)
 
 
@@ -33,14 +39,16 @@ NONEMPTY_WHERE_KEYS: frozenset[str] = frozenset({
     # estado
     "estado", "estado_de_apertura_del_proceso", "estado_del_procedimiento",
     "estado_contrato", "estado_contrato_adicional",
-    # modality
-    "modalidad",
     # entity ecosystem (G7C)
     "entidad_contains_all", "entidad_in_candidates",
 })
 
 
-def _has_nonempty_where_filter(params: dict) -> bool:
+def _has_nonempty_where_filter(
+    params: dict, *, modality_effective: bool = False,
+) -> bool:
+    if modality_effective:
+        return True
     for key in NONEMPTY_WHERE_KEYS:
         value = params.get(key)
         if value in (None, "", [], {}, False):
@@ -235,7 +243,30 @@ class SoQLBuilder:
         a tautology (``1=1``) and the caller has not opted in via
         ``allow_global=True``. Date/value/order alone create no WHERE predicate.
         """
-        if not allow_global and not _has_nonempty_where_filter(params):
+        legacy_key = "modalidad"
+        if (
+            legacy_key in params
+            and params.get(legacy_key) not in (None, "", [], {}, (), False)
+        ):
+            raise ValueError("legacy modality field 'modalidad' is not accepted")
+
+        modality_filter = ModalityFilter.from_params(params)
+        dataset_name = (
+            "contratos"
+            if spec.dataset_id == self.CONTRATOS_DATASET
+            else "procesos"
+        )
+        modality_projection = project_modality_filter(
+            modality_filter, dataset_name
+        )
+        modality_effective = bool(
+            modality_projection.include_raw_values
+            or modality_projection.include_unsatisfiable
+            or modality_projection.exclude_raw_values
+        )
+        if not allow_global and not _has_nonempty_where_filter(
+            params, modality_effective=modality_effective,
+        ):
             raise UnsafeGlobalQueryError(
                 "SoQL build refused: no WHERE predicate (scope/topic/estado/modalidad). "
                 "Pass allow_global=True only if a global query is intentional."
@@ -378,8 +409,9 @@ class SoQLBuilder:
             if field in params and params[field]:
                 self._add_estado_clause(where_clauses, field, params[field])
 
-        if params.get("modalidad"):
-            where_clauses.append(f"modalidad_de_contratacion = '{self._escape(params['modalidad'])}'")
+        modality_clause = self._modality_clause(modality_projection)
+        if modality_clause:
+            where_clauses.append(modality_clause)
 
         # STATE-PRIORITY-001: oportunidades en procesos requieren apertura=Abierto
         if (
@@ -480,6 +512,34 @@ class SoQLBuilder:
     @staticmethod
     def _escape(value: str) -> str:
         return value.replace("'", "''")
+
+    @classmethod
+    def _modality_clause(
+        cls, projection: DatasetModalityProjection,
+    ) -> str:
+        if projection.include_unsatisfiable:
+            return "1=0"
+
+        includes = projection.include_raw_values
+        excludes = projection.exclude_raw_values
+        include_clause = ""
+        if len(includes) == 1:
+            include_clause = (
+                "modalidad_de_contratacion = "
+                f"'{cls._escape(includes[0])}'"
+            )
+        elif includes:
+            values = ", ".join(f"'{cls._escape(raw)}'" for raw in includes)
+            include_clause = f"modalidad_de_contratacion IN ({values})"
+
+        exclude_clause = ""
+        if excludes:
+            values = ", ".join(f"'{cls._escape(raw)}'" for raw in excludes)
+            exclude_clause = f"modalidad_de_contratacion NOT IN ({values})"
+
+        if include_clause and exclude_clause:
+            return f"({include_clause}) AND ({exclude_clause})"
+        return include_clause or exclude_clause
 
     @classmethod
     def _accent_fold_like(cls, field: str, escaped_pattern: str) -> str:

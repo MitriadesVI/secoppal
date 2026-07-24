@@ -1,9 +1,34 @@
 """Tests for the spell correction module."""
 from __future__ import annotations
 
-import pytest
+from pathlib import Path
 
-from app.utils.spell_correction import correct_query
+import pytest
+import yaml
+
+from app.utils.money import normalize_text
+from app.utils.spell_correction import (
+    PROTECTED_MODALITY_VOCABULARY,
+    PROTECTED_STATE_VOCABULARY,
+    PROTECTED_VOCABULARY,
+    correct_query,
+)
+
+_LEXICON_PATH = (
+    Path(__file__).resolve().parent.parent
+    / "app"
+    / "data"
+    / "modality_lexicon_v1.yaml"
+)
+
+
+def _normalized_modality_phrases() -> set[str]:
+    payload = yaml.safe_load(_LEXICON_PATH.read_text(encoding="utf-8"))
+    return {
+        normalize_text(phrase)
+        for rule in payload["rules"]
+        for phrase in rule.get("phrases", [])
+    }
 
 
 class TestCorrectCommonTypos:
@@ -37,6 +62,26 @@ class TestPreservesCorrectWords:
 
     def test_interventoria_unchanged(self):
         assert correct_query("interventoria") == "interventoria"
+
+    @pytest.mark.parametrize(
+        "word",
+        [
+            "proveedor",
+            "proveedores",
+            "publica",
+            "publicas",
+            "publico",
+            "publicos",
+            "publicado",
+            "publicada",
+            "publicados",
+            "publicadas",
+            "concurso",
+            "concursos",
+        ],
+    )
+    def test_semantically_distinct_domain_forms_are_preserved(self, word):
+        assert correct_query(word) == word
 
 
 class TestPreservesShortWords:
@@ -86,6 +131,87 @@ class TestFullQueryCorrection:
         result = correct_query("contratos por 5000000")
         assert "5000000" in result
         assert "contratos" in result
+
+    @pytest.mark.parametrize(
+        "raw",
+        [
+            "solicitud de información a proveedores",
+            "licitación pública de alimentación",
+            "concurso de méritos abierto de interventoría",
+            "procesos publicados de alimentación",
+            "licitación publicada",
+            "licitación pública publicada",
+            "contratación pública",
+            "contratación directa publicada",
+            "concurso público de méritos",
+            "proveedores publicados",
+            "proveedor de alimentación",
+            "solicitud a proveedor",
+        ],
+    )
+    def test_domain_context_is_identity_preserved_after_normalization(self, raw):
+        canonical = normalize_text(raw)
+        assert correct_query(canonical) == canonical
+
+    def test_accented_input_is_not_the_router_identity_test(self):
+        assert correct_query("pública") == "pública"
+        assert correct_query(normalize_text("pública")) == "publica"
+
+
+class TestConservativeCorrection:
+    @pytest.mark.parametrize(
+        ("typo", "expected"),
+        [
+            ("publcia", "publica"),
+            ("dircta", "directa"),
+            ("abirto", "abierto"),
+        ],
+    )
+    def test_unique_single_edit_typo_is_corrected(self, typo, expected):
+        assert correct_query(typo) == expected
+
+    def test_single_edit_tie_is_fail_closed(self):
+        assert correct_query("proveedors") == "proveedors"
+
+
+class TestStateVocabularyProtection:
+    @pytest.mark.parametrize(
+        "word",
+        ["abierta", "abiertas", "abierto", "abiertos"],
+    )
+    def test_open_gender_and_number_are_preserved(self, word):
+        assert correct_query(word) == word
+
+    @pytest.mark.parametrize(
+        ("raw", "expected"),
+        [
+            ("licitaciones abiertas", "licitaciones abiertas"),
+            (
+                "licitación pública abierta",
+                "licitacion publica abierta",
+            ),
+        ],
+    )
+    def test_open_query_matrix_matches_router_input(self, raw, expected):
+        assert correct_query(normalize_text(raw)) == expected
+
+
+class TestModalityLexiconProtection:
+    def test_all_normalized_modality_phrases_are_identity_preserved(self):
+        aliases = _normalized_modality_phrases()
+        changed = {
+            alias: correct_query(alias)
+            for alias in aliases
+            if correct_query(alias) != alias
+        }
+        assert len(aliases) == 106
+        assert changed == {}
+
+    def test_protected_token_metric_is_stable(self):
+        assert len(PROTECTED_MODALITY_VOCABULARY) == 96
+        assert len(PROTECTED_STATE_VOCABULARY) > 0
+        assert PROTECTED_MODALITY_VOCABULARY <= PROTECTED_VOCABULARY
+        assert PROTECTED_STATE_VOCABULARY <= PROTECTED_VOCABULARY
 
 class TestFeedbackTypos:
     """Typos reales observados en feedback.jsonl (1.3)."""

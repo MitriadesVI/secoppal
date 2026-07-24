@@ -13,6 +13,9 @@ from __future__ import annotations
 
 import pytest
 
+from app.core.modality_dataset_projection import (
+    ModalityDatasetProjectionError,
+)
 from app.core.soql_builder import SoQLBuilder, UnsafeGlobalQueryError
 
 
@@ -146,8 +149,72 @@ def test_substantial_filters_recognized() -> None:
         {"contratista": "1234567890"},
         {"estado_del_procedimiento": ["Publicado"]},
         {"estado_contrato": "Activo"},
-        {"modalidad": "Licitación Pública"},
+        {"modalidad_include_procedure_ids": ["licitacion_publica"]},
     ]
     for params in substantial_cases:
         soql = builder.build(CONTRATOS, params)
         assert "1=1" not in soql, f"params={params} should not produce 1=1"
+
+
+def test_applicable_modality_include_projects_to_raw() -> None:
+    soql = SoQLBuilder().build(
+        CONTRATOS,
+        {"modalidad_include_procedure_ids": ["licitacion_publica"]},
+    )
+    assert "modalidad_de_contratacion = 'Licitación pública'" in soql
+    assert "1=1" not in soql
+
+
+def test_fully_inapplicable_include_is_unsatisfiable() -> None:
+    soql = SoQLBuilder().build(
+        CONTRATOS,
+        {
+            "modalidad_include_procedure_ids": [
+                "solicitud_informacion_proveedores"
+            ]
+        },
+    )
+    assert " WHERE 1=0 " in soql
+
+
+def test_unknown_modality_id_fails_closed() -> None:
+    with pytest.raises(ModalityDatasetProjectionError):
+        SoQLBuilder().build(
+            CONTRATOS,
+            {"modalidad_include_procedure_ids": ["id_inexistente"]},
+        )
+
+
+def test_applicable_modality_exclude_counts_as_filter() -> None:
+    soql = SoQLBuilder().build(
+        CONTRATOS,
+        {"modalidad_exclude_procedure_ids": ["contratacion_directa"]},
+    )
+    assert (
+        "modalidad_de_contratacion NOT IN ('Contratación directa')"
+        in soql
+    )
+    assert "1=1" not in soql
+
+
+def test_fully_inapplicable_exclude_cannot_bypass_global_guard() -> None:
+    with pytest.raises(UnsafeGlobalQueryError):
+        SoQLBuilder().build(
+            CONTRATOS,
+            {
+                "modalidad_exclude_procedure_ids": [
+                    "solicitud_informacion_proveedores"
+                ]
+            },
+        )
+
+
+def test_legacy_modality_scalar_fails_loudly() -> None:
+    with pytest.raises(
+        ValueError,
+        match="legacy modality field 'modalidad' is not accepted",
+    ):
+        SoQLBuilder().build(
+            CONTRATOS,
+            {"modalidad": "Licitación Pública"},
+        )

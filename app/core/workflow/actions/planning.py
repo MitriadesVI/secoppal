@@ -28,7 +28,8 @@ from datetime import date
 from burr.core import State, action
 
 from app.core.entity_resolver import EntityResolver
-from app.core.query_plan import compute_query_plan
+from app.core.modality_execution_policy import evaluate_modality_execution
+from app.core.query_plan import QueryPlan, compute_query_plan
 from app.core.response_policy import build_clarification_response
 from app.core.soql_builder import SoQLBuilder, UnsafeGlobalQueryError
 from app.core.workflow.helpers import _with_timing
@@ -50,7 +51,10 @@ def _candidate_limit(params: dict) -> int:
 
 
 @action(
-    reads=["parsed_params", "raw_query", "prev_params", "turn_index"],
+    reads=[
+        "parsed_params", "raw_query", "prev_params", "turn_index",
+        "modality_interpretation",
+    ],
     writes=["query_plan", "parsed_params", "should_execute_decision"],
 )
 def plan_query(state: State) -> State:
@@ -62,7 +66,22 @@ def plan_query(state: State) -> State:
         "turn_index": state.get("turn_index", 0),
         "today": date.today(),
     }
-    plan = compute_query_plan(params, raw, context, enabled_rules=ENABLED_RULES_SPRINT_2A)
+    modality_decision = evaluate_modality_execution(
+        state.get("modality_interpretation")
+    )
+    if not modality_decision.should_execute:
+        plan = QueryPlan(
+            should_execute=False,
+            params=dict(params),
+            missing_slots=list(modality_decision.missing_slots),
+            risk_flags=list(modality_decision.risk_flags),
+            clarification_question=modality_decision.clarification_question,
+            reason=modality_decision.reason,
+        )
+    else:
+        plan = compute_query_plan(
+            params, raw, context, enabled_rules=ENABLED_RULES_SPRINT_2A
+        )
     return state.update(
         query_plan=asdict(plan),
         parsed_params=plan.params,

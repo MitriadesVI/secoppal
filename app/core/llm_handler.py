@@ -81,7 +81,6 @@ SECOPPAL_TOOLS = [
                         "type": "array",
                         "items": {"type": "string", "enum": list(CONTRACT_STATE_VALUES)},
                     },
-                    "modalidad": {"type": "string"},
                     "contratista": {"type": "string"},
                     "fecha_desde": {"type": "string"},
                     "fecha_hasta": {"type": "string"},
@@ -95,6 +94,11 @@ SECOPPAL_TOOLS = [
 # Keys that the regex parser handles well — LLM should NOT overwrite these
 # unless the regex didn't extract them
 REGEX_PRIORITY_KEYS = {"departamento", "estado", "valor_min", "valor_max", "fecha_desde", "fecha_hasta"}
+_MODALITY_AUTHORITY_KEYS = frozenset({
+    "modalidad",
+    "modalidad_include_procedure_ids",
+    "modalidad_exclude_procedure_ids",
+})
 
 # Timeout for DeepSeek API calls (seconds)
 LLM_TIMEOUT_SECONDS = 15
@@ -250,6 +254,8 @@ class LLMHandler:
                 _enforce_estado_policy(user_query, tool_args)
             )
             for key, value in tool_args.items():
+                if key in _MODALITY_AUTHORITY_KEYS:
+                    continue
                 if value in (None, "", []):
                     continue
                 # Don't overwrite keys that regex already extracted with confidence

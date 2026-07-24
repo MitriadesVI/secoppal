@@ -78,7 +78,7 @@ def _has_entity(params: dict) -> bool:
 
 
 def _has_modality(params: dict) -> bool:
-    return _truthy(params.get("modalidad"))
+    return _truthy(params.get("modalidad_include_procedure_ids"))
 
 
 def _has_narrow_date_range(params: dict) -> bool:

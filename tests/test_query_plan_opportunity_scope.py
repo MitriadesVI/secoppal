@@ -46,9 +46,37 @@ def test_p15_allows_concrete_entity():
 
 
 def test_p15_allows_modality():
-    params = _base(ciudad="Barranquilla", modalidad="minima_cuantia")
+    params = _base(
+        ciudad="Barranquilla",
+        modalidad_include_procedure_ids=["minima_cuantia"],
+    )
     plan = compute_query_plan(params, "mínimas cuantías en barranquilla", enabled_rules={"P15"})
     assert plan.should_execute is True
+
+
+def test_p15_exclude_only_does_not_qualify_scope():
+    params = _base(
+        ciudad="Barranquilla",
+        modalidad_exclude_procedure_ids=["contratacion_directa"],
+    )
+    plan = compute_query_plan(
+        params,
+        "oportunidades excepto contratación directa en barranquilla",
+        enabled_rules={"P15"},
+    )
+    assert plan.should_execute is False
+    assert plan.reason == "opportunity_scope_too_broad"
+
+
+def test_p15_legacy_scalar_does_not_qualify_scope():
+    params = _base(ciudad="Barranquilla", modalidad="minima_cuantia")
+    plan = compute_query_plan(
+        params,
+        "mínimas cuantías en barranquilla",
+        enabled_rules={"P15"},
+    )
+    assert plan.should_execute is False
+    assert plan.reason == "opportunity_scope_too_broad"
 
 
 def test_p15_allows_narrow_date():

@@ -25,7 +25,13 @@ from app.core.query_router import QueryRouter
 from app.core.workflow.helpers import _with_timing
 
 
-@action(reads=["user_query", "timings_ms"], writes=["parsed_params", "needs_llm", "route_reason", "timings_ms"])
+@action(
+    reads=["user_query", "timings_ms"],
+    writes=[
+        "parsed_params", "needs_llm", "route_reason",
+        "modality_interpretation", "timings_ms",
+    ],
+)
 def parse_query(state: State, query_router: QueryRouter) -> State:
     start = time.perf_counter()
     result = query_router.parse(state["user_query"])
@@ -36,6 +42,7 @@ def parse_query(state: State, query_router: QueryRouter) -> State:
         parsed_params=result.params,
         needs_llm=result.needs_llm,
         route_reason=result.route_reason,
+        modality_interpretation=result.modality_interpretation,
     )
 
 

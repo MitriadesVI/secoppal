@@ -72,7 +72,18 @@ def test_each_entity_key_executes(key):
 
 
 def test_modality_executes():
-    assert evaluate_opportunity_scope("", _opp(modalidad="minima_cuantia")).should_execute
+    assert evaluate_opportunity_scope(
+        "",
+        _opp(modalidad_include_procedure_ids=["minima_cuantia"]),
+    ).should_execute
+
+
+def test_modality_exclude_only_does_not_count():
+    decision = evaluate_opportunity_scope(
+        "",
+        _opp(modalidad_exclude_procedure_ids=["contratacion_directa"]),
+    )
+    assert decision.should_execute is False
 
 
 # ── Date window boundary ─────────────────────────────────────────────────

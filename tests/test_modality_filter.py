@@ -107,6 +107,31 @@ def test_from_params_non_list_value_rejected():
         ModalityFilter.from_params({_EXCLUDE_KEY: ("tuple", "no", "lista")})
 
 
+@pytest.mark.parametrize("params", [None, [], "params", b"params", True])
+def test_from_params_requires_real_dict(params):
+    with pytest.raises(ValueError, match="params debe ser dict"):
+        ModalityFilter.from_params(params)  # type: ignore[arg-type]
+
+
+def test_from_params_rejects_dict_used_as_collection():
+    with pytest.raises(ValueError, match="debe ser una lista"):
+        ModalityFilter.from_params({_INCLUDE_KEY: {"licitacion_publica": True}})
+
+
+@pytest.mark.parametrize("bad_id", [
+    " licitacion_publica", "licitacion_publica ", " licitacion_publica ",
+])
+def test_external_spaces_are_rejected_not_normalized(bad_id):
+    with pytest.raises(ValueError, match="espacios externos"):
+        ModalityFilter.from_params({_INCLUDE_KEY: [bad_id]})
+
+
+@pytest.mark.parametrize("bad_id", [b"id", True, 1, None, {}])
+def test_from_params_rejects_non_string_ids(bad_id):
+    with pytest.raises(ValueError):
+        ModalityFilter.from_params({_EXCLUDE_KEY: [bad_id]})
+
+
 def test_no_legacy_scalar_modalidad_key_emitted():
     f = ModalityFilter(include_procedure_ids=("licitacion_publica",))
     assert "modalidad" not in f.to_params()

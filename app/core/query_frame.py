@@ -31,7 +31,7 @@ class QueryFrame:
     # Exclusiones temáticas: condiciones negativas, nunca mezcladas con topic.
     objeto_exclude: list[str] = field(default_factory=list)
 
-    # Modifiers: fecha, estado, valor, orden, contratista, modalidad
+    # Modifiers: fecha, estado, valor, orden, contratista y procedure_ids
     modifiers: dict = field(default_factory=dict)
 
     # Raw params (para reconstrucción sin pérdida)
@@ -57,13 +57,21 @@ _MODIFIER_KEYS = frozenset({
     "estado", "estado_field", "estado_family",
     "estado_contrato", "estado_de_apertura_del_proceso", "estado_del_procedimiento",
     "estado_contrato_adicional",
-    "ordering_signal", "modalidad", "contratista",
+    "ordering_signal", "contratista",
+    "modalidad_include_procedure_ids", "modalidad_exclude_procedure_ids",
 })
+
+_LEGACY_MODALITY_KEY = "modalidad"
 
 
 def frame_from_params(params: dict) -> QueryFrame:
     """Construye un QueryFrame a partir de un dict de params del parser."""
     p = params or {}
+    if (
+        _LEGACY_MODALITY_KEY in p
+        and p.get(_LEGACY_MODALITY_KEY) not in (None, [], "", {}, (), False)
+    ):
+        raise ValueError("legacy modality field 'modalidad' is not accepted")
     scope = {k: v for k, v in p.items() if k in _SCOPE_KEYS and v not in (None, [], "", {}, False)}
     topic = list(p.get("objeto", []) or [])
     objeto_exclude = list(p.get("objeto_exclude", []) or [])

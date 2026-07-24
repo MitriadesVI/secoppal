@@ -17,13 +17,17 @@ from app.core.followup_control_tokens import (
 
 
 TOPIC_FIELDS = frozenset({"objeto", "objeto_or", "objeto_phrases", "objeto_exclude", "topic_facets"})
+MODALITY_FIELDS = frozenset({
+    "modalidad_include_procedure_ids",
+    "modalidad_exclude_procedure_ids",
+})
 SCOPE_FIELDS = frozenset({
     "entidad", "entidad_resolved", "entidad_resolution", "entidad_like",
     "departamento", "departamento_resolved", "departamento_resolution",
     "departamentos_in", "ciudad", "ciudad_resolved", "region",
 })
 FILTER_FIELDS = frozenset({
-    "valor_min", "valor_max", "fecha_desde", "fecha_hasta", "modalidad",
+    "valor_min", "valor_max", "fecha_desde", "fecha_hasta", *MODALITY_FIELDS,
     "contratista", *STATE_FIELDS,
 })
 PAGING_FIELDS = frozenset({"offset", "_display_offset", "_shown_total"})
@@ -76,7 +80,8 @@ MUTATION_POLICIES: dict[str, MutationPolicy] = {
             "dataset", "dataset_explicit", *CLASSIFICATION_FIELDS,
         }),
         allowed_clear=frozenset({
-            "valor_min", "valor_max", "modalidad", "objeto_or", "objeto_phrases", "objeto_exclude",
+            "valor_min", "valor_max", *MODALITY_FIELDS,
+            "objeto_or", "objeto_phrases", "objeto_exclude",
             "opportunity_mode", "filter_active_only",
         }),
         transition_cleanup="normalize_topic_transition",
@@ -86,7 +91,8 @@ MUTATION_POLICIES: dict[str, MutationPolicy] = {
     "contextual_requery": MutationPolicy(
         frozenset({"objeto", "objeto_or", "objeto_phrases", "contratista", *CLASSIFICATION_FIELDS}),
         allowed_clear=frozenset({
-            "valor_min", "valor_max", "modalidad", "objeto_or", "objeto_phrases", "objeto_exclude",
+            "valor_min", "valor_max", *MODALITY_FIELDS,
+            "objeto_or", "objeto_phrases", "objeto_exclude",
             "opportunity_mode", "filter_active_only",
         }),
         transition_cleanup="normalize_topic_transition",
@@ -152,6 +158,8 @@ def _transition_clears(
     elif policy.transition_cleanup == "normalize_scope_transition" and any(k in accepted for k in SCOPE_FIELDS):
         clears.update(SCOPE_FIELDS - set(accepted))
     elif policy.transition_cleanup == "normalize_filter_transition":
+        if set(accepted) & MODALITY_FIELDS:
+            clears.update(MODALITY_FIELDS)
         if "contratista" in accepted and len(set(accepted) & FILTER_FIELDS) == 1:
             clears.update(TOPIC_FIELDS | SCOPE_FIELDS | (FILTER_FIELDS - {"contratista"}))
         if any(k in accepted for k in STATE_FIELDS):

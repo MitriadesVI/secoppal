@@ -38,6 +38,10 @@ def _coerce_ids(values: object, field_name: str) -> tuple[str, ...]:
             )
         if not value or not value.strip():
             raise ValueError(f"{field_name}: procedure_id vacío no permitido")
+        if value != value.strip():
+            raise ValueError(
+                f"{field_name}: procedure_id no puede tener espacios externos"
+            )
         seen.add(value)
     return tuple(sorted(seen))
 
@@ -76,6 +80,10 @@ class ModalityFilter:
     @classmethod
     def from_params(cls, params: dict) -> "ModalityFilter":
         """Reconstruye desde params. Claves ausentes ⇒ vacío. No-lista ⇒ error."""
+        if not isinstance(params, dict):
+            raise ValueError(
+                f"params debe ser dict (recibido {type(params).__name__})"
+            )
         include = _require_list(params, _INCLUDE_KEY)
         exclude = _require_list(params, _EXCLUDE_KEY)
         return cls(include_procedure_ids=include, exclude_procedure_ids=exclude)

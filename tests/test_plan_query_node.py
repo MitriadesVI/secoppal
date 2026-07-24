@@ -1,7 +1,10 @@
 """Tests for B3 — plan_query node inserted as no-op pass-through."""
 
 import json
+from pathlib import Path
+import re
 import subprocess
+import sys
 import uuid
 
 from app.config import Settings
@@ -79,11 +82,38 @@ def test_state_only_builds_where_but_execution_requests_scope_or_topic():
 
 def test_corpus_v1_unaffected():
     """Smoke: corpus v1 must stay green after inserting the plan_query node."""
-    import os
-    proc = subprocess.run(
-        [os.path.join(os.getcwd(), ".venv/bin/python"),
-         "scripts/run_query_corpus.py", "--mode", "all"],
-        capture_output=True, text=True,
-        cwd="/Users/rodrigoortiz/Documents/secoppal",
+    repo_root = Path(__file__).resolve().parents[1]
+    probe = subprocess.run(
+        [
+            sys.executable,
+            "-c",
+            "import app; print(app.__file__)",
+        ],
+        capture_output=True,
+        text=True,
+        cwd=repo_root,
     )
-    assert proc.returncode == 0 or "88/88 PASS" in proc.stdout
+    assert probe.returncode == 0, probe.stderr
+    imported_app = Path(probe.stdout.strip()).resolve()
+    assert imported_app.is_relative_to(repo_root)
+
+    proc = subprocess.run(
+        [
+            sys.executable,
+            "scripts/run_query_corpus.py",
+            "--mode",
+            "all",
+        ],
+        capture_output=True,
+        text=True,
+        cwd=repo_root,
+    )
+    assert proc.returncode == 0, proc.stdout + proc.stderr
+    summary = re.search(
+        r"Summary: (\d+)/(\d+) PASS, 0 FAIL",
+        proc.stdout,
+    )
+    assert summary is not None, proc.stdout
+    passed, total = map(int, summary.groups())
+    assert passed == total
+    assert total > 0

@@ -9,6 +9,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import TYPE_CHECKING
 
+from app.core.modality_dataset_projection import procedure_id_for_raw_value
+
 if TYPE_CHECKING:
     from app.core.observer import UniverseInsights
 
@@ -51,12 +53,27 @@ def generate_suggestions(
                 modified_params={**params, "valor_min": 100_000_000},
                 reason="Filtrar oportunidades de alta cuantía",
             ))
-        if not params.get("modalidad") and universe_insights and universe_insights.modality_dominance_name:
-            suggestions.append(Suggestion(
-                label=f"Filtrar por {universe_insights.modality_dominance_name}",
-                modified_params={**params, "modalidad": universe_insights.modality_dominance_name},
-                reason="Concentrar en la modalidad más frecuente",
-            ))
+        if (
+            not params.get("modalidad_include_procedure_ids")
+            and universe_insights
+            and universe_insights.modality_dominance_name
+        ):
+            dataset = (
+                "contratos" if dataset_id == "jbjy-vk9h" else "procesos"
+            )
+            raw_value = universe_insights.modality_dominance_name
+            procedure_id = procedure_id_for_raw_value(dataset, raw_value)
+            if procedure_id:
+                modified = {
+                    **params,
+                    "modalidad_include_procedure_ids": [procedure_id],
+                }
+                modified.pop("modalidad_exclude_procedure_ids", None)
+                suggestions.append(Suggestion(
+                    label=f"Filtrar por {raw_value}",
+                    modified_params=modified,
+                    reason="Concentrar en la modalidad más frecuente",
+                ))
         if dataset_id == "p6dx-8zbt" and len(suggestions) < 3:
             suggestions.append(Suggestion(
                 label="Ver contratos firmados",
