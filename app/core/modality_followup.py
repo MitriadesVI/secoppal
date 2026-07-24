@@ -166,6 +166,13 @@ _AMBIGUOUS_SIN = re.compile(r"\bsin\s+modalidad\b")
 _SIN_FILTRO = re.compile(r"\bsin\s+filtro\s+de\s+modalidad\b")
 _SIN_WORD = re.compile(r"\bsin\b")
 
+# Relativizadores que abren cláusula descriptiva; fronteras fuertes que la cierran.
+_RELATIVIZER = re.compile(r"\b(?:que|quien|quienes|cuyo|cuya|cuyos|cuyas|donde)\b")
+_STRONG_BOUNDARY = re.compile(r"[,;:]")
+
+# Prefijo de "inicio lógico" (§7): solo espacios y puntuación/signos de apertura.
+_LEADING_NOISE = re.compile(r"[\s¿¡.,;:?!\"'()\[\]{}\-–—]*")
+
 
 def _subsumed(span, others) -> bool:
     s, e = span
@@ -194,10 +201,16 @@ def _make_instruction(status, operation, control_code, construction_id, text,
     )
 
 
-def _sin_control_spans(norm, exclude_only, executable, has_evidence):
+def _within_target(cs: int, ce: int, target_spans) -> bool:
+    """True si [cs,ce) está dentro de / solapa algún target span de M2 (paso 1)."""
+    return any(ts < ce and cs < te for ts, te in target_spans)
+
+
+def _sin_control_spans(norm, exclude_only, executable, has_evidence, target_spans):
     """Spans de "sin" que SÍ son control de exclusión.
 
     Regla R1 anti-colisión con nombres jurídicos que contienen "sin":
+      * dentro de un consumed_span de M2 → jurídico consumido: NO es control (R3′ §4);
       * ejecutable + filtro exclude-only  → M2 confirmó exclusión: "sin" es control;
       * status bloqueado con evidencia    → "sin" es control solo como prefijo del
         turno (no hay forma de filtro fiable en que apoyarse);
@@ -210,11 +223,67 @@ def _sin_control_spans(norm, exclude_only, executable, has_evidence):
         if m.span() in reserved:
             continue
         s, e = m.span()
+        if _within_target(s, e, target_spans):  # R3′: "sin" dentro del nombre → jurídico
+            continue
         if executable and exclude_only:
             spans.append((s, e))
-        elif has_evidence and not executable and norm[:s].strip() == "":
+        elif has_evidence and not executable and _at_logical_start(norm, s):
             spans.append((s, e))
     return spans
+
+
+def _at_logical_start(text: str, position: int) -> bool:
+    """True si antes de ``position`` solo hay espacios y puntuación inicial (§7).
+
+    No usa ``.strip()`` (que ignora solo espacios): ``¿``/``¡``/comilla/paréntesis
+    inicial también cuenta como inicio lógico del turno.
+    """
+    return _LEADING_NOISE.fullmatch(text[:position]) is not None
+
+
+def _relative_clause_active(segment: str) -> bool:
+    """True si en el segmento hay un relativizador sin frontera fuerte posterior."""
+    rel = [m.start() for m in _RELATIVIZER.finditer(segment)]
+    if not rel:
+        return False
+    bnd = [m.start() for m in _STRONG_BOUNDARY.finditer(segment)]
+    return not bnd or rel[-1] > bnd[-1]
+
+
+def _governs_target(cs: int, ce: int, norm: str, target_spans, *, blocked_fallback: bool) -> bool:
+    """¿El candidato [cs,ce) gobierna un target M2? (contrato §4). Las conjunciones
+    y/e/o/u no son relativizador ni frontera fuerte, así que no alteran la decisión."""
+    if _within_target(cs, ce, target_spans):                 # 1: dentro/solapa target → descriptivo
+        return False
+    right = [ts for ts, te in target_spans if ts >= ce]      # 2: target completamente a la derecha
+    if not right:                                            # 3: sin target derecho
+        # §6 fallback: control imperativo al inicio del turno bajo status bloqueado
+        # con spans vacíos → preservar la operación para que el motor emita su bloqueo.
+        return blocked_fallback and _at_logical_start(norm, cs)
+    prev_ends = [te for ts, te in target_spans if te <= cs]  # 4: target anterior
+    if not prev_ends:                                        # gobierna el target derecho
+        return True
+    # 5-7: cláusula relativa activa entre el target anterior y el candidato → descriptivo.
+    return not _relative_clause_active(norm[max(prev_ends):cs])
+
+
+def _validate_target_spans(target_spans, n: int) -> None:
+    """Valida fail-closed la geometría de los spans de M2 (§8): un span corrupto
+    lanza ``ValueError``; nunca degrada silenciosamente a clasificación libre."""
+    if type(target_spans) is not tuple:
+        raise ValueError(f"target_spans debe ser tuple, no {type(target_spans).__name__}")
+    last = 0
+    for span in target_spans:
+        if type(span) is not tuple or len(span) != 2:
+            raise ValueError(f"cada target span debe ser tuple de dos: {span!r}")
+        start, end = span
+        if type(start) is not int or type(end) is not int:  # rechaza bool/float/str/Decimal
+            raise ValueError(f"índices de target span deben ser int exactos: {span!r}")
+        if not (0 <= start < end <= n):
+            raise ValueError(f"target span fuera de rango o invertido: {span!r} sobre {n}")
+        if start < last:
+            raise ValueError("target_spans deben ir ordenados y sin solaparse")
+        last = end
 
 
 def classify_modality_followup_control(
@@ -222,37 +291,42 @@ def classify_modality_followup_control(
     *,
     current_filter: ModalityFilter,
     resolution_status,
+    target_spans: tuple[tuple[int, int], ...],
     allow_implicit_replace: bool = False,
 ) -> ModalityFollowupInstruction:
-    """Clasifica el lenguaje de control de un turno. No conoce modalidades.
-
-    Sólo usa la *forma* de ``current_filter`` (vacío / include-only /
-    exclude-only) y ``resolution_status``; nunca inspecciona valores de IDs.
-    """
+    """Clasifica el lenguaje de control de un turno. No conoce modalidades: usa la
+    *forma* de ``current_filter``, ``resolution_status`` y los ``target_spans`` de M2.
+    Un verbo cuenta como control SOLO si gobierna un target M2 (contrato §4)."""
+    _validate_target_spans(target_spans, len(text))
     status = _status_value(resolution_status)
     has_evidence = status != _NO_MATCH          # M2 vio dominio de modalidad
     executable = status in _ALLOWED             # solo estos aplican mutación
     exclude_only = (executable and bool(current_filter.exclude_procedure_ids)
                     and not current_filter.include_procedure_ids)
     norm = _normalize(text)
+    # §6: fallback acotado a status bloqueado con spans vacíos (NO_MATCH excluido).
+    blocked_fallback = (not target_spans) and (status in _STATUS_TO_CODE)
 
-    # 1) Construcciones cerradas primero (requieren evidencia de modalidad).
+    # 1) Construcciones cerradas primero (evidencia + ancladas al inicio lógico §7).
     if has_evidence:
         for pat, op, cid in _CLOSED:
             m = pat.search(norm)
-            if m:
+            if m and _at_logical_start(norm, m.start()):
                 return _make_instruction(_STATUS_RESOLVED, op, cid, cid, text,
                                          [m.span()], True, f"closed construction {cid}")
 
-    # 2) Recolectar TODAS las señales (nunca "la primera regex gana").
+    # 2) Recolectar señales; los atómicos cuentan solo si gobiernan un target M2.
     raw: list[tuple] = []
     for pat in _CLEAR:
         raw += [(_OP.CLEAR, m.start(), m.end(), "clear_phrase") for m in pat.finditer(norm)]
     for pat, op, code in _ATOMIC:
-        raw += [(op, m.start(), m.end(), code) for m in pat.finditer(norm)]
+        for m in pat.finditer(norm):
+            if _governs_target(m.start(), m.end(), norm, target_spans,
+                               blocked_fallback=blocked_fallback):
+                raw.append((op, m.start(), m.end(), code))
     raw += [("ambiguous", m.start(), m.end(), "ambiguous_clear_or_null_value")
             for m in _AMBIGUOUS_SIN.finditer(norm)]
-    for s, e in _sin_control_spans(norm, exclude_only, executable, has_evidence):
+    for s, e in _sin_control_spans(norm, exclude_only, executable, has_evidence, target_spans):
         raw.append((_OP.ADD_EXCLUDE, s, e, "add_exclude_sin"))
 
     all_spans = [(s, e) for _, s, e, _ in raw]

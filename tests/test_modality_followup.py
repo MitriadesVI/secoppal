@@ -54,16 +54,40 @@ def apply(prev, cur, op, status=RESOLVED, known=None, **kw):
     return apply_modality_followup_operation(prev, cur, instr(op, **kw), status, known)
 
 
-def classify(text, *, status=RESOLVED, current=None, implicit=False):
-    """Nueva API R1: el clasificador recibe forma del filtro M2 + status.
+# Nombres de modalidad COMPLETOS. Sintetizan consumed_spans realistas por posición
+# (desacoplado del resolver M2). Nombres parciales del corpus ("subasta", "régimen",
+# "licitación" a secas) NO matchean → target_spans vacío → ejercen el fallback §6,
+# igual que en producción con status bloqueado.
+_KNOWN_MODALITY_NAMES = (
+    "licitación pública", "contratación directa", "mínima cuantía",
+    "subasta inversa", "régimen especial", "menor cuantía", "selección abreviada",
+)
 
-    Por defecto simula un target ejecutable include-only no vacío.
+
+def synth_target_spans(text: str) -> tuple[tuple[int, int], ...]:
+    low = text.lower()
+    spans: list[tuple[int, int]] = []
+    for name in _KNOWN_MODALITY_NAMES:
+        start = 0
+        while (i := low.find(name, start)) >= 0:
+            spans.append((i, i + len(name)))
+            start = i + len(name)
+    return tuple(sorted(spans))
+
+
+def classify(text, *, status=RESOLVED, current=None, implicit=False, target_spans=None):
+    """API R3′: el clasificador recibe forma del filtro M2 + status + target_spans.
+
+    Por defecto simula un target ejecutable include-only no vacío y sintetiza los
+    spans reales de las modalidades presentes en el texto.
     """
     if current is None:
         current = mf(("proc_target",)) if status in (RESOLVED, RWA) else mf()
+    if target_spans is None:
+        target_spans = synth_target_spans(text)
     return classify_modality_followup_control(
         text, current_filter=current, resolution_status=status,
-        allow_implicit_replace=implicit)
+        target_spans=target_spans, allow_implicit_replace=implicit)
 
 
 # --------------------------------------------------------------------------- #
@@ -310,6 +334,185 @@ def test_elimina_todas_is_not_clear():
     ins = classify("elimina todas", status=NO_MATCH, current=mf())
     assert ins.operation is not Op.CLEAR
     assert ins.status == "none"
+
+
+# --------------------------------------------------------------------------- #
+# 6b. R3′ — Corpus puro: control por asociación a target M2 (no por posición sola)
+# --------------------------------------------------------------------------- #
+
+_R3P_DESCRIPTIVE = [
+    "contratación directa que incluye suministro",
+    "régimen especial que permite ofertas",
+    "contratación directa para quien usa plataforma",
+    "contratación directa que excluye intermediarios",
+    "contratación directa que elimina intermediarios",
+    "contratación directa que agrega valor",
+]
+
+
+@pytest.mark.parametrize("text", _R3P_DESCRIPTIVE)
+def test_pure_descriptive_verb_is_not_control(text):
+    # El verbo queda a la derecha del único target (o tras relativizador) → descriptivo.
+    ins = classify(text, status=RESOLVED, current=mf(("proc_pos",)))
+    assert ins.status == "none"
+    assert ins.operation is None
+
+
+@pytest.mark.parametrize("text", _R3P_DESCRIPTIVE[:3])
+def test_pure_descriptive_becomes_implicit_replace(text):
+    ins = classify(text, status=RESOLVED, current=mf(("proc_pos",)), implicit=True)
+    assert ins.operation is Op.REPLACE
+    assert ins.control_code == "implicit_target_replace"
+
+
+@pytest.mark.parametrize("text, op", [
+    ("de esos resultados quita contratación directa", Op.REMOVE_MEMBER),
+    ("en ese caso agrega mínima cuantía", Op.ADD_INCLUDE),
+    ("para la búsqueda actual permite contratación directa", Op.REMOVE_EXCLUDE),
+    ("mejor usa subasta inversa", Op.REPLACE),
+])
+def test_pure_mid_sentence_command(text, op):
+    # El control precede a su target aunque no esté al inicio del turno.
+    ins = classify(text, status=RESOLVED)
+    assert ins.status == "resolved"
+    assert ins.operation is op
+
+
+@pytest.mark.parametrize("text, op", [
+    ("agrega contratación directa que incluye suministro", Op.ADD_INCLUDE),
+    ("ahora régimen especial que permite ofertas", Op.REPLACE),
+    ("quita contratación directa para quien usa plataforma", Op.REMOVE_MEMBER),
+])
+def test_pure_control_then_description(text, op):
+    ins = classify(text, status=RESOLVED)
+    assert ins.status == "resolved"
+    assert ins.operation is op
+    assert len(ins.control_spans) == 1  # solo el control anterior participa
+
+
+def test_pure_coordination_equivalent_signals():
+    ins = classify("agrega e incluye contratación directa", status=RESOLVED)
+    assert ins.operation is Op.ADD_INCLUDE
+    assert len(ins.control_spans) == 2
+
+
+def test_pure_coordination_conflict():
+    ins = classify("quita licitación pública y agrega mínima cuantía", status=RESOLVED)
+    assert ins.status == "conflict"
+
+
+def test_pure_coordination_descriptive_none():
+    ins = classify("régimen especial que permite ofertas y usa plataforma",
+                   status=RESOLVED, current=mf(("proc_pos",)))
+    assert ins.status == "none"
+
+
+def test_pure_strong_boundary_reopens_control_after_description():
+    ins = classify("contratación directa que incluye suministro, ahora mínima cuantía",
+                   status=RESOLVED)
+    assert ins.operation is Op.REPLACE
+    assert len(ins.control_spans) == 1  # solo "ahora"; el "incluye" interno no participa
+
+
+# ── Precedencia de "sin" con spans explícitos (no depende del reconocimiento de nombres)
+
+def test_pure_sin_inside_full_span_is_not_add_exclude():
+    text = "contratación directa sin ofertas"  # M2 consume todo el nombre jurídico
+    ins = classify(text, status=RESOLVED, current=mf(("proc_pos",)),
+                   target_spans=((0, len(text)),))
+    assert ins.operation is not Op.ADD_EXCLUDE
+
+
+def test_pure_sin_residual_exclude_only_is_add_exclude():
+    text = "sin mínima cuantía"
+    i = text.index("mínima")
+    ins = classify(text, status=RESOLVED, current=mf((), ("proc_excl",)),
+                   target_spans=((i, len(text)),))
+    assert ins.operation is Op.ADD_EXCLUDE
+
+
+def test_pure_sin_residual_mixed_filter_is_not_directed():
+    text = "contratación directa sin mínima cuantía"
+    a = (0, len("contratación directa"))
+    j = text.index("mínima")
+    ins = classify(text, status=RESOLVED, current=mf(("proc_i",), ("proc_e",)),
+                   target_spans=(a, (j, len(text))))
+    assert ins.status == "none"  # filtro mixto: "sin" no crea operación dirigida
+
+
+# ── Inicio lógico: puntuación inicial + construcciones cerradas ancladas (§7)
+
+@pytest.mark.parametrize("text", [
+    "¿cualquier modalidad excepto contratación directa?",
+    "... cualquier modalidad excepto contratación directa",
+    "  cualquier modalidad excepto contratación directa",
+])
+def test_pure_closed_construction_leading_punctuation(text):
+    ins = classify(text, status=RESOLVED, current=mf((), ("proc_excl",)))
+    assert ins.operation is Op.REPLACE
+    assert ins.construction_id == "replace_all_except"
+    # La puntuación inicial no entra en control_spans.
+    for s, e in ins.control_spans:
+        assert text[s] not in "¿¡ ."
+
+
+def test_pure_closed_clear_then_replace_leading_question():
+    ins = classify("¿no importa la modalidad, solo subasta inversa?",
+                   status=RESOLVED, current=mf(("proc_t",)))
+    assert ins.operation is Op.REPLACE
+    assert ins.construction_id == "clear_then_replace"
+
+
+def test_pure_closed_construction_not_at_logical_start():
+    ins = classify("texto incidental cualquier modalidad excepto contratación directa",
+                   status=RESOLVED, current=mf((), ("proc_excl",)))
+    assert ins.construction_id != "replace_all_except"
+
+
+def test_pure_blocked_fallback_leading_punctuation():
+    # "¿agrega X?" con status bloqueado y spans vacíos → ADD_INCLUDE preservado (§6/§7).
+    ins = classify("¿agrega prueba de plataforma?",
+                   status=ResolutionStatus.NOT_SEARCHABLE, current=mf())
+    assert ins.status == "resolved"
+    assert ins.operation is Op.ADD_INCLUDE
+    assert all(ins.source_text[s] not in "¿¡ " for s, e in ins.control_spans)
+
+
+def test_pure_blocked_fallback_excludes_no_match():
+    ins = classify("¿agrega prueba de plataforma?", status=NO_MATCH, current=mf())
+    assert ins.status == "none"
+
+
+# ── R3′-R1.1: "sin" bajo inicio lógico (paridad con atómicos/cerradas) ──────
+
+@pytest.mark.parametrize("text, s_status", [
+    ("¿sin prueba de plataforma?", ResolutionStatus.NOT_SEARCHABLE),
+    ("... sin prueba de plataforma", ResolutionStatus.NOT_SEARCHABLE),
+    ("¡sin prueba de plataforma!", ResolutionStatus.NOT_SEARCHABLE),
+    ("¿sin subasta?", ResolutionStatus.AMBIGUOUS),
+])
+def test_pure_sin_blocked_status_leading_punctuation(text, s_status):
+    # status bloqueado (no ejecutable) + "sin" al inicio lógico → control de exclusión.
+    ins = classify(text, status=s_status, current=mf())
+    assert ins.operation is Op.ADD_EXCLUDE
+    assert ins.control_code == "add_exclude_sin"
+    # control_spans cubre únicamente "sin"; la puntuación queda fuera.
+    assert [text[s:e] for s, e in ins.control_spans] == ["sin"]
+
+
+def test_pure_sin_blocked_engine_produces_status_code():
+    ins = classify("¿sin prueba de plataforma?",
+                   status=ResolutionStatus.NOT_SEARCHABLE, current=mf())
+    d = apply_modality_followup_operation(
+        mf(), mf(), ins, ResolutionStatus.NOT_SEARCHABLE, set())
+    assert d.needs_clarification
+    assert d.clarification_code == "non_searchable_target"
+
+
+def test_pure_sin_no_match_excluded_from_logical_start():
+    ins = classify("¿sin alimentación?", status=NO_MATCH, current=mf())
+    assert ins.status == "none"
+    assert ins.operation is None
 
 
 # --------------------------------------------------------------------------- #
