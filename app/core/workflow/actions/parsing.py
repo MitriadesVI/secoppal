@@ -14,27 +14,81 @@ declarations and bodies are byte-for-byte identical.
 """
 from __future__ import annotations
 
+import logging
 import time
+from dataclasses import asdict
 
 from burr.core import State, action
 
+from app.core.query_plan import QueryPlan
+
+from app.core import modality_followup_wiring as modality_wiring
 from app.core.followup_engine import FollowupGuards, detect_and_merge
 from app.core.llm_handler import LLMHandler
-from app.core.query_frame import frame_from_params
+from app.core.query_frame import frame_from_params, params_from_frame
 from app.core.query_router import QueryRouter
 from app.core.workflow.helpers import _with_timing
+
+logger = logging.getLogger(__name__)
+
+# ── R2.2 · Autoridad del fallback LLM: allowlist monotónica ────────────────
+#
+# La política previa era "el LLM puede escribir todo salvo lo que vayamos
+# descubriendo y protegiendo", y por eso cada auditoría encontraba otra puerta
+# (modalidad en R2, dataset en R2.1, estado_contrato en el canary). Aquí se
+# invierte: el LLM no puede escribir NADA salvo estos campos, de modo que
+# dataset, modalidad, estados, intent, orden, paginación, IDs y cualquier campo
+# FUTURO quedan protegidos por defecto, sin necesidad de enumerarlos.
+#
+# Monto y fecha quedan deliberadamente FUERA de esta primera versión: cambian el
+# universo de resultados de forma silenciosa (un "1.000 millones" leído como 100
+# es una consulta válida y semánticamente falsa) y todavía no hay un validador
+# estricto propio al que someter la propuesta.
+# Dimensiones geográficas/de entidad: independientes entre sí, valor escalar.
+#
+# DEUDA LLM-GEO-COHERENCE-001 (fuera del alcance de M3C-C): al ser independientes,
+# el LLM puede completar las tres a la vez con una combinación individualmente
+# válida pero mutuamente incoherente (entidad de Medellín + ciudad Barranquilla +
+# departamento Cundinamarca). La validación cruzada exige resolución determinística
+# contra el gazetteer y no se improvisa aquí.
+_LLM_SCALAR_FIELDS = frozenset({"entidad", "ciudad", "departamento"})
+
+# R2.3 — El topic es UNA dimensión semántica repartida en tres claves. La
+# monotonicidad debe medirse por dimensión, no por clave: si el parser ya resolvió
+# el tema en cualquiera de ellas, el LLM no puede escribir NINGUNA. Sin esto,
+# ``_promote_synonym_expansion`` del handler real (que convierte ``objeto`` en
+# ``objeto_or``) permitía ampliar un tema ya interpretado por una clave lateral.
+_LLM_TOPIC_FIELDS = frozenset({"objeto", "objeto_or", "objeto_phrases"})
+
+# ``objeto_phrases`` queda FUERA de lo escribible: no está en el schema del tool y
+# sus valores son identificadores canónicos del catálogo de frases, que ningún
+# canonizador autorizado del LLM produce. Si ya viene en los params se preserva;
+# lo que no puede es crearlo ni reemplazarlo.
+_LLM_TOPIC_WRITABLE = frozenset({"objeto", "objeto_or"})
+
+_LLM_ASSISTED_FIELDS = _LLM_SCALAR_FIELDS | _LLM_TOPIC_WRITABLE
+
+# Un valor "vacío" no resuelve nada: ni cuenta como propuesta del LLM ni como
+# campo ya resuelto por el parser.
+_EMPTY_VALUES = (None, "", [], {}, (), False)
 
 
 @action(
     reads=["user_query", "timings_ms"],
     writes=[
         "parsed_params", "needs_llm", "route_reason",
-        "modality_interpretation", "timings_ms",
+        "modality_interpretation", "modality_followup_instruction", "timings_ms",
     ],
 )
 def parse_query(state: State, query_router: QueryRouter) -> State:
     start = time.perf_counter()
     result = query_router.parse(state["user_query"])
+    # M3C-C: clasifica SOLO lenguaje de control (allow_implicit_replace=False; el
+    # REPLACE implícito se decide en apply_context, ya conocido el intent real).
+    # M2 no se re-ejecuta: la instrucción viaja como metadata efímera JSON-native.
+    instruction = modality_wiring.classify_control(
+        state["user_query"], result.modality_interpretation, allow_implicit_replace=False
+    )
     return _with_timing(
         state,
         "parse_ms",
@@ -43,23 +97,176 @@ def parse_query(state: State, query_router: QueryRouter) -> State:
         needs_llm=result.needs_llm,
         route_reason=result.route_reason,
         modality_interpretation=result.modality_interpretation,
+        modality_followup_instruction=modality_wiring.instruction_to_state(instruction),
     )
+
+
+def _already_resolved(params: dict, field: str) -> bool:
+    """True si el parser determinístico ya fijó el campo (o su resolución de gazetteer).
+
+    ``entidad``/``departamento``/``ciudad`` tienen una contraparte ``*_resolved``
+    producida por el gazetteer: si existe, el campo está resuelto aunque la clave
+    base venga vacía, y el LLM no puede proponer una alternativa.
+    """
+    for key in (field, f"{field}_resolved"):
+        if params.get(key) not in _EMPTY_VALUES:
+            return True
+    return False
+
+
+def _topic_is_resolved(params: dict) -> bool:
+    """True si el parser ya fijó el TEMA en cualquiera de las claves del cluster."""
+    return any(params.get(key) not in _EMPTY_VALUES for key in _LLM_TOPIC_FIELDS)
+
+
+def _is_canonical_str(value: object) -> bool:
+    """``str`` EXACTO, con contenido y YA canónico (sin whitespace de borde).
+
+    R2.4 — política ESTRICTA, no normalizadora: esta función es frontera hostil y
+    "sin coerciones" también vale para el whitespace. Validar con ``strip()`` y
+    guardar el original dejaba pasar ``"  Cali  "``, que rompe el gazetteer, mete
+    espacios en el SoQL y produce fingerprints distintos para valores equivalentes.
+    El LLM entrega la forma canónica o su propuesta se rechaza.
+    """
+    return type(value) is str and value != "" and value == value.strip()
+
+
+def _is_valid_topic_list(value: object) -> bool:
+    """``list`` EXACTA, no vacía, de ``str`` canónicos.
+
+    Rechaza str (que ``list()`` partiría en caracteres), tuple, set, dict,
+    generadores, números, ``bool`` y listas anidadas: los grupos OR anidados son
+    una construcción del parser, no algo que el LLM pueda proponer.
+    """
+    if type(value) is not list or not value:
+        return False
+    return all(_is_canonical_str(item) for item in value)
+
+
+def _merge_llm_proposal(incoming: dict, proposed: object) -> tuple[dict, list[str], list[str]]:
+    """Merge MONOTÓNICO y TIPADO de la propuesta del LLM sobre los params del parser.
+
+    El LLM puede COMPLETAR huecos, nunca deshacer una decisión válida del parser:
+
+    * se parte siempre de ``incoming`` ⇒ borrar una clave es imposible;
+    * una clave fuera de ``_LLM_ASSISTED_FIELDS`` se descarta ⇒ cambiar dataset,
+      modalidad, estados o cualquier campo cerrado (presente o futuro) es imposible;
+    * una dimensión que el parser YA resolvió se descarta ⇒ reemplazar un valor
+      determinístico es imposible. Para el topic la unidad es la DIMENSIÓN, no la
+      clave: un ``objeto`` resuelto bloquea también ``objeto_or``;
+    * un valor con forma inválida se descarta ⇒ esta función es frontera de
+      seguridad, así que valida tipos y no solo nombres.
+
+    Devuelve ``(merged, accepted, rejected)`` con los NOMBRES de las claves, para
+    telemetría sin exponer valores del usuario.
+    """
+    if not isinstance(proposed, dict):
+        raise ValueError(f"resultado del LLM debe ser dict, no {type(proposed).__name__}")
+    merged = dict(incoming)
+    accepted: list[str] = []
+    rejected: list[str] = []
+    # R2.4 — El cluster temático admite UNA sola escritura por turno, decidida por
+    # política y NO por el orden en que el modelo serializó su JSON. Si llegan dos
+    # representaciones nuevas de la misma dimensión (una AND, otra OR) son
+    # contradictorias entre sí: se rechazan AMBAS en vez de dejar que gane la que
+    # aparezca primero en el dict.
+    topic_candidates = [
+        key for key in _LLM_TOPIC_WRITABLE
+        if key in proposed and not (key in incoming and proposed[key] == incoming[key])
+    ]
+    topic_open = not _topic_is_resolved(incoming) and len(topic_candidates) <= 1
+    for key, value in proposed.items():
+        if key in incoming and value == incoming[key]:
+            continue  # eco de lo que ya entró: no es una propuesta
+        if key in _LLM_SCALAR_FIELDS:
+            if _already_resolved(incoming, key) or not _is_canonical_str(value):
+                rejected.append(key)
+                continue
+            merged[key] = value
+        elif key in _LLM_TOPIC_WRITABLE:
+            if not topic_open or not _is_valid_topic_list(value):
+                rejected.append(key)
+                continue
+            merged[key] = list(value)  # copia: la lista del LLM no queda referenciada
+        else:
+            rejected.append(key)
+            continue
+        accepted.append(key)
+    return merged, accepted, rejected
 
 
 @action(reads=["user_query", "needs_llm", "parsed_params", "timings_ms"], writes=["parsed_params", "timings_ms"])
 def llm_parse(state: State, llm_handler: LLMHandler) -> State:
+    """Fallback LLM bajo allowlist monotónica (R2.2).
+
+    El LLM amplía la cobertura del parser, pero nunca amplía sus propios permisos.
+    Solo puede rellenar los campos de ``_LLM_ASSISTED_FIELDS`` que el parser dejó
+    sin resolver; todo lo demás del turno se preserva exactamente como entró.
+
+    Eso cubre de una vez —y por defecto, también para campos futuros— lo que antes
+    se parcheaba caso a caso: la modalidad canónica (autoridad de M2 en el turno
+    inicial y del motor puro en el follow-up), el ``dataset`` que la hace aplicable,
+    y los estados acoplados al dataset, que ya ni siquiera llegan al merge. M2 no
+    se re-ejecuta y no se reconstruye modalidad desde texto.
+
+    Los invariantes determinísticos que ``LLMHandler.parse`` aplica alrededor del
+    modelo (oportunidad/dataset firmado) no se pierden al descartarse aquí: P10,
+    P11 y P12 los reimponen sobre ``raw_query`` en ``plan_query``, aguas abajo.
+    """
     start = time.perf_counter()
     if not state["needs_llm"]:
         return _with_timing(state, "llm_parse_ms", start)
-    parsed = llm_handler.parse(state["user_query"], existing_params=state["parsed_params"])
-    return _with_timing(state, "llm_parse_ms", start, parsed_params=parsed)
+    incoming_params = state["parsed_params"]
+    proposed = llm_handler.parse(state["user_query"], existing_params=incoming_params)
+    merged, accepted, rejected = _merge_llm_proposal(incoming_params, proposed)
+    if accepted or rejected:
+        logger.info(
+            "llm_parse allowlist: accepted=%s rejected=%s", sorted(accepted), sorted(rejected)
+        )
+    return _with_timing(state, "llm_parse_ms", start, parsed_params=merged)
 
 
-@action(reads=["parsed_params", "context_params", "followup", "user_query", "timings_ms"], writes=["parsed_params", "needs_llm", "needs_clarification", "clarification_reason", "intent_type", "followup_intent_type", "followup_mutation", "timings_ms"])
+_NONE_INSTRUCTION = None  # inicializado perezosamente para evitar import en tiempo de carga
+
+
+def _none_instruction():
+    """Instrucción 'sin operación' de respaldo cuando no hay metadata efímera."""
+    global _NONE_INSTRUCTION
+    if _NONE_INSTRUCTION is None:
+        from app.core.modality_followup import ModalityFollowupInstruction
+        _NONE_INSTRUCTION = ModalityFollowupInstruction(
+            status="none", operation=None, control_code=None, construction_id=None,
+            source_text="", control_spans=(), target_required=False, explanation="",
+        )
+    return _NONE_INSTRUCTION
+
+
+def _load_instruction(state: State):
+    """Carga la instrucción efímera con semántica EXACTA de ausencia (§4).
+
+    Solo ``None`` significa "no hay metadata" (el nodo ``parse_query`` no corrió).
+    Cualquier otro payload —incluidos los falsy ``{}``, ``[]``, ``""``, ``0`` y
+    ``False``— es corrupción interna del state y debe fallar CERRADO en la
+    deserialización estricta, nunca degradarse en silencio a un no-op que dejaría
+    la modalidad sin gobierno. No se convierte en aclaración de usuario: no es
+    ambigüedad conversacional.
+    """
+    payload = state.get("modality_followup_instruction")
+    if payload is None:
+        return _none_instruction()
+    return modality_wiring.instruction_from_state(payload)
+
+
+@action(reads=["parsed_params", "context_params", "followup", "user_query", "modality_interpretation", "modality_followup_instruction", "timings_ms"], writes=["parsed_params", "needs_llm", "needs_clarification", "clarification_reason", "intent_type", "followup_intent_type", "followup_mutation", "query_plan", "timings_ms"])
 def apply_context(state: State) -> State:
     """Fusiona context_params del turno anterior con parsed_params del parse actual.
     Usa followup_engine.detect_and_merge para clasificar la intención granular
     y aplicar políticas de merge por tipo de follow-up.
+
+    M3C-C: la modalidad se delega FUERA del merge genérico. Las dos claves
+    canónicas se retiran del delta antes de detect_and_merge y el motor puro es
+    la única autoridad del filtro final. Un target M2 bloqueado cortocircuita el
+    turno (filtro previo intacto, sin deltas ortogonales, sin ejecución).
 
     Solo corre cuando followup=True.
     """
@@ -67,15 +274,77 @@ def apply_context(state: State) -> State:
     if not state.get("followup"):
         return _with_timing(state, "apply_context_ms", start)
 
-    previous_frame = frame_from_params(state.get("context_params", {}))
+    context_params = state.get("context_params", {})
+    parsed_params = state.get("parsed_params", {})
+    user_query = state.get("user_query", "")
+    interpretation = state.get("modality_interpretation")
+    instruction = _load_instruction(state)
+    previous_frame = frame_from_params(context_params)
+
+    # El follow-up genérico ve la modalidad (la usa para clasificar refine_filter
+    # vs new_search) pero su resultado de modalidad se descarta: el motor puro es
+    # la única autoridad del output. Solo se enmascaran los spans de control y se
+    # limpian del objeto los verbos de control (§8: nunca entran al topic).
+    masked_query = modality_wiring.mask_control_spans(user_query, instruction)
+    generic_current = modality_wiring.scrub_control_topic(
+        parsed_params, user_query, instruction.control_spans
+    )
+
     mutation_trace: dict = {}
     intent, merged = detect_and_merge(
-        text=state.get("user_query", ""),
-        current_params=state.get("parsed_params", {}),
+        text=masked_query,
+        current_params=generic_current,
         previous_frame=previous_frame,
         mutation_trace=mutation_trace,
     )
 
+    # REPLACE implícito: promover solo ahora que el intent genérico real es conocido.
+    if modality_wiring.is_eligible_for_implicit_replace(instruction, interpretation, intent):
+        instruction = modality_wiring.classify_control(
+            user_query, interpretation, allow_implicit_replace=True
+        )
+
+    if instruction.status == "none":
+        # Sin operación de modalidad → paridad M3B-2: el merge genérico ya manejó
+        # la modalidad (heredar / limpiar por cambio de topic) como siempre.
+        return _finish_apply_context(state, start, merged, intent, mutation_trace)
+
+    # Operación de modalidad: el motor puro reemplaza lo que el merge genérico
+    # hizo con la modalidad (autoridad única) y el trace la marca como delegada.
+    previous_filter = modality_wiring.filter_from_params(context_params)
+    decision = modality_wiring.apply_engine(previous_filter, interpretation, instruction)
+    modality_wiring.mark_modality_delegated(mutation_trace)
+    mutation_trace["modality"] = decision.trace
+
+    if decision.needs_clarification:
+        # Target bloqueado o control ambiguo/en conflicto: filtro previo intacto,
+        # sin deltas ortogonales ni ejecución. Se pregunta en el turno actual.
+        # Se emite el mismo query_plan bloqueado que produciría plan_query para que
+        # el clasificador de outcome lo lea como aclaración (no como 0-tras-refinamiento).
+        previous_params = params_from_frame(previous_frame)
+        blocked_plan = asdict(QueryPlan(
+            should_execute=False,
+            params=dict(previous_params),
+            reason=f"modality_{decision.clarification_code}",
+        ))
+        return _with_timing(
+            state, "apply_context_ms", start,
+            parsed_params=previous_params,
+            needs_llm=False,
+            needs_clarification=True,
+            clarification_reason=modality_wiring.message_for(decision.clarification_code),
+            intent_type=intent,
+            followup_intent_type=intent,
+            followup_mutation=mutation_trace,
+            query_plan=blocked_plan,
+        )
+
+    merged = modality_wiring.write_final_filter(merged, decision.final_filter)
+    return _finish_apply_context(state, start, merged, intent, mutation_trace)
+
+
+def _finish_apply_context(state, start, merged, intent, mutation_trace) -> State:
+    """Aplica el guard WHERE 1=1 y decide el ruteo tras el merge (con o sin modalidad)."""
     # Guard contra WHERE 1=1 global.
     # Excepción: una opportunity_search sin scope/topic NO es "contexto
     # perdido" — es una oportunidad demasiado amplia que aún necesita rubro.
