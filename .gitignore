@@ -24,3 +24,29 @@ data/conversations/demo_*.jsonl
 
 # Personal strategic memory — not tracked in git
 memory/
+
+# ── Estado de runtime — se autocrea, nunca se versiona ───────────────────────
+# El schema nace solo (`CREATE TABLE IF NOT EXISTS` + `mkdir(parents=True)`), la
+# ruta es reconfigurable por SECOP_FEEDBACK_PATH / SECOP_FEEDBACK_DB_PATH, y los
+# tests la redirigen a tmp_path en conftest.py. Los datos canónicos que la suite
+# necesita ya viven versionados en tests/fixtures/ (p. ej. rated_eval_v1.yaml).
+data/secoppal.db
+data/secoppal.db-wal
+data/secoppal.db-shm
+data/feedback.jsonl
+
+# Bases locales de los pilotos de notificación (nunca versionar)
+data/telegram_*.db
+data/telegram_*.db-wal
+data/telegram_*.db-shm
+
+# Conversaciones reales de sesiones autenticadas (el nombre lleva la identidad)
+data/conversations/st_email_*.jsonl
+data/conversations/st_email_*.pagination.json
+
+# Herramienta de indexación de terceros, clonada dentro del árbol
+/codegraph/
+.codegraph/daemon.pid
+
+# Checkpoints de ejecución del piloto semántico (regenerables desde su semilla)
+semantic_pilot_v1/**/checkpoints/

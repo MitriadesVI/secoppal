@@ -261,6 +261,8 @@ Almacenamiento append-only en JSONL para observabilidad y mejora continua:
 
 La UI de Streamlit muestra un campo de comentario opcional debajo de cada resultado, antes de los botones 👍/👎. El comentario se persiste en `rating_comment` del JSONL.
 
+**Dónde vive ese estado.** `data/feedback.jsonl` y `data/secoppal.db` son **estado de runtime, no fuente**: no se versionan. Se crean solos en el primer arranque —el directorio con `mkdir(parents=True)` y todo el schema con `CREATE TABLE IF NOT EXISTS`—, así que un clon recién hecho arranca sin ningún paso previo. Las rutas se reconfiguran con `SECOP_FEEDBACK_PATH` y `SECOP_FEEDBACK_DB_PATH`; `tests/conftest.py` las redirige a `tmp_path` para que la suite nunca escriba sobre los datos reales (`tests/test_feedback_isolation.py` lo vigila). Los datos calificados que la suite sí necesita están extraídos como fixture versionada en `tests/fixtures/rated_eval_v1.yaml`; el runtime real solo alimenta scripts de análisis (`scripts/eval_rated.py`, `scripts/diag_timeouts.py`), que se ejecutan sobre la máquina donde se generó.
+
 ---
 
 ### `app/data/aliases_db.json` — Gazetteer de entidades
