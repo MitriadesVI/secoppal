@@ -1820,6 +1820,192 @@ de una sesión larga; un error produce síntomas sutiles (duplicados, filas falt
 consulta, totales contradictorios), peores que un crash. Mejor base estable + frontera clara que
 medio buffer.
 
+## ADR-051: Contrato de entrega de notificaciones del Radar (P1B-0)
+
+**Fecha:** 2026-07-15  
+**Estado:** Proposed — número provisional  
+**Rama:** `radar/mvp-manual` · **HEAD de diseño:** `02ffcfd`
+
+> Antes de integrar, verificar `ADR-051` contra todas las refs remotas. Las
+> colisiones históricas de numeración se resolverán mediante un detector
+> automático separado; no se reescriben ADR anteriores en este bloque.
+
+> **Nota de integración (2026-07-26).** La verificación de numeración pedida
+> arriba se ejecutó: `ADR-051` no aparece en `main` ni en ninguna rama local, de
+> modo que el número deja de ser provisional por colisión. El bloque se
+> incorpora a `main` con su texto original, sin reescribir la decisión. Hasta
+> esta fecha existió únicamente como cambio sin commitear en el worktree de
+> `radar/mvp-manual`, tal como registra
+> `docs/radar/2026-07-26_RADAR_TECHNICAL_INTEGRATION_CLOSEOUT.md`.
+
+### Contexto
+
+P0/P1A corrigieron verdad del diff, refresh de vistos, validación canónica,
+outcomes/backoff y exclusión mutua de `run_radar`. La auditoría P1B-0 comprobó
+que aún no existe un subsistema de notificación del Radar y que conectarlo al
+retorno en memoria del scheduler sería incorrecto:
+
+- `radars.owner` no es una identidad canónica y puede caer en un `"anon"`
+  compartido;
+- `radar_events` no tiene cursor monotónico público y todos los eventos de una
+  corrida comparten `ts`;
+- `seen`, `runs`, `events` y estado operativo se materializan hoy en conexiones
+  autocommit separadas, por lo que un crash puede perder una novedad;
+- `follows.refresh_follows` consulta y escribe fuera del lease de P1A;
+- evento, intención de entrega e intento de proveedor tienen ciclos de vida y
+  riesgos diferentes;
+- el borde de envío existente colapsa timeout, 400, 429 y 500 en un booleano.
+
+### Decisión
+
+1. **Verdad detectada, materializada y entregada son fronteras distintas.** La
+   materialización de una corrida se vuelve transaccional antes de construir
+   outbox: tras terminar toda red, `BEGIN IMMEDIATE`, renovación/fencing del
+   lease como primera operación DML, `run + seen + events + estado`, `COMMIT`.
+   Si el token no sigue vigente o cualquier paso falla, `ROLLBACK` total.
+
+2. **Tres preflights son obligatorios antes del outbox:**
+   - Preflight 1: materialización atómica y fault injection;
+   - Preflight 2: identidad/lease/idempotencia de `follows` y ciclo durable de
+     refresh;
+   - Preflight 3: `needs_attention` solo se limpia mediante acción explícita;
+     una corrida OK no reactiva ni borra la necesidad de revisión.
+
+3. **Identidad canónica ≠ canal.** Se crean `principals`,
+   `principal_owner_keys`, `notification_endpoints` y preferencias por
+   `(radar_id, endpoint_id)`. Un principal solo nace de una `app_account`
+   existente y activa. Un owner anónimo/no vinculado no puede tener endpoints.
+   La creación de preferencia exige que el principal resuelto del radar coincida
+   con `endpoint.principal_id`; el DDL protege también batch↔endpoint con FK
+   compuesta `(endpoint_id, principal_id)`.
+
+4. **Verificación no es un campo editable.** Crear o editar un endpoint deja
+   `verified_at=NULL`. Solo un `ChannelVerifier`, después de prueba de posesión,
+   puede verificarlo. P1B-1 implementa estado pendiente y restricciones; P1B-5
+   implementa el challenge real de Telegram.
+
+5. **Evento ≠ entrega.** Se separan seis responsabilidades: principal,
+   endpoint, preferencia, batch/outbox, asociación batch-evento e intento. Todo
+   mensaje se remonta a eventos concretos y ningún error almacenado contiene
+   secretos o direcciones.
+
+6. **Cursor explícito por `event_seq`.** `ts` solo es inseguro porque una corrida
+   comparte timestamp; `(ts,id)` sería técnicamente válido, pero se adopta
+   `event_seq INTEGER` por legibilidad y consumo incremental. La reserva de
+   secuencia y la inserción del evento ocurren en la misma conexión y dentro de
+   `materialize_run`. Eventos previos a la migración permanecen `NULL` y no se
+   usan como backfill.
+
+7. **El cursor es un watermark de examen.** `last_examined_seq` avanza al máximo
+   evento examinado únicamente en la misma transacción que crea batches e
+   inserta `batch_events`. Una ventana sin elegibles también avanza. Si algo
+   falla, cursor y outbox revierten juntos. `max_items` limita el render, no la
+   trazabilidad: todos los eventos representados quedan asociados.
+
+8. **Opt-in sin backfill.** La transición de preferencia `0→1` —y cualquier
+   reactivación posterior— fija `last_examined_seq = MAX(event_seq)` y habilita
+   la preferencia en la misma transacción. Los eventos del periodo previo o
+   silenciado no se envían por defecto; batches `dead/opted_out` no reviven.
+
+9. **Frecuencia MVP: solo `per_run`.** Un batch por endpoint, radar y
+   `source_cycle_id`, con todos sus eventos elegibles. Para un radar ordinario
+   el ciclo es `radar_run_id`; Preflight 2 define el equivalente durable de
+   `follows`. `daily` y `weekly` se rechazan hasta contar con contrato propio.
+
+10. **Idempotencia basada en el conjunto exacto.** La clave es:
+
+    `sha256(policy_version | endpoint_id | radar_id | event_seq únicos ordenados)`.
+
+    No depende de texto, `digest_hash` ni rango `min/max`. El mismo evento no
+    puede aparecer en dos batches del mismo endpoint:
+    `UNIQUE(endpoint_id,event_id)`, además de la unicidad dentro del batch.
+
+11. **Claim recuperable y fenced.** El worker reclama con un único `UPDATE` que
+    admite `pending` o `claimed` vencido, respeta `not_before` y decide por
+    `rowcount`:
+
+    ```sql
+    UPDATE radar_notification_batches
+       SET status='claimed', claim_token=:token, claim_until=:until
+     WHERE notification_id=:id
+       AND (
+            status='pending'
+            OR (status='claimed' AND claim_until<=:now)
+       )
+       AND (not_before IS NULL OR not_before<=:now)
+    ```
+
+    Un claim vencido sin intento `dispatching` puede continuar. Si existe un
+    `dispatching` huérfano, se cierra a `finished/ambiguous`, el batch queda
+    `ambiguous` y no se reintenta automáticamente.
+
+12. **Attempt write-ahead.** Tras claim y revalidación, se inserta
+    `DeliveryAttempt(phase='dispatching', outcome=NULL, claim_token=...)` y se
+    hace `COMMIT` antes de llamar al proveedor. Solo después se finalizan attempt
+    y batch. Todo intento `finished` tiene outcome; un `dispatching` abandonado
+    se reconcilia a `finished/ambiguous`.
+
+13. **Fencing al finalizar.** `finalize_attempt` comprueba en una transacción que
+    el batch sigue `claimed`, conserva el mismo token y no ha vencido. Un worker
+    viejo no puede marcar `sent` después de que un sucesor haya reconciliado el
+    batch a `ambiguous`.
+
+14. **Semántica effectively-once, no exactly-once.** La idempotencia local evita
+    duplicar decisiones propias, pero no puede hacer commit atómico con el
+    proveedor. En las fuentes oficiales revisadas el 2026-07-15 no se encontró
+    una clave de idempotencia documentada para los endpoints salientes
+    considerados, ni un endpoint de reconciliación en esas referencias; no se
+    verificó exhaustivamente su ausencia y debe revalidarse antes de P1B-5.
+    `ambiguous` es outcome de primera clase y no se reintenta solo.
+
+15. **Elegibilidad estricta.** Solo `new`, `changed_state`, `changed_value` y
+    `disappeared` confirmado son elegibles. `baseline`, `followed`,
+    `window_churn`, `radar_empty`, outcomes de error y estados de control nunca
+    producen push comercial. `needs_attention` y `next_run_after` no invalidan
+    eventos ya materializados; sí frenan opt-out, endpoint inválido/revocado,
+    principal suspendido, radar archivado o batch vencido.
+
+16. **Radares se archivan y restauran.** `archive_radar`/`restore_radar` usan
+    `archived_at`; no hay `DELETE` destructivo. El nombre permanece reservado
+    por `UNIQUE(owner,name)` mientras esté archivado y la historia sobrevive.
+
+17. **Payload congelado, texto renderizado al enviar.** El batch conserva datos
+    y asociaciones; el formatter del canal produce un único mensaje. El exceso
+    se resume con `truncated_count`; no se trocea un batch en varios mensajes.
+
+18. **Privacidad y trazabilidad.** Tokens quedan fuera de tablas; endpoints se
+    minimizan; logs usan IDs enmascarados; `error_message_safe` no contiene
+    secretos, emails, teléfonos ni payload crudo. Revocación/archivo preservan
+    ledger histórico; retención y anonimización son explícitas.
+
+19. **Shadow-first.** Outbox y worker se prueban con fake provider y fault
+    injection, luego shadow sin red y finalmente Telegram detrás de flag
+    `False` por defecto. No hay activación automática.
+
+### Alternativas descartadas
+
+- notificar directamente desde `SchedulerSummary` en RAM;
+- una tabla monolítica `owner/channel/destination/preference`;
+- idempotencia por texto, `digest_hash` o `min_seq/max_seq`;
+- cursor solo por timestamp o `rowid`;
+- marcar `sent` antes de enviar;
+- reintentar automáticamente un estado ambiguo;
+- usar `needs_attention` o `next_run_after` para invalidar eventos históricos;
+- borrar radares, endpoints o principals con historia;
+- prometer exactly-once sin capacidad externa demostrada;
+- declarar `daily/weekly` antes de definir sus ventanas y concurrencia.
+
+### Consecuencias
+
+El roadmap queda: Preflight 1 → Preflight 2 → Preflight 3 → P1B-1 identidad,
+endpoints y preferencias → P1B-2 outbox/ledger → P1B-3 selector y render shadow
+→ P1B-4 worker fake/fault injection → P1B-5 Telegram deshabilitado → P1B-6
+shadow y activación controlada.
+
+**Detalle:** contrato en `docs/radar/P1_NOTIFICATION_AUDIT_ADDENDUM.md` y plan en
+`docs/planes/radar-p1b-notificaciones.md`. Sustituye E5–E7 del plan post-P0, que
+permanece como registro histórico.
+
 ## ADR-054: Contrato conversacional de modalidad con autoridad determinística (M3)
 
 **Fecha:** 2026-07-26  
