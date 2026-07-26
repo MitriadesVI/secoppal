@@ -1917,3 +1917,158 @@ implican documentos faltantes en esta rama.
 - ADR completo: `docs/decisions/2026-07-26_ADR-054_conversational-modality-contract.md`
 - Closeout as-built (autoridad): `docs/planes/2026-07-25_M3C_modality_conversation_closeout.md`
 - Guía operativa: `docs/guides/MODALITY_CONVERSATION_GUIDE.md`
+
+---
+
+> **Nota de reconciliación (2026-07-26).** ADR-052 y ADR-053 se incorporan a
+> `main` después de ADR-054 desde una rama concurrente. La numeración ADR es
+> global y conserva la identidad original; el orden de aparición en este log no
+> altera la fecha ni la precedencia histórica de las decisiones. En su rama de
+> origen ambas existían únicamente como entradas de este registro —no como
+> archivos ADR separados—, y así se conservan aquí: el texto es el commiteado en
+> `radar/mvp-manual`, sin renumerar ni reescribir. Sus commits de código
+> (`87fe8af`, `2516f69`) se trasladaron íntegros; solo su cambio sobre este
+> archivo se difirió hasta este punto.
+
+## ADR-052: Precedencia en la frontera de entrega — consentimiento antes que expiración (R2B-1C-A)
+
+**Fecha:** 2026-07-16  
+**Estado:** Accepted  
+**Rama:** `radar/mvp-manual` · **HEAD:** `f9a77e4`
+
+### Contexto
+
+`authorize_and_begin_dispatch` evaluaba `expires_at` **antes** de leer la matriz
+de consentimiento. La justificación original (R2A) era razonable: ambas causas
+son terminales y ninguna envía, así que la precedencia "solo elige la etiqueta",
+y evaluar el reloj primero ahorraba un join dentro del lock de escritor.
+
+El argumento tiene un hueco: la etiqueta *es* el registro. `dead_reason` es lo
+único que queda para explicar por qué el sistema no habría podido entregar, y
+un batch de alguien que se dio de baja marcado `expired` afirma que el mensaje
+caducó, cuando la verdad es que esa persona ya no lo quería. La razón más
+verdadera pierde frente a la más rápida de calcular.
+
+### Decisión
+
+Orden obligatorio dentro de la frontera de dispatch, bajo un solo
+`BEGIN IMMEDIATE` y con el reloj capturado después del lock:
+
+1. **Claim válido.** `status='claimed'`, token exacto y `claim_until > now`. Va
+   primero: un intento abierto cuyo claim ya venció es un *huérfano* —el caso
+   normal que `claim_for_reconciliation` resuelve—, no una inconsistencia. Un
+   worker que llega con el claim perdido debe oír `claim_lost`, no una alarma.
+2. **Intento `phase='dispatching'` abierto.** Con el claim *vigente*, encontrar
+   uno es el estado imposible: `WorkerStoreConsistencyError`, sin tocar nada.
+   Precede a la expiración y al consentimiento.
+3. Seguridad, aislamiento y consentimiento mediante la matriz compartida
+   (`authorization.py`).
+4. Solo si la matriz autoriza, se evalúa la expiración.
+5. Después se evalúan quiet hours.
+
+### Consecuencias
+
+Razones terminales de consentimiento: ganan sobre la expiración y **quedan
+persistidas** en `dead_reason`.
+
+- `preference_disabled + expired` → `dead_reason='opted_out'`
+- `endpoint_revoked + expired` → `dead_reason='endpoint_revoked'`
+- `radar_archived + expired` → `dead_reason='radar_archived'`
+- `authorized + expired` → `dead_reason='expired'`
+
+Precedencia del intento abierto:
+
+- claim vencido + intento abierto → `claim_lost` y ruta de reconciliación
+- claim vigente + intento abierto → `WorkerStoreConsistencyError`
+
+`principal_mismatch + expired` → la autorización devuelve `security_blocked`,
+pero **solo como resultado de esa llamada**: `security_blocked` no es hoy un
+`dead_reason` persistente. El batch queda `pending` con `not_before = expires_at`
+y el sweep termina registrándolo como `expired` al llegar su TTL. Es decir: el
+registro final de un fallo de aislamiento sigue siendo menos verdadero de lo que
+este ADR exige para el resto de los casos. Corregirlo requiere un `dead_reason`
+nuevo y migración de schema, y queda fuera de R2B-1C-A a propósito — se anota
+aquí para que la deuda esté escrita y no se descubra leyendo el sweep.
+
+Reemplaza deliberadamente la precedencia fijada en R2A por
+`test_61f_expiry_wins_over_consent_causes_and_both_refuse_to_send`, reescrito en
+este bloque para fijar la política nueva. El coste aceptado es un join adicional
+dentro del lock en la rama de batches vencidos.
+
+## ADR-053: Vocabulario auditable del ledger y migración fail-closed (R2B-1C-B / R2B-2)
+
+**Fecha:** 2026-07-16  
+**Estado:** Accepted  
+**Rama:** `radar/mvp-manual` · **HEAD:** `87fe8af`
+
+### Contexto
+
+El worker necesita cerrar tres desenlaces que el vocabulario existente de
+`radar_notification_batches.dead_reason` y `radar_delivery_attempts.error_class`
+no podía nombrar sin mentir:
+
+- un payload que no se deja decodificar, versionar o renderizar — el fallo es
+  nuestro y ocurre antes de cualquier llamada al proveedor;
+- una política de reintentos agotada — lo que murió es la paciencia, no el
+  consentimiento ni el TTL del batch;
+- un canal sin proveedor registrado, y su fallo permanente equivalente.
+
+Cerrar cualquiera de los tres con `dead_reason='expired'` o `'invalid_address'`
+—los únicos valores disponibles— afirmaría algo falso sobre por qué el mensaje
+no se entregó, exactamente el mismo problema que ADR-052 ya había señalado para
+`security_blocked`.
+
+### Decisión
+
+1. **Vocabulario ampliado**, generado por una sola fuente en `schema.py`
+   (`DEAD_REASONS`, `ERROR_CLASSES`) y consumido por `ledger_store.py` sin
+   copia paralela:
+   - `dead_reason`: `render_error`, `retries_exhausted`,
+     `permanent_provider_error`.
+   - `error_class`: `render_error`, `provider_unavailable`.
+   - `invalid_address` sigue reservado exclusivamente para una dirección
+     inválida; los fallos nuestros o de configuración usan las clases nuevas.
+
+2. **`ProviderResult.error_class` comparte el vocabulario persistente.**
+   `provider.py` importa `ERROR_CLASSES` de `schema.py` (sin ciclo: `schema.py`
+   no importa `provider.py`) y rechaza cualquier clase que no pertenezca a él
+   al construir el resultado. Sin este acoplamiento, un proveedor podía producir
+   un `ProviderResult` válido para el contrato de Python pero que la base
+   rechazaría después de haber llamado al proveedor: un "no hubo efecto,
+   reintentable" barato se habría convertido en un intento que revienta a
+   mitad de cerrarse, queda `dispatching`, y la siguiente corrida lo reconcilia
+   como `ambiguous` por una razón ajena a si el mensaje salió.
+
+3. **Migración fail-closed por DDL completo, no por fragmento.** El preflight
+   de `schema.py` compara el texto **entero** normalizado de
+   `radar_notification_batches` y `radar_delivery_attempts` contra las cuatro
+   formas canónicas (current/legacy de cada tabla), generadas por los mismos
+   `_batches_ddl`/`_attempts_ddl` que producen el DDL real. Reconocer solo el
+   fragmento del vocabulario habría permitido clasificar como vigente una tabla
+   que conservara `dead_reason`/`error_class` correctos pero hubiera perdido
+   cualquier otra invariante — un `UNIQUE`, un `ON DELETE RESTRICT`, el `CHECK`
+   compuesto de `phase`/`outcome` — y `CREATE TABLE IF NOT EXISTS` no repara lo
+   que no reconoce. La normalización absorbe tres diferencias no semánticas
+   entre el DDL que se ejecuta y el que SQLite persiste en `sqlite_master.sql`:
+   ausencia de `IF NOT EXISTS`, ausencia del `;` final, y las comillas dobles
+   que `ALTER TABLE ... RENAME TO` añade alrededor del nombre de tabla.
+   Cualquier otro DDL —desconocido o parcialmente parecido— para en seco con
+   `SchemaIncompatibleError`.
+
+4. **La migración es atómica.** Ambas tablas se reconstruyen en una sola
+   transacción aunque solo una lo necesite —evita un estado intermedio que
+   ningún preflight posterior sabría nombrar—, preserva cada fila, FK e índice,
+   y corre `foreign_key_check` + `integrity_check` antes del `COMMIT`. Un fallo
+   en cualquier fase revierte por completo; una base ya vigente no se toca.
+
+### Consecuencias
+
+- `data/secoppal.db` **no** fue migrada durante el desarrollo de este bloque:
+  no contiene las tablas del ledger. La migración solo se ejercitó contra
+  bases temporales fabricadas en las pruebas.
+- El vocabulario de Python y el `CHECK` de la base no pueden desincronizarse
+  en silencio: ambos se derivan de `DEAD_REASONS`/`ERROR_CLASSES`, y
+  `provider.py` valida contra la misma lista antes de que un resultado exista.
+- Detectar el schema heredado por DDL completo es más estricto que por
+  fragmento a propósito: una base que conserve el vocabulario pero pierda otra
+  restricción ahora falla cerrado en vez de aceptarse como vigente.
