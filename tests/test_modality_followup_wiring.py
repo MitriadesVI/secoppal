@@ -352,6 +352,21 @@ def test_mask_noop_when_no_control_spans():
     assert wiring.mask_control_spans("hola mundo", ins) == "hola mundo"
 
 
+def test_clear_then_replace_control_words_strip_boundary_punctuation():
+    text = "no importa la modalidad, solo subasta inversa"
+    prefix = "no importa la modalidad, solo"
+    spans = ((0, len(prefix)),)
+
+    assert wiring._control_words(text, spans) == {
+        "no", "importa", "la", "modalidad", "solo",
+    }
+
+    params = {"objeto": ["importa", "modalidad"]}
+    assert wiring.scrub_control_topic(params, text, spans) == {}
+    assert spans == ((0, len(prefix)),)
+    assert text[:len(prefix)] == prefix
+
+
 # ── Elegibilidad de REPLACE implícito (enmienda #1) ────────────────────────
 
 def _executable_interp():
@@ -546,10 +561,7 @@ def test_scrub_removes_every_control_word_from_flat_topic(router, text):
     params, spans = _parse_and_classify(router, text)
     assert spans, f"premisa: {text!r} debe producir spans de control"
     scrubbed = wiring.scrub_control_topic(params, text, spans)
-    control_words = {
-        tok for start, end in spans
-        for tok in wiring._normalize_text(text[start:end]).split()
-    }
+    control_words = wiring._control_words(text, spans)
     for key in ("objeto", "objeto_or", "objeto_phrases"):
         for item in scrubbed.get(key) or []:
             terms = item if isinstance(item, list) else [item]

@@ -4,6 +4,11 @@ from __future__ import annotations
 from dataclasses import dataclass
 import re
 
+from app.core.modality_followup import (
+    _CLOSED as _FOLLOWUP_CLOSED,
+    _at_logical_start,
+    _normalize as _normalize_followup_text,
+)
 from app.core.query_text_consumption import mask_consumed_spans
 
 _PUBLIC_TENDER_OPEN_RE = re.compile(
@@ -16,6 +21,15 @@ _GENERIC_OPEN_TENDER_RE = re.compile(
 
 _RULE_PUBLIC_TENDER_STATE = "public_tender_open_state"
 _RULE_GENERIC_OPEN_TENDER = "generic_open_tender"
+_RULE_CLEAR_THEN_REPLACE = "clear_then_replace_prefix"
+
+# Reutiliza el descriptor contractual del clasificador: no hay una segunda
+# expresión regular que pueda divergir de ``clear_then_replace``.
+_CLEAR_THEN_REPLACE_RE = next(
+    pattern
+    for pattern, _, construction_id in _FOLLOWUP_CLOSED
+    if construction_id == "clear_then_replace"
+)
 
 
 @dataclass(frozen=True)
@@ -27,6 +41,17 @@ class ModalityPrecedenceResult:
     rule_ids: tuple[str, ...]
 
 
+def _mask_preserving_linebreaks(
+    text: str, spans: tuple[tuple[int, int], ...]
+) -> str:
+    """Enmascara spans sin convertir CR/LF en tokens ni alterar sus offsets."""
+    masked = list(mask_consumed_spans(text, spans))
+    for index, char in enumerate(text):
+        if char in "\r\n":
+            masked[index] = char
+    return "".join(masked)
+
+
 def prepare_modality_text(text: str) -> ModalityPrecedenceResult:
     """Oculta solo spans donde intent/estado tienen precedencia sobre M2."""
     if not isinstance(text, str):
@@ -35,6 +60,16 @@ def prepare_modality_text(text: str) -> ModalityPrecedenceResult:
         )
 
     hidden: list[tuple[int, int, str]] = []
+    normalized = _normalize_followup_text(text)
+    clear_then_replace = _CLEAR_THEN_REPLACE_RE.search(normalized)
+    if (
+        clear_then_replace
+        and _at_logical_start(normalized, clear_then_replace.start())
+    ):
+        hidden.append(
+            (*clear_then_replace.span(), _RULE_CLEAR_THEN_REPLACE)
+        )
+
     for match in _PUBLIC_TENDER_OPEN_RE.finditer(text):
         start, end = match.span("state")
         hidden.append((start, end, _RULE_PUBLIC_TENDER_STATE))
@@ -53,7 +88,7 @@ def prepare_modality_text(text: str) -> ModalityPrecedenceResult:
 
     spans = tuple((start, end) for start, end, _ in hidden)
     return ModalityPrecedenceResult(
-        modality_text=mask_consumed_spans(text, spans),
+        modality_text=_mask_preserving_linebreaks(text, spans),
         hidden_spans=spans,
         rule_ids=tuple(rule_id for _, _, rule_id in hidden),
     )

@@ -5,7 +5,10 @@ from pathlib import Path
 
 import pytest
 
+from app.core.modality_filter import ModalityFilter
+from app.core.modality_followup import classify_modality_followup_control
 from app.core.modality_precedence import prepare_modality_text
+from app.core.modality_resolution_models import ResolutionStatus
 
 
 @pytest.mark.parametrize(
@@ -84,6 +87,76 @@ def test_multiple_rules_are_deterministic_and_non_overlapping():
     assert len(result.modality_text) == len(text)
     for start, end in result.hidden_spans:
         assert result.modality_text[start:end] == " " * (end - start)
+
+
+@pytest.mark.parametrize(
+    ("text", "target"),
+    [
+        (
+            "no importa la modalidad, solo contratación directa",
+            "contratación directa",
+        ),
+        (
+            "no importa la modalidad solo subasta inversa",
+            "subasta inversa",
+        ),
+        (
+            "no importa la modalidad\nsolo subasta inversa",
+            "subasta inversa",
+        ),
+        (
+            "no importa la modalidad, busca contratación directa",
+            "contratación directa",
+        ),
+    ],
+)
+def test_clear_then_replace_classifier_and_precedence_mask_are_in_parity(
+    text, target
+):
+    target_start = text.index(target)
+    target_span = (target_start, target_start + len(target))
+    instruction = classify_modality_followup_control(
+        text,
+        current_filter=ModalityFilter(
+            include_procedure_ids=("placeholder",)
+        ),
+        resolution_status=ResolutionStatus.RESOLVED,
+        target_spans=(target_span,),
+    )
+    result = prepare_modality_text(text)
+
+    assert instruction.construction_id == "clear_then_replace"
+    assert result.hidden_spans == instruction.control_spans
+    assert result.rule_ids == ("clear_then_replace_prefix",)
+    assert len(result.modality_text) == len(text)
+    assert result.modality_text[target_start:] == text[target_start:]
+
+    prefix_start, prefix_end = instruction.control_spans[0]
+    for index in range(prefix_start, prefix_end):
+        if text[index] in "\r\n":
+            assert result.modality_text[index] == text[index]
+        else:
+            assert result.modality_text[index] == " "
+
+
+@pytest.mark.parametrize(
+    "text",
+    [
+        "no importa la modalidad; solo subasta inversa",
+        "no importa la modalidad — solo subasta inversa",
+        "no importa el filtro de modalidad, solo mínima cuantía",
+        "sin filtro de modalidad, ahora subasta inversa",
+        "quita el filtro de modalidad y deja licitación pública",
+        "no importa la modalidad",
+        "sin modalidad",
+    ],
+)
+def test_clear_then_replace_precedence_does_not_expand_outside_contract(text):
+    result = prepare_modality_text(text)
+
+    assert result.modality_text == text
+    assert result.hidden_spans == ()
+    assert result.rule_ids == ()
 
 
 def test_invalid_text_fails_loudly():

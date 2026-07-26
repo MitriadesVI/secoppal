@@ -220,6 +220,111 @@ def _exclude_raws(ids, dataset="procesos") -> tuple[str, ...]:
     return proj.exclude_raw_values
 
 
+def test_clear_then_replace_keeps_positive_target_and_inherited_topic(
+    dialogue, monkeypatch
+):
+    import app.core.modality_parser_integration as mpi
+
+    calls = {"n": 0}
+    real_resolve = mpi.resolve
+
+    def counting_resolve(*args, **kwargs):
+        calls["n"] += 1
+        return real_resolve(*args, **kwargs)
+
+    monkeypatch.setattr(mpi, "resolve", counting_resolve)
+
+    dialogue.turn("licitación pública de mantenimiento")
+    calls["n"] = 0
+    result = dialogue.turn(
+        "no importa la modalidad, solo subasta inversa"
+    )
+
+    assert result["query_plan"]["should_execute"] is True
+
+    mutation = result["followup_mutation"]["modality"]
+    assert mutation["operation"] == "replace"
+    assert mutation["construction_id"] == "clear_then_replace"
+
+    params = result["parsed_params"]
+    assert params[_INCLUDE] == ["seleccion_abreviada_subasta_inversa"]
+    assert params.get(_EXCLUDE, []) == []
+    assert params["objeto"] == ["mantenimiento"]
+    assert calls["n"] == 1
+
+    where = _where(dialogue.last_select_soql())
+    for raw in _include_raws(SI):
+        assert _escape(raw) in where
+    assert "NOT IN" not in where.upper()
+    assert "mantenimiento" in where.lower()
+
+
+@pytest.mark.parametrize(
+    ("query", "expected_include"),
+    [
+        (
+            "no importa la modalidad, solo contratación directa",
+            CD,
+        ),
+        (
+            "no importa la modalidad solo subasta inversa",
+            SI,
+        ),
+        (
+            "no importa la modalidad\nsolo subasta inversa",
+            SI,
+        ),
+        (
+            "no importa la modalidad, busca contratación directa",
+            CD,
+        ),
+    ],
+)
+def test_clear_then_replace_same_contract_variants(
+    dialogue, monkeypatch, query, expected_include
+):
+    import app.core.modality_parser_integration as mpi
+
+    calls = {"n": 0}
+    real_resolve = mpi.resolve
+
+    def counting_resolve(*args, **kwargs):
+        calls["n"] += 1
+        return real_resolve(*args, **kwargs)
+
+    monkeypatch.setattr(mpi, "resolve", counting_resolve)
+
+    dialogue.turn("licitación pública de mantenimiento")
+    calls["n"] = 0
+    result = dialogue.turn(query)
+
+    assert result["query_plan"]["should_execute"] is True
+    assert _mod(result)["operation"] == "replace"
+    assert _mod(result)["construction_id"] == "clear_then_replace"
+    assert _inc(result) == expected_include
+    assert not _exc(result)
+    assert _objeto(result) == ["mantenimiento"]
+    assert calls["n"] == 1
+
+
+@pytest.mark.parametrize(
+    ("query", "expected_exclude"),
+    [
+        ("cualquier modalidad excepto contratación directa", CD),
+        ("sin contratación directa", CD),
+        ("excepto subasta inversa", SI),
+    ],
+)
+def test_clear_then_replace_fix_preserves_exclusion_contrasts(
+    dialogue, query, expected_exclude
+):
+    dialogue.turn("licitación pública de mantenimiento")
+    result = dialogue.turn(query)
+
+    assert expected_exclude <= _exc(result)
+    assert "NOT IN" in _where(dialogue.last_select_soql()).upper()
+
+
 def test_soql_add_include_contains_authorized_raws_of_both(dialogue):
     dialogue.turn("licitación pública de mantenimiento")
     r = dialogue.turn("además contratación directa")

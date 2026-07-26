@@ -23,8 +23,8 @@ from app.core.modality_followup import (
     apply_modality_followup_operation,
     classify_modality_followup_control,
 )
-from app.core.modality_followup import _normalize as _normalize_text
 from app.core.modality_resolution_models import ResolutionStatus
+from app.core.modality_text import normalize_phrase
 from app.core.query_text_consumption import mask_consumed_spans
 
 _TOPIC_KEYS = ("objeto", "objeto_or", "objeto_phrases")
@@ -254,7 +254,7 @@ def _control_words(user_query: str, control_spans) -> set[str]:
     """Palabras de control derivadas de los spans del motor (sin léxico propio)."""
     words: set[str] = set()
     for start, end in control_spans:
-        for token in _normalize_text(user_query[start:end]).split():
+        for token in normalize_phrase(user_query[start:end]).split():
             if token:
                 words.add(token)
     return words
@@ -275,13 +275,16 @@ def _scrub_topic_list(value: list, words: set[str]) -> list:
         if isinstance(item, list):
             group = [
                 sub for sub in item
-                if isinstance(sub, list) or _normalize_text(str(sub)) not in words
+                if (
+                    isinstance(sub, list)
+                    or normalize_phrase(str(sub)) not in words
+                )
             ]
             if not group:
                 continue  # el grupo solo contenía control: desaparece
             cleaned.append(group if len(group) > 1 else group[0])
             continue
-        if _normalize_text(str(item)) not in words:
+        if normalize_phrase(str(item)) not in words:
             cleaned.append(item)
     return cleaned
 
