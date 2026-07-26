@@ -211,6 +211,33 @@ entidad_resolved: expected 'GOBERNACIÓN DE BOYACÁ', got None
 > `main` no tiene. La diferencia es de cobertura del árbol, no una regresión:
 > aquí no falla ninguna prueba.
 
+### Validación sobre el árbol final (2026-07-26, post-Radar)
+
+La nota anterior describe `main` **antes** de integrar Radar. Con ambos bloques
+ya en `main`, la cifra de la rama de origen se alcanza sobre este árbol:
+
+```text
+lint core           app/core/ limpio
+suite completa      6592 passed, 2 skipped, 24 xfailed
+query corpus        89/89 PASS
+dialogue corpus     60/61 PASS
+```
+
+Mismo `GOB-DEPTO-001` como único fallo, con firma idéntica. La diferencia de
+cobertura que explicaba `5381` frente a `6592` era, en efecto, de árbol y no de
+regresión: al sumarse las pruebas de Radar el número converge exactamente.
+
+### Trazabilidad tras el cierre de ramas
+
+Las ramas `search/modality-contract-v1` e `integration/modality-contract-v1-main`
+—citadas arriba como rama de origen y rama de integración— **fueron eliminadas**
+tras verificar que `main` conserva todo su contenido. Consecuencia práctica: los
+*hashes de origen* de la tabla anterior identifican commits que ya no tienen
+referencia y que un `git gc` puede recolectar. Se conservan como **identidad
+histórica**, no como punteros resolubles: para inspeccionar el trabajo hay que
+usar la columna «hash en `main`», que sí es alcanzable. La tabla de origen se
+preservó aquí precisamente porque la rama que la sostenía dejó de existir.
+
 ### Dogfood manual
 
 Registrado como evidencia de **paridad ortogonal**, no como muestra para la

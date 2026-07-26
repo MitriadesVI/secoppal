@@ -2098,6 +2098,16 @@ conserva la identidad `ADR-054` que ya tenía en la rama de origen.
 La numeración global conserva reservas de ramas concurrentes; los saltos no
 implican documentos faltantes en esta rama.
 
+**Cierre de ramas (2026-07-26).** `search/modality-contract-v1` e
+`integration/modality-contract-v1-main` se eliminaron tras comprobar que `main`
+conserva su contenido íntegro. Los *hashes de origen* de la lista anterior
+quedan sin referencia y son recolectables por `git gc`: valen como identidad
+histórica, no como punteros resolubles. Para inspeccionar el trabajo, usar los
+hashes de `main`. Sobre el árbol final —modalidad y Radar juntos— la suite
+completa mide `6592 passed, 2 skipped, 24 xfailed`, que es la cifra que el
+closeout había registrado en la rama de origen; el `5381` de arriba corresponde
+a `main` antes de integrar Radar.
+
 ### Enlaces
 
 - ADR completo: `docs/decisions/2026-07-26_ADR-054_conversational-modality-contract.md`
