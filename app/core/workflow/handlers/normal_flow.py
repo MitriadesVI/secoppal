@@ -40,6 +40,7 @@ import time
 from typing import TYPE_CHECKING
 
 from app.core.conversation_store import is_followup
+from app.core.modality_followup_telemetry import append_event, project_event
 from app.core.response_policy import build_advisor_response
 from app.core.workflow.graph import build_application
 from app.core.workflow.helpers import _elapsed_ms
@@ -440,5 +441,22 @@ def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
             result_count=rows_returned,
             query_fingerprint=result["query_fingerprint"],
         )
+
+    # M3C-CG-I: telemetria observacional de follow-ups de modalidad.
+    # Ejecuta DESPUES de persistir el trace/turno: un fallo aqui no altera
+    # resultado, respuesta, params ni persistencia conversacional.
+    try:
+        telemetry_event = project_event(
+            followup=followup,
+            context_params=context_params,
+            parsed_params=result.get("parsed_params", {}),
+            followup_mutation=result.get("followup_mutation", {}),
+            query_plan_reason=(result.get("query_plan") or {}).get("reason", ""),
+            needs_clarification=result.get("needs_clarification", False),
+        )
+        if telemetry_event is not None:
+            append_event(deps.settings.modality_followup_telemetry_path, telemetry_event)
+    except Exception as exc:
+        logger.warning("modality telemetry projection failed: %s", type(exc).__name__)
 
     return result
