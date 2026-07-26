@@ -17,6 +17,11 @@ metadata:
       says_date       : el usuario menciona una fecha/año este turno
       changes_dataset : el usuario pivota de dataset este turno
       expect          : "block" | "execute"  (resultado esperado a alto nivel)
+      expect_include  : procedure_ids canónicos positivos exactos
+      expect_exclude  : procedure_ids canónicos negativos exactos
+      expect_operation: operación conversacional exacta
+      expect_topic_contains / expect_topic_not_contains : contrato de topic
+      expect_not_in   : presencia del operador de exclusión en el SoQL
 
   invariants: >
     Aplicadas automáticamente a TODAS las secuencias:
@@ -26,6 +31,7 @@ metadata:
          debe seguir en los params de cada turno posterior hasta que nombre otro
       I4 no-alucinación de fecha: tras un cambio de dataset sin fecha nueva,
          fecha_desde debe ser None (una fecha de otro dataset no se hereda)
+      I6 expectativas M3C declaradas ⇒ filtro/operación/topic/SoQL exactos
 
 sequences:
   # ── Regresión de los 2 bugs hallados en testeo manual ──────────────────
@@ -237,3 +243,147 @@ sequences:
       - text: "contratos firmados de mantenimiento"
         changes_dataset: true
         expect: execute
+
+  # ═══════════ M3C-E: contrato conversacional multi-turn congelado ════════
+  - id: DLG-M3C-ADD-INCLUDE
+    note: "ADD_INCLUDE une la modalidad nueva y conserva el topic"
+    turns:
+      - text: "licitación pública de mantenimiento"
+        expect: execute
+      - text: "además contratación directa"
+        expect: execute
+        expect_operation: add_include
+        expect_include:
+          - contratacion_directa
+          - contratacion_directa_con_ofertas
+          - licitacion_publica
+          - licitacion_publica_obra
+        expect_exclude: []
+        expect_topic_contains: [mantenimiento]
+        expect_not_in: false
+
+  - id: DLG-M3C-REMOVE-MEMBER
+    note: "REMOVE_MEMBER retira solo el miembro de la whitelist"
+    turns:
+      - text: "licitación pública o contratación directa de mantenimiento"
+        expect: execute
+      - text: "quita contratación directa"
+        expect: execute
+        expect_operation: remove_member
+        expect_include: [licitacion_publica, licitacion_publica_obra]
+        expect_exclude: []
+        expect_topic_contains: [mantenimiento]
+        expect_not_in: false
+
+  - id: DLG-M3C-REMOVE-EXCLUDE
+    note: "REMOVE_EXCLUDE abre el universo sin crear whitelist"
+    turns:
+      - text: "alimentación excepto contratación directa"
+        expect: execute
+      - text: "permite contratación directa"
+        expect: execute
+        expect_operation: remove_exclude
+        expect_include: []
+        expect_exclude: []
+        expect_topic_contains: [alimentacion]
+        expect_not_in: false
+
+  - id: DLG-M3C-RESTORE-OPEN
+    note: "RESTORE_INCLUDE en universo abierto retira la exclusión sin forzar inclusión"
+    turns:
+      - text: "alimentación excepto contratación directa"
+        expect: execute
+      - text: "vuelve a incluir contratación directa"
+        expect: execute
+        expect_operation: restore_include
+        expect_include: []
+        expect_exclude: []
+        expect_topic_contains: [alimentacion]
+        expect_not_in: false
+
+  - id: DLG-M3C-CLEAR
+    note: "CLEAR elimina solo el filtro de modalidad y conserva el topic"
+    turns:
+      - text: "licitación pública de mantenimiento"
+        expect: execute
+      - text: "sin filtro de modalidad"
+        expect: execute
+        expect_operation: clear
+        expect_include: []
+        expect_exclude: []
+        expect_topic_contains: [mantenimiento]
+        expect_modality_predicate: false
+
+  - id: DLG-M3C-CONTROL-CONFLICT
+    note: "controles incompatibles fallan cerrados y conservan el filtro previo"
+    turns:
+      - text: "contratación directa de alimentación"
+        expect: execute
+      - text: "agrega y quita contratación directa"
+        expect: block
+        expect_reason: control_conflict
+        expect_include:
+          - contratacion_directa
+          - contratacion_directa_con_ofertas
+        expect_exclude: []
+        expect_topic_contains: [alimentacion]
+
+  - id: DLG-M3C-AMBIGUOUS-TARGET
+    note: "target M2 ambiguo bloquea sin mutación parcial"
+    turns:
+      - text: "contratación directa de alimentación"
+        expect: execute
+      - text: "además subasta"
+        expect: block
+        expect_operation: add_include
+        expect_reason: ambiguous_target
+        expect_include:
+          - contratacion_directa
+          - contratacion_directa_con_ofertas
+        expect_exclude: []
+        expect_topic_contains: [alimentacion]
+
+  - id: DLG-M3C-DATASET-PIVOT
+    note: "el cambio de dataset conserva IDs canónicos y reproyecta el SoQL"
+    turns:
+      - text: "subasta inversa de alimentación en procesos"
+        expect: execute
+      - text: "ahora contratos"
+        changes_dataset: true
+        expect: execute
+        expect_dataset: contratos
+        expect_include: [seleccion_abreviada_subasta_inversa]
+        expect_exclude: []
+        expect_topic_contains: [alimentacion]
+        expect_not_in: false
+
+  - id: DLG-M3C-MODALITY-PLUS-TOPIC
+    note: "un verbo descriptivo no se convierte en ADD_INCLUDE"
+    turns:
+      - text: "licitación pública de mantenimiento"
+        expect: execute
+      - text: "contratación directa que incluye suministro"
+        expect: execute
+        expect_operation: replace
+        expect_include:
+          - contratacion_directa
+          - contratacion_directa_con_ofertas
+        expect_exclude: []
+        expect_topic_contains: [suministro]
+        expect_topic_not_contains: [mantenimiento]
+        expect_not_in: false
+
+  - id: DLG-M3C-CLEAR-THEN-REPLACE
+    note: "construcción cerrada: limpia y reemplaza en una sola decisión"
+    turns:
+      - text: "licitación pública de mantenimiento"
+        expect: execute
+      - text: "no importa la modalidad, solo subasta inversa"
+        expect: execute
+        expect_operation: replace
+        expect_construction: clear_then_replace
+        expect_include: [seleccion_abreviada_subasta_inversa]
+        expect_exclude: []
+        expect_topic_contains: [mantenimiento]
+        expect_not_in: false
+        expect_modality_predicate: true

@@ -145,6 +145,60 @@ def test_dialogue_invariants(seq_id, seq, tmp_path):
                 f"(reason={verdict.reason!r}) — posible bypass de P15. params={params!r}"
             )
 
+        # I6 — expectativas contractuales M3C declaradas por el corpus.
+        include = params.get("modalidad_include_procedure_ids") or []
+        exclude = params.get("modalidad_exclude_procedure_ids") or []
+        mutation = (result.get("followup_mutation") or {}).get("modality") or {}
+        topic = params.get("objeto") or []
+
+        if "expect_include" in turn:
+            assert include == turn["expect_include"], (
+                f"{where}: include esperado={turn['expect_include']!r}, got={include!r}"
+            )
+        if "expect_exclude" in turn:
+            assert exclude == turn["expect_exclude"], (
+                f"{where}: exclude esperado={turn['expect_exclude']!r}, got={exclude!r}"
+            )
+        if "expect_operation" in turn:
+            assert mutation.get("operation") == turn["expect_operation"], (
+                f"{where}: operation esperada={turn['expect_operation']!r}, "
+                f"got={mutation.get('operation')!r}"
+            )
+        if "expect_reason" in turn:
+            assert mutation.get("reason") == turn["expect_reason"], (
+                f"{where}: reason esperado={turn['expect_reason']!r}, "
+                f"got={mutation.get('reason')!r}"
+            )
+        if "expect_construction" in turn:
+            assert mutation.get("construction_id") == turn["expect_construction"], (
+                f"{where}: construction esperada={turn['expect_construction']!r}, "
+                f"got={mutation.get('construction_id')!r}"
+            )
+        if "expect_dataset" in turn:
+            assert params.get("dataset") == turn["expect_dataset"], (
+                f"{where}: dataset esperado={turn['expect_dataset']!r}, "
+                f"got={params.get('dataset')!r}"
+            )
+        for expected_topic in turn.get("expect_topic_contains", []):
+            assert expected_topic in topic, (
+                f"{where}: topic debe contener {expected_topic!r}, got={topic!r}"
+            )
+        for forbidden_topic in turn.get("expect_topic_not_contains", []):
+            assert forbidden_topic not in topic, (
+                f"{where}: topic no debe contener {forbidden_topic!r}, got={topic!r}"
+            )
+        if "expect_not_in" in turn:
+            assert ("NOT IN" in soql.upper()) is turn["expect_not_in"], (
+                f"{where}: presencia de NOT IN inesperada en SoQL"
+            )
+        if "expect_modality_predicate" in turn:
+            upper_soql = soql.upper()
+            where_clause = soql[upper_soql.find(" WHERE ") + 7:] if " WHERE " in upper_soql else ""
+            has_predicate = "modalidad_de_contratacion" in where_clause
+            assert has_predicate is turn["expect_modality_predicate"], (
+                f"{where}: presencia del predicado de modalidad inesperada en SoQL"
+            )
+
 
 @pytest.mark.xfail(
     reason="BUG hallado por el corpus adversarial: detect_direct_lookup "
