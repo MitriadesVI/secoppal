@@ -1819,3 +1819,101 @@ secuencia validada completa, no solo "no se repiten"); dual = buffer por `(finge
 de una sesión larga; un error produce síntomas sutiles (duplicados, filas faltantes, páginas de otra
 consulta, totales contradictorios), peores que un crash. Mejor base estable + frontera clara que
 medio buffer.
+
+## ADR-054: Contrato conversacional de modalidad con autoridad determinística (M3)
+
+**Fecha:** 2026-07-26  
+**Estado:** Accepted  
+**Rama de integración:** `integration/modality-contract-v1-main` · **HEAD:** `c5f857e`
+
+### Contexto
+
+El resolutor de modalidad (M2) resolvía el turno inicial, pero el segundo turno
+no tenía semántica: `además contratación directa`, `quita contratación directa`
+y `permite contratación directa` son tres operaciones distintas sobre el mismo
+filtro previo y ninguna estaba nombrada. Además, las señales de control se
+confundían con lenguaje descriptivo (`contratación directa que incluye
+suministro`) y jurídico (el `sin` interno de un nombre de modalidad); el LLM
+podía reescribir parámetros estructurales que el pipeline determinístico ya
+había resuelto; y una mutación parcial podía contaminar dataset, estados, topic
+y persistencia, ejecutando SoQL sobre un estado a medias.
+
+### Decisión
+
+M2 resuelve modalidad exactamente una vez por turno y sus `consumed_spans`
+vinculan el control con targets reales. Las operaciones conversacionales forman
+un enum cerrado —`REPLACE`, `ADD_INCLUDE`, `ADD_EXCLUDE`, `REMOVE_MEMBER`,
+`REMOVE_EXCLUDE`, `RESTORE_INCLUDE`, `CLEAR`— aplicado por un motor puro sobre
+IDs canónicos. `RESTORE_INCLUDE` en universo abierto elimina la exclusión sin
+crear whitelist. Status M2 bloqueado, target ausente o conflicto de control
+producen rollback completo, cero SoQL y cero ejecución: no hay mutación parcial.
+Solo el builder proyecta procedure IDs a raws del dataset final. El LLM opera
+bajo allowlist monotónica (solo llena huecos permitidos aún vacíos: una
+representación de topic, entidad, ciudad o departamento) y tiene cerrados
+dataset, modalidad, estados, monto, fecha, orden, intent y todo campo futuro.
+La metadata de control es efímera y no entra a frame, fingerprint, persistencia
+ni SoQL. Las construcciones cerradas pueden enmascarar la vista que ve M2 sin
+alterar el texto original ni sus offsets. La telemetría es privada, agregada,
+opt-in y fail-open. **El sidecar de aclaración (M3C-D) queda DEFERRED** hasta
+que la compuerta se cumpla con muestra real (`sample_is_real=true`,
+`turns_total >= 100`, y además `blocked_total >= 10` o bien
+`blocked_by_m2_status_total >= 5` con ratio `>= 0.05`); `target_missing` y
+`control_conflict` no cuentan como bloqueo jurídico M2.
+
+### Consecuencias
+
+Comportamiento determinístico y auditable, composición segura con topic, scope,
+monto, fecha y dataset, y campos nuevos cerrados por defecto para el LLM. El
+costo es mayor superficie de tests, un vocabulario de control estrictamente
+gobernado, casos ambiguos (`sin modalidad`, `agrega y quita X`) que exigen
+aclaración explícita, y una telemetría que debe acumular uso real antes de que
+M3C-D pueda evaluarse.
+
+Alternativas descartadas: dejar que el LLM reescriba todos los params; proteger
+campos por lista negra creciente; reejecutar M2 después del merge; inferir el
+target jurídico desde el lenguaje de control; construir ya el sidecar de
+aclaración; aplicar mutaciones parciales cuando un target queda bloqueado.
+
+### Métricas
+
+```text
+lint core           app/core/ limpio
+focal modalidad     526 passed, 1 xfailed
+suite completa      5381 passed, 2 skipped, 24 xfailed
+query corpus        89/89 PASS
+dialogue corpus     60/61 PASS
+dialogue E2E        29/29 secuencias PASS
+```
+
+Fallo basal aceptado, ajeno a modalidad y con firma idéntica al baseline:
+`GOB-DEPTO-001` (`entidad_resolved`: expected `GOBERNACIÓN DE BOYACÁ`, got
+`None`).
+
+### Commits
+
+Once commits integrados en orden; hash en `main` ← hash de origen en
+`search/modality-contract-v1`:
+
+`af55772` ← `e2e3db5` (catálogo canónico), `53812d1` ← `82b17c8` (resolver
+composicional), `361fd6d` ← `2bae6cb` (alternativas coordinadas), `8e23e43` ←
+`e1009df` (contratos de integración), `5b75e67` ← `f94ffbb` (pipeline canónico),
+`d397cdf` ← `33bbdd3` (álgebra pura), `2e3c889` ← `16da02e` (R3 target-span),
+`eaa051f` ← `4096a2c` (wiring + allowlist), `63d22d2` ← `ec55a81` (telemetría /
+product gate), `84a9518` ← `3ea5dc6` (ER1A polaridad), `c5f857e` ← `3cc81cb`
+(cierre M3C-E).
+
+### Trazabilidad
+
+El trabajo se desarrolló en `search/modality-contract-v1`, cuya ascendencia
+incluía trabajo ajeno a modalidad. Sobre `main` se integró únicamente el
+conjunto de modalidad; el contenido de la decisión es el mismo en ambas líneas y
+conserva la identidad `ADR-054` que ya tenía en la rama de origen.
+
+La numeración global conserva reservas de ramas concurrentes; los saltos no
+implican documentos faltantes en esta rama.
+
+### Enlaces
+
+- ADR completo: `docs/decisions/2026-07-26_ADR-054_conversational-modality-contract.md`
+- Closeout as-built (autoridad): `docs/planes/2026-07-25_M3C_modality_conversation_closeout.md`
+- Guía operativa: `docs/guides/MODALITY_CONVERSATION_GUIDE.md`
