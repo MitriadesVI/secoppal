@@ -5,6 +5,7 @@ from types import SimpleNamespace
 
 import pytest
 
+from app.core.formatter import Formatter
 from app.core.direct_lookup import (
     DirectLookupRequest,
     parse_direct_lookup_request,
@@ -206,6 +207,18 @@ class _Formatter:
         return "detalle", results
 
 
+class _RecordingFormatter(Formatter):
+    def __init__(self):
+        super().__init__(max_results=25)
+        self.to_rows_calls = []
+
+    def to_rows(self, results, dataset_id, params=None, *, reference_instant=None):
+        self.to_rows_calls.append((list(results), dataset_id, reference_instant))
+        return super().to_rows(
+            results, dataset_id, params, reference_instant=reference_instant,
+        )
+
+
 class _Client:
     """Respuestas por (dataset, mode); las listas respetan LIMIT."""
 
@@ -228,15 +241,62 @@ class _Client:
         return [dict(row) for row in response[:limit]]
 
 
-def _run(query, responses):
+def _run(query, responses, *, formatter=None):
     feedback = _Feedback()
     deps = SimpleNamespace(
         secop_client=_Client(responses),
-        formatter=_Formatter(),
+        formatter=formatter or _Formatter(),
         feedback=feedback,
     )
     result = handle_direct_lookup(deps, HandlerContext(user_query=query))
     return result, deps.secop_client
+
+
+def test_multi_hit_disambiguation_uses_operational_process_state_and_keeps_contract():
+    selected = {
+        **_candidate("CO1.NTC.SELECTED", "LP-005-2026", "ALCALDIA UNO"),
+        "nombre_del_procedimiento": "PROCESO SELECCIONADO",
+        "estado_de_apertura_del_proceso": "Abierto",
+        "estado_del_procedimiento": "Seleccionado",
+        "urlproceso": {"url": "https://example.test/selected"},
+    }
+    evaluation = {
+        **_candidate("CO1.NTC.EVALUATION", "LP-005-2026", "ALCALDIA DOS"),
+        "nombre_del_procedimiento": "PROCESO EN EVALUACION",
+        "estado_de_apertura_del_proceso": "Abierto",
+        "estado_del_procedimiento": "Evaluación",
+        "urlproceso": {"url": "https://example.test/evaluation"},
+    }
+    contract = {
+        "id_contrato": "CO1.PCCNTR.1",
+        "referencia_del_contrato": "LP-005-2026",
+        "nombre_entidad": "ENTIDAD CONTRATO",
+        "objeto_del_contrato": "CONTRATO SIN CAMBIOS",
+        "estado_contrato": "En ejecución",
+        "urlproceso": "https://example.test/contract",
+    }
+    responses = {
+        (PROCESOS, "exact"): [selected, evaluation],
+        (CONTRATOS, "exact"): [contract],
+    }
+
+    formatter = _RecordingFormatter()
+    result, _client = _run("LP-005-2026", responses, formatter=formatter)
+
+    response = result["response"]
+    assert result["total_count"] == 3
+    assert "📌 ⚫ Seleccionado" in response
+    assert "SECOP reporta apertura: Abierto" in response
+    assert "📌 🟠 En evaluación" in response
+    assert "[Contrato] `CO1.PCCNTR.1`" in response
+    assert "📌 En ejecución" in response
+    assert response.index("CO1.NTC.SELECTED") < response.index("CO1.NTC.EVALUATION")
+    assert response.index("CO1.NTC.EVALUATION") < response.index("CO1.PCCNTR.1")
+    # Solo los dos procesos visibles se enriquecen; el contrato no pasa por M2.
+    assert [call[1] for call in formatter.to_rows_calls] == [PROCESOS, PROCESOS]
+    # Ambas llamadas reciben exactamente el mismo objeto temporal.
+    instants = [call[2] for call in formatter.to_rows_calls]
+    assert instants[0] is instants[1]
 
 
 @pytest.mark.parametrize(

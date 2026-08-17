@@ -36,6 +36,7 @@ from __future__ import annotations
 
 import logging
 import math
+from datetime import datetime, timezone
 from typing import TYPE_CHECKING
 
 from app.core.deadline import (
@@ -52,6 +53,7 @@ from app.core.direct_lookup import (
     detect_direct_lookup,
     resolve_reference_candidates,
 )
+from app.core.formatter import _estado_raw_nota, _estado_visible
 from app.core.soql_builder import SoQLBuilder
 from app.core.workflow.helpers import _client_for
 from app.core.workflow.results import empty_result, tabular_result
@@ -349,7 +351,9 @@ def _handle_entity_ref(
             intent_type="direct_lookup",
         ), resolution.outcome, resolution.outcome_reason, attempts)
 
-    # 2+ results — disambiguation list
+    # 2+ results — disambiguation list. Un solo instante para todos los procesos
+    # visibles; contratos y fallbacks conservan el estado raw anterior.
+    reference_instant_utc = datetime.now(timezone.utc)
     candidates: list[str] = []
     for i, r in enumerate(resolution.candidates[:5], 1):
         ds = r.get("_dataset_id")
@@ -357,11 +361,29 @@ def _handle_entity_ref(
         entidad = (r.get("entidad") or r.get("nombre_entidad", "") or "?")[:60]
         objeto = (r.get("nombre_del_procedimiento") or r.get("objeto_del_contrato", "") or "Sin titulo")[:80]
         estado = r.get("estado_de_apertura_del_proceso") or r.get("estado_contrato", "?")
+        nota_estado = ""
+        if ds == SoQLBuilder.PROCESOS_DATASET:
+            try:
+                cards = deps.formatter.to_rows(
+                    [dict(r)], ds,
+                    {"intent_type": "direct_lookup", "route_reason": "entity_ref_disambiguation"},
+                    reference_instant=reference_instant_utc,
+                )
+                if cards:
+                    estado = _estado_visible(cards[0]) or estado
+                    nota_estado = _estado_raw_nota(cards[0])
+            except Exception:
+                # Best-effort: una fila legacy o formatter parcial conserva el
+                # texto raw previo sin romper toda la desambiguación.
+                pass
         tipo = "Contrato" if ds == "jbjy-vk9h" else "Proceso"
-        candidates.append(
+        candidate = (
             f"{i}. [{tipo}] `{id_}` — {objeto}\n"
             f"   🏛️ {entidad} | 📌 {estado}"
         )
+        if nota_estado:
+            candidate += f"\n   {nota_estado}"
+        candidates.append(candidate)
 
     disambig_response = (
         f"🔍 Encontré {match_count} resultados para la referencia `{lookup_value}`:\n\n"

@@ -11,6 +11,7 @@ from datetime import datetime, timedelta, timezone
 import extra_streamlit_components as stx
 import streamlit as st
 
+from app.core.formatter import _estado_raw_nota
 from app.core.radar import follows
 from app.core.radar.builder import has_scope_or_topic, save_radar_from_params
 from app.core.radar.commands import radar_owner
@@ -129,6 +130,25 @@ def _render_contextual_filters(
                         st.rerun()
 
 
+def _state_presentation(
+    row: dict, raw_icons: dict[str, str],
+) -> tuple[str, str, str]:
+    """Devuelve label, icono y nota ya resueltos para una fila visible.
+
+    Streamlit no interpreta señales SECOP: solo expresa el resumen que añadió el
+    formatter. Contratos, fallbacks y filas legacy sin resumen conservan el
+    comportamiento raw anterior.
+    """
+    operational_label = row.get("estado_op_label")
+    if operational_label:
+        label = str(operational_label)
+        icon = str(row.get("estado_op_icono") or "⚪")
+        return label, icon, _estado_raw_nota(row)
+
+    raw = str(row.get("estado", "") or "")
+    return raw, raw_icons.get(raw, "⚪"), ""
+
+
 def _render_cards(rows: list[dict], owner: str | None = None, idx: int = 0) -> None:
     """Render results as compact cards with SECOP links + botón 'seguir'."""
     estado_icons = {
@@ -151,13 +171,11 @@ def _render_cards(rows: list[dict], owner: str | None = None, idx: int = 0) -> N
         titulo = row.get("titulo", "Sin titulo")[:120]
         entidad = row.get("entidad", "")
         valor = row.get("valor", "")
-        estado = row.get("estado", "")
+        estado, icon, estado_nota = _state_presentation(row, estado_icons)
         fecha = (row.get("fecha") or "")[:10]
         fecha_label = row.get("fecha_label", "")
         contratista = row.get("contratista", "")
         url = row.get("url", "")
-        icon = estado_icons.get(estado, "⚪")
-
         # Warning for duplicate/test entries
         warning = detect_test_or_duplicate_from_row(row)
         if warning:
@@ -168,6 +186,8 @@ def _render_cards(rows: list[dict], owner: str | None = None, idx: int = 0) -> N
             f"🏛️ {entidad}",
             f"💰 {valor} {icon} {estado}",
         ]
+        if estado_nota:
+            parts.append(estado_nota)
         if fecha:
             # Mostrar etiqueta de fuente si no es la publicación canónica
             if fecha_label and fecha_label != "Publicación":
@@ -211,7 +231,7 @@ def _render_detail_card(row: dict, dataset_id: str = "") -> None:
     titulo = row.get("titulo", "Sin titulo")
     entidad = row.get("entidad", "")
     valor = row.get("valor", "")
-    estado = row.get("estado", "")
+    estado, icon, estado_nota = _state_presentation(row, estado_icons)
     fecha = (row.get("fecha") or "")[:10]
     fecha_label = row.get("fecha_label", "")
     contratista = row.get("contratista", "")
@@ -223,8 +243,6 @@ def _render_detail_card(row: dict, dataset_id: str = "") -> None:
     ciudad = row.get("ciudad", "")
     descripcion = row.get("descripcion", "") or row.get("nombre_del_procedimiento", "")
     es_contrato = dataset_id == "jbjy-vk9h"
-    icon = estado_icons.get(estado, "⚪")
-
     with st.expander(f"📋 Informacion completa — {titulo[:80]}...", expanded=True):
         st.markdown(f"**{'Objeto' if es_contrato else 'Nombre del procedimiento'}:** {titulo}")
 
@@ -232,6 +250,8 @@ def _render_detail_card(row: dict, dataset_id: str = "") -> None:
         c1.markdown(f"**ID:** `{id_proceso}`")
         c2.markdown(f"**Referencia:** `{referencia}`")
         c3.markdown(f"**Estado:** {icon} {estado}")
+        if estado_nota:
+            st.caption(estado_nota)
 
         c4, c5 = st.columns(2)
         c4.markdown(f"**Entidad:** {entidad}")
