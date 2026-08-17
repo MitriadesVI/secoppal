@@ -15,6 +15,7 @@ from __future__ import annotations
 import re
 from typing import TYPE_CHECKING
 
+from app.core.formatter import _estado_raw_nota, _estado_visible
 from app.utils.money import format_cop, safe_money
 
 if TYPE_CHECKING:
@@ -499,7 +500,10 @@ def _format_results_list(rows: list[dict]) -> str:
         titulo = row.get("titulo", "Sin titulo")
         entidad = row.get("entidad", "")
         valor = row.get("valor", "")
-        estado = row.get("estado", "")
+        # M2/PROCESS-OP-STATE-001: misma tarjeta, mismo estado visible que el
+        # formatter. La fila ya trae el resumen resuelto; aqui solo se expresa.
+        estado = _estado_visible(row)
+        nota_estado = _estado_raw_nota(row)
         fecha = (row.get("fecha") or "")[:10]
         contratista = row.get("contratista", "")
         url = row.get("url", "")
@@ -513,6 +517,8 @@ def _format_results_list(rows: list[dict]) -> str:
         if fecha:
             detail += f" | {fecha}"
         parts.append(detail)
+        if nota_estado:
+            parts.append(f"   {nota_estado}")
         if contratista:
             parts.append(f"   {contratista}")
         if url:

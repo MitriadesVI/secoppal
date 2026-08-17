@@ -134,6 +134,13 @@ class SoQLBuilder:
                 "estado_de_apertura_del_proceso",
                 "estado_del_procedimiento",
                 "fase",
+                # M2/PROCESS-OP-STATE-001: no arbitra la etapa (eso lo deciden
+                # estado_del_procedimiento + fase), pero el Truth Layer lo tiene
+                # catalogado con política de sentinelas. Omitirlo lo hacía llegar
+                # como "not_observed", que NO penaliza la calidad: la lectura se
+                # declaraba "complete" ignorando un campo con 100% de cobertura.
+                # Se transporta para que la calidad observada sea la real.
+                "estado_resumen",
                 "fecha_de_publicacion_del",
                 "fecha_de_recepcion_de",
                 "urlproceso",

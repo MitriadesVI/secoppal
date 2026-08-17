@@ -1,4 +1,12 @@
-"""Exact public oracles captured from main before dormant M1 integration."""
+"""Exact public oracles captured from main before dormant M1 integration.
+
+M1 froze these because its contract was ``VISIBLE_PRODUCT_CHANGE = NO``. M2
+(PROCESS-OP-STATE-001) authorizes exactly ONE visible divergence — the process
+state presentation — so three oracles move on purpose. Re-pinning them alone
+would throw away the guard, so the divergence is pinned AND bounded: the tests
+below prove that stripping the new fields restores the pre-M2 bytes exactly, and
+that WHERE/ORDER/LIMIT, ranking, ordering, counts and pagination did not move.
+"""
 from __future__ import annotations
 
 from datetime import datetime, timezone
@@ -15,11 +23,18 @@ from app.core.soql_builder import SoQLBuilder
 from app.core.workflow.results import empty_result, tabular_result
 
 
+# Files M2 is authorized to touch, re-pinned. Their divergence is not taken on
+# trust: it is bounded by the structural tests at the end of this module.
+M2_MODIFIED_FILE_SHA256 = {
+    "app/core/formatter.py": "0e51c8f76c4f9d9139d10c6e6b98a623eec8364e1e3656161c67758a91782be7",
+    "app/core/soql_builder.py": "aab031bbfed03e6fd3da814ba1385d12f9f4d67adc2f565ec13dc6a0fca745e8",
+}
+
+# Still byte-frozen: M2 touches neither retrieval, nor ranking, nor pagination,
+# nor the workflow handlers.
 BASELINE_FILE_SHA256 = {
-    "app/core/formatter.py": "fb519e9ddca121d45a8f5a054e46e0354aacfe5149086c3606c13dd47201154e",
     "app/core/pagination_buffer.py": "18165ce221b19f49aa190f0c57a399112f72ce4a6906c49062967b7978c474ea",
     "app/core/phrase_ranking.py": "0a99c8f4ebc10dd71556f1796a40c9192404475831a424964871954bab598c5a",
-    "app/core/soql_builder.py": "1b0a7d15f795c8201a1e31fa2239888fe2a2111ef8729dd627c718ccf530897d",
     "app/core/workflow/dual_dataset.py": "5ccaca040a78273ff873c37ca422645a0005b8bb241ac79bd018a88aed2dcba8",
     "app/core/workflow/handlers/direct_lookup.py": "5f833ed3ae84a34572a7123cb3cbc1853732c5124581867d420add97e61c0bb6",
     "app/core/workflow/handlers/normal_flow.py": "ccd0e9267de2b20e7cb91ce893706abc6b2822ccd4e2954d45ed5d040d8e732a",
@@ -30,15 +45,39 @@ BASELINE_FILE_SHA256 = {
 }
 
 BASELINE_ORACLE_SHA256 = {
-    "soql": "1df7633eeede2783ac4d0321fdb26f5c3bac948d6366840e149ef81912d31a60",
+    # Moved by M2 — SELECT projection only; WHERE/ORDER/LIMIT asserted unchanged.
+    "soql": "7f02ccbe3544cc7cc07e0acdecd5e967baa379a2f3cfb3f01e7e923787d6a94d",
     "ranked": "132fc4c6a549c9150ced9adf715e5b6afe8760bda4728e3dc54da86eeea36a76",
     "response": "55fcb0abf29f2abf7f59acdc8185fa7cf133041ed3465ed93887b6c5b4a0cf21",
-    "cards": "e6864547ebf7717e98ecf6f361586abbe5b0a5bd78b4f29da972342862f854e3",
+    # Moved by M2 — additive process-state fields only.
+    "cards": "61c8c20daa142efab8463e17fa7ec2423a7c5f1744f7ecf73883b8639d350b56",
     "empty": "c9cc48f43781f66cc7753f02e31ddc3a5f97d9d8959a68b84062bbbea367fde2",
-    "tabular": "6faf58c7f8241804978114e5628093d408479403fe205df4136ce692c013388a",
+    # Moved by M2 — carries `cards` inside.
+    "tabular": "2c274be3ca019a18374419981d5f99130c463fe389dd546b3434f53d6e86468e",
     "buffer": "24b3d80a010d8d46e145ed74206d43343566d670830110e19ea61530ff805f00",
     "page": "dd5a788979d1ec2ec6d550390326887ed71982d3d11c7219e7d8b1e54865ead8",
 }
+
+# Pre-M2 oracles. Restoring them by removing the new fields is the proof that
+# M2 added and did not rewrite.
+PRE_M2_ORACLE_SHA256 = {
+    "soql": "1df7633eeede2783ac4d0321fdb26f5c3bac948d6366840e149ef81912d31a60",
+    "cards": "e6864547ebf7717e98ecf6f361586abbe5b0a5bd78b4f29da972342862f854e3",
+    "tabular": "6faf58c7f8241804978114e5628093d408479403fe205df4136ce692c013388a",
+}
+
+# The only field M2 adds to the process SELECT, and the only keys it adds to a
+# process card. Any other addition must fail the tests below.
+M2_ADDED_SELECT_FIELD = "estado_resumen"
+M2_ADDED_CARD_KEYS = frozenset({
+    "estado_op", "estado_op_label", "estado_op_icono",
+    "estado_op_raw", "estado_op_mostrar_raw",
+})
+
+
+def _strip_m2_card_fields(cards: list[dict]) -> list[dict]:
+    return [{k: v for k, v in card.items() if k not in M2_ADDED_CARD_KEYS}
+            for card in cards]
 
 
 def _json_hash(value: object) -> str:
@@ -149,6 +188,14 @@ def test_public_product_files_are_byte_identical_to_pre_m1_main():
     assert actual == BASELINE_FILE_SHA256
 
 
+def test_m2_modified_files_match_their_pinned_state():
+    actual = {
+        path: hashlib.sha256(Path(path).read_bytes()).hexdigest()
+        for path in M2_MODIFIED_FILE_SHA256
+    }
+    assert actual == M2_MODIFIED_FILE_SHA256
+
+
 def test_public_keys_values_types_ordering_and_serialization_match_baseline():
     values = _oracle_values()
     actual = {
@@ -160,6 +207,46 @@ def test_public_keys_values_types_ordering_and_serialization_match_baseline():
         for name, value in values.items()
     }
     assert actual == BASELINE_ORACLE_SHA256
+
+
+def test_m2_soql_divergence_is_confined_to_the_select_projection():
+    """WHERE, ORDER BY y LIMIT deben ser byte-idénticos al oráculo pre-M2."""
+    soql = _oracle_values()["soql"]
+    select, where = soql.split(" WHERE ", 1)
+    fields = select[len("SELECT "):].split(", ")
+    assert M2_ADDED_SELECT_FIELD in fields
+    # Reconstruir el SELECT pre-M2 quitando SOLO el campo añadido devuelve el
+    # oráculo original: ni un campo más, ni un reordenamiento.
+    pre = "SELECT " + ", ".join(f for f in fields if f != M2_ADDED_SELECT_FIELD)
+    restored = f"{pre} WHERE {where}"
+    assert hashlib.sha256(restored.encode()).hexdigest() == PRE_M2_ORACLE_SHA256["soql"]
+
+
+def test_m2_card_divergence_is_purely_additive():
+    """Quitar los campos nuevos restaura las tarjetas pre-M2 byte a byte."""
+    values = _oracle_values()
+    cards = values["cards"]
+    added = set().union(*(set(c) & M2_ADDED_CARD_KEYS for c in cards))
+    assert added == M2_ADDED_CARD_KEYS
+    stripped = _strip_m2_card_fields(cards)
+    assert _json_hash(stripped) == PRE_M2_ORACLE_SHA256["cards"]
+    # `estado` conserva su significado crudo: el radar y la persistencia de
+    # membresías lo consumen y M2 no cambia dato persistido.
+    assert [c["estado"] for c in cards] == ["Publicado", "Publicado"]
+
+    tabular = dict(values["tabular"])
+    tabular["rows"] = _strip_m2_card_fields(tabular["rows"])
+    assert _json_hash(tabular) == PRE_M2_ORACLE_SHA256["tabular"]
+
+
+def test_m2_does_not_move_ranking_ordering_counts_or_pagination():
+    """Los oráculos de recuperación y paginación no pueden moverse en M2."""
+    values = _oracle_values()
+    for name in ("ranked", "response", "empty", "buffer", "page"):
+        value = values[name]
+        actual = (hashlib.sha256(value.encode()).hexdigest()
+                  if isinstance(value, str) else _json_hash(value))
+        assert actual == BASELINE_ORACLE_SHA256[name], f"{name} moved"
 
 
 def test_normal_application_import_does_not_activate_truth_layer():

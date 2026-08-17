@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import re
+from datetime import datetime, timezone
 from typing import Any
 
 from app.core.modality_dataset_projection import project_modality_filter
@@ -17,6 +18,57 @@ from app.utils.value_sanity import detect_value_anomaly
 
 def _resultado(n: int) -> str:
     return "resultado" if n == 1 else "resultados"
+
+
+# M2/PROCESS-OP-STATE-001 — traduccion del estado operativo a campos de tarjeta.
+# Aditivos: `estado` (crudo) no cambia de significado. Best-effort: si el Truth
+# Layer no pudiera concluir, la tarjeta cae al render previo en vez de romperse.
+def _operational_state(item: dict, instant: datetime | None) -> dict:
+    if instant is None:
+        return {}
+    try:
+        from app.core.process_operational_state import (
+            summarize_process_operational_state,
+        )
+        summary = summarize_process_operational_state(
+            item, reference_instant=instant
+        )
+    except Exception:  # nunca romper la respuesta por el resumen operativo
+        return {}
+    return {
+        "estado_op": summary.state,
+        "estado_op_label": summary.label,
+        "estado_op_icono": summary.icon,
+        "estado_op_raw": summary.raw_state,
+        "estado_op_mostrar_raw": summary.show_raw_state,
+    }
+
+
+def _estado_visible(row: dict) -> str:
+    """Texto de estado para la tarjeta: operativo si existe, crudo si no.
+
+    Contratos y filas sin resumen conservan exactamente el render anterior.
+    """
+    label = row.get("estado_op_label")
+    if not label:
+        return str(row.get("estado", "") or "")
+    icon = row.get("estado_op_icono") or ""
+    return f"{icon} {label}".strip()
+
+
+def _estado_raw_nota(row: dict) -> str:
+    """Segunda linea SOLO cuando el crudo contradice materialmente lo operativo.
+
+    Nunca acusa a la fuente: SECOP publica campos con semanticas distintas y
+    ``estado_de_apertura_del_proceso`` es corroboracion, no el estado del
+    proceso. Se reporta lo que dice, no que se equivoque.
+    """
+    if not row.get("estado_op_mostrar_raw"):
+        return ""
+    raw = str(row.get("estado_op_raw", "") or "").strip()
+    if not raw:
+        return ""
+    return f"SECOP reporta apertura: {raw}"
 
 # B2: patrones que indican que el "título" del proceso es en realidad un
 # nombre de razón social o persona, no la descripción del objeto.
@@ -207,8 +259,10 @@ class Formatter:
                            universe_insights: Any = None,
                            suggestions: list | None = None,
                            total_count_approximate: bool = False,
-                           order_guarantee: str = "exact_order") -> tuple[str, list[dict]]:
-        rows = self.to_rows(results, dataset_id, params=params)
+                           order_guarantee: str = "exact_order",
+                           reference_instant: datetime | None = None) -> tuple[str, list[dict]]:
+        rows = self.to_rows(results, dataset_id, params=params,
+                            reference_instant=reference_instant)
         if channel == "telegram":
             return self.format_telegram(rows, params=params, dataset_id=dataset_id, total_count=total_count, universe_insights=universe_insights, suggestions=suggestions, total_count_approximate=total_count_approximate, order_guarantee=order_guarantee), rows
         if channel == "streamlit":
@@ -230,19 +284,29 @@ class Formatter:
         for i, row in enumerate(rows, start=1):
             lines.append(f"{i}. {row['titulo'][:90]}")
             seg = f"🏛️ {row['entidad']}  💰 {row['valor']}"
-            if row.get("estado"):
-                seg += f"  ⚪ {row['estado']}"
+            estado = _estado_visible(row)
+            if estado:
+                # El icono ya viene en el estado operativo; el circulo neutro
+                # queda solo para contratos y filas sin resumen.
+                seg += f"  {estado}" if row.get("estado_op_label") else f"  ⚪ {estado}"
             fecha = (row.get("fecha") or "")[:10]
             if fecha:
                 seg += f"  📅 {fecha}"
             lines.append(seg)
+            nota = _estado_raw_nota(row)
+            if nota:
+                lines.append(nota)
             if row.get("contratista"):
                 lines.append(f"🤝 {row['contratista']}")
             lines.append(f"🔗 {row['url']}" if row.get("url") else "🔒 Sin enlace público")
         return lines
 
-    def format_grouped(self, groups: dict, channel: str, params: dict | None = None) -> tuple[str, dict]:
+    def format_grouped(self, groups: dict, channel: str, params: dict | None = None,
+                       reference_instant: datetime | None = None) -> tuple[str, dict]:
         """Devuelve (texto agrupado, displayed_count por grupo)."""
+        # Un unico instante para AMBOS grupos: procesos y contratos comparten el
+        # mismo turno, y dos lecturas de reloj romperian el determinismo.
+        instant = reference_instant or datetime.now(timezone.utc)
         if all(getattr(g, "status", "error") == "error" for g in groups.values()):
             return ("Ni procesos ni contratos respondieron a tiempo. "
                     "Intenta de nuevo en unos segundos.", {})
@@ -260,7 +324,7 @@ class Formatter:
                              "Los resultados del otro grupo siguen disponibles.")
                 displayed[name] = 0
                 continue
-            cards = self.to_rows(g.rows, ds_id, params)
+            cards = self.to_rows(g.rows, ds_id, params, reference_instant=instant)
             if not cards:
                 parts.append("No encontré coincidencias.")
                 displayed[name] = 0
@@ -302,7 +366,8 @@ class Formatter:
                 return str(val), label
         return "", "Pendiente de publicación"
 
-    def to_rows(self, results: list[dict], dataset_id: str, params: dict | None = None) -> list[dict]:
+    def to_rows(self, results: list[dict], dataset_id: str, params: dict | None = None,
+                *, reference_instant: datetime | None = None) -> list[dict]:
         # DOGFOOD-SOQL-006: boost activos primero antes de dedupe/cut.
         # B1: deduplicar ANTES de cortar al max_results. La funcion compartida
         # tambien la usa la ruta canonica de ranking previa a paginacion.
@@ -313,17 +378,30 @@ class Formatter:
             for k in list(r.keys()):
                 if isinstance(r[k], str):
                     r[k] = _fix_mojibake(r[k])
+        # M2/PROCESS-OP-STATE-001: el estado operativo se calcula SOLO sobre las
+        # filas que de verdad se muestran (ya deduplicadas y recortadas), nunca
+        # sobre el universo recuperado, y jamás antes del ranking. Una sola
+        # lectura de reloj por invocación de formateo — nunca una por fila.
+        instant = reference_instant
+        if instant is None and dataset_id == "p6dx-8zbt":
+            instant = datetime.now(timezone.utc)
         rows: list[dict] = []
         for item in deduped[: self.max_results]:
             url = self._safe_url(item)
             fecha_iso, fecha_label = self._best_date_for_row(item, dataset_id)
             if dataset_id == "p6dx-8zbt":
+                op = _operational_state(item, instant)
                 rows.append(
                     {
                         "titulo": _smart_title(item, dataset_id),  # B2
                         "entidad": item.get("entidad", ""),
                         "valor": format_cop(item.get("precio_base")),
+                        # `estado` sigue siendo el crudo de SECOP: lo consumen
+                        # el radar (follows) y la persistencia de membresías, y
+                        # M2 no cambia dato persistido. Lo visible se toma de
+                        # los campos aditivos `estado_op_*`.
                         "estado": item.get("estado_de_apertura_del_proceso", ""),
+                        **op,
                         "fecha": fecha_iso,
                         "fecha_label": fecha_label,
                         "url": url,
@@ -420,9 +498,13 @@ class Formatter:
             if fecha:
                 lines.append(f"📅 {fecha}")
             tail = f"💰 {row['valor']}"
-            if row.get("estado"):
-                tail += f" | {row['estado']}"
+            estado = _estado_visible(row)
+            if estado:
+                tail += f" | {estado}"
             lines.append(tail)
+            nota = _estado_raw_nota(row)
+            if nota:
+                lines.append(nota)
             if row.get("contratista"):
                 lines.append(f"🤝 {row['contratista']}")
             if row.get("value_quality") == "suspect":
@@ -469,7 +551,10 @@ class Formatter:
             fecha = (row.get("fecha") or "")[:10]
             if fecha:
                 lines.append(f"Fecha: {fecha}")
-            lines.append(f"Valor: {row['valor']} | Estado: {row.get('estado', 'N/D')}")
+            lines.append(f"Valor: {row['valor']} | Estado: {_estado_visible(row) or 'N/D'}")
+            nota = _estado_raw_nota(row)
+            if nota:
+                lines.append(nota)
             if row.get("contratista"):
                 lines.append(f"Contratista: {row['contratista']}")
             if row.get("value_quality") == "suspect":
