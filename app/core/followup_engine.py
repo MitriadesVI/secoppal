@@ -43,6 +43,7 @@ from app.core._followup_constants import (
     SCOPE_TOPIC_KEYS,
 )
 from app.data.smmlv import smmlv_cop
+from app.utils.money import SMMLV_UNIT_PATTERN
 
 
 # ── Constantes de follow-up ────────────────────────────────────────────────
@@ -219,7 +220,14 @@ class FollowupClassifier:
     )
 
     # ── Señales de año ─────────────────────────────────────────────────
-    _YEAR_PATTERN = re.compile(r"\b20\d{2}\b")
+    # Un entero con forma de año deja de ser año cuando está unido a una
+    # unidad monetaria ("2000 millones"). Debe coincidir con la distinción
+    # que ya hace QueryRouter al extraer fechas.
+    _YEAR_PATTERN = re.compile(
+        rf"\b20\d{{2}}\b"
+        rf"(?!\s*(?:millones?|millon|mil\s+millones|billones?|palos?|barras?|pesos|{SMMLV_UNIT_PATTERN}))",
+        re.IGNORECASE,
+    )
 
     # ── Señales de entidad/departamento ────────────────────────────────
     _SCOPE_SIGNALS = re.compile(
@@ -565,43 +573,74 @@ _ESTADO_KEYS = (
 
 def _merge_modifiers(prev_mods: dict, curr_mods: dict) -> dict:
     """Une modifiers ya validados; el cluster de estado se limpia en el gate."""
+    previous = dict(prev_mods)
     current = dict(curr_mods)
     metadata = current.get("money_metadata")
+    desde = None
+    hasta = None
+    year_authority = ""
+
     if (
         isinstance(metadata, dict)
         and metadata.get("unit") == "SMMLV"
         and metadata.get("reference_year_assumed") is True
     ):
-        desde = prev_mods.get("fecha_desde")
-        hasta = prev_mods.get("fecha_hasta")
-        if desde and hasta and str(desde)[:4] == str(hasta)[:4]:
-            inherited_year = int(str(desde)[:4])
-            annual_value = smmlv_cop(inherited_year)
-            if annual_value is not None:
-                rebased = dict(metadata)
-                for field, source_value in metadata.get("source_values", {}).items():
-                    if field in current:
-                        current[field] = int(Decimal(str(source_value)) * annual_value)
-                rebased.update({
-                    "reference_year": inherited_year,
-                    "reference_year_assumed": False,
-                    "year_authority": "inherited_query_date_scope",
-                    "annual_value_cop": annual_value,
-                })
-                current["money_metadata"] = rebased
-        elif desde or hasta:
-            blocked = dict(metadata)
-            blocked.update({
-                "status": "unsupported_multi_year_context",
-                "clarification_message": (
-                    "El contexto anterior abarca más de un año y los SMMLV cambian "
-                    "por vigencia. Indica un solo año para aplicar el umbral."
-                ),
+        desde = previous.get("fecha_desde")
+        hasta = previous.get("fecha_hasta")
+        year_authority = "inherited_query_date_scope"
+    elif "fecha_desde" in current or "fecha_hasta" in current:
+        inherited_metadata = previous.get("money_metadata")
+        if isinstance(inherited_metadata, dict) and inherited_metadata.get("unit") == "SMMLV":
+            metadata = inherited_metadata
+            desde = current.get("fecha_desde", previous.get("fecha_desde"))
+            hasta = current.get("fecha_hasta", previous.get("fecha_hasta"))
+            year_authority = "followup_query_date_scope"
+
+    if not isinstance(metadata, dict) or not year_authority:
+        return {**previous, **current}
+
+    source_values = metadata.get("source_values", {})
+    if desde and hasta and str(desde)[:4] == str(hasta)[:4]:
+        reference_year = int(str(desde)[:4])
+        annual_value = smmlv_cop(reference_year)
+        if annual_value is not None:
+            rebased = dict(metadata)
+            rebased.pop("status", None)
+            rebased.pop("clarification_message", None)
+            for field, source_value in source_values.items():
+                if field in current or field in previous:
+                    current[field] = int(Decimal(str(source_value)) * annual_value)
+            rebased.update({
+                "reference_year": reference_year,
+                "reference_year_assumed": False,
+                "year_authority": year_authority,
+                "annual_value_cop": annual_value,
             })
-            for field in metadata.get("source_values", {}):
-                current.pop(field, None)
-            current["money_metadata"] = blocked
-    return {**prev_mods, **current}
+            current["money_metadata"] = rebased
+            return {**previous, **current}
+
+        status = "unsupported_reference_year"
+        clarification = (
+            f"No tengo un valor oficial de SMMLV catalogado para {reference_year}. "
+            "Indica uno de los años soportados: 2024, 2025 o 2026."
+        )
+    else:
+        status = "unsupported_multi_year_context"
+        clarification = (
+            "El contexto abarca más de un año y los SMMLV cambian por vigencia. "
+            "Indica un solo año para aplicar el umbral."
+        )
+
+    blocked = dict(metadata)
+    blocked.update({
+        "status": status,
+        "clarification_message": clarification,
+    })
+    for field in source_values:
+        previous.pop(field, None)
+        current.pop(field, None)
+    current["money_metadata"] = blocked
+    return {**previous, **current}
 
 
 def _merge_pagination_more(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:

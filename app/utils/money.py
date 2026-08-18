@@ -5,7 +5,7 @@ import unicodedata
 from decimal import Decimal
 from typing import Any
 
-from app.core.money_resolution import resolve_amount
+from app.core.money_resolution import find_numeric_literal, resolve_amount
 from app.data.smmlv import smmlv_cop
 
 
@@ -97,7 +97,10 @@ def money_to_cop(raw_text: str) -> int | None:
     elif "barra" in text:
         multiplier = 1_000_000
     elif "mil" in text:
-        multiplier = 1_000
+        # En un cardinal verbal, ``resolve_amount`` ya incorpora la escala de
+        # ``mil`` ("dos mil" -> 2000). Solo los literales numéricos usan
+        # ``mil`` como unidad separada ("500 mil" -> 500 * 1000).
+        multiplier = 1_000 if find_numeric_literal(text) is not None else 1
 
     return int(amount * multiplier)
 

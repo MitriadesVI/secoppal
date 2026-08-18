@@ -166,6 +166,19 @@ def test_units_scale_the_resolved_amount(text: str, expected: int) -> None:
     assert money_to_cop(text) == expected
 
 
+@pytest.mark.parametrize(
+    ("text", "expected"),
+    [
+        ("mil", 1_000),
+        ("dos mil", 2_000),
+        ("mil quinientos", 1_500),
+        ("quinientos mil", 500_000),
+    ],
+)
+def test_verbal_mil_is_not_scaled_twice(text: str, expected: int) -> None:
+    assert money_to_cop(text) == expected
+
+
 def test_billion_invariant_survives_the_new_numeric_layer() -> None:
     assert money_to_cop("1 billón") == 1000 * money_to_cop("mil millones")
 

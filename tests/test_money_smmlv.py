@@ -154,6 +154,56 @@ def test_followup_over_multi_year_context_is_explicitly_blocked(monkeypatch) -> 
     assert plan.params["money_metadata"]["status"] == "unsupported_multi_year_context"
 
 
+@pytest.mark.parametrize(
+    "first_query",
+    [
+        "contratos de mantenimiento mayores a 1000 SMMLV en 2026",
+        "contratos de mantenimiento mayores a 1000 SMMLV",
+    ],
+)
+def test_inherited_smmlv_is_blocked_when_followup_changes_to_multi_year(
+    first_query: str, monkeypatch
+) -> None:
+    monkeypatch.setattr("app.core.query_router.current_colombian_year", lambda: 2026)
+    previous = frame_from_params(router.parse(first_query).params)
+    current = router.parse("ahora de 2024 a 2026").params
+
+    intent, params = detect_and_merge("ahora de 2024 a 2026", current, previous)
+    plan = compute_query_plan(
+        params, "ahora de 2024 a 2026", enabled_rules={"P16"}
+    )
+
+    assert intent == "change_year"
+    assert params.get("valor_min") is None
+    assert params["money_metadata"]["status"] == "unsupported_multi_year_context"
+    assert plan.should_execute is False
+    assert plan.reason == "smmlv_year_scope_unsupported"
+
+
+@pytest.mark.parametrize(
+    "first_query",
+    [
+        "contratos de mantenimiento mayores a 1000 SMMLV en 2026",
+        "contratos de mantenimiento mayores a 1000 SMMLV",
+    ],
+)
+def test_inherited_smmlv_is_rebased_when_followup_changes_to_single_year(
+    first_query: str, monkeypatch
+) -> None:
+    monkeypatch.setattr("app.core.query_router.current_colombian_year", lambda: 2026)
+    previous = frame_from_params(router.parse(first_query).params)
+    current = router.parse("solo 2025").params
+
+    intent, params = detect_and_merge("solo 2025", current, previous)
+
+    assert intent == "change_year"
+    assert params["valor_min"] == 1_423_500_000
+    metadata = params["money_metadata"]
+    assert metadata["reference_year"] == 2025
+    assert metadata["reference_year_assumed"] is False
+    assert metadata["year_authority"] == "followup_query_date_scope"
+
+
 def test_scalar_money_api_never_hides_smmlv_year() -> None:
     assert money_to_cop("mil salarios minimos") is None
     assert smmlv_to_cop("mil salarios minimos", 2026) == (1_750_905_000, 1000)

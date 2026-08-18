@@ -8,10 +8,12 @@ from app.config import Settings
 from app.core.orchestrator import SecopalWorkflow
 
 
-def _workflow() -> SecopalWorkflow:
+def _workflow(query_calls: list[tuple[str, str]] | None = None) -> SecopalWorkflow:
     workflow = SecopalWorkflow(Settings())
 
     def _query(dataset_id: str, soql_query: str) -> list[dict]:
+        if query_calls is not None:
+            query_calls.append((dataset_id, soql_query))
         if dataset_id == "jbjy-vk9h":
             return [{
                 "referencia_del_contrato": "C-MONEY-V2",
@@ -73,3 +75,74 @@ def test_smmlv_followup_reuses_previous_year_in_real_workflow() -> None:
     metadata = result["resolved_params"]["money_metadata"]
     assert metadata["reference_year"] == 2025
     assert metadata["year_authority"] == "inherited_query_date_scope"
+
+
+def test_p16_blocks_inherited_smmlv_after_multi_year_mutation_in_real_workflow() -> None:
+    query_calls: list[tuple[str, str]] = []
+    workflow = _workflow(query_calls)
+    chat_id = "money-v2-p16-mutation-canary"
+    workflow.run_query(
+        "contratos de mantenimiento mayores a 1000 SMMLV en 2026",
+        channel="streamlit",
+        chat_id=chat_id,
+    )
+    calls_after_first_turn = len(query_calls)
+
+    result = workflow.run_query(
+        "ahora de 2024 a 2026", channel="streamlit", chat_id=chat_id
+    )
+
+    assert calls_after_first_turn == 1
+    assert len(query_calls) == calls_after_first_turn
+    assert result["needs_clarification"] is True
+    assert result["query_plan"]["should_execute"] is False
+    assert result["query_plan"]["reason"] == "smmlv_year_scope_unsupported"
+    assert result["resolved_params"].get("valor_min") is None
+
+
+def test_inherited_smmlv_rebases_to_new_year_in_real_workflow(monkeypatch) -> None:
+    monkeypatch.setattr("app.core.query_router.current_colombian_year", lambda: 2026)
+    workflow = _workflow()
+    chat_id = "money-v2-smmlv-year-change-canary"
+    workflow.run_query(
+        "contratos de mantenimiento mayores a 1000 SMMLV",
+        channel="streamlit",
+        chat_id=chat_id,
+    )
+
+    result = workflow.run_query("solo 2025", channel="streamlit", chat_id=chat_id)
+
+    assert result["needs_clarification"] is False
+    assert "valor_del_contrato >= 1423500000" in result["soql_query"]
+    assert result["resolved_params"]["money_metadata"]["reference_year"] == 2025
+
+
+def test_2000_millones_followup_is_money_not_year_in_real_workflow() -> None:
+    workflow = _workflow()
+    chat_id = "money-v2-year-vs-money-canary"
+    workflow.run_query(
+        "contratos de mantenimiento mayores a 500 millones",
+        channel="streamlit",
+        chat_id=chat_id,
+    )
+
+    result = workflow.run_query(
+        "ahora mayores a 2000 millones", channel="streamlit", chat_id=chat_id
+    )
+
+    assert result["followup"] is True
+    assert result["followup_intent_type"] == "refine_filter"
+    assert result["resolved_params"]["valor_min"] == 2_000_000_000
+    assert "valor_del_contrato >= 2000000000" in result["soql_query"]
+
+
+def test_cardinal_people_count_does_not_become_money_in_real_workflow() -> None:
+    result = _workflow().run_query(
+        "procesos de alimentacion para mil quinientos estudiantes",
+        channel="streamlit",
+    )
+
+    assert result["resolved_params"].get("valor_min") is None
+    assert result["resolved_params"].get("valor_max") is None
+    assert "precio_base >=" not in result["soql_query"]
+    assert "precio_base <=" not in result["soql_query"]
