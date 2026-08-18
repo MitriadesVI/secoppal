@@ -11,7 +11,7 @@ from app.core.modality_filter import ModalityFilter
 from app.core.opportunity_retrieval_policy import (
     REFERENCE_INSTANT_PARAM,
     evaluate_current_opportunity_policy,
-    format_socrata_datetime,
+    format_socrata_calendar_date,
     parse_reference_instant,
 )
 
@@ -467,10 +467,10 @@ class SoQLBuilder:
             where_clauses.append("estado_de_apertura_del_proceso = 'Abierto'")
 
         if opportunity_policy.applies:
-            reference = format_socrata_datetime(
-                opportunity_policy.reference_instant  # type: ignore[arg-type]
+            current_colombia_date = format_socrata_calendar_date(
+                opportunity_policy.current_colombia_date  # type: ignore[arg-type]
             )
-            publication_since = format_socrata_datetime(
+            publication_since = format_socrata_calendar_date(
                 opportunity_policy.unknown_deadline_publication_since  # type: ignore[arg-type]
             )
             # Equivalent to the policy's OR, expressed as one Socrata case()
@@ -480,7 +480,7 @@ class SoQLBuilder:
             where_clauses.append(
                 "case(fecha_de_recepcion_de IS NULL, "
                 f"fecha_de_publicacion_del >= '{publication_since}', "
-                f"true, fecha_de_recepcion_de > '{reference}')"
+                f"true, fecha_de_recepcion_de >= '{current_colombia_date}')"
             )
 
         if params.get("fecha_desde"):

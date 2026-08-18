@@ -6,12 +6,14 @@ deterministic; production must capture it once upstream and reuse it.
 """
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import date, datetime, timezone
 from unittest.mock import MagicMock
 from unittest.mock import patch
 
 from burr.core import State
 
+from app.core.formatter import Formatter
+from app.core.pagination_buffer import PaginationBuffer
 from app.core.process_operational_state import summarize_process_operational_state
 from app.core.opportunity_retrieval_policy import (
     DEFAULT_STATES,
@@ -19,6 +21,7 @@ from app.core.opportunity_retrieval_policy import (
     evaluate_current_opportunity_policy,
 )
 from app.core.soql_builder import SoQLBuilder
+from app.core.suggester import generate_suggestions
 from app.core.workflow.actions.execution import degrade_query
 from app.core.workflow.actions.planning import plan_query
 
@@ -26,6 +29,8 @@ from app.core.workflow.actions.planning import plan_query
 PROCESOS_ID = SoQLBuilder.PROCESOS_DATASET
 REFERENCE_ISO = "2026-08-17T12:00:00Z"
 REFERENCE = datetime(2026, 8, 17, 12, 0, tzinfo=timezone.utc)
+NEXT_DAY_ISO = "2026-08-18T12:00:00+00:00"
+NEXT_DAY = datetime(2026, 8, 18, 12, 0, tzinfo=timezone.utc)
 BASELINE_DEFAULT_STATES = [
     "Publicado",
     "Borrador",
@@ -78,25 +83,25 @@ def test_red_2_current_default_excludes_approval_states_before_limit() -> None:
 def test_red_3_unknown_deadline_uses_recent_publication_fallback() -> None:
     soql = _soql()
     assert "fecha_de_recepcion_de IS NULL" in soql
-    assert "fecha_de_publicacion_del >= '2026-05-19T12:00:00.000'" in soql
+    assert "fecha_de_publicacion_del >= '2026-05-19T00:00:00.000'" in soql
 
 
 def test_red_4_future_deadline_is_not_subject_to_hard_90_day_gate() -> None:
     soql = _soql()
     expected = (
         "case(fecha_de_recepcion_de IS NULL, "
-        "fecha_de_publicacion_del >= '2026-05-19T12:00:00.000', "
-        "true, fecha_de_recepcion_de > '2026-08-17T12:00:00.000')"
+        "fecha_de_publicacion_del >= '2026-05-19T00:00:00.000', "
+        "true, fecha_de_recepcion_de >= '2026-08-17T00:00:00.000')"
     )
     assert expected in soql
     assert soql.count(
-        "fecha_de_publicacion_del >= '2026-05-19T12:00:00.000'"
+        "fecha_de_publicacion_del >= '2026-05-19T00:00:00.000'"
     ) == 1
 
 
 def test_red_5_known_expired_deadline_is_excluded() -> None:
     soql = _soql()
-    assert "fecha_de_recepcion_de > '2026-08-17T12:00:00.000'" in soql
+    assert "fecha_de_recepcion_de >= '2026-08-17T00:00:00.000'" in soql
     assert "fecha_de_recepcion_de <=" not in soql
 
 
@@ -163,6 +168,115 @@ def test_red_10_ordinary_process_search_is_byte_for_byte_unchanged() -> None:
     assert with_o1b_metadata == baseline
 
 
+def test_red_a_calendar_deadline_today_is_included_after_midnight_utc() -> None:
+    soql = _soql(**{REFERENCE_INSTANT_PARAM: "2026-08-18T12:00:00Z"})
+
+    assert "fecha_de_recepcion_de >= '2026-08-18T00:00:00.000'" in soql
+    assert "fecha_de_recepcion_de > '2026-08-18T12:00:00.000'" not in soql
+
+
+def test_red_b_colombia_date_changes_only_at_0500_utc() -> None:
+    before = _soql(**{
+        REFERENCE_INSTANT_PARAM: "2026-08-18T04:59:59Z",
+    })
+    after = _soql(**{
+        REFERENCE_INSTANT_PARAM: "2026-08-18T05:00:01Z",
+    })
+
+    assert "fecha_de_recepcion_de >= '2026-08-17T00:00:00.000'" in before
+    assert "fecha_de_publicacion_del >= '2026-05-19T00:00:00.000'" in before
+    assert "fecha_de_recepcion_de >= '2026-08-18T00:00:00.000'" in after
+    assert "fecha_de_publicacion_del >= '2026-05-20T00:00:00.000'" in after
+
+
+def test_red_c_semantic_followup_replaces_inherited_reference() -> None:
+    state = State({
+        "parsed_params": _current_params(),
+        "raw_query": "ahora en bogotá",
+        "prev_params": None,
+        "turn_index": 1,
+        "modality_interpretation": None,
+        "followup": True,
+        "followup_intent_type": "refine_filter",
+    })
+    with patch("app.core.workflow.actions.planning.datetime") as clock:
+        clock.now.return_value = NEXT_DAY
+        planned = plan_query(state)
+
+    clock.now.assert_called_once_with(timezone.utc)
+    assert planned["parsed_params"][REFERENCE_INSTANT_PARAM] == NEXT_DAY_ISO
+
+
+def test_calendar_policy_covers_required_today_future_past_and_null_cases() -> None:
+    decision = evaluate_current_opportunity_policy(
+        _current_params(), PROCESOS_ID,
+        reference_instant=datetime(2026, 8, 18, 12, 0, tzinfo=timezone.utc),
+    )
+
+    assert decision.current_colombia_date == date(2026, 8, 18)
+    assert decision.unknown_deadline_publication_since == date(2026, 5, 20)
+
+    def included(deadline: date | None, publication: date) -> bool:
+        if deadline is not None:
+            return deadline >= decision.current_colombia_date
+        return publication >= decision.unknown_deadline_publication_since
+
+    assert included(date(2026, 8, 18), date(2026, 2, 19)) is True
+    assert included(date(2026, 8, 19), date(2026, 2, 19)) is True
+    assert included(date(2026, 8, 17), date(2026, 8, 18)) is False
+    assert included(None, date(2026, 8, 18)) is True
+    assert included(None, date(2026, 5, 20)) is True
+    assert included(None, date(2026, 5, 19)) is False
+
+
+def test_pagination_keeps_original_calendar_reference_on_the_next_day() -> None:
+    params = _current_params()
+    rows = [{"id_del_proceso": "one"}, {"id_del_proceso": "two"}]
+    buffer = PaginationBuffer.create(
+        query_fingerprint="o1b-calendar",
+        group="procesos",
+        dataset_id=PROCESOS_ID,
+        query_params=params,
+        candidate_buffer=rows,
+        validated_ranked_buffer=rows,
+        display_cursor=0,
+        source_cursor=2,
+        source_candidate_total=2,
+        now=REFERENCE,
+        ttl_seconds=3 * 24 * 60 * 60,
+    )
+
+    _, after_page_one = buffer.take(1)
+    assert after_page_one.is_expired(now=NEXT_DAY) is False
+    page_two_soql = SoQLBuilder().build(
+        after_page_one.dataset_id, after_page_one.query_params,
+    )
+
+    assert after_page_one.query_params[REFERENCE_INSTANT_PARAM] == REFERENCE_ISO
+    assert "fecha_de_recepcion_de >= '2026-08-17T00:00:00.000'" in page_two_soql
+    assert "2026-08-18T00:00:00.000" not in page_two_soql
+
+
+def test_suggestion_internal_reference_is_never_rendered() -> None:
+    suggestions = generate_suggestions(
+        params=_current_params(),
+        universe_insights=None,
+        total_count=3,
+        rows=[],
+        dataset_id=PROCESOS_ID,
+        intent_type="opportunity_search",
+    )
+
+    assert suggestions
+    assert all(
+        REFERENCE_INSTANT_PARAM in suggestion.modified_params
+        for suggestion in suggestions
+    )
+    visible = Formatter._format_suggestions(suggestions)
+    assert REFERENCE_INSTANT_PARAM not in visible
+    assert REFERENCE_ISO not in visible
+
+
 def test_policy_decision_is_pure_and_exposes_the_90_day_boundary() -> None:
     params = _current_params()
     snapshot = {**params, "estado_del_procedimiento": list(params["estado_del_procedimiento"])}
@@ -173,9 +287,8 @@ def test_policy_decision_is_pure_and_exposes_the_90_day_boundary() -> None:
     assert decision.applies is True
     assert decision.allowed_states == DEFAULT_STATES
     assert decision.reference_instant == REFERENCE
-    assert decision.unknown_deadline_publication_since == datetime(
-        2026, 5, 19, 12, 0, tzinfo=timezone.utc,
-    )
+    assert decision.current_colombia_date == date(2026, 8, 17)
+    assert decision.unknown_deadline_publication_since == date(2026, 5, 19)
     assert params == snapshot
 
 

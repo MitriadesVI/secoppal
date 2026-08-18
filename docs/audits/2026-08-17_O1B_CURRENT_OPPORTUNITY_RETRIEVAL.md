@@ -89,17 +89,19 @@ estado explícita siempre conserva la semántica baseline.
 La regla temporal conceptual es:
 
 ```text
-fecha_de_recepcion_de > reference_instant
+current_colombia_date = reference_instant UTC → America/Bogota → date
+
+fecha_de_recepcion_de >= current_colombia_date 00:00:00
 OR (
   fecha_de_recepcion_de IS NULL
-  AND fecha_de_publicacion_del >= reference_instant - 90 días
+  AND fecha_de_publicacion_del >= (current_colombia_date - 90 días) 00:00:00
 )
 ```
 
 Interpretación:
 
-- deadline futuro conocido: candidato, incluso si fue publicado hace más de 90
-  días;
+- deadline de hoy o futuro conocido: candidato, incluso si fue publicado hace
+  más de 90 días;
 - deadline pasado conocido: fuera del default actual;
 - deadline nulo: no significa cerrado; se conserva si la publicación es
   reciente;
@@ -124,9 +126,12 @@ deadline.
 en evaluación” no se convierte en `Publicado / Abierto`.
 
 Planning captura una única fecha UTC consciente de zona horaria, con precisión
-de segundo, y la transporta como metadata JSON-safe del plan. Query, count,
-fallback técnico y paginación reutilizan ese valor. La política es pura,
-determinista, sin I/O, backend, LLM, warehouse ni reloj propio.
+de segundo, y la transporta como metadata JSON-safe del plan. La política deriva
+de ella una sola fecha civil `America/Bogota`; nunca depende del host ni del
+usuario. Query, count y fallback técnico reutilizan el valor. La paginación
+conserva la referencia original de la consulta, mientras un follow-up semántico
+descarta la metadata heredada y captura una referencia nueva. La política es
+pura, determinista, sin I/O, backend, LLM, warehouse ni reloj propio.
 
 ## Fan-out y timeout
 
@@ -177,7 +182,6 @@ y Evaluación, entidad, modalidad, direct lookup e históricos.
 
 Corpus definitivo: 25 temas (`alimentación`, PAE, mantenimiento, obra,
 tecnología, salud, vivienda, aseo, infraestructura, servicios, dotación,
-transporte, seguridad, vigilancia, consultoría, software, equipos,
 construcción, cafetería, residuos, limpieza, medicamentos, computadores,
 interventoría y capacitación), 50 filas máximas por tema, mismo instante de
 referencia.
@@ -228,6 +232,101 @@ Cada mutación obligatoria fue introducida temporalmente, detectada y restaurada
 | MUT_C — tratar NULL como cerrado | RED_3 |
 | MUT_D — aplicar O1B a tiempo histórico explícito | RED_6 |
 | MUT_E — afirmar recepción con deadline NULL | RED_8 |
+
+## O1B.1 — frontera calendar_date y reloj de follow-up
+
+La revisión independiente detectó que `fecha_de_recepcion_de` y
+`fecha_de_publicacion_del` son columnas Socrata `calendar_date`, materializadas
+a `00:00:00`. Compararlas contra la hora UTC exacta excluía un deadline reportado
+para el día de hoy tan pronto pasaba medianoche UTC, aun cuando en Colombia el
+día seguía vigente o acababa de empezar.
+
+O1B.1 conserva la política sustantiva y corrige solo la frontera:
+
+```text
+CALENDAR_TIMEZONE = America/Bogota
+DEADLINE_COMPARISON = fecha_de_recepcion_de >= Colombia hoy 00:00:00
+FRESHNESS_COMPARISON = fecha_de_publicacion_del >= Colombia hoy - 90 días 00:00:00
+```
+
+Esto no afirma que el proceso permanezca abierto hasta las 23:59. Solo evita
+descartarlo cuando SECOP reporta como fecha límite el día de hoy y no ofrece
+precisión horaria suficiente.
+
+### Bordes deterministas
+
+Con fecha Colombia `2026-08-18`:
+
+| Caso | Resultado |
+|---|---|
+| deadline `2026-08-18` | include |
+| deadline `2026-08-19` | include |
+| deadline `2026-08-17` | exclude |
+| NULL + publicación `2026-08-18` | include |
+| NULL + publicación `2026-05-20` | include (`>=`, día 90) |
+| NULL + publicación `2026-05-19` | exclude |
+
+`2026-08-18T04:59:59Z` deriva `2026-08-17` en Colombia;
+`2026-08-18T05:00:01Z` deriva `2026-08-18`. El test no depende del timezone del
+host.
+
+### Follow-up y paginación
+
+La clave interna `_opportunity_reference_instant` se elimina de los params
+heredados justo antes de planificar un follow-up semántico; si O1B sigue siendo
+aplicable, planning captura un instante nuevo exactamente una vez.
+
+La paginación no crea un nuevo plan: reconstruye la misma consulta desde
+`PaginationBuffer.query_params`. Por eso una página 2 consultada en D+1 conserva
+la referencia D y no mueve silenciosamente el universo entre páginas.
+
+`Suggestion.modified_params` todavía puede transportar la clave interna. Quitarla
+exigiría cambiar el handler de selección de sugerencias, fuera del scope
+productivo autorizado de O1B.1; la revisión indicó que no era blocker. El
+formatter solo presenta labels y un test comprueba que ni el nombre de la clave
+ni su valor aparecen en la respuesta pública.
+
+### RED, mutaciones y smoke live
+
+Antes de producción fallaron los tres defectos:
+
+- `RED_CALENDAR_TODAY`: el deadline de hoy se comparaba contra la hora UTC;
+- `RED_TIMEZONE_BOUNDARY`: el corte cambiaba con el día UTC, no a las 05:00 UTC;
+- `RED_FOLLOWUP_REFERENCE`: planning no consultaba el reloj al recibir una
+  referencia heredada.
+
+Las mutaciones obligatorias fueron detectadas y restauradas:
+
+- volver a `deadline > full UTC instant` hizo fallar el boundary test;
+- volver a heredar la referencia hizo fallar el test de follow-up.
+
+Smoke Socrata del 2026-08-17 Colombia, sobre `p6dx-8zbt`:
+
+| Categoría | Evidencia |
+|---|---|
+| deadline hoy | 3 filas naturales; `CO1.REQ.10796476`, `10832914`, `10855362` |
+| deadline mañana | 3 filas naturales; `CO1.REQ.10782890`, `10847913`, `10752822` |
+| deadline ayer | 0 en el segmento default; 3 filas conocidas fuera del segmento usadas como control de exclusión |
+| NULL + reciente | 3 filas; las tres publicadas exactamente en la frontera `2026-05-19` |
+
+No se añadió ninguna consulta productiva, retry o fan-out; el smoke fue una
+verificación de auditoría fuera del runtime.
+
+### Regresión O1B.1
+
+```text
+Opportunity O1B/O1B.1       22 passed
+Regresión focal ampliada    288 passed
+Query corpus                89/89 PASS
+Dialogue corpus             60/61 PASS
+                            GOB-DEPTO-001, único fallo basal
+Suite baseline O1B          7460 passed, 2 skipped, 24 xfailed
+Suite post-O1B.1            7466 passed, 2 skipped, 24 xfailed
+
+NEW_FAILURES = 0
+NEW_SKIPS    = 0
+NEW_XFAILS   = 0
+```
 
 ## Límites y deuda explícita
 

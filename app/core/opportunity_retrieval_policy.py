@@ -8,14 +8,17 @@ SoQL seam; it never filters rows after LIMIT.
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 from typing import Any
+from zoneinfo import ZoneInfo
 
 
 PROCESS_DATASET_ID = "p6dx-8zbt"
 REFERENCE_INSTANT_PARAM = "_opportunity_reference_instant"
 DEFAULT_STATES = ("Publicado", "Abierto")
 DEFAULT_DISCOVERY_WINDOW_WHEN_DEADLINE_UNKNOWN_DAYS = 90
+CALENDAR_TIMEZONE_NAME = "America/Bogota"
+_CALENDAR_TIMEZONE = ZoneInfo(CALENDAR_TIMEZONE_NAME)
 
 # These are the only procedure-state bundles derived automatically by the
 # current parser for opportunity_search.  Any other bundle is treated as an
@@ -32,7 +35,8 @@ class OpportunityRetrievalDecision:
     reason: str
     allowed_states: tuple[str, ...] = ()
     reference_instant: datetime | None = None
-    unknown_deadline_publication_since: datetime | None = None
+    current_colombia_date: date | None = None
+    unknown_deadline_publication_since: date | None = None
 
 
 def _truthy(value: object) -> bool:
@@ -123,19 +127,20 @@ def evaluate_current_opportunity_policy(
         raise ValueError("reference_instant must be timezone-aware")
 
     instant = reference_instant.astimezone(timezone.utc)
+    current_colombia_date = instant.astimezone(_CALENDAR_TIMEZONE).date()
     return OpportunityRetrievalDecision(
         applies=True,
         reason="current_opportunity_default",
         allowed_states=DEFAULT_STATES,
         reference_instant=instant,
+        current_colombia_date=current_colombia_date,
         unknown_deadline_publication_since=(
-            instant
+            current_colombia_date
             - timedelta(days=DEFAULT_DISCOVERY_WINDOW_WHEN_DEADLINE_UNKNOWN_DAYS)
         ),
     )
 
 
-def format_socrata_datetime(value: datetime) -> str:
-    """Stable calendar-date literal matching the repository's Socrata style."""
-    utc_naive = value.astimezone(timezone.utc).replace(tzinfo=None)
-    return utc_naive.isoformat(timespec="milliseconds")
+def format_socrata_calendar_date(value: date) -> str:
+    """Format a Colombia civil-date boundary for Socrata calendar_date."""
+    return f"{value.isoformat()}T00:00:00.000"

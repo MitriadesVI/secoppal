@@ -58,7 +58,7 @@ def _candidate_limit(params: dict) -> int:
 @action(
     reads=[
         "parsed_params", "raw_query", "prev_params", "turn_index",
-        "modality_interpretation",
+        "modality_interpretation", "followup", "followup_intent_type",
     ],
     writes=["query_plan", "parsed_params", "should_execute_decision"],
 )
@@ -87,9 +87,19 @@ def plan_query(state: State) -> State:
         plan = compute_query_plan(
             params, raw, context, enabled_rules=ENABLED_RULES_SPRINT_2A
         )
-    # O1B: capture exactly one civil instant before retrieval and transport it
-    # as JSON-safe internal metadata. Query, count, timeout fallback and later
-    # pagination builds all reuse this same value. The pure policy owns no clock.
+    # O1B.1: a semantic follow-up is a new query and cannot inherit yesterday's
+    # clock through context_params. Pure pagination bypasses this plan and keeps
+    # the original reference in PaginationBuffer.query_params; the explicit
+    # intent guard also preserves it if that path is ever planned directly.
+    is_semantic_followup = (
+        state.get("followup")
+        and state.get("followup_intent_type") != "pagination_more"
+    )
+    if is_semantic_followup:
+        plan.params.pop(REFERENCE_INSTANT_PARAM, None)
+
+    # Capture exactly one instant before a new retrieval and transport it as
+    # JSON-safe internal metadata. The pure policy owns no clock.
     if (
         plan.should_execute
         and is_current_opportunity_default(plan.params, PROCESS_DATASET_ID)
