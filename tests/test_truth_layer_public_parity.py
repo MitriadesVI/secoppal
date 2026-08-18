@@ -28,7 +28,10 @@ from app.core.workflow.results import empty_result, tabular_result
 # trust: it is bounded by the structural tests at the end of this module.
 M2_MODIFIED_FILE_SHA256 = {
     "app/core/formatter.py": "0e51c8f76c4f9d9139d10c6e6b98a623eec8364e1e3656161c67758a91782be7",
-    "app/core/response_policy.py": "863595d7f47e7955b693afec9cb75def93b323ce3373abdf7c65998f1b8d5059",
+    # Money V2 / M7 adds a section gated strictly by valor_min/valor_max. The
+    # no-money oracle below remains byte-identical and bounds that condition;
+    # tests/test_money_presentation.py pins the authorized monetary divergence.
+    "app/core/response_policy.py": "8e97a215ef426ec96ad76fdf03b996305281c80eb9dd23022d4b70717fc15112",
     # O1B/O1B.1 add a predicate gated by opportunity metadata; the
     # ordinary-query oracle below remains byte-identical and bounds that
     # authorization, including the calendar-date boundary correction.

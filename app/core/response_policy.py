@@ -13,6 +13,7 @@ señales del observer.
 from __future__ import annotations
 
 import re
+from decimal import Decimal, InvalidOperation
 from typing import TYPE_CHECKING
 
 from app.core.formatter import _estado_raw_nota, _estado_visible
@@ -230,10 +231,9 @@ def _summarize_active_filters(resolved: dict) -> list[str]:
             filters.append(f"desde: {desde}")
         elif hasta:
             filters.append(f"hasta: {hasta}")
-    if resolved.get("valor_min") is not None:
-        filters.append(f"valor minimo: {format_cop(resolved['valor_min'])}")
-    if resolved.get("valor_max") is not None:
-        filters.append(f"valor maximo: {format_cop(resolved['valor_max'])}")
+    economic_filter = _build_money_filter_interpretation(resolved)
+    if economic_filter:
+        filters.append(f"filtro económico: {economic_filter.replace(chr(10), '; ')}")
     if resolved.get("estado"):
         filters.append(f"estado: {resolved['estado']}")
     return filters
@@ -277,6 +277,10 @@ def _build_clear_response(
     # 1. Interpretación
     interpretation = _build_interpretation(resolved)
     sections.append(f"📋 {interpretation}")
+
+    economic_filter = _build_money_filter_interpretation(resolved)
+    if economic_filter:
+        sections.append(f"💰 Filtro económico:\n{economic_filter}")
 
     # 2. Universo
     shown = len(rows)
@@ -359,11 +363,60 @@ def _build_interpretation(resolved: dict) -> str:
     if desde:
         parts.append(f"desde {desde[:4]}")
 
-    valor_min = resolved.get("valor_min")
-    if valor_min is not None:
-        parts.append(f"mayores a {format_cop(valor_min)}")
-
     return " ".join(parts)
+
+
+def _format_smmlv_quantity(value: object) -> str:
+    try:
+        quantity = Decimal(str(value))
+    except (InvalidOperation, ValueError):
+        return str(value)
+    if quantity == quantity.to_integral_value():
+        return f"{int(quantity):,}".replace(",", ".")
+    return format(quantity.normalize(), "f").replace(".", ",")
+
+
+def _build_money_filter_interpretation(resolved: dict) -> str | None:
+    """Explica el concepto SECOP filtrado y la unidad de origen, si existe."""
+    valor_min = resolved.get("valor_min")
+    valor_max = resolved.get("valor_max")
+    if valor_min is None and valor_max is None:
+        return None
+
+    concept = (
+        "valor del contrato"
+        if resolved.get("dataset") == "contratos"
+        else "precio base del proceso"
+    )
+    metadata = resolved.get("money_metadata")
+    if isinstance(metadata, dict) and metadata.get("unit") == "SMMLV":
+        source_values = metadata.get("source_values", {})
+        year = metadata.get("reference_year")
+        assumed = " · año civil actual asumido" if metadata.get("reference_year_assumed") else ""
+        source_min = source_values.get("valor_min")
+        source_max = source_values.get("valor_max")
+        if source_min is not None and source_max is not None:
+            return (
+                f"{concept} entre {_format_smmlv_quantity(source_min)} y "
+                f"{_format_smmlv_quantity(source_max)} SMMLV ({year}{assumed})\n"
+                f"≈ {format_cop(valor_min)} a {format_cop(valor_max)}"
+            )
+        if source_min is not None:
+            return (
+                f"{concept} ≥ {_format_smmlv_quantity(source_min)} SMMLV "
+                f"({year}{assumed})\n≈ {format_cop(valor_min)}"
+            )
+        if source_max is not None:
+            return (
+                f"{concept} ≤ {_format_smmlv_quantity(source_max)} SMMLV "
+                f"({year}{assumed})\n≈ {format_cop(valor_max)}"
+            )
+
+    if valor_min is not None and valor_max is not None:
+        return f"{concept} entre {format_cop(valor_min)} y {format_cop(valor_max)}"
+    if valor_min is not None:
+        return f"{concept} ≥ {format_cop(valor_min)}"
+    return f"{concept} ≤ {format_cop(valor_max)}"
 
 
 def _build_ordering_label(params: dict) -> str:
