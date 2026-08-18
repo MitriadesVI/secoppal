@@ -3,6 +3,7 @@
 - Fecha: 2026-08-18
 - Rama: `feature/money-v2`
 - Base del arco: `245147cee2485e3eaf0af37bb773cc6a73e36a8f`
+- Base del patch final: `1fef02761acbc9406bdb12d342dda9b2729a5f35`
 
 ## Veredicto
 
@@ -13,6 +14,12 @@ la autoridad de polaridad, la herencia conversacional general, la proyección
 `DatasetSpec.value` ni el contrato público `valor_min` / `valor_max` en COP.
 La limitación deliberada principal es SMMLV multianual: se bloquea y se pide un
 solo año en vez de aplicar silenciosamente la tarifa de una vigencia a otra.
+
+El re-audit posterior detectó dos variantes de follow-up que no estaban
+cubiertas por el cierre inicial, además de dos falsos positivos monetarios. El
+patch final los corrige sin ampliar la gramática ni modificar la arquitectura:
+revalida SMMLV heredado cuando cambia el año, distingue cardinales verbales con
+`mil` ya escalado y excluye montos `20xx millones` del detector de año.
 
 ## Problema resuelto
 
@@ -61,6 +68,12 @@ M4 añade unidades, 10–29, decenas con `y`, centenas y una composición con
 cincuenta millones`, `mil doscientos millones`, `dos mil quinientos millones`,
 `veinte mil millones` y `dos billones`.
 
+`mil` tiene una sola autoridad de escala: la gramática cardinal ya devuelve
+1.000 para `mil`, 2.000 para `dos mil` y 1.500 para `mil quinientos`; el factor
+de unidad adicional se reserva para literales como `500 mil`. Así se conserva
+`mil millones = 10^9` sin convertir una cantidad de personas en millones de
+pesos.
+
 No es un motor universal de español. Fracciones verbales como `un millón y
 medio`, ordinales y escalas encadenadas fuera del subconjunto se rechazan en
 vez de interpretarse parcialmente.
@@ -107,6 +120,10 @@ Autoridad del año:
 - Sin año: año civil actual de `America/Bogota`; metadata declara la suposición.
 - Follow-up sin año sobre contexto de una vigencia: hereda esa vigencia y
   recalcula el COP antes de ejecutar.
+- Follow-up que cambia el año de un umbral SMMLV heredado: recalcula desde la
+  cantidad SMMLV fuente; no conserva el COP de la vigencia anterior.
+- Follow-up que cambia a un rango multianual: elimina el umbral COP heredado y
+  P16 bloquea antes de cualquier llamada SECOP.
 - Contexto o consulta multianual: `QueryPlan` bloquea y solicita un solo año.
 - Año no catalogado: bloqueo transparente; nunca extrapolación.
 
@@ -189,13 +206,16 @@ tema o scope.
 |---|---|
 | Focal M7 / paridad pública | 324 passed |
 | M8 Radar + Money | 268 passed |
-| Canary workflow local | 6 passed |
+| Patch focal nuevo | 12 passed |
+| Money + value + follow-up | 335 passed |
+| Canary workflow local | 10 passed |
 | Matriz adversarial | 15/15 |
 | Query corpus | 89/89 |
 | Dialogue corpus | 60/61; solo `GOB-DEPTO-001` basal |
 | Torture matrix | 38/38 |
 | `make lint-core` | PASS |
-| Suite global | 7645 passed, 2 skipped, 24 xfailed |
+| `make lint` global | BASELINE FAIL; 257 hallazgos preexistentes, 0 corregidos por alcance |
+| Suite global | 7657 passed, 2 skipped, 24 xfailed |
 
 El canario usa `SecopalWorkflow` con cliente SECOP determinista y cubre COP
 numérico, separadores colombianos, verbal, NIT, SMMLV y follow-up SMMLV con año
@@ -211,7 +231,42 @@ heredado. No depende de disponibilidad Socrata.
 | M6 | `1432140` | SMMLV con semántica anual |
 | M7 | `7aacb5f` | transparencia de filtro económico |
 | M8 | NOOP | decisión `KEEP_SEPARATE` |
-| M9 | este commit | seam de metadata descubierto por canario, pruebas y closeout |
+| M9 | `1fef027` | seam de metadata descubierto por canario, pruebas y closeout |
+| Final patch | `c44b28f` | SMMLV heredado, cardinal `mil`, año vs dinero y P16 real |
+| ADR / closeout final | este commit | decisión ADR-059 y evidencia reconciliada |
+
+## Patch final posterior al re-audit
+
+| Hallazgo | Caso | Resultado final |
+|---|---|---|
+| MV2-01A | 1000 SMMLV 2026 → rango 2024–2026 | BLOCKED por P16; sin umbral COP ni llamada SECOP |
+| MV2-01B | 1000 SMMLV asumido 2026 → solo 2025 | REBASED a 1.423.500.000 COP |
+| MV2-02 | mutación real hasta P16 | PASS; segundo turno hace cero llamadas SECOP |
+| MV2-05 | `mil`, `dos mil`, `mil quinientos` | 1.000, 2.000, 1.500; sin doble escala |
+| MV2-10 | `ahora mayores a 2000 millones` | `refine_filter`; 2.000.000.000 COP |
+| MV2-04 | closeout y ADR | ADR-059 versionado; closeout actualizado |
+
+Matriz SMMLV adicional:
+
+| Umbral heredado | Nuevo alcance | Decisión |
+|---|---|---|
+| explícito 2026 | 2025 | recalcula con tarifa 2025 |
+| año asumido 2026 | 2025 | recalcula con tarifa 2025 |
+| explícito 2026 | 2024–2026 | bloquea |
+| año asumido 2026 | 2024–2026 | bloquea |
+
+Matriz cardinal no monetaria:
+
+| Texto | API escalar | Filtro económico en workflow |
+|---|---:|---|
+| `mil` | 1.000 | no |
+| `dos mil` | 2.000 | no |
+| `mil quinientos` | 1.500 | no |
+| `procesos ... para mil quinientos estudiantes` | 1.500 | no |
+
+Los hallazgos `MV2-06`, `MV2-07`, `MV2-08`, `MV2-09`, `MV2-11`, `MV2-12` y
+`MV2-13` permanecen documentados como diferidos. No se convirtieron en limpieza
+general del parser dentro de este patch.
 
 ## Limitaciones intencionales y deuda real
 
