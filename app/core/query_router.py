@@ -94,6 +94,42 @@ _NIT_SHAPE_RE = re.compile(
     re.IGNORECASE | re.VERBOSE,
 )
 
+_MONEY_UNIT_AFTER_NUMBER_RE = re.compile(
+    r"^\s*(?:cop\b|pesos?\b|millones?\b|millon\b|mil\s+millones\b|"
+    r"billones?\b|palos?\b|barras?\b)",
+    re.IGNORECASE,
+)
+_MONEY_COMPARATOR_BEFORE_NUMBER_RE = re.compile(
+    r"(?:\$\s*|\bcop\s+|\b(?:mas|menos)\s+de\s+|"
+    r"\b(?:mayor(?:es)?|menor(?:es)?|superior(?:es)?|inferior(?:es)?)\s+(?:a|de|que)\s+|"
+    r"\b(?:desde|hasta|por)\s+)\s*$",
+    re.IGNORECASE,
+)
+_IDENTIFIER_BEFORE_NUMBER_RE = re.compile(
+    r"\b(?:nit|contratista|proveedor|documento)\s*(?:n(?:umero|ro)?\.?\s*)?$",
+    re.IGNORECASE,
+)
+
+
+def _number_role(text: str, match: re.Match[str]) -> str:
+    """Clasifica una cifra con forma de NIT usando evidencia semántica local.
+
+    Una forma de 8-11 dígitos es identificador por defecto, preservando las
+    búsquedas históricas por NIT desnudo. Evidencia monetaria explícita (moneda,
+    unidad o comparador) desplaza ese default; una etiqueta de identificador
+    explícita tiene precedencia. Así, la forma por sí sola no se convierte en
+    una segunda autoridad monetaria.
+    """
+    left = text[max(0, match.start() - 48):match.start()]
+    right = text[match.end():match.end() + 32]
+    if _IDENTIFIER_BEFORE_NUMBER_RE.search(left):
+        return "identifier"
+    if _MONEY_UNIT_AFTER_NUMBER_RE.search(right):
+        return "money"
+    if _MONEY_COMPARATOR_BEFORE_NUMBER_RE.search(left):
+        return "money"
+    return "identifier"
+
 STOPWORDS = {
     # Conversational verbs
     "muestrame", "muestreme", "muestra", "mostrar", "mostra",
@@ -454,9 +490,16 @@ class QueryRouter:
         nit_variants = self._extract_nit(normalized)
         if nit_variants:
             params["contratista"] = nit_variants
-            # Scrub: remover el NIT del texto para que no contamine el objeto
-            # Eliminar cualquier secuencia que luzca como NIT (con puntos, guiones, espacios)
-            scrubbed = _NIT_SHAPE_RE.sub(" ", scrubbed)
+            # Scrub solo las formas aceptadas como identificador. Una consulta
+            # puede contener simultáneamente NIT y monto; el monto debe seguir
+            # disponible para el paso 9.
+            scrubbed = _NIT_SHAPE_RE.sub(
+                lambda candidate: (
+                    " " if _number_role(scrubbed, candidate) == "identifier"
+                    else candidate.group(0)
+                ),
+                scrubbed,
+            )
             # También remover la palabra "nit" si quedó suelta
             scrubbed = re.sub(r"\bnit\b", " ", scrubbed, flags=re.IGNORECASE)
 
@@ -741,7 +784,10 @@ class QueryRouter:
                 primary_state = False
 
         # ── 9. Amounts ──────────────────────────────────────────────────
-        amount_params, amount_spans = self._extract_amounts(normalized, date_params)
+        # Amounts run over the progressively scrubbed text. Identifier-shaped
+        # spans accepted by step 1.5 are therefore unavailable to the monetary
+        # scanner, while currency-shaped spans rejected as NIT remain visible.
+        amount_params, amount_spans = self._extract_amounts(scrubbed, date_params)
         params.update(amount_params)
         # Scrub consumed amount spans so residual tokens ("adelante", "menos")
         # don't leak into objeto.
@@ -936,6 +982,7 @@ class QueryRouter:
         """
         params: dict[str, int] = {}
         consumed_spans: list[str] = []
+        digit_amount = r"(?:\$\s*|cop\s+)?\d+(?:[.,]\d+)*"
         year_tokens: set[str] = set()
         for val in date_params.values():
             year_tokens.add(val[:4])
@@ -971,7 +1018,7 @@ class QueryRouter:
             return m.group(0) if m else None
 
         _range_re = re.compile(
-            r"(?:entre|de|desde)\s+((?:\d+(?:[.,]\d+)?|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|barras?|mil)?(?:\s+de\s+pesos)?)(?:\s*[-–—]\s*|\s+y\s+|\s+a\s+|\s+hasta\s+)((?:\d+(?:[.,]\d+)?|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|barras?|mil)?(?:\s+de\s+pesos)?)",
+            rf"(?:entre|de|desde)\s+((?:{digit_amount}|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|barras?|mil)?(?:\s+de\s+pesos)?)(?:\s*[-–—]\s*|\s+y\s+|\s+a\s+|\s+hasta\s+)((?:{digit_amount}|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|barras?|mil)?(?:\s+de\s+pesos)?)",
             re.IGNORECASE,
         )
         range_match = _range_re.search(normalized_query)
@@ -1014,7 +1061,7 @@ class QueryRouter:
         # Only fires when the prefixed _range_re above did NOT match.
         if not range_match:
             _range_hyphen_re = re.compile(
-                r"(\d+(?:[.,]\d+)?)\s*[-–—]\s*(\d+(?:[.,]\d+)?)\s+"
+                rf"({digit_amount})\s*[-–—]\s*({digit_amount})\s+"
                 r"((?:billon(?:es)?|mil\s+millones?|millones?|palos?|barras?))",
                 re.IGNORECASE,
             )
@@ -1039,10 +1086,10 @@ class QueryRouter:
         # e.g., "más de 350 millones y menos de 700" → valor_min + valor_max
         _compound_range_re = re.compile(
             r"(?:m[aá]s\s+de|mayor(?:es)?\s+(?:a|de|que)|por\s+encima\s+de|al\s+menos|superior(?:es)?\s+(?:a|de|que))\s+"
-            r"((?:\d+(?:[.,]\d+)?|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|barras?|mil)?(?:\s+de\s+pesos)?)"
+            rf"((?:{digit_amount}|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|barras?|mil)?(?:\s+de\s+pesos)?)"
             r"\s+(?:y|e)\s+"
             r"(?:menos\s+de|menor(?:es)?\s+(?:a|de|que)|por\s+debajo\s+de|a\s+lo\s+sumo|inferior(?:es)?\s+(?:a|de|que))\s+"
-            r"((?:\d+(?:[.,]\d+)?|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|barras?|mil)?(?:\s+de\s+pesos)?)",
+            rf"((?:{digit_amount}|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|barras?|mil)?(?:\s+de\s+pesos)?)",
             re.IGNORECASE,
         )
         cr_match = _compound_range_re.search(normalized_query)
@@ -1089,7 +1136,7 @@ class QueryRouter:
                 normalized_query = normalized_query[: om.start()] + " " + normalized_query[om.end() :]
 
         amount_text = (
-            r"((?:\d+(?:[.,]\d+)?|un|mil)\s*"
+            rf"((?:{digit_amount}|un|mil)\s*"
             r"(?:billon(?:es)?|mil\s+millones|millones?|palos?|barras?|mil)?"
             r"(?:\s+de\s+pesos)?)"
         )
@@ -1211,7 +1258,7 @@ class QueryRouter:
                 )
 
         matches = list(re.finditer(
-            r"(?:(?:mas|mayor(?:es)?|superior(?:es)?|superen?)\s+(?:de|a)|(?:menos|menor(?:es)?)\s+(?:de|a)|hasta|por|de|desde)?\s*((?:\d+(?:[.,]\d+)?)|\bmil\b|\bun\b)\s*(?:billon(?:es)?|mil millones|millones?|palos?|barras?|\bmil\b)?(?:\s+de\s+pesos)?",
+            rf"(?:(?:mas|mayor(?:es)?|superior(?:es)?|superen?)\s+(?:de|a)|(?:menos|menor(?:es)?)\s+(?:de|a)|hasta|por|de|desde)?\s*((?:{digit_amount})|\bmil\b|\bun\b)\s*(?:billon(?:es)?|mil millones|millones?|palos?|barras?|\bmil\b)?(?:\s+de\s+pesos)?",
             normalized_query,
         ))
 
@@ -1246,8 +1293,15 @@ class QueryRouter:
         SoQL builder pueda hacer OR sobre documento_proveedor.
         Retorna None si no hay NIT en la query.
         """
-        match = _NIT_SHAPE_RE.search(normalized_query)
-        if not match:
+        match = next(
+            (
+                candidate
+                for candidate in _NIT_SHAPE_RE.finditer(normalized_query)
+                if _number_role(normalized_query, candidate) == "identifier"
+            ),
+            None,
+        )
+        if match is None:
             return None
 
         raw = match.group(0).strip()

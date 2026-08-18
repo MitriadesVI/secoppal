@@ -308,11 +308,6 @@ def test_ranges_with_thousands_separator(query: str) -> None:
 # que M2/M3/M4 tienen que satisfacer.
 # ══════════════════════════════════════════════════════════════════════════
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="M0: _extract_amounts corre sobre `normalized`, no sobre `scrubbed`, "
-           "y no ve el scrub de NIT → techo de valor espurio",
-)
 def test_nit_query_must_not_produce_money_filter() -> None:
     query = "contratos de alimentacion del NIT 900123456"
     params = _params(query)
@@ -322,10 +317,6 @@ def test_nit_query_must_not_produce_money_filter() -> None:
     assert params.get("valor_max") is None
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="M0: el NIT llega al WHERE como techo de valor_del_contrato",
-)
 def test_nit_query_must_not_project_money_predicate_to_where() -> None:
     assert _money_predicates("contratos de alimentacion del NIT 900123456") == []
 
@@ -348,11 +339,6 @@ def test_verbal_amount_must_keep_min_polarity() -> None:
     assert params.get("valor_max") is None
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="M0: '$1.500.000.000' lo captura _NIT_SHAPE_RE → contratista espurio "
-           "y cero filtro de valor (colisión dinero→NIT)",
-)
 @pytest.mark.parametrize(
     "query",
     [
@@ -366,11 +352,6 @@ def test_currency_amount_is_money_never_nit(query: str) -> None:
     assert params.get("valor_min") is not None or params.get("valor_max") is not None
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="H1 CONFIRMED (M0): monto exacto en pesos cae bajo el gate >= 1e6 "
-           "tras parsearse mal y se pierde el filtro entero",
-)
 def test_exact_peso_amount_produces_a_filter() -> None:
     query = "contratos de alimentacion de mas de 2.350.000.000 pesos"
     assert _params(query).get("valor_min") == 2_350_000_000
