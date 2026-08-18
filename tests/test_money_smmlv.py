@@ -7,6 +7,7 @@ from datetime import datetime
 import pytest
 
 from app.core.followup_engine import FollowupMerger
+from app.core.followup_engine import detect_and_merge
 from app.core.query_frame import frame_from_params, params_from_frame
 from app.core.query_plan import compute_query_plan
 from app.core.query_router import QueryRouter
@@ -105,6 +106,34 @@ def test_followup_assumed_year_reuses_single_year_context(monkeypatch) -> None:
     metadata = params["money_metadata"]
     assert metadata["reference_year"] == 2025
     assert metadata["year_authority"] == "inherited_query_date_scope"
+
+
+def test_gated_followup_path_preserves_and_rebases_money_metadata(monkeypatch) -> None:
+    monkeypatch.setattr("app.core.query_router.current_colombian_year", lambda: 2026)
+    previous = frame_from_params(
+        router.parse("contratos de alimentacion en 2025").params
+    )
+    current = router.parse("ahora mayores a 1500 SMMLV").params
+    intent, params = detect_and_merge(
+        "ahora mayores a 1500 SMMLV", current, previous
+    )
+    assert intent == "refine_filter"
+    assert params.get("valor_min") == 2_135_250_000
+    assert params["money_metadata"]["reference_year"] == 2025
+
+
+def test_plain_cop_followup_clears_stale_smmlv_metadata() -> None:
+    previous = frame_from_params(
+        router.parse(
+            "contratos de alimentacion mayores a 1000 SMMLV en 2026"
+        ).params
+    )
+    current = router.parse("ahora mayores a dos mil millones").params
+    _, params = detect_and_merge(
+        "ahora mayores a dos mil millones", current, previous
+    )
+    assert params.get("valor_min") == 2_000_000_000
+    assert params.get("money_metadata") is None
 
 
 def test_followup_over_multi_year_context_is_explicitly_blocked(monkeypatch) -> None:

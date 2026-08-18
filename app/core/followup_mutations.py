@@ -28,7 +28,7 @@ SCOPE_FIELDS = frozenset({
 })
 FILTER_FIELDS = frozenset({
     "valor_min", "valor_max", "fecha_desde", "fecha_hasta", *MODALITY_FIELDS,
-    "contratista", *STATE_FIELDS,
+    "contratista", "money_metadata", *STATE_FIELDS,
 })
 PAGING_FIELDS = frozenset({"offset", "_display_offset", "_shown_total"})
 CLASSIFICATION_FIELDS = frozenset({"intent_type", "opportunity_mode", "filter_active_only"})
@@ -70,7 +70,8 @@ MUTATION_POLICIES: dict[str, MutationPolicy] = {
     "remove_filter": MutationPolicy(
         frozenset(),
         allowed_clear=frozenset({
-            "valor_min", "valor_max", "fecha_desde", "fecha_hasta", *STATE_FIELDS,
+            "valor_min", "valor_max", "money_metadata",
+            "fecha_desde", "fecha_hasta", *STATE_FIELDS,
         }),
         transition_cleanup="normalize_remove_filter",
     ),
@@ -80,7 +81,7 @@ MUTATION_POLICIES: dict[str, MutationPolicy] = {
             "dataset", "dataset_explicit", *CLASSIFICATION_FIELDS,
         }),
         allowed_clear=frozenset({
-            "valor_min", "valor_max", *MODALITY_FIELDS,
+            "valor_min", "valor_max", "money_metadata", *MODALITY_FIELDS,
             "objeto_or", "objeto_phrases", "objeto_exclude",
             "opportunity_mode", "filter_active_only",
         }),
@@ -91,7 +92,7 @@ MUTATION_POLICIES: dict[str, MutationPolicy] = {
     "contextual_requery": MutationPolicy(
         frozenset({"objeto", "objeto_or", "objeto_phrases", "contratista", *CLASSIFICATION_FIELDS}),
         allowed_clear=frozenset({
-            "valor_min", "valor_max", *MODALITY_FIELDS,
+            "valor_min", "valor_max", "money_metadata", *MODALITY_FIELDS,
             "objeto_or", "objeto_phrases", "objeto_exclude",
             "opportunity_mode", "filter_active_only",
         }),
@@ -158,6 +159,8 @@ def _transition_clears(
     elif policy.transition_cleanup == "normalize_scope_transition" and any(k in accepted for k in SCOPE_FIELDS):
         clears.update(SCOPE_FIELDS - set(accepted))
     elif policy.transition_cleanup == "normalize_filter_transition":
+        if ({"valor_min", "valor_max"} & set(accepted)) and "money_metadata" not in accepted:
+            clears.add("money_metadata")
         if set(accepted) & MODALITY_FIELDS:
             clears.update(MODALITY_FIELDS)
         if "contratista" in accepted and len(set(accepted) & FILTER_FIELDS) == 1:
