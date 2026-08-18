@@ -23,12 +23,17 @@ from __future__ import annotations
 
 import time
 from dataclasses import asdict
-from datetime import date
+from datetime import date, datetime, timezone
 
 from burr.core import State, action
 
 from app.core.entity_resolver import EntityResolver
 from app.core.modality_execution_policy import evaluate_modality_execution
+from app.core.opportunity_retrieval_policy import (
+    PROCESS_DATASET_ID,
+    REFERENCE_INSTANT_PARAM,
+    is_current_opportunity_default,
+)
 from app.core.query_plan import QueryPlan, compute_query_plan
 from app.core.response_policy import build_clarification_response
 from app.core.soql_builder import SoQLBuilder, UnsafeGlobalQueryError
@@ -82,6 +87,18 @@ def plan_query(state: State) -> State:
         plan = compute_query_plan(
             params, raw, context, enabled_rules=ENABLED_RULES_SPRINT_2A
         )
+    # O1B: capture exactly one civil instant before retrieval and transport it
+    # as JSON-safe internal metadata. Query, count, timeout fallback and later
+    # pagination builds all reuse this same value. The pure policy owns no clock.
+    if (
+        plan.should_execute
+        and is_current_opportunity_default(plan.params, PROCESS_DATASET_ID)
+        and not plan.params.get(REFERENCE_INSTANT_PARAM)
+    ):
+        plan.params[REFERENCE_INSTANT_PARAM] = (
+            datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+        )
+
     return state.update(
         query_plan=asdict(plan),
         parsed_params=plan.params,

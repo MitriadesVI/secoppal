@@ -79,7 +79,8 @@ _OFFER_RECEPTION_STAGE = "offer_phase_observed"
 _RAW_OPEN = "abierto"
 _RAW_CLOSED = "cerrado"
 
-_DEADLINE_SUFFIX = "plazo vencido"
+_UNKNOWN_DEADLINE_LABEL = "Publicado · Vigencia por verificar"
+_PAST_DEADLINE_LABEL = "Plazo de recepción reportado vencido"
 
 
 def _fold(value: object) -> str:
@@ -192,16 +193,28 @@ def summarize_process_operational_state(
     # El eje temporal es soporte: solo puede desmentir una ventana de ofertas
     # que el estado declara viva, nunca crear ni cambiar una etapa. Requiere una
     # relación temporal concluyente — "unknown" jamás cuenta como vencido.
+    temporal_relation = axes["temporal"]["relation"]
     deadline_passed = (
-        stage == _OFFER_RECEPTION_STAGE
-        and axes["temporal"]["relation"] == "past"
+        stage == _OFFER_RECEPTION_STAGE and temporal_relation == "past"
     )
 
     label, icon = _STAGE_LABELS.get(stage, (_UNKNOWN_LABEL, _UNKNOWN_ICON))
-    if deadline_passed:
-        # No se cambia la etapa canónica; se le retira la afirmación de vigencia.
-        label = f"{label} ({_DEADLINE_SUFFIX})"
+    if stage == _OFFER_RECEPTION_STAGE and temporal_relation == "future":
+        # La única afirmación verde exige un plazo futuro observado. La fecha se
+        # incorpora al rótulo porque la tarjeta hoy solo tiene una línea de fecha
+        # primaria (publicación) y no debe esconder la evidencia que la sustenta.
+        raw_deadline = str(row.get("fecha_de_recepcion_de") or "").strip()
+        deadline_date = raw_deadline[:10]
+        if deadline_date:
+            label = f"Recepción de ofertas · límite {deadline_date}"
+    elif deadline_passed:
+        # No se cambia la etapa canónica; solo se limita lo afirmable al usuario.
+        label = _PAST_DEADLINE_LABEL
         icon = "🟠"
+    elif stage == _OFFER_RECEPTION_STAGE:
+        # Fase de oferta sin deadline observado no prueba recepción vigente.
+        label = _UNKNOWN_DEADLINE_LABEL
+        icon = "🔵"
 
     return ProcessOperationalSummary(
         state=stage,

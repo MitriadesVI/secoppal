@@ -88,7 +88,7 @@ def test_case_c_open_past_deadline_loses_the_green_claim():
     assert s.state == "offer_phase_observed"
     # ...pero pierde la afirmación de vigencia.
     assert s.deadline_passed is True
-    assert "plazo vencido" in s.label
+    assert s.label == "Plazo de recepción reportado vencido"
     assert s.icon != "🟢"
 
 
@@ -113,7 +113,7 @@ def test_case_d_real_open_process_is_not_degraded():
         fecha_de_recepcion_de="2026-09-30T10:00:00.000",  # futura
     )
     assert s.state == "offer_phase_observed"
-    assert s.label == "Recepción de ofertas"
+    assert s.label == "Recepción de ofertas · límite 2026-09-30"
     assert s.icon == "🟢"
     assert s.deadline_passed is False
     # No hay discrepancia material: nada de segunda línea redundante (§12).
@@ -341,7 +341,8 @@ def test_card_text_has_no_redundant_second_line_when_aligned():
                        estado_del_procedimiento="Publicado",
                        fase="Presentación de oferta")])
     text = Formatter().format_whatsapp(rows, dataset_id=PROCESOS_ID, total_count=1)
-    assert "Recepción de ofertas" in text
+    assert "Publicado · Vigencia por verificar" in text
+    assert "Recepción de ofertas" not in text
     assert "SECOP reporta" not in text
 
 

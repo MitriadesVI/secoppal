@@ -8,6 +8,12 @@ from app.core.modality_dataset_projection import (
     project_modality_filter,
 )
 from app.core.modality_filter import ModalityFilter
+from app.core.opportunity_retrieval_policy import (
+    REFERENCE_INSTANT_PARAM,
+    evaluate_current_opportunity_policy,
+    format_socrata_datetime,
+    parse_reference_instant,
+)
 
 logger = logging.getLogger(__name__)
 
@@ -295,6 +301,13 @@ class SoQLBuilder:
                 "Pass allow_global=True only if a global query is intentional."
             )
         where_clauses: list[str] = []
+        opportunity_policy = evaluate_current_opportunity_policy(
+            params,
+            spec.dataset_id,
+            reference_instant=parse_reference_instant(
+                params.get(REFERENCE_INSTANT_PARAM)
+            ),
+        )
 
         if params.get("departamento_resolved"):
             where_clauses.append(f"{spec.department} = '{self._escape(params['departamento_resolved'])}'")
@@ -429,8 +442,17 @@ class SoQLBuilder:
         # NUEVO: estado_families filters — puede ser lista o simple
         for field in ("estado_de_apertura_del_proceso", "estado_del_procedimiento",
                       "estado_contrato", "estado_contrato_adicional"):
+            if opportunity_policy.applies and field == "estado_del_procedimiento":
+                continue  # O1B replaces only the automatically-derived bundle.
             if field in params and params[field]:
                 self._add_estado_clause(where_clauses, field, params[field])
+
+        if opportunity_policy.applies:
+            self._add_estado_clause(
+                where_clauses,
+                "estado_del_procedimiento",
+                list(opportunity_policy.allowed_states),
+            )
 
         modality_clause = self._modality_clause(modality_projection)
         if modality_clause:
@@ -443,6 +465,23 @@ class SoQLBuilder:
             and not params.get("estado_de_apertura_del_proceso")
         ):
             where_clauses.append("estado_de_apertura_del_proceso = 'Abierto'")
+
+        if opportunity_policy.applies:
+            reference = format_socrata_datetime(
+                opportunity_policy.reference_instant  # type: ignore[arg-type]
+            )
+            publication_since = format_socrata_datetime(
+                opportunity_policy.unknown_deadline_publication_since  # type: ignore[arg-type]
+            )
+            # Equivalent to the policy's OR, expressed as one Socrata case()
+            # predicate. On p6dx-8zbt this avoids the severe planner penalty of
+            # OR across two calendar-date columns while preserving NULL/future
+            # semantics exactly.
+            where_clauses.append(
+                "case(fecha_de_recepcion_de IS NULL, "
+                f"fecha_de_publicacion_del >= '{publication_since}', "
+                f"true, fecha_de_recepcion_de > '{reference}')"
+            )
 
         if params.get("fecha_desde"):
             where_clauses.append(f"{spec.date} >= '{self._escape(params['fecha_desde'])}'")

@@ -29,7 +29,9 @@ from app.core.workflow.results import empty_result, tabular_result
 M2_MODIFIED_FILE_SHA256 = {
     "app/core/formatter.py": "0e51c8f76c4f9d9139d10c6e6b98a623eec8364e1e3656161c67758a91782be7",
     "app/core/response_policy.py": "863595d7f47e7955b693afec9cb75def93b323ce3373abdf7c65998f1b8d5059",
-    "app/core/soql_builder.py": "aab031bbfed03e6fd3da814ba1385d12f9f4d67adc2f565ec13dc6a0fca745e8",
+    # O1B adds a predicate gated by opportunity metadata; the ordinary-query
+    # oracle below remains byte-identical and bounds that authorization.
+    "app/core/soql_builder.py": "9095c502509adaec0342739467c1f533226c2f4bd780bffdd86a042a4d0b7449",
 }
 
 # M2.1 corrige únicamente dos consumidores visibles. Ambos quedan congelados y

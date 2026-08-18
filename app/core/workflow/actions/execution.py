@@ -252,6 +252,23 @@ def degrade_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
     if state["results"] or state.get("query_error"):
         return _with_timing(state, "degrade_ms", start, degraded=False, degraded_hint="")
 
+    # O1B: a current opportunity search is one normal productive retrieval.
+    # Zero rows may be honest; silently removing geography/value would be a
+    # semantic Tier 2 and would also create hidden fan-out. The technical H4
+    # timeout fallback above remains unchanged because it preserves all filters.
+    from app.core.opportunity_retrieval_policy import (
+        REFERENCE_INSTANT_PARAM,
+        is_current_opportunity_default,
+    )
+    params = state.get("resolved_params", {})
+    if (
+        params.get(REFERENCE_INSTANT_PARAM)
+        and is_current_opportunity_default(params, state.get("dataset_id", ""))
+    ):
+        return _with_timing(
+            state, "degrade_ms", start, degraded=False, degraded_hint=""
+        )
+
     # En contexto conversacional (follow-up), no relajar filtrar scope/fecha automáticamente
     if state.get("followup"):
         return _with_timing(
