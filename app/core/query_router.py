@@ -14,6 +14,7 @@ from app.data.estados import (
     ESTADO_SYNONYMS,
 )
 from app.core.contract_invariants import contains_signed_token
+from app.core.money_resolution import CARDINAL_WORD_PATTERN
 from app.core.modality_parser_integration import resolve_parser_modality
 from app.utils.money import money_to_cop, normalize_text
 from app.utils.spell_correction import correct_query
@@ -983,6 +984,8 @@ class QueryRouter:
         params: dict[str, int] = {}
         consumed_spans: list[str] = []
         digit_amount = r"(?:\$\s*|cop\s+)?\d+(?:[.,]\d+)*"
+        verbal_amount = rf"{CARDINAL_WORD_PATTERN}(?:\s+{CARDINAL_WORD_PATTERN})*"
+        amount_atom = rf"(?:{digit_amount}|{verbal_amount})"
         year_tokens: set[str] = set()
         for val in date_params.values():
             year_tokens.add(val[:4])
@@ -996,10 +999,6 @@ class QueryRouter:
         # Detect "entre X y Y" range BEFORE individual amount parsing so the
         # two numbers don't each get mis-classified by the generic loop below.
         # ── Shared unit-inheritance helpers (used by range + compound block) ──
-        _any_unit_re = re.compile(
-            r"billon(?:es)?|mil\s+millones|millones?|palos?|barras?|\bmil\b",
-            re.IGNORECASE,
-        )
         _compound_unit_re = re.compile(
             r"mil\s+millones?|billon(?:es)?|millones?|palos?|barras?",
             re.IGNORECASE,
@@ -1010,6 +1009,11 @@ class QueryRouter:
         )
         _has_digit_re = re.compile(r"\d")
 
+        def _has_monetary_unit(amount_text: str) -> bool:
+            if _compound_unit_re.search(amount_text):
+                return True
+            return bool(re.search(r"\d(?:[\d.,]*\d)?\s+mil\s*$", amount_text))
+
         def _inherit_unit(donor_text: str) -> str | None:
             if _has_digit_re.search(donor_text):
                 m = _compound_unit_re.search(donor_text)
@@ -1018,7 +1022,7 @@ class QueryRouter:
             return m.group(0) if m else None
 
         _range_re = re.compile(
-            rf"(?:entre|de|desde)\s+((?:{digit_amount}|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|barras?|mil)?(?:\s+de\s+pesos)?)(?:\s*[-–—]\s*|\s+y\s+|\s+a\s+|\s+hasta\s+)((?:{digit_amount}|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|barras?|mil)?(?:\s+de\s+pesos)?)",
+            rf"(?:entre|de|desde)\s+({amount_atom}\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|barras?|mil)?(?:\s+de\s+pesos)?)(?:\s*[-–—]\s*|\s+y\s+|\s+a\s+|\s+hasta\s+)({amount_atom}\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|barras?|mil)?(?:\s+de\s+pesos)?)",
             re.IGNORECASE,
         )
         range_match = _range_re.search(normalized_query)
@@ -1032,8 +1036,8 @@ class QueryRouter:
             #     hereda la unidad COMPUESTA ("mil millones") → "1" → 1 mil millones.
             #   - Si el otro lado es solo "mil millones" (sin número antes),
             #     hereda solo la unidad ATÓMICA ("millones") → "500" → 500 millones.
-            lo_has_unit = bool(_any_unit_re.search(lo_text))
-            hi_has_unit = bool(_any_unit_re.search(hi_text))
+            lo_has_unit = _has_monetary_unit(lo_text)
+            hi_has_unit = _has_monetary_unit(hi_text)
 
             if not lo_has_unit and hi_has_unit:
                 u = _inherit_unit(hi_text)
@@ -1086,10 +1090,10 @@ class QueryRouter:
         # e.g., "más de 350 millones y menos de 700" → valor_min + valor_max
         _compound_range_re = re.compile(
             r"(?:m[aá]s\s+de|mayor(?:es)?\s+(?:a|de|que)|por\s+encima\s+de|al\s+menos|superior(?:es)?\s+(?:a|de|que))\s+"
-            rf"((?:{digit_amount}|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|barras?|mil)?(?:\s+de\s+pesos)?)"
+            rf"({amount_atom}\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|barras?|mil)?(?:\s+de\s+pesos)?)"
             r"\s+(?:y|e)\s+"
             r"(?:menos\s+de|menor(?:es)?\s+(?:a|de|que)|por\s+debajo\s+de|a\s+lo\s+sumo|inferior(?:es)?\s+(?:a|de|que))\s+"
-            rf"((?:{digit_amount}|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|barras?|mil)?(?:\s+de\s+pesos)?)",
+            rf"({amount_atom}\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|barras?|mil)?(?:\s+de\s+pesos)?)",
             re.IGNORECASE,
         )
         cr_match = _compound_range_re.search(normalized_query)
@@ -1098,8 +1102,8 @@ class QueryRouter:
             hi_text = cr_match.group(2)
 
             # Inherit monetary unit from one side to the other
-            lo_has_unit = bool(_any_unit_re.search(lo_text))
-            hi_has_unit = bool(_any_unit_re.search(hi_text))
+            lo_has_unit = _has_monetary_unit(lo_text)
+            hi_has_unit = _has_monetary_unit(hi_text)
 
             if not lo_has_unit and hi_has_unit:
                 u = _inherit_unit(hi_text)
@@ -1136,7 +1140,7 @@ class QueryRouter:
                 normalized_query = normalized_query[: om.start()] + " " + normalized_query[om.end() :]
 
         amount_text = (
-            rf"((?:{digit_amount}|un|mil)\s*"
+            rf"({amount_atom}\s*"
             r"(?:billon(?:es)?|mil\s+millones|millones?|palos?|barras?|mil)?"
             r"(?:\s+de\s+pesos)?)"
         )
@@ -1258,7 +1262,7 @@ class QueryRouter:
                 )
 
         matches = list(re.finditer(
-            rf"(?:(?:mas|mayor(?:es)?|superior(?:es)?|superen?)\s+(?:de|a)|(?:menos|menor(?:es)?)\s+(?:de|a)|hasta|por|de|desde)?\s*((?:{digit_amount})|\bmil\b|\bun\b)\s*(?:billon(?:es)?|mil millones|millones?|palos?|barras?|\bmil\b)?(?:\s+de\s+pesos)?",
+            rf"(?:(?:mas|mayor(?:es)?|superior(?:es)?|superen?)\s+(?:de|a)|(?:menos|menor(?:es)?)\s+(?:de|a)|hasta|por|de|desde)?\s*({amount_atom})\s*(?:billon(?:es)?|mil millones|millones?|palos?|barras?|\bmil\b)?(?:\s+de\s+pesos)?",
             normalized_query,
         ))
 

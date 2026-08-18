@@ -113,8 +113,8 @@ def test_invalid_literals_resolve_to_none(literal: str) -> None:
     assert resolve_numeric_literal(literal) is None
 
 
-def test_resolve_amount_returns_none_without_digits() -> None:
-    assert resolve_amount("mil millones") is None
+def test_resolve_amount_supports_cardinal_words_without_digits() -> None:
+    assert resolve_amount("mil millones") == Decimal(1000)
     assert resolve_amount("sin valor") is None
 
 

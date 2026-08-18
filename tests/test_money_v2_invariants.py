@@ -276,7 +276,6 @@ VERBAL_NUMBER_CASES = [
 ]
 
 
-@pytest.mark.xfail(strict=True, reason="H2 CONFIRMED (M0): sin tokenizador de numerales verbales")
 @pytest.mark.parametrize("raw,expected", VERBAL_NUMBER_CASES)
 def test_verbal_number_composition(raw: str, expected: int) -> None:
     assert money_to_cop(raw) == expected
@@ -327,11 +326,6 @@ def test_thousands_separator_reaches_where_with_correct_scale() -> None:
     assert _money_predicates(query) == ["valor_del_contrato >= 1500000000"]
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="H2 CONFIRMED (M0): 'dos mil millones' pierde el cuantificador Y cae "
-           "al default `else -> valor_max` del scanner genérico: polaridad INVERTIDA",
-)
 def test_verbal_amount_must_keep_min_polarity() -> None:
     query = "contratos de alimentacion de mas de dos mil millones"
     params = _params(query)

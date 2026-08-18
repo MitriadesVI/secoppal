@@ -39,22 +39,21 @@ def money_to_cop(raw_text: str) -> int | None:
     y su escala siguen siendo autoridad de esta función.
     """
     text = normalize_text(raw_text)
-    amount = resolve_amount(text)
+    # Las fracciones verbales están deliberadamente fuera de la gramática M4.
+    # Rechazarlas evita interpretar parcialmente "un millón y medio" como 1M.
+    if re.search(r"\by\s+medi[oa]s?\b", text):
+        return None
+    # "mil millones" es una unidad léxica compuesta: el cardinal que la
+    # precede multiplica 10^9. En cambio "mil quinientos millones" contiene el
+    # cardinal 1500 y la unidad simple millón.
+    compound_scale = re.search(r"\bmil\s+millones\b", text)
+    if compound_scale:
+        prefix = text[:compound_scale.start()]
+        amount = resolve_amount(prefix) if prefix.strip() else Decimal(1)
+    else:
+        amount = resolve_amount(text)
     if amount is None:
-        # Compatibilidad legacy: expresiones sin dígito cuya cantidad va
-        # implícita en la palabra. Es el mínimo necesario para que "un billón" y
-        # "mil millones" sigan valiendo lo de siempre. M4 sustituirá esta rama
-        # por un tokenizador de numerales verbales; hasta entonces "dos mil
-        # millones" seguirá cayendo aquí y valiendo 10^9 (bug H2 conocido,
-        # congelado en tests/test_money_v2_invariants.py).
-        if re.search(r"\bun\b", text):
-            amount = Decimal(1)
-        elif re.search(r"\bmil\s+millones\b", text):
-            amount = Decimal(1)   # "mil millones" = 1 000 000 000, no 1000 × 1e9
-        elif re.search(r"\bmil\b", text):
-            amount = Decimal(1000)
-        else:
-            return None
+        return None
 
     multiplier = 1
 

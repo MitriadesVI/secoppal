@@ -24,9 +24,9 @@ fijada por test en ``tests/test_money_resolution.py``; las dos implementaciones
 siguen separadas solo porque consolidarlas exigiría tocar un módulo del radar,
 fuera del alcance de M2.
 
-Extensión prevista: M4 añadirá composición de numerales verbales ("dos mil
-quinientos") por encima de esta capa; M6 podría añadir unidades indexadas al
-año (SMMLV). Ninguna de las dos pertenece a este módulo hoy.
+M4 añade aquí la composición del subconjunto práctico de cardinales españoles
+que precede unidades monetarias. No intenta ser un motor numérico universal.
+M6 puede añadir unidades indexadas al año (SMMLV) por encima de esta capa.
 """
 
 from __future__ import annotations
@@ -34,7 +34,13 @@ from __future__ import annotations
 import re
 from decimal import Decimal, InvalidOperation
 
-__all__ = ["find_numeric_literal", "resolve_numeric_literal", "resolve_amount"]
+__all__ = [
+    "CARDINAL_WORD_PATTERN",
+    "find_numeric_literal",
+    "resolve_amount",
+    "resolve_cardinal_words",
+    "resolve_numeric_literal",
+]
 
 # Un literal numérico: empieza y termina en dígito; en medio admite dígitos y
 # separadores. Se detiene en cualquier otro carácter, de modo que "900.123.456-7"
@@ -43,6 +49,68 @@ _NUMERIC_LITERAL_RE = re.compile(r"\d(?:[\d.,]*\d)?")
 
 _ALLOWED_CHARS = frozenset("0123456789.,")
 _GROUP_SIZE = 3
+
+_UNITS = {
+    "un": 1,
+    "uno": 1,
+    "dos": 2,
+    "tres": 3,
+    "cuatro": 4,
+    "cinco": 5,
+    "seis": 6,
+    "siete": 7,
+    "ocho": 8,
+    "nueve": 9,
+}
+_SMALL = {
+    **_UNITS,
+    "diez": 10,
+    "once": 11,
+    "doce": 12,
+    "trece": 13,
+    "catorce": 14,
+    "quince": 15,
+    "dieciseis": 16,
+    "diecisiete": 17,
+    "dieciocho": 18,
+    "diecinueve": 19,
+    "veinte": 20,
+    "veintiun": 21,
+    "veintiuno": 21,
+    "veintidos": 22,
+    "veintitres": 23,
+    "veinticuatro": 24,
+    "veinticinco": 25,
+    "veintiseis": 26,
+    "veintisiete": 27,
+    "veintiocho": 28,
+    "veintinueve": 29,
+}
+_TENS = {
+    "treinta": 30,
+    "cuarenta": 40,
+    "cincuenta": 50,
+    "sesenta": 60,
+    "setenta": 70,
+    "ochenta": 80,
+    "noventa": 90,
+}
+_HUNDREDS = {
+    "cien": 100,
+    "ciento": 100,
+    "doscientos": 200,
+    "trescientos": 300,
+    "cuatrocientos": 400,
+    "quinientos": 500,
+    "seiscientos": 600,
+    "setecientos": 700,
+    "ochocientos": 800,
+    "novecientos": 900,
+}
+_CARDINAL_WORDS = frozenset({*_SMALL, *_TENS, *_HUNDREDS, "mil", "y"})
+CARDINAL_WORD_PATTERN = r"(?<![a-z])(?:" + "|".join(
+    sorted(_CARDINAL_WORDS, key=len, reverse=True)
+) + r")(?![a-z])"
 
 
 def find_numeric_literal(text: str) -> str | None:
@@ -126,13 +194,76 @@ def resolve_numeric_literal(literal: str) -> Decimal | None:
         return None
 
 
+def _resolve_below_thousand(tokens: list[str]) -> int | None:
+    if not tokens:
+        return None
+
+    total = 0
+    if tokens[0] in _HUNDREDS:
+        hundred_word = tokens.pop(0)
+        total = _HUNDREDS[hundred_word]
+        if hundred_word == "cien" and tokens:
+            return None
+        if not tokens:
+            return total
+
+    if len(tokens) == 1 and tokens[0] in _SMALL:
+        return total + _SMALL[tokens[0]]
+    if tokens and tokens[0] in _TENS:
+        tens = _TENS[tokens.pop(0)]
+        if not tokens:
+            return total + tens
+        if len(tokens) == 2 and tokens[0] == "y" and tokens[1] in _UNITS:
+            return total + tens + _UNITS[tokens[1]]
+    return None
+
+
+def _resolve_cardinal_tokens(tokens: list[str]) -> int | None:
+    if not tokens or tokens[0] == "y" or tokens[-1] == "y":
+        return None
+    if tokens.count("mil") > 1:
+        return None
+    if "mil" not in tokens:
+        return _resolve_below_thousand(tokens.copy())
+
+    split = tokens.index("mil")
+    prefix = tokens[:split]
+    suffix = tokens[split + 1:]
+    thousands = _resolve_below_thousand(prefix.copy()) if prefix else 1
+    remainder = _resolve_below_thousand(suffix.copy()) if suffix else 0
+    if thousands is None or remainder is None:
+        return None
+    return thousands * 1000 + remainder
+
+
+def resolve_cardinal_words(text: str) -> Decimal | None:
+    """Resuelve un cardinal español práctico contenido en ``text``.
+
+    Admite unidades, 10-29, decenas con ``y``, centenas y una composición con
+    ``mil``. Deliberadamente no interpreta ordinales, fracciones ni escalas
+    encadenadas; millón/billón siguen siendo unidades de ``money_to_cop``.
+    """
+    words = re.findall(r"[a-z]+", text.lower())
+    for start, word in enumerate(words):
+        if word not in _CARDINAL_WORDS or word == "y":
+            continue
+        end = start
+        while end < len(words) and words[end] in _CARDINAL_WORDS:
+            end += 1
+        for candidate_end in range(end, start, -1):
+            value = _resolve_cardinal_tokens(words[start:candidate_end])
+            if value is not None:
+                return Decimal(value)
+    return None
+
+
 def resolve_amount(text: str) -> Decimal | None:
-    """Resuelve la cantidad del primer literal numérico presente en ``text``.
+    """Resuelve la primera cantidad numérica o cardinal presente en ``text``.
 
     Marcadores de moneda ("$", "pesos", "COP") no alteran el valor; se ignoran
     junto con el resto del texto, que es competencia de la capa de unidades.
     """
     literal = find_numeric_literal(text)
-    if literal is None:
-        return None
-    return resolve_numeric_literal(literal)
+    if literal is not None:
+        return resolve_numeric_literal(literal)
+    return resolve_cardinal_words(text)
