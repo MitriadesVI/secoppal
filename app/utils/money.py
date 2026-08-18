@@ -6,6 +6,11 @@ from decimal import Decimal
 from typing import Any
 
 from app.core.money_resolution import resolve_amount
+from app.data.smmlv import smmlv_cop
+
+
+SMMLV_UNIT_PATTERN = r"(?:smmlv|smlmv|smlv|salarios?\s+minimos?)"
+_SMMLV_UNIT_RE = re.compile(rf"\b{SMMLV_UNIT_PATTERN}\b", re.IGNORECASE)
 
 
 def safe_money(value: Any) -> float:
@@ -31,6 +36,26 @@ def normalize_text(text: str) -> str:
     return "".join(char for char in normalized if not unicodedata.combining(char)).lower().strip()
 
 
+def is_smmlv_expression(text: str) -> bool:
+    """True si ``text`` contiene un alias soportado de salario mínimo."""
+    return bool(_SMMLV_UNIT_RE.search(normalize_text(text)))
+
+
+def smmlv_to_cop(raw_text: str, year: int) -> tuple[int, Decimal] | None:
+    """Convierte una cantidad SMMLV con año explícito a COP y cantidad fuente."""
+    text = normalize_text(raw_text)
+    if not _SMMLV_UNIT_RE.search(text):
+        return None
+    annual_value = smmlv_cop(year)
+    if annual_value is None:
+        return None
+    amount_text = _SMMLV_UNIT_RE.sub(" ", text)
+    amount = resolve_amount(amount_text)
+    if amount is None or amount <= 0:
+        return None
+    return int(amount * annual_value), amount
+
+
 def money_to_cop(raw_text: str) -> int | None:
     """Parses colloquial Colombian money expressions into COP integers.
 
@@ -39,6 +64,10 @@ def money_to_cop(raw_text: str) -> int | None:
     y su escala siguen siendo autoridad de esta función.
     """
     text = normalize_text(raw_text)
+    # SMMLV no tiene valor atemporal. El router usa smmlv_to_cop con un año y
+    # conserva metadata; este contrato escalar se niega a ocultar esa decisión.
+    if _SMMLV_UNIT_RE.search(text):
+        return None
     # Las fracciones verbales están deliberadamente fuera de la gramática M4.
     # Rechazarlas evita interpretar parcialmente "un millón y medio" como 1M.
     if re.search(r"\by\s+medi[oa]s?\b", text):

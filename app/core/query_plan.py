@@ -27,7 +27,7 @@ from app.core.semantic_sanity import compute_sanity_flags
 # ── All known rules — used as default when enabled_rules is None ──────────────
 ALL_RULES = {
     "P1", "P2", "P3", "P4", "P5", "P5b", "P6", "P7", "P8", "P9",
-    "P10", "P11", "P12", "P15", "P13", "P14",
+    "P10", "P11", "P12", "P15", "P16", "P13", "P14",
 }
 
 # ── Entity markers that preserve entity when present in raw_query (P9) ───────
@@ -258,6 +258,25 @@ def compute_query_plan(
                     "(mínimo > máximo). ¿Cuál querías?"
                 ),
                 reason="invalid_value_range",
+                signals=all_signals,
+            )
+
+    # ── P16: SMMLV nunca usa una tarifa única sobre alcance multianual ──
+    if "P16" in rules_to_apply:
+        money_metadata = working_params.get("money_metadata")
+        metadata_message = (
+            money_metadata.get("clarification_message")
+            if isinstance(money_metadata, dict)
+            else None
+        )
+        clarification = working_params.get("money_clarification") or metadata_message
+        if clarification:
+            return QueryPlan(
+                should_execute=False,
+                params=working_params,
+                risk_flags=risk_flags + ["smmlv_year_scope_unsupported"],
+                clarification_question=str(clarification),
+                reason="smmlv_year_scope_unsupported",
                 signals=all_signals,
             )
 

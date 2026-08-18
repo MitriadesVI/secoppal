@@ -365,19 +365,10 @@ def test_exact_peso_amount_produces_a_filter() -> None:
 _SPURIOUS_SMMLV_FILTER = 1_000_000
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="H3 CONFIRMED (M0): 'mil salarios mínimos' inventa valor_min=1_000_000 "
-           "por multiplicación accidental mil x mil",
-)
 def test_smmlv_must_not_invent_a_money_filter() -> None:
     params = _params("contratos de alimentacion de mas de mil salarios minimos")
     assert params.get("valor_min") != _SPURIOUS_SMMLV_FILTER
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="H3 CONFIRMED (M0): mismo bug medido en money_to_cop aislado",
-)
 def test_smmlv_phrase_is_not_a_peso_amount() -> None:
     assert money_to_cop("mil salarios minimos") != 1_000_000

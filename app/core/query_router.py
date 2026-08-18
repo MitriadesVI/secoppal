@@ -16,7 +16,14 @@ from app.data.estados import (
 from app.core.contract_invariants import contains_signed_token
 from app.core.money_resolution import CARDINAL_WORD_PATTERN
 from app.core.modality_parser_integration import resolve_parser_modality
-from app.utils.money import money_to_cop, normalize_text
+from app.utils.money import (
+    SMMLV_UNIT_PATTERN,
+    is_smmlv_expression,
+    money_to_cop,
+    normalize_text,
+    smmlv_to_cop,
+)
+from app.data.smmlv import current_colombian_year, smmlv_cop
 from app.utils.spell_correction import correct_query
 
 import logging
@@ -83,21 +90,21 @@ _ORDERING_FECHA_RE = re.compile(
 # DV opcional al final. Lookahead negativo para no confundir con montos.
 # Formatos: 800091140 / 800.091.140 / 800.091.140-4 / 8000911404
 _NIT_SHAPE_RE = re.compile(
-    r"""
+    rf"""
     (?<!\d)                       # no precedido de dígito
-    (\d{1,3}                      # bloque inicial 1-3 dígitos
-    (?:[.\- ]\d{3}){1,3}          # uno a tres grupos de 3 dígitos con separador
+    (\d{{1,3}}                      # bloque inicial 1-3 dígitos
+    (?:[.\- ]\d{{3}}){{1,3}}          # uno a tres grupos de 3 dígitos con separador
     (?:[.\- ]\d)?                 # DV opcional con separador
-    |\d{8,11})                    # o secuencia continua de 8-11 dígitos
+    |\d{{8,11}})                    # o secuencia continua de 8-11 dígitos
     (?!\d)                        # no seguido de dígito
-    (?!\s*(?:millones?|millon|mil\s+millones|billones?|palos?|barras?|pesos))  # no es monto
+    (?!\s*(?:millones?|millon|mil\s+millones|billones?|palos?|barras?|pesos|{SMMLV_UNIT_PATTERN}))  # no es monto
     """,
     re.IGNORECASE | re.VERBOSE,
 )
 
 _MONEY_UNIT_AFTER_NUMBER_RE = re.compile(
-    r"^\s*(?:cop\b|pesos?\b|millones?\b|millon\b|mil\s+millones\b|"
-    r"billones?\b|palos?\b|barras?\b)",
+    rf"^\s*(?:cop\b|pesos?\b|millones?\b|millon\b|mil\s+millones\b|"
+    rf"billones?\b|palos?\b|barras?\b|{SMMLV_UNIT_PATTERN})",
     re.IGNORECASE,
 )
 _MONEY_COMPARATOR_BEFORE_NUMBER_RE = re.compile(
@@ -186,7 +193,8 @@ STOPWORDS = {
     "mas", "menos",
     "no", "maximo", "máximo", "minimo", "mínimo",
     # Money units
-    "pesos", "millones", "millon",
+    "pesos", "millones", "millon", "smmlv", "smlmv", "smlv",
+    "salario", "salarios", "minimo", "minimos",
     # Filler
     "tipo", "tema", "temas", "asunto", "asuntos", "materia", "sector",
     "area", "área", "linea", "línea", "relacionado", "relacionados",
@@ -512,7 +520,7 @@ class QueryRouter:
         # Lookahead negativo: no capturar años seguidos de unidades de dinero
         # (ej: "2000 millones" no es el año 2000)
         _year_re = re.compile(
-            r"\b(20\d{2})\b(?!\s*(?:millones?|millon|mil\s+millones|billones?|palos?|barras?|pesos))",
+            rf"\b(20\d{{2}})\b(?!\s*(?:millones?|millon|mil\s+millones|billones?|palos?|barras?|pesos|{SMMLV_UNIT_PATTERN}))",
             re.IGNORECASE,
         )
         for m in re.finditer(_year_re, scrubbed):
@@ -975,22 +983,76 @@ class QueryRouter:
 
         return params
 
-    def _extract_amounts(self, normalized_query: str, date_params: dict[str, str]) -> tuple[dict[str, int], list[str]]:
+    def _extract_amounts(self, normalized_query: str, date_params: dict[str, str]) -> tuple[dict[str, object], list[str]]:
         """Extrae montos monetarios con polaridad (min/max/rango).
 
         Retorna (params, consumed_spans) donde consumed_spans son los
         spans de texto detectados y consumidos, para scrub posterior.
         """
-        params: dict[str, int] = {}
+        params: dict[str, object] = {}
         consumed_spans: list[str] = []
         digit_amount = r"(?:\$\s*|cop\s+)?\d+(?:[.,]\d+)*"
         verbal_amount = rf"{CARDINAL_WORD_PATTERN}(?:\s+{CARDINAL_WORD_PATTERN})*"
         amount_atom = rf"(?:{digit_amount}|{verbal_amount})"
+        unit_pattern = (
+            rf"(?:billon(?:es)?|mil\s+millones?|millones?|palos?|barras?|"
+            rf"{SMMLV_UNIT_PATTERN}|mil)"
+        )
+        smmlv_requested = is_smmlv_expression(normalized_query)
+        smmlv_year: int | None = None
+        smmlv_year_assumed = False
+        smmlv_sources: dict[int, tuple[str, str]] = {}
+
+        if smmlv_requested:
+            desde = date_params.get("fecha_desde")
+            hasta = date_params.get("fecha_hasta")
+            if desde or hasta:
+                if not desde or not hasta or desde[:4] != hasta[:4]:
+                    years = sorted({value[:4] for value in (desde, hasta) if value})
+                    params["money_metadata"] = {
+                        "unit": "SMMLV",
+                        "status": "unsupported_multi_year",
+                        "year_range": years,
+                    }
+                    params["money_clarification"] = (
+                        "Los SMMLV cambian cada año. Indica un solo año para aplicar "
+                        "un umbral correcto; no convertiré un rango multianual con una sola tarifa."
+                    )
+                    return params, consumed_spans
+                smmlv_year = int(desde[:4])
+            else:
+                smmlv_year = current_colombian_year()
+                smmlv_year_assumed = True
+
+            annual_value = smmlv_cop(smmlv_year)
+            if annual_value is None:
+                params["money_metadata"] = {
+                    "unit": "SMMLV",
+                    "status": "unsupported_year",
+                    "reference_year": smmlv_year,
+                }
+                params["money_clarification"] = (
+                    f"No tengo un valor oficial de SMMLV catalogado para {smmlv_year}. "
+                    "Indica uno de los años soportados: 2024, 2025 o 2026."
+                )
+                return params, consumed_spans
+
+        def _to_cop(amount_text: str) -> int | None:
+            if is_smmlv_expression(amount_text):
+                if smmlv_year is None:
+                    return None
+                resolved = smmlv_to_cop(amount_text, smmlv_year)
+                if resolved is None:
+                    return None
+                cop, source_amount = resolved
+                smmlv_sources[cop] = (str(source_amount), amount_text.strip())
+                return cop
+            return money_to_cop(amount_text)
         year_tokens: set[str] = set()
         for val in date_params.values():
             year_tokens.add(val[:4])
         _year_money_re = re.compile(
-            r"\b(20\d{2})\b(?!\s*(?:millones?|millon|mil\s+millones|billones?|palos?|barras?|pesos))",
+            rf"\b(20\d{{2}})\b(?!\s*(?:millones?|millon|mil\s+millones|billones?|palos?|barras?|pesos|{SMMLV_UNIT_PATTERN}))",
             re.IGNORECASE,
         )
         for m in re.finditer(_year_money_re, normalized_query):
@@ -1000,11 +1062,11 @@ class QueryRouter:
         # two numbers don't each get mis-classified by the generic loop below.
         # ── Shared unit-inheritance helpers (used by range + compound block) ──
         _compound_unit_re = re.compile(
-            r"mil\s+millones?|billon(?:es)?|millones?|palos?|barras?",
+            rf"mil\s+millones?|billon(?:es)?|millones?|palos?|barras?|{SMMLV_UNIT_PATTERN}",
             re.IGNORECASE,
         )
         _atomic_unit_re = re.compile(
-            r"billon(?:es)?|millones?|palos?|barras?",
+            rf"billon(?:es)?|millones?|palos?|barras?|{SMMLV_UNIT_PATTERN}",
             re.IGNORECASE,
         )
         _has_digit_re = re.compile(r"\d")
@@ -1022,7 +1084,7 @@ class QueryRouter:
             return m.group(0) if m else None
 
         _range_re = re.compile(
-            rf"(?:entre|de|desde)\s+({amount_atom}\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|barras?|mil)?(?:\s+de\s+pesos)?)(?:\s*[-–—]\s*|\s+y\s+|\s+a\s+|\s+hasta\s+)({amount_atom}\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|barras?|mil)?(?:\s+de\s+pesos)?)",
+            rf"(?:entre|de|desde)\s+({amount_atom}\s*{unit_pattern}?(?:\s+de\s+pesos)?)(?:\s*[-–—]\s*|\s+y\s+|\s+a\s+|\s+hasta\s+)({amount_atom}\s*{unit_pattern}?(?:\s+de\s+pesos)?)",
             re.IGNORECASE,
         )
         range_match = _range_re.search(normalized_query)
@@ -1048,8 +1110,8 @@ class QueryRouter:
                 if u:
                     hi_text = hi_text + " " + u
 
-            amount_lo = money_to_cop(lo_text)
-            amount_hi = money_to_cop(hi_text)
+            amount_lo = _to_cop(lo_text)
+            amount_hi = _to_cop(hi_text)
 
             if amount_lo and amount_hi and amount_lo >= 1_000_000 and amount_hi >= 1_000_000:
                 params["valor_min"] = min(amount_lo, amount_hi)
@@ -1066,7 +1128,7 @@ class QueryRouter:
         if not range_match:
             _range_hyphen_re = re.compile(
                 rf"({digit_amount})\s*[-–—]\s*({digit_amount})\s+"
-                r"((?:billon(?:es)?|mil\s+millones?|millones?|palos?|barras?))",
+                rf"({unit_pattern})",
                 re.IGNORECASE,
             )
             h_match = _range_hyphen_re.search(normalized_query)
@@ -1075,8 +1137,8 @@ class QueryRouter:
                 lo_text = h_match.group(1) + " " + unit
                 hi_text = h_match.group(2) + " " + unit
 
-                amount_lo = money_to_cop(lo_text)
-                amount_hi = money_to_cop(hi_text)
+                amount_lo = _to_cop(lo_text)
+                amount_hi = _to_cop(hi_text)
 
                 if amount_lo and amount_hi and amount_lo >= 1_000_000 and amount_hi >= 1_000_000:
                     params["valor_min"] = min(amount_lo, amount_hi)
@@ -1090,10 +1152,10 @@ class QueryRouter:
         # e.g., "más de 350 millones y menos de 700" → valor_min + valor_max
         _compound_range_re = re.compile(
             r"(?:m[aá]s\s+de|mayor(?:es)?\s+(?:a|de|que)|por\s+encima\s+de|al\s+menos|superior(?:es)?\s+(?:a|de|que))\s+"
-            rf"({amount_atom}\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|barras?|mil)?(?:\s+de\s+pesos)?)"
+            rf"({amount_atom}\s*{unit_pattern}?(?:\s+de\s+pesos)?)"
             r"\s+(?:y|e)\s+"
             r"(?:menos\s+de|menor(?:es)?\s+(?:a|de|que)|por\s+debajo\s+de|a\s+lo\s+sumo|inferior(?:es)?\s+(?:a|de|que))\s+"
-            rf"({amount_atom}\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|barras?|mil)?(?:\s+de\s+pesos)?)",
+            rf"({amount_atom}\s*{unit_pattern}?(?:\s+de\s+pesos)?)",
             re.IGNORECASE,
         )
         cr_match = _compound_range_re.search(normalized_query)
@@ -1114,8 +1176,8 @@ class QueryRouter:
                 if u:
                     hi_text = hi_text + " " + u
 
-            amount_lo = money_to_cop(lo_text)
-            amount_hi = money_to_cop(hi_text)
+            amount_lo = _to_cop(lo_text)
+            amount_hi = _to_cop(hi_text)
 
             if amount_lo and amount_hi and amount_lo >= 1_000_000 and amount_hi >= 1_000_000:
                 params["valor_min"] = min(amount_lo, amount_hi)
@@ -1126,12 +1188,12 @@ class QueryRouter:
 
         # Detect "X o más" / "X o mas" → valor_min only (before generic loop)
         _o_mas_re = re.compile(
-            r"((?:\d+(?:[.,]\d+)?|un|mil)\s*(?:billon(?:es)?|mil\s+millones|millones?|palos?|barras?|mil)?(?:\s+de\s+pesos)?)\s+o\s+m[aá]s",
+            rf"({amount_atom}\s*{unit_pattern}?(?:\s+de\s+pesos)?)\s+o\s+m[aá]s",
             re.IGNORECASE,
         )
         om = _o_mas_re.search(normalized_query)
         if om:
-            amount = money_to_cop(om.group(1))
+            amount = _to_cop(om.group(1))
             if amount and amount >= 1_000_000:
                 params["valor_min"] = amount
                 # Remove matched span
@@ -1141,7 +1203,7 @@ class QueryRouter:
 
         amount_text = (
             rf"({amount_atom}\s*"
-            r"(?:billon(?:es)?|mil\s+millones|millones?|palos?|barras?|mil)?"
+            rf"{unit_pattern}?"
             r"(?:\s+de\s+pesos)?)"
         )
         polarity_patterns = (
@@ -1213,7 +1275,7 @@ class QueryRouter:
         )
         for field, pattern in polarity_patterns:
             for match in list(pattern.finditer(normalized_query)):
-                amount = money_to_cop(match.group(1))
+                amount = _to_cop(match.group(1))
                 if amount is None or amount < 1_000_000:
                     continue
                 params[field] = amount
@@ -1234,7 +1296,7 @@ class QueryRouter:
             re.IGNORECASE,
         )
         for match in list(_less_than_post_re.finditer(normalized_query)):
-            amount = money_to_cop(match.group(1))
+            amount = _to_cop(match.group(1))
             if amount and amount >= 1_000_000:
                 params["valor_max"] = amount
                 span = normalized_query[match.start():match.end()]
@@ -1250,7 +1312,7 @@ class QueryRouter:
             re.IGNORECASE,
         )
         for match in list(_more_than_post_re.finditer(normalized_query)):
-            amount = money_to_cop(match.group(1))
+            amount = _to_cop(match.group(1))
             if amount and amount >= 1_000_000:
                 params["valor_min"] = amount
                 span = normalized_query[match.start():match.end()]
@@ -1262,7 +1324,7 @@ class QueryRouter:
                 )
 
         matches = list(re.finditer(
-            rf"(?:(?:mas|mayor(?:es)?|superior(?:es)?|superen?)\s+(?:de|a)|(?:menos|menor(?:es)?)\s+(?:de|a)|hasta|por|de|desde)?\s*({amount_atom})\s*(?:billon(?:es)?|mil millones|millones?|palos?|barras?|\bmil\b)?(?:\s+de\s+pesos)?",
+            rf"(?:(?:mas|mayor(?:es)?|superior(?:es)?|superen?)\s+(?:de|a)|(?:menos|menor(?:es)?)\s+(?:de|a)|hasta|por|de|desde)?\s*({amount_atom})\s*{unit_pattern}?(?:\s+de\s+pesos)?",
             normalized_query,
         ))
 
@@ -1271,7 +1333,7 @@ class QueryRouter:
             number_part = match.group(1)
             if number_part in year_tokens:
                 continue
-            amount = money_to_cop(raw)
+            amount = _to_cop(raw)
             if amount is None or amount < 1_000_000:
                 continue
 
@@ -1287,6 +1349,26 @@ class QueryRouter:
                     params.setdefault("valor_max", int(amount * 1.2))
             else:
                 params.setdefault("valor_max", amount)
+
+        if smmlv_sources and smmlv_year is not None:
+            source_values: dict[str, str] = {}
+            source_texts: dict[str, str] = {}
+            for field in ("valor_min", "valor_max"):
+                value = params.get(field)
+                if isinstance(value, int) and value in smmlv_sources:
+                    source_values[field], source_texts[field] = smmlv_sources[value]
+            params["money_metadata"] = {
+                "unit": "SMMLV",
+                "reference_year": smmlv_year,
+                "reference_year_assumed": smmlv_year_assumed,
+                "year_authority": (
+                    "current_bogota_year" if smmlv_year_assumed else "query_date_scope"
+                ),
+                "annual_value_cop": smmlv_cop(smmlv_year),
+                "source_values": source_values,
+                "source_texts": source_texts,
+                "representation_kind": "indexed_unit",
+            }
 
         return params, consumed_spans
 
@@ -1342,7 +1424,11 @@ class QueryRouter:
         for alias in ESTADO_SYNONYMS:
             cleaned = re.sub(rf"\b{re.escape(alias)}\b", " ", cleaned)
         cleaned = re.sub(r"\b(?:\d+(?:[.,]\d+)?)\b", " ", cleaned)
-        cleaned = re.sub(r"\b(?:millon(?:es)?|mil|billon(?:es)?|palos?|barras?|pesos)\b", " ", cleaned)
+        cleaned = re.sub(
+            rf"\b(?:millon(?:es)?|mil|billon(?:es)?|palos?|barras?|pesos|{SMMLV_UNIT_PATTERN})\b",
+            " ",
+            cleaned,
+        )
         # Strip punctuation that can stick to tokens (e.g., "actualmente?")
         cleaned = re.sub(r"[?¿!¡.,;:\"'(){}[\]]", " ", cleaned)
         cleaned = re.sub(r"\s+", " ", cleaned).strip()

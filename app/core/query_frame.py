@@ -54,6 +54,7 @@ _SCOPE_KEYS = frozenset({
 _MODIFIER_KEYS = frozenset({
     "fecha_desde", "fecha_hasta",
     "valor_min", "valor_max",
+    "money_metadata",
     "estado", "estado_field", "estado_family",
     "estado_contrato", "estado_de_apertura_del_proceso", "estado_del_procedimiento",
     "estado_contrato_adicional",
