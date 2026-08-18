@@ -2,7 +2,10 @@ from __future__ import annotations
 
 import re
 import unicodedata
+from decimal import Decimal
 from typing import Any
+
+from app.core.money_resolution import resolve_amount
 
 
 def safe_money(value: Any) -> float:
@@ -29,19 +32,29 @@ def normalize_text(text: str) -> str:
 
 
 def money_to_cop(raw_text: str) -> int | None:
-    """Parses colloquial Colombian money expressions into COP integers."""
+    """Parses colloquial Colombian money expressions into COP integers.
+
+    Contrato público inalterado: ``str -> int | None``. La cantidad la resuelve
+    ``app.core.money_resolution`` (puntuación colombiana, Decimal); las unidades
+    y su escala siguen siendo autoridad de esta función.
+    """
     text = normalize_text(raw_text)
-    match = re.search(r"(\d+(?:[.,]\d+)?)", text)
-    if match:
-        amount = float(match.group(1).replace(",", "."))
-    elif re.search(r"\bun\b", text):
-        amount = 1.0
-    elif re.search(r"\bmil\s+millones\b", text):
-        amount = 1.0   # "mil millones" = 1 000 000 000 (one billion), not 1000 × 1e9
-    elif re.search(r"\bmil\b", text):
-        amount = 1000.0
-    else:
-        return None
+    amount = resolve_amount(text)
+    if amount is None:
+        # Compatibilidad legacy: expresiones sin dígito cuya cantidad va
+        # implícita en la palabra. Es el mínimo necesario para que "un billón" y
+        # "mil millones" sigan valiendo lo de siempre. M4 sustituirá esta rama
+        # por un tokenizador de numerales verbales; hasta entonces "dos mil
+        # millones" seguirá cayendo aquí y valiendo 10^9 (bug H2 conocido,
+        # congelado en tests/test_money_v2_invariants.py).
+        if re.search(r"\bun\b", text):
+            amount = Decimal(1)
+        elif re.search(r"\bmil\s+millones\b", text):
+            amount = Decimal(1)   # "mil millones" = 1 000 000 000, no 1000 × 1e9
+        elif re.search(r"\bmil\b", text):
+            amount = Decimal(1000)
+        else:
+            return None
 
     multiplier = 1
 
