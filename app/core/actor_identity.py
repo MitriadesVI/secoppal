@@ -48,6 +48,25 @@ módulo 11 con probabilidad ≈1/11, así que un DV válido nunca produce
 ``confidence="declared"``. Y la ausencia de DV **no** es evidencia de
 cédula: la cédula simplemente no tiene DV, no lo tiene inválido.
 
+Autoridad sobre la identidad ≠ calidad del dato
+-----------------------------------------------
+El DV no forma parte del NIT: es un dato asociado que se consigna aparte.
+De ahí que sean dos preguntas independientes —*cuál es el número que la
+fuente declaró* y *si el DV que la acompaña supera la validación*— y que
+este módulo nunca deje que la segunda reescriba la primera::
+
+    fuente publica  900123456-7
+        ├─ identidad declarada → IdentityKey("NIT", "900123456")   (intacta)
+        └─ DV declarado 7 vs calculado 8 → CHECK_DIGIT_MISMATCH    (calidad)
+
+Corregir el número a ``900123456-8`` porque el cálculo dice otra cosa
+sería fabricar una identidad que ninguna fuente entregó. Ignorar la
+discrepancia sería perder la única señal de que ese registro está mal
+publicado. Se hace lo tercero: se conserva la identidad y se anota el
+defecto, de modo que un ``900123456`` de RUP y un ``900123456-7`` de otra
+fuente se unan por la misma llave sin que se pierda que una de las dos
+traía un DV inconsistente.
+
 Frontera del módulo
 -------------------
 Puro: sin red, sin base de datos, sin filesystem, sin reloj, sin
@@ -71,6 +90,21 @@ __all__ = [
     "IdentityConfidence",
     "IdentityKey",
     "IdentityMatch",
+    # Los códigos de razón son contrato público: quien consuma esta capa
+    # decide sobre ellos (p. ej. advertir de un DV defectuoso) y debe
+    # compararlos contra la constante, no contra un literal suelto.
+    "REASON_CHECK_DIGIT_EXPLICIT",
+    "REASON_CHECK_DIGIT_MISMATCH",
+    "REASON_CHECK_DIGIT_NOT_APPLICABLE",
+    "REASON_CHECK_DIGIT_NOT_SEPARATED",
+    "REASON_CHECK_DIGIT_VALIDATED",
+    "REASON_EMPTY",
+    "REASON_INVALID_TYPE",
+    "REASON_NO_DIGITS",
+    "REASON_OUT_OF_RANGE",
+    "REASON_SENTINEL_DISCARDED",
+    "REASON_TYPE_DECLARED",
+    "REASON_TYPE_UNDETERMINED",
     "compute_check_digit",
     "normalize_identity",
 ]
@@ -136,6 +170,11 @@ REASON_TYPE_UNDETERMINED = "IDENTITY_TYPE_UNDETERMINED"
 REASON_CHECK_DIGIT_EXPLICIT = "IDENTITY_CHECK_DIGIT_EXPLICIT"
 REASON_CHECK_DIGIT_VALIDATED = "IDENTITY_CHECK_DIGIT_VALIDATED"
 REASON_CHECK_DIGIT_NOT_SEPARATED = "IDENTITY_CHECK_DIGIT_NOT_SEPARATED"
+REASON_CHECK_DIGIT_NOT_APPLICABLE = "IDENTITY_CHECK_DIGIT_NOT_APPLICABLE"
+# Reservado para UN caso: una fuente publicó un DV y el cálculo lo
+# desmiente. Nunca se emite cuando nadie declaró un DV — si se usara
+# también para la hipótesis descartada de un número desnudo, dejaría de
+# poder señalar el dato defectuoso, que es lo único que interesa medir.
 REASON_CHECK_DIGIT_MISMATCH = "IDENTITY_CHECK_DIGIT_MISMATCH"
 REASON_EMPTY = "IDENTITY_EMPTY"
 REASON_INVALID_TYPE = "IDENTITY_INVALID_TYPE"
@@ -290,39 +329,59 @@ def _clean_raw(value: object) -> tuple[str | None, tuple[str, ...]]:
 
 
 def _split_check_digit(
-    cleaned_raw: str, digits: str,
+    cleaned_raw: str, digits: str, declared_type: "DocumentType | None",
 ) -> tuple[str, str | None, tuple[str, ...]]:
     """Separa ``digits`` en ``(base, dv, razones)``.
 
-    Dos caminos, y solo dos:
+    El dígito de verificación es un concepto del NIT. Una cédula no tiene
+    DV, así que cuando la fuente declara ``CC`` no se aplica ninguna regla
+    de DV: el número entero ES la cédula. Sin esta guarda, ~1 de cada 11
+    cédulas de diez dígitos satisface el módulo 11 por azar y perdería su
+    último dígito, convirtiéndose en el documento de otra persona.
 
-    1. **DV explícitamente separado** en el crudo (``…-1``, ``… 1``). Se
-       respeta tal cual, SIN validarlo: la fuente ya declaró dónde
-       termina el base, y sobrescribir esa declaración con una regla
-       aritmética sería contradecir el dato.
-    2. **Secuencia desnuda.** El último dígito se separa como DV
-       únicamente si el módulo 11 del resto lo confirma. Si no confirma,
-       el número se conserva ÍNTEGRO.
+    Para todo lo demás hay dos caminos, y solo dos:
 
-    El punto 2 es la corrección al defecto que el diagnóstico AP0 dejó
-    documentado: hoy ``8600345941`` (sin separadores) no coincide con
-    ``860034594`` y el registro se pierde en silencio. Aquí sí coincide,
-    porque ``dv("860034594") == 1``. Y ``1140835135`` —una cédula real de
-    diez dígitos— NO se parte, porque ``dv("114083513") == 6 != 5``: la
-    misma regla que recupera el NIT protege a la cédula de ser mutilada.
+    1. **DV explícitamente separado** en el crudo (``…-1``, ``… 1``). El
+       ``base_number`` se respeta tal cual: la fuente ya declaró dónde
+       termina el número, y reescribirlo con aritmética propia sería
+       inventar una identidad distinta de la que la fuente entregó. El DV
+       declarado SÍ se contrasta con el cálculo, pero el resultado es
+       *calidad del dato*, no autoridad sobre la identidad: si discrepa se
+       anota ``CHECK_DIGIT_MISMATCH`` y nada más cambia. Identidad y
+       calidad son dos preguntas distintas y se responden por separado.
+    2. **Secuencia desnuda.** Aquí nadie declaró un DV, así que no hay
+       nada con qué discrepar: solo una hipótesis que el módulo 11
+       confirma o no. Si confirma, se separa; si no, el número se conserva
+       ÍNTEGRO y se anota únicamente que no se separó. Emitir
+       ``MISMATCH`` en este camino haría irreconocible el caso que sí
+       importa —una fuente que publicó un DV equivocado—.
+
+    El punto 2 corrige el defecto que el diagnóstico AP0 dejó documentado:
+    ``8600345941`` no coincidía con ``860034594`` y el registro se perdía
+    en silencio. Aquí sí coincide, porque ``dv("860034594") == 1``.
     """
+    if declared_type == "CC":
+        return digits, None, (REASON_CHECK_DIGIT_NOT_APPLICABLE,)
+
     explicit = _EXPLICIT_CHECK_DIGIT_RE.search(cleaned_raw)
     if explicit is not None and len(digits) > 1:
-        return digits[:-1], digits[-1], (REASON_CHECK_DIGIT_EXPLICIT,)
+        base, declared_dv = digits[:-1], digits[-1]
+        reasons = [REASON_CHECK_DIGIT_EXPLICIT]
+        expected = compute_check_digit(base)
+        if expected is None or str(expected) != declared_dv:
+            # La identidad NO se toca: solo se registra que el DV que la
+            # fuente publicó no supera la validación.
+            reasons.append(REASON_CHECK_DIGIT_MISMATCH)
+        else:
+            reasons.append(REASON_CHECK_DIGIT_VALIDATED)
+        return base, declared_dv, tuple(reasons)
 
     if len(digits) > 1:
         candidate_base, candidate_dv = digits[:-1], digits[-1]
         expected = compute_check_digit(candidate_base)
         if expected is not None and str(expected) == candidate_dv:
             return candidate_base, candidate_dv, (REASON_CHECK_DIGIT_VALIDATED,)
-        return digits, None, (
-            REASON_CHECK_DIGIT_MISMATCH, REASON_CHECK_DIGIT_NOT_SEPARATED,
-        )
+        return digits, None, (REASON_CHECK_DIGIT_NOT_SEPARATED,)
 
     return digits, None, (REASON_CHECK_DIGIT_NOT_SEPARATED,)
 
@@ -375,7 +434,9 @@ def normalize_identity(
             confidence="undetermined", reason_codes=_dedupe(reasons),
         )
 
-    base_number, check_digit, split_reasons = _split_check_digit(cleaned, digits)
+    base_number, check_digit, split_reasons = _split_check_digit(
+        cleaned, digits, declared_type,
+    )
     reasons.extend(split_reasons)
 
     # Sanidad de rango sobre el BASE. No discrimina tipo (INV-NO-LENGTH):

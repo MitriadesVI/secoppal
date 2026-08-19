@@ -16,6 +16,11 @@ import pytest
 
 from app.core.actor_identity import (
     CHECK_DIGIT_WEIGHTS,
+    REASON_CHECK_DIGIT_EXPLICIT,
+    REASON_CHECK_DIGIT_MISMATCH,
+    REASON_CHECK_DIGIT_NOT_APPLICABLE,
+    REASON_CHECK_DIGIT_NOT_SEPARATED,
+    REASON_CHECK_DIGIT_VALIDATED,
     IdentityKey,
     IdentityMatch,
     compute_check_digit,
@@ -120,14 +125,127 @@ def test_inv_dv_reason_codes_distinguish_an_explicit_dv_from_a_validated_one():
     misma evidencia: uno lo afirmó la fuente, al otro lo respalda la
     aritmética. La confianza no los separa, los códigos de razón sí.
     """
-    explicit = normalize_identity("900.123.456-7")   # DV declarado, no confirmado
+    explicit = normalize_identity("860.034.594-1")   # DV declarado Y confirmado
     validated = normalize_identity("8600345941")     # DV confirmado por módulo 11
 
     assert explicit.confidence == validated.confidence == "inferred_from_check_digit"
-    assert "IDENTITY_CHECK_DIGIT_EXPLICIT" in explicit.reason_codes
-    assert "IDENTITY_CHECK_DIGIT_VALIDATED" not in explicit.reason_codes
-    assert "IDENTITY_CHECK_DIGIT_VALIDATED" in validated.reason_codes
-    assert "IDENTITY_CHECK_DIGIT_EXPLICIT" not in validated.reason_codes
+    assert REASON_CHECK_DIGIT_EXPLICIT in explicit.reason_codes
+    assert REASON_CHECK_DIGIT_EXPLICIT not in validated.reason_codes
+
+
+# ---------------------------------------------------------------------------
+# AP1.1 — autoridad sobre la identidad frente a calidad del dato.
+# ---------------------------------------------------------------------------
+
+
+def test_declared_check_digit_is_validated_but_never_rewrites_the_identity():
+    """El DV declarado se contrasta; el número declarado no se corrige.
+
+    ``900.123.456-7`` trae un DV que el módulo 11 desmiente (el cálculo da
+    8). Reescribir la identidad a ``900123456-8`` fabricaría un documento
+    que ninguna fuente entregó; ignorar la discrepancia perdería la única
+    señal de que el registro está mal publicado. Se hace lo tercero.
+    """
+    match = normalize_identity("900.123.456-7")
+
+    assert match.key == IdentityKey("NIT", "900123456")   # identidad intacta
+    assert match.check_digit == "7"                        # el DV declarado, no el calculado
+    assert REASON_CHECK_DIGIT_EXPLICIT in match.reason_codes
+    assert REASON_CHECK_DIGIT_MISMATCH in match.reason_codes
+    assert REASON_CHECK_DIGIT_VALIDATED not in match.reason_codes
+
+
+def test_declared_check_digit_that_validates_is_marked_as_such():
+    match = normalize_identity("860.034.594-1")
+    assert match.check_digit == "1"
+    assert REASON_CHECK_DIGIT_VALIDATED in match.reason_codes
+    assert REASON_CHECK_DIGIT_MISMATCH not in match.reason_codes
+
+
+def test_a_defective_check_digit_still_joins_with_the_same_actor():
+    """El caso que motiva la regla: unir RUP con una fuente de DV defectuoso.
+
+    Una fuente publica ``900123456`` y otra ``900123456-7`` (DV que no
+    valida). Son el mismo actor y deben unirse; lo que no puede perderse es
+    que una de las dos traía el dato mal.
+    """
+    from_rup = normalize_identity("900123456", document_type="NIT", source="rup")
+    from_other = normalize_identity("900.123.456-7", document_type="NIT", source="otra")
+
+    assert from_rup.key == from_other.key
+    assert REASON_CHECK_DIGIT_MISMATCH not in from_rup.reason_codes
+    assert REASON_CHECK_DIGIT_MISMATCH in from_other.reason_codes
+
+
+def test_mismatch_is_never_emitted_when_no_source_declared_a_check_digit():
+    """Un número desnudo no discrepa de nada: solo descarta una hipótesis.
+
+    Si ``MISMATCH`` se emitiera también aquí dejaría de poder señalar el
+    caso que sí importa —una fuente que publicó un DV equivocado— y se
+    volvería ruido incontable.
+    """
+    match = normalize_identity("9001234567")
+    assert match.base_number == "9001234567"
+    assert REASON_CHECK_DIGIT_MISMATCH not in match.reason_codes
+    assert REASON_CHECK_DIGIT_NOT_SEPARATED in match.reason_codes
+
+
+# El DV es un concepto del NIT. ~1 de cada 11 cédulas de diez dígitos
+# satisface el módulo 11 por azar; sin la guarda de tipo perderían su
+# último dígito y pasarían a identificar a otra persona.
+_CEDULAS_WHOSE_LAST_DIGIT_PASSES_MODULO_11 = [
+    "1628194821", "1555979711", "1342366712", "1121547280", "1242731672",
+]
+
+
+@pytest.mark.parametrize("raw", _CEDULAS_WHOSE_LAST_DIGIT_PASSES_MODULO_11)
+def test_a_declared_cedula_never_loses_its_last_digit_to_the_nit_rule(raw):
+    match = normalize_identity(raw, document_type="CC")
+    assert match.key == IdentityKey("CC", raw)
+    assert match.check_digit is None
+    assert REASON_CHECK_DIGIT_NOT_APPLICABLE in match.reason_codes
+
+
+def test_a_declared_cedula_ignores_even_an_explicitly_separated_digit():
+    """Con CC declarada, un separador final no convierte nada en DV."""
+    match = normalize_identity("1.140.835.135-5", document_type="CC")
+    assert match.key == IdentityKey("CC", "11408351355")
+    assert match.check_digit is None
+
+
+def test_the_cedula_guard_does_not_weaken_the_nit_path():
+    """La guarda es por tipo declarado, no un apagado global de la regla."""
+    assert normalize_identity("1628194821", document_type="NIT").check_digit == "1"
+    assert normalize_identity("1628194821").check_digit == "1"
+
+
+@pytest.mark.parametrize("declared", [None, "NIT", "UNKNOWN"])
+@pytest.mark.parametrize(
+    "raw",
+    [
+        "860034594", "860034594-1", "860.034.594-1", "8,600,345,941",
+        "860034594 1", "900123456", "900.123.456-7", "8600345941",
+        "9001234567", "1140835135", "7534386", "900264685",
+    ],
+)
+def test_adding_quality_evidence_never_moved_a_non_cedula_key(raw, declared):
+    """Contrato de compatibilidad: validar el DV NO reubicó ninguna llave.
+
+    Añadir evidencia de calidad no puede mover identidades. Fuera del caso
+    de cédula declarada —cuya corrección ES el objetivo— cada
+    ``base_number`` sigue siendo el que ya producía la versión anterior.
+    Un barrido de 6072 entradas confirmó que los únicos 213 cambios
+    ocurren con ``document_type="CC"``.
+    """
+    expected = {
+        "860034594": "860034594", "860034594-1": "860034594",
+        "860.034.594-1": "860034594", "8,600,345,941": "860034594",
+        "860034594 1": "860034594", "900123456": "900123456",
+        "900.123.456-7": "900123456", "8600345941": "860034594",
+        "9001234567": "9001234567", "1140835135": "1140835135",
+        "7534386": "7534386", "900264685": "900264685",
+    }[raw]
+    assert normalize_identity(raw, document_type=declared).base_number == expected
 
 
 def test_inv_dv_a_real_cedula_is_never_mutilated_into_base_plus_dv():
