@@ -35,7 +35,11 @@ M2_MODIFIED_FILE_SHA256 = {
     # O1B/O1B.1 add a predicate gated by opportunity metadata; the
     # ordinary-query oracle below remains byte-identical and bounds that
     # authorization, including the calendar-date boundary correction.
-    "app/core/soql_builder.py": "89b158ba198a7be080f753679fa0ada917352dd48c82ebce6a0f2f3efee415af",
+    # AP2-C adds two builders (territories, observed names) that nothing else
+    # calls, plus one DatasetSpec field. The oracle below is unchanged, which
+    # is what bounds the claim: the ordinary query path emits the same SoQL
+    # byte for byte.
+    "app/core/soql_builder.py": "5682aa610c6ca59f9a91f64e98d313f6cbc106953f9feb774e9df4df9f4fed2e",
 }
 
 # M2.1 corrige únicamente dos consumidores visibles. Ambos quedan congelados y

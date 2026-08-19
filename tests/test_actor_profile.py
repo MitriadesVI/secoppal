@@ -43,8 +43,14 @@ class FakeSecopClient:
         self.fail = fail or set()
         self.exc = exc or RuntimeError("source down")
         self.calls: list[str] = []
+        self.timeouts: list[int] = []
 
-    def with_timeout(self, timeout: int) -> "FakeSecopClient":
+    def derived_for_timeout(self, timeout: int) -> "FakeSecopClient":
+        # El ensamblador usa este método y no `with_timeout` a propósito: es
+        # el que preserva un cliente doblado en vez de abrir un transporte
+        # nuevo — con `with_timeout`, este doble se saltaría y la prueba
+        # saldría a la red de verdad.
+        self.timeouts.append(timeout)
         return self
 
     def _dispatch(self, soql: str) -> list[dict]:

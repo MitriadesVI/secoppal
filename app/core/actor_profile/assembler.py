@@ -85,7 +85,11 @@ def _run_aspect(
         # El dataset no puede servir este aspecto (p. ej. no publica al
         # proveedor). No es un error de transporte: es una capacidad ausente.
         raise NotImplementedError(f"aspect {aspect.name} unsupported by {dataset_id}")
-    client = secop_client.with_timeout(timeout_s)
+    # `derived_for_timeout` y no `with_timeout`: el primero está declarado
+    # thread-safe —crea su propio transporte en vez de mutar el compartido— y
+    # preserva un cliente inyectado. `with_timeout` abriría un Socrata nuevo,
+    # que en un test con el cliente doblado significa salir a la red de verdad.
+    client = secop_client.derived_for_timeout(timeout_s)
     if aspect.transport == "query":
         return list(client.query(dataset_id, soql))
     return list(client.aggregate(dataset_id, soql))

@@ -23,6 +23,7 @@ import time
 from burr.core import State, action
 
 from app.core._followup_constants import SCOPE_TOPIC_KEYS
+from app.core.actor_profile.turn import maybe_handle_actor_profile
 from app.core.analytics import maybe_handle_analytical_query
 from app.core.observer import observe as observe_universe_fn
 from app.core.secop_client import SecopClient
@@ -43,6 +44,11 @@ from app.core.workflow.helpers import (
     _with_timing,
     _with_timings,
 )
+
+
+# Marca del turno de perfil en el estado y en el feedback. No es un análisis
+# de la capa analítica: comparte su canal de transporte, no su naturaleza.
+ACTOR_PROFILE_INTENT = "actor_profile"
 
 
 @action(reads=["resolved_params", "dataset_id", "soql_query", "user_query", "timings_ms"], writes=["results", "query_error", "total_count", "timeout_suggestions", "risk_flag_timeout", "needs_clarification", "clarification_reason", "analytical_response", "analytical_intent", "route_reason", "timings_ms"])
@@ -80,6 +86,37 @@ def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
             analytical_response=analytics.get("response", ""),
             analytical_intent=analytics.get("analytical_intent", ""),
             route_reason=analytics.get("route_reason", state.get("route_reason", "")),
+        )
+
+    # ── Ruta de perfil de actor (AP2) ──────────────────────────────────
+    # Después de los analyzers: una pregunta concreta ("cuánto suma lo
+    # contratado por el NIT X") merece su respuesta concreta. El perfil
+    # atiende la pregunta abierta, que es la que hoy no tiene respuesta
+    # correcta. Comparte el canal de respuesta pre-formateada con la capa
+    # analítica —el único que format_response y build_advisor_response
+    # respetan sin añadirle secciones tabulares—; el `route_reason` mantiene
+    # el trace honesto sobre cuál de las dos rutas atendió el turno.
+    profile_turn = maybe_handle_actor_profile(
+        params=params,
+        dataset_id=state.get("dataset_id", ""),
+        secop_client=secop_client,
+        soql_builder=soql_builder,
+    )
+    if profile_turn:
+        return _with_timing(
+            state,
+            "execute_total_ms",
+            start_total,
+            results=[],
+            query_error="",
+            total_count=int(profile_turn.get("total_count", 0) or 0),
+            timeout_suggestions=[],
+            risk_flag_timeout=False,
+            needs_clarification=False,
+            clarification_reason="",
+            analytical_response=profile_turn.get("response", ""),
+            analytical_intent=ACTOR_PROFILE_INTENT,
+            route_reason=profile_turn.get("route_reason", ""),
         )
 
     # ── Guard anti-WHERE 1=1 ─────────────────────────────────────────────
