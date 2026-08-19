@@ -1,0 +1,562 @@
+# SECOPPAL — Actor Profile focal corpus v1 (AP2-A)
+#
+# Corpus focal de la huella contractual de actor. Se ejecuta con el mismo
+# harness que el corpus general:
+#
+#     python scripts/run_query_corpus.py --corpus tests/fixtures/actor_profile_corpus_v1.yaml --mode all
+#
+# Qué cubre, y por qué cada familia está aquí
+# -------------------------------------------
+#   doc_explicit   — el camino feliz: un documento explícito debe llegar al
+#                    campo del proveedor, no al objeto contractual.
+#   money_vs_doc   — ADR-059 arbitra número-vs-monto. Un actor no puede nacer
+#                    de una cifra de dinero, ni un monto convertirse en actor.
+#   dataset_cap    — INV-NO-SILENT-DROP: el defecto que AP0 encontró vivo. El
+#                    actor NUNCA desaparece del frame por caer en procesos.
+#   name_path      — INV-NAME-NO-GUESS: detectar que se pregunta por un actor
+#                    NO autoriza a resolver quién es. AP2 declara; AP3 resuelve.
+#   topic_guard    — INV-ACTOR-PRECISION: la regresión que más importa. Una
+#                    señal débil de actor jamás puede secuestrar un tema.
+#   followup       — el actor sobrevive a los refinamientos que lo respetan y
+#                    bloquea los que no puede servir.
+#
+# Claves de params que este corpus asevera (contrato de AP2):
+#   contratista        — list[str] de variantes del documento (compatibilidad
+#                        total con el pipeline previo: SoQL, Radar, follow-up).
+#   actor_resolution   — "explicit_document" | "name_unresolved".
+#   actor_scope        — dict plano y serializable con la identidad tipada.
+#
+# Severity:
+#   critical — respuesta silenciosamente equivocada sobre un tercero.
+#   high     — pérdida de la consulta o falsa atribución.
+#   medium   — borde.
+#   smoke    — baseline positivo, alarma de regresión.
+version: 1
+generated_from: AP2-A source contract + AP0 diagnostic §11
+notes: |
+  Los documentos usados son de personas JURÍDICAS verificadas en el contrato de
+  fuente (860002400 = La Previsora) o números sintéticos. No se fija en el
+  corpus el par nombre+cédula de ningún ciudadano.
+
+queries:
+
+  # ──────────────────────────────────────────────────────────────────
+  # doc_explicit — un documento explícito gobierna la consulta
+  # ──────────────────────────────────────────────────────────────────
+
+  - id: AP2-DOC001
+    text: "contratos del NIT 860002400"
+    source: ap2_source_contract
+    severity: critical
+    category: doc_explicit
+    mode: parser
+    expected:
+      dataset: contratos
+      actor_resolution: explicit_document
+      contratista: ["860002400"]
+    expected_objeto_must_not_contain: [nit, "860002400"]
+    notes: El caso que AP0 verificó ya correcto. Aquí es baseline de no-regresión.
+
+  - id: AP2-DOC002
+    text: "contratos del NIT 860.034.594-1"
+    source: ap0_diagnostic
+    severity: critical
+    category: doc_explicit
+    mode: parser
+    expected:
+      dataset: contratos
+      actor_resolution: explicit_document
+      contratista: ["860034594"]
+    notes: DV separado. El base debe ser 860034594; la variante con DV puede acompañar.
+
+  - id: AP2-DOC003
+    text: "contratos del NIT 8600345941"
+    source: ap0_incidental_finding_2
+    severity: critical
+    category: doc_explicit
+    mode: parser
+    expected:
+      dataset: contratos
+      actor_resolution: explicit_document
+      contratista: ["860034594"]
+    notes: |
+      INCIDENTAL_FINDING #2 de AP0: sin separador el DV se perdía y 8600345941
+      no coincidía con 860034594. AP1 lo resuelve en la capa pura; aquí se exige
+      que el routing lo consuma.
+
+  - id: AP2-DOC004
+    text: "qué contratos tiene el proveedor con NIT 900123456"
+    source: ap2_routing
+    severity: high
+    category: doc_explicit
+    mode: parser
+    expected:
+      dataset: contratos
+      actor_resolution: explicit_document
+      contratista: ["900123456"]
+    expected_objeto_must_not_contain: [proveedor, contratos, tiene]
+
+  - id: AP2-DOC005
+    text: "contratos de la empresa NIT 830053105"
+    source: ap2_routing
+    severity: high
+    category: doc_explicit
+    mode: parser
+    expected:
+      dataset: contratos
+      actor_resolution: explicit_document
+      contratista: ["830053105"]
+    expected_objeto_must_not_contain: [empresa, nit]
+
+  - id: AP2-DOC006
+    text: "qué ha contratado el contratista 800197268"
+    source: ap2_routing
+    severity: high
+    category: doc_explicit
+    mode: parser
+    expected:
+      dataset: contratos
+      actor_resolution: explicit_document
+      contratista: ["800197268"]
+    expected_objeto_must_not_contain: [contratista, contratado]
+
+  - id: AP2-DOC007
+    text: "historial contractual del NIT 860002400"
+    source: ap2_routing
+    severity: high
+    category: doc_explicit
+    mode: parser
+    expected:
+      dataset: contratos
+      actor_resolution: explicit_document
+      contratista: ["860002400"]
+    expected_objeto_must_not_contain: [historial, contractual]
+
+  - id: AP2-DOC008
+    text: "contratos adjudicados al NIT 860002400 en 2025"
+    source: ap2_routing
+    severity: high
+    category: doc_explicit
+    mode: parser
+    expected:
+      dataset: contratos
+      actor_resolution: explicit_document
+      contratista: ["860002400"]
+      fecha_desde: "2025-01-01"
+      fecha_hasta: "2025-12-31"
+    notes: Actor + año. El documento y el rango temporal coexisten sin estorbarse.
+
+  - id: AP2-DOC009
+    text: "contratación de la persona con cédula 79482763"
+    source: ap2_source_contract
+    severity: critical
+    category: doc_explicit
+    mode: parser
+    expected:
+      dataset: contratos
+      actor_resolution: explicit_document
+      contratista: ["79482763"]
+    expected_objeto_must_not_contain: [persona, cedula, "cédula", contratacion]
+    notes: |
+      "cédula" declara el tipo documental. Sin esa señal el número sería
+      UNKNOWN; con ella la identidad es CC y no puede fusionarse con un NIT
+      del mismo número (INV-ID-TYPE).
+
+  - id: AP2-DOC010
+    text: "contratos de la cédula 1140835135"
+    source: ap0_diagnostic
+    severity: critical
+    category: doc_explicit
+    mode: parser
+    expected:
+      dataset: contratos
+      actor_resolution: explicit_document
+      contratista: ["1140835135"]
+    expected_objeto_must_not_contain: ["cédula", cedula]
+    notes: |
+      Cédula de 10 dígitos — la forma más frecuente del dataset (2,49M filas).
+      El último dígito NO puede leerse como DV: sería el documento de otra
+      persona.
+
+  - id: AP2-DOC011
+    text: "qué ha celebrado la persona 1140835135 en 2025"
+    source: ap0_diagnostic_P1
+    severity: critical
+    category: doc_explicit
+    mode: parser
+    expected:
+      actor_resolution: explicit_document
+      contratista: ["1140835135"]
+      fecha_desde: "2025-01-01"
+    expected_objeto_must_not_contain: [persona, celebrado]
+    notes: |
+      La patología P1 de AP0 en su forma original: hoy caía a dataset=procesos,
+      perdía la cédula y buscaba la palabra "persona". El actor debe sobrevivir
+      al parseo pase lo que pase con el dataset; el bloqueo es del plan.
+
+  - id: AP2-DOC012
+    text: "contratos adjudicados a 860002400"
+    source: ap2_routing
+    severity: high
+    category: doc_explicit
+    mode: parser
+    expected:
+      dataset: contratos
+      actor_resolution: explicit_document
+      contratista: ["860002400"]
+
+  # ──────────────────────────────────────────────────────────────────
+  # money_vs_doc — un monto no es un actor, y viceversa (ADR-059)
+  # ──────────────────────────────────────────────────────────────────
+
+  - id: AP2-MON001
+    text: "contratos de más de 900123456 pesos"
+    source: money_v2_arbitration
+    severity: critical
+    category: money_vs_doc
+    mode: parser
+    expected:
+      valor_min: 900123456
+      not_present: [contratista, actor_resolution]
+    notes: INV-MONEY — una cifra de dinero jamás produce un actor.
+
+  - id: AP2-MON002
+    text: "contratos mayores a 2000 millones"
+    source: money_v2
+    severity: high
+    category: money_vs_doc
+    mode: parser
+    expected:
+      valor_min: 2000000000
+      not_present: [contratista, actor_resolution]
+
+  - id: AP2-MON003
+    text: "contratos del NIT 860002400 mayores a 500 millones"
+    source: ap2_routing
+    severity: critical
+    category: money_vs_doc
+    mode: parser
+    expected:
+      actor_resolution: explicit_document
+      contratista: ["860002400"]
+      valor_min: 500000000
+    notes: |
+      Actor Y monto en el mismo turno. Ninguno puede canibalizar al otro: el
+      identificador se consume en el paso 1.5 y el monto sigue disponible.
+
+  - id: AP2-MON004
+    text: "contratos entre 1000 y 2000 millones en Antioquia"
+    source: money_v2
+    severity: high
+    category: money_vs_doc
+    mode: parser
+    expected:
+      valor_min: 1000000000
+      valor_max: 2000000000
+      not_present: [contratista, actor_resolution]
+
+  - id: AP2-MON005
+    text: "cuánto suma lo contratado por el NIT 860002400"
+    source: ap0_diagnostic_case10
+    severity: critical
+    category: money_vs_doc
+    mode: parser
+    expected:
+      actor_resolution: explicit_document
+      contratista: ["860002400"]
+    expected_objeto_must_not_contain: [contratado, suma]
+    notes: |
+      Caso 10 de AP0: sumaba SUM(precio_base) sobre LIKE '%contratado%' en
+      procesos y lo presentaba como el total del NIT.
+
+  # ──────────────────────────────────────────────────────────────────
+  # dataset_cap — INV-NO-SILENT-DROP
+  # ──────────────────────────────────────────────────────────────────
+
+  - id: AP2-DS001
+    text: "procesos del NIT 860002400"
+    source: ap0_diagnostic_P1
+    severity: critical
+    category: dataset_cap
+    mode: parser
+    expected:
+      dataset: procesos
+      actor_resolution: explicit_document
+      contratista: ["860002400"]
+    notes: |
+      El actor DEBE seguir en el frame aunque el dataset no pueda proyectarlo.
+      Borrarlo aquí es justamente la falla que hace que la respuesta parezca
+      correcta. El bloqueo lo aplica el plan, no el parser.
+
+  - id: AP2-DS002
+    text: "licitaciones abiertas del NIT 860002400"
+    source: ap2_routing
+    severity: critical
+    category: dataset_cap
+    mode: parser
+    expected:
+      actor_resolution: explicit_document
+      contratista: ["860002400"]
+
+  - id: AP2-DS003
+    text: "oportunidades para el proveedor con NIT 900123456"
+    source: ap2_routing
+    severity: high
+    category: dataset_cap
+    mode: parser
+    expected:
+      actor_resolution: explicit_document
+      contratista: ["900123456"]
+
+  - id: AP2-DS004
+    text: "convocatorias donde participa la cédula 79482763"
+    source: ap2_routing
+    severity: high
+    category: dataset_cap
+    mode: parser
+    expected:
+      actor_resolution: explicit_document
+      contratista: ["79482763"]
+
+  # ──────────────────────────────────────────────────────────────────
+  # name_path — INV-NAME-NO-GUESS (detectar ≠ resolver)
+  # ──────────────────────────────────────────────────────────────────
+
+  - id: AP2-NAME001
+    text: "contratos del proveedor FUNDACARIBE"
+    source: ap0_diagnostic_P2
+    severity: critical
+    category: name_path
+    mode: parser
+    expected:
+      actor_resolution: name_unresolved
+      not_present: [contratista]
+    expected_objeto_must_not_contain: [fundacaribe]
+    notes: |
+      INV-NO-TOPIC-FALLBACK. Hoy "fundacaribe" cae a objeto y produce el doble
+      error de AP0: se pierden los contratos cuyo objeto no la nombra y se le
+      atribuyen los de terceros que sí la mencionan.
+
+  - id: AP2-NAME002
+    text: "contratos del contratista FUNDACARIBE"
+    source: ap2_routing
+    severity: critical
+    category: name_path
+    mode: parser
+    expected:
+      actor_resolution: name_unresolved
+      not_present: [contratista]
+    expected_objeto_must_not_contain: [fundacaribe]
+
+  - id: AP2-NAME003
+    text: "qué contratos tiene FUNDACARIBE"
+    source: ap2_routing
+    severity: high
+    category: name_path
+    mode: parser
+    expected:
+      actor_resolution: name_unresolved
+      not_present: [contratista]
+    expected_objeto_must_not_contain: [fundacaribe]
+
+  - id: AP2-NAME004
+    text: "qué ha contratado FUNSOCOM"
+    source: ap0_diagnostic
+    severity: high
+    category: name_path
+    mode: parser
+    expected:
+      actor_resolution: name_unresolved
+      not_present: [contratista]
+    expected_objeto_must_not_contain: [funsocom]
+
+  - id: AP2-NAME005
+    text: "contratos de FUNDACARIBE"
+    source: ap0_diagnostic_P2
+    severity: critical
+    category: name_path
+    mode: parser
+    expected:
+      not_present: [actor_resolution, contratista]
+    notes: |
+      El bare-name ambiguo NO se resuelve en AP2 y TAMPOCO se clasifica como
+      actor: "contratos de X" es indistinguible de un tema ("contratos de
+      alimentación") sin consultar un índice de actores. La interpretación
+      pertenece a AP3. Clasificarlo aquí con una heurística agresiva rompería
+      INV-ACTOR-PRECISION en las ocho entradas de topic_guard.
+
+  - id: AP2-NAME006
+    text: "contratos de la empresa FUNDACARIBE"
+    source: ap2_routing
+    severity: high
+    category: name_path
+    mode: parser
+    expected:
+      actor_resolution: name_unresolved
+      not_present: [contratista]
+    expected_objeto_must_not_contain: [fundacaribe]
+    notes: |
+      "la empresa X" es contexto lingüístico fuerte; "de X" a secas no lo es.
+
+  # ──────────────────────────────────────────────────────────────────
+  # topic_guard — INV-ACTOR-PRECISION (la regresión que más importa)
+  # ──────────────────────────────────────────────────────────────────
+
+  - id: AP2-TOP001
+    text: "contratos de alimentación"
+    source: regression_baseline
+    severity: critical
+    category: topic_guard
+    mode: parser
+    expected:
+      objeto_contains: ["alimentacion"]
+      not_present: [actor_resolution, contratista]
+
+  - id: AP2-TOP002
+    text: "contratos de mantenimiento"
+    source: regression_baseline
+    severity: critical
+    category: topic_guard
+    mode: parser
+    expected:
+      objeto_contains: [mantenimiento]
+      not_present: [actor_resolution, contratista]
+
+  - id: AP2-TOP003
+    text: "contratos de adulto mayor"
+    source: market_pack_adulto_mayor
+    severity: critical
+    category: topic_guard
+    mode: parser
+    expected:
+      objeto_contains: [adulto]
+      not_present: [actor_resolution, contratista]
+
+  - id: AP2-TOP004
+    text: "contratos de vigilancia"
+    source: regression_baseline
+    severity: critical
+    category: topic_guard
+    mode: parser
+    expected:
+      objeto_contains: [vigilancia]
+      not_present: [actor_resolution, contratista]
+
+  - id: AP2-TOP005
+    text: "contratos de software"
+    source: regression_baseline
+    severity: high
+    category: topic_guard
+    mode: parser
+    expected:
+      objeto_contains: [software]
+      not_present: [actor_resolution, contratista]
+
+  - id: AP2-TOP006
+    text: "contratos de obra en Boyacá"
+    source: regression_baseline
+    severity: high
+    category: topic_guard
+    mode: parser
+    expected:
+      not_present: [actor_resolution, contratista]
+
+  - id: AP2-TOP007
+    text: "contratos de la alcaldía de Medellín"
+    source: regression_baseline
+    severity: critical
+    category: topic_guard
+    mode: parser
+    expected:
+      not_present: [actor_resolution, contratista]
+    notes: |
+      "la alcaldía de X" es un COMPRADOR. Que exista una ruta de actor no puede
+      convertir a las entidades compradoras en contratistas.
+
+  - id: AP2-TOP008
+    text: "procesos de aseo en Cali"
+    source: regression_baseline
+    severity: high
+    category: topic_guard
+    mode: parser
+    expected:
+      not_present: [actor_resolution, contratista]
+
+  - id: AP2-TOP009
+    text: "contratos de consultoría de la gobernación del Huila"
+    source: regression_baseline
+    severity: high
+    category: topic_guard
+    mode: parser
+    expected:
+      not_present: [actor_resolution, contratista]
+
+  # ──────────────────────────────────────────────────────────────────
+  # followup — el actor sobrevive lo que debe y bloquea lo que no puede
+  # ──────────────────────────────────────────────────────────────────
+
+  - id: AP2-FU001
+    source: ap2_followup
+    severity: critical
+    category: followup
+    mode: workflow
+    turns:
+      - text: "contratos del NIT 860002400"
+        expected_intent: new_search
+      - text: "solo 2025"
+        expected_intent: change_year
+        expected_frame:
+          contratista: ["860002400"]
+    notes: Refinar por año no puede perder al actor.
+
+  - id: AP2-FU002
+    source: ap2_followup
+    severity: critical
+    category: followup
+    mode: workflow
+    turns:
+      - text: "contratos del NIT 860002400"
+        expected_intent: new_search
+      - text: "los de mayor valor"
+        expected_frame:
+          contratista: ["860002400"]
+
+  - id: AP2-FU003
+    source: ap2_followup
+    severity: critical
+    category: followup
+    mode: workflow
+    turns:
+      - text: "contratos del NIT 860002400"
+        expected_intent: new_search
+      - text: "ahora en Atlántico"
+        expected_frame:
+          contratista: ["860002400"]
+
+  - id: AP2-FU004
+    source: ap2_followup
+    severity: critical
+    category: followup
+    mode: workflow
+    turns:
+      - text: "contratos del NIT 860002400"
+        expected_intent: new_search
+      - text: "y ahora los procesos"
+        expected_frame:
+          contratista: ["860002400"]
+    notes: |
+      El giro a procesos NO puede borrar al actor. Debe conservarlo y dejar que
+      la política de capacidad de dataset bloquee con una aclaración explícita.
+
+  - id: AP2-FU005
+    source: ap2_followup
+    severity: high
+    category: followup
+    mode: workflow
+    turns:
+      - text: "contratos del NIT 860002400"
+        expected_intent: new_search
+      - text: "y ahora contratos de alimentación"
+        expected_frame:
+          objeto_contains: ["alimentacion"]
+    notes: Un tema nuevo sí puede reemplazar al actor — eso es cambiar de pregunta.

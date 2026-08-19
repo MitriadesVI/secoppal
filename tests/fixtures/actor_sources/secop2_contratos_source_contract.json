@@ -1,0 +1,317 @@
+{
+  "_comment": [
+    "Contrato de fuente VERIFICADO para el perfil contractual de actor (AP2-A).",
+    "Verificado el 2026-08-18 contra el servicio vivo con probes ACOTADAS",
+    "(solo agregaciones y muestras <=5 filas; ningun scan masivo, ninguna descarga).",
+    "Regla: ningun campo entra al codigo de AP2 sin figurar aqui. Si la fuente",
+    "cambia, este archivo cambia primero y los tests lo denuncian."
+  ],
+  "dataset_id": "jbjy-vk9h",
+  "dataset_name": "SECOP II - Contratos Electronicos",
+  "domain": "www.datos.gov.co",
+  "verified_at": "2026-08-18",
+  "total_rows_observed": 5958553,
+  "fields": {
+    "document": {
+      "name": "documento_proveedor",
+      "type": "text",
+      "role": "documento del proveedor/contratista",
+      "null_count": 1,
+      "sentinel_values": [
+        "No Definido"
+      ],
+      "sentinel_count": 175764,
+      "notes": "Es TEXT, no number. Se compara como cadena exacta."
+    },
+    "document_type": {
+      "name": "tipodocproveedor",
+      "type": "text",
+      "role": "TIPO DOCUMENTAL EXPLICITO del proveedor",
+      "notes": [
+        "Hallazgo de AP2-A: el diagnostico AP0 ubicaba la unica columna de tipo",
+        "documental en SECOP I (f789-7hwg). Existe tambien aqui, en el dataset",
+        "que AP2 ya consulta. Es la evidencia de mayor calidad para INV-ID-TYPE",
+        "y no cuesta una integracion nueva."
+      ],
+      "observed_values": {
+        "Cédula de Ciudadanía": 4875277,
+        "NIT": 893444,
+        "No Definido": 168755,
+        "Otro": 11420,
+        "Cédula de Extranjería": 7078,
+        "Permiso por Protección Temporal": 1409,
+        "Tarjeta de Identidad": 487,
+        "Pasaporte": 466,
+        "Permiso especial de permanencia": 166,
+        "Registro Civil": 51
+      }
+    },
+    "provider_name": {
+      "name": "proveedor_adjudicado",
+      "type": "text",
+      "role": "nombre OBSERVADO del proveedor en cada contrato",
+      "notes": [
+        "NO es razon social registral: es la cadena que la entidad compradora",
+        "escribio en ese contrato. Un mismo documento acumula variantes y",
+        "nombres de uniones temporales que lo incluyen (ver observed_names)."
+      ]
+    },
+    "contract_id": {
+      "name": "id_contrato",
+      "type": "text",
+      "role": "identificador contractual",
+      "null_count": 0,
+      "distinct_count": 5958553,
+      "unique": true,
+      "notes": "Verificado: count(*) == count_distinct(id_contrato). Sin duplicados."
+    },
+    "date": {
+      "name": "fecha_de_firma",
+      "type": "calendar_date",
+      "role": "fecha contractual canonica (DatasetSpec.date de contratos)",
+      "null_count": 423975,
+      "null_rate": 0.0712,
+      "notes": [
+        "7,1% de los contratos no publican fecha de firma. Toda metrica temporal",
+        "del perfil (primera/ultima actividad, distribucion anual) se calcula",
+        "sobre el subconjunto con fecha y debe declararlo.",
+        "Socrata OMITE la clave del JSON cuando el valor es null; no envia null. Las dos filas congeladas (estados 'Borrador' y 'Cancelado') no traen fecha_de_firma en absoluto. El consumidor debe usar row.get(...), nunca row[...]."
+      ],
+      "omitted_when_null": true
+    },
+    "value": {
+      "name": "valor_del_contrato",
+      "type": "number",
+      "role": "valor contractual REPORTADO por la fuente",
+      "null_count": 0,
+      "notes": "Llega como string en el JSON de Socrata; se coerciona aguas arriba."
+    },
+    "buyer": {
+      "name": "nombre_entidad",
+      "type": "text",
+      "null_count": 0
+    },
+    "modality": {
+      "name": "modalidad_de_contratacion",
+      "type": "text",
+      "null_count": 0
+    },
+    "territory_department": {
+      "name": "departamento",
+      "type": "text",
+      "null_count": 0
+    },
+    "territory_city": {
+      "name": "ciudad",
+      "type": "text"
+    },
+    "state": {
+      "name": "estado_contrato",
+      "type": "text"
+    },
+    "url": {
+      "name": "urlproceso",
+      "type": "url",
+      "notes": "Crudo = objeto {\"url\": ...}."
+    },
+    "group_flag": {
+      "name": "es_grupo",
+      "type": "text",
+      "notes": "Marca union temporal/consorcio. AP2 no lo interpreta (AP5)."
+    }
+  },
+  "document_format_findings": {
+    "lengths_overall": {
+      "10": 2549701,
+      "8": 2197444,
+      "9": 821224,
+      "7": 199329,
+      "11": 180063,
+      "6": 7338
+    },
+    "lengths_when_type_is_nit": {
+      "9": 803533,
+      "10": 59228,
+      "8": 21432,
+      "11": 5627
+    },
+    "lengths_when_type_is_cedula": {
+      "10": 2487433,
+      "8": 2174245,
+      "7": 194772,
+      "9": 10562
+    },
+    "findings": [
+      "El NIT se publica MAYORITARIAMENTE SIN digito de verificacion: 803.533 de 893.444 (90%) traen 9 digitos. La forma canonica de la fuente coincide con IdentityKey.base_number.",
+      "59.228 NIT traen 10 digitos = base + DV pegado.",
+      "Existe una minoria con DV SEPARADO en el propio valor publicado ('900454994-9', '900635196-5'). Un filtro de igualdad exacta contra el base no los alcanza: el perfil consulta variantes.",
+      "La cedula de 10 digitos es el caso mas frecuente del dataset (2.487.433). Es exactamente el caso que la guarda de tipo de AP1 protege del modulo 11.",
+      "El centinela 'No Definido' aparece en documento_proveedor incluso cuando tipodocproveedor dice 'NIT' (5.476) o 'Cédula de Ciudadanía' (186)."
+    ]
+  },
+  "duplicate_findings": {
+    "contract_rows": "sin duplicados por id_contrato (5.958.553 filas / 5.958.553 ids)",
+    "actor_collision": [
+      "Un mismo documento_proveedor aparece con MAS DE UN tipodocproveedor. No es teorico:",
+      "documento 860002400 -> 4.230 filas con 2 tipos ('NIT' y 'Otro').",
+      "documento 13848603 -> 193 filas: 191 con tipo 'Cédula de Ciudadanía' (persona natural)",
+      "y 1 con tipo 'NIT' a nombre de 'UNIÓN TEMPORAL MIGRACIÓN COLOMBIA 2021'.",
+      "Consecuencia: filtrar solo por documento MEZCLA actores distintos. Es la",
+      "materializacion en produccion de INV-ID-TYPE."
+    ]
+  },
+  "observed_names_sample": {
+    "_comment": "Un unico documento, once nombres. Prueba de que observed_name != razon social.",
+    "documento_proveedor": "860002400",
+    "tipodocproveedor": "NIT",
+    "names": [
+      {
+        "name": "LA PREVISORA S.A. COMPAÑÍA DE SEGUROS",
+        "count": 4211
+      },
+      {
+        "name": "UNIÓN TEMPORAL LA PREVISORA S.A. COMPAÑÍA DE SEGUROS -  POSITIVA COMPAÑÍA DE SEGUROS S.A.",
+        "count": 7
+      },
+      {
+        "name": "UNION TEMPORAL LA PREVISORA - AXA COLPATRIA - ALLIANZ SEGUROS - HDI - 26001053 H3 DE 2026 - AEROCIVIL",
+        "count": 3
+      },
+      {
+        "name": "UT PREVISORA-SOLIDARIA DEQUIN LP 003 2025",
+        "count": 1
+      }
+    ]
+  },
+  "reference_actor": {
+    "_comment": [
+      "Actor de referencia para tests y smoke: persona JURIDICA, sin PII personal.",
+      "Los conteos son de la consulta del 2026-08-18 y CAMBIAN con el tiempo: los",
+      "tests los usan como forma esperada, nunca como igualdad exacta."
+    ],
+    "documento_proveedor": "860002400",
+    "tipodocproveedor": "NIT",
+    "contract_count": 4230,
+    "total_reported_value": 1396701750307.83,
+    "first_signature_date": "2016-12-06",
+    "last_signature_date": "2026-08-14",
+    "top_buyers": [
+      {
+        "nombre_entidad": "Universidad del Atlántico",
+        "cnt": 36
+      },
+      {
+        "nombre_entidad": "MUNICIPIO DE MONTERIA",
+        "cnt": 35
+      },
+      {
+        "nombre_entidad": "GOBERNACION DEL CASANARE",
+        "cnt": 28
+      }
+    ],
+    "years": {
+      "2026": 511,
+      "2025": 844,
+      "2024": 801,
+      "2023": 500,
+      "2022": 344,
+      "2021": 267,
+      "2020": 251,
+      "2019": 208,
+      "2018": 81,
+      "2017": 17,
+      "2016": 1
+    },
+    "top_territories": [
+      {
+        "departamento": "Distrito Capital de Bogotá",
+        "cnt": 959
+      },
+      {
+        "departamento": "Boyacá",
+        "cnt": 396
+      },
+      {
+        "departamento": "Valle del Cauca",
+        "cnt": 293
+      }
+    ],
+    "top_modalities": [
+      {
+        "modalidad_de_contratacion": "Mínima cuantía",
+        "cnt": 2115
+      },
+      {
+        "modalidad_de_contratacion": "Selección Abreviada de Menor Cuantía",
+        "cnt": 1049
+      },
+      {
+        "modalidad_de_contratacion": "Contratación régimen especial",
+        "cnt": 375
+      }
+    ]
+  },
+  "frozen_rows": [
+    {
+      "id_contrato": "CO1.PCCNTR.8521233",
+      "referencia_del_contrato": "4600106154",
+      "nombre_entidad": "DISTRITO ESPECIAL DE CIENCIA TECNOLOGIA E INNOVACION DE MEDELLIN",
+      "departamento": "Antioquia",
+      "ciudad": "Medellín",
+      "objeto_del_contrato": "Adquirir pólizas de seguros del Distrito y conglomerado (grupo 5 SOAT)",
+      "modalidad_de_contratacion": "Licitación pública",
+      "valor_del_contrato": "621602149",
+      "estado_contrato": "Cancelado",
+      "proveedor_adjudicado": "LA PREVISORA S.A. COMPAÑÍA DE SEGUROS",
+      "documento_proveedor": "860002400",
+      "tipodocproveedor": "NIT",
+      "es_grupo": "No",
+      "urlproceso": {
+        "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.8772995&isFromPublicArea=True&isModal=true&asPopupView=true"
+      }
+    },
+    {
+      "id_contrato": "CO1.PCCNTR.352410",
+      "referencia_del_contrato": "CO1.PCCNTR.352410",
+      "nombre_entidad": "PERSONERIA MUNICIPAL  DE SAN PEDRO  SUCRE",
+      "departamento": "Sucre",
+      "ciudad": "San Pedro",
+      "objeto_del_contrato": "No definido",
+      "modalidad_de_contratacion": "Mínima cuantía",
+      "valor_del_contrato": "238000",
+      "estado_contrato": "Borrador",
+      "proveedor_adjudicado": "LA PREVISORA S.A. COMPAÑÍA DE SEGUROS",
+      "documento_proveedor": "860002400",
+      "tipodocproveedor": "NIT",
+      "es_grupo": "No",
+      "urlproceso": {
+        "url": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.342256&isFromPublicArea=True&isModal=true&asPopupView=true"
+      }
+    }
+  ],
+  "state_findings": [
+    "El universo por documento incluye contratos en estado 'Borrador' y 'Cancelado'.",
+    "AP2 NO los filtra: el perfil describe lo PUBLICADO, no lo ejecutado. Por eso",
+    "la metrica se llama 'valor contractual reportado' y no 'valor ejecutado'."
+  ],
+  "pii_findings": [
+    "El dataset expone nombre_representante_legal, identificaci_n_representante_legal,",
+    "domicilio_representante_legal, g_nero_representante_legal, n_mero_de_cuenta y",
+    "nombre_del_banco. AP2 NO los proyecta: lo que no se selecciona no puede filtrarse",
+    "al render (lista blanca en select_fields, no lista negra en el formatter).",
+    "La mayoria de contratistas de SECOP II son personas naturales (4,87M de cedulas),",
+    "asi que el perfil de un documento es, con frecuencia, el de un ciudadano."
+  ],
+  "out_of_scope": [
+    "procesos (p6dx-8zbt) no expone campo de proveedor: DatasetSpec.contractor is None.",
+    "RUP, RUES, SIRI, responsabilidad fiscal y Grupos de Proveedores siguen sin",
+    "contrato verificado (AP4). Ninguno entra en AP2."
+  ],
+  "null_semantics": [
+    "Socrata omite la clave en vez de enviar null. 'campo ausente' y 'campo nulo' son",
+    "la misma observacion en esta fuente, y ninguna de las dos es 'cero'.",
+    "Campos verificados SIN nulos (siempre presentes): id_contrato, valor_del_contrato,",
+    "nombre_entidad, modalidad_de_contratacion, departamento, documento_proveedor.",
+    "Campo con nulos materiales: fecha_de_firma (7,1%)."
+  ]
+}
