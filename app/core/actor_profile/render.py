@@ -31,20 +31,11 @@ muestra entero: es un identificador mercantil público, no un dato personal
 """
 from __future__ import annotations
 
+from app.core.actor_document_types import is_personal_source_type
 from app.core.actor_profile.models import ActorProfileResult
 from app.core.analytics.base import format_currency
 
 __all__ = ["mask_document", "render_actor_profile"]
-
-# Tipos documentales de PERSONA NATURAL, en las escrituras que la fuente
-# usa y en la de AP1. Su número se enmascara en pantalla.
-_PERSONAL_DOCUMENT_TYPES = frozenset({
-    "CC", "CE", "TI",
-    "cédula de ciudadanía", "cedula de ciudadania",
-    "cédula de extranjería", "cedula de extranjeria",
-    "tarjeta de identidad", "registro civil", "pasaporte",
-    "permiso por protección temporal", "permiso especial de permanencia",
-})
 
 _LIMITS_NOTICE = (
     "Esta es la actividad contractual publicada en SECOP II. No incluye "
@@ -53,11 +44,7 @@ _LIMITS_NOTICE = (
 )
 
 
-def _is_personal(document_type: str | None) -> bool:
-    if not document_type:
-        return False
-    value = document_type.strip()
-    return value in _PERSONAL_DOCUMENT_TYPES or value.lower() in _PERSONAL_DOCUMENT_TYPES
+_is_personal = is_personal_source_type
 
 
 def mask_document(document: str, document_type: str | None) -> str:
@@ -94,6 +81,12 @@ def _type_label(declared_type: str | None, observed_type: str | None) -> str:
     if _is_personal(observed_type) or _is_personal(declared_type):
         return str(observed_type or "Documento de identidad")
     return "Documento"
+
+
+def _declared_type(profile: ActorProfileResult) -> str | None:
+    """Tipo que la CONSULTA declaró, no el que la fuente publicó."""
+    declared = (profile.identity or {}).get("document_type")
+    return declared if declared not in (None, "", "UNKNOWN") else None
 
 
 def _distribution(title: str, pairs: tuple[tuple[str, int], ...]) -> str | None:
@@ -152,11 +145,20 @@ def _coverage_notes(profile: ActorProfileResult) -> list[str]:
         )
     if profile.has_mixed_document_types:
         types = ", ".join(profile.document_types_observed)
-        notes.append(
+        note = (
             f"⚠️ Ese número aparece en SECOP bajo más de un tipo de documento "
             f"({types}). Pueden ser actores distintos que comparten número, así "
             "que no sumo sus contratos como si fueran el mismo."
         )
+        if not _declared_type(profile):
+            # Sin tipo declarado no se puede filtrar por él, y recortar a
+            # ciegas sería inventar cuál de los dos actores interesa. La
+            # salida existe y es del usuario: decir si es NIT o cédula.
+            note += (
+                " Dime si buscas el NIT o la cédula y separo la huella de cada "
+                "uno."
+            )
+        notes.append(note)
     if profile.first_observed_date or profile.last_observed_date:
         notes.append(
             "El rango de actividad se calcula sobre los contratos que publican "
@@ -219,7 +221,9 @@ def render_actor_profile(profile: ActorProfileResult) -> str:
             "*Nombres con que aparece en SECOP*\n"
             f"{names}\n"
             "_Son los nombres que las entidades escribieron en cada contrato, "
-            "no una razón social registrada._"
+            "no una razón social registrada. Algunos pueden ser uniones "
+            "temporales o consorcios publicados bajo este mismo documento: el "
+            "conteo los incluye tal como la fuente los reporta._"
         )
 
     recent = _recent_block(profile)

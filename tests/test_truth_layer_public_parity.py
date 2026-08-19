@@ -36,10 +36,11 @@ M2_MODIFIED_FILE_SHA256 = {
     # ordinary-query oracle below remains byte-identical and bounds that
     # authorization, including the calendar-date boundary correction.
     # AP2-C adds two builders (territories, observed names) that nothing else
-    # calls, plus one DatasetSpec field. The oracle below is unchanged, which
-    # is what bounds the claim: the ordinary query path emits the same SoQL
-    # byte for byte.
-    "app/core/soql_builder.py": "5682aa610c6ca59f9a91f64e98d313f6cbc106953f9feb774e9df4df9f4fed2e",
+    # calls, plus one DatasetSpec field. AP2-E adds one WHERE predicate gated
+    # strictly by params["actor_scope"], a key only the actor route emits. The
+    # oracle below is unchanged, which is what bounds both claims: the ordinary
+    # query path emits the same SoQL byte for byte.
+    "app/core/soql_builder.py": "88dc8c35d5ad5627ab11dfd1f1035dc6c0801684e5e3de451f62b58e4e78333d",
 }
 
 # M2.1 corrige únicamente dos consumidores visibles. Ambos quedan congelados y

@@ -3,6 +3,7 @@ from __future__ import annotations
 import logging
 from dataclasses import dataclass
 
+from app.core.actor_document_types import incompatible_source_types
 from app.core.modality_dataset_projection import (
     DatasetModalityProjection,
     project_modality_filter,
@@ -521,7 +522,39 @@ class SoQLBuilder:
                         f"UPPER({spec.contractor}) LIKE UPPER('%{self._escape(contractor)}%')"
                     )
 
+            type_clause = self._actor_document_type_clause(spec, params)
+            if type_clause:
+                where_clauses.append(type_clause)
+
         return " AND ".join(where_clauses) if where_clauses else "1=1"
+
+    @classmethod
+    def _actor_document_type_clause(cls, spec: DatasetSpec, params: dict) -> str:
+        """Segunda dimensión de la llave de identidad, en el WHERE.
+
+        AP1 declaró que ``(document_type, base_number)`` identifica a un
+        actor. Filtrar solo por el número deja esa declaración fuera de la
+        ejecución: verificado en la fuente, el documento 13848603 devuelve
+        192 filas de una persona natural y 1 de una unión temporal, y sin
+        esta cláusula el mismo SoQL las trae todas (INV-TYPED-PROJECTION).
+
+        Excluye lo que CONTRADICE la identidad, no lo que difiere de ella:
+        los tipos indeterminados de la fuente se conservan porque no
+        afirman nada. La forma ``IS NULL OR NOT IN`` importa — un ``NOT
+        IN`` a secas descarta los nulos en silencio, que es la clase de
+        omisión que este bloque existe para cerrar.
+        """
+        if not spec.contractor_document_type:
+            return ""
+        scope = params.get("actor_scope")
+        if not isinstance(scope, dict):
+            return ""
+        excluded = incompatible_source_types(scope.get("document_type"))
+        if not excluded:
+            return ""
+        values = ", ".join(f"'{cls._escape(value)}'" for value in excluded)
+        field = spec.contractor_document_type
+        return f"({field} IS NULL OR {field} NOT IN ({values}))"
 
     def build_top_entities(self, dataset_id: str, params: dict, limit: int = 5, *, allow_global: bool = False) -> str:
         spec = self.SPECS[dataset_id]

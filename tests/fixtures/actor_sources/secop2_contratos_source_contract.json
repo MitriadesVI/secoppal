@@ -31,7 +31,8 @@
         "Hallazgo de AP2-A: el diagnostico AP0 ubicaba la unica columna de tipo",
         "documental en SECOP I (f789-7hwg). Existe tambien aqui, en el dataset",
         "que AP2 ya consulta. Es la evidencia de mayor calidad para INV-ID-TYPE",
-        "y no cuesta una integracion nueva."
+        "y no cuesta una integracion nueva.",
+        "Sin nulos: los diez valores observados suman exactamente 5.958.553 filas. Aun asi el filtro de tipo conserva los nulos explicitamente: un NOT IN a secas los descartaria en silencio si aparecieran."
       ],
       "observed_values": {
         "Cédula de Ciudadanía": 4875277,
@@ -44,7 +45,8 @@
         "Pasaporte": 466,
         "Permiso especial de permanencia": 166,
         "Registro Civil": 51
-      }
+      },
+      "null_count": 0
     },
     "provider_name": {
       "name": "proveedor_adjudicado",
@@ -313,5 +315,30 @@
     "Campos verificados SIN nulos (siempre presentes): id_contrato, valor_del_contrato,",
     "nombre_entidad, modalidad_de_contratacion, departamento, documento_proveedor.",
     "Campo con nulos materiales: fecha_de_firma (7,1%)."
-  ]
+  ],
+  "typed_projection_findings": {
+    "_comment": [
+      "Medido el 2026-08-18 para decidir entre filtro ESTRICTO (tipo = valor) y",
+      "filtro COMPATIBLE (excluir solo tipos contradictorios)."
+    ],
+    "documento_860002400_por_tipo": {
+      "NIT": 4226,
+      "Otro": 4
+    },
+    "documento_13848603_por_tipo": {
+      "Cédula de Ciudadanía": 192,
+      "NIT": 1
+    },
+    "filas_con_documento_utilizable_y_tipo_indeterminado": {
+      "No Definido": 57,
+      "Otro": 10016
+    },
+    "findings": [
+      "Un filtro ESTRICTO por tipodocproveedor='NIT' borraria 4 contratos reales de La Previsora, publicados como 'Otro' (uniones temporales).",
+      "En el universo hay 10.073 filas con documento utilizable y tipo indeterminado que un filtro estricto perderia.",
+      "Por eso se excluye solo lo CONTRADICTORIO: 'No Definido' y 'Otro' se conservan siempre.",
+      "Verificado en vivo con el filtro compatible: cedula 13848603 -> 192 filas (antes 193), NIT 13848603 -> 1, NIT 860002400 -> 4230 (intacto).",
+      "LIMITE CONOCIDO: de las 192 filas con tipo 'Cédula de Ciudadanía' bajo 13848603, una es 'UNION TEMPORAL DE RECARGAS 2022'. La fuente la clasifico mal y ningun filtro por tipo la separa: por eso el filtro NO sustituye la declaracion de nombres observados."
+    ]
+  }
 }
