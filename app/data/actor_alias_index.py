@@ -88,6 +88,10 @@ class ActorAliasBuildPolicy:
             raise ValueError("minimum_dominant_name_share must be in (0, 1]")
         if self.maximum_distinct_observed_names < 1:
             raise ValueError("maximum_distinct_observed_names must be positive")
+        if not self.exclude_cross_document_type_collisions:
+            raise ValueError("cross-document-type collision exclusion is mandatory")
+        if not self.exclude_secondary_group_aliases:
+            raise ValueError("secondary group alias exclusion is mandatory")
 
 
 @dataclass(frozen=True, slots=True)
