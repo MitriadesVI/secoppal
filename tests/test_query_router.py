@@ -289,10 +289,15 @@ def test_no_llm_simple_object_query(router: QueryRouter) -> None:
 # ═════════════════════════════════════════════════════════════════════════════
 
 def test_nit_with_dots_and_dv(router: QueryRouter) -> None:
-    """NIT con puntos y DV — debe extraer base y completo."""
+    """NIT con puntos y DV — base, completo y la forma con DV separado.
+
+    La tercera variante entró con AP2-B: SECOP publica el documento del
+    proveedor de las tres maneras y el filtro solo cubría dos, así que los
+    contratos escritos con guion quedaban fuera sin aviso.
+    """
     result = router.parse("contratos con edubar nit 800.091.140-4")
     contratista = result.params.get("contratista")
-    assert contratista == ["800091140", "8000911404"], f"got {contratista}"
+    assert contratista == ["800091140", "8000911404", "800091140-4"], f"got {contratista}"
     # El NIT crudo y la palabra 'nit' no deben estar en objeto
     objeto = result.params.get("objeto", [])
     assert "800091140" not in objeto

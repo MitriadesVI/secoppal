@@ -46,6 +46,15 @@ class Settings(BaseSettings):
     modality_followup_telemetry_path: Path | None = Field(
         default=None, alias="MODALITY_FOLLOWUP_TELEMETRY_PATH"
     )
+    # ── Actor Profile (AP2) ──────────────────────────────────────────────────
+    # Gobierna la huella contractual por actor: routing de documento exacto,
+    # bloqueo por capacidad de dataset y render del perfil. Apagado, el parser,
+    # el SoQL y la respuesta vuelven al comportamiento previo a AP2 — lo
+    # verifica tests/test_actor_flag_off.py.
+    secoppal_actor_profile_enabled: bool = Field(
+        default=True, alias="SECOPPAL_ACTOR_PROFILE_ENABLED",
+    )
+
     # ── Autenticación de la UI ───────────────────────────────────────────────
     secoppal_auth_enabled: bool = Field(default=True, alias="SECOPPAL_AUTH_ENABLED")
     secoppal_admin_email: str | None = Field(default=None, alias="SECOPPAL_ADMIN_EMAIL")
@@ -60,3 +69,18 @@ class Settings(BaseSettings):
 @lru_cache(maxsize=1)
 def get_settings() -> Settings:
     return Settings()
+
+
+def actor_profile_enabled() -> bool:
+    """Lectura del flag de AP2 desde el punto más bajo del pipeline.
+
+    El parser y el planificador son puros y no reciben ``Settings``; leerlo
+    aquí evita enhebrar la configuración por siete firmas para un booleano.
+    Si la configuración no se puede construir (entorno sin ``.env``, como los
+    scripts de corpus), cae al default declarado en ``Settings`` en vez de
+    reventar: un flag ilegible no debe tumbar una consulta.
+    """
+    try:
+        return bool(get_settings().secoppal_actor_profile_enabled)
+    except Exception:  # pragma: no cover - configuración rota
+        return True

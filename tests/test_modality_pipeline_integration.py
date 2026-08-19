@@ -531,9 +531,14 @@ _NO_MODALITY_GOLDEN = {
         "2083d9dc97e4039209cfb140077221ccc3b0e6ae33f18e7a71168494aefac7cc",
         ("manual", "LIMIT 200"),
     ),
+    # AP2-B: el filtro ganó una tercera variante, "800091140-4". La fuente
+    # publica el DV de las tres formas —pegado, separado y ausente— y el
+    # filtro de igualdad solo alcanzaba dos. El fingerprint cambia porque
+    # cambió el filtro, no la interpretación de modalidad.
     "contratos del proveedor NIT 800.091.140-4": (
-        "d7e237b500d35a249e1c1d4c237b83ccf518ea67318869722274056f0cc5e883",
-        ("documento_proveedor = '800091140'", "documento_proveedor = '8000911404'"),
+        "32b6c4fad81841570b88e3d38ca4824c733fa2ec63660e59b1a16dfd3308d669",
+        ("documento_proveedor = '800091140'", "documento_proveedor = '8000911404'",
+         "documento_proveedor = '800091140-4'"),
     ),
 }
 

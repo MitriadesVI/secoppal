@@ -13,6 +13,8 @@ from app.data.estados import (
     ESTADO_PROCEDIMIENTO_SYNONYMS,
     ESTADO_SYNONYMS,
 )
+from app.config import actor_profile_enabled
+from app.core.actor_intent import detect_actor_name, reference_from_document
 from app.core.contract_invariants import contains_signed_token
 from app.core.money_resolution import CARDINAL_WORD_PATTERN
 from app.core.modality_parser_integration import resolve_parser_modality
@@ -496,21 +498,7 @@ class QueryRouter:
         # ── 1.5. NIT detection (shape-based, before year/amount stripping) ──
         # Detecta NITs colombianos por forma antes de cualquier otra extracción
         # para que no sean confundidos con años ni montos.
-        nit_variants = self._extract_nit(normalized)
-        if nit_variants:
-            params["contratista"] = nit_variants
-            # Scrub solo las formas aceptadas como identificador. Una consulta
-            # puede contener simultáneamente NIT y monto; el monto debe seguir
-            # disponible para el paso 9.
-            scrubbed = _NIT_SHAPE_RE.sub(
-                lambda candidate: (
-                    " " if _number_role(scrubbed, candidate) == "identifier"
-                    else candidate.group(0)
-                ),
-                scrubbed,
-            )
-            # También remover la palabra "nit" si quedó suelta
-            scrubbed = re.sub(r"\bnit\b", " ", scrubbed, flags=re.IGNORECASE)
+        scrubbed = self._consume_actor_document(normalized, scrubbed, params)
 
         # ── 2. Dates (regex — reliable for numbers) ─────────────────────
         date_params = self._extract_dates(normalized)
@@ -806,11 +794,14 @@ class QueryRouter:
 
         # ── 10. Contractor ──────────────────────────────────────────────
         # Solo corre si el NIT no fue ya detectado por forma en paso 1.5
-        if "contratista" not in params:
-            contractor = self._extract_contractor(normalized, str(params["dataset"]))
-            if contractor:
-                params["contratista"] = contractor
-                scrubbed = scrubbed.replace(contractor, " ")
+        if "contratista" not in params and "actor_resolution" not in params:
+            if actor_profile_enabled():
+                scrubbed = self._detect_named_actor(normalized, scrubbed, params)
+            else:
+                contractor = self._extract_contractor(normalized, str(params["dataset"]))
+                if contractor:
+                    params["contratista"] = contractor
+                    scrubbed = scrubbed.replace(contractor, " ")
 
         # ── 10.5. City detection (before object terms) ────────────────────
         city_match = _CITY_PATTERN_RE.search(scrubbed)
@@ -1372,14 +1363,115 @@ class QueryRouter:
 
         return params, consumed_spans
 
-    def _extract_nit(self, normalized_query: str) -> list[str] | None:
-        """Detecta NITs colombianos por forma y retorna variantes base + con DV.
+    # ── Actor (AP2) ─────────────────────────────────────────────────────
+    # El documento y el nombre del actor se consumen aquí y NO en el
+    # extractor de objeto: un actor que se filtra a `objeto` produce el
+    # doble error que AP0 documentó — se pierden sus contratos cuando el
+    # objeto no lo nombra, y se le atribuyen los de terceros que sí.
 
-        Retorna lista con nit_base y nit_completo (si hay DV) para que el
-        SoQL builder pueda hacer OR sobre documento_proveedor.
-        Retorna None si no hay NIT en la query.
+    def _consume_actor_document(
+        self, normalized: str, scrubbed: str, params: dict,
+    ) -> str:
+        """Extrae el documento del actor y devuelve el texto ya sin él.
+
+        Corre antes que fechas y montos porque un identificador leído como
+        año o como cifra deja de ser un actor y se vuelve un filtro
+        equivocado. Devuelve ``scrubbed`` para que el llamador no tenga que
+        saber qué palabras se consumieron.
         """
-        match = next(
+        match = self._find_identifier_span(normalized)
+        if match is None:
+            return scrubbed
+
+        if not actor_profile_enabled():
+            # Camino previo a AP2, intacto.
+            nit_variants = self._extract_nit(normalized)
+            if not nit_variants:
+                return scrubbed
+            params["contratista"] = nit_variants
+            return self._scrub_identifier_spans(scrubbed)
+
+        reference = reference_from_document(match.group(0).strip(), normalized)
+        if reference is None:
+            # El crudo no produjo identidad utilizable (centinela, fuera de
+            # rango). No se fabrica un actor: se deja el texto como estaba.
+            return scrubbed
+
+        variants = list(reference.document_variants)
+        if not variants:
+            return scrubbed
+
+        params["contratista"] = variants
+        params["actor_resolution"] = reference.resolution_method
+        params["actor_scope"] = reference.to_params()
+
+        # Promoción de dataset, que NO es lo mismo que descartar el filtro.
+        # "historial contractual del NIT X" y "contratación de la persona con
+        # cédula Y" no contienen la palabra "contratos", así que la selección
+        # por palabra clave las manda a procesos — el único dataset que no
+        # publica quién contrata. Con un documento de actor sobre la mesa y
+        # sin que el usuario haya pedido procesos, la fuente que puede
+        # responder es contratos, y se elige esa. Cuando el usuario SÍ pidió
+        # procesos su intención manda: ahí la política de capacidad bloquea
+        # con una aclaración explícita en vez de tirar el actor
+        # (INV-NO-SILENT-DROP).
+        if not params.get("dataset_explicit"):
+            params["dataset"] = DATASET_CONTRATOS
+
+        scrubbed = self._scrub_identifier_spans(scrubbed)
+        for span in reference.consumed_spans:
+            scrubbed = re.sub(
+                rf"\b{re.escape(span)}\b", " ", scrubbed, flags=re.IGNORECASE,
+            )
+        return scrubbed
+
+    @staticmethod
+    def _scrub_identifier_spans(scrubbed: str) -> str:
+        """Quita del texto los spans aceptados como identificador.
+
+        Solo esos: una consulta puede traer NIT y monto a la vez, y el monto
+        debe seguir visible para el paso 9.
+        """
+        scrubbed = _NIT_SHAPE_RE.sub(
+            lambda candidate: (
+                " " if _number_role(scrubbed, candidate) == "identifier"
+                else candidate.group(0)
+            ),
+            scrubbed,
+        )
+        return re.sub(r"\bnit\b", " ", scrubbed, flags=re.IGNORECASE)
+
+    def _detect_named_actor(self, normalized: str, scrubbed: str, params: dict) -> str:
+        """Clasifica un actor NOMBRADO sin resolver quién es (INV-NAME-NO-GUESS).
+
+        Marca la consulta como dirigida a un actor y deja constancia de que
+        falta el documento. No escribe ``contratista``: hacerlo dispararía un
+        ``LIKE '%nombre%'`` sobre ``proveedor_adjudicado`` que fusiona actores
+        distintos —"FUNDACARIBE" coincide con "FUNDACARIBE SAS" y con
+        "CORPORACIÓN FUNDACARIBE DEL NORTE"— y presentaría la suma como la
+        huella de uno solo.
+        """
+        reference = detect_actor_name(normalized)
+        if reference is None:
+            return scrubbed
+
+        params["actor_resolution"] = reference.resolution_method
+        params["actor_scope"] = reference.to_params()
+        for span in reference.consumed_spans:
+            scrubbed = scrubbed.replace(span, " ")
+        return scrubbed
+
+    @staticmethod
+    def _find_identifier_span(normalized_query: str) -> "re.Match[str] | None":
+        """Primer span con forma de identificador que ADR-059 no lee como monto.
+
+        Extraído de ``_extract_nit`` para que la ruta de actor obtenga el
+        crudo VERBATIM —con sus puntos y su guion— sin repetir el arbitraje
+        número-vs-monto ni desincronizarse de él. AP1 necesita el crudo,
+        no los dígitos ya limpios: es el separador lo que distingue un DV
+        declarado por la fuente de una hipótesis del módulo 11.
+        """
+        return next(
             (
                 candidate
                 for candidate in _NIT_SHAPE_RE.finditer(normalized_query)
@@ -1387,6 +1479,19 @@ class QueryRouter:
             ),
             None,
         )
+
+    def _extract_nit(self, normalized_query: str) -> list[str] | None:
+        """Detecta NITs colombianos por forma y retorna variantes base + con DV.
+
+        Retorna lista con nit_base y nit_completo (si hay DV) para que el
+        SoQL builder pueda hacer OR sobre documento_proveedor.
+        Retorna None si no hay NIT en la query.
+
+        Camino LEGACY: sigue siendo la ruta con ``ACTOR_PROFILE`` apagado.
+        Con el flag encendido gobierna ``actor_intent.reference_from_document``,
+        que separa el DV validándolo en vez de exigir un separador.
+        """
+        match = self._find_identifier_span(normalized_query)
         if match is None:
             return None
 

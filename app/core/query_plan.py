@@ -20,6 +20,8 @@ from app.core.contract_invariants import (
     enforce_oferta_abierta_not_contracts,
     has_substantial_filter,
 )
+from app.config import actor_profile_enabled
+from app.core.actor_scope_policy import evaluate_actor_scope
 from app.core.dialogue_policy import classify, DialogueSignal
 from app.core.opportunity_scope_policy import evaluate_opportunity_scope
 from app.core.semantic_sanity import compute_sanity_flags
@@ -27,7 +29,7 @@ from app.core.semantic_sanity import compute_sanity_flags
 # ── All known rules — used as default when enabled_rules is None ──────────────
 ALL_RULES = {
     "P1", "P2", "P3", "P4", "P5", "P5b", "P6", "P7", "P8", "P9",
-    "P10", "P11", "P12", "P15", "P16", "P13", "P14",
+    "P10", "P11", "P12", "P17", "P15", "P16", "P13", "P14",
 }
 
 # ── Entity markers that preserve entity when present in raw_query (P9) ───────
@@ -294,6 +296,25 @@ def compute_query_plan(
     if "P12" in rules_to_apply:
         working_params, flags = enforce_oferta_abierta_not_contracts(working_params)
         risk_flags.extend(flags)
+
+    # ── P17: actor scope — the dataset must be able to project the actor ─
+    # Runs BEFORE P15 on purpose. "oportunidades para el proveedor con NIT X"
+    # carries an actor but no topic, so P15 would block first and ask which
+    # product the user wants — a question that answers the wrong problem. The
+    # real obstacle is that procesos does not publish who contracts, and that
+    # is what the user needs to hear.
+    if "P17" in rules_to_apply and actor_profile_enabled():
+        actor_scope = evaluate_actor_scope(working_params)
+        if not actor_scope.should_execute:
+            return QueryPlan(
+                should_execute=False,
+                params=working_params,
+                missing_slots=list(actor_scope.missing_slots),
+                risk_flags=risk_flags + list(actor_scope.risk_flags),
+                clarification_question=actor_scope.clarification_question,
+                reason=actor_scope.reason,
+                signals=all_signals,
+            )
 
     # ── P15: opportunity scope — block topic-less opportunity searches ──
     # Runs after P11/P12 so intent_type is already classified as

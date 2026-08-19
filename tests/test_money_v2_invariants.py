@@ -215,9 +215,15 @@ def test_valor_min_max_are_dataset_agnostic_abstractions() -> None:
 # ══════════════════════════════════════════════════════════════════════════
 
 def test_nit_with_dv_yields_both_variants_and_no_money_filter() -> None:
-    """NIT con dígito de verificación: hoy discrimina correctamente."""
+    """NIT con dígito de verificación: hoy discrimina correctamente.
+
+    AP2-B sumó una tercera variante con el DV separado ("900123456-7"): el
+    contrato de fuente encontró esa escritura publicada en
+    ``documento_proveedor``, y el filtro de igualdad no la alcanzaba. Lo que
+    esta prueba congela —que un NIT no se lee como monto— sigue intacto.
+    """
     params = _params("contratos de alimentacion del nit 900.123.456-7")
-    assert params.get("contratista") == ["900123456", "9001234567"]
+    assert params.get("contratista") == ["900123456", "9001234567", "900123456-7"]
     assert params.get("valor_min") is None
     assert params.get("valor_max") is None
 

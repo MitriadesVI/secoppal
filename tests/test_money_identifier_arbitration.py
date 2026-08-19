@@ -22,7 +22,10 @@ def _params(query: str) -> dict:
     ("query", "expected"),
     [
         ("contratos de alimentacion del NIT 900123456", ["900123456"]),
-        ("contratos del proveedor nit 900.123.456-7", ["900123456", "9001234567"]),
+        # AP2-B añadió la forma con DV separado: la fuente la publica tal cual
+        # ("900454994-9" existe en documento_proveedor) y el filtro la perdía.
+        ("contratos del proveedor nit 900.123.456-7",
+         ["900123456", "9001234567", "900123456-7"]),
         ("800091140", ["800091140"]),
     ],
 )
