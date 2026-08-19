@@ -51,8 +51,16 @@ class Settings(BaseSettings):
     # bloqueo por capacidad de dataset y render del perfil. Apagado, el parser,
     # el SoQL y la respuesta vuelven al comportamiento previo a AP2 — lo
     # verifica tests/test_actor_flag_off.py.
+    #
+    # Apagado POR DEFECTO a propósito. Si esta rama entra a main por
+    # fast-forward, el merge no debe encender un routing nuevo en producción
+    # sin que nadie lo haya decidido: la activación es un acto explícito del
+    # entorno (SECOPPAL_ACTOR_PROFILE_ENABLED=true), no un efecto secundario
+    # de integrar código. La suite corre con el flag encendido —ver
+    # tests/conftest.py— porque lo que hay que ejercitar es el camino que se
+    # va a desplegar el día que se encienda.
     secoppal_actor_profile_enabled: bool = Field(
-        default=True, alias="SECOPPAL_ACTOR_PROFILE_ENABLED",
+        default=False, alias="SECOPPAL_ACTOR_PROFILE_ENABLED",
     )
 
     # ── Autenticación de la UI ───────────────────────────────────────────────

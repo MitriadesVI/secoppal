@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import pytest
 
-from app.config import actor_profile_enabled
+from app.config import Settings, actor_profile_enabled
 from app.core.query_plan import compute_query_plan
 from app.core.query_router import QueryRouter
 from app.core.soql_builder import SoQLBuilder
@@ -39,7 +39,24 @@ def soql_for(text: str) -> str:
     return builder.build(builder.dataset_id_for(params.get("dataset")), params)
 
 
-def test_the_flag_is_on_by_default():
+def test_the_declared_default_is_off():
+    """El default de producción es apagado; la suite lo enciende aparte.
+
+    Se lee el campo declarado y no ``actor_profile_enabled()``, porque la
+    fixture de ``conftest`` ya encendió el flag para todo el resto de la
+    suite: preguntarle a la función mediría el entorno de pruebas, no la
+    decisión de despliegue.
+
+    Importa que un fast-forward a main no active un routing nuevo por el
+    solo hecho de integrar el código.
+    """
+    field = Settings.model_fields["secoppal_actor_profile_enabled"]
+    assert field.default is False
+    assert field.alias == "SECOPPAL_ACTOR_PROFILE_ENABLED"
+
+
+def test_the_suite_runs_with_the_flag_on():
+    """Lo que se despliega el día que se encienda es lo que se está probando."""
     assert actor_profile_enabled() is True
 
 

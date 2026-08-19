@@ -3,7 +3,12 @@
 # Corpus focal de la huella contractual de actor. Se ejecuta con el mismo
 # harness que el corpus general:
 #
+#     SECOPPAL_ACTOR_PROFILE_ENABLED=true \
 #     python scripts/run_query_corpus.py --corpus tests/fixtures/actor_profile_corpus_v1.yaml --mode all
+#
+# La variable es obligatoria: ACTOR_PROFILE viene APAGADO por defecto para que
+# un merge a main no encienda routing nuevo por sí solo, y este harness no corre
+# bajo pytest, así que no hereda la fixture que lo enciende en la suite.
 #
 # Qué cubre, y por qué cada familia está aquí
 # -------------------------------------------
