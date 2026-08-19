@@ -44,6 +44,7 @@ from rapidfuzz import fuzz, process  # noqa: E402
 
 from app.config import Settings  # noqa: E402
 from app.core.actor_identity import compute_check_digit, normalize_identity  # noqa: E402
+from app.core.actor_name import normalize_actor_name  # noqa: E402
 
 
 DATASET_ID = "jbjy-vk9h"
@@ -192,7 +193,9 @@ def normalize_n1(value: str) -> str:
 
 def normalize_n2(value: str) -> str:
     """N2: N1 + colapso de whitespace."""
-    return " ".join(normalize_n1(value).split())
+    # AP3-B convirtió la decisión del benchmark en contrato de producción.
+    # Mantener este nombre preserva la API del benchmark sin duplicar N2.
+    return normalize_actor_name(value)
 
 
 def normalize_n3(value: str) -> str:

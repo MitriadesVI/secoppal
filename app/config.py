@@ -27,6 +27,12 @@ class Settings(BaseSettings):
     secop_timeout_seconds: int = Field(default=15, alias="SECOP_TIMEOUT_SECONDS")
     secop_results_limit: int = Field(default=25, alias="SECOP_RESULTS_LIMIT")
     secop_alias_db_path: Path = Field(default=Path("app/data/aliases_db.json"), alias="SECOP_ALIAS_DB_PATH")
+    # AP3-B: artefacto SQLite local, regenerable y no versionado. El resolver
+    # abre esta ruta en solo lectura; únicamente el builder la reemplaza.
+    secop_actor_alias_index_path: Path = Field(
+        default=Path("data/actor_alias_index.sqlite"),
+        alias="SECOP_ACTOR_ALIAS_INDEX_PATH",
+    )
     telegram_bot_token: str | None = Field(default=None, alias="TELEGRAM_BOT_TOKEN")
     telegram_webhook_secret: str | None = Field(default=None, alias="TELEGRAM_WEBHOOK_SECRET")
     twilio_whatsapp_number: str | None = Field(default=None, alias="TWILIO_WHATSAPP_NUMBER")

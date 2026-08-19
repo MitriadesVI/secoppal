@@ -35,6 +35,11 @@ data/secoppal.db-wal
 data/secoppal.db-shm
 data/feedback.jsonl
 
+# AP3-B actor alias index — artefacto local regenerable, nunca versionado
+data/actor_alias_index.sqlite
+data/actor_alias_index.sqlite-wal
+data/actor_alias_index.sqlite-shm
+
 # Bases locales de los pilotos de notificación (nunca versionar)
 data/telegram_*.db
 data/telegram_*.db-wal
