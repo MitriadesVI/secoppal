@@ -100,6 +100,12 @@ class DatasetSpec:
     reference: str | None = None
     contractor: str | None = None
     contractor_document: str | None = None
+    # Columna de TIPO documental del proveedor. Declarada aparte del documento
+    # porque responde otra pregunta: el documento dice qué número es, el tipo
+    # dice de quién puede ser. En jbjy-vk9h un mismo número aparece bajo dos
+    # tipos —cédula de una persona y NIT de una unión temporal—, así que
+    # agrupar sin el tipo fusiona actores distintos (INV-ID-TYPE).
+    contractor_document_type: str | None = None
     city: str | None = None
     select_fields: tuple[str, ...] = ()
 
@@ -168,6 +174,7 @@ class SoQLBuilder:
             signature_date="fecha_de_firma",
             contractor="proveedor_adjudicado",
             contractor_document="documento_proveedor",
+            contractor_document_type="tipodocproveedor",
             reference="referencia_del_contrato",
             city="ciudad",
             select_fields=(
@@ -540,6 +547,42 @@ class SoQLBuilder:
         return (
             f"SELECT {m}, count(*) AS cnt WHERE {where} "
             f"GROUP BY {m} ORDER BY cnt DESC LIMIT {limit}"
+        )
+
+    def build_top_territories(self, dataset_id: str, params: dict, limit: int = 5, *, allow_global: bool = False) -> str:
+        """Distribución territorial del universo filtrado.
+
+        Gemelo de ``build_top_entities`` sobre ``spec.department``: era el
+        único agregado de la huella contractual que no existía.
+        """
+        spec = self.SPECS[dataset_id]
+        where = self._build_where(spec, params, allow_global=allow_global)
+        return (
+            f"SELECT {spec.department}, count(*) AS cnt WHERE {where} "
+            f"GROUP BY {spec.department} ORDER BY cnt DESC LIMIT {limit}"
+        )
+
+    def build_observed_names(self, dataset_id: str, params: dict, limit: int = 10, *, allow_global: bool = False) -> str:
+        """Nombres con que la fuente designó al proveedor en cada contrato.
+
+        Agrupa por documento y TIPO documental además del nombre. Sin el tipo,
+        las filas de una persona natural y las de una unión temporal que
+        comparten número se sumarían en un solo actor.
+
+        Devuelve cadena vacía si el dataset no publica al proveedor: quien
+        llama debe tratarlo como aspecto no disponible, no como cero nombres.
+        """
+        spec = self.SPECS[dataset_id]
+        if not spec.contractor or not spec.contractor_document:
+            return ""
+        where = self._build_where(spec, params, allow_global=allow_global)
+        group_fields = [spec.contractor, spec.contractor_document]
+        if spec.contractor_document_type:
+            group_fields.append(spec.contractor_document_type)
+        projection = ", ".join(group_fields)
+        return (
+            f"SELECT {projection}, count(*) AS cnt WHERE {where} "
+            f"GROUP BY {projection} ORDER BY cnt DESC LIMIT {limit}"
         )
 
     def build_date_range(self, dataset_id: str, params: dict, *, allow_global: bool = False) -> str:
