@@ -298,6 +298,18 @@ def test_an_actor_plus_a_topic_is_a_filtered_search_not_a_profile():
     assert "documento_proveedor = '860002400'" in result["soql_query"]
 
 
+def test_asking_for_an_ordering_is_a_listing_not_a_profile():
+    """"Los de mayor valor" pide ver contratos grandes, no un agregado.
+
+    El perfil muestra distribuciones y una muestra reciente: devolverlo ante
+    una petición de orden no respondería la pregunta.
+    """
+    assert is_actor_profile_turn({
+        "actor_resolution": "explicit_document", "contratista": ["860002400"],
+        "dataset": "contratos", "ordering_signal": "valor_desc",
+    }) is False
+
+
 def test_is_actor_profile_turn_requires_a_document_never_a_name():
     assert is_actor_profile_turn({
         "actor_resolution": "explicit_document",

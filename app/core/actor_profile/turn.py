@@ -49,12 +49,7 @@ def is_actor_profile_turn(params: dict) -> bool:
         return False
     if not params.get("contratista"):
         return False
-    if _has_topic(params):
-        # El actor es un FILTRO, no el sujeto de la pregunta. "Contratos de
-        # alimentación del NIT X" pide esa lista, y contestarla con la huella
-        # completa respondería de más. El camino tabular la sirve —ahora con
-        # el filtro exacto de documento— y el perfil se reserva para la
-        # pregunta abierta, que es la que hoy no tiene respuesta correcta.
+    if _asks_for_a_listing(params):
         return False
     return dataset_supports_actor(params.get("dataset"))
 
@@ -62,7 +57,25 @@ def is_actor_profile_turn(params: dict) -> bool:
 _TOPIC_KEYS = ("objeto", "objeto_or", "objeto_phrases")
 
 
-def _has_topic(params: dict) -> bool:
+def _asks_for_a_listing(params: dict) -> bool:
+    """¿El turno pide ver contratos, en vez de preguntar por el actor?
+
+    Dos señales, y las dos dicen lo mismo: el actor es un FILTRO, no el
+    sujeto de la pregunta.
+
+    Un TEMA — "contratos de alimentación del NIT X" pide esa lista, y
+    contestarla con la huella completa respondería de más.
+
+    Un ORDEN explícito — "los de mayor valor" pide ver los contratos
+    grandes de ese actor. El perfil muestra agregados y una muestra
+    reciente, así que devolverlo aquí no respondería nada.
+
+    En ambos casos el camino tabular sirve la consulta —ahora con el filtro
+    exacto de documento que AP2-B corrigió— y el perfil se reserva para la
+    pregunta abierta, que es la que hoy no tiene respuesta correcta.
+    """
+    if params.get("ordering_signal"):
+        return True
     return any(params.get(key) not in (None, "", [], {}, ()) for key in _TOPIC_KEYS)
 
 
