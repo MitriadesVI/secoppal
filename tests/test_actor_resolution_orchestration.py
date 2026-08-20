@@ -4,9 +4,11 @@ from __future__ import annotations
 from pathlib import Path
 from types import SimpleNamespace
 
+import pytest
 from burr.core import State
 
 from app.config import Settings
+from app.core.actor_arbitration import detect_bare_actor_probe
 from app.core.actor_identity import IdentityKey, normalize_identity
 from app.core.actor_name import ActorResolutionStatus
 from app.core.actor_resolution import (
@@ -108,6 +110,98 @@ def test_bare_exact_unique_becomes_actor_and_preserves_year_and_order(tmp_path):
     assert params["fecha_hasta"] == "2025-12-31"
     assert params["ordering_signal"] == "valor_desc"
     assert is_authoritative_actor_resolution(params)
+
+
+@pytest.mark.parametrize(
+    ("query", "expected_name"),
+    [
+        (
+            "contratos de FUNDACIÓN MANOS EN ACCIÓN",
+            "fundacion manos en accion",
+        ),
+        (
+            "contratos de CORPORACIÓN PARA EL DESARROLLO SOCIAL",
+            "corporacion para el desarrollo social",
+        ),
+        ("contratos de FUNDACIÓN CON AMOR", "fundacion con amor"),
+        (
+            "contratos de FUNDACARIBE en 2025 por mayor valor",
+            "fundacaribe",
+        ),
+    ],
+)
+def test_bare_probe_preserves_internal_prepositions_and_cuts_real_tails(
+    query,
+    expected_name,
+):
+    params = dict(QueryRouter().parse(query).params)
+
+    probe = detect_bare_actor_probe(query, params)
+
+    assert probe is not None
+    assert probe.actor_name == expected_name
+
+
+def test_bare_probe_does_not_resolve_a_truncated_wrong_actor(tmp_path):
+    resolver = _resolver(tmp_path, [
+        _row("NIT", "900111222", "FUNDACION MANOS"),
+    ])
+    query = "contratos de FUNDACIÓN MANOS EN ACCIÓN"
+    baseline = dict(QueryRouter().parse(query).params)
+
+    params = _resolve_action(query, resolver)
+
+    assert params == baseline
+    assert params.get("actor_resolution") is None
+    assert params["objeto"] == ["fundacion", "manos", "accion"]
+
+
+def test_bare_ambiguous_clarification_uses_pending_actor_name(tmp_path):
+    resolver = _resolver(tmp_path, [
+        _row("NIT", "900111222", "FUNDACION MANOS EN ACCION", 9),
+        _row("NIT", "900333444", "FUNDACION MANOS EN ACCION", 8),
+    ])
+
+    params = _resolve_action("contratos de FUNDACIÓN MANOS EN ACCIÓN", resolver)
+    question = evaluate_actor_scope(params).clarification_question or ""
+
+    assert params["actor_resolution_status"] == ActorResolutionStatus.AMBIGUOUS
+    assert params.get("actor_scope") is None
+    assert "FUNDACION MANOS EN ACCION" in question
+    assert "None" not in question
+
+
+def test_ambiguous_clarification_has_a_neutral_last_resort_name():
+    decision = evaluate_actor_scope({
+        "actor_resolution_status": ActorResolutionStatus.AMBIGUOUS,
+        "actor_pending": {"candidates": []},
+    })
+    question = decision.clarification_question or ""
+
+    assert "INDICADO" in question
+    assert "None" not in question
+
+
+@pytest.mark.parametrize(
+    ("query", "expected_name"),
+    [
+        ("contratos del proveedor UNIVERSIDAD X", "universidad x"),
+        ("contratos del contratista HOSPITAL X", "hospital x"),
+        ("contratos adjudicados a UNIVERSIDAD X", "universidad x"),
+    ],
+)
+def test_buyer_like_name_with_explicit_actor_role_survives_projection(
+    tmp_path,
+    query,
+    expected_name,
+):
+    params = _resolve_action(query, ActorNameResolver(tmp_path / "missing.sqlite"))
+
+    assert params["actor_scope"]["observed_name"] == expected_name
+    assert params["actor_resolution_status"] == ActorResolutionStatus.INDEX_UNAVAILABLE
+    assert params.get("entidad") is None
+    assert params.get("entidad_resolved") is None
+    assert params.get("objeto") is None
 
 
 def test_bare_probe_miss_or_unavailable_preserves_baseline_topic(tmp_path):

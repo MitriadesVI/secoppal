@@ -14,7 +14,11 @@ from app.data.estados import (
     ESTADO_SYNONYMS,
 )
 from app.config import actor_profile_enabled
-from app.core.actor_intent import detect_actor_name, reference_from_document
+from app.core.actor_intent import (
+    detect_actor_name,
+    recognized_actor_modifier_tails,
+    reference_from_document,
+)
 from app.core.contract_invariants import contains_signed_token
 from app.core.money_resolution import CARDINAL_WORD_PATTERN
 from app.core.modality_parser_integration import resolve_parser_modality
@@ -384,6 +388,7 @@ class QueryRouter:
         #    This prevents tokens like "publicados", "departamento", "alcaldía"
         #    from leaking into 'objeto' and poisoning LIKE clauses.
         consumed_spans: list[str] = []  # track consumed text for debugging
+        actor_modifier_spans: list[str] = []
 
         # ── 0a. INTENT extraction (bidder intent → config overrides) ─────
         from app.core.intent_vocabulary import extract_intent
@@ -395,6 +400,8 @@ class QueryRouter:
                 params["estado_family"] = intent_config["estado_family"]
             if intent_config.get("scrub_only") or "estado_family" in intent_config:
                 consumed_spans.append(intent_span)
+                if intent_config.get("estado_family"):
+                    actor_modifier_spans.append(intent_span)
             # OPP-003 G1: si el intent del bidder activa la familia oferta_abierta
             # (ej. "para presentarme", "donde me pueda presentar"), también
             # marcar intent_type=opportunity_search para que el resto del
@@ -481,10 +488,12 @@ class QueryRouter:
         if modality_result.executable_params:
             params.update(modality_result.executable_params)
         scrubbed = modality_result.masked_text
-        consumed_spans.extend(
+        modality_spans = [
             normalized[start:end]
             for start, end in modality_result.interpretation.consumed_spans
-        )
+        ]
+        consumed_spans.extend(modality_spans)
+        actor_modifier_spans.extend(modality_spans)
 
         # El intent se detectó antes para seleccionar dataset, pero se consume
         # después del masking por offsets de M2.
@@ -576,6 +585,7 @@ class QueryRouter:
                         }
                         _consumed = scrubbed[_km.start():_km.start(1) + len(_cand)]
                         consumed_spans.append(_consumed)
+                        actor_modifier_spans.append(_consumed)
                         scrubbed = scrubbed.replace(_consumed, " ", 1)
                         scrubbed = re.sub(r"\s+", " ", scrubbed).strip()
                         break
@@ -723,6 +733,7 @@ class QueryRouter:
             # Scrub the consumed span from text
             span = estado_family_result["consumed_span"]
             consumed_spans.append(span)
+            actor_modifier_spans.append(span)
             scrubbed = re.sub(r"\b" + re.escape(span) + r"\b", " ", scrubbed, flags=re.IGNORECASE)
             secondary_state = self._extract_state(
                 scrubbed,
@@ -731,6 +742,7 @@ class QueryRouter:
             if secondary_state and secondary_state.get("source_text"):
                 secondary_source = str(secondary_state["source_text"])
                 consumed_spans.append(secondary_source)
+                actor_modifier_spans.append(secondary_source)
                 scrubbed = re.sub(
                     rf"\b{re.escape(secondary_source)}\b",
                     " ",
@@ -765,6 +777,7 @@ class QueryRouter:
                 if not source_text:
                     break
                 consumed_spans.append(source_text)
+                actor_modifier_spans.append(source_text)
                 state_pattern = rf"\b{re.escape(source_text)}\b"
                 scrubbed = re.sub(
                     state_pattern,
@@ -796,7 +809,17 @@ class QueryRouter:
         # Solo corre si el NIT no fue ya detectado por forma en paso 1.5
         if "contratista" not in params and "actor_resolution" not in params:
             if actor_profile_enabled():
-                scrubbed = self._detect_named_actor(normalized, scrubbed, params)
+                modifier_tails = recognized_actor_modifier_tails(
+                    normalized,
+                    params,
+                    extra_consumed_spans=(*actor_modifier_spans, *amount_spans),
+                )
+                scrubbed = self._detect_named_actor(
+                    normalized,
+                    scrubbed,
+                    params,
+                    recognized_modifier_tails=modifier_tails,
+                )
             else:
                 contractor = self._extract_contractor(normalized, str(params["dataset"]))
                 if contractor:
@@ -1441,7 +1464,14 @@ class QueryRouter:
         )
         return re.sub(r"\bnit\b", " ", scrubbed, flags=re.IGNORECASE)
 
-    def _detect_named_actor(self, normalized: str, scrubbed: str, params: dict) -> str:
+    def _detect_named_actor(
+        self,
+        normalized: str,
+        scrubbed: str,
+        params: dict,
+        *,
+        recognized_modifier_tails: tuple[str, ...] = (),
+    ) -> str:
         """Clasifica un actor NOMBRADO sin resolver quién es (INV-NAME-NO-GUESS).
 
         Marca la consulta como dirigida a un actor y deja constancia de que
@@ -1451,7 +1481,10 @@ class QueryRouter:
         "CORPORACIÓN FUNDACARIBE DEL NORTE"— y presentaría la suma como la
         huella de uno solo.
         """
-        reference = detect_actor_name(normalized)
+        reference = detect_actor_name(
+            normalized,
+            recognized_modifier_tails=recognized_modifier_tails,
+        )
         if reference is None:
             return scrubbed
 

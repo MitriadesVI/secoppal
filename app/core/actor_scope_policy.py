@@ -224,13 +224,18 @@ def evaluate_actor_scope(params: dict) -> ActorScopeDecision:
     return ActorScopeDecision(should_execute=True)
 
 
-def _observed_name(params: dict) -> str | None:
+def _observed_name(params: dict) -> str:
     scope = params.get("actor_scope")
     if isinstance(scope, dict):
         name = scope.get("observed_name")
         if isinstance(name, str) and name.strip():
             return name.strip().upper()
-    return None
+    pending = params.get("actor_pending")
+    if isinstance(pending, dict):
+        name = pending.get("actor_name")
+        if isinstance(name, str) and name.strip():
+            return name.strip().upper()
+    return "INDICADO"
 
 
 def _candidate_choices(params: dict) -> list[str]:

@@ -52,8 +52,9 @@ dependencia inversa crearía un ciclo.
 from __future__ import annotations
 
 import re
+import unicodedata
 from dataclasses import dataclass
-from typing import Literal
+from typing import Iterable, Literal, Mapping
 
 from app.core.actor_identity import IdentityMatch, normalize_identity
 
@@ -68,7 +69,9 @@ __all__ = [
     "ActorResolution",
     "detect_actor_name",
     "document_type_hint",
+    "recognized_actor_modifier_tails",
     "reference_from_document",
+    "strip_recognized_actor_modifier_tail",
 ]
 
 ActorRole = Literal["contractor"]
@@ -120,17 +123,6 @@ _VERB_PATTERNS: tuple[re.Pattern[str], ...] = (
     re.compile(r"\blo\s+contratado\s+por\b", re.IGNORECASE),
 )
 
-# Palabras que delatan una entidad COMPRADORA. Un nombre que las contenga
-# no se clasifica como contratista: ADR-040 ya fijó que ante un nombre que
-# puede ser comprador y proveedor se pregunta, nunca se elige.
-_BUYER_MARKERS = (
-    "alcaldia", "alcaldía", "gobernacion", "gobernación", "municipio",
-    "distrito", "secretaria", "secretaría", "ministerio", "departamento de",
-    "universidad", "hospital", "personeria", "personería", "contraloria",
-    "contraloría", "instituto", "agencia nacional", "unidad administrativa",
-    "e.s.e", "ese ", "esap",
-)
-
 # Un nombre que empieza por artículo o preposición no es un nombre: es la
 # continuación de un sintagma ("proveedor de alimentos", "contratista de
 # la obra"). Rechazarlos es lo que impide que un tema entre por la puerta
@@ -140,14 +132,33 @@ _LEADING_STOPWORDS = frozenset({
     "en", "para", "por", "con", "que", "al", "a", "y", "o", "sobre",
 })
 
-# Ruido que puede quedar pegado al final de un nombre capturado.
-_TRAILING_NOISE_RE = re.compile(
-    r"\s+(?:en|por|desde|hasta|durante|entre|mayor(?:es)?|menor(?:es)?|m[aá]s|menos|"
-    r"con|para|sobre|del?|la|el|los|las)\b.*$",
+_YEAR_RE = re.compile(r"\b(?:19|20)\d{2}\b")
+
+_DATE_MODIFIER_RE = re.compile(
+    r"\b(?:en|durante|desde|hasta|entre|de)\s+(?:el\s+)?(?:19|20)\d{2}"
+    r"(?:\s+(?:a|y|hasta)\s+(?:19|20)\d{2})?\b",
     re.IGNORECASE,
 )
-
-_YEAR_RE = re.compile(r"\b(?:19|20)\d{2}\b")
+_ORDER_MODIFIER_RE = re.compile(
+    r"\b(?:por\s+)?(?:"
+    r"mayor(?:es)?\s+(?:valor|cuantia)|menor(?:es)?\s+(?:valor|cuantia)|"
+    r"mas\s+(?:caros?|costosos?|grandes?|recientes?)|"
+    r"ordenar\s+por\s+(?:valor|monto|fecha)|"
+    r"de\s+mayor\s+a\s+menor|ultimos?|recientes?"
+    r")\b",
+    re.IGNORECASE,
+)
+_AMOUNT_MODIFIER_RE = re.compile(
+    r"\b(?:por|de|desde|hasta|entre|mayor(?:es)?\s+(?:a|de)|"
+    r"menor(?:es)?\s+(?:a|de)|mas\s+de|menos\s+de)\s+"
+    r"\$?\s*\d[\d.,]*(?:\s+(?:cop|pesos?|millones?|mil|smmlv|smlmv|smlv))?\b",
+    re.IGNORECASE,
+)
+_BOUNDARY_PREPOSITION_RE = re.compile(
+    r"\b(?:en|por|desde|hasta|entre|durante|con|para|sobre|de|del)\s*$",
+    re.IGNORECASE,
+)
+_BOUNDARY_PUNCTUATION_RE = re.compile(r"[^\w\s]", re.UNICODE)
 
 
 # ---------------------------------------------------------------------------
@@ -312,7 +323,120 @@ def _document_context_spans(normalized_query: str) -> tuple[str, ...]:
 # ---------------------------------------------------------------------------
 
 
-def _clean_candidate_name(raw: str) -> str | None:
+def _boundary_normalize(value: object) -> str:
+    decomposed = unicodedata.normalize("NFKD", str(value or "").casefold())
+    without_accents = "".join(
+        character for character in decomposed
+        if not unicodedata.combining(character)
+    )
+    without_punctuation = _BOUNDARY_PUNCTUATION_RE.sub(" ", without_accents)
+    return " ".join(without_punctuation.split())
+
+
+def _append_span(
+    spans: list[tuple[int, int]],
+    query: str,
+    start: int,
+    end: int,
+) -> None:
+    """Record a modifier span, including its immediately preceding preposition."""
+    prefix = query[:start]
+    preposition = _BOUNDARY_PREPOSITION_RE.search(prefix)
+    if preposition is not None:
+        start = preposition.start()
+    spans.append((start, end))
+
+
+def recognized_actor_modifier_tails(
+    normalized_query: str,
+    params: Mapping[str, object],
+    *,
+    extra_consumed_spans: Iterable[str] = (),
+) -> tuple[str, ...]:
+    """Return suffixes independently recognized as supported query modifiers.
+
+    A preposition is never evidence by itself.  It becomes a name boundary
+    only when its following segment was independently classified as date,
+    ordering, geography, amount, modality/state or another consumed modifier.
+    Consecutive modifiers are combined into one tail, e.g. ``en 2025 por mayor
+    valor``.
+    """
+    query = _boundary_normalize(normalized_query)
+    spans: list[tuple[int, int]] = []
+
+    if params.get("fecha_desde") or params.get("fecha_hasta"):
+        spans.extend(match.span() for match in _DATE_MODIFIER_RE.finditer(query))
+    if params.get("ordering_signal"):
+        spans.extend(match.span() for match in _ORDER_MODIFIER_RE.finditer(query))
+    if params.get("valor_min") is not None or params.get("valor_max") is not None:
+        spans.extend(match.span() for match in _AMOUNT_MODIFIER_RE.finditer(query))
+
+    geography_values: list[object] = []
+    for key in (
+        "ciudad", "ciudad_resolved", "departamento", "departamento_resolved", "region",
+    ):
+        if params.get(key):
+            geography_values.append(params[key])
+    for value in geography_values:
+        geography = _boundary_normalize(value)
+        if not geography:
+            continue
+        pattern = re.compile(
+            rf"\b(?:en|de|para)\s+(?:(?:el|la)\s+)?{re.escape(geography)}\b",
+            re.IGNORECASE,
+        )
+        spans.extend(match.span() for match in pattern.finditer(query))
+
+    for raw_span in extra_consumed_spans:
+        consumed = _boundary_normalize(raw_span)
+        if not consumed:
+            continue
+        for match in re.finditer(rf"\b{re.escape(consumed)}\b", query):
+            _append_span(spans, query, match.start(), match.end())
+
+    if not spans:
+        return ()
+
+    # A valid tail is a suffix fully covered by one or more recognized spans;
+    # whitespace between adjacent modifiers is harmless, substantive text is not.
+    tails: set[str] = set()
+    query_end = len(query)
+    for candidate_start in sorted({start for start, _ in spans}):
+        covered = [False] * (query_end - candidate_start)
+        for start, end in spans:
+            if start < candidate_start:
+                continue
+            for index in range(start - candidate_start, min(end, query_end) - candidate_start):
+                covered[index] = True
+        remainder = query[candidate_start:]
+        if all(
+            is_covered or character.isspace()
+            for character, is_covered in zip(remainder, covered)
+        ):
+            tails.add(remainder.strip())
+    return tuple(sorted(tails, key=len, reverse=True))
+
+
+def strip_recognized_actor_modifier_tail(
+    candidate: str,
+    recognized_modifier_tails: Iterable[str],
+) -> str:
+    """Cut only a suffix backed by independent modifier recognition."""
+    normalized = _boundary_normalize(candidate)
+    for tail in sorted(
+        {_boundary_normalize(value) for value in recognized_modifier_tails if value},
+        key=len,
+        reverse=True,
+    ):
+        if normalized.endswith(f" {tail}"):
+            return normalized[: -(len(tail) + 1)].strip()
+    return normalized
+
+
+def _clean_candidate_name(
+    raw: str,
+    recognized_modifier_tails: Iterable[str] = (),
+) -> str | None:
     """Recorta el candidato y lo rechaza si no puede ser un nombre.
 
     Rechaza lo que empieza por artículo o preposición, porque eso indica
@@ -320,7 +444,10 @@ def _clean_candidate_name(raw: str) -> str | None:
     alimentos") y no un nombre propio. También rechaza números y años:
     esos entran por el camino del documento o por el de fechas.
     """
-    candidate = _TRAILING_NOISE_RE.sub("", raw).strip(" ,.;:¿?¡!\"'()")
+    candidate = strip_recognized_actor_modifier_tail(
+        raw.strip(" ,.;:¿?¡!\"'()"),
+        recognized_modifier_tails,
+    )
     if not candidate:
         return None
     words = candidate.split()
@@ -328,24 +455,23 @@ def _clean_candidate_name(raw: str) -> str | None:
         return None
     if _YEAR_RE.fullmatch(candidate) or candidate.replace(".", "").isdigit():
         return None
-    # Un "nombre" de cinco palabras es una frase, no una razón social.
-    if len(words) > 4:
+    # Los marcadores fuertes admiten razones sociales largas; el resolver aún
+    # debe aportar autoridad exacta o limitarse a sugerencias.
+    if len(words) > 8:
         return None
     return candidate
 
 
-def _looks_like_a_buyer(candidate: str) -> bool:
-    lowered = f" {candidate.lower()} "
-    return any(marker in lowered for marker in _BUYER_MARKERS)
-
-
-def _name_after_role_marker(normalized_query: str) -> tuple[str, str] | None:
+def _name_after_role_marker(
+    normalized_query: str,
+    recognized_modifier_tails: Iterable[str] = (),
+) -> tuple[str, str] | None:
     """``(nombre, span_consumido)`` tras un marcador de rol, o ``None``."""
     for marker in _ROLE_MARKERS:
         pattern = re.compile(rf"\b{re.escape(marker)}\s+(.+)$", re.IGNORECASE)
         match = pattern.search(normalized_query)
         if match:
-            name = _clean_candidate_name(match.group(1))
+            name = _clean_candidate_name(match.group(1), recognized_modifier_tails)
             if name:
                 return name, f"{match.group(0)[:match.start(1) - match.start(0)]}{name}"
     for marker in _DETERMINED_ROLE_MARKERS:
@@ -355,25 +481,32 @@ def _name_after_role_marker(normalized_query: str) -> tuple[str, str] | None:
         )
         match = pattern.search(normalized_query)
         if match:
-            name = _clean_candidate_name(match.group(1))
+            name = _clean_candidate_name(match.group(1), recognized_modifier_tails)
             if name:
                 return name, f"{match.group(0)[:match.start(1) - match.start(0)]}{name}"
     return None
 
 
-def _name_after_verb_marker(normalized_query: str) -> tuple[str, str] | None:
+def _name_after_verb_marker(
+    normalized_query: str,
+    recognized_modifier_tails: Iterable[str] = (),
+) -> tuple[str, str] | None:
     for pattern in _VERB_PATTERNS:
         match = pattern.search(normalized_query)
         if match is None:
             continue
         tail = normalized_query[match.end():]
-        name = _clean_candidate_name(tail)
+        name = _clean_candidate_name(tail, recognized_modifier_tails)
         if name:
             return name, f"{match.group(0)}{tail[:len(tail) - len(tail.lstrip())]}{name}"
     return None
 
 
-def detect_actor_name(normalized_query: str) -> ActorReference | None:
+def detect_actor_name(
+    normalized_query: str,
+    *,
+    recognized_modifier_tails: Iterable[str] = (),
+) -> ActorReference | None:
     """Detecta un actor nombrado, **sin resolver su identidad**.
 
     Exige contexto lingüístico fuerte. ``"contratos de FUNDACARIBE"`` no
@@ -387,20 +520,15 @@ def detect_actor_name(normalized_query: str) -> ActorReference | None:
     pierden los contratos del actor cuyo objeto no lo nombra, y se le
     atribuyen los de terceros que sí lo mencionan.
     """
-    found = _name_after_role_marker(normalized_query)
+    found = _name_after_role_marker(normalized_query, recognized_modifier_tails)
     marker_reason = REASON_ROLE_MARKER
     if found is None:
-        found = _name_after_verb_marker(normalized_query)
+        found = _name_after_verb_marker(normalized_query, recognized_modifier_tails)
         marker_reason = REASON_VERB_MARKER
     if found is None:
         return None
 
     name, span = found
-    if _looks_like_a_buyer(name):
-        # ADR-040: un nombre que puede ser comprador y proveedor se
-        # pregunta, no se elige. Aquí ni siquiera se declara actor.
-        return None
-
     return ActorReference(
         resolution_method="name_unresolved",
         identity=None,

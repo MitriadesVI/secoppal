@@ -4,6 +4,10 @@ from __future__ import annotations
 import re
 from dataclasses import dataclass
 
+from app.core.actor_intent import (
+    recognized_actor_modifier_tails,
+    strip_recognized_actor_modifier_tail,
+)
 from app.core.actor_name import normalize_actor_name
 from app.data.morphological_variants import MORPHOLOGICAL_VARIANTS
 
@@ -21,12 +25,10 @@ class BareActorProbe:
 
 
 _BARE_ACTOR_RE = re.compile(r"\bcontratos?\s+de\s+(.+)$", re.IGNORECASE)
-_TAIL_MODIFIER_RE = re.compile(
-    r"\s+(?:en|por|desde|hasta|entre|durante|mayor(?:es)?|menor(?:es)?|"
-    r"mas|menos|con|sobre)\b.*$",
-    re.IGNORECASE,
-)
 _REJECTED_LEADS = frozenset({"el", "la", "los", "las", "un", "una", "del", "de"})
+_ACTOR_SYNTAX_TOPIC_TERMS = frozenset({
+    "adjudicatario", "contratista", "proveedor",
+})
 
 _KNOWN_TOPIC_TERMS = frozenset(
     normalize_actor_name(value)
@@ -50,7 +52,10 @@ def detect_bare_actor_probe(raw_query: str, params: dict) -> BareActorProbe | No
     match = _BARE_ACTOR_RE.search(normalized)
     if match is None:
         return None
-    candidate = _TAIL_MODIFIER_RE.sub("", match.group(1)).strip()
+    candidate = strip_recognized_actor_modifier_tail(
+        match.group(1),
+        recognized_actor_modifier_tails(normalized, params),
+    ).strip()
     words = candidate.split()
     if not words or len(words) > 8 or words[0] in _REJECTED_LEADS:
         return None
@@ -98,11 +103,11 @@ def scrub_strong_actor_leaks(params: dict, actor_name: str) -> dict:
             if isinstance(value, list):
                 nested = [
                     item for item in value
-                    if not _value_is_part_of_name(item, name, name_tokens)
+                    if not _value_is_actor_syntax_or_name(item, name, name_tokens)
                 ]
                 if nested:
                     kept.append(nested if len(nested) > 1 else nested[0])
-            elif not _value_is_part_of_name(value, name, name_tokens):
+            elif not _value_is_actor_syntax_or_name(value, name, name_tokens):
                 kept.append(value)
         if kept:
             clean["objeto"] = kept
@@ -116,6 +121,8 @@ def scrub_strong_actor_leaks(params: dict, actor_name: str) -> dict:
         "ciudad": ("ciudad_resolved",),
         "departamento": ("departamento_resolved", "departamento_resolution"),
         "departamento_resolved": ("departamento", "departamento_resolution"),
+        "entidad": ("entidad_resolved", "entidad_resolution", "entidad_like"),
+        "entidad_resolved": ("entidad", "entidad_resolution", "entidad_like"),
     }.items():
         if _value_is_part_of_name(clean.get(key), name, name_tokens):
             clean.pop(key, None)
@@ -131,3 +138,17 @@ def _value_is_part_of_name(value: object, name: str, name_tokens: set[str]) -> b
     if not normalized:
         return False
     return normalized in name or set(normalized.split()) <= name_tokens
+
+
+def _value_is_actor_syntax_or_name(
+    value: object,
+    name: str,
+    name_tokens: set[str],
+) -> bool:
+    if not isinstance(value, str):
+        return _value_is_part_of_name(value, name, name_tokens)
+    normalized = normalize_actor_name(value).replace("_", " ")
+    return (
+        normalized in _ACTOR_SYNTAX_TOPIC_TERMS
+        or _value_is_part_of_name(value, name, name_tokens)
+    )

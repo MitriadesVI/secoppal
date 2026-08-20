@@ -204,6 +204,97 @@ def test_historial_contractual_de_nombre_is_strong_actor_syntax():
 
 
 @pytest.mark.parametrize(
+    ("text", "expected_name"),
+    [
+        (
+            "contratos del proveedor FUNDACIÓN MANOS EN ACCIÓN",
+            "fundacion manos en accion",
+        ),
+        (
+            "contratos del proveedor CORPORACIÓN PARA EL DESARROLLO SOCIAL",
+            "corporacion para el desarrollo social",
+        ),
+        (
+            "contratos del proveedor FUNDACIÓN CON AMOR",
+            "fundacion con amor",
+        ),
+        (
+            "contratos del proveedor ASOCIACIÓN POR COLOMBIA",
+            "asociacion por colombia",
+        ),
+        (
+            "contratos del proveedor UNIÓN PARA EL PROGRESO",
+            "union para el progreso",
+        ),
+        (
+            "contratos del proveedor CORPORACIÓN DE LA COSTA",
+            "corporacion de la costa",
+        ),
+    ],
+)
+def test_actor_name_internal_prepositions_are_not_boundaries(text, expected_name):
+    params = parse(text)
+
+    assert params["actor_scope"]["observed_name"] == expected_name
+
+
+@pytest.mark.parametrize(
+    ("text", "expected_name", "expected_param", "expected_value"),
+    [
+        (
+            "contratos del proveedor FUNDACIÓN MANOS EN ACCIÓN en 2025",
+            "fundacion manos en accion",
+            "fecha_desde",
+            "2025-01-01",
+        ),
+        (
+            "contratos del proveedor FUNDACIÓN CON AMOR por mayor valor",
+            "fundacion con amor",
+            "ordering_signal",
+            "valor_desc",
+        ),
+        (
+            "contratos del proveedor CORPORACIÓN PARA EL DESARROLLO en Bolívar",
+            "corporacion para el desarrollo",
+            "departamento_resolved",
+            "Bolívar",
+        ),
+        (
+            "contratos del proveedor FUNDACARIBE en 2025 por mayor valor",
+            "fundacaribe",
+            "ordering_signal",
+            "valor_desc",
+        ),
+    ],
+)
+def test_actor_name_cuts_only_independently_recognized_modifier_tails(
+    text,
+    expected_name,
+    expected_param,
+    expected_value,
+):
+    params = parse(text)
+
+    assert params["actor_scope"]["observed_name"] == expected_name
+    assert params[expected_param] == expected_value
+
+
+@pytest.mark.parametrize(
+    ("text", "expected_name"),
+    [
+        ("contratos del proveedor UNIVERSIDAD X", "universidad x"),
+        ("contratos del contratista HOSPITAL X", "hospital x"),
+        ("contratos adjudicados a UNIVERSIDAD X", "universidad x"),
+    ],
+)
+def test_explicit_contractor_role_outweighs_buyer_like_name(text, expected_name):
+    params = parse(text)
+
+    assert params["actor_resolution"] == "name_unresolved"
+    assert params["actor_scope"]["observed_name"] == expected_name
+
+
+@pytest.mark.parametrize(
     "text",
     [
         "contratos del proveedor FUNDACARIBE",
