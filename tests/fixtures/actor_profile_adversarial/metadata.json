@@ -1,0 +1,57 @@
+{
+  "acquisition": {
+    "anchor_pages": [
+      [
+        0,
+        20000
+      ],
+      [
+        1500000,
+        15000
+      ],
+      [
+        4000000,
+        15000
+      ]
+    ],
+    "anchor_rows": 50000,
+    "method": "anchor sample ORDER BY :id + bounded IN-batch aggregation",
+    "note": "no raw bulk download; source evidence is aggregated groups only",
+    "secop_calls_acquire": 3,
+    "secop_calls_confirm": 6
+  },
+  "audit": "APV1-AA",
+  "base_head": "78943b6225613809a7e353aac7f053ee362c9666",
+  "branch": "feature/actor-profile-v1",
+  "counts": {
+    "by_stratum": {
+      "EXTERNAL_HOLDOUT": 60,
+      "EXTERNAL_HOLDOUT_CONTRADICTION": 6,
+      "S10_BUYER_LIKE": 84,
+      "S11_GROUP_LIKE": 72,
+      "S12_LOW_FREQUENCY": 72,
+      "S15_TOPIC": 10,
+      "S1_STABLE_NIT": 120,
+      "S2_STABLE_CC": 96,
+      "S3_MULTI_ALIAS": 96,
+      "S5_CROSS_TYPE": 18,
+      "S6_DV_COLLISIONS": 84,
+      "S7_LONG_NAMES": 120,
+      "S8_NAME_DOCUMENT_CONTRADICTION": 48,
+      "S8_PREPOSITIONS": 108,
+      "S9_MODIFIER_LIKE": 108,
+      "S_CC_ACCIDENTAL_DV": 48
+    },
+    "frozen_cases": 1150,
+    "sequences": 38,
+    "source_evidence_groups": 385
+  },
+  "dataset": "jbjy-vk9h",
+  "generated_at": "2026-08-19",
+  "policy": [
+    "Frozen BEFORE running SECOPPAL. No case may be edited, replaced or dropped afterwards.",
+    "Expectations derive from source evidence and invariants, never from SECOPPAL output.",
+    "CC documents are real and public in SECOP; fixtures store them for reproducibility, and the audit gate is that they never reach user-visible output."
+  ],
+  "seed": 20260819
+}
