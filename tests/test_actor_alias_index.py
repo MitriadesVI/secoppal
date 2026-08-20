@@ -183,6 +183,50 @@ def test_same_n2_alias_variants_collapse_only_within_one_typed_identity(tmp_path
     assert row[3] == 7
 
 
+def test_base_and_attached_dv_need_shared_alias_evidence_to_remain_authoritative(
+    tmp_path,
+):
+    # AP1 recognizes 8 as the valid DV of 86000773.  A shared N2 name bridges
+    # the two source forms and documents that they are representation variants.
+    path = _build(tmp_path, [
+        _row("NIT", "86000773", "ACTOR PUENTE", 4),
+        _row("NIT", "860007738", "Actor Puente", 5),
+    ])
+    metadata = validate_actor_alias_index(path)
+
+    assert metadata.identity_count == 1
+    assert metadata.alias_count == 1
+    assert metadata.source_quality[
+        "unbridged_document_form_collapse_buckets_excluded"
+    ] == 0
+
+
+def test_disjoint_names_on_base_and_inferred_dv_form_are_excluded(tmp_path):
+    path = _build(tmp_path, [
+        _row("NIT", "86000773", "ACTOR OCHO DIGITOS", 8),
+        _row("NIT", "860007738", "ACTOR NUEVE DIGITOS", 7),
+    ])
+    metadata = validate_actor_alias_index(path)
+
+    assert metadata.identity_count == 0
+    assert metadata.alias_count == 0
+    assert metadata.source_quality[
+        "unbridged_document_form_collapse_buckets_excluded"
+    ] == 1
+    assert metadata.source_quality["dirty_reason_counts"][
+        "UNBRIDGED_DOCUMENT_FORM_COLLAPSE"
+    ] == 1
+    with sqlite3.connect(path) as connection:
+        reasons = connection.execute(
+            "SELECT reason_codes_json FROM actor_alias_build_audit"
+        ).fetchall()
+    assert reasons
+    assert all(
+        "UNBRIDGED_DOCUMENT_FORM_COLLAPSE" in json.loads(raw)
+        for (raw,) in reasons
+    )
+
+
 def test_failed_build_preserves_last_valid_index(tmp_path, monkeypatch):
     path = _build(tmp_path, [_row("NIT", "900111222", "VALID ACTOR")])
     before = path.read_bytes()

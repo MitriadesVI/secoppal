@@ -80,6 +80,7 @@ class ActorAliasBuildPolicy:
     maximum_distinct_observed_names: int = 25
     exclude_cross_document_type_collisions: bool = True
     exclude_secondary_group_aliases: bool = True
+    exclude_unbridged_document_form_collapses: bool = True
 
     def __post_init__(self) -> None:
         if self.minimum_total_occurrences < 1:
@@ -92,6 +93,8 @@ class ActorAliasBuildPolicy:
             raise ValueError("cross-document-type collision exclusion is mandatory")
         if not self.exclude_secondary_group_aliases:
             raise ValueError("secondary group alias exclusion is mandatory")
+        if not self.exclude_unbridged_document_form_collapses:
+            raise ValueError("unbridged document-form collapse exclusion is mandatory")
 
 
 @dataclass(frozen=True, slots=True)
@@ -240,7 +243,7 @@ def _prepare_rows(
     *,
     source_dataset: str,
 ) -> tuple[list[_RawAlias], list[_AuditRecord], Counter[str]]:
-    merged: dict[tuple[str, str, str], _RawAlias] = {}
+    merged: dict[tuple[str, str, str, str], _RawAlias] = {}
     rejected: list[_AuditRecord] = []
     quality: Counter[str] = Counter()
 
@@ -292,7 +295,11 @@ def _prepare_rows(
             continue
 
         raw_document = str(raw_document_value or "")
-        key = (document_type, match.key.base_number, raw_alias)
+        # Keep source document forms separate through bucket classification.
+        # AP1 can legitimately collapse base/base+DV to one IdentityKey, but
+        # AP3-B.1 still needs to audit whether those forms share any name
+        # evidence before granting exact-alias authority.
+        key = (document_type, match.key.base_number, raw_document, raw_alias)
         current = merged.get(key)
         if current is None:
             merged[key] = _RawAlias(
@@ -335,6 +342,7 @@ def _classify_rows(
 
     stable_rows: list[_RawAlias] = []
     dirty_buckets = 0
+    unbridged_document_form_collapses = 0
     excluded_group_aliases = 0
     dirty_reasons: Counter[str] = Counter()
     for (document_type, base_number), aliases in sorted(buckets.items()):
@@ -367,6 +375,13 @@ def _classify_rows(
             reasons.append("EXTREME_ALIAS_CARDINALITY")
         if not clean_aliases:
             reasons.append("NO_CLEAN_ALIAS")
+        if (
+            policy.exclude_unbridged_document_form_collapses
+            and document_type == "NIT"
+            and _has_unbridged_document_form_collapse(aliases)
+        ):
+            reasons.append("UNBRIDGED_DOCUMENT_FORM_COLLAPSE")
+            unbridged_document_form_collapses += 1
 
         if reasons:
             dirty_buckets += 1
@@ -427,10 +442,37 @@ def _classify_rows(
         "dirty_buckets_excluded": dirty_buckets,
         "dirty_reason_counts": dict(sorted(dirty_reasons.items())),
         "secondary_group_aliases_excluded": excluded_group_aliases,
+        "unbridged_document_form_collapse_buckets_excluded": (
+            unbridged_document_form_collapses
+        ),
         "known_document_types_only": ["NIT", "CC"],
         "disposition_counts": dict(sorted(disposition_counts.items())),
     }
     return indexed, audit, source_quality
+
+
+def _has_unbridged_document_form_collapse(aliases: Sequence[_RawAlias]) -> bool:
+    """Detect distinct bare NIT forms collapsed by DV inference without a name bridge.
+
+    ``base`` and ``base+valid_DV`` are normally two publications of one NIT.
+    They are accepted when at least one N2 alias appears under both forms.  If
+    the forms carry disjoint name sets, the local index cannot distinguish a
+    legitimate representation variant from two source identifiers collapsed
+    by arithmetic inference, so the entire bucket is excluded from authority.
+    """
+    aliases_by_form: dict[str, set[str]] = defaultdict(set)
+    for alias in aliases:
+        digits = re.sub(r"\D", "", alias.raw_document)
+        if digits:
+            aliases_by_form[digits].add(alias.normalized_alias)
+    if len(aliases_by_form) <= 1:
+        return False
+    forms = list(aliases_by_form.values())
+    return not any(
+        left & right
+        for index, left in enumerate(forms)
+        for right in forms[index + 1:]
+    )
 
 
 def _audit_from_raw(
