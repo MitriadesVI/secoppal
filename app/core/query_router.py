@@ -16,6 +16,7 @@ from app.data.estados import (
 from app.config import actor_profile_enabled
 from app.core.actor_identity import has_plausible_actor_document_digits
 from app.core.actor_intent import (
+    detect_asserted_actor_name_before_document,
     detect_actor_name,
     recognized_actor_modifier_tails,
     reference_from_document,
@@ -1432,9 +1433,17 @@ class QueryRouter:
         if not variants:
             return scrubbed
 
+        asserted_actor = detect_asserted_actor_name_before_document(
+            normalized, match.start(),
+        )
         params["contratista"] = variants
         params["actor_resolution"] = reference.resolution_method
-        params["actor_scope"] = reference.to_params()
+        actor_scope = reference.to_params()
+        if asserted_actor is not None and asserted_actor.observed_name:
+            # Contextual evidence only.  The document remains the sole
+            # execution authority and the resolver never adds a name filter.
+            actor_scope["asserted_name"] = asserted_actor.observed_name
+        params["actor_scope"] = actor_scope
 
         # Promoción de dataset, que NO es lo mismo que descartar el filtro.
         # "historial contractual del NIT X" y "contratación de la persona con
@@ -1450,6 +1459,12 @@ class QueryRouter:
             params["dataset"] = DATASET_CONTRATOS
 
         scrubbed = self._scrub_identifier_spans(scrubbed)
+        # Consume the atomic role/name span before its shorter role marker;
+        # otherwise removing "proveedor" first would make the full span
+        # impossible to match and leave the asserted name behind as a topic.
+        if asserted_actor is not None:
+            for span in asserted_actor.consumed_spans:
+                scrubbed = scrubbed.replace(span, " ")
         for span in reference.consumed_spans:
             scrubbed = re.sub(
                 rf"\b{re.escape(span)}\b", " ", scrubbed, flags=re.IGNORECASE,

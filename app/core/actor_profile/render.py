@@ -32,6 +32,7 @@ muestra entero: es un identificador mercantil público, no un dato personal
 from __future__ import annotations
 
 from app.core.actor_document_types import is_personal_source_type
+from app.core.actor_name import normalize_actor_name
 from app.core.actor_profile.models import ActorProfileResult
 from app.core.analytics.base import format_currency
 
@@ -73,6 +74,44 @@ def _identity_line(profile: ActorProfileResult) -> str:
     primary_name = profile.observed_names[0].name if profile.observed_names else None
     head = f"{label} {shown}".strip()
     return f"{primary_name} · {head}" if primary_name else head
+
+
+def _asserted_name_note(profile: ActorProfileResult) -> str | None:
+    """Keep a user-supplied name contextual until source evidence matches it."""
+    identity = profile.identity or {}
+    asserted = identity.get("asserted_name")
+    if not isinstance(asserted, str) or not asserted.strip():
+        return None
+
+    observed = {
+        normalize_actor_name(item.name)
+        for item in profile.observed_names
+        if item.name.strip()
+    }
+    asserted_normalized = normalize_actor_name(asserted)
+    if asserted_normalized and asserted_normalized in observed:
+        return None
+
+    document = str(identity.get("base_number") or "")
+    shown = mask_document(
+        document,
+        profile.document_types_observed[0]
+        if profile.document_types_observed
+        else identity.get("document_type"),
+    )
+    authority = f"documento {shown}" if shown else "documento indicado"
+    if observed:
+        return (
+            f"⚠️ Escribiste “{asserted.strip()}”, pero ese nombre no coincide "
+            f"literalmente con los nombres observados para este {authority} en "
+            "SECOP. La actividad de abajo se atribuye al documento, no al "
+            "nombre escrito."
+        )
+    return (
+        f"⚠️ Escribiste “{asserted.strip()}”, pero no pude contrastar ese "
+        f"nombre con la fuente. La actividad de abajo se atribuye al {authority}, "
+        "no al nombre escrito."
+    )
 
 
 def _type_label(declared_type: str | None, observed_type: str | None) -> str:
@@ -170,6 +209,10 @@ def _coverage_notes(profile: ActorProfileResult) -> list[str]:
 def render_actor_profile(profile: ActorProfileResult) -> str:
     """Texto del perfil para cualquier canal."""
     blocks: list[str] = [_identity_line(profile)]
+
+    asserted_name_note = _asserted_name_note(profile)
+    if asserted_name_note:
+        blocks.append(asserted_name_note)
 
     stamp = profile.queried_at.strftime("%d/%m/%Y %H:%M")
     blocks.append(

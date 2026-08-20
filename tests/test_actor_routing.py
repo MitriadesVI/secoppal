@@ -166,6 +166,40 @@ def test_short_cc_profile_matches_the_independent_4265582_oracle():
     assert all("tipodocproveedor NOT IN ('NIT')" in soql for soql in calls)
 
 
+@pytest.mark.parametrize(
+    "text",
+    [
+        "contratos del proveedor ASILO DE SAN ANTONIO NIT 890.102.896-1",
+        "qué ha contratado ASILO DE SAN ANTONIO con NIT 890.102.896-1",
+        "historial contractual de ASILO DE SAN ANTONIO NIT 890.102.896-1",
+        (
+            "contratos del proveedor AGENCIA LOGÍSTICA DE GESTIÓN "
+            "INMOBILIARIA Y DE SERVICIOS DE CUNDINAMARCA NIT 900221051"
+        ),
+    ],
+)
+def test_inv_actor_mention_atomicity_name_plus_document_cannot_leak(text):
+    params = parse(text)
+
+    assert params["actor_resolution"] == "explicit_document"
+    assert params["actor_scope"]["asserted_name"]
+    assert params.get("objeto") is None
+    assert params.get("entidad") is None
+    assert params.get("entidad_resolved") is None
+    assert params.get("departamento") is None
+    assert params.get("departamento_resolved") is None
+    assert params.get("ciudad") is None
+
+
+def test_name_plus_document_filters_secop_by_document_only():
+    query = "contratos del proveedor ASILO DE SAN ANTONIO NIT 890.102.896-1"
+    soql = soql_for(query)
+
+    assert "documento_proveedor = '890102896'" in soql
+    assert "ASILO" not in soql.upper()
+    assert "HOSPITAL SAN ANTONIO" not in soql.upper()
+
+
 # ---------------------------------------------------------------------------
 # INV-ACTOR-NOT-TOPIC — el actor nunca se degrada a búsqueda de texto.
 # ---------------------------------------------------------------------------

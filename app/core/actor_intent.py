@@ -67,6 +67,7 @@ __all__ = [
     "ActorReference",
     "ActorRole",
     "ActorResolution",
+    "detect_asserted_actor_name_before_document",
     "detect_actor_name",
     "document_type_hint",
     "recognized_actor_modifier_tails",
@@ -96,6 +97,11 @@ REASON_DOCUMENT_TYPE_AMBIGUOUS = "ACTOR_DOCUMENT_TYPE_AMBIGUOUS"
 _NIT_MARKER_RE = re.compile(r"\bnit\b", re.IGNORECASE)
 _CEDULA_MARKER_RE = re.compile(
     r"\b(?:c[eé]dulas?|c\.c\.|cc|persona\s+natural|documento\s+de\s+identidad)\b",
+    re.IGNORECASE,
+)
+_DOCUMENT_MARKER_SUFFIX_RE = re.compile(
+    r"\s+(?:con\s+)?(?:(?:el|la)\s+)?(?:nit|c[eé]dulas?|c\.c\.|cc|"
+    r"documento(?:\s+de\s+identidad)?)\s*$",
     re.IGNORECASE,
 )
 
@@ -436,6 +442,8 @@ def strip_recognized_actor_modifier_tail(
 def _clean_candidate_name(
     raw: str,
     recognized_modifier_tails: Iterable[str] = (),
+    *,
+    max_words: int | None = 8,
 ) -> str | None:
     """Recorta el candidato y lo rechaza si no puede ser un nombre.
 
@@ -457,7 +465,7 @@ def _clean_candidate_name(
         return None
     # Los marcadores fuertes admiten razones sociales largas; el resolver aún
     # debe aportar autoridad exacta o limitarse a sugerencias.
-    if len(words) > 8:
+    if max_words is not None and len(words) > max_words:
         return None
     return candidate
 
@@ -465,13 +473,17 @@ def _clean_candidate_name(
 def _name_after_role_marker(
     normalized_query: str,
     recognized_modifier_tails: Iterable[str] = (),
+    *,
+    max_words: int | None = 8,
 ) -> tuple[str, str] | None:
     """``(nombre, span_consumido)`` tras un marcador de rol, o ``None``."""
     for marker in _ROLE_MARKERS:
         pattern = re.compile(rf"\b{re.escape(marker)}\s+(.+)$", re.IGNORECASE)
         match = pattern.search(normalized_query)
         if match:
-            name = _clean_candidate_name(match.group(1), recognized_modifier_tails)
+            name = _clean_candidate_name(
+                match.group(1), recognized_modifier_tails, max_words=max_words,
+            )
             if name:
                 return name, f"{match.group(0)[:match.start(1) - match.start(0)]}{name}"
     for marker in _DETERMINED_ROLE_MARKERS:
@@ -481,7 +493,9 @@ def _name_after_role_marker(
         )
         match = pattern.search(normalized_query)
         if match:
-            name = _clean_candidate_name(match.group(1), recognized_modifier_tails)
+            name = _clean_candidate_name(
+                match.group(1), recognized_modifier_tails, max_words=max_words,
+            )
             if name:
                 return name, f"{match.group(0)[:match.start(1) - match.start(0)]}{name}"
     return None
@@ -490,16 +504,88 @@ def _name_after_role_marker(
 def _name_after_verb_marker(
     normalized_query: str,
     recognized_modifier_tails: Iterable[str] = (),
+    *,
+    max_words: int | None = 8,
 ) -> tuple[str, str] | None:
     for pattern in _VERB_PATTERNS:
         match = pattern.search(normalized_query)
         if match is None:
             continue
         tail = normalized_query[match.end():]
-        name = _clean_candidate_name(tail, recognized_modifier_tails)
+        name = _clean_candidate_name(
+            tail, recognized_modifier_tails, max_words=max_words,
+        )
         if name:
             return name, f"{match.group(0)}{tail[:len(tail) - len(tail.lstrip())]}{name}"
     return None
+
+
+def detect_asserted_actor_name_before_document(
+    normalized_query: str,
+    document_start: int,
+) -> ActorReference | None:
+    """Return a strong user-supplied name immediately before a document.
+
+    The authoritative identity remains the document.  This helper only claims
+    and consumes the contextual name span early enough that buyer, geography,
+    and topic extractors cannot reinterpret its fragments as independent
+    contract filters.  The document provides a hard right boundary, so this
+    path intentionally has no historical eight-word limit.
+    """
+    prefix = normalized_query[:document_start]
+    actor_context = _DOCUMENT_MARKER_SUFFIX_RE.sub("", prefix).strip()
+    if not actor_context or actor_context == prefix.strip():
+        return None
+
+    name: str | None = None
+    span: str | None = None
+    marker_reason = REASON_ROLE_MARKER
+    # Preserve the exact surface span for consumption.  The general name
+    # detector returns an N2-like boundary string, which intentionally drops
+    # punctuation; using that string to scrub ``S.A.S.`` or ``&`` would fail.
+    for marker in _ROLE_MARKERS:
+        match = re.search(
+            rf"\b{re.escape(marker)}\s+(.+)$", actor_context, re.IGNORECASE,
+        )
+        if match is not None:
+            name = _clean_candidate_name(match.group(1), max_words=None)
+            if name:
+                span = match.group(0)
+                break
+    if name is None:
+        for marker in _DETERMINED_ROLE_MARKERS:
+            match = re.search(
+                rf"\b(?:la|el|los|las|una|un)\s+{re.escape(marker)}\s+(.+)$",
+                actor_context,
+                re.IGNORECASE,
+            )
+            if match is not None:
+                name = _clean_candidate_name(match.group(1), max_words=None)
+                if name:
+                    span = match.group(0)
+                    break
+    if name is None:
+        marker_reason = REASON_VERB_MARKER
+        for pattern in _VERB_PATTERNS:
+            match = pattern.search(actor_context)
+            if match is None:
+                continue
+            name = _clean_candidate_name(
+                actor_context[match.end():], max_words=None,
+            )
+            if name:
+                span = actor_context[match.start():]
+                break
+    if name is None or span is None:
+        return None
+
+    return ActorReference(
+        resolution_method="name_unresolved",
+        identity=None,
+        observed_name=name,
+        consumed_spans=(span,),
+        reason_codes=(marker_reason, REASON_NAME_NEEDS_RESOLUTION),
+    )
 
 
 def detect_actor_name(

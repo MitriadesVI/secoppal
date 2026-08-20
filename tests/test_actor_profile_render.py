@@ -170,6 +170,42 @@ def test_inv_observed_name_the_text_says_these_are_observed_not_registered():
     assert "no una razón social registrada" in text
 
 
+def test_inv_name_document_contradiction_uses_source_name_and_warns():
+    profile = make_profile(
+        identity={
+            "document_type": "NIT",
+            "base_number": "860002400",
+            "asserted_name": "ASILO DE SAN ANTONIO",
+        },
+        observed_names=(
+            ObservedName("LA PREVISORA S.A.", "860002400", "NIT", 4230),
+        ),
+    )
+
+    text = render_actor_profile(profile)
+
+    assert text.startswith("LA PREVISORA S.A. · NIT 860002400")
+    assert "Escribiste “ASILO DE SAN ANTONIO”" in text
+    assert "se atribuye al documento, no al nombre escrito" in text
+    assert not text.startswith("ASILO DE SAN ANTONIO")
+
+
+def test_an_unchecked_asserted_name_never_becomes_the_profile_heading():
+    profile = make_profile(
+        identity={
+            "document_type": "NIT",
+            "base_number": "860002400",
+            "asserted_name": "ACTOR A",
+        },
+        observed_names=(),
+    )
+
+    text = render_actor_profile(profile)
+
+    assert text.startswith("NIT 860002400")
+    assert "no pude contrastar ese nombre" in text
+
+
 def test_inv_id_type_mixed_document_types_are_warned_about_in_the_text():
     profile = make_profile(
         observed_names=(
