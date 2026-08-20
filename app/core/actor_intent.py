@@ -73,6 +73,8 @@ __all__ = [
     "recognized_actor_modifier_tails",
     "reference_from_document",
     "strip_recognized_actor_modifier_tail",
+    "strong_actor_modifier_suffix",
+    "strong_actor_name_prefixes",
 ]
 
 ActorRole = Literal["contractor"]
@@ -622,3 +624,74 @@ def detect_actor_name(
         consumed_spans=(span,),
         reason_codes=(marker_reason, REASON_NAME_NEEDS_RESOLUTION),
     )
+
+
+def _strong_actor_tail(normalized_query: str) -> str | None:
+    query = _boundary_normalize(normalized_query)
+    tail: str | None = None
+    for marker in _ROLE_MARKERS:
+        match = re.search(rf"\b{re.escape(marker)}\s+(.+)$", query, re.IGNORECASE)
+        if match is not None:
+            tail = match.group(1)
+            break
+    if tail is None:
+        for marker in _DETERMINED_ROLE_MARKERS:
+            match = re.search(
+                rf"\b(?:la|el|los|las|una|un)\s+{re.escape(marker)}\s+(.+)$",
+                query,
+                re.IGNORECASE,
+            )
+            if match is not None:
+                tail = match.group(1)
+                break
+    if tail is None:
+        for pattern in _VERB_PATTERNS:
+            match = pattern.search(query)
+            if match is not None:
+                tail = query[match.end():].strip()
+                break
+    if not tail:
+        return None
+    return tail
+
+
+def strong_actor_name_prefixes(
+    normalized_query: str,
+    *,
+    minimum_name: str,
+) -> tuple[str, ...]:
+    """Longest-first boundary candidates from independently strong syntax.
+
+    This function does not decide that any prefix is an actor.  The caller may
+    grant boundary authority only when the exact alias index confirms one and
+    any remainder is independently parsed as a supported modifier; fuzzy
+    retrieval must never choose a prefix or consume that remainder.
+    """
+    tail = _strong_actor_tail(normalized_query)
+    if tail is None:
+        return ()
+
+    minimum = _boundary_normalize(minimum_name)
+    if not minimum or not (tail == minimum or tail.startswith(f"{minimum} ")):
+        return ()
+    words = tail.split()
+    return tuple(
+        " ".join(words[:size])
+        for size in range(len(words), 0, -1)
+    )
+
+
+def strong_actor_modifier_suffix(
+    normalized_query: str,
+    actor_name: str,
+) -> str | None:
+    """Text after an exact actor prefix, or ``None`` if it is not a prefix."""
+    tail = _strong_actor_tail(normalized_query)
+    name = _boundary_normalize(actor_name)
+    if tail is None or not name:
+        return None
+    if tail == name:
+        return ""
+    if tail.startswith(f"{name} "):
+        return tail[len(name) + 1:]
+    return None

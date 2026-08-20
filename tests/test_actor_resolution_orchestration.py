@@ -306,6 +306,67 @@ def test_strong_actor_name_does_not_leak_into_topic_or_geography(tmp_path):
     assert params["ordering_signal"] == "valor_desc"
 
 
+@pytest.mark.parametrize(
+    ("query", "expected_modifier", "expected_value"),
+    [
+        (
+            "contratos del proveedor UNIVERSIDAD INDUSTRIAL DE SANTANDER",
+            None,
+            None,
+        ),
+        (
+            "contratos del proveedor UNIVERSIDAD INDUSTRIAL DE SANTANDER en 2025",
+            "fecha_desde",
+            "2025-01-01",
+        ),
+        (
+            "contratos del proveedor UNIVERSIDAD INDUSTRIAL DE SANTANDER en Bolívar",
+            "departamento_resolved",
+            "Bolívar",
+        ),
+    ],
+)
+def test_inv_actor_longest_authoritative_span_keeps_internal_santander(
+    tmp_path,
+    query,
+    expected_modifier,
+    expected_value,
+):
+    resolver = _resolver(tmp_path, [
+        _row("NIT", "890201213", "UNIVERSIDAD INDUSTRIAL DE SANTANDER", 234),
+    ])
+
+    params = _resolve_action(query, resolver)
+
+    assert is_authoritative_actor_resolution(params)
+    assert params["actor_scope"]["observed_name"] == (
+        "universidad industrial de santander"
+    )
+    assert params["actor_scope"]["base_number"] == "890201213"
+    assert params.get("entidad") is None
+    assert params.get("entidad_resolved") is None
+    assert params.get("departamento") != "de santander"
+    assert params.get("departamento_resolved") != "Santander"
+    if expected_modifier:
+        assert params[expected_modifier] == expected_value
+
+
+def test_fuzzy_never_claims_a_longer_actor_boundary(tmp_path):
+    resolver = _resolver(tmp_path, [
+        _row("NIT", "890201213", "UNIVERSIDAD INDUSTRIAL DE SANTANDER", 234),
+    ])
+
+    params = _resolve_action(
+        "contratos del proveedor UNIVERSIDAD INDUSTRIAL DE SANTANDE en Bolívar",
+        resolver,
+    )
+
+    assert params["actor_resolution_status"] == ActorResolutionStatus.CANDIDATES
+    assert params.get("contratista") is None
+    assert not is_authoritative_actor_resolution(params)
+    assert params["departamento_resolved"] == "Bolívar"
+
+
 def test_ambiguous_cc_choices_are_masked_in_clarification(tmp_path):
     resolver = _resolver(tmp_path, [
         _row("Cédula de Ciudadanía", "1140835135", "PERSONA OBSERVADA", 9),

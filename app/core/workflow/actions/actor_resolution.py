@@ -9,6 +9,10 @@ from app.core.actor_arbitration import (
     has_strong_topic_evidence,
     scrub_strong_actor_leaks,
 )
+from app.core.actor_intent import (
+    strong_actor_modifier_suffix,
+    strong_actor_name_prefixes,
+)
 from app.core.actor_name import ActorResolutionStatus
 from app.core.actor_resolution import (
     METHOD_EXPLICIT_DOCUMENT,
@@ -17,6 +21,46 @@ from app.core.actor_resolution import (
     project_actor_resolution,
 )
 from app.data.actor_alias_resolver import ActorNameResolver
+
+
+_BOUNDARY_MODIFIER_KEYS = frozenset({
+    "fecha_desde", "fecha_hasta", "ordering_signal",
+    "valor_min", "valor_max", "money_metadata",
+    "ciudad", "ciudad_resolved",
+    "departamento", "departamento_resolved", "departamento_resolution",
+    "region", "departamentos_in",
+    "estado", "estado_field", "estado_family",
+    "estado_contrato", "estado_del_procedimiento",
+    "estado_de_apertura_del_proceso",
+    "modalidad", "modalidad_resolved", "modalidad_resolution",
+})
+
+
+def _parse_exact_boundary_modifier_suffix(
+    raw_query: str,
+    actor_name: str,
+) -> dict | None:
+    """Validate and recover only a supported suffix after an exact alias."""
+    suffix = strong_actor_modifier_suffix(raw_query, actor_name)
+    if suffix is None:
+        return None
+    if not suffix:
+        return {}
+
+    # Reparse only the remainder, never the actor name.  This gives the normal
+    # deterministic modifier grammar a clean view after exact alias evidence
+    # fixed the boundary.  Any thematic residue makes the boundary indefensible.
+    from app.core.query_router import QueryRouter
+
+    parsed = dict(QueryRouter().parse(f"contratos {suffix}").params)
+    if any(parsed.get(key) for key in ("objeto", "objeto_phrases", "actor_scope")):
+        return None
+    modifiers = {
+        key: value
+        for key, value in parsed.items()
+        if key in _BOUNDARY_MODIFIER_KEYS and value not in (None, "", [], {}, ())
+    }
+    return modifiers or None
 
 
 @action(reads=["parsed_params", "raw_query"], writes=["parsed_params"])
@@ -34,12 +78,44 @@ def resolve_actor_name(state: State, actor_name_resolver: ActorNameResolver) -> 
         actor_name = scope.get("observed_name") if isinstance(scope, dict) else None
         if not isinstance(actor_name, str) or not actor_name.strip():
             return state
+        result = None
+        recovered_modifiers: dict = {}
+        # Give the strong mention a chance to claim its longest exact alias
+        # before accepting geography/date/state tokens as suffix modifiers.
+        # Exact lookup may decide the boundary; fuzzy retrieval never may.
+        for candidate in strong_actor_name_prefixes(
+            raw_query,
+            minimum_name=actor_name,
+        ):
+            exact = actor_name_resolver.resolve_exact(candidate)
+            if exact.status in {
+                ActorResolutionStatus.RESOLVED,
+                ActorResolutionStatus.AMBIGUOUS,
+            }:
+                suffix_modifiers = _parse_exact_boundary_modifier_suffix(
+                    raw_query, candidate,
+                )
+                if suffix_modifiers is None:
+                    continue
+                actor_name = candidate
+                result = exact
+                recovered_modifiers = suffix_modifiers
+                break
+            if exact.status == ActorResolutionStatus.INDEX_UNAVAILABLE:
+                result = exact
+                break
+
         params = scrub_strong_actor_leaks(params, actor_name)
+        params.update(recovered_modifiers)
+        scope = params.get("actor_scope")
+        if isinstance(scope, dict):
+            params["actor_scope"] = {**scope, "observed_name": actor_name}
         # As with AP2's explicit-document door, an implicit dataset must move
         # to contracts, the dataset that publishes contractor documents.
         if not params.get("dataset_explicit"):
             params["dataset"] = "contratos"
-        result = actor_name_resolver.resolve(actor_name)
+        if result is None:
+            result = actor_name_resolver.resolve(actor_name)
         projected = project_actor_resolution(
             params,
             result,
