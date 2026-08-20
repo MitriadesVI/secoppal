@@ -268,3 +268,60 @@ def test_logical_build_is_reproducible_for_fixed_input_and_timestamp(tmp_path):
         ).fetchall() == two.execute(
             "SELECT * FROM actor_index_metadata"
         ).fetchall()
+
+
+# ---------------------------------------------------------------------------
+# AP3-E — política de frecuencia mínima.
+# ---------------------------------------------------------------------------
+
+
+def test_low_frequency_alone_is_not_dirty(tmp_path):
+    """Un proveedor con un solo contrato pertenece al directorio.
+
+    Con el umbral anterior (3) quedaban fuera el 43,9% de los proveedores del
+    país, medido sobre la fuente. Ser infrecuente no dice nada sobre la calidad
+    de la evidencia; excluirlos convertía el directorio en un censo de
+    proveedores grandes.
+    """
+    from app.data.actor_alias_index import build_actor_alias_index
+
+    rows = [{
+        "tipodocproveedor": "NIT", "documento_proveedor": "900123456",
+        "proveedor_adjudicado": "PROVEEDOR DE UN SOLO CONTRATO",
+        "occurrences": 1, "first_seen": "2025-01-01", "last_seen": "2025-01-01",
+    }]
+    report = build_actor_alias_index(
+        rows, tmp_path / "index.sqlite", source_dataset="jbjy-vk9h",
+    )
+    assert report.to_dict()["metadata"]["identity_count"] == 1
+
+
+def test_one_occurrence_with_a_quality_problem_is_still_dirty(tmp_path):
+    """Baja frecuencia deja de excluir; los defectos de evidencia no.
+
+    El mismo número bajo dos tipos documentales sigue siendo una colisión de
+    actores aunque cada lado tenga una sola observación.
+    """
+    from app.data.actor_alias_index import build_actor_alias_index
+
+    rows = [
+        {"tipodocproveedor": "NIT", "documento_proveedor": "13848603",
+         "proveedor_adjudicado": "UNION TEMPORAL X", "occurrences": 1,
+         "first_seen": "2025-01-01", "last_seen": "2025-01-01"},
+        {"tipodocproveedor": "Cédula de Ciudadanía", "documento_proveedor": "13848603",
+         "proveedor_adjudicado": "PERSONA NATURAL", "occurrences": 1,
+         "first_seen": "2025-01-01", "last_seen": "2025-01-01"},
+    ]
+    report = build_actor_alias_index(
+        rows, tmp_path / "index.sqlite", source_dataset="jbjy-vk9h",
+    )
+    payload = report.to_dict()
+    assert payload["metadata"]["identity_count"] == 0
+    assert "CROSS_TYPE_COLLISION" in json.dumps(payload)
+
+
+def test_the_default_threshold_is_pinned(tmp_path):
+    """Si alguien vuelve a subirlo, que sea una decisión, no un descuido."""
+    from app.data.actor_alias_index import ActorAliasBuildPolicy
+
+    assert ActorAliasBuildPolicy().minimum_total_occurrences == 1

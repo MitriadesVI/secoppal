@@ -1,0 +1,29 @@
+{
+  "by_type": {
+    "CC": 1105444,
+    "NIT": 108907
+  },
+  "dirty_reason_counts": {
+    "CROSS_TYPE_COLLISION": 4968,
+    "EXTREME_ALIAS_CARDINALITY": 4,
+    "LOW_DOMINANT_NAME_SHARE": 60,
+    "SECONDARY_GROUP_ALIAS": 415,
+    "UNBRIDGED_DOCUMENT_FORM_COLLAPSE": 1964
+  },
+  "indexed_identities": 1214351,
+  "metadata": {
+    "alias_count": 1217203,
+    "ambiguous_alias_count": 14305,
+    "built_at": "2026-08-20T18:10:58+00:00",
+    "excluded_dirty_count": 15936,
+    "identity_count": 1214351,
+    "normalization_version": "N2",
+    "schema_version": "1",
+    "singleton": 1,
+    "source_dataset": "jbjy-vk9h",
+    "source_max_date": "2026-08-18",
+    "source_quality_json": "{\"accepted_aggregated_rows\": 1229684, \"dirty_buckets_excluded\": 6963, \"dirty_reason_counts\": {\"CROSS_TYPE_COLLISION\": 4968, \"EXTREME_ALIAS_CARDINALITY\": 4, \"LOW_DOMINANT_NAME_SHARE\": 60, \"SECONDARY_GROUP_ALIAS\": 415, \"UNBRIDGED_DOCUMENT_FORM_COLLAPSE\": 1964}, \"disposition_counts\": {\"EXCLUDED_DIRTY\": 15936, \"INDEXED_AMBIGUOUS\": 44385, \"INDEXED_STABLE\": 1175270}, \"empty_or_sentinel_name\": 243, \"known_document_types_only\": [\"NIT\", \"CC\"], \"rejected_aggregated_rows\": 5907, \"secondary_group_aliases_excluded\": 415, \"unbridged_document_form_collapse_buckets_excluded\": 1964, \"unknown_document_type\": 5354, \"unusable_document\": 310}",
+    "source_row_count": 1235591
+  },
+  "source_distinct_documents": 1228645
+}

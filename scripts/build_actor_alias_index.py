@@ -17,6 +17,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import time
 import sys
 from pathlib import Path
 from typing import Any, Sequence
@@ -30,6 +31,8 @@ from app.core.soql_builder import SoQLBuilder  # noqa: E402
 from app.data.actor_alias_index import build_actor_alias_index  # noqa: E402
 from app.data.actor_alias_source import (  # noqa: E402
     ACTOR_ALIAS_SOURCE_SEED,
+    ACTOR_DIRECTORY_PAGE_SIZE,
+    acquire_actor_alias_directory,
     acquire_actor_alias_source,
 )
 
@@ -52,7 +55,12 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     source.add_argument(
         "--acquire",
         action="store_true",
-        help="consultar SECOP con la política ancla+agregación acotada",
+        help="muestra acotada: ancla + agregación dirigida (NO es un directorio)",
+    )
+    source.add_argument(
+        "--directory",
+        action="store_true",
+        help="recorrido COMPLETO de los grupos de la fuente (build de producción)",
     )
     source.add_argument(
         "--source-jsonl",
@@ -65,6 +73,7 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         default=SoQLBuilder.CONTRATOS_DATASET,
         help="dataset que produjo --source-jsonl",
     )
+    parser.add_argument("--page-size", type=int, default=ACTOR_DIRECTORY_PAGE_SIZE)
     parser.add_argument("--anchor-per-type", type=int, default=50_000)
     parser.add_argument("--selected-per-type", type=int, default=2_500)
     parser.add_argument("--batch-size", type=int, default=50)
@@ -82,24 +91,46 @@ def main(argv: Sequence[str] | None = None) -> int:
     settings = Settings()
     target = args.target or settings.secop_actor_alias_index_path
 
-    if args.acquire:
+    if args.acquire or args.directory:
         try:
             from sodapy import Socrata
         except ImportError as exc:  # pragma: no cover - dependencia declarada
             raise RuntimeError("sodapy is required for --acquire") from exc
+        # El recorrido completo emite páginas agregadas de 50.000 grupos que el
+        # servidor tarda decenas de segundos en producir; el timeout corto del
+        # runtime conversacional no aplica aquí.
+        acquisition_timeout = (
+            180 if args.directory else max(45, settings.secop_timeout_seconds)
+        )
         client = Socrata(
             settings.datos_gov_domain,
             app_token=settings.secop_app_token,
-            timeout=max(45, settings.secop_timeout_seconds),
+            timeout=acquisition_timeout,
         )
         try:
-            snapshot = acquire_actor_alias_source(
-                client,
-                anchor_per_type=args.anchor_per_type,
-                selected_per_type=args.selected_per_type,
-                batch_size=args.batch_size,
-                seed=args.seed,
-            )
+            if args.directory:
+                started = time.perf_counter()
+
+                def _progress(pages: int, groups: int, duplicates: int) -> None:
+                    if not args.quiet:
+                        print(
+                            f"  página {pages}: {groups:,} grupos únicos "
+                            f"({duplicates} duplicados) "
+                            f"[{time.perf_counter() - started:.0f}s]",
+                            flush=True,
+                        )
+
+                snapshot = acquire_actor_alias_directory(
+                    client, page_size=args.page_size, progress=_progress,
+                )
+            else:
+                snapshot = acquire_actor_alias_source(
+                    client,
+                    anchor_per_type=args.anchor_per_type,
+                    selected_per_type=args.selected_per_type,
+                    batch_size=args.batch_size,
+                    seed=args.seed,
+                )
         finally:
             client.close()
         rows = snapshot.rows

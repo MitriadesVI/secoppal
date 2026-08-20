@@ -1,0 +1,1293 @@
+{
+  "external": [
+    {
+      "exact_identity_set": [
+        "NIT:890102897"
+      ],
+      "expected_base_number": "890102897",
+      "expected_nit_raw": "890.102.897-7",
+      "name": "ASILO DE SAN ANTONIO",
+      "normalized_alias": "asilo de san antonio",
+      "present_in_index": true,
+      "resolved_base": "890102897",
+      "resolver_method": "exact_unique_alias",
+      "resolver_status": "RESOLVED",
+      "status": "EXACT_RESOLVED"
+    },
+    {
+      "exact_identity_set": [
+        "NIT:890102896"
+      ],
+      "expected_base_number": "890102896",
+      "expected_nit_raw": "890.102.896-1",
+      "name": "ASILO HOGAR GRANJA SAN JOSE",
+      "normalized_alias": "asilo hogar granja san jose",
+      "present_in_index": true,
+      "resolved_base": "890102896",
+      "resolver_method": "exact_unique_alias",
+      "resolver_status": "RESOLVED",
+      "status": "EXACT_RESOLVED"
+    },
+    {
+      "exact_identity_set": [
+        "NIT:901717025"
+      ],
+      "expected_base_number": "901717025",
+      "expected_nit_raw": "901.717.025-0",
+      "name": "FUNDACIÓN ANA DELIA",
+      "normalized_alias": "fundacion ana delia",
+      "present_in_index": true,
+      "resolved_base": "901717025",
+      "resolver_method": "exact_unique_alias",
+      "resolver_status": "RESOLVED",
+      "status": "EXACT_RESOLVED"
+    },
+    {
+      "exact_identity_set": [],
+      "expected_base_number": "900923481",
+      "expected_nit_raw": "900.923.481-5",
+      "name": "TUS ABUELOS BARRANQUILLA S.A.S.",
+      "normalized_alias": "tus abuelos barranquilla s a s",
+      "present_in_index": false,
+      "resolved_base": null,
+      "resolver_method": "fts5_trigram_bm25",
+      "resolver_status": "CANDIDATES",
+      "status": "CANDIDATES_SAFE"
+    },
+    {
+      "exact_identity_set": [],
+      "expected_base_number": "802019565",
+      "expected_nit_raw": "802.019.565-2",
+      "name": "FUNDACION HOGAR DE SAN CAMILO",
+      "normalized_alias": "fundacion hogar de san camilo",
+      "present_in_index": false,
+      "resolved_base": null,
+      "resolver_method": "fts5_trigram_bm25",
+      "resolver_status": "CANDIDATES",
+      "status": "CANDIDATES_SAFE"
+    },
+    {
+      "exact_identity_set": [],
+      "expected_base_number": "901313012",
+      "expected_nit_raw": "901.313.012-0",
+      "name": "FUNDACION HOGAR DE PASO MIS MEJORES AÑOS",
+      "normalized_alias": "fundacion hogar de paso mis mejores anos",
+      "present_in_index": false,
+      "resolved_base": null,
+      "resolver_method": "fts5_trigram_bm25",
+      "resolver_status": "CANDIDATES",
+      "status": "CANDIDATES_SAFE"
+    }
+  ],
+  "random": {
+    "counts": {
+      "AMBIGUOUS_SAFE": 5,
+      "EXACT_RESOLVED": 115
+    },
+    "privacy": "Los documentos y nombres de personas naturales se enmascaran aquí. El holdout es reproducible desde seed + offsets, que sí se versionan; lo que no se versiona es el par nombre↔cédula.",
+    "rows": [
+      {
+        "document": "****0345",
+        "expected_base_number": "****0345",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 4,
+        "resolved_base": "****0345",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****4178",
+        "expected_base_number": "****4178",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 7,
+        "resolved_base": "****4178",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******7994",
+        "expected_base_number": "******7994",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 5,
+        "resolved_base": "******7994",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****0940",
+        "expected_base_number": "****0940",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 4,
+        "resolved_base": "****0940",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****1170",
+        "expected_base_number": "****1170",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 2,
+        "resolved_base": "****1170",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****8437",
+        "expected_base_number": "****8437",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 4,
+        "resolved_base": "****8437",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****0608",
+        "expected_base_number": "****0608",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 10,
+        "resolved_base": "****0608",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****2695",
+        "expected_base_number": "****2695",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 1,
+        "resolved_base": "****2695",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "80075955",
+        "expected_base_number": "80075955",
+        "name": "JHON MATIZ",
+        "occurrences": 10,
+        "resolved_base": "80075955",
+        "resolver_status": "RESOLVED",
+        "source_type": "NIT",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******2907",
+        "expected_base_number": "******2907",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 3,
+        "resolved_base": "******2907",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****6186",
+        "expected_base_number": "****6186",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 3,
+        "resolved_base": "****6186",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******0942",
+        "expected_base_number": "******0942",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 5,
+        "resolved_base": "******0942",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****0852",
+        "expected_base_number": "****0852",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 6,
+        "resolved_base": "****0852",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****4838",
+        "expected_base_number": "****4838",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 7,
+        "resolved_base": "****4838",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******3784",
+        "expected_base_number": "******3784",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 1,
+        "resolved_base": "******3784",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****1368",
+        "expected_base_number": "****1368",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 3,
+        "resolved_base": "****1368",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****5245",
+        "expected_base_number": "****5245",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 6,
+        "resolved_base": "****5245",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******6738",
+        "expected_base_number": "******6738",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 2,
+        "resolved_base": "******6738",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****7934",
+        "expected_base_number": "****7934",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 3,
+        "resolved_base": "****7934",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****4096",
+        "expected_base_number": "****4096",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 7,
+        "resolved_base": "****4096",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****5388",
+        "expected_base_number": "****5388",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 16,
+        "resolved_base": null,
+        "resolver_status": "AMBIGUOUS",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "AMBIGUOUS_SAFE"
+      },
+      {
+        "document": "******1705",
+        "expected_base_number": "******1705",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 1,
+        "resolved_base": "******1705",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****5147",
+        "expected_base_number": "****5147",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 2,
+        "resolved_base": "****5147",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****7764",
+        "expected_base_number": "****7764",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 7,
+        "resolved_base": "****7764",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "***2354",
+        "expected_base_number": "***2354",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 1,
+        "resolved_base": "***2354",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****5330",
+        "expected_base_number": "****5330",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 1,
+        "resolved_base": "****5330",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****1532",
+        "expected_base_number": "****1532",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 1,
+        "resolved_base": "****1532",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****6219",
+        "expected_base_number": "****6219",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 1,
+        "resolved_base": "****6219",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******8431",
+        "expected_base_number": "******8431",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 3,
+        "resolved_base": "******8431",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "80095749",
+        "expected_base_number": "80095749",
+        "name": "JULIO_CUESTA",
+        "occurrences": 8,
+        "resolved_base": "80095749",
+        "resolver_status": "RESOLVED",
+        "source_type": "NIT",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******4795",
+        "expected_base_number": "******4795",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 1,
+        "resolved_base": "******4795",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****5298",
+        "expected_base_number": "****5298",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 20,
+        "resolved_base": "****5298",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****0577",
+        "expected_base_number": "****0577",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 2,
+        "resolved_base": "****0577",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******4357",
+        "expected_base_number": "******4357",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 1,
+        "resolved_base": "******4357",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******1450",
+        "expected_base_number": "******1450",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 10,
+        "resolved_base": "******1450",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******9317",
+        "expected_base_number": "******9317",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 4,
+        "resolved_base": "******9317",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******3122",
+        "expected_base_number": "******3122",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 1,
+        "resolved_base": "******3122",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******5517",
+        "expected_base_number": "******5517",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 3,
+        "resolved_base": "******5517",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******9993",
+        "expected_base_number": "******9993",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 1,
+        "resolved_base": "******9993",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******6149",
+        "expected_base_number": "******6149",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 18,
+        "resolved_base": "******6149",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******2693",
+        "expected_base_number": "******2693",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 3,
+        "resolved_base": "******2693",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****3312",
+        "expected_base_number": "****3312",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 9,
+        "resolved_base": "****3312",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******5562",
+        "expected_base_number": "******5562",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 2,
+        "resolved_base": "******5562",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******2246",
+        "expected_base_number": "******2246",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 2,
+        "resolved_base": "******2246",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******5572",
+        "expected_base_number": "******5572",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 6,
+        "resolved_base": "******5572",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******4990",
+        "expected_base_number": "******4990",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 1,
+        "resolved_base": "******4990",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******4255",
+        "expected_base_number": "******4255",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 5,
+        "resolved_base": "******4255",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******9881",
+        "expected_base_number": "******9881",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 4,
+        "resolved_base": "******9881",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******3736",
+        "expected_base_number": "******3736",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 11,
+        "resolved_base": "******3736",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******5580",
+        "expected_base_number": "******5580",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 2,
+        "resolved_base": "******5580",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****7113",
+        "expected_base_number": "****7113",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 7,
+        "resolved_base": "****7113",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******6289",
+        "expected_base_number": "******6289",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 1,
+        "resolved_base": "******6289",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****5387",
+        "expected_base_number": "****5387",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 15,
+        "resolved_base": "****5387",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******5198",
+        "expected_base_number": "******5198",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 1,
+        "resolved_base": "******5198",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****0849",
+        "expected_base_number": "****0849",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 12,
+        "resolved_base": "****0849",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******8472",
+        "expected_base_number": "******8472",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 4,
+        "resolved_base": "******8472",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******0158",
+        "expected_base_number": "******0158",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 2,
+        "resolved_base": "******0158",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******6197",
+        "expected_base_number": "******6197",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 2,
+        "resolved_base": "******6197",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****5794",
+        "expected_base_number": "****5794",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 1,
+        "resolved_base": "****5794",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "***2449",
+        "expected_base_number": "***2449",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 3,
+        "resolved_base": "***2449",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******8248",
+        "expected_base_number": "******8248",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 7,
+        "resolved_base": "******8248",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****8496",
+        "expected_base_number": "****8496",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 1,
+        "resolved_base": "****8496",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******8142",
+        "expected_base_number": "******8142",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 1,
+        "resolved_base": "******8142",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****2402",
+        "expected_base_number": "****2402",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 3,
+        "resolved_base": "****2402",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****7164",
+        "expected_base_number": "****7164",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 8,
+        "resolved_base": "****7164",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****8109",
+        "expected_base_number": "****8109",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 8,
+        "resolved_base": "****8109",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******8562",
+        "expected_base_number": "******8562",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 1,
+        "resolved_base": "******8562",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****5830",
+        "expected_base_number": "****5830",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 4,
+        "resolved_base": "****5830",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****6917",
+        "expected_base_number": "****6917",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 1,
+        "resolved_base": "****6917",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******0397",
+        "expected_base_number": "******0397",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 11,
+        "resolved_base": "******0397",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******4260",
+        "expected_base_number": "******4260",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 2,
+        "resolved_base": "******4260",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****3703",
+        "expected_base_number": "****3703",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 7,
+        "resolved_base": "****3703",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******6904",
+        "expected_base_number": "******6904",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 4,
+        "resolved_base": "******6904",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****5141",
+        "expected_base_number": "****5141",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 1,
+        "resolved_base": "****5141",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****6536",
+        "expected_base_number": "****6536",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 3,
+        "resolved_base": "****6536",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******8219",
+        "expected_base_number": "******8219",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 2,
+        "resolved_base": "******8219",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****9013",
+        "expected_base_number": "****9013",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 1,
+        "resolved_base": "****9013",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****6166",
+        "expected_base_number": "****6166",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 5,
+        "resolved_base": "****6166",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******4623",
+        "expected_base_number": "******4623",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 4,
+        "resolved_base": "******4623",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****5882",
+        "expected_base_number": "****5882",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 4,
+        "resolved_base": "****5882",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "3396545",
+        "expected_base_number": "3396545",
+        "name": "La Bruja Riso",
+        "occurrences": 1,
+        "resolved_base": "3396545",
+        "resolver_status": "RESOLVED",
+        "source_type": "NIT",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******3176",
+        "expected_base_number": "******3176",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 1,
+        "resolved_base": "******3176",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****1617",
+        "expected_base_number": "****1617",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 4,
+        "resolved_base": "****1617",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****5508",
+        "expected_base_number": "****5508",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 3,
+        "resolved_base": "****5508",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****1818",
+        "expected_base_number": "****1818",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 5,
+        "resolved_base": "****1818",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****4556",
+        "expected_base_number": "****4556",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 14,
+        "resolved_base": "****4556",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****3517",
+        "expected_base_number": "****3517",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 5,
+        "resolved_base": "****3517",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******6924",
+        "expected_base_number": "******6924",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 5,
+        "resolved_base": "******6924",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******5625",
+        "expected_base_number": "******5625",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 6,
+        "resolved_base": "******5625",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****9837",
+        "expected_base_number": "****9837",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 6,
+        "resolved_base": "****9837",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******9772",
+        "expected_base_number": "******9772",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 1,
+        "resolved_base": "******9772",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******7548",
+        "expected_base_number": "******7548",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 1,
+        "resolved_base": "******7548",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******4122",
+        "expected_base_number": "******4122",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 5,
+        "resolved_base": "******4122",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****7229",
+        "expected_base_number": "****7229",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 4,
+        "resolved_base": "****7229",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******9480",
+        "expected_base_number": "******9480",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 2,
+        "resolved_base": "******9480",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******2742",
+        "expected_base_number": "******2742",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 1,
+        "resolved_base": "******2742",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****0434",
+        "expected_base_number": "****0434",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 9,
+        "resolved_base": "****0434",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****9308",
+        "expected_base_number": "****9308",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 23,
+        "resolved_base": null,
+        "resolver_status": "AMBIGUOUS",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "AMBIGUOUS_SAFE"
+      },
+      {
+        "document": "******3666",
+        "expected_base_number": "******3666",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 7,
+        "resolved_base": "******3666",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******1512",
+        "expected_base_number": "******1512",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 3,
+        "resolved_base": "******1512",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "***2279",
+        "expected_base_number": "***2279",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 3,
+        "resolved_base": "***2279",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******1583",
+        "expected_base_number": "******1583",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 13,
+        "resolved_base": "******1583",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******3553",
+        "expected_base_number": "******3553",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 2,
+        "resolved_base": "******3553",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****9186",
+        "expected_base_number": "****9186",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 9,
+        "resolved_base": "****9186",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****7213",
+        "expected_base_number": "****7213",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 4,
+        "resolved_base": "****7213",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******5529",
+        "expected_base_number": "******5529",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 6,
+        "resolved_base": "******5529",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******0708",
+        "expected_base_number": "******0708",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 5,
+        "resolved_base": "******0708",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******4920",
+        "expected_base_number": "******4920",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 3,
+        "resolved_base": "******4920",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******0996",
+        "expected_base_number": "******0996",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 10,
+        "resolved_base": "******0996",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******2831",
+        "expected_base_number": "******2831",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 2,
+        "resolved_base": null,
+        "resolver_status": "AMBIGUOUS",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "AMBIGUOUS_SAFE"
+      },
+      {
+        "document": "******2651",
+        "expected_base_number": "******2651",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 2,
+        "resolved_base": null,
+        "resolver_status": "AMBIGUOUS",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "AMBIGUOUS_SAFE"
+      },
+      {
+        "document": "******5423",
+        "expected_base_number": "******5423",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 5,
+        "resolved_base": "******5423",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******3986",
+        "expected_base_number": "******3986",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 4,
+        "resolved_base": "******3986",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****0164",
+        "expected_base_number": "****0164",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 7,
+        "resolved_base": null,
+        "resolver_status": "AMBIGUOUS",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "AMBIGUOUS_SAFE"
+      },
+      {
+        "document": "******0813",
+        "expected_base_number": "******0813",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 4,
+        "resolved_base": "******0813",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****0479",
+        "expected_base_number": "****0479",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 8,
+        "resolved_base": "****0479",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****0270",
+        "expected_base_number": "****0270",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 1,
+        "resolved_base": "****0270",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "****7222",
+        "expected_base_number": "****7222",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 4,
+        "resolved_base": "****7222",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******0138",
+        "expected_base_number": "******0138",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 4,
+        "resolved_base": "******0138",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      },
+      {
+        "document": "******4657",
+        "expected_base_number": "******4657",
+        "name": "«persona natural, nombre no versionado»",
+        "occurrences": 1,
+        "resolved_base": "******4657",
+        "resolver_status": "RESOLVED",
+        "source_type": "Cédula de Ciudadanía",
+        "status": "EXACT_RESOLVED"
+      }
+    ],
+    "seed": 20260820,
+    "size": 120
+  }
+}

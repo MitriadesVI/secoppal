@@ -75,7 +75,15 @@ class BuildDisposition:
 class ActorAliasBuildPolicy:
     """Umbrales de AP3-A que separan evidencia estable de buckets sucios."""
 
-    minimum_total_occurrences: int = 3
+    # AP3-E: la baja frecuencia NO es suciedad. Con umbral 3 quedaban fuera el
+    # 43,9% de los proveedores del país —casi todos legítimos, con uno o dos
+    # contratos— mientras la cobertura de ACTIVIDAD seguía en 89,8%, cifra que
+    # camuflaba el sesgo hacia proveedores grandes. Que un actor sea infrecuente
+    # no dice nada sobre la calidad de su evidencia; las reglas que sí la miden
+    # (colisión de tipo, colapso DV sin puente, cuota del nombre dominante,
+    # cardinalidad extrema, alias de grupo secundarios) siguen intactas y una
+    # sola observación con cualquiera de esos problemas sigue siendo dirty.
+    minimum_total_occurrences: int = 1
     minimum_dominant_name_share: float = 0.50
     maximum_distinct_observed_names: int = 25
     exclude_cross_document_type_collisions: bool = True
