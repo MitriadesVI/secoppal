@@ -28,7 +28,7 @@ class BareActorProbe:
 
 
 _BARE_ACTOR_RE = re.compile(r"\bcontratos?\s+de\s+(.+)$", re.IGNORECASE)
-_REJECTED_LEADS = frozenset({"el", "la", "los", "las", "un", "una", "del", "de"})
+_REJECTED_LEADS = frozenset({"del", "de"})
 _ACTOR_SYNTAX_TOPIC_TERMS = frozenset({
     "adjudicatario", "contratista", "proveedor",
 })
@@ -39,7 +39,8 @@ _LEGAL_FORM_SUFFIXES = (
 _ORGANIZATION_NOUNS = frozenset({
     "agencia", "asilo", "asociacion", "camara", "cooperativa",
     "corporacion", "empresa", "fundacion", "grupo", "hogar", "hospital",
-    "instituto", "sociedad", "universidad", "consorcio", "union",
+    "instituto", "ips", "junta", "sanatorio", "sociedad", "universidad",
+    "consorcio", "ese", "union", "ut",
 })
 _NAME_CONNECTORS = frozenset({
     "a", "al", "con", "de", "del", "el", "en", "la", "las", "los",
@@ -74,7 +75,7 @@ def detect_bare_actor_probe(raw_query: str, params: dict) -> BareActorProbe | No
         recognized_actor_modifier_tails(normalized, params),
     ).strip()
     words = candidate.split()
-    if not words or len(words) > 8 or words[0] in _REJECTED_LEADS:
+    if not words or words[0] in _REJECTED_LEADS:
         return None
     if candidate.isdigit():
         return None
@@ -112,7 +113,7 @@ def has_entity_like_name_evidence(probe: BareActorProbe) -> bool:
         word for word in surface_words
         if normalize_actor_name(word) not in _NAME_CONNECTORS
     ]
-    if len(substantive) < 3:
+    if len(substantive) < 2:
         return False
     return all(
         word.isupper() or (word[:1].isupper() and word[1:].islower())

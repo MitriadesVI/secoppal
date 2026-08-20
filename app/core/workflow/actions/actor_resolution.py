@@ -158,6 +158,15 @@ def resolve_actor_name(state: State, actor_name_resolver: ActorNameResolver) -> 
         entity_like = has_entity_like_name_evidence(probe)
         if has_strong_topic_evidence(probe.actor_name, params) and not entity_like:
             return state
+        surface_lead = probe.unbounded_name.split(maxsplit=1)[0]
+        if (
+            surface_lead in {"el", "la", "los", "las", "un", "una"}
+            and (params.get("entidad") or params.get("entidad_resolved"))
+        ):
+            # ``contratos de la alcaldía de X`` already has independent buyer
+            # evidence.  After an exact actor miss, preserve that established
+            # reading instead of replacing it with a bare-name clarification.
+            return state
         if not entity_like:
             return state
         actor_name = probe.unbounded_name

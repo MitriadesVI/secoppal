@@ -232,6 +232,18 @@ def test_known_topics_survive_exact_miss_without_actor_clarification(tmp_path, t
     assert _resolve_action(query, resolver) == baseline
 
 
+def test_article_led_buyer_survives_an_exact_actor_miss(tmp_path):
+    resolver = _resolver(tmp_path, [_row("NIT", "900111222", "ACTOR DISTINTO")])
+    query = "contratos de la alcaldía de Medellín"
+    baseline = dict(QueryRouter().parse(query).params)
+
+    params = _resolve_action(query, resolver)
+
+    assert params == baseline
+    assert params.get("entidad_resolved")
+    assert params.get("actor_resolution_status") is None
+
+
 @pytest.mark.parametrize(
     "name",
     [
