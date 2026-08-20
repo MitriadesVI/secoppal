@@ -14,6 +14,7 @@ from app.data.estados import (
     ESTADO_SYNONYMS,
 )
 from app.config import actor_profile_enabled
+from app.core.actor_identity import has_plausible_actor_document_digits
 from app.core.actor_intent import (
     detect_actor_name,
     recognized_actor_modifier_tails,
@@ -101,7 +102,7 @@ _NIT_SHAPE_RE = re.compile(
     (\d{{1,3}}                      # bloque inicial 1-3 dígitos
     (?:[.\- ]\d{{3}}){{1,3}}          # uno a tres grupos de 3 dígitos con separador
     (?:[.\- ]\d)?                 # DV opcional con separador
-    |\d{{8,11}})                    # o secuencia continua de 8-11 dígitos
+    |\d+)                             # o secuencia continua; el rango se valida
     (?!\d)                        # no seguido de dígito
     (?!\s*(?:millones?|millon|mil\s+millones|billones?|palos?|barras?|pesos|{SMMLV_UNIT_PATTERN}))  # no es monto
     """,
@@ -120,7 +121,8 @@ _MONEY_COMPARATOR_BEFORE_NUMBER_RE = re.compile(
     re.IGNORECASE,
 )
 _IDENTIFIER_BEFORE_NUMBER_RE = re.compile(
-    r"\b(?:nit|contratista|proveedor|documento)\s*(?:n(?:umero|ro)?\.?\s*)?$",
+    r"\b(?:nit|c[eé]dulas?|c\.c\.|cc|documento(?:\s+de\s+identidad)?|"
+    r"contratista|proveedor)\s*(?:n(?:umero|ro)?\.?\s*)?$",
     re.IGNORECASE,
 )
 
@@ -138,6 +140,12 @@ def _number_role(text: str, match: re.Match[str]) -> str:
     right = text[match.end():match.end() + 32]
     if _IDENTIFIER_BEFORE_NUMBER_RE.search(left):
         return "identifier"
+    if not has_plausible_actor_document_digits(match.group(0)):
+        return "other"
+    # Short documents overlap ordinary quantities too heavily to authorize an
+    # actor by shape alone.  They need the explicit local evidence above.
+    if len(re.sub(r"[^0-9]", "", match.group(0))) < 8:
+        return "other"
     if _MONEY_UNIT_AFTER_NUMBER_RE.search(right):
         return "money"
     if _MONEY_COMPARATOR_BEFORE_NUMBER_RE.search(left):

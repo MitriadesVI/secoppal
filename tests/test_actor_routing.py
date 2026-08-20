@@ -7,8 +7,12 @@ tercero identificable.
 """
 from __future__ import annotations
 
+import json
+from pathlib import Path
+
 import pytest
 
+from app.core.actor_profile import build_actor_profile
 from app.core.query_plan import compute_query_plan
 from app.core.query_router import QueryRouter
 from app.core.soql_builder import SoQLBuilder
@@ -83,6 +87,83 @@ def test_the_raw_value_survives_verbatim_for_auditing():
     assert scope["raw_value"] == "860.034.594-1"
     assert scope["base_number"] == "860034594"
     assert scope["check_digit"] == "1"
+
+
+@pytest.mark.parametrize(
+    ("marker", "expected_type"),
+    [
+        ("cédula", "CC"),
+        ("CC", "CC"),
+        ("NIT", "NIT"),
+    ],
+)
+def test_short_explicit_documents_use_the_actor_path_without_length_inference(
+    marker,
+    expected_type,
+):
+    params = parse(f"contratos del proveedor {marker} 4265582")
+
+    assert params["actor_resolution"] == "explicit_document"
+    assert params["actor_scope"]["document_type"] == expected_type
+    assert params["actor_scope"]["base_number"] == "4265582"
+    assert params["contratista"] == ["4265582"]
+
+
+def test_a_bare_short_number_without_actor_or_document_evidence_is_not_an_actor():
+    params = parse("contratos de 4265582")
+
+    assert params.get("actor_resolution") is None
+    assert params.get("actor_scope") is None
+    assert params.get("contratista") is None
+
+
+def test_short_cc_profile_matches_the_independent_4265582_oracle():
+    oracle = json.loads(
+        Path("tests/fixtures/actor_profile_short_document_oracle.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    calls: list[str] = []
+
+    class OracleClient:
+        def derived_for_timeout(self, timeout_s):
+            return self
+
+        def aggregate(self, dataset_id, soql):
+            calls.append(soql)
+            if "SUM(" in soql:
+                return [{"total_count": str(oracle["contract_count"]), "total_value": "0"}]
+            if "GROUP BY proveedor_adjudicado" in soql:
+                return [{
+                    "proveedor_adjudicado": oracle["observed_name"],
+                    "documento_proveedor": oracle["document"],
+                    "tipodocproveedor": "Cédula de Ciudadanía",
+                    "cnt": str(oracle["contract_count"]),
+                }]
+            return []
+
+        def query(self, dataset_id, soql):
+            calls.append(soql)
+            return [
+                {"id_contrato": contract_id}
+                for contract_id in oracle["recent_contract_ids"]
+            ]
+
+    params = parse("contratos de la cédula 4265582")
+    profile = build_actor_profile(
+        params,
+        builder.dataset_id_for(params["dataset"]),
+        OracleClient(),
+        builder,
+    )
+
+    assert profile.contract_count == oracle["contract_count"]
+    assert [row["id_contrato"] for row in profile.recent_contracts] == oracle[
+        "recent_contract_ids"
+    ]
+    assert calls
+    assert all("documento_proveedor = '4265582'" in soql for soql in calls)
+    assert all("tipodocproveedor NOT IN ('NIT')" in soql for soql in calls)
 
 
 # ---------------------------------------------------------------------------

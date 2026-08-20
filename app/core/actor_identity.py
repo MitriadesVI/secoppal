@@ -106,6 +106,7 @@ __all__ = [
     "REASON_TYPE_DECLARED",
     "REASON_TYPE_UNDETERMINED",
     "compute_check_digit",
+    "has_plausible_actor_document_digits",
     "normalize_identity",
 ]
 
@@ -159,6 +160,18 @@ _SENTINEL_TEXTS: frozenset[str] = frozenset({
 _EXPLICIT_CHECK_DIGIT_RE = re.compile(r"[-\s.](\d)$")
 
 _NON_DIGITS_RE = re.compile(r"[^0-9]")
+
+
+def has_plausible_actor_document_digits(value: object) -> bool:
+    """Whether ``value`` carries the shared 5–11 digit sanity range.
+
+    This answers shape only.  It never infers NIT vs CC or whether the user
+    intended an actor; those decisions require separate evidence upstream.
+    """
+    if not isinstance(value, str):
+        return False
+    size = len(_NON_DIGITS_RE.sub("", value))
+    return _MIN_DOCUMENT_DIGITS <= size <= _MAX_DOCUMENT_DIGITS
 
 
 # ---------------------------------------------------------------------------
@@ -441,7 +454,7 @@ def normalize_identity(
 
     # Sanidad de rango sobre el BASE. No discrimina tipo (INV-NO-LENGTH):
     # descarta lo que no puede ser un documento en ninguna de las clases.
-    if not (_MIN_DOCUMENT_DIGITS <= len(base_number) <= _MAX_DOCUMENT_DIGITS):
+    if not has_plausible_actor_document_digits(base_number):
         reasons.append(REASON_OUT_OF_RANGE)
         return IdentityMatch(
             key=None, check_digit=None, raw_value=cleaned, source=source,

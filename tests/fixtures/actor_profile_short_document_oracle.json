@@ -1,0 +1,26 @@
+{
+  "captured_at": "2026-08-19",
+  "dataset": "jbjy-vk9h",
+  "document": "4265582",
+  "document_type": "CC",
+  "observed_name": "OCTAVIO OSWALDO ARIAS ROJAS",
+  "contract_count": 9,
+  "contract_ids": [
+    "CO1.PCCNTR.5282368",
+    "CO1.PCCNTR.5461308",
+    "CO1.PCCNTR.5731517",
+    "CO1.PCCNTR.5767176",
+    "CO1.PCCNTR.7223494",
+    "CO1.PCCNTR.7275036",
+    "CO1.PCCNTR.7998937",
+    "CO1.PCCNTR.8787060",
+    "CO1.PCCNTR.9071363"
+  ],
+  "recent_contract_ids": [
+    "CO1.PCCNTR.9071363",
+    "CO1.PCCNTR.8787060",
+    "CO1.PCCNTR.7998937",
+    "CO1.PCCNTR.7275036",
+    "CO1.PCCNTR.7223494"
+  ]
+}
