@@ -125,6 +125,19 @@ def evaluate_actor_scope(params: dict) -> ActorScopeDecision:
     conflict = params.get("actor_intent_conflict")
     if isinstance(conflict, dict):
         name = str(conflict.get("actor_name") or "ese término").upper()
+        if conflict.get("kind") == "entity_like_no_exact":
+            return ActorScopeDecision(
+                should_execute=False,
+                missing_slots=("actor_or_topic", "actor_document"),
+                risk_flags=("unresolved_entity_like_name",),
+                clarification_question=(
+                    f"¿Te refieres a {name} como tema del contrato o al nombre "
+                    "de un proveedor? No encontré una coincidencia exacta y no "
+                    "voy a convertirlo en una búsqueda temática distinta. Si es "
+                    "el proveedor, compárteme su NIT o cédula."
+                ),
+                reason=REASON_INTENT_CONFLICT,
+            )
         return ActorScopeDecision(
             should_execute=False,
             missing_slots=("actor_or_topic",),

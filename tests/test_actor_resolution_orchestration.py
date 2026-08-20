@@ -1,6 +1,7 @@
 """AP3-C — two-door arbitration, authority and contextual selection."""
 from __future__ import annotations
 
+import socket
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -10,7 +11,7 @@ from burr.core import State
 from app.config import Settings
 from app.core.actor_arbitration import detect_bare_actor_probe
 from app.core.actor_identity import IdentityKey, normalize_identity
-from app.core.actor_name import ActorResolutionStatus
+from app.core.actor_name import ActorResolutionStatus, normalize_actor_name
 from app.core.actor_resolution import (
     METHOD_EXACT_UNIQUE_ALIAS,
     METHOD_USER_SELECTED_CANDIDATE,
@@ -20,6 +21,7 @@ from app.core.actor_resolution import (
 from app.core.actor_scope_policy import evaluate_actor_scope
 from app.core.conversation_store import ConversationStore
 from app.core.orchestrator import SecopalWorkflow
+from app.core.query_plan import compute_query_plan
 from app.core.query_router import QueryRouter
 from app.core.workflow.actions.actor_resolution import resolve_actor_name
 from app.core.workflow.handlers.actor_selection import handle_actor_selection
@@ -147,13 +149,14 @@ def test_bare_probe_does_not_resolve_a_truncated_wrong_actor(tmp_path):
         _row("NIT", "900111222", "FUNDACION MANOS"),
     ])
     query = "contratos de FUNDACIÓN MANOS EN ACCIÓN"
-    baseline = dict(QueryRouter().parse(query).params)
-
     params = _resolve_action(query, resolver)
 
-    assert params == baseline
-    assert params.get("actor_resolution") is None
-    assert params["objeto"] == ["fundacion", "manos", "accion"]
+    assert params["actor_resolution_status"] == ActorResolutionStatus.UNRESOLVED
+    assert params["actor_scope"]["observed_name"] == "fundacion manos en accion"
+    assert params["actor_intent_conflict"]["kind"] == "entity_like_no_exact"
+    assert params.get("contratista") is None
+    assert params.get("objeto") is None
+    assert evaluate_actor_scope(params).should_execute is False
 
 
 def test_bare_ambiguous_clarification_uses_pending_actor_name(tmp_path):
@@ -215,6 +218,92 @@ def test_bare_probe_miss_or_unavailable_preserves_baseline_topic(tmp_path):
     assert miss == baseline
     assert unavailable == baseline
     assert miss["objeto"] == ["mantenimiento"]
+
+
+@pytest.mark.parametrize(
+    "topic",
+    ["alimentación", "mantenimiento", "software", "vigilancia"],
+)
+def test_known_topics_survive_exact_miss_without_actor_clarification(tmp_path, topic):
+    resolver = _resolver(tmp_path, [_row("NIT", "900111222", "ACTOR DISTINTO")])
+    query = f"contratos de {topic}"
+    baseline = dict(QueryRouter().parse(query).params)
+
+    assert _resolve_action(query, resolver) == baseline
+
+
+@pytest.mark.parametrize(
+    "name",
+    [
+        "ASILO DE SAN ANTONIO",
+        "ASILO HOGAR GRANJA SAN JOSE",
+        "FUNDACIÓN ANA DELIA",
+        "TUS ABUELOS BARRANQUILLA S.A.S.",
+        "FUNDACION HOGAR DE SAN CAMILO",
+        "FUNDACION HOGAR DE PASO MIS MEJORES AÑOS",
+    ],
+)
+def test_inv_bare_name_safe_nohit_external_holdouts_never_become_topics(
+    tmp_path,
+    name,
+):
+    resolver = _resolver(tmp_path, [_row("NIT", "900111222", "ACTOR DISTINTO")])
+    query = f"contratos de {name}"
+
+    params = _resolve_action(query, resolver)
+    decision = evaluate_actor_scope(params)
+
+    assert params["actor_resolution_status"] == ActorResolutionStatus.UNRESOLVED
+    assert params["actor_scope"]["observed_name"] == normalize_actor_name(name)
+    assert params["actor_intent_conflict"]["kind"] == "entity_like_no_exact"
+    assert params.get("objeto") is None
+    assert params.get("objeto_phrases") is None
+    assert params.get("entidad") is None
+    assert params.get("entidad_resolved") is None
+    assert params.get("ciudad") is None
+    assert params.get("departamento_resolved") is None
+    assert decision.should_execute is False
+    assert decision.reason == "actor_or_topic_ambiguous"
+    assert "NIT o cédula" in (decision.clarification_question or "")
+
+
+def test_entity_shaped_bare_name_blocks_when_index_is_unavailable(tmp_path):
+    query = "contratos de FUNDACION HOGAR DE SAN CAMILO"
+
+    params = _resolve_action(query, ActorNameResolver(tmp_path / "missing.sqlite"))
+    decision = evaluate_actor_scope(params)
+
+    assert params["actor_resolution_status"] == ActorResolutionStatus.INDEX_UNAVAILABLE
+    assert params.get("objeto") is None
+    assert decision.should_execute is False
+    assert decision.reason == "actor_index_unavailable"
+
+
+def test_explicit_actor_index_unavailable_has_a_dedicated_execution_block(
+    tmp_path,
+    monkeypatch,
+):
+    query = "contratos del proveedor FUNDACARIBE"
+
+    def network_forbidden(*args, **kwargs):
+        raise AssertionError("network fallback attempted")
+
+    monkeypatch.setattr(socket, "create_connection", network_forbidden)
+
+    params = _resolve_action(query, ActorNameResolver(tmp_path / "missing.sqlite"))
+    decision = evaluate_actor_scope(params)
+    plan = compute_query_plan(params, query)
+
+    assert params["actor_resolution_status"] == ActorResolutionStatus.INDEX_UNAVAILABLE
+    assert params.get("objeto") is None
+    assert decision.should_execute is False
+    assert decision.reason == "actor_index_unavailable"
+    assert decision.risk_flags == ("actor_index_unavailable",)
+    assert decision.missing_slots == ("actor_document",)
+    assert "NIT o la cédula" in (decision.clarification_question or "")
+    assert plan.should_execute is False
+    assert plan.reason == "actor_index_unavailable"
+    assert "NIT o la cédula" in (plan.clarification_question or "")
 
 
 def test_bare_probe_never_uses_fuzzy_as_intent_evidence(monkeypatch):
@@ -446,6 +535,9 @@ def test_numbered_selection_mutates_the_original_frame_with_honest_provenance(
     assert captured["ordering_signal"] == "valor_desc"
     assert captured["actor_resolution_method"] == METHOD_USER_SELECTED_CANDIDATE
     assert captured["actor_resolution"] == METHOD_USER_SELECTED_CANDIDATE
+    assert captured["actor_resolution_method"] == "user_selected_candidate"
+    assert captured["actor_resolution"] == "user_selected_candidate"
+    assert captured["actor_scope"]["resolution_method"] == "user_selected_candidate"
     assert captured["actor_resolution_status"] == ActorResolutionStatus.RESOLVED
     assert "actor_pending" not in captured
     assert captured["pipeline_query"].startswith("contratos del proveedor")
@@ -476,6 +568,9 @@ def test_candidate_selection_resumes_real_pipeline_with_original_modifiers(tmp_p
     assert pending["resolved_params"]["actor_resolution_status"] == "CANDIDATES"
     assert selected["resolved_params"]["actor_resolution_method"] == (
         METHOD_USER_SELECTED_CANDIDATE
+    )
+    assert selected["resolved_params"]["actor_resolution_method"] == (
+        "user_selected_candidate"
     )
     assert selected["resolved_params"]["fecha_desde"] == "2025-01-01"
     assert selected["resolved_params"]["fecha_hasta"] == "2025-12-31"

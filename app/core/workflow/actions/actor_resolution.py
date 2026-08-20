@@ -6,6 +6,7 @@ from burr.core import State, action
 from app.config import actor_profile_enabled
 from app.core.actor_arbitration import (
     detect_bare_actor_probe,
+    has_entity_like_name_evidence,
     has_strong_topic_evidence,
     scrub_strong_actor_leaks,
 )
@@ -139,30 +140,66 @@ def resolve_actor_name(state: State, actor_name_resolver: ActorNameResolver) -> 
     probe = detect_bare_actor_probe(raw_query, params)
     if probe is None:
         return state
-    result = actor_name_resolver.resolve_exact(probe.actor_name)
+    actor_name = probe.unbounded_name
+    result = actor_name_resolver.resolve_exact(actor_name)
+    if (
+        result.status == ActorResolutionStatus.UNRESOLVED
+        and actor_name != probe.actor_name
+    ):
+        actor_name = probe.actor_name
+        result = actor_name_resolver.resolve_exact(actor_name)
     if result.status in {
         ActorResolutionStatus.UNRESOLVED,
         ActorResolutionStatus.INDEX_UNAVAILABLE,
     }:
-        # The probe is optional evidence, not confirmed actor intent.  A miss
-        # or unavailable index preserves the exact baseline thematic frame.
-        return state
+        # Known topics retain their exact baseline semantics.  An entity-like
+        # miss, however, may be an uncovered actor and must not silently become
+        # a morphology-expanded thematic answer.
+        entity_like = has_entity_like_name_evidence(probe)
+        if has_strong_topic_evidence(probe.actor_name, params) and not entity_like:
+            return state
+        if not entity_like:
+            return state
+        actor_name = probe.unbounded_name
+        projected = scrub_strong_actor_leaks(params, actor_name)
+        projected.pop("objeto", None)
+        projected.pop("objeto_phrases", None)
+        projected["actor_resolution_status"] = result.status
+        projected["actor_resolution_method"] = METHOD_NAME_UNRESOLVED
+        projected["actor_resolution"] = METHOD_NAME_UNRESOLVED
+        projected["actor_scope"] = {
+            "role": "contractor",
+            "resolution_method": METHOD_NAME_UNRESOLVED,
+            "requires_resolution": True,
+            "observed_name": actor_name,
+        }
+        if result.status == ActorResolutionStatus.UNRESOLVED:
+            projected["actor_intent_conflict"] = {
+                "kind": "entity_like_no_exact",
+                "actor_name": actor_name,
+                "resolution_status": result.status,
+            }
+        return state.update(parsed_params=projected)
 
+    baseline_params = params
+    params = scrub_strong_actor_leaks(params, actor_name)
+    params.pop("objeto", None)
+    params.pop("objeto_phrases", None)
     projected = project_actor_resolution(
         params,
         result,
-        actor_name=probe.actor_name,
+        actor_name=actor_name,
         original_query=raw_query,
         origin="bare_exact_probe",
     )
-    if has_strong_topic_evidence(probe.actor_name, params):
+    if has_strong_topic_evidence(probe.actor_name, baseline_params):
         # Restore baseline topic fields: neither interpretation won.  P17 will
         # ask whether X is the topic or the observed provider.
         for key in ("objeto", "objeto_phrases"):
-            if key in params:
-                projected[key] = params[key]
+            if key in baseline_params:
+                projected[key] = baseline_params[key]
         projected["actor_intent_conflict"] = {
-            "actor_name": probe.actor_name,
+            "actor_name": actor_name,
             "resolution_status": result.status,
         }
     return state.update(parsed_params=projected)

@@ -14,6 +14,7 @@ from app.data.morphological_variants import MORPHOLOGICAL_VARIANTS
 __all__ = [
     "BareActorProbe",
     "detect_bare_actor_probe",
+    "has_entity_like_name_evidence",
     "has_strong_topic_evidence",
     "scrub_strong_actor_leaks",
 ]
@@ -22,12 +23,27 @@ __all__ = [
 @dataclass(frozen=True, slots=True)
 class BareActorProbe:
     actor_name: str
+    unbounded_name: str
+    surface_name: str
 
 
 _BARE_ACTOR_RE = re.compile(r"\bcontratos?\s+de\s+(.+)$", re.IGNORECASE)
 _REJECTED_LEADS = frozenset({"el", "la", "los", "las", "un", "una", "del", "de"})
 _ACTOR_SYNTAX_TOPIC_TERMS = frozenset({
     "adjudicatario", "contratista", "proveedor",
+})
+_LEGAL_FORM_SUFFIXES = (
+    "sas", "s a s", "sa", "s a", "ltda", "limitada", "esp", "e s p",
+    "sca", "s c a", "fundacion", "corporacion",
+)
+_ORGANIZATION_NOUNS = frozenset({
+    "agencia", "asilo", "asociacion", "camara", "cooperativa",
+    "corporacion", "empresa", "fundacion", "grupo", "hogar", "hospital",
+    "instituto", "sociedad", "universidad", "consorcio", "union",
+})
+_NAME_CONNECTORS = frozenset({
+    "a", "al", "con", "de", "del", "el", "en", "la", "las", "los",
+    "para", "por", "y",
 })
 
 _KNOWN_TOPIC_TERMS = frozenset(
@@ -52,8 +68,9 @@ def detect_bare_actor_probe(raw_query: str, params: dict) -> BareActorProbe | No
     match = _BARE_ACTOR_RE.search(normalized)
     if match is None:
         return None
+    unbounded = match.group(1).strip()
     candidate = strip_recognized_actor_modifier_tail(
-        match.group(1),
+        unbounded,
         recognized_actor_modifier_tails(normalized, params),
     ).strip()
     words = candidate.split()
@@ -61,7 +78,46 @@ def detect_bare_actor_probe(raw_query: str, params: dict) -> BareActorProbe | No
         return None
     if candidate.isdigit():
         return None
-    return BareActorProbe(actor_name=candidate)
+    surface_match = _BARE_ACTOR_RE.search(raw_query)
+    surface = surface_match.group(1).strip() if surface_match else unbounded
+    return BareActorProbe(
+        actor_name=candidate,
+        unbounded_name=unbounded,
+        surface_name=surface,
+    )
+
+
+def has_entity_like_name_evidence(probe: BareActorProbe) -> bool:
+    """Conservative cues that bare X may be a person or organization name."""
+    normalized = normalize_actor_name(probe.unbounded_name)
+    tokens = normalized.split()
+    # A complete catalogued topic phrase is stronger than a generic noun that
+    # happens to appear at its head (for example, a thematic phrase beginning
+    # with "grupo").
+    if normalized in _KNOWN_TOPIC_TERMS:
+        return False
+    if any(
+        normalized == suffix or normalized.endswith(f" {suffix}")
+        for suffix in _LEGAL_FORM_SUFFIXES
+    ):
+        return True
+    if tokens and tokens[0] in _ORGANIZATION_NOUNS:
+        return True
+
+    # Case is evidence only for a multi-token proper-name structure.  This is
+    # deliberately unavailable after normalization, so inspect the original
+    # surface and ignore connectors rather than maintaining a name dictionary.
+    surface_words = re.findall(r"[^\W\d_]+", probe.surface_name, re.UNICODE)
+    substantive = [
+        word for word in surface_words
+        if normalize_actor_name(word) not in _NAME_CONNECTORS
+    ]
+    if len(substantive) < 3:
+        return False
+    return all(
+        word.isupper() or (word[:1].isupper() and word[1:].islower())
+        for word in substantive
+    )
 
 
 def has_strong_topic_evidence(actor_name: str, params: dict) -> bool:
