@@ -107,6 +107,30 @@ def test_zero_exact_returns_native_trigram_candidates_never_resolution(
     assert result.candidates[0].retrieval_score is not None
 
 
+def test_exact_probe_never_returns_fuzzy_candidates(
+    resolver: ActorNameResolver,
+):
+    full = resolver.resolve("fundacion para desarrollo caribe")
+    exact_only = resolver.resolve_exact("fundacion para desarrollo caribe")
+
+    assert full.status == ActorResolutionStatus.CANDIDATES
+    assert exact_only.status == ActorResolutionStatus.UNRESOLVED
+    assert exact_only.method == "no_exact_match"
+    assert exact_only.candidates == ()
+
+
+def test_exact_probe_preserves_exact_resolution_and_ambiguity(
+    resolver: ActorNameResolver,
+):
+    resolved = resolver.resolve_exact("fundacion agil s a s")
+    ambiguous = resolver.resolve_exact("servicios del caribe")
+
+    assert resolved.status == ActorResolutionStatus.RESOLVED
+    assert resolved.method == "exact_unique_alias"
+    assert ambiguous.status == ActorResolutionStatus.AMBIGUOUS
+    assert ambiguous.method == "exact_ambiguous_alias"
+
+
 def test_even_an_incorrect_or_topic_like_fuzzy_top_hit_is_only_a_candidate(
     resolver: ActorNameResolver,
 ):

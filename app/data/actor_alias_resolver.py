@@ -64,6 +64,29 @@ class ActorNameResolver:
         return cls(settings.secop_actor_alias_index_path)
 
     def resolve(self, query: str | None) -> ActorResolutionResult:
+        """Resolve an actor name with exact authority and fuzzy suggestions.
+
+        Fuzzy retrieval is deliberately confined to this full-resolution door.
+        Call :meth:`resolve_exact` for syntax that is not strong enough to
+        authorize suggestions or an actor-scope interpretation.
+        """
+        return self._resolve(query, allow_fuzzy=True)
+
+    def resolve_exact(self, query: str | None) -> ActorResolutionResult:
+        """Probe only the exact N2 alias table; never execute FTS retrieval.
+
+        The result vocabulary is the same as :meth:`resolve`, except that this
+        method can never return ``CANDIDATES``.  A miss is ``UNRESOLVED`` and
+        callers remain free to keep their baseline thematic interpretation.
+        """
+        return self._resolve(query, allow_fuzzy=False)
+
+    def _resolve(
+        self,
+        query: str | None,
+        *,
+        allow_fuzzy: bool,
+    ) -> ActorResolutionResult:
         normalized_query = normalize_actor_name(query)
         if not normalized_query:
             return ActorResolutionResult(
@@ -99,6 +122,13 @@ class ActorNameResolver:
                     normalized_query=normalized_query,
                     candidates=exact,
                     method="exact_ambiguous_alias",
+                )
+
+            if not allow_fuzzy:
+                return ActorResolutionResult(
+                    status=ActorResolutionStatus.UNRESOLVED,
+                    normalized_query=normalized_query,
+                    method="no_exact_match",
                 )
 
             expression = self._fts_expression(normalized_query)
