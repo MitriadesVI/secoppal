@@ -196,6 +196,13 @@ def test_inv_name_no_guess_a_named_actor_is_declared_never_resolved(text):
     assert params.get("contratista") is None
 
 
+def test_historial_contractual_de_nombre_is_strong_actor_syntax():
+    params = parse("historial contractual de FUNDACARIBE")
+    assert params["actor_resolution"] == "name_unresolved"
+    assert params["actor_scope"]["observed_name"] == "fundacaribe"
+    assert "fundacaribe" not in objeto_tokens(params)
+
+
 @pytest.mark.parametrize(
     "text",
     [

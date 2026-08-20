@@ -111,7 +111,7 @@ _DETERMINED_ROLE_MARKERS = (
 _VERB_PATTERNS: tuple[re.Pattern[str], ...] = (
     re.compile(r"\bqu[eé]\s+contratos?\s+(?:tiene|ha\s+tenido|posee)\b", re.IGNORECASE),
     re.compile(r"\bqu[eé]\s+ha\s+(?:contratado|celebrado|suscrito|ejecutado)\b", re.IGNORECASE),
-    re.compile(r"\bhistorial\s+contractual\b", re.IGNORECASE),
+    re.compile(r"\bhistorial\s+contractual\s+(?:de|del)\b", re.IGNORECASE),
     re.compile(r"\bcontrataci[oó]n\s+d[eu][el]?\s+l[ao]s?\s+(?:empresa|persona|firma)\b", re.IGNORECASE),
     re.compile(r"\bcontratos?\s+adjudicados?\s+a\b", re.IGNORECASE),
     re.compile(r"\badjudicados?\s+a\b", re.IGNORECASE),

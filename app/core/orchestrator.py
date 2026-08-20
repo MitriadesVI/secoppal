@@ -18,12 +18,14 @@ from app.core.soql_builder import SoQLBuilder
 from app.core.workflow.context import HandlerContext
 from app.core.workflow.deps import WorkflowDeps
 from app.core.workflow.handlers.direct_lookup import handle_direct_lookup
+from app.core.workflow.handlers.actor_selection import handle_actor_selection
 from app.core.workflow.handlers.normal_flow import handle_normal_flow
 from app.core.workflow.handlers.pagination import handle_pagination
 from app.core.workflow.handlers.radar import handle_radar_command
 from app.core.workflow.handlers.refinement import handle_refinement
 from app.core.workflow.handlers.reset import handle_reset
 from app.core.workflow.handlers.suggestion import handle_suggestion_selection
+from app.data.actor_alias_resolver import ActorNameResolver
 
 # ── Legacy compatibility shim ────────────────────────────────────────────
 # The 12 Burr actions and the private helpers below moved to
@@ -78,6 +80,7 @@ class SecopalWorkflow:
         self.settings = settings
         self.entity_resolver = EntityResolver(settings.secop_alias_db_path)
         self.query_router = QueryRouter(entity_resolver=self.entity_resolver)
+        self.actor_name_resolver = ActorNameResolver(settings.secop_actor_alias_index_path)
         self.llm_handler = LLMHandler(api_key=settings.deepseek_api_key, model=settings.deepseek_model)
         self.soql_builder = SoQLBuilder()
         self.secop_client = SecopClient(
@@ -112,6 +115,7 @@ class SecopalWorkflow:
             settings=self.settings,
             entity_resolver=self.entity_resolver,
             query_router=self.query_router,
+            actor_name_resolver=self.actor_name_resolver,
             llm_handler=self.llm_handler,
             soql_builder=self.soql_builder,
             secop_client=self.secop_client,
@@ -165,9 +169,10 @@ class SecopalWorkflow:
         2. ``handle_reset``       — ``/reset`` and synonyms.
         3. ``handle_radar_command`` — guardar/listar/ejecutar radar.
         4. ``handle_pagination``  — "muestrame mas" and synonyms.
-        5. ``handle_suggestion_selection`` — user picked a numbered chip.
-        6. ``handle_direct_lookup`` — query is a SECOP id/URL/entity_ref.
-        7. ``handle_normal_flow`` — fallback that runs the Burr pipeline.
+        5. ``handle_actor_selection`` — user chose a pending actor candidate.
+        6. ``handle_suggestion_selection`` — user picked a numbered chip.
+        7. ``handle_direct_lookup`` — query is a SECOP id/URL/entity_ref.
+        8. ``handle_normal_flow`` — fallback that runs the Burr pipeline.
 
         Every handler receives a fresh ``HandlerContext`` and the
         ``self.deps`` snapshot. ``run_started_at`` baked into the
@@ -223,6 +228,7 @@ class SecopalWorkflow:
             handle_reset,
             handle_radar_command,
             handle_pagination,
+            handle_actor_selection,
             handle_suggestion_selection,
             handle_direct_lookup,
         ):

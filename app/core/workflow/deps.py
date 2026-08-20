@@ -34,6 +34,7 @@ from app.core.query_router import QueryRouter
 from app.core.radar.store import RadarStore
 from app.core.secop_client import SecopClient
 from app.core.soql_builder import SoQLBuilder
+from app.data.actor_alias_resolver import ActorNameResolver
 
 
 @dataclass
@@ -48,6 +49,7 @@ class WorkflowDeps:
     settings: Settings
     entity_resolver: EntityResolver
     query_router: QueryRouter
+    actor_name_resolver: ActorNameResolver
     llm_handler: LLMHandler
     soql_builder: SoQLBuilder
     secop_client: SecopClient

@@ -43,10 +43,22 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+from app.core.actor_identity import IdentityKey
+from app.core.actor_name import ActorResolutionStatus, mask_identity_key
+from app.core.actor_resolution import (
+    METHOD_NAME_UNRESOLVED,
+    actor_resolution_method,
+    actor_resolution_status,
+    is_authoritative_actor_resolution,
+)
 from app.core.soql_builder import SoQLBuilder
 
 __all__ = [
     "REASON_DATASET_UNSUPPORTED",
+    "REASON_INDEX_UNAVAILABLE",
+    "REASON_INTENT_CONFLICT",
+    "REASON_NAME_AMBIGUOUS",
+    "REASON_NAME_CANDIDATES",
     "REASON_NAME_UNRESOLVED",
     "ActorScopeDecision",
     "dataset_supports_actor",
@@ -56,6 +68,10 @@ __all__ = [
 
 REASON_DATASET_UNSUPPORTED = "actor_dataset_unsupported"
 REASON_NAME_UNRESOLVED = "actor_name_requires_resolution"
+REASON_NAME_AMBIGUOUS = "actor_name_ambiguous"
+REASON_NAME_CANDIDATES = "actor_name_candidates"
+REASON_INDEX_UNAVAILABLE = "actor_index_unavailable"
+REASON_INTENT_CONFLICT = "actor_or_topic_ambiguous"
 
 _DATASET_LABELS = {"procesos": "procesos", "contratos": "contratos"}
 
@@ -78,7 +94,13 @@ def has_actor_scope(params: dict) -> bool:
     resolver: en ambos casos el usuario preguntó por alguien concreto, y
     ejecutar sin ese alcance respondería otra pregunta.
     """
-    return bool(params.get("actor_resolution") or params.get("actor_scope"))
+    return bool(
+        actor_resolution_method(params)
+        or actor_resolution_status(params)
+        or params.get("actor_scope")
+        or params.get("actor_pending")
+        or params.get("actor_intent_conflict")
+    )
 
 
 def dataset_supports_actor(dataset: str | None) -> bool:
@@ -100,7 +122,61 @@ def evaluate_actor_scope(params: dict) -> ActorScopeDecision:
     if not has_actor_scope(params):
         return ActorScopeDecision(should_execute=True)
 
-    if params.get("actor_resolution") == "name_unresolved":
+    conflict = params.get("actor_intent_conflict")
+    if isinstance(conflict, dict):
+        name = str(conflict.get("actor_name") or "ese término").upper()
+        return ActorScopeDecision(
+            should_execute=False,
+            missing_slots=("actor_or_topic",),
+            risk_flags=("actor_topic_conflict",),
+            clarification_question=(
+                f"¿Te refieres a contratos sobre {name} como tema, o al proveedor "
+                f"observado como ‘{name}’? No voy a elegir una interpretación "
+                "silenciosamente."
+            ),
+            reason=REASON_INTENT_CONFLICT,
+        )
+
+    status = actor_resolution_status(params)
+    if status in {ActorResolutionStatus.AMBIGUOUS, ActorResolutionStatus.CANDIDATES}:
+        name = _observed_name(params)
+        choices = _candidate_choices(params)
+        if status == ActorResolutionStatus.AMBIGUOUS:
+            intro = f"El nombre {name} corresponde a más de un actor observado en SECOP."
+            reason = REASON_NAME_AMBIGUOUS
+        else:
+            intro = f"No encontré una coincidencia exacta para {name}; sí nombres similares."
+            reason = REASON_NAME_CANDIDATES
+        question = intro
+        if choices:
+            question += "\n\n" + "\n".join(choices)
+            question += "\n\nResponde con el número correcto o comparte el NIT/cédula."
+        else:
+            question += " Necesito el NIT o la cédula para continuar."
+        return ActorScopeDecision(
+            should_execute=False,
+            missing_slots=("actor_selection",),
+            risk_flags=("actor_requires_selection",),
+            clarification_question=question,
+            reason=reason,
+        )
+
+    if status == ActorResolutionStatus.INDEX_UNAVAILABLE:
+        return ActorScopeDecision(
+            should_execute=False,
+            missing_slots=("actor_document",),
+            risk_flags=("actor_index_unavailable",),
+            clarification_question=(
+                "No tengo disponible el índice local para distinguir ese nombre. "
+                "Compárteme el NIT o la cédula y continúo sin adivinar."
+            ),
+            reason=REASON_INDEX_UNAVAILABLE,
+        )
+
+    if (
+        status == ActorResolutionStatus.UNRESOLVED
+        or actor_resolution_method(params) == METHOD_NAME_UNRESOLVED
+    ):
         name = _observed_name(params)
         return ActorScopeDecision(
             should_execute=False,
@@ -114,6 +190,18 @@ def evaluate_actor_scope(params: dict) -> ActorScopeDecision:
                 if name else
                 "Necesito el NIT o la cédula del proveedor para consultar su "
                 "actividad contractual."
+            ),
+            reason=REASON_NAME_UNRESOLVED,
+        )
+
+    if not is_authoritative_actor_resolution(params):
+        return ActorScopeDecision(
+            should_execute=False,
+            missing_slots=("authoritative_actor",),
+            risk_flags=("actor_not_authoritative",),
+            clarification_question=(
+                "Necesito confirmar el NIT, la cédula o una de las opciones antes "
+                "de atribuir contratos a ese actor."
             ),
             reason=REASON_NAME_UNRESOLVED,
         )
@@ -143,3 +231,27 @@ def _observed_name(params: dict) -> str | None:
         if isinstance(name, str) and name.strip():
             return name.strip().upper()
     return None
+
+
+def _candidate_choices(params: dict) -> list[str]:
+    pending = params.get("actor_pending")
+    if not isinstance(pending, dict):
+        return []
+    candidates = pending.get("candidates")
+    if not isinstance(candidates, list):
+        return []
+    choices: list[str] = []
+    for candidate in candidates[:10]:
+        if not isinstance(candidate, dict):
+            continue
+        try:
+            identity = IdentityKey(
+                str(candidate["document_type"]),  # type: ignore[arg-type]
+                str(candidate["base_number"]),
+            )
+        except (KeyError, TypeError, ValueError):
+            continue
+        rank = candidate.get("rank") or len(choices) + 1
+        observed = str(candidate.get("observed_name") or "Nombre observado").upper()
+        choices.append(f"{rank}. {observed} ({mask_identity_key(identity)})")
+    return choices

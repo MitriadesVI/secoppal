@@ -27,6 +27,7 @@ from typing import Any
 from app.config import actor_profile_enabled
 from app.core.actor_profile.assembler import build_actor_profile
 from app.core.actor_profile.render import render_actor_profile
+from app.core.actor_resolution import is_authoritative_actor_resolution
 from app.core.actor_scope_policy import dataset_supports_actor
 
 logger = logging.getLogger(__name__)
@@ -39,13 +40,12 @@ ROUTE_REASON = "actor_profile"
 def is_actor_profile_turn(params: dict) -> bool:
     """¿Este turno pide la huella contractual de un actor identificado?
 
-    Exige identidad por DOCUMENTO. Un nombre sin resolver nunca ejecuta un
-    perfil: atribuirle contratos a partir de un parecido textual es
-    precisamente la falsa atribución que AP2 existe para cerrar.
+    Exige una identidad autoritativa según la primitive central. Un candidato
+    fuzzy nunca ejecuta un perfil; una selección explícita del usuario sí.
     """
     if not actor_profile_enabled():
         return False
-    if params.get("actor_resolution") != "explicit_document":
+    if not is_authoritative_actor_resolution(params):
         return False
     if not params.get("contratista"):
         return False

@@ -3,7 +3,7 @@
 What this module owns
 ---------------------
 The DAG of @action nodes and their transitions: parse_query →
-apply_context → llm_parse → plan_query → resolve_entities →
+apply_context → llm_parse → resolve_actor_name → plan_query → resolve_entities →
 build_query → execute_query → degrade_query → observe_universe →
 suggester_action → format_response (with clarify_query as the escape
 hatch on any branch that sets needs_clarification).
@@ -30,6 +30,7 @@ from app.core.workflow.actions.execution import (
     execute_query,
     observe_universe,
 )
+from app.core.workflow.actions.actor_resolution import resolve_actor_name
 from app.core.workflow.actions.parsing import (
     apply_context,
     llm_parse,
@@ -76,6 +77,9 @@ def build_application(
             parse_query=parse_query.bind(query_router=deps.query_router),
             apply_context=apply_context,
             llm_parse=llm_parse.bind(llm_handler=deps.llm_handler),
+            resolve_actor_name=resolve_actor_name.bind(
+                actor_name_resolver=deps.actor_name_resolver,
+            ),
             plan_query=plan_query,
             resolve_entities=resolve_entities.bind(entity_resolver=deps.entity_resolver),
             build_query=build_query.bind(soql_builder=deps.soql_builder),
@@ -96,11 +100,12 @@ def build_application(
         .with_transitions(
             ("parse_query", "apply_context", expr("followup")),
             ("parse_query", "llm_parse", expr("not followup and needs_llm")),
-            ("parse_query", "plan_query", expr("not followup and not needs_llm")),
+            ("parse_query", "resolve_actor_name", expr("not followup and not needs_llm")),
             ("apply_context", "clarify_query", expr("needs_clarification")),
             ("apply_context", "llm_parse", expr("not needs_clarification and needs_llm")),
-            ("apply_context", "plan_query", expr("not needs_clarification and not needs_llm")),
-            ("llm_parse", "plan_query", default),
+            ("apply_context", "resolve_actor_name", expr("not needs_clarification and not needs_llm")),
+            ("llm_parse", "resolve_actor_name", default),
+            ("resolve_actor_name", "plan_query", default),
             ("plan_query", "resolve_entities", default),
             ("resolve_entities", "clarify_query", expr("needs_clarification")),
             ("resolve_entities", "build_query", expr("not needs_clarification")),
