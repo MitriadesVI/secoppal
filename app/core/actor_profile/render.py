@@ -24,15 +24,15 @@ contratos en borrador y cancelados, y ``valor_del_contrato`` es lo que la
 entidad reportó, no lo que se pagó. Se nombra por lo que es: valor
 contractual reportado (INV-SOURCE-VALUE).
 
-No reproduce la cédula de una persona natural. El documento completo se
-usa para el join, en memoria; en pantalla va enmascarado. Un NIT sí se
-muestra entero: es un identificador mercantil público, no un dato personal
-(INV-PII).
+Actor Profile muestra el documento completo —NIT o CC— como evidencia de
+desambiguación elegida por producto. Esta excepción es deliberadamente local:
+los reprs, logs y diagnósticos internos conservan sus primitivas enmascaradas.
 """
 from __future__ import annotations
 
 from app.core.actor_document_types import is_personal_source_type
-from app.core.actor_name import normalize_actor_name
+from app.core.actor_identity import IdentityKey
+from app.core.actor_name import format_actor_identity_for_user, normalize_actor_name
 from app.core.actor_profile.models import ActorProfileResult
 from app.core.analytics.base import format_currency
 
@@ -63,17 +63,35 @@ def mask_document(document: str, document_type: str | None) -> str:
     return f"{'*' * max(len(document) - len(tail), 0)}{tail}"
 
 
+def _user_identity(document: str, declared_type: object, observed_type: object) -> str:
+    """Format profile identity from explicit type evidence, never length."""
+    declared = str(declared_type or "")
+    observed = str(observed_type or "")
+    if declared in {"NIT", "CC", "UNKNOWN"}:
+        document_type = declared
+    elif observed == "NIT":
+        document_type = "NIT"
+    elif _is_personal(observed):
+        document_type = "CC"
+    else:
+        document_type = "UNKNOWN"
+    try:
+        return format_actor_identity_for_user(
+            IdentityKey(document_type, document),  # type: ignore[arg-type]
+        )
+    except ValueError:
+        return "Documento no disponible"
+
+
 def _identity_line(profile: ActorProfileResult) -> str:
     identity = profile.identity or {}
     document = str(identity.get("base_number") or "")
     declared_type = identity.get("document_type")
     observed_type = profile.document_types_observed[0] if profile.document_types_observed else None
-    label = _type_label(declared_type, observed_type)
-    shown = mask_document(document, observed_type or declared_type)
+    shown = _user_identity(document, declared_type, observed_type)
 
     primary_name = profile.observed_names[0].name if profile.observed_names else None
-    head = f"{label} {shown}".strip()
-    return f"{primary_name} · {head}" if primary_name else head
+    return f"{primary_name} · {shown}" if primary_name else shown
 
 
 def _asserted_name_note(profile: ActorProfileResult) -> str | None:
@@ -93,13 +111,13 @@ def _asserted_name_note(profile: ActorProfileResult) -> str | None:
         return None
 
     document = str(identity.get("base_number") or "")
-    shown = mask_document(
-        document,
+    observed_type = (
         profile.document_types_observed[0]
         if profile.document_types_observed
-        else identity.get("document_type"),
+        else None
     )
-    authority = f"documento {shown}" if shown else "documento indicado"
+    shown = _user_identity(document, identity.get("document_type"), observed_type)
+    authority = shown if shown else "documento indicado"
     if observed:
         return (
             f"⚠️ Escribiste “{asserted.strip()}”, pero ese nombre no coincide "

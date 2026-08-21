@@ -44,7 +44,10 @@ from __future__ import annotations
 from dataclasses import dataclass
 
 from app.core.actor_identity import IdentityKey
-from app.core.actor_name import ActorResolutionStatus, mask_identity_key
+from app.core.actor_name import (
+    ActorResolutionStatus,
+    format_actor_identity_for_user,
+)
 from app.core.actor_resolution import (
     METHOD_NAME_UNRESOLVED,
     actor_resolution_method,
@@ -301,5 +304,7 @@ def _candidate_choices(params: dict) -> list[str]:
             continue
         rank = candidate.get("rank") or len(choices) + 1
         observed = str(candidate.get("observed_name") or "Nombre observado").upper()
-        choices.append(f"{rank}. {observed} ({mask_identity_key(identity)})")
+        choices.append(
+            f"{rank}. {observed} — {format_actor_identity_for_user(identity)}"
+        )
     return choices

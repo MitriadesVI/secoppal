@@ -21,6 +21,7 @@ __all__ = [
     "ActorResolutionCandidate",
     "ActorResolutionResult",
     "ActorResolutionStatus",
+    "format_actor_identity_for_user",
     "mask_identity_key",
     "normalize_actor_name",
 ]
@@ -70,6 +71,20 @@ def mask_identity_key(identity: IdentityKey) -> str:
         return f"{identity.document_type}:{identity.base_number}"
     tail = identity.base_number[-4:]
     return f"CC:{'*' * max(0, len(identity.base_number) - len(tail))}{tail}"
+
+
+def format_actor_identity_for_user(identity: IdentityKey) -> str:
+    """Render a typed Actor Profile identity for intentional user display.
+
+    Actor Profile uses the complete document as disambiguation evidence.  This
+    deliberately separate primitive keeps ``mask_identity_key`` suitable for
+    reprs, logs, exceptions, and other diagnostic surfaces.  The type comes
+    only from ``IdentityKey``; an unknown document is never relabelled by its
+    length.
+    """
+    if identity.document_type in {"NIT", "CC"}:
+        return f"{identity.document_type} {identity.base_number}"
+    return f"Documento {identity.base_number}"
 
 
 @dataclass(frozen=True, slots=True, repr=False)
