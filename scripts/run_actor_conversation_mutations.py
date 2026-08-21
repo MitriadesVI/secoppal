@@ -62,8 +62,8 @@ MUTATIONS: tuple[Mutation, ...] = (
     Mutation(
         "M04", "EN projects buyer instead of geography",
         "app/core/actor_conversation.py",
-        "            operation=ActorConversationOperation.SET_TERRITORY,\n            territory_mention=_clean_mention(",
-        "            operation=ActorConversationOperation.SET_BUYER,\n            territory_mention=_clean_mention(",
+        "            operation=ActorConversationOperation.SET_TERRITORY,\n            territory_mention=territory,",
+        "            operation=ActorConversationOperation.SET_BUYER,\n            territory_mention=territory,",
         ("tests/test_actor_conversation.py::test_con_and_en_project_different_contextual_operations",),
     ),
     Mutation(
