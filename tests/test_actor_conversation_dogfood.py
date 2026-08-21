@@ -13,6 +13,7 @@ import pytest
 from burr.core import State
 
 from app.config import Settings
+from app.core.actor_candidate_ui import actor_candidate_options
 from app.core.actor_name import ActorResolutionStatus
 from app.core.actor_resolution import METHOD_USER_SELECTED_CANDIDATE
 from app.core.orchestrator import SecopalWorkflow
@@ -76,6 +77,16 @@ def test_d2_candidate_two_has_selection_precedence_and_no_framing_leak(tmp_path)
         "buscate al proveedor jorge verbel", chat_id="ap3f-d2"
     )
     selected = workflow.run_query("2", chat_id="ap3f-d2")
+    click_pending = workflow.run_query(
+        "buscate al proveedor jorge verbel", chat_id="ap3g-d2-click"
+    )
+    pending_payload = click_pending["resolved_params"]["actor_pending"]
+    clicked = workflow.select_actor_candidate(
+        2,
+        pending_payload["selection_token"],
+        channel="streamlit",
+        chat_id="ap3g-d2-click",
+    )
 
     assert pending["resolved_params"]["actor_resolution_status"] == (
         ActorResolutionStatus.CANDIDATES
@@ -84,6 +95,13 @@ def test_d2_candidate_two_has_selection_precedence_and_no_framing_leak(tmp_path)
     assert params["actor_resolution_method"] == METHOD_USER_SELECTED_CANDIDATE
     assert params["actor_scope"]["base_number"] == "1020727022"
     assert params.get("objeto") in (None, [])
+    options = actor_candidate_options(click_pending["resolved_params"])
+    assert len(options) >= 2
+    assert all(option.identity_text in click_pending["response"] for option in options)
+    assert clicked["resolved_params"]["actor_scope"] == params["actor_scope"]
+    assert clicked["resolved_params"]["actor_resolution_method"] == (
+        METHOD_USER_SELECTED_CANDIDATE
+    )
 
 
 def test_d3_actor_and_buyer_are_separate_roles_and_not_topic():

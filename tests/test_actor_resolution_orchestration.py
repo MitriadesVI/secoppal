@@ -468,7 +468,7 @@ def test_fuzzy_never_claims_a_longer_actor_boundary(tmp_path):
     assert params["departamento_resolved"] == "Bolívar"
 
 
-def test_ambiguous_cc_choices_are_masked_in_clarification(tmp_path):
+def test_ambiguous_cc_choices_show_complete_documents_for_disambiguation(tmp_path):
     resolver = _resolver(tmp_path, [
         _row("Cédula de Ciudadanía", "1140835135", "PERSONA OBSERVADA", 9),
         _row("Cédula de Ciudadanía", "79482763", "PERSONA OBSERVADA", 8),
@@ -478,9 +478,9 @@ def test_ambiguous_cc_choices_are_masked_in_clarification(tmp_path):
     question = evaluate_actor_scope(params).clarification_question or ""
 
     assert params["actor_resolution_status"] == ActorResolutionStatus.AMBIGUOUS
-    assert "1140835135" not in question
-    assert "79482763" not in question
-    assert "****5135" in question
+    assert "CC 1140835135" in question
+    assert "CC 79482763" in question
+    assert "****" not in question
 
 
 def test_numbered_selection_mutates_the_original_frame_with_honest_provenance(

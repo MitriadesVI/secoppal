@@ -93,7 +93,7 @@ def test_the_date_coverage_gap_is_declared_when_a_range_is_shown():
 
 
 # ---------------------------------------------------------------------------
-# INV-PII — el documento de una persona natural no se reproduce.
+# Internal masking remains available; Actor Profile intentionally shows full IDs.
 # ---------------------------------------------------------------------------
 
 
@@ -110,15 +110,14 @@ def test_inv_pii_a_nit_is_shown_in_full():
     assert mask_document("860002400", "NIT") == "860002400"
 
 
-def test_inv_pii_the_rendered_profile_of_a_person_hides_the_full_number():
+def test_actor_profile_renders_a_person_document_in_full():
     profile = make_profile(
         identity={"document_type": "CC", "base_number": "1140835135"},
         observed_names=(ObservedName("PERSONA NATURAL", "1140835135",
                                      "Cédula de Ciudadanía", 12),),
     )
     text = render_actor_profile(profile)
-    assert "1140835135" not in text
-    assert "5135" in text
+    assert "CC 1140835135" in text
 
 
 def test_inv_pii_no_legal_representative_data_reaches_the_text():

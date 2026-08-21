@@ -43,11 +43,12 @@ M2_MODIFIED_FILE_SHA256 = {
     "app/core/soql_builder.py": "88dc8c35d5ad5627ab11dfd1f1035dc6c0801684e5e3de451f62b58e4e78333d",
 }
 
-# M2.1 corrige únicamente dos consumidores visibles. Ambos quedan congelados y
-# su divergencia se demuestra funcionalmente en sus tests focales.
+# M2.1 corrigió dos consumidores visibles. AP3-G autoriza además controles de
+# candidato dentro del consumidor Streamlit; el nuevo pin se acota con
+# tests/test_actor_candidate_ux.py y no modifica el consumidor direct_lookup.
 M2_1_MODIFIED_FILE_SHA256 = {
     "app/core/workflow/handlers/direct_lookup.py": "6dcfc63405824e82b46a4b07bbdd503fd2bd504ec65a5640a0c3cc628ee90b6b",
-    "streamlit_app.py": "6ef082fa2e17014b029780ac7b17ca292929562f0ad4f204339c34253e05b976",
+    "streamlit_app.py": "ff24ccd886ce6b0e86b085fa77b5c8b14c22f0860d9d52e0127742ca37941fb4",
 }
 
 # Still byte-frozen: M2 touches neither retrieval, nor ranking, nor pagination,

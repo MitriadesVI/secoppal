@@ -15,9 +15,11 @@ from app.core.actor_conversation import (
 )
 from app.core.actor_name import ActorResolutionStatus
 from app.core.actor_resolution import (
+    ACTOR_PENDING_VERSION,
     METHOD_EXACT_LEGAL_FORM_VARIANT,
     METHOD_USER_SELECTED_CANDIDATE,
     is_authoritative_actor_resolution,
+    pending_selection_token,
 )
 from app.core.actor_scope_policy import evaluate_actor_scope
 from app.core.orchestrator import SecopalWorkflow
@@ -104,6 +106,166 @@ def test_pending_actor_selection_precedes_generic_routing_and_preserves_context(
     assert params["fecha_desde"] == "2025-01-01"
     assert params["fecha_hasta"] == "2025-12-31"
     assert params["ordering_signal"] == "valor_desc"
+
+
+def test_click_and_text_selection_are_metamorphically_equivalent(tmp_path):
+    workflow = _workflow(tmp_path, [
+        _row("NIT", "900111222", "ACTOR ALFA", 9),
+        _row("CC", "10000002", "ACTOR ALFA", 8),
+    ])
+    query = "contratos del proveedor ACTOR ALFA en 2025 por mayor valor"
+    text_pending = workflow.run_query(query, chat_id="selection-text")
+    click_pending = workflow.run_query(query, chat_id="selection-click")
+
+    text = workflow.run_query("2", chat_id="selection-text")
+    pending = click_pending["resolved_params"]["actor_pending"]
+    click = workflow.select_actor_candidate(
+        2,
+        pending["selection_token"],
+        channel="streamlit",
+        chat_id="selection-click",
+    )
+
+    keys = {
+        "actor_scope", "actor_resolution_status", "actor_resolution_method",
+        "contratista", "dataset", "fecha_desde", "fecha_hasta",
+        "ordering_signal", "actor_selection_rank",
+    }
+    assert {key: text["resolved_params"].get(key) for key in keys} == {
+        key: click["resolved_params"].get(key) for key in keys
+    }
+    assert text_pending["resolved_params"]["actor_pending"]["candidates"] == (
+        pending["candidates"]
+    )
+    assert click["resolved_params"]["actor_resolution_method"] == (
+        METHOD_USER_SELECTED_CANDIDATE
+    )
+    assert click["resolved_params"]["actor_resolution_status"] == (
+        ActorResolutionStatus.RESOLVED
+    )
+    assert is_authoritative_actor_resolution(click["resolved_params"])
+
+
+def _append_pending_turn(
+    workflow, chat_id: str, *, status: str, selection_token: str | None = None,
+) -> dict:
+    original_params = {
+        "dataset": "contratos",
+        "dataset_explicit": True,
+        "fecha_desde": "2025-01-01",
+        "fecha_hasta": "2025-12-31",
+        "entidad_resolved": "ALCALDIA DE PRUEBA",
+        "departamento_resolved": "Atlántico",
+        "valor_min": 100_000_000,
+        "valor_max": 900_000_000,
+        "ordering_signal": "valor_desc",
+        "modalidad_include_procedure_ids": ["licitacion_publica"],
+    }
+    pending = {
+        "version": ACTOR_PENDING_VERSION,
+        "origin": "strong_actor_syntax",
+        "original_query": "contratos del proveedor ACTOR ALFA",
+        "original_params": original_params,
+        "actor_name": "actor alfa",
+        "resolution_status": status,
+        "candidates": [
+            {
+                "document_type": "NIT", "base_number": "900111222",
+                "matched_alias": "actor alfa", "observed_name": "ACTOR ALFA",
+                "rank": 1, "occurrences": 9,
+            },
+            {
+                "document_type": "CC", "base_number": "10000002",
+                "matched_alias": "actor alfa", "observed_name": "ACTOR ALFA",
+                "rank": 2, "occurrences": 8,
+            },
+        ],
+    }
+    pending["selection_token"] = selection_token or pending_selection_token(pending)
+    parsed = dict(original_params)
+    parsed.update({
+        "actor_resolution_status": status,
+        "actor_resolution_method": "fts5_trigram_bm25",
+        "actor_resolution": "fts5_trigram_bm25",
+        "actor_pending": pending,
+    })
+    workflow.conv_store.append_turn(
+        chat_id=chat_id,
+        user_query=pending["original_query"],
+        response="opciones",
+        parsed_params=parsed,
+    )
+    return pending
+
+
+@pytest.mark.parametrize(
+    "status", [ActorResolutionStatus.AMBIGUOUS, ActorResolutionStatus.CANDIDATES],
+)
+def test_click_selects_exact_or_fuzzy_candidate_with_all_context(tmp_path, status):
+    workflow = _workflow(tmp_path, [])
+    pending = _append_pending_turn(workflow, f"click-{status}", status=status)
+
+    result = workflow.select_actor_candidate(
+        2, pending["selection_token"], chat_id=f"click-{status}",
+    )
+    params = result["resolved_params"]
+
+    assert params["actor_scope"]["document_type"] == "CC"
+    assert params["actor_scope"]["base_number"] == "10000002"
+    assert params["actor_resolution_method"] == METHOD_USER_SELECTED_CANDIDATE
+    for key in (
+        "dataset", "fecha_desde", "fecha_hasta", "entidad_resolved",
+        "departamento_resolved", "valor_min", "valor_max", "ordering_signal",
+        "modalidad_include_procedure_ids",
+    ):
+        assert params[key] == pending["original_params"][key]
+
+
+def test_click_token_cannot_inject_or_select_from_stale_pending_state(tmp_path):
+    workflow = _workflow(tmp_path, [
+        _row("NIT", "900111222", "ACTOR ALFA", 9),
+        _row("NIT", "900333444", "ACTOR ALFA", 8),
+    ])
+    first = workflow.run_query("busca proveedor ACTOR ALFA", chat_id="stale")
+    old_token = first["resolved_params"]["actor_pending"]["selection_token"]
+    forged = workflow.select_actor_candidate(2, "forged-token", chat_id="stale")
+    current = _append_pending_turn(
+        workflow,
+        "stale",
+        status=ActorResolutionStatus.AMBIGUOUS,
+        selection_token="new-current-token",
+    )
+    current_token = current["selection_token"]
+
+    stale = workflow.select_actor_candidate(2, old_token, chat_id="stale")
+
+    assert forged["route_reason"] == "actor_selection_stale"
+    assert current_token != old_token
+    assert stale["route_reason"] == "actor_selection_stale"
+    assert stale["resolved_params"] == {}
+    assert stale["rows"] == []
+
+
+def test_click_after_reset_and_duplicate_click_fail_closed(tmp_path):
+    workflow = _workflow(tmp_path, [
+        _row("NIT", "900111222", "ACTOR ALFA", 9),
+        _row("NIT", "900333444", "ACTOR ALFA", 8),
+    ])
+    first = workflow.run_query("busca proveedor ACTOR ALFA", chat_id="double")
+    token = first["resolved_params"]["actor_pending"]["selection_token"]
+    selected = workflow.select_actor_candidate(2, token, chat_id="double")
+    duplicate = workflow.select_actor_candidate(2, token, chat_id="double")
+
+    reset_pending = workflow.run_query(
+        "busca proveedor ACTOR ALFA", chat_id="after-reset",
+    )
+    reset_token = reset_pending["resolved_params"]["actor_pending"]["selection_token"]
+    workflow.run_query("/reset", chat_id="after-reset")
+    after_reset = workflow.select_actor_candidate(2, reset_token, chat_id="after-reset")
+
+    assert selected["resolved_params"]["actor_scope"]["base_number"] == "900333444"
+    assert duplicate["route_reason"] == "actor_selection_stale"
+    assert after_reset["route_reason"] == "actor_selection_stale"
 
 
 def test_invalid_pending_rank_asks_again_instead_of_falling_through(tmp_path):
