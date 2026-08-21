@@ -134,6 +134,7 @@ class SecopalWorkflow:
         chat_id: str | None = None,
         user_identity: dict[str, Any] | None = None,
         seed_resolved_params: dict | None = None,
+        actor_candidate_selection: dict[str, Any] | None = None,
         run_started_at: float | None = None,
     ) -> "HandlerContext":
         """Build a HandlerContext from run_query's arguments.
@@ -148,6 +149,7 @@ class SecopalWorkflow:
             "chat_id": chat_id,
             "user_identity": user_identity,
             "seed_resolved_params": seed_resolved_params,
+            "actor_candidate_selection": actor_candidate_selection,
         }
         if run_started_at is not None:
             kwargs["run_started_at"] = run_started_at
@@ -160,6 +162,7 @@ class SecopalWorkflow:
         chat_id: str | None = None,
         user_identity: dict[str, Any] | None = None,
         seed_resolved_params: dict | None = None,
+        actor_candidate_selection: dict[str, Any] | None = None,
     ) -> dict:
         """Dispatch a request through the handler chain.
 
@@ -184,6 +187,7 @@ class SecopalWorkflow:
             chat_id=chat_id,
             user_identity=user_identity,
             seed_resolved_params=seed_resolved_params,
+            actor_candidate_selection=actor_candidate_selection,
             run_started_at=time.perf_counter(),
         )
 
@@ -215,6 +219,35 @@ class SecopalWorkflow:
         attach_telemetry(result, metrics)
         attach_deadline_telemetry(result, dl_tel, ctx.run_started_at)
         return result
+
+    def select_actor_candidate(
+        self,
+        candidate_rank: int,
+        pending_token: str,
+        *,
+        channel: str = "whatsapp",
+        chat_id: str | None = None,
+        user_identity: dict[str, Any] | None = None,
+    ) -> dict:
+        """Submit transport-independent ``SELECT_ACTOR_CANDIDATE``.
+
+        A transport supplies only the displayed rank and pending-list token.
+        Identity lookup, provenance, context restoration, and execution remain
+        in ``handle_actor_selection``, shared with natural text selections.
+        """
+        from app.core.actor_conversation import ActorConversationOperation
+
+        return self.run_query(
+            f"opción {candidate_rank}",
+            channel=channel,
+            chat_id=chat_id,
+            user_identity=user_identity,
+            actor_candidate_selection={
+                "operation": ActorConversationOperation.SELECT_ACTOR_CANDIDATE,
+                "candidate_rank": candidate_rank,
+                "pending_token": pending_token,
+            },
+        )
 
     def _dispatch(self, ctx: HandlerContext, seed_resolved_params: dict | None) -> dict:
         """Chain of responsibility — first non-None handler result wins."""

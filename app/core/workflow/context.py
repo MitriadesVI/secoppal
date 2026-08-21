@@ -39,4 +39,5 @@ class HandlerContext:
     chat_id: str | None = None
     user_identity: dict[str, Any] | None = None
     seed_resolved_params: dict | None = None
+    actor_candidate_selection: dict[str, Any] | None = None
     run_started_at: float = field(default_factory=time.perf_counter)

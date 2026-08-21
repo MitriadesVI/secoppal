@@ -11,6 +11,7 @@ from datetime import datetime, timedelta, timezone
 import extra_streamlit_components as stx
 import streamlit as st
 
+from app.core.actor_candidate_ui import actor_candidate_options
 from app.core.formatter import _estado_raw_nota
 from app.core.radar import follows
 from app.core.radar.builder import has_scope_or_topic, save_radar_from_params
@@ -371,6 +372,58 @@ def _clean_resolved(resolved: dict) -> dict:
         else:
             clean[k] = v
     return clean
+
+
+def _assistant_history_item(result: dict) -> dict:
+    """Build one rerun-stable assistant item, including safe actor controls."""
+    resolved_params = result.get("resolved_params", {})
+    debug_payload = {
+        "route_reason": result.get("route_reason", ""),
+        "needs_llm": result.get("needs_llm", False),
+        "dataset_id": result.get("dataset_id", ""),
+        "parsed_params": result.get("parsed_params", {}),
+        "resolved_params": _clean_resolved(resolved_params),
+        "soql_query": result.get("soql_query", ""),
+        "results_count": len(result.get("results", [])),
+    }
+    return {
+        "role": "assistant",
+        "content": result.get("response", ""),
+        "rows": result.get("rows", []),
+        "debug": debug_payload,
+        "trace_id": result.get("trace_id"),
+        "rating": None,
+        "contextual_filters": result.get("contextual_filters", {}),
+        "total_count": result.get("total_count", 0),
+        "actor_candidates": [
+            option.as_dict() for option in actor_candidate_options(resolved_params)
+        ],
+    }
+
+
+def _render_actor_candidates(candidates: list[dict], history_idx: int) -> None:
+    """Render current candidates without interpreting or submitting identity."""
+    for candidate in candidates:
+        rank = candidate.get("rank")
+        token = candidate.get("pending_token")
+        if not isinstance(rank, int) or not isinstance(token, str):
+            continue
+        with st.container(border=True):
+            text_col, action_col = st.columns([4, 1])
+            text_col.markdown(
+                f"**{candidate.get('observed_name', 'Nombre observado')}**  \n"
+                f"{candidate.get('identity_text', '')}"
+            )
+            if action_col.button(
+                "Seleccionar",
+                key=f"actor_select_{history_idx}_{rank}_{token}",
+                use_container_width=True,
+            ):
+                st.session_state._pending_actor_selection = {
+                    "candidate_rank": rank,
+                    "pending_token": token,
+                }
+                st.rerun()
 
 
 def _safe_key(value: str) -> str:
@@ -1075,6 +1128,9 @@ with tab_buscar:
         with st.chat_message("assistant"):
             st.markdown(item["content"])
 
+            if idx == _last_assistant_idx and item.get("actor_candidates"):
+                _render_actor_candidates(item["actor_candidates"], idx)
+
             # Contextual filter bar — aparece incluso con pocos resultados (≥5)
             # para que los refinamientos sucesivos sigan teniendo opciones visibles.
             contextual_filters = item.get("contextual_filters", {})
@@ -1129,6 +1185,11 @@ with tab_radares:
 
 incoming_query: str | None = None
 seed_resolved_params: dict | None = None
+actor_selection_event: dict | None = None
+
+if getattr(st.session_state, "_pending_actor_selection", None):
+    actor_selection_event = st.session_state._pending_actor_selection
+    del st.session_state._pending_actor_selection
 
 # Pending refinement from filter bar
 if hasattr(st.session_state, "_pending_refinement") and st.session_state._pending_refinement:
@@ -1172,6 +1233,20 @@ typed_query = st.chat_input("Escribe tu consulta sobre procesos o contratos SECO
 if typed_query:
     incoming_query = typed_query
     seed_resolved_params = None  # query natural manda
+    actor_selection_event = None
+
+if actor_selection_event:
+    user_identity = _current_user_identity()
+    with st.spinner("Consultando SECOP..."):
+        result = workflow.select_actor_candidate(
+            actor_selection_event.get("candidate_rank"),
+            actor_selection_event.get("pending_token"),
+            channel="streamlit",
+            chat_id=st.session_state.chat_id,
+            user_identity=user_identity,
+        )
+    st.session_state.history.append(_assistant_history_item(result))
+    st.rerun()
 
 if incoming_query:
     st.session_state.history.append({"role": "user", "content": incoming_query})
@@ -1183,26 +1258,5 @@ if incoming_query:
                                      user_identity=user_identity,
                                      seed_resolved_params=seed_resolved_params)
 
-    debug_payload = {
-        "route_reason": result.get("route_reason", ""),
-        "needs_llm": result.get("needs_llm", False),
-        "dataset_id": result.get("dataset_id", ""),
-        "parsed_params": result.get("parsed_params", {}),
-        "resolved_params": _clean_resolved(result.get("resolved_params", {})),
-        "soql_query": result.get("soql_query", ""),
-        "results_count": len(result.get("results", [])),
-    }
-
-    st.session_state.history.append(
-        {
-            "role": "assistant",
-            "content": result.get("response", ""),
-            "rows": result.get("rows", []),
-            "debug": debug_payload,
-            "trace_id": result.get("trace_id"),
-            "rating": None,
-            "contextual_filters": result.get("contextual_filters", {}),
-            "total_count": result.get("total_count", 0),
-        }
-    )
+    st.session_state.history.append(_assistant_history_item(result))
     st.rerun()

@@ -11,6 +11,9 @@ P17, Actor Profile y los futuros consumidores.
 """
 from __future__ import annotations
 
+import hashlib
+import json
+import secrets
 from typing import Any
 
 from app.core.actor_identity import IdentityKey, compute_check_digit
@@ -34,6 +37,7 @@ __all__ = [
     "candidate_from_payload",
     "candidate_to_payload",
     "is_authoritative_actor_resolution",
+    "pending_selection_token",
     "project_actor_resolution",
 ]
 
@@ -52,6 +56,30 @@ AUTHORITATIVE_ACTOR_METHODS = frozenset({
 })
 
 ACTOR_PENDING_VERSION = 1
+
+
+def pending_selection_token(pending: dict) -> str:
+    """Return an opaque token binding a UI selection to one pending list.
+
+    The token carries no identity authority: the backend still resolves only a
+    rank from its current conversation payload.  It merely prevents a delayed
+    callback from selecting the same rank after a different actor query.
+    """
+    material = {
+        "version": pending.get("version"),
+        "origin": pending.get("origin"),
+        "original_query": pending.get("original_query"),
+        "actor_name": pending.get("actor_name"),
+        "resolution_status": pending.get("resolution_status"),
+        "candidates": pending.get("candidates"),
+    }
+    encoded = json.dumps(
+        material,
+        ensure_ascii=False,
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()[:32]
 
 
 def actor_resolution_method(params: dict) -> str | None:
@@ -211,7 +239,7 @@ def project_actor_resolution(
     if result.status in {ActorResolutionStatus.AMBIGUOUS, ActorResolutionStatus.CANDIDATES}:
         original_params = dict(params)
         original_params.pop("actor_pending", None)
-        projected["actor_pending"] = {
+        pending = {
             "version": ACTOR_PENDING_VERSION,
             "origin": origin,
             "original_query": original_query,
@@ -220,6 +248,11 @@ def project_actor_resolution(
             "resolution_status": result.status,
             "candidates": [candidate_to_payload(candidate) for candidate in result.candidates],
         }
+        # A fresh nonce distinguishes even two identical consecutive actor
+        # queries, so a delayed callback from the first list cannot authorize a
+        # rank in the second one.
+        pending["selection_token"] = secrets.token_urlsafe(24)
+        projected["actor_pending"] = pending
     else:
         projected.pop("actor_pending", None)
     return projected

@@ -6,12 +6,16 @@ from dataclasses import replace
 from typing import TYPE_CHECKING
 
 from app.config import actor_profile_enabled
-from app.core.actor_conversation import parse_actor_candidate_selection
+from app.core.actor_conversation import (
+    ActorConversationOperation,
+    parse_actor_candidate_selection,
+)
 from app.core.actor_resolution import (
     ACTOR_PENDING_VERSION,
     METHOD_USER_SELECTED_CANDIDATE,
     apply_actor_identity,
     candidate_from_payload,
+    pending_selection_token,
 )
 from app.core.workflow.results import empty_result
 
@@ -74,19 +78,41 @@ class _SelectionFeedback:
 
 def handle_actor_selection(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict | None:
     """Apply a numbered candidate to the pending frame, then resume planning."""
+    structured = ctx.actor_candidate_selection
     if not actor_profile_enabled() or not ctx.chat_id:
-        return None
-    selected_rank = parse_actor_candidate_selection(ctx.user_query)
-    if selected_rank is None:
-        return None
+        return _stale_selection_result() if structured is not None else None
+    if structured is not None:
+        if structured.get("operation") != ActorConversationOperation.SELECT_ACTOR_CANDIDATE:
+            return _stale_selection_result()
+        selected_rank = structured.get("candidate_rank")
+        submitted_token = structured.get("pending_token")
+        if (
+            isinstance(selected_rank, bool)
+            or not isinstance(selected_rank, int)
+            or selected_rank < 1
+            or not isinstance(submitted_token, str)
+            or not submitted_token
+        ):
+            return _stale_selection_result()
+    else:
+        selected_rank = parse_actor_candidate_selection(ctx.user_query)
+        submitted_token = None
+        if selected_rank is None:
+            return None
 
     history = deps.conv_store.get_history(ctx.chat_id, last_n=1)
     if not history:
-        return None
+        return _stale_selection_result() if structured is not None else None
     last_turn = history[-1]
     pending = last_turn.parsed_params.get("actor_pending")
     if not isinstance(pending, dict):
-        return None
+        return _stale_selection_result() if structured is not None else None
+    if structured is not None:
+        current_token = pending.get("selection_token")
+        if not isinstance(current_token, str):
+            current_token = pending_selection_token(pending)
+        if submitted_token != current_token:
+            return _stale_selection_result()
     if last_turn.age_minutes() > ACTOR_SELECTION_TTL_MINUTES:
         return empty_result(
             response=(
@@ -105,7 +131,7 @@ def handle_actor_selection(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict 
 
     candidates = pending.get("candidates")
     if not isinstance(candidates, list):
-        return None
+        return _stale_selection_result() if structured is not None else None
     selected = next(
         (
             candidate for candidate in candidates
@@ -160,3 +186,14 @@ def handle_actor_selection(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict 
     result = handle_normal_flow(selected_deps, selection_ctx)
     result["followup"] = True
     return result
+
+
+def _stale_selection_result() -> dict:
+    return empty_result(
+        response=(
+            "Esas opciones ya no están activas. Repite la consulta por nombre "
+            "para generar una lista actual."
+        ),
+        route_reason="actor_selection_stale",
+        needs_clarification=True,
+    )
