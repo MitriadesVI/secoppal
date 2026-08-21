@@ -40,3 +40,28 @@ def actor_profile_flag_on(monkeypatch):
     get_settings.cache_clear()
     yield
     get_settings.cache_clear()
+
+
+@pytest.fixture(autouse=True)
+def isolate_actor_alias_index(monkeypatch, tmp_path):
+    """La suite nunca ve el directorio de actores de la máquina.
+
+    El artefacto de producción pesa 662 MB, vive fuera de git y existe o no
+    según quién ejecute las pruebas. Cuando la suite lo leía de forma
+    ambiental, su resultado dependía de eso: con el directorio presente dos
+    pruebas fallaban y sin él pasaban — y ninguna de las dos versiones era
+    "la verdad".
+
+    Por defecto se apunta a una ruta inexistente dentro de ``tmp_path``, que
+    es el caso base honesto: sin índice, la resolución por nombre falla
+    cerrado. Un test que necesite un índice construye el suyo y se lo pasa
+    explícitamente al resolver.
+    """
+    from app.config import get_settings
+
+    monkeypatch.setenv(
+        "SECOP_ACTOR_ALIAS_INDEX_PATH", str(tmp_path / "no_actor_index.sqlite"),
+    )
+    get_settings.cache_clear()
+    yield
+    get_settings.cache_clear()

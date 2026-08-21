@@ -298,7 +298,17 @@ def test_an_actor_on_an_unsupported_dataset_asks_instead_of_answering():
 
 
 def test_an_unresolved_name_asks_for_the_document_instead_of_profiling():
-    result = _workflow().run_query("contratos del proveedor FUNDACARIBE", channel="streamlit")
+    """Un nombre que el directorio no resuelve pide el documento.
+
+    El nombre es sintético a propósito. La versión anterior usaba
+    FUNDACARIBE y asumía que jamás resolvería; el directorio real demostró
+    lo contrario —existe, NIT 900429803— y la prueba pasó a afirmar algo
+    falso sobre el dataset. Lo que se verifica aquí es la política ante una
+    resolución fallida, no un hecho sobre SECOP.
+    """
+    result = _workflow().run_query(
+        "contratos del proveedor ZZQX ENTIDAD INEXISTENTE QQV", channel="streamlit",
+    )
 
     assert result["needs_clarification"] is True
     assert "NIT" in result["response"] or "cédula" in result["response"]
