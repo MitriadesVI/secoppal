@@ -144,18 +144,18 @@ def test_bare_probe_preserves_internal_prepositions_and_cuts_real_tails(
     assert probe.actor_name == expected_name
 
 
-def test_bare_probe_does_not_resolve_a_truncated_wrong_actor(tmp_path):
+def test_bare_probe_only_offers_truncated_fuzzy_neighbor_as_candidate(tmp_path):
     resolver = _resolver(tmp_path, [
         _row("NIT", "900111222", "FUNDACION MANOS"),
     ])
     query = "contratos de FUNDACIÓN MANOS EN ACCIÓN"
     params = _resolve_action(query, resolver)
 
-    assert params["actor_resolution_status"] == ActorResolutionStatus.UNRESOLVED
-    assert params["actor_scope"]["observed_name"] == "fundacion manos en accion"
-    assert params["actor_intent_conflict"]["kind"] == "entity_like_no_exact"
+    assert params["actor_resolution_status"] == ActorResolutionStatus.CANDIDATES
+    assert params["actor_pending"]["actor_name"] == "fundacion manos en accion"
     assert params.get("contratista") is None
     assert params.get("objeto") is None
+    assert not is_authoritative_actor_resolution(params)
     assert evaluate_actor_scope(params).should_execute is False
 
 

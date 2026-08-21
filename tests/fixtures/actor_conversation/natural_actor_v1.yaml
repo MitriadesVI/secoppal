@@ -1,0 +1,164 @@
+version: AP3-F-NATURAL-ACTOR-V1
+description: >-
+  Expanded deterministic corpus. Every strong family is crossed with every
+  real production actor below; every sequence family is crossed with the same
+  actors. Expected values describe semantic operations/frame mutations, not
+  response prose.
+
+real_actors:
+  - name: FUNSOCOM
+    document_type: NIT
+    base_number: "900334689"
+  - name: JORGE VERBEL
+    resolution: candidates
+  - name: JOSE CANTILLO
+    resolution: ambiguous
+  - name: UNIVERSIDAD INDUSTRIAL DE SANTANDER
+    document_type: NIT
+    base_number: "890201213"
+  - name: LMP INGENIERIA SAS
+    document_type: NIT
+    base_number: "900739049"
+  - name: EMPRESA PARA LA COMPETITIVIDAD TERRITORIAL DEL MUNICIPIO DE GIRARDOTA
+    document_type: NIT
+    base_number: "901464458"
+  - name: EMPRESA DE DESARROLLO URBANO Y RURAL DEL MUNICIPIO DE BELLO
+    document_type: NIT
+    base_number: "901465133"
+  - name: FONDO MIXTO PARA LA PROMOCION DE LA CULTURA Y LAS ARTES DE BOYACA
+    document_type: NIT
+    base_number: "820000107"
+  - name: E.S.E HOSPITAL PEDRO LEON ALVAREZ DIAZ
+    document_type: NIT
+    base_number: "890680027"
+  - name: CENTRO SOCIAL DE AGENTES Y PATRULLEROS DE LA POLICIA NACIONAL
+    document_type: NIT
+    base_number: "830028714"
+
+strong_families:
+  - id: busca_proveedor
+    template: "busca proveedor {actor}"
+    expected: {operation: SET_ACTOR, actor_role: contractor}
+  - id: buscame_proveedor
+    template: "buscame al proveedor {actor}"
+    expected: {operation: SET_ACTOR, actor_role: contractor}
+  - id: buscate_proveedor
+    template: "buscate al proveedor {actor}"
+    expected: {operation: SET_ACTOR, actor_role: contractor}
+  - id: mira_proveedor
+    template: "mira al proveedor {actor}"
+    expected: {operation: SET_ACTOR, actor_role: contractor}
+  - id: mirame_contratista
+    template: "mirame el contratista {actor}"
+    expected: {operation: SET_ACTOR, actor_role: contractor}
+  - id: muestrame_contratista
+    template: "muestrame al contratista {actor}"
+    expected: {operation: SET_ACTOR, actor_role: contractor}
+  - id: dime_contratos
+    template: "dime que contratos tiene {actor}"
+    expected: {operation: SET_ACTOR, actor_role: contractor}
+  - id: averigua_contratos
+    template: "averigua que contratos ha tenido {actor}"
+    expected: {operation: SET_ACTOR, actor_role: contractor}
+  - id: consulta_proveedor
+    template: "consulta proveedor {actor}"
+    expected: {operation: SET_ACTOR, actor_role: contractor}
+  - id: revisa_contratista
+    template: "revisa contratista {actor}"
+    expected: {operation: SET_ACTOR, actor_role: contractor}
+  - id: informacion_contratista
+    template: "busca informacion de este contratista {actor}"
+    expected: {operation: SET_ACTOR, actor_role: contractor}
+  - id: historial_contractual
+    template: "muestrame el historial contractual de {actor}"
+    expected: {operation: SET_ACTOR, actor_role: contractor}
+  - id: contratos_tiene
+    template: "que contratos tiene {actor}"
+    expected: {operation: SET_ACTOR, actor_role: contractor}
+  - id: que_ha_hecho
+    template: "que ha hecho {actor}"
+    expected: {operation: SET_ACTOR, actor_role: contractor}
+  - id: que_ha_contratado
+    template: "que ha contratado {actor}"
+    expected: {operation: SET_ACTOR, actor_role: contractor}
+
+exact_dogfood:
+  - text: "busca proveedor funsocom"
+    expected: {operation: SET_ACTOR, actor_mention: funsocom}
+  - text: "que ha hecho en 2026?"
+    expected: {fecha_desde: "2026-01-01", fecha_hasta: "2026-12-31"}
+  - text: "con cordoba?"
+    expected: {operation: SET_BUYER, buyer_mention: cordoba}
+  - text: "en cordoba?"
+    expected: {operation: SET_TERRITORY, territory_mention: cordoba}
+  - text: "buscate al proveedor jorge verbel"
+    expected: {operation: SET_ACTOR, actor_mention: jorge verbel}
+  - text: "2"
+    expected: {operation: SELECT_ACTOR_CANDIDATE, rank: 2}
+  - text: "contrato de jose cantillo con alcaldia de barranquilla"
+    expected:
+      operation: SET_ACTOR
+      actor_mention: jose cantillo
+      buyer_mention: alcaldia de barranquilla
+  - text: "contratos de lmp ingieneria en 2025"
+    expected: {actor_like: true, fecha_desde: "2025-01-01"}
+  - text: "busca informacion de este contratista CODETEC"
+    expected: {operation: SET_ACTOR, actor_mention: codetec}
+  - text: "que contratos tiene CODETEC con gobernacion?"
+    expected: {operation: SET_ACTOR, buyer_clarification: true}
+  - text: "que contratos tiene CODETEC con gobernacion del atlantico?"
+    expected: {operation: SET_ACTOR, buyer_mention: gobernacion del atlantico}
+  - text: "mirame que ha hecho esta persona 1140835135"
+    expected: {operation: SET_ACTOR, document_type: UNKNOWN}
+  - text: "mirame que ha hecho la persona con cedula 1140835135"
+    expected: {operation: SET_ACTOR, document_type: CC}
+  - text: "muestrame el historial contractual de CODETEC"
+    expected: {operation: SET_ACTOR, actor_mention: codetec}
+  - text: "averigua que contratos ha tenido CODETEC con la alcaldia de barranquilla"
+    expected: {operation: SET_ACTOR, buyer_mention: la alcaldia de barranquilla}
+  - text: "que ha hecho CODETEC este año"
+    expected: {operation: SET_ACTOR, fecha_desde: "2026-01-01"}
+
+topic_controls:
+  - alimentacion
+  - alimentación
+  - mantenimiento
+  - software
+  - vigilancia
+  - nutricion
+  - nutrición
+  - adulto mayor
+  - transporte
+  - obras
+  - aseo
+  - salud
+  - ingenieria
+  - ingeniería
+
+sequence_families:
+  - id: actor_time_buyer_value
+    turns:
+      - text: "busca proveedor {actor}"
+        expected: {operation: SET_ACTOR, actor_replaced: true}
+      - text: "que ha hecho en 2026?"
+        expected: {mutation: SET_TIME, actor_preserved: true}
+      - text: "con cordoba?"
+        expected: {operation: SET_BUYER, actor_preserved: true, time_preserved: true}
+      - text: "solo los mayores de 500 millones"
+        expected: {mutation: SET_VALUE, actor_preserved: true, buyer_preserved: true}
+  - id: actor_time_territory
+    turns:
+      - text: "busca proveedor {actor}"
+        expected: {operation: SET_ACTOR, actor_replaced: true}
+      - text: "solo 2025"
+        expected: {mutation: SET_TIME, actor_preserved: true}
+      - text: "en bolivar"
+        expected: {operation: SET_TERRITORY, actor_preserved: true, time_preserved: true}
+  - id: actor_replace_buyer
+    turns:
+      - text: "busca proveedor {actor}"
+        expected: {operation: SET_ACTOR, actor_replaced: true}
+      - text: "cambia a FUNSOCOM"
+        expected: {operation: REPLACE_ACTOR, old_identity_cleared: true}
+      - text: "con barranquilla"
+        expected: {operation: SET_BUYER, actor_preserved: true}
