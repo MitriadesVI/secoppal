@@ -211,7 +211,7 @@ _LEADING_FRAMING_RE = re.compile(
     re.IGNORECASE,
 )
 _REPLACE_RE = re.compile(
-    r"^(?:ahora\s+)?cambia(?:me)?\s+(?:a|por)\s+(?P<actor>.+)$",
+    r"^(?:ahora\s+)?cambia(?:me)?\s+(?:al?|por)\s+(?P<actor>.+)$",
     re.IGNORECASE,
 )
 _SEARCH_BARE_RE = re.compile(
@@ -295,11 +295,15 @@ def interpret_actor_conversation(query: str) -> ActorConversationInstruction:
 
     contextual_territory = _CONTEXT_TERRITORY_RE.fullmatch(normalized)
     if contextual_territory is not None:
+        territory = _clean_mention(contextual_territory.group("territory"))
+        if re.fullmatch(r"(?:19|20)\d{2}", territory):
+            # ``en 2025`` is temporal grammar.  CON/EN relation precedence
+            # applies only when EN introduces a place, never by preposition
+            # alone.
+            return ActorConversationInstruction(framing_spans=framing)
         return ActorConversationInstruction(
             operation=ActorConversationOperation.SET_TERRITORY,
-            territory_mention=_clean_mention(
-                contextual_territory.group("territory")
-            ),
+            territory_mention=territory,
             framing_spans=framing,
             construction="contextual_en",
         )
@@ -307,6 +311,10 @@ def interpret_actor_conversation(query: str) -> ActorConversationInstruction:
     replacement = _REPLACE_RE.fullmatch(normalized)
     if replacement is not None:
         actor = _strip_supported_actor_tail(replacement.group("actor"))
+        if actor.split(maxsplit=1)[0] in _NON_ACTOR_SEARCH_LEADS:
+            # ``cambia a procesos/contratos`` is a dataset mutation, not an
+            # actor called PROCESOS.  The generic follow-up policy owns it.
+            return ActorConversationInstruction(framing_spans=framing)
         return ActorConversationInstruction(
             operation=ActorConversationOperation.REPLACE_ACTOR,
             actor_mention=actor,

@@ -129,6 +129,13 @@ def test_con_and_en_project_different_contextual_operations():
     assert en.territory_mention == "cordoba"
 
 
+def test_en_year_is_temporal_not_a_territory_operation():
+    instruction = interpret_actor_conversation("en 2025")
+
+    assert instruction.operation is None
+    assert instruction.territory_mention is None
+
+
 def test_contextual_con_and_en_keep_actor_and_year_but_change_different_roles(
     tmp_path,
 ):
@@ -249,6 +256,33 @@ def test_actor_replacement_purges_old_identity_and_preserves_orthogonal_year(
     assert "900111222" not in replaced["contratista"]
     assert replaced["fecha_desde"] == "2025-01-01"
     assert replaced.get("objeto") in (None, [])
+
+
+def test_explicit_document_replacement_updates_scope_and_keeps_year(tmp_path):
+    workflow = _workflow(tmp_path, [])
+    workflow.run_query("contratos del NIT 900711074", chat_id="replace-doc")
+    dated = workflow.run_query("en 2025", chat_id="replace-doc")
+    replaced = workflow.run_query(
+        "cambia al proveedor NIT 900459754", chat_id="replace-doc"
+    )
+
+    assert dated["resolved_params"]["fecha_desde"] == "2025-01-01"
+    params = replaced["resolved_params"]
+    assert params["actor_scope"]["base_number"] == "900459754"
+    assert params["contratista"] == ["900459754"]
+    assert params["fecha_desde"] == "2025-01-01"
+    assert "900711074" not in params["contratista"]
+
+
+def test_dataset_pivot_is_not_misread_as_actor_replacement(tmp_path):
+    workflow = _workflow(tmp_path, [])
+    workflow.run_query("contratos del NIT 900711074", chat_id="pivot-dataset")
+
+    pivot = workflow.run_query("cambia a procesos", chat_id="pivot-dataset")
+
+    assert pivot["needs_clarification"] is True
+    assert pivot["resolved_params"]["actor_scope"]["base_number"] == "900711074"
+    assert pivot["resolved_params"]["dataset"] == "procesos"
 
 
 def test_purge_actor_state_removes_every_identity_and_provenance_field():
