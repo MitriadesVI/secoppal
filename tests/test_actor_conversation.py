@@ -312,6 +312,35 @@ def test_fuzzy_candidates_require_independent_actor_evidence(tmp_path):
     assert params.get("actor_pending") is None
 
 
+@pytest.mark.parametrize(
+    "query",
+    [
+        "busca contratos de aseo en huila",
+        "busca procesos de educacion en bogota",
+        "busca licitacion publica de obras",
+        "busca contratacion directa que incluye suministro",
+    ],
+)
+def test_explicit_new_search_grammar_is_not_an_actor_operation(query):
+    params = dict(QueryRouter().parse(query).params)
+
+    assert params.get("actor_resolution") is None
+    assert params.get("actor_conversation_operation") is None
+
+
+def test_money_unit_in_modifier_tail_is_not_actor_shape_evidence(tmp_path):
+    resolver = _resolver(
+        tmp_path, [_row("NIT", "900111222", "UNRELATED ACTOR SAS", 8)]
+    )
+    query = "contratos de alimentacion mayores a 1000 SMMLV en 2026"
+
+    params = _resolve(query, resolver)
+
+    assert params["objeto"] == ["alimentacion"]
+    assert params.get("actor_resolution") is None
+    assert params["valor_min"] == 1_750_905_000
+
+
 def test_article_does_not_let_buyer_prefix_consume_complete_actor_name(tmp_path):
     resolver = _resolver(
         tmp_path, [_row("NIT", "900111222", "UNRELATED ACTOR SAS", 8)]

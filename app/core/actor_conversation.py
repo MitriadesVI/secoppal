@@ -219,6 +219,10 @@ _SEARCH_BARE_RE = re.compile(
     r"(?P<actor>.+)$",
     re.IGNORECASE,
 )
+_NON_ACTOR_SEARCH_LEADS = frozenset({
+    "compra", "compras", "contratacion", "contrato", "contratos",
+    "licitacion", "oportunidad", "oportunidades", "proceso", "procesos",
+})
 _BARE_CONTRACTS_RE = re.compile(
     r"\bcontratos?\s+(?:de|del)\s+(?P<actor>.+)$",
     re.IGNORECASE,
@@ -337,6 +341,8 @@ def interpret_actor_conversation(query: str) -> ActorConversationInstruction:
     bare_search = _SEARCH_BARE_RE.fullmatch(normalized)
     if bare_search is not None and not _ACTOR_ROLE_RE.search(normalized):
         actor = _strip_supported_actor_tail(bare_search.group("actor"))
+        if actor.split(maxsplit=1)[0] in _NON_ACTOR_SEARCH_LEADS:
+            return ActorConversationInstruction(framing_spans=framing)
         evidence = actor_likeness(actor)
         if evidence != "topic":
             return ActorConversationInstruction(

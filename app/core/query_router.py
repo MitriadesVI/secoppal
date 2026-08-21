@@ -1656,10 +1656,6 @@ class QueryRouter:
         params["contratista"] = variants
         params.pop("actor_conversation_probe", None)
         params["actor_resolution"] = reference.resolution_method
-        params["actor_conversation_operation"] = (
-            ActorConversationOperation.SET_ACTOR
-        )
-        params["actor_conversation_construction"] = "explicit_actor_document"
         actor_scope = reference.to_params()
         if asserted_actor is not None and asserted_actor.observed_name:
             # Contextual evidence only.  The document remains the sole

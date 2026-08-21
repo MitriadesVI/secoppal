@@ -93,7 +93,10 @@ def detect_bare_actor_probe(raw_query: str, params: dict) -> BareActorProbe | No
 
 def has_entity_like_name_evidence(probe: BareActorProbe) -> bool:
     """Conservative cues that bare X may be a person or organization name."""
-    normalized = normalize_actor_name(probe.unbounded_name)
+    # Shape evidence belongs to the actor candidate, not to a recognized
+    # modifier tail.  Otherwise ``mantenimiento ... 1000 SMMLV`` looks like an
+    # acronym-bearing organization merely because its money unit is uppercase.
+    normalized = normalize_actor_name(probe.actor_name)
     tokens = normalized.split()
     # A complete catalogued topic phrase is stronger than a generic noun that
     # happens to appear at its head (for example, a thematic phrase beginning
