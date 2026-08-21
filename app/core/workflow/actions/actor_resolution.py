@@ -1,6 +1,8 @@
 """Impure AP3-C orchestration between parse/context and pure QueryPlan."""
 from __future__ import annotations
 
+import re
+
 from burr.core import State, action
 
 from app.config import actor_profile_enabled
@@ -37,6 +39,16 @@ _BOUNDARY_MODIFIER_KEYS = frozenset({
 })
 
 
+# Conectores que introducen un modificador externo. Un sufijo que no empiece
+# por uno de ellos no es una cola: es la continuación del nombre.
+_EXTERNAL_MODIFIER_LEAD_RE = re.compile(
+    r"^(?:en|por|para|desde|hasta|entre|entre\s+el|con|de\s+mas|de\s+menos|"
+    r"mayor(?:es)?|menor(?:es)?|mas|menos|superior(?:es)?|inferior(?:es)?|"
+    r"antes|despues|durante|solo|solamente|unicamente)\b",
+    re.IGNORECASE,
+)
+
+
 def _parse_exact_boundary_modifier_suffix(
     raw_query: str,
     actor_name: str,
@@ -47,6 +59,21 @@ def _parse_exact_boundary_modifier_suffix(
         return None
     if not suffix:
         return {}
+    if not _EXTERNAL_MODIFIER_LEAD_RE.match(suffix):
+        # INV-ACTOR-RESOLUTION-REQUIRES-COMPLETE-MENTION.
+        #
+        # Un modificador externo viene INTRODUCIDO —"… en Bolívar", "… en
+        # 2025", "… por mayor valor"—. Un token que va pegado al final del
+        # nombre es parte del nombre, por mucho que parezca geografía:
+        # "ALCALDIA DE PUERTO SALGAR CUNDINAMARCA" y "CONSORCIO SALUD
+        # BOLIVAR 2024" se llaman así.
+        #
+        # Sin esta guarda el buscador de frontera podía recortar hasta
+        # cualquier prefijo cuyo resto se dejara reparsear, y con un
+        # directorio de 1,2 M de aliases eso encontraba a otro actor:
+        # "proveedor E.S.E HOSPITAL PEDRO LEON ALVAREZ DIAZ en 2025"
+        # terminaba en "e s", el alias exacto de la empresa E&S.
+        return None
 
     # Reparse only the remainder, never the actor name.  This gives the normal
     # deterministic modifier grammar a clean view after exact alias evidence
@@ -54,7 +81,13 @@ def _parse_exact_boundary_modifier_suffix(
     from app.core.query_router import QueryRouter
 
     parsed = dict(QueryRouter().parse(f"contratos {suffix}").params)
-    if any(parsed.get(key) for key in ("objeto", "objeto_phrases", "actor_scope")):
+    # Una entidad nombrada en el resto delata que el corte partió un nombre
+    # propio por la mitad: las colas admisibles son fecha, orden, monto,
+    # geografía, estado y modalidad, nunca una entidad.
+    if any(parsed.get(key) for key in (
+        "objeto", "objeto_phrases", "actor_scope",
+        "entidad", "entidad_resolved", "entidad_like",
+    )):
         return None
     modifiers = {
         key: value
