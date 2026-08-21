@@ -208,6 +208,45 @@ def test_an_entity_in_the_tail_means_the_cut_split_a_proper_name(trap_index):
     assert (params.get("actor_scope") or {}).get("base_number") is None
 
 
+@pytest.mark.parametrize(
+    "query",
+    [
+        "contratos del proveedor FUNDACION NORTE en hospital san jose en 2025",
+        "contratos del proveedor FUNDACION NORTE en la universidad nacional por mayor valor",
+    ],
+)
+def test_a_named_entity_after_a_connector_is_still_not_a_valid_tail(query, trap_index):
+    """El conector no basta: la cola tampoco puede ser un nombre propio.
+
+    El sufijo empieza por conector —así que la regla de forma lo dejaría
+    pasar— y además contiene un modificador real, así que la lista de claves
+    admitidas tampoco lo descartaría. Lo único que lo rechaza es advertir que
+    el resto se reparsea como ENTIDAD, señal de que el corte partió un nombre
+    propio por la mitad. Sin esa guarda, el prefijo "fundacion norte" —que en
+    el índice-trampa es otro actor real— se quedaría con la autoridad.
+
+    Es el caso que separa las dos reglas: con un sufijo que solo produce
+    entidad, quitar esta guarda no cambiaría nada, porque la entidad no está
+    entre las claves de modificador.
+    """
+    params = _resolve(query, trap_index)
+    scope = params.get("actor_scope") or {}
+
+    assert scope.get("base_number") != "900222222"
+    assert params.get("actor_resolution_method") != "exact_unique_alias"
+
+
+def test_a_modifier_only_tail_after_a_connector_is_accepted(trap_index):
+    """El contraste: una cola que solo lleva modificadores sí se desprende."""
+    params = _resolve(
+        "contratos del proveedor FUNDACION NORTE en 2025", trap_index,
+    )
+    scope = params.get("actor_scope") or {}
+
+    assert scope.get("base_number") == "900222222"
+    assert params.get("fecha_desde") == "2025-01-01"
+
+
 def test_prefix_candidates_are_longest_first():
     """El más largo primero: la mención más defendible gana la carrera."""
     query = "contratos del proveedor fundacion norte del caribe"
