@@ -1,12 +1,12 @@
 """Resume a pending actor resolution without losing the original QueryFrame."""
 from __future__ import annotations
 
-import re
 from copy import copy
 from dataclasses import replace
 from typing import TYPE_CHECKING
 
 from app.config import actor_profile_enabled
+from app.core.actor_conversation import parse_actor_candidate_selection
 from app.core.actor_resolution import (
     ACTOR_PENDING_VERSION,
     METHOD_USER_SELECTED_CANDIDATE,
@@ -21,7 +21,6 @@ if TYPE_CHECKING:
 
 
 ACTOR_SELECTION_TTL_MINUTES = 30.0
-_SELECTION_RE = re.compile(r"^(?:opci[oó]n\s+)?(10|[1-9])$", re.IGNORECASE)
 
 
 class _SelectedFrameRouter:
@@ -77,8 +76,8 @@ def handle_actor_selection(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict 
     """Apply a numbered candidate to the pending frame, then resume planning."""
     if not actor_profile_enabled() or not ctx.chat_id:
         return None
-    match = _SELECTION_RE.fullmatch(ctx.user_query.strip())
-    if match is None:
+    selected_rank = parse_actor_candidate_selection(ctx.user_query)
+    if selected_rank is None:
         return None
 
     history = deps.conv_store.get_history(ctx.chat_id, last_n=1)
@@ -107,7 +106,6 @@ def handle_actor_selection(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict 
     candidates = pending.get("candidates")
     if not isinstance(candidates, list):
         return None
-    selected_rank = int(match.group(1))
     selected = next(
         (
             candidate for candidate in candidates

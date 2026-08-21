@@ -3,7 +3,7 @@ from __future__ import annotations
 import calendar
 import re
 from pathlib import Path
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from typing import TYPE_CHECKING
 
 from app.data.departamentos import DEPARTAMENTOS
@@ -14,6 +14,11 @@ from app.data.estados import (
     ESTADO_SYNONYMS,
 )
 from app.config import actor_profile_enabled
+from app.core.actor_conversation import (
+    ActorConversationInstruction,
+    ActorConversationOperation,
+    interpret_actor_conversation,
+)
 from app.core.actor_identity import has_plausible_actor_document_digits
 from app.core.actor_intent import (
     detect_asserted_actor_name_before_document,
@@ -156,7 +161,8 @@ def _number_role(text: str, match: re.Match[str]) -> str:
 STOPWORDS = {
     # Conversational verbs
     "muestrame", "muestreme", "muestra", "mostrar", "mostra",
-    "busca", "buscar", "buscame", "buscando", "busco",
+    "busca", "buscar", "buscame", "buscate", "buscando", "busco",
+    "mirame", "averigua", "revisa", "cambia",
     "dame", "dime", "necesito", "quiero", "quisiera",
     "encuentra", "encontrar", "encontrame", "encontra",
     "lista", "listar", "listame",
@@ -220,7 +226,7 @@ STOPWORDS = {
     "semana", "dia", "dias", "día", "días", "ayer",
     "mes", "meses",
     # Interrogative verbs ("qué ha hecho/hizo/gastó X") — no son objetos
-    "hecho", "hizo", "hace", "hacen", "haciendo", "gastado",
+    "hecho", "hizo", "hace", "hacen", "haciendo", "gastado", "tenido",
     # Indefinite pronouns
     "algun", "alguna", "algunos", "algunas", "alguno", "algunos", "ningun", "ninguna",
     "otro", "otra", "otros", "otras",
@@ -256,6 +262,7 @@ STOPWORDS = {
     "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre",
     # More temporal
     "semestre", "trimestre", "bimestre", "periodo", "anual", "mensual",
+    "ano", "año",
     "pasado", "pasada", "anterior", "siguiente", "proximo",
     # Semantic-layer scrubbed terms (should already be consumed, safety net)
     "departamento", "departamentos",
@@ -392,6 +399,12 @@ class QueryRouter:
         normalized = normalize_text(user_query)
         normalized = correct_query(normalized)
         params: dict[str, object] = {}
+        actor_conversation = (
+            interpret_actor_conversation(normalized)
+            if actor_profile_enabled()
+            else ActorConversationInstruction()
+        )
+        actor_relation_spans: tuple[str, ...] = ()
 
         # ── 0. Semantic normalization layer (runs BEFORE existing extractors) ──
         #    This prevents tokens like "publicados", "departamento", "alcaldía"
@@ -465,6 +478,14 @@ class QueryRouter:
         if dataset_explicit:
             params["dataset_explicit"] = True
 
+        # AP3-F: project conversational roles before entity/geography/topic
+        # scanners see the same words.  This layer identifies mentions only;
+        # actor and buyer authority remain with their existing resolvers.
+        if actor_profile_enabled():
+            actor_conversation, actor_relation_spans = (
+                self._seed_actor_conversation(actor_conversation, params)
+            )
+
         # ── 1.b Dataset SCOPE: "procesos o contratos" / "ambos" → los DOS ───
         # El usuario pide AMBOS conjuntos. `dataset` sigue ESCALAR (primario =
         # procesos, el universo más amplio) por compatibilidad; el ejecutor (Commit 2)
@@ -497,6 +518,12 @@ class QueryRouter:
         if modality_result.executable_params:
             params.update(modality_result.executable_params)
         scrubbed = modality_result.masked_text
+        for relation_span in actor_relation_spans:
+            scrubbed = re.sub(
+                re.escape(relation_span), " ", scrubbed, count=1,
+                flags=re.IGNORECASE,
+            )
+        scrubbed = re.sub(r"\s+", " ", scrubbed).strip()
         modality_spans = [
             normalized[start:end]
             for start, end in modality_result.interpretation.consumed_spans
@@ -835,6 +862,18 @@ class QueryRouter:
                     params["contratista"] = contractor
                     scrubbed = scrubbed.replace(contractor, " ")
 
+        # Command framing is consumed only after this turn has independently
+        # established actor intent.  Thus "busca mantenimiento" keeps its
+        # thematic semantics, while "búscate al proveedor X" cannot leak the
+        # framing verb into ``objeto`` or a replayed candidate frame.
+        if params.get("actor_resolution"):
+            for framing_span in actor_conversation.framing_spans:
+                scrubbed = re.sub(
+                    re.escape(framing_span), " ", scrubbed, count=1,
+                    flags=re.IGNORECASE,
+                )
+            scrubbed = re.sub(r"\s+", " ", scrubbed).strip()
+
         # ── 10.5. City detection (before object terms) ────────────────────
         city_match = _CITY_PATTERN_RE.search(scrubbed)
         if city_match:
@@ -1003,6 +1042,11 @@ class QueryRouter:
         until_match = re.search(r"\bhasta\s+(20\d{2})\b", normalized_query)
         if until_match:
             params["fecha_hasta"] = f"{until_match.group(1)}-12-31"
+
+        if re.search(r"\beste\s+a[nñ]o\b", normalized_query, re.IGNORECASE):
+            year = current_colombian_year()
+            params.setdefault("fecha_desde", f"{year}-01-01")
+            params.setdefault("fecha_hasta", f"{year}-12-31")
 
         return params
 
@@ -1395,6 +1439,179 @@ class QueryRouter:
 
         return params, consumed_spans
 
+    # ── Actor conversation roles (AP3-F) ───────────────────────────────
+
+    def _seed_actor_conversation(
+        self,
+        instruction: ActorConversationInstruction,
+        params: dict[str, object],
+    ) -> tuple[ActorConversationInstruction, tuple[str, ...]]:
+        """Seed role mentions without granting actor/buyer identity authority."""
+        relation_spans: tuple[str, ...] = ()
+        buyer_accepted = False
+        if instruction.buyer_mention:
+            buyer_has_explicit_role = bool(re.match(
+                r"^(?:la\s+|el\s+)?(?:alcaldia|gobernacion|secretaria|"
+                r"municipio|departamento|distrito|entidad)\b",
+                instruction.buyer_mention,
+                re.IGNORECASE,
+            ))
+            # An explicit actor-role span owns its complete mention.  ``CON``
+            # inside "proveedor FUNDACIÓN CON AMOR" is not a buyer boundary;
+            # only a structurally explicit buyer phrase may override it.
+            role_name_requires_full_boundary = (
+                instruction.construction.startswith("role_")
+                and not buyer_has_explicit_role
+            )
+            if not role_name_requires_full_boundary:
+                buyer_accepted = self._project_actor_relation_buyer(
+                    instruction.buyer_mention, params,
+                )
+            if buyer_accepted and instruction.relation_buyer_span:
+                relation_spans = (instruction.relation_buyer_span,)
+            elif role_name_requires_full_boundary:
+                return ActorConversationInstruction(
+                    framing_spans=instruction.framing_spans,
+                ), ()
+            elif instruction.fallback_actor_mention:
+                # ``CON`` may be part of a legal name (FUNDACIÓN CON AMOR).
+                # It becomes a relation boundary only with independent buyer
+                # evidence; otherwise restore the complete actor mention.
+                instruction = replace(
+                    instruction,
+                    actor_mention=instruction.fallback_actor_mention,
+                    actor_evidence=instruction.fallback_actor_evidence,
+                    buyer_mention=None,
+                    relation_buyer_span=None,
+                )
+            elif instruction.operation == ActorConversationOperation.SET_BUYER:
+                return ActorConversationInstruction(
+                    framing_spans=instruction.framing_spans,
+                ), ()
+
+        actor = instruction.actor_mention
+        evidence = instruction.actor_evidence
+        if actor and evidence not in {None, "topic"}:
+            params["actor_conversation_operation"] = instruction.operation
+            params["actor_conversation_construction"] = instruction.construction
+            if evidence == "probe":
+                # Exact-only directory evidence may promote this mention later.
+                # Fuzzy retrieval is forbidden on this door.
+                params["actor_conversation_probe"] = {
+                    "actor_name": actor,
+                    "construction": instruction.construction,
+                }
+            else:
+                params["actor_resolution"] = "name_unresolved"
+                params["actor_scope"] = {
+                    "role": "contractor",
+                    "resolution_method": "name_unresolved",
+                    "requires_resolution": True,
+                    "observed_name": actor,
+                    "reason_codes": [
+                        "ACTOR_CONVERSATION_OPERATION",
+                        "ACTOR_NAME_NEEDS_RESOLUTION",
+                    ],
+                }
+        elif buyer_accepted:
+            params["actor_conversation_operation"] = (
+                ActorConversationOperation.SET_BUYER
+            )
+            params["actor_conversation_construction"] = instruction.construction
+        elif instruction.operation == ActorConversationOperation.SET_TERRITORY:
+            params["actor_conversation_operation"] = instruction.operation
+            params["actor_conversation_construction"] = instruction.construction
+
+        return instruction, relation_spans
+
+    def _project_actor_relation_buyer(
+        self,
+        buyer_mention: str,
+        params: dict[str, object],
+    ) -> bool:
+        """Use the existing buyer resolver under relation-role semantics.
+
+        Only deterministic exact evidence is accepted here.  In particular,
+        the generic word ``gobernación`` is represented as a clarification,
+        never sent to the resolver's global fuzzy tier where it could guess a
+        specific department.
+        """
+        mention = normalize_text(buyer_mention).strip(" ,.;:¿?¡!")
+        if not mention:
+            return False
+        generic = mention in {
+            "alcaldia", "gobernacion", "secretaria", "municipio",
+            "departamento", "distrito", "entidad",
+        }
+        if generic:
+            params["entidad"] = mention
+            params["entidad_resolution"] = {
+                "value": None,
+                "method": "actor_relation_buyer_ambiguous",
+                "kind": "buyer_entity",
+                "confidence": "none",
+                "like_value": None,
+                "metadata": {"buyer_mention": mention},
+                "clarification_needed": True,
+                "clarification_hint": (
+                    f"¿A cuál {mention} te refieres? Indica la ciudad o el "
+                    "departamento; no voy a escoger una entidad al azar."
+                ),
+            }
+            return True
+
+        if self.entity_resolver is not None:
+            scanned = self.entity_resolver.scan_entity(mention)
+            if scanned is not None:
+                params["entidad"] = mention
+                params["entidad_resolved"] = scanned.official_name
+                params["entidad_resolution"] = {
+                    "value": scanned.official_name,
+                    "method": "actor_relation_scan_exact",
+                    "kind": "buyer_entity",
+                    "confidence": "high",
+                    "like_value": None,
+                    "metadata": {"buyer_mention": mention},
+                }
+                return True
+
+            resolved = self.entity_resolver.resolve_entidad(mention)
+            if (
+                resolved.value
+                and resolved.method == "exact"
+                and resolved.confidence == "high"
+            ):
+                params["entidad"] = mention
+                params["entidad_resolved"] = resolved.value
+                params["entidad_resolution"] = {
+                    **resolved.to_dict(),
+                    "method": "actor_relation_exact",
+                    "kind": "buyer_entity",
+                    "metadata": {
+                        **resolved.metadata,
+                        "buyer_mention": mention,
+                    },
+                }
+                return True
+
+        # Reuse the router's established city→buyer projection.  This is a
+        # buyer relation because syntax said CON, not because a city alias by
+        # itself has buyer authority.
+        city_buyer = _CITY_TO_ENTITY.get(mention)
+        if city_buyer:
+            params["entidad"] = mention.title()
+            params["entidad_resolved"] = city_buyer
+            params["entidad_resolution"] = {
+                "value": city_buyer,
+                "method": "actor_relation_city_to_entity",
+                "kind": "buyer_entity",
+                "confidence": "high",
+                "like_value": None,
+                "metadata": {"buyer_mention": mention},
+            }
+            return True
+        return False
+
     # ── Actor (AP2) ─────────────────────────────────────────────────────
     # El documento y el nombre del actor se consumen aquí y NO en el
     # extractor de objeto: un actor que se filtra a `objeto` produce el
@@ -1437,7 +1654,12 @@ class QueryRouter:
             normalized, match.start(),
         )
         params["contratista"] = variants
+        params.pop("actor_conversation_probe", None)
         params["actor_resolution"] = reference.resolution_method
+        params["actor_conversation_operation"] = (
+            ActorConversationOperation.SET_ACTOR
+        )
+        params["actor_conversation_construction"] = "explicit_actor_document"
         actor_scope = reference.to_params()
         if asserted_actor is not None and asserted_actor.observed_name:
             # Contextual evidence only.  The document remains the sole
@@ -1512,6 +1734,13 @@ class QueryRouter:
             return scrubbed
 
         params["actor_resolution"] = reference.resolution_method
+        params.setdefault(
+            "actor_conversation_operation",
+            ActorConversationOperation.SET_ACTOR,
+        )
+        params.setdefault(
+            "actor_conversation_construction", "strong_actor_syntax",
+        )
         params["actor_scope"] = reference.to_params()
         for span in reference.consumed_spans:
             scrubbed = scrubbed.replace(span, " ")

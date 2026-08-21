@@ -171,6 +171,32 @@ def resolve_actor_name(state: State, actor_name_resolver: ActorNameResolver) -> 
             return state.update(parsed_params=params)
         return state
 
+    conversation_probe = params.pop("actor_conversation_probe", None)
+    if isinstance(conversation_probe, dict):
+        probe_name = conversation_probe.get("actor_name")
+        if isinstance(probe_name, str) and probe_name.strip():
+            result = actor_name_resolver.resolve_exact(probe_name)
+            if result.status in {
+                ActorResolutionStatus.RESOLVED,
+                ActorResolutionStatus.AMBIGUOUS,
+            }:
+                projected = scrub_strong_actor_leaks(params, probe_name)
+                projected.pop("objeto", None)
+                projected.pop("objeto_phrases", None)
+                projected = project_actor_resolution(
+                    projected,
+                    result,
+                    actor_name=probe_name,
+                    original_query=raw_query,
+                    origin="actor_conversation_exact_probe",
+                )
+                return state.update(parsed_params=projected)
+        # A probe is not actor evidence by itself.  An exact miss/unavailable
+        # keeps the generic interpretation and never opens fuzzy retrieval.
+        params.pop("actor_conversation_operation", None)
+        params.pop("actor_conversation_construction", None)
+        return state.update(parsed_params=params)
+
     probe = detect_bare_actor_probe(raw_query, params)
     if probe is None:
         return state
@@ -198,18 +224,47 @@ def resolve_actor_name(state: State, actor_name_resolver: ActorNameResolver) -> 
         entity_like = has_entity_like_name_evidence(probe)
         if has_strong_topic_evidence(probe.actor_name, params) and not entity_like:
             return state
-        surface_lead = probe.unbounded_name.split(maxsplit=1)[0]
-        if (
-            surface_lead in {"el", "la", "los", "las", "un", "una"}
-            and (params.get("entidad") or params.get("entidad_resolved"))
+        article_led_buyer = bool(re.match(
+            r"^(?:el|la|los|las|un|una)\s+(?:alcaldia|gobernacion|"
+            r"secretaria|municipio|departamento|distrito|entidad)\b",
+            probe.unbounded_name,
+            re.IGNORECASE,
+        ))
+        if article_led_buyer and (
+            params.get("entidad") or params.get("entidad_resolved")
         ):
             # ``contratos de la alcaldía de X`` already has independent buyer
             # evidence.  After an exact actor miss, preserve that established
             # reading instead of replacing it with a bare-name clarification.
+            # The article alone is not buyer evidence: real actors such as
+            # ``LA PREVISORA S.A. COMPAÑÍA DE SEGUROS`` must fail closed when
+            # an entity scan recognizes only a prefix of their complete name.
             return state
         if not entity_like:
             return state
-        actor_name = probe.unbounded_name
+        actor_name = probe.actor_name
+        if result.status == ActorResolutionStatus.UNRESOLVED:
+            # Independent entity-shaped evidence authorizes candidate
+            # retrieval, but the candidates remain suggestions.  Retrieval
+            # itself is never used as evidence that the phrase was an actor.
+            fuzzy = actor_name_resolver.resolve(actor_name)
+            if fuzzy.status in {
+                ActorResolutionStatus.CANDIDATES,
+                ActorResolutionStatus.AMBIGUOUS,
+            }:
+                projected = scrub_strong_actor_leaks(params, actor_name)
+                projected.pop("objeto", None)
+                projected.pop("objeto_phrases", None)
+                projected["actor_conversation_operation"] = "SET_ACTOR"
+                projected["actor_conversation_construction"] = "bare_actor_like"
+                projected = project_actor_resolution(
+                    projected,
+                    fuzzy,
+                    actor_name=actor_name,
+                    original_query=raw_query,
+                    origin="bare_actor_like",
+                )
+                return state.update(parsed_params=projected)
         projected = scrub_strong_actor_leaks(params, actor_name)
         projected.pop("objeto", None)
         projected.pop("objeto_phrases", None)

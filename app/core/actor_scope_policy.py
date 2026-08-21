@@ -100,6 +100,7 @@ def has_actor_scope(params: dict) -> bool:
         or params.get("actor_scope")
         or params.get("actor_pending")
         or params.get("actor_intent_conflict")
+        or _ambiguous_relation_buyer(params)
     )
 
 
@@ -207,6 +208,26 @@ def evaluate_actor_scope(params: dict) -> ActorScopeDecision:
             reason=REASON_NAME_UNRESOLVED,
         )
 
+    buyer_resolution = _ambiguous_relation_buyer(params)
+    if buyer_resolution is not None:
+        hint = buyer_resolution.get("clarification_hint")
+        mention = str(
+            buyer_resolution.get("metadata", {}).get("buyer_mention")
+            if isinstance(buyer_resolution.get("metadata"), dict)
+            else "la entidad"
+        )
+        return ActorScopeDecision(
+            should_execute=False,
+            missing_slots=("buyer_entity",),
+            risk_flags=("buyer_relation_ambiguous",),
+            clarification_question=(
+                str(hint) if hint else
+                f"¿A cuál {mention} te refieres? Indica la ciudad o el "
+                "departamento; no voy a escoger una entidad al azar."
+            ),
+            reason="actor_relation_buyer_ambiguous",
+        )
+
     if not is_authoritative_actor_resolution(params):
         return ActorScopeDecision(
             should_execute=False,
@@ -235,6 +256,15 @@ def evaluate_actor_scope(params: dict) -> ActorScopeDecision:
         )
 
     return ActorScopeDecision(should_execute=True)
+
+
+def _ambiguous_relation_buyer(params: dict) -> dict | None:
+    resolution = params.get("entidad_resolution")
+    if not isinstance(resolution, dict):
+        return None
+    if resolution.get("method") != "actor_relation_buyer_ambiguous":
+        return None
+    return resolution
 
 
 def _observed_name(params: dict) -> str:

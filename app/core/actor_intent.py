@@ -98,12 +98,13 @@ REASON_DOCUMENT_TYPE_AMBIGUOUS = "ACTOR_DOCUMENT_TYPE_AMBIGUOUS"
 # longitud del número jamás decide (INV-NO-LENGTH, congelado en AP1).
 _NIT_MARKER_RE = re.compile(r"\bnit\b", re.IGNORECASE)
 _CEDULA_MARKER_RE = re.compile(
-    r"\b(?:c[eé]dulas?|c\.c\.|cc|persona\s+natural|documento\s+de\s+identidad)\b",
+    r"(?:\bc[eé]dulas?\b|(?<!\w)c\.c\.?(?!\w)|\bc\s+c\b|\bcc\b|"
+    r"\bpersona\s+natural\b|\bdocumento\s+de\s+identidad\b)",
     re.IGNORECASE,
 )
 _DOCUMENT_MARKER_SUFFIX_RE = re.compile(
     r"\s+(?:con\s+)?(?:(?:el|la)\s+)?(?:nit|c[eé]dulas?|c\.c\.|cc|"
-    r"documento(?:\s+de\s+identidad)?)\s*$",
+    r"c\s+c|documento(?:\s+de\s+identidad)?)\s*$",
     re.IGNORECASE,
 )
 
@@ -121,7 +122,7 @@ _DETERMINED_ROLE_MARKERS = (
 # es el actor. Cubren la lista de D.1 del encargo.
 _VERB_PATTERNS: tuple[re.Pattern[str], ...] = (
     re.compile(r"\bqu[eé]\s+contratos?\s+(?:tiene|ha\s+tenido|posee)\b", re.IGNORECASE),
-    re.compile(r"\bqu[eé]\s+ha\s+(?:contratado|celebrado|suscrito|ejecutado)\b", re.IGNORECASE),
+    re.compile(r"\bqu[eé]\s+ha\s+(?:hecho|contratado|celebrado|suscrito|ejecutado)\b", re.IGNORECASE),
     re.compile(r"\bhistorial\s+contractual\s+(?:de|del)\b", re.IGNORECASE),
     re.compile(r"\bcontrataci[oó]n\s+d[eu][el]?\s+l[ao]s?\s+(?:empresa|persona|firma)\b", re.IGNORECASE),
     re.compile(r"\bcontratos?\s+adjudicados?\s+a\b", re.IGNORECASE),
@@ -143,8 +144,8 @@ _LEADING_STOPWORDS = frozenset({
 _YEAR_RE = re.compile(r"\b(?:19|20)\d{2}\b")
 
 _DATE_MODIFIER_RE = re.compile(
-    r"\b(?:en|durante|desde|hasta|entre|de)\s+(?:el\s+)?(?:19|20)\d{2}"
-    r"(?:\s+(?:a|y|hasta)\s+(?:19|20)\d{2})?\b",
+    r"\b(?:(?:en|durante|desde|hasta|entre|de)\s+(?:el\s+)?(?:19|20)\d{2}"
+    r"(?:\s+(?:a|y|hasta)\s+(?:19|20)\d{2})?|este\s+a[nñ]o)\b",
     re.IGNORECASE,
 )
 _ORDER_MODIFIER_RE = re.compile(
@@ -445,7 +446,7 @@ def _clean_candidate_name(
     raw: str,
     recognized_modifier_tails: Iterable[str] = (),
     *,
-    max_words: int | None = 8,
+    max_words: int | None = None,
 ) -> str | None:
     """Recorta el candidato y lo rechaza si no puede ser un nombre.
 
@@ -465,6 +466,8 @@ def _clean_candidate_name(
         return None
     if _YEAR_RE.fullmatch(candidate) or candidate.replace(".", "").isdigit():
         return None
+    if len(candidate) > 512:
+        return None
     # Los marcadores fuertes admiten razones sociales largas; el resolver aún
     # debe aportar autoridad exacta o limitarse a sugerencias.
     if max_words is not None and len(words) > max_words:
@@ -476,7 +479,7 @@ def _name_after_role_marker(
     normalized_query: str,
     recognized_modifier_tails: Iterable[str] = (),
     *,
-    max_words: int | None = 8,
+    max_words: int | None = None,
 ) -> tuple[str, str] | None:
     """``(nombre, span_consumido)`` tras un marcador de rol, o ``None``."""
     for marker in _ROLE_MARKERS:
@@ -491,7 +494,8 @@ def _name_after_role_marker(
     for marker in _DETERMINED_ROLE_MARKERS:
         # Con determinante obligatorio: "la empresa X", nunca "empresa" suelta.
         pattern = re.compile(
-            rf"\b(?:la|el|los|las|una|un)\s+{re.escape(marker)}\s+(.+)$", re.IGNORECASE,
+            rf"\b(?:la|el|los|las|una|un|esta|este|estas|estos)\s+"
+            rf"{re.escape(marker)}\s+(.+)$", re.IGNORECASE,
         )
         match = pattern.search(normalized_query)
         if match:
@@ -507,7 +511,7 @@ def _name_after_verb_marker(
     normalized_query: str,
     recognized_modifier_tails: Iterable[str] = (),
     *,
-    max_words: int | None = 8,
+    max_words: int | None = None,
 ) -> tuple[str, str] | None:
     for pattern in _VERB_PATTERNS:
         match = pattern.search(normalized_query)
@@ -557,7 +561,8 @@ def detect_asserted_actor_name_before_document(
     if name is None:
         for marker in _DETERMINED_ROLE_MARKERS:
             match = re.search(
-                rf"\b(?:la|el|los|las|una|un)\s+{re.escape(marker)}\s+(.+)$",
+                rf"\b(?:la|el|los|las|una|un|esta|este|estas|estos)\s+"
+                rf"{re.escape(marker)}\s+(.+)$",
                 actor_context,
                 re.IGNORECASE,
             )

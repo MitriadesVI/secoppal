@@ -31,6 +31,9 @@ _BARE_ACTOR_RE = re.compile(r"\bcontratos?\s+de\s+(.+)$", re.IGNORECASE)
 _REJECTED_LEADS = frozenset({"del", "de"})
 _ACTOR_SYNTAX_TOPIC_TERMS = frozenset({
     "adjudicatario", "contratista", "proveedor",
+    "historial", "contractual", "buscate", "buscame", "mirame",
+    "muestrame", "averigua", "consulta", "revisa", "informacion",
+    "contratado",
 })
 _LEGAL_FORM_SUFFIXES = (
     "sas", "s a s", "sa", "s a", "ltda", "limitada", "esp", "e s p",
@@ -103,6 +106,20 @@ def has_entity_like_name_evidence(probe: BareActorProbe) -> bool:
     ):
         return True
     if tokens and tokens[0] in _ORGANIZATION_NOUNS:
+        return True
+
+    # Acronym-like distinctive material is independent actor-shape evidence
+    # even when the user typed it in lowercase.  Requiring two consonants and
+    # no vowels keeps ordinary short topic words out while covering forms such
+    # as ``LMP INGIENERIA`` and ``XYZ MANTENIMIENTO``.  The accompanying topic
+    # token never authorizes identity; it only prevents the acronym from being
+    # silently discarded.
+    if len(tokens) >= 2 and any(
+        2 <= len(token) <= 5
+        and token.isalpha()
+        and not set(token) & set("aeiou")
+        for token in tokens
+    ):
         return True
 
     # Case is evidence only for a multi-token proper-name structure.  This is

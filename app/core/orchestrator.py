@@ -167,9 +167,9 @@ class SecopalWorkflow:
 
         1. ``handle_refinement`` — when the UI sends pre-resolved params.
         2. ``handle_reset``       — ``/reset`` and synonyms.
-        3. ``handle_radar_command`` — guardar/listar/ejecutar radar.
-        4. ``handle_pagination``  — "muestrame mas" and synonyms.
-        5. ``handle_actor_selection`` — user chose a pending actor candidate.
+        3. ``handle_actor_selection`` — user chose a pending actor candidate.
+        4. ``handle_radar_command`` — guardar/listar/ejecutar radar.
+        5. ``handle_pagination``  — "muestrame mas" and synonyms.
         6. ``handle_suggestion_selection`` — user picked a numbered chip.
         7. ``handle_direct_lookup`` — query is a SECOP id/URL/entity_ref.
         8. ``handle_normal_flow`` — fallback that runs the Burr pipeline.
@@ -226,9 +226,9 @@ class SecopalWorkflow:
 
         for handler in (
             handle_reset,
+            handle_actor_selection,
             handle_radar_command,
             handle_pagination,
-            handle_actor_selection,
             handle_suggestion_selection,
             handle_direct_lookup,
         ):

@@ -23,6 +23,11 @@ from burr.core import State, action
 from app.core.query_plan import QueryPlan
 
 from app.core import modality_followup_wiring as modality_wiring
+from app.core.actor_conversation import (
+    ActorConversationOperation,
+    purge_actor_state,
+)
+from app.core.actor_resolution import is_authoritative_actor_resolution
 from app.core.followup_engine import FollowupGuards, detect_and_merge
 from app.core.llm_handler import LLMHandler
 from app.core.query_frame import frame_from_params, params_from_frame
@@ -280,6 +285,112 @@ def apply_context(state: State) -> State:
     interpretation = state.get("modality_interpretation")
     instruction = _load_instruction(state)
     previous_frame = frame_from_params(context_params)
+
+    # AP3-F precedence: explicit actor operations and contextual buyer
+    # relations mutate the conversational frame before the generic classifier
+    # can reinterpret their words as topic/geography.
+    operation = parsed_params.get("actor_conversation_operation")
+    if operation in {
+        ActorConversationOperation.SET_ACTOR,
+        ActorConversationOperation.REPLACE_ACTOR,
+    } and (
+        parsed_params.get("actor_resolution")
+        or parsed_params.get("actor_scope")
+        or parsed_params.get("contratista")
+        or parsed_params.get("actor_conversation_probe")
+    ):
+        if operation == ActorConversationOperation.REPLACE_ACTOR:
+            previous_params = purge_actor_state(params_from_frame(previous_frame))
+            current = dict(parsed_params)
+            if not current.get("dataset_explicit"):
+                current.pop("dataset", None)
+                current.pop("dataset_explicit", None)
+            merged = {**previous_params, **current}
+            intent = "replace_actor"
+        else:
+            # A complete actor operation starts a new actor search and cannot
+            # inherit any old IdentityKey or pending candidate list.
+            merged = dict(parsed_params)
+            intent = "set_actor"
+        mutation_trace = {
+            "intent": intent,
+            "requested_fields": sorted(parsed_params),
+            "accepted_fields": sorted(parsed_params),
+            "transition_cleared_fields": sorted(
+                set(context_params) - set(merged)
+            ),
+            "rejected_fields": [],
+            "rejection_reasons": {},
+        }
+        return _finish_apply_context(
+            state, start, merged, intent, mutation_trace,
+        )
+
+    if (
+        operation == ActorConversationOperation.SET_BUYER
+        and is_authoritative_actor_resolution(context_params)
+    ):
+        merged = dict(params_from_frame(previous_frame))
+        entity_cluster = {
+            "entidad", "entidad_resolved", "entidad_resolution", "entidad_like",
+        }
+        for key in entity_cluster:
+            merged.pop(key, None)
+        for key, value in parsed_params.items():
+            if key in entity_cluster or key in {
+                "objeto", "objeto_phrases", "actor_conversation_operation",
+                "actor_conversation_construction",
+            }:
+                if value not in (None, "", [], {}, ()):
+                    merged[key] = value
+        mutation_trace = {
+            "intent": "set_buyer",
+            "requested_fields": sorted(parsed_params),
+            "accepted_fields": sorted(
+                key for key in parsed_params
+                if key in entity_cluster or key in {"objeto", "objeto_phrases"}
+            ),
+            "transition_cleared_fields": sorted(
+                key for key in entity_cluster if key in context_params
+            ),
+            "rejected_fields": [],
+            "rejection_reasons": {},
+        }
+        return _finish_apply_context(
+            state, start, merged, "set_buyer", mutation_trace,
+        )
+
+    if (
+        operation == ActorConversationOperation.SET_TERRITORY
+        and is_authoritative_actor_resolution(context_params)
+    ):
+        merged = dict(params_from_frame(previous_frame))
+        territory_cluster = {
+            "ciudad", "ciudad_resolved", "departamento",
+            "departamento_resolved", "departamento_resolution", "region",
+            "departamentos_in",
+        }
+        for key in territory_cluster:
+            merged.pop(key, None)
+        accepted = territory_cluster | {
+            "actor_conversation_operation", "actor_conversation_construction",
+        }
+        for key, value in parsed_params.items():
+            if key in accepted and value not in (None, "", [], {}, ()):
+                merged[key] = value
+        mutation_trace = {
+            "intent": "set_territory",
+            "requested_fields": sorted(parsed_params),
+            "accepted_fields": sorted(key for key in parsed_params if key in accepted),
+            "transition_cleared_fields": sorted(
+                key for key in territory_cluster if key in context_params
+            ),
+            "rejected_fields": [],
+            "rejection_reasons": {},
+        }
+        return _finish_apply_context(
+            state, start, merged, "set_territory", mutation_trace,
+        )
 
     # El follow-up genérico ve la modalidad (la usa para clasificar refine_filter
     # vs new_search) pero su resultado de modalidad se descarta: el motor puro es
