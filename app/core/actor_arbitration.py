@@ -121,6 +121,42 @@ def has_entity_like_name_evidence(probe: BareActorProbe) -> bool:
     )
 
 
+def _canonical_geography_terms() -> frozenset[str]:
+    """Topónimos que el propio parser trata como geografía canónica.
+
+    Se derivan de las mismas fuentes que el router usa —el diccionario de
+    departamentos y la lista de ciudades— para que la política no pueda
+    divergir de lo que el sistema ya considera un lugar.
+    """
+    from app.core.query_router import _COMMON_CITIES
+    from app.data.departamentos import DEPARTAMENTOS
+
+    terms = {normalize_actor_name(city) for city in _COMMON_CITIES}
+    for alias, canonical in DEPARTAMENTOS.items():
+        terms.add(normalize_actor_name(alias))
+        terms.add(normalize_actor_name(canonical))
+    return frozenset(term for term in terms if term)
+
+
+def has_canonical_geography_evidence(actor_name: str, params: dict) -> bool:
+    """INV-BARE-GEOGRAPHY-PRECEDENCE.
+
+    ``contratos de Bogotá`` es una consulta territorial. Que el directorio
+    contenga a alguien cuyo nombre observado en SECOP sea literalmente
+    "Bogota" —hay dos cédulas así— no puede cambiar eso: el routing de una
+    geografía canónica dejaría de ser determinista y pasaría a depender de
+    qué personas aparezcan en el directorio del día.
+
+    Solo aplica a la mención DESNUDA. Con sintaxis explícita de rol
+    —"proveedor Bogotá", "qué ha contratado Bogotá"— el usuario dijo que
+    pregunta por un actor, y ahí la resolución sigue permitida.
+    """
+    normalized = normalize_actor_name(actor_name)
+    if not normalized:
+        return False
+    return normalized in _canonical_geography_terms()
+
+
 def has_strong_topic_evidence(actor_name: str, params: dict) -> bool:
     """Whether baseline semantics independently recognize X as a known topic."""
     normalized = normalize_actor_name(actor_name)

@@ -8,6 +8,7 @@ from burr.core import State, action
 from app.config import actor_profile_enabled
 from app.core.actor_arbitration import (
     detect_bare_actor_probe,
+    has_canonical_geography_evidence,
     has_entity_like_name_evidence,
     has_strong_topic_evidence,
     scrub_strong_actor_leaks,
@@ -172,6 +173,12 @@ def resolve_actor_name(state: State, actor_name_resolver: ActorNameResolver) -> 
 
     probe = detect_bare_actor_probe(raw_query, params)
     if probe is None:
+        return state
+    if has_canonical_geography_evidence(probe.actor_name, params):
+        # INV-BARE-GEOGRAPHY-PRECEDENCE: el frame territorial del parser se
+        # conserva intacto. La sonda desnuda es evidencia opcional, y un
+        # topónimo canónico no deja de serlo porque alguien se llame así en
+        # el directorio.
         return state
     actor_name = probe.unbounded_name
     result = actor_name_resolver.resolve_exact(actor_name)
