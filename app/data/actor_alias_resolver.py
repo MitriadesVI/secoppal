@@ -18,6 +18,7 @@ from pathlib import Path
 from typing import Any, Iterable
 
 from app.core.actor_identity import IdentityKey
+from app.core.actor_legal_forms import legal_form_variants
 from app.core.actor_name import (
     ACTOR_NAME_NORMALIZATION_VERSION,
     ActorResolutionCandidate,
@@ -123,6 +124,36 @@ class ActorNameResolver:
                     candidates=exact,
                     method="exact_ambiguous_alias",
                 )
+
+            # AP3-F lookup-time challenger: punctuation in a FINAL legal form
+            # may change N2 (S.A.S. -> "s a s", SAS -> "sas").  Query only
+            # deterministic equivalents and collapse them by typed IdentityKey.
+            # A multi-key union is ambiguity, never authority.
+            legal_variants = legal_form_variants(normalized_query)
+            if legal_variants:
+                placeholders = ",".join("?" for _ in legal_variants)
+                variant_rows = connection.execute(
+                    "SELECT normalized_alias,raw_alias,raw_aliases_json,document_type,"
+                    "base_number,occurrences,first_seen,last_seen "
+                    f"FROM actor_aliases WHERE normalized_alias IN ({placeholders}) "
+                    "ORDER BY occurrences DESC,document_type,base_number,alias_id",
+                    legal_variants,
+                ).fetchall()
+                legal_exact = self._collapse_exact(variant_rows)
+                if len(legal_exact) == 1:
+                    return ActorResolutionResult(
+                        status=ActorResolutionStatus.RESOLVED,
+                        normalized_query=normalized_query,
+                        identity=legal_exact[0].identity,
+                        method="exact_legal_form_variant",
+                    )
+                if len(legal_exact) > 1:
+                    return ActorResolutionResult(
+                        status=ActorResolutionStatus.AMBIGUOUS,
+                        normalized_query=normalized_query,
+                        candidates=legal_exact,
+                        method="exact_legal_form_variant_ambiguous",
+                    )
 
             if not allow_fuzzy:
                 return ActorResolutionResult(

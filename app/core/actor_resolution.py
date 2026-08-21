@@ -24,6 +24,7 @@ __all__ = [
     "ACTOR_PENDING_VERSION",
     "AUTHORITATIVE_ACTOR_METHODS",
     "METHOD_EXACT_UNIQUE_ALIAS",
+    "METHOD_EXACT_LEGAL_FORM_VARIANT",
     "METHOD_EXPLICIT_DOCUMENT",
     "METHOD_NAME_UNRESOLVED",
     "METHOD_USER_SELECTED_CANDIDATE",
@@ -39,12 +40,14 @@ __all__ = [
 
 METHOD_EXPLICIT_DOCUMENT = "explicit_document"
 METHOD_EXACT_UNIQUE_ALIAS = "exact_unique_alias"
+METHOD_EXACT_LEGAL_FORM_VARIANT = "exact_legal_form_variant"
 METHOD_USER_SELECTED_CANDIDATE = "user_selected_candidate"
 METHOD_NAME_UNRESOLVED = "name_unresolved"
 
 AUTHORITATIVE_ACTOR_METHODS = frozenset({
     METHOD_EXPLICIT_DOCUMENT,
     METHOD_EXACT_UNIQUE_ALIAS,
+    METHOD_EXACT_LEGAL_FORM_VARIANT,
     METHOD_USER_SELECTED_CANDIDATE,
 })
 
@@ -181,10 +184,15 @@ def project_actor_resolution(
     """Project a resolver result without confusing candidates with authority."""
     if result.status == ActorResolutionStatus.RESOLVED:
         assert result.identity is not None
+        method = (
+            result.method
+            if result.method in AUTHORITATIVE_ACTOR_METHODS
+            else METHOD_EXACT_UNIQUE_ALIAS
+        )
         projected = apply_actor_identity(
             params,
             result.identity,
-            method=METHOD_EXACT_UNIQUE_ALIAS,
+            method=method,
             observed_name=actor_name,
         )
         if origin == "bare_exact_probe":
