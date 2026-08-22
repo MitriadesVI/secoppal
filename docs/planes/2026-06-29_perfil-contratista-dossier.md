@@ -1,3 +1,35 @@
+> ## ⚠️ PROPUESTA HISTÓRICA — PARCIALMENTE SUPERADA
+>
+> **Actualizado el 2026-08-22.** Este documento se conserva **íntegro** como
+> registro del razonamiento original de junio de 2026. Ya **no** es la
+> descripción del sistema entregado.
+>
+> **Numeración.** El `ADR-042` que encabeza este texto era **provisional** y
+> **no se retuvo**: ese número quedó asignado a otra decisión. La decisión
+> canónica de este frente es **ADR-060 — Actor Profile V1**, en
+> [`docs/decisions_log.md`](../decisions_log.md).
+>
+> **La secuencia de implementación cambió.** Lo entregado en V1 (main `8acb21a`)
+> es un subconjunto deliberado, construido sobre una sola fuente:
+>
+> - identidad tipada `IdentityKey(document_type, base_number)` — `NIT` y `CC`;
+> - directorio local de aliases de actores construido desde SECOP II Contratos
+>   (`jbjy-vk9h`);
+> - huella contractual observada, con límites declarados;
+> - conversación natural de actor (`SET_ACTOR`, `REPLACE_ACTOR`,
+>   `SELECT_ACTOR_CANDIDATE`, `SET_BUYER`, `SET_TERRITORY`);
+> - UX de candidatos con documento completo y selección clicable.
+>
+> **Sigue siendo trabajo futuro**, tal como lo proponía este documento pero sin
+> entregarse todavía: RUP, RUES, representante legal, SIRI, enriquecimiento de
+> responsabilidad fiscal, y la composición de **uniones temporales / consorcios**
+> (siguiente frente: *Actor Relationships V1*).
+>
+> **Guía técnica del sistema entregado:**
+> [`docs/architecture/ACTOR_PROFILE_V1.md`](../architecture/ACTOR_PROFILE_V1.md).
+
+---
+
 # ADR-042: Perfil integral de proponente/contratista (dossier transversal)
 
 **Estado:** Proposed

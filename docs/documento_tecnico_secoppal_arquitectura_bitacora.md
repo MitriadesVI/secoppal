@@ -5,7 +5,136 @@
 **Sistema:** SECOPPAL — asistente conversacional para consulta y análisis de contratación pública SECOP II  
 **Propósito del documento:** dejar una descripción comprensible para un tercero técnico o funcional sobre qué hace el sistema, cómo está construido, qué archivos lo componen, qué decisiones de arquitectura se han tomado, qué bugs relevantes se han detectado y cuál es el estado actual del proyecto.
 
-## Estado canónico actual — 2026-06-26
+## Estado canónico actual — 2026-08-22
+
+- **Main:** `8acb21a9a432f7750ac719f5921ad70776c448a2` — dos frentes cerrados y
+  mergeados ff-only: **Actor Profile V1** (ADR-060) y **SEARCH-SH1** (ADR-061).
+- **Suite:** 8250 passed, 2 skipped, 24 xfailed · query corpus 89/89 ·
+  dialogue corpus 60/61 (`GOB-DEPTO-001` basal, histórico) · corpus de modalidad
+  3.327 passed · dinero/follow-up/paginación focalizados 364 passed ·
+  `make lint-core` limpio.
+- **Qué cambió, en una línea:** el sistema aprendió *de quién* habla una consulta,
+  y dejó de perder por el camino lo que el usuario acababa de pedir.
+
+### Actor Profile V1 (ADR-060 · HEAD de cierre `7f24517`)
+
+- Identidad **tipada** `IdentityKey(document_type, base_number)` — `NIT` y `CC`.
+  La longitud jamás decide el tipo; el DV es evidencia de calidad, no autoridad.
+- **Directorio local completo** de aliases desde SECOP II Contratos
+  (`jbjy-vk9h`): 1.235.591 grupos de origen, 1.214.351 identidades indexadas,
+  cobertura de identidad 98,84% y de actividad contractual 98,13%.
+- Resolución **exacta autoritativa** vs. **candidatos difusos sin autoridad**: el
+  trigram recupera, nunca auto-selecciona. Un candidato solo se vuelve
+  autoritativo por selección explícita del usuario.
+- **Huella contractual observada** en SECOP II, con fecha de consulta y límites
+  declarados. No es dossier legal, ni RUP/RUES, ni informe de riesgo.
+- **Conversación natural de actor:** `SET_ACTOR`, `REPLACE_ACTOR`,
+  `SELECT_ACTOR_CANDIDATE`, `SET_BUYER`, `SET_TERRITORY`.
+- **NIT y CC completos** en la lista de candidatos: el documento *es* la evidencia
+  de desambiguación.
+- **Selección clicable** en Streamlit que llega a la misma operación de backend
+  que el texto, independiente del transporte.
+- **Flag apagado por defecto en código** (`SECOPPAL_ACTOR_PROFILE_ENABLED=false`);
+  se activa por entorno aprovisionado y exige un `actor_alias_index.sqlite`
+  completo y compatible en `SECOP_ACTOR_ALIAS_INDEX_PATH`.
+- Auditoría adversarial congelada de **1.150 casos**: P0 0 · P1 0 · identidades
+  equivocadas 0 · secuestros temáticos 0 · pérdidas de actor 0 ·
+  auto-resoluciones difusas 0.
+
+### SEARCH-SH1 (ADR-061 · `8acb21a`)
+
+- **Separación de dimensiones semánticas** (`semantic_dimensions.py`): no todo
+  token no-stopword se convierte en `objeto`.
+- **`convenios` deja de fugarse a tema.** Auditado en fuente: no existe
+  `tipo_de_contrato = 'Convenio'`; es una clase **compuesta** que exige evidencia
+  estructurada más texto controlado.
+- **La arquitectura de modalidad se preserva intacta** — `ModalityResolver`,
+  catálogo y léxico sin modificar. Naturaleza contractual ≠ modalidad.
+- **Los deltas ortogonales componen:** repetir el año ya no borra un refinamiento
+  monetario explícito.
+- **Los refinamientos monetarios sobreviven** toda la cadena hasta el SoQL y el
+  contexto almacenado.
+- **La paginación se rebasa** tras cualquier mutación semántica de filtro.
+- Dogfood en vivo: Gobernación de Atlántico / adulto mayor / 2026 pasa de 46 a 4
+  filas con `>100M`, con **0** filas bajo el umbral y paginación correcta sobre el
+  universo refinado.
+
+### Promesa de producto vigente
+
+Sin cambio respecto de 2026-08-17: SECOPPAL **prioriza procesos con las mejores
+señales disponibles de vigencia y accionabilidad**; no pretende certificar que
+todos sigan abiertos. Actor Profile añade una segunda promesa de la misma
+familia: **describe la huella observada, no certifica al actor**.
+
+### Deuda vigente
+
+- Latencia trigram sobre el índice completo: **287–857 ms** según caché;
+  pico de memoria del builder **3,02 GB**; **77** equivalencias de forma jurídica
+  ambiguas que fallan cerrado. Ninguna bloquea el cierre.
+- `DEPLOY-TZ-001` (ver §12.1) — sigue abierta.
+- `GOB-DEPTO-001` del dialogue corpus — mismatch histórico, ajeno a ambos frentes.
+- Deuda de lint del repositorio en superficies legacy; `lint-core` y todos los
+  archivos nuevos de SEARCH-SH1 están limpios.
+
+### Siguiente frente
+
+**Actor Relationships V1 — UT / Consorcios.** No implementado. La operación
+siguiente probable es una auditoría de fuente contra *Grupos de Proveedores —
+SECOP II* (dataset probable `ceth-n4bn`), que debe validarse antes de fijar
+arquitectura.
+
+### Docs
+
+- ADR-060 y ADR-061 en [`decisions_log.md`](decisions_log.md).
+- Guías técnicas: [`architecture/ACTOR_PROFILE_V1.md`](architecture/ACTOR_PROFILE_V1.md) ·
+  [`architecture/SEMANTIC_QUERY_DIMENSIONS.md`](architecture/SEMANTIC_QUERY_DIMENSIONS.md).
+- Auditoría SEARCH-SH1:
+  [`audits/2026-08-22_SEARCH_SH1_SEMANTIC_MONEY_HARDENING.md`](audits/2026-08-22_SEARCH_SH1_SEMANTIC_MONEY_HARDENING.md).
+- Auditorías de Actor Profile en `docs/audits/`
+  (`2026-08-18_ACTOR_PROFILE_DIAGNOSTIC.md`,
+  `2026-08-19_ACTOR_PROFILE_V1_ADVERSARIAL_AUDIT.md`,
+  `2026-08-20_AP3E_PRODUCTION_ACTOR_DIRECTORY.md`,
+  `2026-08-20_AP3E1_FULL_INDEX_REMEDIATION.md`).
+- Propuesta histórica de junio, parcialmente superada:
+  [`planes/2026-06-29_perfil-contratista-dossier.md`](planes/2026-06-29_perfil-contratista-dossier.md).
+
+> Los bloques siguientes (2026-08-17 y anteriores) quedan como histórico.
+
+## Estado canónico — 2026-08-17 (histórico)
+
+- **Main:** `2d4e24a` — arco **M1 → M2 → O1B** mergeado ff-only
+  (ADR-056, ADR-057, ADR-058).
+- **Suite:** 7466 passed, 2 skipped, 24 xfailed · query corpus 89/89 ·
+  dialogue corpus 60/61 (`GOB-DEPTO-001` basal) · torture matrix 12/12 ·
+  `make lint-core` limpio.
+- **Qué cambió, en una línea:** el sistema dejó de afirmar disponibilidad que no
+  puede sostener, y empezó a priorizar la que sí.
+  - **M1 (`ad1bb28`)** — fundación del Truth Layer integrada *dormida*:
+    36 archivos nuevos, 0 modificados, `VISIBLE_PRODUCT_CHANGE = NO`.
+  - **M2 (`81993dd`)** — la tarjeta deja de mostrar
+    `estado_de_apertura_del_proceso` como estado. Ese campo decía "Abierto" en el
+    87,5% del dataset, y el 65,7% de esos no estaba en recepción de ofertas.
+  - **O1B (`2d4e24a`)** — la búsqueda de oportunidades filtra en el `WHERE`, antes
+    de `LIMIT`, por fecha civil `America/Bogota`. Prepublicación 68,8% → 0% y
+    plazos vencidos 7,1% → 0% en muestra pareada de 22 consultas.
+- **Promesa de producto vigente:** SECOPPAL **prioriza procesos con las mejores
+  señales disponibles de vigencia y accionabilidad**; no pretende certificar que
+  todos sigan abiertos. Eso permite tolerar falsos positivos plausibles (plazo
+  nulo) sin sacrificar oportunidades ni perseguir una precisión imposible.
+- **Investigación cerrada:** `TRUTH_LAYER_RESEARCH = CLOSED` ·
+  `OPPORTUNITY_STATE_DATE_RESEARCH = CLOSED`.
+- **Deuda nueva:** `DEPLOY-TZ-001` (ver §12.1) — garantizar `America/Bogota` en
+  todos los entornos soportados. No se resuelve tocando la lógica de oportunidades.
+- **Guía del Truth Layer:** `docs/architecture/TRUTH_LAYER_FOUNDATION.md`
+  (dossier curado; el archivo histórico vive en `docs/archive/truth-layer-experimental/`).
+- **Docs:** ADR-056/057/058 en `decisions_log.md`; informes en `docs/audits/`
+  (`2026-08-14_TRUTH_LAYER_MAIN_FOUNDATION_INTEGRATION.md`,
+  `2026-08-17_M2_PROCESS_OPERATIONAL_STATE.md`,
+  `2026-08-17_O1B_CURRENT_OPPORTUNITY_RETRIEVAL.md`).
+
+> Los bloques siguientes (2026-06-26 y anteriores) quedan como histórico.
+
+## Estado canónico — 2026-06-26 (histórico)
 
 - **Main:** `f683c2b` — mergeada la **capa de retrieval phrase-aware** (ADR-036, tag
   `semantic-retrieval-v1-2026-06`). Arco de 12 commits.
@@ -648,6 +777,203 @@ Contratos de esten
 
 ---
 
+### 2026-08-22 — Actor Profile V1 + SEARCH-SH1: de quién habla la consulta, y qué sobrevive al refinamiento
+
+**Problema/causa.** Dos frentes independientes con el mismo patrón de fondo: el
+sistema descartaba en silencio información que el usuario sí había dado.
+
+1. **Actor.** El nombre de un proveedor entraba como objeto contractual. AP0 lo
+   midió: *"qué ha celebrado la persona 1140835135 en 2025"* producía una
+   búsqueda de la palabra `persona` en 2025, presentada como el historial de esa
+   persona. En procesos, `spec.contractor is None` hacía que el filtro de
+   contratista simplemente no se añadiera al `WHERE`.
+2. **Búsqueda.** `convenios` caía en el extractor de objeto y se volvía búsqueda
+   literal de texto. Y en un follow-up, repetir el año clasificaba el turno como
+   `change_year`, cuyo conjunto permitido descartaba `valor_min`; como el campo
+   desaparecía antes de serializar el frame, el fingerprint no cambiaba y la
+   paginación seguía recorriendo el universo sin filtrar.
+
+**Solución.**
+
+- **Actor Profile V1 (ADR-060, `7f24517`)** — identidad tipada
+  `IdentityKey(document_type, base_number)` como spine; directorio SQLite local
+  de aliases construido desde `jbjy-vk9h`; estado de resolución separado del
+  método de autoridad, con la recuperación difusa explícitamente **sin**
+  autoridad; huella contractual observada con límites declarados; álgebra
+  conversacional de actor; documento completo y selección clicable en la UX de
+  candidatos. Flag apagado por defecto en código.
+- **SEARCH-SH1 (ADR-061, `8acb21a`)** — `SemanticDimension` como vocabulario
+  compartido de dimensiones; resolutor y proyección de tipo/naturaleza
+  contractual respaldados por auditoría de fuente (`convenio` es **compuesto**,
+  no un alias de modalidad); deltas ortogonales componibles en el follow-up; y
+  toda mutación semántica de filtro invalida la paginación.
+
+**Archivos tocados.** Actor: `app/core/actor_*.py`, `app/core/actor_profile/`,
+`app/core/workflow/actions/actor_resolution.py`,
+`app/core/workflow/handlers/actor_selection.py`, `app/data/actor_alias_*.py`,
+`app/config.py`, `streamlit_app.py`. SEARCH-SH1:
+`app/core/semantic_dimensions.py`, `app/core/contract_type_resolver.py`,
+`app/core/contract_type_projection.py`, `app/core/followup_engine.py`,
+`app/core/followup_mutations.py`, `app/core/_followup_constants.py`,
+`app/core/query_router.py`, `app/core/query_frame.py`,
+`app/core/soql_builder.py`, `app/core/conversation_store.py`,
+`app/core/workflow/handlers/normal_flow.py`.
+
+**Validación.** Suite 8250 passed, 2 skipped, 24 xfailed · query corpus 89/89 ·
+dialogue corpus 60/61 (`GOB-DEPTO-001` basal) · modalidad/diálogo/E2E 3.327
+passed · dinero/follow-up/paginación 364 passed · mutaciones SEARCH-SH1 15/15
+detectadas con fuentes restauradas byte a byte · `make lint-core` limpio.
+Cierre de Actor Profile: 8175 passed, corpus de actor 41/41, corpus natural 6/6,
+mutaciones AP3-G de UX 15/15, auditoría adversarial congelada de 1.150 casos con
+P0 0 · P1 0 · identidades equivocadas 0.
+
+**Dogfood en vivo (2026-08-22).** Gobernación de Atlántico / adulto mayor / 2026:
+46 filas base → 4 tras `>100M`, con 0 filas bajo el umbral y paginación correcta
+sobre el universo refinado. Convenios en Barranquilla: 2 filas de procesos, sin
+fuga a `objeto`. Convenio + régimen especial + `>2B`: 0 filas — intersección
+válida respaldada por fuente.
+
+**Deuda aceptada.**
+
+- Latencia trigram del índice completo **287–857 ms** según caché, sobre el
+  presupuesto de turno; pico de memoria del builder **3,02 GB**.
+- **77** equivalencias de forma jurídica ambiguas: fallan cerrado.
+- El índice de aliases es requisito de aprovisionamiento para activar el frente.
+- `GOB-DEPTO-001` sigue siendo un mismatch histórico, ajeno a ambos frentes.
+
+**Fuera de alcance de Actor Profile V1.** UT/consorcios, RUP, RUES,
+representante legal, SIRI, responsabilidad fiscal, `ActorId` como grafo entre
+fuentes, score de riesgo, Radar por actor, grafo profundo/Neo4j. Siguiente
+frente: **Actor Relationships V1 — UT / Consorcios**.
+
+**Documentación:** ADR-060 y ADR-061 en `decisions_log.md`;
+`docs/architecture/ACTOR_PROFILE_V1.md`;
+`docs/architecture/SEMANTIC_QUERY_DIMENSIONS.md`;
+`docs/audits/2026-08-22_SEARCH_SH1_SEMANTIC_MONEY_HARDENING.md`.
+
+---
+
+### 2026-08-17 — Arco M1 → M2 → O1B: de afirmar disponibilidad a priorizarla
+
+**Problema/causa.** Dos defectos con la misma raíz: el sistema afirmaba
+disponibilidad que la fuente no sostiene.
+
+1. La tarjeta mostraba `estado_de_apertura_del_proceso` como estado del proceso.
+   Medido en vivo sobre 9.018.738 filas: ese campo dice "Abierto" en el 87,5%, y
+   el 65,7% de esos ya no admite ofertas (60,1% `Seleccionado`, 4,1% `Evaluación`).
+2. La búsqueda de oportunidades devolvía 68,8% de filas en prepublicación y 7,1%
+   con plazo vencido. O1A había falsificado la salida fácil: filtrar después de
+   `LIMIT 50` pierde candidatos, porque el recorte ocurre antes que el filtro.
+
+**Solución.** Tres bloques encadenados, cada uno con su ADR:
+
+- **M1 (ADR-057, `ad1bb28`)** — trasplante selectivo de la fundación del Truth
+  Layer desde la rama experimental: 28 `FOUNDATION_KEEP` de 103 elementos
+  inventariados, 36 archivos nuevos y 0 modificados. Entra dormida.
+- **M2 (ADR-058, `81993dd`)** — `process_operational_state.py` traduce la salida
+  del observer a lo que la tarjeta puede afirmar. El campo crudo no se oculta: se
+  degrada a corroboración y se muestra cuando contradice la etapa.
+- **O1B (ADR-056, `2d4e24a`)** — política pura en
+  `opportunity_retrieval_policy.py`, aplicada solo a `procesos` +
+  `opportunity_search` sin tiempo ni estado explícitos. Filtro en el `WHERE` con
+  un único `case(...)` de Socrata y frontera de día en **fecha civil
+  `America/Bogota`**, no en UTC.
+
+**Archivos tocados.** `app/core/opportunity_retrieval_policy.py` (nuevo),
+`app/core/process_operational_state.py`, `app/core/soql_builder.py`,
+`app/core/workflow/actions/planning.py`, `app/core/workflow/actions/execution.py`,
+más la fundación bajo `app/core/truth_layer/` (M1) y tests dedicados.
+
+**Validación.** Suite 7466 passed, 2 skipped, 24 xfailed · query corpus 89/89 ·
+dialogue corpus 60/61 (`GOB-DEPTO-001` basal, preexistente) · torture matrix
+12/12 invariantes · `make lint-core` limpio · `data/feedback.jsonl` sin tocar.
+Paridad fuera de alcance: **0 divergencias** sobre 22 consultas comparadas contra
+`81993dd` (procesos con año, históricos, estados explícitos, contratos, entidad,
+modalidad, valor, direct lookup). Verificación live contra Socrata: 6/6 casos de
+frontera correctos, incluidos plazo de hoy (38 filas), de mañana (637) y plazo
+futuro con publicación de más de 90 días (22).
+
+**Corrección intermedia (O1B.1).** La primera versión comparaba contra el
+instante UTC exacto. Eso excluía el proceso durante todo su último día y, entre
+las 19:00 y 24:00 COT, adelantaba un día calendario. `2d4e24a` mueve la frontera
+a `America/Bogota` y hace que un follow-up semántico recapture el reloj en vez de
+heredar el del turno inicial; la paginación sí conserva la referencia original.
+
+**Deuda aceptada.**
+
+- `DEPLOY-TZ-001` — dependencia de la base de zonas horarias del sistema (§12.1).
+- `STATE_DATE_CONFLICT_DEFERRED` — `Evaluación` con plazo futuro sigue fuera del
+  default; O1B no reconcilia campos contradictorios.
+- `OPPORTUNITY_MODALITY_SEMANTICS_DEFERRED` — no se excluye contratación directa;
+  la ausencia de plazo no es evidencia negativa por sí sola.
+- `WAREHOUSE_RECEPTION_DATE_TRANSPORT_DEFERRED` — solo aplica si Search gana un
+  backend local.
+- Un candidato con plazo nulo puede ser un falso positivo plausible: eso es
+  deliberado, no un defecto.
+
+**Documentación:** ADR-056, ADR-057, ADR-058; informes en `docs/audits/`.
+
+---
+
+### 2026-08-17 — Truth Layer: foundation consolidada y dossier técnico preservado
+
+**Problema/causa.** M1 integró selectivamente el *código* probado del Truth Layer,
+pero no la memoria técnica que explica por qué ese código quedó así. Main tenía
+1 documento del Truth Layer; el worktree experimental
+`secoppal-truth-layer` (`exp/generic-enrichment-runtime-v1`, `ba02826`) tenía 33,
+unas 11.700 líneas. Copiarlos todos habría creado un cementerio documental;
+no copiar nada habría perdido meses de razonamiento.
+
+**Solución.** Curaduría con matriz `DOCUMENTO / EN_MAIN / VIGENTE_O_HISTÓRICO /
+ACCIÓN` antes de mover nada, y una guía de entrada única:
+`docs/architecture/TRUTH_LAYER_FOUNDATION.md` — qué problema resuelve, qué hay
+realmente en main, qué usa producción hoy, qué está dormido, principios
+arquitectónicos, qué NO está integrado, evidencia de cierre, cuándo reabrir y
+documentos fuente.
+
+- **Canónicos** (`docs/architecture/truth-layer/`, 6 + 2 de segundo nivel):
+  reconciliación de diseño R1/R2/R3, closeout de proceso T1B-2 con su
+  post-commit patch, temporal + visibility T1B-4/5; en segundo nivel el closeout
+  contractual T1B-3 y E1 como case study.
+- **Histórico** (`docs/archive/truth-layer-experimental/`, 5 + README): dogfood,
+  D1-MIN, addendum de autorización, bloque G y opportunity composition, con una
+  tabla que dice de cada uno **por qué no es vigente**.
+- **Fuera de curaduría:** los 18 restantes siguen en el worktree, que se conserva
+  como archivo histórico.
+
+**Tres hallazgos de la matriz.** (1) `DESIGN_RECONCILIATION_R1` **no** está
+supersedido — R3 lo dice expresamente, y el cuerpo sustantivo de decisiones vive
+ahí, no en R2; rescatar solo R2/R3 habría dejado el razonamiento colgando.
+(2) El post-commit patch de T1B-2 toca `process_lifecycle.py`, que **sí** está en
+main: sin él el closeout describe un estado anterior al código productivo.
+(3) **El cierre empírico final no existía**: el identificador
+`TRUTH_LAYER_PROVEN_FOUNDATION_CLOSE_WORKSTREAM` se citaba desde M1 sin documento
+que lo sustentara. Se redactó
+`2026-08-17_TRUTH_LAYER_EMPIRICAL_CLOSEOUT.md` citando cada número con su fuente
+y declarando explícitamente lo que **no** se midió — en particular que la revisión
+humana de calidad semántica **nunca se completó** (muestra de 80 preparada,
+`reviewer labels prefilled=0`), y que el benchmark de core conserva veredicto de
+FALLO (`106.732 ms/1.000` contra un gate de `70 ms/1.000`).
+
+**Archivos tocados.** Solo documentación: `docs/architecture/` (nuevo),
+`docs/archive/truth-layer-experimental/` (nuevo). Ningún archivo de código.
+
+**Resultado.** La investigación experimental fue cerrada; se integró
+selectivamente la infraestructura probada y se preservó el dossier técnico que
+documenta sus invariantes, límites y criterios de reactivación. Producción
+consume **un solo** punto del Truth Layer (`process_lifecycle` → M2); los ejes
+contractuales y las librerías de identidad/grouping están integrados pero
+dormidos (`GROUPING_RUNTIME_WIRING = DEFERRED`).
+
+**Deuda registrada.** `HUMAN_SEMANTIC_REVIEW = NEVER_COMPLETED` — es el eslabón
+abierto si alguien reabre la línea. Reabrir exige un consumidor de producto
+declarado, no curiosidad técnica (§8 de la guía).
+
+**Documentación:** `docs/architecture/TRUTH_LAYER_FOUNDATION.md` y los 14
+documentos que enlaza.
+
+---
+
 ## 10. Tests y evaluación de calidad
 
 ### 10.1 Suite general
@@ -796,6 +1122,7 @@ grep -R "classify_turn\|merge_query_frames" -n app/core/orchestrator.py
 | Relajación automática excesiva | Resultados fuera de alcance | En follow-up, sugerir opciones antes de relajar |
 | Timeout SECOP | Mala UX | Retry controlado + count-lazy (ADR-008) |
 | LLM alucina narrativa | Lectura rápida inventa cifras | Validación de grounding monetario en `narrator.py` |
+| `DEPLOY-TZ-001` — falta `tzdata` en el entorno | `ZoneInfo("America/Bogota")` se resuelve al importar `opportunity_retrieval_policy`: sin base de zonas horarias el arranque falla | Garantizar `America/Bogota` en todos los entornos soportados (microbloque de deployment/hardening). **No** se mitiga tocando la lógica de oportunidades |
 
 ### 12.2 Causas raíz estructurales (revisión integral junio 2026)
 
@@ -815,7 +1142,12 @@ La revisión integral de arquitectura identificó 5 causas raíz que explican po
 
 ## 13. Decisiones de diseño vigentes
 
-El registro completo de decisiones está en [docs/decisions_log.md](../decisions_log.md) (formato ADR, numeración continua ADR-001 a ADR-023).
+El registro completo de decisiones está en [docs/decisions_log.md](decisions_log.md)
+(formato ADR; el máximo vigente es **ADR-061**). La numeración tiene huecos:
+algunos números quedaron reservados en worktrees paralelos y **ADR-054** y
+**ADR-059** viven además como archivo propio bajo `docs/decisions/`. Al asignar
+un ADR nuevo, el número sale del **máximo global** sobre todos los worktrees, no
+del máximo de este archivo.
 
 Esta sección antes contenía un mirror (D1–D21) que se eliminó para evitar drift entre las dos numeraciones. El log de decisiones es ahora la fuente única de verdad.
 

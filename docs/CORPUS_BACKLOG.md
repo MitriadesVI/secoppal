@@ -2,7 +2,7 @@
 
 Fallos conocidos del corpus, agrupados por severidad. NO editar parser/core para hacer pasar estos casos — son bugs reales que requieren features o fixes separados.
 
-**Última actualización:** 2026-05-25 (Dogfooding UX fixes ADR-017 + CASE WHEN BadRequest fix)
+**Última actualización:** 2026-08-22 (SEARCH-SH1: CONTRACTUAL-DIMENSION-CONVENIO-001 y FOLLOWUP-MONEY-REFINEMENT-001 cerrados — ADR-061)
 
 ## Re-diagnóstico empírico (2026-05-19, octava tanda)
 
@@ -117,6 +117,8 @@ Estos NO son fallos del corpus v1 (el corpus pasa 88/88). Son bugs reales detect
 | MORPHO-UNEVEN-001 | Expansión morfológica desigual (`cultura` completo, `turismo` nada) | 1 | **CLOSED Sprint 5** — 120 variantes en 15 rubros. ROOT_TO_VARIANTS 35→50. Commit `3007088` |
 | HEADER-TOPIC-OMISSION-001 | Header del response omite tokens del objeto buscado | 1 | **CLOSED** — `_build_interpretation` renderiza objeto correctamente |
 | MOJIBAKE-DISPLAY-001 | Caracteres mal decodificados de SECOP (`Ã³`, `Ã±`) renderizados en UI | 1 | **LOW — VIVO**. 0% implementado. `unicodedata.normalize('NFKC')` pendiente. |
+| CONTRACTUAL-DIMENSION-CONVENIO-001 | Lenguaje de naturaleza contractual (`convenios`) no reconocido como dimensión estructurada → caía en el extractor de objeto y se proyectaba como búsqueda literal de texto. **Confirmado en dogfood manual:** `convenios de alcaldia de barranquilla en 2026` buscaba la cadena `convenio` dentro del objeto contractual, trayendo prestación de servicios, obra e interventoría que solo *referencian* un convenio ajeno. | 1 confirmado (dogfood) | **CLOSED SEARCH-SH1 — 2026-08-22** — `semantic_dimensions.py` + `contract_type_resolver.py` + `contract_type_projection.py`. Auditado en fuente: no existe `tipo_de_contrato = 'Convenio'`; la familia interadministrativa (135.932 procesos / 123.823 contratos) vive mayoritariamente como tipo `Otro`. `convenio` se clasifica `COMPOSITE` (estructura + texto controlado) e **INV-STRUCTURED-DIMENSION-NOT-TOPIC** impide la fuga a `objeto`. `ModalityResolver` sin modificar. Verificado en vivo: 2 filas de procesos en Barranquilla 2026, sin fuga. ADR-061. Commit `8acb21a`. |
+| FOLLOWUP-MONEY-REFINEMENT-001 | Follow-up con año repetido descartaba el delta monetario ortogonal. **Confirmado en dogfood manual:** base `contratos adulto mayor gobernacion de atlantico en 2026` + follow-up `por mas de 100 millones en 2026` → el parser sí emitía `valor_min=100000000`, pero `FollowupClassifier` marcaba `change_year` y `gate_delta` rechazaba el campo como `field_not_allowed_for_intent`. **Subhallazgo acoplado:** al perderse el campo antes de serializar el frame, el fingerprint no representaba un universo nuevo y el sidecar de paginación anterior seguía elegible — `más resultados` paginaba resultados sin filtrar. | 1 confirmado (dogfood) | **CLOSED SEARCH-SH1 — 2026-08-22** — **INV-ORTHOGONAL-DELTA-NOT-LOST-BY-NOOP**: `followup_engine.py` deja de clasificar como `change_year`/`change_order` un turno con filtro ortogonal, y `MONEY_FIELDS` entra en los conjuntos permitidos. **INV-FILTER-MUTATION-INVALIDATES-PAGINATION**: `ConversationStore.invalidate_pagination_buffers()` borra el sidecar completo antes de todo turno semántico. Verificado en vivo: 46 → 4 filas en Gobernación de Atlántico, **0 filas bajo los 100M**, paginación correcta sobre el universo refinado. ADR-061. Commit `8acb21a`. |
 
 ---
 

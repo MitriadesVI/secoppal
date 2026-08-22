@@ -2268,3 +2268,761 @@ no se entregó, exactamente el mismo problema que ADR-052 ya había señalado pa
 - Detectar el schema heredado por DDL completo es más estricto que por
   fragmento a propósito: una base que conserve el vocabulario pero pierda otra
   restricción ahora falla cerrado en vez de aceptarse como vigente.
+
+---
+
+## ADR-056: Recuperación de oportunidades vigentes por fecha civil colombiana (O1B / O1B.1)
+
+**Fecha:** 2026-08-17  
+**Estado:** Accepted  
+**Rama:** `feature/opportunity-retrieval-v1` (mergeada ff-only) · **HEAD:** `2d4e24a`
+
+### Contexto
+
+La búsqueda de oportunidades devolvía un universo dominado por procesos que el
+usuario no puede accionar. Medición pareada sobre 22 consultas reales contra
+`p6dx-8zbt` (2026-08-17), antes del cambio:
+
+| Métrica | Baseline |
+|---|---:|
+| Filas en prepublicación (`Borrador`/`En aprobación`/`Aprobado`) | 722 de 1.050 (68,8%) |
+| Filas con plazo de recepción ya vencido | 75 (7,1%) |
+| Filas con plazo futuro conocido | 28 |
+
+O1A ya había falsificado la salida fácil: filtrar después de `LIMIT 50` pierde
+candidatos válidos, porque el recorte ocurre antes de que el filtro vea el
+universo. El filtro grueso tiene que vivir en el `WHERE`.
+
+O1A.1 añadió el matiz que impide endurecer de más: la cobertura de
+`fecha_de_recepcion_de` cambia mucho por modalidad, y su ausencia **no** es
+evidencia de que el proceso esté cerrado.
+
+### Decisión
+
+Política pura y determinista en `app/core/opportunity_retrieval_policy.py`, sin
+I/O, sin backend, sin LLM y sin reloj propio. Se aplica **solo** cuando
+`dataset = procesos AND intent_type = opportunity_search`, sin tiempo explícito
+y sin estado explícito del usuario.
+
+1. **Estados por defecto:** `estado_del_procedimiento IN ('Publicado','Abierto')`,
+   conservando intacta `STATE-PRIORITY-001`
+   (`estado_de_apertura_del_proceso = 'Abierto'`).
+
+2. **Regla temporal**, expresada como un único predicado Socrata:
+
+   ```sql
+   case(fecha_de_recepcion_de IS NULL,
+        fecha_de_publicacion_del >= 'D-90',
+        true, fecha_de_recepcion_de >= 'D')
+   ```
+
+   `D` es la **fecha civil `America/Bogota`**, derivada vía `ZoneInfo` de un
+   instante UTC capturado **una sola vez** en `plan_query` y transportado como
+   metadata interna JSON-safe (`_opportunity_reference_instant`).
+   Los 90 días son una ventana de descubrimiento cuando el plazo es desconocido,
+   **no** una vida máxima de la oportunidad.
+
+3. **Precedencia de presentación (O1B sobre M2):** `Recepción de ofertas` exige
+   plazo futuro observado. Plazo nulo → `Publicado · Vigencia por verificar`;
+   plazo vencido → `Plazo de recepción reportado vencido`. Las etapas canónicas
+   `selected`, `evaluation`, `cancelled` y `suspended` conservan su autoridad: el
+   eje temporal nunca las rebaja.
+
+4. **Estabilidad temporal:** la paginación reutiliza la referencia original desde
+   `PaginationBuffer.query_params` (verificado también en el camino de refill);
+   un follow-up semántico la descarta y recaptura, para que una conversación
+   larga no siga consultando con el reloj de ayer.
+
+### Alternativas descartadas
+
+- **`OR` literal entre las dos columnas de fecha.** Lógicamente correcto, pero
+  el planner de Socrata lo penaliza severamente: mediana 2,03 s y p90 8,41 s,
+  por encima del gate. El `case(...)` produce el mismo conjunto y el mismo orden.
+- **Comparar contra el instante UTC exacto** (implementación original de O1B).
+  Excluía el proceso durante todo su último día — 38 procesos vivos medidos — y
+  entre las 19:00 y 24:00 COT adelantaba un día calendario, dejando fuera 637
+  filas que aún no vencían. Corregido en O1B.1: la frontera de día se decide en
+  `America/Bogota`, nunca en UTC ni en el huso del host (verificado idéntico con
+  `TZ` en UTC, Asia/Tokyo, America/Los_Angeles y Pacific/Kiritimati).
+- **Freshness de 90 días universal.** Habría descartado plazos futuros de
+  procesos publicados hace mucho: 22 filas reales verificadas en vivo.
+- **Tratar `fecha_de_recepcion_de IS NULL` como cerrado.** Contradice O1A.1 y
+  eliminaría la mayor parte del universo accionable.
+- **Post-filtrado local tras recuperar 50 filas.** Es exactamente el defecto que
+  O1A falsificó.
+
+### Consecuencias
+
+- Prepublicación y plazos vencidos salen del default: **0% en ambas** sobre la
+  muestra pareada, sin regresión de timeouts (1 vs 1, atribuible a red).
+- Se acepta el **falso positivo plausible con plazo nulo**. La promesa de
+  producto es priorizar las mejores señales disponibles de vigencia, no
+  certificar que el proceso siga abierto; Radar cubre la detección temprana.
+- Una consulta de oportunidad ejecuta **una sola** recuperación productiva: sin
+  Tier 2 automático, sin segunda consulta ante cero filas, sin oversampling. El
+  fallback técnico H4 ante timeout conserva todos los filtros sustantivos.
+- Deuda aceptada: `DEPLOY-TZ-001` — `ZoneInfo("America/Bogota")` se resuelve al
+  importar el módulo y depende de la base de zonas horarias del sistema. Una
+  imagen Linux mínima sin `tzdata` haría fallar el arranque. Se trata como
+  microbloque de deployment/hardening; **no** se resuelve tocando la lógica de
+  oportunidades.
+- Diferido: `STATE_DATE_CONFLICT_DEFERRED` (Evaluación con plazo futuro),
+  `OPPORTUNITY_MODALITY_SEMANTICS_DEFERRED` (contratación directa),
+  `WAREHOUSE_RECEPTION_DATE_TRANSPORT_DEFERRED` (solo si Search gana backend local).
+
+### Tests
+
+`tests/test_current_opportunity_retrieval.py` (22 tests, incluidos los guardianes
+de frontera de calendario, cruce 05:00Z, referencia de paginación y no-fuga de la
+metadata interna).
+
+Validación de cierre: suite **7466 passed, 2 skipped, 24 xfailed** ·
+query corpus **89/89** · dialogue corpus **60/61** (`GOB-DEPTO-001` basal) ·
+torture matrix **12/12 invariantes** · `make lint-core` limpio ·
+paridad fuera de alcance **0 divergencias** sobre 22 consultas (procesos con año,
+históricos, estados explícitos, contratos, entidad, modalidad, valor, direct lookup).
+
+**Documentación:** `docs/audits/2026-08-17_O1B_CURRENT_OPPORTUNITY_RETRIEVAL.md`.
+
+---
+
+## ADR-057: Fundación dormida del Truth Layer integrada a main (M1)
+
+**Fecha:** 2026-08-14  
+**Estado:** Accepted  
+**Rama:** trasplante selectivo desde `exp/generic-enrichment-runtime-v1` · **HEAD:** `ad1bb28`
+
+### Contexto
+
+La investigación del Truth Layer quedó cerrada (`TRUTH_LAYER_PROVEN_FOUNDATION_CLOSE_WORKSTREAM`)
+sobre una rama experimental de 27 commits descendiente lineal de main. Mantenerla
+viva fuera de main la condenaba a divergir; fusionarla entera habría traído 46
+archivos exclusivos del experimento a la ruta productiva.
+
+### Decisión
+
+Trasplante **selectivo** —no merge ni cherry-pick de la secuencia experimental—
+con contrato `VISIBLE_PRODUCT_CHANGE = NO`. De un inventario de 103 elementos:
+28 `FOUNDATION_KEEP`, 3 `NEUTRAL_SEAM_EXTRACT`, 2 `DORMANT_LIBRARY_KEEP`,
+2 `DEFER`, 46 `EXPERIMENT_ONLY_DROP`, 22 obsoletos. Resultado: 36 archivos nuevos
+y **0 modificados**. La fundación entra dormida: nadie la consume todavía, y el
+siguiente consumidor queda declarado (`PROCESS_OPERATIONAL_STATE`).
+
+### Alternativas descartadas
+
+- **Merge completo de la rama experimental:** arrastra el andamiaje de
+  investigación a producción.
+- **Dejar la fundación fuera de main:** divergencia garantizada y un consumidor
+  (M2) bloqueado sin base.
+
+### Consecuencias
+
+Main gana la capa de observación sin cambio visible de producto. La
+investigación queda cerrada como línea de trabajo; lo que sigue es consumo, no
+más investigación.
+
+### Tests
+
+Suite en el momento del cierre: `6592 passed, 2 skipped, 24 xfailed` ·
+query `89/89` · dialogue `60/61` (`GOB-DEPTO-001` basal). Oráculos públicos
+capturados antes del trasplante (formatter, ranking, SoQL, paginación,
+constructores canónicos y hashes de archivos runtime públicos).
+
+**Documentación:** `docs/audits/2026-08-14_TRUTH_LAYER_MAIN_FOUNDATION_INTEGRATION.md`.
+
+---
+
+## ADR-058: La tarjeta deja de mostrar `estado_de_apertura_del_proceso` como estado (M2)
+
+**Fecha:** 2026-08-17  
+**Estado:** Accepted  
+**Rama:** `feature/process-operational-state` · **HEAD:** `81993dd`
+
+### Contexto
+
+Medición en vivo contra `p6dx-8zbt` (9.018.738 filas, 2026-08-17):
+`estado_de_apertura_del_proceso = 'Abierto'` cubre 7.888.926 filas (**87,5%**),
+y de esas el **65,7% no está en recepción de ofertas** — 60,1% `Seleccionado`,
+4,1% `Evaluación`, 0,84% `Cancelado`. La tarjeta mostraba ese campo como si
+fuera el estado del proceso: un proceso ya adjudicado se leía como "Abierto".
+
+### Decisión
+
+Costura pequeña (`app/core/process_operational_state.py`) entre el Truth Layer
+(M1) y el producto. La autoridad del estado es `process_lifecycle`, resuelto por
+`observe_process_truth_axes`; aquí solo se rotula. El campo crudo no se oculta:
+se degrada a corroboración y se conserva visible cuando **contradice** la etapa
+operativa. El eje temporal es soporte, nunca motor: puede retirarle el verde a
+una ventana de ofertas, jamás crear o cambiar una etapa.
+
+### Alternativas descartadas
+
+- **Seguir mostrando el campo crudo:** afirma disponibilidad falsa en dos de
+  cada tres tarjetas.
+- **Ocultar el campo crudo:** deja la tarjeta muda cuando es el único dato.
+- **Reimplementar la interpretación en la capa de presentación:** duplicaría el
+  lifecycle fuera del Truth Layer.
+
+### Consecuencias
+
+Lo que la tarjeta afirma queda respaldado por evidencia. Evidencia insuficiente
+nunca se convierte en categoría: cae a un fallback conservador
+(`Estado por verificar`). No consulta contratos, así que un proceso publicado ya
+contratado en otro dataset no es detectable aquí (`OPP-CROSS-DATASET-001`).
+
+### Tests
+
+`tests/test_process_operational_state.py` (33) · `tests/test_truth_layer_public_parity.py` (10),
+que acota la divergencia visible autorizada: quitar los campos nuevos restaura
+byte a byte los oráculos previos.
+
+**Documentación:** `docs/audits/2026-08-17_M2_PROCESS_OPERATIONAL_STATE.md`.
+
+---
+
+## ADR-059: Autoridad monetaria determinística y vigencia SMMLV (Money v2)
+
+**Fecha:** 2026-08-18  
+**Estado:** Accepted  
+**Rama:** `feature/money-v2`
+
+> **Reconciliación de registro (2026-08-22).** Esta decisión se versionó primero
+> como archivo autónomo —`docs/decisions/2026-08-18_ADR-059_money-v2-deterministic-authority.md`—
+> porque en ese momento `decisions_log.md` tenía cambios locales ajenos al patch.
+> Esta entrada la incorpora al registro canónico. El archivo autónomo se conserva
+> como documentación de detalle; la autoridad *as-built* sigue siendo
+> `docs/audits/2026-08-18_MONEY_V2_CLOSEOUT.md`.
+
+### Contexto
+
+SECOPPAL debía interpretar montos colombianos sin confundirlos con NIT, años o
+referencias, y proyectarlos al campo económico correcto de procesos o contratos.
+SMMLV añade una restricción propia: el equivalente en COP depende de una
+**vigencia**, y no puede sobrevivir sin revisión cuando un follow-up cambia el
+alcance temporal.
+
+La auditoría posterior al arco inicial dejó tres fronteras que debían quedar
+explícitas bajo la misma autoridad: un umbral SMMLV heredado frente a un año
+nuevo, el cardinal verbal `mil` ya escalado por la gramática, y un monto como
+`2000 millones` que tiene forma de año.
+
+### Decisión
+
+1. `app/core/money_resolution.py` resuelve la representación numérica con
+   `Decimal`; `app/utils/money.py` aplica unidades y escalas COP.
+2. En cardinales verbales, `mil` **forma parte** del número resuelto
+   (`dos mil` = 2.000). Solo un literal numérico seguido de la unidad `mil`
+   aplica un factor adicional (`500 mil` = 500 × 1.000).
+3. Un entero `20xx` seguido de unidad monetaria **no** es señal temporal para el
+   clasificador de follow-up: `2000 millones` refina valor; `solo 2025` cambia la
+   vigencia.
+4. `money_metadata` conserva la **cantidad SMMLV fuente**. Si un follow-up cambia
+   fechas, el merge revalida la metadata heredada antes de ejecutar:
+   - una sola vigencia catalogada **recalcula** `valor_min`/`valor_max` desde la
+     cantidad fuente;
+   - un alcance **multianual** elimina el umbral COP heredado y produce una
+     aclaración bloqueante;
+   - una vigencia **no catalogada** también bloquea, sin extrapolar.
+5. `QueryPlan` **P16** es la última compuerta: una aclaración SMMLV impide
+   construir o enviar una consulta SECOP.
+6. El contrato público sigue usando **enteros COP** en `valor_min`/`valor_max`.
+   La polaridad no cambia y `DatasetSpec` conserva la proyección a `precio_base`
+   o `valor_del_contrato`.
+7. La metadata sigue siendo un diccionario mínimo y opcional. **No** se
+   introduce un motor monetario paralelo, ni LLM, ni dependencia lingüística
+   externa, ni semántica SMMLV multianual aproximada.
+
+### Consecuencias
+
+- El umbral SMMLV siempre corresponde al **año efectivo del frame final**.
+- Los rangos de varias vigencias **fallan cerrados** y hacen **cero** llamadas a
+  SECOP.
+- Las cantidades cardinales no monetarias por debajo del umbral del router ya no
+  se inflan 1.000 veces hasta convertirse en filtros económicos falsos.
+- El invariante `1 billón = 1000 × mil millones` permanece intacto.
+- El catálogo anual sigue exigiendo actualización **explícita y respaldada por
+  fuente oficial** para cada vigencia nueva.
+
+### Alcance diferido
+
+Este ADR **no** autoriza limpieza general del parser. Siguen diferidos `MV2-06`,
+`MV2-07`, `MV2-08`, `MV2-09`, `MV2-11`, `MV2-12` y `MV2-13`, según el re-audit.
+
+**Documentación:** decisión versionada en detalle en
+`docs/decisions/2026-08-18_ADR-059_money-v2-deterministic-authority.md`;
+autoridad *as-built* en `docs/audits/2026-08-18_MONEY_V2_CLOSEOUT.md`.
+
+---
+
+## ADR-060: Actor Profile V1 — identidad tipada, resolución de proveedor y huella contractual
+
+**Fecha:** 2026-08-22  
+**Estado:** Accepted  
+**Rama:** `feature/actor-profile-v1` (mergeada ff-only) · **HEAD de cierre:** `7f24517`  
+**Vigente en main:** `8acb21a`
+
+> **Nota de numeración.** El máximo global comprometido sobre los ~21 worktrees
+> era **ADR-059** (autoridad monetaria determinística), que se versionó primero
+> como archivo autónomo y quedó reconciliado en este registro el 2026-08-22.
+> El **ADR-042** provisional de la propuesta de junio
+> (`docs/planes/2026-06-29_perfil-contratista-dossier.md`) **no se reutiliza**:
+> ese número quedó asignado a otra decisión y reciclarlo rompería el orden
+> temporal del log.
+
+### Contexto
+
+SECOPPAL no sabía responder *quién es este proveedor*. Las preguntas reales del
+usuario —"qué contratos tiene X", "qué ha hecho X en 2026", "contratos de X con
+Y", por nombre, por NIT o por cédula— caían en el camino temático: el nombre del
+actor entraba como `objeto` contractual y la consulta buscaba esa cadena dentro
+del objeto del contrato.
+
+Ese degradado es peor que un error visible. AP0 lo midió: *"qué ha celebrado la
+persona 1140835135 en 2025"* producía una búsqueda de la palabra `persona` en
+2025, y esa lista se presentaba como el historial de esa persona. No falla, no
+avisa, y devuelve una respuesta con la forma correcta.
+
+Cuando lo que se afirma es sobre un tercero identificable, **una atribución
+equivocada es peor que no responder**. Esa asimetría fija toda la política del
+frente.
+
+### Decisión
+
+#### 1. Identidad tipada como spine (INV-ID-TYPE)
+
+La llave canónica es `IdentityKey(document_type, base_number)`
+(`app/core/actor_identity.py`). Tipos autoritativos en V1: **`NIT`** y **`CC`**.
+
+La llave es lo que **une** fuentes; la procedencia es lo que se **audita**. Si la
+llave llevara `source`, `raw_value`, `check_digit` o `confidence`, dos registros
+del mismo actor vistos desde fuentes distintas dejarían de comparar iguales
+(INV-PROVENANCE-SEPARATION). Por eso `IdentityMatch` conserva aparte el crudo
+verbatim, el origen, el DV cuando se pudo separar y por qué se decidió el tipo.
+
+Consecuencias directas:
+
+- **El mismo número bajo dos tipos declarados distintos no es automáticamente el
+  mismo actor.**
+- **La longitud jamás decide el tipo** (INV-NO-LENGTH): cédulas y NIT se solapan
+  en dígitos, y clasificar por longitud produce atribuciones falsas con
+  apariencia de certeza.
+- El **dígito de verificación es evidencia de calidad, no autoridad de tipo**: un
+  número cualquiera satisface el módulo 11 con probabilidad ≈1/11, así que un DV
+  válido nunca degrada una `CC` declarada a `NIT`. Un DV inconsistente se anota
+  (`CHECK_DIGIT_MISMATCH`) sin reescribir el número que la fuente publicó.
+
+#### 2. La fuente de la huella es SECOP II Contratos
+
+El perfil contractual se construye sobre **SECOP II Contratos electrónicos,
+`jbjy-vk9h`**, proyectando los campos reales de proveedor y documento. El
+almacén histórico de procesos **no** es verdad de Actor Profile: no publica
+autoridad equivalente de documento del proveedor por el mismo camino.
+
+El tipo de la fuente se usa para **excluir lo contradictorio, no para exigir lo
+idéntico** (`app/core/actor_document_types.py`): `"No Definido"` y `"Otro"` se
+conservan siempre —son indeterminados, no contradictorios—, porque un filtro de
+igualdad `tipodocproveedor = 'NIT'` borraría uniones temporales clasificadas como
+`"Otro"` (cuatro de los 4.230 contratos del NIT 860.002.400, y 10.073 filas con
+documento utilizable y tipo indeterminado en el universo completo).
+
+Cuando la combinación actor/dataset **no** se puede proyectar, la consulta **no
+se ejecuta**: se pide la aclaración correspondiente (`actor_scope_policy.py`,
+INV-NO-SILENT-DROP). El actor nunca se descarta para seguir adelante con los
+filtros restantes.
+
+#### 3. Directorio local de aliases de actores
+
+La resolución por nombre se apoya en un directorio SQLite local construido desde
+`jbjy-vk9h` (`scripts/build_actor_alias_index.py` →
+`app/data/actor_alias_index.py`, consultado por `app/data/actor_alias_resolver.py`).
+Build completo aceptado (AP3-E / AP3-E1):
+
+| Métrica | Valor |
+|---|---:|
+| Grupos de origen considerados | 1.235.591 |
+| Suma de ocurrencias de origen | 5.784.468 |
+| Identidades indexadas | 1.214.351 |
+| Cobertura de identidad | 98,84% |
+| Cobertura de actividad contractual | 98,13% |
+| Aliases exactos ambiguos | 14.305 (1,18%) |
+| Exclusiones por suciedad | 15.936 (1,30%) |
+
+El índice es **infraestructura de recuperación de candidatos**, no verdad
+registral: no es RUES, no es RUP, no prueba existencia legal y no certifica nada.
+El SQLite generado está ignorado y **no** se commitea.
+
+#### 4. Estado ≠ método: dos dimensiones separadas
+
+`app/core/actor_resolution.py` mantiene separado *qué ocurrió* de *por qué una
+identidad es autoritativa*.
+
+Estados: `RESOLVED`, `AMBIGUOUS`, `CANDIDATES`, `UNRESOLVED`, `INDEX_UNAVAILABLE`.
+
+Métodos autoritativos (`AUTHORITATIVE_ACTOR_METHODS`):
+
+- `explicit_document`
+- `exact_unique_alias`
+- `exact_legal_form_variant`
+- `user_selected_candidate`
+
+**La recuperación difusa no es autoridad.** El trigram/BM25 de FTS5 recupera
+candidatos y jamás auto-selecciona identidad (INV-NAME-NO-GUESS); un candidato
+solo se vuelve autoritativo por **selección explícita del usuario**. Un nombre
+sin resolver termina en `name_unresolved`: la consulta queda clasificada, la
+identidad queda declarada pendiente, y el perfil no se ejecuta.
+
+#### 5. Mención completa y precedencia de geografía desnuda
+
+`INV-ACTOR-RESOLUTION-REQUIRES-COMPLETE-MENTION` — un fragmento más corto de una
+mención natural más larga no adquiere autoridad solo porque ese fragmento sea un
+alias exacto del directorio.
+
+`INV-BARE-GEOGRAPHY-PRECEDENCE` — *"contratos de Barranquilla"* sigue siendo
+interpretación geográfica/de búsqueda cuando el contexto lo sostiene. Un alias de
+actor llamado Barranquilla no puede secuestrar esa consulta. El lenguaje
+explícito de actor (*"proveedor"*, *"contratista"*, *"qué ha contratado"*) sí
+puede sobreponerse a esa precedencia.
+
+#### 6. Variantes de forma jurídica, acotadas en lookup
+
+`app/core/actor_legal_forms.py` genera equivalencias deterministas de **cola**:
+`S.A.S. ↔ SAS`, `S.A. ↔ SA`, `E.S.E. ↔ ESE`. **N2 no se reconstruyó globalmente**;
+la capa está guardada en tiempo de consulta y no reescribe tokens intermedios ni
+elimina la forma jurídica.
+
+Auditoría de la variante (`scripts/audit_actor_legal_form_variants.py`):
+1.187.243 aliases · 36.965 clases de equivalencia · **77 equivalencias nuevamente
+ambiguas** · **0 identidades equivocadas**. Las ambiguas **fallan cerrado**.
+Método resultante: `exact_legal_form_variant`.
+
+#### 7. El producto es una huella observada, no un dossier
+
+`ActorProfileResult` (`app/core/actor_profile/`) devuelve la **huella contractual
+observada en SECOP II**: nombre observado, documento tipado, `queried_at` con
+zona, conteo de contratos, valor contractual reportado, rango de actividad,
+actividad por año, principales compradores, modalidades, territorios, contratos
+recientes y enlaces a SECOP.
+
+No es un dossier legal, ni certificación RUP/RUES, ni informe de riesgo, ni
+certificado de antecedentes. El render declara la fuente, la fecha y —sobre
+todo— **qué no se consultó** (INV-SCOPE-DECLARED), y no emite juicios agregados
+de riesgo ni ordena actores en ninguna escala (INV-NO-VERDICT).
+
+Un agregado secundario que falla **no** destruye el perfil, y un perfil incompleto
+**no** se presenta como completo (INV-PARTIAL): el vocabulario de `outcome.py`
+distingue el vacío confirmado por la fuente del fallo de la fuente, para que un
+timeout no se lea como "este actor no tiene contratos en Antioquia".
+
+#### 8. Conversación natural de actor
+
+`app/core/actor_conversation.py` reconoce **operaciones y roles, nunca
+identidades**: `SET_ACTOR`, `REPLACE_ACTOR`, `SELECT_ACTOR_CANDIDATE`,
+`SET_BUYER`, `SET_TERRITORY`. El `QueryFrame` existente sigue gobernando los
+filtros ortogonales (tiempo, valor, modalidad, orden).
+
+Con actor activo: `CON <entidad>` → comprador; `EN <lugar>` → territorio. Ejemplo:
+`FUNSOCOM` → `qué ha hecho en 2026` → `con Córdoba` significa actor FUNSOCOM, año
+2026, comprador Departamento de Córdoba.
+
+#### 9. Documento completo en la UX de candidatos
+
+En la lista de candidatos, **NIT y CC se muestran completos**
+(`format_actor_identity_for_user`): el documento **es** la evidencia de
+desambiguación, y enmascararlo destruiría exactamente la información que el
+usuario necesita para elegir entre `JORGE VERBEL MARTELO — CC 92550735` y
+`JORGE LUIS VERBEL GARCIA — CC 1020727022`. `mask_identity_key` sigue intacto
+para reprs, logs, excepciones y superficies diagnósticas.
+
+#### 10. Selección clicable, transporte-independiente
+
+Streamlit renderiza controles nativos sobre `actor_candidate_options(...)`. El
+clic y el texto (`2`, `opción 2`, `el segundo`) llegan a la **misma** operación
+de backend `SELECT_ACTOR_CANDIDATE`, servida por
+`SecopalWorkflow.select_actor_candidate(candidate_rank, pending_token)` y resuelta
+en `handle_actor_selection`. La UI **no puede inyectar un `IdentityKey`
+arbitrario**: solo transporta un rango y un token opaco que ata la selección a la
+lista pendiente vigente. Procedencia resultante: `user_selected_candidate`. Los
+botones de candidato en Telegram **no** están entregados todavía; la operación ya
+es apta para ese callback.
+
+#### 11. Flag apagado por defecto ≠ feature incompleta
+
+`SECOPPAL_ACTOR_PROFILE_ENABLED=false` es el **default seguro del código**
+(`app/config.py`), verificado por `tests/test_actor_flag_off.py`. Activar es una
+decisión de entorno aprovisionado, no un efecto secundario del import.
+
+Para activar hacen falta **dos** cosas: `SECOPPAL_ACTOR_PROFILE_ENABLED=true` y
+`SECOP_ACTOR_ALIAS_INDEX_PATH` apuntando a un `actor_alias_index.sqlite` completo
+y de esquema compatible. Sin artefacto válido el resolver devuelve
+`INDEX_UNAVAILABLE` sin fallback — nunca adivina.
+
+### Alternativas descartadas
+
+- **Tratar el nombre del actor como `objeto` contractual.** Es el defecto que el
+  frente existe para cerrar: produce falsa atribución con forma de acierto.
+- **Inferir el tipo documental por longitud del número.** Cédulas y NIT se
+  solapan; la inferencia fabrica certeza donde no la hay.
+- **Dejar que el DV reclasifique una `CC` declarada como `NIT`.** Sería fabricar
+  una identidad que ninguna fuente entregó.
+- **Auto-resolver el mejor candidato difuso.** Un BM25 alto ordena; no identifica.
+- **Filtrar `tipodocproveedor` por igualdad.** Cambia falsas atribuciones por
+  omisiones silenciosas.
+- **Reconstruir N2 globalmente para absorber formas jurídicas.** Coste alto y
+  riesgo de colisión sobre 1,2 M de identidades, cuando la equivalencia acotada
+  en lookup resuelve el caso con 0 identidades equivocadas.
+- **Enmascarar el documento en la lista de candidatos.** Destruye la evidencia de
+  desambiguación en la única pantalla donde el usuario debe decidir.
+- **Descartar el actor y ejecutar el resto de filtros cuando el dataset no lo
+  soporta.** Degradado silencioso: la peor de las opciones.
+
+### Consecuencias
+
+- SECOPPAL responde por proveedor con identidad tipada y procedencia auditable,
+  o **no responde** — nunca atribuye por conveniencia.
+- El directorio local añade un artefacto de aprovisionamiento a la operación: sin
+  índice compatible, el frente queda inerte por diseño.
+- **Fuera de alcance de V1** (siguen siendo trabajo futuro): relaciones UT /
+  consorcios, RUP, RUES, representante legal, SIRI, enriquecimiento de
+  responsabilidad fiscal, `ActorId` como grafo entre fuentes, score de riesgo,
+  Radar por actor, grafo profundo / Neo4j.
+- **Deuda aceptada:** latencia trigram sobre el índice completo **287–857 ms**
+  según estado de caché (p95 caliente / p95 en frío); pico de memoria del builder
+  **3,02 GB**; 77 equivalencias de forma jurídica ambiguas que fallan cerrado.
+  Ninguna bloquea el cierre.
+- **Siguiente frente de actor:** Actor Relationships V1 — UT / Consorcios.
+
+### Tests y evidencia de cierre
+
+Suite en el cierre de Actor Profile (`7f24517`): **8175 passed, 2 skipped,
+24 xfailed** · corpus de actor **41/41** · corpus natural de actor **6/6** ·
+mutaciones AP3-G de UX de candidatos **15/15 detectadas**.
+
+Auditoría adversarial congelada — **1.150 casos**,
+`FROZEN_CORPUS_SHA256 = a3db00d39cc8ed54811ac3ebfea2c05c6c1e275711171295e34015b5a8df7518`
+(`tests/fixtures/actor_profile_adversarial/SHA256SUMS`):
+
+```text
+P0 0 · P1 0 · identidades equivocadas 0 · secuestros temáticos 0
+pérdidas de actor 0 · auto-resoluciones difusas 0
+```
+
+**Documentación:** guía técnica `docs/architecture/ACTOR_PROFILE_V1.md`; informes
+en `docs/audits/` (`2026-08-18_ACTOR_PROFILE_DIAGNOSTIC.md`,
+`2026-08-18_ACTOR_NAME_RESOLUTION_BENCHMARK.md`,
+`2026-08-19_ACTOR_PROFILE_V1_ADVERSARIAL_AUDIT.md`,
+`2026-08-20_AP3E_PRODUCTION_ACTOR_DIRECTORY.md`,
+`2026-08-20_AP3E1_FULL_INDEX_REMEDIATION.md`).
+
+---
+
+## ADR-061: Dimensiones semánticas estructuradas y mutaciones conversacionales componibles (SEARCH-SH1)
+
+**Fecha:** 2026-08-22  
+**Estado:** Accepted  
+**Rama:** `fix/search-semantic-hardening-v1` (mergeada ff-only) · **HEAD / main:** `8acb21a`
+
+### Contexto
+
+Dos fallas sistémicas encontradas en dogfood manual, con una raíz común: el
+sistema no distinguía **a qué dimensión estructural pertenece** un tramo del
+lenguaje del usuario, ni permitía que dos dimensiones distintas cambiaran en el
+mismo turno.
+
+**A. `convenios` se convertía en tema.**
+
+```text
+convenios de alcaldia de barranquilla en 2026
+```
+
+`convenios` no era ni modalidad reconocida ni tema real, así que caía en el
+extractor de objeto y terminaba como búsqueda literal de texto.
+
+**B. El refinamiento monetario se perdía al repetir el año.**
+
+```text
+base:      contratos adulto mayor gobernacion de atlantico en 2026
+follow-up: por mas de 100 millones en 2026
+```
+
+El parser **sí** emitía `valor_min=100000000`. La pérdida ocurría después:
+
+```text
+MONEY_LOSS_STAGE:
+  FollowupClassifier(change_year)
+    -> followup_mutations.gate_delta(change_year allowed_set)
+```
+
+El año repetido clasificaba el turno como `change_year`, y el conjunto permitido
+de esa intención **descartaba `valor_min`** como `field_not_allowed_for_intent`.
+Como el campo desaparecía antes de serializar el frame, el fingerprint de la
+consulta seguía representando el universo viejo y el sidecar de paginación
+anterior permanecía elegible: *"más resultados"* seguía paginando resultados sin
+filtrar.
+
+### Decisión
+
+#### 1. Dimensiones semánticas explícitas
+
+`app/core/semantic_dimensions.py` declara un **vocabulario, no una ontología**:
+
+```text
+TOPIC · MODALITY · CONTRACT_TYPE_OR_NATURE · ACTOR · BUYER
+GEOGRAPHY · TIME · VALUE · STATE · CONTROL_LANGUAGE
+```
+
+Sirve para que un resolutor estructurado declare **qué consumió**, de modo que
+ese tramo no pueda volver a inferirse como término temático.
+
+**`INV-STRUCTURED-DIMENSION-NOT-TOPIC`** — una vez que un tramo se consume con
+confianza como dimensión estructurada, no puede además filtrarse a `objeto`,
+salvo que la semántica exija explícitamente el uso dual (el caso `COMPOSITE`, que
+requiere evidencia textual controlada *además* del campo estructurado).
+
+Parse conceptual de referencia:
+
+```text
+convenios de régimen especial de alcaldía de barranquilla en 2026
+  → naturaleza contractual = convenio
+  → modalidad             = régimen especial
+  → comprador             = Barranquilla
+  → año                   = 2026
+  → objeto                = []
+```
+
+#### 2. `convenio` es COMPOSITE, no un alias de modalidad
+
+Auditoría de fuente en vivo sobre `p6dx-8zbt` (procesos) y `jbjy-vk9h`
+(contratos), 2026-08-22. Campos estructurados relevantes: `tipo_de_contrato`
+junto a `modalidad_de_contratacion` y el campo de justificación de modalidad.
+
+**No existe** un valor de fuente `tipo_de_contrato = 'Convenio'`. La familia
+interadministrativa —135.932 filas de procesos y 123.823 de contratos— está
+mayoritariamente almacenada como tipo `Otro`, lo que prueba que
+`tipo_de_contrato` por sí solo **no puede** representar el lenguaje natural
+`convenio`. Familia solidaria: 2.208 procesos / 8.900 contratos. Tipo exacto
+`Acuerdo de cooperación`: 27 / 22.
+
+Por eso `app/core/contract_type_resolver.py` clasifica en tres niveles
+—`STRUCTURED_EXACT`, `STRUCTURED_FAMILY`, `COMPOSITE`— y
+`app/core/contract_type_projection.py` proyecta cada clase con la evidencia que
+la fuente sí sostiene, por dataset (los nombres de campo de justificación
+difieren). Donde el valor de fuente confunde contratos y convenios, se exige
+**además** evidencia textual controlada; el `%convenio%` crudo no es equivalente
+a naturaleza contractual (verificado con falsos positivos reales: contratos de
+prestación de servicios, obra e interventoría que solo *referencian* un convenio).
+
+**Documentar `convenio == régimen especial` sería arquitectura falsa.** Son ejes
+independientes que pueden coexistir.
+
+#### 3. La arquitectura de modalidad se preserva intacta
+
+`ModalityResolver`, su catálogo y su léxico **no se modificaron**. La autoridad
+sobre la modalidad de contratación sigue siendo suya. Familias verificadas en la
+auditoría: selección abreviada, régimen especial, mínima cuantía, licitación
+pública, concurso de méritos, acuerdo marco, contratación directa y enajenación
+—todas consumidas sin residual y sin fuga a `objeto`.
+
+`M2 cambiado: NO`. Los IDs de procedimiento de modalidad **nunca** se usan como
+IDs de tipo contractual. `naturaleza contractual ≠ modalidad`.
+
+#### 4. Los deltas ortogonales componen
+
+**`INV-ORTHOGONAL-DELTA-NOT-LOST-BY-NOOP`** — un no-op o una repetición en una
+dimensión no puede borrar un cambio explícito en otra.
+
+`app/core/followup_engine.py` deja de clasificar como `change_year` (o
+`change_order`) un turno que además trae un filtro ortogonal, y
+`app/core/followup_mutations.py` admite `MONEY_FIELDS` dentro de los conjuntos
+permitidos de `change_year`, `change_order`, `change_scope` y `change_dataset`.
+El caso base:
+
+```text
+año previo = 2026
+follow-up  = por mas de 100 millones en 2026
+resultado  = año 2026 + valor_min 100000000
+```
+
+Reglas de límites monetarios: un rango completo reemplaza ambos extremos; un
+mínimo nuevo solo limpia un máximo heredado cuando los límites son
+incompatibles, y simétricamente.
+
+#### 5. Proyección monetaria por capacidad de dataset
+
+La restricción monetaria del usuario es **una sola** a nivel de producto y se
+proyecta según el dataset: `valor_del_contrato` en contratos, `precio_base` en
+procesos. Fuera del contrato de producto vigente esos campos de fuente **no** se
+declaran semánticamente equivalentes.
+
+#### 6. Toda mutación semántica invalida la paginación
+
+**`INV-FILTER-MUTATION-INVALIDATES-PAGINATION`** — si cambia el filtro, cambia el
+universo de resultados; el estado de paginación deja de ser válido.
+
+`ConversationStore.invalidate_pagination_buffers(chat_id)` elimina el sidecar
+completo, y `handle_normal_flow` lo invoca **antes** de parsear y ejecutar
+cualquier turno que no sea de paginación. Toda mutación aceptada limpia además
+`offset`, `_display_offset` y `_shown_total`. Aplica a valor, tiempo, tema,
+comprador, territorio, modalidad, tipo/naturaleza contractual y actor.
+
+El sidecar es solo una caché reproducible de paginación: el historial de
+conversación queda intacto. Borrarlo entero también impide que un grupo hermano
+rancio de una consulta dual-dataset sobreviva a un refinamiento posterior de un
+solo dataset, y cubre los caminos de cero resultados, aclaración y timeout.
+
+### Alternativas descartadas
+
+- **Añadir `convenio` al léxico de modalidad.** Falso: no es una modalidad, y
+  contaminaría la autoridad de `ModalityResolver`.
+- **Proyectar `convenio` como `LIKE '%convenio%'` sobre el objeto.** Trae
+  contratos de obra, interventoría y prestación de servicios que solo mencionan
+  un convenio ajeno.
+- **Ampliar el conjunto permitido de `change_year` sin tocar la clasificación.**
+  Trata el síntoma: el turno seguiría siendo "cambio de año" cuando en realidad
+  es un refinamiento.
+- **Invalidar la paginación solo cuando cambia el fingerprint.** Fue exactamente
+  el acoplamiento que dejó el sidecar rancio vivo mientras el delta monetario se
+  perdía antes de serializarse.
+
+### Consecuencias
+
+- El lenguaje natural de naturaleza contractual deja de degradarse a búsqueda de
+  texto, y `objeto` deja de ser el vertedero de todo token no-stopword.
+- Un refinamiento conversacional se comporta como refinamiento: acota el
+  universo y la paginación siguiente pagina **ese** universo.
+- **Cero es un resultado válido** cuando la intersección está respaldada por la
+  fuente y bien formada; no toda consulta debe devolver filas.
+- Añadir una clase contractual nueva exige evidencia de fuente para su
+  proyección, no una entrada de léxico.
+
+### Evidencia de dogfood aceptada (SECOP en vivo, 2026-08-22)
+
+| Caso | Dataset | Filas | Verificación |
+|---|---|---:|---|
+| Gobernación de Atlántico · adulto mayor · 2026 (base) | contratos | 46 | tema, comprador y año preservados |
+| ↳ `por mas de 100 millones en 2026` | contratos | 4 | `valor_min=100000000`; mínimo crudo $348.747.143; filas bajo el umbral **0** |
+| ↳ `más resultados` | contratos | 4, agotado | conserva `valor_min`; sin filas ni IDs rancios |
+| convenios · Barranquilla · 2026 | procesos | 2 | `contract_type_include=[convenio]`; sin fuga a `objeto` |
+| convenio + régimen especial + Barranquilla + `>2B` · 2026 | procesos | 0 | intersección válida respaldada por fuente; ambas dimensiones presentes |
+| selección abreviada · Barranquilla · 2026 | contratos | 19 | familia exacta de tres hijos preservada |
+| adulto mayor · Cartagena · `>1B` · 2025 | contratos | 5 | `adulto_mayor` temático preservado |
+
+### Tests
+
+Suite final: **8250 passed, 2 skipped, 24 xfailed** · query corpus **89/89** ·
+dialogue corpus **60/61** (`GOB-DEPTO-001` basal, en `query_plan` no tocado) ·
+modalidad/diálogo/E2E **3.327 passed** · dinero/follow-up/paginación focalizados
+**364 passed** · centinelas de Actor Profile 8 passed · campaña de mutación
+**15/15 detectadas**, fuentes restauradas byte a byte
+(`scripts/run_search_sh1_mutations.py`) · `make lint-core` limpio y Ruff limpio
+sobre todos los archivos nuevos de SEARCH-SH1.
+
+Archivos de prueba: `tests/test_search_sh1_dogfood_regressions.py`,
+`tests/test_contract_type_resolver.py`,
+`tests/test_contractual_dimension_pipeline.py`,
+`tests/test_search_sh1_modality_audit.py`,
+`tests/test_search_sh1_money_followups.py`,
+`tests/test_pagination_buffer_lifecycle.py`.
+
+**Documentación:** guía técnica `docs/architecture/SEMANTIC_QUERY_DIMENSIONS.md`;
+evidencia detallada de fuente y proyección en
+`docs/audits/2026-08-22_SEARCH_SH1_SEMANTIC_MONEY_HARDENING.md`.

@@ -1,5 +1,11 @@
 # ADR-059 — Autoridad monetaria determinística y vigencia SMMLV
 
+> **Registro canónico.** Desde el 2026-08-22 esta decisión también está
+> registrada en [`docs/decisions_log.md`](../decisions_log.md), que es el índice
+> canónico de ADR del repositorio. Este archivo se conserva como documentación
+> de detalle de la decisión; la autoridad *as-built* sigue siendo
+> `docs/audits/2026-08-18_MONEY_V2_CLOSEOUT.md`.
+
 **Estado:** Accepted
 **Fecha:** 2026-08-18
 **Rama:** `feature/money-v2`
