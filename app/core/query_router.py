@@ -27,6 +27,7 @@ from app.core.actor_intent import (
     reference_from_document,
 )
 from app.core.contract_invariants import contains_signed_token
+from app.core.contract_type_resolver import resolve_contract_types
 from app.core.money_resolution import CARDINAL_WORD_PATTERN
 from app.core.modality_parser_integration import resolve_parser_modality
 from app.utils.money import (
@@ -56,6 +57,7 @@ except ImportError as exc:
     VARIANT_TO_ROOT: dict[str, str] = {}
 
 if TYPE_CHECKING:
+    from app.core.contract_type_resolver import ContractTypeInterpretation
     from app.core.entity_resolver import EntityResolver
     from app.core.modality_frame_adapter import ModalityInterpretation
 
@@ -376,6 +378,7 @@ class ParsedQuery:
     dataset_explicit: bool = False
     consumed_spans: list[str] | None = None
     modality_interpretation: ModalityInterpretation | None = None
+    contract_type_interpretation: ContractTypeInterpretation | None = None
 
 
 class QueryRouter:
@@ -539,6 +542,19 @@ class QueryRouter:
             and (intent_config.get("scrub_only") or "estado_family" in intent_config)
         ):
             scrubbed = scrubbed.replace(intent_span, " ", 1)
+
+        # ── 1.d Contractual type/nature (independent from modality) ─────
+        # A recognized contractual class owns its span before the catch-all
+        # thematic extractor runs.  Projection is source-backed and dataset-
+        # aware; this layer only emits canonical class IDs.
+        contract_type_result = resolve_contract_types(scrubbed)
+        if contract_type_result.include_ids:
+            params["contract_type_include"] = list(
+                contract_type_result.include_ids
+            )
+            consumed_spans.extend(contract_type_result.consumed_spans)
+            actor_modifier_spans.extend(contract_type_result.consumed_spans)
+        scrubbed = contract_type_result.residual_text
 
         # ── 1.5. NIT detection (shape-based, before year/amount stripping) ──
         # Detecta NITs colombianos por forma antes de cualquier otra extracción
@@ -944,7 +960,8 @@ class QueryRouter:
         return ParsedQuery(params=params, needs_llm=needs_llm, route_reason=route_reason,
                           dataset_explicit=dataset_explicit,
                           consumed_spans=consumed_spans,
-                          modality_interpretation=modality_result.interpretation)
+                          modality_interpretation=modality_result.interpretation,
+                          contract_type_interpretation=contract_type_result)
 
     # ─── Helper methods (only for non-entity extractions) ───────────────
 

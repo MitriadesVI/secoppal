@@ -22,6 +22,7 @@ _SCOPE_PRESENT = [
     ({"departamento_resolved": "ANTIOQUIA"}, "departamento_resolved"),
     ({"ciudad": "Medellin"}, "ciudad"),
     ({"contratista": "CONSTRUCTORA ABC"}, "contratista"),
+    ({"contract_type_include": ["convenio"]}, "contract_type_include"),
 ]
 
 _MODIFIERS_ONLY = [
@@ -87,5 +88,6 @@ class TestGuardEquivalence:
         expected = frozenset({
             "objeto", "objeto_phrases", "entidad_resolved", "entidad_like",
             "departamento_resolved", "departamentos_in", "ciudad", "contratista",
+            "contract_type_include",
         })
         assert SCOPE_TOPIC_KEYS == expected

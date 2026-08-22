@@ -22,6 +22,9 @@ MODALITY_FIELDS = frozenset({
     "modalidad_include_procedure_ids",
     "modalidad_exclude_procedure_ids",
 })
+CONTRACT_TYPE_FIELDS = frozenset({
+    "contract_type_include",
+})
 SCOPE_FIELDS = frozenset({
     "entidad", "entidad_resolved", "entidad_resolution", "entidad_like",
     "departamento", "departamento_resolved", "departamento_resolution",
@@ -29,6 +32,7 @@ SCOPE_FIELDS = frozenset({
 })
 FILTER_FIELDS = frozenset({
     *MONEY_FIELDS, "fecha_desde", "fecha_hasta", *MODALITY_FIELDS,
+    *CONTRACT_TYPE_FIELDS,
     "contratista", *STATE_FIELDS,
 })
 PAGING_FIELDS = frozenset({"offset", "_display_offset", "_shown_total"})
@@ -55,7 +59,7 @@ MUTATION_POLICIES: dict[str, MutationPolicy] = {
         frozenset({"fecha_desde", "fecha_hasta", *MONEY_FIELDS}),
     ),
     "change_dataset": MutationPolicy(
-        frozenset({"dataset", "dataset_explicit", *MONEY_FIELDS}),
+        frozenset({"dataset", "dataset_explicit", *FILTER_FIELDS}),
         allowed_clear=frozenset({
             *STATE_FIELDS, "fecha_desde", "fecha_hasta", *PAGING_FIELDS,
             "dataset_scope", *CLASSIFICATION_FIELDS,
@@ -63,7 +67,7 @@ MUTATION_POLICIES: dict[str, MutationPolicy] = {
         transition_cleanup="normalize_dataset_transition",
     ),
     "change_scope": MutationPolicy(
-        frozenset({*SCOPE_FIELDS, *MONEY_FIELDS}),
+        frozenset({*SCOPE_FIELDS, *FILTER_FIELDS}),
         allowed_clear=SCOPE_FIELDS,
         transition_cleanup="normalize_scope_transition",
     ),

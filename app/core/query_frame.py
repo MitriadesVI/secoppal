@@ -60,6 +60,7 @@ _MODIFIER_KEYS = frozenset({
     "estado_contrato_adicional",
     "ordering_signal", "contratista",
     "modalidad_include_procedure_ids", "modalidad_exclude_procedure_ids",
+    "contract_type_include",
 })
 
 _LEGACY_MODALITY_KEY = "modalidad"

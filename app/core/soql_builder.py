@@ -4,6 +4,7 @@ import logging
 from dataclasses import dataclass
 
 from app.core.actor_document_types import incompatible_source_types
+from app.core.contract_type_projection import project_contract_types
 from app.core.modality_dataset_projection import (
     DatasetModalityProjection,
     project_modality_filter,
@@ -41,6 +42,7 @@ NONEMPTY_WHERE_KEYS: frozenset[str] = frozenset({
     "departamento_resolved", "departamentos_in", "ciudad",
     "entidad_resolved", "entidad_like",
     "contratista",
+    "contract_type_include",
     # topic
     "objeto", "objeto_or", "objeto_phrases",
     # estado
@@ -92,6 +94,8 @@ class DatasetSpec:
     date: str
     url: str
     modality: str = "modalidad_de_contratacion"
+    contract_type: str = "tipo_de_contrato"
+    contract_justification: str = ""
     # Proyección de evento del radar (R2B-1B1). Declarados por dataset y no
     # derivados de `date`: en procesos `date` es la fecha de PUBLICACIÓN, que no
     # es ni cierre ni firma. Reusarla proyectaría publicación bajo la etiqueta
@@ -126,6 +130,7 @@ class SoQLBuilder:
             state="estado_de_apertura_del_proceso",
             date="fecha_de_publicacion_del",
             url="urlproceso",
+            contract_justification="justificaci_n_modalidad_de",
             # Única columna de recepción de ofertas que el repo ya reconoce
             # (formatter._best_date_for_row, DOGFOOD-DATE-002). Auditoría previa
             # (opportunity_stage.py): ~99% NULL en el dataset, así que el radar
@@ -143,6 +148,7 @@ class SoQLBuilder:
                 "descripci_n_del_procedimiento",
                 "tipo_de_contrato",
                 "modalidad_de_contratacion",
+                "justificaci_n_modalidad_de",
                 "precio_base",
                 "estado_de_apertura_del_proceso",
                 "estado_del_procedimiento",
@@ -169,6 +175,7 @@ class SoQLBuilder:
             state="estado_contrato",
             date="fecha_de_firma",
             url="urlproceso",
+            contract_justification="justificacion_modalidad_de",
             # Contratos no publican cierre de ofertas (el proceso ya terminó);
             # el hecho fechado equivalente es la firma. Coincide con `date`, pero
             # se declara aparte: son dos contratos distintos que hoy convergen.
@@ -188,6 +195,7 @@ class SoQLBuilder:
                 "descripcion_del_proceso",
                 "tipo_de_contrato",
                 "modalidad_de_contratacion",
+                "justificacion_modalidad_de",
                 "valor_del_contrato",
                 "estado_contrato",
                 "fecha_de_firma",
@@ -301,11 +309,23 @@ class SoQLBuilder:
             or modality_projection.include_unsatisfiable
             or modality_projection.exclude_raw_values
         )
+        contract_type_projection = project_contract_types(
+            params.get("contract_type_include") or [],
+            type_field=spec.contract_type,
+            justification_field=spec.contract_justification,
+            text_fields=tuple(
+                field for field in (spec.object_name, spec.description) if field
+            ),
+        )
         if not allow_global and not _has_nonempty_where_filter(
-            params, modality_effective=modality_effective,
+            params,
+            modality_effective=(
+                modality_effective or bool(contract_type_projection.clause)
+            ),
         ):
             raise UnsafeGlobalQueryError(
-                "SoQL build refused: no WHERE predicate (scope/topic/estado/modalidad). "
+                "SoQL build refused: no WHERE predicate "
+                "(scope/topic/estado/modalidad/contract_type). "
                 "Pass allow_global=True only if a global query is intentional."
             )
         where_clauses: list[str] = []
@@ -465,6 +485,9 @@ class SoQLBuilder:
         modality_clause = self._modality_clause(modality_projection)
         if modality_clause:
             where_clauses.append(modality_clause)
+
+        if contract_type_projection.clause:
+            where_clauses.append(contract_type_projection.clause)
 
         # STATE-PRIORITY-001: oportunidades en procesos requieren apertura=Abierto
         if (

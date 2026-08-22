@@ -337,9 +337,10 @@ class FollowupClassifier:
         has_year = bool(cls._YEAR_PATTERN.search(norm_text))
         has_scope_signal = bool(cls._SCOPE_SIGNALS.search(norm_text))
         has_order = cls._has_ordering_signal(norm_text)
-        has_money = any(
-            current_frame.modifiers.get(key) is not None
-            for key in ("valor_min", "valor_max", "money_metadata")
+        has_orthogonal_filter = any(
+            key not in {"fecha_desde", "fecha_hasta", "ordering_signal"}
+            and value not in (None, "", [], {}, (), False)
+            for key, value in current_frame.modifiers.items()
         )
 
         if (
@@ -347,7 +348,7 @@ class FollowupClassifier:
             and not current_frame.topic
             and not has_scope_signal
             and not has_order
-            and not has_money
+            and not has_orthogonal_filter
         ):
             return "change_year"
 
@@ -357,7 +358,7 @@ class FollowupClassifier:
             and not current_frame.topic
             and not has_year
             and not has_scope_signal
-            and not has_money
+            and not has_orthogonal_filter
         ):
             return "change_order"
 

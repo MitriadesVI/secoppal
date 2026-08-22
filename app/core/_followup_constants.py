@@ -53,4 +53,5 @@ RESET_COMMANDS: frozenset[str] = frozenset({
 SCOPE_TOPIC_KEYS: frozenset[str] = frozenset({
     "objeto", "objeto_phrases", "entidad_resolved", "entidad_like",
     "departamento_resolved", "departamentos_in", "ciudad", "contratista",
+    "contract_type_include",
 })
