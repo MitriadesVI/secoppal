@@ -337,12 +337,28 @@ class FollowupClassifier:
         has_year = bool(cls._YEAR_PATTERN.search(norm_text))
         has_scope_signal = bool(cls._SCOPE_SIGNALS.search(norm_text))
         has_order = cls._has_ordering_signal(norm_text)
+        has_money = any(
+            current_frame.modifiers.get(key) is not None
+            for key in ("valor_min", "valor_max", "money_metadata")
+        )
 
-        if has_year and not current_frame.topic and not has_scope_signal and not has_order:
+        if (
+            has_year
+            and not current_frame.topic
+            and not has_scope_signal
+            and not has_order
+            and not has_money
+        ):
             return "change_year"
 
         # 4. Solo cambio de orden (sin topic nuevo, sin año, sin scope)
-        if has_order and not current_frame.topic and not has_year and not has_scope_signal:
+        if (
+            has_order
+            and not current_frame.topic
+            and not has_year
+            and not has_scope_signal
+            and not has_money
+        ):
             return "change_order"
 
         # 4.5. Refinamiento numérico con topic débil/anafórico.
@@ -355,7 +371,11 @@ class FollowupClassifier:
             current_frame.modifiers.get(k) is not None
             for k in ("valor_min", "valor_max", "fecha_desde", "fecha_hasta")
         )
-        if has_numeric_modifier and cls._is_weak_topic(current_frame.topic):
+        if (
+            has_numeric_modifier
+            and not current_frame.scope
+            and cls._is_weak_topic(current_frame.topic)
+        ):
             return "refine_filter"
 
         # 5. Cambio de scope (entidad/ciudad diferente)

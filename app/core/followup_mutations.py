@@ -17,6 +17,7 @@ from app.core.followup_control_tokens import (
 
 
 TOPIC_FIELDS = frozenset({"objeto", "objeto_or", "objeto_phrases", "objeto_exclude", "topic_facets"})
+MONEY_FIELDS = frozenset({"valor_min", "valor_max", "money_metadata"})
 MODALITY_FIELDS = frozenset({
     "modalidad_include_procedure_ids",
     "modalidad_exclude_procedure_ids",
@@ -27,8 +28,8 @@ SCOPE_FIELDS = frozenset({
     "departamentos_in", "ciudad", "ciudad_resolved", "region",
 })
 FILTER_FIELDS = frozenset({
-    "valor_min", "valor_max", "fecha_desde", "fecha_hasta", *MODALITY_FIELDS,
-    "contratista", "money_metadata", *STATE_FIELDS,
+    *MONEY_FIELDS, "fecha_desde", "fecha_hasta", *MODALITY_FIELDS,
+    "contratista", *STATE_FIELDS,
 })
 PAGING_FIELDS = frozenset({"offset", "_display_offset", "_shown_total"})
 CLASSIFICATION_FIELDS = frozenset({"intent_type", "opportunity_mode", "filter_active_only"})
@@ -47,10 +48,14 @@ class MutationPolicy:
 
 MUTATION_POLICIES: dict[str, MutationPolicy] = {
     "pagination_more": MutationPolicy(frozenset()),
-    "change_order": MutationPolicy(frozenset({"ordering_signal", "order_by"})),
-    "change_year": MutationPolicy(frozenset({"fecha_desde", "fecha_hasta"})),
+    "change_order": MutationPolicy(
+        frozenset({"ordering_signal", "order_by", *MONEY_FIELDS}),
+    ),
+    "change_year": MutationPolicy(
+        frozenset({"fecha_desde", "fecha_hasta", *MONEY_FIELDS}),
+    ),
     "change_dataset": MutationPolicy(
-        frozenset({"dataset", "dataset_explicit"}),
+        frozenset({"dataset", "dataset_explicit", *MONEY_FIELDS}),
         allowed_clear=frozenset({
             *STATE_FIELDS, "fecha_desde", "fecha_hasta", *PAGING_FIELDS,
             "dataset_scope", *CLASSIFICATION_FIELDS,
@@ -58,7 +63,7 @@ MUTATION_POLICIES: dict[str, MutationPolicy] = {
         transition_cleanup="normalize_dataset_transition",
     ),
     "change_scope": MutationPolicy(
-        SCOPE_FIELDS,
+        frozenset({*SCOPE_FIELDS, *MONEY_FIELDS}),
         allowed_clear=SCOPE_FIELDS,
         transition_cleanup="normalize_scope_transition",
     ),
@@ -177,6 +182,30 @@ def _transition_clears(
             clears.update(STATE_FIELDS | PAGING_FIELDS | {"fecha_desde", "fecha_hasta", "dataset_scope"})
         if accepted.get("intent_type") and accepted.get("intent_type") != previous.get("intent_type"):
             clears.update({"opportunity_mode", "filter_active_only"})
+
+    accepted_money = set(accepted) & MONEY_FIELDS
+    if accepted_money:
+        # Follow-up bounds keep the existing intersection when it is coherent,
+        # but an explicit replacement can never inherit an impossible opposite
+        # bound.  A complete range replaces both previous endpoints.
+        if {"valor_min", "valor_max"} <= accepted_money:
+            clears.update({"valor_min", "valor_max"})
+        elif "valor_min" in accepted_money:
+            clears.add("valor_min")
+            old_max = previous.get("valor_max")
+            if old_max is not None and accepted["valor_min"] > old_max:
+                clears.add("valor_max")
+        elif "valor_max" in accepted_money:
+            clears.add("valor_max")
+            old_min = previous.get("valor_min")
+            if old_min is not None and accepted["valor_max"] < old_min:
+                clears.add("valor_min")
+
+    semantic_fields = TOPIC_FIELDS | SCOPE_FIELDS | FILTER_FIELDS | DATASET_FIELDS
+    if set(accepted) & semantic_fields:
+        # Cursors describe one exact WHERE universe.  Every accepted semantic
+        # delta starts from page one and must trace the invalidation explicitly.
+        clears.update(PAGING_FIELDS)
     return clears
 
 

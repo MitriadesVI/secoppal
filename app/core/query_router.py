@@ -1331,7 +1331,7 @@ class QueryRouter:
                         |exceda(?:n)?(?:\s+los?)?
                         |por\s+encima\s+de
                         |al\s+menos
-                        |m[ií]nimo
+                        |m[ií]nim[oa]
                         |desde
                         |a\s+partir\s+de
                     )\s+{amount_text}
