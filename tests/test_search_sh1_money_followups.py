@@ -138,6 +138,22 @@ def test_modality_and_money_compose(router: QueryRouter, previous: dict) -> None
     )
 
 
+def test_money_followup_preserves_previous_modality(router: QueryRouter) -> None:
+    base = router.parse(
+        "contratos adulto mayor de regimen especial en 2026"
+    ).params
+
+    intent, merged, trace = _merge(router, base, "por mas de 100 millones")
+
+    assert intent == "refine_filter"
+    assert merged["modalidad_include_procedure_ids"] == [
+        "regimen_especial",
+        "regimen_especial_con_ofertas",
+    ]
+    assert merged["valor_min"] == 100_000_000
+    assert "valor_min" in trace["accepted_fields"]
+
+
 @pytest.mark.parametrize(
     ("dataset", "dataset_id", "field"),
     [
@@ -186,4 +202,3 @@ def test_filter_mutation_invalidates_all_pagination_cursors(
     assert {"offset", "_display_offset", "_shown_total"} <= set(
         trace["transition_cleared_fields"]
     )
-
