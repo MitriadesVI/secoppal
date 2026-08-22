@@ -1,0 +1,1221 @@
+# HCA-1 — Frozen holistic conversational audit corpus v1 (2026-08-22)
+#
+# Oracle policy: expectations encode USER INTENT (Layer A) and the structural
+# frame it should produce (Layer B) — NEVER current SECOPPAL behavior. A FAIL
+# is a bug candidate to be triaged in the audit report; the corpus is not to
+# be edited to make cases pass.
+#
+# Check DSL: see scripts/audits/run_conversation_holistic_audit.py header.
+# severity_if_failed is the auditor's prior; final severity is set in triage.
+version: 1
+frozen: 2026-08-22
+cases:
+
+# =====================================================================
+# A. INTENT / DATASET
+# =====================================================================
+- id: HCA-INTENT-001
+  category: intent_dataset
+  severity_if_failed: P1
+  turns:
+  - {q: "contratos firmados de obra en cartagena", expect: execute, ds: contratos}
+- id: HCA-INTENT-002
+  category: intent_dataset
+  severity_if_failed: P1
+  turns:
+  - {q: "procesos abiertos de vigilancia en atlantico", expect: execute, ds: procesos, eq: {estado_family: oferta_abierta}}
+- id: HCA-INTENT-003
+  category: intent_dataset
+  severity_if_failed: P1
+  turns:
+  - {q: "contratos celebrados por la gobernacion del atlantico en 2025", expect: execute, ds: contratos}
+- id: HCA-INTENT-004
+  category: intent_dataset
+  severity_if_failed: P1
+  turns:
+  - {q: "licitaciones abiertas de aseo en bolivar", expect: execute, ds: procesos}
+- id: HCA-INTENT-005
+  category: intent_dataset
+  severity_if_failed: P1
+  turns:
+  - {q: "licitaciones celebradas de aseo en bolivar", expect: execute, ds: contratos}
+- id: HCA-INTENT-006
+  category: intent_dataset
+  severity_if_failed: P1
+  notes: "que contrató X → contracts (past)"
+  turns:
+  - {q: "que contrato la alcaldia de monteria en 2025", expect: execute, ds: contratos}
+- id: HCA-INTENT-007
+  category: intent_dataset
+  severity_if_failed: P1
+  notes: "que está contratando → open processes, and the verb must not leak to objeto"
+  turns:
+  - {q: "que esta contratando la alcaldia de barranquilla", expect: execute, ds: procesos, objeto_not: [contratando]}
+- id: HCA-INTENT-008
+  category: intent_dataset
+  severity_if_failed: P1
+  turns:
+  - {q: "que piensa contratar la gobernacion de cordoba", expect: execute, ds: procesos, objeto_not: [contratar, piensa]}
+- id: HCA-INTENT-009
+  category: intent_dataset
+  severity_if_failed: P1
+  turns:
+  - {q: "oportunidades abiertas de software", expect: execute, ds: procesos, eq: {intent_type: opportunity_search}}
+- id: HCA-INTENT-010
+  category: intent_dataset
+  severity_if_failed: P1
+  turns:
+  - {q: "procesos para licitar de interventoria en santander", expect: execute, ds: procesos, objeto_has: [interventoria], objeto_not: [licitar]}
+- id: HCA-INTENT-011
+  category: intent_dataset
+  severity_if_failed: P1
+  notes: "adjudicado belongs to contracts side"
+  turns:
+  - {q: "contratos adjudicados de transporte en 2026", expect: execute, ds: contratos, objeto_has: [transporte], objeto_not: [adjudicad]}
+- id: HCA-INTENT-012
+  category: intent_dataset
+  severity_if_failed: P1
+  turns:
+  - {q: "procesos publicados de dotacion escolar en sucre", expect: execute, ds: procesos, objeto_has: [dotacion]}
+- id: HCA-INTENT-013
+  category: intent_dataset
+  severity_if_failed: P2
+  notes: "qué tiene abierto → open processes of that buyer"
+  turns:
+  - {q: "que tiene abierto el sena", expect: execute, ds: procesos}
+- id: HCA-INTENT-014
+  category: intent_dataset
+  severity_if_failed: P2
+  turns:
+  - {q: "convocatorias abiertas de consultoria en narino", expect: execute, ds: procesos, objeto_has: [consultoria]}
+
+# =====================================================================
+# B. TOPIC / OBJECT
+# =====================================================================
+- id: HCA-TOPIC-001
+  category: topic_object
+  severity_if_failed: P1
+  turns:
+  - {q: "contratos de adulto mayor en cartagena", expect: execute, objeto_has: [adulto]}
+- id: HCA-TOPIC-002
+  category: topic_object
+  severity_if_failed: P1
+  notes: "population+service compound"
+  turns:
+  - {q: "contratos de alimentacion para adulto mayor", expect: execute, objeto_has: [adulto, alimentacion]}
+- id: HCA-TOPIC-003
+  category: topic_object
+  severity_if_failed: P2
+  turns:
+  - {q: "contratos de mantenimiento de edificios", expect: execute, objeto_has: [mantenimiento]}
+- id: HCA-TOPIC-004
+  category: topic_object
+  severity_if_failed: P2
+  turns:
+  - {q: "procesos de mejoramiento de vivienda en choco", expect: execute, ds: procesos, objeto_has: [vivienda]}
+- id: HCA-TOPIC-005
+  category: topic_object
+  severity_if_failed: P1
+  turns:
+  - {q: "contratos de transporte escolar en boyaca", expect: execute, objeto_has: [transporte]}
+- id: HCA-TOPIC-006
+  category: topic_object
+  severity_if_failed: P2
+  turns:
+  - {q: "contratos de servicios funerarios", expect: execute, objeto_has: [funerari]}
+- id: HCA-TOPIC-007
+  category: topic_object
+  severity_if_failed: P2
+  turns:
+  - {q: "procesos del pae en la guajira", expect: execute, ds: procesos, objeto_has: [pae]}
+- id: HCA-TOPIC-008
+  category: topic_object
+  severity_if_failed: P1
+  notes: "buyer words must not leak into objeto"
+  turns:
+  - {q: "contratos de la alcaldia de sincelejo de vigilancia", expect: execute, objeto_has: [vigilancia], objeto_not: [alcaldia, sincelejo]}
+- id: HCA-TOPIC-009
+  category: topic_object
+  severity_if_failed: P1
+  notes: "geography must not leak into objeto"
+  turns:
+  - {q: "contratos de aseo en el departamento del cesar", expect: execute, objeto_has: [aseo], objeto_not: [cesar, departamento]}
+- id: HCA-TOPIC-010
+  category: topic_object
+  severity_if_failed: P2
+  notes: "technical vs common terminology"
+  turns:
+  - {q: "contratos de interventoria tecnica de obra", expect: execute, objeto_has: [interventoria]}
+- id: HCA-TOPIC-011
+  category: topic_object
+  severity_if_failed: P2
+  turns:
+  - {q: "procesos de suministro de combustible", expect: execute, ds: procesos, objeto_has: [combustible]}
+- id: HCA-TOPIC-012
+  category: topic_object
+  severity_if_failed: P2
+  notes: "very broad topic should still execute, not clarify"
+  turns:
+  - {q: "contratos de salud en amazonas", expect: execute, objeto_has: [salud]}
+- id: HCA-TOPIC-013
+  category: topic_object
+  severity_if_failed: P1
+  notes: "instruction verbs are not topics"
+  turns:
+  - {q: "buscame contratos de papeleria en tunja", expect: execute, objeto_has: [papeleria], objeto_not: [buscame, busca]}
+- id: HCA-TOPIC-014
+  category: topic_object
+  severity_if_failed: P2
+  turns:
+  - {q: "contratos de comedores comunitarios en soacha", expect: execute, objeto_has: [comedor]}
+- id: HCA-TOPIC-015
+  category: topic_object
+  severity_if_failed: P2
+  notes: "multiword: agua potable should survive as concept"
+  turns:
+  - {q: "procesos de agua potable y saneamiento basico", expect: execute, ds: procesos, objeto_has: [agua]}
+
+# =====================================================================
+# C. CONTRACTUAL NATURE / TYPE
+# =====================================================================
+- id: HCA-TYPE-001
+  category: contract_type
+  severity_if_failed: P1
+  notes: "SEARCH-SH1 core: convenio = structured dimension + topic intact"
+  turns:
+  - {q: "convenios de adulto mayor", expect: execute, eq: {contract_type_include: [convenio]}, objeto_has: [adulto], objeto_not: [convenio]}
+- id: HCA-TYPE-002
+  category: contract_type
+  severity_if_failed: P1
+  turns:
+  - {q: "convenios interadministrativos de la gobernacion de bolivar", expect: execute, has: [contract_type_include], objeto_not: [convenio, interadministrativo]}
+- id: HCA-TYPE-003
+  category: contract_type
+  severity_if_failed: P2
+  turns:
+  - {q: "contratos de prestacion de servicios en monteria", expect: execute, objeto_not: [prestacion]}
+- id: HCA-TYPE-004
+  category: contract_type
+  severity_if_failed: P2
+  turns:
+  - {q: "contratos de obra publica en cali", expect: execute}
+- id: HCA-TYPE-005
+  category: contract_type
+  severity_if_failed: P2
+  turns:
+  - {q: "contratos de suministro en valledupar", expect: execute}
+- id: HCA-TYPE-006
+  category: contract_type
+  severity_if_failed: P2
+  turns:
+  - {q: "contratos de arrendamiento de inmuebles", expect: execute}
+- id: HCA-TYPE-007
+  category: contract_type
+  severity_if_failed: P2
+  notes: "consultoría as contract type and/or topic — either, but not dropped"
+  turns:
+  - {q: "contratos de consultoria en neiva", expect: execute}
+- id: HCA-TYPE-008
+  category: contract_type
+  severity_if_failed: P1
+  notes: "convenio solidario family"
+  turns:
+  - {q: "convenios solidarios con juntas de accion comunal", expect: execute, has: [contract_type_include]}
+- id: HCA-TYPE-009
+  category: contract_type
+  severity_if_failed: P1
+  notes: "type + modality must coexist"
+  turns:
+  - {q: "convenios de regimen especial de la alcaldia de barranquilla", expect: execute, has: [contract_type_include, modalidad_include_procedure_ids]}
+- id: HCA-TYPE-010
+  category: contract_type
+  severity_if_failed: P1
+  notes: "contrato interadministrativo (not convenio wording)"
+  turns:
+  - {q: "contratos interadministrativos en 2026", expect: execute, has: [contract_type_include], objeto_not: [interadministrativo]}
+
+# =====================================================================
+# D. MODALITY
+# =====================================================================
+- id: HCA-MODALITY-001
+  category: modality
+  severity_if_failed: P1
+  turns:
+  - {q: "licitaciones publicas de obra en atlantico", expect: execute, has: [modalidad_include_procedure_ids], objeto_has: [obra]}
+- id: HCA-MODALITY-002
+  category: modality
+  severity_if_failed: P1
+  turns:
+  - {q: "contratos por seleccion abreviada de menor cuantia en 2026", expect: execute, has: [modalidad_include_procedure_ids], objeto_not: [seleccion, abreviada, cuantia]}
+- id: HCA-MODALITY-003
+  category: modality
+  severity_if_failed: P1
+  turns:
+  - {q: "subastas inversas de suministro", expect: execute, has: [modalidad_include_procedure_ids], objeto_has: [suministro], objeto_not: [subasta]}
+- id: HCA-MODALITY-004
+  category: modality
+  severity_if_failed: P1
+  turns:
+  - {q: "procesos de minima cuantia en santa marta", expect: execute, ds: procesos, has: [modalidad_include_procedure_ids], objeto_not: [minima, cuantia]}
+- id: HCA-MODALITY-005
+  category: modality
+  severity_if_failed: P1
+  turns:
+  - {q: "concursos de meritos de interventoria", expect: execute, has: [modalidad_include_procedure_ids], objeto_has: [interventoria]}
+- id: HCA-MODALITY-006
+  category: modality
+  severity_if_failed: P1
+  turns:
+  - {q: "contratacion directa de la gobernacion del magdalena en 2025", expect: execute, has: [modalidad_include_procedure_ids]}
+- id: HCA-MODALITY-007
+  category: modality
+  severity_if_failed: P1
+  turns:
+  - {q: "procesos de regimen especial con ofertas en cordoba", expect: execute, has: [modalidad_include_procedure_ids]}
+- id: HCA-MODALITY-008
+  category: modality
+  severity_if_failed: P2
+  notes: "accent/plural robustness: 'licitación pública' singular accented"
+  turns:
+  - {q: "licitación pública de vivienda en Sucre", expect: execute, has: [modalidad_include_procedure_ids]}
+- id: HCA-MODALITY-009
+  category: modality
+  severity_if_failed: P2
+  turns:
+  - {q: "acuerdos marco de precios de dotacion", expect: execute}
+- id: HCA-MODALITY-010
+  category: modality
+  severity_if_failed: P2
+  notes: "modality + money + buyer composition"
+  turns:
+  - {q: "contratacion directa de la alcaldia de soledad por mas de 50 millones", expect: execute, has: [modalidad_include_procedure_ids], eq: {valor_min: 50000000}}
+- id: HCA-MODALITY-011
+  category: modality
+  severity_if_failed: P1
+  notes: "seleccion abreviada bare must map to the SA family, not leak as topic"
+  turns:
+  - {q: "selecciones abreviadas de la alcaldia de barranquilla en 2026", expect: execute, has: [modalidad_include_procedure_ids], objeto_not: [seleccion]}
+- id: HCA-MODALITY-012
+  category: modality
+  severity_if_failed: P2
+  notes: "enajenacion de bienes is a real SECOP modality"
+  turns:
+  - {q: "procesos de enajenacion de bienes en 2026", expect: execute, ds: procesos}
+
+# =====================================================================
+# E. BUYER / ENTITY
+# =====================================================================
+- id: HCA-ENTITY-001
+  category: entity_buyer
+  severity_if_failed: P0
+  notes: "canonical value must not carry markdown/asterisks into LIKE"
+  turns:
+  - {q: "contratos de la gobernacion del atlantico en 2026", expect: execute, soql_not: ["ATLANTICO**"]}
+- id: HCA-ENTITY-002
+  category: entity_buyer
+  severity_if_failed: P1
+  turns:
+  - {q: "contratos de la alcaldia de barranquilla", expect: execute, eq: {entidad_resolved: "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"}}
+- id: HCA-ENTITY-003
+  category: entity_buyer
+  severity_if_failed: P1
+  notes: "distrito wording resolves to same buyer as alcaldía"
+  turns:
+  - {q: "contratos del distrito de barranquilla", expect: execute, eq: {entidad_resolved: "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"}}
+- id: HCA-ENTITY-004
+  category: entity_buyer
+  severity_if_failed: P1
+  notes: "department-as-buyer: gobernación del atlántico ≠ territory filter only"
+  turns:
+  - {q: "que contrato el departamento del atlantico en 2025", expect: execute, has: [entidad_resolved]}
+- id: HCA-ENTITY-005
+  category: entity_buyer
+  severity_if_failed: P1
+  notes: "unqualified generic must clarify, not pick arbitrary entity"
+  turns:
+  - {q: "contratos de la alcaldia", expect: block}
+- id: HCA-ENTITY-006
+  category: entity_buyer
+  severity_if_failed: P1
+  turns:
+  - {q: "contratos de la gobernacion de boyaca", expect: execute, has: [entidad_resolved]}
+- id: HCA-ENTITY-007
+  category: entity_buyer
+  severity_if_failed: P2
+  notes: "bare city = territory, not buyer"
+  turns:
+  - {q: "contratos en barranquilla", expect: execute, eq: {ciudad: Barranquilla}, absent: [entidad_resolved]}
+- id: HCA-ENTITY-008
+  category: entity_buyer
+  severity_if_failed: P2
+  turns:
+  - {q: "procesos del ministerio de educacion nacional", expect: execute, ds: procesos, has: [entidad_resolved]}
+- id: HCA-ENTITY-009
+  category: entity_buyer
+  severity_if_failed: P1
+  notes: "ICBF regional query should not become national ICBF blindly"
+  turns:
+  - {q: "contratos del icbf en cordoba", expect: execute, has: [entidad_resolved]}
+- id: HCA-ENTITY-010
+  category: entity_buyer
+  severity_if_failed: P2
+  turns:
+  - {q: "contratos de la alcaldia local de teusaquillo", expect: execute, has: [entidad_resolved]}
+
+# =====================================================================
+# F. GEOGRAPHY
+# =====================================================================
+- id: HCA-GEO-001
+  category: geography
+  severity_if_failed: P1
+  turns:
+  - {q: "contratos de dotacion en cordoba", expect: execute, eq: {departamento_resolved: "Córdoba"}}
+- id: HCA-GEO-002
+  category: geography
+  severity_if_failed: P1
+  notes: "city Cartagena, not department Bolívar"
+  turns:
+  - {q: "contratos de pavimentacion en cartagena", expect: execute, eq: {ciudad: Cartagena}}
+- id: HCA-GEO-003
+  category: geography
+  severity_if_failed: P1
+  turns:
+  - {q: "procesos de electrificacion en el choco", expect: execute, eq: {departamento_resolved: "Chocó"}}
+- id: HCA-GEO-004
+  category: geography
+  severity_if_failed: P1
+  notes: "department homonym: Bolívar dept vs Ciudad Bolívar etc."
+  turns:
+  - {q: "contratos de acueducto en bolivar", expect: execute, eq: {departamento_resolved: "Bolívar"}}
+- id: HCA-GEO-005
+  category: geography
+  severity_if_failed: P2
+  notes: "city + department combined"
+  turns:
+  - {q: "contratos de aseo en monteria cordoba", expect: execute}
+- id: HCA-GEO-006
+  category: geography
+  severity_if_failed: P1
+  notes: "Valle del Cauca full name"
+  turns:
+  - {q: "procesos de salud en valle del cauca", expect: execute, eq: {departamento_resolved: "Valle del Cauca"}}
+- id: HCA-GEO-007
+  category: geography
+  severity_if_failed: P2
+  notes: "Atlántico as department scope (no buyer wording)"
+  turns:
+  - {q: "contratos de vias en el atlantico", expect: execute, eq: {departamento_resolved: "Atlántico"}, absent: [entidad_resolved]}
+
+# =====================================================================
+# H. MONEY (extensive)
+# =====================================================================
+- id: HCA-MONEY-001
+  category: money
+  severity_if_failed: P1
+  turns:
+  - {q: "contratos de aseo por mas de 100 millones", expect: execute, eq: {valor_min: 100000000}, absent: [valor_max]}
+- id: HCA-MONEY-002
+  category: money
+  severity_if_failed: P1
+  turns:
+  - {q: "contratos de aseo superiores a 100 millones", expect: execute, eq: {valor_min: 100000000}}
+- id: HCA-MONEY-003
+  category: money
+  severity_if_failed: P1
+  turns:
+  - {q: "contratos de aseo desde 100 millones", expect: execute, eq: {valor_min: 100000000}}
+- id: HCA-MONEY-004
+  category: money
+  severity_if_failed: P1
+  turns:
+  - {q: "contratos de aseo de minimo 100 millones", expect: execute, eq: {valor_min: 100000000}}
+- id: HCA-MONEY-005
+  category: money
+  severity_if_failed: P1
+  turns:
+  - {q: "contratos de aseo por encima de 100 millones", expect: execute, eq: {valor_min: 100000000}}
+- id: HCA-MONEY-006
+  category: money
+  severity_if_failed: P1
+  turns:
+  - {q: "contratos de vigilancia por menos de 500 millones", expect: execute, eq: {valor_max: 500000000}, absent: [valor_min]}
+- id: HCA-MONEY-007
+  category: money
+  severity_if_failed: P1
+  turns:
+  - {q: "contratos de vigilancia hasta 500 millones", expect: execute, eq: {valor_max: 500000000}}
+- id: HCA-MONEY-008
+  category: money
+  severity_if_failed: P1
+  turns:
+  - {q: "contratos de vigilancia de maximo 500 millones", expect: execute, eq: {valor_max: 500000000}}
+- id: HCA-MONEY-009
+  category: money
+  severity_if_failed: P1
+  turns:
+  - {q: "contratos de vigilancia por debajo de 500 millones", expect: execute, eq: {valor_max: 500000000}}
+- id: HCA-MONEY-010
+  category: money
+  severity_if_failed: P1
+  turns:
+  - {q: "contratos de obra entre 100 y 500 millones", expect: execute, eq: {valor_min: 100000000, valor_max: 500000000}}
+- id: HCA-MONEY-011
+  category: money
+  severity_if_failed: P1
+  turns:
+  - {q: "contratos de obra de 100 a 500 millones", expect: execute, eq: {valor_min: 100000000, valor_max: 500000000}}
+- id: HCA-MONEY-012
+  category: money
+  severity_if_failed: P1
+  notes: "1.000 millones colombian thousands separator = 1e9"
+  turns:
+  - {q: "contratos de obra por mas de 1.000 millones", expect: execute, eq: {valor_min: 1000000000}}
+- id: HCA-MONEY-013
+  category: money
+  severity_if_failed: P1
+  turns:
+  - {q: "contratos de obra por mas de mil millones", expect: execute, eq: {valor_min: 1000000000}}
+- id: HCA-MONEY-014
+  category: money
+  severity_if_failed: P1
+  turns:
+  - {q: "contratos de obra por mas de 2 mil millones", expect: execute, eq: {valor_min: 2000000000}}
+- id: HCA-MONEY-015
+  category: money
+  severity_if_failed: P1
+  notes: "decimal comma: 2,5 mil millones = 2.5e9"
+  turns:
+  - {q: "contratos de obra por mas de 2,5 mil millones", expect: execute, eq: {valor_min: 2500000000}}
+- id: HCA-MONEY-016
+  category: money
+  severity_if_failed: P1
+  turns:
+  - {q: "contratos de infraestructura por mas de 1 billon", expect: execute, eq: {valor_min: 1000000000000}}
+- id: HCA-MONEY-017
+  category: money
+  severity_if_failed: P1
+  turns:
+  - {q: "contratos de aseo por mas de COP 500 millones", expect: execute, eq: {valor_min: 500000000}}
+- id: HCA-MONEY-018
+  category: money
+  severity_if_failed: P1
+  turns:
+  - {q: "contratos de aseo por mas de $500 millones", expect: execute, eq: {valor_min: 500000000}}
+- id: HCA-MONEY-019
+  category: money
+  severity_if_failed: P2
+  notes: "shorthand 500M — supported or safely unsupported, never wrong magnitude"
+  turns:
+  - {q: "contratos de aseo por mas de 500M en barranquilla", expect: execute}
+- id: HCA-MONEY-020
+  category: money
+  severity_if_failed: P1
+  notes: "100 mil = 100,000 (not millions)"
+  turns:
+  - {q: "contratos de papeleria por mas de 100 mil pesos", expect: execute, eq: {valor_min: 100000}}
+- id: HCA-MONEY-021
+  category: money
+  severity_if_failed: P1
+  notes: "contradictory range must clarify or be rejected, not silently swapped"
+  turns:
+  - {q: "contratos de aseo en cali por mas de 500 millones y menos de 100 millones", expect: block}
+- id: HCA-MONEY-022
+  category: money
+  severity_if_failed: P1
+  notes: "money + year + buyer + topic all coexist"
+  turns:
+  - {q: "contratos de alimentacion de la gobernacion de sucre por mas de 200 millones en 2025", expect: execute, eq: {valor_min: 200000000, fecha_desde: "2025-01-01"}, has: [entidad_resolved], objeto_has: [alimentacion]}
+- id: HCA-MONEY-023
+  category: money
+  severity_if_failed: P1
+  notes: "processes project money onto precio_base"
+  turns:
+  - {q: "procesos de obra por mas de 300 millones", expect: execute, ds: procesos, eq: {valor_min: 300000000}, soql_has: [precio_base >=]}
+- id: HCA-MONEY-024
+  category: money
+  severity_if_failed: P1
+  notes: "contracts project money onto valor_del_contrato"
+  turns:
+  - {q: "contratos de obra por mas de 300 millones", expect: execute, ds: contratos, eq: {valor_min: 300000000}, soql_has: [valor_del_contrato >=]}
+- id: HCA-MONEY-025
+  category: money
+  severity_if_failed: P2
+  notes: "X o más"
+  turns:
+  - {q: "contratos de vias de 800 millones o mas", expect: execute, eq: {valor_min: 800000000}}
+- id: HCA-MONEY-026
+  category: money
+  severity_if_failed: P2
+  notes: "millón singular"
+  turns:
+  - {q: "contratos de papeleria por mas de 1 millon", expect: execute, eq: {valor_min: 1000000}}
+- id: HCA-MONEY-027
+  category: money
+  severity_if_failed: P2
+  notes: "no money mentioned → no money filter invented"
+  turns:
+  - {q: "contratos de aseo en riohacha", expect: execute, absent: [valor_min, valor_max]}
+
+# =====================================================================
+# I. TIME (extensive)
+# =====================================================================
+- id: HCA-TIME-001
+  category: time
+  severity_if_failed: P1
+  turns:
+  - {q: "contratos de aseo en 2026", expect: execute, eq: {fecha_desde: "2026-01-01", fecha_hasta: "2026-12-31"}}
+- id: HCA-TIME-002
+  category: time
+  severity_if_failed: P1
+  turns:
+  - {q: "contratos de aseo en junio de 2026", expect: execute, eq: {fecha_desde: "2026-06-01", fecha_hasta: "2026-06-30"}}
+- id: HCA-TIME-003
+  category: time
+  severity_if_failed: P1
+  notes: "specific day"
+  turns:
+  - {q: "contratos de aseo del 15 de junio de 2026", expect: execute, eq: {fecha_desde: "2026-06-15", fecha_hasta: "2026-06-15"}}
+- id: HCA-TIME-004
+  category: time
+  severity_if_failed: P1
+  notes: "month range must span BOTH months"
+  turns:
+  - {q: "contratos de aseo entre enero y marzo de 2026", expect: execute, eq: {fecha_desde: "2026-01-01", fecha_hasta: "2026-03-31"}}
+- id: HCA-TIME-005
+  category: time
+  severity_if_failed: P1
+  turns:
+  - {q: "contratos de aseo desde marzo de 2025", expect: execute, eq: {fecha_desde: "2025-03-01"}}
+- id: HCA-TIME-006
+  category: time
+  severity_if_failed: P1
+  turns:
+  - {q: "contratos de aseo hasta junio de 2026", expect: execute, eq: {fecha_hasta: "2026-06-30"}}
+- id: HCA-TIME-007
+  category: time
+  severity_if_failed: P1
+  notes: "este año = 2026"
+  turns:
+  - {q: "contratos de aseo de este año en cucuta", expect: execute, eq: {fecha_desde: "2026-01-01"}}
+- id: HCA-TIME-008
+  category: time
+  severity_if_failed: P1
+  notes: "el año pasado = 2025 — must NOT be silently dropped"
+  turns:
+  - {q: "contratos de aseo del año pasado en cucuta", expect: execute, eq: {fecha_desde: "2025-01-01", fecha_hasta: "2025-12-31"}}
+- id: HCA-TIME-009
+  category: time
+  severity_if_failed: P1
+  notes: "este mes = August 2026"
+  turns:
+  - {q: "contratos de aseo de este mes en cucuta", expect: execute, eq: {fecha_desde: "2026-08-01"}}
+- id: HCA-TIME-010
+  category: time
+  severity_if_failed: P1
+  notes: "mes pasado = July 2026"
+  turns:
+  - {q: "contratos de aseo del mes pasado en cucuta", expect: execute, eq: {fecha_desde: "2026-07-01", fecha_hasta: "2026-07-31"}}
+- id: HCA-TIME-011
+  category: time
+  severity_if_failed: P2
+  notes: "últimos 30 días — any correct rolling window"
+  turns:
+  - {q: "contratos de aseo de los ultimos 30 dias en cucuta", expect: execute, has: [fecha_desde]}
+- id: HCA-TIME-012
+  category: time
+  severity_if_failed: P1
+  notes: "bare month without year: junio (of current year)"
+  turns:
+  - {q: "contratos de aseo de junio en cucuta", expect: execute, eq: {fecha_desde: "2026-06-01", fecha_hasta: "2026-06-30"}}
+- id: HCA-TIME-013
+  category: time
+  severity_if_failed: P1
+  notes: "no time mentioned → no date filter invented"
+  turns:
+  - {q: "contratos de aseo en leticia", expect: execute, absent: [fecha_desde, fecha_hasta]}
+- id: HCA-TIME-014
+  category: time
+  severity_if_failed: P1
+  notes: "date range with explicit days"
+  turns:
+  - {q: "contratos de aseo entre el 1 de febrero y el 15 de marzo de 2026", expect: execute, eq: {fecha_desde: "2026-02-01", fecha_hasta: "2026-03-15"}}
+- id: HCA-TIME-015
+  category: time
+  severity_if_failed: P2
+  notes: "firmados el año pasado — signature-date semantics on contracts"
+  turns:
+  - {q: "contratos firmados el año pasado en cordoba", expect: execute, ds: contratos, eq: {fecha_desde: "2025-01-01", fecha_hasta: "2025-12-31"}, soql_has: [fecha_de_firma]}
+
+# =====================================================================
+# G. ACTOR / CONTRACTOR (Actor Profile ON, production index)
+# =====================================================================
+- id: HCA-ACTOR-001
+  category: actor
+  severity_if_failed: P0
+  notes: "sentinel FUNSOCOM: exact alias resolves to typed identity, no guessing"
+  turns:
+  - {q: "busca proveedor funsocom", expect: execute, has: [actor_scope]}
+- id: HCA-ACTOR-002
+  category: actor
+  severity_if_failed: P0
+  notes: "sentinel: FUNSOCOM then year refinement keeps actor scope"
+  turns:
+  - {q: "busca proveedor funsocom", expect: execute, has: [actor_scope]}
+  - {q: "que ha hecho en 2026?", expect: execute, has: [actor_scope], eq: {fecha_desde: "2026-01-01"}}
+- id: HCA-ACTOR-003
+  category: actor
+  severity_if_failed: P0
+  notes: "sentinel: con cordoba = buyer relation; en cordoba = territory; actor kept in both"
+  turns:
+  - {q: "busca proveedor funsocom", expect: execute, has: [actor_scope]}
+  - {q: "con cordoba?", expect: execute, has: [actor_scope, entidad_resolved]}
+  - {q: "en cordoba?", expect: execute, has: [actor_scope], eq: {departamento_resolved: "Córdoba"}}
+- id: HCA-ACTOR-004
+  category: actor
+  severity_if_failed: P1
+  notes: "sentinel typo LMP INGIENERIA — actor-shaped mention must go to candidates, not topic"
+  turns:
+  - {q: "contratos de lmp ingieneria en 2025", has: [actor_scope], objeto_not: [lmp, ingieneria]}
+- id: HCA-ACTOR-005
+  category: actor
+  severity_if_failed: P0
+  notes: "sentinel JORGE VERBEL: ambiguous person name → candidate list, then text selection"
+  turns:
+  - {q: "buscate al proveedor jorge verbel", expect: block}
+  - {q: "1", expect: execute, has: [actor_scope]}
+- id: HCA-ACTOR-006
+  category: actor
+  severity_if_failed: P0
+  notes: "sentinel JOSE CANTILLO + buyer alcaldía de barranquilla"
+  turns:
+  - {q: "contrato de jose cantillo con alcaldia de barranquilla", has: [entidad_resolved]}
+- id: HCA-ACTOR-007
+  category: actor
+  severity_if_failed: P0
+  notes: "sentinel BRIANA LOPESIERRA"
+  turns:
+  - {q: "busca contratista briana lopesierra", has: [actor_scope]}
+- id: HCA-ACTOR-008
+  category: actor
+  severity_if_failed: P1
+  notes: "explicit NIT lookup"
+  turns:
+  - {q: "contratos del nit 900649156", expect: execute}
+- id: HCA-ACTOR-009
+  category: actor
+  severity_if_failed: P1
+  notes: "actor + money + year composition — actor scope must never be silently dropped"
+  turns:
+  - {q: "busca proveedor funsocom", expect: execute, has: [actor_scope]}
+  - {q: "contratos de mas de 50 millones en 2025", has: [actor_scope]}
+- id: HCA-ACTOR-010
+  category: actor
+  severity_if_failed: P0
+  notes: "sentinel UIS is a buyer (university contracts), not actor confusion"
+  turns:
+  - {q: "contratos de la universidad industrial de santander", expect: execute, eq: {entidad_resolved: "UNIVERSIDAD INDUSTRIAL DE SANTANDER"}}
+- id: HCA-ACTOR-011
+  category: actor
+  severity_if_failed: P1
+  notes: "pending candidates + unrelated new search must NOT be treated as selection"
+  turns:
+  - {q: "buscate al proveedor jorge verbel", expect: block}
+  - {q: "contratos de aseo en barranquilla en 2025", expect: execute, objeto_has: [aseo], absent: [actor_scope]}
+- id: HCA-ACTOR-012
+  category: actor
+  severity_if_failed: P1
+  notes: "UT / consorcio mention as actor candidate, distinct from topic adulto mayor"
+  turns:
+  - {q: "busca proveedor ut adulto mayor 2025", has: [actor_scope]}
+- id: HCA-ACTOR-013
+  category: actor
+  severity_if_failed: P2
+  notes: "SAS legal form"
+  turns:
+  - {q: "busca proveedor conalvias sas", has: [actor_scope]}
+- id: HCA-ACTOR-014
+  category: actor
+  severity_if_failed: P1
+  notes: "reset clears pending actor state"
+  turns:
+  - {q: "buscate al proveedor jorge verbel", expect: block}
+  - {q: "reset", absent: [actor_scope, actor_pending]}
+  - {q: "contratos de vigilancia en soledad", expect: execute, objeto_has: [vigilancia], absent: [actor_scope]}
+
+# =====================================================================
+# J. STATE / OPPORTUNITY
+# =====================================================================
+- id: HCA-STATE-001
+  category: state
+  severity_if_failed: P1
+  turns:
+  - {q: "que procesos tiene abiertos la alcaldia de barranquilla", expect: execute, ds: procesos, has: [entidad_resolved], eq: {estado_family: oferta_abierta}}
+- id: HCA-STATE-002
+  category: state
+  severity_if_failed: P1
+  notes: "contratos activos → contract-state family, not process states"
+  turns:
+  - {q: "contratos activos de la gobernacion del atlantico", expect: execute, ds: contratos, has: [estado_contrato], absent: [estado_del_procedimiento]}
+- id: HCA-STATE-003
+  category: state
+  severity_if_failed: P1
+  notes: "liquidados is contract-side"
+  turns:
+  - {q: "contratos liquidados de obra en 2025", expect: execute, ds: contratos, has: [estado_contrato]}
+- id: HCA-STATE-004
+  category: state
+  severity_if_failed: P1
+  notes: "procesos cerrados ≠ abiertos family"
+  turns:
+  - {q: "procesos cerrados de vigilancia en atlantico", expect: execute, ds: procesos, objeto_has: [vigilancia]}
+- id: HCA-STATE-005
+  category: state
+  severity_if_failed: P1
+  notes: "publicados literally says Publicado — family must not inject Borrador"
+  turns:
+  - {q: "procesos publicados de aseo en cesar", expect: execute, soql_not: [Borrador]}
+- id: HCA-STATE-006
+  category: state
+  severity_if_failed: P1
+  notes: "cierran hoy — deadline semantics, verb must not leak to objeto"
+  turns:
+  - {q: "procesos que cierran hoy en atlantico", expect: execute, objeto_not: [cierran]}
+- id: HCA-STATE-007
+  category: state
+  severity_if_failed: P1
+  notes: "en ejecución family"
+  turns:
+  - {q: "contratos en ejecucion de la alcaldia de medellin", expect: execute, has: [estado_contrato]}
+- id: HCA-STATE-008
+  category: state
+  severity_if_failed: P2
+  notes: "borradores explicit"
+  turns:
+  - {q: "procesos en borrador de la gobernacion de narino", expect: execute, ds: procesos}
+
+# =====================================================================
+# K. ORDERING
+# =====================================================================
+- id: HCA-ORDER-001
+  category: ordering
+  severity_if_failed: P1
+  turns:
+  - {q: "contratos de obra en cali ordenados por mayor valor", expect: execute, eq: {ordering_signal: valor_desc}}
+- id: HCA-ORDER-002
+  category: ordering
+  severity_if_failed: P1
+  notes: "los más grandes = valor desc"
+  turns:
+  - {q: "los contratos mas grandes de la gobernacion del valle en 2026", expect: execute, eq: {ordering_signal: valor_desc}}
+- id: HCA-ORDER-003
+  category: ordering
+  severity_if_failed: P2
+  notes: "más recientes = date desc (default ok, must execute)"
+  turns:
+  - {q: "los contratos mas recientes de aseo en pasto", expect: execute}
+- id: HCA-ORDER-004
+  category: ordering
+  severity_if_failed: P2
+  notes: "top 10 limit"
+  turns:
+  - {q: "top 10 contratos de obra por valor en antioquia", expect: execute, eq: {ordering_signal: valor_desc}}
+- id: HCA-ORDER-005
+  category: ordering
+  severity_if_failed: P2
+  notes: "muéstrame 5"
+  turns:
+  - {q: "muestrame 5 contratos de vigilancia en ibague", expect: execute}
+
+# =====================================================================
+# N. NEGATION / EXCLUSION
+# =====================================================================
+- id: HCA-NEG-001
+  category: negation
+  severity_if_failed: P1
+  turns:
+  - {q: "procesos de obra sin contratacion directa", expect: execute, has: [modalidad_exclude_procedure_ids], absent: [modalidad_include_procedure_ids]}
+- id: HCA-NEG-002
+  category: negation
+  severity_if_failed: P1
+  turns:
+  - {q: "contratos de vigilancia excepto minima cuantia", expect: execute, has: [modalidad_exclude_procedure_ids]}
+- id: HCA-NEG-003
+  category: negation
+  severity_if_failed: P0
+  notes: "ignored geographic negation executes the OPPOSITE of user intent"
+  turns:
+  - {q: "contratos de aseo que no sean de barranquilla", absent: [ciudad]}
+- id: HCA-NEG-004
+  category: negation
+  severity_if_failed: P1
+  notes: "no mayores de 500M = valor_max, not valor_min"
+  turns:
+  - {q: "contratos de obra no mayores de 500 millones", expect: execute, eq: {valor_max: 500000000}, absent: [valor_min]}
+- id: HCA-NEG-005
+  category: negation
+  severity_if_failed: P1
+  notes: "sin alimentacion = thematic exclusion, never positive topic"
+  turns:
+  - {q: "contratos de la gobernacion de sucre sin alimentacion", objeto_not: [alimentacion]}
+- id: HCA-NEG-006
+  category: negation
+  severity_if_failed: P1
+  notes: "menos los de 2025 in follow-up"
+  turns:
+  - {q: "contratos de aseo en valledupar", expect: execute}
+  - {q: "menos los de 2025", absent: [fecha_desde]}
+
+# =====================================================================
+# O. TYPO / NORMALIZATION
+# =====================================================================
+- id: HCA-TYPO-001
+  category: typo
+  severity_if_failed: P2
+  turns:
+  - {q: "contratos de alimentacion en barranquila", expect: execute}
+- id: HCA-TYPO-002
+  category: typo
+  severity_if_failed: P2
+  turns:
+  - {q: "contratos de la gobernacion del atlantico", expect: execute, has: [entidad_resolved]}
+- id: HCA-TYPO-003
+  category: typo
+  severity_if_failed: P2
+  notes: "regimen without accent"
+  turns:
+  - {q: "procesos de regimen especial en 2026", expect: execute, has: [modalidad_include_procedure_ids]}
+- id: HCA-TYPO-004
+  category: typo
+  severity_if_failed: P2
+  notes: "random capitalization"
+  turns:
+  - {q: "CONTRATOS DE ASEO EN BARRANQUILLA", expect: execute, objeto_has: [aseo]}
+- id: HCA-TYPO-005
+  category: typo
+  severity_if_failed: P2
+  notes: "double spaces + punctuation"
+  turns:
+  - {q: "contratos  de  aseo,  en barranquilla.", expect: execute, objeto_has: [aseo]}
+- id: HCA-TYPO-006
+  category: typo
+  severity_if_failed: P2
+  notes: "ingenieria typo in generic topic (no actor marker)"
+  turns:
+  - {q: "contratos de ingenieria civil en cundinamarca", expect: execute}
+
+# =====================================================================
+# P. AMBIGUITY / CLARIFICATION
+# =====================================================================
+- id: HCA-AMBIG-001
+  category: ambiguity
+  severity_if_failed: P2
+  notes: "no filters at all must clarify"
+  turns:
+  - {q: "contratos", expect: block}
+- id: HCA-AMBIG-002
+  category: ambiguity
+  severity_if_failed: P2
+  notes: "clear query must NOT clarify (false clarification audit)"
+  turns:
+  - {q: "contratos de aseo en barranquilla en 2025", expect: execute}
+- id: HCA-AMBIG-003
+  category: ambiguity
+  severity_if_failed: P2
+  notes: "ordering without object should ask"
+  turns:
+  - {q: "los mas grandes", expect: block}
+
+# =====================================================================
+# Q. DIRECT LOOKUP / IDENTIFIERS
+# =====================================================================
+- id: HCA-LOOKUP-001
+  category: direct_lookup
+  severity_if_failed: P1
+  notes: "SECOP process reference format"
+  turns:
+  - {q: "CO1.PCCNTR.7754467", expect: execute}
+- id: HCA-LOOKUP-002
+  category: direct_lookup
+  severity_if_failed: P1
+  notes: "cedula as typed identity"
+  turns:
+  - {q: "contratos de la cedula 13848603", expect: execute}
+- id: HCA-LOOKUP-003
+  category: direct_lookup
+  severity_if_failed: P1
+  notes: "short CC 4265582 sentinel"
+  turns:
+  - {q: "contratos de la cedula 4265582", expect: execute}
+
+# =====================================================================
+# L/M. FOLLOW-UP + PAGINATION sequences
+# =====================================================================
+- id: HCA-FOLLOWUP-001
+  category: followup
+  severity_if_failed: P1
+  notes: "canonical 7-turn mutation ladder"
+  turns:
+  - {q: "contratos de adulto mayor de la gobernacion del atlantico en 2026", expect: execute, has: [entidad_resolved], eq: {fecha_desde: "2026-01-01"}}
+  - {q: "por mas de 100 millones", expect: execute, eq: {valor_min: 100000000, fecha_desde: "2026-01-01"}, has: [entidad_resolved], objeto_has: [adulto]}
+  - {q: "solo regimen especial", expect: execute, has: [modalidad_include_procedure_ids], eq: {valor_min: 100000000}, objeto_has: [adulto]}
+  - {q: "ordena por mayor valor", expect: execute, eq: {ordering_signal: valor_desc, valor_min: 100000000}, has: [modalidad_include_procedure_ids]}
+  - {q: "mas resultados", eq: {valor_min: 100000000}, has: [modalidad_include_procedure_ids]}
+- id: HCA-FOLLOWUP-002
+  category: followup
+  severity_if_failed: P1
+  notes: "ADR-061 sentinel: repeated year must not erase money"
+  turns:
+  - {q: "contratos adulto mayor gobernacion de atlantico en 2026", expect: execute}
+  - {q: "por mas de 100 millones en 2026", expect: execute, eq: {valor_min: 100000000, fecha_desde: "2026-01-01"}}
+  - {q: "mas resultados", eq: {valor_min: 100000000}}
+- id: HCA-FOLLOWUP-003
+  category: followup
+  severity_if_failed: P1
+  notes: "money replacement: >100M then >500M replaces, not stacks"
+  turns:
+  - {q: "contratos de obra en antioquia por mas de 100 millones", expect: execute, eq: {valor_min: 100000000}}
+  - {q: "ahora por mas de 500 millones", expect: execute, eq: {valor_min: 500000000}}
+- id: HCA-FOLLOWUP-004
+  category: followup
+  severity_if_failed: P1
+  notes: "max→range replacement"
+  turns:
+  - {q: "contratos de obra en antioquia por menos de 500 millones", expect: execute, eq: {valor_max: 500000000}}
+  - {q: "mejor entre 100 y 300 millones", expect: execute, eq: {valor_min: 100000000, valor_max: 300000000}}
+- id: HCA-FOLLOWUP-005
+  category: followup
+  severity_if_failed: P1
+  notes: "scope switch keeps topic+year, drops nothing else"
+  turns:
+  - {q: "contratos de aseo en barranquilla en 2025", expect: execute}
+  - {q: "ahora en bolivar", expect: execute, objeto_has: [aseo], eq: {fecha_desde: "2025-01-01", departamento_resolved: "Bolívar"}}
+- id: HCA-FOLLOWUP-006
+  category: followup
+  severity_if_failed: P1
+  notes: "year change follow-up replaces year only"
+  turns:
+  - {q: "contratos de vigilancia de la alcaldia de monteria en 2025", expect: execute, eq: {fecha_desde: "2025-01-01"}}
+  - {q: "y en 2024?", expect: execute, eq: {fecha_desde: "2024-01-01", fecha_hasta: "2024-12-31"}, objeto_has: [vigilancia], has: [entidad_resolved]}
+- id: HCA-FOLLOWUP-007
+  category: followup
+  severity_if_failed: P1
+  notes: "filter removal: quita el filtro de modalidad"
+  turns:
+  - {q: "contratos de obra en atlantico por licitacion publica", expect: execute, has: [modalidad_include_procedure_ids]}
+  - {q: "mejor quita el filtro de modalidad", absent: [modalidad_include_procedure_ids], objeto_has: [obra]}
+- id: HCA-FOLLOWUP-008
+  category: followup
+  severity_if_failed: P1
+  notes: "topic change purges stale money (FOLLOWUP-VALUE-INHERIT guard)"
+  turns:
+  - {q: "contratos de residuos solidos en yarumal por menos de 20 millones", expect: execute, eq: {valor_max: 20000000}}
+  - {q: "contratos de sistemas silvopastoriles en yarumal", expect: execute, absent: [valor_max]}
+- id: HCA-FOLLOWUP-009
+  category: followup
+  severity_if_failed: P1
+  notes: "buyer replacement in follow-up"
+  turns:
+  - {q: "contratos de alimentacion de la alcaldia de barranquilla en 2026", expect: execute, eq: {entidad_resolved: "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"}}
+  - {q: "ahora los de la alcaldia de soledad", expect: execute, objeto_has: [alimentacion], eq: {fecha_desde: "2026-01-01"}}
+- id: HCA-FOLLOWUP-010
+  category: followup
+  severity_if_failed: P1
+  notes: "dataset pivot: contracts → open processes keeps topic+scope, drops contract states"
+  turns:
+  - {q: "contratos de dotacion escolar en sucre en 2025", expect: execute, ds: contratos}
+  - {q: "y que procesos abiertos hay de eso?", expect: execute, ds: procesos, objeto_has: [dotacion]}
+- id: HCA-FOLLOWUP-011
+  category: followup
+  severity_if_failed: P1
+  notes: "pagination after refinement must use refined universe (fingerprint)"
+  turns:
+  - {q: "contratos de obra en atlantico en 2026", expect: execute}
+  - {q: "por mas de 200 millones", expect: execute, eq: {valor_min: 200000000}}
+  - {q: "mas resultados", eq: {valor_min: 200000000}}
+- id: HCA-FOLLOWUP-012
+  category: followup
+  severity_if_failed: P2
+  notes: "contextual requery: new topic inherits scope"
+  turns:
+  - {q: "contratos de aseo en barranquilla en 2025", expect: execute}
+  - {q: "y de vigilancia?", expect: execute, objeto_has: [vigilancia], objeto_not: [aseo], eq: {ciudad: Barranquilla}}
+- id: HCA-FOLLOWUP-013
+  category: followup
+  severity_if_failed: P1
+  notes: "reset then fresh query carries nothing"
+  turns:
+  - {q: "contratos de aseo en barranquilla por mas de 100 millones en 2025", expect: execute}
+  - {q: "reset"}
+  - {q: "procesos de software en bogota", expect: execute, ds: procesos, absent: [valor_min, fecha_desde], objeto_has: [software], objeto_not: [aseo]}
+- id: HCA-FOLLOWUP-014
+  category: followup
+  severity_if_failed: P1
+  notes: "modality removal via natural language after composition"
+  turns:
+  - {q: "convenios de regimen especial de alcaldia de barranquilla por mas de 2000 millones en 2026", expect: execute, has: [contract_type_include, modalidad_include_procedure_ids], eq: {valor_min: 2000000000}}
+  - {q: "quita lo de regimen especial", absent: [modalidad_include_procedure_ids], has: [contract_type_include], eq: {valor_min: 2000000000}}
+- id: HCA-FOLLOWUP-015
+  category: followup
+  severity_if_failed: P2
+  notes: "NOOP repetition must not corrupt frame"
+  turns:
+  - {q: "contratos de aseo en barranquilla en 2025", expect: execute}
+  - {q: "contratos de aseo en barranquilla en 2025", expect: execute, objeto_has: [aseo], eq: {ciudad: Barranquilla, fecha_desde: "2025-01-01"}}
+- id: HCA-FOLLOWUP-016
+  category: followup
+  severity_if_failed: P1
+  notes: " ordering change must not lose money filter (reorder keeps WHERE)"
+  turns:
+  - {q: "contratos de obra en cali por mas de 300 millones", expect: execute, eq: {valor_min: 300000000}}
+  - {q: "los mas antiguos primero", eq: {valor_min: 300000000}, objeto_has: [obra]}
+- id: HCA-FOLLOWUP-017
+  category: followup
+  severity_if_failed: P2
+  notes: "pronoun scope: esos = current result set refined"
+  turns:
+  - {q: "contratos de vigilancia en cartagena en 2026", expect: execute}
+  - {q: "solo los de mas de 80 millones", expect: execute, eq: {valor_min: 80000000}, objeto_has: [vigilancia]}
+- id: HCA-FOLLOWUP-018
+  category: followup
+  severity_if_failed: P1
+  notes: "estado follow-up on top of buyer query"
+  turns:
+  - {q: "procesos de la gobernacion del cesar en 2026", expect: execute, ds: procesos}
+  - {q: "solo los abiertos", expect: execute, eq: {estado_family: oferta_abierta}, has: [entidad_resolved]}
+
+# =====================================================================
+# METAMORPHIC pairs (same_frame_as) and ANTI-METAMORPHIC (differ_from)
+# =====================================================================
+- id: HCA-META-001A
+  category: metamorphic
+  severity_if_failed: P2
+  turns:
+  - {q: "contratos de adulto mayor de la gobernacion del atlantico en 2026", expect: execute}
+- id: HCA-META-001B
+  category: metamorphic
+  severity_if_failed: P2
+  same_frame_as: HCA-META-001A
+  turns:
+  - {q: "contratos de adulto mayor del departamento del atlantico para 2026", expect: execute}
+- id: HCA-META-002A
+  category: metamorphic
+  severity_if_failed: P2
+  turns:
+  - {q: "contratos de aseo en barranquilla por mas de 100 millones", expect: execute}
+- id: HCA-META-002B
+  category: metamorphic
+  severity_if_failed: P2
+  same_frame_as: HCA-META-002A
+  notes: "uppercase + accent variation"
+  turns:
+  - {q: "CONTRATOS DE ASEO EN BARRANQUILLA POR MÁS DE 100 MILLONES", expect: execute}
+- id: HCA-META-003A
+  category: metamorphic
+  severity_if_failed: P2
+  turns:
+  - {q: "contratos de obra en cali entre 100 y 500 millones", expect: execute}
+- id: HCA-META-003B
+  category: metamorphic
+  severity_if_failed: P2
+  same_frame_as: HCA-META-003A
+  turns:
+  - {q: "contratos de obra en cali de 100 a 500 millones", expect: execute}
+- id: HCA-META-004A
+  category: metamorphic
+  severity_if_failed: P2
+  turns:
+  - {q: "contratos de vigilancia de la alcaldia de barranquilla en 2025", expect: execute}
+- id: HCA-META-004B
+  category: metamorphic
+  severity_if_failed: P2
+  same_frame_as: HCA-META-004A
+  notes: "polite verb + word order"
+  turns:
+  - {q: "por favor muestrame los contratos de vigilancia que hizo la alcaldia de barranquilla en 2025", expect: execute}
+- id: HCA-META-005A
+  category: metamorphic
+  severity_if_failed: P2
+  turns:
+  - {q: "contratos de obra por mas de mil millones", expect: execute}
+- id: HCA-META-005B
+  category: metamorphic
+  severity_if_failed: P2
+  same_frame_as: HCA-META-005A
+  turns:
+  - {q: "contratos de obra por mas de 1.000 millones", expect: execute}
+- id: HCA-META-006A
+  category: metamorphic
+  severity_if_failed: P2
+  turns:
+  - {q: "procesos abiertos de software en bogota", expect: execute}
+- id: HCA-META-006B
+  category: metamorphic
+  severity_if_failed: P2
+  same_frame_as: HCA-META-006A
+  turns:
+  - {q: "procesos de software abiertos en bogota", expect: execute}
+- id: HCA-ANTI-001
+  category: anti_metamorphic
+  severity_if_failed: P1
+  notes: "en cordoba (territory) vs con cordoba (buyer) — frames MUST differ"
+  turns:
+  - {q: "contratos de aseo en cordoba", expect: execute, eq: {departamento_resolved: "Córdoba"}}
+- id: HCA-ANTI-002
+  category: anti_metamorphic
+  severity_if_failed: P1
+  differ_from: {case: HCA-ANTI-001, fields: [departamento_resolved]}
+  turns:
+  - {q: "contratos de aseo con cordoba", expect: execute}
+- id: HCA-ANTI-003
+  category: anti_metamorphic
+  severity_if_failed: P1
+  notes: "2025 exact year vs desde 2025 open-ended"
+  turns:
+  - {q: "contratos de aseo en cali en 2025", expect: execute, eq: {fecha_desde: "2025-01-01", fecha_hasta: "2025-12-31"}}
+- id: HCA-ANTI-004
+  category: anti_metamorphic
+  severity_if_failed: P1
+  differ_from: {case: HCA-ANTI-003, fields: [fecha_hasta]}
+  turns:
+  - {q: "contratos de aseo en cali desde 2025", expect: execute, eq: {fecha_desde: "2025-01-01"}}
+- id: HCA-ANTI-005
+  category: anti_metamorphic
+  severity_if_failed: P1
+  notes: "mas de 100M vs menos de 100M"
+  turns:
+  - {q: "contratos de obra en tolima por mas de 100 millones", expect: execute, eq: {valor_min: 100000000}}
+- id: HCA-ANTI-006
+  category: anti_metamorphic
+  severity_if_failed: P1
+  differ_from: {case: HCA-ANTI-005, fields: [valor_min, valor_max]}
+  turns:
+  - {q: "contratos de obra en tolima por menos de 100 millones", expect: execute, eq: {valor_max: 100000000}}
+- id: HCA-ANTI-007
+  category: anti_metamorphic
+  severity_if_failed: P1
+  notes: "contratos celebrados vs procesos abiertos — dataset must differ"
+  turns:
+  - {q: "licitaciones celebradas de obra en huila", expect: execute, ds: contratos}
+- id: HCA-ANTI-008
+  category: anti_metamorphic
+  severity_if_failed: P1
+  differ_from: {case: HCA-ANTI-007, fields: [dataset]}
+  turns:
+  - {q: "licitaciones abiertas de obra en huila", expect: execute, ds: procesos}
+
+# =====================================================================
+# R/S. SOURCE CAPABILITY / EPISTEMICS (structural side)
+# =====================================================================
+- id: HCA-SOURCE-001
+  category: source_capability
+  severity_if_failed: P1
+  notes: "actor scope + processes dataset: must not silently drop actor"
+  turns:
+  - {q: "busca proveedor funsocom", expect: execute}
+  - {q: "que procesos abiertos tiene?", has: [actor_scope]}
+- id: HCA-SOURCE-002
+  category: source_capability
+  severity_if_failed: P1
+  notes: "contract state requested on processes wording — must not fabricate"
+  turns:
+  - {q: "procesos liquidados de obra en cauca", ds: procesos}
