@@ -119,6 +119,27 @@ def test_group_isolation_delete_and_clear(tmp_path):
     assert store.get_pagination_buffer("chat-1", "contratos", "fp-2") is None
 
 
+def test_semantic_turn_invalidation_drops_all_buffer_groups(tmp_path):
+    store = ConversationStore(base_path=tmp_path / "conv")
+    _seed(store)
+    procesos = _buffer()
+    contratos = PaginationBuffer.create(
+        query_fingerprint="fp-2", group="contratos", dataset_id="jbjy-vk9h",
+        query_params={"dataset": "contratos", "objeto": ["aseo"], "limit": 5},
+        candidate_buffer=[_row(1, dataset="contratos")],
+        validated_ranked_buffer=[_row(1, dataset="contratos")],
+        display_cursor=1, source_cursor=1, source_candidate_total=1,
+        now=datetime.now(timezone.utc),
+    )
+    store.save_pagination_buffer("chat-1", procesos)
+    store.save_pagination_buffer("chat-1", contratos)
+
+    store.invalidate_pagination_buffers("chat-1")
+
+    assert store.get_pagination_buffer("chat-1", "procesos", "fp-1") is None
+    assert store.get_pagination_buffer("chat-1", "contratos", "fp-2") is None
+
+
 def test_orphan_buffer_without_conversation_is_evicted_on_read(tmp_path):
     store = ConversationStore(base_path=tmp_path / "conv")
     store.save_pagination_buffer("orphan", _buffer())

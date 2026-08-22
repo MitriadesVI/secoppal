@@ -286,6 +286,19 @@ class ConversationStore:
             payload = self._read_pagination_payload(path)
             self._delete_pagination_group(path, payload, group)
 
+    def invalidate_pagination_buffers(self, chat_id: str) -> None:
+        """Drop every cached result universe before a semantic search turn.
+
+        A sidecar is only a reproducible pagination cache; conversation history
+        remains authoritative and untouched. Removing the whole sidecar also
+        prevents a stale sibling group from a previous dual-dataset query from
+        surviving a later single-dataset refinement.
+        """
+        with self._pagination_lock:
+            path = self._pagination_path_for(chat_id)
+            if path.exists():
+                path.unlink()
+
     # ------------------------------------------------------------------
     # Internos
     # ------------------------------------------------------------------

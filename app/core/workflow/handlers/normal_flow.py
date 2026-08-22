@@ -91,6 +91,12 @@ def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
     last_turn = history[-1] if history else None
     followup = is_followup(ctx.user_query, last_turn)
     context_params = dict(last_turn.parsed_params) if (followup and last_turn) else {}
+    # This handler only receives non-pagination turns. Clear all cached result
+    # universes before parsing/execution so any semantic mutation (including a
+    # turn that later returns zero rows or fails closed) cannot leave an old
+    # candidate buffer available to a subsequent "más resultados".
+    if ctx.chat_id:
+        deps.conv_store.invalidate_pagination_buffers(ctx.chat_id)
 
     app = build_application(
         deps,
