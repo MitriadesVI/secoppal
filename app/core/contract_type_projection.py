@@ -8,6 +8,9 @@ _INTERADMIN_JUSTIFICATIONS = (
     "Contratos o convenios Interadministrativos (valor cero)",
     "Contratos o convenios Interadministrativos (con valor)",
 )
+_CONTRACT_INTERADMIN_JUSTIFICATIONS = (
+    "Contratos interadministrativos",
+)
 _SOLIDARITY_JUSTIFICATIONS = (
     "Convenios Solidarios Regimen articulo 92 Ley 2166 de 2021",
     "Law2166of2021_Article95_SolidarityAgreements",
@@ -69,10 +72,12 @@ def _clause_for(
             f"{_contains_any(text_fields, 'convenio')})"
         )
     if canonical_id == "contrato_interadministrativo":
-        return (
+        exact = _in(justification_field, _CONTRACT_INTERADMIN_JUSTIFICATIONS)
+        combined = (
             f"({_in(justification_field, _INTERADMIN_JUSTIFICATIONS)} AND "
             f"{_contains_any(text_fields, 'contrato interadministrativo')})"
         )
+        return f"({exact} OR {combined})"
     if canonical_id == "convenio_asociacion":
         decree = (
             f"({type_field} = 'Decreto 092 de 2017' OR "

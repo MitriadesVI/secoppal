@@ -113,6 +113,18 @@ def test_exact_contract_types_project_to_source_values(
     assert expected_predicate in soql
 
 
+def test_interadministrative_contract_projection_includes_exact_justification() -> None:
+    params = router.parse(
+        "contratos interadministrativos de la gobernacion del atlantico"
+    ).params
+
+    for dataset in ("procesos", "contratos"):
+        soql = builder.build(builder.dataset_id_for(dataset), dict(params, dataset=dataset))
+        assert "Contratos interadministrativos" in soql
+        assert "Contratos o convenios Interadministrativos" in soql
+        assert "contrato interadministrativo" in soql
+
+
 def test_contract_type_round_trips_through_query_frame() -> None:
     params = router.parse("convenios de adulto mayor").params
 
