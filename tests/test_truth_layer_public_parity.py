@@ -40,7 +40,10 @@ M2_MODIFIED_FILE_SHA256 = {
     # strictly by params["actor_scope"], a key only the actor route emits. The
     # oracle below is unchanged, which is what bounds both claims: the ordinary
     # query path emits the same SoQL byte for byte.
-    "app/core/soql_builder.py": "88dc8c35d5ad5627ab11dfd1f1035dc6c0801684e5e3de451f62b58e4e78333d",
+    # SEARCH-SH1 adds dataset-explicit contractual predicates. The ordinary
+    # oracle below remains byte-identical and therefore bounds the new paths to
+    # queries that actually carry contract_type_include.
+    "app/core/soql_builder.py": "b2d4431a33ee4b524e5d9091dd5f217b3e08105036d5b9725824093c14ce125a",
 }
 
 # M2.1 corrigió dos consumidores visibles. AP3-G autoriza además controles de
@@ -51,17 +54,25 @@ M2_1_MODIFIED_FILE_SHA256 = {
     "streamlit_app.py": "ff24ccd886ce6b0e86b085fa77b5c8b14c22f0860d9d52e0127742ca37941fb4",
 }
 
-# Still byte-frozen: M2 touches neither retrieval, nor ranking, nor pagination,
-# nor the workflow handlers.
+# Still byte-frozen: M2/SEARCH-SH1 touch neither ranking nor the surrounding
+# public result contracts.
 BASELINE_FILE_SHA256 = {
     "app/core/pagination_buffer.py": "18165ce221b19f49aa190f0c57a399112f72ce4a6906c49062967b7978c474ea",
     "app/core/phrase_ranking.py": "0a99c8f4ebc10dd71556f1796a40c9192404475831a424964871954bab598c5a",
     "app/core/workflow/dual_dataset.py": "5ccaca040a78273ff873c37ca422645a0005b8bb241ac79bd018a88aed2dcba8",
-    "app/core/workflow/handlers/normal_flow.py": "ccd0e9267de2b20e7cb91ce893706abc6b2822ccd4e2954d45ed5d040d8e732a",
     "app/core/workflow/handlers/pagination.py": "5d46abd695d30b0c4dbb7cac734b9d5c102482af5391ad1790cd19be80744dc3",
     "app/core/workflow/handlers/refinement.py": "fe1a08d26550d5a39fb4fdddbcb40fd623b89e7ab09c634d0bba7a95db00e076",
     "app/core/workflow/results.py": "b4e869d985dadcb50679a19aafda27d92ead18ef756d4833a0ad9e4100d51057",
     "app/main.py": "bad1f025e142301e036fd40d6dbde78077719850bfda45e45ff1ff0bf4dda282",
+}
+
+# SEARCH-SH1 intentionally invalidates cached result universes at the normal
+# semantic-turn boundary. tests/test_pagination_buffer_lifecycle.py and the
+# frozen R4 workflow test bound that one authorized workflow-handler change.
+SEARCH_SH1_MODIFIED_FILE_SHA256 = {
+    "app/core/workflow/handlers/normal_flow.py": (
+        "624d4165fb0d87cbb1c14dae0743e90340005546bca9b01a253fb0b1e9a7caf5"
+    ),
 }
 
 BASELINE_ORACLE_SHA256 = {
@@ -267,6 +278,14 @@ def test_m2_1_modified_consumers_match_their_pinned_state():
         for path in M2_1_MODIFIED_FILE_SHA256
     }
     assert actual == M2_1_MODIFIED_FILE_SHA256
+
+
+def test_search_sh1_modified_handler_matches_its_pinned_state():
+    actual = {
+        path: hashlib.sha256(Path(path).read_bytes()).hexdigest()
+        for path in SEARCH_SH1_MODIFIED_FILE_SHA256
+    }
+    assert actual == SEARCH_SH1_MODIFIED_FILE_SHA256
 
 
 def test_m2_response_policy_is_covered_by_parity_guard():

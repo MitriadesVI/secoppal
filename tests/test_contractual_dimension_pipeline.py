@@ -128,3 +128,10 @@ def test_thematic_control_case_stays_thematic() -> None:
 
     assert params["objeto"] == ["adulto_mayor"]
     assert "contract_type_include" not in params
+
+
+def test_plural_obras_control_remains_thematic() -> None:
+    params = router.parse("contratos de obras").params
+
+    assert params["objeto"] == ["obras"]
+    assert "contract_type_include" not in params

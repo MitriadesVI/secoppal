@@ -102,7 +102,7 @@ _PATTERNS: tuple[_Pattern, ...] = (
     ),
     _Pattern(
         "obra",
-        _compile(r"\bcontratos?\s+de\s+obras?\b"),
+        _compile(r"\bcontratos?\s+de\s+obra\b"),
     ),
     _Pattern("convenio", _compile(r"\bconvenios?\b")),
 )

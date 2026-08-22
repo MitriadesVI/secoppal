@@ -471,10 +471,10 @@ queries:
     expected:
       dataset: contratos
       departamento_resolved: "Santander"
-      objeto_contains: [suministro]
+      contract_type_include: [suministro]
       valor_min: 100000000
       valor_max: 550000000
-      objeto_must_not_contain: [hola, quiero]
+      objeto_must_not_contain: [hola, quiero, suministro]
 
   - id: RATED-055
     query: "holaa contratos de dotacion en magdalena en 2025 por 500 millones o menos"
