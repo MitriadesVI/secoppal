@@ -69,7 +69,7 @@ MUTATIONS = (
         "M07", "maximum monetary delta is rejected by the intent gate",
         "app/core/followup_mutations.py",
         'MONEY_FIELDS = frozenset({"valor_min", "valor_max", "money_metadata"})\n',
-        'MONEY_FIELDS = frozenset({"valor_min", "money_metadata"})\n',
+        'MONEY_FIELDS = frozenset({"valor_min", "money_metadata"})  # M07\n',
         ("tests/test_search_sh1_money_followups.py::test_maximum_families_survive_followup",),
     ),
     Mutation(
