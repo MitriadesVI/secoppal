@@ -1123,6 +1123,7 @@ grep -R "classify_turn\|merge_query_frames" -n app/core/orchestrator.py
 | Timeout SECOP | Mala UX | Retry controlado + count-lazy (ADR-008) |
 | LLM alucina narrativa | Lectura rápida inventa cifras | Validación de grounding monetario en `narrator.py` |
 | `DEPLOY-TZ-001` — falta `tzdata` en el entorno | `ZoneInfo("America/Bogota")` se resuelve al importar `opportunity_retrieval_policy`: sin base de zonas horarias el arranque falla | Garantizar `America/Bogota` en todos los entornos soportados (microbloque de deployment/hardening). **No** se mitiga tocando la lógica de oportunidades |
+| `SEMANTIC-AUTHORITY-CLEANUP` — `MORPHOLOGICAL_VARIANTS` mezcla autoridades | Morfología, equivalencia, alias, jerarquía y asociación viven en una sola tabla: el router convierte `nutricion` en el root `alimentacion` y pierde la identidad explícita; el builder abre un OR donde la relación asociativa adquiere autoridad de equivalencia. `RUNTIME_BUG_CONFIRMED` en `docs/audits/2026-08-22_SEMANTIC_AUTHORITY_AUDIT.md` | Separar autoridades (morfología / semántica de dominio / semántica de consulta) en un microbloque propio. Deuda **abierta**, no abordada por ADR-062: el cierre del spike semántico la documenta pero no la corrige |
 
 ### 12.2 Causas raíz estructurales (revisión integral junio 2026)
 

@@ -3026,3 +3026,138 @@ Archivos de prueba: `tests/test_search_sh1_dogfood_regressions.py`,
 **Documentación:** guía técnica `docs/architecture/SEMANTIC_QUERY_DIMENSIONS.md`;
 evidencia detallada de fuente y proyección en
 `docs/audits/2026-08-22_SEARCH_SH1_SEMANTIC_MONEY_HARDENING.md`.
+
+---
+
+## ADR-062: Cierre del spike Semantic Market Pack — NO-GO como autoridad runtime
+
+**Fecha:** 2026-08-23  
+**Estado:** Accepted  
+**Rama:** `exp/semantic-radar-adulto-mayor-final` (**no mergeada**; archivo de evidencia)
+
+```text
+AS_BUILT_AUTHORITY:
+  docs/audits/2026-08-23_SEMANTIC_MARKET_PACK_SPIKE_CLOSURE.md
+  docs/audits/2026-08-23_ADULTO_MAYOR_SEMANTIC_RADAR_FINAL.md
+```
+
+### Contexto
+
+El spike preguntaba si un **Market Pack** ejecutado sobre el **Semantic Registry
+v0** podía ser autoridad de runtime en dos frentes: sustituir el retrieval
+clásico en Search y clasificar pertenencia a mercado en Radar mejor que una
+definición curada lexical. El protocolo pre-registrado autorizaba transferir la
+prueba a un segundo mercado (Infraestructura Vial) **solo** ante `GO` o
+`KEEP_WITH_LIMITS` en el primero.
+
+Brazos: `A_CLASSIC` (producción), `B2_STRONG_CURATED_OR` (definición curada:
+términos positivos, frases, exclusiones y filtros estructurados) y
+`D_SEMANTIC_REGISTRY_HYBRID` (Market Pack sobre el Registry, con abstención
+conservadora y evidencia de fila requerida).
+
+### Experimentos
+
+MP1 (spike) → MP1-R (reparación de metodología) → MP1-D (labels diagnósticos
+ciegos) → MP2 (B2 + protocolo de cold pre-registrado) → MP2-FINAL (sonda de
+retrieval en vivo) → SRADAR-2 (veredicto de Radar sobre muestra ciega de 240
+filas con labels congelados antes de abrir el MAP).
+
+### Evidencia
+
+**Search — `FINAL_EXPERIMENT_TRANSPORT_INCONCLUSIVE`.** Run `20260823T033843Z`:
+36 casos × 3 rondas = 108 slots por brazo, seis permutaciones balanceadas,
+semilla `20260822`, `timeout=15s`, sin reintento oculto. `paired_query_count = 9`
+frente a `minimum_paired_queries = 24` → transporte insuficiente y **sin
+veredicto comparativo**. Dos hechos independientes del transporte: el componente
+semántico de D registró **108/108 abstenciones**, por lo que sus 42 rondas
+exitosas fueron **passthrough** del brazo clásico; y las 108 trazas cerraron con
+cero violaciones de seguridad — el diseño resultó seguro pero **inerte**.
+
+**Radar — `ADULTO_MAYOR_RADAR_SEMANTIC_NO_GO`.**
+
+| Métrica | B2 | D |
+|---|---:|---:|
+| Precision | 0,913793 | 1,000000 |
+| Recall | 0,913793 | 0,724138 |
+| F1 | 0,913793 | 0,840000 |
+| Abstention rate | 0,000000 | 0,808333 |
+
+D corrige 5 falsos positivos y 1 hard negative, recupera 2 misses por evidencia
+de fila, pierde 13 positivos y produce **11 notificaciones verdaderas netas
+menos**. Los 5 falsos positivos corregidos y los 13 positivos perdidos se
+atribuyen a `ABSTENTION_POLICY`, no a causalidad semántica: solo hay 2
+`SEMANTIC_CAUSAL_WINS` y 1 `SEMANTIC_CAUSAL_LOSS`.
+
+Gates: `R1 PASS`, `R2 PASS`, `R3 PASS`, **`R4 FAIL`** (costo de recall), `R5 PASS`.
+
+### Decisión
+
+```text
+SEMANTIC_MARKET_PACK_RUNTIME: NO_GO
+```
+
+1. El Market Pack **no** se adopta como autoridad de runtime, ni en Search ni en
+   Radar.
+2. La prueba de transferencia a **Infraestructura Vial queda cancelada**: el
+   primer mercado no superó el gate de utilidad operativa.
+3. El **Semantic Registry se conserva**, reclasificado a rol
+   `ADVISORY / GOVERNANCE / AUTHORING`: relaciones semánticas, provenance,
+   documentación, auditoría y sugerencia de vocabulario al curar definiciones de
+   mercado. No se convierte en autoridad de runtime sin evidencia independiente
+   nueva.
+4. Se mantiene la separación de autoridades `MORPHOLOGY` / `DOMAIN SEMANTICS` /
+   `QUERY SEMANTICS`.
+5. Baseline recomendado para Radar: **definición de mercado curada** (términos
+   positivos, frases, exclusiones y filtros estructurados de región, entidad,
+   valor, modalidad y fechas) → broad retrieval → dedup/diff de candidatos →
+   notificación. Se adopta el patrón, **no** el artefacto B2 de Adulto Mayor.
+6. Search se mantiene sin cambios. SODA3/transporte, recall lexical, reranking,
+   embeddings y clasificadores post-retrieval son prioridades independientes que
+   **no** forman parte de este cierre.
+7. Ninguna rama experimental se mergea y ninguna evidencia se borra.
+
+### Qué NO significa
+
+No se concluye que la semántica de dominio carezca de valor, que el Registry
+deba eliminarse, que embeddings o rerankers no puedan funcionar, ni que el Radar
+no pueda manejar mercados. Search quedó **inconcluyente por transporte**, no
+refutado. La conclusión es acotada: la hipótesis e implementación actuales de
+Market Pack + Semantic Registry no justifican su complejidad como autoridad
+runtime.
+
+### Consecuencias
+
+- Radar conserva su arquitectura actual; el patrón de definición curada queda
+  registrado como baseline recomendado para cuando se implemente soporte de
+  mercados.
+- El Registry v0 (`app/core/semantic_registry.py`,
+  `app/data/semantic_registry_v0.json`) permanece **dormido y fuera de main**:
+  ningún módulo de runtime lo importa.
+- Todo el harness experimental (`app/experiments/market_packs/`,
+  `scripts/experiments/`, `artifacts/experiments/`) queda fuera de producción.
+- Se preserva la evidencia completa: cold v2 (36 casos, hash canónico
+  `aa0f4c32…`), labels adjudicados, manifiestos, métricas y auditorías.
+- Hipótesis futura registrada, **sin implementación**:
+  `BROAD RETRIEVAL → RERANK / CLASSIFY` en lugar de
+  `SEMANTIC PRE-RETRIEVAL GATING`, porque la abstención conservadora demostró
+  costar cobertura.
+
+### Criterios de reapertura
+
+La clasificación semántica de mercado en runtime solo se reabre si existe una
+técnica o hipótesis nueva que cumpla **las cuatro** condiciones:
+
+1. **no** dependa de retunear el cold de Adulto Mayor ya usado;
+2. ataque directamente el tradeoff precision/recall observado — es decir,
+   proponga un mecanismo que recupere cobertura sin depender de la política de
+   abstención;
+3. traiga una evaluación independiente nueva, con muestra y labels congelados
+   antes de medir;
+4. **no** sea simplemente añadir más vocabulario al Registry.
+
+Añadir conceptos, relaciones o qualifiers al Registry **no** constituye por sí
+mismo un criterio de reapertura.
+
+**Documentación:** cierre y matriz de integración de commits en
+`docs/audits/2026-08-23_SEMANTIC_MARKET_PACK_SPIKE_CLOSURE.md`; veredicto de
+Radar en `docs/audits/2026-08-23_ADULTO_MAYOR_SEMANTIC_RADAR_FINAL.md`.
