@@ -53,7 +53,7 @@ _ENTITY_REF_PREFIXES = (
 _ENTITY_REF_RE = re.compile(
     r"\b(?P<prefix>"
     + "|".join(_ENTITY_REF_PREFIXES)
-    + r")[-\s]?(?P<num1>\d{1,4}|[A-Z]{2,6})"
+    + r")(?P<prefix_sep>[-\s]?)(?P<num1>\d{1,4}|[A-Z]{2,6})"
     r"(?:[-\s](?P<num2>(?:\d{1,4}|[A-Z]{2,6})))?"
     r"(?:[-\s](?P<year>\d{1,5}))?",
     re.IGNORECASE,
@@ -474,7 +474,9 @@ def _extract_entity_refs(text: str) -> list[str]:
     """Extract entity reference patterns from text.
 
     Returns list of normalized references. A reference is only valid if:
-    - It has at least a prefix AND a number (two segments minimum).
+    - It has at least a prefix AND a component (two segments minimum).
+    - At least one component is numeric.
+    - An alphabetic first component is explicitly separated from the prefix.
     - It's not just a standalone number.
     - It doesn't look like normal text (e.g., "MC" alone is too ambiguous).
     """
@@ -482,12 +484,23 @@ def _extract_entity_refs(text: str) -> list[str]:
     refs: list[str] = []
     for m in matches:
         prefix = m.group("prefix")
+        prefix_sep = m.group("prefix_sep")
         num1 = m.group("num1")
         num2 = m.group("num2")
         year = m.group("year")
 
         # Must have at least 2 components (prefix + num1)
         if not prefix or not num1:
+            continue
+
+        # Official references in the supported corpus always carry numeric
+        # structure.  Alphabetic sub-prefixes are valid only when separated
+        # (SAMC-JCT-006); without that boundary, short prefixes such as SA,
+        # SI, or LIC merely consume the beginning of an ordinary word.
+        components = (num1, num2, year)
+        if not any(component and component.isdigit() for component in components):
+            continue
+        if not prefix_sep and not num1.isdigit():
             continue
 
         # Build the full match string

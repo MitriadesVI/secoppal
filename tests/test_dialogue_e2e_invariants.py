@@ -200,15 +200,7 @@ def test_dialogue_invariants(seq_id, seq, tmp_path):
             )
 
 
-@pytest.mark.xfail(
-    reason="BUG hallado por el corpus adversarial: detect_direct_lookup "
-    "clasifica 'contratos de salud en huila' como entity-ref 'SALUD-EN' "
-    "(dispara en primer turno; ajeno al follow-up engine). Falso positivo "
-    "en app/core/workflow/handlers/direct_lookup.py — secuestra búsquedas "
-    "normales a la ruta de lookup por referencia.",
-    strict=True,
-)
-def test_known_bug_detect_direct_lookup_false_positive():
+def test_direct_lookup_does_not_capture_natural_language():
     from app.core.workflow.handlers.direct_lookup import detect_direct_lookup
     request = detect_direct_lookup("contratos de salud en huila")
     assert request is None, f"misclasificó como referencia {request!r}"

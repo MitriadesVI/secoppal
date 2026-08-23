@@ -166,6 +166,26 @@ def test_conversational_suffix_is_not_an_entity_qualifier():
     assert request.entity_qualifier_raw is None
 
 
+@pytest.mark.parametrize(
+    "query",
+    [
+        "salud en amazonas",
+        "salud mental",
+        "salud pública en cali",
+        "salud oral",
+        "santa marta",
+        "sana convivencia",
+        "siembra de árboles",
+        "sistemas de agua",
+        "sistemas silvopastoriles",
+        "licitar de interventoria",
+    ],
+)
+def test_natural_language_lookup_gate_yields_to_next_handler(query):
+    result = handle_direct_lookup(SimpleNamespace(), HandlerContext(user_query=query))
+    assert result is None
+
+
 def test_numeric_segment_001_matches_only_segment_1():
     request = parse_direct_lookup_request("SAMC-001-2026")
     resolution = resolve_reference_candidates(request, [

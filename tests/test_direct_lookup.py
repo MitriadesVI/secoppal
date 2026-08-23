@@ -136,6 +136,22 @@ class TestPrefixDataset:
 class TestEntityRefDetection:
     """detect_direct_lookup() — entity reference detection."""
 
+    @pytest.mark.parametrize(
+        ("raw_reference", "expected_reference"),
+        [
+            ("CD-08-2026-5534", "CD-08-2026-5534"),
+            ("CMC 0017-2026", "CMC-0017-2026"),
+            ("SAMC-JCT-006", "SAMC-JCT-006"),
+            ("CMC-SD-051", "CMC-SD-051"),
+            ("DHMP-SA-SFDS-003", "SA-SFDS-003"),
+            ("UNIPUTUMAYO-MC-013", "MC-013"),
+            ("SMC MP 021", "MP-021"),
+            ("MC067-2026", "MC067-2026"),
+        ],
+    )
+    def test_supported_real_reference_families(self, raw_reference, expected_reference):
+        assert detect_direct_lookup(raw_reference) == (expected_reference, "entity_ref")
+
     def test_detect_cd_format(self):
         assert detect_direct_lookup("CD-08-2026-5534") == ("CD-08-2026-5534", "entity_ref")
 
@@ -193,6 +209,44 @@ class TestEntityRefDetection:
     def test_no_detect_normal_text(self):
         assert detect_direct_lookup("licitaciones de obra") == (None, None)
         assert detect_direct_lookup("contratos del SENA") == (None, None)
+
+    @pytest.mark.parametrize(
+        "query",
+        [
+            "salud en amazonas",
+            "salud mental",
+            "salud pública en cali",
+            "salud oral",
+            "santa marta",
+            "sana convivencia",
+            "siembra de árboles",
+            "sistemas de agua",
+            "sistemas silvopastoriles",
+            "licitar de interventoria",
+        ],
+    )
+    def test_hca_natural_language_is_not_captured(self, query):
+        assert detect_direct_lookup(query) == (None, None)
+
+    @pytest.mark.parametrize(
+        "query",
+        [
+            "contratos de salud en amazonas",
+            "procesos de salud en valle del cauca",
+            "procesos de minima cuantia en santa marta",
+            "procesos para licitar de interventoria en santander",
+            "contratos de sistemas silvopastoriles en yarumal",
+            "SALUD MENTAL",
+            "SANTA MARTA",
+            "SISTEMAS DE AGUA",
+            "salud en 2026",
+            "santa marta 2026",
+            "sistemas de agua 2026",
+            "licitar de interventoria 2026",
+        ],
+    )
+    def test_directed_natural_language_fuzz_fails_closed(self, query):
+        assert detect_direct_lookup(query) == (None, None)
 
 
 class TestNormalization:
