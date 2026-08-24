@@ -3161,3 +3161,55 @@ mismo un criterio de reapertura.
 **Documentación:** cierre y matriz de integración de commits en
 `docs/audits/2026-08-23_SEMANTIC_MARKET_PACK_SPIKE_CLOSURE.md`; veredicto de
 Radar en `docs/audits/2026-08-23_ADULTO_MAYOR_SEMANTIC_RADAR_FINAL.md`.
+
+---
+
+## ADR-063: La normalización preserva intención direccional y extremos abiertos
+
+**Fecha:** 2026-08-24
+**Estado:** Accepted
+
+### Contexto
+
+HCA-R2 confirmó un patrón común antes de `QueryPlan`:
+`NORMALIZATION_ERASES_USER_INTENT_BEFORE_POLICY`. El extractor monetario
+reconocía correctamente un límite inferior y uno superior, pero ordenaba sus
+valores con `min()`/`max()` aun cuando el usuario había expresado roles
+direccionales contradictorios. P8 recibía así un rango aparentemente válido.
+Este es su estado histórico exacto:
+
+```text
+P8 historical status:
+BLINDED_BY_NORMALIZATION_FROM_BIRTH
+```
+
+En tiempo, `_extract_dates()` emitía correctamente `fecha_desde=2025-01-01` sin
+`fecha_hasta` para `desde 2025`; el fallback genérico de año completaba después
+el extremo ausente y volvía esa consulta indistinguible de `en 2025`.
+
+### Decisión
+
+**`INV-NORMALIZATION-PRESERVES-INTENT`** — normalizar puede convertir unidades,
+canonicalizar representación y ordenar extremos solo cuando la expresión es
+semánticamente simétrica. No puede destruir dirección, contradicción,
+apertura/cierre, granularidad ni provenance requerida por una policy posterior.
+
+La representación existente ya basta para HCA-R3:
+
+- `valor_min` conserva el límite inferior expresado y `valor_max` el superior;
+- `fecha_desde`/`fecha_hasta` conservan la presencia o ausencia de cada extremo;
+- los rangos monetarios simétricos (`entre X y Y`) pueden seguir ordenándose;
+- los rangos de polaridad (`más de X` y `menos de Y`) no se intercambian;
+- un fallback de año solo crea un año cerrado si el extractor temporal no emitió
+  ninguna estructura;
+- P8 valida los límites conservados y `SoQLBuilder` proyecta solo los extremos
+  presentes.
+
+No se añade un tipo arquitectónico, un AST paralelo ni inteligencia nueva en
+policy. `QueryFrame` ya transporta estos cuatro campos sin reinterpretarlos.
+
+### Alcance y deuda explícita
+
+Esta decisión no es Time V2. Permanecen fuera de alcance los rangos enero-marzo,
+los rangos con días, el día exacto, `de junio`, `mes pasado`, `año pasado`,
+negación, control-language y actor hygiene.

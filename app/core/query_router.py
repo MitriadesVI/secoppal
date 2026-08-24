@@ -574,14 +574,19 @@ class QueryRouter:
         )
         for m in re.finditer(_year_re, scrubbed):
             scrubbed = re.sub(rf"\b{re.escape(m.group(0))}\b", " ", scrubbed)
-        # Also extract bare years as dates
+        # Also extract bare years as dates.  A structured result from
+        # _extract_dates() owns the endpoint contract: in particular,
+        # ``desde 2025`` intentionally has no fecha_hasta.  The generic bare-
+        # year fallback may create a closed year only when the date extractor
+        # did not recognize any temporal structure.
         protected_year_spans = _protected_entity_year_spans(normalized)
-        for m in re.finditer(_year_re, normalized):
-            if _inside_spans(m.start(1), m.end(1), protected_year_spans):
-                continue
-            year = m.group(1)
-            params.setdefault("fecha_desde", f"{year}-01-01")
-            params.setdefault("fecha_hasta", f"{year}-12-31")
+        if not date_params:
+            for m in re.finditer(_year_re, normalized):
+                if _inside_spans(m.start(1), m.end(1), protected_year_spans):
+                    continue
+                year = m.group(1)
+                params.setdefault("fecha_desde", f"{year}-01-01")
+                params.setdefault("fecha_hasta", f"{year}-12-31")
         scrubbed = re.sub(r"\s+", " ", scrubbed).strip()
 
         # ── 4. Ordering signals ─────────────────────────────────────────
@@ -1264,8 +1269,11 @@ class QueryRouter:
             amount_hi = _to_cop(hi_text)
 
             if amount_lo and amount_hi and amount_lo >= 1_000_000 and amount_hi >= 1_000_000:
-                params["valor_min"] = min(amount_lo, amount_hi)
-                params["valor_max"] = max(amount_lo, amount_hi)
+                # Unlike a symmetric ``entre X y Y`` range, these operands
+                # have explicit semantic roles.  Preserve them so P8 can see
+                # a contradictory lower bound instead of silently swapping it.
+                params["valor_min"] = amount_lo
+                params["valor_max"] = amount_hi
                 span = normalized_query[cr_match.start():cr_match.end()]
                 consumed_spans.append(span)
                 normalized_query = normalized_query[: cr_match.start()] + " " + normalized_query[cr_match.end() :]

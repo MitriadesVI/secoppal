@@ -1,10 +1,9 @@
 """B4.4 — E2E tests for clarification path (P1 command_incomplete is the key E2E case).
 
-P2 (non_query_followup) and P8 (invalid_value_range) are covered by
-unit tests in test_query_plan.py. P2 requires conversation context
-that the E2E harness doesn't fully replicate. P8 is safety net —
-the query_router auto-swaps min/max so invalid ranges never reach
-the pipeline.
+P2 (non_query_followup) is covered by unit tests in test_query_plan.py and
+requires conversation context that this E2E harness does not fully replicate.
+The historical unit-level P8 test remains there; its real natural-language
+workflow contract is covered by test_normalization_contract.py.
 """
 
 import uuid
