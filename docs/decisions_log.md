@@ -3213,3 +3213,222 @@ policy. `QueryFrame` ya transporta estos cuatro campos sin reinterpretarlos.
 Esta decisión no es Time V2. Permanecen fuera de alcance los rangos enero-marzo,
 los rangos con días, el día exacto, `de junio`, `mes pasado`, `año pasado`,
 negación, control-language y actor hygiene.
+
+---
+
+## ADR-064: La negación preserva la dimensión antes que la ejecutabilidad
+
+**Fecha:** 2026-08-24
+**Estado:** Accepted (diseño) — **runtime sin cambios**
+
+### CONTEXT
+
+HCA-1 reportó tres P1 de negación transversal. HCA-R4 los reprodujo sobre el
+runtime de R3 (`9ecf3be`) con el runner offline y con sondeos directos a
+`QueryRouter.parse` y `followup_engine.detect_and_merge`:
+
+```text
+"contratos de aseo que no sean de barranquilla"
+  → ciudad=Barranquilla + entidad_resolved=DISTRITO … DE BARRANQUILLA
+
+"…de la gobernacion de sucre sin alimentacion"
+  → objeto=[alimentacion]
+
+T1 "aseo en valledupar" / T2 "menos los de 2025"
+  → fecha_desde=2025-01-01 + fecha_hasta=2025-12-31
+```
+
+La reproducción amplió el daño más allá de lo reportado:
+
+- `en atlantico menos barranquilla` → `departamento=Atlántico` **+**
+  `ciudad=Barranquilla`: el complemento exacto de lo pedido;
+- T2 `menos barranquilla` sobre `Atlántico` → `intent=change_scope` que **borra
+  Atlántico** y deja el valor rechazado como alcance;
+- T2 `sin alimentacion` sobre tema `alimentacion` → frame idéntico al previo:
+  **no-op silencioso**;
+- `donde el proveedor no sea X` → params `{dataset}`: **drop total**;
+- `objeto` + `objeto_exclude` con el mismo valor → SoQL insatisfacible y **cero
+  filas fabricado**, indistinguible de un cero real.
+
+SECOPPAL sí ejecuta negación: la modalidad tiene exclusión completa
+(`modalidad_exclude_procedure_ids` → `NOT IN`, verificado PASS). Es el único
+subsistema que entiende que un marcador negativo pertenece a una dimensión.
+
+### PROBLEM
+
+Los extractores estructurados corren antes que cualquier lectura de polaridad y
+reclaman el valor sin mirar qué lo gobierna. La arbitración que salva a la
+modalidad es **accidental**: su span se consume en el paso 1.c del parser, antes
+de que la regex de exclusión corra en el paso 11. El mismo mecanismo rompe la
+geografía, porque la ciudad también consume su span (paso 10.5) y deja la cola
+de `excepto` vacía.
+
+Mismo patrón raíz que ADR-063 —
+`NORMALIZATION_ERASES_USER_INTENT_BEFORE_POLICY` — en otra dimensión: allí la
+normalización monetaria borraba dirección; aquí la extracción borra polaridad.
+
+### DIMENSIONAL_NEGATION_MODEL
+
+Un marcador de exclusión se resuelve a una petición tipada
+`NegationRequest(dimension, value_span, scope_anchor, marker, verdict)` **antes**
+de decidir si es ejecutable. Siete clases, no una:
+
+| clase | ejemplo | dimensiones |
+|---|---|---|
+| `VALUE_EXCLUSION` (vocabulario abierto) | `sin alimentación` | OBJECT |
+| `SET_EXCLUSION` (vocabulario cerrado) | `excepto contratación directa` | MODALITY, DEPARTMENT, CONTRACT TYPE, STATE |
+| `SCOPE_EXCLUSION` (resta territorial) | `que no sean de Barranquilla` | CITY, DEPARTMENT, BUYER |
+| `TEMPORAL_EXCLUSION` (hueco) | `menos los de 2025` | TIME |
+| `CONTRADICTORY_NEGATION` | `alimentación pero sin alimentación` | cualquiera |
+| `UNSUPPORTED_NEGATION` | proyección insegura | cualquiera |
+| `POLARITY_INVERSION` (**no es exclusión**) | `no mayores de 500 millones` | MONEY |
+
+Separar `POLARITY_INVERSION` es requisito de seguridad, no taxonomía: el
+marcador `menos` es compartido entre `por menos de 500 millones` (comparador,
+correcto hoy) y `menos los de 2025` (exclusión).
+
+La resolución de dimensión reutiliza la disciplina de la modalidad: los
+marcadores se evalúan **solo en el texto fuera de spans ya resueltos**
+(`has_external_negative_operator`), con lista de anti-negación. Por eso
+`contratación directa sin ofertas` —alias real— resuelve a inclusión. OBJECT es
+el destino por defecto del **residuo**, no de la negación.
+
+### SUPPORTED_V1
+
+1. **OBJECT exclusion.** La cadena `objeto_exclude` ya existe completa —parser →
+   frame → `exclude_topic` → `MutationPolicy` → `NOT (…)` en SoQL— y está
+   verificada extremo a extremo. Falta solo el disparador lingüístico: la regex
+   acepta `excluye|excluir|excepto` anclada al final y no acepta `sin`,
+   `que no sean`, `salvo`, `excluyendo` ni el subjuntivo (`excluyan` fuga a
+   `objeto`).
+2. **MODALITY exclusion.** Existente, comportamiento intacto. Única intervención
+   admisible: extraer `_EXTERNAL_NEGATIVE_OPERATORS` / `_ANTI_NEGATION_PATTERNS`
+   a un módulo compartido de una sola responsabilidad, con pruebas de
+   equivalencia exacta. Duplicar la lista garantizaría deriva entre dimensiones.
+3. **DEPARTMENT set-exclusion con alcance positivo explícito.** Se resta de
+   `departamentos_in` **antes** de construir el SoQL. Sin predicado negativo,
+   sin semántica de NULL, sin tocar `SoQLBuilder`.
+
+### DEFERRED
+
+- **CITY exclusion** (con o sin ancla) → CLARIFY. Precondición: gazetteer
+  municipal + `ciudad_resolved` con proyección por igualdad + medición de
+  NULL/centinela en `ciudad`.
+- **TEMPORAL exclusion** → `TEMPORAL_NEGATION_V1 = CLARIFY_UNSUPPORTED`.
+- **Geografía negativa sin alcance positivo** (complemento nacional) → CLARIFY.
+- **BUYER** y **ACTOR** exclusion → CLARIFY. Identidad no resuelta: ecosistemas
+  de entidad y integrantes de UT (Riesgo D, ADR-042).
+- **CONTRACT TYPE** y **STATE** → sin demanda reportada; baratos después.
+
+Se aparta de la frontera sugerida en el encargo (*city exclusion cuando existe
+alcance mayor*): el alcance positivo resuelve la **amplitud** pero no la
+**proyección**. `ciudad` se proyecta por subcadena
+(`unaccent(UPPER(ciudad)) LIKE '%x%'`) sobre una columna sin canonicalizar y sin
+gazetteer, así que `NOT LIKE '%cali%'` borra Calima y `NOT LIKE '%san andres%'`
+borra San Andrés de Sotavento y de Cuerquia. Un LIKE positivo demasiado ancho
+devuelve filas de más y el usuario las descarta; un `NOT LIKE` demasiado ancho
+**borra filas correctas de forma invisible**. `DEPARTMENT set-exclusion` entrega
+la misma clase de utilidad con riesgo nulo.
+
+### CONFLICT_POLICY
+
+Hay contradicción cuando el **mismo valor**, en la **misma dimensión**, aparece
+a la vez en el conjunto positivo y en el negativo tras normalización —incluida
+la expansión morfológica—. Política V1: **CLARIFY, fail-closed**, tanto en el
+mismo turno como por herencia entre turnos. No se adivina cuál de las dos
+lecturas quiso el usuario; su respuesta a la aclaración es la telemetría que
+permitirá decidirlo después con datos.
+
+Replica el precedente de `ModalityFilter.__post_init__`, que lanza `ValueError`
+ante `include ∩ exclude ≠ ∅`. La diferencia entre modalidad y objeto no puede
+ser el azar de qué subsistema se escribió con más cuidado. El orden de los
+parsers no decide quién gana.
+
+### NULL_SEMANTICS
+
+La ausencia geográfica en SECOP **no se codifica como NULL sino como
+centinela**: `departamento = 'No Definido'` cubre 569 832 filas en `p6dx-8zbt`
+(**6,61 %**) y 112 820 en `jbjy-vk9h` (**2,01 %**). Las consecuencias son
+opuestas: NULL bajo lógica de tres valores hace que `NOT (x LIKE …)` **elimine**
+la fila; `No Definido` es cadena real y la **incluye**.
+
+Política: una exclusión debe declarar su tratamiento del desconocido, y el
+default correcto es **incluirlo y decirlo**. Excluir el desconocido convierte la
+resta de una ciudad en la resta de una ciudad más el 2–7 % del universo — el
+drop silencioso que el invariante prohíbe.
+
+Defecto latente detectado en el mecanismo **ya en producción**: la cláusula
+`NOT (f₁ LIKE … OR f₂ LIKE …)` de `objeto_exclude` no es null-safe. Si
+`descripcion_del_proceso` es NULL y `objeto_del_contrato` no coincide, la
+disyunción vale `NULL`, `NOT NULL` vale `NULL` y la fila se elimina aunque no
+contenga el término excluido. Forma correcta: `COALESCE(… LIKE …, false)`.
+
+### FOLLOWUP_POLICY
+
+Regla estructural: **un valor gobernado por un marcador negativo nunca puede
+servir de evidencia para clasificar la intención del turno.** La clasificación
+corre sobre el residuo positivo; si está vacío, el turno es de exclusión y no de
+cambio de alcance.
+
+- Una política de mutación de exclusión solo puede tocar su campo negativo
+  (`MutationPolicy({objeto_exclude})` ya lo hace). Esa restricción es lo que
+  impide estructuralmente que `menos barranquilla` reemplace el alcance.
+- Una exclusión no ejecutable en seguimiento **no es un no-op**: produce un turno
+  de aclaración y deja el frame anterior intacto.
+- Una exclusión sin alcance positivo previo ni en el turno es demasiado amplia
+  (precedente: P15 bloquea oportunidades sin alcance).
+- Las exclusiones deben poder retirarse. `refinement_recovery` ya etiqueta
+  `objeto_exclude` como "exclusión" ante el usuario, pero
+  `requested_clear_fields` no tiene slot para ella: hoy una exclusión heredada
+  no se puede quitar por lenguaje.
+- La expansión morfológica se conserva en la exclusión (simetría con el
+  positivo) pero **se declara** en traza y respuesta: `sin alimentación` también
+  excluye `comedor`, `nutrición`, `alimentos`.
+
+### INVARIANTS
+
+**`INV-NEGATION-PRESERVES-DIMENSION`** — una negación conserva qué dimensión se
+niega, qué valor se niega, dentro de qué alcance, y si la exclusión puede
+ejecutarse con seguridad. Ninguna dimensión puede recibir un valor **positivo**
+derivado de un span gobernado por un marcador negativo.
+
+**`INV-NO-SILENT-NEGATION-DROP`** — si el usuario usa un marcador inequívoco de
+exclusión sobre un span resoluble y SECOPPAL no puede representarlo, aclara o
+avisa. Nunca lo convierte en positivo; nunca lo ignora en silencio. Ejecutar la
+parte positiva ignorando la exclusión **no cumple**: devuelve un superconjunto
+que contiene precisamente las filas rechazadas.
+
+### TEST_REQUIREMENTS
+
+24 casos pre-registrados **antes** del código en
+`tests/fixtures/audits/negation_focal_v1.yaml` (no ejecutado; ningún test lo
+carga por glob). Cubren los 12 exigidos más siete derivados de la reproducción
+(anti-negación ESAL, alias con `sin`, subjuntivo, span de ciudad consumido,
+buyer, actor, control monetario) y dos anti-metamórficas:
+
+- **N5 ≢ N6** — `de alimentación sin transporte` y `sin alimentación ni
+  transporte` tienen significados opuestos y hoy producen el mismo frame;
+- **N2 ≢ N12** — una consulta y su negación no pueden producir el mismo frame.
+
+Innegociables del bloque de implementación: `NEG-N4` y `NEG-N15` (modalidad) y
+`NEG-N13` (dinero) son controles anti-regresión; el corpus congelado
+`conversation_holistic_v1.yaml` (`sha256 262c225c…99ffba`) no se edita.
+
+Tres mediciones preceden a la implementación: tasa de NULL de
+`descripcion_del_proceso`/`objeto_del_contrato`; NULL y centinela de `ciudad` /
+`ciudad_entidad`; coste de latencia de una disyunción de fechas en `p6dx-8zbt`
+contra el gate p90 de Etapa 6.
+
+### Alcance y deuda explícita
+
+Esta decisión no soporta toda la negación del español. No cubre negación de
+constituyentes coordinados complejos, cuantificadores ni doble negación
+(`no sin`). El objetivo es **dejar de ejecutar lo contrario de lo que pidió el
+usuario**.
+
+Recomendación independiente, de una línea y sin depender de que se implemente
+exclusión alguna: **desacoplar `_CITY_TO_ENTITY` de la detección de ciudad
+cuando hay marcador negativo**. Ese mapeo convierte una exclusión geográfica en
+una restricción de comprador y duplica el daño de la inversión.
+
+Guía técnica: `docs/architecture/DIMENSIONAL_NEGATION_SEMANTICS.md`.
