@@ -3346,22 +3346,32 @@ parsers no decide quién gana.
 
 ### NULL_SEMANTICS
 
-La ausencia geográfica en SECOP **no se codifica como NULL sino como
-centinela**: `departamento = 'No Definido'` cubre 569 832 filas en `p6dx-8zbt`
-(**6,61 %**) y 112 820 en `jbjy-vk9h` (**2,01 %**). Las consecuencias son
-opuestas: NULL bajo lógica de tres valores hace que `NOT (x LIKE …)` **elimine**
-la fila; `No Definido` es cadena real y la **incluye**.
+HCA-R4.1 midió la fuente en vivo el 2026-08-24. En los campos CITY, NULL y
+vacío fueron 0 en ambos datasets; el desconocido se codifica exactamente como
+`No Definido`: 2 154 643/9 055 609 filas de `ciudad_entidad` en `p6dx-8zbt`
+(**23,79 %**) y 1 286 689/5 980 312 de `ciudad` en `jbjy-vk9h`
+(**21,52 %**), sin otras variantes de centinela observadas. En DEPARTMENT, el
+mismo snapshot dio 582 818 (**6,44 %**) y 120 469 (**2,01 %**): la cifra de
+diseño 6,61 % / 2,01 % ya no se reproduce para Procesos y sí se reproduce, al
+redondear, para Contratos. Las consecuencias siguen siendo opuestas: NULL bajo
+lógica de tres valores hace que `NOT (x LIKE …)` **elimine** la fila;
+`No Definido` es una cadena real y la **incluye**.
 
 Política: una exclusión debe declarar su tratamiento del desconocido, y el
 default correcto es **incluirlo y decirlo**. Excluir el desconocido convierte la
-resta de una ciudad en la resta de una ciudad más el 2–7 % del universo — el
-drop silencioso que el invariante prohíbe.
+resta de una ciudad en la resta de una ciudad más el 21–24 % del universo
+observado; 2–7 % es el rango de DEPARTMENT. Ese es el drop silencioso que el
+invariante prohíbe.
 
 Defecto latente detectado en el mecanismo **ya en producción**: la cláusula
-`NOT (f₁ LIKE … OR f₂ LIKE …)` de `objeto_exclude` no es null-safe. Si
-`descripcion_del_proceso` es NULL y `objeto_del_contrato` no coincide, la
-disyunción vale `NULL`, `NOT NULL` vale `NULL` y la fila se elimina aunque no
-contenga el término excluido. Forma correcta: `COALESCE(… LIKE …, false)`.
+`NOT (f₁ LIKE … OR f₂ LIKE …)` de `objeto_exclude` no es null-safe. La
+medición encontró 5 NULL en `nombre_del_procedimiento` y 1 en
+`descripci_n_del_procedimiento` de Procesos, sin solape; ambos campos de
+Contratos tuvieron 0 NULL. Con un término sintético ausente, la forma actual
+eliminó las 6 filas de Procesos y la forma
+`COALESCE(… LIKE …, false)` preservó 6/6; con controles que sí contenían el
+término, ambas formas conservaron la exclusión. La corrección es semántica,
+aunque el impacto vivo medido sea hoy de seis filas.
 
 ### FOLLOWUP_POLICY
 
@@ -3414,10 +3424,13 @@ Innegociables del bloque de implementación: `NEG-N4` y `NEG-N15` (modalidad) y
 `NEG-N13` (dinero) son controles anti-regresión; el corpus congelado
 `conversation_holistic_v1.yaml` (`sha256 262c225c…99ffba`) no se edita.
 
-Tres mediciones preceden a la implementación: tasa de NULL de
-`descripcion_del_proceso`/`objeto_del_contrato`; NULL y centinela de `ciudad` /
-`ciudad_entidad`; coste de latencia de una disyunción de fechas en `p6dx-8zbt`
-contra el gate p90 de Etapa 6.
+Las tres mediciones preimplementación quedaron cerradas por HCA-R4.1: tasa de
+NULL de los cuatro campos reales usados por `objeto_exclude`; NULL, vacío y
+centinela de `ciudad`/`ciudad_entidad`; y benchmark alternado de la disyunción
+de fechas en `p6dx-8zbt`. El transporte temporal fue SAFE en el sondeo (sin
+timeouts; p90 fetch 0,4582 s, count 2,5275 s), pero la comparación es
+fuente-a-fuente y no activa soporte TIME. Evidencia:
+`docs/audits/2026-08-24_HCA_R4_1_NEGATION_LIVE_SOURCE_PRECHECK.md`.
 
 ### Alcance y deuda explícita
 

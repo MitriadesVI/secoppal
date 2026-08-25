@@ -295,20 +295,20 @@ NOT (unaccent(UPPER(objeto_del_contrato))    LIKE '%comedor%'
   OR … )        -- 6 variantes morfológicas × 2 campos = 12 LIKE
 ```
 
-Con lógica de tres valores, si `descripcion_del_proceso` es NULL y
-`objeto_del_contrato` no coincide, la disyunción vale `NULL`, `NOT NULL` vale
-`NULL`, y **la fila se elimina aunque no contenga el término excluido**. Es un
-defecto latente del mecanismo *actual*, no del propuesto. La forma correcta es
-explícita:
+Con lógica de tres valores, si uno de los dos campos es NULL y el otro no
+coincide, la disyunción vale `NULL`, `NOT NULL` vale `NULL`, y **la fila se
+elimina aunque no contenga el término excluido**. Es un defecto latente del
+mecanismo *actual*, no del propuesto. La forma correcta es explícita:
 
 ```sql
 NOT ( COALESCE(unaccent(UPPER(objeto_del_contrato))    LIKE '%x%', false)
    OR COALESCE(unaccent(UPPER(descripcion_del_proceso)) LIKE '%x%', false) )
 ```
 
-`IS NULL` ya se usa en el builder (`soql_builder.py:510`), así que la forma es
-expresable. **Preflight obligatorio antes de implementar:** medir la tasa de
-NULL de `descripcion_del_proceso` y `objeto_del_contrato` en ambos datasets.
+HCA-R4.1 verificó esta forma directamente en SoQL. En vivo, los cuatro campos
+reales tienen 6 NULL en total —todos en Procesos— y 0 vacíos: la forma actual
+borró las 6 filas para un término ausente; `COALESCE` preservó 6/6 y siguió
+excluyendo los controles que sí contenían el término.
 
 **(c) La exclusión hereda la expansión morfológica.** `objeto_exclude=[alimentacion]`
 excluye también `comedor`, `nutricion`, `alimentos`. Para una inclusión eso es
@@ -367,20 +367,26 @@ La asimetría es decisiva:
 - un `NOT LIKE` demasiado ancho **borra filas correctas de forma invisible**.
 
 Con el vocabulario de ciudades que el parser ya reconoce, el riesgo es concreto:
-`NOT LIKE '%cali%'` elimina también Calima; `NOT LIKE '%san andres%'` elimina
-San Andrés de Sotavento (Córdoba) y San Andrés de Cuerquia (Antioquia). Y
-`Armenia` es homónimo real (Quindío y Antioquia): la exclusión borra las dos.
+`NOT LIKE '%cali%'` elimina también Calima, San Calixto y California;
+`NOT LIKE '%san andres%'` elimina `San Andrés Sotavento` y todos los valores
+exactos `San Andrés`, incluidos los que la fuente diferencia solo por
+departamento (Archipiélago, Santander y Antioquia). `NOT LIKE '%cartagena%'`
+elimina además `Cartagena Del Chairá`.
 
 ### 6.2 ¿`NOT ciudad = 'Barranquilla'` debe incluir filas con ciudad NULL?
 
-No se decide por intuición. La evidencia del catálogo de valores reales
-(`app/data/secop_field_values.json`) dice que **la ausencia geográfica en SECOP
-no se codifica como NULL sino como centinela**:
+No se decide por intuición. HCA-R4.1 midió directamente los campos CITY de la
+fuente en vivo. NULL y vacío fueron 0; la ausencia se codifica exactamente como
+el centinela `No Definido`:
 
-| dataset | campo | valor centinela | filas | % del total catalogado |
+| dataset | campo | valor centinela | filas | % del total vivo |
 |---|---|---|---|---|
-| `p6dx-8zbt` (procesos) | `departamento_entidad` | `No Definido` | 569 832 | **6,61 %** |
-| `jbjy-vk9h` (contratos) | `departamento` | `No Definido` | 112 820 | **2,01 %** |
+| `p6dx-8zbt` (procesos) | `ciudad_entidad` | `No Definido` | 2 154 643 | **23,79 %** |
+| `jbjy-vk9h` (contratos) | `ciudad` | `No Definido` | 1 286 689 | **21,52 %** |
+
+No aparecieron otras variantes de centinela entre los valores agrupados. Como
+referencia separada, DEPARTMENT dio 582 818 (6,44 %) y 120 469 (2,01 %): la
+cifra de diseño 6,61 % / 2,01 % solo se reproduce, al redondear, en Contratos.
 
 Consecuencias, y son opuestas entre sí:
 
@@ -393,13 +399,10 @@ Consecuencias, y son opuestas entre sí:
 **Política documentada (no ejecutada en V1):** una exclusión geográfica debe
 declarar su tratamiento del desconocido, y el default correcto es
 **incluir el desconocido y decirlo**: "excluí Barranquilla; N resultados tienen
-territorio sin definir y se conservaron". Excluir el desconocido convierte una
-resta de una ciudad en una resta de una ciudad *más el 2–7 % del universo*, que
-es exactamente el drop silencioso que el invariante prohíbe.
-
-La tasa de NULL/centinela de la columna **`ciudad`** (distinta de
-`departamento`) no está catalogada en el repo y **debe medirse antes de
-implementar** cualquier exclusión de ciudad.
+territorio sin definir y se conservaron". Excluir el desconocido convertiría
+una resta de ciudad en la resta pedida más **21–24 %** del universo; para
+DEPARTMENT, el riesgo medido es 2–7 %. Ambos son exactamente el drop silencioso
+que el invariante prohíbe.
 
 ### 6.3 `en Atlántico menos Barranquilla`
 
@@ -496,9 +499,10 @@ Sería representable en SoQL:
 Pero el propio `SoQLBuilder` documenta la razón para no hacerlo a la ligera
 (`soql_builder.py:505-508`): una `OR` entre columnas de fecha en `p6dx-8zbt`
 tiene *"severe planner penalty"*, y por eso la política de oportunidades se
-reescribió como un único `case(...)`. Con un gate de latencia vigente en
-Etapa 6 (p90 ≈ 11,6 s), introducir disyunciones temporales sin medir es
-arriesgar el presupuesto de latencia por una construcción de uso minoritario.
+reescribió como un único `case(...)`. El gate vigente de Etapa 6 es
+**p90 < 15 s**; **11,6 s** fue el resultado observado en la corrida de cierre,
+no el umbral. Introducir disyunciones temporales sin medir es arriesgar ese
+presupuesto de latencia por una construcción de uso minoritario.
 
 Además el coste de diseño escala mal:
 
@@ -689,12 +693,12 @@ evalúa la **proyección real**.
 
 | DIMENSION | REPRESENTABLE | SOQL_FORM | NULL_SEMANTICS | SAFE | DECISION |
 |---|---|---|---|---|---|
-| **OBJECT** | sí | `NOT (f₁ LIKE '%x%' OR f₂ LIKE '%x%' …)` | 3VL: `descripcion` NULL ⇒ **fila borrada**. Requiere `COALESCE(…, false)` | sí, **con el fix null-safe** | **SUPPORTED** |
+| **OBJECT** | sí | `NOT (f₁ LIKE '%x%' OR f₂ LIKE '%x%' …)` | 3VL: un campo NULL ⇒ **fila borrada** si el otro no coincide. En vivo: 6 filas de Procesos afectables; 0 de Contratos. `COALESCE(…, false)` verificado | sí, **con el fix null-safe** | **SUPPORTED** |
 | **MODALITY** | sí | `modalidad_de_contratacion NOT IN (…)` sobre raws de catálogo | NULL ⇒ fila borrada (medir; en producción hoy) | sí | **EXISTING** |
 | **DEPARTMENT (resta de conjunto)** | sí | `departamento IN (<positivos − excluidos>)` | **no aplica**: predicado positivo | sí | **SUPPORTED** |
-| **DEPARTMENT (complemento abierto)** | sí | `departamento NOT IN (…)` | `No Definido` (6,61 % / 2,01 %) queda **incluido** | ambiguo, decidible | **DEFER** |
-| **CITY** | técnicamente sí | `NOT (unaccent(UPPER(ciudad)) LIKE '%x%')` | NULL ⇒ borrada; `No Definido` incluida; **colisión de subcadena** (Calima⊃cali, San Andrés de Sotavento) | **no** | **CLARIFY** |
-| **TIME** | sí, con disyunción | `(fecha < a OR fecha > b)` o `case(…)` | NULL ⇒ borrada | penalización de planner **documentada** + gate de latencia | **CLARIFY_ONLY** |
+| **DEPARTMENT (complemento abierto)** | sí | `departamento NOT IN (…)` | `No Definido` (6,44 % / 2,01 % en HCA-R4.1) queda **incluido** | ambiguo, decidible | **DEFER** |
+| **CITY** | técnicamente sí | `NOT (unaccent(UPPER(ciudad)) LIKE '%x%')` | NULL/vacío 0 %, pero `No Definido` es 23,79 % / 21,52 %; **colisión de subcadena** (Calima⊃cali, San Andrés Sotavento) | **no** | **CLARIFY** |
+| **TIME** | sí, con disyunción | `(fecha < a OR fecha > b)` o `case(…)` | NULL ⇒ borrada | transporte exploratorio SAFE; parser/representación siguen abiertos | **CLARIFY_ONLY** |
 | **BUYER** | sí | `nombre_entidad != '…'` / `NOT LIKE` | homónimos, ecosistemas | no | **DEFER** |
 | **ACTOR** | sí | `proveedor_adjudicado NOT LIKE` / `documento_proveedor NOT IN` | NULL frecuente (no adjudicados); UT | no | **DEFER** |
 | **CONTRACT TYPE** | sí | `tipo_de_contrato NOT IN (…)` | cerrado | sí | **DEFER** (sin demanda) |
@@ -726,10 +730,12 @@ evalúa la **proyección real**.
 
 4. **CITY exclusion**, con o sin ancla positiva. Precondición para reabrir:
    gazetteer municipal (DIVIPOLA) + `ciudad_resolved` con proyección por
-   igualdad + medición de NULL/centinela en la columna `ciudad`. Ese trabajo
-   también mejora la **precisión positiva** de ciudad, así que se paga dos veces.
-5. **TEMPORAL exclusion**. Precondición: cerrar `HCA-TIME-001/002/003/004` y
-   medir el coste de la disyunción contra el gate de latencia.
+   igualdad. La medición de NULL/centinela ya cerró en HCA-R4.1 y refuerza esta
+   frontera. Ese trabajo también mejora la **precisión positiva** de ciudad, así
+   que se paga dos veces.
+5. **TEMPORAL exclusion**. La disyunción pasó el benchmark exploratorio de
+   transporte de HCA-R4.1, pero no activa soporte. Precondición restante: cerrar
+   `HCA-TIME-001/002/003/004` y diseñar el álgebra de intervalos.
 6. **Geografía negativa sin alcance positivo alguno** — complemento nacional.
 7. **BUYER exclusion** y **ACTOR exclusion** — identidad no resuelta
    (ecosistemas, UT).
@@ -802,19 +808,26 @@ porque no dependen de valores concretos:
 
 ---
 
-## 16. Precondiciones de medición
+## 16. Mediciones preimplementación — cerradas por HCA-R4.1
 
-Tres mediciones deben preceder a la implementación. Ninguna es opcional y
-ninguna se puede hacer sin red.
+El precheck en vivo del 2026-08-24 cerró las tres mediciones obligatorias. La
+evidencia, queries y rondas completas están en
+[`2026-08-24_HCA_R4_1_NEGATION_LIVE_SOURCE_PRECHECK.md`](../audits/2026-08-24_HCA_R4_1_NEGATION_LIVE_SOURCE_PRECHECK.md)
+y en su artefacto JSON.
 
-1. **Tasa de NULL de `descripcion_del_proceso` y `objeto_del_contrato`** en
-   ambos datasets. Determina el impacto del defecto null-safe de §5.2(b), que
-   afecta al `objeto_exclude` **ya en producción**.
-2. **Tasa de NULL y de centinela de la columna `ciudad`** (`jbjy-vk9h`) y
-   `ciudad_entidad` (`p6dx-8zbt`). El catálogo del repo solo cubre
-   `departamento`.
-3. **Coste de latencia de una disyunción de fechas** sobre `p6dx-8zbt`, contra
-   el gate p90 de Etapa 6. Determina si TIME puede reabrirse alguna vez.
+1. **OBJECT NULL.** Procesos: `nombre_del_procedimiento` 5 NULL
+   (0,00005521 %) y `descripci_n_del_procedimiento` 1 (0,00001104 %), sin
+   solape ni vacíos; Contratos: 0 NULL/vacíos en ambos campos. La forma actual
+   borró las 6 filas NULL ante un término ausente; la forma con `COALESCE`
+   preservó 6/6 y siguió excluyendo controles positivos.
+2. **CITY unknown.** NULL/vacío = 0 en ambos datasets. El único centinela
+   relevante observado fue exactamente `No Definido`: 2 154 643/9 055 609
+   (23,79346326 %) en Procesos y 1 286 689/5 980 312 (21,51541592 %) en
+   Contratos.
+3. **TIME transport.** 8 rondas alternadas por variante de fetch y 4 de count,
+   sin timeouts. La disyunción tuvo p90 0,4582 s (fetch) y 2,5275 s (count), por
+   debajo del gate orientativo de 15 s. Es fuente-a-fuente y exploratorio: no
+   levanta `TEMPORAL_NEGATION_V1 = CLARIFY_UNSUPPORTED`.
 
 ---
 
