@@ -2,17 +2,25 @@
 
 Drives the REAL workflow (SecopalWorkflow.run_query) with the real parser,
 follow-up engine, resolvers and SoQL builder. Only SECOP execution is mocked;
-the narrator LLM is stubbed; every persistence path is redirected to a temp
-directory. Read-only against runtime code and production data.
+the narrator LLM is stubbed; every writable persistence path is redirected to
+a throwaway directory. Read-only against runtime code and production data.
+
+INV-AUDIT-RUNNER-NO-PRODUCTION-WRITES: correr este script no escribe en los
+stores reales del proyecto, sin variables de entorno previas y sea cual sea el
+directorio de trabajo. El aislamiento vive en ``scripts/audits/audit_isolation``
+y se aplica ANTES de importar ``app``; los recursos de solo lectura (gazetteer
+de alias, índice SQLite de actores) se siguen leyendo de su ubicación real.
 
 Usage:
     .venv/bin/python scripts/audits/run_conversation_holistic_audit.py \
         [--corpus tests/fixtures/audits/conversation_holistic_v1.yaml] \
         [--out <dir>] [--only CASE_ID_PREFIX]
 
-Outputs (machine-readable, written under --out, default a fresh temp dir):
+Outputs (machine-readable, written under --out, default a fresh temp dir que
+NO se borra — la salida es del usuario, no persistencia interna):
     results.jsonl   one record per executed turn with full evidence
     verdicts.json   per-case PASS/FAIL + failed check details + metrics
+    isolation.json  rutas efectivas de cada store escribible de la corrida
 
 Check DSL (per turn; all optional):
     expect: execute | block          outcome contract
@@ -48,25 +56,20 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 
-TMP = Path(tempfile.mkdtemp(prefix="hca1_audit_"))
-os.environ["SECOP_FEEDBACK_PATH"] = str(TMP / "feedback.jsonl")
-os.environ["SECOP_FEEDBACK_DB_PATH"] = str(TMP / "secoppal.db")
-os.environ["CONVERSATION_STORE_DIR"] = str(TMP / "conversations")
 os.environ["SECOPPAL_ACTOR_PROFILE_ENABLED"] = "true"
 # El worktree de auditoría no versiona data/: el índice de producción vive en
-# el checkout principal. El resolver lo abre mode=ro&immutable=1.
+# el checkout principal. El resolver lo abre mode=ro&immutable=1 — recurso de
+# solo lectura, por eso no se redirige al sandbox.
 _MAIN_INDEX = Path("/Users/rodrigoortiz/Documents/secoppal/data/actor_alias_index.sqlite")
 os.environ.setdefault("SECOP_ACTOR_ALIAS_INDEX_PATH", str(_MAIN_INDEX))
 os.environ.pop("DEEPSEEK_API_KEY", None)
 
 import yaml  # noqa: E402
 
-from app.config import Settings, get_settings  # noqa: E402
-
-get_settings.cache_clear()
-
-from app.core.conversation_store import ConversationStore  # noqa: E402
-from app.core.orchestrator import SecopalWorkflow  # noqa: E402
+from scripts.audits.audit_isolation import (  # noqa: E402
+    AuditIsolation,
+    isolated_runtime_stores,
+)
 
 # Campos materiales del frame para comparación metamórfica.
 MATERIAL_FIELDS = (
@@ -195,9 +198,29 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--corpus", default=str(
         ROOT / "tests" / "fixtures" / "audits" / "conversation_holistic_v1.yaml"))
-    ap.add_argument("--out", default=str(TMP / "out"))
+    ap.add_argument("--out", default=None)
     ap.add_argument("--only", default=None)
     args = ap.parse_args()
+
+    # La salida sobrevive a la corrida: es el producto que el usuario lee.
+    # Sin --out se crea un temporal propio que NADIE borra — distinto del
+    # sandbox de stores, que se elimina siempre.
+    out_dir = Path(args.out) if args.out else Path(
+        tempfile.mkdtemp(prefix="hca1_audit_out_"))
+
+    with isolated_runtime_stores() as stores:
+        run_audit(args, out_dir, stores)
+
+
+def run_audit(args, out_dir: Path, stores: AuditIsolation) -> None:
+    # Importar app DENTRO del sandbox: ningún módulo debe materializar rutas
+    # de producción en import time.
+    from app.config import Settings, get_settings
+
+    get_settings.cache_clear()
+
+    from app.core.conversation_store import ConversationStore
+    from app.core.orchestrator import SecopalWorkflow
 
     corpus_path = Path(args.corpus)
     corpus_bytes = corpus_path.read_bytes()
@@ -207,11 +230,12 @@ def main() -> None:
     if args.only:
         cases = [c for c in cases if str(c["id"]).startswith(args.only)]
 
-    out_dir = Path(args.out)
     out_dir.mkdir(parents=True, exist_ok=True)
     results_f = (out_dir / "results.jsonl").open("w", encoding="utf-8")
 
-    wf = SecopalWorkflow(Settings())
+    # Overrides explícitos: el aislamiento no depende de que pydantic lea el
+    # entorno ni de los defaults de producción de Settings.
+    wf = SecopalWorkflow(Settings(**stores.settings_overrides))
 
     def _query(dataset_id, soql_query, **kw):
         return _mk_rows(5)
@@ -225,7 +249,34 @@ def main() -> None:
         wf.narrator.narrate_with_grounding = lambda **kw: None  # type: ignore
     except Exception:
         pass
-    wf.conv_store = ConversationStore(base_path=TMP / "conv")
+    wf.conv_store = ConversationStore(base_path=stores.conversation_dir)
+
+    # Evidencia de rutas efectivas sobre los objetos realmente construidos,
+    # no sobre la configuración declarada. El test de no-escritura la lee.
+    effective_stores = {
+        "sandbox_root": str(stores.root),
+        "feedback_jsonl": str(wf.feedback.path),
+        "feedback_db": str(wf.feedback.db_path),
+        "conversation_dir": str(wf.conv_store.base_path),
+        "radar_db": str(wf.radar_store.db_path),
+        "modality_telemetry": str(wf.settings.modality_followup_telemetry_path),
+    }
+    outside = sorted(
+        name for name, value in effective_stores.items()
+        if name != "sandbox_root" and not stores.contains(value)
+    )
+    (out_dir / "isolation.json").write_text(
+        json.dumps(
+            {"stores": effective_stores, "outside_sandbox": outside},
+            ensure_ascii=False, indent=1,
+        ),
+        encoding="utf-8",
+    )
+    if outside:
+        raise RuntimeError(
+            "INV-AUDIT-RUNNER-NO-PRODUCTION-WRITES violado: stores fuera del "
+            f"sandbox: {outside}"
+        )
 
     frames_by_case: dict[str, dict] = {}
     verdicts: list[dict] = []
