@@ -34,8 +34,8 @@ class _SelectedFrameRouter:
         self._delegate = delegate
         self._params = dict(params)
 
-    def parse(self, user_query: str):
-        parsed = self._delegate.parse(user_query)
+    def parse(self, user_query: str, *, today=None):
+        parsed = self._delegate.parse(user_query, today=today)
         return replace(
             parsed,
             params=dict(self._params),

@@ -21,10 +21,12 @@ keyword arguments is the right shape.
 """
 from __future__ import annotations
 
+from datetime import date as Date
 from typing import TYPE_CHECKING
 
 from burr.core import ApplicationBuilder, default, expr
 
+from app.core.temporal_semantics import civil_today
 from app.core.workflow.actions.execution import (
     degrade_query,
     execute_query,
@@ -61,6 +63,7 @@ def build_application(
     channel: str,
     followup: bool,
     context_params: dict,
+    today: Date | None = None,
 ) -> "Application":
     """Construct the per-request Burr Application.
 
@@ -121,6 +124,7 @@ def build_application(
         .with_state(
             user_query=user_query,
             raw_query=user_query,
+            today=civil_today(today),
             channel=channel,
             parsed_params={},
             resolved_params={},

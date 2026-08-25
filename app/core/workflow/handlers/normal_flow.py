@@ -97,6 +97,7 @@ def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
         channel=ctx.channel,
         followup=followup,
         context_params=context_params,
+        today=ctx.today,
     )
 
     *_, state = app.run(halt_after=["format_response", "clarify_query"])

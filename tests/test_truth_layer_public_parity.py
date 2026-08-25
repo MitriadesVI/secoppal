@@ -31,7 +31,12 @@ M2_MODIFIED_FILE_SHA256 = {
     # Money V2 / M7 adds a section gated strictly by valor_min/valor_max. The
     # no-money oracle below remains byte-identical and bounds that condition;
     # tests/test_money_presentation.py pins the authorized monetary divergence.
-    "app/core/response_policy.py": "8e97a215ef426ec96ad76fdf03b996305281c80eb9dd23022d4b70717fc15112",
+    # HCA-R5 replaces the interpretation's "desde <año>" collapse with a scope
+    # formatter that preserves day/month/range/open granularity. It reads only
+    # fecha_desde/fecha_hasta, so the dateless ordinary-query oracle below stays
+    # byte-identical; tests/test_time_semantics_v2.py
+    # (test_interpretation_preserves_temporal_granularity) pins the new phrasing.
+    "app/core/response_policy.py": "ee9444b84d4dc0873a4a81b28637e8317fbad588cfd17fb21eb0f5d75eb64e0a",
     # O1B/O1B.1 add a predicate gated by opportunity metadata; the
     # ordinary-query oracle below remains byte-identical and bounds that
     # authorization, including the calendar-date boundary correction.
@@ -74,9 +79,14 @@ BASELINE_FILE_SHA256 = {
 # fail-closed unsupported negation, whose confirmed frame and buffer are
 # transactional. tests/test_pagination_buffer_lifecycle.py and
 # tests/test_safe_negation_policies.py bound the authorized handler changes.
+# HCA-R5 adds exactly one keyword argument (today=ctx.today) to the existing
+# app.run() invocation, so the workflow reads the injected civil clock instead
+# of Date.today(). No predicate, projection or ordering moves: the oracles below
+# stay byte-identical, and tests/test_time_semantics_v2.py pins the determinism
+# this argument buys.
 SEARCH_SH1_MODIFIED_FILE_SHA256 = {
     "app/core/workflow/handlers/normal_flow.py": (
-        "17e391f6fc60dd50642f6ec64a0d4975c2d80f300ead27c70ddf65bfeb5b7a66"
+        "405724be7f3aff06934314da50184515ddc384aa4c1381403843afb9d81ae8a5"
     ),
 }
 

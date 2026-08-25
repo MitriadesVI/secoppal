@@ -1,9 +1,9 @@
 from __future__ import annotations
 
-import calendar
 import re
 from pathlib import Path
 from dataclasses import dataclass, replace
+from datetime import date as Date
 from typing import TYPE_CHECKING
 
 from app.data.departamentos import DEPARTAMENTOS
@@ -27,6 +27,11 @@ from app.core.actor_intent import (
     reference_from_document,
 )
 from app.core.contract_invariants import contains_signed_token
+from app.core.temporal_semantics import (
+    TemporalResolution,
+    civil_today,
+    resolve_temporal_scope,
+)
 from app.core.contract_type_resolver import resolve_contract_types
 from app.core.money_resolution import CARDINAL_WORD_PATTERN
 from app.core.negation_binding import (
@@ -311,12 +316,6 @@ STOPWORDS = {
     "adelante", "arriba", "abajo",
 }
 
-MONTH_MAP = {
-    "enero": 1, "febrero": 2, "marzo": 3, "abril": 4,
-    "mayo": 5, "junio": 6, "julio": 7, "agosto": 8,
-    "septiembre": 9, "octubre": 10, "noviembre": 11, "diciembre": 12,
-}
-
 # ── Cities / municipalities ──────────────────────────────────────────────────
 _COMMON_CITIES = frozenset({
     "barranquilla", "soledad", "cartagena", "bogota", "bogotá",
@@ -376,10 +375,6 @@ def _protected_entity_year_spans(text: str) -> list[tuple[int, int]]:
     return [m.span(1) for m in _ENTITY_NUMBER_RE.finditer(text)]
 
 
-def _inside_spans(start: int, end: int, spans: list[tuple[int, int]]) -> bool:
-    return any(start >= s and end <= e for s, e in spans)
-
-
 @dataclass(slots=True)
 class ParsedQuery:
     params: dict
@@ -410,7 +405,8 @@ class QueryRouter:
             entity_resolver = _ER(self._DEFAULT_ALIAS_DB)
         self.entity_resolver = entity_resolver
 
-    def parse(self, user_query: str) -> ParsedQuery:
+    def parse(self, user_query: str, *, today: Date | None = None) -> ParsedQuery:
+        clock = civil_today(today)
         normalized = normalize_text(user_query)
         normalized = correct_query(normalized)
         params: dict[str, object] = {}
@@ -529,9 +525,9 @@ class QueryRouter:
         # are protected before the shared word ``menos``/``no`` is considered
         # dimensional negation, including verbal comparators such as
         # "que no supere" and "al menos".
-        preliminary_dates = self._extract_dates(normalized)
+        preliminary_dates = self._extract_dates(normalized, today=clock)
         _, preliminary_amount_texts = self._extract_amounts(
-            normalized, preliminary_dates,
+            normalized, preliminary_dates, reference_year=clock.year,
         )
         preliminary_amount_spans = tuple({
             match.span()
@@ -549,6 +545,17 @@ class QueryRouter:
             modality_result.masked_text,
             negation_binding.masked_spans,
         )
+        temporal_resolution = resolve_temporal_scope(
+            positive_text,
+            today=clock,
+            protected_spans=tuple(_protected_entity_year_spans(positive_text)),
+        )
+        if temporal_resolution.span is not None:
+            scrubbed = mask_consumed_spans(
+                scrubbed,
+                (temporal_resolution.span,),
+            )
+            consumed_spans.append(temporal_resolution.phrase)
 
         # AP3-F projects roles only from positive residual text.  A provider or
         # buyer governed by negation remains a typed NegationRequest and cannot
@@ -599,7 +606,7 @@ class QueryRouter:
         scrubbed = self._consume_actor_document(positive_text, scrubbed, params)
 
         # ── 2. Dates (regex — reliable for numbers) ─────────────────────
-        date_params = self._extract_dates(positive_text)
+        date_params = self._temporal_params(temporal_resolution)
         params.update(date_params)
 
         # ── 3. Strip year tokens so they don't contaminate scans ────────
@@ -611,19 +618,6 @@ class QueryRouter:
         )
         for m in re.finditer(_year_re, scrubbed):
             scrubbed = re.sub(rf"\b{re.escape(m.group(0))}\b", " ", scrubbed)
-        # Also extract bare years as dates.  A structured result from
-        # _extract_dates() owns the endpoint contract: in particular,
-        # ``desde 2025`` intentionally has no fecha_hasta.  The generic bare-
-        # year fallback may create a closed year only when the date extractor
-        # did not recognize any temporal structure.
-        protected_year_spans = _protected_entity_year_spans(positive_text)
-        if not date_params:
-            for m in re.finditer(_year_re, positive_text):
-                if _inside_spans(m.start(1), m.end(1), protected_year_spans):
-                    continue
-                year = m.group(1)
-                params.setdefault("fecha_desde", f"{year}-01-01")
-                params.setdefault("fecha_hasta", f"{year}-12-31")
         scrubbed = re.sub(r"\s+", " ", scrubbed).strip()
 
         # ── 4. Ordering signals ─────────────────────────────────────────
@@ -894,7 +888,9 @@ class QueryRouter:
         # Amounts run over the progressively scrubbed text. Identifier-shaped
         # spans accepted by step 1.5 are therefore unavailable to the monetary
         # scanner, while currency-shaped spans rejected as NIT remain visible.
-        amount_params, amount_spans = self._extract_amounts(scrubbed, date_params)
+        amount_params, amount_spans = self._extract_amounts(
+            scrubbed, date_params, reference_year=clock.year,
+        )
         params.update(amount_params)
         # Scrub consumed amount spans so residual tokens ("adelante", "menos")
         # don't leak into objeto.
@@ -1070,67 +1066,43 @@ class QueryRouter:
                     }
         return None
 
-    def _extract_dates(self, normalized_query: str) -> dict[str, str]:
-        params: dict[str, str] = {}
-        iso_dates = re.findall(r"\b\d{4}-\d{2}-\d{2}\b", normalized_query)
-        if len(iso_dates) >= 1:
-            params["fecha_desde"] = iso_dates[0]
-        if len(iso_dates) >= 2:
-            params["fecha_hasta"] = iso_dates[1]
-
-        # ── Month + year patterns ─────────────────────────────────────────
-        # Matches: "abril de 2026", "del mes de enero de 2025", "en marzo 2024"
-        _month_names = "|".join(MONTH_MAP.keys())
-        month_year_re = re.compile(
-            rf"(?:del\s+mes\s+de\s+|en\s+)?({_month_names})\s+(?:de\s+)?(20\d{{2}})\b",
-            re.IGNORECASE,
-        )
-        month_match = month_year_re.search(normalized_query)
-        if month_match:
-            month_num = MONTH_MAP[month_match.group(1).lower()]
-            year_num = int(month_match.group(2))
-            last_day = calendar.monthrange(year_num, month_num)[1]
-            params.setdefault("fecha_desde", f"{year_num}-{month_num:02d}-01")
-            params.setdefault("fecha_hasta", f"{year_num}-{month_num:02d}-{last_day:02d}")
-
-        year_range_re = re.compile(
-            r"""
-            \bentre\s+(?:el\s+)?(20\d{2})\s+y\s+(?:el\s+)?(20\d{2})\b
-            |\bde\s+(20\d{2})\s+a\s+(20\d{2})\b
-            |\bdesde\s+(20\d{2})\s+hasta\s+(20\d{2})\b
-            |(?<!\d)(20\d{2})\s*(?:-|a|y)\s*(20\d{2})(?!\d)
-            """,
-            re.IGNORECASE | re.VERBOSE,
-        )
-        year_range_match = year_range_re.search(normalized_query)
-        if year_range_match:
-            years = [int(year) for year in year_range_match.groups() if year]
-            year1, year2 = sorted(years[:2])
-            params["fecha_desde"] = f"{year1}-01-01"
-            params["fecha_hasta"] = f"{year2}-12-31"
-
-        year_match = re.search(r"\ben\s+(20\d{2})\b", normalized_query)
-        if year_match:
-            year = year_match.group(1)
-            params.setdefault("fecha_desde", f"{year}-01-01")
-            params.setdefault("fecha_hasta", f"{year}-12-31")
-
-        since_match = re.search(r"\bdesde\s+(20\d{2})\b", normalized_query)
-        if since_match:
-            params["fecha_desde"] = f"{since_match.group(1)}-01-01"
-
-        until_match = re.search(r"\bhasta\s+(20\d{2})\b", normalized_query)
-        if until_match:
-            params["fecha_hasta"] = f"{until_match.group(1)}-12-31"
-
-        if re.search(r"\beste\s+a[nñ]o\b", normalized_query, re.IGNORECASE):
-            year = current_colombian_year()
-            params.setdefault("fecha_desde", f"{year}-01-01")
-            params.setdefault("fecha_hasta", f"{year}-12-31")
-
+    @staticmethod
+    def _temporal_params(resolution: TemporalResolution) -> dict[str, object]:
+        params: dict[str, object] = {}
+        if resolution.fecha_desde:
+            params["fecha_desde"] = resolution.fecha_desde
+        if resolution.fecha_hasta:
+            params["fecha_hasta"] = resolution.fecha_hasta
+        if resolution.matched and not resolution.should_clarify:
+            # Señal efímera para que el follow-up reemplace ambos extremos de
+            # forma atómica, incluso cuando el nuevo scope es abierto.
+            params["_temporal_replace_scope"] = True
+        if resolution.should_clarify:
+            params["_temporal_error"] = resolution.error_code
+            params["_temporal_clarification"] = resolution.clarification
         return params
 
-    def _extract_amounts(self, normalized_query: str, date_params: dict[str, str]) -> tuple[dict[str, object], list[str]]:
+    def _extract_dates(
+        self,
+        normalized_query: str,
+        *,
+        today: Date | None = None,
+    ) -> dict[str, object]:
+        """Compatibilidad: proyecta la autoridad temporal de dialogue_policy."""
+        resolution = resolve_temporal_scope(
+            normalized_query,
+            today=today,
+            protected_spans=tuple(_protected_entity_year_spans(normalized_query)),
+        )
+        return self._temporal_params(resolution)
+
+    def _extract_amounts(
+        self,
+        normalized_query: str,
+        date_params: dict[str, object],
+        *,
+        reference_year: int | None = None,
+    ) -> tuple[dict[str, object], list[str]]:
         """Extrae montos monetarios con polaridad (min/max/rango).
 
         Retorna (params, consumed_spans) donde consumed_spans son los
@@ -1154,8 +1126,16 @@ class QueryRouter:
             desde = date_params.get("fecha_desde")
             hasta = date_params.get("fecha_hasta")
             if desde or hasta:
-                if not desde or not hasta or desde[:4] != hasta[:4]:
-                    years = sorted({value[:4] for value in (desde, hasta) if value})
+                if (
+                    not isinstance(desde, str)
+                    or not isinstance(hasta, str)
+                    or desde[:4] != hasta[:4]
+                ):
+                    years = sorted({
+                        value[:4]
+                        for value in (desde, hasta)
+                        if isinstance(value, str)
+                    })
                     params["money_metadata"] = {
                         "unit": "SMMLV",
                         "status": "unsupported_multi_year",
@@ -1168,7 +1148,7 @@ class QueryRouter:
                     return params, consumed_spans
                 smmlv_year = int(desde[:4])
             else:
-                smmlv_year = current_colombian_year()
+                smmlv_year = reference_year or current_colombian_year()
                 smmlv_year_assumed = True
 
             annual_value = smmlv_cop(smmlv_year)
@@ -1197,7 +1177,8 @@ class QueryRouter:
             return money_to_cop(amount_text)
         year_tokens: set[str] = set()
         for val in date_params.values():
-            year_tokens.add(val[:4])
+            if isinstance(val, str) and re.fullmatch(r"\d{4}-\d{2}-\d{2}", val):
+                year_tokens.add(val[:4])
         _year_money_re = re.compile(
             rf"\b(20\d{{2}})\b(?!\s*(?:millones?|millon|mil\s+millones|billones?|palos?|barras?|pesos|{SMMLV_UNIT_PATTERN}))",
             re.IGNORECASE,

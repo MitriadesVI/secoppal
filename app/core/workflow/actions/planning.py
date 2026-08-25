@@ -23,7 +23,7 @@ from __future__ import annotations
 
 import time
 from dataclasses import asdict
-from datetime import date, datetime, timezone
+from datetime import datetime, timezone
 
 from burr.core import State, action
 
@@ -75,7 +75,7 @@ def plan_query(state: State) -> State:
     context = {
         "prev_params": state.get("prev_params"),
         "turn_index": state.get("turn_index", 0),
-        "today": date.today(),
+        "today": state.get("today"),
     }
     modality_decision = evaluate_modality_execution(
         state.get("modality_interpretation")

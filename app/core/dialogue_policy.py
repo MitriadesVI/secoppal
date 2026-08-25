@@ -10,8 +10,10 @@ from __future__ import annotations
 
 import re
 from dataclasses import dataclass, field
-from datetime import date as Date, timedelta
+from datetime import date as Date
 from typing import Literal
+
+from app.core.temporal_semantics import civil_today, resolve_temporal_scope
 
 # ── Signal kinds ─────────────────────────────────────────────────────────────
 
@@ -21,6 +23,7 @@ DialogueSignalKind = Literal[
     "discourse_filler",         # "hola, estoy interesado", quejas, verbos
     "temporal_month",           # "en mayo", "este mes", "el mes pasado"
     "temporal_range",           # "hoy", "ayer", "esta semana", "últimos N días"
+    "temporal_invalid",         # marcador temporal inequívoco pero no resoluble
     "number_phrase_scrub",      # "supere", "exceda" cuando ya hay valor numérico
     "city_mention_as_topic",    # token geográfico atrapado en objeto
     "non_query_followup",       # queja/comentario tras query previa
@@ -100,28 +103,6 @@ _INTERROGATIVE_VERBS = frozenset({
     "encuentro", "encuentra", "encuentran",
 })
 
-# R4: temporal month patterns
-_MONTH_MAP: dict[str, int] = {
-    "enero": 1, "febrero": 2, "marzo": 3, "abril": 4,
-    "mayo": 5, "junio": 6, "julio": 7, "agosto": 8,
-    "septiembre": 9, "octubre": 10, "noviembre": 11, "diciembre": 12,
-}
-
-_R4_MONTH_PATTERN = re.compile(
-    r"\ben\s+(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)\b",
-    re.IGNORECASE,
-)
-_R4_ESTE_MES = re.compile(r"\beste\s+mes\b", re.IGNORECASE)
-_R4_MES_PASADO = re.compile(r"\bel\s+mes\s+pasado\b", re.IGNORECASE)
-_R4_HACE_MESES = re.compile(r"\bhace\s+(\d+)\s+meses\b", re.IGNORECASE)
-
-# R4b: temporal week/day patterns
-_R4_HOY = re.compile(r"\bhoy\b", re.IGNORECASE)
-_R4_AYER = re.compile(r"\bayer\b", re.IGNORECASE)
-_R4_ESTA_SEMANA = re.compile(r"\besta\s+semana\b", re.IGNORECASE)
-_R4_SEMANA_PASADA = re.compile(r"\b(?:la\s+)?semana\s+pasada\b", re.IGNORECASE)
-_R4_ULTIMOS_DIAS = re.compile(r"\b(?:ultimos|últimos)\s+(\d+)\s+(?:dias|días)\b", re.IGNORECASE)
-
 # R5: number phrase scrub catalog
 SCRUB_CATALOG = frozenset({
     "supere", "exceda", "supera", "alcance", "rebase", "llegue",
@@ -142,6 +123,7 @@ _SECOP_NOUNS = frozenset({
     "prestacion", "prestación", "servicio", "servicios",
     "compra", "compras", "adquisicion", "adquisición",
 })
+
 
 
 # ── Classifier ───────────────────────────────────────────────────────────────
@@ -165,7 +147,7 @@ def classify(
             - today: date | None (defaults to date.today())
     """
     ctx = context or {}
-    today = ctx.get("today") or Date.today()
+    today = civil_today(ctx.get("today"))
     prev_params = ctx.get("prev_params")
     turn_index = ctx.get("turn_index", 0)
 
@@ -181,11 +163,8 @@ def classify(
     # ── R3: discourse_filler + non_query_followup ──
     _detect_discourse_filler(query_lower, prev_params, turn_index, signals)
 
-    # ── R4: temporal_month ──
-    _detect_temporal_month(query_lower, today, signals)
-
-    # ── R4b: temporal_range (week/day) ──
-    _detect_temporal_range(query_lower, today, signals)
+    # ── R4: temporal (una sola autoridad para mes/día/año/rangos/relativos) ──
+    _detect_temporal_scope(query_lower, today, signals)
 
     # ── R5: number_phrase_scrub ──
     _detect_number_phrase_scrub(params, signals)
@@ -298,130 +277,49 @@ def _detect_discourse_filler(
             ))
 
 
-def _detect_temporal_month(
+def _detect_temporal_scope(
     query_lower: str,
     today: Date,
     signals: list[DialogueSignal],
 ) -> None:
-    m = _R4_MONTH_PATTERN.search(query_lower)
-    if m:
-        month_name = m.group(1).lower()
-        month_num = _MONTH_MAP[month_name]
+    """Adapta la resolución autoritativa al contrato histórico de señales."""
+    resolution = resolve_temporal_scope(query_lower, today=today)
+    if resolution.should_clarify:
         signals.append(DialogueSignal(
-            kind="temporal_month",
-            payload={"month": month_num, "year": today.year, "phrase": m.group(0)},
-            source_tokens=[m.group(0)],
-        ))
-        return
-
-    if _R4_ESTE_MES.search(query_lower):
-        signals.append(DialogueSignal(
-            kind="temporal_month",
-            payload={"month": today.month, "year": today.year, "phrase": "este mes"},
-        ))
-        return
-
-    if _R4_MES_PASADO.search(query_lower):
-        # Previous month
-        if today.month == 1:
-            month, year = 12, today.year - 1
-        else:
-            month, year = today.month - 1, today.year
-        signals.append(DialogueSignal(
-            kind="temporal_month",
-            payload={"month": month, "year": year, "phrase": "el mes pasado"},
-        ))
-        return
-
-    m = _R4_HACE_MESES.search(query_lower)
-    if m:
-        n = int(m.group(1))
-        total_months = today.month - n
-        if total_months <= 0:
-            year = today.year - 1
-            month = 12 + total_months
-        else:
-            year = today.year
-            month = total_months
-        signals.append(DialogueSignal(
-            kind="temporal_month",
-            payload={"month": month, "year": year, "phrase": m.group(0)},
-        ))
-
-
-def _detect_temporal_range(
-    query_lower: str,
-    today: Date,
-    signals: list[DialogueSignal],
-) -> None:
-    """Emit kind='temporal_range' for week/day relative expressions.
-
-    Semantics:
-      - "hoy"                       → desde = hasta = today
-      - "ayer"                      → desde = hasta = today - 1
-      - "esta semana"               → desde = lunes ISO, hasta = today
-      - "la semana pasada" / "semana pasada" → desde = lunes previo, hasta = domingo previo
-      - "últimos N días"            → desde = today - N, hasta = today
-    """
-    if _R4_HOY.search(query_lower):
-        iso = today.isoformat()
-        signals.append(DialogueSignal(
-            kind="temporal_range",
-            payload={"desde": iso, "hasta": iso, "phrase": "hoy"},
-        ))
-        return
-
-    if _R4_AYER.search(query_lower):
-        yesterday = today - timedelta(days=1)
-        iso = yesterday.isoformat()
-        signals.append(DialogueSignal(
-            kind="temporal_range",
-            payload={"desde": iso, "hasta": iso, "phrase": "ayer"},
-        ))
-        return
-
-    if _R4_ESTA_SEMANA.search(query_lower):
-        # ISO weekday: 1=Monday, 7=Sunday
-        weekday = today.isocalendar().weekday
-        monday = today - timedelta(days=weekday - 1)
-        signals.append(DialogueSignal(
-            kind="temporal_range",
+            kind="temporal_invalid",
             payload={
-                "desde": monday.isoformat(),
-                "hasta": today.isoformat(),
-                "phrase": "esta semana",
+                "code": resolution.error_code,
+                "question": resolution.clarification,
+                "phrase": resolution.phrase,
             },
+            source_tokens=[resolution.phrase] if resolution.phrase else [],
         ))
         return
+    if not resolution.matched:
+        return
 
-    if _R4_SEMANA_PASADA.search(query_lower):
-        weekday = today.isocalendar().weekday
-        this_monday = today - timedelta(days=weekday - 1)
-        last_monday = this_monday - timedelta(days=7)
-        last_sunday = last_monday + timedelta(days=6)
+    if resolution.precision == "month" and resolution.fecha_desde:
+        start = Date.fromisoformat(resolution.fecha_desde)
         signals.append(DialogueSignal(
-            kind="temporal_range",
+            kind="temporal_month",
             payload={
-                "desde": last_monday.isoformat(),
-                "hasta": last_sunday.isoformat(),
-                "phrase": "semana pasada",
+                "month": start.month,
+                "year": start.year,
+                "phrase": resolution.phrase,
             },
+            source_tokens=[resolution.phrase],
         ))
         return
-
-    m = _R4_ULTIMOS_DIAS.search(query_lower)
-    if m:
-        n = int(m.group(1))
-        if 1 <= n <= 365:
-            desde = today - timedelta(days=n)
-            signals.append(DialogueSignal(
-                kind="temporal_range",
-                payload={
-                    "desde": desde.isoformat(),
-                    "hasta": today.isoformat(),
-                    "phrase": m.group(0),
-                },
-            ))
+    signals.append(DialogueSignal(
+        kind="temporal_range",
+        payload={
+            "desde": resolution.fecha_desde,
+            "hasta": resolution.fecha_hasta,
+            "phrase": resolution.phrase,
+            "precision": resolution.precision,
+        },
+        source_tokens=[resolution.phrase],
+    ))
 
 
 def _detect_number_phrase_scrub(

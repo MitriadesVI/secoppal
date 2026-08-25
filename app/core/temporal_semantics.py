@@ -1,0 +1,433 @@
+"""Autoridad determinística para scopes temporales de consultas SECOPPAL."""
+from __future__ import annotations
+
+import calendar
+import re
+from dataclasses import dataclass
+from datetime import date as Date, timedelta
+from typing import Any
+
+
+@dataclass(frozen=True)
+class TemporalResolution:
+    """Resolución única y enmascarable de una expresión temporal."""
+
+    matched: bool = False
+    fecha_desde: str | None = None
+    fecha_hasta: str | None = None
+    phrase: str = ""
+    span: tuple[int, int] | None = None
+    precision: str = ""
+    error_code: str | None = None
+    clarification: str | None = None
+
+    @property
+    def should_clarify(self) -> bool:
+        return self.error_code is not None
+
+
+_MONTH_ALIASES: dict[str, int] = {
+    "enero": 1, "febrero": 2, "marzo": 3, "abril": 4,
+    "mayo": 5, "junio": 6, "julio": 7, "agosto": 8,
+    "septiembre": 9, "octubre": 10, "noviembre": 11, "diciembre": 12,
+    "ene": 1, "feb": 2, "mar": 3, "abr": 4,
+    "may": 5, "jun": 6, "jul": 7, "ago": 8,
+    "sep": 9, "sept": 9, "oct": 10, "nov": 11, "dic": 12,
+}
+_MONTH_TOKEN = "|".join(
+    sorted((re.escape(name) for name in _MONTH_ALIASES), key=len, reverse=True)
+)
+_YEAR_TOKEN = r"20\d{2}"
+_MONEY_AFTER_YEAR = (
+    r"(?!\s*(?:millones?|millon|mil\s+millones|billones?|palos?|barras?|pesos))"
+)
+_HACE_MESES = re.compile(r"\bhace\s+(\d+)\s+meses\b", re.IGNORECASE)
+_HOY = re.compile(r"\bhoy\b", re.IGNORECASE)
+_AYER = re.compile(r"\bayer\b", re.IGNORECASE)
+_ESTA_SEMANA = re.compile(r"\besta\s+semana\b", re.IGNORECASE)
+_SEMANA_PASADA = re.compile(r"\b(?:la\s+)?semana\s+pasada\b", re.IGNORECASE)
+_ULTIMOS_DIAS = re.compile(
+    r"\b(?:ultimos|últimos)\s+(\d+)\s+(?:dias|días)\b", re.IGNORECASE,
+)
+_ULTIMAS_SEMANAS = re.compile(
+    r"\b(?:las\s+)?(?:ultimas|últimas)\s+(\d+)\s+semanas\b", re.IGNORECASE,
+)
+
+_INVALID_DATE_QUESTION = (
+    "La fecha indicada no existe en el calendario. ¿Qué fecha querías usar?"
+)
+_REVERSE_RANGE_QUESTION = (
+    "El inicio del rango temporal queda después del final. "
+    "¿Cuál era el intervalo correcto?"
+)
+_MISSING_YEAR_QUESTION = (
+    "Ese rango temporal necesita un año explícito para interpretarlo sin inventar contexto. "
+    "¿De qué año se trata?"
+)
+_UNSUPPORTED_TIME_QUESTION = (
+    "Reconocí una referencia temporal, pero no puedo resolverla con seguridad. "
+    "Indica un día, mes, año o rango explícito."
+)
+
+
+def civil_today(value: Date | None = None) -> Date:
+    """Único punto de lectura del reloj civil; acepta inyección en tests/audits."""
+    return value if value is not None else Date.today()
+
+
+def _month_number(value: str) -> int:
+    return _MONTH_ALIASES[value.lower()]
+
+
+def _safe_date(year: int, month: int, day: int) -> Date | None:
+    try:
+        return Date(year, month, day)
+    except ValueError:
+        return None
+
+
+def _last_day(year: int, month: int) -> int:
+    return calendar.monthrange(year, month)[1]
+
+
+def _resolution(
+    match: re.Match[str],
+    *,
+    desde: Date | str | None,
+    hasta: Date | str | None,
+    precision: str,
+) -> TemporalResolution:
+    def _iso(value: Date | str | None) -> str | None:
+        return value.isoformat() if isinstance(value, Date) else value
+
+    return TemporalResolution(
+        matched=True,
+        fecha_desde=_iso(desde),
+        fecha_hasta=_iso(hasta),
+        phrase=match.group(0),
+        span=match.span(),
+        precision=precision,
+    )
+
+
+def _error_resolution(
+    match: re.Match[str] | None,
+    code: str,
+    question: str,
+) -> TemporalResolution:
+    return TemporalResolution(
+        matched=match is not None,
+        phrase=match.group(0) if match else "",
+        span=match.span() if match else None,
+        precision="invalid",
+        error_code=code,
+        clarification=question,
+    )
+
+
+def _overlaps_protected(match: re.Match[str], spans: tuple[tuple[int, int], ...]) -> bool:
+    start, end = match.span()
+    return any(
+        start < protected_end and end > protected_start
+        for protected_start, protected_end in spans
+    )
+
+
+def resolve_temporal_scope(
+    text: str,
+    *,
+    today: Date | None = None,
+    protected_spans: tuple[tuple[int, int], ...] = (),
+) -> TemporalResolution:
+    """Resuelve un scope por precedencia conservadora y sin LLM.
+
+    Orden: rangos de día/mes/año → día exacto → relativos → abiertos →
+    mes → año. Mes o día sin año usa el año civil actual; rango sin año
+    aclara para no inventar contexto.
+    """
+    clock = civil_today(today)
+
+    iso_matches = list(re.finditer(r"\b\d{4}-\d{2}-\d{2}\b", text))
+    if iso_matches:
+        parsed = []
+        for item in iso_matches[:2]:
+            try:
+                parsed.append(Date.fromisoformat(item.group(0)))
+            except ValueError:
+                return _error_resolution(item, "invalid_date", _INVALID_DATE_QUESTION)
+        if len(parsed) == 2 and parsed[0] > parsed[1]:
+            encompassing = re.search(
+                rf"{re.escape(iso_matches[0].group(0))}.*?"
+                rf"{re.escape(iso_matches[1].group(0))}",
+                text,
+            )
+            return _error_resolution(
+                encompassing or iso_matches[0], "reverse_range", _REVERSE_RANGE_QUESTION,
+            )
+        first = iso_matches[0]
+        if len(parsed) == 1:
+            return _resolution(first, desde=parsed[0], hasta=None, precision="open_from")
+        encompassing = re.search(
+            rf"{re.escape(iso_matches[0].group(0))}.*?"
+            rf"{re.escape(iso_matches[1].group(0))}",
+            text,
+        ) or first
+        return _resolution(
+            encompassing, desde=parsed[0], hasta=parsed[1], precision="day_range",
+        )
+
+    day_range_re = re.compile(
+        rf"\b(?:entre\s+(?:el\s+)?|del?\s+)?"
+        rf"(\d{{1,2}})\s+(?:de\s+)?({_MONTH_TOKEN})"
+        rf"(?:\s+(?:de\s+)?({_YEAR_TOKEN}))?\s+"
+        rf"(?:y|al|a)\s+(?:el\s+)?(\d{{1,2}})\s+(?:de\s+)?({_MONTH_TOKEN})"
+        rf"(?:\s+(?:de\s+)?({_YEAR_TOKEN}))?\b",
+        re.IGNORECASE,
+    )
+    if match := day_range_re.search(text):
+        year1_raw, year2_raw = match.group(3), match.group(6)
+        if not year1_raw and not year2_raw:
+            return _error_resolution(match, "missing_range_year", _MISSING_YEAR_QUESTION)
+        year1, year2 = int(year1_raw or year2_raw), int(year2_raw or year1_raw)
+        start = _safe_date(year1, _month_number(match.group(2)), int(match.group(1)))
+        end = _safe_date(year2, _month_number(match.group(5)), int(match.group(4)))
+        if start is None or end is None:
+            return _error_resolution(match, "invalid_date", _INVALID_DATE_QUESTION)
+        if start > end:
+            return _error_resolution(match, "reverse_range", _REVERSE_RANGE_QUESTION)
+        return _resolution(match, desde=start, hasta=end, precision="day_range")
+
+    month_range_re = re.compile(
+        rf"\b(?:entre\s+|de\s+)?({_MONTH_TOKEN})"
+        rf"(?:\s+(?:de\s+)?({_YEAR_TOKEN}))?\s+(?:y|a|al)\s+"
+        rf"({_MONTH_TOKEN})(?:\s+(?:(?:de|del)\s+)?({_YEAR_TOKEN}))?\b",
+        re.IGNORECASE,
+    )
+    if match := month_range_re.search(text):
+        year1_raw, year2_raw = match.group(2), match.group(4)
+        if not year1_raw and not year2_raw:
+            return _error_resolution(match, "missing_range_year", _MISSING_YEAR_QUESTION)
+        year1, year2 = int(year1_raw or year2_raw), int(year2_raw or year1_raw)
+        month1, month2 = _month_number(match.group(1)), _month_number(match.group(3))
+        start = Date(year1, month1, 1)
+        end = Date(year2, month2, _last_day(year2, month2))
+        if start > end:
+            return _error_resolution(match, "reverse_range", _REVERSE_RANGE_QUESTION)
+        return _resolution(match, desde=start, hasta=end, precision="month_range")
+
+    year_range_re = re.compile(
+        rf"\b(?:entre\s+(?:el\s+)?|de\s+|desde\s+)({_YEAR_TOKEN})\s+"
+        rf"(?:y|a|hasta)\s+(?:el\s+)?({_YEAR_TOKEN})\b"
+        rf"|(?<!\d)({_YEAR_TOKEN})\s*(?:-|a|y)\s*({_YEAR_TOKEN})(?!\d)",
+        re.IGNORECASE,
+    )
+    if match := year_range_re.search(text):
+        years = [int(value) for value in match.groups() if value]
+        if years[0] > years[1]:
+            return _error_resolution(match, "reverse_range", _REVERSE_RANGE_QUESTION)
+        return _resolution(
+            match,
+            desde=Date(years[0], 1, 1),
+            hasta=Date(years[1], 12, 31),
+            precision="year_range",
+        )
+
+    exact_day_re = re.compile(
+        rf"\b(?:del?\s+|el\s+)?(\d{{1,2}})\s+(?:de\s+)?({_MONTH_TOKEN})"
+        rf"(?:\s+(?:de\s+)?({_YEAR_TOKEN}))?\b",
+        re.IGNORECASE,
+    )
+    if match := exact_day_re.search(text):
+        left_context = text[max(0, match.start() - 48):match.start()]
+        if re.search(
+            r"\b(?:referencia|radicado|numero|nro|no\.?|id)\s*$",
+            left_context,
+            re.IGNORECASE,
+        ):
+            return TemporalResolution()
+        year = int(match.group(3) or clock.year)
+        value = _safe_date(year, _month_number(match.group(2)), int(match.group(1)))
+        if value is None:
+            return _error_resolution(match, "invalid_date", _INVALID_DATE_QUESTION)
+        return _resolution(match, desde=value, hasta=value, precision="day")
+
+    relative_patterns = (
+        (re.compile(r"\b(?:de\s+|del\s+)?este\s+mes\b", re.IGNORECASE), "this_month"),
+        (re.compile(r"\b(?:de\s+|del\s+|el\s+)?mes\s+pasado\b", re.IGNORECASE), "last_month"),
+        (re.compile(r"\b(?:de\s+|del\s+)?este\s+a[nñ]o\b", re.IGNORECASE), "this_year"),
+        (re.compile(r"\b(?:de\s+|del\s+|el\s+)?a[nñ]o\s+pasado\b", re.IGNORECASE), "last_year"),
+        (_HACE_MESES, "months_ago"),
+        (_ESTA_SEMANA, "this_week"),
+        (_SEMANA_PASADA, "last_week"),
+        (_ULTIMAS_SEMANAS, "trailing_weeks"),
+        (_ULTIMOS_DIAS, "trailing_days"),
+        (_HOY, "today"),
+        (_AYER, "yesterday"),
+    )
+    for pattern, kind in relative_patterns:
+        match = pattern.search(text)
+        if not match:
+            continue
+        if kind == "this_month":
+            start = Date(clock.year, clock.month, 1)
+            end = Date(clock.year, clock.month, _last_day(clock.year, clock.month))
+            return _resolution(match, desde=start, hasta=end, precision="month")
+        if kind == "last_month":
+            year, month = (
+                (clock.year - 1, 12)
+                if clock.month == 1
+                else (clock.year, clock.month - 1)
+            )
+            return _resolution(
+                match,
+                desde=Date(year, month, 1),
+                hasta=Date(year, month, _last_day(year, month)),
+                precision="month",
+            )
+        if kind == "months_ago":
+            count = int(match.group(1))
+            if not 1 <= count <= 120:
+                return _error_resolution(
+                    match, "unsupported_month_count", _UNSUPPORTED_TIME_QUESTION,
+                )
+            year, zero_based_month = divmod(
+                clock.year * 12 + clock.month - 1 - count, 12,
+            )
+            month = zero_based_month + 1
+            return _resolution(
+                match,
+                desde=Date(year, month, 1),
+                hasta=Date(year, month, _last_day(year, month)),
+                precision="month",
+            )
+        if kind in {"this_year", "last_year"}:
+            year = clock.year if kind == "this_year" else clock.year - 1
+            return _resolution(
+                match, desde=Date(year, 1, 1), hasta=Date(year, 12, 31), precision="year",
+            )
+        if kind == "this_week":
+            monday = clock - timedelta(days=clock.weekday())
+            return _resolution(
+                match, desde=monday, hasta=monday + timedelta(days=6), precision="week",
+            )
+        if kind == "last_week":
+            monday = clock - timedelta(days=clock.weekday() + 7)
+            return _resolution(
+                match, desde=monday, hasta=monday + timedelta(days=6), precision="week",
+            )
+        if kind == "trailing_weeks":
+            count = int(match.group(1))
+            if 1 <= count <= 52:
+                return _resolution(
+                    match,
+                    desde=clock - timedelta(days=count * 7),
+                    hasta=clock,
+                    precision="trailing_weeks",
+                )
+            return _error_resolution(
+                match, "unsupported_week_count", _UNSUPPORTED_TIME_QUESTION,
+            )
+        if kind == "trailing_days":
+            count = int(match.group(1))
+            if 1 <= count <= 365:
+                return _resolution(
+                    match,
+                    desde=clock - timedelta(days=count),
+                    hasta=clock,
+                    precision="trailing_days",
+                )
+            return _error_resolution(
+                match, "unsupported_day_count", _UNSUPPORTED_TIME_QUESTION,
+            )
+        value = clock if kind == "today" else clock - timedelta(days=1)
+        return _resolution(match, desde=value, hasta=value, precision="day")
+
+    open_month_re = re.compile(
+        rf"\b(desde|hasta)\s+(?:el\s+mes\s+de\s+)?({_MONTH_TOKEN})"
+        rf"(?:\s+(?:de\s+)?({_YEAR_TOKEN}))?\b",
+        re.IGNORECASE,
+    )
+    if match := open_month_re.search(text):
+        year, month = int(match.group(3) or clock.year), _month_number(match.group(2))
+        if match.group(1).lower() == "desde":
+            return _resolution(
+                match, desde=Date(year, month, 1), hasta=None, precision="open_from",
+            )
+        return _resolution(
+            match,
+            desde=None,
+            hasta=Date(year, month, _last_day(year, month)),
+            precision="open_until",
+        )
+
+    month_re = re.compile(
+        rf"\b(?:del\s+mes\s+de\s+|(?:en|de|durante)\s+)?({_MONTH_TOKEN})"
+        rf"(?:\s+(?:de\s+)?({_YEAR_TOKEN}))?\b",
+        re.IGNORECASE,
+    )
+    if match := month_re.search(text):
+        year, month = int(match.group(2) or clock.year), _month_number(match.group(1))
+        return _resolution(
+            match,
+            desde=Date(year, month, 1),
+            hasta=Date(year, month, _last_day(year, month)),
+            precision="month",
+        )
+
+    open_year_re = re.compile(
+        rf"\b(desde|hasta)\s+({_YEAR_TOKEN})\b{_MONEY_AFTER_YEAR}", re.IGNORECASE,
+    )
+    if match := open_year_re.search(text):
+        if not _overlaps_protected(match, protected_spans):
+            year = int(match.group(2))
+            if match.group(1).lower() == "desde":
+                return _resolution(
+                    match, desde=Date(year, 1, 1), hasta=None, precision="open_from",
+                )
+            return _resolution(
+                match, desde=None, hasta=Date(year, 12, 31), precision="open_until",
+            )
+
+    closed_year_re = re.compile(
+        rf"\b(?:(?:en|de|del|durante)\s+)?({_YEAR_TOKEN})\b{_MONEY_AFTER_YEAR}",
+        re.IGNORECASE,
+    )
+    for match in closed_year_re.finditer(text):
+        if _overlaps_protected(match, protected_spans):
+            continue
+        year = int(match.group(1))
+        return _resolution(
+            match, desde=Date(year, 1, 1), hasta=Date(year, 12, 31), precision="year",
+        )
+
+    unresolved = re.search(
+        rf"\b(?:trimestres?|semestres?|(?:ultimo|último)\s+a[nñ]o|"
+        rf"entre\b[^,.]*?(?:{_MONTH_TOKEN}|{_YEAR_TOKEN}{_MONEY_AFTER_YEAR})|"
+        rf"(?:mes|a[nñ]o|semanas?|d[ií]as?)\s+(?:pasado|pasada|anterior))\b",
+        text,
+        re.IGNORECASE,
+    )
+    if unresolved:
+        return _error_resolution(
+            unresolved, "unsupported_temporal_expression", _UNSUPPORTED_TIME_QUESTION,
+        )
+    return TemporalResolution()
+
+
+def consume_temporal_metadata(
+    params: dict[str, Any],
+    signals: list[Any],
+) -> tuple[str | None, str | None]:
+    """Retira metadata efímera y devuelve un bloqueo temporal, si existe."""
+    error = params.pop("_temporal_error", None)
+    question = params.pop("_temporal_clarification", None)
+    params.pop("_temporal_replace_scope", None)
+    if error:
+        return str(error), str(question or _UNSUPPORTED_TIME_QUESTION)
+    invalid = next((signal for signal in signals if signal.kind == "temporal_invalid"), None)
+    if invalid is None:
+        return None, None
+    return (
+        str(invalid.payload.get("code") or "invalid"),
+        str(invalid.payload.get("question") or _UNSUPPORTED_TIME_QUESTION),
+    )

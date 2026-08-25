@@ -32,7 +32,8 @@ SCOPE_FIELDS = frozenset({
     "departamentos_in", "ciudad", "ciudad_resolved", "region",
 })
 FILTER_FIELDS = frozenset({
-    *MONEY_FIELDS, "fecha_desde", "fecha_hasta", *MODALITY_FIELDS,
+    *MONEY_FIELDS, "fecha_desde", "fecha_hasta", "_temporal_replace_scope",
+    *MODALITY_FIELDS,
     *CONTRACT_TYPE_FIELDS,
     "contratista", *STATE_FIELDS,
 })
@@ -57,7 +58,10 @@ MUTATION_POLICIES: dict[str, MutationPolicy] = {
         frozenset({"ordering_signal", "order_by", *MONEY_FIELDS}),
     ),
     "change_year": MutationPolicy(
-        frozenset({"fecha_desde", "fecha_hasta", *MONEY_FIELDS}),
+        frozenset({
+            "fecha_desde", "fecha_hasta", "_temporal_replace_scope",
+            *MONEY_FIELDS,
+        }),
     ),
     "change_dataset": MutationPolicy(
         frozenset({"dataset", "dataset_explicit", *FILTER_FIELDS}),
@@ -214,6 +218,9 @@ def _transition_clears(
             old_min = previous.get("valor_min")
             if old_min is not None and accepted["valor_max"] < old_min:
                 clears.add("valor_min")
+
+    if accepted.get("_temporal_replace_scope"):
+        clears.update({"fecha_desde", "fecha_hasta"})
 
     semantic_fields = TOPIC_FIELDS | SCOPE_FIELDS | FILTER_FIELDS | DATASET_FIELDS
     if set(accepted) & semantic_fields:

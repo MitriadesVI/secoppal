@@ -23,7 +23,10 @@ from __future__ import annotations
 
 import time
 from dataclasses import dataclass, field
+from datetime import date as Date
 from typing import Any
+
+from app.core.temporal_semantics import civil_today
 
 
 @dataclass(frozen=True)
@@ -40,4 +43,5 @@ class HandlerContext:
     user_identity: dict[str, Any] | None = None
     seed_resolved_params: dict | None = None
     actor_candidate_selection: dict[str, Any] | None = None
+    today: Date = field(default_factory=civil_today)
     run_started_at: float = field(default_factory=time.perf_counter)

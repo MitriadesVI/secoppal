@@ -1,0 +1,270 @@
+version: 1
+name: HCA R5 Time Semantics V2 focal
+cases:
+  - id: TIMEV2-001
+    category: explicit_month_year
+    turns:
+      - q: contratos de aseo en junio de 2026
+        expect: execute
+        eq: {fecha_desde: '2026-06-01', fecha_hasta: '2026-06-30'}
+        objeto_not: [junio]
+        soql_has: ["fecha_de_firma >= '2026-06-01'", "fecha_de_firma <= '2026-06-30'"]
+
+  - id: TIMEV2-002
+    category: month_without_year
+    clock: 2026-08-25
+    turns:
+      - q: contratos de aseo de junio
+        expect: execute
+        eq: {fecha_desde: '2026-06-01', fecha_hasta: '2026-06-30'}
+
+  - id: TIMEV2-003
+    category: month_without_year_future_policy
+    clock: 2026-01-10
+    turns:
+      - q: contratos de aseo en diciembre
+        expect: execute
+        eq: {fecha_desde: '2026-12-01', fecha_hasta: '2026-12-31'}
+
+  - id: TIMEV2-004
+    category: relative_month
+    clock: 2026-08-25
+    turns:
+      - q: contratos de aseo del mes pasado
+        expect: execute
+        eq: {fecha_desde: '2026-07-01', fecha_hasta: '2026-07-31'}
+        objeto_not: [mes, pasado]
+
+  - id: TIMEV2-005
+    category: relative_month_cross_year
+    clock: 2026-01-10
+    turns:
+      - q: contratos de aseo del mes pasado
+        expect: execute
+        eq: {fecha_desde: '2025-12-01', fecha_hasta: '2025-12-31'}
+
+  - id: TIMEV2-006
+    category: relative_year
+    clock: 2026-08-25
+    turns:
+      - q: contratos firmados el año pasado en cordoba
+        expect: execute
+        ds: contratos
+        eq: {fecha_desde: '2025-01-01', fecha_hasta: '2025-12-31'}
+        soql_has: [fecha_de_firma]
+
+  - id: TIMEV2-007
+    category: exact_day
+    turns:
+      - q: contratos de aseo del 15 de junio de 2026
+        expect: execute
+        eq: {fecha_desde: '2026-06-15', fecha_hasta: '2026-06-15'}
+        soql_has: ["fecha_de_firma >= '2026-06-15'", "fecha_de_firma <= '2026-06-15'"]
+
+  - id: TIMEV2-008
+    category: exact_day_without_year
+    clock: 2026-08-25
+    turns:
+      - q: procesos de aseo el 15 de junio
+        expect: execute
+        ds: procesos
+        eq: {fecha_desde: '2026-06-15', fecha_hasta: '2026-06-15'}
+        soql_has: [fecha_de_publicacion_del]
+
+  - id: TIMEV2-009
+    category: month_range
+    turns:
+      - q: contratos de aseo entre enero y marzo de 2026
+        expect: execute
+        eq: {fecha_desde: '2026-01-01', fecha_hasta: '2026-03-31'}
+
+  - id: TIMEV2-010
+    category: month_range_variant
+    turns:
+      - q: contratos de aseo de enero a marzo de 2026
+        expect: execute
+        eq: {fecha_desde: '2026-01-01', fecha_hasta: '2026-03-31'}
+
+  - id: TIMEV2-011
+    category: day_range
+    turns:
+      - q: contratos de aseo entre el 1 de febrero y el 15 de marzo de 2026
+        expect: execute
+        eq: {fecha_desde: '2026-02-01', fecha_hasta: '2026-03-15'}
+
+  - id: TIMEV2-012
+    category: day_range_variant
+    turns:
+      - q: contratos de aseo del 1 de febrero al 15 de marzo de 2026
+        expect: execute
+        eq: {fecha_desde: '2026-02-01', fecha_hasta: '2026-03-15'}
+
+  - id: TIMEV2-013
+    category: open_from_year
+    turns:
+      - q: contratos de aseo desde 2025
+        expect: execute
+        eq: {fecha_desde: '2025-01-01'}
+        absent: [fecha_hasta]
+        objeto_not: [desde]
+
+  - id: TIMEV2-014
+    category: open_until_year
+    turns:
+      - q: contratos de aseo hasta 2025
+        expect: execute
+        eq: {fecha_hasta: '2025-12-31'}
+        absent: [fecha_desde]
+        objeto_not: [hasta]
+
+  - id: TIMEV2-015
+    category: open_from_month
+    turns:
+      - q: contratos de aseo desde marzo de 2025
+        expect: execute
+        eq: {fecha_desde: '2025-03-01'}
+        absent: [fecha_hasta]
+
+  - id: TIMEV2-016
+    category: closed_year
+    turns:
+      - q: contratos de aseo en 2025
+        expect: execute
+        eq: {fecha_desde: '2025-01-01', fecha_hasta: '2025-12-31'}
+
+  - id: TIMEV2-017
+    category: invalid_date
+    turns:
+      - q: contratos de aseo del 31 de febrero de 2026
+        expect: block
+        absent: [fecha_desde, fecha_hasta]
+
+  - id: TIMEV2-018
+    category: reverse_range
+    turns:
+      - q: contratos de aseo entre marzo y enero de 2026
+        expect: block
+        absent: [fecha_desde, fecha_hasta]
+
+  - id: TIMEV2-019
+    category: missing_range_year
+    clock: 2026-08-25
+    turns:
+      - q: contratos de aseo entre enero y marzo
+        expect: block
+        absent: [fecha_desde, fecha_hasta]
+
+  - id: TIMEV2-020
+    category: leap_year
+    turns:
+      - q: contratos de aseo en febrero de 2024
+        expect: execute
+        eq: {fecha_desde: '2024-02-01', fecha_hasta: '2024-02-29'}
+
+  - id: TIMEV2-021
+    category: non_leap_year
+    turns:
+      - q: contratos de aseo en febrero de 2025
+        expect: execute
+        eq: {fecha_desde: '2025-02-01', fecha_hasta: '2025-02-28'}
+
+  - id: TIMEV2-022
+    category: current_week_iso
+    clock: 2026-08-25
+    turns:
+      - q: contratos de aseo esta semana
+        expect: execute
+        eq: {fecha_desde: '2026-08-24', fecha_hasta: '2026-08-30'}
+        objeto_not: [semana]
+
+  - id: TIMEV2-023
+    category: previous_week_iso
+    clock: 2026-08-25
+    turns:
+      - q: contratos de aseo la semana pasada
+        expect: execute
+        eq: {fecha_desde: '2026-08-17', fecha_hasta: '2026-08-23'}
+
+  - id: TIMEV2-024
+    category: trailing_weeks
+    clock: 2026-08-25
+    turns:
+      - q: contratos de aseo de las ultimas 2 semanas
+        expect: execute
+        eq: {fecha_desde: '2026-08-11', fecha_hasta: '2026-08-25'}
+        objeto_not: [semanas]
+
+  - id: TIMEV2-025
+    category: trailing_days_object_hygiene
+    clock: 2026-08-25
+    turns:
+      - q: contratos de aseo de los ultimos 30 dias
+        expect: execute
+        eq: {fecha_desde: '2026-07-26', fecha_hasta: '2026-08-25'}
+        objeto_not: [dias, vias]
+
+  - id: TIMEV2-026
+    category: followup_day_replaces_month
+    clock: 2026-08-25
+    turns:
+      - q: contratos de mantenimiento en Barranquilla
+        expect: execute
+      - q: de junio de 2026
+        expect: execute
+        eq: {fecha_desde: '2026-06-01', fecha_hasta: '2026-06-30'}
+      - q: del 15 de junio de 2026
+        expect: execute
+        eq: {fecha_desde: '2026-06-15', fecha_hasta: '2026-06-15'}
+
+  - id: TIMEV2-027
+    category: followup_open_replaced_atomically
+    clock: 2026-08-25
+    turns:
+      - q: contratos de mantenimiento desde 2025
+        expect: execute
+        eq: {fecha_desde: '2025-01-01'}
+        absent: [fecha_hasta]
+      - q: solo marzo de 2026
+        expect: execute
+        eq: {fecha_desde: '2026-03-01', fecha_hasta: '2026-03-31'}
+
+  - id: TIMEV2-028
+    category: followup_missing_year_transactional
+    clock: 2026-08-25
+    turns:
+      - q: contratos de mantenimiento en junio de 2026
+        expect: execute
+        eq: {fecha_desde: '2026-06-01', fecha_hasta: '2026-06-30'}
+      - q: mejor entre enero y marzo
+        expect: block
+        eq: {fecha_desde: '2026-06-01', fecha_hasta: '2026-06-30'}
+
+  - id: TIMEV2-029
+    category: negative_time_preserved
+    turns:
+      - q: contratos de aseo menos los de 2025
+        expect: block
+        absent: [fecha_desde, fecha_hasta]
+
+  - id: TIMEV2-030-CLOSED
+    category: closed_vs_open_anti_metamorphic
+    turns:
+      - q: contratos de aseo en 2025
+        expect: execute
+        eq: {fecha_desde: '2025-01-01', fecha_hasta: '2025-12-31'}
+
+  - id: TIMEV2-031-OPEN
+    category: closed_vs_open_anti_metamorphic
+    differ_from: {case: TIMEV2-030-CLOSED, fields: [fecha_hasta]}
+    turns:
+      - q: contratos de aseo desde 2025
+        expect: execute
+        eq: {fecha_desde: '2025-01-01'}
+        absent: [fecha_hasta]
+
+  - id: TIMEV2-032
+    category: cross_year_explicit
+    turns:
+      - q: contratos de aseo entre diciembre de 2025 y febrero de 2026
+        expect: execute
+        eq: {fecha_desde: '2025-12-01', fecha_hasta: '2026-02-28'}

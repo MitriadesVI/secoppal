@@ -13,6 +13,8 @@ señales del observer.
 from __future__ import annotations
 
 import re
+import calendar
+from datetime import date as Date
 from decimal import Decimal, InvalidOperation
 from typing import TYPE_CHECKING
 
@@ -360,10 +362,48 @@ def _build_interpretation(resolved: dict) -> str:
         parts.append(f"de {ent}")
 
     desde = resolved.get("fecha_desde", "")
-    if desde:
-        parts.append(f"desde {desde[:4]}")
+    hasta = resolved.get("fecha_hasta", "")
+    temporal = _format_temporal_scope(desde, hasta)
+    if temporal:
+        parts.append(temporal)
 
     return " ".join(parts)
+
+
+_MONTH_LABELS = (
+    "", "enero", "febrero", "marzo", "abril", "mayo", "junio",
+    "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre",
+)
+
+
+def _format_temporal_scope(desde: str, hasta: str) -> str:
+    """Describe día, mes, año, rango y abiertos sin colapsar granularidad."""
+    try:
+        start = Date.fromisoformat(desde) if desde else None
+        end = Date.fromisoformat(hasta) if hasta else None
+    except (TypeError, ValueError):
+        if desde and hasta:
+            return f"entre {desde} y {hasta}"
+        return f"desde {desde}" if desde else (f"hasta {hasta}" if hasta else "")
+
+    if start and end:
+        if start == end:
+            return f"el {start.isoformat()}"
+        if start == Date(start.year, 1, 1) and end == Date(start.year, 12, 31):
+            return f"en {start.year}"
+        if (
+            start.year == end.year
+            and start.month == end.month
+            and start.day == 1
+            and end.day == calendar.monthrange(end.year, end.month)[1]
+        ):
+            return f"en {_MONTH_LABELS[start.month]} de {start.year}"
+        return f"entre {start.isoformat()} y {end.isoformat()}"
+    if start:
+        return f"desde {start.year}" if start.month == start.day == 1 else f"desde {start.isoformat()}"
+    if end:
+        return f"hasta {end.year}" if (end.month, end.day) == (12, 31) else f"hasta {end.isoformat()}"
+    return ""
 
 
 def _format_smmlv_quantity(value: object) -> str:

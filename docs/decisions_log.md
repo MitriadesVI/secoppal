@@ -3512,3 +3512,93 @@ cuando hay marcador negativo**. Ese mapeo convierte una exclusión geográfica e
 una restricción de comprador y duplica el daño de la inversión.
 
 Guía técnica: `docs/architecture/DIMENSIONAL_NEGATION_SEMANTICS.md`.
+
+---
+
+## ADR-065: Una autoridad temporal determinística y un reloj civil inyectable
+
+**Fecha:** 2026-08-25
+**Estado:** Accepted — `TIME_SEMANTICS_V2: CLOSED` para las capacidades R5
+
+### Contexto
+
+La semántica temporal estaba dividida entre dos capas. `QueryRouter._extract_dates()`
+proyectaba años y un único patrón mes+año, sin reloj. `dialogue_policy` ya
+reconocía `este mes`, `mes pasado`, semanas y últimos N días usando un reloj
+contextual, pero `QueryPlan` sólo proyectaba esas señales si el parser no había
+creado otro extremo. En el workflow real varias señales se perdían y los
+extractores genéricos podían reinterpretar sus tokens como objeto contractual.
+
+Los rangos específicos tampoco tenían precedencia: `entre enero y marzo de
+2026` terminaba como marzo porque el último match genérico sobrescribía al
+primero. Un día exacto colapsaba al mes y una fecha civil imposible se ejecutaba
+como el mes completo. El merge conversacional heredaba por separado
+`fecha_desde` y `fecha_hasta`, por lo que un scope nuevo abierto podía conservar
+un extremo viejo.
+
+### Decisión
+
+1. **`temporal_semantics.resolve_temporal_scope()` es la única autoridad
+   lingüística temporal.** Vive en su propio módulo —no dentro de
+   `dialogue_policy`— porque es una responsabilidad separada y ambos
+   consumidores la necesitan sin arrastrar el clasificador. Evalúa una gramática
+   determinística en orden de especificidad y devuelve una sola
+   `TemporalResolution`. `QueryRouter` la consume y sólo proyecta a
+   `fecha_desde`/`fecha_hasta`; `dialogue_policy` la adapta al contrato histórico
+   de señales y `QueryPlan` delega el veredicto de ejecución en
+   `temporal_gate.temporal_plan_block()`.
+2. **`civil_today()` es el único punto de lectura del reloj civil.** El valor
+   viaja por `HandlerContext` y el estado del workflow hasta parser y policy.
+   `SecopalWorkflow.run_query(today=...)` y el runner HCA permiten congelarlo.
+3. **Mes —y día inequívoco— sin año usa el año civil actual.** Esta política A
+   se aplica incluso en enero ante `diciembre`: puede señalar diciembre futuro.
+   No se inventa “el más reciente no futuro”. Los rangos sin año aclaran porque
+   heredar o inventar el año cambiaría materialmente la intención.
+4. **La precedencia es semántica, no una secuencia de mutaciones:** rangos de
+   día/mes/año → día exacto → relativos → abiertos → mes → año. Un rango
+   invertido o una fecha imposible aclara; nunca se ordena ni se degrada a mes.
+5. **La mutación temporal de follow-up es atómica.** La señal efímera
+   `_temporal_replace_scope` permite limpiar ambos extremos anteriores antes de
+   aplicar el scope nuevo, incluida la ausencia intencional de un extremo. La
+   señal se elimina antes de SoQL, persistencia y fingerprint.
+6. **Todo span temporal reconocido se enmascara antes de actor, entidad, estado,
+   dinero y objeto.** La protección léxica impide además la corrección
+   `dias → vias`.
+
+### Semántica cerrada en R5
+
+- día, mes y año cerrados; mes sin año según la política anterior;
+- rangos explícitos de días, meses y años, incluido cross-year con ambos años;
+- `desde`/`hasta` para año o mes;
+- `este/mes pasado`, `este/año pasado`, hoy, ayer;
+- semana civil ISO actual/anterior y últimas N semanas como ventana trailing
+  `today - N*7 .. today`;
+- últimos N días conserva el contrato previo `today - N .. today`;
+- fecha inválida, rango invertido, rango sin año y marcador inequívoco no
+  soportado terminan en aclaración determinística, nunca `needs_llm`.
+
+### Consecuencias y límites
+
+No se crea AST temporal ni se modifica `SoQLBuilder`: la representación sigue
+siendo `fecha_desde`/`fecha_hasta`. Continúan fuera de alcance la negación
+temporal ejecutable, huecos/NOT BETWEEN, quarters, semestres, años fiscales,
+recurrencia, días hábiles, deadlines y estado contractual. `menos los de 2025`
+conserva la política de ADR-064: TIME/CLARIFY y cero proyección positiva.
+
+### Evidencia de aceptación
+
+- HCA congelado: **164/195 → 171/195** sobre el mismo corpus
+  (sha `262c225c…`, sin editar). La línea base se remidió de forma
+  independiente en un worktree limpio de `main` y el diferencial se comparó
+  caso por caso, no por el neto: corregidos `HCA-TIME-003/004/008/010/012/014/015`,
+  **regresiones: ninguna**. Ambas corridas se hicieron con el extractor LLM
+  caído (HTTP 402, saldo agotado) y por tanto en modo regex-only; la comparación
+  es válida porque la condición fue idéntica en ambos lados, y R5 es
+  precisamente trabajo determinístico sin LLM;
+- los 15 `HCA-TIME-*`: **15/15**;
+- `time_v2_focal.yaml`: **32/32** con reloj por caso relativo;
+- fuente Socrata: 80 filas en día/mes/rango/abierto, **0 violaciones**;
+- fixture de negación intacto: **22/24** basal, 2 deudas de oráculo conocidas.
+
+Informe reproducible:
+`docs/audits/2026-08-25_HCA_R5_TIME_V2.md`.

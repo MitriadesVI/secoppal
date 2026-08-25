@@ -371,7 +371,10 @@ class FollowupClassifier:
         has_scope_signal = bool(cls._SCOPE_SIGNALS.search(norm_text))
         has_order = cls._has_ordering_signal(norm_text)
         has_orthogonal_filter = any(
-            key not in {"fecha_desde", "fecha_hasta", "ordering_signal"}
+            key not in {
+                "fecha_desde", "fecha_hasta", "_temporal_replace_scope",
+                "ordering_signal",
+            }
             and value not in (None, "", [], {}, (), False)
             for key, value in current_frame.modifiers.items()
         )
@@ -629,6 +632,14 @@ def _merge_modifiers(prev_mods: dict, curr_mods: dict) -> dict:
     """Une modifiers ya validados; el cluster de estado se limpia en el gate."""
     previous = dict(prev_mods)
     current = dict(curr_mods)
+    replace_temporal_scope = bool(current.pop("_temporal_replace_scope", False))
+    previous.pop("_temporal_replace_scope", None)
+    if replace_temporal_scope:
+        # INV-TEMPORAL-MUTATION-ATOMIC: un scope temporal nuevo reemplaza el
+        # par completo. Para un rango abierto, la ausencia del otro extremo es
+        # información y no autorización para heredarlo del turno anterior.
+        previous.pop("fecha_desde", None)
+        previous.pop("fecha_hasta", None)
     metadata = current.get("money_metadata")
     desde = None
     hasta = None

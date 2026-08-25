@@ -177,11 +177,12 @@ def test_two_year_range_extracted_as_full_year_bounds(router: QueryRouter, query
     assert parsed.params.get("fecha_hasta") == "2026-12-31"
 
 
-def test_reversed_two_year_range_is_normalized(router: QueryRouter) -> None:
+def test_reversed_two_year_range_fails_closed_without_swapping(router: QueryRouter) -> None:
     parsed = router.parse("contratos de obra entre 2026 y 2025")
 
-    assert parsed.params.get("fecha_desde") == "2025-01-01"
-    assert parsed.params.get("fecha_hasta") == "2026-12-31"
+    assert parsed.params.get("fecha_desde") is None
+    assert parsed.params.get("fecha_hasta") is None
+    assert parsed.params.get("_temporal_error") == "reverse_range"
 
 
 # ═════════════════════════════════════════════════════════════════════════════

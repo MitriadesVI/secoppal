@@ -25,7 +25,7 @@ LAST_SUNDAY = date(2026, 5, 31)
 
 def _parse_and_plan(query: str):
     """Helper: QueryRouter.parse() → compute_query_plan(), return QueryPlan."""
-    result = QueryRouter().parse(query)
+    result = QueryRouter().parse(query, today=TODAY)
     return compute_query_plan(result.params, query, {"today": TODAY})
 
 
@@ -50,13 +50,13 @@ def test_ayer_produce_rango_ayer():
 
 
 # ═══════════════════════════════════════════════════════════════════════════
-# "esta semana" → desde = lunes ISO, hasta = today
+# "esta semana" → semana civil ISO completa (lunes a domingo)
 # ═══════════════════════════════════════════════════════════════════════════
 
-def test_esta_semana_produce_rango_lunes_a_hoy():
+def test_esta_semana_produce_rango_lunes_a_domingo():
     plan = _parse_and_plan("contratos esta semana")
     assert plan.params["fecha_desde"] == "2026-06-01"  # Monday
-    assert plan.params["fecha_hasta"] == "2026-06-04"  # Thursday = today
+    assert plan.params["fecha_hasta"] == "2026-06-07"  # Sunday
 
 
 # ═══════════════════════════════════════════════════════════════════════════

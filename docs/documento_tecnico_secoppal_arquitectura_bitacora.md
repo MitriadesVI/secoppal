@@ -7,19 +7,24 @@
 
 ## Estado canónico actual — 2026-08-25
 
-- **Main:** `c66ebba719159c9fc0ee55fc01775b32956c5d09` — **HCA Core Remediation
+- **Main:** `e0ba21173e56a8562eb626a5136ca53173af8d23` — **HCA Core Remediation
   Fase 1** integrada ff-only (9 commits, sin commit de merge) sobre
   `0f8dc94` (que ya traía el cierre del spike Semantic Market Pack, ADR-062).
+- **Rama de cierre R5:** `feature/hca-r5-time-v2` — `TIME_SEMANTICS_V2: CLOSED`
+  para las capacidades A–I de ADR-065; pendiente de integration review, sin
+  merge ni push desde este sprint.
 - **Estado de cierre:** `HCA_CORE_PHASE_1: INTEGRATED` ·
   `DIRECT_LOOKUP_HIJACK: CLOSED` · `NORMALIZATION_CONTRACT: CLOSED` ·
-  `DIMENSIONAL_NEGATION_V1: CLOSED` ·
-  `MAIN_INTEGRATION: c66ebba719159c9fc0ee55fc01775b32956c5d09`.
+  `DIMENSIONAL_NEGATION_V1: CLOSED` · `TIME_SEMANTICS_V2: CLOSED (R5 branch)` ·
+  `MAIN_INTEGRATION: e0ba21173e56a8562eb626a5136ca53173af8d23`.
 - **Suite:** 8436 passed, 2 skipped, 23 xfailed · query corpus 89/89 ·
   dialogue corpus con único FAIL `GOB-DEPTO-001` (basal, histórico) ·
   focales lookup/normalización/negación/paginación 424 passed ·
   `make lint-core` limpio · `git diff --check` limpio.
 - **HCA-1 congelado** (`conversation_holistic_v1.yaml`, sha `262c225c…`,
-  intacto): **156 → 164 PASS de 195**. 8 casos corregidos
+  intacto): Fase 1 **156 → 164 PASS de 195**; R5 temporal medido sobre su rama
+  **164 → 171 PASS de 195**, 7 TIME corregidos y 0 regresiones.
+  Los 8 casos de Fase 1 fueron
   (`HCA-INTENT-010`, `HCA-MODALITY-004`, `HCA-GEO-006`, `HCA-MONEY-021`,
   `HCA-NEG-003`, `HCA-NEG-005`, `HCA-NEG-006`, `HCA-ANTI-004`) y **0 casos
   rotos** frente a main.
@@ -28,7 +33,7 @@
   normalizarla, y aprendió a distinguir *qué* se está negando antes de decidir
   si puede ejecutarlo.
 
-### Tres cierres
+### Cuatro cierres
 
 - **`HCA-LOOKUP-HIJACK-001`: CLOSED** (`0d194f3`). `_extract_entity_refs()`
   exigía prefijo + componente, pero no que algún componente fuera numérico: un
@@ -49,12 +54,18 @@
   resta de conjunto es segura. CITY, TIME, BUYER, ACTOR, CONTRACT_TYPE y STATE
   **aclaran fail-closed** sin mutar el frame previo ni invalidar su buffer. El
   ciclo de vida es simétrico: lo que el usuario excluyó, lo puede retirar.
+- **`TIME_SEMANTICS_V2`: CLOSED para R5** (ADR-065, rama
+  `feature/hca-r5-time-v2`). `temporal_semantics` es la autoridad temporal única;
+  parser y plan consumen su resolución con reloj civil inyectable. Día, mes,
+  año, rangos explícitos, extremos abiertos, relativos y semanas preservan
+  granularidad; fechas imposibles/rangos invertidos aclaran. Focal 32/32, HCA
+  TIME 15/15 y fuente viva 80 filas sin violaciones.
 
 ### Deuda explícita — HCA **no** está completo
 
-- `TIME_V2` — álgebra temporal (rangos de meses, días, `mes pasado`).
-  `HCA-TIME-004` sigue FAIL por `entre enero y marzo de 2026`, fuera del
-  alcance declarado de ADR-063.
+- `TIME_AFTER_R5` — siguen fuera negación temporal ejecutable, NOT BETWEEN,
+  huecos/resta de intervalos, quarters/semestres/años fiscales, recurrencia,
+  días hábiles y deadlines. R5 no declara resuelta toda la semántica temporal.
 - `CONTROL_LANGUAGE` — refactor general del lenguaje de control.
 - `ACTOR_HYGIENE` — `HCA-ACTOR-011` sigue FAIL basal; el arreglo general de
   Actor Pending está reservado a HCA-R7 y **no** se coló en R4.

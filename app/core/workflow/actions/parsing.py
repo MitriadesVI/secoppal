@@ -98,7 +98,7 @@ _EMPTY_VALUES = (None, "", [], {}, (), False)
 
 
 @action(
-    reads=["user_query", "timings_ms"],
+    reads=["user_query", "today", "timings_ms"],
     writes=[
         "parsed_params", "needs_llm", "route_reason",
         "modality_interpretation", "modality_followup_instruction", "timings_ms",
@@ -107,7 +107,7 @@ _EMPTY_VALUES = (None, "", [], {}, (), False)
 )
 def parse_query(state: State, query_router: QueryRouter) -> State:
     start = time.perf_counter()
-    result = query_router.parse(state["user_query"])
+    result = query_router.parse(state["user_query"], today=state.get("today"))
     # M3C-C: clasifica SOLO lenguaje de control (allow_implicit_replace=False; el
     # REPLACE implícito se decide en apply_context, ya conocido el intent real).
     # M2 no se re-ejecuta: la instrucción viaja como metadata efímera JSON-native.
@@ -432,6 +432,44 @@ def apply_context(state: State) -> State:
                 "rejection_reasons": {
                     "negative_span": risk_flag,
                 },
+            },
+            query_plan=blocked_plan,
+        )
+
+    temporal_error = parsed_params.get("_temporal_error")
+    if temporal_error:
+        # Una mutación temporal inválida es transaccional: no mezcla un extremo
+        # nuevo con el scope confirmado ni reemplaza el frame conversacional.
+        previous_params = dict(context_params)
+        clarification = str(parsed_params.get("_temporal_clarification") or (
+            "No pude resolver esa referencia temporal con seguridad. "
+            "¿Qué intervalo querías usar?"
+        ))
+        blocked_plan = asdict(QueryPlan(
+            should_execute=False,
+            params=previous_params,
+            risk_flags=[f"TEMPORAL_{str(temporal_error).upper()}"],
+            clarification_question=clarification,
+            reason="invalid_temporal_scope",
+        ))
+        return _with_timing(
+            state,
+            "apply_context_ms",
+            start,
+            parsed_params=previous_params,
+            resolved_params=previous_params,
+            needs_llm=False,
+            needs_clarification=True,
+            clarification_reason=clarification,
+            intent_type="invalid_temporal_scope",
+            followup_intent_type="invalid_temporal_scope",
+            followup_mutation={
+                "intent": "invalid_temporal_scope",
+                "requested_fields": ["fecha_desde", "fecha_hasta"],
+                "accepted_fields": [],
+                "transition_cleared_fields": [],
+                "rejected_fields": ["temporal_scope"],
+                "rejection_reasons": {"temporal_scope": str(temporal_error)},
             },
             query_plan=blocked_plan,
         )

@@ -28,6 +28,7 @@ from app.core.object_negation_policy import (
     object_negation_overlap,
 )
 from app.core.semantic_sanity import compute_sanity_flags
+from app.core.temporal_gate import temporal_plan_block
 
 # ── All known rules — used as default when enabled_rules is None ──────────────
 ALL_RULES = {
@@ -89,6 +90,9 @@ def compute_query_plan(
     all_signals = classify(raw_query, params, context)
     reason_parts: list[str] = []
     risk_flags: list[str] = []
+
+    if (temporal := temporal_plan_block(working_params, all_signals)) is not None:
+        return QueryPlan(params=working_params, signals=all_signals, **temporal)
 
     # INV-OBJECT-NEGATION-END-TO-END: never send mutually incompatible
     # positive/negative OBJECT predicates to SECOP and fabricate a zero result.

@@ -37,6 +37,20 @@ _SEMANTIC_IDENTITY_FORMS = frozenset({
     "publicada",
     "publicados",
     "publicadas",
+    # Autoridad temporal: estos tokens deben llegar intactos al parser. Sin
+    # protección, ``dias`` se corregía por distancia 1 a ``vias`` y contaminaba
+    # el objeto contractual de "últimos 30 días".
+    "dia",
+    "dias",
+    "semana",
+    "semanas",
+    "mes",
+    "meses",
+    "ano",
+    "desde",
+    "hasta",
+    "pasado",
+    "pasada",
 })
 
 

@@ -29,6 +29,7 @@ Check DSL (per turn; all optional):
 
 Case kinds:
     turns: [...]                     conversation (single- or multi-turn)
+    clock: YYYY-MM-DD                optional frozen civil clock for every turn
     same_frame_as: OTHER_CASE_ID     metamorphic — material frame must equal
     differ_from: {case: ID, fields: [...]}   anti-metamorphic — fields must differ
 """
@@ -41,6 +42,7 @@ import os
 import sys
 import tempfile
 import unicodedata
+from datetime import date as Date
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -123,6 +125,20 @@ def material_frame(params: dict) -> dict:
             v = sorted(str(x) for x in v)
         out[k] = v
     return out
+
+
+def _case_clock(case: dict) -> Date | None:
+    value = case.get("clock")
+    if value is None:
+        return None
+    if isinstance(value, Date):
+        return value
+    try:
+        return Date.fromisoformat(str(value))
+    except ValueError as exc:
+        raise ValueError(
+            f"case {case.get('id')}: invalid clock {value!r}"
+        ) from exc
 
 
 def check_turn(turn: dict, record: dict) -> list[str]:
@@ -216,6 +232,7 @@ def main() -> None:
 
     for case in cases:
         cid = str(case["id"])
+        clock = _case_clock(case)
         chat_id = f"hca1-{cid}"
         fails: list[str] = []
         error: str | None = None
@@ -223,7 +240,12 @@ def main() -> None:
         for i, turn in enumerate(case.get("turns") or []):
             q = turn["q"]
             try:
-                result = wf.run_query(q, channel="telegram", chat_id=chat_id)
+                result = wf.run_query(
+                    q,
+                    channel="telegram",
+                    chat_id=chat_id,
+                    today=clock,
+                )
             except Exception as exc:  # noqa: BLE001
                 error = f"turn {i + 1} {q!r}: {type(exc).__name__}: {exc}"
                 break

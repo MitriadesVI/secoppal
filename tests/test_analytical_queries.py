@@ -181,7 +181,7 @@ class TestAnalyticalQueriesIntegration:
         monkeypatch.setattr(
             wf.query_router,
             "parse",
-            lambda q: ParsedQuery(
+            lambda q, **kwargs: ParsedQuery(
                 params={"dataset": "contratos"},
                 needs_llm=False,
                 route_reason="heuristic_only",

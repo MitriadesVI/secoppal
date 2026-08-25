@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import logging
 import time
+from datetime import date as Date
 from typing import Any
 
 from app.config import Settings
@@ -135,6 +136,7 @@ class SecopalWorkflow:
         user_identity: dict[str, Any] | None = None,
         seed_resolved_params: dict | None = None,
         actor_candidate_selection: dict[str, Any] | None = None,
+        today: Date | None = None,
         run_started_at: float | None = None,
     ) -> "HandlerContext":
         """Build a HandlerContext from run_query's arguments.
@@ -153,6 +155,8 @@ class SecopalWorkflow:
         }
         if run_started_at is not None:
             kwargs["run_started_at"] = run_started_at
+        if today is not None:
+            kwargs["today"] = today
         return HandlerContext(**kwargs)
 
     def run_query(
@@ -163,6 +167,7 @@ class SecopalWorkflow:
         user_identity: dict[str, Any] | None = None,
         seed_resolved_params: dict | None = None,
         actor_candidate_selection: dict[str, Any] | None = None,
+        today: Date | None = None,
     ) -> dict:
         """Dispatch a request through the handler chain.
 
@@ -188,6 +193,7 @@ class SecopalWorkflow:
             user_identity=user_identity,
             seed_resolved_params=seed_resolved_params,
             actor_candidate_selection=actor_candidate_selection,
+            today=today,
             run_started_at=time.perf_counter(),
         )
 
