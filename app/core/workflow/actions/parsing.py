@@ -31,9 +31,13 @@ from app.core.actor_resolution import is_authoritative_actor_resolution
 from app.core.followup_engine import FollowupGuards, detect_and_merge
 from app.core.llm_handler import LLMHandler
 from app.core.negation_binding import (
-    deferred_negation_question,
+    NegationDimension,
+    NegationRequest,
+    blocking_negation_reason,
+    negation_clarification_question,
     requests_require_policy,
 )
+from app.core.negation_policy import apply_negation_policy
 from app.core.object_negation_policy import (
     OBJECT_NEGATION_CONTRADICTION_QUESTION,
     object_negation_overlap,
@@ -108,7 +112,12 @@ def parse_query(state: State, query_router: QueryRouter) -> State:
         "parse_ms",
         start,
         parsed_params=result.params,
-        needs_llm=result.needs_llm,
+        # A blocked negation must not trigger an external LLM call before the
+        # deterministic clarification plan is built.
+        needs_llm=(
+            result.needs_llm
+            and not requests_require_policy(result.negation_requests)
+        ),
         route_reason=result.route_reason,
         modality_interpretation=result.modality_interpretation,
         modality_followup_instruction=modality_wiring.instruction_to_state(instruction),
@@ -290,7 +299,8 @@ def _load_instruction(state: State):
     writes=[
         "parsed_params", "needs_llm", "needs_clarification",
         "clarification_reason", "intent_type", "followup_intent_type",
-        "followup_mutation", "query_plan", "timings_ms",
+        "followup_mutation", "query_plan", "resolved_params",
+        "negation_requests", "timings_ms",
     ],
 )
 def apply_context(state: State) -> State:
@@ -317,36 +327,62 @@ def apply_context(state: State) -> State:
     previous_frame = frame_from_params(context_params)
 
     negation_requests = state.get("negation_requests") or []
+    if negation_requests:
+        typed_requests = tuple(
+            request
+            if isinstance(request, NegationRequest)
+            else NegationRequest.from_state(request)
+            for request in negation_requests
+        )
+        # A department set may come from the confirmed conversational frame,
+        # not from the isolated follow-up text. Re-evaluate capability against
+        # that effective scope before deciding to clarify.
+        capability_params = {**context_params, **parsed_params}
+        policy = apply_negation_policy(typed_requests, capability_params)
+        negation_requests = [request.to_state() for request in policy.requests]
+        state = state.update(negation_requests=negation_requests)
+        if not policy.blocks_execution and any(
+            request.dimension is NegationDimension.DEPARTMENT
+            for request in policy.requests
+        ):
+            parsed_params = dict(parsed_params)
+            parsed_params["departamentos_in"] = list(
+                policy.params["departamentos_in"]  # type: ignore[arg-type]
+            )
+
     if requests_require_policy(negation_requests):
         # Fail closed before actor precedence or generic follow-up
         # classification. The previous frame remains intact.
         previous_params = dict(context_params)
-        clarification = deferred_negation_question(negation_requests)
+        clarification = negation_clarification_question(negation_requests)
+        reason, risk_flag = blocking_negation_reason(negation_requests)
         blocked_plan = asdict(QueryPlan(
             should_execute=False,
             params=dict(previous_params),
-            risk_flags=["DIMENSIONAL_NEGATION_DEFERRED"],
+            risk_flags=[risk_flag],
             clarification_question=clarification,
-            reason="dimensional_negation_deferred",
+            reason=reason,
         ))
         return _with_timing(
             state,
             "apply_context_ms",
             start,
             parsed_params=previous_params,
+            resolved_params=dict(previous_params),
+            negation_requests=negation_requests,
             needs_llm=False,
             needs_clarification=True,
             clarification_reason=clarification,
-            intent_type="negation_deferred",
-            followup_intent_type="negation_deferred",
+            intent_type=reason,
+            followup_intent_type=reason,
             followup_mutation={
-                "intent": "negation_deferred",
+                "intent": reason,
                 "requested_fields": [],
                 "accepted_fields": [],
                 "transition_cleared_fields": [],
                 "rejected_fields": ["negative_span"],
                 "rejection_reasons": {
-                    "negative_span": "DIMENSIONAL_NEGATION_POLICY_DEFERRED",
+                    "negative_span": risk_flag,
                 },
             },
             query_plan=blocked_plan,

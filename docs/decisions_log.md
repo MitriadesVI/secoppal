@@ -3219,10 +3219,10 @@ negación, control-language y actor hygiene.
 ## ADR-064: La negación preserva la dimensión antes que la ejecutabilidad
 
 **Fecha:** 2026-08-24
-**Estado:** Accepted — infraestructura R4-S1 implementada; políticas por
-dimensión diferidas a R4-S2/S3/S4
+**Estado:** Accepted — infraestructura R4-S1, OBJECT R4-S2 y safe policies
+R4-S3 implementadas; lifecycle diferido a R4-S4
 
-### IMPLEMENTATION STATUS (R4-S2)
+### IMPLEMENTATION STATUS (R4-S3)
 
 R4-S1 centralizó el vocabulario en `app/core/negation_markers.py` e introdujo
 `NegationRequest` en `app/core/negation_binding.py`. El binding ocurre antes de
@@ -3232,9 +3232,14 @@ dimensiones todavía no ejecutables cierran de forma segura con aclaración.
 R4-S2 convirtió únicamente OBJECT en ejecutable mediante la autoridad existente
 `objeto_exclude`, corrigió la proyección a `NOT (coalesce(LIKE, false) OR …)` y
 añadió aclaración fail-closed ante overlap positivo/negativo proyectado. La
-modalidad mantiene su política existente. Geografía, tiempo, comprador, actor,
-estado y tipo de contrato permanecen diferidos a R4-S3/S4. Evidencia:
-`docs/audits/2026-08-25_HCA_R4_S2_OBJECT_NEGATION.md`.
+modalidad mantiene su política existente. R4-S3 cerró CITY, TIME, BUYER, ACTOR,
+CONTRACT TYPE y STATE como `CLARIFY_ONLY`; el plan bloqueado no llama SECOP, el
+resolvedor de actor ni el fallback LLM. La aclaración en follow-up conserva y
+persiste una copia exacta del frame confirmado y no invalida su snapshot de
+paginación. DEPARTMENT sólo ejecuta al restar un valor canónico de un
+`departamentos_in` finito ya materializado; sin ese conjunto aclara y no genera
+`NOT IN`. Evidencia:
+`docs/audits/2026-08-25_HCA_R4_S3_SAFE_NEGATION_POLICIES.md`.
 
 ### CONTEXT
 
@@ -3426,6 +3431,16 @@ exclusión sobre un span resoluble y SECOPPAL no puede representarlo, aclara o
 avisa. Nunca lo convierte en positivo; nunca lo ignora en silencio. Ejecutar la
 parte positiva ignorando la exclusión **no cumple**: devuelve un superconjunto
 que contiene precisamente las filas rechazadas.
+
+**`INV-UNSUPPORTED-NEGATION-DOES-NOT-MUTATE-QUERY`** — una negación bindeada
+sin capacidad segura no altera filtros positivos, no activa resolución de
+actor/entidad y no ejecuta SECOP. Produce una aclaración que reconoce la
+exclusión entendida.
+
+**`INV-NEGATION-CLARIFY-IS-TRANSACTIONAL`** — una aclaración negativa en
+follow-up persiste exactamente el frame confirmado anterior; no conserva un
+delta parcial, no crea `actor_pending` y no invalida el universo paginable de
+esa búsqueda.
 
 ### TEST_REQUIREMENTS
 

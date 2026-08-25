@@ -24,6 +24,7 @@ from app.core.actor_resolution import (
     actor_resolution_method,
     project_actor_resolution,
 )
+from app.core.negation_binding import requests_require_policy
 from app.data.actor_alias_resolver import ActorNameResolver
 
 
@@ -98,9 +99,17 @@ def _parse_exact_boundary_modifier_suffix(
     return modifiers or None
 
 
-@action(reads=["parsed_params", "raw_query"], writes=["parsed_params"])
+@action(
+    reads=["parsed_params", "raw_query", "negation_requests"],
+    writes=["parsed_params"],
+)
 def resolve_actor_name(state: State, actor_name_resolver: ActorNameResolver) -> State:
     """Resolve strong mentions fully and bare names by exact lookup only."""
+    # Negative ACTOR/BUYER spans are already bound. No directory probe,
+    # candidate retrieval or actor_pending projection may run before the
+    # fail-closed policy clarification.
+    if requests_require_policy(state.get("negation_requests") or []):
+        return state
     if not actor_profile_enabled():
         return state
 

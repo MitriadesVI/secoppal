@@ -208,6 +208,21 @@ def test_actor_binding_never_creates_positive_actor(router: QueryRouter) -> None
     assert request.value == "union temporal aseo"
 
 
+def test_contrastive_actor_negation_never_creates_positive_actor(
+    router: QueryRouter,
+) -> None:
+    parsed = router.parse(
+        "contratos donde el proveedor pero no union temporal aseo"
+    )
+    assert "actor_scope" not in parsed.params
+    assert "actor_resolution" not in parsed.params
+    assert "objeto_exclude" not in parsed.params
+    request = parsed.negation_requests[0]
+    assert request.dimension is NegationDimension.ACTOR
+    assert request.value == "union temporal aseo"
+    assert request.verdict is NegationVerdict.CLARIFY
+
+
 @pytest.mark.parametrize(
     "query,dimension",
     [

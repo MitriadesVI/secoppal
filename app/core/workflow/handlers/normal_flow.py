@@ -91,13 +91,6 @@ def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
     last_turn = history[-1] if history else None
     followup = is_followup(ctx.user_query, last_turn)
     context_params = dict(last_turn.parsed_params) if (followup and last_turn) else {}
-    # This handler only receives non-pagination turns. Clear all cached result
-    # universes before parsing/execution so any semantic mutation (including a
-    # turn that later returns zero rows or fails closed) cannot leave an old
-    # candidate buffer available to a subsequent "más resultados".
-    if ctx.chat_id:
-        deps.conv_store.invalidate_pagination_buffers(ctx.chat_id)
-
     app = build_application(
         deps,
         user_query=ctx.user_query,
@@ -158,6 +151,16 @@ def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
         "contextual_filters": {},
     }
 
+    # A semantic turn normally invalidates the old result universe. An
+    # unsupported/contradictory negation is transactional, however: it changes
+    # neither the confirmed frame nor its pagination snapshot.
+    negation_block = (result.get("query_plan") or {}).get("reason") in {
+        "unsupported_negation",
+        "dimensional_negation_contradiction",
+    }
+    if ctx.chat_id and not negation_block:
+        deps.conv_store.invalidate_pagination_buffers(ctx.chat_id)
+
     # ── Contextual filters (Feature: refinement bar) ──────────────────
     raw_results = result.get("results", [])
     total_count = result.get("total_count", 0)
@@ -180,7 +183,12 @@ def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
     # ── Entity ecosystem expansion (Sprint 6 Fase 3) ─────────────────
     # Si no hay entidad explícita pero sí ciudad/departamento, expandir
     resolved_post = state.get("resolved_params", {})
-    if resolved_post and not resolved_post.get("entidad_resolved") and not resolved_post.get("entidad_like"):
+    if (
+        resolved_post
+        and not state.get("needs_clarification")
+        and not resolved_post.get("entidad_resolved")
+        and not resolved_post.get("entidad_like")
+    ):
         from app.core.entity_ecosystem import get_ecosystem_entities, should_expand_ecosystem
         if should_expand_ecosystem(resolved_post):
             ecosys = get_ecosystem_entities(

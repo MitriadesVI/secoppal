@@ -70,11 +70,13 @@ BASELINE_FILE_SHA256 = {
 }
 
 # SEARCH-SH1 intentionally invalidates cached result universes at the normal
-# semantic-turn boundary. tests/test_pagination_buffer_lifecycle.py and the
-# frozen R4 workflow test bound that one authorized workflow-handler change.
+# semantic-turn boundary. HCA-R4-S3 preserves that behavior except for a
+# fail-closed unsupported negation, whose confirmed frame and buffer are
+# transactional. tests/test_pagination_buffer_lifecycle.py and
+# tests/test_safe_negation_policies.py bound the authorized handler changes.
 SEARCH_SH1_MODIFIED_FILE_SHA256 = {
     "app/core/workflow/handlers/normal_flow.py": (
-        "624d4165fb0d87cbb1c14dae0743e90340005546bca9b01a253fb0b1e9a7caf5"
+        "17e391f6fc60dd50642f6ec64a0d4975c2d80f300ead27c70ddf65bfeb5b7a66"
     ),
 }
 

@@ -30,7 +30,8 @@ from burr.core import State, action
 from app.core.entity_resolver import EntityResolver
 from app.core.modality_execution_policy import evaluate_modality_execution
 from app.core.negation_binding import (
-    deferred_negation_question,
+    blocking_negation_reason,
+    negation_clarification_question,
     requests_require_policy,
 )
 from app.core.opportunity_retrieval_policy import (
@@ -81,12 +82,13 @@ def plan_query(state: State) -> State:
     )
     negation_requests = state.get("negation_requests") or []
     if requests_require_policy(negation_requests):
+        reason, risk_flag = blocking_negation_reason(negation_requests)
         plan = QueryPlan(
             should_execute=False,
             params=dict(params),
-            risk_flags=["DIMENSIONAL_NEGATION_DEFERRED"],
-            clarification_question=deferred_negation_question(negation_requests),
-            reason="dimensional_negation_deferred",
+            risk_flags=[risk_flag],
+            clarification_question=negation_clarification_question(negation_requests),
+            reason=reason,
         )
     elif not modality_decision.should_execute:
         plan = QueryPlan(

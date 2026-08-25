@@ -47,7 +47,7 @@ def test_llm_sees_only_positive_residual_text() -> None:
     assert "union temporal aseo" not in llm.query
 
 
-def test_first_turn_deferred_negation_blocks_before_execution() -> None:
+def test_first_turn_unsupported_negation_blocks_before_execution() -> None:
     parsed = QueryRouter().parse(
         "contratos de aseo que no sean de barranquilla"
     )
@@ -63,8 +63,8 @@ def test_first_turn_deferred_negation_blocks_before_execution() -> None:
     })
     out = plan_query(state)
     assert out["query_plan"]["should_execute"] is False
-    assert out["query_plan"]["reason"] == "dimensional_negation_deferred"
-    assert "DIMENSIONAL_NEGATION_DEFERRED" in out["query_plan"]["risk_flags"]
+    assert out["query_plan"]["reason"] == "unsupported_negation"
+    assert "UNSUPPORTED_NEGATION" in out["query_plan"]["risk_flags"]
 
 
 def _followup_state(current_query: str, previous: dict) -> State:
@@ -93,7 +93,7 @@ def test_negative_city_cannot_classify_change_scope() -> None:
     previous = QueryRouter().parse("contratos de aseo en atlantico").params
     out = parsing_actions.apply_context(_followup_state("menos barranquilla", previous))
     assert out["needs_clarification"] is True
-    assert out["followup_intent_type"] == "negation_deferred"
+    assert out["followup_intent_type"] == "unsupported_negation"
     assert out["parsed_params"] == previous
     assert "ciudad" not in out["parsed_params"]
 
@@ -102,7 +102,7 @@ def test_negative_year_cannot_classify_change_year() -> None:
     previous = QueryRouter().parse("contratos de aseo en valledupar").params
     out = parsing_actions.apply_context(_followup_state("menos los de 2025", previous))
     assert out["needs_clarification"] is True
-    assert out["followup_intent_type"] == "negation_deferred"
+    assert out["followup_intent_type"] == "unsupported_negation"
     assert out["parsed_params"] == previous
     assert "fecha_desde" not in out["parsed_params"]
 

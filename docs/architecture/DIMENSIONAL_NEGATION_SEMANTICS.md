@@ -1,7 +1,8 @@
 # Semántica de negación dimensional
 
 **Estado:** diseño aprobado · binding **R4-S1 implementado** · OBJECT end-to-end
-**R4-S2 implementado**; políticas restantes diferidas a R4-S3/S4 · decisión canónica en
+**R4-S2 implementado** · safe policies **R4-S3 implementadas**; lifecycle diferido a
+R4-S4 · decisión canónica en
 [`ADR-064`](../decisions_log.md)
 **Rama de diseño:** `design/hca-negation-semantics` (hija de
 `fix/hca-normalization-contract`, `9ecf3be`)
@@ -21,6 +22,13 @@
 > `objeto_exclude`, corrigió su proyección NULL-safe y añadió contradicción
 > fail-closed. Evidencia de cierre:
 > [`2026-08-25_HCA_R4_S2_OBJECT_NEGATION.md`](../audits/2026-08-25_HCA_R4_S2_OBJECT_NEGATION.md).
+>
+> R4-S3 convirtió las dimensiones no soportadas a `CLARIFY`, sin llamadas a
+> SECOP ni side effects de actor/entidad, y volvió transaccional la aclaración
+> de follow-up. DEPARTMENT sólo ejecuta por resta de un `departamentos_in`
+> finito y canónico ya existente; no se añadió predicado negativo al builder.
+> Evidencia de cierre:
+> [`2026-08-25_HCA_R4_S3_SAFE_NEGATION_POLICIES.md`](../audits/2026-08-25_HCA_R4_S3_SAFE_NEGATION_POLICIES.md).
 
 ---
 
@@ -715,13 +723,13 @@ evalúa la **proyección real**.
 | **OBJECT** | sí | `NOT (f₁ LIKE '%x%' OR f₂ LIKE '%x%' …)` | 3VL: un campo NULL ⇒ **fila borrada** si el otro no coincide. En vivo: 6 filas de Procesos afectables; 0 de Contratos. `COALESCE(…, false)` verificado | sí, **con el fix null-safe** | **SUPPORTED** |
 | **MODALITY** | sí | `modalidad_de_contratacion NOT IN (…)` sobre raws de catálogo | NULL ⇒ fila borrada (medir; en producción hoy) | sí | **EXISTING** |
 | **DEPARTMENT (resta de conjunto)** | sí | `departamento IN (<positivos − excluidos>)` | **no aplica**: predicado positivo | sí | **SUPPORTED** |
-| **DEPARTMENT (complemento abierto)** | sí | `departamento NOT IN (…)` | `No Definido` (6,44 % / 2,01 % en HCA-R4.1) queda **incluido** | ambiguo, decidible | **DEFER** |
+| **DEPARTMENT (complemento abierto)** | sí | `departamento NOT IN (…)` | `No Definido` (6,44 % / 2,01 % en HCA-R4.1) queda **incluido** | ambiguo, decidible | **CLARIFY_ONLY** |
 | **CITY** | técnicamente sí | `NOT (unaccent(UPPER(ciudad)) LIKE '%x%')` | NULL/vacío 0 %, pero `No Definido` es 23,79 % / 21,52 %; **colisión de subcadena** (Calima⊃cali, San Andrés Sotavento) | **no** | **CLARIFY** |
 | **TIME** | sí, con disyunción | `(fecha < a OR fecha > b)` o `case(…)` | NULL ⇒ borrada | transporte exploratorio SAFE; parser/representación siguen abiertos | **CLARIFY_ONLY** |
-| **BUYER** | sí | `nombre_entidad != '…'` / `NOT LIKE` | homónimos, ecosistemas | no | **DEFER** |
-| **ACTOR** | sí | `proveedor_adjudicado NOT LIKE` / `documento_proveedor NOT IN` | NULL frecuente (no adjudicados); UT | no | **DEFER** |
-| **CONTRACT TYPE** | sí | `tipo_de_contrato NOT IN (…)` | cerrado | sí | **DEFER** (sin demanda) |
-| **STATE** | sí | `estado_* NOT IN (…)` | cerrado | sí | **DEFER** (sin demanda) |
+| **BUYER** | sí | `nombre_entidad != '…'` / `NOT LIKE` | homónimos, ecosistemas | no | **CLARIFY_ONLY** |
+| **ACTOR** | sí | `proveedor_adjudicado NOT LIKE` / `documento_proveedor NOT IN` | NULL frecuente (no adjudicados); UT | no | **CLARIFY_ONLY** |
+| **CONTRACT TYPE** | sí | `tipo_de_contrato NOT IN (…)` | cerrado | no autorizado en V1 | **CLARIFY_ONLY** |
+| **STATE** | sí | `estado_* NOT IN (…)` | cerrado | no autorizado en V1 | **CLARIFY_ONLY** |
 | **MONEY** | n/a | comparador invertido | n/a | sí | **POLARITY**, no exclusión |
 
 `SOQL_REPRESENTABILITY: PARTIAL` — toda dimensión es *expresable*; no toda es
@@ -758,6 +766,8 @@ evalúa la **proyección real**.
 6. **Geografía negativa sin alcance positivo alguno** — complemento nacional.
 7. **BUYER exclusion** y **ACTOR exclusion** — identidad no resuelta
    (ecosistemas, UT).
+8. **CONTRACT TYPE** y **STATE exclusion** — reconocidas, pero sin autoridad de
+   ejecución negativa autorizada en V1.
 
 ### Frontera V1 divergente respecto a la propuesta inicial, y por qué
 

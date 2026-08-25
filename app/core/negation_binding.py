@@ -82,6 +82,33 @@ class NegationRequest:
             "context": self.context,
         }
 
+    @classmethod
+    def from_state(cls, state: Mapping[str, object]) -> "NegationRequest":
+        """Restore the JSON-native ephemeral form transported by Burr."""
+        anchor_state = state.get("scope_anchor")
+        anchor = None
+        if isinstance(anchor_state, Mapping):
+            anchor = ScopeAnchor(
+                NegationDimension(str(anchor_state["dimension"])),
+                str(anchor_state["value"]),
+            )
+        return cls(
+            dimension=NegationDimension(str(state["dimension"])),
+            value=str(state.get("value", "")),
+            value_start=int(state.get("value_start", 0) or 0),
+            value_end=int(state.get("value_end", 0) or 0),
+            marker=str(state.get("marker", "")),
+            marker_start=int(state.get("marker_start", 0) or 0),
+            marker_end=int(state.get("marker_end", 0) or 0),
+            verdict=NegationVerdict(str(state.get("verdict", NegationVerdict.DEFER.value))),
+            scope_anchor=anchor,
+            context=(
+                str(state["context"])
+                if state.get("context") is not None
+                else None
+            ),
+        )
+
 
 @dataclass(frozen=True, slots=True)
 class NegationBinding:
@@ -100,7 +127,9 @@ _BUYER_RE = re.compile(
     re.IGNORECASE,
 )
 _ACTOR_ROLE_BEFORE_RE = re.compile(
-    r"\b(?:proveedor|contratista)(?:\s+adjudicado)?\s*$", re.IGNORECASE,
+    r"\b(?:proveedor|contratista)(?:\s+adjudicado)?"
+    r"(?P<contrast>\s+pero)?\s*$",
+    re.IGNORECASE,
 )
 _TIME_RE = re.compile(
     r"\b(?:20\d{2}|enero|febrero|marzo|abril|mayo|junio|julio|agosto|"
@@ -233,6 +262,15 @@ def _classify_target(
     return NegationDimension.OBJECT, target_start + local_start
 
 
+def _actor_contrast_start(text: str, marker: NegativeMarker) -> int | None:
+    """Return the start of ``pero`` when it joins an ACTOR role to ``no``."""
+    prefix_start = max(0, marker.start - 40)
+    match = _ACTOR_ROLE_BEFORE_RE.search(text[prefix_start:marker.start])
+    if match is None or match.group("contrast") is None:
+        return None
+    return prefix_start + match.start("contrast")
+
+
 def _protected_money_spans(text: str) -> tuple[tuple[int, int], ...]:
     return tuple(
         match.span()
@@ -361,7 +399,12 @@ def bind_negations(
                 context=context,
             ))
         if requests and requests[-1].marker_start == marker.start:
-            mask_spans.append((marker.start, end))
+            mask_start = marker.start
+            if dimension is NegationDimension.ACTOR:
+                contrast_start = _actor_contrast_start(text, marker)
+                if contrast_start is not None:
+                    mask_start = contrast_start
+            mask_spans.append((mask_start, end))
             if sino_span is not None:
                 mask_spans.append(sino_span)
 
@@ -400,26 +443,109 @@ def requests_require_policy(requests: Iterable[NegationRequest | Mapping[str, ob
     """True when at least one request cannot execute in the current sprint."""
     for request in requests:
         verdict = request.verdict.value if isinstance(request, NegationRequest) else request.get("verdict")
-        if verdict != NegationVerdict.EXECUTE.value:
+        if verdict not in {NegationVerdict.EXECUTE, NegationVerdict.EXECUTE.value}:
             return True
     return False
 
 
-def deferred_negation_question(
+def _request_field(
+    request: NegationRequest | Mapping[str, object], field: str,
+) -> object:
+    return getattr(request, field) if isinstance(request, NegationRequest) else request.get(field)
+
+
+def blocking_negation_reason(
+    requests: Iterable[NegationRequest | Mapping[str, object]],
+) -> tuple[str, str]:
+    """Return stable QueryPlan reason/risk for a fail-closed request set."""
+    if any(
+        _request_field(request, "verdict")
+        in {NegationVerdict.CONTRADICTORY, NegationVerdict.CONTRADICTORY.value}
+        for request in requests
+    ):
+        return (
+            "dimensional_negation_contradiction",
+            "DIMENSIONAL_NEGATION_CONTRADICTION",
+        )
+    return "unsupported_negation", "UNSUPPORTED_NEGATION"
+
+
+def negation_clarification_question(
     requests: Iterable[NegationRequest | Mapping[str, object]],
 ) -> str:
-    """Build a value-safe generic clarification for deferred dimensions."""
-    dimensions: set[str] = set()
-    for request in requests:
-        if isinstance(request, NegationRequest):
-            if request.verdict is not NegationVerdict.EXECUTE:
-                dimensions.add(request.dimension.value)
-        elif request.get("verdict") != NegationVerdict.EXECUTE.value:
-            dimension = request.get("dimension")
-            if isinstance(dimension, str) and dimension:
-                dimensions.add(dimension)
-    label = ", ".join(sorted(dimensions)) or "la dimensión indicada"
-    return (
-        f"Identifiqué una exclusión sobre {label}, pero esa política todavía "
-        "no está habilitada de forma segura. ¿Quieres reformular la búsqueda?"
+    """Explain that the exclusion was understood, never that parsing failed."""
+    blocked = [
+        request for request in requests
+        if _request_field(request, "verdict")
+        not in {NegationVerdict.EXECUTE, NegationVerdict.EXECUTE.value}
+    ]
+    contradictory = [
+        request for request in blocked
+        if _request_field(request, "verdict")
+        in {NegationVerdict.CONTRADICTORY, NegationVerdict.CONTRADICTORY.value}
+    ]
+    if contradictory:
+        value = str(_request_field(contradictory[0], "value") or "ese valor").strip()
+        return (
+            f"La búsqueda incluye y excluye '{value}' al mismo tiempo. "
+            "¿Cuál de las dos condiciones quieres conservar?"
+        )
+
+    if not blocked:
+        return "Necesito que reformules la exclusión para poder aplicarla con seguridad."
+
+    request = blocked[0]
+    value = str(_request_field(request, "value") or "ese valor").strip()
+    raw_dimension = _request_field(request, "dimension")
+    dimension = (
+        raw_dimension.value
+        if isinstance(raw_dimension, NegationDimension)
+        else str(raw_dimension or "")
     )
+    messages = {
+        NegationDimension.CITY.value: (
+            f"Entendí que quieres excluir '{value}', pero todavía no puedo aplicar "
+            "esa exclusión municipal con suficiente precisión."
+        ),
+        NegationDimension.TIME.value: (
+            f"Entendí que quieres excluir '{value}', pero aún no puedo representar "
+            "huecos temporales de forma segura."
+        ),
+        NegationDimension.BUYER.value: (
+            f"Entendí que quieres excluir la entidad compradora '{value}', pero "
+            "todavía no puedo ejecutar esa exclusión con precisión."
+        ),
+        NegationDimension.ACTOR.value: (
+            f"Entendí que quieres excluir al proveedor o contratista '{value}', "
+            "pero todavía no puedo ejecutar esa exclusión con precisión."
+        ),
+        NegationDimension.DEPARTMENT.value: (
+            f"Entendí que quieres excluir el departamento '{value}', pero sólo "
+            "puedo hacerlo cuando la búsqueda ya define un conjunto regional "
+            "finito y seguro."
+        ),
+        NegationDimension.CONTRACT_TYPE.value: (
+            f"Entendí que quieres excluir el tipo contractual '{value}', pero "
+            "esa exclusión todavía no es ejecutable de forma segura."
+        ),
+        NegationDimension.STATE.value: (
+            f"Entendí que quieres excluir el estado '{value}', pero esa exclusión "
+            "todavía no es ejecutable de forma segura."
+        ),
+    }
+    if len(blocked) == 1 and dimension in messages:
+        return messages[dimension]
+    dimensions = sorted({
+        raw.value if isinstance(raw, NegationDimension) else str(raw or "")
+        for raw in (_request_field(item, "dimension") for item in blocked)
+    })
+    return (
+        "Entendí las exclusiones solicitadas sobre "
+        f"{', '.join(item for item in dimensions if item)}, pero no puedo "
+        "ejecutarlas juntas de forma segura todavía."
+    )
+
+
+# Compatibility alias for R4-S1 callers; S3 resolves DEFER into CLARIFY before
+# workflow planning, so new code should use the truthful name above.
+deferred_negation_question = negation_clarification_question

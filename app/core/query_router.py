@@ -36,6 +36,7 @@ from app.core.negation_binding import (
     attach_scope_anchors,
     bind_negations,
 )
+from app.core.negation_policy import apply_negation_policy
 from app.core.modality_parser_integration import resolve_parser_modality
 from app.core.query_text_consumption import mask_consumed_spans
 from app.utils.money import (
@@ -1008,8 +1009,10 @@ class QueryRouter:
             needs_llm = True
             route_reason = "ordering_without_object"
 
+        negation_policy = apply_negation_policy(negation_binding.requests, params)
+        params = negation_policy.params
         negation_requests = attach_scope_anchors(
-            negation_binding.requests, params,
+            negation_policy.requests, params,
         )
         return ParsedQuery(
             params=params,
