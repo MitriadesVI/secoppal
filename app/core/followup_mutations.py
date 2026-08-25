@@ -14,6 +14,7 @@ from app.core.followup_control_tokens import (
     is_control_only_turn,
     requested_clear_fields,
 )
+from app.core.negation_followup import is_object_exclusion_replace
 
 
 TOPIC_FIELDS = frozenset({"objeto", "objeto_or", "objeto_phrases", "objeto_exclude", "topic_facets"})
@@ -77,16 +78,16 @@ MUTATION_POLICIES: dict[str, MutationPolicy] = {
         transition_cleanup="normalize_filter_transition",
     ),
     "remove_filter": MutationPolicy(
-        frozenset(),
+        frozenset({"objeto_exclude"}),
         allowed_clear=frozenset({
             "valor_min", "valor_max", "money_metadata",
-            "fecha_desde", "fecha_hasta", *STATE_FIELDS,
+            "fecha_desde", "fecha_hasta", *STATE_FIELDS, "objeto_exclude",
         }),
         transition_cleanup="normalize_remove_filter",
     ),
     "replace_topic": MutationPolicy(
         frozenset({
-            "objeto", "objeto_or", "objeto_phrases", "contratista",
+            "objeto", "objeto_or", "objeto_phrases", "objeto_exclude", "contratista",
             "dataset", "dataset_explicit", *CLASSIFICATION_FIELDS,
         }),
         allowed_clear=frozenset({
@@ -97,9 +98,15 @@ MUTATION_POLICIES: dict[str, MutationPolicy] = {
         transition_cleanup="normalize_topic_transition",
     ),
     "refine_topic": MutationPolicy(TOPIC_FIELDS),
-    "exclude_topic": MutationPolicy(frozenset({"objeto_exclude"})),
+    "exclude_topic": MutationPolicy(
+        frozenset({"objeto_exclude"}),
+        allowed_clear=frozenset({"objeto_exclude"}),
+    ),
     "contextual_requery": MutationPolicy(
-        frozenset({"objeto", "objeto_or", "objeto_phrases", "contratista", *CLASSIFICATION_FIELDS}),
+        frozenset({
+            "objeto", "objeto_or", "objeto_phrases", "objeto_exclude",
+            "contratista", *CLASSIFICATION_FIELDS,
+        }),
         allowed_clear=frozenset({
             "valor_min", "valor_max", "money_metadata", *MODALITY_FIELDS,
             "objeto_or", "objeto_phrases", "objeto_exclude",
@@ -186,6 +193,9 @@ def _transition_clears(
             clears.update(STATE_FIELDS | PAGING_FIELDS | {"fecha_desde", "fecha_hasta", "dataset_scope"})
         if accepted.get("intent_type") and accepted.get("intent_type") != previous.get("intent_type"):
             clears.update({"opportunity_mode", "filter_active_only"})
+
+    if intent == "exclude_topic" and is_object_exclusion_replace(text):
+        clears.update({"objeto_exclude"} & policy.allowed_clear)
 
     accepted_money = set(accepted) & MONEY_FIELDS
     if accepted_money:

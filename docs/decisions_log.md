@@ -3219,10 +3219,10 @@ negación, control-language y actor hygiene.
 ## ADR-064: La negación preserva la dimensión antes que la ejecutabilidad
 
 **Fecha:** 2026-08-24
-**Estado:** Accepted — infraestructura R4-S1, OBJECT R4-S2 y safe policies
-R4-S3 implementadas; lifecycle diferido a R4-S4
+**Estado:** Accepted — `DIMENSIONAL_NEGATION_V1: CLOSED`; infraestructura R4-S1,
+OBJECT R4-S2, safe policies R4-S3 y lifecycle R4-S4 implementados
 
-### IMPLEMENTATION STATUS (R4-S3)
+### IMPLEMENTATION STATUS (R4-S4)
 
 R4-S1 centralizó el vocabulario en `app/core/negation_markers.py` e introdujo
 `NegationRequest` en `app/core/negation_binding.py`. El binding ocurre antes de
@@ -3240,6 +3240,16 @@ paginación. DEPARTMENT sólo ejecuta al restar un valor canónico de un
 `departamentos_in` finito ya materializado; sin ese conjunto aclara y no genera
 `NOT IN`. Evidencia:
 `docs/audits/2026-08-25_HCA_R4_S3_SAFE_NEGATION_POLICIES.md`.
+
+R4-S4 cerró el lifecycle conversacional sobre las autoridades ya existentes.
+OBJECT soporta crear, preservar, retirar, re-incluir, añadir y reemplazar
+exclusiones con traza previa/solicitada/resultante e idempotencia. MODALITY
+conserva su motor especializado; `ahora incluye X` restaura X retirándolo del
+conjunto negativo, sin forzar una whitelist. DEPARTMENT sólo re-incluye cuando
+la procedencia `region` permite reconstruir el conjunto canónico; de lo
+contrario aclara sin mutar. No se añadió historial universal de eventos ni se
+abrieron las dimensiones `CLARIFY_ONLY`. Evidencia:
+`docs/audits/2026-08-25_HCA_R4_S4_NEGATION_LIFECYCLE.md`.
 
 ### CONTEXT
 
@@ -3411,10 +3421,9 @@ cambio de alcance.
   de aclaración y deja el frame anterior intacto.
 - Una exclusión sin alcance positivo previo ni en el turno es demasiado amplia
   (precedente: P15 bloquea oportunidades sin alcance).
-- Las exclusiones deben poder retirarse. `refinement_recovery` ya etiqueta
-  `objeto_exclude` como "exclusión" ante el usuario, pero
-  `requested_clear_fields` no tiene slot para ella: hoy una exclusión heredada
-  no se puede quitar por lenguaje.
+- Las exclusiones deben poder retirarse. R4-S4 añadió el slot acotado
+  `objeto_exclude` a `requested_clear_fields` y una autoridad específica de
+  mutación; sólo las construcciones explícitas autorizadas lo activan.
 - La expansión morfológica se conserva en la exclusión (simetría con el
   positivo) pero **se declara** en traza y respuesta: `sin alimentación` también
   excluye `comedor`, `nutrición`, `alimentos`.
@@ -3442,11 +3451,20 @@ follow-up persiste exactamente el frame confirmado anterior; no conserva un
 delta parcial, no crea `actor_pending` y no invalida el universo paginable de
 esa búsqueda.
 
+**`INV-NEGATION-LIFECYCLE-SYMMETRIC`** — una exclusión OBJECT creada por el
+sistema puede retirarse, re-incluirse o reemplazarse mediante lenguaje acotado
+sin crear otra representación y conservando el resto del frame confirmado.
+
+**`INV-NEGATION-REMOVAL-IS-DIMENSIONAL`** — retirar una exclusión sólo muta el
+campo negativo de su dimensión; no borra el tema positivo, el alcance ni otros
+filtros.
+
 ### TEST_REQUIREMENTS
 
 24 casos pre-registrados **antes** del código en
-`tests/fixtures/audits/negation_focal_v1.yaml` (no ejecutado; ningún test lo
-carga por glob). Cubren los 12 exigidos más siete derivados de la reproducción
+`tests/fixtures/audits/negation_focal_v1.yaml`, ejecutados explícitamente con el
+runner HCA (`--corpus`) y mantenidos byte a byte. Cubren los 12 exigidos más
+siete derivados de la reproducción
 (anti-negación ESAL, alias con `sin`, subjuntivo, span de ciudad consumido,
 buyer, actor, control monetario) y dos anti-metamórficas:
 
@@ -3465,6 +3483,21 @@ de fechas en `p6dx-8zbt`. El transporte temporal fue SAFE en el sondeo (sin
 timeouts; p90 fetch 0,4582 s, count 2,5275 s), pero la comparación es
 fuente-a-fuente y no activa soporte TIME. Evidencia:
 `docs/audits/2026-08-24_HCA_R4_1_NEGATION_LIVE_SOURCE_PRECHECK.md`.
+
+Resultado R4-S4 del fixture focal: **22 PASS / 2 FAIL / 0 errores**. Los dos
+restantes se clasificaron sin cambiar código, fixture ni runner:
+
+- `NEG-N15`: `VALID_DEFERRED`; la inclusión de modalidad es correcta, pero el
+  plan exige tema o alcance adicional para ejecutar una consulta sólo-modalidad.
+- `NEG-ANTI-002`: `WRONG_ORACLE_CANDIDATE`; la consulta negativa difiere en
+  `ciudad`, pero el oráculo exige además diferencia individual en
+  `entidad_resolved`, que correctamente es `None` en ambos frames desde S3.
+
+La regresión completa cerró con **8436 passed, 2 skipped, 23 xfailed**;
+`query_corpus` con **89/89**, diálogo E2E con **44/44**, fixture HCA congelado
+con **164 PASS / 31 FAIL / 0 errores** y cero cambios de estado, frame o detalle
+frente al baseline. `HCA-ACTOR-011` permanece FAIL: el arreglo general de Actor
+Pending se mantuvo fuera del alcance.
 
 ### Alcance y deuda explícita
 

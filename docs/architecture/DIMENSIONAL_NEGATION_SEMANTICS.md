@@ -1,8 +1,8 @@
 # Semántica de negación dimensional
 
 **Estado:** diseño aprobado · binding **R4-S1 implementado** · OBJECT end-to-end
-**R4-S2 implementado** · safe policies **R4-S3 implementadas**; lifecycle diferido a
-R4-S4 · decisión canónica en
+**R4-S2 implementado** · safe policies **R4-S3 implementadas** · lifecycle
+dimensional **R4-S4 implementado** · `DIMENSIONAL_NEGATION_V1: CLOSED` · decisión canónica en
 [`ADR-064`](../decisions_log.md)
 **Rama de diseño:** `design/hca-negation-semantics` (hija de
 `fix/hca-normalization-contract`, `9ecf3be`)
@@ -29,6 +29,14 @@ R4-S4 · decisión canónica en
 > finito y canónico ya existente; no se añadió predicado negativo al builder.
 > Evidencia de cierre:
 > [`2026-08-25_HCA_R4_S3_SAFE_NEGATION_POLICIES.md`](../audits/2026-08-25_HCA_R4_S3_SAFE_NEGATION_POLICIES.md).
+>
+> R4-S4 cerró el ciclo conversacional acotado de OBJECT —crear, preservar,
+> retirar, re-incluir, añadir, reemplazar e idempotencia— reutilizando
+> `objeto_exclude`; mantuvo la autoridad especializada de MODALITY y permitió
+> re-inclusión DEPARTMENT únicamente cuando un `region` persistido permite
+> reconstruir el conjunto finito. Sin esa procedencia aclara y no muta.
+> Evidencia de cierre:
+> [`2026-08-25_HCA_R4_S4_NEGATION_LIFECYCLE.md`](../audits/2026-08-25_HCA_R4_S4_NEGATION_LIFECYCLE.md).
 
 ---
 
@@ -354,7 +362,7 @@ lenguaje crudo
 **OBJECT es el destino por defecto del residuo, no el destino por defecto de la
 negación.** La diferencia es todo el invariante.
 
-### 5.4 Estado de implementación R4-S2
+### 5.4 Estado de implementación R4-S2–S4
 
 La ruta mínima anterior está ejecutada. Todos los marcadores OBJECT resueltos
 por S1 se proyectan a `objeto_exclude`; `NegationRequest` se descarta como
@@ -362,6 +370,12 @@ metadata efímera y no se añadió ninguna representación runtime paralela. La
 exclusión usa `coalesce(<LIKE>, false)` por campo antes del `NOT`. Un overlap
 entre la proyección positiva y negativa existente produce aclaración antes de
 consultar SECOP. CITY, TIME, BUYER y ACTOR continúan fail-closed sin ejecución.
+
+R4-S4 añadió mutaciones conversacionales acotadas sobre esa misma autoridad:
+`ADD_EXCLUSION`, `REMOVE_EXCLUSION`, `REPLACE_EXCLUSION` y `REINCLUDE`. La
+remoción es dimensional: retirar una exclusión no borra el tema positivo ni
+otros filtros. Las órdenes ambiguas o sin procedencia suficiente aclaran sin
+mutar el frame confirmado.
 
 ---
 
@@ -796,9 +810,19 @@ cubiertas: OBJECT se ejecuta bien, CITY y TIME dejan de invertirse.
 Pre-registrada **antes** del código, en
 [`tests/fixtures/audits/negation_focal_v1.yaml`](../../tests/fixtures/audits/negation_focal_v1.yaml).
 
-Ese archivo **no se ejecuta**: ningún test lo carga por glob; el runner de HCA
-solo lee el corpus que recibe por `--corpus`. Es un artefacto de diseño hasta que
-el bloque de implementación lo conecte.
+El archivo no se carga por glob: se ejecuta explícitamente con el runner de HCA
+mediante `--corpus`. Se mantuvo byte a byte durante R4-S4. Resultado final:
+**22 PASS / 2 FAIL / 0 errores**. Los dos FAIL restantes no son fallas del
+lifecycle:
+
+- `NEG-N15` es `VALID_DEFERRED`: la modalidad se resuelve correctamente como
+  inclusión y no contamina OBJECT, pero el `QueryPlan` exige además tema o
+  alcance para ejecutar una consulta sólo-modalidad; la nota del oráculo quedó
+  obsoleta.
+- `NEG-ANTI-002` es `WRONG_ORACLE_CANDIDATE`: el frame negativo ya difiere del
+  positivo en `ciudad`, mientras `entidad_resolved` queda `None` en ambos por la
+  corrección de S3. El runner interpreta `differ_from.fields` como diferencia
+  obligatoria campo a campo, no colectiva.
 
 | ID | consulta | expected_dimension | expected_positive | expected_exclusion | expected_policy | must_not_silently_drop |
 |---|---|---|---|---|---|---|
@@ -857,6 +881,27 @@ y en su artefacto JSON.
    sin timeouts. La disyunción tuvo p90 0,4582 s (fetch) y 2,5275 s (count), por
    debajo del gate orientativo de 15 s. Es fuente-a-fuente y exploratorio: no
    levanta `TEMPORAL_NEGATION_V1 = CLARIFY_UNSUPPORTED`.
+
+### 16.1 Cierre del lifecycle R4-S4
+
+| dimensión | creación | preservación | retiro / re-inclusión | reemplazo / adición | frontera segura |
+|---|---:|---:|---:|---:|---|
+| OBJECT | sí | sí | sí | sí | overlap o referencia ambigua ⇒ `CLARIFY`, sin mutación |
+| MODALITY | existente | sí | sí | autoridad especializada existente | `ahora incluye X` restaura X sin convertirlo en whitelist |
+| DEPARTMENT | resta de conjunto | sí | sólo con `region` persistido | no se inventa historial | sin procedencia reconstruible ⇒ `CLARIFY` |
+| CITY, TIME, BUYER, ACTOR, TYPE, STATE | no | sí | n/a | n/a | políticas `CLARIFY_ONLY` de R4-S3 intactas |
+
+**`INV-NEGATION-LIFECYCLE-SYMMETRIC`** — toda exclusión OBJECT creada por el
+sistema puede retirarse o reemplazarse por lenguaje acotado sin escribir una
+representación paralela ni perder los demás filtros confirmados.
+
+**`INV-NEGATION-REMOVAL-IS-DIMENSIONAL`** — retirar o re-incluir un valor sólo
+muta la exclusión de su dimensión. No borra el filtro positivo homónimo, el
+alcance territorial ni filtros de otras dimensiones.
+
+El cierre es deliberadamente V1: no añade historial universal de eventos, no
+abre CITY/TIME/BUYER/ACTOR y no convierte el lenguaje de control general en un
+nuevo subsistema.
 
 ---
 

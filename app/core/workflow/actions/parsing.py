@@ -38,6 +38,13 @@ from app.core.negation_binding import (
     requests_require_policy,
 )
 from app.core.negation_policy import apply_negation_policy
+from app.core.negation_followup import (
+    REMOVE_EXCLUSION,
+    REPLACE_EXCLUSION,
+    REINCLUDE,
+    classify_department_reinclude,
+    classify_object_exclusion_mutation,
+)
 from app.core.object_negation_policy import (
     OBJECT_NEGATION_CONTRADICTION_QUESTION,
     object_negation_overlap,
@@ -290,6 +297,47 @@ def _load_instruction(state: State):
     return modality_wiring.instruction_from_state(payload)
 
 
+def _block_negation_lifecycle_mutation(
+    state: State,
+    start: float,
+    *,
+    previous_params: dict,
+    reason: str,
+    clarification: str,
+    lifecycle_trace: dict,
+) -> State:
+    """Block one unconfirmed lifecycle command without mutating context."""
+    blocked_plan = asdict(QueryPlan(
+        should_execute=False,
+        params=dict(previous_params),
+        risk_flags=["NEGATION_LIFECYCLE_CLARIFICATION"],
+        clarification_question=clarification,
+        reason=reason,
+    ))
+    return _with_timing(
+        state,
+        "apply_context_ms",
+        start,
+        parsed_params=dict(previous_params),
+        resolved_params=dict(previous_params),
+        needs_llm=False,
+        needs_clarification=True,
+        clarification_reason=clarification,
+        intent_type=reason,
+        followup_intent_type=reason,
+        followup_mutation={
+            "intent": reason,
+            "requested_fields": ["objeto_exclude"],
+            "accepted_fields": [],
+            "transition_cleared_fields": [],
+            "rejected_fields": ["negation_mutation"],
+            "rejection_reasons": {"negation_mutation": reason},
+            "negation_lifecycle": lifecycle_trace,
+        },
+        query_plan=blocked_plan,
+    )
+
+
 @action(
     reads=[
         "parsed_params", "context_params", "followup", "user_query",
@@ -494,6 +542,73 @@ def apply_context(state: State) -> State:
             state, start, merged, "set_territory", mutation_trace,
         )
 
+    # OBJECT lifecycle uses the existing negative slot; no pending state is
+    # introduced. Department reinclusion is reconstructed only from explicit
+    # region provenance and otherwise fails closed transactionally.
+    object_mutation = None
+    department_mutation = None
+    if instruction.status == "none":
+        object_mutation = classify_object_exclusion_mutation(
+            user_query,
+            parsed_params,
+            list(context_params.get("objeto_exclude") or []),
+        )
+        if object_mutation is None:
+            department_mutation = classify_department_reinclude(
+                user_query,
+                parsed_params,
+                context_params,
+            )
+
+    if object_mutation is not None and not object_mutation.should_apply:
+        clarification = object_mutation.clarification or (
+            "No pude aplicar esa mutación de exclusión con seguridad."
+        )
+        return _block_negation_lifecycle_mutation(
+            state,
+            start,
+            previous_params=context_params,
+            reason=object_mutation.reason,
+            clarification=clarification,
+            lifecycle_trace=object_mutation.trace(
+                list(context_params.get("objeto_exclude") or [])
+            ),
+        )
+
+    if department_mutation is not None:
+        lifecycle_trace = department_mutation.trace(
+            list(context_params.get("departamentos_in") or []),
+            context_params.get("region"),
+        )
+        if not department_mutation.should_apply:
+            clarification = department_mutation.clarification or (
+                "No pude reconstruir ese alcance territorial con seguridad."
+            )
+            return _block_negation_lifecycle_mutation(
+                state,
+                start,
+                previous_params=context_params,
+                reason=department_mutation.reason,
+                clarification=clarification,
+                lifecycle_trace=lifecycle_trace,
+            )
+        merged = params_from_frame(previous_frame)
+        merged["departamentos_in"] = list(
+            department_mutation.resulting_departments
+        )
+        mutation_trace = {
+            "intent": "department_reinclude",
+            "requested_fields": ["departamentos_in"],
+            "accepted_fields": ["departamentos_in"],
+            "transition_cleared_fields": [],
+            "rejected_fields": [],
+            "rejection_reasons": {},
+            "negation_lifecycle": lifecycle_trace,
+        }
+        return _finish_apply_context(
+            state, start, merged, "department_reinclude", mutation_trace,
+        )
+
     # El follow-up genérico ve la modalidad (la usa para clasificar refine_filter
     # vs new_search) pero su resultado de modalidad se descarta: el motor puro es
     # la única autoridad del output. Solo se enmascaran los spans de control y se
@@ -504,13 +619,41 @@ def apply_context(state: State) -> State:
         parsed_params, user_query, instruction.control_spans
     )
 
+    merge_text = masked_query
+    intent_override = None
+    if object_mutation is not None:
+        merge_text = user_query
+        if object_mutation.operation in {REMOVE_EXCLUSION, REINCLUDE}:
+            # The parser sees control words as a positive topic. Replace that
+            # tentative frame with the authorized negative-slot result.
+            generic_current = {}
+            if object_mutation.resulting:
+                generic_current["objeto_exclude"] = list(
+                    object_mutation.resulting
+                )
+            intent_override = "remove_filter"
+        elif (
+            object_mutation.operation == REPLACE_EXCLUSION
+            and generic_current.get("objeto")
+        ):
+            # "no X sino Y" explicitly replaces the positive topic while
+            # retaining X as the new exclusion. The generic exclusion intent
+            # would reject Y and manufacture a positive/negative conflict.
+            intent_override = "contextual_requery"
+
     mutation_trace: dict = {}
     intent, merged = detect_and_merge(
-        text=masked_query,
+        text=merge_text,
         current_params=generic_current,
         previous_frame=previous_frame,
         mutation_trace=mutation_trace,
+        intent_override=intent_override,
     )
+
+    if object_mutation is not None:
+        mutation_trace["negation_lifecycle"] = object_mutation.trace(
+            list(context_params.get("objeto_exclude") or [])
+        )
 
     if object_negation_overlap(merged):
         # The contradictory delta never becomes conversational state.  Preserve

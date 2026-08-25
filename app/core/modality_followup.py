@@ -126,6 +126,11 @@ _CLOSED = [
      _OP.REPLACE, "replace_all_except"),
     (re.compile(r"\bno importa la modalidad,?\s+(?:solo|busca)\b"),
      _OP.REPLACE, "clear_then_replace"),
+    # "ahora incluye X" is a reinclusion command, not the conflicting pair
+    # REPLACE("ahora") + ADD_INCLUDE("incluye"). RESTORE_INCLUDE removes X
+    # from the blacklist without forcing a whitelist when none existed.
+    (re.compile(r"\bahora\s+incluye\b"),
+     _OP.RESTORE_INCLUDE, "restore_include_ahora_incluye"),
 ]
 
 # Señales atómicas: (regex, operación, code). "excepto"/"excluye" son verbos de

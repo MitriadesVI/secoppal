@@ -11,6 +11,8 @@ import re
 import unicodedata
 from typing import Any
 
+from app.core.negation_followup import requests_object_exclusion_clear
+
 
 STATE_FIELDS = frozenset({
     "estado", "estado_field", "estado_family", "estado_contrato",
@@ -54,6 +56,9 @@ _DATASET_CONTROL_RE = re.compile(
 _STATE_CONTROL_RE = re.compile(
     r"^(?:dejame\s+)?solo\s+(?:las\s+que\s+)?(?:todavia\s+)?(?:reciben|reciba|aceptan)\s+ofertas$"
 )
+_KEEP_CONTEXT_RE = re.compile(
+    r"^(?:entonces\s+)?(?:dejalo|dejame(?:lo)?)\s+asi$"
+)
 
 
 def requested_clear_fields(text: str) -> frozenset[str]:
@@ -64,6 +69,8 @@ def requested_clear_fields(text: str) -> frozenset[str]:
         return frozenset({"fecha_desde", "fecha_hasta"})
     if _REMOVE_STATE_RE.fullmatch(norm):
         return STATE_FIELDS
+    if requests_object_exclusion_clear(text):
+        return frozenset({"objeto_exclude"})
     return frozenset()
 
 
@@ -71,10 +78,17 @@ def classify_control_intent(text: str, current_params: dict[str, Any]) -> str | 
     norm = _plain(text)
     if _PAGINATION_CONTROL_RE.fullmatch(norm):
         return "pagination_more"
-    if requested_clear_fields(text):
+    # OBJECT exclusion removal is context-sensitive: a bare "quita X" is a
+    # negative mutation only when X matches a persisted exclusion.  The
+    # lifecycle classifier authorizes that operation and supplies an explicit
+    # intent override; do not reinterpret it here without that context.
+    clear_fields = requested_clear_fields(text)
+    if clear_fields - {"objeto_exclude"}:
         return "remove_filter"
     if _DATASET_CONTROL_RE.fullmatch(norm):
         return "change_dataset"
+    if _KEEP_CONTEXT_RE.fullmatch(norm):
+        return "refine_filter"
     if current_params.get("objeto_exclude"):
         return "exclude_topic"
     if current_params.get("ordering_signal") and _ORDER_CONTROL_RE.fullmatch(norm):
@@ -97,6 +111,7 @@ def is_control_only_turn(text: str, parsed_delta: dict[str, Any]) -> bool:
         or _REMOVE_DATE_RE.fullmatch(norm)
         or _REMOVE_STATE_RE.fullmatch(norm)
         or _DATASET_CONTROL_RE.fullmatch(norm)
+        or _KEEP_CONTEXT_RE.fullmatch(norm)
         or (parsed_delta.get("ordering_signal") and _ORDER_CONTROL_RE.fullmatch(norm))
         or (any(parsed_delta.get(key) for key in STATE_FIELDS) and _STATE_CONTROL_RE.fullmatch(norm))
     )

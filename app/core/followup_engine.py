@@ -25,7 +25,12 @@ from datetime import datetime, timezone
 from decimal import Decimal
 from typing import Any
 
-from app.core.query_frame import QueryFrame, frame_from_params, params_from_frame
+from app.core.query_frame import (
+    QueryFrame,
+    frame_from_params,
+    is_complete_new_search,
+    params_from_frame,
+)
 from app.core.followup_mutations import (
     calculate_delta,
     gate_delta,
@@ -41,6 +46,7 @@ from app.core._followup_constants import (
     NOISE_PREFIXES,
     SCOPE_TOPIC_KEYS,
 )
+from app.data.colombia_geography import ZONES_BY_NAME
 from app.data.smmlv import smmlv_cop
 from app.utils.money import SMMLV_UNIT_PATTERN
 
@@ -285,10 +291,6 @@ class FollowupClassifier:
             return "new_search"
 
         current_params = params_from_frame(current_frame)
-        control_intent = classify_control_intent(text, current_params)
-        if control_intent:
-            return control_intent
-
         if current_frame.topic and is_contextual_topic_request(text):
             return "replace_topic"
 
@@ -302,6 +304,38 @@ class FollowupClassifier:
                 rest = noise_free[len(verb):].strip()
                 if len(rest.split()) >= 1:
                     return "new_search"
+
+        # A complete, explicitly scoped query must break a persisted negation
+        # lifecycle even when phrased conversationally ("muéstrame contratos
+        # de X en Y"). Keep this fix scoped to negative state: the general
+        # actor-pending new-search bug belongs to Actor Hygiene, not R4-S4.
+        explicit_more_refinement = bool(re.match(
+            r"^(?:muestrame|muestra|dame)\s+mas\b",
+            TextNormalizer.normalize(text),
+        ))
+        previous_region = previous_frame.scope.get("region")
+        previous_departments = previous_frame.scope.get("departamentos_in")
+        full_region = ZONES_BY_NAME.get(str(previous_region), [])
+        previous_has_department_subtraction = bool(
+            full_region
+            and isinstance(previous_departments, list)
+            and previous_departments != full_region
+        )
+        previous_has_exclusion = bool(
+            previous_frame.objeto_exclude
+            or previous_frame.modifiers.get("modalidad_exclude_procedure_ids")
+            or previous_has_department_subtraction
+        )
+        if (
+            previous_has_exclusion
+            and is_complete_new_search(current_frame)
+            and not explicit_more_refinement
+        ):
+            return "new_search"
+
+        control_intent = classify_control_intent(text, current_params)
+        if control_intent:
+            return control_intent
 
         # 1. Paginación pura
         if cls.is_pagination_pure(text):
@@ -887,6 +921,7 @@ def detect_and_merge(
     current_params: dict,
     previous_frame: QueryFrame | None,
     mutation_trace: dict | None = None,
+    intent_override: str | None = None,
 ) -> tuple[str, dict]:
     """Detecta la intención y aplica merge, retornando (intent_type, merged_params).
 
@@ -914,8 +949,10 @@ def detect_and_merge(
             and not current_frame.topic
             and current_params.get("dataset") in ("procesos", "contratos"))
 
-    intent = "change_dataset" if is_dual_collapse else FollowupClassifier.classify_followup(
-        text=text, current_frame=current_frame, previous_frame=previous_frame,
+    intent = intent_override or (
+        "change_dataset" if is_dual_collapse else FollowupClassifier.classify_followup(
+            text=text, current_frame=current_frame, previous_frame=previous_frame,
+        )
     )
 
     previous_params: dict = {}
