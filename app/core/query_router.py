@@ -29,7 +29,15 @@ from app.core.actor_intent import (
 from app.core.contract_invariants import contains_signed_token
 from app.core.contract_type_resolver import resolve_contract_types
 from app.core.money_resolution import CARDINAL_WORD_PATTERN
+from app.core.negation_binding import (
+    NegationDimension,
+    NegationRequest,
+    NegationVerdict,
+    attach_scope_anchors,
+    bind_negations,
+)
 from app.core.modality_parser_integration import resolve_parser_modality
+from app.core.query_text_consumption import mask_consumed_spans
 from app.utils.money import (
     SMMLV_UNIT_PATTERN,
     is_smmlv_expression,
@@ -209,6 +217,7 @@ STOPWORDS = {
     # Articles & prepositions
     "de", "del", "en", "el", "la", "las", "los",
     "por", "para", "que", "se", "un", "una", "con", "excepto", "sin",
+    "pero", "sino", "ni", "salvo",
     # Comparators
     "mayor", "mayores", "menor", "menores",
     "superior", "superiores", "supere", "superen",
@@ -379,6 +388,8 @@ class ParsedQuery:
     consumed_spans: list[str] | None = None
     modality_interpretation: ModalityInterpretation | None = None
     contract_type_interpretation: ContractTypeInterpretation | None = None
+    negation_requests: tuple[NegationRequest, ...] = ()
+    positive_text: str = ""
 
 
 class QueryRouter:
@@ -402,11 +413,7 @@ class QueryRouter:
         normalized = normalize_text(user_query)
         normalized = correct_query(normalized)
         params: dict[str, object] = {}
-        actor_conversation = (
-            interpret_actor_conversation(normalized)
-            if actor_profile_enabled()
-            else ActorConversationInstruction()
-        )
+        actor_conversation = ActorConversationInstruction()
         actor_relation_spans: tuple[str, ...] = ()
 
         # ── 0. Semantic normalization layer (runs BEFORE existing extractors) ──
@@ -481,14 +488,6 @@ class QueryRouter:
         if dataset_explicit:
             params["dataset_explicit"] = True
 
-        # AP3-F: project conversational roles before entity/geography/topic
-        # scanners see the same words.  This layer identifies mentions only;
-        # actor and buyer authority remain with their existing resolvers.
-        if actor_profile_enabled():
-            actor_conversation, actor_relation_spans = (
-                self._seed_actor_conversation(actor_conversation, params)
-            )
-
         # ── 1.b Dataset SCOPE: "procesos o contratos" / "ambos" → los DOS ───
         # El usuario pide AMBOS conjuntos. `dataset` sigue ESCALAR (primario =
         # procesos, el universo más amplio) por compatibilidad; el ejecutor (Commit 2)
@@ -520,7 +519,44 @@ class QueryRouter:
         )
         if modality_result.executable_params:
             params.update(modality_result.executable_params)
-        scrubbed = modality_result.masked_text
+
+        # ── 1.c.1 Dimensional negation binding ─────────────────────────
+        # Bind polarity before any positive extractor can claim the governed
+        # value.  Modality spans are protected aliases: an internal ``sin``
+        # ("contratación directa sin ofertas") never becomes an operator.
+        # ADR-063 remains the monetary authority.  Its complete consumed spans
+        # are protected before the shared word ``menos``/``no`` is considered
+        # dimensional negation, including verbal comparators such as
+        # "que no supere" and "al menos".
+        preliminary_dates = self._extract_dates(normalized)
+        _, preliminary_amount_texts = self._extract_amounts(
+            normalized, preliminary_dates,
+        )
+        preliminary_amount_spans = tuple({
+            match.span()
+            for amount_text in preliminary_amount_texts
+            for match in re.finditer(re.escape(amount_text), normalized)
+        })
+        negation_binding = bind_negations(
+            normalized,
+            city_pattern=_CITY_PATTERN_RE,
+            modality_spans=modality_result.interpretation.consumed_spans,
+            protected_spans=preliminary_amount_spans,
+        )
+        positive_text = negation_binding.masked_text
+        scrubbed = mask_consumed_spans(
+            modality_result.masked_text,
+            negation_binding.masked_spans,
+        )
+
+        # AP3-F projects roles only from positive residual text.  A provider or
+        # buyer governed by negation remains a typed NegationRequest and cannot
+        # become positive actor/entity evidence.
+        if actor_profile_enabled():
+            actor_conversation = interpret_actor_conversation(positive_text)
+            actor_conversation, actor_relation_spans = (
+                self._seed_actor_conversation(actor_conversation, params)
+            )
         for relation_span in actor_relation_spans:
             scrubbed = re.sub(
                 re.escape(relation_span), " ", scrubbed, count=1,
@@ -559,10 +595,10 @@ class QueryRouter:
         # ── 1.5. NIT detection (shape-based, before year/amount stripping) ──
         # Detecta NITs colombianos por forma antes de cualquier otra extracción
         # para que no sean confundidos con años ni montos.
-        scrubbed = self._consume_actor_document(normalized, scrubbed, params)
+        scrubbed = self._consume_actor_document(positive_text, scrubbed, params)
 
         # ── 2. Dates (regex — reliable for numbers) ─────────────────────
-        date_params = self._extract_dates(normalized)
+        date_params = self._extract_dates(positive_text)
         params.update(date_params)
 
         # ── 3. Strip year tokens so they don't contaminate scans ────────
@@ -579,9 +615,9 @@ class QueryRouter:
         # ``desde 2025`` intentionally has no fecha_hasta.  The generic bare-
         # year fallback may create a closed year only when the date extractor
         # did not recognize any temporal structure.
-        protected_year_spans = _protected_entity_year_spans(normalized)
+        protected_year_spans = _protected_entity_year_spans(positive_text)
         if not date_params:
-            for m in re.finditer(_year_re, normalized):
+            for m in re.finditer(_year_re, positive_text):
                 if _inside_spans(m.start(1), m.end(1), protected_year_spans):
                     continue
                 year = m.group(1)
@@ -820,7 +856,10 @@ class QueryRouter:
                 )
         else:
             # ── 7b. OLD State extractor (dataset-aware keyword match) ────────
-            state_scan_text = modality_result.masked_text
+            state_scan_text = mask_consumed_spans(
+                modality_result.masked_text,
+                negation_binding.masked_spans,
+            )
             primary_state = True
             while state_result := self._extract_state(
                 state_scan_text,
@@ -867,18 +906,18 @@ class QueryRouter:
         if "contratista" not in params and "actor_resolution" not in params:
             if actor_profile_enabled():
                 modifier_tails = recognized_actor_modifier_tails(
-                    normalized,
+                    positive_text,
                     params,
                     extra_consumed_spans=(*actor_modifier_spans, *amount_spans),
                 )
                 scrubbed = self._detect_named_actor(
-                    normalized,
+                    positive_text,
                     scrubbed,
                     params,
                     recognized_modifier_tails=modifier_tails,
                 )
             else:
-                contractor = self._extract_contractor(normalized, str(params["dataset"]))
+                contractor = self._extract_contractor(positive_text, str(params["dataset"]))
                 if contractor:
                     params["contratista"] = contractor
                     scrubbed = scrubbed.replace(contractor, " ")
@@ -926,18 +965,24 @@ class QueryRouter:
         #    Preserva colocaciones de dominio ("manual de contratación") como
         #    unidad antes de que "de" se descarte y la frase se pierda. Consume
         #    el span para que sus tokens NO recreen el objeto roto (no duplicar).
-        # Exclusión temática explícita. Se extrae como campo negativo propio;
-        # nunca se deja que el verbo ni sus términos entren al objeto positivo.
-        exclusion_match = re.search(
-            r"\b(?:excluye|excluir|excepto)\s+(.+?)\s*$",
-            scrubbed,
-            flags=re.IGNORECASE,
-        )
-        if exclusion_match:
-            excluded = self._extract_object_terms(exclusion_match.group(1))
-            if excluded:
-                params["objeto_exclude"] = excluded
-            scrubbed = scrubbed[:exclusion_match.start()].strip()
+        # Preserve the pre-R4 executable OBJECT forms exactly.  New linguistic
+        # forms remain typed/deferred until R4-S2; none can leak into objeto.
+        legacy_excluded: list[str | list[str]] = []
+        for request in negation_binding.requests:
+            if (
+                request.dimension is NegationDimension.OBJECT
+                and request.verdict is NegationVerdict.EXECUTE
+            ):
+                legacy_excluded.extend(self._extract_object_terms(request.value))
+        if legacy_excluded:
+            seen_excluded: set[str] = set()
+            unique_excluded: list[str | list[str]] = []
+            for value in legacy_excluded:
+                key = "|".join(value) if isinstance(value, list) else value
+                if key not in seen_excluded:
+                    seen_excluded.add(key)
+                    unique_excluded.append(value)
+            params["objeto_exclude"] = unique_excluded
 
         from app.core.phrase_catalog import detect_phrases
         objeto_phrases, objeto_text = detect_phrases(scrubbed)
@@ -951,7 +996,7 @@ class QueryRouter:
 
         # ── 12. LLM decision ───────────────────────────────────────────
         extracted_keys = {k for k, v in params.items() if v not in (None, [], "", {})}
-        needs_llm = self._needs_llm(normalized, params)
+        needs_llm = self._needs_llm(positive_text, params)
         route_reason = "heuristic_only" if not needs_llm else "heuristic_plus_llm"
 
         if extracted_keys == {"dataset"}:
@@ -962,11 +1007,20 @@ class QueryRouter:
             needs_llm = True
             route_reason = "ordering_without_object"
 
-        return ParsedQuery(params=params, needs_llm=needs_llm, route_reason=route_reason,
-                          dataset_explicit=dataset_explicit,
-                          consumed_spans=consumed_spans,
-                          modality_interpretation=modality_result.interpretation,
-                          contract_type_interpretation=contract_type_result)
+        negation_requests = attach_scope_anchors(
+            negation_binding.requests, params,
+        )
+        return ParsedQuery(
+            params=params,
+            needs_llm=needs_llm,
+            route_reason=route_reason,
+            dataset_explicit=dataset_explicit,
+            consumed_spans=consumed_spans,
+            modality_interpretation=modality_result.interpretation,
+            contract_type_interpretation=contract_type_result,
+            negation_requests=negation_requests,
+            positive_text=positive_text,
+        )
 
     # ─── Helper methods (only for non-entity extractions) ───────────────
 

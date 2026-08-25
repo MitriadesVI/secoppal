@@ -1,12 +1,17 @@
 # Semántica de negación dimensional
 
-**Estado:** diseño aprobado, **sin implementar** · decisión canónica en
+**Estado:** diseño aprobado · infraestructura de binding **R4-S1 implementada**;
+políticas ejecutables por dimensión diferidas a R4-S2/S3/S4 · decisión canónica en
 [`ADR-064`](../decisions_log.md)
-**Rama:** `design/hca-negation-semantics` (hija de `fix/hca-normalization-contract`, `9ecf3be`)
+**Rama de diseño:** `design/hca-negation-semantics` (hija de
+`fix/hca-normalization-contract`, `9ecf3be`)
 **Última actualización:** 2026-08-24
 
-> Guía **de diseño**. Ningún módulo de runtime cambia en este bloque. La
-> evidencia conversacional viene de
+> Esta guía conserva el diagnóstico y contrato de diseño originales. R4-S1
+> implementó la detección compartida, `NegationRequest`, aislamiento de spans y
+> transporte efímero fuera de `QueryFrame`; no implementó las políticas de
+> exclusión listadas para los sprints posteriores. La evidencia conversacional
+> viene de
 > [`docs/audits/2026-08-22_CONVERSATIONAL_SYSTEM_HOLISTIC_AUDIT.md`](../audits/2026-08-22_CONVERSATIONAL_SYSTEM_HOLISTIC_AUDIT.md)
 > (HCA-1) y de sondeos directos al parser reproducidos abajo. El corpus congelado
 > `tests/fixtures/audits/conversation_holistic_v1.yaml`

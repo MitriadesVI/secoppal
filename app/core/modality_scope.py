@@ -7,17 +7,14 @@ lingüística no coordinada. Las anti-negaciones se evalúan antes de ``no``/``s
 from __future__ import annotations
 
 from app.core.modality_composition import Mention
+from app.core.negation_markers import (
+    ANTI_NEGATION_PATTERNS,
+    EXTERNAL_NEGATIVE_OPERATORS,
+)
 from app.core.modality_resolution_models import MatchPolarity
 from app.core.modality_text import Clause, contains_phrase, is_separator_only
 
 _COORDINATORS = ("y", "o", "ni")
-_NEGATIVE_OPERATORS = (
-    "que no sean", "que no sea", "diferentes de", "diferente de",
-    "distintos de", "distinto de", "excluyendo", "excepto", "salvo", "no", "sin",
-)
-_ANTI_NEGATION_PATTERNS = (
-    "no solo", "sin descartar", "sin excluir", "no quiero excluir", "no busco excluir",
-)
 
 
 def _contains_any(text: str, phrases: tuple[str, ...]) -> bool:
@@ -57,8 +54,8 @@ def assign_polarities(
         for mention in local:
             gap = norm[cursor:mention.norm_start]
             operator_gap = operator_text[cursor:mention.norm_start]
-            anti_negation = _contains_any(operator_gap, _ANTI_NEGATION_PATTERNS)
-            negative_operator = _contains_any(operator_gap, _NEGATIVE_OPERATORS)
+            anti_negation = _contains_any(operator_gap, ANTI_NEGATION_PATTERNS)
+            negative_operator = _contains_any(operator_gap, EXTERNAL_NEGATIVE_OPERATORS)
             coordinated = _contains_any(gap, _COORDINATORS)
 
             if anti_negation:

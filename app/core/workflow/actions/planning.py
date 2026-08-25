@@ -29,6 +29,10 @@ from burr.core import State, action
 
 from app.core.entity_resolver import EntityResolver
 from app.core.modality_execution_policy import evaluate_modality_execution
+from app.core.negation_binding import (
+    deferred_negation_question,
+    requests_require_policy,
+)
 from app.core.opportunity_retrieval_policy import (
     PROCESS_DATASET_ID,
     REFERENCE_INSTANT_PARAM,
@@ -59,6 +63,7 @@ def _candidate_limit(params: dict) -> int:
     reads=[
         "parsed_params", "raw_query", "prev_params", "turn_index",
         "modality_interpretation", "followup", "followup_intent_type",
+        "negation_requests",
     ],
     writes=["query_plan", "parsed_params", "should_execute_decision"],
 )
@@ -74,7 +79,16 @@ def plan_query(state: State) -> State:
     modality_decision = evaluate_modality_execution(
         state.get("modality_interpretation")
     )
-    if not modality_decision.should_execute:
+    negation_requests = state.get("negation_requests") or []
+    if requests_require_policy(negation_requests):
+        plan = QueryPlan(
+            should_execute=False,
+            params=dict(params),
+            risk_flags=["DIMENSIONAL_NEGATION_DEFERRED"],
+            clarification_question=deferred_negation_question(negation_requests),
+            reason="dimensional_negation_deferred",
+        )
+    elif not modality_decision.should_execute:
         plan = QueryPlan(
             should_execute=False,
             params=dict(params),

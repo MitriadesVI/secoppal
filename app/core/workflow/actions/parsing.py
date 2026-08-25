@@ -30,6 +30,10 @@ from app.core.actor_conversation import (
 from app.core.actor_resolution import is_authoritative_actor_resolution
 from app.core.followup_engine import FollowupGuards, detect_and_merge
 from app.core.llm_handler import LLMHandler
+from app.core.negation_binding import (
+    deferred_negation_question,
+    requests_require_policy,
+)
 from app.core.query_frame import frame_from_params, params_from_frame
 from app.core.query_router import QueryRouter
 from app.core.workflow.helpers import _with_timing
@@ -83,6 +87,7 @@ _EMPTY_VALUES = (None, "", [], {}, (), False)
     writes=[
         "parsed_params", "needs_llm", "route_reason",
         "modality_interpretation", "modality_followup_instruction", "timings_ms",
+        "negation_requests", "positive_query",
     ],
 )
 def parse_query(state: State, query_router: QueryRouter) -> State:
@@ -103,6 +108,8 @@ def parse_query(state: State, query_router: QueryRouter) -> State:
         route_reason=result.route_reason,
         modality_interpretation=result.modality_interpretation,
         modality_followup_instruction=modality_wiring.instruction_to_state(instruction),
+        negation_requests=[request.to_state() for request in result.negation_requests],
+        positive_query=result.positive_text,
     )
 
 
@@ -200,7 +207,13 @@ def _merge_llm_proposal(incoming: dict, proposed: object) -> tuple[dict, list[st
     return merged, accepted, rejected
 
 
-@action(reads=["user_query", "needs_llm", "parsed_params", "timings_ms"], writes=["parsed_params", "timings_ms"])
+@action(
+    reads=[
+        "user_query", "positive_query", "negation_requests",
+        "needs_llm", "parsed_params", "timings_ms",
+    ],
+    writes=["parsed_params", "timings_ms"],
+)
 def llm_parse(state: State, llm_handler: LLMHandler) -> State:
     """Fallback LLM bajo allowlist monotónica (R2.2).
 
@@ -222,7 +235,9 @@ def llm_parse(state: State, llm_handler: LLMHandler) -> State:
     if not state["needs_llm"]:
         return _with_timing(state, "llm_parse_ms", start)
     incoming_params = state["parsed_params"]
-    proposed = llm_handler.parse(state["user_query"], existing_params=incoming_params)
+    # A model cannot recreate positive evidence from a governed negative span.
+    llm_query = state.get("positive_query") or state["user_query"]
+    proposed = llm_handler.parse(llm_query, existing_params=incoming_params)
     merged, accepted, rejected = _merge_llm_proposal(incoming_params, proposed)
     if accepted or rejected:
         logger.info(
@@ -262,7 +277,18 @@ def _load_instruction(state: State):
     return modality_wiring.instruction_from_state(payload)
 
 
-@action(reads=["parsed_params", "context_params", "followup", "user_query", "modality_interpretation", "modality_followup_instruction", "timings_ms"], writes=["parsed_params", "needs_llm", "needs_clarification", "clarification_reason", "intent_type", "followup_intent_type", "followup_mutation", "query_plan", "timings_ms"])
+@action(
+    reads=[
+        "parsed_params", "context_params", "followup", "user_query",
+        "positive_query", "negation_requests", "modality_interpretation",
+        "modality_followup_instruction", "timings_ms",
+    ],
+    writes=[
+        "parsed_params", "needs_llm", "needs_clarification",
+        "clarification_reason", "intent_type", "followup_intent_type",
+        "followup_mutation", "query_plan", "timings_ms",
+    ],
+)
 def apply_context(state: State) -> State:
     """Fusiona context_params del turno anterior con parsed_params del parse actual.
     Usa followup_engine.detect_and_merge para clasificar la intención granular
@@ -285,6 +311,42 @@ def apply_context(state: State) -> State:
     interpretation = state.get("modality_interpretation")
     instruction = _load_instruction(state)
     previous_frame = frame_from_params(context_params)
+
+    negation_requests = state.get("negation_requests") or []
+    if requests_require_policy(negation_requests):
+        # Fail closed before actor precedence or generic follow-up
+        # classification. The previous frame remains intact.
+        previous_params = dict(context_params)
+        clarification = deferred_negation_question(negation_requests)
+        blocked_plan = asdict(QueryPlan(
+            should_execute=False,
+            params=dict(previous_params),
+            risk_flags=["DIMENSIONAL_NEGATION_DEFERRED"],
+            clarification_question=clarification,
+            reason="dimensional_negation_deferred",
+        ))
+        return _with_timing(
+            state,
+            "apply_context_ms",
+            start,
+            parsed_params=previous_params,
+            needs_llm=False,
+            needs_clarification=True,
+            clarification_reason=clarification,
+            intent_type="negation_deferred",
+            followup_intent_type="negation_deferred",
+            followup_mutation={
+                "intent": "negation_deferred",
+                "requested_fields": [],
+                "accepted_fields": [],
+                "transition_cleared_fields": [],
+                "rejected_fields": ["negative_span"],
+                "rejection_reasons": {
+                    "negative_span": "DIMENSIONAL_NEGATION_POLICY_DEFERRED",
+                },
+            },
+            query_plan=blocked_plan,
+        )
 
     # AP3-F precedence: explicit actor operations and contextual buyer
     # relations mutate the conversational frame before the generic classifier
@@ -396,7 +458,8 @@ def apply_context(state: State) -> State:
     # vs new_search) pero su resultado de modalidad se descarta: el motor puro es
     # la única autoridad del output. Solo se enmascaran los spans de control y se
     # limpian del objeto los verbos de control (§8: nunca entran al topic).
-    masked_query = modality_wiring.mask_control_spans(user_query, instruction)
+    positive_query = state.get("positive_query") or user_query
+    masked_query = modality_wiring.mask_control_spans(positive_query, instruction)
     generic_current = modality_wiring.scrub_control_topic(
         parsed_params, user_query, instruction.control_spans
     )

@@ -9,10 +9,10 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Mapping, Protocol, Sequence
 
+from app.core.negation_markers import has_external_negative_operator
 from app.core.modality_text import (
     comma_count,
     contains_phrase,
-    find_occurrences,
     token_distance,
 )
 
@@ -26,15 +26,6 @@ _STRENGTH_RANK = {
 
 _COORDINATORS = ("y o", "o", "y")
 _CONTRASTS = ("pero", "sino", "sin embargo", "en cambio")
-_EXTERNAL_NEGATIVE_OPERATORS = (
-    "que no sean", "que no sea", "diferentes de", "diferente de",
-    "distintos de", "distinto de", "excluyendo", "excepto", "salvo",
-    "no", "sin",
-)
-_ANTI_NEGATION_PATTERNS = (
-    "no solo", "sin descartar", "sin excluir",
-    "no quiero excluir", "no busco excluir",
-)
 
 
 class RuleLike(Protocol):
@@ -101,22 +92,6 @@ def has_explicit_coordinator(gap: str, *, first_gap: str = "") -> bool:
     if any(contains_phrase(gap, marker) for marker in _COORDINATORS):
         return True
     return contains_phrase(gap, "como") and contains_phrase(first_gap, "tanto")
-
-
-def has_external_negative_operator(norm_gap: str) -> bool:
-    """Detecta operadores negativos externos a un efecto lingüístico.
-
-    El llamador entrega únicamente el texto comprendido entre el primario o el
-    efecto anterior y el inicio del efecto actual. Por tanto, un ``sin``/``no``
-    que forma parte del propio alias técnico nunca aparece aquí. Las
-    anti-negaciones se neutralizan primero, preservando longitud y límites.
-    """
-    chars = list(norm_gap)
-    for phrase in _ANTI_NEGATION_PATTERNS:
-        for start, end in find_occurrences(norm_gap, phrase):
-            chars[start:end] = " " * (end - start)
-    operator_gap = "".join(chars)
-    return any(contains_phrase(operator_gap, phrase) for phrase in _EXTERNAL_NEGATIVE_OPERATORS)
 
 
 def attachment_gap(

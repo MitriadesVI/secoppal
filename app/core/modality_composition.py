@@ -8,6 +8,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, replace
 
+from app.core.negation_markers import REFINEMENT_NEGATIVE_BLOCKERS
 from app.core.modality_alternatives import (
     analyze_alternatives,
     attachment_gap,
@@ -30,10 +31,6 @@ from app.core.modality_text import (
 
 _REFINEMENT_MAX_COST = 7
 _COORDINATORS = ("y", "o", "ni")
-_REFINEMENT_BLOCKERS = (
-    "excepto", "salvo", "no", "sin", "diferente de", "diferentes de",
-    "distinto de", "distintos de", "excluyendo",
-)
 _CODE_QUALIFIER_CONFLICT = "MODALITY_QUALIFIER_FAMILY_CONFLICT"
 _CODE_QUALIFIER_VALUE_CONFLICT = "MODALITY_QUALIFIER_VALUE_CONFLICT"
 
@@ -294,7 +291,7 @@ class CompositionEngine:
                     continue
                 norm_gap = norm[general.norm_end:specific.norm_start]
                 if has_explicit_coordinator(norm_gap) or self._gap_has_any(
-                    norm_gap, _REFINEMENT_BLOCKERS
+                    norm_gap, REFINEMENT_NEGATIVE_BLOCKERS
                 ):
                     continue
                 gap = (

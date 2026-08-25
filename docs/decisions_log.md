@@ -3219,7 +3219,19 @@ negación, control-language y actor hygiene.
 ## ADR-064: La negación preserva la dimensión antes que la ejecutabilidad
 
 **Fecha:** 2026-08-24
-**Estado:** Accepted (diseño) — **runtime sin cambios**
+**Estado:** Accepted — infraestructura R4-S1 implementada; políticas por
+dimensión diferidas a R4-S2/S3/S4
+
+### IMPLEMENTATION STATUS (R4-S1)
+
+R4-S1 centralizó el vocabulario en `app/core/negation_markers.py` e introdujo
+`NegationRequest` en `app/core/negation_binding.py`. El binding ocurre antes de
+los extractores positivos y sus spans se enmascaran conservando offsets. La
+metadata viaja como estado efímero del turno, fuera de `QueryFrame`; las
+dimensiones todavía no ejecutables cierran de forma segura con aclaración. La
+modalidad mantiene su política existente y sigue siendo el control ejecutable.
+OBJECT end-to-end, contradicciones y políticas ejecutables para geografía,
+tiempo, comprador, actor, estado y tipo de contrato permanecen fuera de R4-S1.
 
 ### CONTEXT
 
