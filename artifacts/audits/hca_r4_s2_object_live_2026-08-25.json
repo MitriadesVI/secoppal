@@ -1,0 +1,259 @@
+{
+  "schema": "secoppal.hca_r4_s2_object_live.v1",
+  "started_at_utc": "2026-08-25T04:49:05.282378+00:00",
+  "finished_at_utc": "2026-08-25T04:49:32.107726+00:00",
+  "source": {
+    "domain": "www.datos.gov.co",
+    "authenticated_with_app_token": true,
+    "read_only": true
+  },
+  "datasets": {
+    "p6dx-8zbt": {
+      "dataset": "p6dx-8zbt",
+      "label": "procesos",
+      "fields": [
+        "nombre_del_procedimiento",
+        "descripci_n_del_procedimiento"
+      ],
+      "comparison": {
+        "scope": {
+          "departamento_resolved": "Atlántico",
+          "fecha_desde": "2025-01-01",
+          "fecha_hasta": "2026-08-24"
+        },
+        "positive_term": "alimentacion",
+        "excluded_term": "transporte",
+        "positive": {
+          "soql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE departamento_entidad = 'Atlántico' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%alimentacion%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%alimentacion%'))) AND fecha_de_publicacion_del >= '2025-01-01' AND fecha_de_publicacion_del <= '2026-08-24' ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 100",
+          "count_soql": "SELECT count(*) WHERE departamento_entidad = 'Atlántico' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%alimentacion%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%alimentacion%'))) AND fecha_de_publicacion_del >= '2025-01-01' AND fecha_de_publicacion_del <= '2026-08-24'",
+          "total_count": 1140,
+          "fetched_rows": 100,
+          "rows_containing_excluded_term": 3,
+          "matching_samples": [
+            {
+              "id": "CO1.REQ.10704363",
+              "nombre_del_procedimiento": "SAMC-IUB-008-2026 (Manifestación de interés (Menor Cuantía)) (Presentación de oferta)",
+              "descripci_n_del_procedimiento": "PRESTACION DE SERVICIOS DE UNA AGENCIA DE VIAJE QUE\nSUMINISTRE TIQUETES AÉREOS NACIONALES E INTERNACIONALES,\nALOJAMIENTO, ALIMENTACION, TRANSPORTE TERRESTRE Y\nSEGUROS MEDICOS DE VIAJE, PARA MOVILIDAD ENTRANTE Y\nSALIENTE SEGUN LA NECESIDAD Y PLANEACION DE LA\nINSTITUCION UNIVERSITARIA DE BARRANQUILLA "
+            },
+            {
+              "id": "CO1.REQ.10666602",
+              "nombre_del_procedimiento": "SAMC-IUB-008-2026 (Manifestación de interés (Menor Cuantía))",
+              "descripci_n_del_procedimiento": "PRESTACION DE SERVICIOS DE UNA AGENCIA DE VIAJE QUE\nSUMINISTRE TIQUETES AÉREOS NACIONALES E INTERNACIONALES,\nALOJAMIENTO, ALIMENTACION, TRANSPORTE TERRESTRE Y\nSEGUROS MEDICOS DE VIAJE, PARA MOVILIDAD ENTRANTE Y\nSALIENTE SEGUN LA NECESIDAD Y PLANEACION DE LA\nINSTITUCION UNIVERSITARIA DE BARRANQUILLA "
+            },
+            {
+              "id": "CO1.REQ.10608608",
+              "nombre_del_procedimiento": "SAMC-IUB-008-2026",
+              "descripci_n_del_procedimiento": "PRESTACION DE SERVICIOS DE UNA AGENCIA DE VIAJE QUE\nSUMINISTRE TIQUETES AÉREOS NACIONALES E INTERNACIONALES,\nALOJAMIENTO, ALIMENTACION, TRANSPORTE TERRESTRE Y\nSEGUROS MEDICOS DE VIAJE, PARA MOVILIDAD ENTRANTE Y\nSALIENTE SEGUN LA NECESIDAD Y PLANEACION DE LA\nINSTITUCION UNIVERSITARIA DE BARRANQUILLA "
+            }
+          ]
+        },
+        "with_exclusion": {
+          "soql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE departamento_entidad = 'Atlántico' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%alimentacion%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%alimentacion%'))) AND NOT (coalesce(unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%transporte%')), false) OR coalesce(unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%transporte%')), false)) AND fecha_de_publicacion_del >= '2025-01-01' AND fecha_de_publicacion_del <= '2026-08-24' ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 100",
+          "count_soql": "SELECT count(*) WHERE departamento_entidad = 'Atlántico' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%alimentacion%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%alimentacion%'))) AND NOT (coalesce(unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%transporte%')), false) OR coalesce(unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%transporte%')), false)) AND fecha_de_publicacion_del >= '2025-01-01' AND fecha_de_publicacion_del <= '2026-08-24'",
+          "total_count": 1119,
+          "fetched_rows": 100,
+          "violations": 0,
+          "violation_samples": []
+        }
+      },
+      "null_cases": {
+        "synthetic_absent_term": "zznegobjectr4s220260825",
+        "candidate_soql": "SELECT id_del_proceso, nombre_del_procedimiento, descripci_n_del_procedimiento WHERE (nombre_del_procedimiento IS NULL OR descripci_n_del_procedimiento IS NULL) LIMIT 100",
+        "excluded_soql": "SELECT id_del_proceso, nombre_del_procedimiento, descripci_n_del_procedimiento WHERE (nombre_del_procedimiento IS NULL OR descripci_n_del_procedimiento IS NULL) AND (NOT (coalesce(unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%zznegobjectr4s220260825%')), false) OR coalesce(unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%zznegobjectr4s220260825%')), false))) LIMIT 100",
+        "candidate_count": 6,
+        "survivor_count": 6,
+        "missing_ids": [],
+        "samples": [
+          {
+            "id": "CO1.REQ.3292622",
+            "nombre_del_procedimiento": "",
+            "descripci_n_del_procedimiento": "Prestar los servicios PROFESIONALES Y DE APOYO A LA GESTIÓN por sus propios medios con plena autonomía técnica y administrativa, como LICENCIADA EN EDUCACIÓN FÍSICA Y RECREACIÓN para el desarrollo del proyecto estratégico denominado: FORTALECIMIENTO DE LA PARTICIPACIÓN E INCLUSIÓN DE LA POBLACIÓN EN"
+          },
+          {
+            "id": "CO1.REQ.8506316",
+            "nombre_del_procedimiento": "",
+            "descripci_n_del_procedimiento": "PRESTACION DE SERVICIOS PROFESIONALES COMO SEGURIDAD Y SALUD EN EL TRABAJO DE LA ESE CENTRO DE SALUD SAN JOSE DE ALBAN"
+          },
+          {
+            "id": "CO1.REQ.10026520",
+            "nombre_del_procedimiento": "",
+            "descripci_n_del_procedimiento": "RESTACION DE SERVICIOS  DE APOYO A LA GESTION COMO  GESTOR COMUNITARIO   PARA LA EJECUCION DEL SERVICIO INTEGRAL DE ATENCION PARA LA PREVENCION DE LA DESNUTRICION (SIAPD) EN CUMPLIMIENTO AL CONVENIO INTERADMINISTRATIVO N° 08007932025  SUSCRITO ENTRE EL INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGI"
+          },
+          {
+            "id": "CO1.REQ.8857541",
+            "nombre_del_procedimiento": "",
+            "descripci_n_del_procedimiento": "PRESTAR SERVICIOS PROFESIONALES A LA OFICINA DE NOMINA, REPORTANDO A LAS ÁREAS CORRESPONDIENTES AQUELLAS INCONSISTENCIAS ENCONTRADAS EN EL PROCESO DE REVISIÓN DE LA LIQUIDACIÓN DE LA NÓMINA PARA EL PAGO DE LOS SALARIOS Y DEMAS PRESTACIONES SOCIALES DE LOS DOCENTES DE LA SED"
+          },
+          {
+            "id": "CO1.REQ.4151982",
+            "nombre_del_procedimiento": "",
+            "descripci_n_del_procedimiento": "No definido"
+          },
+          {
+            "id": "CO1.REQ.6908304",
+            "nombre_del_procedimiento": "xxxxxxxxxxt",
+            "descripci_n_del_procedimiento": ""
+          }
+        ],
+        "not_applicable_reason": null
+      },
+      "status": "PASS"
+    },
+    "jbjy-vk9h": {
+      "dataset": "jbjy-vk9h",
+      "label": "contratos",
+      "fields": [
+        "objeto_del_contrato",
+        "descripcion_del_proceso"
+      ],
+      "comparison": {
+        "scope": {
+          "departamento_resolved": "Atlántico",
+          "fecha_desde": "2025-01-01",
+          "fecha_hasta": "2026-08-24"
+        },
+        "positive_term": "alimentacion",
+        "excluded_term": "transporte",
+        "positive": {
+          "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE departamento = 'Atlántico' AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentacion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentacion%'))) AND fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2026-08-24' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 100",
+          "count_soql": "SELECT count(*) WHERE departamento = 'Atlántico' AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentacion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentacion%'))) AND fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2026-08-24'",
+          "total_count": 825,
+          "fetched_rows": 100,
+          "rows_containing_excluded_term": 2,
+          "matching_samples": [
+            {
+              "id": "CO1.PCCNTR.9751910",
+              "objeto_del_contrato": "PRESTACIÓN DE SERVICIOS DE UNA AGENCIA\nDE VIAJE QUE SUMINISTRE TIQUETES AÉREOS NACIONALES E\nINTERNACIONALES; ALOJAMIENTO; ALIMENTACIÓN; TRANSPORTE\nTERRESTRE Y SEGUROS MÉDICOS DE VIAJE; PARA MOVILIDAD ENTRANTE\nPágina 2 de 5\nY SALIENTE SEGÚN LA NECESIDAD Y PLANEACIÓN DE LA INSTITUCIÓN\nUNIVERSITARIA DE",
+              "descripcion_del_proceso": "PRESTACIÓN DE SERVICIOS DE UNA AGENCIA\nDE VIAJE QUE SUMINISTRE TIQUETES AÉREOS NACIONALES E\nINTERNACIONALES; ALOJAMIENTO; ALIMENTACIÓN; TRANSPORTE\nTERRESTRE Y SEGUROS MÉDICOS DE VIAJE; PARA MOVILIDAD ENTRANTE\nPágina 2 de 5\nY SALIENTE SEGÚN LA NECESIDAD Y PLANEACIÓN DE LA INSTITUCIÓN\nUNIVERSITARIA DE"
+            },
+            {
+              "id": "CO1.PCCNTR.9516318",
+              "objeto_del_contrato": "CONTRATAR LOS SERVICIOS DE ALOJAMIENTO; ALIMENTACIÓN; CATERING;\nSUMINISTRO DE VESTUARIO Y TRANSPORTES REQUERIDOS PARA GARANTIZAR\nLA ADECUADA PARTICIPACIÓN DE LA UNIVERSIDAD DEL ATLÁNTICO EN LOS\nJUEGOS REGIONALES ASCUN CULTURA 2026.",
+              "descripcion_del_proceso": "CONTRATAR LOS SERVICIOS DE ALOJAMIENTO; ALIMENTACIÓN; CATERING;\nSUMINISTRO DE VESTUARIO Y TRANSPORTES REQUERIDOS PARA GARANTIZAR\nLA ADECUADA PARTICIPACIÓN DE LA UNIVERSIDAD DEL ATLÁNTICO EN LOS\nJUEGOS REGIONALES ASCUN CULTURA 2026."
+            }
+          ]
+        },
+        "with_exclusion": {
+          "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE departamento = 'Atlántico' AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentacion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentacion%'))) AND NOT (coalesce(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%transporte%')), false) OR coalesce(unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%transporte%')), false)) AND fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2026-08-24' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 100",
+          "count_soql": "SELECT count(*) WHERE departamento = 'Atlántico' AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentacion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentacion%'))) AND NOT (coalesce(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%transporte%')), false) OR coalesce(unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%transporte%')), false)) AND fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2026-08-24'",
+          "total_count": 819,
+          "fetched_rows": 100,
+          "violations": 0,
+          "violation_samples": []
+        }
+      },
+      "null_cases": {
+        "synthetic_absent_term": "zznegobjectr4s220260825",
+        "candidate_soql": "SELECT id_contrato, objeto_del_contrato, descripcion_del_proceso WHERE (objeto_del_contrato IS NULL OR descripcion_del_proceso IS NULL) LIMIT 100",
+        "excluded_soql": "SELECT id_contrato, objeto_del_contrato, descripcion_del_proceso WHERE (objeto_del_contrato IS NULL OR descripcion_del_proceso IS NULL) AND (NOT (coalesce(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%zznegobjectr4s220260825%')), false) OR coalesce(unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%zznegobjectr4s220260825%')), false))) LIMIT 100",
+        "candidate_count": 0,
+        "survivor_count": 0,
+        "missing_ids": [],
+        "samples": [],
+        "not_applicable_reason": "No NULL rows observed in the governed fields in this live snapshot."
+      },
+      "status": "PASS"
+    }
+  },
+  "transport_operations": [
+    {
+      "label": "p6dx-8zbt:positive_fetch",
+      "dataset": "p6dx-8zbt",
+      "soql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE departamento_entidad = 'Atlántico' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%alimentacion%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%alimentacion%'))) AND fecha_de_publicacion_del >= '2025-01-01' AND fecha_de_publicacion_del <= '2026-08-24' ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 100",
+      "status": "ok",
+      "latency_s": 2.5988,
+      "row_count": 100
+    },
+    {
+      "label": "p6dx-8zbt:excluded_fetch",
+      "dataset": "p6dx-8zbt",
+      "soql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE departamento_entidad = 'Atlántico' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%alimentacion%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%alimentacion%'))) AND NOT (coalesce(unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%transporte%')), false) OR coalesce(unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%transporte%')), false)) AND fecha_de_publicacion_del >= '2025-01-01' AND fecha_de_publicacion_del <= '2026-08-24' ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 100",
+      "status": "ok",
+      "latency_s": 2.3447,
+      "row_count": 100
+    },
+    {
+      "label": "p6dx-8zbt:positive_count",
+      "dataset": "p6dx-8zbt",
+      "soql": "SELECT count(*) WHERE departamento_entidad = 'Atlántico' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%alimentacion%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%alimentacion%'))) AND fecha_de_publicacion_del >= '2025-01-01' AND fecha_de_publicacion_del <= '2026-08-24'",
+      "status": "ok",
+      "latency_s": 2.2603,
+      "row_count": 1
+    },
+    {
+      "label": "p6dx-8zbt:excluded_count",
+      "dataset": "p6dx-8zbt",
+      "soql": "SELECT count(*) WHERE departamento_entidad = 'Atlántico' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%alimentacion%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%alimentacion%'))) AND NOT (coalesce(unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%transporte%')), false) OR coalesce(unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%transporte%')), false)) AND fecha_de_publicacion_del >= '2025-01-01' AND fecha_de_publicacion_del <= '2026-08-24'",
+      "status": "ok",
+      "latency_s": 5.0732,
+      "row_count": 1
+    },
+    {
+      "label": "p6dx-8zbt:null_candidates",
+      "dataset": "p6dx-8zbt",
+      "soql": "SELECT id_del_proceso, nombre_del_procedimiento, descripci_n_del_procedimiento WHERE (nombre_del_procedimiento IS NULL OR descripci_n_del_procedimiento IS NULL) LIMIT 100",
+      "status": "ok",
+      "latency_s": 0.1446,
+      "row_count": 6
+    },
+    {
+      "label": "p6dx-8zbt:null_candidates_with_exclusion",
+      "dataset": "p6dx-8zbt",
+      "soql": "SELECT id_del_proceso, nombre_del_procedimiento, descripci_n_del_procedimiento WHERE (nombre_del_procedimiento IS NULL OR descripci_n_del_procedimiento IS NULL) AND (NOT (coalesce(unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%zznegobjectr4s220260825%')), false) OR coalesce(unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%zznegobjectr4s220260825%')), false))) LIMIT 100",
+      "status": "ok",
+      "latency_s": 0.1478,
+      "row_count": 6
+    },
+    {
+      "label": "jbjy-vk9h:positive_fetch",
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE departamento = 'Atlántico' AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentacion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentacion%'))) AND fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2026-08-24' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 100",
+      "status": "ok",
+      "latency_s": 6.7634,
+      "row_count": 100
+    },
+    {
+      "label": "jbjy-vk9h:excluded_fetch",
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE departamento = 'Atlántico' AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentacion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentacion%'))) AND NOT (coalesce(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%transporte%')), false) OR coalesce(unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%transporte%')), false)) AND fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2026-08-24' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 100",
+      "status": "ok",
+      "latency_s": 3.1412,
+      "row_count": 100
+    },
+    {
+      "label": "jbjy-vk9h:positive_count",
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT count(*) WHERE departamento = 'Atlántico' AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentacion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentacion%'))) AND fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2026-08-24'",
+      "status": "ok",
+      "latency_s": 2.0138,
+      "row_count": 1
+    },
+    {
+      "label": "jbjy-vk9h:excluded_count",
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT count(*) WHERE departamento = 'Atlántico' AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentacion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentacion%'))) AND NOT (coalesce(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%transporte%')), false) OR coalesce(unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%transporte%')), false)) AND fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2026-08-24'",
+      "status": "ok",
+      "latency_s": 1.9484,
+      "row_count": 1
+    },
+    {
+      "label": "jbjy-vk9h:null_candidates",
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT id_contrato, objeto_del_contrato, descripcion_del_proceso WHERE (objeto_del_contrato IS NULL OR descripcion_del_proceso IS NULL) LIMIT 100",
+      "status": "ok",
+      "latency_s": 0.1665,
+      "row_count": 0
+    },
+    {
+      "label": "jbjy-vk9h:null_candidates_with_exclusion",
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT id_contrato, objeto_del_contrato, descripcion_del_proceso WHERE (objeto_del_contrato IS NULL OR descripcion_del_proceso IS NULL) AND (NOT (coalesce(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%zznegobjectr4s220260825%')), false) OR coalesce(unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%zznegobjectr4s220260825%')), false))) LIMIT 100",
+      "status": "ok",
+      "latency_s": 0.2049,
+      "row_count": 0
+    }
+  ],
+  "verdict": {
+    "HCA_R4_S2_OBJECT_LIVE": "PASS"
+  }
+}

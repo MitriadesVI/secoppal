@@ -44,7 +44,7 @@ NONEMPTY_WHERE_KEYS: frozenset[str] = frozenset({
     "contratista",
     "contract_type_include",
     # topic
-    "objeto", "objeto_or", "objeto_phrases",
+    "objeto", "objeto_or", "objeto_phrases", "objeto_exclude",
     # estado
     "estado", "estado_de_apertura_del_proceso", "estado_del_procedimiento",
     "estado_contrato", "estado_contrato_adicional",
@@ -73,7 +73,19 @@ except ImportError as exc:
         exc,
     )
     ROOT_TO_VARIANTS: dict[str, frozenset[str]] = {}
-    dedup_like_variants = lambda v: sorted(v, key=len)  # type: ignore
+
+    def dedup_like_variants(values):  # type: ignore
+        return sorted(values, key=len)
+
+
+def project_object_term_variants(term: str) -> tuple[str, ...]:
+    """Return the exact LIKE patterns used by positive and negative OBJECT.
+
+    This is retrieval projection, not semantic normalization.  In particular,
+    it deliberately reuses the current morphological authority unchanged.
+    """
+    term_variants = ROOT_TO_VARIANTS.get(term, frozenset([term]))
+    return tuple(dedup_like_variants(term_variants))
 
 try:
     from app.core.intent_vocabulary import COMMON_TOKENS
@@ -425,9 +437,12 @@ class SoQLBuilder:
 
         # Exclusiones temáticas son predicados negativos independientes. Cada
         # término se excluye tanto de objeto como de descripción, de forma
-        # simétrica a las condiciones positivas.
+        # simétrica a las condiciones positivas. COALESCE makes each LIKE
+        # explicitly false on NULL before applying NOT to the disjunction.
         for term in params.get("objeto_exclude") or []:
-            conditions = self._object_term_conditions(spec, str(term))
+            conditions = self._object_term_conditions(
+                spec, str(term), null_safe=True,
+            )
             if conditions:
                 where_clauses.append(f"NOT ({' OR '.join(conditions)})")
 
@@ -706,26 +721,33 @@ class SoQLBuilder:
         pattern_expr = cls._accent_fold_expr(f"UPPER('%{escaped_pattern}%')")
         return f"{field_expr} LIKE {pattern_expr}"
 
-    def _object_term_conditions(self, spec: DatasetSpec, term: str) -> list[str]:
+    def _object_term_conditions(
+        self,
+        spec: DatasetSpec,
+        term: str,
+        *,
+        null_safe: bool = False,
+    ) -> list[str]:
         # Expand to all morphological variants (OR clauses).
         # ROOT_TO_VARIANTS maps root to all surface forms; unknown terms are used as-is.
         # BOTH routing paths (heuristic_only and heuristic_plus_llm) converge here —
         # so morphological expansion is always applied. Confirmed by test_morpho_expansion_consistency.py.
         # MORPHO-EXPANSION-INCONSISTENT-001 was a false alarm.
-        term_variants = ROOT_TO_VARIANTS.get(term, frozenset([term]))
-        # Dedup: '%mantenimiento%' already matches 'mantenimiento correctivo'
-        # so we only need the shortest variant. Fixes VARIANT-EXPLOSION-001.
-        deduped = dedup_like_variants(term_variants)
         conditions: list[str] = []
-        for variant in deduped:
+        for variant in project_object_term_variants(term):
             esc = self._escape(variant)
+            object_like = self._accent_fold_like(spec.object_name, esc)
+            if null_safe:
+                object_like = f"coalesce({object_like}, false)"
             if spec.description:
+                description_like = self._accent_fold_like(spec.description, esc)
+                if null_safe:
+                    description_like = f"coalesce({description_like}, false)"
                 conditions.append(
-                    f"{self._accent_fold_like(spec.object_name, esc)} OR "
-                    f"{self._accent_fold_like(spec.description, esc)}"
+                    f"{object_like} OR {description_like}"
                 )
             else:
-                conditions.append(self._accent_fold_like(spec.object_name, esc))
+                conditions.append(object_like)
         return conditions
 
     def _phrase_recall_conditions(self, spec: DatasetSpec, phrase_spec) -> str:

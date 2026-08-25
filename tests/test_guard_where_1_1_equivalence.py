@@ -6,10 +6,6 @@ from __future__ import annotations
 import pytest
 
 from app.core._followup_constants import SCOPE_TOPIC_KEYS
-from app.core.orchestrator import (
-    SecopalWorkflow,
-    execute_query as _execute_query_action,
-)
 from app.core.followup_engine import FollowupGuards
 
 
@@ -17,6 +13,7 @@ from app.core.followup_engine import FollowupGuards
 
 _SCOPE_PRESENT = [
     ({"objeto": ["mantenimiento"]}, "objeto"),
+    ({"objeto_exclude": ["alimentacion"]}, "objeto_exclude"),
     ({"entidad_resolved": "ALCALDIA DE BOGOTA"}, "entidad_resolved"),
     ({"entidad_like": "%BOGOTA%"}, "entidad_like"),
     ({"departamento_resolved": "ANTIOQUIA"}, "departamento_resolved"),
@@ -86,7 +83,8 @@ class TestGuardEquivalence:
     def test_sco_topic_keys_frozenset_matches(self):
         """Sanity: las keys son exactamente las esperadas."""
         expected = frozenset({
-            "objeto", "objeto_phrases", "entidad_resolved", "entidad_like",
+            "objeto", "objeto_phrases", "objeto_exclude",
+            "entidad_resolved", "entidad_like",
             "departamento_resolved", "departamentos_in", "ciudad", "contratista",
             "contract_type_include",
         })

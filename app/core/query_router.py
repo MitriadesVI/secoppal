@@ -965,19 +965,20 @@ class QueryRouter:
         #    Preserva colocaciones de dominio ("manual de contratación") como
         #    unidad antes de que "de" se descarte y la frase se pierda. Consume
         #    el span para que sus tokens NO recreen el objeto roto (no duplicar).
-        # Preserve the pre-R4 executable OBJECT forms exactly.  New linguistic
-        # forms remain typed/deferred until R4-S2; none can leak into objeto.
-        legacy_excluded: list[str | list[str]] = []
+        # R4-S2 resolves every safe OBJECT request into the one existing runtime
+        # authority. NegationRequest remains ephemeral and no governed token can
+        # re-enter the positive topic extractors below.
+        object_excluded: list[str | list[str]] = []
         for request in negation_binding.requests:
             if (
                 request.dimension is NegationDimension.OBJECT
                 and request.verdict is NegationVerdict.EXECUTE
             ):
-                legacy_excluded.extend(self._extract_object_terms(request.value))
-        if legacy_excluded:
+                object_excluded.extend(self._extract_object_terms(request.value))
+        if object_excluded:
             seen_excluded: set[str] = set()
             unique_excluded: list[str | list[str]] = []
-            for value in legacy_excluded:
+            for value in object_excluded:
                 key = "|".join(value) if isinstance(value, list) else value
                 if key not in seen_excluded:
                     seen_excluded.add(key)

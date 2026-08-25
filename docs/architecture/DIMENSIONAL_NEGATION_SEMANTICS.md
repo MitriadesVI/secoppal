@@ -1,11 +1,11 @@
 # Semántica de negación dimensional
 
-**Estado:** diseño aprobado · infraestructura de binding **R4-S1 implementada**;
-políticas ejecutables por dimensión diferidas a R4-S2/S3/S4 · decisión canónica en
+**Estado:** diseño aprobado · binding **R4-S1 implementado** · OBJECT end-to-end
+**R4-S2 implementado**; políticas restantes diferidas a R4-S3/S4 · decisión canónica en
 [`ADR-064`](../decisions_log.md)
 **Rama de diseño:** `design/hca-negation-semantics` (hija de
 `fix/hca-normalization-contract`, `9ecf3be`)
-**Última actualización:** 2026-08-24
+**Última actualización:** 2026-08-25
 
 > Esta guía conserva el diagnóstico y contrato de diseño originales. R4-S1
 > implementó la detección compartida, `NegationRequest`, aislamiento de spans y
@@ -16,6 +16,11 @@ políticas ejecutables por dimensión diferidas a R4-S2/S3/S4 · decisión canó
 > (HCA-1) y de sondeos directos al parser reproducidos abajo. El corpus congelado
 > `tests/fixtures/audits/conversation_holistic_v1.yaml`
 > (`sha256 262c225c…99ffba`) no se toca.
+>
+> R4-S2 ejecutó únicamente OBJECT mediante la autoridad existente
+> `objeto_exclude`, corrigió su proyección NULL-safe y añadió contradicción
+> fail-closed. Evidencia de cierre:
+> [`2026-08-25_HCA_R4_S2_OBJECT_NEGATION.md`](../audits/2026-08-25_HCA_R4_S2_OBJECT_NEGATION.md).
 
 ---
 
@@ -340,6 +345,15 @@ lenguaje crudo
 
 **OBJECT es el destino por defecto del residuo, no el destino por defecto de la
 negación.** La diferencia es todo el invariante.
+
+### 5.4 Estado de implementación R4-S2
+
+La ruta mínima anterior está ejecutada. Todos los marcadores OBJECT resueltos
+por S1 se proyectan a `objeto_exclude`; `NegationRequest` se descarta como
+metadata efímera y no se añadió ninguna representación runtime paralela. La
+exclusión usa `coalesce(<LIKE>, false)` por campo antes del `NOT`. Un overlap
+entre la proyección positiva y negativa existente produce aclaración antes de
+consultar SECOP. CITY, TIME, BUYER y ACTOR continúan fail-closed sin ejecución.
 
 ---
 

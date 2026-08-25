@@ -68,7 +68,7 @@ from app.core.orchestrator import SecopalWorkflow  # noqa: E402
 
 # Campos materiales del frame para comparación metamórfica.
 MATERIAL_FIELDS = (
-    "dataset", "objeto", "objeto_or", "valor_min", "valor_max",
+    "dataset", "objeto", "objeto_or", "objeto_exclude", "valor_min", "valor_max",
     "fecha_desde", "fecha_hasta", "entidad_resolved", "departamento_resolved",
     "ciudad", "modalidad_include_procedure_ids", "modalidad_exclude_procedure_ids",
     "contract_type_include", "estado_family", "estado_contrato",

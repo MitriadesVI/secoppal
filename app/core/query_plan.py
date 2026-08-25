@@ -12,7 +12,6 @@ from __future__ import annotations
 import calendar
 from copy import deepcopy
 from dataclasses import dataclass, field
-from datetime import date as Date
 
 from app.core.contract_invariants import (
     apply_opportunity_invariant,
@@ -24,6 +23,10 @@ from app.config import actor_profile_enabled
 from app.core.actor_scope_policy import evaluate_actor_scope
 from app.core.dialogue_policy import classify, DialogueSignal
 from app.core.opportunity_scope_policy import evaluate_opportunity_scope
+from app.core.object_negation_policy import (
+    OBJECT_NEGATION_CONTRADICTION_QUESTION,
+    object_negation_overlap,
+)
 from app.core.semantic_sanity import compute_sanity_flags
 
 # ── All known rules — used as default when enabled_rules is None ──────────────
@@ -82,11 +85,22 @@ def compute_query_plan(
     working_params = deepcopy(params)
     rules_to_apply = enabled_rules if enabled_rules is not None else ALL_RULES
     ctx = context or {}
-    today = ctx.get("today") or Date.today()
 
     all_signals = classify(raw_query, params, context)
     reason_parts: list[str] = []
     risk_flags: list[str] = []
+
+    # INV-OBJECT-NEGATION-END-TO-END: never send mutually incompatible
+    # positive/negative OBJECT predicates to SECOP and fabricate a zero result.
+    if object_negation_overlap(working_params):
+        return QueryPlan(
+            should_execute=False,
+            params=working_params,
+            risk_flags=["OBJECT_NEGATION_CONTRADICTION"],
+            clarification_question=OBJECT_NEGATION_CONTRADICTION_QUESTION,
+            reason="object_negation_contradiction",
+            signals=all_signals,
+        )
 
     # ── P1: command_incomplete ────────────────────────────────────────────
     if "P1" in rules_to_apply:

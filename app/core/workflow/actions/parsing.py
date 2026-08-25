@@ -34,6 +34,10 @@ from app.core.negation_binding import (
     deferred_negation_question,
     requests_require_policy,
 )
+from app.core.object_negation_policy import (
+    OBJECT_NEGATION_CONTRADICTION_QUESTION,
+    object_negation_overlap,
+)
 from app.core.query_frame import frame_from_params, params_from_frame
 from app.core.query_router import QueryRouter
 from app.core.workflow.helpers import _with_timing
@@ -471,6 +475,37 @@ def apply_context(state: State) -> State:
         previous_frame=previous_frame,
         mutation_trace=mutation_trace,
     )
+
+    if object_negation_overlap(merged):
+        # The contradictory delta never becomes conversational state.  Preserve
+        # the previous frame and clarify before planning or SECOP execution.
+        previous_params = dict(context_params)
+        blocked_plan = asdict(QueryPlan(
+            should_execute=False,
+            params=dict(previous_params),
+            risk_flags=["OBJECT_NEGATION_CONTRADICTION"],
+            clarification_question=OBJECT_NEGATION_CONTRADICTION_QUESTION,
+            reason="object_negation_contradiction",
+        ))
+        return _with_timing(
+            state,
+            "apply_context_ms",
+            start,
+            parsed_params=previous_params,
+            needs_llm=False,
+            needs_clarification=True,
+            clarification_reason=OBJECT_NEGATION_CONTRADICTION_QUESTION,
+            intent_type="object_negation_contradiction",
+            followup_intent_type="object_negation_contradiction",
+            followup_mutation={
+                **mutation_trace,
+                "rejected_fields": ["objeto_exclude"],
+                "rejection_reasons": {
+                    "objeto_exclude": "OBJECT_NEGATION_CONTRADICTION",
+                },
+            },
+            query_plan=blocked_plan,
+        )
 
     # REPLACE implícito: promover solo ahora que el intent genérico real es conocido.
     if modality_wiring.is_eligible_for_implicit_replace(instruction, interpretation, intent):

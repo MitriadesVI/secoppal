@@ -43,7 +43,10 @@ M2_MODIFIED_FILE_SHA256 = {
     # SEARCH-SH1 adds dataset-explicit contractual predicates. The ordinary
     # oracle below remains byte-identical and therefore bounds the new paths to
     # queries that actually carry contract_type_include.
-    "app/core/soql_builder.py": "b2d4431a33ee4b524e5d9091dd5f217b3e08105036d5b9725824093c14ce125a",
+    # HCA-R4-S2 adds a null-safe predicate gated strictly by objeto_exclude.
+    # The ordinary-query oracle below remains byte-identical; the six-valued
+    # null specification lives in tests/test_object_negation_soql.py.
+    "app/core/soql_builder.py": "ac0908135446334a03b4b85255f01694c917e3e969fbd0358cc31ac3c2552110",
 }
 
 # M2.1 corrigió dos consumidores visibles. AP3-G autoriza además controles de

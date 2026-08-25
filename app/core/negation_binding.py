@@ -356,7 +356,6 @@ def bind_negations(
                 verdict=(
                     NegationVerdict.EXECUTE
                     if dimension is NegationDimension.OBJECT
-                    and marker.text in {"excluye", "excluir", "excepto"}
                     else NegationVerdict.DEFER
                 ),
                 context=context,

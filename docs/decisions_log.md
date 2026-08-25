@@ -3222,16 +3222,19 @@ negación, control-language y actor hygiene.
 **Estado:** Accepted — infraestructura R4-S1 implementada; políticas por
 dimensión diferidas a R4-S2/S3/S4
 
-### IMPLEMENTATION STATUS (R4-S1)
+### IMPLEMENTATION STATUS (R4-S2)
 
 R4-S1 centralizó el vocabulario en `app/core/negation_markers.py` e introdujo
 `NegationRequest` en `app/core/negation_binding.py`. El binding ocurre antes de
 los extractores positivos y sus spans se enmascaran conservando offsets. La
 metadata viaja como estado efímero del turno, fuera de `QueryFrame`; las
-dimensiones todavía no ejecutables cierran de forma segura con aclaración. La
-modalidad mantiene su política existente y sigue siendo el control ejecutable.
-OBJECT end-to-end, contradicciones y políticas ejecutables para geografía,
-tiempo, comprador, actor, estado y tipo de contrato permanecen fuera de R4-S1.
+dimensiones todavía no ejecutables cierran de forma segura con aclaración.
+R4-S2 convirtió únicamente OBJECT en ejecutable mediante la autoridad existente
+`objeto_exclude`, corrigió la proyección a `NOT (coalesce(LIKE, false) OR …)` y
+añadió aclaración fail-closed ante overlap positivo/negativo proyectado. La
+modalidad mantiene su política existente. Geografía, tiempo, comprador, actor,
+estado y tipo de contrato permanecen diferidos a R4-S3/S4. Evidencia:
+`docs/audits/2026-08-25_HCA_R4_S2_OBJECT_NEGATION.md`.
 
 ### CONTEXT
 
@@ -3384,6 +3387,10 @@ eliminó las 6 filas de Procesos y la forma
 `COALESCE(… LIKE …, false)` preservó 6/6; con controles que sí contenían el
 término, ambas formas conservaron la exclusión. La corrección es semántica,
 aunque el impacto vivo medido sea hoy de seis filas.
+
+R4-S2 cerró este defecto para OBJECT. La forma NULL-safe fue verificada de nuevo
+en vivo sobre Procesos y Contratos; las seis filas NULL de Procesos sobrevivieron
+y las filas con el término excluido continuaron fuera del resultado.
 
 ### FOLLOWUP_POLICY
 

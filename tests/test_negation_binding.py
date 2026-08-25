@@ -114,13 +114,15 @@ def test_object_binding_never_becomes_positive(router: QueryRouter) -> None:
         "alimentacion",
         "sin",
     )
-    assert request.verdict is NegationVerdict.DEFER
+    assert request.verdict is NegationVerdict.EXECUTE
     assert "objeto" not in parsed.params
+    assert parsed.params["objeto_exclude"] == ["alimentacion"]
 
 
 def test_positive_and_negative_object_are_separated(router: QueryRouter) -> None:
     parsed = router.parse("contratos de alimentacion sin transporte")
     assert parsed.params["objeto"] == ["alimentacion"]
+    assert parsed.params["objeto_exclude"] == ["transporte"]
     request = parsed.negation_requests[0]
     assert request.dimension is NegationDimension.OBJECT
     assert request.value == "transporte"
@@ -141,12 +143,14 @@ def test_ni_propagates_negative_polarity(router: QueryRouter, query: str) -> Non
         (NegationDimension.OBJECT, "transporte"),
     ]
     assert "objeto" not in parsed.params
+    assert parsed.params["objeto_exclude"] == ["alimentacion", "transporte"]
     assert parsed.negation_requests[1].context == "ni"
 
 
 def test_sino_closes_negation_and_opens_positive_span(router: QueryRouter) -> None:
     parsed = router.parse("no de alimentacion sino de transporte")
     assert parsed.params["objeto"] == ["transporte"]
+    assert parsed.params["objeto_exclude"] == ["alimentacion"]
     request = parsed.negation_requests[0]
     assert request.dimension is NegationDimension.OBJECT
     assert request.value == "alimentacion"
@@ -241,6 +245,8 @@ def test_adversarial_marker_forms_bind_without_positive_leak(
     assert request.dimension is NegationDimension.OBJECT
     assert request.marker == marker
     assert request.value == "alimentacion"
+    assert request.verdict is NegationVerdict.EXECUTE
+    assert parsed.params["objeto_exclude"] == ["alimentacion"]
     assert "alimentacion" not in parsed.params.get("objeto", [])
 
 

@@ -37,7 +37,6 @@ from app.core.followup_control_tokens import (
 )
 from app.core._followup_constants import (
     FOLLOWUP_WINDOW_MINUTES,
-    CONTINUATION_WORDS,
     NEW_SEARCH_VERBS,
     NOISE_PREFIXES,
     SCOPE_TOPIC_KEYS,
@@ -821,6 +820,7 @@ def _merge_new_search(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
         dataset_explicit=curr.dataset_explicit,
         scope=dict(curr.scope) if curr.scope else {},
         topic=list(curr.topic) if curr.topic else [],
+        objeto_exclude=list(curr.objeto_exclude),
         modifiers=dict(curr.modifiers),
         raw_params=raw,
         intent_type="new_search",
