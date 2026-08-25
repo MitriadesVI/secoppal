@@ -1,4 +1,6 @@
-.PHONY: test smoke smoke-fast lint lint-core dev restart
+.PHONY: test smoke smoke-fast lint lint-core audit-negation-v1 dev restart
+
+AUDIT_OUT ?=
 
 lint-core:
 	@bad=$$(find app/core -type f \( -name "*.bak*" -o -name "* v*.py" -o -name "*copy*.py" -o -name "*backup*" -o -name "*.xlsx" -o -name "*.docx" -o -name "*.pdf" \) 2>/dev/null); \
@@ -18,6 +20,10 @@ smoke-fast:
 
 lint:
 	ruff check app/ tests/ scripts/ --select E,W,F --ignore E501
+
+audit-negation-v1:
+	.venv/bin/python scripts/audits/run_conversation_holistic_audit.py \
+		--corpus tests/fixtures/audits/negation_focal_v1.yaml $(if $(AUDIT_OUT),--out "$(AUDIT_OUT)")
 
 dev:
 	./dev.sh

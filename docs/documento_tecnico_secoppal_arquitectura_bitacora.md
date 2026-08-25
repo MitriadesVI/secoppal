@@ -5,7 +5,96 @@
 **Sistema:** SECOPPAL — asistente conversacional para consulta y análisis de contratación pública SECOP II  
 **Propósito del documento:** dejar una descripción comprensible para un tercero técnico o funcional sobre qué hace el sistema, cómo está construido, qué archivos lo componen, qué decisiones de arquitectura se han tomado, qué bugs relevantes se han detectado y cuál es el estado actual del proyecto.
 
-## Estado canónico actual — 2026-08-22
+## Estado canónico actual — 2026-08-25
+
+- **Main:** `c66ebba719159c9fc0ee55fc01775b32956c5d09` — **HCA Core Remediation
+  Fase 1** integrada ff-only (9 commits, sin commit de merge) sobre
+  `0f8dc94` (que ya traía el cierre del spike Semantic Market Pack, ADR-062).
+- **Estado de cierre:** `HCA_CORE_PHASE_1: INTEGRATED` ·
+  `DIRECT_LOOKUP_HIJACK: CLOSED` · `NORMALIZATION_CONTRACT: CLOSED` ·
+  `DIMENSIONAL_NEGATION_V1: CLOSED` ·
+  `MAIN_INTEGRATION: c66ebba719159c9fc0ee55fc01775b32956c5d09`.
+- **Suite:** 8436 passed, 2 skipped, 23 xfailed · query corpus 89/89 ·
+  dialogue corpus con único FAIL `GOB-DEPTO-001` (basal, histórico) ·
+  focales lookup/normalización/negación/paginación 424 passed ·
+  `make lint-core` limpio · `git diff --check` limpio.
+- **HCA-1 congelado** (`conversation_holistic_v1.yaml`, sha `262c225c…`,
+  intacto): **156 → 164 PASS de 195**. 8 casos corregidos
+  (`HCA-INTENT-010`, `HCA-MODALITY-004`, `HCA-GEO-006`, `HCA-MONEY-021`,
+  `HCA-NEG-003`, `HCA-NEG-005`, `HCA-NEG-006`, `HCA-ANTI-004`) y **0 casos
+  rotos** frente a main.
+- **Qué cambió, en una línea:** el sistema dejó de secuestrar consultas
+  naturales como referencias, dejó de borrar la intención del usuario al
+  normalizarla, y aprendió a distinguir *qué* se está negando antes de decidir
+  si puede ejecutarlo.
+
+### Tres cierres
+
+- **`HCA-LOOKUP-HIJACK-001`: CLOSED** (`0d194f3`). `_extract_entity_refs()`
+  exigía prefijo + componente, pero no que algún componente fuera numérico: un
+  prefijo corto (`SA`, `SI`, `LIC`) consumía el principio de una palabra normal
+  y `contratos de salud en huila` viajaba a la ruta de lookup por referencia.
+  Ahora la referencia exige estructura numérica, y un subprefijo alfabético solo
+  vale separado (`SAMC-JCT-006`). El P0 estaba congelado como `xfail(strict)` en
+  `test_dialogue_e2e_invariants.py`; ese xfail es hoy un test verde.
+- **`NORMALIZATION_CONTRACT`: CLOSED** (ADR-063, `9ecf3be`).
+  `INV-NORMALIZATION-PRESERVES-INTENT`. `más de 500 millones y menos de 100
+  millones` ya no se reordena con `min()`/`max()`: P8 ve la contradicción real
+  en lugar de un rango plausible — P8 nació ciego, no se rompió después.
+  `desde 2025` conserva su extremo abierto porque el fallback genérico de año
+  solo actúa si el extractor temporal no reconoció estructura alguna.
+- **`DIMENSIONAL_NEGATION_V1`: CLOSED** (ADR-064, `7b7a79a`→`c66ebba`).
+  La negación se bindea a su dimensión antes que cualquier extractor positivo
+  reclame el valor gobernado. Ejecutan OBJECT, MODALITY y DEPARTMENT cuando la
+  resta de conjunto es segura. CITY, TIME, BUYER, ACTOR, CONTRACT_TYPE y STATE
+  **aclaran fail-closed** sin mutar el frame previo ni invalidar su buffer. El
+  ciclo de vida es simétrico: lo que el usuario excluyó, lo puede retirar.
+
+### Deuda explícita — HCA **no** está completo
+
+- `TIME_V2` — álgebra temporal (rangos de meses, días, `mes pasado`).
+  `HCA-TIME-004` sigue FAIL por `entre enero y marzo de 2026`, fuera del
+  alcance declarado de ADR-063.
+- `CONTROL_LANGUAGE` — refactor general del lenguaje de control.
+- `ACTOR_HYGIENE` — `HCA-ACTOR-011` sigue FAIL basal; el arreglo general de
+  Actor Pending está reservado a HCA-R7 y **no** se coló en R4.
+- `ORACLE_REVIEW` — `NEG-N15` (`VALID_DEFERRED`) y `NEG-ANTI-002`
+  (`WRONG_ORACLE_CANDIDATE`) son **deuda de oráculo**, no bugs de runtime
+  abiertos. El fixture pre-registrado `negation_focal_v1.yaml` (sha `f4f64a33…`,
+  intacto) queda en 22 PASS / 2 FAIL; no se editó para fabricar 24/24.
+- `SEMANTIC_AUTHORITY_CLEANUP` — pendiente.
+- `GOB-DEPTO-001` — mismatch histórico del dialogue corpus, ajeno a este frente.
+
+### Reproducibilidad del fixture focal de negación
+
+El punto de entrada canónico es:
+
+```bash
+make audit-negation-v1
+```
+
+El target reutiliza, sin duplicar lógica, el runner offline/mock existente:
+
+```bash
+.venv/bin/python scripts/audits/run_conversation_holistic_audit.py \
+  --corpus tests/fixtures/audits/negation_focal_v1.yaml
+```
+
+El reporting (`results.jsonl` y `verdicts.json`) sigue a cargo del runner. Por
+defecto se escribe en su directorio temporal; para conservarlo en una ruta
+elegida por el operador:
+
+```bash
+make audit-negation-v1 AUDIT_OUT=/ruta/de/salida
+```
+
+El resultado de cierre R4 es **22 PASS / 2 FAIL / 0 ERROR**. `NEG-N15` y
+`NEG-ANTI-002` se preservan como **ORACLE / BENCHMARK DEBT**; por tanto, este
+22/24 documenta el estado auditado y no es un gate perpetuo de producto ni dos
+bugs abiertos de runtime. El fixture permanece congelado con SHA-256
+`f4f64a33ea7009eb1da9fa7d3c910e67010e6dafc6b4c5b6932901c27fad9a1d`.
+
+## Estado canónico — 2026-08-22 (histórico)
 
 - **Main:** `8acb21a9a432f7750ac719f5921ad70776c448a2` — dos frentes cerrados y
   mergeados ff-only: **Actor Profile V1** (ADR-060) y **SEARCH-SH1** (ADR-061).
