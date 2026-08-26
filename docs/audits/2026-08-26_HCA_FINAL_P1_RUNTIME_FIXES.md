@@ -200,8 +200,15 @@ Educación Nacional, secretaría de Educación de Bogotá, ICBF, ANI, EAAB, dist
 de Barranquilla, municipio de Soacha. `"que contrató el departamento del
 Atlántico"` (HCA-ENTITY-004, fuera de alcance) sin cambio.
 
-`"contratos del fondo nacional de vivienda"` no resuelve — verificado
-**idéntico en `eb8cfe1`**: falta en el gazetteer, es preexistente.
+**Fuera de alcance, registrados.** Dos comportamientos verificados **idénticos
+en `eb8cfe1`**, preexistentes y ajenos a los seis casos:
+
+- `"contratos del fondo nacional de vivienda"` no resuelve — falta en el
+  gazetteer;
+- `"contratos del proveedor LMP Ingeniería con la alcaldía"` deja `alcaldia` en
+  `objeto`. El guard solo reconoce la mención tras `de/del/para/en/por`, y aquí
+  la introduce `con` dentro de una construcción de relación actor-comprador.
+  Ampliarlo tocaría la ruta de actor (R7), que este sprint no debe mover.
 
 ---
 
