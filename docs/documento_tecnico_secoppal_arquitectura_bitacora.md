@@ -7,23 +7,27 @@
 
 ## Estado canónico actual — 2026-08-25
 
-- **Main:** `e0ba21173e56a8562eb626a5136ca53173af8d23` — **HCA Core Remediation
-  Fase 1** integrada ff-only (9 commits, sin commit de merge) sobre
-  `0f8dc94` (que ya traía el cierre del spike Semantic Market Pack, ADR-062).
-- **Rama de cierre R5:** `feature/hca-r5-time-v2` — `TIME_SEMANTICS_V2: CLOSED`
-  para las capacidades A–I de ADR-065; pendiente de integration review, sin
-  merge ni push desde este sprint.
+- **Main:** `68f98e481124e0ed33039821dcd992eb00bc777e` — **HCA-R5 Time
+  Semantics V2 + aislamiento del runner de auditoría** integrados ff-only
+  (2 commits, sin commit de merge) sobre
+  `e0ba21173e56a8562eb626a5136ca53173af8d23`, que ya traía **HCA Core
+  Remediation Fase 1** (9 commits, ff-only, ADR-062 incluido).
 - **Estado de cierre:** `HCA_CORE_PHASE_1: INTEGRATED` ·
   `DIRECT_LOOKUP_HIJACK: CLOSED` · `NORMALIZATION_CONTRACT: CLOSED` ·
-  `DIMENSIONAL_NEGATION_V1: CLOSED` · `TIME_SEMANTICS_V2: CLOSED (R5 branch)` ·
-  `MAIN_INTEGRATION: e0ba21173e56a8562eb626a5136ca53173af8d23`.
-- **Suite:** 8436 passed, 2 skipped, 23 xfailed · query corpus 89/89 ·
-  dialogue corpus con único FAIL `GOB-DEPTO-001` (basal, histórico) ·
-  focales lookup/normalización/negación/paginación 424 passed ·
-  `make lint-core` limpio · `git diff --check` limpio.
+  `DIMENSIONAL_NEGATION_V1: CLOSED` · `TIME_SEMANTICS_V2: CLOSED` ·
+  `AUDIT_RUNNER_ISOLATION: CLOSED` ·
+  `MAIN_INTEGRATION: 68f98e481124e0ed33039821dcd992eb00bc777e`.
+- **Suite (integration review R5, medida sobre `68f98e4`):** 8481 passed,
+  2 skipped, 23 xfailed · query corpus 89/89 · dialogue corpus 60/61 con único
+  FAIL `GOB-DEPTO-001` (basal, remedido en `e0ba211` con idéntico resultado) ·
+  `make audit-negation-v1` 22/24 · `make audit-time-v2` 32/32 ·
+  `make lint-core` limpio · `git diff --check` limpio en Python ·
+  Ruff sobre archivos tocados: 0 hallazgos nuevos frente a `e0ba211`.
 - **HCA-1 congelado** (`conversation_holistic_v1.yaml`, sha `262c225c…`,
-  intacto): Fase 1 **156 → 164 PASS de 195**; R5 temporal medido sobre su rama
-  **164 → 171 PASS de 195**, 7 TIME corregidos y 0 regresiones.
+  intacto): **171 PASS / 24 FAIL / 0 ERROR de 195**. Fase 1 llevó
+  **156 → 164**; R5 llevó **164 → 171**, con la línea base remedida de forma
+  independiente en un worktree limpio de `e0ba211` y el diferencial comparado
+  caso por caso: 7 TIME corregidos, **0 rotos**. HCA **no** está completo.
   Los 8 casos de Fase 1 fueron
   (`HCA-INTENT-010`, `HCA-MODALITY-004`, `HCA-GEO-006`, `HCA-MONEY-021`,
   `HCA-NEG-003`, `HCA-NEG-005`, `HCA-NEG-006`, `HCA-ANTI-004`) y **0 casos
@@ -59,7 +63,18 @@
   parser y plan consumen su resolución con reloj civil inyectable. Día, mes,
   año, rangos explícitos, extremos abiertos, relativos y semanas preservan
   granularidad; fechas imposibles/rangos invertidos aclaran. Focal 32/32, HCA
-  TIME 15/15 y fuente viva 80 filas sin violaciones.
+  TIME 15/15 y fuente viva 80 filas sin violaciones (reproducida en el
+  integration review).
+- **`AUDIT_RUNNER_ISOLATION`: CLOSED** (`68f98e4`). Correr un runner de
+  auditoría ya no escribe en los stores reales del proyecto sin depender de que
+  el operador exporte variables antes de invocarlo:
+  `scripts/audits/audit_isolation.py` redirige todo store escribible a un
+  temporal efímero **antes** de importar `app`, pasa overrides explícitos a
+  `Settings(...)`, deja los recursos de solo lectura (gazetteer, índice de
+  actores) en su sitio, y emite `isolation.json` con las rutas efectivas de los
+  objetos realmente construidos. La salida `--out` sobrevive; el sandbox de
+  stores se borra siempre. Invariante:
+  `INV-AUDIT-RUNNER-NO-PRODUCTION-WRITES`.
 
 ### Deuda explícita — HCA **no** está completo
 
@@ -74,6 +89,18 @@
   abiertos. El fixture pre-registrado `negation_focal_v1.yaml` (sha `f4f64a33…`,
   intacto) queda en 22 PASS / 2 FAIL; no se editó para fabricar 24/24.
 - `SEMANTIC_AUTHORITY_CLEANUP` — pendiente.
+- `QUERY_PLAN_AT_LIMIT` — `app/core/query_plan.py` queda en **299/300 LoC**
+  (`tests/test_module_size_limits.py`). Decisión: `ACCEPTED_AT_LIMIT`, sin
+  refactor en este bloque. **`NEXT_TOUCH_RULE`:** cualquier nueva modificación
+  funcional de `query_plan.py` debe extraer primero una responsabilidad
+  suficiente para recuperar margen. El tope de 300 **no** se sube.
+- `TEMPORAL_EPHEMERAL_SIGNAL_HYGIENE` — `_temporal_replace_scope` la limpia
+  `temporal_gate.temporal_plan_block()`, que no se alcanza en dos salidas
+  tempranas (bloqueo por negación contradictoria, frame pendiente de selección
+  de actor). En esos casos la señal queda en el frame reportado. Sin ruta a
+  SoQL observada (0 en 251 turnos de auditoría) y neutralizada aguas abajo por
+  `_merge_modifiers` y por `_TRANSIENT` en `query_fingerprint`: higiene, no
+  bug abierto.
 - `GOB-DEPTO-001` — mismatch histórico del dialogue corpus, ajeno a este frente.
 
 ### Reproducibilidad del fixture focal de negación

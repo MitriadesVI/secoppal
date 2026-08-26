@@ -11,6 +11,10 @@ def _count_loc(path: Path) -> int:
 
 
 def test_query_plan_under_300_loc():
+    # NEXT_TOUCH_RULE (integration review HCA-R5): el módulo quedó en 299/300.
+    # Cualquier nueva modificación funcional de query_plan.py debe extraer
+    # primero una responsabilidad suficiente para recuperar margen — como hizo
+    # R5 con app/core/temporal_gate.py. El tope de 300 no se sube.
     loc = _count_loc(Path("app/core/query_plan.py"))
     assert loc < 300, f"query_plan.py grew to {loc} LoC — refactor before merging"
 
