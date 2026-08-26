@@ -1,0 +1,16 @@
+{
+  "algorithm": "sha256",
+  "files": {
+    "tests/fixtures/audits/conversation_holistic_v1.yaml": "a341405a79d74cdb43872cf937cd2b58f4ebb736afe4a2135ced9b6d389c352e",
+    "hca-run/results.jsonl": "49dc1d669b44bb9e747223e1a827529ce61993a72d1800e7c7ae6e1d4ee41230",
+    "hca-run/verdicts.json": "10b0597f92cd0e263c86adef76f4d462a12a84463acae0987874d1f86d6829ea",
+    "fresh_adversarial_plan.json": "72a0c95f8a30019f77fbb3f6e9c82dfc851ccf3cb1d050607313086ce850ecce",
+    "fresh-run/results.jsonl": "67024b825c74545abeb7a33c8a02a9045bb4a95269e40f0378b876348360d34a",
+    "fresh-run/verdicts.json": "8364f9b1d940e72998ecdcc26e6ffdd8e706150eacf2cb557d14204e7f379d2c",
+    "fresh_adversarial_results.json": "e0996a72a57c54bff2c75500fcdacaa85aab03d13a84d53da46b2044c2c57ca9",
+    "source_canaries.json": "bfe89792b6aeefede0a3a82f8c0d1614e60eab5afa93fd05f6530bea98652ad6",
+    "../../2026-08-26_HCA_FINAL_CLOSEOUT.md": "5a106c361f30556fb1b178f034f14b1214e9555dcb5ccb1b835889c47bef6a21"
+  },
+  "self_and_manifest_excluded": true,
+  "note": "Paths other than the corpus and report are relative to this evidence directory."
+}

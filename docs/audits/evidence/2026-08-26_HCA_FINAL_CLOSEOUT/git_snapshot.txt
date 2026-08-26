@@ -1,0 +1,16 @@
+HCA FINAL CLOSEOUT — Git snapshot
+date: 2026-08-26
+branch: audit/hca-final-closeout
+HEAD_BEFORE: 92476c5f2edba5be91a60c3592a5da6f86f3b1ab
+main: 92476c5f2edba5be91a60c3592a5da6f86f3b1ab
+HEAD_AFTER: SELF (the commit containing this immutable evidence snapshot; exact hash reported in the audit handoff)
+tracked_worktree_at_preflight: clean
+historical_untracked_files: present and preserved
+worktrees: multiple existing worktrees observed and left untouched
+merge: NO
+push: NO
+reset/clean/rebase: NO
+allowed_change_scope: docs/audits/**, docs/audits/evidence/**, canonical bitacora
+runtime_files_changed: 0
+fixture_files_changed: 0
+product_test_files_changed: 0

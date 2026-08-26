@@ -1,0 +1,50 @@
+{
+  "audit": "2026-08-26_HCA_FINAL_CLOSEOUT",
+  "outcome": "BLOCKED_FOR_NEW_RUNTIME_BUG",
+  "campaign_state": "OPEN",
+  "generated_on": "2026-08-26",
+  "base_head": "92476c5f2edba5be91a60c3592a5da6f86f3b1ab",
+  "branch": "audit/hca-final-closeout",
+  "scope": "docs/evidence-only plus canonical bitacora; no runtime, product tests, fixture, corpus, merge, or push changes",
+  "required_artifacts": {
+    "manifest": "manifest.json",
+    "hca_summary": "hca_summary.json",
+    "hca_verdicts": "hca_verdicts.json",
+    "remaining_cases": "remaining_cases.json",
+    "focal_results": "focal_results.json",
+    "full_suite_summary": "full_suite_summary.json",
+    "fresh_plan": "fresh_adversarial_plan.json",
+    "fresh_results": "fresh_adversarial_results.json",
+    "source_canaries": "source_canaries.json",
+    "architecture_snapshot": "architecture_snapshot.json",
+    "campaign_delta": "campaign_delta.json",
+    "git_snapshot": "git_snapshot.txt",
+    "isolation": "isolation.json",
+    "hashes": "hashes.json"
+  },
+  "supporting_artifacts": [
+    {"path": "hca-run/results.jsonl", "description": "Fresh canonical per-turn records"},
+    {"path": "hca-run/verdicts.json", "description": "Fresh canonical runner verdicts"},
+    {"path": "hca-run/isolation.json", "description": "Effective isolated HCA stores"},
+    {"path": "fresh-run/results.jsonl", "description": "Fresh-challenge per-turn records"},
+    {"path": "fresh-run/verdicts.json", "description": "Raw exploratory runner verdicts"},
+    {"path": "fresh-run/isolation.json", "description": "Effective isolated fresh-run stores"},
+    {"path": "focal-final-p1/", "description": "40-case Final P1 verdicts, records, isolation"},
+    {"path": "focal-actor/", "description": "36-case actor verdicts, records, isolation"},
+    {"path": "focal-control/", "description": "42-case control verdicts, records, isolation"},
+    {"path": "focal-time/", "description": "32-case time verdicts, records, isolation"},
+    {"path": "focal-negation/", "description": "24-case negation verdicts, records, isolation"},
+    {"path": "source_canaries_runner.py", "description": "Bounded read-only canary reproducer; no rows persisted"},
+    {"path": "followup_universe.json", "description": "WHERE equality and explicit ICBF ecosystem evidence"},
+    {"path": "static_results.json", "description": "lint-core, Ruff, Semgrep availability, diff-check"},
+    {"path": "production_writes.json", "description": "Timestamp/channel/prefix-based production-write attribution"},
+    {"path": "root_causes_closed.json", "description": "Closed canonical roots and fresh boundaries"},
+    {"path": "debt_and_decisions.json", "description": "Product decisions, nonblocking debt, blocking implementation bugs"}
+  ],
+  "privacy": {
+    "secrets_stored": false,
+    "live_rows_stored": false,
+    "live_queries_bounded": true
+  },
+  "hash_reference": "hashes.json"
+}

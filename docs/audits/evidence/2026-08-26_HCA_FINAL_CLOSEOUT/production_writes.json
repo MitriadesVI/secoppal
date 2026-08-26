@@ -1,0 +1,20 @@
+{
+  "audit_window_anchor": "2026-08-26T14:01:28-05:00",
+  "method": "Files under data/ newer than the first HCA evidence artifact were inspected by timestamp, channel, chat_id/content, audit prefixes, and runner isolation records.",
+  "data_files_newer_than_anchor": ["data/feedback.jsonl"],
+  "attribution": [
+    {
+      "path": "data/feedback.jsonl",
+      "audit_attributable": false,
+      "reason": "The newest stored events predate the HCA run, use channel=streamlit, and contain no hca1-, FRESH-, HCA_FINAL_CLOSEOUT, or sandbox audit prefix. The later filesystem mtime is consistent with an external development process flush."
+    }
+  ],
+  "runner_isolation_references": [
+    "hca-run/isolation.json", "fresh-run/isolation.json",
+    "focal-final-p1/isolation.json", "focal-actor/isolation.json",
+    "focal-control/isolation.json", "focal-time/isolation.json",
+    "focal-negation/isolation.json"
+  ],
+  "audit_attributable_production_writes": 0,
+  "user_services_stopped": false
+}

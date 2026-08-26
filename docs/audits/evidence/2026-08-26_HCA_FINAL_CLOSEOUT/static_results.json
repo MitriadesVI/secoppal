@@ -1,0 +1,13 @@
+{
+  "lint_core": {"command": "make lint-core", "status": "PASS", "summary": "app/core limpio"},
+  "ruff": {
+    "command": ".venv/bin/ruff check app/ tests/ scripts/ --select E,W,F --ignore E501",
+    "status": "FAIL_PREEXISTING",
+    "errors": 264,
+    "fixable": 181,
+    "changed_file_regression": false,
+    "action": "No changes made in audit-only mode."
+  },
+  "semgrep": {"status": "TOOL_UNAVAILABLE", "policy_file_present": true, "installed_by_audit": false},
+  "git_diff_check": {"status": "PASS"}
+}

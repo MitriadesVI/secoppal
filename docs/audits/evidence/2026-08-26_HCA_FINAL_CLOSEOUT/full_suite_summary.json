@@ -1,0 +1,14 @@
+{
+  "command": "PYTHONHASHSEED=0 /usr/bin/time -p .venv/bin/python -m pytest tests/ -q",
+  "completed_on": "2026-08-26",
+  "passed": 8657,
+  "skipped": 2,
+  "xfailed": 24,
+  "failed": 0,
+  "pytest_duration_seconds": 575.70,
+  "wall_seconds": 580.00,
+  "user_seconds": 129.54,
+  "system_seconds": 87.65,
+  "exit_code": 0,
+  "summary": "8657 passed, 2 skipped, 24 xfailed in 575.70s (0:09:35)"
+}

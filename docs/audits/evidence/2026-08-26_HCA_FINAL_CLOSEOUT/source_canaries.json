@@ -1,0 +1,102 @@
+{
+  "run_timestamp_utc": "2026-08-26T19:14:10.667454+00:00",
+  "method": "Six bounded read-only Socrata GET canaries; LIMIT 5; one attempt each; rows not persisted.",
+  "status": "FAIL",
+  "cases": 6,
+  "live_ok": 6,
+  "hard_filter_violations": 0,
+  "semantic_contract_violations": 1,
+  "canaries": [
+    {
+      "id": "LIVE-MONEY-SMALL",
+      "query_text": "contratos de cuadernos por más de 75 mil pesos durante 2025",
+      "dataset": "contratos",
+      "dataset_id": "jbjy-vk9h",
+      "status": "ok",
+      "latency_s": 10.0782,
+      "row_count": 5,
+      "hard_filter_violations": 0,
+      "violation_details": [],
+      "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%cuadernos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%cuadernos%'))) AND valor_del_contrato >= 75000 AND fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
+    },
+    {
+      "id": "LIVE-PUBLISHED-EXACT",
+      "query_text": "procesos publicados de señalización en Huila",
+      "dataset": "procesos",
+      "dataset_id": "p6dx-8zbt",
+      "status": "ok",
+      "latency_s": 24.6459,
+      "row_count": 5,
+      "hard_filter_violations": 0,
+      "violation_details": [],
+      "soql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE departamento_entidad = 'Huila' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%senalizacion%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%senalizacion%'))) AND estado_del_procedimiento = 'Publicado' AND estado_de_apertura_del_proceso = 'Abierto' ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 5"
+    },
+    {
+      "id": "LIVE-OPPORTUNITY-FAMILY",
+      "query_text": "oportunidades vigentes de dotación escolar en Nariño",
+      "dataset": "procesos",
+      "dataset_id": "p6dx-8zbt",
+      "status": "ok",
+      "latency_s": 9.1556,
+      "row_count": 5,
+      "hard_filter_violations": 0,
+      "violation_details": [],
+      "semantic_contract_violations": 1,
+      "semantic_contract_details": [
+        {
+          "expected": "oferta_abierta projected to the authorized open funnel",
+          "actual": {
+            "estado_family": "oferta_abierta",
+            "estado_de_apertura_del_proceso": [
+              "Cerrado"
+            ],
+            "estado_del_procedimiento": [
+              "Seleccionado"
+            ]
+          },
+          "finding": "Declared oferta_abierta but queried Cerrado/Seleccionado."
+        }
+      ],
+      "soql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE departamento_entidad = 'Nariño' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%dotacion%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%dotacion%'))) AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%escolar%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%escolar%'))) AND estado_de_apertura_del_proceso = 'Cerrado' AND estado_del_procedimiento = 'Seleccionado' ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 5"
+    },
+    {
+      "id": "LIVE-COMPLETE-BUYER",
+      "query_text": "contratos de la alcaldía de Cali para parques en 2025",
+      "dataset": "contratos",
+      "dataset_id": "jbjy-vk9h",
+      "status": "ok",
+      "latency_s": 6.5672,
+      "row_count": 1,
+      "hard_filter_violations": 0,
+      "violation_details": [],
+      "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SANTIAGO DE CALI DISTRITO ESPECIAL - SECRETARIA DEL DEPORTE Y LA RECREACIÓN%')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%parques%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%parques%'))) AND fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 5"
+    },
+    {
+      "id": "LIVE-FOLLOWUP-ORDERING",
+      "query_text": "ordénalos del menor valor al mayor",
+      "dataset": "contratos",
+      "dataset_id": "jbjy-vk9h",
+      "status": "ok",
+      "latency_s": 0.4006,
+      "row_count": 5,
+      "hard_filter_violations": 0,
+      "violation_details": [],
+      "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE departamento = 'Meta' AND (tipo_de_contrato = 'Obra') AND fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31' ORDER BY valor_del_contrato ASC, fecha_de_firma ASC, id_contrato ASC LIMIT 5",
+      "where_t1": "departamento = 'Meta' AND (tipo_de_contrato = 'Obra') AND fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31'",
+      "where_t2": "departamento = 'Meta' AND (tipo_de_contrato = 'Obra') AND fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31'",
+      "where_equal": true
+    },
+    {
+      "id": "LIVE-DIRECT-LOOKUP",
+      "query_text": "lookup exacto de referencia real observada (contratos)",
+      "dataset": "contratos",
+      "dataset_id": "jbjy-vk9h",
+      "status": "ok",
+      "latency_s": 0.2024,
+      "row_count": 1,
+      "reference": "CO1.PCCNTR.8543723",
+      "hard_filter_violations": 0,
+      "soql": "SELECT referencia_del_contrato WHERE UPPER(referencia_del_contrato) = UPPER('CO1.PCCNTR.8543723') LIMIT 5"
+    }
+  ]
+}

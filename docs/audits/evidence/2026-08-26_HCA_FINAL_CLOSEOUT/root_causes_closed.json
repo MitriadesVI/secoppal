@@ -1,0 +1,92 @@
+{
+  "scope_note": "Statuses describe the original canonical HCA root causes. Fresh-challenge variants are listed explicitly and prevent campaign closeout where applicable.",
+  "root_causes": [
+    {
+      "name": "DIRECT_LOOKUP_HIJACK",
+      "status": "CLOSED",
+      "invariant": "A direct reference requires numeric structure; ordinary natural language cannot enter lookup by a short alphabetic prefix.",
+      "authority_modules": ["app/core/direct_lookup.py", "app/core/workflow/handlers/direct_lookup.py"],
+      "tests_or_fixtures": ["tests/test_direct_lookup.py", "tests/test_direct_lookup_entity_scope.py", "tests/fixtures/audits/conversation_holistic_v1.yaml"],
+      "hca_cases_fixed": ["HCA-INTENT-010"]
+    },
+    {
+      "name": "NORMALIZATION_ERASES_INTENT",
+      "status": "CLOSED_FOR_ORIGINAL_CONTRACT",
+      "invariant": "INV-NORMALIZATION-PRESERVES-INTENT: normalization cannot turn contradictory money ranges plausible or close an explicitly open time span.",
+      "authority_modules": ["app/core/query_router.py", "app/core/temporal_semantics.py", "app/utils/money.py"],
+      "tests_or_fixtures": ["tests/test_normalization_contract.py", "tests/fixtures/audits/conversation_holistic_v1.yaml"],
+      "hca_cases_fixed": ["HCA-MONEY-021", "HCA-ANTI-004"],
+      "fresh_boundary": "FRESH-MONEY-003/005 expose a distinct lower-bound loss for small-money ranges."
+    },
+    {
+      "name": "DIMENSIONAL_NEGATION",
+      "status": "CLOSED_FOR_V1; NEW_VARIANT_OPEN",
+      "invariant": "Negation binds to its dimension before positive extractors; unsupported dimensions clarify without positive leakage or source execution.",
+      "authority_modules": ["app/core/negation_binding.py", "app/core/negation_policy.py", "app/core/object_negation_policy.py", "app/core/negation_followup.py"],
+      "tests_or_fixtures": ["tests/fixtures/audits/negation_focal_v1.yaml", "tests/test_negation_binding.py", "tests/test_safe_negation_policies.py"],
+      "hca_cases_fixed": ["HCA-NEG-003", "HCA-NEG-005", "HCA-NEG-006"],
+      "fresh_boundary": "FRESH-NEGATION-005 is a P0 negative-state conjugation fail-open."
+    },
+    {
+      "name": "TEMPORAL_SEMANTICS",
+      "status": "CLOSED_FOR_R5_SCOPE",
+      "invariant": "Specific span wins; exact day/month/year, explicit and open ranges, relatives, invalid dates, and reversed ranges preserve their declared semantics.",
+      "authority_modules": ["app/core/temporal_semantics.py", "app/core/temporal_gate.py"],
+      "tests_or_fixtures": ["tests/fixtures/audits/time_v2_focal.yaml", "tests/test_truth_layer_temporal.py"],
+      "hca_cases_fixed": ["HCA-TIME-003", "HCA-TIME-004", "HCA-TIME-008", "HCA-TIME-010", "HCA-TIME-012", "HCA-TIME-014", "HCA-TIME-015"]
+    },
+    {
+      "name": "CONTROL_LANGUAGE_TO_TOPIC",
+      "status": "CLOSED_FOR_V1; NEW_VARIANTS_OPEN",
+      "invariant": "Control language changes ordering or question mode and is not content; ordering-only follow-ups preserve WHERE.",
+      "authority_modules": ["app/core/control_language.py"],
+      "tests_or_fixtures": ["tests/fixtures/audits/control_language_v1.yaml", "tests/test_control_language.py"],
+      "hca_cases_fixed": ["HCA-INTENT-007", "HCA-INTENT-008", "HCA-STATE-006", "HCA-ORDER-004"],
+      "fresh_boundary": "Polite pagination, natural reset, and licitar variants remain open P1 findings."
+    },
+    {
+      "name": "ACTOR_ROUTING_HYGIENE",
+      "status": "CLOSED",
+      "invariant": "EXACT > USER_SELECTION > FUZZY_CANDIDATES; casing is not evidence, fuzzy never authorizes identity, and an explicit new search beats pending state.",
+      "authority_modules": ["app/core/actor_resolution.py", "app/core/actor_arbitration.py", "app/core/workflow/actions/actor_resolution.py"],
+      "tests_or_fixtures": ["tests/fixtures/audits/actor_hygiene_v1.yaml", "tests/test_actor_resolution_orchestration.py"],
+      "hca_cases_fixed": ["HCA-ACTOR-011", "HCA-META-002B"]
+    },
+    {
+      "name": "MONEY_ADMISSION",
+      "status": "CLOSED_FOR_CANONICAL_CASES; RANGE_VARIANT_OPEN",
+      "invariant": "Explicit money evidence is not dropped by magnitude; unsupported compound amounts clarify instead of executing a partial amount.",
+      "authority_modules": ["app/core/money_admission.py", "app/core/money_resolution.py", "app/utils/money.py"],
+      "tests_or_fixtures": ["tests/test_normalization_contract.py", "tests/fixtures/audits/hca_final_p1_fixes.yaml"],
+      "hca_cases_fixed": ["HCA-MONEY-020", "HCA-MONEY-026"],
+      "fresh_boundary": "Small-money range lower bounds are silently lost in FRESH-MONEY-003/005."
+    },
+    {
+      "name": "STATE_PROJECTION",
+      "status": "CLOSED_FOR_CANONICAL_CASES; OPPORTUNITY_VARIANT_OPEN",
+      "invariant": "Exact states do not widen and declared families project completely and consistently to the selected dataset.",
+      "authority_modules": ["app/core/estado_families.py", "app/core/estado_projection.py"],
+      "tests_or_fixtures": ["tests/test_estado_families_integrity.py", "tests/fixtures/audits/hca_final_p1_fixes.yaml"],
+      "hca_cases_fixed": ["HCA-STATE-005", "HCA-STATE-007"],
+      "fresh_boundary": "FRESH-STATE-002 declares oferta_abierta while querying Cerrado/Seleccionado."
+    },
+    {
+      "name": "GENERIC_BUYER_AS_TOPIC",
+      "status": "CLOSED_FOR_UNQUALIFIED_BUYER; PURCHASE_VERB_VARIANT_OPEN",
+      "invariant": "An unqualified generic buyer clarifies and never becomes a content keyword or arbitrary entity scope.",
+      "authority_modules": ["app/core/generic_buyer.py", "app/core/query_router.py"],
+      "tests_or_fixtures": ["tests/fixtures/audits/hca_final_p1_fixes.yaml"],
+      "hca_cases_fixed": ["HCA-ENTITY-005"],
+      "fresh_boundary": "Buyer purchase-verb queries route to procesos and leak the verb as topic in FRESH-BUYER-002/CROSS-004."
+    },
+    {
+      "name": "DERIVED_EXECUTION_STATE_PERSISTENCE",
+      "status": "CLOSED_FOR_ORDERING_FOLLOWUPS",
+      "invariant": "Derived execution-only entity ecosystems do not persist into conversational state; ordering changes ORDER BY without changing WHERE.",
+      "authority_modules": ["app/core/derived_execution_state.py", "app/core/conversation_store.py"],
+      "tests_or_fixtures": ["tests/fixtures/audits/hca_final_p1_fixes.yaml", "tests/fixtures/audits/conversation_holistic_v1.yaml"],
+      "hca_cases_fixed": ["HCA-FOLLOWUP-016"],
+      "fresh_boundary": "Covered ordering variants pass; separate pagination/reset variants remain open."
+    }
+  ]
+}

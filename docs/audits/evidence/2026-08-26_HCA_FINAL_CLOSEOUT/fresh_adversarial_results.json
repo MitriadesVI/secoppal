@@ -1,0 +1,108 @@
+{
+  "run_id": "2026-08-26_HCA_FINAL_CLOSEOUT/fresh-run",
+  "completed_at": "2026-08-26T14:08:34-05:00",
+  "plan_written_before_execution": true,
+  "plan_reference": "fresh_adversarial_plan.json",
+  "raw_runner": {"scenarios": 52, "turns": 58, "pass": 30, "fail": 22, "error": 0},
+  "semantic_adjudication": {
+    "matched": 41,
+    "new_p0": 1,
+    "new_p1": 8,
+    "new_p2": 2,
+    "new_p3": 12,
+    "runtime_bug_scenarios": 9,
+    "runtime_bug_root_causes": 7,
+    "note": "Severity counts describe newly adjudicated discrepancies. P3 test-expectation errors convert 12 raw FAIL scenarios to semantic matches; FRESH-STATE-002 converts one raw PASS to a P1 semantic failure after source-canary inspection."
+  },
+  "new_runtime_bugs": [
+    {
+      "severity": "P0",
+      "classification": "REAL_RUNTIME_BUG",
+      "root_cause": "NEGATIVE_STATE_CONJUGATION_FAIL_OPEN",
+      "cases": ["FRESH-NEGATION-005"],
+      "evidence": "The request 'procesos de obra en Caldas que no estén publicados' ignores the negative state and executes an unrestricted positive obra/Caldas query. Unsupported state negation must clarify without source execution."
+    },
+    {
+      "severity": "P1",
+      "classification": "REAL_RUNTIME_BUG",
+      "root_cause": "SMALL_MONEY_RANGE_LOWER_BOUND_LOSS",
+      "cases": ["FRESH-MONEY-003", "FRESH-MONEY-005"],
+      "evidence": "Both small-money ranges preserve only valor_max and silently drop valor_min before executing."
+    },
+    {
+      "severity": "P1",
+      "classification": "REAL_RUNTIME_BUG",
+      "root_cause": "OPPORTUNITY_STATE_FAMILY_PROJECTION_CONTRADICTION",
+      "cases": ["FRESH-STATE-002"],
+      "evidence": "The frame declares estado_family=oferta_abierta, but emits estado_de_apertura_del_proceso=Cerrado and estado_del_procedimiento=Seleccionado. The fresh runner's shallow oracle passed; the live source canary exposed the contradictory query."
+    },
+    {
+      "severity": "P1",
+      "classification": "REAL_RUNTIME_BUG",
+      "root_cause": "BUYER_PURCHASE_VERB_TO_TOPIC_AND_DATASET",
+      "cases": ["FRESH-BUYER-002", "FRESH-CROSS-004"],
+      "evidence": "The verb 'compró' is routed to procesos and leaks as objeto=compro instead of preserving a buyer-subject contracts query."
+    },
+    {
+      "severity": "P1",
+      "classification": "REAL_RUNTIME_BUG",
+      "root_cause": "PAGINATION_POLITE_VARIANT_NOT_RECOGNIZED",
+      "cases": ["FRESH-FOLLOWUP-004"],
+      "evidence": "'muéstrame la siguiente página' becomes objeto=pagina and mutates the prior maintenance universe instead of paginating it."
+    },
+    {
+      "severity": "P1",
+      "classification": "REAL_RUNTIME_BUG",
+      "root_cause": "RESET_NATURAL_VARIANT_NOT_RECOGNIZED",
+      "cases": ["FRESH-FOLLOWUP-005"],
+      "evidence": "'limpia todos los filtros y empecemos de cero' retains Caldas/2024 and executes with control words as topic instead of clearing state."
+    },
+    {
+      "severity": "P1",
+      "classification": "REAL_RUNTIME_BUG",
+      "root_cause": "BIDDER_LICITAR_INTENT_NOT_ENFORCED",
+      "cases": ["FRESH-CONTROL-005"],
+      "evidence": "'necesito licitar...' selects procesos but omits opportunity intent and oferta_abierta constraints, allowing historical all-state results."
+    }
+  ],
+  "p2_findings": [
+    {
+      "id": "FRESH-BUYER-004",
+      "severity": "P2",
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "reason": "Buyer subject versus territory remains an undecided product boundary."
+    },
+    {
+      "id": "FRESH-LOOKUP-003",
+      "severity": "P2",
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "reason": "No authority establishes the synthetic ABC-2025-0198 structure as a valid canonical reference grammar."
+    }
+  ],
+  "p3_test_expectation_errors": [
+    {"id": "FRESH-MONEY-006", "reason": "Safely clarifies the unsupported compound amount without partial money or source execution; topic canonicalization differs from the exploratory oracle."},
+    {"id": "FRESH-STATE-003", "reason": "ADR-003 defines contrato_activo as En ejecución, Modificado, and Prorrogado, not the exploratory values."},
+    {"id": "FRESH-FOLLOWUP-001", "reason": "Obra is correctly represented as contract_type_include and WHERE is preserved while ordering changes."},
+    {"id": "FRESH-FOLLOWUP-003", "reason": "Bogotá is canonically represented as Distrito Capital de Bogotá and the later explicit new search wins."},
+    {"id": "FRESH-ACTOR-001", "reason": "'sobre SALUD' explicitly supplies topic context; uppercase alone is not actor evidence and execution is correct."},
+    {"id": "FRESH-NEGATION-004", "reason": "Negative buyer is detected and safely clarified without source execution; the blocked-frame oracle overrequired positive dimensions."},
+    {"id": "FRESH-TIME-001", "reason": "Exact-day semantics are correct; Bogotá uses the canonical district representation."},
+    {"id": "FRESH-TIME-008", "reason": "Negative year safely blocks; Obra is a structured contract type rather than objeto."},
+    {"id": "FRESH-CONTROL-003", "reason": "Escuelas canonicalizes to educación while menor cuantía remains modality and not ordering."},
+    {"id": "FRESH-LOOKUP-001", "reason": "The valid direct lookup path executes correct exact-reference SoQL; direct-path parsed params need not include dataset."},
+    {"id": "FRESH-LOOKUP-002", "reason": "Natural language does not hijack direct lookup; nutrition escolar canonicalizes to alimentación/escolar."},
+    {"id": "FRESH-CROSS-001", "reason": "'sobre SALUD' disambiguates topic while preserving amount, geography, and year; uppercase is not actor evidence."}
+  ],
+  "semantic_matches_from_raw_pass": [
+    "FRESH-MONEY-001", "FRESH-MONEY-002", "FRESH-MONEY-004",
+    "FRESH-STATE-001", "FRESH-STATE-004", "FRESH-STATE-005",
+    "FRESH-BUYER-001", "FRESH-BUYER-003", "FRESH-BUYER-005",
+    "FRESH-FOLLOWUP-002",
+    "FRESH-ACTOR-002", "FRESH-ACTOR-003", "FRESH-ACTOR-004", "FRESH-ACTOR-005",
+    "FRESH-NEGATION-001", "FRESH-NEGATION-002", "FRESH-NEGATION-003",
+    "FRESH-TIME-002", "FRESH-TIME-003", "FRESH-TIME-004", "FRESH-TIME-005", "FRESH-TIME-006", "FRESH-TIME-007",
+    "FRESH-CONTROL-001", "FRESH-CONTROL-002", "FRESH-CONTROL-004",
+    "FRESH-CROSS-002", "FRESH-CROSS-003", "FRESH-CROSS-005"
+  ],
+  "final_audit_effect": "BLOCKED_FOR_NEW_RUNTIME_BUG"
+}

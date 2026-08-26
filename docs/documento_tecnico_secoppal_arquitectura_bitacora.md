@@ -7,6 +7,48 @@
 
 ## Estado canónico actual — 2026-08-26
 
+### HCA Final Audit — campaña abierta por bugs frescos
+
+- **`HCA_FINAL_AUDIT: BLOCKED_FOR_NEW_RUNTIME_BUG` · `HCA_CAMPAIGN: OPEN`.**
+  Auditoría final audit-only sobre `main=92476c5f2edba5be91a60c3592a5da6f86f3b1ab`,
+  rama `audit/hca-final-closeout`. No modifica runtime, tests productivos,
+  fixtures ni corpus; sin merge ni push.
+- **HCA canónico reproducido: 188 PASS / 7 FAIL / 0 ERROR**, corpus
+  `a341405a79d74cdb43872cf937cd2b58f4ebb736afe4a2135ced9b6d389c352e`,
+  intacto. Comparación por los 195 IDs contra el baseline post Oracle Patch:
+  cambios de estado **0**, PASS→FAIL **0**. `SEMANTICALLY_SUPPORTED: 189/195`
+  sigue significando 188 runner PASS + TOPIC-012 safe fail-closed, no runner score.
+- Los siete FAIL siguen siendo exactamente TOPIC-012 (1 SAFE),
+  MODALITY-002/012 y TYPO-003 (3 DEFERRED), ENTITY-004, STATE-003 y SOURCE-002
+  (3 INSUFFICIENT). `REAL_RUNTIME_BUG_IN_REMAINING_SEVEN=0` y
+  `CONFIRMED_ORACLE_DEBT_IN_HCA=0`. No se decidió only-modality,
+  buyer-sujeto/territorio ni liquidación.
+- **Regresión canónica estable:** final P1 40/40, actor 36/36, control 42/42,
+  tiempo 32/32, negación 22/24 con los dos fallos basales; query 89/89;
+  dialogue 60/61 con `GOB-DEPTO-001` basal. Full suite: **8657 passed,
+  2 skipped, 24 xfailed, 0 failed**. Runner y focales aislados,
+  `outside_sandbox=[]`; `AUDIT_ATTRIBUTABLE_PRODUCTION_WRITES=0`.
+- **Fresh challenge pre-registrado:** 52 escenarios / 58 turnos; runner crudo
+  30 PASS / 22 FAIL, adjudicación semántica **41/52**. Encuentra **1 P0 + 8 P1**
+  en nueve escenarios y siete causas raíz: negación de estado fail-open; pérdida
+  de cota inferior en rangos monetarios pequeños; contradicción
+  `oferta_abierta`→`Cerrado/Seleccionado`; verbos de compra desviados a procesos
+  y tema; variantes naturales de paginación/reset; e intención `licitar` sin
+  enforcement de oportunidad. Además hay 2 P2 y 12 P3 de expectativa.
+- **Canarios vivos:** 6/6 respondieron, filas persistidas=0 y violaciones de los
+  hard filters emitidos=0. El estado agregado es **FAIL**: el canario de
+  oportunidades confirmó que el SoQL emitido contradice la familia declarada;
+  es runtime, no Socrata. Ordering-only conserva WHERE en Meta e ICBF para las
+  variantes cubiertas.
+- **Principios finales:** intent survives normalization **PARTIAL**;
+  dimensions do not collapse into topic **PARTIAL**; follow-ups preserve
+  universe **PARTIAL**; unsupported fails closed **FAIL** por el P0.
+  `QUERY_PLAN: AT_LIMIT` en 299/300 LoC efectivas y `NEXT_TOUCH_RULE: ACTIVE`.
+- **Informe y evidencia:**
+  [HCA Final Closeout](audits/2026-08-26_HCA_FINAL_CLOSEOUT.md). Próximo trabajo:
+  sprint acotado de las siete causas frescas, empezando por el P0, y repetición
+  del mismo plan sin cambiar sus oráculos.
+
 ### Integración Oracle Patch V1 y reparación de evidencia canónica
 
 - **`FINAL_P1_RUNTIME: INTEGRATED` · `ORACLE_PATCH_V1: INTEGRATED`**.

@@ -1,0 +1,16 @@
+{
+  "measurement": "physical lines and effective nonblank/non-comment lines",
+  "modules": [
+    {"path": "app/core/query_plan.py", "physical_loc": 371, "effective_loc": 299, "limit": 300, "status": "AT_LIMIT"},
+    {"path": "app/core/dialogue_policy.py", "physical_loc": 378, "effective_loc": 288},
+    {"path": "app/core/control_language.py", "physical_loc": 397, "effective_loc": 286},
+    {"path": "app/core/temporal_semantics.py", "physical_loc": 433, "effective_loc": 394},
+    {"path": "app/core/actor_resolution.py", "physical_loc": 258, "effective_loc": 214},
+    {"path": "app/core/actor_arbitration.py", "physical_loc": 318, "effective_loc": 261},
+    {"path": "app/core/workflow/actions/actor_resolution.py", "physical_loc": 345, "effective_loc": 270}
+  ],
+  "query_plan": "AT_LIMIT",
+  "next_touch_rule": "ACTIVE",
+  "next_touch_requirement": "Any future functional touch to query_plan.py must first extract enough responsibility; do not raise the cap.",
+  "runtime_files_changed_by_audit": 0
+}

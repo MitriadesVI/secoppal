@@ -1,0 +1,28 @@
+{
+  "product_decisions_required": [
+    {"name": "ONLY_MODALITY_SCOPE_POLICY", "kind": "PRODUCT_DECISION", "hca_cases": ["HCA-MODALITY-002", "HCA-MODALITY-012", "HCA-TYPO-003"]},
+    {"name": "BUYER_SUBJECT_VS_TERRITORY_POLICY", "kind": "PRODUCT_DECISION", "hca_cases": ["HCA-ENTITY-004"]},
+    {"name": "LIQUIDATION_QUERY_SEMANTICS", "kind": "PRODUCT_DECISION", "hca_cases": ["HCA-STATE-003"]},
+    {"name": "LIQUIDATION_SOURCE_DATASET_CAPABILITY", "kind": "PRODUCT_DECISION", "hca_cases": ["HCA-SOURCE-002"]},
+    {"name": "CONTROL_LIMIT_SEMANTICS", "kind": "DEFERRED_CAPABILITY", "hca_cases": []},
+    {"name": "DEFERRED_FOLLOWUP_SCOPE_TOPIC", "kind": "DEFERRED_CAPABILITY", "hca_cases": []}
+  ],
+  "known_nonblocking_debt": [
+    {"name": "NEG-N15", "hca_blocking": false, "kind": "FOCAL_ORACLE_DEBT"},
+    {"name": "NEG-ANTI-002", "hca_blocking": false, "kind": "FOCAL_ORACLE_DEBT"},
+    {"name": "GOB-DEPTO-001", "hca_blocking": false, "kind": "PREEXISTING_DIALOGUE_CORPUS_MISMATCH"},
+    {"name": "change_scope topic loss", "hca_blocking": false, "kind": "DEFERRED_IMPLEMENTATION_DEBT"},
+    {"name": "CONTROL_LIMIT_SEMANTICS", "hca_blocking": false, "kind": "DEFERRED_PRODUCT_CAPABILITY"},
+    {"name": "SEMANTIC_AUTHORITY_CLEANUP", "hca_blocking": false, "kind": "ARCHITECTURAL_DEBT"},
+    {"name": "QUERY_PLAN_AT_LIMIT", "hca_blocking": false, "kind": "ARCHITECTURAL_CONSTRAINT"}
+  ],
+  "blocking_implementation_bugs": [
+    "NEGATIVE_STATE_CONJUGATION_FAIL_OPEN",
+    "SMALL_MONEY_RANGE_LOWER_BOUND_LOSS",
+    "OPPORTUNITY_STATE_FAMILY_PROJECTION_CONTRADICTION",
+    "BUYER_PURCHASE_VERB_TO_TOPIC_AND_DATASET",
+    "PAGINATION_POLITE_VARIANT_NOT_RECOGNIZED",
+    "RESET_NATURAL_VARIANT_NOT_RECOGNIZED",
+    "BIDDER_LICITAR_INTENT_NOT_ENFORCED"
+  ]
+}

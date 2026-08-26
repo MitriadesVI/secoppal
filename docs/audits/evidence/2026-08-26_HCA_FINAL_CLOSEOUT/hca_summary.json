@@ -1,0 +1,55 @@
+{
+  "audit": "HCA_FINAL_CLOSEOUT",
+  "run_id": "2026-08-26_HCA_FINAL_CLOSEOUT/hca-run",
+  "completed_at": "2026-08-26T14:01:28-05:00",
+  "head": "92476c5f2edba5be91a60c3592a5da6f86f3b1ab",
+  "branch": "audit/hca-final-closeout",
+  "command": "PYTHONHASHSEED=0 .venv/bin/python scripts/audits/run_conversation_holistic_audit.py --out docs/audits/evidence/2026-08-26_HCA_FINAL_CLOSEOUT/hca-run",
+  "runtime": {
+    "python": "3.14.5",
+    "platform": "Darwin arm64",
+    "timezone": "America/Bogota",
+    "python_hash_seed": "0",
+    "remote_llm": "DISABLED_BY_RUNNER",
+    "llm_fallback": "deterministic structural parser; deepseek_api_key=None",
+    "source_execution": "mocked by runner",
+    "narrator": "stubbed"
+  },
+  "corpus": {
+    "path": "tests/fixtures/audits/conversation_holistic_v1.yaml",
+    "sha256": "a341405a79d74cdb43872cf937cd2b58f4ebb736afe4a2135ced9b6d389c352e",
+    "historical_pre_patch_sha256": "262c225c7939f04516ee95b3c77b4911f9f476058941a88a61d01c918499ffba",
+    "modified_by_audit": false
+  },
+  "runner": {
+    "cases": 195,
+    "pass": 188,
+    "fail": 7,
+    "error": 0,
+    "fail_ids": [
+      "HCA-TOPIC-012",
+      "HCA-MODALITY-002",
+      "HCA-MODALITY-012",
+      "HCA-ENTITY-004",
+      "HCA-STATE-003",
+      "HCA-TYPO-003",
+      "HCA-SOURCE-002"
+    ]
+  },
+  "canonical_baseline": {
+    "path": "docs/audits/evidence/2026-08-26_HCA_ORACLE_PATCH_V1_INTEGRATION_REVIEW/hca-postintegration/verdicts.json",
+    "case_count": 195,
+    "status_changes": [],
+    "previous_pass_to_fail": []
+  },
+  "semantically_supported": {
+    "count": 189,
+    "denominator": 195,
+    "definition": "188 runner PASS plus HCA-TOPIC-012, which safely fails closed; this is not the runner score"
+  },
+  "isolation": {
+    "status": "PASS",
+    "reference": "hca-run/isolation.json",
+    "outside_sandbox": []
+  }
+}

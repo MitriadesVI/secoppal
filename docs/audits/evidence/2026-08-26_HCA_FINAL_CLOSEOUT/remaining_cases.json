@@ -1,0 +1,62 @@
+{
+  "counts": {
+    "safe_unsupported": 1,
+    "known_deferred_product_debt": 3,
+    "insufficient_evidence": 3,
+    "real_runtime_bug": 0,
+    "confirmed_oracle_debt": 0
+  },
+  "cases": [
+    {
+      "id": "HCA-TOPIC-012",
+      "query": "contratos de salud en amazonas",
+      "classification": "SAFE_UNSUPPORTED",
+      "root_cause_or_decision": "EXACT_TOPIC_ACTOR_COLLISION",
+      "observed": "Preserves topic salud and Amazonas, detects the exact SALUD actor collision, asks for clarification, and emits no source query.",
+      "safe_fail_closed_still_correct": true
+    },
+    {
+      "id": "HCA-MODALITY-002",
+      "query": "contratos por seleccion abreviada de menor cuantia en 2026",
+      "classification": "KNOWN_DEFERRED_PRODUCT_DEBT",
+      "root_cause_or_decision": "ONLY_MODALITY_SCOPE_POLICY",
+      "observed": "Recognizes dataset, year, and modality; modality does not leak to topic; the scope guard clarifies and performs no source call."
+    },
+    {
+      "id": "HCA-MODALITY-012",
+      "query": "procesos de enajenacion de bienes en 2026",
+      "classification": "KNOWN_DEFERRED_PRODUCT_DEBT",
+      "root_cause_or_decision": "ONLY_MODALITY_SCOPE_POLICY",
+      "observed": "Recognizes dataset, year, and modality; the scope guard clarifies and performs no source call."
+    },
+    {
+      "id": "HCA-TYPO-003",
+      "query": "procesos de regimen especial en 2026",
+      "classification": "KNOWN_DEFERRED_PRODUCT_DEBT",
+      "root_cause_or_decision": "ONLY_MODALITY_SCOPE_POLICY",
+      "observed": "Recognizes the modality family and year without topic leakage; the scope guard clarifies and performs no source call."
+    },
+    {
+      "id": "HCA-ENTITY-004",
+      "query": "que contrato el departamento del atlantico en 2025",
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "root_cause_or_decision": "BUYER_SUBJECT_VS_TERRITORY_POLICY",
+      "observed": "Executes contracts for territorial Atlántico in 2025; current authority does not decide whether the phrase is the institutional buyer or the territory."
+    },
+    {
+      "id": "HCA-STATE-003",
+      "query": "contratos liquidados de obra en 2025",
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "root_cause_or_decision": "LIQUIDATION_QUERY_SEMANTICS",
+      "decision_status": "UNDECIDED",
+      "observed": "Executes a contracts query for obra in 2025 without a canonical liquidation projection; no recent change established authority."
+    },
+    {
+      "id": "HCA-SOURCE-002",
+      "query": "procesos liquidados de obra en cauca",
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "root_cause_or_decision": "LIQUIDATION_SOURCE_DATASET_CAPABILITY",
+      "observed": "Silently selects contratos and a closed-state interpretation; source, dataset, governing date, and process-liquidation semantics remain undecided."
+    }
+  ]
+}

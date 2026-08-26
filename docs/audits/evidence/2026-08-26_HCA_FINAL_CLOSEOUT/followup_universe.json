@@ -1,0 +1,20 @@
+{
+  "status": "PASS_FOR_COVERED_ORDERING_VARIANTS",
+  "fresh_ordering_case": {
+    "id": "FRESH-FOLLOWUP-001",
+    "where_t1": "departamento = 'Meta' AND (tipo_de_contrato = 'Obra') AND fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31'",
+    "where_t2": "departamento = 'Meta' AND (tipo_de_contrato = 'Obra') AND fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31'",
+    "where_equal": true,
+    "only_ordering_changed": true
+  },
+  "explicit_ecosystem_case": {
+    "source": "focal-final-p1",
+    "id": "P1-FOLLOWUP-003",
+    "ecosystem": "ICBF",
+    "where_t1": "departamento = 'Antioquia' AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ICBF%'))",
+    "where_t2": "departamento = 'Antioquia' AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ICBF%'))",
+    "where_equal": true,
+    "ecosystem_preserved": true
+  },
+  "boundary": "This pass does not cover the newly found polite pagination and natural reset variants, both classified as P1 runtime bugs."
+}

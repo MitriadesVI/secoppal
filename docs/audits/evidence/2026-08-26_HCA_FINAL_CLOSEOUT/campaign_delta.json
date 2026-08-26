@@ -1,0 +1,16 @@
+{
+  "denominator": 195,
+  "milestones": [
+    {"stage": "initial", "pass": 156, "delta": 0, "kind": "baseline"},
+    {"stage": "post_R1_R3_R4", "pass": 164, "delta": 8, "kind": "runtime_fixes", "cases": ["HCA-INTENT-010", "HCA-MODALITY-004", "HCA-GEO-006", "HCA-MONEY-021", "HCA-NEG-003", "HCA-NEG-005", "HCA-NEG-006", "HCA-ANTI-004"]},
+    {"stage": "time_R5", "pass": 171, "delta": 7, "kind": "runtime_fixes", "cases": ["HCA-TIME-003", "HCA-TIME-004", "HCA-TIME-008", "HCA-TIME-010", "HCA-TIME-012", "HCA-TIME-014", "HCA-TIME-015"]},
+    {"stage": "control_R6", "pass": 175, "delta": 4, "kind": "runtime_fixes", "cases": ["HCA-INTENT-007", "HCA-INTENT-008", "HCA-STATE-006", "HCA-ORDER-004"]},
+    {"stage": "actor_R7", "pass": 177, "delta": 2, "kind": "runtime_fixes", "cases": ["HCA-ACTOR-011", "HCA-META-002B"]},
+    {"stage": "final_runtime", "pass": 182, "delta": 5, "kind": "runtime_fixes", "raw_pass_cases": ["HCA-ENTITY-005", "HCA-MONEY-020", "HCA-MONEY-026", "HCA-STATE-005", "HCA-STATE-007"], "also_closed_without_raw_score_change": ["HCA-FOLLOWUP-016"]},
+    {"stage": "oracle_patch_v1", "pass": 188, "delta": 6, "kind": "oracle_corrections", "cases": ["HCA-ACTOR-004", "HCA-TOPIC-007", "HCA-ENTITY-001", "HCA-FOLLOWUP-007", "HCA-META-001B", "HCA-FOLLOWUP-016"]}
+  ],
+  "runtime_score_gain": 26,
+  "oracle_correction_gain": 6,
+  "final_runner_score": 188,
+  "note": "Oracle Patch V1 is reported separately and is not a runtime improvement."
+}

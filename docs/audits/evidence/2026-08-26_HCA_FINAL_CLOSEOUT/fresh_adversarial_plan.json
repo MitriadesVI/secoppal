@@ -1,0 +1,496 @@
+{
+  "campaign": "HCA_FINAL_CLOSEOUT_FRESH_ADVERSARIAL",
+  "created_date": "2026-08-26",
+  "method": "Plan semántico escrito antes de la ejecución, sin consultar la implementación para diseñar las consultas. Los campos de oracle usan únicamente contratos públicos ya establecidos por la campaña HCA.",
+  "scenario_count": 52,
+  "turn_count": 58,
+  "cases": [
+    {
+      "id": "FRESH-MONEY-001",
+      "category": "money",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Contratos de cuadernos de al menos 75 mil pesos durante 2025.",
+      "expected_dimensions": ["DATASET=contratos", "TOPIC=cuadernos", "MONEY_MIN=75000", "TIME=2025"],
+      "execute_or_clarify_expectation": "EXECUTE",
+      "turns": [{"q": "contratos de cuadernos por más de 75 mil pesos durante 2025", "expect": "execute", "ds": "contratos", "eq": {"valor_min": 75000, "fecha_desde": "2025-01-01", "fecha_hasta": "2025-12-31"}, "objeto_has": ["cuadernos"]}]
+    },
+    {
+      "id": "FRESH-MONEY-002",
+      "category": "money",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Contratos de computadores por debajo de 600 mil pesos en Antioquia.",
+      "expected_dimensions": ["DATASET=contratos", "TOPIC=computadores", "MONEY_MAX=600000", "GEOGRAPHY=Antioquia"],
+      "execute_or_clarify_expectation": "EXECUTE",
+      "turns": [{"q": "un contrato de computadores por menos de 600 mil pesos en Antioquia", "expect": "execute", "ds": "contratos", "eq": {"valor_max": 600000, "departamento_resolved": "Antioquia"}, "objeto_has": ["computadores"]}]
+    },
+    {
+      "id": "FRESH-MONEY-003",
+      "category": "money",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Contratos de aseo dentro del rango cerrado 120 mil–350 mil pesos durante 2024.",
+      "expected_dimensions": ["DATASET=contratos", "TOPIC=aseo", "MONEY_RANGE=120000..350000", "TIME=2024"],
+      "execute_or_clarify_expectation": "EXECUTE",
+      "turns": [{"q": "contratos de aseo entre 120 mil y 350 mil pesos en 2024", "expect": "execute", "ds": "contratos", "eq": {"valor_min": 120000, "valor_max": 350000, "fecha_desde": "2024-01-01", "fecha_hasta": "2024-12-31"}, "objeto_has": ["aseo"]}]
+    },
+    {
+      "id": "FRESH-MONEY-004",
+      "category": "money",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Contratos del actor identificado por NIT, con mínimo monetario y año.",
+      "expected_dimensions": ["DATASET=contratos", "ACTOR_NIT=900659292", "MONEY_MIN=2000000", "TIME=2025"],
+      "execute_or_clarify_expectation": "EXECUTE",
+      "turns": [{"q": "contratos del contratista con NIT 900659292 por más de 2 millones en 2025", "expect": "execute", "ds": "contratos", "eq": {"valor_min": 2000000, "fecha_desde": "2025-01-01", "fecha_hasta": "2025-12-31"}, "actor_identity": {"document_type": "NIT", "base_number": "900659292"}}]
+    },
+    {
+      "id": "FRESH-MONEY-005",
+      "category": "money",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Contratos de mantenimiento entre 300 mil y 900 mil pesos durante 2026.",
+      "expected_dimensions": ["DATASET=contratos", "TOPIC=mantenimiento", "MONEY_RANGE=300000..900000", "TIME=2026"],
+      "execute_or_clarify_expectation": "EXECUTE",
+      "turns": [{"q": "contratos de mantenimiento desde 300 mil hasta 900 mil pesos en 2026", "expect": "execute", "ds": "contratos", "eq": {"valor_min": 300000, "valor_max": 900000, "fecha_desde": "2026-01-01", "fecha_hasta": "2026-12-31"}, "objeto_has": ["mantenimiento"]}]
+    },
+    {
+      "id": "FRESH-MONEY-006",
+      "category": "money",
+      "severity_if_failed": "P0",
+      "intended_user_semantics": "Monto verbal compuesto no soportado; debe aclarar sin aplicar parcialmente un millón.",
+      "expected_dimensions": ["DATASET=contratos", "TOPIC=uniformes", "MONEY=UNSUPPORTED_COMPOUND"],
+      "execute_or_clarify_expectation": "CLARIFY",
+      "turns": [{"q": "contratos de uniformes por más de un millón y medio en Córdoba", "expect": "block", "ds": "contratos", "absent": ["valor_min", "valor_max"], "objeto_has": ["uniformes"]}]
+    },
+    {
+      "id": "FRESH-STATE-001",
+      "category": "state",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Procesos exactamente publicados, no la familia amplia de oportunidades.",
+      "expected_dimensions": ["DATASET=procesos", "TOPIC=señalización", "GEOGRAPHY=Huila", "STATE=Published_EXACT"],
+      "execute_or_clarify_expectation": "EXECUTE",
+      "turns": [{"q": "procesos publicados de señalización en Huila", "expect": "execute", "ds": "procesos", "eq": {"departamento_resolved": "Huila"}, "objeto_has": ["señalizacion"], "soql_has": ["Publicado"], "soql_not": ["Borrador"]}]
+    },
+    {
+      "id": "FRESH-STATE-002",
+      "category": "state",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Oportunidades vigentes de dotación escolar en Nariño, usando la familia amplia vigente.",
+      "expected_dimensions": ["DATASET=procesos", "TOPIC=dotación escolar", "GEOGRAPHY=Nariño", "INTENT=opportunity", "STATE_FAMILY=opportunity"],
+      "execute_or_clarify_expectation": "EXECUTE",
+      "turns": [{"q": "oportunidades vigentes de dotación escolar en Nariño", "expect": "execute", "ds": "procesos", "eq": {"departamento_resolved": "Nariño"}, "has": ["estado_family"], "objeto_has": ["dotacion", "escolar"]}]
+    },
+    {
+      "id": "FRESH-STATE-003",
+      "category": "state",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Contratos activos de vigilancia durante 2025 mediante la familia contractual activa.",
+      "expected_dimensions": ["DATASET=contratos", "TOPIC=vigilancia", "TIME=2025", "STATE_FAMILY=contrato_activo"],
+      "execute_or_clarify_expectation": "EXECUTE",
+      "turns": [{"q": "contratos activos de vigilancia en 2025", "expect": "execute", "ds": "contratos", "eq": {"fecha_desde": "2025-01-01", "fecha_hasta": "2025-12-31"}, "has": ["estado_family"], "objeto_has": ["vigilancia"], "soql_has": ["Activo", "Firmado", "Adjudicado"]}]
+    },
+    {
+      "id": "FRESH-STATE-004",
+      "category": "state",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Contratos exactamente cerrados de consultoría durante 2024.",
+      "expected_dimensions": ["DATASET=contratos", "TOPIC=consultoría", "TIME=2024", "STATE=Cerrado_EXACT"],
+      "execute_or_clarify_expectation": "EXECUTE",
+      "turns": [{"q": "contratos cerrados de consultoría en 2024", "expect": "execute", "ds": "contratos", "eq": {"fecha_desde": "2024-01-01", "fecha_hasta": "2024-12-31"}, "objeto_has": ["consultoria"], "soql_has": ["estado_contrato = 'Cerrado'"]}]
+    },
+    {
+      "id": "FRESH-STATE-005",
+      "category": "state",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Procesos desiertos de alimentación en Sucre mediante la proyección no_procede.",
+      "expected_dimensions": ["DATASET=procesos", "TOPIC=alimentación", "GEOGRAPHY=Sucre", "STATE_FAMILY=no_procede"],
+      "execute_or_clarify_expectation": "EXECUTE",
+      "turns": [{"q": "procesos desiertos de alimentación en Sucre", "expect": "execute", "ds": "procesos", "eq": {"departamento_resolved": "Sucre"}, "has": ["estado_family"], "objeto_has": ["alimentacion"]}]
+    },
+    {
+      "id": "FRESH-BUYER-001",
+      "category": "buyer",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Contratos comprados por la Alcaldía de Cali para parques en 2025.",
+      "expected_dimensions": ["DATASET=contratos", "BUYER=Alcaldía de Cali", "TOPIC=parques", "TIME=2025"],
+      "execute_or_clarify_expectation": "EXECUTE",
+      "turns": [{"q": "contratos de la alcaldía de Cali para parques en 2025", "expect": "execute", "ds": "contratos", "has": ["entidad_resolved"], "absent": ["departamento_resolved"], "eq": {"fecha_desde": "2025-01-01", "fecha_hasta": "2025-12-31"}, "objeto_has": ["parques"], "soql_has": ["nombre_entidad"]}]
+    },
+    {
+      "id": "FRESH-BUYER-002",
+      "category": "buyer",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Qué compró la Gobernación de Cundinamarca durante 2024.",
+      "expected_dimensions": ["DATASET=contratos", "BUYER=Gobernación de Cundinamarca", "TIME=2024"],
+      "execute_or_clarify_expectation": "EXECUTE",
+      "turns": [{"q": "qué compró la gobernación de Cundinamarca durante 2024", "expect": "execute", "ds": "contratos", "has": ["entidad_resolved"], "absent": ["departamento_resolved"], "eq": {"fecha_desde": "2024-01-01", "fecha_hasta": "2024-12-31"}, "soql_has": ["nombre_entidad"]}]
+    },
+    {
+      "id": "FRESH-BUYER-003",
+      "category": "buyer",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Comprador genérico sin identidad suficiente; debe pedir cuál gobernación.",
+      "expected_dimensions": ["DATASET=contratos", "BUYER=UNRESOLVED_GENERIC"],
+      "execute_or_clarify_expectation": "CLARIFY",
+      "turns": [{"q": "muéstrame contratos de la gobernación", "expect": "block", "ds": "contratos", "absent": ["entidad_resolved", "departamento_resolved"]}]
+    },
+    {
+      "id": "FRESH-BUYER-004",
+      "category": "buyer",
+      "severity_if_failed": "P2",
+      "intended_user_semantics": "Frontera sin autoridad entre Departamento de Boyacá como sujeto comprador y territorio; aclarar es la salida segura preferida.",
+      "expected_dimensions": ["DATASET=contratos", "BUYER_OR_TERRITORY=Boyacá", "TIME=2025", "POLICY=UNDECIDED"],
+      "execute_or_clarify_expectation": "CLARIFY_PREFERRED_UNDECIDED",
+      "turns": [{"q": "qué adquirió el departamento de Boyacá durante 2025", "expect": "block", "ds": "contratos", "eq": {"fecha_desde": "2025-01-01", "fecha_hasta": "2025-12-31"}}]
+    },
+    {
+      "id": "FRESH-BUYER-005",
+      "category": "buyer",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Contratos territoriales de puentes ubicados en Boyacá, no comprador institucional.",
+      "expected_dimensions": ["DATASET=contratos", "GEOGRAPHY=Boyacá", "TOPIC=puentes", "TIME=2025"],
+      "execute_or_clarify_expectation": "EXECUTE",
+      "turns": [{"q": "contratos de puentes en el departamento de Boyacá durante 2025", "expect": "execute", "ds": "contratos", "eq": {"departamento_resolved": "Boyacá", "fecha_desde": "2025-01-01", "fecha_hasta": "2025-12-31"}, "absent": ["entidad_resolved"], "objeto_has": ["puentes"]}]
+    },
+    {
+      "id": "FRESH-FOLLOWUP-001",
+      "category": "followup",
+      "severity_if_failed": "P0",
+      "intended_user_semantics": "Un followup sólo de orden cambia ORDER BY y conserva íntegro el universo obra+Meta+2025.",
+      "expected_dimensions": ["T1=TOPIC+GEOGRAPHY+TIME", "T2=ORDER_ASC_VALUE", "FILTERS_PRESERVED"],
+      "execute_or_clarify_expectation": "EXECUTE_THEN_EXECUTE",
+      "turns": [
+        {"q": "contratos de obra en Meta durante 2025", "expect": "execute", "ds": "contratos", "eq": {"departamento_resolved": "Meta", "fecha_desde": "2025-01-01", "fecha_hasta": "2025-12-31"}, "objeto_has": ["obra"]},
+        {"q": "ordénalos del menor valor al mayor", "expect": "execute", "ds": "contratos", "eq": {"departamento_resolved": "Meta", "fecha_desde": "2025-01-01", "fecha_hasta": "2025-12-31"}, "objeto_has": ["obra"], "soql_has": ["ORDER BY valor_del_contrato ASC"]}
+      ]
+    },
+    {
+      "id": "FRESH-FOLLOWUP-002",
+      "category": "followup",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Mutar lugar de departamento a ciudad sin perder tema ni estado de oportunidad.",
+      "expected_dimensions": ["T1=procesos+aseo+Bolívar+open", "T2=CITY=Cartagena", "TOPIC_AND_STATE_PRESERVED"],
+      "execute_or_clarify_expectation": "EXECUTE_THEN_EXECUTE",
+      "turns": [
+        {"q": "procesos abiertos de aseo en Bolívar", "expect": "execute", "ds": "procesos", "eq": {"departamento_resolved": "Bolívar"}, "objeto_has": ["aseo"], "has": ["estado_family"]},
+        {"q": "ahora sólo los de Cartagena", "expect": "execute", "ds": "procesos", "eq": {"ciudad": "Cartagena"}, "objeto_has": ["aseo"], "has": ["estado_family"]}
+      ]
+    },
+    {
+      "id": "FRESH-FOLLOWUP-003",
+      "category": "followup",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Una nueva búsqueda explícita reemplaza el universo previo, incluido dataset, tema, lugar y año.",
+      "expected_dimensions": ["T1=contratos+mobiliario+Bogotá+2025", "T2=NEW_SEARCH procesos+alimentación escolar+Cauca"],
+      "execute_or_clarify_expectation": "EXECUTE_THEN_EXECUTE",
+      "turns": [
+        {"q": "contratos de mobiliario en Bogotá durante 2025", "expect": "execute", "ds": "contratos", "eq": {"ciudad": "Bogotá", "fecha_desde": "2025-01-01", "fecha_hasta": "2025-12-31"}, "objeto_has": ["mobiliario"]},
+        {"q": "busca mejor procesos de alimentación escolar en Cauca", "expect": "execute", "ds": "procesos", "eq": {"departamento_resolved": "Cauca"}, "absent": ["fecha_desde", "fecha_hasta"], "objeto_has": ["alimentacion", "escolar"], "objeto_not": ["mobiliario"]}
+      ]
+    },
+    {
+      "id": "FRESH-FOLLOWUP-004",
+      "category": "followup",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Paginación pide más resultados del mismo universo sin mutar filtros.",
+      "expected_dimensions": ["T1=mantenimiento+Antioquia+2025", "T2=PAGINATION", "FILTERS_PRESERVED"],
+      "execute_or_clarify_expectation": "EXECUTE_THEN_EXECUTE",
+      "turns": [
+        {"q": "contratos de mantenimiento en Antioquia en 2025", "expect": "execute", "ds": "contratos", "eq": {"departamento_resolved": "Antioquia", "fecha_desde": "2025-01-01", "fecha_hasta": "2025-12-31"}, "objeto_has": ["mantenimiento"]},
+        {"q": "muéstrame la siguiente página", "expect": "execute", "ds": "contratos", "eq": {"departamento_resolved": "Antioquia", "fecha_desde": "2025-01-01", "fecha_hasta": "2025-12-31"}, "objeto_has": ["mantenimiento"]}
+      ]
+    },
+    {
+      "id": "FRESH-FOLLOWUP-005",
+      "category": "followup",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "CLEAR explícito elimina el universo previo y no ejecuta una consulta global vacía.",
+      "expected_dimensions": ["T1=papelería+Caldas+2024", "T2=CLEAR_ALL", "NO_GLOBAL_QUERY"],
+      "execute_or_clarify_expectation": "EXECUTE_THEN_CLARIFY",
+      "turns": [
+        {"q": "contratos de papelería en Caldas en 2024", "expect": "execute", "ds": "contratos", "eq": {"departamento_resolved": "Caldas", "fecha_desde": "2024-01-01", "fecha_hasta": "2024-12-31"}, "objeto_has": ["papeleria"]},
+        {"q": "limpia todos los filtros y empecemos de cero", "expect": "block", "absent": ["departamento_resolved", "fecha_desde", "fecha_hasta", "objeto"]}
+      ]
+    },
+    {
+      "id": "FRESH-ACTOR-001",
+      "category": "actor",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Uppercase no decide identidad; la colisión SALUD tema/actor sigue requiriendo aclaración.",
+      "expected_dimensions": ["DATASET=contratos", "TOPIC=salud", "GEOGRAPHY=Amazonas", "ACTOR_TOPIC_CONFLICT"],
+      "execute_or_clarify_expectation": "CLARIFY",
+      "turns": [{"q": "CONTRATOS SOBRE SALUD EN AMAZONAS", "expect": "block", "ds": "contratos", "eq": {"departamento_resolved": "Amazonas"}, "objeto_has": ["salud"], "has": ["actor_intent_conflict"]}]
+    },
+    {
+      "id": "FRESH-ACTOR-002",
+      "category": "actor",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Un nombre parecido no autoriza identidad; debe quedar pendiente o aclararse.",
+      "expected_dimensions": ["DATASET=contratos", "ACTOR=FUZZY_UNAUTHORIZED", "TIME=2024"],
+      "execute_or_clarify_expectation": "CLARIFY",
+      "turns": [{"q": "contratos de lmp ingienería sas durante 2024", "expect": "block", "ds": "contratos", "eq": {"fecha_desde": "2024-01-01", "fecha_hasta": "2024-12-31"}, "has": ["actor_pending"], "absent": ["actor_scope"]}]
+    },
+    {
+      "id": "FRESH-ACTOR-003",
+      "category": "actor",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Proveedor explícito SALUD desambigua la colisión y usa identidad exacta.",
+      "expected_dimensions": ["DATASET=contratos", "ACTOR=SALUD_EXACT", "GEOGRAPHY=Amazonas"],
+      "execute_or_clarify_expectation": "EXECUTE",
+      "turns": [{"q": "contratos del proveedor SALUD en Amazonas", "expect": "execute", "ds": "contratos", "eq": {"departamento_resolved": "Amazonas"}, "actor_identity": {"document_type": "NIT", "base_number": "900659292"}}]
+    },
+    {
+      "id": "FRESH-ACTOR-004",
+      "category": "actor",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Un nombre empresarial genérico y ambiguo no debe convertirse en identidad fuzzy.",
+      "expected_dimensions": ["DATASET=contratos", "ACTOR=AMBIGUOUS_GENERIC", "TIME=2025"],
+      "execute_or_clarify_expectation": "CLARIFY",
+      "turns": [{"q": "contratos de ingeniería sas en 2025", "expect": "block", "ds": "contratos", "eq": {"fecha_desde": "2025-01-01", "fecha_hasta": "2025-12-31"}, "absent": ["actor_scope"]}]
+    },
+    {
+      "id": "FRESH-ACTOR-005",
+      "category": "actor",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Una nueva búsqueda explícita gana sobre el estado pending del actor y no hereda identidad.",
+      "expected_dimensions": ["T1=ACTOR_PENDING", "T2=NEW_SEARCH puentes+Tolima+2025", "NO_ACTOR_SCOPE"],
+      "execute_or_clarify_expectation": "CLARIFY_THEN_EXECUTE",
+      "turns": [
+        {"q": "quiero ver contratos de lmp ingienería sas del año 2024", "expect": "block", "ds": "contratos", "has": ["actor_pending"], "absent": ["actor_scope"]},
+        {"q": "mejor busca contratos de puentes en Tolima durante 2025", "expect": "execute", "ds": "contratos", "eq": {"departamento_resolved": "Tolima", "fecha_desde": "2025-01-01", "fecha_hasta": "2025-12-31"}, "absent": ["actor_scope", "actor_pending"], "objeto_has": ["puentes"]}
+      ]
+    },
+    {
+      "id": "FRESH-NEGATION-001",
+      "category": "negation",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Incluir aseo y excluir vigilancia sin perder territorio ni año.",
+      "expected_dimensions": ["DATASET=contratos", "TOPIC_INCLUDE=aseo", "TOPIC_EXCLUDE=vigilancia", "GEOGRAPHY=Quindío", "TIME=2025"],
+      "execute_or_clarify_expectation": "EXECUTE",
+      "turns": [{"q": "contratos de aseo sin vigilancia en Quindío durante 2025", "expect": "execute", "ds": "contratos", "eq": {"departamento_resolved": "Quindío", "fecha_desde": "2025-01-01", "fecha_hasta": "2025-12-31"}, "objeto_has": ["aseo"], "has": ["objeto_exclude"], "soql_has": ["NOT"]}]
+    },
+    {
+      "id": "FRESH-NEGATION-002",
+      "category": "negation",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Excluir contratación directa de procesos de mantenimiento en Tolima.",
+      "expected_dimensions": ["DATASET=procesos", "TOPIC=mantenimiento", "MODALITY_EXCLUDE=contratación_directa", "GEOGRAPHY=Tolima", "TIME=2026"],
+      "execute_or_clarify_expectation": "EXECUTE",
+      "turns": [{"q": "procesos que no sean de contratación directa sobre mantenimiento en Tolima en 2026", "expect": "execute", "ds": "procesos", "eq": {"departamento_resolved": "Tolima", "fecha_desde": "2026-01-01", "fecha_hasta": "2026-12-31"}, "objeto_has": ["mantenimiento"], "has": ["modalidad_exclude_procedure_ids"]}]
+    },
+    {
+      "id": "FRESH-NEGATION-003",
+      "category": "negation",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Incluir el universo territorial/temporal y excluir interventoría como objeto.",
+      "expected_dimensions": ["DATASET=contratos", "TOPIC_EXCLUDE=interventoría", "GEOGRAPHY=Risaralda", "TIME=2025"],
+      "execute_or_clarify_expectation": "EXECUTE",
+      "turns": [{"q": "contratos sin interventoría en Risaralda durante 2025", "expect": "execute", "ds": "contratos", "eq": {"departamento_resolved": "Risaralda", "fecha_desde": "2025-01-01", "fecha_hasta": "2025-12-31"}, "has": ["objeto_exclude"], "soql_has": ["NOT"]}]
+    },
+    {
+      "id": "FRESH-NEGATION-004",
+      "category": "negation",
+      "severity_if_failed": "P0",
+      "intended_user_semantics": "La negación de comprador es dimensión no soportada: debe aclarar y nunca resolver la Alcaldía positivamente.",
+      "expected_dimensions": ["DATASET=contratos", "TOPIC=obra", "NEGATIVE_BUYER=Alcaldía de Pereira", "TIME=2025"],
+      "execute_or_clarify_expectation": "CLARIFY",
+      "turns": [{"q": "contratos de obra excepto los de la alcaldía de Pereira en 2025", "expect": "block", "ds": "contratos", "eq": {"fecha_desde": "2025-01-01", "fecha_hasta": "2025-12-31"}, "objeto_has": ["obra"], "absent": ["entidad_resolved", "actor_scope"]}]
+    },
+    {
+      "id": "FRESH-NEGATION-005",
+      "category": "negation",
+      "severity_if_failed": "P0",
+      "intended_user_semantics": "Estado negativo no soportado; debe aclarar sin consumir publicar como filtro positivo.",
+      "expected_dimensions": ["DATASET=procesos", "TOPIC=obra", "GEOGRAPHY=Caldas", "NEGATIVE_STATE=publicado"],
+      "execute_or_clarify_expectation": "CLARIFY",
+      "turns": [{"q": "procesos de obra en Caldas que no estén publicados", "expect": "block", "ds": "procesos", "eq": {"departamento_resolved": "Caldas"}, "objeto_has": ["obra"], "absent": ["estado_family", "estado_del_procedimiento"]}]
+    },
+    {
+      "id": "FRESH-TIME-001",
+      "category": "time",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Contratos de un día civil exacto.",
+      "expected_dimensions": ["DATASET=contratos", "TOPIC=aseo", "CITY=Bogotá", "DATE=2025-02-14"],
+      "execute_or_clarify_expectation": "EXECUTE",
+      "turns": [{"q": "contratos de aseo del 14 de febrero de 2025 en Bogotá", "expect": "execute", "ds": "contratos", "eq": {"ciudad": "Bogotá", "fecha_desde": "2025-02-14", "fecha_hasta": "2025-02-14"}, "objeto_has": ["aseo"]}]
+    },
+    {
+      "id": "FRESH-TIME-002",
+      "category": "time",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Procesos del mes calendario marzo de 2025.",
+      "expected_dimensions": ["DATASET=procesos", "TOPIC=obra", "GEOGRAPHY=Huila", "MONTH=2025-03"],
+      "execute_or_clarify_expectation": "EXECUTE",
+      "turns": [{"q": "procesos de obra en marzo de 2025 en Huila", "expect": "execute", "ds": "procesos", "eq": {"departamento_resolved": "Huila", "fecha_desde": "2025-03-01", "fecha_hasta": "2025-03-31"}, "objeto_has": ["obra"]}]
+    },
+    {
+      "id": "FRESH-TIME-003",
+      "category": "time",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Rango de días específico dentro de 2025; el span específico prevalece.",
+      "expected_dimensions": ["DATASET=contratos", "TOPIC=vigilancia", "GEOGRAPHY=Meta", "DATE_RANGE=2025-04-03..2025-05-18"],
+      "execute_or_clarify_expectation": "EXECUTE",
+      "turns": [{"q": "contratos de vigilancia entre el 3 de abril y el 18 de mayo de 2025 en Meta", "expect": "execute", "ds": "contratos", "eq": {"departamento_resolved": "Meta", "fecha_desde": "2025-04-03", "fecha_hasta": "2025-05-18"}, "objeto_has": ["vigilancia"]}]
+    },
+    {
+      "id": "FRESH-TIME-004",
+      "category": "time",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Rango temporal abierto desde el inicio de 2025.",
+      "expected_dimensions": ["DATASET=contratos", "TOPIC=software", "CITY=Cali", "DATE_FROM=2025-01-01", "DATE_TO=OPEN"],
+      "execute_or_clarify_expectation": "EXECUTE",
+      "turns": [{"q": "contratos de software en Cali desde 2025", "expect": "execute", "ds": "contratos", "eq": {"ciudad": "Cali", "fecha_desde": "2025-01-01"}, "absent": ["fecha_hasta"], "objeto_has": ["software"]}]
+    },
+    {
+      "id": "FRESH-TIME-005",
+      "category": "time",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Rango temporal abierto hasta el cierre de 2024.",
+      "expected_dimensions": ["DATASET=contratos", "TOPIC=papelería", "GEOGRAPHY=Valle del Cauca", "DATE_TO=2024-12-31", "DATE_FROM=OPEN"],
+      "execute_or_clarify_expectation": "EXECUTE",
+      "turns": [{"q": "contratos de papelería en Valle del Cauca hasta 2024", "expect": "execute", "ds": "contratos", "eq": {"departamento_resolved": "Valle del Cauca", "fecha_hasta": "2024-12-31"}, "absent": ["fecha_desde"], "objeto_has": ["papeleria"]}]
+    },
+    {
+      "id": "FRESH-TIME-006",
+      "category": "time",
+      "severity_if_failed": "P0",
+      "intended_user_semantics": "Rango invertido inválido; aclarar, no ejecutar fechas reordenadas silenciosamente.",
+      "expected_dimensions": ["DATASET=contratos", "TOPIC=aseo", "INVALID_REVERSED_TIME"],
+      "execute_or_clarify_expectation": "CLARIFY",
+      "turns": [{"q": "contratos de aseo entre diciembre de 2025 y enero de 2025", "expect": "block", "ds": "contratos", "objeto_has": ["aseo"]}]
+    },
+    {
+      "id": "FRESH-TIME-007",
+      "category": "time",
+      "severity_if_failed": "P1",
+      "clock": "2026-08-26",
+      "intended_user_semantics": "El mes pasado relativo al reloj congelado es julio de 2026.",
+      "expected_dimensions": ["DATASET=contratos", "TOPIC=alimentación", "GEOGRAPHY=Antioquia", "RELATIVE_MONTH=2026-07"],
+      "execute_or_clarify_expectation": "EXECUTE",
+      "turns": [{"q": "contratos de alimentación del mes pasado en Antioquia", "expect": "execute", "ds": "contratos", "eq": {"departamento_resolved": "Antioquia", "fecha_desde": "2026-07-01", "fecha_hasta": "2026-07-31"}, "objeto_has": ["alimentacion"]}]
+    },
+    {
+      "id": "FRESH-TIME-008",
+      "category": "time",
+      "severity_if_failed": "P0",
+      "intended_user_semantics": "Negación temporal no soportada; aclarar sin convertir 2025 en filtro positivo.",
+      "expected_dimensions": ["DATASET=contratos", "TOPIC=obra", "GEOGRAPHY=Cundinamarca", "NEGATIVE_TIME=2025"],
+      "execute_or_clarify_expectation": "CLARIFY",
+      "turns": [{"q": "contratos de obra en Cundinamarca pero no de 2025", "expect": "block", "ds": "contratos", "eq": {"departamento_resolved": "Cundinamarca"}, "objeto_has": ["obra"], "absent": ["fecha_desde", "fecha_hasta"]}]
+    },
+    {
+      "id": "FRESH-CONTROL-001",
+      "category": "control",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Lenguaje de orden no se convierte en objeto y ordena por valor ascendente.",
+      "expected_dimensions": ["DATASET=contratos", "TOPIC=aseo", "GEOGRAPHY=Cesar", "TIME=2025", "ORDER=VALUE_ASC"],
+      "execute_or_clarify_expectation": "EXECUTE",
+      "turns": [{"q": "ordena de menor a mayor los contratos de aseo en Cesar de 2025", "expect": "execute", "ds": "contratos", "eq": {"departamento_resolved": "Cesar", "fecha_desde": "2025-01-01", "fecha_hasta": "2025-12-31"}, "objeto_has": ["aseo"], "objeto_not": ["ordena", "menor", "mayor"], "soql_has": ["ORDER BY valor_del_contrato ASC"]}]
+    },
+    {
+      "id": "FRESH-CONTROL-002",
+      "category": "control",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Intención de presentarse selecciona oportunidades/procesos y conserva mantenimiento vial como contenido.",
+      "expected_dimensions": ["DATASET=procesos", "TOPIC=mantenimiento vial", "GEOGRAPHY=Santander", "INTENT=opportunity"],
+      "execute_or_clarify_expectation": "EXECUTE",
+      "turns": [{"q": "quiero presentarme a mantenimiento de vías en Santander", "expect": "execute", "ds": "procesos", "eq": {"departamento_resolved": "Santander"}, "objeto_has": ["mantenimiento", "vias"], "has": ["estado_family"]}]
+    },
+    {
+      "id": "FRESH-CONTROL-003",
+      "category": "control",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Menor cuantía es modalidad, no instrucción de orden.",
+      "expected_dimensions": ["DATASET=contratos", "TOPIC=escuelas", "GEOGRAPHY=Magdalena", "TIME=2025", "MODALITY=menor_cuantía", "ORDER=ABSENT"],
+      "execute_or_clarify_expectation": "EXECUTE",
+      "turns": [{"q": "muéstrame contratos de menor cuantía para escuelas en Magdalena en 2025", "expect": "execute", "ds": "contratos", "eq": {"departamento_resolved": "Magdalena", "fecha_desde": "2025-01-01", "fecha_hasta": "2025-12-31"}, "has": ["modalidad_include_procedure_ids"], "absent": ["ordering_signal"], "objeto_has": ["escuelas"]}]
+    },
+    {
+      "id": "FRESH-CONTROL-004",
+      "category": "control",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Comparador monetario no es señal de orden.",
+      "expected_dimensions": ["DATASET=contratos", "TOPIC=papelería", "GEOGRAPHY=Boyacá", "TIME=2025", "MONEY_MAX=800000", "ORDER=ABSENT"],
+      "execute_or_clarify_expectation": "EXECUTE",
+      "turns": [{"q": "contratos de papelería por debajo de 800 mil pesos en Boyacá durante 2025", "expect": "execute", "ds": "contratos", "eq": {"departamento_resolved": "Boyacá", "fecha_desde": "2025-01-01", "fecha_hasta": "2025-12-31", "valor_max": 800000}, "absent": ["ordering_signal"], "objeto_has": ["papeleria"]}]
+    },
+    {
+      "id": "FRESH-CONTROL-005",
+      "category": "control",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Imperativo de licitar expresa intención bidder y no contamina el tema uniformes.",
+      "expected_dimensions": ["DATASET=procesos", "TOPIC=uniformes", "GEOGRAPHY=Córdoba", "INTENT=opportunity"],
+      "execute_or_clarify_expectation": "EXECUTE",
+      "turns": [{"q": "necesito licitar suministro de uniformes en Córdoba", "expect": "execute", "ds": "procesos", "eq": {"departamento_resolved": "Córdoba"}, "objeto_has": ["suministro", "uniformes"], "objeto_not": ["necesito", "licitar"], "has": ["estado_family"]}]
+    },
+    {
+      "id": "FRESH-LOOKUP-001",
+      "category": "direct_lookup",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Lookup directo por referencia contractual estructurada.",
+      "expected_dimensions": ["DATASET=contratos", "REFERENCE=LP-047-2025"],
+      "execute_or_clarify_expectation": "EXECUTE",
+      "turns": [{"q": "consulta el contrato con referencia LP-047-2025", "expect": "execute", "ds": "contratos", "soql_has": ["LP-047-2025"]}]
+    },
+    {
+      "id": "FRESH-LOOKUP-002",
+      "category": "direct_lookup",
+      "severity_if_failed": "P0",
+      "intended_user_semantics": "Frase natural con la palabra proceso es búsqueda temática, no lookup directo.",
+      "expected_dimensions": ["DATASET=contratos", "TOPIC=nutrición escolar", "REFERENCE=ABSENT"],
+      "execute_or_clarify_expectation": "EXECUTE",
+      "turns": [{"q": "necesito contratos para el proceso de nutrición escolar", "expect": "execute", "ds": "contratos", "objeto_has": ["nutricion", "escolar"], "soql_not": ["referencia_del_proceso =", "referencia_del_contrato ="]}]
+    },
+    {
+      "id": "FRESH-LOOKUP-003",
+      "category": "direct_lookup",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Lookup directo por otra referencia estructurada explícita.",
+      "expected_dimensions": ["DATASET=contratos", "REFERENCE=ABC-2025-0198"],
+      "execute_or_clarify_expectation": "EXECUTE",
+      "turns": [{"q": "buscar contratos con referencia ABC-2025-0198", "expect": "execute", "ds": "contratos", "soql_has": ["ABC-2025-0198"]}]
+    },
+    {
+      "id": "FRESH-CROSS-001",
+      "category": "cross_dimension",
+      "severity_if_failed": "P0",
+      "intended_user_semantics": "Colisión tema/actor SALUD con dinero, territorio y año; aclarar sin perder dimensiones ni ejecutar parcialmente.",
+      "expected_dimensions": ["DATASET=contratos", "TOPIC=salud", "ACTOR_TOPIC_CONFLICT", "MONEY_MIN=200000", "GEOGRAPHY=Amazonas", "TIME=2025"],
+      "execute_or_clarify_expectation": "CLARIFY",
+      "turns": [{"q": "contratos sobre SALUD por más de 200 mil pesos en Amazonas durante 2025", "expect": "block", "ds": "contratos", "eq": {"valor_min": 200000, "departamento_resolved": "Amazonas", "fecha_desde": "2025-01-01", "fecha_hasta": "2025-12-31"}, "objeto_has": ["salud"], "has": ["actor_intent_conflict"]}]
+    },
+    {
+      "id": "FRESH-CROSS-002",
+      "category": "cross_dimension",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Estado Published exacto combinado con rango mensual, tema y territorio.",
+      "expected_dimensions": ["DATASET=procesos", "STATE=Published_EXACT", "TOPIC=obra", "GEOGRAPHY=Arauca", "TIME=2025-04..2025-06"],
+      "execute_or_clarify_expectation": "EXECUTE",
+      "turns": [{"q": "procesos publicados de obra entre abril y junio de 2025 en Arauca", "expect": "execute", "ds": "procesos", "eq": {"departamento_resolved": "Arauca", "fecha_desde": "2025-04-01", "fecha_hasta": "2025-06-30"}, "objeto_has": ["obra"], "soql_has": ["Publicado"], "soql_not": ["Borrador"]}]
+    },
+    {
+      "id": "FRESH-CROSS-003",
+      "category": "cross_dimension",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Negación de objeto y orden por mayor valor coexisten sin contaminar contenido.",
+      "expected_dimensions": ["DATASET=contratos", "TOPIC_EXCLUDE=consultoría", "GEOGRAPHY=Nariño", "TIME=2025", "ORDER=VALUE_DESC"],
+      "execute_or_clarify_expectation": "EXECUTE",
+      "turns": [{"q": "contratos sin consultoría en Nariño de 2025 ordenados por mayor valor", "expect": "execute", "ds": "contratos", "eq": {"departamento_resolved": "Nariño", "fecha_desde": "2025-01-01", "fecha_hasta": "2025-12-31"}, "has": ["objeto_exclude"], "objeto_not": ["ordenados", "mayor", "valor"], "soql_has": ["NOT", "ORDER BY valor_del_contrato DESC"]}]
+    },
+    {
+      "id": "FRESH-CROSS-004",
+      "category": "cross_dimension",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Comprador completo, tema salud y año deben coexistir como dimensiones separadas.",
+      "expected_dimensions": ["DATASET=contratos", "BUYER=Alcaldía de Pasto", "TOPIC=salud", "TIME=2025"],
+      "execute_or_clarify_expectation": "EXECUTE",
+      "turns": [{"q": "qué compró la alcaldía de Pasto para salud durante 2025", "expect": "execute", "ds": "contratos", "has": ["entidad_resolved"], "absent": ["departamento_resolved"], "eq": {"fecha_desde": "2025-01-01", "fecha_hasta": "2025-12-31"}, "objeto_has": ["salud"], "soql_has": ["nombre_entidad"]}]
+    },
+    {
+      "id": "FRESH-CROSS-005",
+      "category": "cross_dimension",
+      "severity_if_failed": "P1",
+      "intended_user_semantics": "Actor exacto por NIT, dinero y territorio coexisten sin colapsar en tema.",
+      "expected_dimensions": ["DATASET=contratos", "ACTOR_NIT=900659292", "MONEY_MAX=5000000", "GEOGRAPHY=Amazonas"],
+      "execute_or_clarify_expectation": "EXECUTE",
+      "turns": [{"q": "contratos del NIT 900659292 por menos de 5 millones en Amazonas", "expect": "execute", "ds": "contratos", "eq": {"valor_max": 5000000, "departamento_resolved": "Amazonas"}, "actor_identity": {"document_type": "NIT", "base_number": "900659292"}}]
+    }
+  ]
+}
