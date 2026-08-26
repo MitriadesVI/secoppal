@@ -1,0 +1,142 @@
+{
+ "mechanism": {
+  "id": "ENUMERATED_SURFACE_FORM_VOCABULARY_WITH_FAIL_OPEN_DEFAULT",
+  "statement": "Cada dimension semantica se reconoce con una lista de FORMAS SUPERFICIALES mantenida a mano. Un token ausente de la lista no produce error ni aclaracion: cae al destino por defecto (objeto/tema) o desaparece. El sistema ejecuta entonces una consulta bien formada y semanticamente equivocada.",
+  "expressions": [
+   "A. Hueco de vocabulario  -> el token cae a objeto (basura inyectada)",
+   "B. Vocabularios divergentes del mismo concepto entre capas -> restriccion perdida",
+   "C. Capa previa reescribe el texto -> las protecciones de la capa siguiente no aplican"
+  ]
+ },
+ "scenarios": [
+  {
+   "case": "FRESH-NEGATION-005",
+   "declared_root": "NEGATIVE_STATE_CONJUGATION_FAIL_OPEN",
+   "first_divergence": "negation_binding._STATE_RE (construido desde app/data/estados.ESTADO_SYNONYMS)",
+   "fact": "ESTADO_SYNONYMS (43 entradas) no contiene 'publicado'/'publicados'; estado_families.NATURAL_TO_FAMILY si. Dos vocabularios del mismo concepto.",
+   "expression": "B",
+   "shape": "DROPPED"
+  },
+  {
+   "case": "FRESH-STATE-002",
+   "declared_root": "OPPORTUNITY_STATE_FAMILY_PROJECTION_CONTRADICTION",
+   "first_divergence": "app/core/estado_families.py NATURAL_TO_FAMILY",
+   "fact": "Clave duplicada en el MISMO dict literal: 'vigente'/'vigentes' -> oferta_abierta (l.138-139) y -> contrato_activo (l.156-157). Gana la ultima; la primera es codigo muerto. Ruff F601 lo detecta y NO esta en el select de ruff.toml.",
+   "expression": "B",
+   "shape": "CONTRADICTION"
+  },
+  {
+   "case": "FRESH-MONEY-003",
+   "declared_root": "SMALL_MONEY_RANGE_LOWER_BOUND_LOSS",
+   "first_divergence": "money_admission.has_explicit_monetary_evidence",
+   "fact": "La escala 'mil' no es unidad monetaria explicita (el patron exige escala >= millon). En 'entre 120 mil y 350 mil pesos' el marcador 'pesos' se escribe una sola vez y solo gobierna el operando alto; el bajo queda desnudo y cae bajo MIN_BARE_AMOUNT_COP=1_000_000. El rango es todo-o-nada: se descarta entero y un bucle generico posterior fija solo valor_max.",
+   "expression": "A",
+   "shape": "DROPPED"
+  },
+  {
+   "case": "FRESH-MONEY-005",
+   "declared_root": "SMALL_MONEY_RANGE_LOWER_BOUND_LOSS",
+   "first_divergence": "money_admission.has_explicit_monetary_evidence",
+   "fact": "Identico a FRESH-MONEY-003.",
+   "expression": "A",
+   "shape": "DROPPED"
+  },
+  {
+   "case": "FRESH-BUYER-002",
+   "declared_root": "BUYER_PURCHASE_VERB_TO_TOPIC_AND_DATASET",
+   "first_divergence": "query_router.STOPWORDS / intent_vocabulary.ACTION_VERBS",
+   "fact": "'compra','compras','comprar' estan en ACTION_VERBS; 'compro' (preterito) no esta en ninguna de las dos listas. 'que compra ...' no fuga; 'que compro ...' si.",
+   "expression": "A",
+   "shape": "INJECTED"
+  },
+  {
+   "case": "FRESH-CROSS-004",
+   "declared_root": "BUYER_PURCHASE_VERB_TO_TOPIC_AND_DATASET",
+   "first_divergence": "query_router.STOPWORDS / intent_vocabulary.ACTION_VERBS",
+   "fact": "Identico a FRESH-BUYER-002.",
+   "expression": "A",
+   "shape": "INJECTED"
+  },
+  {
+   "case": "FRESH-FOLLOWUP-004",
+   "declared_root": "PAGINATION_POLITE_VARIANT_NOT_RECOGNIZED",
+   "first_divergence": "query_router.STOPWORDS",
+   "fact": "'siguiente' esta en STOPWORDS; 'pagina' no. Sobrevive el sustantivo y se vuelve tema.",
+   "expression": "A",
+   "shape": "INJECTED"
+  },
+  {
+   "case": "FRESH-FOLLOWUP-005",
+   "declared_root": "RESET_NATURAL_VARIANT_NOT_RECOGNIZED",
+   "first_divergence": "query_router.STOPWORDS",
+   "fact": "'filtra'/'filtrar' estan; 'filtros' (sustantivo plural) no. 'limpia','empecemos','cero' tampoco. No existe concepto RESET: ninguna formulacion natural probada se reconoce.",
+   "expression": "A",
+   "shape": "INJECTED"
+  },
+  {
+   "case": "FRESH-CONTROL-005",
+   "declared_root": "BIDDER_LICITAR_INTENT_NOT_ENFORCED",
+   "first_divergence": "intent_vocabulary.INTENT_PATTERNS",
+   "fact": "NO hay fuga: 'necesito' y 'licitar' si estan en STOPWORDS. Falta una entrada en la alternancia (?:presentarme|participar|ofertar) del patron de intencion bidder. 'necesito participar' y 'quiero ofertar' funcionan; 'necesito licitar' no.",
+   "expression": "A",
+   "shape": "MISSING_CONSTRAINT"
+  }
+ ],
+ "new_findings_not_in_closeout": [
+  {
+   "id": "NEGATED_STATE_POLARITY_INVERSION",
+   "severity_proposed": "P0",
+   "statement": "Cuando el estado negado SI esta en ESTADO_SYNONYMS, la negacion no se ignora: se invierte. 'procesos que no esten abiertos' proyecta estado_del_procedimiento IN (Publicado, Borrador, En aprobacion, Aprobado, Abierto) — exactamente el universo excluido — y ejecuta 2 source calls sin aclarar. Igual con 'contratos que no esten en ejecucion' -> estado_contrato IN (En ejecucion, Modificado, Prorrogado).",
+   "why_worse": "El P0 registrado describe fail-open (resultado demasiado amplio). Esto es fail-inverted: la respuesta es el complemento exacto de lo pedido, entregada con plena confianza.",
+   "evidence": "causality_probe.json -> polarity_end_to_end"
+  },
+  {
+   "id": "SPELL_CORRECTOR_FABRICATES_TOPIC",
+   "severity_proposed": "P1",
+   "statement": "app/utils/spell_correction.correct_query convierte 'otra'->'obra' y 'otras'->'obras'. 'otra' es palabra comun del espanol; 'obra' es un tipo contractual. Cualquier consulta con 'otra/otras' recibe un tema fantasma.",
+   "why_systemic": "STOPWORDS SI contiene 'otra'/'otras', pero correct_query corre ANTES del scrub: la capa previa reescribe el texto y la proteccion de la capa siguiente ya no aplica (expresion C del mecanismo).",
+   "evidence": "correct_query('quitalo todo y empezamos otra vez') == 'quitalo todo y empezamos obra vez'"
+  }
+ ],
+ "root_cause_recount": {
+  "declared_by_closeout": 7,
+  "shared_mechanism": 1,
+  "independent_repair_sites": 4,
+  "sites": [
+   {
+    "site": "app/data/estados.ESTADO_SYNONYMS + negation state polarity",
+    "cases": [
+     "FRESH-NEGATION-005",
+     "(nuevo) inversion de polaridad"
+    ],
+    "severity": "P0"
+   },
+   {
+    "site": "app/core/estado_families.NATURAL_TO_FAMILY (clave duplicada)",
+    "cases": [
+     "FRESH-STATE-002"
+    ],
+    "severity": "P1"
+   },
+   {
+    "site": "query_router.STOPWORDS + intent_vocabulary (ACTION_VERBS, INTENT_PATTERNS)",
+    "cases": [
+     "FRESH-BUYER-002",
+     "FRESH-CROSS-004",
+     "FRESH-FOLLOWUP-004",
+     "FRESH-FOLLOWUP-005",
+     "FRESH-CONTROL-005"
+    ],
+    "severity": "P1"
+   },
+   {
+    "site": "money_admission.has_explicit_monetary_evidence + rango todo-o-nada",
+    "cases": [
+     "FRESH-MONEY-003",
+     "FRESH-MONEY-005"
+    ],
+    "severity": "P1"
+   }
+  ]
+ }
+}

@@ -7,6 +7,53 @@
 
 ## Estado canónico actual — 2026-08-26
 
+### Adjudicación causal de los hallazgos fresh — siete síntomas, un mecanismo
+
+- **Rama:** `audit/fresh-findings-causality` sobre `4d9e5c7`. **Audit-only**:
+  `RUNTIME_FILES_CHANGED: 0`, `FIXTURES_CHANGED: 0`, sin merge, sin push.
+  El corpus fresh queda congelado: es el primer examen fuera de muestra de la
+  campaña y su valor depende de no editarlo.
+- **`FRESH_FINDINGS_CAUSALITY: SYSTEMATIC_CONFIRMED`.** Las **7 causas raíz**
+  declaradas por el closeout son síntomas de **1 mecanismo**, repartido en
+  **4 sitios reparables**:
+  `ENUMERATED_SURFACE_FORM_VOCABULARY_WITH_FAIL_OPEN_DEFAULT`. Cada dimensión
+  se reconoce con una lista de formas superficiales mantenida a mano; el token
+  ausente no da error ni aclaración, cae a `objeto` o desaparece, y el sistema
+  ejecuta una consulta **bien formada y semánticamente equivocada**.
+- **Pares mínimos:** `compra` catalogado y `compró` no; `participar` sí y
+  `licitar` no; `millones` cuenta como evidencia monetaria y `mil` no. Mismo
+  lema, distinta inflexión, comportamiento opuesto.
+- **Prueba predictiva: `12/12`.** Doce consultas derivadas del mecanismo, que
+  **ningún corpus contiene**, fallaron como se predijo. Consecuencia estratégica:
+  parchar nueve escenarios **no cierra la clase**; el lote fresh tomó una
+  muestra del espacio de fallo, no lo agotó.
+- **Dos hallazgos nuevos, ausentes del closeout:**
+  **(1) `NEGATED_STATE_POLARITY_INVERSION`, propuesto P0** y más grave que el P0
+  conocido — cuando el estado negado **sí** está en `ESTADO_SYNONYMS` la negación
+  no se ignora, **se invierte**: `no estén abiertos` proyecta
+  `estado_del_procedimiento IN (Publicado, Borrador, En aprobación, Aprobado,
+  Abierto)` y ejecuta 2 source calls sin aclarar. Fail-open entrega de más;
+  fail-inverted entrega el complemento exacto de lo pedido y parece plausible.
+  **(2) `SPELL_CORRECTOR_FABRICATES_TOPIC`, propuesto P1** — `correct_query`
+  convierte `otra`→`obra` y `otras`→`obras`, inyectando un tema fantasma;
+  `STOPWORDS` sí protege `otra`, pero el corrector corre **antes** del scrub.
+- **`STATE-002` es una clave duplicada, no un diseño:** `NATURAL_TO_FAMILY`
+  declara `vigente(s)` dos veces en el mismo dict (`oferta_abierta` l.138,
+  `contrato_activo` l.156); gana la última en silencio. **Ruff `F601` lo detecta
+  con precisión y no está en el `select` de `ruff.toml`** — la puerta se diseñó
+  para nacer en verde y esta regla quedó fuera con un bug real dentro.
+- **El gate «>3 raíces → revisar arquitectura» no aplica como estaba escrito:**
+  buscaba dispersión y lo que hay es **concentración**. Mejor noticia para la
+  arquitectura, peor para el alcance del sprint.
+- **Informe:** [adjudicación causal fresh](audits/2026-08-26_FRESH_FINDINGS_CAUSALITY.md).
+- **Siguiente:** **`READY_FOR_HCA_FRESH_P1_SPRINT`**, P0 primero y con dos gates:
+  **anti-vocabulario** (el fix no se acepta si es sólo añadir `publicado` a una
+  lista: una autoridad única de estado y fail-closed por defecto) y
+  **predictivo** (re-correr las doce consultas del §4, que no están en ningún corpus).
+
+### Cierre de campaña HCA — bloqueado por bugs frescos — 2026-08-26
+
+
 ### HCA Final Audit — campaña abierta por bugs frescos
 
 - **`HCA_FINAL_AUDIT: BLOCKED_FOR_NEW_RUNTIME_BUG` · `HCA_CAMPAIGN: OPEN`.**
