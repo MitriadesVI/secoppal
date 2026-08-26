@@ -35,6 +35,10 @@ from app.core.temporal_semantics import (
 from app.core.contract_type_resolver import resolve_contract_types
 from app.core.control_language import interpret_control_language
 from app.core.money_resolution import CARDINAL_WORD_PATTERN
+from app.core.money_admission import (
+    has_explicit_monetary_evidence,
+    is_admissible_amount,
+)
 from app.core.negation_binding import (
     NegationDimension,
     NegationRequest,
@@ -49,6 +53,9 @@ from app.utils.money import (
     SMMLV_UNIT_PATTERN,
     is_smmlv_expression,
     money_to_cop,
+    MONETARY_ATOMIC_SCALE_UNIT_PATTERN,
+    MONETARY_SCALE_UNIT_PATTERN,
+    MONETARY_UNIT_PATTERN,
     normalize_text,
     smmlv_to_cop,
 )
@@ -1091,10 +1098,15 @@ class QueryRouter:
         digit_amount = r"(?:\$\s*|cop\s+)?\d+(?:[.,]\d+)*"
         verbal_amount = rf"{CARDINAL_WORD_PATTERN}(?:\s+{CARDINAL_WORD_PATTERN})*"
         amount_atom = rf"(?:{digit_amount}|{verbal_amount})"
-        unit_pattern = (
-            rf"(?:billon(?:es)?|mil\s+millones?|millones?|palos?|barras?|"
-            rf"{SMMLV_UNIT_PATTERN}|mil)"
-        )
+        # HCA-P1: la gramática de unidades es autoridad de app.utils.money, la
+        # misma capa que sabe escalarlas. El catálogo local escribía
+        # ``millones?`` — que no acepta el singular — y dejaba que ``mil`` se
+        # comiera el prefijo de "millon", de modo que "1 millon" valía 1.000.
+        unit_pattern = MONETARY_UNIT_PATTERN
+        # INV-NO-SILENT-EXPLICIT-MONEY-DROP: spans con unidad monetaria
+        # declarada que la conversión no supo resolver. Si al final no queda
+        # ningún filtro de valor, se pide precisión en vez de ejecutar.
+        unconvertible_money: list[str] = []
         smmlv_requested = is_smmlv_expression(normalized_query)
         smmlv_year: int | None = None
         smmlv_year_assumed = False
@@ -1168,11 +1180,11 @@ class QueryRouter:
         # two numbers don't each get mis-classified by the generic loop below.
         # ── Shared unit-inheritance helpers (used by range + compound block) ──
         _compound_unit_re = re.compile(
-            rf"mil\s+millones?|billon(?:es)?|millones?|palos?|barras?|{SMMLV_UNIT_PATTERN}",
+            rf"{MONETARY_SCALE_UNIT_PATTERN}|{SMMLV_UNIT_PATTERN}",
             re.IGNORECASE,
         )
         _atomic_unit_re = re.compile(
-            rf"billon(?:es)?|millones?|palos?|barras?|{SMMLV_UNIT_PATTERN}",
+            rf"{MONETARY_ATOMIC_SCALE_UNIT_PATTERN}|{SMMLV_UNIT_PATTERN}",
             re.IGNORECASE,
         )
         _has_digit_re = re.compile(r"\d")
@@ -1190,7 +1202,7 @@ class QueryRouter:
             return m.group(0) if m else None
 
         _range_re = re.compile(
-            rf"(?:entre|de|desde)\s+({amount_atom}\s*{unit_pattern}?(?:\s+de\s+pesos)?)(?:\s*[-–—]\s*|\s+y\s+|\s+a\s+|\s+hasta\s+)({amount_atom}\s*{unit_pattern}?(?:\s+de\s+pesos)?)",
+            rf"(?:entre|de|desde)\s+({amount_atom}\s*{unit_pattern}?(?:(?:\s+de)?\s+pesos?)?)(?:\s*[-–—]\s*|\s+y\s+|\s+a\s+|\s+hasta\s+)({amount_atom}\s*{unit_pattern}?(?:(?:\s+de)?\s+pesos?)?)",
             re.IGNORECASE,
         )
         range_match = _range_re.search(normalized_query)
@@ -1219,7 +1231,8 @@ class QueryRouter:
             amount_lo = _to_cop(lo_text)
             amount_hi = _to_cop(hi_text)
 
-            if amount_lo and amount_hi and amount_lo >= 1_000_000 and amount_hi >= 1_000_000:
+            if (is_admissible_amount(amount_lo, lo_text)
+                    and is_admissible_amount(amount_hi, hi_text)):
                 params["valor_min"] = min(amount_lo, amount_hi)
                 params["valor_max"] = max(amount_lo, amount_hi)
                 # Remove matched span so generic loop below doesn't re-parse it
@@ -1246,7 +1259,8 @@ class QueryRouter:
                 amount_lo = _to_cop(lo_text)
                 amount_hi = _to_cop(hi_text)
 
-                if amount_lo and amount_hi and amount_lo >= 1_000_000 and amount_hi >= 1_000_000:
+                if (is_admissible_amount(amount_lo, lo_text)
+                        and is_admissible_amount(amount_hi, hi_text)):
                     params["valor_min"] = min(amount_lo, amount_hi)
                     params["valor_max"] = max(amount_lo, amount_hi)
                     span = normalized_query[h_match.start():h_match.end()]
@@ -1258,10 +1272,10 @@ class QueryRouter:
         # e.g., "más de 350 millones y menos de 700" → valor_min + valor_max
         _compound_range_re = re.compile(
             r"(?:m[aá]s\s+de|mayor(?:es)?\s+(?:a|de|que)|por\s+encima\s+de|al\s+menos|superior(?:es)?\s+(?:a|de|que))\s+"
-            rf"({amount_atom}\s*{unit_pattern}?(?:\s+de\s+pesos)?)"
+            rf"({amount_atom}\s*{unit_pattern}?(?:(?:\s+de)?\s+pesos?)?)"
             r"\s+(?:y|e)\s+"
             r"(?:menos\s+de|menor(?:es)?\s+(?:a|de|que)|por\s+debajo\s+de|a\s+lo\s+sumo|inferior(?:es)?\s+(?:a|de|que))\s+"
-            rf"({amount_atom}\s*{unit_pattern}?(?:\s+de\s+pesos)?)",
+            rf"({amount_atom}\s*{unit_pattern}?(?:(?:\s+de)?\s+pesos?)?)",
             re.IGNORECASE,
         )
         cr_match = _compound_range_re.search(normalized_query)
@@ -1285,7 +1299,8 @@ class QueryRouter:
             amount_lo = _to_cop(lo_text)
             amount_hi = _to_cop(hi_text)
 
-            if amount_lo and amount_hi and amount_lo >= 1_000_000 and amount_hi >= 1_000_000:
+            if (is_admissible_amount(amount_lo, lo_text)
+                    and is_admissible_amount(amount_hi, hi_text)):
                 # Unlike a symmetric ``entre X y Y`` range, these operands
                 # have explicit semantic roles.  Preserve them so P8 can see
                 # a contradictory lower bound instead of silently swapping it.
@@ -1297,13 +1312,13 @@ class QueryRouter:
 
         # Detect "X o más" / "X o mas" → valor_min only (before generic loop)
         _o_mas_re = re.compile(
-            rf"({amount_atom}\s*{unit_pattern}?(?:\s+de\s+pesos)?)\s+o\s+m[aá]s",
+            rf"({amount_atom}\s*{unit_pattern}?(?:(?:\s+de)?\s+pesos?)?)\s+o\s+m[aá]s",
             re.IGNORECASE,
         )
         om = _o_mas_re.search(normalized_query)
         if om:
             amount = _to_cop(om.group(1))
-            if amount and amount >= 1_000_000:
+            if is_admissible_amount(amount, om.group(1)):
                 params["valor_min"] = amount
                 # Remove matched span
                 span = normalized_query[om.start():om.end()]
@@ -1313,7 +1328,7 @@ class QueryRouter:
         amount_text = (
             rf"({amount_atom}\s*"
             rf"{unit_pattern}?"
-            r"(?:\s+de\s+pesos)?)"
+            r"(?:(?:\s+de)?\s+pesos?)?)"
         )
         polarity_patterns = (
             (
@@ -1385,7 +1400,12 @@ class QueryRouter:
         for field, pattern in polarity_patterns:
             for match in list(pattern.finditer(normalized_query)):
                 amount = _to_cop(match.group(1))
-                if amount is None or amount < 1_000_000:
+                if not is_admissible_amount(amount, match.group(1)):
+                    # INV-NO-SILENT-EXPLICIT-MONEY-DROP: un comparador con
+                    # unidad monetaria declarada que no se puede convertir no
+                    # se ejecuta sin filtro — se pregunta.
+                    if amount is None and has_explicit_monetary_evidence(match.group(1)):
+                        unconvertible_money.append(match.group(1).strip())
                     continue
                 params[field] = amount
                 span = normalized_query[match.start():match.end()]
@@ -1406,7 +1426,7 @@ class QueryRouter:
         )
         for match in list(_less_than_post_re.finditer(normalized_query)):
             amount = _to_cop(match.group(1))
-            if amount and amount >= 1_000_000:
+            if is_admissible_amount(amount, match.group(1)):
                 params["valor_max"] = amount
                 span = normalized_query[match.start():match.end()]
                 consumed_spans.append(span)
@@ -1422,7 +1442,7 @@ class QueryRouter:
         )
         for match in list(_more_than_post_re.finditer(normalized_query)):
             amount = _to_cop(match.group(1))
-            if amount and amount >= 1_000_000:
+            if is_admissible_amount(amount, match.group(1)):
                 params["valor_min"] = amount
                 span = normalized_query[match.start():match.end()]
                 consumed_spans.append(span)
@@ -1433,7 +1453,7 @@ class QueryRouter:
                 )
 
         matches = list(re.finditer(
-            rf"(?:(?:mas|mayor(?:es)?|superior(?:es)?|superen?)\s+(?:de|a)|(?:menos|menor(?:es)?)\s+(?:de|a)|hasta|por|de|desde)?\s*({amount_atom})\s*{unit_pattern}?(?:\s+de\s+pesos)?",
+            rf"(?:(?:mas|mayor(?:es)?|superior(?:es)?|superen?)\s+(?:de|a)|(?:menos|menor(?:es)?)\s+(?:de|a)|hasta|por|de|desde)?\s*({amount_atom})\s*{unit_pattern}?(?:(?:\s+de)?\s+pesos?)?",
             normalized_query,
         ))
 
@@ -1443,7 +1463,7 @@ class QueryRouter:
             if number_part in year_tokens:
                 continue
             amount = _to_cop(raw)
-            if amount is None or amount < 1_000_000:
+            if not is_admissible_amount(amount, raw):
                 continue
 
             if re.search(r"(?:mas|mayor(?:es)?|superior(?:es)?|superen?)\s+(?:de|a)|desde", raw):
@@ -1478,6 +1498,20 @@ class QueryRouter:
                 "source_texts": source_texts,
                 "representation_kind": "indexed_unit",
             }
+
+        # INV-NO-SILENT-EXPLICIT-MONEY-DROP. Un comparador con unidad monetaria
+        # declarada que no se pudo convertir, y sin ningún otro filtro de valor
+        # que lo respalde, no puede terminar en una consulta sin cota: el
+        # usuario recibiría un universo que no pidió y no tendría cómo notarlo.
+        if unconvertible_money and not (
+            "valor_min" in params or "valor_max" in params
+        ) and "money_clarification" not in params:
+            expresion = unconvertible_money[0]
+            params["money_clarification"] = (
+                f"No pude interpretar el monto de \"{expresion}\". "
+                "¿Me lo das como una cifra? Por ejemplo: "
+                "\"más de 100 mil pesos\" o \"más de 2 millones\"."
+            )
 
         return params, consumed_spans
 

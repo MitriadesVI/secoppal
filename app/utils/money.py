@@ -12,6 +12,30 @@ from app.data.smmlv import smmlv_cop
 SMMLV_UNIT_PATTERN = r"(?:smmlv|smlmv|smlv|salarios?\s+minimos?)"
 _SMMLV_UNIT_RE = re.compile(rf"\b{SMMLV_UNIT_PATTERN}\b", re.IGNORECASE)
 
+# ── Gramática canónica de unidades monetarias ────────────────────────────
+# Autoridad única de RECONOCIMIENTO, alineada por construcción con las escalas
+# que money_to_cop sabe aplicar más abajo. Vive aquí, pegada a la primitiva de
+# conversión, porque una unidad reconocible que la conversión no escale produce
+# un monto silenciosamente equivocado — que es como "1 millon" acabó valiendo
+# 1.000: el catálogo del router escribía ``millones?``, que no acepta el
+# singular, y la alternativa ``mil`` se comía el prefijo de "millon".
+#
+# El orden de las alternativas es significativo: la escala compuesta primero,
+# "mil" al final, para que la coincidencia más larga gane.
+MONETARY_ATOMIC_SCALE_UNIT_PATTERN = (
+    r"(?:bill[oó]n(?:es)?|mill[oó]n(?:es)?|palos?|barras?)"
+)
+MONETARY_SCALE_UNIT_PATTERN = (
+    rf"(?:mil\s+mill[oó]n(?:es)?|{MONETARY_ATOMIC_SCALE_UNIT_PATTERN})"
+)
+CURRENCY_MARKER_PATTERN = r"(?:\$|\bcop\b|\bpesos?\b)"
+# El lookahead va DENTRO del grupo: los consumidores escriben
+# ``{MONETARY_UNIT_PATTERN}?`` para hacer la unidad opcional, y si la frontera
+# quedara fuera, el ``?`` haría opcional el lookahead en vez de la unidad.
+MONETARY_UNIT_PATTERN = (
+    rf"(?:(?:{MONETARY_SCALE_UNIT_PATTERN}|{SMMLV_UNIT_PATTERN}|mil)(?![a-z]))"
+)
+
 
 def safe_money(value: Any) -> float:
     """Converts SECOP monetary fields into floats safely."""

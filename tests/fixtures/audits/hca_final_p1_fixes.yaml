@@ -1,0 +1,281 @@
+# HCA FINAL P1 — corpus focal de los seis REAL_RUNTIME_BUGS del Oracle Review
+# (2026-08-26) más sus anti-regresiones directas.
+#
+# NO sustituye a conversation_holistic_v1.yaml: lo complementa con los
+# sentinels que el corpus holístico no expresa (vecindad monetaria pequeña,
+# familia de estado completa en la fuente, comprador genérico incompleto y
+# universo preservado en un follow-up de solo-orden).
+#
+# Invariantes bajo prueba:
+#   INV-EXPLICIT-MONEY-IS-NOT-DROPPED-BY-MAGNITUDE
+#   INV-NO-SILENT-EXPLICIT-MONEY-DROP
+#   INV-EXACT-STATE-DOES-NOT-WIDEN-TO-FAMILY
+#   INV-STATE-FAMILY-PROJECTS-COMPLETE
+#   INV-INCOMPLETE-BUYER-CANNOT-BECOME-TOPIC
+#   INV-PURE-ORDERING-PRESERVES-SOURCE-UNIVERSE
+cases:
+
+# =====================================================================
+# A. MONEY — magnitud explícita y unidad singular
+# =====================================================================
+- id: P1-MONEY-001
+  category: money
+  severity_if_failed: P1
+  notes: "HCA-MONEY-020 — 100 mil pesos es señal monetaria inequívoca"
+  turns:
+  - {q: "contratos de papeleria por mas de 100 mil pesos", expect: execute, eq: {valor_min: 100000}, soql_has: ["valor_del_contrato >= 100000"]}
+- id: P1-MONEY-002
+  category: money
+  severity_if_failed: P2
+  notes: "HCA-MONEY-026 — millon singular"
+  turns:
+  - {q: "contratos de papeleria por mas de 1 millon", expect: execute, eq: {valor_min: 1000000}}
+- id: P1-MONEY-003
+  category: money
+  severity_if_failed: P2
+  notes: "millón con tilde = millon sin tilde"
+  turns:
+  - {q: "contratos de papeleria por mas de 1 millón", expect: execute, eq: {valor_min: 1000000}}
+- id: P1-MONEY-004
+  category: money
+  severity_if_failed: P1
+  notes: "cota superior pequeña explícita"
+  turns:
+  - {q: "contratos de papeleria por menos de 750 mil pesos", expect: execute, eq: {valor_max: 750000}}
+- id: P1-MONEY-005
+  category: money
+  severity_if_failed: P2
+  notes: "plural sigue intacto"
+  turns:
+  - {q: "contratos de papeleria por mas de 2 millones", expect: execute, eq: {valor_min: 2000000}}
+- id: P1-MONEY-006
+  category: money
+  severity_if_failed: P1
+  notes: "magnitudes grandes sin cambio"
+  turns:
+  - {q: "contratos de obra por mas de 500 millones", expect: execute, eq: {valor_min: 500000000}}
+- id: P1-MONEY-007
+  category: money
+  severity_if_failed: P1
+  notes: "ANTI — año no es dinero"
+  turns:
+  - {q: "contratos de aseo en 2025", expect: execute, absent: [valor_min, valor_max], eq: {fecha_desde: "2025-01-01"}}
+- id: P1-MONEY-008
+  category: money
+  severity_if_failed: P1
+  notes: "ANTI — NIT no es dinero"
+  turns:
+  - {q: "contratos del nit 900739049", absent: [valor_min, valor_max]}
+- id: P1-MONEY-009
+  category: money
+  severity_if_failed: P1
+  notes: "ANTI — cantidad de procesos no es dinero"
+  turns:
+  - {q: "muestrame 100 procesos de aseo en cesar", expect: execute, absent: [valor_min, valor_max]}
+- id: P1-MONEY-010
+  category: money
+  severity_if_failed: P1
+  notes: "ANTI — SMMLV conserva su autoridad indexada"
+  turns:
+  - {q: "contratos de obra por mas de 100 smmlv en 2025", expect: execute, has: [valor_min, money_metadata]}
+- id: P1-MONEY-011
+  category: money
+  severity_if_failed: P1
+  notes: "ANTI — rango monetario existente sin cambio"
+  turns:
+  - {q: "contratos de obra entre 100 y 500 millones", expect: execute, eq: {valor_min: 100000000, valor_max: 500000000}}
+- id: P1-MONEY-012
+  category: money
+  severity_if_failed: P2
+  notes: "unidad no se filtra al objeto"
+  turns:
+  - {q: "contratos de papeleria por mas de 100 mil pesos", expect: execute, objeto_not: [pesos, mil, millon]}
+
+# =====================================================================
+# B. STATE — exacto vs familia
+# =====================================================================
+- id: P1-STATE-001
+  category: state
+  severity_if_failed: P1
+  notes: "HCA-STATE-005 — publicados es literal, no el funnel completo"
+  turns:
+  - {q: "procesos publicados de aseo en cesar", expect: execute, ds: procesos, soql_has: ["'Publicado'"], soql_not: [Borrador, "En aprobación", Aprobado]}
+- id: P1-STATE-002
+  category: state
+  severity_if_failed: P1
+  notes: "HCA-STATE-007 — contrato_activo se proyecta completo (ADR-003)"
+  turns:
+  - {q: "contratos en ejecucion de la alcaldia de medellin", expect: execute, ds: contratos, has: [estado_contrato], soql_has: ["En ejecución", "Modificado", "Prorrogado"]}
+- id: P1-STATE-003
+  category: state
+  severity_if_failed: P1
+  notes: "ANTI — la policy de oportunidad vigente (O1B) se conserva intacta"
+  turns:
+  - {q: "oportunidades de aseo en cesar", expect: execute, ds: procesos, eq: {estado_family: oferta_abierta, intent_type: opportunity_search}, soql_has: ["estado_del_procedimiento IN ('Publicado', 'Abierto')", "fecha_de_recepcion_de"]}
+- id: P1-STATE-004
+  category: state
+  severity_if_failed: P2
+  notes: "borrador literal tampoco arrastra Publicado"
+  turns:
+  - {q: "procesos en borrador de la gobernacion de narino", expect: execute, ds: procesos, soql_has: ["'Borrador'"], soql_not: ["'Publicado'"]}
+- id: P1-STATE-005
+  category: state
+  severity_if_failed: P1
+  notes: "ANTI — familias cerradas de un solo valor intactas"
+  turns:
+  - {q: "contratos cerrados de aseo en cali", expect: execute, ds: contratos, soql_has: ["Cerrado"]}
+- id: P1-STATE-006
+  category: state
+  severity_if_failed: P1
+  notes: "ANTI — terminados intacto"
+  turns:
+  - {q: "contratos terminados de obra en 2025", expect: execute, ds: contratos, soql_has: ["terminado"]}
+- id: P1-STATE-007
+  category: state
+  severity_if_failed: P1
+  notes: "ANTI — contrato_activo también completo sin comprador"
+  turns:
+  - {q: "contratos en ejecucion de obra en cali", expect: execute, ds: contratos, soql_has: ["En ejecución", "Modificado", "Prorrogado"]}
+
+# =====================================================================
+# C. GENERIC BUYER — comprador incompleto no es tema
+# =====================================================================
+- id: P1-BUYER-001
+  category: entity_buyer
+  severity_if_failed: P1
+  notes: "HCA-ENTITY-005 — alcaldía sin calificar aclara, no ejecuta"
+  turns:
+  - {q: "contratos de la alcaldia", expect: block, objeto_not: [alcaldia]}
+- id: P1-BUYER-002
+  category: entity_buyer
+  severity_if_failed: P1
+  notes: "gobernación sin calificar"
+  turns:
+  - {q: "contratos de la gobernacion", expect: block, objeto_not: [gobernacion]}
+- id: P1-BUYER-003
+  category: entity_buyer
+  severity_if_failed: P1
+  notes: "municipio sin calificar"
+  turns:
+  - {q: "contratos del municipio", expect: block, objeto_not: [municipio]}
+- id: P1-BUYER-004
+  category: entity_buyer
+  severity_if_failed: P2
+  notes: "ministerio sin calificar"
+  turns:
+  - {q: "contratos del ministerio", expect: block, objeto_not: [ministerio]}
+- id: P1-BUYER-005
+  category: entity_buyer
+  severity_if_failed: P2
+  notes: "secretaría sin calificar"
+  turns:
+  - {q: "contratos de la secretaria", expect: block, objeto_not: [secretaria]}
+- id: P1-BUYER-006
+  category: entity_buyer
+  severity_if_failed: P1
+  notes: "ANTI — comprador completo ejecuta"
+  turns:
+  - {q: "contratos de la alcaldia de medellin", expect: execute, has: [entidad_resolved]}
+- id: P1-BUYER-007
+  category: entity_buyer
+  severity_if_failed: P1
+  notes: "ANTI — alcaldía local del gazetteer"
+  turns:
+  - {q: "contratos de la alcaldia local de teusaquillo", expect: execute, has: [entidad_resolved]}
+- id: P1-BUYER-008
+  category: entity_buyer
+  severity_if_failed: P1
+  notes: "ANTI — gobernación completa"
+  turns:
+  - {q: "contratos de la gobernacion del atlantico en 2026", expect: execute, has: [entidad_resolved]}
+- id: P1-BUYER-009
+  category: entity_buyer
+  severity_if_failed: P1
+  notes: "ANTI — tema + comprador completo conviven"
+  turns:
+  - {q: "contratos de aseo de la alcaldia de medellin", expect: execute, has: [entidad_resolved], objeto_has: [aseo]}
+- id: P1-BUYER-010
+  category: entity_buyer
+  severity_if_failed: P1
+  notes: "ANTI — ciudad desnuda sigue siendo territorio"
+  turns:
+  - {q: "contratos en barranquilla", expect: execute, eq: {ciudad: Barranquilla}, absent: [entidad_resolved]}
+
+# =====================================================================
+# D. FOLLOW-UP — ordenar no cambia el universo
+# =====================================================================
+- id: P1-FOLLOWUP-001
+  category: followup
+  severity_if_failed: P1
+  notes: "HCA-FOLLOWUP-016 — ordering-only no inyecta ecosistema de compradores"
+  turns:
+  - {q: "contratos de obra en cali por mas de 300 millones", expect: execute, eq: {valor_min: 300000000}}
+  - {q: "los mas antiguos primero", expect: execute, eq: {valor_min: 300000000, ordering_signal: fecha_asc}, absent: [entidad_ecosystem], soql_not: ["ALCALDÍA DE SANTIAGO DE CALI", "SECRETARÍA DE EDUCACIÓN MUNICIPAL", nombre_entidad]}
+- id: P1-FOLLOWUP-002
+  category: followup
+  severity_if_failed: P1
+  notes: "ordering-only tras territorio departamental"
+  turns:
+  - {q: "contratos de aseo en cesar", expect: execute}
+  - {q: "ordenalos por mayor valor", expect: execute, eq: {ordering_signal: valor_desc}, absent: [entidad_ecosystem], soql_not: [nombre_entidad]}
+- id: P1-FOLLOWUP-003
+  category: followup
+  severity_if_failed: P1
+  notes: "ANTI — comprador explícito sobrevive el reordenamiento"
+  turns:
+  - {q: "contratos del icbf en antioquia", expect: execute}
+  - {q: "ordenalos por mayor valor", expect: execute, eq: {ordering_signal: valor_desc}, soql_has: [ICBF]}
+- id: P1-FOLLOWUP-004
+  category: followup
+  severity_if_failed: P1
+  notes: "ANTI — entidad explícita sobrevive el reordenamiento"
+  turns:
+  - {q: "contratos de la gobernacion de boyaca", expect: execute, has: [entidad_resolved]}
+  - {q: "los mas antiguos primero", expect: execute, has: [entidad_resolved], eq: {ordering_signal: fecha_asc}}
+- id: P1-FOLLOWUP-005
+  category: followup
+  severity_if_failed: P1
+  notes: "ANTI — tiempo y dinero sobreviven el reordenamiento"
+  turns:
+  - {q: "contratos de obra en cali por mas de 300 millones en 2025", expect: execute}
+  - {q: "ordenalos por mayor valor", expect: execute, eq: {valor_min: 300000000, fecha_desde: "2025-01-01", ordering_signal: valor_desc}}
+
+# =====================================================================
+# E. SENTINELS DE ALCANCE — lo que este sprint NO debe decidir
+# =====================================================================
+- id: P1-SCOPE-001
+  category: scope_sentinel
+  severity_if_failed: P1
+  notes: "INSUFFICIENT_EVIDENCE — liquidado sigue sin filtro de estado (HCA-STATE-003)"
+  turns:
+  - {q: "contratos liquidados de obra en 2025", expect: execute, ds: contratos, absent: [estado_contrato]}
+- id: P1-SCOPE-002
+  category: scope_sentinel
+  severity_if_failed: P1
+  notes: "INSUFFICIENT_EVIDENCE — procesos liquidados conserva su dataset actual (HCA-SOURCE-002)"
+  turns:
+  - {q: "procesos liquidados de obra en cauca", expect: execute, ds: contratos}
+- id: P1-SCOPE-003
+  category: scope_sentinel
+  severity_if_failed: P1
+  notes: "KNOWN_DEFERRED — modalidad fuera de alcance sigue fail-safe"
+  turns:
+  - {q: "contratos por seleccion abreviada de menor cuantia en 2026", expect: block}
+- id: P1-SCOPE-004
+  category: scope_sentinel
+  severity_if_failed: P1
+  notes: "KNOWN_DEFERRED — enajenación sigue fail-safe"
+  turns:
+  - {q: "procesos de enajenacion de bienes en 2026", expect: block}
+- id: P1-SCOPE-005
+  category: scope_sentinel
+  severity_if_failed: P1
+  notes: "KNOWN_DEFERRED — régimen especial sigue fail-safe"
+  turns:
+  - {q: "procesos de regimen especial en 2026", expect: block}
+- id: P1-SCOPE-006
+  category: scope_sentinel
+  severity_if_failed: P1
+  notes: "SAFE_UNSUPPORTED — salud sin acotar sigue pidiendo precisión"
+  turns:
+  - {q: "contratos de salud en amazonas", expect: block}
