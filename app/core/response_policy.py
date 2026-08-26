@@ -461,10 +461,8 @@ def _build_money_filter_interpretation(resolved: dict) -> str | None:
 
 def _build_ordering_label(params: dict) -> str:
     """Etiqueta de ordenamiento para el header del universo."""
-    ordering = params.get("ordering_signal", "")
-    if ordering == "valor_desc":
-        return "de mayor valor"
-    return "más recientes"
+    from app.core.order_semantics import ordering_label
+    return ordering_label(params)
 
 
 def _build_lectura_rapida(

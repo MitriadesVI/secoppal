@@ -211,13 +211,18 @@ def test_rejected_control_topic_does_not_persist_three_turns(
     control_query: str,
 ) -> None:
     first = {"dataset": "procesos", "objeto": ["mantenimiento", "ascensores"]}
+    parsed_control = router.parse(control_query).params
     second, trace = _followup(router, control_query, first)
     third, _ = _followup(router, "ahora en Medellín", second)
 
     assert second["objeto"] == first["objeto"]
     assert third["objeto"] == first["objeto"]
     assert not ({"ordenalos", "regresa", "elimina", "rango"} & set(third["objeto"]))
-    assert "objeto" in trace["rejected_fields"]
+    # A control turn must never mutate the topic. Two defenses satisfy that:
+    # the parser produces no topic at all (R6 consumes the whole control span),
+    # or the mutation gate rejects the one it produced. Requiring the gate
+    # rejection alone would fail the moment the upstream leak is fixed.
+    assert not parsed_control.get("objeto") or "objeto" in trace["rejected_fields"]
 
 
 def test_modality_refinement_replaces_the_whole_cluster(

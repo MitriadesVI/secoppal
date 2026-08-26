@@ -11,6 +11,7 @@ import re
 import unicodedata
 from typing import Any
 
+from app.core.control_language import is_pure_control_turn
 from app.core.negation_followup import requests_object_exclusion_clear
 
 
@@ -41,13 +42,6 @@ _REMOVE_DATE_RE = re.compile(
 )
 _REMOVE_STATE_RE = re.compile(
     r"^(?:ahora\s+)?(?:quita|elimina|borra)\s+(?:(?:ese|el)\s+)?estado$"
-)
-_ORDER_CONTROL_RE = re.compile(
-    r"^(?:(?:ahora\s+)?(?:ordena|ordenalos|ponlos|dejame)"
-    r"(?:\s+(?:los|solo\s+los))?(?:\s+(?:contratos|procesos))?\s*)?"
-    r"(?:del\s+)?(?:mas\s+caro(?:s)?(?:\s+al?\s+mas\s+barato(?:s)?)?|"
-    r"por\s+(?:mayor\s+)?valor|de\s+mayor\s+a\s+menor|"
-    r"(?:los\s+)?mas\s+recientes?)$"
 )
 _DATASET_CONTROL_RE = re.compile(
     r"^(?:ahora\s+)?(?:vuelve|regresa|cambia|pasa)(?:\s+de\s+nuevo)?\s+a\s+(?:los\s+)?"
@@ -91,7 +85,7 @@ def classify_control_intent(text: str, current_params: dict[str, Any]) -> str | 
         return "refine_filter"
     if current_params.get("objeto_exclude"):
         return "exclude_topic"
-    if current_params.get("ordering_signal") and _ORDER_CONTROL_RE.fullmatch(norm):
+    if current_params.get("ordering_signal") and is_pure_control_turn(norm):
         return "change_order"
     if any(current_params.get(key) for key in STATE_FIELDS) and _STATE_CONTROL_RE.fullmatch(norm):
         return "refine_filter"
@@ -112,6 +106,6 @@ def is_control_only_turn(text: str, parsed_delta: dict[str, Any]) -> bool:
         or _REMOVE_STATE_RE.fullmatch(norm)
         or _DATASET_CONTROL_RE.fullmatch(norm)
         or _KEEP_CONTEXT_RE.fullmatch(norm)
-        or (parsed_delta.get("ordering_signal") and _ORDER_CONTROL_RE.fullmatch(norm))
+        or (parsed_delta.get("ordering_signal") and is_pure_control_turn(norm))
         or (any(parsed_delta.get(key) for key in STATE_FIELDS) and _STATE_CONTROL_RE.fullmatch(norm))
     )

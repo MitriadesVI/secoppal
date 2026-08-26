@@ -27,7 +27,12 @@ from app.core.workflow.results import empty_result, tabular_result
 # Files M2 is authorized to touch, re-pinned. Their divergence is not taken on
 # trust: it is bounded by the structural tests at the end of this module.
 M2_MODIFIED_FILE_SHA256 = {
-    "app/core/formatter.py": "0e51c8f76c4f9d9139d10c6e6b98a623eec8364e1e3656161c67758a91782be7",
+    # HCA-R6 replaces the inlined `ordering_signal == "valor_desc"` conditional
+    # with a call to order_semantics.ordering_label, so the two ascending
+    # directions R6 adds are not announced as "de mayor valor"/"más recientes".
+    # The label for every pre-R6 signal is unchanged and the oracles below stay
+    # byte-identical, which bounds the change to the new signals.
+    "app/core/formatter.py": "0d43d654df3a0072572ec404d8d9d1ded26c4a2b9d5f1981b2b540fa92650aa2",
     # Money V2 / M7 adds a section gated strictly by valor_min/valor_max. The
     # no-money oracle below remains byte-identical and bounds that condition;
     # tests/test_money_presentation.py pins the authorized monetary divergence.
@@ -36,7 +41,8 @@ M2_MODIFIED_FILE_SHA256 = {
     # fecha_desde/fecha_hasta, so the dateless ordinary-query oracle below stays
     # byte-identical; tests/test_time_semantics_v2.py
     # (test_interpretation_preserves_temporal_granularity) pins the new phrasing.
-    "app/core/response_policy.py": "ee9444b84d4dc0873a4a81b28637e8317fbad588cfd17fb21eb0f5d75eb64e0a",
+    # HCA-R6: same delegation to order_semantics.ordering_label as formatter.
+    "app/core/response_policy.py": "940ab9fb9c08a1fd31339570aa23028f6610088ec46aad2d689af78cc4438ba4",
     # O1B/O1B.1 add a predicate gated by opportunity metadata; the
     # ordinary-query oracle below remains byte-identical and bounds that
     # authorization, including the calendar-date boundary correction.
@@ -51,7 +57,11 @@ M2_MODIFIED_FILE_SHA256 = {
     # HCA-R4-S2 adds a null-safe predicate gated strictly by objeto_exclude.
     # The ordinary-query oracle below remains byte-identical; the six-valued
     # null specification lives in tests/test_object_negation_soql.py.
-    "app/core/soql_builder.py": "ac0908135446334a03b4b85255f01694c917e3e969fbd0358cc31ac3c2552110",
+    # HCA-R6 adds two ORDER BY branches (valor_asc, fecha_asc) and makes the
+    # id tie-break follow the requested direction. Both are gated strictly by
+    # ordering_signal values the parser could not emit before R6; the ordinary
+    # oracle below is byte-identical, which bounds the divergence to them.
+    "app/core/soql_builder.py": "ebdf1d1a14aae2695fdc26211f207266676ebe111609f1a8d2672c1246d0037c",
 }
 
 # M2.1 corrigió dos consumidores visibles. AP3-G autoriza además controles de
@@ -62,13 +72,22 @@ M2_1_MODIFIED_FILE_SHA256 = {
     "streamlit_app.py": "ff24ccd886ce6b0e86b085fa77b5c8b14c22f0860d9d52e0127742ca37941fb4",
 }
 
+# HCA-R6 re-pins ONE previously byte-frozen file. The pagination header carried
+# a third copy of the ordering label; leaving it behind would have announced
+# "más recientes" over an oldest-first page — a false claim about the rows on
+# screen. The edit is the same delegation applied to the other two consumers and
+# touches no cursor, buffer or fingerprint logic; test_m2_does_not_move_ranking_
+# ordering_counts_or_pagination below is what bounds that claim.
+CONTROL_LANGUAGE_REPINNED_SHA256 = {
+    "app/core/workflow/handlers/pagination.py": "9d93cc16d8354bbf302ef0ea87acaf78e017309326f4ea717ee47db62ae86b7d",
+}
+
 # Still byte-frozen: M2/SEARCH-SH1 touch neither ranking nor the surrounding
 # public result contracts.
 BASELINE_FILE_SHA256 = {
     "app/core/pagination_buffer.py": "18165ce221b19f49aa190f0c57a399112f72ce4a6906c49062967b7978c474ea",
     "app/core/phrase_ranking.py": "0a99c8f4ebc10dd71556f1796a40c9192404475831a424964871954bab598c5a",
     "app/core/workflow/dual_dataset.py": "5ccaca040a78273ff873c37ca422645a0005b8bb241ac79bd018a88aed2dcba8",
-    "app/core/workflow/handlers/pagination.py": "5d46abd695d30b0c4dbb7cac734b9d5c102482af5391ad1790cd19be80744dc3",
     "app/core/workflow/handlers/refinement.py": "fe1a08d26550d5a39fb4fdddbcb40fd623b89e7ab09c634d0bba7a95db00e076",
     "app/core/workflow/results.py": "b4e869d985dadcb50679a19aafda27d92ead18ef756d4833a0ad9e4100d51057",
     "app/main.py": "bad1f025e142301e036fd40d6dbde78077719850bfda45e45ff1ff0bf4dda282",
@@ -269,6 +288,14 @@ def _oracle_values() -> dict[str, object]:
         "page": page,
         "advisor_response": advisor_response,
     }
+
+
+def test_control_language_repinned_files_match_their_pinned_state():
+    actual = {
+        path: hashlib.sha256(Path(path).read_bytes()).hexdigest()
+        for path in CONTROL_LANGUAGE_REPINNED_SHA256
+    }
+    assert actual == CONTROL_LANGUAGE_REPINNED_SHA256
 
 
 def test_public_product_files_are_byte_identical_to_pre_m1_main():

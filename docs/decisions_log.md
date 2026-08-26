@@ -3602,3 +3602,109 @@ conserva la política de ADR-064: TIME/CLARIFY y cero proyección positiva.
 
 Informe reproducible:
 `docs/audits/2026-08-25_HCA_R5_TIME_V2.md`.
+
+---
+
+## ADR-066: El lenguaje de control no es contenido de búsqueda
+
+**Fecha:** 2026-08-25
+**Estado:** Accepted — `CONTROL_LANGUAGE: CLOSED`
+
+### Contexto
+
+Una consulta mezcla dos lenguajes en una sola frase. **CONTENIDO** nombra lo que
+se busca (`obra`, `mantenimiento`, `Cali`) y pertenece al `WHERE`. **CONTROL**
+dice cómo ordenar, paginar o enmarcar ese contenido (`ordenados por mayor
+valor`, `los más antiguos primero`) y qué clase de pregunta se está haciendo
+(`qué está contratando`, `procesos que cierran`).
+
+La separación existía solo por accidente. La regex de orden consumía el
+*criterio* (`mayor valor`) pero no el *comando* a su alrededor (`ordenados`), y
+el residual iba entero al extractor temático. `contratos de obra en cali
+ordenados por mayor valor` viajaba a SECOP con `LIKE '%ordenados%'` y devolvía
+**0 filas** sobre un universo que tiene 50. El sistema convertía una consulta
+respondible en un vacío, sin decirlo.
+
+Dos autoridades desalineadas agravaban el efecto en conversación: el parser
+reconocía un vocabulario de orden y el clasificador de follow-up otro, más
+estrecho. `los más antiguos primero` no estaba en ninguno, así que se leía como
+tema nuevo, cambiaba el universo y no ordenaba.
+
+### Decisión
+
+1. `app/core/control_language.py` es la autoridad única del lenguaje de control.
+   Recibe el residual positivo y devuelve un `ControlRequest` con la señal de
+   orden y el residual sin los spans consumidos. **No es una lista de palabras
+   prohibidas**: el reconocimiento es por span y contextual, igual que el
+   binding dimensional de ADR-064.
+2. Un span reconocido como control nunca sobrevive al residual —
+   `INV-CONTROL-LANGUAGE-NOT-CONTENT` — y por tanto no puede volverse `objeto`,
+   actor, geografía ni disparador de ecosistema de entidad.
+3. El span cubre el comando completo, no solo el criterio. Se ensancha hacia la
+   izquierda sobre pegamento gramatical, y sobre artículos y sustantivos de
+   relleno **solo si alcanza un imperativo real de «ordenar»** o un ancla
+   `primero`. Un criterio sin comando alrededor no se traga contenido vecino —
+   `INV-CONTROL-SPAN-DOES-NOT-CLASSIFY-CONTENT`.
+4. Las parejas direccionales explícitas se leen antes que cualquier criterio de
+   un solo lado. `de menor a mayor valor` contiene `mayor valor`; leerlo de un
+   lado invierte la intención — el patrón `NORMALIZATION_ERASES_USER_INTENT` de
+   HCA-R2. `ordering_signal` gana `valor_asc` y `fecha_asc`, y `soql_builder`
+   los proyecta a `ASC` con el desempate por identificador en la misma
+   dirección.
+5. La morfología imperativa de «ordenar» es control con criterio o sin él: un
+   imperativo incompleto se consume pero **no infiere dirección** — el orden
+   presentacional por defecto se mantiene antes que adivinar uno.
+6. Los verbos que fijan el modo de la pregunta (`está contratando`, `piensa
+   contratar`, `cierran`) son control y conservan su complemento temático:
+   `está contratando mantenimiento` mantiene `mantenimiento` —
+   `CONTROL_VERB_CANNOT_BECOME_TOPIC`.
+7. Un follow-up de solo orden cambia el `ORDER BY` y nada más:
+   `INV-ORDERING-FOLLOWUP-PRESERVES-UNIVERSE`, verificado comparando el `WHERE`
+   generado antes y después, no solo el frame.
+8. Un comando es frontera del objetivo de una negación, y solo cuando va
+   explícitamente encabezado por comando. `sin alimentación ordenados por mayor
+   valor` excluye el objeto y ordena; `sin obras nuevas` conserva su
+   comportamiento previo intacto.
+9. La etiqueta de orden en cabecera vive en `order_semantics.ordering_label`.
+   Estaba inlined en tres consumidores como un condicional de dos ramas; con
+   dos direcciones nuevas, tres copias habrían anunciado «de mayor valor» sobre
+   una página de menor a mayor.
+
+### Consecuencias y límites
+
+`params["limit"]` **no** es cardinalidad de display sino tamaño del pool de
+candidatos que se valida y rankea. Un `top 10` que lo fijara encogería el pool
+antes de validar y cambiaría *qué* filas sobreviven. R6 reconoce y consume el
+span de `top N` —no puede contaminar— y aplica el orden que lo acompaña, pero
+**no** la cardinalidad: `DEFERRED_CONTROL_LIMIT`.
+
+Sobre `cierran`, la decisión garantiza únicamente que no es un tema contractual.
+La semántica de deadline queda exactamente como estaba; no se abrió trabajo de
+deadlines. `menor cuantía` se excluye del vocabulario ascendente porque es una
+**modalidad** de contratación, no una dirección de orden.
+
+`app/core/query_plan.py` no se tocó: sigue en 299 LoC y la `NEXT_TOUCH_RULE`
+no se invocó.
+
+### Evidencia de aceptación
+
+- HCA congelado: **171/195 → 175/195** sobre el mismo corpus (sha
+  `262c225c…`, sin editar; sha idéntico antes y después). Diferencial caso por
+  caso, no por el neto: corregidos `HCA-INTENT-007`, `HCA-INTENT-008`,
+  `HCA-STATE-006`, `HCA-ORDER-004`; **rotos: 0**. Ambas corridas en modo
+  regex-only por el extractor LLM caído (HTTP 402), condición idéntica en ambos
+  lados y trabajo determinístico sin LLM;
+- corpus focal `control_language_v1.yaml`: **42/42**, pre-registrado
+  (`make audit-control-language-v1`);
+- adversarial generado: **516 comprobaciones**, 0 hallazgos en las once clases
+  de fuga buscadas;
+- fuente Socrata, caso cero histórico: `b661a09` **0 filas** con
+  `LIKE '%ordenados%'` → R6 **50 filas** ordenadas por valor descendente, sin
+  ese predicado. `fecha_asc` verificado ascendente estricto contra la fuente;
+- no-regresión: suite 8554 passed / 2 skipped / 24 xfailed · query corpus 89/89 ·
+  dialogue corpus 60/61 (único FAIL `GOB-DEPTO-001`, basal) ·
+  `make audit-negation-v1` 22/24 idéntico a `b661a09` ·
+  `make audit-time-v2` 32/32.
+
+Informe reproducible:
+`docs/audits/2026-08-25_HCA_R6_CONTROL_LANGUAGE.md`.

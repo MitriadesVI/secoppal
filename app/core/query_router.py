@@ -33,6 +33,7 @@ from app.core.temporal_semantics import (
     resolve_temporal_scope,
 )
 from app.core.contract_type_resolver import resolve_contract_types
+from app.core.control_language import interpret_control_language
 from app.core.money_resolution import CARDINAL_WORD_PATTERN
 from app.core.negation_binding import (
     NegationDimension,
@@ -86,33 +87,6 @@ _DUAL_DATASET_PATTERNS = (
     r"\bprocesos?\s+(?:o|y|e)\s+contratos?\b",
     r"\bambos\b",
     r"\btodo lo relacionado\b",
-)
-
-_ORDERING_VALOR_RE = re.compile(
-    r"""
-    \b(?:mayor|mayores)\s+valor\b
-    |\b(?:mayor|mayores)\s+cuant(?:ia|ía)\b
-    |\blos\s+de\s+mayor\s+valor\b
-    |\blos\s+m[áa]s\s+grandes\s+por\s+valor\b
-    |\bm[áa]s\s+valor\b
-    |\bm[áa]s\s+(?:caro|caros|cara|caras|costoso|costosos|costosa|costosas)\b
-    |\bm[áa]s\s+(?:grande|grandes|importante|importantes|alto|altos|alta|altas)\b
-    |\bordenar\s+por\s+valor\b
-    |\bordenar\s+por\s+monto\b
-    |\bde\s+mayor\s+a\s+menor\b
-    """,
-    re.IGNORECASE | re.VERBOSE,
-)
-
-_ORDERING_FECHA_RE = re.compile(
-    r"""
-    \bm[áa]s\s+recientes?\b
-    |\b[uú]ltimos?\b
-    |\b(?:reciente|recientes)\b
-    |\bordenar\s+por\s+fecha\b
-    |\b(?:nuevo|nuevos|nueva|nuevas|actual|actuales)\b
-    """,
-    re.IGNORECASE | re.VERBOSE,
 )
 
 # NIT colombiano: 8-10 dígitos base, separadores opcionales (punto/guion/espacio),
@@ -620,15 +594,19 @@ class QueryRouter:
             scrubbed = re.sub(rf"\b{re.escape(m.group(0))}\b", " ", scrubbed)
         scrubbed = re.sub(r"\s+", " ", scrubbed).strip()
 
-        # ── 4. Ordering signals ─────────────────────────────────────────
-        if _ORDERING_VALOR_RE.search(scrubbed):
-            params["ordering_signal"] = "valor_desc"
-            scrubbed = _ORDERING_VALOR_RE.sub(" ", scrubbed)
-            scrubbed = re.sub(r"\s+", " ", scrubbed).strip()
-        elif _ORDERING_FECHA_RE.search(scrubbed):
-            params["ordering_signal"] = "fecha_desc"
-            scrubbed = _ORDERING_FECHA_RE.sub(" ", scrubbed)
-            scrubbed = re.sub(r"\s+", " ", scrubbed).strip()
+        # ── 4. Control language (ordering + command/intent verbs) ───────
+        # CONTROL vs CONTENT: a command about how to present or navigate the
+        # results is not part of what the user is looking for. Consuming only
+        # the criterion ("mayor valor") and leaving the command around it
+        # ("ordenados por") shipped LIKE '%ordenados%' to SECOP and returned
+        # zero rows. The control authority owns the whole span.
+        control = interpret_control_language(scrubbed)
+        if control.ordering_signal:
+            params["ordering_signal"] = control.ordering_signal
+        if control.consumed_spans:
+            consumed_spans.extend(control.consumed_spans)
+            actor_modifier_spans.extend(control.consumed_spans)
+        scrubbed = control.residual_text
 
         # ── 4.5. Temporal anaphora: "ese año", "ese periodo" ──────────────────
         # Scrub BEFORE entity rewrite para que "ESE" no capture "ese año"

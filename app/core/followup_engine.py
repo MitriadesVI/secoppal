@@ -36,6 +36,7 @@ from app.core.followup_mutations import (
     gate_delta,
     validate_mutation_invariants,
 )
+from app.core.control_language import is_pure_control_turn
 from app.core.followup_control_tokens import (
     classify_control_intent,
     is_contextual_topic_request,
@@ -478,19 +479,14 @@ class FollowupClassifier:
 
     @staticmethod
     def _has_ordering_signal(text: str) -> bool:
-        """Detecta señales de ordenamiento en texto normalizado."""
-        return bool(re.search(
-            r"\b(?:"
-            r"mayor\s+valor|mayor\s+cuantia|"
-            r"mas\s+caro|mas\s+caros|mas\s+alta|mas\s+alto|"
-            r"mas\s+reciente|mas\s+recientes|"
-            r"mas\s+nuevo|mas\s+nuevos|"
-            r"mas\s+grande|mas\s+grandes|"
-            r"ordena|ordenalos|por\s+valor|por\s+fecha"
-            r")\b",
-            text,
-            re.IGNORECASE,
-        ))
+        """Detecta señales de ordenamiento en texto normalizado.
+
+        Delegado a la autoridad de control language: el clasificador y el parser
+        deben coincidir sobre qué es una orden, o un turno como "los más
+        antiguos primero" se parsea como orden y se clasifica como tema nuevo.
+        """
+        from app.core.control_language import ORDER_VERB_RE, detect_ordering
+        return bool(detect_ordering(text)) or bool(ORDER_VERB_RE.search(text))
 
     @staticmethod
     def _scope_differs(current_scope: dict, previous_scope: dict) -> bool:
@@ -953,11 +949,15 @@ def detect_and_merge(
     # con ese grupo": hereda tema/scope/filtros previos, fija el dataset elegido y
     # suelta dataset_scope. Sin esto, "solo procesos" cae a new_search (el dataset
     # no cambió vs el primario dual) y pierde el tema, mostrando TODO el universo.
+    # "ordena los contratos por mayor valor" names a dataset noun inside a
+    # command, not a choice of dataset: the collapse must not read control
+    # language as content (INV-CONTROL-LANGUAGE-NOT-CONTENT).
     is_dual_collapse = (previous_frame is not None
             and previous_frame.raw_params.get("dataset_scope")
             and current_params.get("dataset_explicit")
             and "dataset_scope" not in current_params
             and not current_frame.topic
+            and not is_pure_control_turn(text)
             and current_params.get("dataset") in ("procesos", "contratos"))
 
     intent = intent_override or (

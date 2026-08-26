@@ -297,11 +297,8 @@ def handle_pagination(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict | Non
             )
             display_from = buffer.displayed_so_far + 1
             display_to = buffer.displayed_so_far + len(rows)
-            ordering_label = (
-                "de mayor valor"
-                if buffer.query_params.get("ordering_signal") == "valor_desc"
-                else "más recientes"
-            )
+            from app.core.order_semantics import ordering_label as _ordering_label
+            ordering_label = _ordering_label(buffer.query_params)
             source_label = (
                 f"{advanced.source_candidate_total}+"
                 if advanced.source_total_approximate

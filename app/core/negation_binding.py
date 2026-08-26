@@ -12,6 +12,7 @@ from dataclasses import dataclass, replace
 from enum import Enum
 from typing import Iterable, Mapping, Pattern
 
+from app.core.control_language import command_boundary
 from app.core.negation_markers import (
     NegativeMarker,
     find_dimensional_negative_markers,
@@ -290,6 +291,14 @@ def _target_end(text: str, marker: NegativeMarker, next_marker_start: int) -> tu
     boundary = _STRONG_BOUNDARY_RE.search(text[marker.end:end])
     if boundary is not None:
         end = marker.end + boundary.start()
+    # HCA-R6: a command terminates the negated target. Without this, "sin
+    # alimentación ordenados por mayor valor" excludes the object AND the word
+    # "ordenados", and the ordering never reaches the builder. Only explicitly
+    # command-led spans cut: a bare adjective ("sin obras nuevas") stays part of
+    # what is being excluded.
+    command = command_boundary(text[marker.end:end])
+    if command is not None:
+        end = marker.end + command
     return end, sino_span
 
 

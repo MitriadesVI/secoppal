@@ -1,4 +1,4 @@
-.PHONY: test smoke smoke-fast lint lint-core audit-negation-v1 audit-time-v2 dev restart
+.PHONY: test smoke smoke-fast lint lint-core audit-negation-v1 audit-time-v2 audit-control-language-v1 dev restart
 
 AUDIT_OUT ?=
 
@@ -28,6 +28,10 @@ audit-negation-v1:
 audit-time-v2:
 	.venv/bin/python scripts/audits/run_conversation_holistic_audit.py \
 		--corpus tests/fixtures/audits/time_v2_focal.yaml $(if $(AUDIT_OUT),--out "$(AUDIT_OUT)")
+
+audit-control-language-v1:
+	.venv/bin/python scripts/audits/run_conversation_holistic_audit.py \
+		--corpus tests/fixtures/audits/control_language_v1.yaml $(if $(AUDIT_OUT),--out "$(AUDIT_OUT)")
 
 dev:
 	./dev.sh

@@ -12,10 +12,13 @@
   (2 commits, sin commit de merge) sobre
   `e0ba21173e56a8562eb626a5136ca53173af8d23`, que ya traía **HCA Core
   Remediation Fase 1** (9 commits, ff-only, ADR-062 incluido).
+- **Rama abierta:** `feature/hca-r6-control-language` — `CONTROL_LANGUAGE: CLOSED`
+  para R6 (ADR-066); pendiente de integration review, **sin merge ni push**
+  desde este sprint.
 - **Estado de cierre:** `HCA_CORE_PHASE_1: INTEGRATED` ·
   `DIRECT_LOOKUP_HIJACK: CLOSED` · `NORMALIZATION_CONTRACT: CLOSED` ·
   `DIMENSIONAL_NEGATION_V1: CLOSED` · `TIME_SEMANTICS_V2: CLOSED` ·
-  `AUDIT_RUNNER_ISOLATION: CLOSED` ·
+  `AUDIT_RUNNER_ISOLATION: CLOSED` · `CONTROL_LANGUAGE: CLOSED (R6 branch)` ·
   `MAIN_INTEGRATION: 68f98e481124e0ed33039821dcd992eb00bc777e`.
 - **Suite (integration review R5, medida sobre `68f98e4`):** 8481 passed,
   2 skipped, 23 xfailed · query corpus 89/89 · dialogue corpus 60/61 con único
@@ -24,7 +27,8 @@
   `make lint-core` limpio · `git diff --check` limpio en Python ·
   Ruff sobre archivos tocados: 0 hallazgos nuevos frente a `e0ba211`.
 - **HCA-1 congelado** (`conversation_holistic_v1.yaml`, sha `262c225c…`,
-  intacto): **171 PASS / 24 FAIL / 0 ERROR de 195**. Fase 1 llevó
+  intacto): **175 PASS / 20 FAIL / 0 ERROR de 195** en la rama R6
+  (**171/24/0** en `main`). Fase 1 llevó
   **156 → 164**; R5 llevó **164 → 171**, con la línea base remedida de forma
   independiente en un worktree limpio de `e0ba211` y el diferencial comparado
   caso por caso: 7 TIME corregidos, **0 rotos**. HCA **no** está completo.
@@ -37,7 +41,7 @@
   normalizarla, y aprendió a distinguir *qué* se está negando antes de decidir
   si puede ejecutarlo.
 
-### Cuatro cierres
+### Cierres acumulados
 
 - **`HCA-LOOKUP-HIJACK-001`: CLOSED** (`0d194f3`). `_extract_entity_refs()`
   exigía prefijo + componente, pero no que algún componente fuera numérico: un
@@ -76,20 +80,54 @@
   stores se borra siempre. Invariante:
   `INV-AUDIT-RUNNER-NO-PRODUCTION-WRITES`.
 
+- **`CONTROL_LANGUAGE`: CLOSED para R6** (ADR-066, rama
+  `feature/hca-r6-control-language`). Una consulta mezcla dos lenguajes:
+  CONTENIDO (lo que se busca) y CONTROL (cómo ordenarlo, y qué clase de pregunta
+  es). El sistema consumía el criterio del orden pero no el comando a su
+  alrededor, así que `contratos de obra en cali ordenados por mayor valor`
+  viajaba a SECOP con `LIKE '%ordenados%'` y devolvía **0 filas** sobre un
+  universo de 50 — verificado contra la fuente en ambas ramas el mismo día.
+  `app/core/control_language.py` es ahora la autoridad: reconoce por span, no
+  por lista de palabras, así que `ordenamiento territorial` y `gestión de
+  órdenes de compra` quedan intactos. `ordering_signal` gana `valor_asc` y
+  `fecha_asc` — antes `de menor a mayor valor` se leía descendente, invirtiendo
+  la intención. Un follow-up de solo orden cambia el `ORDER BY` y nada más
+  (`INV-ORDERING-FOLLOWUP-PRESERVES-UNIVERSE`, verificado comparando el `WHERE`
+  generado, no solo el frame). Los verbos que fijan el modo de la pregunta
+  (`está contratando`, `piensa contratar`, `cierran`) dejan de ser tema y
+  conservan su complemento. HCA **171 → 175**, 0 rotos; focal 42/42;
+  adversarial 516 comprobaciones, 0 fugas.
+
 ### Deuda explícita — HCA **no** está completo
 
 - `TIME_AFTER_R5` — siguen fuera negación temporal ejecutable, NOT BETWEEN,
   huecos/resta de intervalos, quarters/semestres/años fiscales, recurrencia,
   días hábiles y deadlines. R5 no declara resuelta toda la semántica temporal.
-- `CONTROL_LANGUAGE` — refactor general del lenguaje de control.
+- `DEFERRED_CONTROL_LIMIT` — `top N` reconoce y consume el span y aplica el
+  orden que lo acompaña, pero **no** la cardinalidad. `params["limit"]` no es
+  cardinalidad de display sino tamaño del pool de candidatos que se valida y
+  rankea; fijarlo en 10 cambiaría *qué* filas sobreviven, no cuántas se ven.
+  Aplicarlo bien exige un `display_limit` separado atravesando formatter y
+  paginación.
+- `DEFERRED_FOLLOWUP_SCOPE_TOPIC` — un follow-up clasificado `change_scope` que
+  trae un tema genuinamente nuevo lo pierde: la política de mutación de
+  `change_scope` no admite campos de topic y el merger hereda el anterior.
+  Verificado idéntico en `b661a09` — no es regresión de R6. Congelado como
+  `xfail(strict=True)` en `tests/test_control_language.py`.
 - `ACTOR_HYGIENE` — `HCA-ACTOR-011` sigue FAIL basal; el arreglo general de
   Actor Pending está reservado a HCA-R7 y **no** se coló en R4.
 - `ORACLE_REVIEW` — `NEG-N15` (`VALID_DEFERRED`) y `NEG-ANTI-002`
   (`WRONG_ORACLE_CANDIDATE`) son **deuda de oráculo**, no bugs de runtime
-  abiertos. El fixture pre-registrado `negation_focal_v1.yaml` (sha `f4f64a33…`,
+  abiertos. Se les suman `HCA-FOLLOWUP-007` y `HCA-FOLLOWUP-016`: ambos exigen
+  `objeto_has: [obra]`, pero desde SEARCH-SH1 `obra` se proyecta a
+  `contract_type_include` y no a `objeto`, así que el oráculo es insatisfacible
+  por construcción. El comportamiento R6 de `HCA-FOLLOWUP-016` es el correcto
+  (`fecha_asc`, dinero, ciudad y tipo preservados, `objeto` sin contaminar); el
+  corpus HCA **no** se editó. El fixture pre-registrado `negation_focal_v1.yaml` (sha `f4f64a33…`,
   intacto) queda en 22 PASS / 2 FAIL; no se editó para fabricar 24/24.
 - `SEMANTIC_AUTHORITY_CLEANUP` — pendiente.
-- `QUERY_PLAN_AT_LIMIT` — `app/core/query_plan.py` queda en **299/300 LoC**
+- `QUERY_PLAN_AT_LIMIT` — `app/core/query_plan.py` sigue en **299/300 LoC**;
+  R6 no lo tocó y no necesitó invocar la regla
   (`tests/test_module_size_limits.py`). Decisión: `ACCEPTED_AT_LIMIT`, sin
   refactor en este bloque. **`NEXT_TOUCH_RULE`:** cualquier nueva modificación
   funcional de `query_plan.py` debe extraer primero una responsabilidad

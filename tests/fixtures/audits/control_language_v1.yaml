@@ -1,0 +1,392 @@
+version: 1
+name: HCA R6 Control Language & Ordering Semantics focal
+# Pre-registered before the R6 gate. Every case states an expectation about the
+# boundary between CONTROL language (how to order/navigate results, what mode of
+# question is being asked) and CONTENT language (what the user is looking for).
+#
+# Same DSL as the other focal corpora (expect/ds/eq/has/absent/objeto_has/
+# objeto_not/soql_has/soql_not, same_frame_as, differ_from).
+cases:
+
+  # ── Ordering by value ────────────────────────────────────────────────────
+  - id: CTRL-ORD-001
+    category: ordering_value_desc
+    notes: the historical live zero-result case — LIKE '%ordenados%'
+    turns:
+      - q: contratos de obra en cali ordenados por mayor valor
+        expect: execute
+        eq: {ordering_signal: valor_desc, ciudad: Cali}
+        objeto_not: [ordenados, ordenar, mayor, valor]
+        soql_not: ["%ordenados%"]
+
+  - id: CTRL-ORD-002
+    category: ordering_value_desc
+    turns:
+      - q: contratos de aseo en cali de mayor a menor valor
+        expect: execute
+        eq: {ordering_signal: valor_desc}
+        objeto_has: [aseo]
+        objeto_not: [mayor, menor, valor]
+
+  - id: CTRL-ORD-003
+    category: ordering_value_asc
+    notes: descending vocabulary must not swallow an ascending request
+    turns:
+      - q: contratos de aseo en cali de menor a mayor valor
+        expect: execute
+        eq: {ordering_signal: valor_asc}
+        objeto_has: [aseo]
+
+  - id: CTRL-ORD-004
+    category: ordering_value_desc
+    turns:
+      - q: los contratos de aseo mas caros primero en cali
+        expect: execute
+        eq: {ordering_signal: valor_desc}
+        objeto_not: [primero, caros]
+
+  - id: CTRL-ORD-005
+    category: ordering_value_asc
+    turns:
+      - q: los contratos de aseo mas baratos primero en cali
+        expect: execute
+        eq: {ordering_signal: valor_asc}
+        objeto_not: [primero, baratos]
+
+  - id: CTRL-ORD-006
+    category: ordering_value_desc_imperative
+    turns:
+      - q: ordename los contratos de mantenimiento en cali por mayor valor
+        expect: execute
+        eq: {ordering_signal: valor_desc}
+        objeto_has: [mantenimiento]
+        objeto_not: [ordename, ordena]
+
+  # ── Ordering by date ─────────────────────────────────────────────────────
+  - id: CTRL-ORD-010
+    category: ordering_time_desc
+    turns:
+      - q: los contratos mas recientes de aseo en pasto
+        expect: execute
+        eq: {ordering_signal: fecha_desc}
+        objeto_has: [aseo]
+
+  - id: CTRL-ORD-011
+    category: ordering_time_asc
+    turns:
+      - q: contratos de aseo en cali los mas antiguos primero
+        expect: execute
+        eq: {ordering_signal: fecha_asc}
+        objeto_has: [aseo]
+        objeto_not: [antiguos, primero]
+
+  - id: CTRL-ORD-012
+    category: ordering_time_asc
+    turns:
+      - q: contratos de aseo en cali de mas antiguo a mas reciente
+        expect: execute
+        eq: {ordering_signal: fecha_asc}
+        objeto_not: [antiguo, reciente]
+
+  - id: CTRL-ORD-013
+    category: ordering_time_desc
+    turns:
+      - q: contratos de aseo en cali de mas reciente a mas antiguo
+        expect: execute
+        eq: {ordering_signal: fecha_desc}
+
+  # ── ORDER BY reaches the source ──────────────────────────────────────────
+  - id: CTRL-SRC-001
+    category: source_order_by
+    turns:
+      - q: contratos de aseo en cali ordenados por mayor valor
+        expect: execute
+        soql_has: ["ORDER BY valor_del_contrato DESC"]
+
+  - id: CTRL-SRC-002
+    category: source_order_by
+    turns:
+      - q: contratos de aseo en cali de menor a mayor valor
+        expect: execute
+        soql_has: ["ORDER BY valor_del_contrato ASC"]
+
+  - id: CTRL-SRC-003
+    category: source_order_by
+    turns:
+      - q: contratos de aseo en cali los mas antiguos primero
+        expect: execute
+        soql_has: ["ORDER BY fecha_de_firma ASC"]
+
+  # ── Follow-up ordering preserves the universe ────────────────────────────
+  - id: CTRL-FU-001A
+    category: followup_ordering_baseline
+    turns:
+      - q: contratos de mantenimiento en cali
+        expect: execute
+        eq: {ciudad: Cali}
+        objeto_has: [mantenimiento]
+
+  - id: CTRL-FU-001B
+    category: followup_ordering
+    notes: only ORDER BY may move — same topic, same city, same dataset
+    turns:
+      - q: contratos de mantenimiento en cali
+        expect: execute
+      - q: ordenalos por mayor valor
+        expect: execute
+        eq: {ordering_signal: valor_desc, ciudad: Cali}
+        objeto_has: [mantenimiento]
+        objeto_not: [ordenalos]
+
+  - id: CTRL-FU-002
+    category: followup_ordering_time_asc
+    turns:
+      - q: contratos de mantenimiento en cali por mas de 300 millones
+        expect: execute
+      - q: los mas antiguos primero
+        expect: execute
+        eq: {ordering_signal: fecha_asc, ciudad: Cali, valor_min: 300000000}
+        objeto_has: [mantenimiento]
+        objeto_not: [antiguos, primero]
+
+  - id: CTRL-FU-003
+    category: followup_ordering_preserves_time_range
+    turns:
+      - q: contratos de aseo en cali de junio de 2026
+        expect: execute
+      - q: ordenalos por mayor valor
+        expect: execute
+        eq: {ordering_signal: valor_desc, fecha_desde: '2026-06-01', fecha_hasta: '2026-06-30'}
+        objeto_has: [aseo]
+
+  - id: CTRL-FU-004
+    category: followup_ordering_no_pagination_carryover
+    notes: a new ordering restarts paging — an inherited cursor would skip rows
+    turns:
+      - q: contratos de aseo en cali
+        expect: execute
+      - q: muestrame mas
+        expect: execute
+      - q: ordenalos por mayor valor
+        expect: execute
+        absent: [offset]
+
+  # ── Show more / new search must survive control masking ──────────────────
+  - id: CTRL-NAV-001
+    category: show_more
+    turns:
+      - q: contratos de aseo en cali
+        expect: execute
+      - q: muestrame mas
+        expect: execute
+        objeto_has: [aseo]
+        eq: {ciudad: Cali}
+
+  - id: CTRL-NAV-002
+    category: new_search
+    notes: '"ahora muestrame" is control, but software/Bogotá are content'
+    turns:
+      - q: ahora muestrame contratos de software en bogota
+        expect: execute
+        objeto_has: [software]
+        objeto_not: [muestrame, ahora]
+
+  - id: CTRL-NAV-003
+    category: new_search_after_ordering
+    notes: an ordering follow-up must not block a genuinely new search after it
+    turns:
+      - q: contratos de mantenimiento en cali
+        expect: execute
+      - q: ordenalos por mayor valor
+        expect: execute
+      - q: busca contratos de software en bogota
+        expect: execute
+        objeto_has: [software]
+        objeto_not: [mantenimiento, ordenalos]
+
+  # ── Intent verbs are not contractual topics ──────────────────────────────
+  - id: CTRL-VERB-001
+    category: intent_verb
+    turns:
+      - q: que esta contratando la alcaldia de barranquilla
+        expect: execute
+        ds: procesos
+        objeto_not: [contratando, esta]
+
+  - id: CTRL-VERB-002
+    category: intent_verb
+    turns:
+      - q: que piensa contratar la gobernacion de cordoba
+        expect: execute
+        ds: procesos
+        objeto_not: [piensa, contratar]
+
+  - id: CTRL-VERB-003
+    category: intent_verb_keeps_complement
+    notes: the verb is control, the noun after it is still content
+    turns:
+      - q: que esta contratando la alcaldia de barranquilla en mantenimiento
+        expect: execute
+        objeto_has: [mantenimiento]
+        objeto_not: [contratando]
+
+  - id: CTRL-VERB-004
+    category: deadline_verb
+    notes: R6 only guarantees "cierran" is not a topic; deadline semantics unchanged
+    turns:
+      - q: procesos que cierran hoy en atlantico
+        expect: execute
+        objeto_not: [cierran]
+
+  - id: CTRL-VERB-005
+    category: bidder_intent_preserved
+    notes: >
+      "para licitar" routing predates R6 and must not move. P15 blocks a
+      territory-only opportunity search (ADR/OPP-SCOPE, Opción A); R6 only
+      guarantees the verb never becomes a contractual topic.
+    turns:
+      - q: procesos para licitar en cali
+        expect: block
+        ds: procesos
+        eq: {intent_type: opportunity_search}
+        objeto_not: [licitar]
+
+  # ── Control words that are genuine content ───────────────────────────────
+  - id: CTRL-FP-001
+    category: control_word_is_content
+    notes: ordenamiento territorial is a real procurement object
+    turns:
+      - q: contratos de ordenamiento territorial en cali
+        expect: execute
+        objeto_has: [ordenamiento]
+        absent: [ordering_signal]
+
+  - id: CTRL-FP-002
+    category: control_word_is_content
+    turns:
+      - q: contratos de sistemas de control de acceso en medellin
+        expect: execute
+        objeto_has: [control]
+        absent: [ordering_signal]
+
+  - id: CTRL-FP-003
+    category: control_word_is_content
+    notes: menor cuantía is a MODALITY, never a sort direction
+    turns:
+      - q: contratos de aseo por seleccion abreviada de menor cuantia en cali
+        expect: execute
+        absent: [ordering_signal]
+
+  - id: CTRL-FP-004
+    category: control_word_is_content
+    notes: a non-final "primeros" modifies the noun after it
+    turns:
+      - q: contratos de primeros auxilios en cali
+        expect: execute
+        objeto_has: [primeros]
+        absent: [ordering_signal]
+
+  - id: CTRL-FP-005
+    category: incomplete_command
+    notes: a bare imperative is consumed but infers no direction
+    turns:
+      - q: contratos de aseo en cali ordena
+        expect: execute
+        objeto_has: [aseo]
+        objeto_not: [ordena]
+        absent: [ordering_signal]
+
+  # ── Money must not be read as ordering ───────────────────────────────────
+  - id: CTRL-MONEY-001
+    category: money_not_ordering
+    turns:
+      - q: contratos de aseo en cali por mas de 500 millones
+        expect: execute
+        eq: {valor_min: 500000000}
+        absent: [ordering_signal]
+
+  - id: CTRL-MONEY-002
+    category: money_not_ordering
+    turns:
+      - q: contratos de aseo en cali por valor de 500 millones
+        expect: execute
+        absent: [ordering_signal]
+
+  - id: CTRL-MONEY-003
+    category: money_and_ordering
+    turns:
+      - q: contratos de aseo en cali por mas de 500 millones ordenados de mayor a menor
+        expect: execute
+        eq: {valor_min: 500000000, ordering_signal: valor_desc}
+        objeto_has: [aseo]
+
+  # ── Time must not be read as ordering ────────────────────────────────────
+  - id: CTRL-TIME-001
+    category: time_and_ordering
+    turns:
+      - q: contratos de aseo de junio de 2026 ordenados por mayor valor
+        expect: execute
+        eq: {fecha_desde: '2026-06-01', fecha_hasta: '2026-06-30', ordering_signal: valor_desc}
+        objeto_not: [ordenados]
+
+  - id: CTRL-TIME-002
+    category: temporal_window_not_ordering
+    notes: '"los últimos 30 días" is a window, not a sort key'
+    clock: 2026-08-25
+    turns:
+      - q: contratos de aseo en cali de los ultimos 30 dias
+        expect: execute
+        absent: [ordering_signal]
+
+  # ── Negation binding must survive control masking ────────────────────────
+  - id: CTRL-NEG-001
+    category: negation_and_ordering
+    turns:
+      - q: contratos de mantenimiento sin alimentacion en cali ordenados por mayor valor
+        expect: execute
+        eq: {ordering_signal: valor_desc}
+        objeto_has: [mantenimiento]
+        objeto_not: [ordenados, alimentacion]
+
+  # ── Top N ────────────────────────────────────────────────────────────────
+  - id: CTRL-TOPN-001
+    category: top_n_ordering
+    notes: DEFERRED_CONTROL_LIMIT — the cardinality is not applied, the order is
+    turns:
+      - q: top 10 contratos de obra por valor en antioquia
+        expect: execute
+        eq: {ordering_signal: valor_desc}
+        objeto_not: [top]
+
+  # ── Metamorphic: ordering must not move the universe ─────────────────────
+  - id: CTRL-META-001A
+    category: metamorphic_ordering
+    turns:
+      - q: contratos de mantenimiento en cali
+        expect: execute
+
+  - id: CTRL-META-001B
+    category: metamorphic_ordering
+    notes: adding an ordering follow-up may only change ordering_signal
+    turns:
+      - q: contratos de mantenimiento en cali
+        expect: execute
+      - q: ordenalos por mayor valor
+        expect: execute
+    differ_from: {case: CTRL-META-001A, fields: [ordering_signal]}
+
+  - id: CTRL-META-002A
+    category: metamorphic_ordering_scope
+    turns:
+      - q: contratos de aseo en cali ordenados por mayor valor
+        expect: execute
+
+  - id: CTRL-META-002B
+    category: metamorphic_ordering_scope
+    notes: same universe reached through a follow-up instead of one turn
+    turns:
+      - q: contratos de aseo en cali
+        expect: execute
+      - q: ordenalos por mayor valor
+        expect: execute
+    same_frame_as: CTRL-META-002A

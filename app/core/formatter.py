@@ -693,13 +693,9 @@ class Formatter:
 
     @staticmethod
     def _ordering_label(params: dict | None) -> str:
-        """Retorna etiqueta de ordenación para el header.
-        valor_desc → 'de mayor valor'
-        default    → 'más recientes'
-        """
-        if params and params.get("ordering_signal") == "valor_desc":
-            return "de mayor valor"
-        return "más recientes"
+        """Etiqueta de ordenación para el header (autoridad: order_semantics)."""
+        from app.core.order_semantics import ordering_label
+        return ordering_label(params)
 
     def _shown_phrase(self, shown: int, params: dict | None,
                       order_guarantee: str = "exact_order") -> str:

@@ -66,3 +66,22 @@ def sort_page_presentational(rows: list[dict], date_field: str, value_field: str
         key=lambda r: (str(r.get(date_field) or ""), _coerce_float(r.get(value_field))),
         reverse=True,
     )
+
+
+# ── Presentation label — one authority, three consumers ──────────────────────
+# The header phrase used to be inlined in formatter, response_policy and the
+# pagination handler as `== "valor_desc" ? ... : "más recientes"`. With R6 the
+# system can order ascending, and three copies of a two-branch conditional would
+# have announced "de mayor valor" over a cheapest-first page.
+_ORDERING_LABELS = {
+    "valor_desc": "de mayor valor",
+    "valor_asc": "de menor valor",
+    "fecha_desc": "más recientes",
+    "fecha_asc": "más antiguos",
+}
+
+
+def ordering_label(params: dict | None) -> str:
+    """Human label for the active ordering; the default is presentational."""
+    signal = str((params or {}).get("ordering_signal") or "")
+    return _ORDERING_LABELS.get(signal, "más recientes")

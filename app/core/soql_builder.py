@@ -259,6 +259,10 @@ class SoQLBuilder:
             order_expr = f"{spec.date} DESC, {spec.value} DESC"  # freshness + value
         elif ordering == "valor_desc":
             order_expr = f"{spec.value} DESC, {spec.date} DESC"
+        elif ordering == "valor_asc":
+            order_expr = f"{spec.value} ASC, {spec.date} ASC"
+        elif ordering == "fecha_asc":
+            order_expr = f"{spec.date} ASC, {spec.value} ASC"
         else:
             order_expr = f"{spec.date} DESC, {spec.value} DESC"
         # Etapa 8A: desempate ESTABLE por identificador. Sin esto, filas con misma fecha
@@ -266,7 +270,11 @@ class SoQLBuilder:
         # solapan/saltan al cruzar la ventana SECOP. El id es único y la columna final
         # rompe todos los empates de forma reproducible entre procesos.
         id_field = "id_contrato" if dataset_id == self.CONTRATOS_DATASET else "id_del_proceso"
-        order_expr = f"{order_expr}, {id_field} DESC"
+        # R6: the tie-break follows the requested direction. An ASC page broken
+        # by a DESC id is still deterministic, but it walks the id axis backwards
+        # while paging forward, so consecutive pages can overlap on ties.
+        tie_direction = "ASC" if ordering in ("valor_asc", "fecha_asc") else "DESC"
+        order_expr = f"{order_expr}, {id_field} {tie_direction}"
         # Commit 5: con frase recall-first ampliamos el POOL de candidatos (no el
         # display, que recorta aguas abajo). Permite que el validador (Commit 6) vea
         # los positivos hoy perdidos sin que LIMIT los trunque.
