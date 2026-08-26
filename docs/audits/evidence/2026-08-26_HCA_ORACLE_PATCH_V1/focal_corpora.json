@@ -1,0 +1,68 @@
+{
+ "all_match_baseline": true,
+ "focals": [
+  {
+   "target": "audit-hca-final-p1",
+   "corpus": "tests/fixtures/audits/hca_final_p1_fixes.yaml",
+   "corpus_sha256": "1d0ab1028b0bb0784b4e6f3cb4937f82cc6b86db4521141af5556cde547031c2",
+   "cases": 40,
+   "pass": 40,
+   "fail": 0,
+   "error": 0,
+   "expected_baseline_pass": 40,
+   "matches_baseline": true,
+   "fails": []
+  },
+  {
+   "target": "audit-actor-hygiene-v1",
+   "corpus": "tests/fixtures/audits/actor_hygiene_v1.yaml",
+   "corpus_sha256": "217df608a9a5dfb0abd1c89cda27d1c79f04a3000d9086457eb54dc916418698",
+   "cases": 36,
+   "pass": 36,
+   "fail": 0,
+   "error": 0,
+   "expected_baseline_pass": 36,
+   "matches_baseline": true,
+   "fails": []
+  },
+  {
+   "target": "audit-control-language-v1",
+   "corpus": "tests/fixtures/audits/control_language_v1.yaml",
+   "corpus_sha256": "b082f2d86952c28ce17d75d95b25c31706b147f857c126f82ef312b4b1501aba",
+   "cases": 42,
+   "pass": 42,
+   "fail": 0,
+   "error": 0,
+   "expected_baseline_pass": 42,
+   "matches_baseline": true,
+   "fails": []
+  },
+  {
+   "target": "audit-time-v2",
+   "corpus": "tests/fixtures/audits/time_v2_focal.yaml",
+   "corpus_sha256": "7e535cb6323d41735e63e996aa7ed139ff513372ba8bd9a671158bd5685dcd13",
+   "cases": 32,
+   "pass": 32,
+   "fail": 0,
+   "error": 0,
+   "expected_baseline_pass": 32,
+   "matches_baseline": true,
+   "fails": []
+  },
+  {
+   "target": "audit-negation-v1",
+   "corpus": "tests/fixtures/audits/negation_focal_v1.yaml",
+   "corpus_sha256": "f4f64a33ea7009eb1da9fa7d3c910e67010e6dafc6b4c5b6932901c27fad9a1d",
+   "cases": 24,
+   "pass": 22,
+   "fail": 2,
+   "error": 0,
+   "expected_baseline_pass": 22,
+   "matches_baseline": true,
+   "fails": [
+    "NEG-N15",
+    "NEG-ANTI-002"
+   ]
+  }
+ ]
+}

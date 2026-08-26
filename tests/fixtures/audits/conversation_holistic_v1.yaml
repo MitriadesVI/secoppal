@@ -5,6 +5,12 @@
 # is a bug candidate to be triaged in the audit report; the corpus is not to
 # be edited to make cases pass.
 #
+# Amendment ORACLE_PATCH_V1 (2026-08-26): six oracles were rewritten because a
+# blind adjudication proved them wrong about the canonical semantics, NOT to
+# make them pass — see docs/audits/2026-08-26_HCA_ORACLE_PATCH_V1.md. The
+# no-editing rule stands: an expectation may only change on prior adjudicated
+# authority, never on observed runtime behavior. No runtime code was touched.
+#
 # Check DSL: see scripts/audits/run_conversation_holistic_audit.py header.
 # severity_if_failed is the auditor's prior; final severity is set in triage.
 version: 1
@@ -126,8 +132,14 @@ cases:
 - id: HCA-TOPIC-007
   category: topic_object
   severity_if_failed: P2
+  notes: "PAE denotes the canonical school-feeding topic; validate the canonical concept plus territory and curated source aliases, not the input acronym"
   turns:
-  - {q: "procesos del pae en la guajira", expect: execute, ds: procesos, objeto_has: [pae]}
+  - q: "procesos del pae en la guajira"
+    expect: execute
+    ds: procesos
+    objeto_has: [alimentacion_escolar]
+    soql_has: ["departamento_entidad = 'La Guajira'", "%alimentacion escolar%"]
+    soql_not: ["%pae%"]
 - id: HCA-TOPIC-008
   category: topic_object
   severity_if_failed: P1
@@ -308,9 +320,17 @@ cases:
 - id: HCA-ENTITY-001
   category: entity_buyer
   severity_if_failed: P0
-  notes: "canonical value must not carry markdown/asterisks into LIKE"
+  notes: "buyer must use the real SECOP source name, asterisks included (ADR-040); no accidental territorial reinterpretation; 2026 scope preserved"
   turns:
-  - {q: "contratos de la gobernacion del atlantico en 2026", expect: execute, soql_not: ["ATLANTICO**"]}
+  - q: "contratos de la gobernacion del atlantico en 2026"
+    expect: execute
+    ds: contratos
+    eq: {entidad_resolved: "DEPARTAMENTO DEL ATLANTICO**"}
+    absent: [departamento_resolved]
+    soql_has:
+    - "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DEPARTAMENTO DEL ATLANTICO**%'))"
+    - "fecha_de_firma >= '2026-01-01'"
+    - "fecha_de_firma <= '2026-12-31'"
 - id: HCA-ENTITY-002
   category: entity_buyer
   severity_if_failed: P1
@@ -673,9 +693,15 @@ cases:
 - id: HCA-ACTOR-004
   category: actor
   severity_if_failed: P1
-  notes: "sentinel typo LMP INGIENERIA — actor-shaped mention must go to candidates, not topic"
+  notes: "typo actor-shaped: typed candidates must be offered WITHOUT authorizing identity before user selection; no topic leakage"
   turns:
-  - {q: "contratos de lmp ingieneria en 2025", has: [actor_scope], objeto_not: [lmp, ingieneria]}
+  - q: "contratos de lmp ingieneria en 2025"
+    expect: block
+    has: [actor_pending]
+    absent: [actor_scope, contratista]
+    eq: {actor_resolution_status: CANDIDATES}
+    candidate_present: {document_type: NIT, base_number: "900739049", max_rank: 3}
+    objeto_not: [lmp, ingieneria]
 - id: HCA-ACTOR-005
   category: actor
   severity_if_failed: P0
@@ -999,10 +1025,16 @@ cases:
 - id: HCA-FOLLOWUP-007
   category: followup
   severity_if_failed: P1
-  notes: "filter removal: quita el filtro de modalidad"
+  notes: "CLEAR removes modality and preserves territory plus the structured contract type Obra; do not require duplicate topic text (ADR-061)"
   turns:
   - {q: "contratos de obra en atlantico por licitacion publica", expect: execute, has: [modalidad_include_procedure_ids]}
-  - {q: "mejor quita el filtro de modalidad", absent: [modalidad_include_procedure_ids], objeto_has: [obra]}
+  - q: "mejor quita el filtro de modalidad"
+    expect: execute
+    ds: contratos
+    absent: [modalidad_include_procedure_ids, modalidad_exclude_procedure_ids]
+    eq: {contract_type_include: [obra]}
+    soql_has: ["departamento = 'Atlántico'", "tipo_de_contrato = 'Obra'"]
+    soql_not: ["modalidad_de_contratacion IN", "modalidad_de_contratacion ="]
 - id: HCA-FOLLOWUP-008
   category: followup
   severity_if_failed: P1
@@ -1064,10 +1096,20 @@ cases:
 - id: HCA-FOLLOWUP-016
   category: followup
   severity_if_failed: P1
-  notes: " ordering change must not lose money filter (reorder keeps WHERE)"
+  notes: "ordering-only change keeps the WHERE universe: money, city and the structured contract type Obra; no derived buyers appear (ADR-066/ADR-061)"
   turns:
   - {q: "contratos de obra en cali por mas de 300 millones", expect: execute, eq: {valor_min: 300000000}}
-  - {q: "los mas antiguos primero", eq: {valor_min: 300000000}, objeto_has: [obra]}
+  - q: "los mas antiguos primero"
+    expect: execute
+    ds: contratos
+    eq: {valor_min: 300000000, ciudad: Cali, contract_type_include: [obra], ordering_signal: fecha_asc}
+    absent: [entidad_ecosystem, entidad_resolved, entidad_like]
+    soql_has:
+    - "unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Cali%'))"
+    - "valor_del_contrato >= 300000000"
+    - "tipo_de_contrato = 'Obra'"
+    - "ORDER BY fecha_de_firma ASC"
+    soql_not: ["unaccent(UPPER(nombre_entidad)) LIKE"]
 - id: HCA-FOLLOWUP-017
   category: followup
   severity_if_failed: P2
@@ -1094,9 +1136,21 @@ cases:
 - id: HCA-META-001B
   category: metamorphic
   severity_if_failed: P2
-  same_frame_as: HCA-META-001A
+  notes: "territorial department is NOT equivalent to the Gobernacion buyer (ADR-040 INV-7); topic and time are preserved, the universe dimension is not"
+  differ_from: {case: HCA-META-001A, fields: [entidad_resolved, departamento_resolved]}
   turns:
-  - {q: "contratos de adulto mayor del departamento del atlantico para 2026", expect: execute}
+  - q: "contratos de adulto mayor del departamento del atlantico para 2026"
+    expect: execute
+    ds: contratos
+    eq: {departamento_resolved: "Atlántico"}
+    absent: [entidad_resolved]
+    objeto_has: [adulto_mayor]
+    soql_has:
+    - "departamento = 'Atlántico'"
+    - "%adulto mayor%"
+    - "fecha_de_firma >= '2026-01-01'"
+    - "fecha_de_firma <= '2026-12-31'"
+    soql_not: ["unaccent(UPPER(nombre_entidad)) LIKE"]
 - id: HCA-META-002A
   category: metamorphic
   severity_if_failed: P2

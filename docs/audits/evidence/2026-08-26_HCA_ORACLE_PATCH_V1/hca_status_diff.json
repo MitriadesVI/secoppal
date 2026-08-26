@@ -1,0 +1,115 @@
+{
+ "corpus_sha_before": "262c225c7939f04516ee95b3c77b4911f9f476058941a88a61d01c918499ffba",
+ "corpus_sha_after": "a341405a79d74cdb43872cf937cd2b58f4ebb736afe4a2135ced9b6d389c352e",
+ "cases": 195,
+ "before": {
+  "pass": 182,
+  "fail": 13,
+  "error": 0
+ },
+ "after": {
+  "pass": 188,
+  "fail": 7,
+  "error": 0
+ },
+ "compared_case_ids": 195,
+ "pass_to_fail": [],
+ "fail_to_pass": [
+  "HCA-ACTOR-004",
+  "HCA-ENTITY-001",
+  "HCA-FOLLOWUP-007",
+  "HCA-FOLLOWUP-016",
+  "HCA-META-001B",
+  "HCA-TOPIC-007"
+ ],
+ "status_changes": [
+  {
+   "case_id": "HCA-TOPIC-007",
+   "before": "FAIL",
+   "after": "PASS"
+  },
+  {
+   "case_id": "HCA-ENTITY-001",
+   "before": "FAIL",
+   "after": "PASS"
+  },
+  {
+   "case_id": "HCA-ACTOR-004",
+   "before": "FAIL",
+   "after": "PASS"
+  },
+  {
+   "case_id": "HCA-FOLLOWUP-007",
+   "before": "FAIL",
+   "after": "PASS"
+  },
+  {
+   "case_id": "HCA-FOLLOWUP-016",
+   "before": "FAIL",
+   "after": "PASS"
+  },
+  {
+   "case_id": "HCA-META-001B",
+   "before": "FAIL",
+   "after": "PASS"
+  }
+ ],
+ "remaining_fails": [
+  {
+   "case_id": "HCA-TOPIC-012",
+   "classification": "SAFE_UNSUPPORTED_CAPABILITY",
+   "fails": [
+    "turn 1 'contratos de salud en amazonas': expected execution, got clarification"
+   ]
+  },
+  {
+   "case_id": "HCA-MODALITY-002",
+   "classification": "KNOWN_DEFERRED_PRODUCT_DEBT",
+   "fails": [
+    "turn 1 'contratos por seleccion abreviada de menor cuantia en 2026': expected execution, got clarification"
+   ]
+  },
+  {
+   "case_id": "HCA-MODALITY-012",
+   "classification": "KNOWN_DEFERRED_PRODUCT_DEBT",
+   "fails": [
+    "turn 1 'procesos de enajenacion de bienes en 2026': expected execution, got clarification"
+   ]
+  },
+  {
+   "case_id": "HCA-ENTITY-004",
+   "classification": "INSUFFICIENT_EVIDENCE",
+   "fails": [
+    "turn 1 'que contrato el departamento del atlantico en 2025': missing param entidad_resolved"
+   ]
+  },
+  {
+   "case_id": "HCA-STATE-003",
+   "classification": "INSUFFICIENT_EVIDENCE",
+   "fails": [
+    "turn 1 'contratos liquidados de obra en 2025': missing param estado_contrato"
+   ]
+  },
+  {
+   "case_id": "HCA-TYPO-003",
+   "classification": "KNOWN_DEFERRED_PRODUCT_DEBT",
+   "fails": [
+    "turn 1 'procesos de regimen especial en 2026': expected execution, got clarification"
+   ]
+  },
+  {
+   "case_id": "HCA-SOURCE-002",
+   "classification": "INSUFFICIENT_EVIDENCE",
+   "fails": [
+    "turn 1 'procesos liquidados de obra en cauca': dataset='contratos', expected 'procesos'"
+   ]
+  }
+ ],
+ "remaining_composition": {
+  "safe_unsupported": 1,
+  "known_deferred": 3,
+  "insufficient_evidence": 3,
+  "real_runtime_bug": 0,
+  "confirmed_oracle_debt": 0
+ }
+}

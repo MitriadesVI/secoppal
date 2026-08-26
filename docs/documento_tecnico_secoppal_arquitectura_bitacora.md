@@ -7,6 +7,55 @@
 
 ## Estado canónico actual — 2026-08-26
 
+### Oracle Patch V1 — el examen deja de medir una versión anterior de sí mismo
+
+- **Rama:** `audit/hca-oracle-patch-v1` sobre
+  `8833ba286d5679926493efed4287cdbb425ff276`. **Sin merge, sin push, sin ADR**:
+  este bloque no cambia la arquitectura del producto, cambia el instrumento de
+  evaluación. `RUNTIME_FILES_CHANGED: 0`; `RUNNER_CHANGED: NO`;
+  `FIXTURE_ONLY_PATCH`.
+- **Seis oráculos reescritos**, todos con adjudicación previa que los autoriza:
+  `HCA-ACTOR-004` (candidato fuzzy no autoriza identidad), `HCA-TOPIC-007`
+  (PAE es el concepto canónico `alimentacion_escolar`, no la forma superficial),
+  `HCA-ENTITY-001` (`DEPARTAMENTO DEL ATLANTICO**` es valor real de fuente,
+  no Markdown a limpiar), `HCA-FOLLOWUP-007` y `HCA-FOLLOWUP-016` (obra es
+  dimensión estructurada de tipo contractual y no se duplica como tema) y
+  `HCA-META-001B`, que pasa de metamórfico falso a **anti-metamórfico**
+  (`differ_from`) porque comprador y territorio son universos distintos por diseño.
+- **Nada más se tocó.** `HCA-TOPIC-012` sigue `SAFE_UNSUPPORTED_CAPABILITY`;
+  MODALITY-002/012 y TYPO-003 siguen `KNOWN_DEFERRED_PRODUCT_DEBT`;
+  ENTITY-004, STATE-003 y SOURCE-002 siguen `INSUFFICIENT_EVIDENCE`.
+  `NEG-N15` y `NEG-ANTI-002` viven en otro fixture y no entraron aquí.
+  Gate estructural por hash de fragmento: `CHANGED_CASE_IDS` = los seis,
+  `UNEXPECTED_CHANGED_CASES: 0`, orden y conjunto de los 195 IDs intactos.
+- **HCA: 182/195 → 188/195 PASS**, 7 FAIL, 0 ERROR, comparando los 195 IDs:
+  **`PASS→FAIL = 0`**. Los 7 restantes son 1 SAFE + 3 DEFERRED + 3 INSUFFICIENT;
+  `REAL_RUNTIME_BUG: 0` y `CONFIRMED_ORACLE_DEBT: 0`. **188/195 no es
+  «100% correcto»**: es la cifra ya sin deuda de oráculo contaminándola.
+- **El SHA del corpus cambia a propósito** — fingir que sigue congelado sería
+  falso. `262c225c…` → **`a341405a79d74cdb43872cf937cd2b58f4ebb736afe4a2135ced9b6d389c352e`**,
+  nuevo baseline canónico del Final HCA.
+- **No-vacuidad probada: `PATCH_NONVACUOUS = 6/6`.** Cada oracle nuevo se
+  enfrentó al defecto conceptual que dice impedir (fuzzy que auto-resuelve, tema
+  perdido, comprador vuelto territorio, Obra perdida al quitar modalidad,
+  compradores derivados reapareciendo al ordenar, ambos frames colapsando) y
+  falló como debía. Ninguno se apoya sólo en «ejecutó» o «pidió aclaración».
+- **Límites declarados, no disimulados:** el runner no observa llamadas a la
+  fuente, así que «cero source calls» de ACTOR-004 **no** es aserción del corpus;
+  y la igualdad de WHERE entre turnos de FOLLOWUP-016 sigue siendo evidencia
+  externa. No se inventó una aserción débil ni se extendió el runner para
+  simular ninguna de las dos.
+- **Validación:** focales sin mover — final-p1 40/40, actor 36/36, control 42/42,
+  tiempo 32/32, negación 22/24 basal. Ruff, lint-core y diff-check PASS.
+  Aislamiento del runner `outside_sandbox: []`. **Suite completa NO ejecutada**,
+  por ser patch de fixture + docs con runner intacto.
+- **Informe:** [Oracle Patch V1](audits/2026-08-26_HCA_ORACLE_PATCH_V1.md).
+  El [Oracle Review](audits/2026-08-26_HCA_ORACLE_REVIEW.md) original se conserva:
+  guarda la evidencia de por qué el patch era legítimo.
+- **Siguiente:** **`READY_FOR_HCA_ORACLE_PATCH_INTEGRATION_REVIEW`**.
+
+### Cierre Final P1 Runtime — 2026-08-26
+
 - **Main:** `dec589a21bf36844d595db80093e7824ea2a0189`, promovido mediante
   `git merge --ff-only feature/hca-final-p1-runtime-fixes` desde
   `eb8cfe1ed72ba5c9df0ab9c0ead5089ff5d09368`. Siete commits: cuatro runtime
