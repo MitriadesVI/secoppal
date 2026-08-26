@@ -1,0 +1,57 @@
+# Leyes arquitectonicas de SECOPPAL, ejecutables.
+#
+# Esto NO duplica a ruff. Ruff sabe de Python; estas reglas saben de SECOPPAL.
+# Cada una nacio de un fallo real que se repitio, y existe para que no dependa
+# de que alguien se acuerde.
+
+rules:
+  - id: settings-sin-redirigir-persistencia
+    languages: [python]
+    severity: WARNING
+    message: >-
+      Settings() sin redirigir la persistencia escribe en los data/feedback.jsonl
+      y data/secoppal.db REALES. Fuera de pytest, pasa siempre
+      secop_feedback_path= y secop_feedback_db_path= a un directorio temporal.
+      Este es el modo de fallo que contamina data/ sin que nadie lo note hasta
+      que una auditoria da numeros raros.
+    patterns:
+      - pattern: Settings(...)
+      - pattern-not: Settings(..., secop_feedback_path=$P, ...)
+      # El idioma real de aislamiento en este repo es desempaquetar un dict de
+      # overrides. Sin esta excepcion la regla marcaba el runner HCA, que es
+      # precisamente el que SI aisla — un falso positivo sobre el buen ejemplo.
+      - pattern-not: Settings(**$OVERRIDES)
+    paths:
+      exclude:
+        - "**/tests/**"
+        - "**/app/config.py"
+
+  - id: workflow-sin-settings-explicito
+    languages: [python]
+    severity: WARNING
+    message: >-
+      SecopalWorkflow() construido sin unos Settings explicitos hereda los
+      defaults de produccion, incluida la persistencia. Pasa un Settings
+      configurado.
+    patterns:
+      - pattern: SecopalWorkflow()
+    paths:
+      exclude:
+        - "**/tests/**"
+
+  - id: except-exception-que-silencia
+    languages: [python]
+    severity: ERROR
+    message: >-
+      Un except que se traga la excepcion sin registrar nada. En un sistema cuyo
+      defecto central es devolver resultados incorrectos en silencio, esto es
+      justo el patron que impide diagnosticar. Registra o re-lanza.
+    patterns:
+      - pattern: |
+          try:
+              ...
+          except Exception:
+              pass
+    paths:
+      exclude:
+        - "**/tests/**"

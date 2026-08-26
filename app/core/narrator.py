@@ -17,6 +17,8 @@ La validación cubre:
 
 from __future__ import annotations
 
+from typing import Any
+
 import logging
 import re
 

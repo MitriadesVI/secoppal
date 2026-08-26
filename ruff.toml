@@ -1,0 +1,44 @@
+# Linter de SECOPPAL.
+#
+# La division en dos niveles es deliberada. Una puerta que nace en rojo se
+# ignora a la semana, asi que `select` contiene SOLO reglas donde app/ ya esta
+# limpio: a partir de hoy son ley, y cualquier regresion falla.
+#
+# Lo que hoy esta sucio (BLE001, S110, S608, C901) NO va aqui. Vive en
+# `make lint-backlog`, que mide el numero y falla si sube. Se limpia por lotes,
+# no de golpe.
+
+target-version = "py313"
+line-length = 100
+extend-exclude = ["archive", "baseline", ".venv", "data"]
+
+[lint]
+# Ley: verificado limpio en app/ el 2026-08-26.
+select = [
+    "E9",      # errores de sintaxis / IO
+    "F63",     # comparaciones siempre falsas
+    "F7",      # sintaxis mal usada (break fuera de bucle, etc.)
+    "F82",     # nombres indefinidos  <- encontro Any sin importar en narrator.py
+    "B006",    # default mutable en argumento
+    "B008",    # llamada a funcion en el default
+    "S102",    # exec()
+    "S307",    # eval()
+    "T201",    # print() en codigo de produccion
+]
+
+# El backlog no se selecciona aqui; se mide aparte. Listado para que quede
+# constancia de por que no esta:
+#   BLE001  57  except Exception desnudo
+#   S110    11  try/except/pass
+#   S608    20  SQL por concatenacion (revisar: el builder de SOQL puede ser
+#               legitimo, pero 20 sitios merecen una mirada)
+#   C901    80  complejidad ciclomatica
+
+[lint.per-file-ignores]
+# Los tests si imprimen y si usan patrones que en produccion serian olor.
+# Los tests cargan streamlit_app.py con exec(); es legitimo ahi.
+"tests/**" = ["T201", "S101", "S102"]
+"scripts/**" = ["T201"]
+
+[format]
+quote-style = "preserve"

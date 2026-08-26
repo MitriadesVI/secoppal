@@ -1,0 +1,5 @@
+# Herramientas de verificacion. No son dependencias de runtime.
+# semgrep no va aqui: se usa con `uvx --from semgrep semgrep`, que no
+# contamina el venv con sus ~100MB de arbol de dependencias.
+hypothesis>=6.165
+ruff>=0.16

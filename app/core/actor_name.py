@@ -37,11 +37,16 @@ def normalize_actor_name(value: str | None) -> str:
     marcas ``FUNDACIÓN``, ``UNIÓN TEMPORAL`` y ``CONSORCIO`` siguen formando
     parte del alias normalizado.
     """
-    folded_case = (value or "").casefold().strip()
-    decomposed = unicodedata.normalize("NFKD", folded_case)
+    # NFKD va ANTES de casefold: la descomposicion de compatibilidad puede
+    # reintroducir mayusculas ya plegadas. Con el orden inverso, '\u2116'
+    # ("numero") daba 'No' en la primera pasada y 'no' en la segunda, y la
+    # normalizacion dejaba de ser idempotente — un alias indexado no
+    # encontraba su propia consulta. Lo encontro Hypothesis.
+    decomposed = unicodedata.normalize("NFKD", (value or "").strip())
+    folded_case = decomposed.casefold()
     without_accents = "".join(
         character
-        for character in decomposed
+        for character in folded_case
         if not unicodedata.combining(character)
     )
     punctuation_as_space = "".join(
