@@ -1,0 +1,134 @@
+{
+  "classification": "CANONICAL_EVIDENCE_OMISSION",
+  "legitimate": true,
+  "report_files": 1,
+  "evidence_files": 58,
+  "total_files": 59,
+  "original_manifest_hashes_verified": 57,
+  "extra_files_outside_manifest": [],
+  "historical_scratch_identical_files": 55,
+  "historical_archive_normalizations": [
+    {
+      "path": "final-status.txt",
+      "difference": "Archived snapshot omits one leading space on its first line; all other bytes identical. Original manifest matches archived bytes. Treat as human-readable status, not raw porcelain."
+    }
+  ],
+  "historical_python_evidence_files": 6,
+  "runtime": 0,
+  "tests": 0,
+  "fixtures": 0,
+  "runner": 0,
+  "tracked_references": [
+    "docs/audits/2026-08-26_HCA_ORACLE_PATCH_V1.md:161:  [revisión de integración Final P1](2026-08-26_HCA_FINAL_P1_RUNTIME_INTEGRATION_REVIEW.md) §6;",
+    "docs/documento_tecnico_secoppal_arquitectura_bitacora.md:99:  [revisión final P1](audits/2026-08-26_HCA_FINAL_P1_RUNTIME_INTEGRATION_REVIEW.md)."
+  ],
+  "missing_report_links": [],
+  "historical_script_dependencies": [
+    "preverdict.py requires original preflight-untracked.z and feature worktree; not a standalone current-ref gate",
+    "production_window.py generates production-window-runner.log and production-window-hca; these are not archived evidence inputs"
+  ],
+  "historical_counts": {
+    "base-actor-hygiene-v1": {
+      "cases": 36,
+      "pass": 36,
+      "fail": 0,
+      "error": 0
+    },
+    "base-control-language-v1": {
+      "cases": 42,
+      "pass": 42,
+      "fail": 0,
+      "error": 0
+    },
+    "base-hca": {
+      "cases": 195,
+      "pass": 177,
+      "fail": 18,
+      "error": 0
+    },
+    "base-hca-final-p1": {
+      "cases": 40,
+      "pass": 26,
+      "fail": 14,
+      "error": 0
+    },
+    "base-hca-final-p1-initial": {
+      "cases": 40,
+      "pass": 25,
+      "fail": 15,
+      "error": 0
+    },
+    "base-negation-v1": {
+      "cases": 24,
+      "pass": 22,
+      "fail": 2,
+      "error": 0
+    },
+    "base-time-v2": {
+      "cases": 32,
+      "pass": 32,
+      "fail": 0,
+      "error": 0
+    },
+    "feature-actor-hygiene-v1": {
+      "cases": 36,
+      "pass": 36,
+      "fail": 0,
+      "error": 0
+    },
+    "feature-control-language-v1": {
+      "cases": 42,
+      "pass": 42,
+      "fail": 0,
+      "error": 0
+    },
+    "feature-hca": {
+      "cases": 195,
+      "pass": 182,
+      "fail": 13,
+      "error": 0
+    },
+    "feature-hca-final-p1": {
+      "cases": 40,
+      "pass": 40,
+      "fail": 0,
+      "error": 0
+    },
+    "feature-negation-v1": {
+      "cases": 24,
+      "pass": 22,
+      "fail": 2,
+      "error": 0
+    },
+    "feature-time-v2": {
+      "cases": 32,
+      "pass": 32,
+      "fail": 0,
+      "error": 0
+    },
+    "postmerge-hca-final-p1": {
+      "cases": 40,
+      "pass": 40,
+      "fail": 0,
+      "error": 0
+    }
+  },
+  "followup_016_source_universe_evidence": "EXTERNAL_AND_CANONICAL_ONCE_TRACKED",
+  "followup_016_source_queries": [
+    {
+      "kind": "query",
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Cali%')) AND valor_del_contrato >= 300000000 AND (tipo_de_contrato = 'Obra') ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+      "where": "unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Cali%')) AND valor_del_contrato >= 300000000 AND (tipo_de_contrato = 'Obra')"
+    },
+    {
+      "kind": "query",
+      "dataset": "jbjy-vk9h",
+      "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Cali%')) AND valor_del_contrato >= 300000000 AND (tipo_de_contrato = 'Obra') ORDER BY fecha_de_firma ASC, valor_del_contrato ASC, id_contrato ASC LIMIT 50",
+      "where": "unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Cali%')) AND valor_del_contrato >= 300000000 AND (tipo_de_contrato = 'Obra')"
+    }
+  ],
+  "followup_016_where_equal": true,
+  "actor_004_external_source_calls": 0,
+  "actor_004_external_evidence_role": "COMPLEMENTARY; not an HCA DSL assertion"
+}

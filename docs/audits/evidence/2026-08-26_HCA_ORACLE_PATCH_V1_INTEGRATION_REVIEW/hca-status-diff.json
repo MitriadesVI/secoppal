@@ -1,0 +1,1018 @@
+{
+  "before": {
+    "cases": 195,
+    "pass": 182,
+    "fail": 13,
+    "error": 0
+  },
+  "after": {
+    "cases": 195,
+    "pass": 188,
+    "fail": 7,
+    "error": 0
+  },
+  "pass_to_fail": [],
+  "fail_to_pass": [
+    "HCA-ACTOR-004",
+    "HCA-ENTITY-001",
+    "HCA-FOLLOWUP-007",
+    "HCA-FOLLOWUP-016",
+    "HCA-META-001B",
+    "HCA-TOPIC-007"
+  ],
+  "remaining": {
+    "SAFE_UNSUPPORTED_CAPABILITY": [
+      "HCA-TOPIC-012"
+    ],
+    "KNOWN_DEFERRED_PRODUCT_DEBT": [
+      "HCA-MODALITY-002",
+      "HCA-MODALITY-012",
+      "HCA-TYPO-003"
+    ],
+    "INSUFFICIENT_EVIDENCE": [
+      "HCA-ENTITY-004",
+      "HCA-STATE-003",
+      "HCA-SOURCE-002"
+    ]
+  },
+  "real_runtime_bug": 0,
+  "confirmed_oracle_debt": 0,
+  "semantically_supported": "189/195 = 188 observed PASS + 1 SAFE; not runner score",
+  "statuses": [
+    {
+      "id": "HCA-INTENT-001",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-INTENT-002",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-INTENT-003",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-INTENT-004",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-INTENT-005",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-INTENT-006",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-INTENT-007",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-INTENT-008",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-INTENT-009",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-INTENT-010",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-INTENT-011",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-INTENT-012",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-INTENT-013",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-INTENT-014",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TOPIC-001",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TOPIC-002",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TOPIC-003",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TOPIC-004",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TOPIC-005",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TOPIC-006",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TOPIC-007",
+      "before": "FAIL",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TOPIC-008",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TOPIC-009",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TOPIC-010",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TOPIC-011",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TOPIC-012",
+      "before": "FAIL",
+      "after": "FAIL"
+    },
+    {
+      "id": "HCA-TOPIC-013",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TOPIC-014",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TOPIC-015",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TYPE-001",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TYPE-002",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TYPE-003",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TYPE-004",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TYPE-005",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TYPE-006",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TYPE-007",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TYPE-008",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TYPE-009",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TYPE-010",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MODALITY-001",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MODALITY-002",
+      "before": "FAIL",
+      "after": "FAIL"
+    },
+    {
+      "id": "HCA-MODALITY-003",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MODALITY-004",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MODALITY-005",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MODALITY-006",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MODALITY-007",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MODALITY-008",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MODALITY-009",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MODALITY-010",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MODALITY-011",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MODALITY-012",
+      "before": "FAIL",
+      "after": "FAIL"
+    },
+    {
+      "id": "HCA-ENTITY-001",
+      "before": "FAIL",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-ENTITY-002",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-ENTITY-003",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-ENTITY-004",
+      "before": "FAIL",
+      "after": "FAIL"
+    },
+    {
+      "id": "HCA-ENTITY-005",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-ENTITY-006",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-ENTITY-007",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-ENTITY-008",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-ENTITY-009",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-ENTITY-010",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-GEO-001",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-GEO-002",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-GEO-003",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-GEO-004",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-GEO-005",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-GEO-006",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-GEO-007",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MONEY-001",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MONEY-002",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MONEY-003",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MONEY-004",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MONEY-005",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MONEY-006",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MONEY-007",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MONEY-008",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MONEY-009",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MONEY-010",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MONEY-011",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MONEY-012",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MONEY-013",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MONEY-014",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MONEY-015",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MONEY-016",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MONEY-017",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MONEY-018",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MONEY-019",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MONEY-020",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MONEY-021",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MONEY-022",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MONEY-023",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MONEY-024",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MONEY-025",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MONEY-026",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-MONEY-027",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TIME-001",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TIME-002",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TIME-003",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TIME-004",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TIME-005",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TIME-006",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TIME-007",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TIME-008",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TIME-009",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TIME-010",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TIME-011",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TIME-012",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TIME-013",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TIME-014",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TIME-015",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-ACTOR-001",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-ACTOR-002",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-ACTOR-003",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-ACTOR-004",
+      "before": "FAIL",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-ACTOR-005",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-ACTOR-006",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-ACTOR-007",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-ACTOR-008",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-ACTOR-009",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-ACTOR-010",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-ACTOR-011",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-ACTOR-012",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-ACTOR-013",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-ACTOR-014",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-STATE-001",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-STATE-002",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-STATE-003",
+      "before": "FAIL",
+      "after": "FAIL"
+    },
+    {
+      "id": "HCA-STATE-004",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-STATE-005",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-STATE-006",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-STATE-007",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-STATE-008",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-ORDER-001",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-ORDER-002",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-ORDER-003",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-ORDER-004",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-ORDER-005",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-NEG-001",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-NEG-002",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-NEG-003",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-NEG-004",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-NEG-005",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-NEG-006",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TYPO-001",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TYPO-002",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TYPO-003",
+      "before": "FAIL",
+      "after": "FAIL"
+    },
+    {
+      "id": "HCA-TYPO-004",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TYPO-005",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-TYPO-006",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-AMBIG-001",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-AMBIG-002",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-AMBIG-003",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-LOOKUP-001",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-LOOKUP-002",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-LOOKUP-003",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-FOLLOWUP-001",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-FOLLOWUP-002",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-FOLLOWUP-003",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-FOLLOWUP-004",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-FOLLOWUP-005",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-FOLLOWUP-006",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-FOLLOWUP-007",
+      "before": "FAIL",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-FOLLOWUP-008",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-FOLLOWUP-009",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-FOLLOWUP-010",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-FOLLOWUP-011",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-FOLLOWUP-012",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-FOLLOWUP-013",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-FOLLOWUP-014",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-FOLLOWUP-015",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-FOLLOWUP-016",
+      "before": "FAIL",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-FOLLOWUP-017",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-FOLLOWUP-018",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-META-001A",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-META-001B",
+      "before": "FAIL",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-META-002A",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-META-002B",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-META-003A",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-META-003B",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-META-004A",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-META-004B",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-META-005A",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-META-005B",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-META-006A",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-META-006B",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-ANTI-001",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-ANTI-002",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-ANTI-003",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-ANTI-004",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-ANTI-005",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-ANTI-006",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-ANTI-007",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-ANTI-008",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-SOURCE-001",
+      "before": "PASS",
+      "after": "PASS"
+    },
+    {
+      "id": "HCA-SOURCE-002",
+      "before": "FAIL",
+      "after": "FAIL"
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+ "patch_nonvacuous": "6/6",
+ "probes": [
+  {
+   "case_id": "HCA-ACTOR-004",
+   "turn": 1,
+   "mutation": "fuzzy candidate auto-authorizes identity",
+   "real_fails": [],
+   "mutated_fails": [
+    "expected block, got execution",
+    "actor_resolution_status='EXACT', expected 'CANDIDATES'",
+    "missing param actor_pending",
+    "param actor_scope present ({'document_type': 'NIT', 'base_number': '900739049'}), expected absent",
+    "pending list lacks requested typed candidate within rank 3"
+   ],
+   "nonvacuous": true
+  },
+  {
+   "case_id": "HCA-TOPIC-007",
+   "turn": 1,
+   "mutation": "canonical school-feeding topic dropped",
+   "real_fails": [],
+   "mutated_fails": [
+    "objeto lacks 'alimentacion_escolar' (objeto=[])",
+    "soql lacks '%alimentacion escolar%'"
+   ],
+   "nonvacuous": true
+  },
+  {
+   "case_id": "HCA-ENTITY-001",
+   "turn": 1,
+   "mutation": "buyer reinterpreted as territory",
+   "real_fails": [],
+   "mutated_fails": [
+    "entidad_resolved=None, expected 'DEPARTAMENTO DEL ATLANTICO**'",
+    "param departamento_resolved present ('Atlántico'), expected absent",
+    "soql lacks \"unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DEPARTAMENTO DEL ATLANTICO**%'))\""
+   ],
+   "nonvacuous": true
+  },
+  {
+   "case_id": "HCA-FOLLOWUP-007",
+   "turn": 2,
+   "mutation": "structured contract type Obra lost with modality",
+   "real_fails": [],
+   "mutated_fails": [
+    "contract_type_include=[], expected ['obra']",
+    "soql lacks \"tipo_de_contrato = 'Obra'\""
+   ],
+   "nonvacuous": true
+  },
+  {
+   "case_id": "HCA-FOLLOWUP-016",
+   "turn": 2,
+   "mutation": "derived buyers reappear on ordering-only turn",
+   "real_fails": [],
+   "mutated_fails": [
+    "param entidad_ecosystem present (['ALCALDIA DE CALI']), expected absent",
+    "soql contains 'unaccent(UPPER(nombre_entidad)) LIKE'"
+   ],
+   "nonvacuous": true
+  },
+  {
+   "case_id": "HCA-META-001B",
+   "turn": null,
+   "mutation": "both frames collapse onto the same universe dimension",
+   "real_fails": [],
+   "mutated_fails": [
+    "anti-metamorphic: field entidad_resolved identical to HCA-META-001A",
+    "anti-metamorphic: field departamento_resolved identical to HCA-META-001A"
+   ],
+   "nonvacuous": true
+  }
+ ]
+}

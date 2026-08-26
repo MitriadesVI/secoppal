@@ -1,0 +1,15 @@
+{
+  "classification": "CANONICAL_EVIDENCE_OMISSION",
+  "commit": "25d9eac05eb14e56ed2f8b9c9ddb6b670c0f1092",
+  "files": 59,
+  "runtime": 0,
+  "tests": 0,
+  "fixtures": 0,
+  "runner": 0,
+  "diff_cached_check_exit": 2,
+  "historical_mutation_log_trailing_whitespace_warnings": 34,
+  "whitespace_resolution": "Historical bytes and manifest retained unchanged; no whitespace configuration override.",
+  "merge_base": "8833ba286d5679926493efed4287cdbb425ff276",
+  "main_is_ancestor_exit": 1,
+  "relation": "CLEAN_DOC_DIVERGENCE"
+}

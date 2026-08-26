@@ -7,6 +7,51 @@
 
 ## Estado canónico actual — 2026-08-26
 
+### Integración Oracle Patch V1 y reparación de evidencia canónica
+
+- **`FINAL_P1_RUNTIME: INTEGRATED` · `ORACLE_PATCH_V1: INTEGRATED`**.
+  Review de integración **PASS**. Main previo
+  `8833ba286d5679926493efed4287cdbb425ff276`; reparación docs/evidence-only
+  `25d9eac05eb14e56ed2f8b9c9ddb6b670c0f1092`; patch fuente
+  `9bd014c0d11c0acb353006eddd4421078c1bba0a` integrado por **cherry-pick** como
+  `f074402c5147e98ede373d09341874df2c428aaf`, sin conflictos ni merge commit.
+  La divergencia tras reparar docs es `CLEAN_DOC_DIVERGENCE`. Sin rebase ni push;
+  rama fuente preservada. Este cierre posterior sólo añade documentación.
+- **`CANONICAL_EVIDENCE_OMISSION` reparada:** informe Final P1 más 58 artefactos
+  legítimos ahora tracked, todos byte-idénticos; 57/57 hashes del manifiesto
+  original verificados. Los 191 untracked ajenos conservan su SHA y estado.
+  El stage fue explícito. Los scripts `.py` archivados son evidencia previa,
+  no cambios nuevos de runtime o runner. Se conservaron 34 avisos de espacios
+  finales del `mutation.log` histórico; no se reescribió evidencia para limpiarlos.
+- **RAW HCA: 188/195**, 7 FAIL, 0 ERROR. Baseline repetido 182/195; patch y main
+  postintegración repiten 188/195. Comparados los 195 IDs: **PASS→FAIL=0**,
+  **FAIL→PASS=exactamente los seis autorizados**, orden intacto, unexpected=0.
+  No vacuidad reejecutada: **6/6**. El diff aplicado es byte-idéntico al fuente.
+- **SEMANTICALLY_SUPPORTED: 189/195 = 188 PASS + 1 SAFE**, no score del runner.
+  Los siete FAIL conservan **1 SAFE** (TOPIC-012), **3 DEFERRED**
+  (MODALITY-002/012, TYPO-003) y **3 INSUFFICIENT**
+  (ENTITY-004, STATE-003, SOURCE-002). REAL_RUNTIME_BUG=0 y
+  CONFIRMED_ORACLE_DEBT=0 entre los fallos adjudicados restantes.
+- **Baseline Final HCA:**
+  `HCA_ORACLE_PATCH_V1_SHA=a341405a79d74cdb43872cf937cd2b58f4ebb736afe4a2135ced9b6d389c352e`.
+  Reemplaza deliberadamente a
+  `262c225c7939f04516ee95b3c77b4911f9f476058941a88a61d01c918499ffba`;
+  el SHA histórico y las adjudicaciones permanecen documentados.
+- **Límites:** FOLLOWUP-016 tiene igualdad de WHERE demostrada mediante evidencia
+  **EXTERNAL_AND_CANONICAL**, pues el DSL no compara turnos. Cero llamadas de
+  ACTOR-004 sigue siendo evidencia externa complementaria; el fixture protege
+  block, pending, CANDIDATES y ausencia de identidad. No se añadió DSL ni proxy.
+- **Focales repetidos:** final P1 40/40, actor 36/36, control 42/42, tiempo 32/32,
+  negación 22/24 con NEG-N15 y NEG-ANTI-002 basales. RUNTIME_CHANGED=0;
+  RUNNER_CHANGED=0; Python inesperado=0; FULL_PYTEST=NOT_REQUIRED, no ejecutado.
+- **Informe e inventario:**
+  [Integration Review Oracle Patch V1](audits/2026-08-26_HCA_ORACLE_PATCH_V1_INTEGRATION_REVIEW.md).
+  **Siguiente: `READY_FOR_HCA_FINAL_AUDIT`**. Final HCA aún no se declara cerrado.
+
+Los dos bloques siguientes conservan los cierres históricos de preparación del
+patch y de runtime; sus antiguos pasos siguientes quedan sustituidos por el
+estado canónico de integración anterior.
+
 ### Oracle Patch V1 — el examen deja de medir una versión anterior de sí mismo
 
 - **Rama:** `audit/hca-oracle-patch-v1` sobre

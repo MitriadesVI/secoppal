@@ -1,0 +1,20 @@
+{
+  "changed_case_ids": [
+    "HCA-ACTOR-004",
+    "HCA-ENTITY-001",
+    "HCA-FOLLOWUP-007",
+    "HCA-FOLLOWUP-016",
+    "HCA-META-001B",
+    "HCA-TOPIC-007"
+  ],
+  "cases": 195,
+  "order_preserved": true,
+  "ids_preserved": true,
+  "all_queries_preserved": true,
+  "clocks_categories_severities_preserved": true,
+  "followup_first_turns_preserved": true,
+  "top_level_yaml_preserved": true,
+  "unexpected": 0,
+  "sha_before": "262c225c7939f04516ee95b3c77b4911f9f476058941a88a61d01c918499ffba",
+  "sha_after": "a341405a79d74cdb43872cf937cd2b58f4ebb736afe4a2135ced9b6d389c352e"
+}

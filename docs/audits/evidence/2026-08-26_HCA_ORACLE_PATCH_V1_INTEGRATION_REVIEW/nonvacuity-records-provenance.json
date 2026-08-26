@@ -1,0 +1,36 @@
+{
+  "source_run": "hca-preintegration on 9bd014c0d11c0acb353006eddd4421078c1bba0a",
+  "full_results_sha256": "a12ee780bf5184c2ee1b6f7ee25da6ad311466f7073c7623cc23669a9d5204b5",
+  "retained_records": [
+    {
+      "case": "HCA-ACTOR-004",
+      "turn": 1
+    },
+    {
+      "case": "HCA-ENTITY-001",
+      "turn": 1
+    },
+    {
+      "case": "HCA-FOLLOWUP-007",
+      "turn": 2
+    },
+    {
+      "case": "HCA-FOLLOWUP-016",
+      "turn": 2
+    },
+    {
+      "case": "HCA-META-001A",
+      "turn": 1
+    },
+    {
+      "case": "HCA-META-001B",
+      "turn": 1
+    },
+    {
+      "case": "HCA-TOPIC-007",
+      "turn": 1
+    }
+  ],
+  "transformation": "Exact original JSONL lines selected by case and turn; no field or value edits.",
+  "purpose": "Sufficient real records to rerun the existing nonvacuity probe without archiving unrelated turn payloads."
+}

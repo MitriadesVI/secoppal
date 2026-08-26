@@ -1,0 +1,82 @@
+{
+  "source_commit": "9bd014c0d11c0acb353006eddd4421078c1bba0a",
+  "base": "8833ba286d5679926493efed4287cdbb425ff276",
+  "groups": {
+    "HCA_FIXTURE": [
+      {
+        "status": "M",
+        "path": "tests/fixtures/audits/conversation_holistic_v1.yaml"
+      }
+    ],
+    "DOC": [
+      {
+        "status": "A",
+        "path": "docs/audits/2026-08-26_HCA_ORACLE_PATCH_V1.md"
+      }
+    ],
+    "EVIDENCE": [
+      {
+        "status": "A",
+        "path": "docs/audits/evidence/2026-08-26_HCA_ORACLE_PATCH_V1/corpus_gate.json"
+      },
+      {
+        "status": "A",
+        "path": "docs/audits/evidence/2026-08-26_HCA_ORACLE_PATCH_V1/corpus_gate.py"
+      },
+      {
+        "status": "A",
+        "path": "docs/audits/evidence/2026-08-26_HCA_ORACLE_PATCH_V1/focal_corpora.json"
+      },
+      {
+        "status": "A",
+        "path": "docs/audits/evidence/2026-08-26_HCA_ORACLE_PATCH_V1/hca_status_diff.json"
+      },
+      {
+        "status": "A",
+        "path": "docs/audits/evidence/2026-08-26_HCA_ORACLE_PATCH_V1/hca_verdicts_after.json"
+      },
+      {
+        "status": "A",
+        "path": "docs/audits/evidence/2026-08-26_HCA_ORACLE_PATCH_V1/hca_verdicts_before.json"
+      },
+      {
+        "status": "A",
+        "path": "docs/audits/evidence/2026-08-26_HCA_ORACLE_PATCH_V1/isolation_after.json"
+      },
+      {
+        "status": "A",
+        "path": "docs/audits/evidence/2026-08-26_HCA_ORACLE_PATCH_V1/mutation_probe.json"
+      },
+      {
+        "status": "A",
+        "path": "docs/audits/evidence/2026-08-26_HCA_ORACLE_PATCH_V1/mutation_probe.py"
+      }
+    ],
+    "BITACORA": [
+      {
+        "status": "M",
+        "path": "docs/documento_tecnico_secoppal_arquitectura_bitacora.md"
+      }
+    ],
+    "RUNNER": [],
+    "RUNTIME": [],
+    "OTHER_TEST": [],
+    "OTHER": []
+  },
+  "counts": {
+    "HCA_FIXTURE": 1,
+    "DOC": 1,
+    "EVIDENCE": 9,
+    "BITACORA": 1,
+    "RUNNER": 0,
+    "RUNTIME": 0,
+    "OTHER_TEST": 0,
+    "OTHER": 0
+  },
+  "runtime_and_scripts_tree_identical": true,
+  "python_evidence_additions": [
+    "docs/audits/evidence/2026-08-26_HCA_ORACLE_PATCH_V1/corpus_gate.py",
+    "docs/audits/evidence/2026-08-26_HCA_ORACLE_PATCH_V1/mutation_probe.py"
+  ],
+  "unexpected_python_changes": 0
+}
