@@ -36,6 +36,10 @@ from app.core.contract_type_resolver import resolve_contract_types
 from app.core.control_language import interpret_control_language
 from app.core.money_resolution import CARDINAL_WORD_PATTERN
 from app.core.estado_projection import project_estado_family
+from app.core.generic_buyer import (
+    build_incomplete_buyer_resolution,
+    detect_incomplete_buyer,
+)
 from app.core.money_admission import (
     has_explicit_monetary_evidence,
     is_admissible_amount,
@@ -943,6 +947,31 @@ class QueryRouter:
             # Scrub city from scrubbed so it doesn't enter objeto
             scrubbed = _CITY_PATTERN_RE.sub(" ", scrubbed)
             scrubbed = re.sub(r"\s+", " ", scrubbed).strip()
+
+        # ── 10.7. Comprador institucional incompleto ──────────────────────
+        # INV-INCOMPLETE-BUYER-CANNOT-BECOME-TOPIC. Si nadie logró resolver una
+        # entidad y el texto solo menciona la CLASE ("de la alcaldía"), el token
+        # no puede seguir viaje hasta ``objeto``: allí se convertiría en
+        # LIKE '%alcaldia%' sobre el objeto del contrato — otra pregunta — y de
+        # paso haría pasar por tema lo que es un comprador a medio nombrar.
+        # Se rutea a ``entidad`` sin resolverla: la resolución dirá que falta
+        # precisión y el turno se bloquea sin tocar la fuente.
+        if not any(
+            params.get(key)
+            for key in ("entidad", "entidad_resolved", "entidad_like")
+        ):
+            incomplete_buyer = detect_incomplete_buyer(normalized)
+            if incomplete_buyer:
+                params["entidad"] = incomplete_buyer
+                params["entidad_resolution"] = build_incomplete_buyer_resolution(
+                    incomplete_buyer,
+                )
+                consumed_spans.append(incomplete_buyer)
+                scrubbed = re.sub(
+                    rf"\b{re.escape(incomplete_buyer)}\b", " ", scrubbed,
+                    flags=re.IGNORECASE,
+                )
+                scrubbed = re.sub(r"\s+", " ", scrubbed).strip()
 
         # ── 11. Phrase detection BEFORE token scrub (objeto_phrases) ────
         #    Preserva colocaciones de dominio ("manual de contratación") como

@@ -8,6 +8,11 @@ from pathlib import Path
 
 from rapidfuzz import fuzz, process
 
+from app.core.generic_buyer import (
+    GENERIC_BUYER_TOKENS,
+    incomplete_buyer_hint,
+    is_generic_buyer_token,
+)
 from app.data.colombia_geography import REGION_ALIASES
 from app.data.departamentos import DEPARTAMENTOS, DEPARTAMENTOS_OFICIALES
 from app.utils.money import normalize_text
@@ -177,16 +182,8 @@ class EntityResolver:
     # as a standalone alias (data-side bug) and _is_unqualified_dept
     # only protected department names, not generic entity-type tokens
     # (code-side bug).
-    _GENERIC_ENTITY_TOKENS: set[str] = {
-        "alcaldia", "alcaldía",
-        "gobernacion", "gobernación",
-        "secretaria", "secretaría",
-        "municipio", "departamento",
-        "distrito", "instituto",
-        "ministerio", "agencia",
-        "fondo", "corporacion", "corporación",
-        "empresa", "entidad",
-    }
+    # Autoridad compartida con QueryRouter: ver app/core/generic_buyer.py.
+    _GENERIC_ENTITY_TOKENS: frozenset[str] = GENERIC_BUYER_TOKENS
 
     # =====================================================================
     # SCAN: Find entities/departments as substrings in text
@@ -380,6 +377,21 @@ class EntityResolver:
 
     def resolve_entidad(self, user_input: str, departamento: str | None = None) -> ResolutionResult:
         normalized = normalize_text(user_input)
+
+        # INV-INCOMPLETE-BUYER-CANNOT-BECOME-TOPIC. ``scan_entity`` ya rechaza
+        # el genérico desnudo, pero esta puerta quedaba abierta: los tiers de
+        # fuzzy global le encuentran vecino a cualquier cosa y "alcaldia" salía
+        # resuelto —con confianza alta— a una entidad que nadie pidió.
+        if is_generic_buyer_token(normalized):
+            return ResolutionResult(
+                value=None,
+                method="generic_buyer_unqualified",
+                confidence="none",
+                metadata={"buyer_mention": normalized},
+                clarification_needed=True,
+                clarification_hint=incomplete_buyer_hint(normalized),
+            )
+
         strict_rewrite = self._strict_rewrite_target(normalized)
 
         # Tier 1: Exact alias match
