@@ -309,9 +309,20 @@ make audit-negation-v1        22/24        ·  idéntico a eb8cfe1 (verificado e
 make audit-time-v2            32/32
 make audit-control-language-v1 42/42
 make audit-actor-hygiene-v1    36/36
-suite pytest completa   ver §7
+suite pytest completa   8657 passed · 2 skipped · 24 xfailed · 0 failed
+query corpus            89/89
+dialogue corpus         60/61   ·  único FAIL GOB-DEPTO-001, basal: verificado
+                                   60/61 con el mismo caso en eb8cfe1
 make lint-core          app/core/ limpio
-ruff check              limpio en todo lo tocado
+ruff check              limpio en app/ tests/ scripts/ con ruff.toml del repo
+semgrep                 NO EJECUTADO — no está instalado en este entorno. La
+                        ley `settings-sin-redirigir-persistencia` se verificó a
+                        mano sobre el diff: la única construcción nueva fuera de
+                        tests usa `Settings(**overrides)`, que es la excepción
+                        declarada por la propia regla
+data/ real              sin escrituras del sprint — el mtime de feedback.jsonl
+                        lo mueve el Streamlit de dev del usuario; la última
+                        entrada es anterior a la sesión
 git diff --check        limpio
 query_plan.py           299 LoC, intacto — NEXT_TOUCH_RULE no se invocó
 ```
