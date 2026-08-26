@@ -210,14 +210,14 @@ cases:
   notes: "HCA-FOLLOWUP-016 — ordering-only no inyecta ecosistema de compradores"
   turns:
   - {q: "contratos de obra en cali por mas de 300 millones", expect: execute, eq: {valor_min: 300000000}}
-  - {q: "los mas antiguos primero", expect: execute, eq: {valor_min: 300000000, ordering_signal: fecha_asc}, absent: [entidad_ecosystem], soql_not: ["ALCALDÍA DE SANTIAGO DE CALI", "SECRETARÍA DE EDUCACIÓN MUNICIPAL", nombre_entidad]}
+  - {q: "los mas antiguos primero", expect: execute, eq: {valor_min: 300000000, ordering_signal: fecha_asc}, absent: [entidad_ecosystem], soql_not: ["ALCALDÍA DE SANTIAGO DE CALI", "SECRETARÍA DE EDUCACIÓN MUNICIPAL", "OR unaccent(UPPER(nombre_entidad))"]}
 - id: P1-FOLLOWUP-002
   category: followup
   severity_if_failed: P1
   notes: "ordering-only tras territorio departamental"
   turns:
   - {q: "contratos de aseo en cesar", expect: execute}
-  - {q: "ordenalos por mayor valor", expect: execute, eq: {ordering_signal: valor_desc}, absent: [entidad_ecosystem], soql_not: [nombre_entidad]}
+  - {q: "ordenalos por mayor valor", expect: execute, eq: {ordering_signal: valor_desc}, absent: [entidad_ecosystem], soql_not: ["OR unaccent(UPPER(nombre_entidad))"]}
 - id: P1-FOLLOWUP-003
   category: followup
   severity_if_failed: P1

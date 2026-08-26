@@ -356,9 +356,14 @@ def test_pagination_drops_post_query_ecosystem_to_refetch_same_source(tmp_path, 
         "app.core.entity_ecosystem.should_expand_ecosystem",
         lambda _params: True,
     )
+    expansions: list[dict] = []
+
+    def _ecosystem(**kwargs):
+        expansions.append(kwargs)
+        return ["ENTIDAD INYECTADA DESPUES DEL FETCH"]
+
     monkeypatch.setattr(
-        "app.core.entity_ecosystem.get_ecosystem_entities",
-        lambda **_kwargs: ["ENTIDAD INYECTADA DESPUES DEL FETCH"],
+        "app.core.entity_ecosystem.get_ecosystem_entities", _ecosystem,
     )
     data_query = _make_query(total=30)
     seen_soql: list[str] = []
@@ -378,8 +383,14 @@ def test_pagination_drops_post_query_ecosystem_to_refetch_same_source(tmp_path, 
         "procesos de mantenimiento en bogota de 2026",
         channel="streamlit", chat_id=chat,
     )
+    # La expansión asesora SÍ ocurre en este turno. Sin comprobarlo, el resto
+    # del test pasaría vacuamente: no habría nada que la paginación ignorase.
+    assert expansions, "la expansión post-query no llegó a ejecutarse"
+    # INV-PURE-ORDERING-PRESERVES-SOURCE-UNIVERSE: y no entra al historial.
+    # Antes sí entraba, y el siguiente follow-up la heredaba como si fuera un
+    # filtro que el usuario hubiera pedido.
     persisted = wf.conv_store.get_history(chat, last_n=1)[0].parsed_params
-    assert persisted["entidad_ecosystem"] == ["ENTIDAD INYECTADA DESPUES DEL FETCH"]
+    assert "entidad_ecosystem" not in persisted
 
     page_2 = wf.run_query("muestrame mas", channel="streamlit", chat_id=chat)
 

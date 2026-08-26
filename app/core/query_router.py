@@ -1236,7 +1236,7 @@ class QueryRouter:
             return m.group(0) if m else None
 
         _range_re = re.compile(
-            rf"(?:entre|de|desde)\s+({amount_atom}\s*{unit_pattern}?(?:(?:\s+de)?\s+pesos?)?)(?:\s*[-–—]\s*|\s+y\s+|\s+a\s+|\s+hasta\s+)({amount_atom}\s*{unit_pattern}?(?:(?:\s+de)?\s+pesos?)?)",
+            rf"(?:entre|de|desde)\s+({amount_atom}\s*{unit_pattern}?(?:\s+y\s+medi[oa]s?)?(?:(?:\s+de)?\s+pesos?)?)(?:\s*[-–—]\s*|\s+y\s+|\s+a\s+|\s+hasta\s+)({amount_atom}\s*{unit_pattern}?(?:\s+y\s+medi[oa]s?)?(?:(?:\s+de)?\s+pesos?)?)",
             re.IGNORECASE,
         )
         range_match = _range_re.search(normalized_query)
@@ -1306,10 +1306,10 @@ class QueryRouter:
         # e.g., "más de 350 millones y menos de 700" → valor_min + valor_max
         _compound_range_re = re.compile(
             r"(?:m[aá]s\s+de|mayor(?:es)?\s+(?:a|de|que)|por\s+encima\s+de|al\s+menos|superior(?:es)?\s+(?:a|de|que))\s+"
-            rf"({amount_atom}\s*{unit_pattern}?(?:(?:\s+de)?\s+pesos?)?)"
+            rf"({amount_atom}\s*{unit_pattern}?(?:\s+y\s+medi[oa]s?)?(?:(?:\s+de)?\s+pesos?)?)"
             r"\s+(?:y|e)\s+"
             r"(?:menos\s+de|menor(?:es)?\s+(?:a|de|que)|por\s+debajo\s+de|a\s+lo\s+sumo|inferior(?:es)?\s+(?:a|de|que))\s+"
-            rf"({amount_atom}\s*{unit_pattern}?(?:(?:\s+de)?\s+pesos?)?)",
+            rf"({amount_atom}\s*{unit_pattern}?(?:\s+y\s+medi[oa]s?)?(?:(?:\s+de)?\s+pesos?)?)",
             re.IGNORECASE,
         )
         cr_match = _compound_range_re.search(normalized_query)
@@ -1346,7 +1346,7 @@ class QueryRouter:
 
         # Detect "X o más" / "X o mas" → valor_min only (before generic loop)
         _o_mas_re = re.compile(
-            rf"({amount_atom}\s*{unit_pattern}?(?:(?:\s+de)?\s+pesos?)?)\s+o\s+m[aá]s",
+            rf"({amount_atom}\s*{unit_pattern}?(?:\s+y\s+medi[oa]s?)?(?:(?:\s+de)?\s+pesos?)?)\s+o\s+m[aá]s",
             re.IGNORECASE,
         )
         om = _o_mas_re.search(normalized_query)
@@ -1359,10 +1359,16 @@ class QueryRouter:
                 consumed_spans.append(span)
                 normalized_query = normalized_query[: om.start()] + " " + normalized_query[om.end() :]
 
+        # La fracción verbal entra en el span A PROPÓSITO. money_to_cop se niega
+        # a convertir "un millón y medio" —no interpreta a medias— pero solo
+        # puede negarse si la ve: si "y medio" quedara fuera del span, la
+        # conversión leería "un millón" y devolvería 1.000.000 por un millón y
+        # medio. Dentro del span, devuelve None y el invariante de no-drop
+        # convierte el caso en una pregunta.
         amount_text = (
             rf"({amount_atom}\s*"
             rf"{unit_pattern}?"
-            r"(?:(?:\s+de)?\s+pesos?)?)"
+            r"(?:\s+y\s+medi[oa]s?)?(?:(?:\s+de)?\s+pesos?)?)"
         )
         polarity_patterns = (
             (
@@ -1487,7 +1493,7 @@ class QueryRouter:
                 )
 
         matches = list(re.finditer(
-            rf"(?:(?:mas|mayor(?:es)?|superior(?:es)?|superen?)\s+(?:de|a)|(?:menos|menor(?:es)?)\s+(?:de|a)|hasta|por|de|desde)?\s*({amount_atom})\s*{unit_pattern}?(?:(?:\s+de)?\s+pesos?)?",
+            rf"(?:(?:mas|mayor(?:es)?|superior(?:es)?|superen?)\s+(?:de|a)|(?:menos|menor(?:es)?)\s+(?:de|a)|hasta|por|de|desde)?\s*({amount_atom})\s*{unit_pattern}?(?:\s+y\s+medi[oa]s?)?(?:(?:\s+de)?\s+pesos?)?",
             normalized_query,
         ))
 

@@ -36,6 +36,7 @@ from app.core._followup_constants import (
     NOISE_PREFIXES,
     RESET_COMMANDS,
 )
+from app.core.derived_execution_state import strip_derived_execution_state
 from app.core.pagination_buffer import PaginationBuffer, pagination_fingerprint
 
 
@@ -181,7 +182,12 @@ class ConversationStore:
             chat_id=chat_id,
             user_query=user_query,
             response=response,
-            parsed_params=dict(parsed_params),
+            # INV-PURE-ORDERING-PRESERVES-SOURCE-UNIVERSE: el historial guarda
+            # lo que el usuario pidió, no lo que el motor derivó después de
+            # ejecutar. El filtro vive aquí y no en los cuatro handlers que
+            # escriben turnos porque el invariante es del historial: lo que
+            # entra aquí es exactamente lo que el próximo follow-up hereda.
+            parsed_params=strip_derived_execution_state(dict(parsed_params)),
             result_ids=list(result_ids or []),
             trace_id=trace_id,
             suggestions=suggestions or [],
