@@ -1,6 +1,12 @@
 # HCA-R7 — Actor Hygiene V1
 
 Fecha: 2026-08-26. Rama: `feature/hca-r7-actor-hygiene`.
+
+**Actualización de integración:** `23f307c` integrado ff-only en main;
+`HCA_R7_INTEGRATION_REVIEW: PASS`, sin push. Véase
+[revisión y cierre](2026-08-26_HCA_R7_INTEGRATION_REVIEW.md).
+El resto de este informe conserva la evidencia y el estado histórico de entrega
+de la rama, anteriores a esa integración.
 Base canónica: `39234f873fb345b9de72ded7092afacadfdd646c` (docs-only R6,
 autorizado tras detectar el preflight sucio). Integración funcional R6:
 `8bd5467aa7aa203d55605a758eedc0bf18ca33b5`.
