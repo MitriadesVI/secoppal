@@ -1,0 +1,164 @@
+[
+  {
+    "CASE_ID": "HCA-TOPIC-007",
+    "TURN_COUNT": 1,
+    "DOMAIN": "topic_object",
+    "ORACLE_FAILURE": [
+      "turn 1 'procesos del pae en la guajira': objeto lacks 'pae' (objeto=['alimentacion_escolar'])"
+    ],
+    "CURRENT_STATUS": "FAIL"
+  },
+  {
+    "CASE_ID": "HCA-TOPIC-012",
+    "TURN_COUNT": 1,
+    "DOMAIN": "topic_object",
+    "ORACLE_FAILURE": [
+      "turn 1 'contratos de salud en amazonas': expected execution, got clarification"
+    ],
+    "CURRENT_STATUS": "FAIL"
+  },
+  {
+    "CASE_ID": "HCA-MODALITY-002",
+    "TURN_COUNT": 1,
+    "DOMAIN": "modality",
+    "ORACLE_FAILURE": [
+      "turn 1 'contratos por seleccion abreviada de menor cuantia en 2026': expected execution, got clarification"
+    ],
+    "CURRENT_STATUS": "FAIL"
+  },
+  {
+    "CASE_ID": "HCA-MODALITY-012",
+    "TURN_COUNT": 1,
+    "DOMAIN": "modality",
+    "ORACLE_FAILURE": [
+      "turn 1 'procesos de enajenacion de bienes en 2026': expected execution, got clarification"
+    ],
+    "CURRENT_STATUS": "FAIL"
+  },
+  {
+    "CASE_ID": "HCA-ENTITY-001",
+    "TURN_COUNT": 1,
+    "DOMAIN": "entity_buyer",
+    "ORACLE_FAILURE": [
+      "turn 1 'contratos de la gobernacion del atlantico en 2026': soql contains 'ATLANTICO**'"
+    ],
+    "CURRENT_STATUS": "FAIL"
+  },
+  {
+    "CASE_ID": "HCA-ENTITY-004",
+    "TURN_COUNT": 1,
+    "DOMAIN": "entity_buyer",
+    "ORACLE_FAILURE": [
+      "turn 1 'que contrato el departamento del atlantico en 2025': missing param entidad_resolved"
+    ],
+    "CURRENT_STATUS": "FAIL"
+  },
+  {
+    "CASE_ID": "HCA-ENTITY-005",
+    "TURN_COUNT": 1,
+    "DOMAIN": "entity_buyer",
+    "ORACLE_FAILURE": [
+      "turn 1 'contratos de la alcaldia': expected block, got execution"
+    ],
+    "CURRENT_STATUS": "FAIL"
+  },
+  {
+    "CASE_ID": "HCA-MONEY-020",
+    "TURN_COUNT": 1,
+    "DOMAIN": "money",
+    "ORACLE_FAILURE": [
+      "turn 1 'contratos de papeleria por mas de 100 mil pesos': valor_min=None, expected 100000"
+    ],
+    "CURRENT_STATUS": "FAIL"
+  },
+  {
+    "CASE_ID": "HCA-MONEY-026",
+    "TURN_COUNT": 1,
+    "DOMAIN": "money",
+    "ORACLE_FAILURE": [
+      "turn 1 'contratos de papeleria por mas de 1 millon': valor_min=None, expected 1000000"
+    ],
+    "CURRENT_STATUS": "FAIL"
+  },
+  {
+    "CASE_ID": "HCA-ACTOR-004",
+    "TURN_COUNT": 1,
+    "DOMAIN": "actor",
+    "ORACLE_FAILURE": [
+      "turn 1 'contratos de lmp ingieneria en 2025': missing param actor_scope"
+    ],
+    "CURRENT_STATUS": "FAIL"
+  },
+  {
+    "CASE_ID": "HCA-STATE-003",
+    "TURN_COUNT": 1,
+    "DOMAIN": "state",
+    "ORACLE_FAILURE": [
+      "turn 1 'contratos liquidados de obra en 2025': missing param estado_contrato"
+    ],
+    "CURRENT_STATUS": "FAIL"
+  },
+  {
+    "CASE_ID": "HCA-STATE-005",
+    "TURN_COUNT": 1,
+    "DOMAIN": "state",
+    "ORACLE_FAILURE": [
+      "turn 1 'procesos publicados de aseo en cesar': soql contains 'Borrador'"
+    ],
+    "CURRENT_STATUS": "FAIL"
+  },
+  {
+    "CASE_ID": "HCA-STATE-007",
+    "TURN_COUNT": 1,
+    "DOMAIN": "state",
+    "ORACLE_FAILURE": [
+      "turn 1 'contratos en ejecucion de la alcaldia de medellin': missing param estado_contrato"
+    ],
+    "CURRENT_STATUS": "FAIL"
+  },
+  {
+    "CASE_ID": "HCA-TYPO-003",
+    "TURN_COUNT": 1,
+    "DOMAIN": "typo",
+    "ORACLE_FAILURE": [
+      "turn 1 'procesos de regimen especial en 2026': expected execution, got clarification"
+    ],
+    "CURRENT_STATUS": "FAIL"
+  },
+  {
+    "CASE_ID": "HCA-FOLLOWUP-007",
+    "TURN_COUNT": 2,
+    "DOMAIN": "followup",
+    "ORACLE_FAILURE": [
+      "turn 2 'mejor quita el filtro de modalidad': objeto lacks 'obra' (objeto=[])"
+    ],
+    "CURRENT_STATUS": "FAIL"
+  },
+  {
+    "CASE_ID": "HCA-FOLLOWUP-016",
+    "TURN_COUNT": 2,
+    "DOMAIN": "followup",
+    "ORACLE_FAILURE": [
+      "turn 2 'los mas antiguos primero': objeto lacks 'obra' (objeto=[])"
+    ],
+    "CURRENT_STATUS": "FAIL"
+  },
+  {
+    "CASE_ID": "HCA-META-001B",
+    "TURN_COUNT": 1,
+    "DOMAIN": "metamorphic",
+    "ORACLE_FAILURE": [
+      "metamorphic mismatch vs HCA-META-001A: {'departamento_resolved': (None, 'Atlántico'), 'entidad_resolved': ('DEPARTAMENTO DEL ATLANTICO**', None)}"
+    ],
+    "CURRENT_STATUS": "FAIL"
+  },
+  {
+    "CASE_ID": "HCA-SOURCE-002",
+    "TURN_COUNT": 1,
+    "DOMAIN": "source_capability",
+    "ORACLE_FAILURE": [
+      "turn 1 'procesos liquidados de obra en cauca': dataset='contratos', expected 'procesos'"
+    ],
+    "CURRENT_STATUS": "FAIL"
+  }
+]

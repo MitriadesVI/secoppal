@@ -1,0 +1,148 @@
+[
+  {
+    "case_id": "HCA-ACTOR-004",
+    "turn": 1,
+    "old_oracle": {
+      "has": [
+        "actor_scope"
+      ],
+      "objeto_not": [
+        "lmp",
+        "ingieneria"
+      ]
+    },
+    "proposed_oracle": {
+      "expect": "block",
+      "absent": [
+        "actor_scope",
+        "contratista"
+      ],
+      "has": [
+        "actor_pending"
+      ],
+      "candidate_present": {
+        "document_type": "NIT",
+        "base_number": "900739049",
+        "max_rank": 3
+      },
+      "objeto_not": [
+        "lmp",
+        "ingieneria"
+      ]
+    },
+    "why": "Confirma la calibración ciega: la expectativa de scope autoritativo contradice candidatos sin selección. El ranking no autoriza identidad. No es fallo de recall ni un bug que deba curarse auto-resolviendo fuzzy.",
+    "authority": "ADR-060 §4, §5, §9–10; ACTOR_PROFILE_V1 §7–10; INV-NAME-NO-GUESS.",
+    "old_notes": "sentinel typo LMP INGIENERIA — actor-shaped mention must go to candidates, not topic",
+    "proposed_notes": "Typo actor-shaped: present typed candidates without authorizing identity before user selection; no topic leakage.",
+    "observable_acceptance": "Antes de selección: cero source_calls; candidato tipado visible, ninguna identidad autorizada. La DSL expect:block no prueba por sí sola cero llamadas; comprobar con el observador adjunto."
+  },
+  {
+    "case_id": "HCA-TOPIC-007",
+    "turn": 1,
+    "old_oracle": {
+      "expect": "execute",
+      "ds": "procesos",
+      "objeto_has": [
+        "pae"
+      ]
+    },
+    "proposed_oracle": {
+      "expect": "execute",
+      "ds": "procesos",
+      "soql_has": [
+        "departamento_entidad = 'La Guajira'",
+        "%alimentacion escolar%"
+      ],
+      "soql_not": [
+        "%pae%"
+      ]
+    },
+    "why": "La intención se representa mediante el concepto canónico y sus aliases; exigir el substring pae en params no mide la conservación del tema. El catálogo excluye %pae% para evitar Páez. La expansión curada existente no se certifica aquí como recall/precision perfecta; la deuda confirmada es exigir la forma superficial.",
+    "authority": "ADR-006; ADR-024; ADR-036 (PAE requiere aliases curados); ADR-061.",
+    "old_notes": null,
+    "proposed_notes": "PAE denotes the canonical school-feeding topic; validate territory and source aliases, not the input acronym in an internal field."
+  },
+  {
+    "case_id": "HCA-ENTITY-001",
+    "turn": 1,
+    "old_oracle": {
+      "expect": "execute",
+      "soql_not": [
+        "ATLANTICO**"
+      ]
+    },
+    "proposed_oracle": {
+      "expect": "execute",
+      "ds": "contratos",
+      "soql_has": [
+        "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DEPARTAMENTO DEL ATLANTICO**%'))",
+        "fecha_de_firma >= '2026-01-01'",
+        "fecha_de_firma <= '2026-12-31'"
+      ]
+    },
+    "why": "ADR-040 documenta exactamente los dos asteriscos como parte del valor SECOP. El oracle confundió dato de fuente con Markdown. El P0 histórico no es una severidad de runtime confirmada. Limpiar la cadena por estética no es un arreglo autorizado; cualquier presentación escapada es otra superficie.",
+    "authority": "ADR-040: Atlántico se registra como DEPARTAMENTO DEL ATLANTICO** y el comprador usa el valor real.",
+    "old_notes": "canonical value must not carry markdown/asterisks into LIKE",
+    "proposed_notes": "Buyer must use the real SECOP source name, including literal asterisks where present; preserve the 2026 scope."
+  },
+  {
+    "case_id": "HCA-FOLLOWUP-007",
+    "turn": 2,
+    "old_oracle": {
+      "absent": [
+        "modalidad_include_procedure_ids"
+      ],
+      "objeto_has": [
+        "obra"
+      ]
+    },
+    "proposed_oracle": {
+      "expect": "execute",
+      "ds": "contratos",
+      "absent": [
+        "modalidad_include_procedure_ids",
+        "modalidad_exclude_procedure_ids"
+      ],
+      "soql_has": [
+        "departamento = 'Atlántico'",
+        "tipo_de_contrato = 'Obra'"
+      ],
+      "soql_not": [
+        "modalidad_de_contratacion IN",
+        "modalidad_de_contratacion ="
+      ]
+    },
+    "why": "El control de modalidad sí funciona. ADR-061 prohíbe duplicar el tramo obra como tema cuando ya lo consume la dimensión de tipo contractual. El oracle exige la representación vieja. El header abreviado no enumera el tipo, pero no afirma otra naturaleza; esa observación UX no convierte el fallo del oracle en retrieval bug.",
+    "authority": "ADR-054 CLEAR; guía modalidad §2–3; ADR-061 INV-STRUCTURED-DIMENSION-NOT-TOPIC.",
+    "old_notes": "filter removal: quita el filtro de modalidad",
+    "proposed_notes": "CLEAR removes modality and preserves territory plus structured contract type Obra; do not require duplicate topic text."
+  },
+  {
+    "case_id": "HCA-META-001B",
+    "turn": 1,
+    "old_oracle": {
+      "expect": "execute"
+    },
+    "proposed_oracle": {
+      "expect": "execute",
+      "ds": "contratos",
+      "soql_has": [
+        "departamento = 'Atlántico'",
+        "%adulto mayor%",
+        "fecha_de_firma >= '2026-01-01'",
+        "fecha_de_firma <= '2026-12-31'"
+      ],
+      "soql_not": [
+        "unaccent(UPPER(nombre_entidad)) LIKE"
+      ]
+    },
+    "why": "ADR-040 INV-7 exige universos distintos entre departamento territorial y Gobernación compradora. La transformación no es neutra. El FAIL metamórfico protege una equivalencia semánticamente falsa; uppercase/lowercase, en cambio, sí debe preservar intención (no es este par).",
+    "authority": "ADR-040 INV-7; ADR-061.",
+    "old_notes": null,
+    "proposed_notes": "Territorial department is not equivalent to Gobernacion buyer (ADR-040); preserve topic/time while querying the territorial universe.",
+    "remove_case_field": {
+      "same_frame_as": "HCA-META-001A"
+    },
+    "observable_pair_requirement": "A: comprador; B: territorio; mismo tema y tiempo. No exigir igualdad del frame completo."
+  }
+]

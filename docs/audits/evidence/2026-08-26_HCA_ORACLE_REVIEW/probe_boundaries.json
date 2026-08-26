@@ -1,0 +1,122 @@
+{
+  "money_primitive": {
+    "100 mil pesos": 100000,
+    "1 millon": 1000000,
+    "1 millones": 1000000
+  },
+  "unit_pattern_accepts_millon": false,
+  "state_family_direct": {
+    "family": "contrato_activo",
+    "filters": {
+      "estado_contrato": [
+        "En ejecución",
+        "Modificado",
+        "Prorrogado"
+      ]
+    },
+    "consumed_span": "en ejecucion"
+  },
+  "parser_probes": [
+    {
+      "query": "contratos de papeleria por mas de 100 mil pesos",
+      "params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "objeto": [
+          "papeleria"
+        ]
+      }
+    },
+    {
+      "query": "contratos de papeleria por mas de 1 millon",
+      "params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "objeto": [
+          "papeleria"
+        ]
+      }
+    },
+    {
+      "query": "contratos de papeleria por mas de 1 millones",
+      "params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "valor_min": 1000000,
+        "objeto": [
+          "papeleria"
+        ]
+      }
+    },
+    {
+      "query": "contratos de papeleria por mas de 100000 pesos",
+      "params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "objeto": [
+          "papeleria"
+        ]
+      }
+    },
+    {
+      "query": "contratos de papeleria por mas de 1000000 pesos",
+      "params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "valor_min": 1000000,
+        "objeto": [
+          "papeleria"
+        ]
+      }
+    },
+    {
+      "query": "contratos en ejecucion de la alcaldia de medellin",
+      "params": {
+        "dataset": "contratos",
+        "estado_family": "contrato_activo",
+        "dataset_explicit": true,
+        "entidad": "Municipio de medellin",
+        "entidad_resolved": "DISTRITO ESPECIAL DE CIENCIA TECNOLOGIA E INNOVACION DE MEDELLIN",
+        "entidad_resolution": {
+          "value": "DISTRITO ESPECIAL DE CIENCIA TECNOLOGIA E INNOVACION DE MEDELLIN",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de medellin"
+          }
+        },
+        "estado": "En ejecución",
+        "estado_field": "estado_contrato"
+      }
+    },
+    {
+      "query": "contratos activos de la alcaldia de medellin",
+      "params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de medellin",
+        "entidad_resolved": "DISTRITO ESPECIAL DE CIENCIA TECNOLOGIA E INNOVACION DE MEDELLIN",
+        "entidad_resolution": {
+          "value": "DISTRITO ESPECIAL DE CIENCIA TECNOLOGIA E INNOVACION DE MEDELLIN",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de medellin"
+          }
+        },
+        "estado_contrato": [
+          "En ejecución",
+          "Modificado",
+          "Prorrogado"
+        ],
+        "estado_family": "contrato_activo",
+        "estado": "En ejecución",
+        "estado_field": "estado_contrato"
+      }
+    }
+  ]
+}

@@ -1,0 +1,353 @@
+{
+  "hca": {
+    "corpus": "/Users/rodrigoortiz/Documents/secoppal-hca-oracle-review/tests/fixtures/audits/conversation_holistic_v1.yaml",
+    "corpus_sha256": "262c225c7939f04516ee95b3c77b4911f9f476058941a88a61d01c918499ffba",
+    "cases": 195,
+    "pass": 177,
+    "fail": 18,
+    "error": 0,
+    "failures": [
+      {
+        "id": "HCA-TOPIC-007",
+        "fails": [
+          "turn 1 'procesos del pae en la guajira': objeto lacks 'pae' (objeto=['alimentacion_escolar'])"
+        ]
+      },
+      {
+        "id": "HCA-TOPIC-012",
+        "fails": [
+          "turn 1 'contratos de salud en amazonas': expected execution, got clarification"
+        ]
+      },
+      {
+        "id": "HCA-MODALITY-002",
+        "fails": [
+          "turn 1 'contratos por seleccion abreviada de menor cuantia en 2026': expected execution, got clarification"
+        ]
+      },
+      {
+        "id": "HCA-MODALITY-012",
+        "fails": [
+          "turn 1 'procesos de enajenacion de bienes en 2026': expected execution, got clarification"
+        ]
+      },
+      {
+        "id": "HCA-ENTITY-001",
+        "fails": [
+          "turn 1 'contratos de la gobernacion del atlantico en 2026': soql contains 'ATLANTICO**'"
+        ]
+      },
+      {
+        "id": "HCA-ENTITY-004",
+        "fails": [
+          "turn 1 'que contrato el departamento del atlantico en 2025': missing param entidad_resolved"
+        ]
+      },
+      {
+        "id": "HCA-ENTITY-005",
+        "fails": [
+          "turn 1 'contratos de la alcaldia': expected block, got execution"
+        ]
+      },
+      {
+        "id": "HCA-MONEY-020",
+        "fails": [
+          "turn 1 'contratos de papeleria por mas de 100 mil pesos': valor_min=None, expected 100000"
+        ]
+      },
+      {
+        "id": "HCA-MONEY-026",
+        "fails": [
+          "turn 1 'contratos de papeleria por mas de 1 millon': valor_min=None, expected 1000000"
+        ]
+      },
+      {
+        "id": "HCA-ACTOR-004",
+        "fails": [
+          "turn 1 'contratos de lmp ingieneria en 2025': missing param actor_scope"
+        ]
+      },
+      {
+        "id": "HCA-STATE-003",
+        "fails": [
+          "turn 1 'contratos liquidados de obra en 2025': missing param estado_contrato"
+        ]
+      },
+      {
+        "id": "HCA-STATE-005",
+        "fails": [
+          "turn 1 'procesos publicados de aseo en cesar': soql contains 'Borrador'"
+        ]
+      },
+      {
+        "id": "HCA-STATE-007",
+        "fails": [
+          "turn 1 'contratos en ejecucion de la alcaldia de medellin': missing param estado_contrato"
+        ]
+      },
+      {
+        "id": "HCA-TYPO-003",
+        "fails": [
+          "turn 1 'procesos de regimen especial en 2026': expected execution, got clarification"
+        ]
+      },
+      {
+        "id": "HCA-FOLLOWUP-007",
+        "fails": [
+          "turn 2 'mejor quita el filtro de modalidad': objeto lacks 'obra' (objeto=[])"
+        ]
+      },
+      {
+        "id": "HCA-FOLLOWUP-016",
+        "fails": [
+          "turn 2 'los mas antiguos primero': objeto lacks 'obra' (objeto=[])"
+        ]
+      },
+      {
+        "id": "HCA-META-001B",
+        "fails": [
+          "metamorphic mismatch vs HCA-META-001A: {'departamento_resolved': (None, 'Atlántico'), 'entidad_resolved': ('DEPARTAMENTO DEL ATLANTICO**', None)}"
+        ]
+      },
+      {
+        "id": "HCA-SOURCE-002",
+        "fails": [
+          "turn 1 'procesos liquidados de obra en cauca': dataset='contratos', expected 'procesos'"
+        ]
+      }
+    ],
+    "isolation": {
+      "stores": {
+        "sandbox_root": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_x3a9a7ig",
+        "feedback_jsonl": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_x3a9a7ig/feedback.jsonl",
+        "feedback_db": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_x3a9a7ig/secoppal.db",
+        "conversation_dir": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_x3a9a7ig/conversations",
+        "radar_db": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_x3a9a7ig/secoppal.db",
+        "modality_telemetry": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_x3a9a7ig/modality_followup_telemetry.jsonl"
+      },
+      "outside_sandbox": []
+    }
+  },
+  "captured": {
+    "corpus": "/Users/rodrigoortiz/Documents/secoppal-hca-oracle-review/tests/fixtures/audits/conversation_holistic_v1.yaml",
+    "corpus_sha256": "262c225c7939f04516ee95b3c77b4911f9f476058941a88a61d01c918499ffba",
+    "cases": 195,
+    "pass": 177,
+    "fail": 18,
+    "error": 0,
+    "failures": [
+      {
+        "id": "HCA-TOPIC-007",
+        "fails": [
+          "turn 1 'procesos del pae en la guajira': objeto lacks 'pae' (objeto=['alimentacion_escolar'])"
+        ]
+      },
+      {
+        "id": "HCA-TOPIC-012",
+        "fails": [
+          "turn 1 'contratos de salud en amazonas': expected execution, got clarification"
+        ]
+      },
+      {
+        "id": "HCA-MODALITY-002",
+        "fails": [
+          "turn 1 'contratos por seleccion abreviada de menor cuantia en 2026': expected execution, got clarification"
+        ]
+      },
+      {
+        "id": "HCA-MODALITY-012",
+        "fails": [
+          "turn 1 'procesos de enajenacion de bienes en 2026': expected execution, got clarification"
+        ]
+      },
+      {
+        "id": "HCA-ENTITY-001",
+        "fails": [
+          "turn 1 'contratos de la gobernacion del atlantico en 2026': soql contains 'ATLANTICO**'"
+        ]
+      },
+      {
+        "id": "HCA-ENTITY-004",
+        "fails": [
+          "turn 1 'que contrato el departamento del atlantico en 2025': missing param entidad_resolved"
+        ]
+      },
+      {
+        "id": "HCA-ENTITY-005",
+        "fails": [
+          "turn 1 'contratos de la alcaldia': expected block, got execution"
+        ]
+      },
+      {
+        "id": "HCA-MONEY-020",
+        "fails": [
+          "turn 1 'contratos de papeleria por mas de 100 mil pesos': valor_min=None, expected 100000"
+        ]
+      },
+      {
+        "id": "HCA-MONEY-026",
+        "fails": [
+          "turn 1 'contratos de papeleria por mas de 1 millon': valor_min=None, expected 1000000"
+        ]
+      },
+      {
+        "id": "HCA-ACTOR-004",
+        "fails": [
+          "turn 1 'contratos de lmp ingieneria en 2025': missing param actor_scope"
+        ]
+      },
+      {
+        "id": "HCA-STATE-003",
+        "fails": [
+          "turn 1 'contratos liquidados de obra en 2025': missing param estado_contrato"
+        ]
+      },
+      {
+        "id": "HCA-STATE-005",
+        "fails": [
+          "turn 1 'procesos publicados de aseo en cesar': soql contains 'Borrador'"
+        ]
+      },
+      {
+        "id": "HCA-STATE-007",
+        "fails": [
+          "turn 1 'contratos en ejecucion de la alcaldia de medellin': missing param estado_contrato"
+        ]
+      },
+      {
+        "id": "HCA-TYPO-003",
+        "fails": [
+          "turn 1 'procesos de regimen especial en 2026': expected execution, got clarification"
+        ]
+      },
+      {
+        "id": "HCA-FOLLOWUP-007",
+        "fails": [
+          "turn 2 'mejor quita el filtro de modalidad': objeto lacks 'obra' (objeto=[])"
+        ]
+      },
+      {
+        "id": "HCA-FOLLOWUP-016",
+        "fails": [
+          "turn 2 'los mas antiguos primero': objeto lacks 'obra' (objeto=[])"
+        ]
+      },
+      {
+        "id": "HCA-META-001B",
+        "fails": [
+          "metamorphic mismatch vs HCA-META-001A: {'departamento_resolved': (None, 'Atlántico'), 'entidad_resolved': ('DEPARTAMENTO DEL ATLANTICO**', None)}"
+        ]
+      },
+      {
+        "id": "HCA-SOURCE-002",
+        "fails": [
+          "turn 1 'procesos liquidados de obra en cauca': dataset='contratos', expected 'procesos'"
+        ]
+      }
+    ],
+    "isolation": {
+      "stores": {
+        "sandbox_root": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_kz1z4q8w",
+        "feedback_jsonl": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_kz1z4q8w/feedback.jsonl",
+        "feedback_db": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_kz1z4q8w/secoppal.db",
+        "conversation_dir": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_kz1z4q8w/conversations",
+        "radar_db": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_kz1z4q8w/secoppal.db",
+        "modality_telemetry": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_kz1z4q8w/modality_followup_telemetry.jsonl"
+      },
+      "outside_sandbox": []
+    }
+  },
+  "negation": {
+    "corpus": "tests/fixtures/audits/negation_focal_v1.yaml",
+    "corpus_sha256": "f4f64a33ea7009eb1da9fa7d3c910e67010e6dafc6b4c5b6932901c27fad9a1d",
+    "cases": 24,
+    "pass": 22,
+    "fail": 2,
+    "error": 0,
+    "failures": [
+      {
+        "id": "NEG-N15",
+        "fails": [
+          "turn 1 'contratacion directa sin ofertas': expected execution, got clarification"
+        ]
+      },
+      {
+        "id": "NEG-ANTI-002",
+        "fails": [
+          "anti-metamorphic: field entidad_resolved identical to NEG-N12 (None)"
+        ]
+      }
+    ],
+    "isolation": {
+      "stores": {
+        "sandbox_root": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_aokyx5o0",
+        "feedback_jsonl": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_aokyx5o0/feedback.jsonl",
+        "feedback_db": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_aokyx5o0/secoppal.db",
+        "conversation_dir": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_aokyx5o0/conversations",
+        "radar_db": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_aokyx5o0/secoppal.db",
+        "modality_telemetry": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_aokyx5o0/modality_followup_telemetry.jsonl"
+      },
+      "outside_sandbox": []
+    }
+  },
+  "actor": {
+    "corpus": "tests/fixtures/audits/actor_hygiene_v1.yaml",
+    "corpus_sha256": "217df608a9a5dfb0abd1c89cda27d1c79f04a3000d9086457eb54dc916418698",
+    "cases": 36,
+    "pass": 36,
+    "fail": 0,
+    "error": 0,
+    "failures": [],
+    "isolation": {
+      "stores": {
+        "sandbox_root": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_cdd4namj",
+        "feedback_jsonl": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_cdd4namj/feedback.jsonl",
+        "feedback_db": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_cdd4namj/secoppal.db",
+        "conversation_dir": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_cdd4namj/conversations",
+        "radar_db": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_cdd4namj/secoppal.db",
+        "modality_telemetry": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_cdd4namj/modality_followup_telemetry.jsonl"
+      },
+      "outside_sandbox": []
+    }
+  },
+  "control": {
+    "corpus": "tests/fixtures/audits/control_language_v1.yaml",
+    "corpus_sha256": "b082f2d86952c28ce17d75d95b25c31706b147f857c126f82ef312b4b1501aba",
+    "cases": 42,
+    "pass": 42,
+    "fail": 0,
+    "error": 0,
+    "failures": [],
+    "isolation": {
+      "stores": {
+        "sandbox_root": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_30mq7lba",
+        "feedback_jsonl": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_30mq7lba/feedback.jsonl",
+        "feedback_db": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_30mq7lba/secoppal.db",
+        "conversation_dir": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_30mq7lba/conversations",
+        "radar_db": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_30mq7lba/secoppal.db",
+        "modality_telemetry": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_30mq7lba/modality_followup_telemetry.jsonl"
+      },
+      "outside_sandbox": []
+    }
+  },
+  "time": {
+    "corpus": "tests/fixtures/audits/time_v2_focal.yaml",
+    "corpus_sha256": "7e535cb6323d41735e63e996aa7ed139ff513372ba8bd9a671158bd5685dcd13",
+    "cases": 32,
+    "pass": 32,
+    "fail": 0,
+    "error": 0,
+    "failures": [],
+    "isolation": {
+      "stores": {
+        "sandbox_root": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_9n780efc",
+        "feedback_jsonl": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_9n780efc/feedback.jsonl",
+        "feedback_db": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_9n780efc/secoppal.db",
+        "conversation_dir": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_9n780efc/conversations",
+        "radar_db": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_9n780efc/secoppal.db",
+        "modality_telemetry": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_9n780efc/modality_followup_telemetry.jsonl"
+      },
+      "outside_sandbox": []
+    }
+  }
+}

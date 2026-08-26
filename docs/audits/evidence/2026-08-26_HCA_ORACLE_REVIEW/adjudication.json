@@ -1,0 +1,192 @@
+{
+  "counts": {
+    "CONFIRMED_ORACLE_DEBT": 5,
+    "SAFE_UNSUPPORTED_CAPABILITY": 1,
+    "KNOWN_DEFERRED_PRODUCT_DEBT": 3,
+    "INSUFFICIENT_EVIDENCE": 3,
+    "REAL_RUNTIME_BUG": 6,
+    "PRESENTATION_ONLY_DEFECT": 0
+  },
+  "cases": [
+    {
+      "case_id": "HCA-ACTOR-004",
+      "classification": "CONFIRMED_ORACLE_DEBT",
+      "runtime_change": "NO",
+      "oracle_change": "YES",
+      "priority": "P2",
+      "root_cause": "ACTOR_CANDIDATE_NOT_IDENTITY",
+      "current_runtime_behavior": "CANDIDATES, método fts5_trigram_bm25; LMP INGENIERIA SAS, NIT 900739049, rank 1. No actor_scope ni contratista. Plan actor_name_candidates bloqueado; pide selección y hace cero llamadas.",
+      "rationale": "Confirma la calibración ciega: la expectativa de scope autoritativo contradice candidatos sin selección. El ranking no autoriza identidad. No es fallo de recall ni un bug que deba curarse auto-resolviendo fuzzy."
+    },
+    {
+      "case_id": "HCA-TOPIC-007",
+      "classification": "CONFIRMED_ORACLE_DEBT",
+      "runtime_change": "NO",
+      "oracle_change": "YES",
+      "priority": "P2",
+      "root_cause": "CANONICAL_TOPIC_ALIAS",
+      "current_runtime_behavior": "objeto=[alimentacion_escolar], departamento La Guajira, procesos. Ejecuta una consulta con aliases de alimentación escolar y no usa LIKE %pae%.",
+      "rationale": "La intención se representa mediante el concepto canónico y sus aliases; exigir el substring pae en params no mide la conservación del tema. El catálogo excluye %pae% para evitar Páez. La expansión curada existente no se certifica aquí como recall/precision perfecta; la deuda confirmada es exigir la forma superficial."
+    },
+    {
+      "case_id": "HCA-TOPIC-012",
+      "classification": "SAFE_UNSUPPORTED_CAPABILITY",
+      "runtime_change": "NO",
+      "oracle_change": "MAYBE",
+      "priority": "P2",
+      "root_cause": "EXACT_ACTOR_TOPIC_AMBIGUITY",
+      "current_runtime_behavior": "El índice devuelve alias exact_unique_alias SALUD, NIT 900659292, y el parser conserva tema salud y Amazonas. P17 emite actor_or_topic_ambiguous, should_execute=false, pregunta explícita tema/proveedor; cero llamadas.",
+      "rationale": "La fase A favorecía ejecución temática sin conocer una colisión exacta. El contraste aporta ese hecho: no es un nombre inventado ni heurística fuzzy. ADR-060 y el contrato R7 permiten que alias exacto y filtros coexistan y prohíben atribución insegura. La aclaración conserva explícitas ambas lecturas y el territorio; no ejecuta actor_scope. Se registra este cambio de supuesto, sin reescribir fase A. SAFE describe la imposibilidad de elegir automáticamente el rol, no una falta de soporte de salud."
+    },
+    {
+      "case_id": "HCA-MODALITY-002",
+      "classification": "KNOWN_DEFERRED_PRODUCT_DEBT",
+      "runtime_change": "YES",
+      "oracle_change": "NO",
+      "priority": "P2",
+      "root_cause": "ONLY_MODALITY_SCOPE_POLICY",
+      "current_runtime_behavior": "Inclusión seleccion_abreviada_menor_cuantia y año correctos; sin fuga temática. Plan valid_query con unsafe_global_candidate; builder produce SoQL, pero el guard de ejecución aclara y hace cero llamadas.",
+      "rationale": "ADR-024 distingue WHERE no tautológico de alcance útil: modalidad y fecha no habilitan búsqueda sin tema/entidad/lugar/contratista. Mismo límite que NEG-N15 VALID_DEFERRED. No hay bug del resolutor; la demanda de ejecutar sólo modalidad exige decisión de producto. Runtime YES es para entregar esa demanda diferida, no para reparar la seguridad vigente."
+    },
+    {
+      "case_id": "HCA-MODALITY-012",
+      "classification": "KNOWN_DEFERRED_PRODUCT_DEBT",
+      "runtime_change": "YES",
+      "oracle_change": "NO",
+      "priority": "P2",
+      "root_cause": "ONLY_MODALITY_SCOPE_POLICY",
+      "current_runtime_behavior": "Incluye enajenacion_sobre_cerrado y enajenacion_subasta, procesos, 2026. Plan valid_query/unsafe_global_candidate; aclara alcance en guard final, cero llamadas.",
+      "rationale": "Enajenación sí se interpreta. El FAIL sólo exige ejecución de un universo sólo-modalidad que la política general no permite todavía. Se mantiene como capacidad diferida, no como falso negativo léxico ni parche de oracle en este bloque."
+    },
+    {
+      "case_id": "HCA-ENTITY-001",
+      "classification": "CONFIRMED_ORACLE_DEBT",
+      "runtime_change": "NO",
+      "oracle_change": "YES",
+      "priority": "P2",
+      "root_cause": "SOURCE_BUYER_LITERAL",
+      "current_runtime_behavior": "Resuelve comprador DEPARTAMENTO DEL ATLANTICO** y envía LIKE sobre nombre_entidad, con fechas 2026. No lo trata como territorio.",
+      "rationale": "ADR-040 documenta exactamente los dos asteriscos como parte del valor SECOP. El oracle confundió dato de fuente con Markdown. El P0 histórico no es una severidad de runtime confirmada. Limpiar la cadena por estética no es un arreglo autorizado; cualquier presentación escapada es otra superficie."
+    },
+    {
+      "case_id": "HCA-ENTITY-004",
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "runtime_change": "MAYBE",
+      "oracle_change": "MAYBE",
+      "priority": "P1",
+      "root_cause": "BUYER_SUBJECT_VS_TERRITORIAL_POLICY",
+      "current_runtime_behavior": "Interpreta departamento como territorio y ejecuta departamento=Atlántico con fechas 2025, sin nombre_entidad. Resumen dice Contratos en Atlántico.",
+      "rationale": "La intención razonable de qué contrató el departamento favorece sujeto comprador, mientras ADR-040 manda patrón territorial y no declara excepción para ese verbo. La fase A pidió aclarar esa frontera. No se toma la ejecución territorial como prueba de corrección ni se fuerza una excepción al ADR desde el oracle. Hace falta decisión explícita sobre sujeto comprador; no es el mismo caso que la frase territorial META-001B."
+    },
+    {
+      "case_id": "HCA-ENTITY-005",
+      "classification": "REAL_RUNTIME_BUG",
+      "runtime_change": "YES",
+      "oracle_change": "NO",
+      "priority": "P1",
+      "root_cause": "UNQUALIFIED_BUYER_AS_TOPIC",
+      "current_runtime_behavior": "No elige entidad arbitraria, pero transforma alcaldia en objeto y envía LIKE %alcaldia% sobre objeto/descripcion. Plan valid_query; una llamada.",
+      "rationale": "El comportamiento contradice la fase A: comprador incompleto requiere aclaración. Neutralizar el alias de entidad no basta si luego el sustantivo institucional se convierte en tema y sirve para saltar el guard de alcance. Es un bug de universo consultado, no de resumen."
+    },
+    {
+      "case_id": "HCA-MONEY-020",
+      "classification": "REAL_RUNTIME_BUG",
+      "runtime_change": "YES",
+      "oracle_change": "NO",
+      "priority": "P1",
+      "root_cause": "MONEY_ROUTER_UNIT_ACCEPTANCE",
+      "current_runtime_behavior": "Elimina el mínimo; sólo queda papeleria. Una llamada sin predicado de valor. money_to_cop(100 mil pesos)=100000, pero el router descarta montos <1000000.",
+      "rationale": "El contrato público es COP, y moneda más comparador son evidencia explícita. El piso antirruido no justifica ignorar un mínimo inequívoco y ejecutar más ampliamente. Subcausa: umbral duro del router, no conversión de escala. No se atribuye a un MV2 diferido sin una correspondencia documentada entre esos IDs y este caso."
+    },
+    {
+      "case_id": "HCA-MONEY-026",
+      "classification": "REAL_RUNTIME_BUG",
+      "runtime_change": "YES",
+      "oracle_change": "NO",
+      "priority": "P1",
+      "root_cause": "MONEY_ROUTER_UNIT_ACCEPTANCE",
+      "current_runtime_behavior": "Elimina el mínimo; fuente sólo filtra papelería. La primitiva da 1000000 para 1 millon. El patrón del router millones? no acepta millon; la variante gramaticalmente incorrecta 1 millones sí produce valor_min=1000000.",
+      "rationale": "La fase A exige singular monetario normal. La evidencia localiza el hueco en reconocimiento de unidad del router, no en Decimal ni en normalización de acentos. Se agrupa con MONEY-020 como un trabajo acotado de admisión de montos, conservando sus dos causas técnicas distintas."
+    },
+    {
+      "case_id": "HCA-STATE-003",
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "runtime_change": "MAYBE",
+      "oracle_change": "MAYBE",
+      "priority": "P1",
+      "root_cause": "LIQUIDATION_SOURCE_CONTRACT_UNDEFINED",
+      "current_runtime_behavior": "Usa estado=Cerrado con estado_field=estado_contrato; tema textual obra, fechas de firma 2025, y ejecuta. Falta la lista estado_contrato que el oracle exige.",
+      "rationale": "Un scalar correctamente proyectado bastaría para no exigir una lista interna, pero eso no acredita la equivalencia liquidado=Cerrado. La base no contiene una autoridad canónica de liquidación; el comentario de código closest no la crea. Tampoco determina firma vs fecha de liquidación para 2025. No declarar oracle debt ni inventar Liquidado como literal. Requiere contrato de estado/fecha antes de decidir el arreglo."
+    },
+    {
+      "case_id": "HCA-STATE-005",
+      "classification": "REAL_RUNTIME_BUG",
+      "runtime_change": "YES",
+      "oracle_change": "NO",
+      "priority": "P1",
+      "root_cause": "STATE_FAMILY_PROJECTION",
+      "current_runtime_behavior": "Publicado pasa a oferta_abierta y envía IN (Publicado, Borrador, En aprobación, Aprobado, Abierto), además apertura=Abierto. Una llamada real al stub de procesos.",
+      "rationale": "La referencia canónica distingue borrador no publicado de publicado, y sólo incluye borradores deliberadamente en oportunidades/abiertos. La consulta no pidió ese funnel. Conservarlo para oportunidades no autoriza contaminar publicado literal. La cláusula incorrecta ya está en fuente: no es sólo una etiqueta errónea ni se necesita creer las filas sintéticas para demostrarlo."
+    },
+    {
+      "case_id": "HCA-STATE-007",
+      "classification": "REAL_RUNTIME_BUG",
+      "runtime_change": "YES",
+      "oracle_change": "NO",
+      "priority": "P1",
+      "root_cause": "STATE_FAMILY_PROJECTION",
+      "current_runtime_behavior": "Frame declara contrato_activo, pero fuente envía sólo estado_contrato=En ejecución. El intent inicial consume la frase y la proyección de familia no materializa Modificado/Prorrogado; el fallback legacy recupera un scalar.",
+      "rationale": "Se mantiene la fase A basada en ADR-003: en ejecución mapea a contrato_activo con tres valores. La ausencia de un campo interno por sí sola no sería bug; la pérdida observable de dos miembros de la familia sí lo es. El probe directo de familia devuelve los tres, y contratos activos también; no se halló una decisión posterior que revoque esa política. Si producto quiere literal exacto, debe cambiar autoridad explícitamente, no legitimar el accidente del fallback. No se infiere que activo, firmado y adjudicado sean sinónimos."
+    },
+    {
+      "case_id": "HCA-TYPO-003",
+      "classification": "KNOWN_DEFERRED_PRODUCT_DEBT",
+      "runtime_change": "YES",
+      "oracle_change": "NO",
+      "priority": "P2",
+      "root_cause": "ONLY_MODALITY_SCOPE_POLICY",
+      "current_runtime_behavior": "Reconoce regimen_especial y regimen_especial_con_ofertas sin tilde, procesos y 2026. Plan valid_query/unsafe_global_candidate, guard pide alcance; cero llamadas.",
+      "rationale": "La ausencia de tilde no causa el FAIL. La familia se reconoce y el límite es el mismo que MODALITY-002/012 y NEG-N15. No crear un proyecto de typos separado ni relajar seguridad para subir el score."
+    },
+    {
+      "case_id": "HCA-FOLLOWUP-007",
+      "classification": "CONFIRMED_ORACLE_DEBT",
+      "runtime_change": "NO",
+      "oracle_change": "YES",
+      "priority": "P2",
+      "root_cause": "STRUCTURED_CONTRACT_TYPE_NOT_TOPIC",
+      "current_runtime_behavior": "T1 incluye obra, Atlántico y licitación. T2 delega CLEAR al motor de modalidad; queda obra + Atlántico, sin inclusiones/exclusiones de modalidad, ejecuta. Ambos WHERE conservan tipo_de_contrato=Obra.",
+      "rationale": "El control de modalidad sí funciona. ADR-061 prohíbe duplicar el tramo obra como tema cuando ya lo consume la dimensión de tipo contractual. El oracle exige la representación vieja. El header abreviado no enumera el tipo, pero no afirma otra naturaleza; esa observación UX no convierte el fallo del oracle en retrieval bug."
+    },
+    {
+      "case_id": "HCA-FOLLOWUP-016",
+      "classification": "REAL_RUNTIME_BUG",
+      "runtime_change": "YES",
+      "oracle_change": "YES",
+      "priority": "P1",
+      "root_cause": "ORDERING_FOLLOWUP_ECOSYSTEM_DRIFT",
+      "current_runtime_behavior": "Dinero=300000000, ciudad=Cali y tipo=obra sobreviven; T2 change_order sólo acepta ordering_signal=fecha_asc. Sin embargo T1 consulta sin entidad_ecosystem y T2 consulta con un OR de diez compradores. Una llamada por turno.",
+      "rationale": "La hipótesis de objeto_has obra obsoleto se confirma como defecto secundario del oracle, pero la condición ciega de WHERE idéntico falla. normal_flow añade ecosistema post-query y lo persiste; al reordenar, ese estado pasa al próximo fetch. Captura de source_calls confirma el AND adicional; no es sólo SoQL decorativo. Primaria REAL_RUNTIME_BUG. No entra al plan de oracle mientras sea primaria runtime. No es CHANGE_SCOPE_TOPIC_LOSS: el intent real es change_order y no se pierde obra."
+    },
+    {
+      "case_id": "HCA-META-001B",
+      "classification": "CONFIRMED_ORACLE_DEBT",
+      "runtime_change": "NO",
+      "oracle_change": "YES",
+      "priority": "P2",
+      "root_cause": "TERRITORY_BUYER_FALSE_EQUIVALENCE",
+      "current_runtime_behavior": "B consulta departamento=Atlántico; A consulta comprador DEPARTAMENTO DEL ATLANTICO**. Ambos conservan adulto_mayor y 2026, ejecutando una llamada cada uno.",
+      "rationale": "ADR-040 INV-7 exige universos distintos entre departamento territorial y Gobernación compradora. La transformación no es neutra. El FAIL metamórfico protege una equivalencia semánticamente falsa; uppercase/lowercase, en cambio, sí debe preservar intención (no es este par)."
+    },
+    {
+      "case_id": "HCA-SOURCE-002",
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "runtime_change": "MAYBE",
+      "oracle_change": "MAYBE",
+      "priority": "P1",
+      "root_cause": "LIQUIDATION_SOURCE_CONTRACT_UNDEFINED",
+      "current_runtime_behavior": "A pesar de procesos, selecciona contratos y consulta Cauca + texto obra + estado_contrato=Cerrado. No aclara. El oracle sólo reclama dataset procesos.",
+      "rationale": "Conservar dataset procesos no resuelve una capacidad de liquidación que ese oracle no demuestra. Tampoco moverlo en silencio a contratos prueba corrección. Comparte falta de autoridad de liquidación con STATE-003 y agrega conflicto de dataset. La evidencia de implementación no permite declarar Liquidado=Cerrado ni estado de proceso equivalente. Se conserva INSUFFICIENT_EVIDENCE; decisión de fuente y política de aclaración antes de modificar runtime/oracle."
+    }
+  ]
+}

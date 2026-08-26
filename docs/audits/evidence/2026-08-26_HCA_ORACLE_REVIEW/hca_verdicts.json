@@ -1,0 +1,3354 @@
+{
+ "corpus": "/Users/rodrigoortiz/Documents/secoppal-hca-oracle-review/tests/fixtures/audits/conversation_holistic_v1.yaml",
+ "corpus_sha256": "262c225c7939f04516ee95b3c77b4911f9f476058941a88a61d01c918499ffba",
+ "cases": 195,
+ "pass": 177,
+ "fail": 18,
+ "error": 0,
+ "verdicts": [
+  {
+   "id": "HCA-INTENT-001",
+   "category": "intent_dataset",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "obra"
+    ],
+    "ciudad": "Cartagena"
+   }
+  },
+  {
+   "id": "HCA-INTENT-002",
+   "category": "intent_dataset",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "vigilancia"
+    ],
+    "departamento_resolved": "Atlántico",
+    "estado_family": "oferta_abierta",
+    "estado_del_procedimiento": [
+     "Abierto",
+     "Aprobado",
+     "Borrador",
+     "En aprobación",
+     "Publicado"
+    ],
+    "intent_type": "opportunity_search"
+   }
+  },
+  {
+   "id": "HCA-INTENT-003",
+   "category": "intent_dataset",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "entidad_resolved": "DEPARTAMENTO DEL ATLANTICO**"
+   }
+  },
+  {
+   "id": "HCA-INTENT-004",
+   "category": "intent_dataset",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "aseo"
+    ],
+    "departamento_resolved": "Bolívar",
+    "estado_family": "oferta_abierta",
+    "estado_del_procedimiento": [
+     "Abierto",
+     "Aprobado",
+     "Borrador",
+     "En aprobación",
+     "Publicado"
+    ],
+    "intent_type": "opportunity_search"
+   }
+  },
+  {
+   "id": "HCA-INTENT-005",
+   "category": "intent_dataset",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "departamento_resolved": "Bolívar",
+    "modalidad_include_procedure_ids": [
+     "licitacion_publica",
+     "licitacion_publica_obra"
+    ]
+   }
+  },
+  {
+   "id": "HCA-INTENT-006",
+   "category": "intent_dataset",
+   "severity_if_failed": "P1",
+   "notes": "que contrató X → contracts (past)",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "entidad_resolved": "MUNICIPIO DE MONTERIA"
+   }
+  },
+  {
+   "id": "HCA-INTENT-007",
+   "category": "intent_dataset",
+   "severity_if_failed": "P1",
+   "notes": "que está contratando → open processes, and the verb must not leak to objeto",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"
+   }
+  },
+  {
+   "id": "HCA-INTENT-008",
+   "category": "intent_dataset",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "entidad_resolved": "DEPARTAMENTO DE CORDOBA"
+   }
+  },
+  {
+   "id": "HCA-INTENT-009",
+   "category": "intent_dataset",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "software"
+    ],
+    "estado_family": "oferta_abierta",
+    "estado_del_procedimiento": [
+     "Abierto",
+     "Aprobado",
+     "Borrador",
+     "En aprobación",
+     "Publicado"
+    ],
+    "intent_type": "opportunity_search"
+   }
+  },
+  {
+   "id": "HCA-INTENT-010",
+   "category": "intent_dataset",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "interventoria"
+    ],
+    "departamento_resolved": "Santander",
+    "estado_family": "oferta_abierta",
+    "intent_type": "opportunity_search"
+   }
+  },
+  {
+   "id": "HCA-INTENT-011",
+   "category": "intent_dataset",
+   "severity_if_failed": "P1",
+   "notes": "adjudicado belongs to contracts side",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "transporte"
+    ],
+    "fecha_desde": "2026-01-01",
+    "fecha_hasta": "2026-12-31",
+    "estado_family": "en_evaluacion",
+    "estado_contrato": [
+     "Aprobado",
+     "Borrador",
+     "En aprobación",
+     "enviado Proveedor"
+    ]
+   }
+  },
+  {
+   "id": "HCA-INTENT-012",
+   "category": "intent_dataset",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "dotacion",
+     "escolar"
+    ],
+    "departamento_resolved": "Sucre",
+    "estado_family": "oferta_abierta",
+    "estado_del_procedimiento": [
+     "Abierto",
+     "Aprobado",
+     "Borrador",
+     "En aprobación",
+     "Publicado"
+    ],
+    "intent_type": "opportunity_search"
+   }
+  },
+  {
+   "id": "HCA-INTENT-013",
+   "category": "intent_dataset",
+   "severity_if_failed": "P2",
+   "notes": "qué tiene abierto → open processes of that buyer",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "entidad_resolved": "SENA SECRETARIA GENERAL",
+    "estado_family": "oferta_abierta",
+    "estado_del_procedimiento": [
+     "Abierto",
+     "Aprobado",
+     "Borrador",
+     "En aprobación",
+     "Publicado"
+    ],
+    "intent_type": "opportunity_search"
+   }
+  },
+  {
+   "id": "HCA-INTENT-014",
+   "category": "intent_dataset",
+   "severity_if_failed": "P2",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "consultoria"
+    ],
+    "departamento_resolved": "Nariño",
+    "estado_family": "oferta_abierta",
+    "estado_del_procedimiento": [
+     "Abierto",
+     "Aprobado",
+     "Borrador",
+     "En aprobación",
+     "Publicado"
+    ],
+    "intent_type": "opportunity_search"
+   }
+  },
+  {
+   "id": "HCA-TOPIC-001",
+   "category": "topic_object",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "adulto_mayor"
+    ],
+    "ciudad": "Cartagena"
+   }
+  },
+  {
+   "id": "HCA-TOPIC-002",
+   "category": "topic_object",
+   "severity_if_failed": "P1",
+   "notes": "population+service compound",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "adulto_mayor",
+     "alimentacion"
+    ]
+   }
+  },
+  {
+   "id": "HCA-TOPIC-003",
+   "category": "topic_object",
+   "severity_if_failed": "P2",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "mantenimiento",
+     "sede"
+    ]
+   }
+  },
+  {
+   "id": "HCA-TOPIC-004",
+   "category": "topic_object",
+   "severity_if_failed": "P2",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "mejoramiento",
+     "vivienda"
+    ],
+    "departamento_resolved": "Chocó"
+   }
+  },
+  {
+   "id": "HCA-TOPIC-005",
+   "category": "topic_object",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "escolar",
+     "transporte"
+    ],
+    "departamento_resolved": "Boyacá"
+   }
+  },
+  {
+   "id": "HCA-TOPIC-006",
+   "category": "topic_object",
+   "severity_if_failed": "P2",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "funerarios",
+     "servicios"
+    ]
+   }
+  },
+  {
+   "id": "HCA-TOPIC-007",
+   "category": "topic_object",
+   "severity_if_failed": "P2",
+   "notes": null,
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'procesos del pae en la guajira': objeto lacks 'pae' (objeto=['alimentacion_escolar'])"
+   ],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "alimentacion_escolar"
+    ],
+    "departamento_resolved": "La Guajira"
+   }
+  },
+  {
+   "id": "HCA-TOPIC-008",
+   "category": "topic_object",
+   "severity_if_failed": "P1",
+   "notes": "buyer words must not leak into objeto",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "vigilancia"
+    ],
+    "entidad_resolved": "MUNICIPIO DE SINCELEJO"
+   }
+  },
+  {
+   "id": "HCA-TOPIC-009",
+   "category": "topic_object",
+   "severity_if_failed": "P1",
+   "notes": "geography must not leak into objeto",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "departamento_resolved": "Cesar"
+   }
+  },
+  {
+   "id": "HCA-TOPIC-010",
+   "category": "topic_object",
+   "severity_if_failed": "P2",
+   "notes": "technical vs common terminology",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "interventoria",
+     "obra",
+     "tecnica"
+    ]
+   }
+  },
+  {
+   "id": "HCA-TOPIC-011",
+   "category": "topic_object",
+   "severity_if_failed": "P2",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "combustible",
+     "suministro"
+    ]
+   }
+  },
+  {
+   "id": "HCA-TOPIC-012",
+   "category": "topic_object",
+   "severity_if_failed": "P2",
+   "notes": "very broad topic should still execute, not clarify",
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'contratos de salud en amazonas': expected execution, got clarification"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "salud"
+    ],
+    "departamento_resolved": "Amazonas"
+   }
+  },
+  {
+   "id": "HCA-TOPIC-013",
+   "category": "topic_object",
+   "severity_if_failed": "P1",
+   "notes": "instruction verbs are not topics",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "papeleria"
+    ],
+    "entidad_resolved": "MUNICIPIO DE TUNJA/"
+   }
+  },
+  {
+   "id": "HCA-TOPIC-014",
+   "category": "topic_object",
+   "severity_if_failed": "P2",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "comedores",
+     "comunitarios"
+    ],
+    "entidad_resolved": "MUNICIPIO DE SOACHA.."
+   }
+  },
+  {
+   "id": "HCA-TOPIC-015",
+   "category": "topic_object",
+   "severity_if_failed": "P2",
+   "notes": "multiword: agua potable should survive as concept",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "agua",
+     "basico",
+     "potable",
+     "saneamiento"
+    ]
+   }
+  },
+  {
+   "id": "HCA-TYPE-001",
+   "category": "contract_type",
+   "severity_if_failed": "P1",
+   "notes": "SEARCH-SH1 core: convenio = structured dimension + topic intact",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "adulto_mayor"
+    ],
+    "contract_type_include": [
+     "convenio"
+    ]
+   }
+  },
+  {
+   "id": "HCA-TYPE-002",
+   "category": "contract_type",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "entidad_resolved": "GOBERNACIÓN DE BOLÍVAR//",
+    "contract_type_include": [
+     "convenio_interadministrativo"
+    ]
+   }
+  },
+  {
+   "id": "HCA-TYPE-003",
+   "category": "contract_type",
+   "severity_if_failed": "P2",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "ciudad": "Monteria",
+    "contract_type_include": [
+     "prestacion_servicios"
+    ]
+   }
+  },
+  {
+   "id": "HCA-TYPE-004",
+   "category": "contract_type",
+   "severity_if_failed": "P2",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "ciudad": "Cali",
+    "contract_type_include": [
+     "obra"
+    ]
+   }
+  },
+  {
+   "id": "HCA-TYPE-005",
+   "category": "contract_type",
+   "severity_if_failed": "P2",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "ciudad": "Valledupar",
+    "contract_type_include": [
+     "suministro"
+    ]
+   }
+  },
+  {
+   "id": "HCA-TYPE-006",
+   "category": "contract_type",
+   "severity_if_failed": "P2",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "contract_type_include": [
+     "arrendamiento_inmuebles"
+    ]
+   }
+  },
+  {
+   "id": "HCA-TYPE-007",
+   "category": "contract_type",
+   "severity_if_failed": "P2",
+   "notes": "consultoría as contract type and/or topic — either, but not dropped",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "consultoria"
+    ],
+    "entidad_resolved": "MUNICIPIO DE NEIVA"
+   }
+  },
+  {
+   "id": "HCA-TYPE-008",
+   "category": "contract_type",
+   "severity_if_failed": "P1",
+   "notes": "convenio solidario family",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "accion",
+     "comunal",
+     "juntas"
+    ],
+    "contract_type_include": [
+     "convenio_solidario"
+    ]
+   }
+  },
+  {
+   "id": "HCA-TYPE-009",
+   "category": "contract_type",
+   "severity_if_failed": "P1",
+   "notes": "type + modality must coexist",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+    "modalidad_include_procedure_ids": [
+     "regimen_especial",
+     "regimen_especial_con_ofertas"
+    ],
+    "contract_type_include": [
+     "convenio"
+    ]
+   }
+  },
+  {
+   "id": "HCA-TYPE-010",
+   "category": "contract_type",
+   "severity_if_failed": "P1",
+   "notes": "contrato interadministrativo (not convenio wording)",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "fecha_desde": "2026-01-01",
+    "fecha_hasta": "2026-12-31",
+    "contract_type_include": [
+     "contrato_interadministrativo"
+    ]
+   }
+  },
+  {
+   "id": "HCA-MODALITY-001",
+   "category": "modality",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "obra"
+    ],
+    "departamento_resolved": "Atlántico",
+    "modalidad_include_procedure_ids": [
+     "licitacion_publica",
+     "licitacion_publica_obra"
+    ]
+   }
+  },
+  {
+   "id": "HCA-MODALITY-002",
+   "category": "modality",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'contratos por seleccion abreviada de menor cuantia en 2026': expected execution, got clarification"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "fecha_desde": "2026-01-01",
+    "fecha_hasta": "2026-12-31",
+    "modalidad_include_procedure_ids": [
+     "seleccion_abreviada_menor_cuantia"
+    ]
+   }
+  },
+  {
+   "id": "HCA-MODALITY-003",
+   "category": "modality",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "suministro"
+    ],
+    "modalidad_include_procedure_ids": [
+     "seleccion_abreviada_subasta_inversa"
+    ]
+   }
+  },
+  {
+   "id": "HCA-MODALITY-004",
+   "category": "modality",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "ciudad": "Santa marta",
+    "modalidad_include_procedure_ids": [
+     "minima_cuantia"
+    ]
+   }
+  },
+  {
+   "id": "HCA-MODALITY-005",
+   "category": "modality",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "interventoria"
+    ],
+    "modalidad_include_procedure_ids": [
+     "concurso_meritos_abierto",
+     "concurso_meritos_precalificacion"
+    ]
+   }
+  },
+  {
+   "id": "HCA-MODALITY-006",
+   "category": "modality",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "entidad_resolved": "GOBERNACION DEL MAGDALENA",
+    "modalidad_include_procedure_ids": [
+     "contratacion_directa",
+     "contratacion_directa_con_ofertas"
+    ]
+   }
+  },
+  {
+   "id": "HCA-MODALITY-007",
+   "category": "modality",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "departamento_resolved": "Córdoba",
+    "modalidad_include_procedure_ids": [
+     "regimen_especial_con_ofertas"
+    ]
+   }
+  },
+  {
+   "id": "HCA-MODALITY-008",
+   "category": "modality",
+   "severity_if_failed": "P2",
+   "notes": "accent/plural robustness: 'licitación pública' singular accented",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "vivienda"
+    ],
+    "departamento_resolved": "Sucre",
+    "modalidad_include_procedure_ids": [
+     "licitacion_publica",
+     "licitacion_publica_obra"
+    ]
+   }
+  },
+  {
+   "id": "HCA-MODALITY-009",
+   "category": "modality",
+   "severity_if_failed": "P2",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "dotacion"
+    ],
+    "modalidad_include_procedure_ids": [
+     "acuerdo_marco_precio_secop"
+    ]
+   }
+  },
+  {
+   "id": "HCA-MODALITY-010",
+   "category": "modality",
+   "severity_if_failed": "P2",
+   "notes": "modality + money + buyer composition",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "valor_min": 50000000,
+    "entidad_resolved": "MUNICIPIO DE SOLEDAD",
+    "modalidad_include_procedure_ids": [
+     "contratacion_directa",
+     "contratacion_directa_con_ofertas"
+    ]
+   }
+  },
+  {
+   "id": "HCA-MODALITY-011",
+   "category": "modality",
+   "severity_if_failed": "P1",
+   "notes": "seleccion abreviada bare must map to the SA family, not leak as topic",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "fecha_desde": "2026-01-01",
+    "fecha_hasta": "2026-12-31",
+    "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+    "modalidad_include_procedure_ids": [
+     "seleccion_abreviada_menor_cuantia",
+     "seleccion_abreviada_menor_cuantia_sin_manifestacion",
+     "seleccion_abreviada_subasta_inversa"
+    ]
+   }
+  },
+  {
+   "id": "HCA-MODALITY-012",
+   "category": "modality",
+   "severity_if_failed": "P2",
+   "notes": "enajenacion de bienes is a real SECOP modality",
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'procesos de enajenacion de bienes en 2026': expected execution, got clarification"
+   ],
+   "final_frame": {
+    "dataset": "procesos",
+    "fecha_desde": "2026-01-01",
+    "fecha_hasta": "2026-12-31",
+    "modalidad_include_procedure_ids": [
+     "enajenacion_sobre_cerrado",
+     "enajenacion_subasta"
+    ]
+   }
+  },
+  {
+   "id": "HCA-ENTITY-001",
+   "category": "entity_buyer",
+   "severity_if_failed": "P0",
+   "notes": "canonical value must not carry markdown/asterisks into LIKE",
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'contratos de la gobernacion del atlantico en 2026': soql contains 'ATLANTICO**'"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "fecha_desde": "2026-01-01",
+    "fecha_hasta": "2026-12-31",
+    "entidad_resolved": "DEPARTAMENTO DEL ATLANTICO**"
+   }
+  },
+  {
+   "id": "HCA-ENTITY-002",
+   "category": "entity_buyer",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"
+   }
+  },
+  {
+   "id": "HCA-ENTITY-003",
+   "category": "entity_buyer",
+   "severity_if_failed": "P1",
+   "notes": "distrito wording resolves to same buyer as alcaldía",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"
+   }
+  },
+  {
+   "id": "HCA-ENTITY-004",
+   "category": "entity_buyer",
+   "severity_if_failed": "P1",
+   "notes": "department-as-buyer: gobernación del atlántico ≠ territory filter only",
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'que contrato el departamento del atlantico en 2025': missing param entidad_resolved"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "departamento_resolved": "Atlántico"
+   }
+  },
+  {
+   "id": "HCA-ENTITY-005",
+   "category": "entity_buyer",
+   "severity_if_failed": "P1",
+   "notes": "unqualified generic must clarify, not pick arbitrary entity",
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'contratos de la alcaldia': expected block, got execution"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "alcaldia"
+    ]
+   }
+  },
+  {
+   "id": "HCA-ENTITY-006",
+   "category": "entity_buyer",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "entidad_resolved": "GOBERNACIÓN DE BOYACÁ"
+   }
+  },
+  {
+   "id": "HCA-ENTITY-007",
+   "category": "entity_buyer",
+   "severity_if_failed": "P2",
+   "notes": "bare city = territory, not buyer",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "ciudad": "Barranquilla"
+   }
+  },
+  {
+   "id": "HCA-ENTITY-008",
+   "category": "entity_buyer",
+   "severity_if_failed": "P2",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "entidad_resolved": "MINISTERIO DE EDUCACION NACIONAL (MEN)"
+   }
+  },
+  {
+   "id": "HCA-ENTITY-009",
+   "category": "entity_buyer",
+   "severity_if_failed": "P1",
+   "notes": "ICBF regional query should not become national ICBF blindly",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "entidad_resolved": "ICBF REGIONAL CÓRDOBA",
+    "departamento_resolved": "Córdoba"
+   }
+  },
+  {
+   "id": "HCA-ENTITY-010",
+   "category": "entity_buyer",
+   "severity_if_failed": "P2",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "entidad_resolved": "ALCALDIA LOCAL DE TEUSAQUILLO(oficial)"
+   }
+  },
+  {
+   "id": "HCA-GEO-001",
+   "category": "geography",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "dotacion"
+    ],
+    "departamento_resolved": "Córdoba"
+   }
+  },
+  {
+   "id": "HCA-GEO-002",
+   "category": "geography",
+   "severity_if_failed": "P1",
+   "notes": "city Cartagena, not department Bolívar",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "pavimentacion"
+    ],
+    "ciudad": "Cartagena"
+   }
+  },
+  {
+   "id": "HCA-GEO-003",
+   "category": "geography",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "electrificacion"
+    ],
+    "departamento_resolved": "Chocó"
+   }
+  },
+  {
+   "id": "HCA-GEO-004",
+   "category": "geography",
+   "severity_if_failed": "P1",
+   "notes": "department homonym: Bolívar dept vs Ciudad Bolívar etc.",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "acueducto"
+    ],
+    "departamento_resolved": "Bolívar"
+   }
+  },
+  {
+   "id": "HCA-GEO-005",
+   "category": "geography",
+   "severity_if_failed": "P2",
+   "notes": "city + department combined",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "departamento_resolved": "Córdoba",
+    "ciudad": "Monteria"
+   }
+  },
+  {
+   "id": "HCA-GEO-006",
+   "category": "geography",
+   "severity_if_failed": "P1",
+   "notes": "Valle del Cauca full name",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "salud"
+    ],
+    "departamento_resolved": "Valle del Cauca"
+   }
+  },
+  {
+   "id": "HCA-GEO-007",
+   "category": "geography",
+   "severity_if_failed": "P2",
+   "notes": "Atlántico as department scope (no buyer wording)",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "vias"
+    ],
+    "departamento_resolved": "Atlántico"
+   }
+  },
+  {
+   "id": "HCA-MONEY-001",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "valor_min": 100000000
+   }
+  },
+  {
+   "id": "HCA-MONEY-002",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "valor_min": 100000000
+   }
+  },
+  {
+   "id": "HCA-MONEY-003",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "valor_min": 100000000
+   }
+  },
+  {
+   "id": "HCA-MONEY-004",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "valor_min": 100000000
+   }
+  },
+  {
+   "id": "HCA-MONEY-005",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "valor_min": 100000000
+   }
+  },
+  {
+   "id": "HCA-MONEY-006",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "vigilancia"
+    ],
+    "valor_max": 500000000
+   }
+  },
+  {
+   "id": "HCA-MONEY-007",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "vigilancia"
+    ],
+    "valor_max": 500000000
+   }
+  },
+  {
+   "id": "HCA-MONEY-008",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "vigilancia"
+    ],
+    "valor_max": 500000000
+   }
+  },
+  {
+   "id": "HCA-MONEY-009",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "vigilancia"
+    ],
+    "valor_max": 500000000
+   }
+  },
+  {
+   "id": "HCA-MONEY-010",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "valor_min": 100000000,
+    "valor_max": 500000000,
+    "contract_type_include": [
+     "obra"
+    ]
+   }
+  },
+  {
+   "id": "HCA-MONEY-011",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "valor_min": 100000000,
+    "valor_max": 500000000,
+    "contract_type_include": [
+     "obra"
+    ]
+   }
+  },
+  {
+   "id": "HCA-MONEY-012",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": "1.000 millones colombian thousands separator = 1e9",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "valor_min": 1000000000,
+    "contract_type_include": [
+     "obra"
+    ]
+   }
+  },
+  {
+   "id": "HCA-MONEY-013",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "valor_min": 1000000000,
+    "contract_type_include": [
+     "obra"
+    ]
+   }
+  },
+  {
+   "id": "HCA-MONEY-014",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "valor_min": 2000000000,
+    "contract_type_include": [
+     "obra"
+    ]
+   }
+  },
+  {
+   "id": "HCA-MONEY-015",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": "decimal comma: 2,5 mil millones = 2.5e9",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "valor_min": 2500000000,
+    "contract_type_include": [
+     "obra"
+    ]
+   }
+  },
+  {
+   "id": "HCA-MONEY-016",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "infraestructura"
+    ],
+    "valor_min": 1000000000000
+   }
+  },
+  {
+   "id": "HCA-MONEY-017",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "valor_min": 500000000
+   }
+  },
+  {
+   "id": "HCA-MONEY-018",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "valor_min": 500000000
+   }
+  },
+  {
+   "id": "HCA-MONEY-019",
+   "category": "money",
+   "severity_if_failed": "P2",
+   "notes": "shorthand 500M — supported or safely unsupported, never wrong magnitude",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "500m",
+     "aseo"
+    ],
+    "ciudad": "Barranquilla"
+   }
+  },
+  {
+   "id": "HCA-MONEY-020",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": "100 mil = 100,000 (not millions)",
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'contratos de papeleria por mas de 100 mil pesos': valor_min=None, expected 100000"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "papeleria"
+    ]
+   }
+  },
+  {
+   "id": "HCA-MONEY-021",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": "contradictory range must clarify or be rejected, not silently swapped",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "valor_min": 500000000,
+    "valor_max": 100000000,
+    "ciudad": "Cali"
+   }
+  },
+  {
+   "id": "HCA-MONEY-022",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": "money + year + buyer + topic all coexist",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "alimentacion"
+    ],
+    "valor_min": 200000000,
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "entidad_resolved": "GOBERNACION DE SUCRE"
+   }
+  },
+  {
+   "id": "HCA-MONEY-023",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": "processes project money onto precio_base",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "obra"
+    ],
+    "valor_min": 300000000
+   }
+  },
+  {
+   "id": "HCA-MONEY-024",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": "contracts project money onto valor_del_contrato",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "valor_min": 300000000,
+    "contract_type_include": [
+     "obra"
+    ]
+   }
+  },
+  {
+   "id": "HCA-MONEY-025",
+   "category": "money",
+   "severity_if_failed": "P2",
+   "notes": "X o más",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "vias"
+    ],
+    "valor_min": 800000000
+   }
+  },
+  {
+   "id": "HCA-MONEY-026",
+   "category": "money",
+   "severity_if_failed": "P2",
+   "notes": "millón singular",
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'contratos de papeleria por mas de 1 millon': valor_min=None, expected 1000000"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "papeleria"
+    ]
+   }
+  },
+  {
+   "id": "HCA-MONEY-027",
+   "category": "money",
+   "severity_if_failed": "P2",
+   "notes": "no money mentioned → no money filter invented",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "entidad_resolved": "ALCALDIA DISTRITO DE RIOHACHA"
+   }
+  },
+  {
+   "id": "HCA-TIME-001",
+   "category": "time",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2026-01-01",
+    "fecha_hasta": "2026-12-31"
+   }
+  },
+  {
+   "id": "HCA-TIME-002",
+   "category": "time",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2026-06-01",
+    "fecha_hasta": "2026-06-30"
+   }
+  },
+  {
+   "id": "HCA-TIME-003",
+   "category": "time",
+   "severity_if_failed": "P1",
+   "notes": "specific day",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2026-06-15",
+    "fecha_hasta": "2026-06-15"
+   }
+  },
+  {
+   "id": "HCA-TIME-004",
+   "category": "time",
+   "severity_if_failed": "P1",
+   "notes": "month range must span BOTH months",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2026-01-01",
+    "fecha_hasta": "2026-03-31"
+   }
+  },
+  {
+   "id": "HCA-TIME-005",
+   "category": "time",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2025-03-01"
+   }
+  },
+  {
+   "id": "HCA-TIME-006",
+   "category": "time",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_hasta": "2026-06-30"
+   }
+  },
+  {
+   "id": "HCA-TIME-007",
+   "category": "time",
+   "severity_if_failed": "P1",
+   "notes": "este año = 2026",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2026-01-01",
+    "fecha_hasta": "2026-12-31",
+    "departamento_resolved": "Norte de Santander"
+   }
+  },
+  {
+   "id": "HCA-TIME-008",
+   "category": "time",
+   "severity_if_failed": "P1",
+   "notes": "el año pasado = 2025 — must NOT be silently dropped",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "departamento_resolved": "Norte de Santander"
+   }
+  },
+  {
+   "id": "HCA-TIME-009",
+   "category": "time",
+   "severity_if_failed": "P1",
+   "notes": "este mes = August 2026",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2026-08-01",
+    "fecha_hasta": "2026-08-31",
+    "departamento_resolved": "Norte de Santander"
+   }
+  },
+  {
+   "id": "HCA-TIME-010",
+   "category": "time",
+   "severity_if_failed": "P1",
+   "notes": "mes pasado = July 2026",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2026-07-01",
+    "fecha_hasta": "2026-07-31",
+    "departamento_resolved": "Norte de Santander"
+   }
+  },
+  {
+   "id": "HCA-TIME-011",
+   "category": "time",
+   "severity_if_failed": "P2",
+   "notes": "últimos 30 días — any correct rolling window",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2026-07-27",
+    "fecha_hasta": "2026-08-26",
+    "departamento_resolved": "Norte de Santander"
+   }
+  },
+  {
+   "id": "HCA-TIME-012",
+   "category": "time",
+   "severity_if_failed": "P1",
+   "notes": "bare month without year: junio (of current year)",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2026-06-01",
+    "fecha_hasta": "2026-06-30",
+    "departamento_resolved": "Norte de Santander"
+   }
+  },
+  {
+   "id": "HCA-TIME-013",
+   "category": "time",
+   "severity_if_failed": "P1",
+   "notes": "no time mentioned → no date filter invented",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "ciudad": "Leticia"
+   }
+  },
+  {
+   "id": "HCA-TIME-014",
+   "category": "time",
+   "severity_if_failed": "P1",
+   "notes": "date range with explicit days",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2026-02-01",
+    "fecha_hasta": "2026-03-15"
+   }
+  },
+  {
+   "id": "HCA-TIME-015",
+   "category": "time",
+   "severity_if_failed": "P2",
+   "notes": "firmados el año pasado — signature-date semantics on contracts",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "departamento_resolved": "Córdoba"
+   }
+  },
+  {
+   "id": "HCA-ACTOR-001",
+   "category": "actor",
+   "severity_if_failed": "P0",
+   "notes": "sentinel FUNSOCOM: exact alias resolves to typed identity, no guessing",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos"
+   }
+  },
+  {
+   "id": "HCA-ACTOR-002",
+   "category": "actor",
+   "severity_if_failed": "P0",
+   "notes": "sentinel: FUNSOCOM then year refinement keeps actor scope",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "fecha_desde": "2026-01-01",
+    "fecha_hasta": "2026-12-31"
+   }
+  },
+  {
+   "id": "HCA-ACTOR-003",
+   "category": "actor",
+   "severity_if_failed": "P0",
+   "notes": "sentinel: con cordoba = buyer relation; en cordoba = territory; actor kept in both",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "entidad_resolved": "DEPARTAMENTO DE CORDOBA",
+    "departamento_resolved": "Córdoba"
+   }
+  },
+  {
+   "id": "HCA-ACTOR-004",
+   "category": "actor",
+   "severity_if_failed": "P1",
+   "notes": "sentinel typo LMP INGIENERIA — actor-shaped mention must go to candidates, not topic",
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'contratos de lmp ingieneria en 2025': missing param actor_scope"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31"
+   }
+  },
+  {
+   "id": "HCA-ACTOR-005",
+   "category": "actor",
+   "severity_if_failed": "P0",
+   "notes": "sentinel JORGE VERBEL: ambiguous person name → candidate list, then text selection",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos"
+   }
+  },
+  {
+   "id": "HCA-ACTOR-006",
+   "category": "actor",
+   "severity_if_failed": "P0",
+   "notes": "sentinel JOSE CANTILLO + buyer alcaldía de barranquilla",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"
+   }
+  },
+  {
+   "id": "HCA-ACTOR-007",
+   "category": "actor",
+   "severity_if_failed": "P0",
+   "notes": "sentinel BRIANA LOPESIERRA",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos"
+   }
+  },
+  {
+   "id": "HCA-ACTOR-008",
+   "category": "actor",
+   "severity_if_failed": "P1",
+   "notes": "explicit NIT lookup",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos"
+   }
+  },
+  {
+   "id": "HCA-ACTOR-009",
+   "category": "actor",
+   "severity_if_failed": "P1",
+   "notes": "actor + money + year composition — actor scope must never be silently dropped",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "valor_min": 50000000,
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31"
+   }
+  },
+  {
+   "id": "HCA-ACTOR-010",
+   "category": "actor",
+   "severity_if_failed": "P0",
+   "notes": "sentinel UIS is a buyer (university contracts), not actor confusion",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "entidad_resolved": "UNIVERSIDAD INDUSTRIAL DE SANTANDER",
+    "departamento_resolved": "Santander"
+   }
+  },
+  {
+   "id": "HCA-ACTOR-011",
+   "category": "actor",
+   "severity_if_failed": "P1",
+   "notes": "pending candidates + unrelated new search must NOT be treated as selection",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "ciudad": "Barranquilla"
+   }
+  },
+  {
+   "id": "HCA-ACTOR-012",
+   "category": "actor",
+   "severity_if_failed": "P1",
+   "notes": "UT / consorcio mention as actor candidate, distinct from topic adulto mayor",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31"
+   }
+  },
+  {
+   "id": "HCA-ACTOR-013",
+   "category": "actor",
+   "severity_if_failed": "P2",
+   "notes": "SAS legal form",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos"
+   }
+  },
+  {
+   "id": "HCA-ACTOR-014",
+   "category": "actor",
+   "severity_if_failed": "P1",
+   "notes": "reset clears pending actor state",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "vigilancia"
+    ],
+    "ciudad": "Soledad"
+   }
+  },
+  {
+   "id": "HCA-STATE-001",
+   "category": "state",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+    "estado_family": "oferta_abierta",
+    "estado_del_procedimiento": [
+     "Abierto",
+     "Aprobado",
+     "Borrador",
+     "En aprobación",
+     "Publicado"
+    ],
+    "intent_type": "opportunity_search"
+   }
+  },
+  {
+   "id": "HCA-STATE-002",
+   "category": "state",
+   "severity_if_failed": "P1",
+   "notes": "contratos activos → contract-state family, not process states",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "entidad_resolved": "DEPARTAMENTO DEL ATLANTICO**",
+    "estado_family": "contrato_activo",
+    "estado_contrato": [
+     "En ejecución",
+     "Modificado",
+     "Prorrogado"
+    ]
+   }
+  },
+  {
+   "id": "HCA-STATE-003",
+   "category": "state",
+   "severity_if_failed": "P1",
+   "notes": "liquidados is contract-side",
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'contratos liquidados de obra en 2025': missing param estado_contrato"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "obra"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31"
+   }
+  },
+  {
+   "id": "HCA-STATE-004",
+   "category": "state",
+   "severity_if_failed": "P1",
+   "notes": "procesos cerrados ≠ abiertos family",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "vigilancia"
+    ],
+    "departamento_resolved": "Atlántico"
+   }
+  },
+  {
+   "id": "HCA-STATE-005",
+   "category": "state",
+   "severity_if_failed": "P1",
+   "notes": "publicados literally says Publicado — family must not inject Borrador",
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'procesos publicados de aseo en cesar': soql contains 'Borrador'"
+   ],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "aseo"
+    ],
+    "departamento_resolved": "Cesar",
+    "estado_family": "oferta_abierta",
+    "estado_del_procedimiento": [
+     "Abierto",
+     "Aprobado",
+     "Borrador",
+     "En aprobación",
+     "Publicado"
+    ],
+    "intent_type": "opportunity_search"
+   }
+  },
+  {
+   "id": "HCA-STATE-006",
+   "category": "state",
+   "severity_if_failed": "P1",
+   "notes": "cierran hoy — deadline semantics, verb must not leak to objeto",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "fecha_desde": "2026-08-26",
+    "fecha_hasta": "2026-08-26",
+    "departamento_resolved": "Atlántico"
+   }
+  },
+  {
+   "id": "HCA-STATE-007",
+   "category": "state",
+   "severity_if_failed": "P1",
+   "notes": "en ejecución family",
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'contratos en ejecucion de la alcaldia de medellin': missing param estado_contrato"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "entidad_resolved": "DISTRITO ESPECIAL DE CIENCIA TECNOLOGIA E INNOVACION DE MEDELLIN",
+    "estado_family": "contrato_activo"
+   }
+  },
+  {
+   "id": "HCA-STATE-008",
+   "category": "state",
+   "severity_if_failed": "P2",
+   "notes": "borradores explicit",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "entidad_resolved": "GOBERNACION DE NARIÑO",
+    "estado_family": "oferta_abierta",
+    "estado_del_procedimiento": [
+     "Abierto",
+     "Aprobado",
+     "Borrador",
+     "En aprobación",
+     "Publicado"
+    ],
+    "intent_type": "opportunity_search"
+   }
+  },
+  {
+   "id": "HCA-ORDER-001",
+   "category": "ordering",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "ciudad": "Cali",
+    "contract_type_include": [
+     "obra"
+    ],
+    "ordering_signal": "valor_desc"
+   }
+  },
+  {
+   "id": "HCA-ORDER-002",
+   "category": "ordering",
+   "severity_if_failed": "P1",
+   "notes": "los más grandes = valor desc",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "fecha_desde": "2026-01-01",
+    "fecha_hasta": "2026-12-31",
+    "entidad_resolved": "GOBERNACION DEL VALLE DEL CAUCA - DADI",
+    "ordering_signal": "valor_desc"
+   }
+  },
+  {
+   "id": "HCA-ORDER-003",
+   "category": "ordering",
+   "severity_if_failed": "P2",
+   "notes": "más recientes = date desc (default ok, must execute)",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "ciudad": "Pasto",
+    "ordering_signal": "fecha_desc"
+   }
+  },
+  {
+   "id": "HCA-ORDER-004",
+   "category": "ordering",
+   "severity_if_failed": "P2",
+   "notes": "top 10 limit",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "departamento_resolved": "Antioquia",
+    "contract_type_include": [
+     "obra"
+    ],
+    "ordering_signal": "valor_desc"
+   }
+  },
+  {
+   "id": "HCA-ORDER-005",
+   "category": "ordering",
+   "severity_if_failed": "P2",
+   "notes": "muéstrame 5",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "vigilancia"
+    ],
+    "ciudad": "Ibague"
+   }
+  },
+  {
+   "id": "HCA-NEG-001",
+   "category": "negation",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "obra"
+    ],
+    "modalidad_exclude_procedure_ids": [
+     "contratacion_directa",
+     "contratacion_directa_con_ofertas"
+    ]
+   }
+  },
+  {
+   "id": "HCA-NEG-002",
+   "category": "negation",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "vigilancia"
+    ],
+    "modalidad_exclude_procedure_ids": [
+     "minima_cuantia"
+    ]
+   }
+  },
+  {
+   "id": "HCA-NEG-003",
+   "category": "negation",
+   "severity_if_failed": "P0",
+   "notes": "ignored geographic negation executes the OPPOSITE of user intent",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ]
+   }
+  },
+  {
+   "id": "HCA-NEG-004",
+   "category": "negation",
+   "severity_if_failed": "P1",
+   "notes": "no mayores de 500M = valor_max, not valor_min",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "valor_max": 500000000,
+    "contract_type_include": [
+     "obra"
+    ]
+   }
+  },
+  {
+   "id": "HCA-NEG-005",
+   "category": "negation",
+   "severity_if_failed": "P1",
+   "notes": "sin alimentacion = thematic exclusion, never positive topic",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto_exclude": [
+     "alimentacion"
+    ],
+    "entidad_resolved": "GOBERNACION DE SUCRE"
+   }
+  },
+  {
+   "id": "HCA-NEG-006",
+   "category": "negation",
+   "severity_if_failed": "P1",
+   "notes": "menos los de 2025 in follow-up",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "ciudad": "Valledupar"
+   }
+  },
+  {
+   "id": "HCA-TYPO-001",
+   "category": "typo",
+   "severity_if_failed": "P2",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "alimentacion",
+     "barranquila"
+    ]
+   }
+  },
+  {
+   "id": "HCA-TYPO-002",
+   "category": "typo",
+   "severity_if_failed": "P2",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "entidad_resolved": "DEPARTAMENTO DEL ATLANTICO**"
+   }
+  },
+  {
+   "id": "HCA-TYPO-003",
+   "category": "typo",
+   "severity_if_failed": "P2",
+   "notes": "regimen without accent",
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'procesos de regimen especial en 2026': expected execution, got clarification"
+   ],
+   "final_frame": {
+    "dataset": "procesos",
+    "fecha_desde": "2026-01-01",
+    "fecha_hasta": "2026-12-31",
+    "modalidad_include_procedure_ids": [
+     "regimen_especial",
+     "regimen_especial_con_ofertas"
+    ]
+   }
+  },
+  {
+   "id": "HCA-TYPO-004",
+   "category": "typo",
+   "severity_if_failed": "P2",
+   "notes": "random capitalization",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "ciudad": "Barranquilla"
+   }
+  },
+  {
+   "id": "HCA-TYPO-005",
+   "category": "typo",
+   "severity_if_failed": "P2",
+   "notes": "double spaces + punctuation",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "ciudad": "Barranquilla"
+   }
+  },
+  {
+   "id": "HCA-TYPO-006",
+   "category": "typo",
+   "severity_if_failed": "P2",
+   "notes": "ingenieria typo in generic topic (no actor marker)",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "civil",
+     "ingenieria"
+    ],
+    "departamento_resolved": "Cundinamarca"
+   }
+  },
+  {
+   "id": "HCA-AMBIG-001",
+   "category": "ambiguity",
+   "severity_if_failed": "P2",
+   "notes": "no filters at all must clarify",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos"
+   }
+  },
+  {
+   "id": "HCA-AMBIG-002",
+   "category": "ambiguity",
+   "severity_if_failed": "P2",
+   "notes": "clear query must NOT clarify (false clarification audit)",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "ciudad": "Barranquilla"
+   }
+  },
+  {
+   "id": "HCA-AMBIG-003",
+   "category": "ambiguity",
+   "severity_if_failed": "P2",
+   "notes": "ordering without object should ask",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "ordering_signal": "valor_desc"
+   }
+  },
+  {
+   "id": "HCA-LOOKUP-001",
+   "category": "direct_lookup",
+   "severity_if_failed": "P1",
+   "notes": "SECOP process reference format",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {}
+  },
+  {
+   "id": "HCA-LOOKUP-002",
+   "category": "direct_lookup",
+   "severity_if_failed": "P1",
+   "notes": "cedula as typed identity",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos"
+   }
+  },
+  {
+   "id": "HCA-LOOKUP-003",
+   "category": "direct_lookup",
+   "severity_if_failed": "P1",
+   "notes": "short CC 4265582 sentinel",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos"
+   }
+  },
+  {
+   "id": "HCA-FOLLOWUP-001",
+   "category": "followup",
+   "severity_if_failed": "P1",
+   "notes": "canonical 7-turn mutation ladder",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "adulto_mayor"
+    ],
+    "valor_min": 100000000,
+    "fecha_desde": "2026-01-01",
+    "fecha_hasta": "2026-12-31",
+    "entidad_resolved": "DEPARTAMENTO DEL ATLANTICO**",
+    "modalidad_include_procedure_ids": [
+     "regimen_especial",
+     "regimen_especial_con_ofertas"
+    ],
+    "ordering_signal": "valor_desc"
+   }
+  },
+  {
+   "id": "HCA-FOLLOWUP-002",
+   "category": "followup",
+   "severity_if_failed": "P1",
+   "notes": "ADR-061 sentinel: repeated year must not erase money",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "adulto_mayor"
+    ],
+    "valor_min": 100000000,
+    "fecha_desde": "2026-01-01",
+    "fecha_hasta": "2026-12-31",
+    "entidad_resolved": "DEPARTAMENTO DEL ATLANTICO**"
+   }
+  },
+  {
+   "id": "HCA-FOLLOWUP-003",
+   "category": "followup",
+   "severity_if_failed": "P1",
+   "notes": "money replacement: >100M then >500M replaces, not stacks",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "valor_min": 500000000,
+    "departamento_resolved": "Antioquia",
+    "contract_type_include": [
+     "obra"
+    ]
+   }
+  },
+  {
+   "id": "HCA-FOLLOWUP-004",
+   "category": "followup",
+   "severity_if_failed": "P1",
+   "notes": "max→range replacement",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "valor_min": 100000000,
+    "valor_max": 300000000,
+    "departamento_resolved": "Antioquia",
+    "contract_type_include": [
+     "obra"
+    ]
+   }
+  },
+  {
+   "id": "HCA-FOLLOWUP-005",
+   "category": "followup",
+   "severity_if_failed": "P1",
+   "notes": "scope switch keeps topic+year, drops nothing else",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "departamento_resolved": "Bolívar"
+   }
+  },
+  {
+   "id": "HCA-FOLLOWUP-006",
+   "category": "followup",
+   "severity_if_failed": "P1",
+   "notes": "year change follow-up replaces year only",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "vigilancia"
+    ],
+    "fecha_desde": "2024-01-01",
+    "fecha_hasta": "2024-12-31",
+    "entidad_resolved": "MUNICIPIO DE MONTERIA"
+   }
+  },
+  {
+   "id": "HCA-FOLLOWUP-007",
+   "category": "followup",
+   "severity_if_failed": "P1",
+   "notes": "filter removal: quita el filtro de modalidad",
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 2 'mejor quita el filtro de modalidad': objeto lacks 'obra' (objeto=[])"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "departamento_resolved": "Atlántico",
+    "contract_type_include": [
+     "obra"
+    ]
+   }
+  },
+  {
+   "id": "HCA-FOLLOWUP-008",
+   "category": "followup",
+   "severity_if_failed": "P1",
+   "notes": "topic change purges stale money (FOLLOWUP-VALUE-INHERIT guard)",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "silvopastoriles",
+     "tecnologia",
+     "yarumal"
+    ],
+    "ciudad": "Yarumal"
+   }
+  },
+  {
+   "id": "HCA-FOLLOWUP-009",
+   "category": "followup",
+   "severity_if_failed": "P1",
+   "notes": "buyer replacement in follow-up",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "alimentacion"
+    ],
+    "fecha_desde": "2026-01-01",
+    "fecha_hasta": "2026-12-31",
+    "entidad_resolved": "MUNICIPIO DE SOLEDAD"
+   }
+  },
+  {
+   "id": "HCA-FOLLOWUP-010",
+   "category": "followup",
+   "severity_if_failed": "P1",
+   "notes": "dataset pivot: contracts → open processes keeps topic+scope, drops contract states",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "dotacion",
+     "escolar"
+    ],
+    "departamento_resolved": "Sucre",
+    "estado_family": "oferta_abierta",
+    "estado_del_procedimiento": [
+     "Abierto",
+     "Aprobado",
+     "Borrador",
+     "En aprobación",
+     "Publicado"
+    ],
+    "intent_type": "opportunity_search"
+   }
+  },
+  {
+   "id": "HCA-FOLLOWUP-011",
+   "category": "followup",
+   "severity_if_failed": "P1",
+   "notes": "pagination after refinement must use refined universe (fingerprint)",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "valor_min": 200000000,
+    "fecha_desde": "2026-01-01",
+    "fecha_hasta": "2026-12-31",
+    "departamento_resolved": "Atlántico",
+    "contract_type_include": [
+     "obra"
+    ]
+   }
+  },
+  {
+   "id": "HCA-FOLLOWUP-012",
+   "category": "followup",
+   "severity_if_failed": "P2",
+   "notes": "contextual requery: new topic inherits scope",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "vigilancia"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "ciudad": "Barranquilla"
+   }
+  },
+  {
+   "id": "HCA-FOLLOWUP-013",
+   "category": "followup",
+   "severity_if_failed": "P1",
+   "notes": "reset then fresh query carries nothing",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "software"
+    ],
+    "departamento_resolved": "Distrito Capital de Bogotá"
+   }
+  },
+  {
+   "id": "HCA-FOLLOWUP-014",
+   "category": "followup",
+   "severity_if_failed": "P1",
+   "notes": "modality removal via natural language after composition",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "valor_min": 2000000000,
+    "fecha_desde": "2026-01-01",
+    "fecha_hasta": "2026-12-31",
+    "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+    "contract_type_include": [
+     "convenio"
+    ]
+   }
+  },
+  {
+   "id": "HCA-FOLLOWUP-015",
+   "category": "followup",
+   "severity_if_failed": "P2",
+   "notes": "NOOP repetition must not corrupt frame",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "ciudad": "Barranquilla"
+   }
+  },
+  {
+   "id": "HCA-FOLLOWUP-016",
+   "category": "followup",
+   "severity_if_failed": "P1",
+   "notes": " ordering change must not lose money filter (reorder keeps WHERE)",
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 2 'los mas antiguos primero': objeto lacks 'obra' (objeto=[])"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "valor_min": 300000000,
+    "ciudad": "Cali",
+    "contract_type_include": [
+     "obra"
+    ],
+    "ordering_signal": "fecha_asc"
+   }
+  },
+  {
+   "id": "HCA-FOLLOWUP-017",
+   "category": "followup",
+   "severity_if_failed": "P2",
+   "notes": "pronoun scope: esos = current result set refined",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "vigilancia"
+    ],
+    "valor_min": 80000000,
+    "fecha_desde": "2026-01-01",
+    "fecha_hasta": "2026-12-31",
+    "ciudad": "Cartagena"
+   }
+  },
+  {
+   "id": "HCA-FOLLOWUP-018",
+   "category": "followup",
+   "severity_if_failed": "P1",
+   "notes": "estado follow-up on top of buyer query",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "fecha_desde": "2026-01-01",
+    "fecha_hasta": "2026-12-31",
+    "entidad_resolved": "GOBERNACION DEL DEPARTAMENTO DEL CESAR",
+    "estado_family": "oferta_abierta",
+    "estado_del_procedimiento": [
+     "Abierto",
+     "Aprobado",
+     "Borrador",
+     "En aprobación",
+     "Publicado"
+    ],
+    "intent_type": "opportunity_search"
+   }
+  },
+  {
+   "id": "HCA-META-001A",
+   "category": "metamorphic",
+   "severity_if_failed": "P2",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "adulto_mayor"
+    ],
+    "fecha_desde": "2026-01-01",
+    "fecha_hasta": "2026-12-31",
+    "entidad_resolved": "DEPARTAMENTO DEL ATLANTICO**"
+   }
+  },
+  {
+   "id": "HCA-META-001B",
+   "category": "metamorphic",
+   "severity_if_failed": "P2",
+   "notes": null,
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "metamorphic mismatch vs HCA-META-001A: {'departamento_resolved': (None, 'Atlántico'), 'entidad_resolved': ('DEPARTAMENTO DEL ATLANTICO**', None)}"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "adulto_mayor"
+    ],
+    "fecha_desde": "2026-01-01",
+    "fecha_hasta": "2026-12-31",
+    "departamento_resolved": "Atlántico"
+   }
+  },
+  {
+   "id": "HCA-META-002A",
+   "category": "metamorphic",
+   "severity_if_failed": "P2",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "valor_min": 100000000,
+    "ciudad": "Barranquilla"
+   }
+  },
+  {
+   "id": "HCA-META-002B",
+   "category": "metamorphic",
+   "severity_if_failed": "P2",
+   "notes": "uppercase + accent variation",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "valor_min": 100000000,
+    "ciudad": "Barranquilla"
+   }
+  },
+  {
+   "id": "HCA-META-003A",
+   "category": "metamorphic",
+   "severity_if_failed": "P2",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "valor_min": 100000000,
+    "valor_max": 500000000,
+    "ciudad": "Cali",
+    "contract_type_include": [
+     "obra"
+    ]
+   }
+  },
+  {
+   "id": "HCA-META-003B",
+   "category": "metamorphic",
+   "severity_if_failed": "P2",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "valor_min": 100000000,
+    "valor_max": 500000000,
+    "ciudad": "Cali",
+    "contract_type_include": [
+     "obra"
+    ]
+   }
+  },
+  {
+   "id": "HCA-META-004A",
+   "category": "metamorphic",
+   "severity_if_failed": "P2",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "vigilancia"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"
+   }
+  },
+  {
+   "id": "HCA-META-004B",
+   "category": "metamorphic",
+   "severity_if_failed": "P2",
+   "notes": "polite verb + word order",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "vigilancia"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"
+   }
+  },
+  {
+   "id": "HCA-META-005A",
+   "category": "metamorphic",
+   "severity_if_failed": "P2",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "valor_min": 1000000000,
+    "contract_type_include": [
+     "obra"
+    ]
+   }
+  },
+  {
+   "id": "HCA-META-005B",
+   "category": "metamorphic",
+   "severity_if_failed": "P2",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "valor_min": 1000000000,
+    "contract_type_include": [
+     "obra"
+    ]
+   }
+  },
+  {
+   "id": "HCA-META-006A",
+   "category": "metamorphic",
+   "severity_if_failed": "P2",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "software"
+    ],
+    "departamento_resolved": "Distrito Capital de Bogotá",
+    "estado_family": "oferta_abierta",
+    "estado_del_procedimiento": [
+     "Abierto",
+     "Aprobado",
+     "Borrador",
+     "En aprobación",
+     "Publicado"
+    ],
+    "intent_type": "opportunity_search"
+   }
+  },
+  {
+   "id": "HCA-META-006B",
+   "category": "metamorphic",
+   "severity_if_failed": "P2",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "software"
+    ],
+    "departamento_resolved": "Distrito Capital de Bogotá",
+    "estado_family": "oferta_abierta",
+    "estado_del_procedimiento": [
+     "Abierto",
+     "Aprobado",
+     "Borrador",
+     "En aprobación",
+     "Publicado"
+    ],
+    "intent_type": "opportunity_search"
+   }
+  },
+  {
+   "id": "HCA-ANTI-001",
+   "category": "anti_metamorphic",
+   "severity_if_failed": "P1",
+   "notes": "en cordoba (territory) vs con cordoba (buyer) — frames MUST differ",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "departamento_resolved": "Córdoba"
+   }
+  },
+  {
+   "id": "HCA-ANTI-002",
+   "category": "anti_metamorphic",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "entidad_resolved": "DEPARTAMENTO DE CORDOBA"
+   }
+  },
+  {
+   "id": "HCA-ANTI-003",
+   "category": "anti_metamorphic",
+   "severity_if_failed": "P1",
+   "notes": "2025 exact year vs desde 2025 open-ended",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "ciudad": "Cali"
+   }
+  },
+  {
+   "id": "HCA-ANTI-004",
+   "category": "anti_metamorphic",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2025-01-01",
+    "ciudad": "Cali"
+   }
+  },
+  {
+   "id": "HCA-ANTI-005",
+   "category": "anti_metamorphic",
+   "severity_if_failed": "P1",
+   "notes": "mas de 100M vs menos de 100M",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "valor_min": 100000000,
+    "departamento_resolved": "Tolima",
+    "contract_type_include": [
+     "obra"
+    ]
+   }
+  },
+  {
+   "id": "HCA-ANTI-006",
+   "category": "anti_metamorphic",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "valor_max": 100000000,
+    "departamento_resolved": "Tolima",
+    "contract_type_include": [
+     "obra"
+    ]
+   }
+  },
+  {
+   "id": "HCA-ANTI-007",
+   "category": "anti_metamorphic",
+   "severity_if_failed": "P1",
+   "notes": "contratos celebrados vs procesos abiertos — dataset must differ",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "obra"
+    ],
+    "departamento_resolved": "Huila",
+    "modalidad_include_procedure_ids": [
+     "licitacion_publica",
+     "licitacion_publica_obra"
+    ]
+   }
+  },
+  {
+   "id": "HCA-ANTI-008",
+   "category": "anti_metamorphic",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "obra"
+    ],
+    "departamento_resolved": "Huila",
+    "estado_family": "oferta_abierta",
+    "estado_del_procedimiento": [
+     "Abierto",
+     "Aprobado",
+     "Borrador",
+     "En aprobación",
+     "Publicado"
+    ],
+    "intent_type": "opportunity_search"
+   }
+  },
+  {
+   "id": "HCA-SOURCE-001",
+   "category": "source_capability",
+   "severity_if_failed": "P1",
+   "notes": "actor scope + processes dataset: must not silently drop actor",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "estado_family": "oferta_abierta",
+    "estado_del_procedimiento": [
+     "Abierto",
+     "Aprobado",
+     "Borrador",
+     "En aprobación",
+     "Publicado"
+    ],
+    "intent_type": "opportunity_search"
+   }
+  },
+  {
+   "id": "HCA-SOURCE-002",
+   "category": "source_capability",
+   "severity_if_failed": "P1",
+   "notes": "contract state requested on processes wording — must not fabricate",
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'procesos liquidados de obra en cauca': dataset='contratos', expected 'procesos'"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "obra"
+    ],
+    "departamento_resolved": "Cauca"
+   }
+  }
+ ]
+}

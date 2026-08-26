@@ -1,0 +1,171 @@
+{
+  "phase": "A",
+  "sealed_at_utc": "2026-08-26T11:16:59.184976+00:00",
+  "runtime_outputs_read": false,
+  "calibration_first": "HCA-ACTOR-004",
+  "corpus_sha256": "262c225c7939f04516ee95b3c77b4911f9f476058941a88a61d01c918499ffba",
+  "entries": [
+    {
+      "case_id": "HCA-ACTOR-004",
+      "USER_INTENT": "Contratos en 2025 del proveedor cuya mención contiene el typo lmp ingieneria.",
+      "REQUIRED_DIMENSIONS": "ACTOR pendiente; TIME=2025; dataset contratos; no TOPIC derivado del nombre.",
+      "DECISION": "SHOULD_CLARIFY",
+      "EXPECTED_PRODUCT_BEHAVIOR": "Mostrar candidatos tipados y pedir selección; no autorizar actor_scope por similitud ni consultar fuente contractual antes de seleccionar.",
+      "CANONICAL_AUTHORITIES": "ADR-060 §4, §5, §9–10; ACTOR_PROFILE_V1 §7–10; INV-NAME-NO-GUESS.",
+      "SEMANTIC_ORACLE_VERDICT": "INCORRECTO: has actor_scope contradice la propia nota de candidatos y la autoridad exact-only. La ausencia de fuga temática sí es válida."
+    },
+    {
+      "case_id": "HCA-TOPIC-007",
+      "USER_INTENT": "Buscar procesos del programa de alimentación escolar en La Guajira.",
+      "REQUIRED_DIMENSIONS": "TOPIC=PAE o expansión curada equivalente; GEOGRAPHY=La Guajira; dataset procesos.",
+      "DECISION": "SHOULD_EXECUTE",
+      "EXPECTED_PRODUCT_BEHAVIOR": "Preservar el tema y el departamento; no imponer otra entidad ni cambiar la intención. PAE puede expresarse por aliases equivalentes, sin obligar un campo interno particular.",
+      "CANONICAL_AUTHORITIES": "ADR-006; ADR-024; ADR-036 (PAE requiere aliases curados); ADR-061.",
+      "SEMANTIC_ORACLE_VERDICT": "Ejecución válida. objeto_has pae es demasiado específico si existe expansión semántica equivalente; verificar fuente antes de decidir deuda."
+    },
+    {
+      "case_id": "HCA-TOPIC-012",
+      "USER_INTENT": "Buscar contratos relacionados con salud en el departamento de Amazonas.",
+      "REQUIRED_DIMENSIONS": "TOPIC=salud; GEOGRAPHY=Amazonas; dataset contratos.",
+      "DECISION": "SHOULD_EXECUTE",
+      "EXPECTED_PRODUCT_BEHAVIOR": "Tema amplio pero explícito más territorio es alcance suficiente; no reemplazar salud por una entidad sanitaria sin autoridad.",
+      "CANONICAL_AUTHORITIES": "ADR-024 alcance útil; ADR-031 geografía regional y precedencia Amazonas; ADR-040; ADR-061.",
+      "SEMANTIC_ORACLE_VERDICT": "VÁLIDO semánticamente: debe ejecutar conservando salud y Amazonas."
+    },
+    {
+      "case_id": "HCA-MODALITY-002",
+      "USER_INTENT": "Contratos por selección abreviada de menor cuantía durante 2026, sin tema ni territorio.",
+      "REQUIRED_DIMENSIONS": "MODALITY=seleccion_abreviada_menor_cuantia; TIME=2026; contratos.",
+      "DECISION": "SHOULD_CLARIFY",
+      "EXPECTED_PRODUCT_BEHAVIOR": "Resolver modalidad y año, sin fuga temática. Bajo la política general vigente, solicitar tema/entidad/lugar/contratista antes de ejecutar una búsqueda sólo-modalidad.",
+      "CANONICAL_AUTHORITIES": "ADR-024 distinción SCOPE_TOPIC_KEYS/NONEMPTY_WHERE_KEYS; ADR-054; ADR-061 §3.",
+      "SEMANTIC_ORACLE_VERDICT": "EXECUTE es prematuro bajo el contrato vigente; demanda válida para una ampliación de scope, no un defecto del resolver de modalidad."
+    },
+    {
+      "case_id": "HCA-MODALITY-012",
+      "USER_INTENT": "Procesos por enajenación de bienes en 2026, a escala no acotada.",
+      "REQUIRED_DIMENSIONS": "MODALITY=enajenación; TIME=2026; procesos.",
+      "DECISION": "SHOULD_CLARIFY",
+      "EXPECTED_PRODUCT_BEHAVIOR": "Reconocer la familia de modalidad; solicitar alcance útil. La fecha no sustituye tema/territorio/entidad.",
+      "CANONICAL_AUTHORITIES": "ADR-024; ADR-054; ADR-061 §3 (enajenación reconocida).",
+      "SEMANTIC_ORACLE_VERDICT": "EXECUTE excede la política de alcance vigente; mantener demanda diferenciada del soporte léxico."
+    },
+    {
+      "case_id": "HCA-ENTITY-001",
+      "USER_INTENT": "Contratos de la Gobernación del Atlántico en 2026.",
+      "REQUIRED_DIMENSIONS": "BUYER=Gobernación del Atlántico; TIME=2026; contratos.",
+      "DECISION": "SHOULD_EXECUTE",
+      "EXPECTED_PRODUCT_BEHAVIOR": "Filtrar el campo de comprador por el valor real SECOP. No eliminar caracteres del nombre fuente porque parezcan Markdown.",
+      "CANONICAL_AUTHORITIES": "ADR-040: Atlántico se registra como DEPARTAMENTO DEL ATLANTICO** y el comprador usa el valor real.",
+      "SEMANTIC_ORACLE_VERDICT": "INCORRECTO: prohibir ATLANTICO** contradice la autoridad de datos documentada. El oracle debe comprobar comprador, no higiene de un supuesto Markdown."
+    },
+    {
+      "case_id": "HCA-ENTITY-004",
+      "USER_INTENT": "Qué compró el Departamento del Atlántico en 2025: el verbo favorece lectura de comprador.",
+      "REQUIRED_DIMENSIONS": "BUYER frente a GEOGRAPHY materialmente distinguibles; TIME=2025; contratos.",
+      "DECISION": "SHOULD_CLARIFY",
+      "EXPECTED_PRODUCT_BEHAVIOR": "No fingir equivalencia territorio=comprador. La intención razonable favorece comprador, pero ADR-040 enruta departamento de X a territorio y no establece excepción del sujeto qué contrató. Requiere decidir esa precedencia; aclarar es una salida segura.",
+      "CANONICAL_AUTHORITIES": "ADR-040 INV-7; ADR-006; orden de autoridad del encargo (intención antes que implementación/oracle).",
+      "SEMANTIC_ORACLE_VERDICT": "NO DETERMINADO: has entidad_resolved no basta como autoridad; conflicto entre sintaxis de sujeto comprador y política territorial. No declarar representación territorial plenamente correcta sin resolverlo."
+    },
+    {
+      "case_id": "HCA-ENTITY-005",
+      "USER_INTENT": "Contratos de una alcaldía no especificada.",
+      "REQUIRED_DIMENSIONS": "BUYER pendiente; contratos; sin territorio ni tema sustancial.",
+      "DECISION": "SHOULD_CLARIFY",
+      "EXPECTED_PRODUCT_BEHAVIOR": "Preguntar cuál alcaldía; no seleccionar comprador, usar alcaldía como tema ni ejecutar un universo inventado.",
+      "CANONICAL_AUTHORITIES": "ADR-006 P1; ADR-024 alcance útil; ADR-040 separación comprador/territorio.",
+      "SEMANTIC_ORACLE_VERDICT": "VÁLIDO: block. Una consulta genérica no autoriza entidad arbitraria."
+    },
+    {
+      "case_id": "HCA-MONEY-020",
+      "USER_INTENT": "Contratos de papelería por más de cien mil pesos.",
+      "REQUIRED_DIMENSIONS": "TOPIC=papelería; VALUE mínimo=100000 COP; contratos.",
+      "DECISION": "SHOULD_EXECUTE",
+      "EXPECTED_PRODUCT_BEHAVIOR": "Aplicar escala literal 100 × 1000, preservar comparador y tema, proyectar al valor contractual; no filtrar por mil como texto.",
+      "CANONICAL_AUTHORITIES": "ADR-059 §2 y §6; MONEY_V2_CLOSEOUT gramática/unidades; ADR-061.",
+      "SEMANTIC_ORACLE_VERDICT": "VÁLIDO: valor_min=100000 es contrato público COP, no detalle histórico de implementación."
+    },
+    {
+      "case_id": "HCA-MONEY-026",
+      "USER_INTENT": "Contratos de papelería por más de un millón de pesos.",
+      "REQUIRED_DIMENSIONS": "TOPIC=papelería; VALUE mínimo=1000000 COP; contratos.",
+      "DECISION": "SHOULD_EXECUTE",
+      "EXPECTED_PRODUCT_BEHAVIOR": "Reconocer singular sin tilde como unidad monetaria normal, preservar mínimo y tema.",
+      "CANONICAL_AUTHORITIES": "ADR-059 contrato numérico/COP; ADR-063 normalización preserva intención; ADR-061.",
+      "SEMANTIC_ORACLE_VERDICT": "VÁLIDO: umbral COP 1000000."
+    },
+    {
+      "case_id": "HCA-STATE-003",
+      "USER_INTENT": "Contratos de obra liquidados, con filtro temporal 2025.",
+      "REQUIRED_DIMENSIONS": "STATE=liquidación contractual; CONTRACT_TYPE=obra; TIME=2025; contratos.",
+      "DECISION": "SHOULD_DEFER",
+      "EXPECTED_PRODUCT_BEHAVIOR": "No inventar estado_contrato=Liquidado ni equiparar liquidación con Cerrado/terminado/firmado. Falta autoridad canónica que proyecte liquidación y aclare qué fecha rige 2025; pedir precisión o declarar limitación antes de prometer resultados liquidados.",
+      "CANONICAL_AUTHORITIES": "ADR-003/004/024; docs/reference/estado_contrato_semantica.md enumera estados pero no fija proyección de liquidación.",
+      "SEMANTIC_ORACLE_VERDICT": "NO DETERMINADO: dataset contratos es razonable; has estado_contrato no demuestra liquidación y podría congelar una representación falsa."
+    },
+    {
+      "case_id": "HCA-STATE-005",
+      "USER_INTENT": "Procesos de aseo publicados en Cesar.",
+      "REQUIRED_DIMENSIONS": "STATE=publicado; TOPIC=aseo; GEOGRAPHY=Cesar; procesos.",
+      "DECISION": "SHOULD_EXECUTE",
+      "EXPECTED_PRODUCT_BEHAVIOR": "Respetar publicado; no ampliar a borradores no publicados. No equiparar literalmente publicado con todo el funnel de oportunidades abiertas.",
+      "CANONICAL_AUTHORITIES": "docs/reference/estado_contrato_semantica.md §3–4: Borrador-proceso es no publicado; ADR-004; ADR-058; ADR-056 limita oportunidades.",
+      "SEMANTIC_ORACLE_VERDICT": "VÁLIDO: excluir Borrador del universo solicitado. La política oferta_abierta no autoriza expandir cualquier mención explícita de publicado."
+    },
+    {
+      "case_id": "HCA-STATE-007",
+      "USER_INTENT": "Contratos en ejecución de la Alcaldía de Medellín.",
+      "REQUIRED_DIMENSIONS": "STATE=contrato_activo; BUYER=Alcaldía de Medellín; contratos.",
+      "DECISION": "SHOULD_EXECUTE",
+      "EXPECTED_PRODUCT_BEHAVIOR": "Proyectar familia contrato_activo={En ejecución, Modificado, Prorrogado} conforme ADR-003 y comprador. Aceptar familia canónica sin requerir lista duplicada en params.",
+      "CANONICAL_AUTHORITIES": "ADR-003/004; ADR-040; ADR-024.",
+      "SEMANTIC_ORACLE_VERDICT": "has estado_contrato es innecesario si la familia se proyecta correctamente; confirmar SoQL y texto antes de declarar deuda."
+    },
+    {
+      "case_id": "HCA-TYPO-003",
+      "USER_INTENT": "Procesos por régimen especial en 2026, sin alcance adicional.",
+      "REQUIRED_DIMENSIONS": "MODALITY=régimen especial; TIME=2026; procesos.",
+      "DECISION": "SHOULD_CLARIFY",
+      "EXPECTED_PRODUCT_BEHAVIOR": "Reconocer régimen sin tilde, sin volverlo tema. Solicitar alcance útil según la política nacional de consulta.",
+      "CANONICAL_AUTHORITIES": "ADR-024; ADR-054; ADR-061 §3.",
+      "SEMANTIC_ORACLE_VERDICT": "EXECUTE excede alcance vigente; no es automáticamente un typo sin soporte."
+    },
+    {
+      "case_id": "HCA-FOLLOWUP-007",
+      "USER_INTENT": "Buscar obra en Atlántico por licitación y después retirar todo el filtro de modalidad.",
+      "REQUIRED_DIMENSIONS": "Preservar CONTRACT_TYPE=obra, GEOGRAPHY=Atlántico, dataset; limpiar inclusiones/exclusiones de MODALITY.",
+      "DECISION": "SHOULD_EXECUTE",
+      "EXPECTED_PRODUCT_BEHAVIOR": "CLEAR debe preservar naturaleza y territorio y eliminar modalidad. Obra estructurada no debe duplicarse como tema.",
+      "CANONICAL_AUTHORITIES": "ADR-054 CLEAR; guía modalidad §2–3; ADR-061 INV-STRUCTURED-DIMENSION-NOT-TOPIC.",
+      "SEMANTIC_ORACLE_VERDICT": "La ausencia de modalidad es válida; objeto_has obra es incorrecto si obra permanece proyectada por contract_type_include."
+    },
+    {
+      "case_id": "HCA-FOLLOWUP-016",
+      "USER_INTENT": "Buscar obra en Cali por más de 300 millones; ordenar después de antiguo a reciente.",
+      "REQUIRED_DIMENSIONS": "CONTRACT_TYPE=obra; CITY=Cali; VALUE mínimo=300000000; ORDER fecha ASC; contratos.",
+      "DECISION": "SHOULD_EXECUTE",
+      "EXPECTED_PRODUCT_BEHAVIOR": "Cambiar sólo ORDER BY, preservando WHERE de tipo, ciudad y monto. Obra no requiere filtro temático redundante.",
+      "CANONICAL_AUTHORITIES": "ADR-061; ADR-066 INV-ORDERING-FOLLOWUP-PRESERVES-UNIVERSE.",
+      "SEMANTIC_ORACLE_VERDICT": "INCORRECTO exigir objeto_has obra como representación duplicada; monto y conservación observable del universo siguen siendo obligatorios."
+    },
+    {
+      "case_id": "HCA-META-001B",
+      "USER_INTENT": "Contratos de adulto mayor del departamento del Atlántico en 2026; comparado con Gobernación.",
+      "REQUIRED_DIMENSIONS": "TOPIC=adulto mayor; GEOGRAPHY=Atlántico; TIME=2026; contratos. Referencia usa BUYER.",
+      "DECISION": "SHOULD_EXECUTE",
+      "EXPECTED_PRODUCT_BEHAVIOR": "Preservar la diferencia departamento territorial vs Gobernación compradora. No igualar universos de todas las entidades y una sola entidad.",
+      "CANONICAL_AUTHORITIES": "ADR-040 INV-7; ADR-061.",
+      "SEMANTIC_ORACLE_VERDICT": "INCORRECTO same_frame_as: la sustitución cambia dimensión semántica, no es una variante neutra."
+    },
+    {
+      "case_id": "HCA-SOURCE-002",
+      "USER_INTENT": "Procesos de obra liquidados en Cauca: vocabulario de procesos junto a atributo contractual.",
+      "REQUIRED_DIMENSIONS": "CONTRACT_TYPE=obra; GEOGRAPHY=Cauca; STATE=liquidación, capacidad/dataset sin resolver.",
+      "DECISION": "SHOULD_CLARIFY",
+      "EXPECTED_PRODUCT_BEHAVIOR": "Aclarar procesos frente a contratos y la semántica de liquidación; no fabricar estado de proceso ni cambiar fuente en silencio. No basta comprobar dataset.",
+      "CANONICAL_AUTHORITIES": "ADR-003/024; referencia de estados; ADR-061 proyección explícita por dataset; ausencia de contrato canónico de liquidación en la base.",
+      "SEMANTIC_ORACLE_VERDICT": "NO DETERMINADO para dataset obligatorio; el oracle no verifica aclaración ni proyección válida y no autoriza semántica inventada."
+    }
+  ]
+}

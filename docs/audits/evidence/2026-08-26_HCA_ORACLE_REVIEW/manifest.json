@@ -1,0 +1,57 @@
+{
+  "created_at_utc": "2026-08-26T11:26:30.627674+00:00",
+  "head_before": "0a77070ec6be5aab82360a6b10e8b3c77a1048ac",
+  "branch": "codex/hca-oracle-review",
+  "workspace_main_head_before": "df3cc9625ce56ed88b0dcd62a95911b0a798743f",
+  "corpus_sha256_before": "262c225c7939f04516ee95b3c77b4911f9f476058941a88a61d01c918499ffba",
+  "corpus_sha256_after": "262c225c7939f04516ee95b3c77b4911f9f476058941a88a61d01c918499ffba",
+  "phase_a_sha256": "575e7916496c4c91c41fe092ee039f0ff412e8e296165a042c2353599054d66d",
+  "actor_index_sha256": "464add1dbb479e616ee80a079b11c256db0d67dc6b979e4f285612233bdb8690",
+  "query_plan_physical_lines": 371,
+  "query_plan_g8_loc": 299,
+  "base_tree_objects": {
+    "app": "002be015ac464bf62a2d1e6e381f41cdb1bfc3bc",
+    "tests": "1848170bd5005af598582fdbdc0c334463dc5033",
+    "scripts": "3210a11ad3f607ecf2ef4764b42621577d5cb0f2"
+  },
+  "raw_hca": {
+    "pass": 177,
+    "fail": 18,
+    "error": 0
+  },
+  "adjudication": {
+    "CONFIRMED_ORACLE_DEBT": 5,
+    "SAFE_UNSUPPORTED_CAPABILITY": 1,
+    "KNOWN_DEFERRED_PRODUCT_DEBT": 3,
+    "INSUFFICIENT_EVIDENCE": 3,
+    "REAL_RUNTIME_BUG": 6,
+    "PRESENTATION_ONLY_DEFECT": 0
+  },
+  "metrics": {
+    "raw_supported": "177/195",
+    "semantically_supported": "183/195",
+    "composition": "177 PASS + 5 CONFIRMED_ORACLE_DEBT + 1 SAFE_UNSUPPORTED_CAPABILITY",
+    "actionable_runtime_failures_now": 6,
+    "presentation_only": 0,
+    "deferred_product_cases": 3,
+    "product_change_backlog_including_deferred": 9,
+    "unresolved_evidence_cases": 3
+  },
+  "runtime_files_changed": 0,
+  "fixtures_changed": false,
+  "push": false,
+  "evidence_sha256": {
+    "adjudication.json": "135c5532ee7bca394fdf01d4237d22fa3ca2a5db518e9340a8362f7daabf516e",
+    "capture_runtime.py": "e5e979cdca3d90935151292681e1c14c88026bc4fbbb97483df1ee6eb515d2bb",
+    "frozen_failures.json": "5b8a35b2d7e654f1d400643f06bde1d666a6ffa4f4c7c828c47b7410d8d72636",
+    "hca_failed_turns.jsonl": "289d1b174aa2c356e840eca4e7ab0d9b4f02ff23405be59e7926ea070a1cf02c",
+    "hca_verdicts.json": "75437cfb291487822731d3b29c82e3eac81f4ff93e1e0e7c3687ab10a505fb15",
+    "negation_controls.jsonl": "9b0eb82256cd8ffb2b49d2977d2d989752e88d5ca1c138d338268525791800dc",
+    "oracle_patch_plan.json": "755bc7d89e099849c8bbaa59955e4d1b1e2b7aff0bbbcf206c6f418121079bcd",
+    "phase_a_blind.json": "575e7916496c4c91c41fe092ee039f0ff412e8e296165a042c2353599054d66d",
+    "probe_boundaries.json": "244068dd21320c9f82b900054002d368f38b40314439eb80d259541260e92db5",
+    "probe_boundaries.py": "4f2ef433374378b6aa3ecdc46ccc995354d6615a7f7a40a0b2aaa5816e96c06a",
+    "run_summaries.json": "e809367625a0388f7c0177324701fab729f9f2eee2c7fe63f4b44532019ceef1",
+    "runtime_contrast.jsonl": "5ac5c517cc05a7149a982dc7863e9d4ea8502e0179f751e86c02798b97e12202"
+  }
+}
