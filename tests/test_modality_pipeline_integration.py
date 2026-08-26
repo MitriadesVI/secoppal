@@ -511,9 +511,14 @@ _NO_MODALITY_GOLDEN = {
         "8bc90f440f7bfda2938525825fd5f8b2e1bb5c0cf970d72050f2a6c45f9b8eb5",
         ("fecha_de_firma >= '2024-01-01'", "fecha_de_firma <= '2025-12-31'"),
     ),
+    # ADR-067: contrato_activo se proyecta completo. El marcador anterior era
+    # el escalar truncado ``estado_contrato = 'En ejecución'``, que perdía
+    # Modificado y Prorrogado (ADR-003). Igual que en el caso AP2-B de abajo,
+    # el fingerprint cambia porque cambió el FILTRO, no la interpretación de
+    # modalidad, que sigue siendo NO_MATCH y sin cláusula propia.
     "contratos en ejecución de alimentación": (
-        "393770fcf7124d810fc96cccfec8424b67d4f798ffa2d0b7d21a71a1cc704040",
-        ("estado_contrato = 'En ejecución'",),
+        "efe365c825462125cec0541db2ed2b7040ebdaf3d71e86d5dedd90519c889aef",
+        ("estado_contrato IN ('En ejecución', 'Modificado', 'Prorrogado')",),
     ),
     "oportunidades de alimentación en Barranquilla": (
         "07e2e13f82413a9cff419a2627f71b1e2af7e610f8b8e2acbe9a8024a143a800",

@@ -3708,3 +3708,149 @@ no se invocó.
 
 Informe reproducible:
 `docs/audits/2026-08-25_HCA_R6_CONTROL_LANGUAGE.md`.
+
+---
+
+## ADR-067: Estado léxico exacto frente a familia semántica
+
+**Fecha:** 2026-08-26
+**Estado:** Accepted — `EXACT_VS_FAMILY_STATE: CLOSED`
+
+### Contexto
+
+`estado_families.py` traducía todo token conocido a una familia y proyectaba
+**todos** sus valores. Esa uniformidad producía dos errores opuestos.
+
+`procesos publicados de aseo en cesar` devolvía `estado_del_procedimiento IN
+('Publicado','Borrador','En aprobación','Aprobado','Abierto')`: el usuario nombró
+un valor literal del dataset y recibió borradores. En el otro extremo,
+`contratos en ejecución de la alcaldía de Medellín` declaraba
+`estado_family = contrato_activo` en el frame y llegaba a la fuente como
+`estado_contrato = 'En ejecución'`, perdiendo `Modificado` y `Prorrogado`, que
+ADR-003 declara parte de la misma familia.
+
+La causa común no es el catálogo sino la ausencia de una distinción: **nada
+garantizaba que la forma de resolver un estado y la forma de proyectarlo
+coincidieran**. Una familia podía declararse sin materializarse —la ruta de
+`intent_vocabulary` no conoce el dataset y nunca escribió filtros— y un literal
+podía materializarse como familia.
+
+### Decisión
+
+Un token de estado se resuelve por **uno de dos contratos**, y la proyección a
+la fuente corresponde siempre al contrato con que se resolvió.
+
+1. **Léxico exacto** — el token nombra un valor literal del dataset y proyecta
+   ese valor y solo ese. `LEXICAL_EXACT_STATE` tiene precedencia sobre
+   `NATURAL_TO_FAMILY` y deriva la ubicación del literal de `ESTADO_FAMILIES` en
+   vez de duplicarla. **INV-EXACT-STATE-DOES-NOT-WIDEN-TO-FAMILY**.
+2. **Familia semántica** — el token describe una etapa del ciclo de vida sin
+   nombrar un valor, y proyecta la familia completa.
+   **INV-STATE-FAMILY-PROJECTS-COMPLETE**, aplicado en
+   `app/core/estado_projection.py` sobre los params ya resueltos, de modo que
+   cubre cualquier ruta que declare familia. **Rellena y nunca ensancha**: un
+   campo de estado con valores es una decisión previa y se respeta.
+
+El catálogo exacto es deliberadamente corto: un token entra solo si nombra un
+literal real, su familia tiene más de un valor para ese dataset y no es a la vez
+vocabulario que describe la familia entera. Por lo tercero quedan fuera
+`abiertos` y `vigentes` —lenguaje natural de la oferta abierta— y `en ejecución`,
+al que ADR-003 asigna los tres estados de contrato activo.
+
+### Consecuencias y límites
+
+La policy de oportunidad vigente (O1B: `Publicado` + `Abierto` más ventana de
+descubrimiento) no cambia. El invariante de proyección corrige además un caso
+que nadie había reportado: `procesos desiertos` declaraba `no_procede` y
+consultaba **sin filtro de estado alguno**.
+
+Esta decisión **no** toca el alcance de liquidación. Qué significa *liquidado*
+en SECOP (HCA-STATE-003, HCA-SOURCE-002) sigue sin autoridad suficiente.
+
+`app/core/query_plan.py` no se tocó: sigue en 299 LoC y la `NEXT_TOUCH_RULE` no
+se invocó.
+
+### Evidencia de aceptación
+
+- HCA congelado, corpus sha `262c225c…` sin editar: `HCA-STATE-005` y
+  `HCA-STATE-007` FAIL → PASS, **0 rotos**;
+- corpus focal `hca_final_p1_fixes.yaml` 40/40 (`make audit-hca-final-p1`);
+- fuente Socrata: `Publicado` y `Borrador` son valores reales y disjuntos; los
+  tres estados de `contrato_activo` existen por separado — el ensanchamiento
+  traía filas no pedidas y el truncamiento ocultaba filas legítimas;
+- diferencial de SoQL sobre 50 consultas adversariales contra `eb8cfe1`: los
+  únicos cambios de filtro de estado son los previstos.
+
+Detalle: `docs/decisions/2026-08-26_ADR-067_exact-state-vs-state-family.md`.
+Informe: `docs/audits/2026-08-26_HCA_FINAL_P1_RUNTIME_FIXES.md`.
+
+---
+
+## ADR-068: El estado derivado de ejecución no persiste como estado del usuario
+
+**Fecha:** 2026-08-26
+**Estado:** Accepted — `DERIVED_EXECUTION_STATE: CLOSED`
+
+### Contexto
+
+`resolved_params` mezclaba dos cosas de naturaleza distinta: el **estado
+semántico del usuario** —tema, territorio, comprador, dinero, tiempo, estado,
+modalidad— y el **estado derivado de ejecución**, que el motor calcula *después*
+de consultar la fuente para enriquecer la respuesta.
+
+`entidad_ecosystem` es del segundo tipo. `normal_flow` lo inyecta tras ejecutar,
+reconstruye la SoQL para la respuesta asesora y **no vuelve a consultar**: las
+filas que el usuario vio nunca lo aplicaron. Como se persistía en el turno, el
+siguiente follow-up lo heredaba como filtro solicitado. Tras una búsqueda en
+Cali, pedir `los más antiguos primero` añadía al `WHERE` un `OR` con diez
+compradores del ecosistema municipal: el usuario pidió reordenar y recibió otro
+universo.
+
+Tres capas ya se defendían por su cuenta, cada una con su lista —buffer de
+paginación, repesca de página 2, guardado de radares—. Ninguna formalizaba la
+categoría, y faltaba justamente la cuarta: la persistencia conversacional, que
+es por donde se propaga.
+
+### Decisión
+
+1. `app/core/derived_execution_state.py` declara la categoría una sola vez.
+   `entidad_ecosystem` es su primer miembro.
+2. **El historial conversacional guarda estado semántico del usuario, nunca
+   estado derivado de ejecución.** El filtro se aplica en
+   `ConversationStore.append_turn` y no en los cuatro handlers que escriben
+   turnos: el invariante es del historial — lo que entra ahí es exactamente lo
+   que el próximo follow-up hereda.
+3. **INV-PURE-ORDERING-PRESERVES-SOURCE-UNIVERSE**: para un follow-up que solo
+   cambia el orden, `FILTERS(WHERE(T2)) == FILTERS(WHERE(T1))`. Las únicas
+   diferencias admisibles son `ORDER BY` y el cursor de paginación.
+
+El gate se pone sobre las **source calls reales**, no sobre el `QueryFrame`: el
+defecto vivía justo en el hueco entre ambos.
+
+### Consecuencias y límites
+
+Purgar la clave derivada no se lleva un universo legítimo. Un ecosistema que el
+usuario declara no viaja por `entidad_ecosystem` —`contratos del ICBF en
+Antioquia` llega como `entidad_resolved`/`entidad_like`— y `should_expand_ecosystem`
+ni se activa cuando hay entidad: la expansión post-query solo ocurre en ausencia
+de comprador, que es cuando nadie la pidió.
+
+No se introduce event sourcing ni procedencia por campo: la distinción se
+resuelve con una lista corta porque la clave que la necesitaba es una sola. Si
+aparece otro enriquecimiento post-query persistido, su lugar es esa lista y no
+una cuarta deny-list local.
+
+### Evidencia de aceptación
+
+- `tests/test_ordering_followup_source_universe.py`, 10 casos que comparan las
+  source calls de T1 y T2 (territorio municipal y departamental, comprador
+  explícito, dinero, tiempo, estado, negación, modalidad). **Verificado por
+  mutación**: sin el fix, 4 fallan;
+- HCA-FOLLOWUP-016 re-adjudicado: `WHERE` idéntico entre turnos, orden correcto,
+  `obra` preservada como `contract_type_include`. Sigue rojo en el HCA bruto
+  **solo** por `objeto_has:[obra]` — deuda de oráculo, no de runtime, que pasa
+  al Oracle Patch;
+- HCA congelado **0 rotos**.
+
+Detalle: `docs/decisions/2026-08-26_ADR-068_derived-execution-state.md`.
+Informe: `docs/audits/2026-08-26_HCA_FINAL_P1_RUNTIME_FIXES.md`.

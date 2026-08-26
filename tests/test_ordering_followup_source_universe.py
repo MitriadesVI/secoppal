@@ -74,6 +74,10 @@ def _order_by(soql: str) -> str:
         ("contratos de la gobernacion de boyaca", "los mas antiguos primero"),
         # Estado explícito.
         ("contratos en ejecucion de obra en cali", "ordenalos por mayor valor"),
+        # Negación dimensional (R4): la exclusión también es parte del universo.
+        ("contratos de aseo sin obra en cali", "ordenalos por mayor valor"),
+        # Modalidad.
+        ("procesos de licitacion publica en cali en 2026", "los mas antiguos primero"),
     ],
 )
 def test_ordering_only_followup_preserves_source_where(base_query, reorder_query):

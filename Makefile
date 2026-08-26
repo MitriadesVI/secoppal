@@ -1,4 +1,4 @@
-.PHONY: test smoke smoke-fast lint lint-core audit-negation-v1 audit-time-v2 audit-control-language-v1 audit-actor-hygiene-v1 dev restart
+.PHONY: test smoke smoke-fast lint lint-core audit-negation-v1 audit-time-v2 audit-control-language-v1 audit-actor-hygiene-v1 audit-hca-final-p1 dev restart
 
 AUDIT_OUT ?=
 
@@ -36,6 +36,10 @@ audit-control-language-v1:
 audit-actor-hygiene-v1:
 	.venv/bin/python scripts/audits/run_conversation_holistic_audit.py \
 		--corpus tests/fixtures/audits/actor_hygiene_v1.yaml $(if $(AUDIT_OUT),--out "$(AUDIT_OUT)")
+
+audit-hca-final-p1:
+	.venv/bin/python scripts/audits/run_conversation_holistic_audit.py \
+		--corpus tests/fixtures/audits/hca_final_p1_fixes.yaml $(if $(AUDIT_OUT),--out "$(AUDIT_OUT)")
 
 dev:
 	./dev.sh
