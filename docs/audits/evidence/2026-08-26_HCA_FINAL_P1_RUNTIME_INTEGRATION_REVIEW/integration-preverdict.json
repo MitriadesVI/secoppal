@@ -1,0 +1,29 @@
+{
+ "timestamp_utc": "2026-08-26T14:44:23.333050+00:00",
+ "HCA_FINAL_RUNTIME_INTEGRATION_REVIEW": "PASS",
+ "MAIN_RELATION": "FAST_FORWARD_AVAILABLE",
+ "MAIN_BEFORE": "eb8cfe1ed72ba5c9df0ab9c0ead5089ff5d09368",
+ "FEATURE_HEAD": "dec589a21bf36844d595db80093e7824ea2a0189",
+ "MERGE_BASE": "eb8cfe1ed72ba5c9df0ab9c0ead5089ff5d09368",
+ "COMMITS": 7,
+ "UNRELATED": 0,
+ "TEST_REPINS": {
+  "plan_query_node": "JUSTIFIED",
+  "pagination": "NONVACUOUS",
+  "modality": "JUSTIFIED"
+ },
+ "AUTHORITIES": {
+  "money_admission": "ONE_RESPONSIBILITY",
+  "estado_projection": "ONE_RESPONSIBILITY",
+  "generic_buyer": "ONE_RESPONSIBILITY",
+  "derived_execution_state": "ONE_RESPONSIBILITY"
+ },
+ "SIX_RUNTIME_BUGS": "6/6 CLOSED",
+ "BROKEN": 0,
+ "FULL_SUITE": "8657 passed, 2 skipped, 24 xfailed, 0 failed",
+ "QUERY_PLAN_LOC": 299,
+ "UNTRACKED_PRESERVED": 191,
+ "SEMGREP": "TOOL_UNAVAILABLE",
+ "PRODUCTION_WRITES": 0,
+ "PROMOTION_AUTHORIZED_BY_GATES": true
+}

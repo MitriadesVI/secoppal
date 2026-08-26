@@ -1,0 +1,33 @@
+Updating eb8cfe1..dec589a
+Fast-forward
+ Makefile                                           |   6 +-
+ app/core/conversation_store.py                     |   8 +-
+ app/core/derived_execution_state.py                |  55 +++
+ app/core/entity_resolver.py                        |  32 +-
+ app/core/estado_families.py                        |  66 +++-
+ app/core/estado_projection.py                      |  88 +++++
+ app/core/generic_buyer.py                          | 123 +++++++
+ app/core/money_admission.py                        |  77 ++++
+ app/core/query_router.py                           | 114 ++++--
+ app/utils/money.py                                 |  24 ++
+ .../2026-08-26_HCA_FINAL_P1_RUNTIME_FIXES.md       | 398 +++++++++++++++++++++
+ ...26-08-26_ADR-067_exact-state-vs-state-family.md | 117 ++++++
+ .../2026-08-26_ADR-068_derived-execution-state.md  |  91 +++++
+ docs/decisions_log.md                              | 146 ++++++++
+ scripts/audits/probe_query.py                      | 102 ++++++
+ tests/fixtures/audits/hca_final_p1_fixes.yaml      | 281 +++++++++++++++
+ tests/test_modality_pipeline_integration.py        |   9 +-
+ tests/test_ordering_followup_source_universe.py    | 130 +++++++
+ tests/test_pagination_buffer.py                    |  17 +-
+ tests/test_plan_query_node.py                      |  10 +-
+ 20 files changed, 1855 insertions(+), 39 deletions(-)
+ create mode 100644 app/core/derived_execution_state.py
+ create mode 100644 app/core/estado_projection.py
+ create mode 100644 app/core/generic_buyer.py
+ create mode 100644 app/core/money_admission.py
+ create mode 100644 docs/audits/2026-08-26_HCA_FINAL_P1_RUNTIME_FIXES.md
+ create mode 100644 docs/decisions/2026-08-26_ADR-067_exact-state-vs-state-family.md
+ create mode 100644 docs/decisions/2026-08-26_ADR-068_derived-execution-state.md
+ create mode 100644 scripts/audits/probe_query.py
+ create mode 100644 tests/fixtures/audits/hca_final_p1_fixes.yaml
+ create mode 100644 tests/test_ordering_followup_source_universe.py

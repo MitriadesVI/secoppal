@@ -1,0 +1,70 @@
+{
+  "total": 61,
+  "passed": 60,
+  "failed": 1,
+  "by_category": {
+    "city_as_scope": {
+      "total": 11,
+      "passed": 11,
+      "failed": 0,
+      "rate": 100.0
+    },
+    "city_not_entity": {
+      "total": 6,
+      "passed": 6,
+      "failed": 0,
+      "rate": 100.0
+    },
+    "discourse_filler": {
+      "total": 8,
+      "passed": 8,
+      "failed": 0,
+      "rate": 100.0
+    },
+    "entity_resolution": {
+      "total": 1,
+      "passed": 0,
+      "failed": 1,
+      "rate": 0.0
+    },
+    "implicit_opportunity": {
+      "total": 13,
+      "passed": 13,
+      "failed": 0,
+      "rate": 100.0
+    },
+    "negative": {
+      "total": 15,
+      "passed": 15,
+      "failed": 0,
+      "rate": 100.0
+    },
+    "non_query_followup": {
+      "total": 1,
+      "passed": 1,
+      "failed": 0,
+      "rate": 100.0
+    },
+    "number_phrase_scrub": {
+      "total": 1,
+      "passed": 1,
+      "failed": 0,
+      "rate": 100.0
+    },
+    "temporal_month": {
+      "total": 5,
+      "passed": 5,
+      "failed": 0,
+      "rate": 100.0
+    }
+  },
+  "failures": [
+    {
+      "id": "GOB-DEPTO-001",
+      "status": "FAIL",
+      "failures": [
+        "entidad_resolved: expected 'GOBERNACIÓN DE BOYACÁ', got None"
+      ]
+    }
+  ]
+}

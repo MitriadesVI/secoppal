@@ -1,0 +1,714 @@
+{
+ "corpus": "/private/tmp/secoppal-hca-integration-20260826-ayEYjj/focal-initial.yaml",
+ "corpus_sha256": "3c6c27a19d667ecd91c7ca99ad7925f46fba08bf6215d192b382ed90b61a2c0d",
+ "cases": 40,
+ "pass": 25,
+ "fail": 15,
+ "error": 0,
+ "verdicts": [
+  {
+   "id": "P1-MONEY-001",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": "HCA-MONEY-020 — 100 mil pesos es señal monetaria inequívoca",
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'contratos de papeleria por mas de 100 mil pesos': valor_min=None, expected 100000",
+    "turn 1 'contratos de papeleria por mas de 100 mil pesos': soql lacks 'valor_del_contrato >= 100000'"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "papeleria"
+    ]
+   }
+  },
+  {
+   "id": "P1-MONEY-002",
+   "category": "money",
+   "severity_if_failed": "P2",
+   "notes": "HCA-MONEY-026 — millon singular",
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'contratos de papeleria por mas de 1 millon': valor_min=None, expected 1000000"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "papeleria"
+    ]
+   }
+  },
+  {
+   "id": "P1-MONEY-003",
+   "category": "money",
+   "severity_if_failed": "P2",
+   "notes": "millón con tilde = millon sin tilde",
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'contratos de papeleria por mas de 1 millón': valor_min=None, expected 1000000"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "papeleria"
+    ]
+   }
+  },
+  {
+   "id": "P1-MONEY-004",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": "cota superior pequeña explícita",
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'contratos de papeleria por menos de 750 mil pesos': valor_max=None, expected 750000"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "papeleria"
+    ]
+   }
+  },
+  {
+   "id": "P1-MONEY-005",
+   "category": "money",
+   "severity_if_failed": "P2",
+   "notes": "plural sigue intacto",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "papeleria"
+    ],
+    "valor_min": 2000000
+   }
+  },
+  {
+   "id": "P1-MONEY-006",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": "magnitudes grandes sin cambio",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "valor_min": 500000000,
+    "contract_type_include": [
+     "obra"
+    ]
+   }
+  },
+  {
+   "id": "P1-MONEY-007",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": "ANTI — año no es dinero",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31"
+   }
+  },
+  {
+   "id": "P1-MONEY-008",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": "ANTI — NIT no es dinero",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos"
+   }
+  },
+  {
+   "id": "P1-MONEY-009",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": "ANTI — cantidad de procesos no es dinero",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "aseo"
+    ],
+    "departamento_resolved": "Cesar"
+   }
+  },
+  {
+   "id": "P1-MONEY-010",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": "ANTI — SMMLV conserva su autoridad indexada",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "valor_min": 142350000,
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "contract_type_include": [
+     "obra"
+    ]
+   }
+  },
+  {
+   "id": "P1-MONEY-011",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": "ANTI — rango monetario existente sin cambio",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "valor_min": 100000000,
+    "valor_max": 500000000,
+    "contract_type_include": [
+     "obra"
+    ]
+   }
+  },
+  {
+   "id": "P1-MONEY-012",
+   "category": "money",
+   "severity_if_failed": "P2",
+   "notes": "unidad no se filtra al objeto",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "papeleria"
+    ]
+   }
+  },
+  {
+   "id": "P1-STATE-001",
+   "category": "state",
+   "severity_if_failed": "P1",
+   "notes": "HCA-STATE-005 — publicados es literal, no el funnel completo",
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'procesos publicados de aseo en cesar': soql contains 'Borrador'",
+    "turn 1 'procesos publicados de aseo en cesar': soql contains 'En aprobación'",
+    "turn 1 'procesos publicados de aseo en cesar': soql contains 'Aprobado'"
+   ],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "aseo"
+    ],
+    "departamento_resolved": "Cesar",
+    "estado_family": "oferta_abierta",
+    "estado_del_procedimiento": [
+     "Abierto",
+     "Aprobado",
+     "Borrador",
+     "En aprobación",
+     "Publicado"
+    ],
+    "intent_type": "opportunity_search"
+   }
+  },
+  {
+   "id": "P1-STATE-002",
+   "category": "state",
+   "severity_if_failed": "P1",
+   "notes": "HCA-STATE-007 — contrato_activo se proyecta completo (ADR-003)",
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'contratos en ejecucion de la alcaldia de medellin': missing param estado_contrato",
+    "turn 1 'contratos en ejecucion de la alcaldia de medellin': soql lacks 'Modificado'",
+    "turn 1 'contratos en ejecucion de la alcaldia de medellin': soql lacks 'Prorrogado'"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "entidad_resolved": "DISTRITO ESPECIAL DE CIENCIA TECNOLOGIA E INNOVACION DE MEDELLIN",
+    "estado_family": "contrato_activo"
+   }
+  },
+  {
+   "id": "P1-STATE-003",
+   "category": "state",
+   "severity_if_failed": "P1",
+   "notes": "ANTI — la policy de oportunidad vigente (O1B) se conserva intacta",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "aseo"
+    ],
+    "departamento_resolved": "Cesar",
+    "estado_family": "oferta_abierta",
+    "estado_del_procedimiento": [
+     "Abierto",
+     "Borrador",
+     "Publicado"
+    ],
+    "intent_type": "opportunity_search"
+   }
+  },
+  {
+   "id": "P1-STATE-004",
+   "category": "state",
+   "severity_if_failed": "P2",
+   "notes": "borrador literal tampoco arrastra Publicado",
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'procesos en borrador de la gobernacion de narino': soql contains \"'Publicado'\""
+   ],
+   "final_frame": {
+    "dataset": "procesos",
+    "entidad_resolved": "GOBERNACION DE NARIÑO",
+    "estado_family": "oferta_abierta",
+    "estado_del_procedimiento": [
+     "Abierto",
+     "Aprobado",
+     "Borrador",
+     "En aprobación",
+     "Publicado"
+    ],
+    "intent_type": "opportunity_search"
+   }
+  },
+  {
+   "id": "P1-STATE-005",
+   "category": "state",
+   "severity_if_failed": "P1",
+   "notes": "ANTI — familias cerradas de un solo valor intactas",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "ciudad": "Cali",
+    "estado_family": "contrato_cerrado",
+    "estado_contrato": [
+     "Cerrado"
+    ]
+   }
+  },
+  {
+   "id": "P1-STATE-006",
+   "category": "state",
+   "severity_if_failed": "P1",
+   "notes": "ANTI — terminados intacto",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "obra"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "estado_family": "contrato_terminado",
+    "estado_contrato": [
+     "terminado"
+    ]
+   }
+  },
+  {
+   "id": "P1-STATE-007",
+   "category": "state",
+   "severity_if_failed": "P1",
+   "notes": "ANTI — contrato_activo también completo sin comprador",
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'contratos en ejecucion de obra en cali': soql lacks 'Modificado'",
+    "turn 1 'contratos en ejecucion de obra en cali': soql lacks 'Prorrogado'"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "obra"
+    ],
+    "ciudad": "Cali",
+    "estado_family": "contrato_activo"
+   }
+  },
+  {
+   "id": "P1-BUYER-001",
+   "category": "entity_buyer",
+   "severity_if_failed": "P1",
+   "notes": "HCA-ENTITY-005 — alcaldía sin calificar aclara, no ejecuta",
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'contratos de la alcaldia': expected block, got execution",
+    "turn 1 'contratos de la alcaldia': objeto leaks 'alcaldia' (objeto=['alcaldia'])"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "alcaldia"
+    ]
+   }
+  },
+  {
+   "id": "P1-BUYER-002",
+   "category": "entity_buyer",
+   "severity_if_failed": "P1",
+   "notes": "gobernación sin calificar",
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'contratos de la gobernacion': expected block, got execution",
+    "turn 1 'contratos de la gobernacion': objeto leaks 'gobernacion' (objeto=['gobernacion'])"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "gobernacion"
+    ]
+   }
+  },
+  {
+   "id": "P1-BUYER-003",
+   "category": "entity_buyer",
+   "severity_if_failed": "P1",
+   "notes": "municipio sin calificar",
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'contratos del municipio': expected block, got execution",
+    "turn 1 'contratos del municipio': objeto leaks 'municipio' (objeto=['municipio'])"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "municipio"
+    ]
+   }
+  },
+  {
+   "id": "P1-BUYER-004",
+   "category": "entity_buyer",
+   "severity_if_failed": "P2",
+   "notes": "ministerio sin calificar",
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'contratos del ministerio': expected block, got execution",
+    "turn 1 'contratos del ministerio': objeto leaks 'ministerio' (objeto=['ministerio'])"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "ministerio"
+    ]
+   }
+  },
+  {
+   "id": "P1-BUYER-005",
+   "category": "entity_buyer",
+   "severity_if_failed": "P2",
+   "notes": "secretaría sin calificar",
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'contratos de la secretaria': expected block, got execution",
+    "turn 1 'contratos de la secretaria': objeto leaks 'secretaria' (objeto=['secretaria'])"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "secretaria"
+    ]
+   }
+  },
+  {
+   "id": "P1-BUYER-006",
+   "category": "entity_buyer",
+   "severity_if_failed": "P1",
+   "notes": "ANTI — comprador completo ejecuta",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "entidad_resolved": "DISTRITO ESPECIAL DE CIENCIA TECNOLOGIA E INNOVACION DE MEDELLIN"
+   }
+  },
+  {
+   "id": "P1-BUYER-007",
+   "category": "entity_buyer",
+   "severity_if_failed": "P1",
+   "notes": "ANTI — alcaldía local del gazetteer",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "entidad_resolved": "ALCALDIA LOCAL DE TEUSAQUILLO(oficial)"
+   }
+  },
+  {
+   "id": "P1-BUYER-008",
+   "category": "entity_buyer",
+   "severity_if_failed": "P1",
+   "notes": "ANTI — gobernación completa",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "fecha_desde": "2026-01-01",
+    "fecha_hasta": "2026-12-31",
+    "entidad_resolved": "DEPARTAMENTO DEL ATLANTICO**"
+   }
+  },
+  {
+   "id": "P1-BUYER-009",
+   "category": "entity_buyer",
+   "severity_if_failed": "P1",
+   "notes": "ANTI — tema + comprador completo conviven",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "entidad_resolved": "DISTRITO ESPECIAL DE CIENCIA TECNOLOGIA E INNOVACION DE MEDELLIN"
+   }
+  },
+  {
+   "id": "P1-BUYER-010",
+   "category": "entity_buyer",
+   "severity_if_failed": "P1",
+   "notes": "ANTI — ciudad desnuda sigue siendo territorio",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "ciudad": "Barranquilla"
+   }
+  },
+  {
+   "id": "P1-FOLLOWUP-001",
+   "category": "followup",
+   "severity_if_failed": "P1",
+   "notes": "HCA-FOLLOWUP-016 — ordering-only no inyecta ecosistema de compradores",
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 2 'los mas antiguos primero': param entidad_ecosystem present (['ALCALDÍA DE SANTIAGO DE CALI', 'SECRETARÍA DE EDUCACIÓN MUNICIPAL', 'SECRETARÍA DE SALUD PÚBLICA MUNICIPAL', 'SECRETARÍA DE INFRAESTRUCTURA Y VALORIZACIÓN', 'SECRETARÍA DE CULTURA DE CALI', 'DEPARTAMENTO ADMINISTRATIVO DE GESTIÓN DEL MEDIO AMBIENTE', 'EMPRESAS MUNICIPALES DE CALI', 'INSTITUTO MUNICIPAL DE DEPORTE Y RECREACIÓN', 'SECRETARÍA DE MOVILIDAD DE CALI', 'SECRETARÍA DE BIENESTAR SOCIAL']), expected absent",
+    "turn 2 'los mas antiguos primero': soql contains 'ALCALDÍA DE SANTIAGO DE CALI'",
+    "turn 2 'los mas antiguos primero': soql contains 'SECRETARÍA DE EDUCACIÓN MUNICIPAL'",
+    "turn 2 'los mas antiguos primero': soql contains 'nombre_entidad'"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "valor_min": 300000000,
+    "ciudad": "Cali",
+    "contract_type_include": [
+     "obra"
+    ],
+    "ordering_signal": "fecha_asc"
+   }
+  },
+  {
+   "id": "P1-FOLLOWUP-002",
+   "category": "followup",
+   "severity_if_failed": "P1",
+   "notes": "ordering-only tras territorio departamental",
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 2 'ordenalos por mayor valor': soql contains 'nombre_entidad'"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "departamento_resolved": "Cesar",
+    "ordering_signal": "valor_desc"
+   }
+  },
+  {
+   "id": "P1-FOLLOWUP-003",
+   "category": "followup",
+   "severity_if_failed": "P1",
+   "notes": "ANTI — comprador explícito sobrevive el reordenamiento",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "entidad_resolved": "ICBF REGIONAL ANTIOQUIA",
+    "departamento_resolved": "Antioquia",
+    "ordering_signal": "valor_desc"
+   }
+  },
+  {
+   "id": "P1-FOLLOWUP-004",
+   "category": "followup",
+   "severity_if_failed": "P1",
+   "notes": "ANTI — entidad explícita sobrevive el reordenamiento",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "entidad_resolved": "GOBERNACIÓN DE BOYACÁ",
+    "ordering_signal": "fecha_asc"
+   }
+  },
+  {
+   "id": "P1-FOLLOWUP-005",
+   "category": "followup",
+   "severity_if_failed": "P1",
+   "notes": "ANTI — tiempo y dinero sobreviven el reordenamiento",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "valor_min": 300000000,
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "ciudad": "Cali",
+    "contract_type_include": [
+     "obra"
+    ],
+    "ordering_signal": "valor_desc"
+   }
+  },
+  {
+   "id": "P1-SCOPE-001",
+   "category": "scope_sentinel",
+   "severity_if_failed": "P1",
+   "notes": "INSUFFICIENT_EVIDENCE — liquidado sigue sin filtro de estado (HCA-STATE-003)",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "obra"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31"
+   }
+  },
+  {
+   "id": "P1-SCOPE-002",
+   "category": "scope_sentinel",
+   "severity_if_failed": "P1",
+   "notes": "INSUFFICIENT_EVIDENCE — procesos liquidados conserva su dataset actual (HCA-SOURCE-002)",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "obra"
+    ],
+    "departamento_resolved": "Cauca"
+   }
+  },
+  {
+   "id": "P1-SCOPE-003",
+   "category": "scope_sentinel",
+   "severity_if_failed": "P1",
+   "notes": "KNOWN_DEFERRED — modalidad fuera de alcance sigue fail-safe",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "fecha_desde": "2026-01-01",
+    "fecha_hasta": "2026-12-31",
+    "modalidad_include_procedure_ids": [
+     "seleccion_abreviada_menor_cuantia"
+    ]
+   }
+  },
+  {
+   "id": "P1-SCOPE-004",
+   "category": "scope_sentinel",
+   "severity_if_failed": "P1",
+   "notes": "KNOWN_DEFERRED — enajenación sigue fail-safe",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "fecha_desde": "2026-01-01",
+    "fecha_hasta": "2026-12-31",
+    "modalidad_include_procedure_ids": [
+     "enajenacion_sobre_cerrado",
+     "enajenacion_subasta"
+    ]
+   }
+  },
+  {
+   "id": "P1-SCOPE-005",
+   "category": "scope_sentinel",
+   "severity_if_failed": "P1",
+   "notes": "KNOWN_DEFERRED — régimen especial sigue fail-safe",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "fecha_desde": "2026-01-01",
+    "fecha_hasta": "2026-12-31",
+    "modalidad_include_procedure_ids": [
+     "regimen_especial",
+     "regimen_especial_con_ofertas"
+    ]
+   }
+  },
+  {
+   "id": "P1-SCOPE-006",
+   "category": "scope_sentinel",
+   "severity_if_failed": "P1",
+   "notes": "SAFE_UNSUPPORTED — salud sin acotar sigue pidiendo precisión",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "salud"
+    ],
+    "departamento_resolved": "Amazonas"
+   }
+  }
+ ]
+}

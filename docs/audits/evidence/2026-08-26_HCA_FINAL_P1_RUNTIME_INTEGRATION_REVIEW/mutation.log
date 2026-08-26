@@ -1,0 +1,388 @@
+F..F.FFFF.F                                                              [100%]
+=================================== FAILURES ===================================
+_ test_ordering_only_followup_preserves_source_where[contratos de obra en cali por mas de 300 millones-los mas antiguos primero] _
+
+base_query = 'contratos de obra en cali por mas de 300 millones'
+reorder_query = 'los mas antiguos primero'
+
+    @pytest.mark.parametrize(
+        ("base_query", "reorder_query"),
+        [
+            # El caso del defecto: territorio municipal sin comprador explícito.
+            ("contratos de obra en cali por mas de 300 millones", "los mas antiguos primero"),
+            # Territorio departamental.
+            ("contratos de aseo en cesar", "ordenalos por mayor valor"),
+            # Comprador explícito: el universo también debe quedar intacto.
+            ("contratos del icbf en antioquia", "ordenalos por mayor valor"),
+            # Tiempo + dinero + tipo contractual.
+            ("contratos de obra en cali por mas de 300 millones en 2025", "ordenalos por mayor valor"),
+            # Entidad resuelta por reescritura.
+            ("contratos de la gobernacion de boyaca", "los mas antiguos primero"),
+            # Estado explícito.
+            ("contratos en ejecucion de obra en cali", "ordenalos por mayor valor"),
+            # Negación dimensional (R4): la exclusión también es parte del universo.
+            ("contratos de aseo sin obra en cali", "ordenalos por mayor valor"),
+            # Modalidad.
+            ("procesos de licitacion publica en cali en 2026", "los mas antiguos primero"),
+        ],
+    )
+    def test_ordering_only_followup_preserves_source_where(base_query, reorder_query):
+        wf, calls = _workflow()
+        chat_id = f"inv-ordering-{uuid.uuid4().hex[:10]}"
+    
+        wf.run_query(base_query, chat_id=chat_id)
+        assert calls, f"el turno base no consultó la fuente: {base_query!r}"
+        where_before = _where(calls[-1])
+        order_before = _order_by(calls[-1])
+    
+        calls.clear()
+        wf.run_query(reorder_query, chat_id=chat_id)
+        assert calls, f"el follow-up no consultó la fuente: {reorder_query!r}"
+        where_after = _where(calls[-1])
+        order_after = _order_by(calls[-1])
+    
+>       assert where_after == where_before, (
+            "un follow-up de solo-orden cambió el universo de la fuente\n"
+            f"  antes:   {where_before}\n"
+            f"  después: {where_after}"
+        )
+E       AssertionError: un follow-up de solo-orden cambió el universo de la fuente
+E           antes:   unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Cali%')) AND valor_del_contrato >= 300000000 AND (tipo_de_contrato = 'Obra')
+E           después: unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Cali%')) AND (unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DE SANTIAGO DE CALI%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE EDUCACIÓN MUNICIPAL%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE SALUD PÚBLICA MUNICIPAL%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE INFRAESTRUCTURA Y VALORIZACIÓN%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE CULTURA DE CALI%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DEPARTAMENTO ADMINISTRATIVO DE GESTIÓN DEL MEDIO AMBIENTE%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%EMPRESAS MUNICIPALES DE CALI%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%INSTITUTO MUNICIPAL DE DEPORTE Y RECREACIÓN%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE MOVILIDAD DE CALI%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE BIENESTAR SOCIAL%'))) AND valor_del_contrato >= 300000000 AND (tipo_de_contrato = 'Obra')
+E       assert "unaccent(UPP...ato = 'Obra')" == "unaccent(UPP...ato = 'Obra')"
+E         
+E         Skipping 49 identical leading characters in diff, use -v to show
+E         - i%')) AND valor_del_contrato >= 300000000 AND (tipo_de_contrato = 'Obra')
+E         + i%')) AND (unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DE SANTIAGO DE CALI%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE EDUCACIÓN MUNICIPAL%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE SALUD PÚBLICA MUNICIPAL%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE INFRAESTRUCTURA Y VALORIZACIÓN%')) OR unaccent(UPPER(nombre_entidad)) LI...
+E         
+E         ...Full output truncated (1 line hidden), use '-vv' to show
+
+tests/test_ordering_followup_source_universe.py:98: AssertionError
+------------------------------ Captured log call -------------------------------
+WARNING  root:socrata.py:63 Requests made without an app_token will be subject to strict throttling limits.
+_ test_ordering_only_followup_preserves_source_where[contratos de obra en cali por mas de 300 millones en 2025-ordenalos por mayor valor] _
+
+base_query = 'contratos de obra en cali por mas de 300 millones en 2025'
+reorder_query = 'ordenalos por mayor valor'
+
+    @pytest.mark.parametrize(
+        ("base_query", "reorder_query"),
+        [
+            # El caso del defecto: territorio municipal sin comprador explícito.
+            ("contratos de obra en cali por mas de 300 millones", "los mas antiguos primero"),
+            # Territorio departamental.
+            ("contratos de aseo en cesar", "ordenalos por mayor valor"),
+            # Comprador explícito: el universo también debe quedar intacto.
+            ("contratos del icbf en antioquia", "ordenalos por mayor valor"),
+            # Tiempo + dinero + tipo contractual.
+            ("contratos de obra en cali por mas de 300 millones en 2025", "ordenalos por mayor valor"),
+            # Entidad resuelta por reescritura.
+            ("contratos de la gobernacion de boyaca", "los mas antiguos primero"),
+            # Estado explícito.
+            ("contratos en ejecucion de obra en cali", "ordenalos por mayor valor"),
+            # Negación dimensional (R4): la exclusión también es parte del universo.
+            ("contratos de aseo sin obra en cali", "ordenalos por mayor valor"),
+            # Modalidad.
+            ("procesos de licitacion publica en cali en 2026", "los mas antiguos primero"),
+        ],
+    )
+    def test_ordering_only_followup_preserves_source_where(base_query, reorder_query):
+        wf, calls = _workflow()
+        chat_id = f"inv-ordering-{uuid.uuid4().hex[:10]}"
+    
+        wf.run_query(base_query, chat_id=chat_id)
+        assert calls, f"el turno base no consultó la fuente: {base_query!r}"
+        where_before = _where(calls[-1])
+        order_before = _order_by(calls[-1])
+    
+        calls.clear()
+        wf.run_query(reorder_query, chat_id=chat_id)
+        assert calls, f"el follow-up no consultó la fuente: {reorder_query!r}"
+        where_after = _where(calls[-1])
+        order_after = _order_by(calls[-1])
+    
+>       assert where_after == where_before, (
+            "un follow-up de solo-orden cambió el universo de la fuente\n"
+            f"  antes:   {where_before}\n"
+            f"  después: {where_after}"
+        )
+E       AssertionError: un follow-up de solo-orden cambió el universo de la fuente
+E           antes:   unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Cali%')) AND valor_del_contrato >= 300000000 AND (tipo_de_contrato = 'Obra') AND fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31'
+E           después: unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Cali%')) AND (unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DE SANTIAGO DE CALI%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE EDUCACIÓN MUNICIPAL%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE SALUD PÚBLICA MUNICIPAL%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE INFRAESTRUCTURA Y VALORIZACIÓN%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE CULTURA DE CALI%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DEPARTAMENTO ADMINISTRATIVO DE GESTIÓN DEL MEDIO AMBIENTE%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%EMPRESAS MUNICIPALES DE CALI%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%INSTITUTO MUNICIPAL DE DEPORTE Y RECREACIÓN%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE MOVILIDAD DE CALI%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE BIENESTAR SOCIAL%'))) AND valor_del_contrato >= 300000000 AND (tipo_de_contrato = 'Obra') AND fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31'
+E       assert "unaccent(UPP... '2025-12-31'" == "unaccent(UPP... '2025-12-31'"
+E         
+E         Skipping 49 identical leading characters in diff, use -v to show
+E         - i%')) AND valor_del_contrato >= 300000000 AND (tipo_de_contrato = 'Obra') AND fecha_de_firma >= '2025-01-01' AND fecha_de_firma <= '2025-12-31'
+E         + i%')) AND (unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DE SANTIAGO DE CALI%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE EDUCACIÓN MUNICIPAL%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE SALUD PÚBLICA MUNICIPAL%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE IN...
+E         
+E         ...Full output truncated (1 line hidden), use '-vv' to show
+
+tests/test_ordering_followup_source_universe.py:98: AssertionError
+------------------------------ Captured log call -------------------------------
+WARNING  root:socrata.py:63 Requests made without an app_token will be subject to strict throttling limits.
+_ test_ordering_only_followup_preserves_source_where[contratos en ejecucion de obra en cali-ordenalos por mayor valor] _
+
+base_query = 'contratos en ejecucion de obra en cali'
+reorder_query = 'ordenalos por mayor valor'
+
+    @pytest.mark.parametrize(
+        ("base_query", "reorder_query"),
+        [
+            # El caso del defecto: territorio municipal sin comprador explícito.
+            ("contratos de obra en cali por mas de 300 millones", "los mas antiguos primero"),
+            # Territorio departamental.
+            ("contratos de aseo en cesar", "ordenalos por mayor valor"),
+            # Comprador explícito: el universo también debe quedar intacto.
+            ("contratos del icbf en antioquia", "ordenalos por mayor valor"),
+            # Tiempo + dinero + tipo contractual.
+            ("contratos de obra en cali por mas de 300 millones en 2025", "ordenalos por mayor valor"),
+            # Entidad resuelta por reescritura.
+            ("contratos de la gobernacion de boyaca", "los mas antiguos primero"),
+            # Estado explícito.
+            ("contratos en ejecucion de obra en cali", "ordenalos por mayor valor"),
+            # Negación dimensional (R4): la exclusión también es parte del universo.
+            ("contratos de aseo sin obra en cali", "ordenalos por mayor valor"),
+            # Modalidad.
+            ("procesos de licitacion publica en cali en 2026", "los mas antiguos primero"),
+        ],
+    )
+    def test_ordering_only_followup_preserves_source_where(base_query, reorder_query):
+        wf, calls = _workflow()
+        chat_id = f"inv-ordering-{uuid.uuid4().hex[:10]}"
+    
+        wf.run_query(base_query, chat_id=chat_id)
+        assert calls, f"el turno base no consultó la fuente: {base_query!r}"
+        where_before = _where(calls[-1])
+        order_before = _order_by(calls[-1])
+    
+        calls.clear()
+        wf.run_query(reorder_query, chat_id=chat_id)
+        assert calls, f"el follow-up no consultó la fuente: {reorder_query!r}"
+        where_after = _where(calls[-1])
+        order_after = _order_by(calls[-1])
+    
+>       assert where_after == where_before, (
+            "un follow-up de solo-orden cambió el universo de la fuente\n"
+            f"  antes:   {where_before}\n"
+            f"  después: {where_after}"
+        )
+E       AssertionError: un follow-up de solo-orden cambió el universo de la fuente
+E           antes:   unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Cali%')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%obra%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%obra%'))) AND estado_contrato IN ('En ejecución', 'Modificado', 'Prorrogado')
+E           después: unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Cali%')) AND (unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DE SANTIAGO DE CALI%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE EDUCACIÓN MUNICIPAL%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE SALUD PÚBLICA MUNICIPAL%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE INFRAESTRUCTURA Y VALORIZACIÓN%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE CULTURA DE CALI%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DEPARTAMENTO ADMINISTRATIVO DE GESTIÓN DEL MEDIO AMBIENTE%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%EMPRESAS MUNICIPALES DE CALI%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%INSTITUTO MUNICIPAL DE DEPORTE Y RECREACIÓN%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE MOVILIDAD DE CALI%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE BIENESTAR SOCIAL%'))) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%obra%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%obra%'))) AND estado_contrato IN ('En ejecución', 'Modificado', 'Prorrogado')
+E       assert "unaccent(UPP...'Prorrogado')" == "unaccent(UPP...'Prorrogado')"
+E         
+E         Skipping 65 identical leading characters in diff, use -v to show
+E         - ent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%obra%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%obra%'))) AND estado_contrato IN ('En ejecución', 'Modificado', 'Prorrogado')
+E         + ent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DE SANTIAGO DE CALI%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE EDUCACIÓN MUNICIPAL%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE SALUD PÚBLICA MUNICIPAL%')) OR unaccent(UPPER(nombre_e...
+E         
+E         ...Full output truncated (1 line hidden), use '-vv' to show
+
+tests/test_ordering_followup_source_universe.py:98: AssertionError
+------------------------------ Captured log call -------------------------------
+WARNING  root:socrata.py:63 Requests made without an app_token will be subject to strict throttling limits.
+_ test_ordering_only_followup_preserves_source_where[contratos de aseo sin obra en cali-ordenalos por mayor valor] _
+
+base_query = 'contratos de aseo sin obra en cali'
+reorder_query = 'ordenalos por mayor valor'
+
+    @pytest.mark.parametrize(
+        ("base_query", "reorder_query"),
+        [
+            # El caso del defecto: territorio municipal sin comprador explícito.
+            ("contratos de obra en cali por mas de 300 millones", "los mas antiguos primero"),
+            # Territorio departamental.
+            ("contratos de aseo en cesar", "ordenalos por mayor valor"),
+            # Comprador explícito: el universo también debe quedar intacto.
+            ("contratos del icbf en antioquia", "ordenalos por mayor valor"),
+            # Tiempo + dinero + tipo contractual.
+            ("contratos de obra en cali por mas de 300 millones en 2025", "ordenalos por mayor valor"),
+            # Entidad resuelta por reescritura.
+            ("contratos de la gobernacion de boyaca", "los mas antiguos primero"),
+            # Estado explícito.
+            ("contratos en ejecucion de obra en cali", "ordenalos por mayor valor"),
+            # Negación dimensional (R4): la exclusión también es parte del universo.
+            ("contratos de aseo sin obra en cali", "ordenalos por mayor valor"),
+            # Modalidad.
+            ("procesos de licitacion publica en cali en 2026", "los mas antiguos primero"),
+        ],
+    )
+    def test_ordering_only_followup_preserves_source_where(base_query, reorder_query):
+        wf, calls = _workflow()
+        chat_id = f"inv-ordering-{uuid.uuid4().hex[:10]}"
+    
+        wf.run_query(base_query, chat_id=chat_id)
+        assert calls, f"el turno base no consultó la fuente: {base_query!r}"
+        where_before = _where(calls[-1])
+        order_before = _order_by(calls[-1])
+    
+        calls.clear()
+        wf.run_query(reorder_query, chat_id=chat_id)
+        assert calls, f"el follow-up no consultó la fuente: {reorder_query!r}"
+        where_after = _where(calls[-1])
+        order_after = _order_by(calls[-1])
+    
+>       assert where_after == where_before, (
+            "un follow-up de solo-orden cambió el universo de la fuente\n"
+            f"  antes:   {where_before}\n"
+            f"  después: {where_after}"
+        )
+E       AssertionError: un follow-up de solo-orden cambió el universo de la fuente
+E           antes:   unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Cali%')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND NOT (coalesce(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%obra%')), false) OR coalesce(unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%obra%')), false))
+E           después: unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Cali%')) AND (unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DE SANTIAGO DE CALI%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE EDUCACIÓN MUNICIPAL%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE SALUD PÚBLICA MUNICIPAL%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE INFRAESTRUCTURA Y VALORIZACIÓN%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE CULTURA DE CALI%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DEPARTAMENTO ADMINISTRATIVO DE GESTIÓN DEL MEDIO AMBIENTE%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%EMPRESAS MUNICIPALES DE CALI%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%INSTITUTO MUNICIPAL DE DEPORTE Y RECREACIÓN%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE MOVILIDAD DE CALI%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE BIENESTAR SOCIAL%'))) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND NOT (coalesce(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%obra%')), false) OR coalesce(unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%obra%')), false))
+E       assert "unaccent(UPP...%')), false))" == "unaccent(UPP...%')), false))"
+E         
+E         Skipping 65 identical leading characters in diff, use -v to show
+E         - ent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND NOT (coalesce(unaccent(UPPER(objeto_del_contrato)) LIKE una...
+E         
+E         ...Full output truncated (2 lines hidden), use '-vv' to show
+
+tests/test_ordering_followup_source_universe.py:98: AssertionError
+------------------------------ Captured log call -------------------------------
+WARNING  root:socrata.py:63 Requests made without an app_token will be subject to strict throttling limits.
+_ test_ordering_only_followup_preserves_source_where[procesos de licitacion publica en cali en 2026-los mas antiguos primero] _
+
+base_query = 'procesos de licitacion publica en cali en 2026'
+reorder_query = 'los mas antiguos primero'
+
+    @pytest.mark.parametrize(
+        ("base_query", "reorder_query"),
+        [
+            # El caso del defecto: territorio municipal sin comprador explícito.
+            ("contratos de obra en cali por mas de 300 millones", "los mas antiguos primero"),
+            # Territorio departamental.
+            ("contratos de aseo en cesar", "ordenalos por mayor valor"),
+            # Comprador explícito: el universo también debe quedar intacto.
+            ("contratos del icbf en antioquia", "ordenalos por mayor valor"),
+            # Tiempo + dinero + tipo contractual.
+            ("contratos de obra en cali por mas de 300 millones en 2025", "ordenalos por mayor valor"),
+            # Entidad resuelta por reescritura.
+            ("contratos de la gobernacion de boyaca", "los mas antiguos primero"),
+            # Estado explícito.
+            ("contratos en ejecucion de obra en cali", "ordenalos por mayor valor"),
+            # Negación dimensional (R4): la exclusión también es parte del universo.
+            ("contratos de aseo sin obra en cali", "ordenalos por mayor valor"),
+            # Modalidad.
+            ("procesos de licitacion publica en cali en 2026", "los mas antiguos primero"),
+        ],
+    )
+    def test_ordering_only_followup_preserves_source_where(base_query, reorder_query):
+        wf, calls = _workflow()
+        chat_id = f"inv-ordering-{uuid.uuid4().hex[:10]}"
+    
+        wf.run_query(base_query, chat_id=chat_id)
+        assert calls, f"el turno base no consultó la fuente: {base_query!r}"
+        where_before = _where(calls[-1])
+        order_before = _order_by(calls[-1])
+    
+        calls.clear()
+        wf.run_query(reorder_query, chat_id=chat_id)
+        assert calls, f"el follow-up no consultó la fuente: {reorder_query!r}"
+        where_after = _where(calls[-1])
+        order_after = _order_by(calls[-1])
+    
+>       assert where_after == where_before, (
+            "un follow-up de solo-orden cambió el universo de la fuente\n"
+            f"  antes:   {where_before}\n"
+            f"  después: {where_after}"
+        )
+E       AssertionError: un follow-up de solo-orden cambió el universo de la fuente
+E           antes:   unaccent(UPPER(ciudad_entidad)) LIKE unaccent(UPPER('%Cali%')) AND modalidad_de_contratacion IN ('Licitación pública', 'Licitación pública Obra Publica') AND fecha_de_publicacion_del >= '2026-01-01' AND fecha_de_publicacion_del <= '2026-12-31'
+E           después: unaccent(UPPER(ciudad_entidad)) LIKE unaccent(UPPER('%Cali%')) AND (unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%ALCALDÍA DE SANTIAGO DE CALI%')) OR unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE EDUCACIÓN MUNICIPAL%')) OR unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE SALUD PÚBLICA MUNICIPAL%')) OR unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE INFRAESTRUCTURA Y VALORIZACIÓN%')) OR unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE CULTURA DE CALI%')) OR unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%DEPARTAMENTO ADMINISTRATIVO DE GESTIÓN DEL MEDIO AMBIENTE%')) OR unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%EMPRESAS MUNICIPALES DE CALI%')) OR unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%INSTITUTO MUNICIPAL DE DEPORTE Y RECREACIÓN%')) OR unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE MOVILIDAD DE CALI%')) OR unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE BIENESTAR SOCIAL%'))) AND modalidad_de_contratacion IN ('Licitación pública', 'Licitación pública Obra Publica') AND fecha_de_publicacion_del >= '2026-01-01' AND fecha_de_publicacion_del <= '2026-12-31'
+E       assert "unaccent(UPP... '2026-12-31'" == "unaccent(UPP... '2026-12-31'"
+E         
+E         Skipping 57 identical leading characters in diff, use -v to show
+E         - i%')) AND modalidad_de_contratacion IN ('Licitación pública', 'Licitación pública Obra Publica') AND fecha_de_publicacion_del >= '2026-01-01' AND fecha_de_publicacion_del <= '2026-12-31'
+E         + i%')) AND (unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%ALCALDÍA DE SANTIAGO DE CALI%')) OR unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE EDUCACIÓN MUNICIPAL%')) OR unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE SALUD PÚBLICA MUNICIPAL%')) OR unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%S...
+E         
+E         ...Full output truncated (1 line hidden), use '-vv' to show
+
+tests/test_ordering_followup_source_universe.py:98: AssertionError
+------------------------------ Captured log call -------------------------------
+WARNING  root:socrata.py:63 Requests made without an app_token will be subject to strict throttling limits.
+___________ test_ordering_followup_does_not_inject_entity_ecosystem ____________
+
+    def test_ordering_followup_does_not_inject_entity_ecosystem():
+        """El síntoma concreto: un OR de compradores que nadie pidió."""
+        wf, calls = _workflow()
+        chat_id = f"inv-ecosystem-{uuid.uuid4().hex[:10]}"
+    
+        wf.run_query("contratos de obra en cali por mas de 300 millones", chat_id=chat_id)
+        calls.clear()
+        result = wf.run_query("los mas antiguos primero", chat_id=chat_id)
+    
+>       assert "OR unaccent(UPPER(nombre_entidad))" not in calls[-1]
+E       AssertionError: assert 'OR unaccent...re_entidad))' not in 'SELECT id_c...ASC LIMIT 50'
+E         
+E         'OR unaccent(UPPER(nombre_entidad))' is contained here:
+E         ?           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^                                                                     ^^^^^
+E            CALI%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE EDUCACIÓN MUNICIPAL%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE SALUD PÚBLICA MUNICIPAL%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE INFRAESTRUCTURA Y VALORIZACIÓN%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SEC...
+E         
+E         ...Full output truncated (2 lines hidden), use '-vv' to show
+
+tests/test_ordering_followup_source_universe.py:117: AssertionError
+------------------------------ Captured log call -------------------------------
+WARNING  root:socrata.py:63 Requests made without an app_token will be subject to strict throttling limits.
+______ test_pagination_drops_post_query_ecosystem_to_refetch_same_source _______
+
+tmp_path = PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-930/test_pagination_drops_post_que0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1111e25f0>
+
+    def test_pagination_drops_post_query_ecosystem_to_refetch_same_source(tmp_path, monkeypatch):
+        """Una expansion asesora tardia no puede alterar la fuente de pagina 2."""
+        monkeypatch.setattr(
+            "app.core.workflow.actions.execution.observe_universe_fn",
+            lambda *a, **k: None,
+        )
+        monkeypatch.setattr(
+            "app.core.entity_ecosystem.should_expand_ecosystem",
+            lambda _params: True,
+        )
+        expansions: list[dict] = []
+    
+        def _ecosystem(**kwargs):
+            expansions.append(kwargs)
+            return ["ENTIDAD INYECTADA DESPUES DEL FETCH"]
+    
+        monkeypatch.setattr(
+            "app.core.entity_ecosystem.get_ecosystem_entities", _ecosystem,
+        )
+        data_query = _make_query(total=30)
+        seen_soql: list[str] = []
+    
+        def query(ds: str, soql: str) -> list[dict]:
+            seen_soql.append(soql)
+            return data_query(ds, soql)
+    
+        wf = SecopalWorkflow(Settings())
+        wf.secop_client.query = query
+        wf.secop_client.count = lambda _ds, _soql: 30
+        wf.narrator.narrate_with_grounding = lambda **kw: None
+        wf.conv_store = ConversationStore(base_path=tmp_path / "conv")
+    
+        chat = "e8b_post_query_params"
+        wf.run_query(
+            "procesos de mantenimiento en bogota de 2026",
+            channel="streamlit", chat_id=chat,
+        )
+        # La expansión asesora SÍ ocurre en este turno. Sin comprobarlo, el resto
+        # del test pasaría vacuamente: no habría nada que la paginación ignorase.
+        assert expansions, "la expansión post-query no llegó a ejecutarse"
+        # INV-PURE-ORDERING-PRESERVES-SOURCE-UNIVERSE: y no entra al historial.
+        # Antes sí entraba, y el siguiente follow-up la heredaba como si fuera un
+        # filtro que el usuario hubiera pedido.
+        persisted = wf.conv_store.get_history(chat, last_n=1)[0].parsed_params
+>       assert "entidad_ecosystem" not in persisted
+E       AssertionError: assert 'entidad_ecosystem' not in {'dataset': 'procesos', 'departamento': 'en bogota', 'departamento_resolution': {'confidence': 'high', 'kind': 'territorial_department', 'like_value': None, 'metadata': {}, ...}, 'departamento_resolved': 'Distrito Capital de Bogotá', ...}
+
+tests/test_pagination_buffer.py:393: AssertionError
+------------------------------ Captured log call -------------------------------
+WARNING  root:socrata.py:63 Requests made without an app_token will be subject to strict throttling limits.
+=========================== short test summary info ============================
+FAILED tests/test_ordering_followup_source_universe.py::test_ordering_only_followup_preserves_source_where[contratos de obra en cali por mas de 300 millones-los mas antiguos primero]
+FAILED tests/test_ordering_followup_source_universe.py::test_ordering_only_followup_preserves_source_where[contratos de obra en cali por mas de 300 millones en 2025-ordenalos por mayor valor]
+FAILED tests/test_ordering_followup_source_universe.py::test_ordering_only_followup_preserves_source_where[contratos en ejecucion de obra en cali-ordenalos por mayor valor]
+FAILED tests/test_ordering_followup_source_universe.py::test_ordering_only_followup_preserves_source_where[contratos de aseo sin obra en cali-ordenalos por mayor valor]
+FAILED tests/test_ordering_followup_source_universe.py::test_ordering_only_followup_preserves_source_where[procesos de licitacion publica en cali en 2026-los mas antiguos primero]
+FAILED tests/test_ordering_followup_source_universe.py::test_ordering_followup_does_not_inject_entity_ecosystem
+FAILED tests/test_pagination_buffer.py::test_pagination_drops_post_query_ecosystem_to_refetch_same_source
+7 failed, 4 passed in 1.88s

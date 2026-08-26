@@ -1,0 +1,577 @@
+{
+ "corpora": {
+  "hca": {
+   "base": {
+    "cases": 195,
+    "pass": 177,
+    "fail": 18,
+    "error": 0
+   },
+   "feature": {
+    "cases": 195,
+    "pass": 182,
+    "fail": 13,
+    "error": 0
+   },
+   "fixed": [
+    "HCA-ENTITY-005",
+    "HCA-MONEY-020",
+    "HCA-MONEY-026",
+    "HCA-STATE-005",
+    "HCA-STATE-007"
+   ],
+   "broken": [],
+   "same_sha": true
+  },
+  "hca-final-p1": {
+   "base": {
+    "cases": 40,
+    "pass": 26,
+    "fail": 14,
+    "error": 0
+   },
+   "feature": {
+    "cases": 40,
+    "pass": 40,
+    "fail": 0,
+    "error": 0
+   },
+   "fixed": [
+    "P1-MONEY-001",
+    "P1-MONEY-002",
+    "P1-MONEY-003",
+    "P1-MONEY-004",
+    "P1-STATE-001",
+    "P1-STATE-002",
+    "P1-STATE-004",
+    "P1-STATE-007",
+    "P1-BUYER-001",
+    "P1-BUYER-002",
+    "P1-BUYER-003",
+    "P1-BUYER-004",
+    "P1-BUYER-005",
+    "P1-FOLLOWUP-001"
+   ],
+   "broken": [],
+   "same_sha": true
+  },
+  "negation-v1": {
+   "base": {
+    "cases": 24,
+    "pass": 22,
+    "fail": 2,
+    "error": 0
+   },
+   "feature": {
+    "cases": 24,
+    "pass": 22,
+    "fail": 2,
+    "error": 0
+   },
+   "fixed": [],
+   "broken": [],
+   "same_sha": true
+  },
+  "time-v2": {
+   "base": {
+    "cases": 32,
+    "pass": 32,
+    "fail": 0,
+    "error": 0
+   },
+   "feature": {
+    "cases": 32,
+    "pass": 32,
+    "fail": 0,
+    "error": 0
+   },
+   "fixed": [],
+   "broken": [],
+   "same_sha": true
+  },
+  "control-language-v1": {
+   "base": {
+    "cases": 42,
+    "pass": 42,
+    "fail": 0,
+    "error": 0
+   },
+   "feature": {
+    "cases": 42,
+    "pass": 42,
+    "fail": 0,
+    "error": 0
+   },
+   "fixed": [],
+   "broken": [],
+   "same_sha": true
+  },
+  "actor-hygiene-v1": {
+   "base": {
+    "cases": 36,
+    "pass": 36,
+    "fail": 0,
+    "error": 0
+   },
+   "feature": {
+    "cases": 36,
+    "pass": 36,
+    "fail": 0,
+    "error": 0
+   },
+   "fixed": [],
+   "broken": [],
+   "same_sha": true
+  }
+ },
+ "gates": {
+  "hca_no_regressions": true,
+  "hca-final-p1_no_regressions": true,
+  "negation-v1_no_regressions": true,
+  "time-v2_no_regressions": true,
+  "control-language-v1_no_regressions": true,
+  "actor-hygiene-v1_no_regressions": true,
+  "HCA-STATE-003_unchanged": true,
+  "HCA-SOURCE-002_unchanged": true,
+  "HCA-ENTITY-004_unchanged": true,
+  "HCA-ACTOR-004_unchanged": true,
+  "HCA-TOPIC-007_unchanged": true,
+  "HCA-ENTITY-001_unchanged": true,
+  "HCA-FOLLOWUP-007_unchanged": true,
+  "HCA-META-001B_unchanged": true,
+  "HCA-TOPIC-012_unchanged": true,
+  "HCA-MODALITY-002_unchanged": true,
+  "HCA-MODALITY-012_unchanged": true,
+  "HCA-TYPO-003_unchanged": true,
+  "BUYER-ACTOR-PREEXISTING_unchanged": true,
+  "BUYER-FONDO-PREEXISTING_unchanged": true,
+  "MONEY-REFERENCE_unchanged": true,
+  "STATE-OPPORTUNITY_unchanged": true,
+  "HCA-MONEY-020": true,
+  "HCA-MONEY-026": true,
+  "MONEY-ACCENT": true,
+  "MONEY-2M": true,
+  "MONEY-500M": true,
+  "MONEY-YEAR": true,
+  "MONEY-NIT": true,
+  "MONEY-COUNT": true,
+  "MONEY-BARE": true,
+  "MONEY-BARE-EXACT": true,
+  "MONEY-HALF": true,
+  "MONEY-HALF-EXACT": true,
+  "BUYER-COMPLETE": true,
+  "BUYER-LOCAL": true,
+  "BUYER-TOPIC": true,
+  "HCA-ENTITY-005": true,
+  "HCA-STATE-005": true,
+  "HCA-STATE-007": true,
+  "state_catalog_identical": true,
+  "state_projection_property": true,
+  "desiertos_same_root": true,
+  "HCA-FOLLOWUP-016_where": true,
+  "FOLLOWUP-ICBF_where": true,
+  "FOLLOWUP-ICBF_explicit": true,
+  "FOLLOWUP-SENA_where": true,
+  "FOLLOWUP-SENA_explicit": true,
+  "followup_obra_money_cali": true,
+  "followup_persisted_derived_absent": true,
+  "modality:contratos de alimentación": true,
+  "modality:contratos de alimentación del SENA": true,
+  "modality:procesos de alimentación en el departamento del Atlántico": true,
+  "modality:contratos de alimentación en Barranquilla": true,
+  "modality:contratos de alimentación por más de 500 millones": true,
+  "modality:contratos de alimentación entre 2024 y 2025": true,
+  "modality:contratos en ejecución de alimentación": true,
+  "modality:oportunidades de alimentación en Barranquilla": true,
+  "modality:procesos y contratos de alimentación en Barranquilla": true,
+  "modality:contratos de alimentación de la regional SENA Bolívar": true,
+  "modality:contratos de manual de contratación en Barranquilla": true,
+  "modality:contratos del proveedor NIT 800.091.140-4": true,
+  "modality:procesos de licitacion publica en cali en 2026": true,
+  "modality:contratos de aseo sin contratacion directa": true,
+  "modality:contratos en ejecucion de aseo por licitacion publica": true,
+  "modality:contratos por seleccion abreviada": true,
+  "query_plan_loc": true
+ },
+ "details": {
+  "HCA-STATE-003": [],
+  "HCA-SOURCE-002": [],
+  "HCA-ENTITY-004": [],
+  "HCA-ACTOR-004": [],
+  "HCA-TOPIC-007": [],
+  "HCA-ENTITY-001": [],
+  "HCA-FOLLOWUP-007": [],
+  "HCA-META-001B": [],
+  "HCA-TOPIC-012": [],
+  "HCA-MODALITY-002": [],
+  "HCA-MODALITY-012": [],
+  "HCA-TYPO-003": [],
+  "BUYER-ACTOR-PREEXISTING": [],
+  "BUYER-FONDO-PREEXISTING": [],
+  "MONEY-REFERENCE": [],
+  "STATE-OPPORTUNITY": [],
+  "MONEY-HALF": {
+   "id": "MONEY-HALF",
+   "turn": 1,
+   "q": "contratos de papeleria por más de un millón y medio de pesos",
+   "params": {
+    "dataset": "contratos",
+    "dataset_explicit": true,
+    "money_clarification": "No pude interpretar el monto de \"un millon y medio de pesos\". ¿Me lo das como una cifra? Por ejemplo: \"más de 100 mil pesos\" o \"más de 2 millones\".",
+    "objeto": [
+     "papeleria",
+     "medio"
+    ]
+   },
+   "needs_clarification": true,
+   "route_reason": "heuristic_only",
+   "followup": false,
+   "source_calls": [],
+   "persisted": {
+    "dataset": "contratos",
+    "dataset_explicit": true,
+    "money_clarification": "No pude interpretar el monto de \"un millon y medio de pesos\". ¿Me lo das como una cifra? Por ejemplo: \"más de 100 mil pesos\" o \"más de 2 millones\".",
+    "objeto": [
+     "papeleria",
+     "medio"
+    ]
+   }
+  },
+  "MONEY-HALF-EXACT": {
+   "id": "MONEY-HALF-EXACT",
+   "turn": 1,
+   "q": "más de un millón y medio de pesos",
+   "params": {
+    "dataset": "procesos",
+    "dataset_explicit": false,
+    "money_clarification": "No pude interpretar el monto de \"un millon y medio de pesos\". ¿Me lo das como una cifra? Por ejemplo: \"más de 100 mil pesos\" o \"más de 2 millones\".",
+    "objeto": [
+     "medio"
+    ]
+   },
+   "needs_clarification": true,
+   "route_reason": "heuristic_only",
+   "followup": false,
+   "source_calls": [],
+   "persisted": {
+    "dataset": "procesos",
+    "dataset_explicit": false,
+    "money_clarification": "No pude interpretar el monto de \"un millon y medio de pesos\". ¿Me lo das como una cifra? Por ejemplo: \"más de 100 mil pesos\" o \"más de 2 millones\".",
+    "objeto": [
+     "medio"
+    ]
+   }
+  },
+  "HCA-STATE-005_source": {
+   "base": {
+    "kind": "query",
+    "dataset": "p6dx-8zbt",
+    "soql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE departamento_entidad = 'Cesar' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%'))) AND estado_del_procedimiento IN ('Publicado', 'Borrador', 'En aprobación', 'Aprobado', 'Abierto') AND estado_de_apertura_del_proceso = 'Abierto' ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50",
+    "where": "departamento_entidad = 'Cesar' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%'))) AND estado_del_procedimiento IN ('Publicado', 'Borrador', 'En aprobación', 'Aprobado', 'Abierto') AND estado_de_apertura_del_proceso = 'Abierto'"
+   },
+   "feature": {
+    "kind": "query",
+    "dataset": "p6dx-8zbt",
+    "soql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE departamento_entidad = 'Cesar' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%'))) AND estado_del_procedimiento = 'Publicado' AND estado_de_apertura_del_proceso = 'Abierto' ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50",
+    "where": "departamento_entidad = 'Cesar' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%'))) AND estado_del_procedimiento = 'Publicado' AND estado_de_apertura_del_proceso = 'Abierto'"
+   }
+  },
+  "HCA-STATE-007_source": {
+   "base": {
+    "kind": "query",
+    "dataset": "jbjy-vk9h",
+    "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL DE CIENCIA TECNOLOGIA E INNOVACION DE MEDELLIN%')) AND estado_contrato = 'En ejecución' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+    "where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL DE CIENCIA TECNOLOGIA E INNOVACION DE MEDELLIN%')) AND estado_contrato = 'En ejecución'"
+   },
+   "feature": {
+    "kind": "query",
+    "dataset": "jbjy-vk9h",
+    "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL DE CIENCIA TECNOLOGIA E INNOVACION DE MEDELLIN%')) AND estado_contrato IN ('En ejecución', 'Modificado', 'Prorrogado') ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+    "where": "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL DE CIENCIA TECNOLOGIA E INNOVACION DE MEDELLIN%')) AND estado_contrato IN ('En ejecución', 'Modificado', 'Prorrogado')"
+   }
+  },
+  "STATE-OPPORTUNITY_source": {
+   "base": {
+    "kind": "query",
+    "dataset": "p6dx-8zbt",
+    "soql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE departamento_entidad = 'Cesar' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%'))) AND estado_del_procedimiento IN ('Publicado', 'Abierto') AND estado_de_apertura_del_proceso = 'Abierto' AND case(fecha_de_recepcion_de IS NULL, fecha_de_publicacion_del >= '2026-05-28T00:00:00.000', true, fecha_de_recepcion_de >= '2026-08-26T00:00:00.000') ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50",
+    "where": "departamento_entidad = 'Cesar' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%'))) AND estado_del_procedimiento IN ('Publicado', 'Abierto') AND estado_de_apertura_del_proceso = 'Abierto' AND case(fecha_de_recepcion_de IS NULL, fecha_de_publicacion_del >= '2026-05-28T00:00:00.000', true, fecha_de_recepcion_de >= '2026-08-26T00:00:00.000')"
+   },
+   "feature": {
+    "kind": "query",
+    "dataset": "p6dx-8zbt",
+    "soql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE departamento_entidad = 'Cesar' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%'))) AND estado_del_procedimiento IN ('Publicado', 'Abierto') AND estado_de_apertura_del_proceso = 'Abierto' AND case(fecha_de_recepcion_de IS NULL, fecha_de_publicacion_del >= '2026-05-28T00:00:00.000', true, fecha_de_recepcion_de >= '2026-08-26T00:00:00.000') ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50",
+    "where": "departamento_entidad = 'Cesar' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%'))) AND estado_del_procedimiento IN ('Publicado', 'Abierto') AND estado_de_apertura_del_proceso = 'Abierto' AND case(fecha_de_recepcion_de IS NULL, fecha_de_publicacion_del >= '2026-05-28T00:00:00.000', true, fecha_de_recepcion_de >= '2026-08-26T00:00:00.000')"
+   }
+  },
+  "STATE-DESIERTOS_source": {
+   "base": {
+    "kind": "query",
+    "dataset": "p6dx-8zbt",
+    "soql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE departamento_entidad = 'Cesar' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%'))) ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50",
+    "where": "departamento_entidad = 'Cesar' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%')))"
+   },
+   "feature": {
+    "kind": "query",
+    "dataset": "p6dx-8zbt",
+    "soql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE departamento_entidad = 'Cesar' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%'))) AND estado_del_procedimiento IN ('Cancelado', 'Suspendido') ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50",
+    "where": "departamento_entidad = 'Cesar' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%aseo urbano%'))) AND estado_del_procedimiento IN ('Cancelado', 'Suspendido')"
+   }
+  },
+  "HCA-FOLLOWUP-016": {
+   "base": [
+    {
+     "kind": "query",
+     "dataset": "jbjy-vk9h",
+     "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Cali%')) AND valor_del_contrato >= 300000000 AND (tipo_de_contrato = 'Obra') ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+     "where": "unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Cali%')) AND valor_del_contrato >= 300000000 AND (tipo_de_contrato = 'Obra')"
+    },
+    {
+     "kind": "query",
+     "dataset": "jbjy-vk9h",
+     "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Cali%')) AND (unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DE SANTIAGO DE CALI%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE EDUCACIÓN MUNICIPAL%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE SALUD PÚBLICA MUNICIPAL%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE INFRAESTRUCTURA Y VALORIZACIÓN%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE CULTURA DE CALI%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DEPARTAMENTO ADMINISTRATIVO DE GESTIÓN DEL MEDIO AMBIENTE%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%EMPRESAS MUNICIPALES DE CALI%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%INSTITUTO MUNICIPAL DE DEPORTE Y RECREACIÓN%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE MOVILIDAD DE CALI%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE BIENESTAR SOCIAL%'))) AND valor_del_contrato >= 300000000 AND (tipo_de_contrato = 'Obra') ORDER BY fecha_de_firma ASC, valor_del_contrato ASC, id_contrato ASC LIMIT 50",
+     "where": "unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Cali%')) AND (unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA DE SANTIAGO DE CALI%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE EDUCACIÓN MUNICIPAL%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE SALUD PÚBLICA MUNICIPAL%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE INFRAESTRUCTURA Y VALORIZACIÓN%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE CULTURA DE CALI%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DEPARTAMENTO ADMINISTRATIVO DE GESTIÓN DEL MEDIO AMBIENTE%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%EMPRESAS MUNICIPALES DE CALI%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%INSTITUTO MUNICIPAL DE DEPORTE Y RECREACIÓN%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE MOVILIDAD DE CALI%')) OR unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SECRETARÍA DE BIENESTAR SOCIAL%'))) AND valor_del_contrato >= 300000000 AND (tipo_de_contrato = 'Obra')"
+    }
+   ],
+   "feature": [
+    {
+     "kind": "query",
+     "dataset": "jbjy-vk9h",
+     "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Cali%')) AND valor_del_contrato >= 300000000 AND (tipo_de_contrato = 'Obra') ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+     "where": "unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Cali%')) AND valor_del_contrato >= 300000000 AND (tipo_de_contrato = 'Obra')"
+    },
+    {
+     "kind": "query",
+     "dataset": "jbjy-vk9h",
+     "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Cali%')) AND valor_del_contrato >= 300000000 AND (tipo_de_contrato = 'Obra') ORDER BY fecha_de_firma ASC, valor_del_contrato ASC, id_contrato ASC LIMIT 50",
+     "where": "unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Cali%')) AND valor_del_contrato >= 300000000 AND (tipo_de_contrato = 'Obra')"
+    }
+   ]
+  },
+  "FOLLOWUP-ICBF": {
+   "base": [
+    {
+     "kind": "query",
+     "dataset": "jbjy-vk9h",
+     "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE departamento = 'Antioquia' AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ICBF%')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+     "where": "departamento = 'Antioquia' AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ICBF%'))"
+    },
+    {
+     "kind": "query",
+     "dataset": "jbjy-vk9h",
+     "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE departamento = 'Antioquia' AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ICBF%')) ORDER BY valor_del_contrato DESC, fecha_de_firma DESC, id_contrato DESC LIMIT 50",
+     "where": "departamento = 'Antioquia' AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ICBF%'))"
+    }
+   ],
+   "feature": [
+    {
+     "kind": "query",
+     "dataset": "jbjy-vk9h",
+     "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE departamento = 'Antioquia' AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ICBF%')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+     "where": "departamento = 'Antioquia' AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ICBF%'))"
+    },
+    {
+     "kind": "query",
+     "dataset": "jbjy-vk9h",
+     "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE departamento = 'Antioquia' AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ICBF%')) ORDER BY valor_del_contrato DESC, fecha_de_firma DESC, id_contrato DESC LIMIT 50",
+     "where": "departamento = 'Antioquia' AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ICBF%'))"
+    }
+   ]
+  },
+  "FOLLOWUP-SENA": {
+   "base": [
+    {
+     "kind": "query",
+     "dataset": "jbjy-vk9h",
+     "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE departamento = 'Antioquia' AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ANTIOQUIA%')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+     "where": "departamento = 'Antioquia' AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ANTIOQUIA%'))"
+    },
+    {
+     "kind": "query",
+     "dataset": "jbjy-vk9h",
+     "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE departamento = 'Antioquia' AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ANTIOQUIA%')) ORDER BY fecha_de_firma ASC, valor_del_contrato ASC, id_contrato ASC LIMIT 50",
+     "where": "departamento = 'Antioquia' AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ANTIOQUIA%'))"
+    }
+   ],
+   "feature": [
+    {
+     "kind": "query",
+     "dataset": "jbjy-vk9h",
+     "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE departamento = 'Antioquia' AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ANTIOQUIA%')) ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+     "where": "departamento = 'Antioquia' AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ANTIOQUIA%'))"
+    },
+    {
+     "kind": "query",
+     "dataset": "jbjy-vk9h",
+     "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE departamento = 'Antioquia' AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ANTIOQUIA%')) ORDER BY fecha_de_firma ASC, valor_del_contrato ASC, id_contrato ASC LIMIT 50",
+     "where": "departamento = 'Antioquia' AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%')) AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ANTIOQUIA%'))"
+    }
+   ]
+  }
+ },
+ "hca_failures": [
+  {
+   "id": "HCA-TOPIC-007",
+   "fails": [
+    "turn 1 'procesos del pae en la guajira': objeto lacks 'pae' (objeto=['alimentacion_escolar'])"
+   ]
+  },
+  {
+   "id": "HCA-TOPIC-012",
+   "fails": [
+    "turn 1 'contratos de salud en amazonas': expected execution, got clarification"
+   ]
+  },
+  {
+   "id": "HCA-MODALITY-002",
+   "fails": [
+    "turn 1 'contratos por seleccion abreviada de menor cuantia en 2026': expected execution, got clarification"
+   ]
+  },
+  {
+   "id": "HCA-MODALITY-012",
+   "fails": [
+    "turn 1 'procesos de enajenacion de bienes en 2026': expected execution, got clarification"
+   ]
+  },
+  {
+   "id": "HCA-ENTITY-001",
+   "fails": [
+    "turn 1 'contratos de la gobernacion del atlantico en 2026': soql contains 'ATLANTICO**'"
+   ]
+  },
+  {
+   "id": "HCA-ENTITY-004",
+   "fails": [
+    "turn 1 'que contrato el departamento del atlantico en 2025': missing param entidad_resolved"
+   ]
+  },
+  {
+   "id": "HCA-ACTOR-004",
+   "fails": [
+    "turn 1 'contratos de lmp ingieneria en 2025': missing param actor_scope"
+   ]
+  },
+  {
+   "id": "HCA-STATE-003",
+   "fails": [
+    "turn 1 'contratos liquidados de obra en 2025': missing param estado_contrato"
+   ]
+  },
+  {
+   "id": "HCA-TYPO-003",
+   "fails": [
+    "turn 1 'procesos de regimen especial en 2026': expected execution, got clarification"
+   ]
+  },
+  {
+   "id": "HCA-FOLLOWUP-007",
+   "fails": [
+    "turn 2 'mejor quita el filtro de modalidad': objeto lacks 'obra' (objeto=[])"
+   ]
+  },
+  {
+   "id": "HCA-FOLLOWUP-016",
+   "fails": [
+    "turn 2 'los mas antiguos primero': objeto lacks 'obra' (objeto=[])"
+   ]
+  },
+  {
+   "id": "HCA-META-001B",
+   "fails": [
+    "metamorphic mismatch vs HCA-META-001A: {'departamento_resolved': (None, 'Atlántico'), 'entidad_resolved': ('DEPARTAMENTO DEL ATLANTICO**', None)}"
+   ]
+  },
+  {
+   "id": "HCA-SOURCE-002",
+   "fails": [
+    "turn 1 'procesos liquidados de obra en cauca': dataset='contratos', expected 'procesos'"
+   ]
+  }
+ ],
+ "modality_deltas": [
+  {
+   "q": "contratos en ejecución de alimentación",
+   "fields": [
+    "params",
+    "soql",
+    "fingerprint"
+   ],
+   "param_changes": {
+    "estado_contrato": [
+     null,
+     [
+      "En ejecución",
+      "Modificado",
+      "Prorrogado"
+     ]
+    ]
+   },
+   "source_before": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentacion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentacion%'))) AND estado_contrato = 'En ejecución' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+   "source_after": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%comedor%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutrición%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutricion%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentación%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentacion%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentacion%'))) AND estado_contrato IN ('En ejecución', 'Modificado', 'Prorrogado') ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+  },
+  {
+   "q": "contratos en ejecucion de aseo por licitacion publica",
+   "fields": [
+    "params",
+    "soql",
+    "fingerprint"
+   ],
+   "param_changes": {
+    "estado_contrato": [
+     null,
+     [
+      "En ejecución",
+      "Modificado",
+      "Prorrogado"
+     ]
+    ]
+   },
+   "source_before": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND estado_contrato = 'En ejecución' AND modalidad_de_contratacion IN ('Licitación pública', 'Licitación pública Obra Publica') ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50",
+   "source_after": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND estado_contrato IN ('En ejecución', 'Modificado', 'Prorrogado') AND modalidad_de_contratacion IN ('Licitación pública', 'Licitación pública Obra Publica') ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+  }
+ ],
+ "source_behavior_deltas_all_hca": [
+  {
+   "id": "HCA-INTENT-012",
+   "turn": 1
+  },
+  {
+   "id": "HCA-ENTITY-005",
+   "turn": 1
+  },
+  {
+   "id": "HCA-MONEY-020",
+   "turn": 1
+  },
+  {
+   "id": "HCA-MONEY-026",
+   "turn": 1
+  },
+  {
+   "id": "HCA-STATE-005",
+   "turn": 1
+  },
+  {
+   "id": "HCA-STATE-007",
+   "turn": 1
+  },
+  {
+   "id": "HCA-STATE-008",
+   "turn": 1
+  },
+  {
+   "id": "HCA-FOLLOWUP-003",
+   "turn": 2
+  },
+  {
+   "id": "HCA-FOLLOWUP-004",
+   "turn": 2
+  },
+  {
+   "id": "HCA-FOLLOWUP-016",
+   "turn": 2
+  }
+ ],
+ "failed_gates": []
+}

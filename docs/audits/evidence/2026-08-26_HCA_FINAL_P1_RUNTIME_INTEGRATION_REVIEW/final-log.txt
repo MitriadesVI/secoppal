@@ -1,0 +1,15 @@
+dec589a (HEAD -> main, feature/hca-final-p1-runtime-fixes) docs(audit): close the P1 report with final suite figures
+6719f2d docs(audit): register the two out-of-scope buyer findings
+dc1bf79 docs(audit): record the HCA final P1 runtime remediation
+9169b8e fix(followup): keep derived execution state out of the turn history
+a8aa645 fix(entity): stop an unqualified buyer from becoming a topic
+d63fa26 fix(state): separate exact state from semantic family
+f85f209 fix(money): admit explicit monetary amounts below one million
+eb8cfe1 docs(audit): adjudicate remaining HCA oracle failures
+df3cc96 (experiment/chatgpt-sandbox, chore/agent-tooling) chore(tooling): track CLAUDE.md with the tool selection policy
+963f51f chore(tooling): add ruff, semgrep laws and hypothesis properties
+0a77070 docs(bitacora): register HCA-R7 integration closeout
+23f307c (feature/hca-r7-actor-hygiene) fix(actor): harden actor routing and candidate recall
+39234f8 docs(bitacora): register HCA-R6 integration closeout
+8bd5467 (feature/hca-r6-control-language) feat(query): isolate control language from search content
+b661a09 docs(bitacora): register HCA-R5 integration and audit runner isolation

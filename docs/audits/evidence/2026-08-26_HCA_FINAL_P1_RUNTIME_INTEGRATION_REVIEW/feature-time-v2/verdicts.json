@@ -1,0 +1,541 @@
+{
+ "corpus": "tests/fixtures/audits/time_v2_focal.yaml",
+ "corpus_sha256": "7e535cb6323d41735e63e996aa7ed139ff513372ba8bd9a671158bd5685dcd13",
+ "cases": 32,
+ "pass": 32,
+ "fail": 0,
+ "error": 0,
+ "verdicts": [
+  {
+   "id": "TIMEV2-001",
+   "category": "explicit_month_year",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2026-06-01",
+    "fecha_hasta": "2026-06-30"
+   }
+  },
+  {
+   "id": "TIMEV2-002",
+   "category": "month_without_year",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2026-06-01",
+    "fecha_hasta": "2026-06-30"
+   }
+  },
+  {
+   "id": "TIMEV2-003",
+   "category": "month_without_year_future_policy",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2026-12-01",
+    "fecha_hasta": "2026-12-31"
+   }
+  },
+  {
+   "id": "TIMEV2-004",
+   "category": "relative_month",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2026-07-01",
+    "fecha_hasta": "2026-07-31"
+   }
+  },
+  {
+   "id": "TIMEV2-005",
+   "category": "relative_month_cross_year",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2025-12-01",
+    "fecha_hasta": "2025-12-31"
+   }
+  },
+  {
+   "id": "TIMEV2-006",
+   "category": "relative_year",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "departamento_resolved": "Córdoba"
+   }
+  },
+  {
+   "id": "TIMEV2-007",
+   "category": "exact_day",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2026-06-15",
+    "fecha_hasta": "2026-06-15"
+   }
+  },
+  {
+   "id": "TIMEV2-008",
+   "category": "exact_day_without_year",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2026-06-15",
+    "fecha_hasta": "2026-06-15"
+   }
+  },
+  {
+   "id": "TIMEV2-009",
+   "category": "month_range",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2026-01-01",
+    "fecha_hasta": "2026-03-31"
+   }
+  },
+  {
+   "id": "TIMEV2-010",
+   "category": "month_range_variant",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2026-01-01",
+    "fecha_hasta": "2026-03-31"
+   }
+  },
+  {
+   "id": "TIMEV2-011",
+   "category": "day_range",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2026-02-01",
+    "fecha_hasta": "2026-03-15"
+   }
+  },
+  {
+   "id": "TIMEV2-012",
+   "category": "day_range_variant",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2026-02-01",
+    "fecha_hasta": "2026-03-15"
+   }
+  },
+  {
+   "id": "TIMEV2-013",
+   "category": "open_from_year",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2025-01-01"
+   }
+  },
+  {
+   "id": "TIMEV2-014",
+   "category": "open_until_year",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_hasta": "2025-12-31"
+   }
+  },
+  {
+   "id": "TIMEV2-015",
+   "category": "open_from_month",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2025-03-01"
+   }
+  },
+  {
+   "id": "TIMEV2-016",
+   "category": "closed_year",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31"
+   }
+  },
+  {
+   "id": "TIMEV2-017",
+   "category": "invalid_date",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ]
+   }
+  },
+  {
+   "id": "TIMEV2-018",
+   "category": "reverse_range",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ]
+   }
+  },
+  {
+   "id": "TIMEV2-019",
+   "category": "missing_range_year",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ]
+   }
+  },
+  {
+   "id": "TIMEV2-020",
+   "category": "leap_year",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2024-02-01",
+    "fecha_hasta": "2024-02-29"
+   }
+  },
+  {
+   "id": "TIMEV2-021",
+   "category": "non_leap_year",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2025-02-01",
+    "fecha_hasta": "2025-02-28"
+   }
+  },
+  {
+   "id": "TIMEV2-022",
+   "category": "current_week_iso",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2026-08-24",
+    "fecha_hasta": "2026-08-30"
+   }
+  },
+  {
+   "id": "TIMEV2-023",
+   "category": "previous_week_iso",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2026-08-17",
+    "fecha_hasta": "2026-08-23"
+   }
+  },
+  {
+   "id": "TIMEV2-024",
+   "category": "trailing_weeks",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2026-08-11",
+    "fecha_hasta": "2026-08-25"
+   }
+  },
+  {
+   "id": "TIMEV2-025",
+   "category": "trailing_days_object_hygiene",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2026-07-26",
+    "fecha_hasta": "2026-08-25"
+   }
+  },
+  {
+   "id": "TIMEV2-026",
+   "category": "followup_day_replaces_month",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "mantenimiento"
+    ],
+    "fecha_desde": "2026-06-15",
+    "fecha_hasta": "2026-06-15",
+    "ciudad": "Barranquilla"
+   }
+  },
+  {
+   "id": "TIMEV2-027",
+   "category": "followup_open_replaced_atomically",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "mantenimiento"
+    ],
+    "fecha_desde": "2026-03-01",
+    "fecha_hasta": "2026-03-31"
+   }
+  },
+  {
+   "id": "TIMEV2-028",
+   "category": "followup_missing_year_transactional",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "mantenimiento"
+    ],
+    "fecha_desde": "2026-06-01",
+    "fecha_hasta": "2026-06-30"
+   }
+  },
+  {
+   "id": "TIMEV2-029",
+   "category": "negative_time_preserved",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ]
+   }
+  },
+  {
+   "id": "TIMEV2-030-CLOSED",
+   "category": "closed_vs_open_anti_metamorphic",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31"
+   }
+  },
+  {
+   "id": "TIMEV2-031-OPEN",
+   "category": "closed_vs_open_anti_metamorphic",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2025-01-01"
+   }
+  },
+  {
+   "id": "TIMEV2-032",
+   "category": "cross_year_explicit",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2025-12-01",
+    "fecha_hasta": "2026-02-28"
+   }
+  }
+ ]
+}

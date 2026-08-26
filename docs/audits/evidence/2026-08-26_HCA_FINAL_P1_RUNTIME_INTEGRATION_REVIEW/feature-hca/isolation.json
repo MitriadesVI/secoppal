@@ -1,0 +1,11 @@
+{
+ "stores": {
+  "sandbox_root": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_zd49q7ad",
+  "feedback_jsonl": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_zd49q7ad/feedback.jsonl",
+  "feedback_db": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_zd49q7ad/secoppal.db",
+  "conversation_dir": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_zd49q7ad/conversations",
+  "radar_db": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_zd49q7ad/secoppal.db",
+  "modality_telemetry": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_zd49q7ad/modality_followup_telemetry.jsonl"
+ },
+ "outside_sandbox": []
+}

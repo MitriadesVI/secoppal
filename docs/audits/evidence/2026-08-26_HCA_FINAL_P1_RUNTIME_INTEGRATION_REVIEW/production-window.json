@@ -1,0 +1,20 @@
+{
+ "start_utc": "2026-08-26T14:36:05.214961+00:00",
+ "elapsed_seconds": 1.492915,
+ "runner_exit": 0,
+ "channel": "telegram",
+ "chat_id": "hca1-HCA-FOLLOWUP-016",
+ "changes": [],
+ "attributed_production_writes": [],
+ "isolation": {
+  "stores": {
+   "sandbox_root": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_mse05nf8",
+   "feedback_jsonl": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_mse05nf8/feedback.jsonl",
+   "feedback_db": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_mse05nf8/secoppal.db",
+   "conversation_dir": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_mse05nf8/conversations",
+   "radar_db": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_mse05nf8/secoppal.db",
+   "modality_telemetry": "/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/hca_audit_stores_mse05nf8/modality_followup_telemetry.jsonl"
+  },
+  "outside_sandbox": []
+ }
+}

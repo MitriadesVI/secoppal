@@ -1,0 +1,717 @@
+{
+ "corpus": "tests/fixtures/audits/control_language_v1.yaml",
+ "corpus_sha256": "b082f2d86952c28ce17d75d95b25c31706b147f857c126f82ef312b4b1501aba",
+ "cases": 42,
+ "pass": 42,
+ "fail": 0,
+ "error": 0,
+ "verdicts": [
+  {
+   "id": "CTRL-ORD-001",
+   "category": "ordering_value_desc",
+   "severity_if_failed": null,
+   "notes": "the historical live zero-result case — LIKE '%ordenados%'",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "ciudad": "Cali",
+    "contract_type_include": [
+     "obra"
+    ],
+    "ordering_signal": "valor_desc"
+   }
+  },
+  {
+   "id": "CTRL-ORD-002",
+   "category": "ordering_value_desc",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "ciudad": "Cali",
+    "ordering_signal": "valor_desc"
+   }
+  },
+  {
+   "id": "CTRL-ORD-003",
+   "category": "ordering_value_asc",
+   "severity_if_failed": null,
+   "notes": "descending vocabulary must not swallow an ascending request",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "ciudad": "Cali",
+    "ordering_signal": "valor_asc"
+   }
+  },
+  {
+   "id": "CTRL-ORD-004",
+   "category": "ordering_value_desc",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "ciudad": "Cali",
+    "ordering_signal": "valor_desc"
+   }
+  },
+  {
+   "id": "CTRL-ORD-005",
+   "category": "ordering_value_asc",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "ciudad": "Cali",
+    "ordering_signal": "valor_asc"
+   }
+  },
+  {
+   "id": "CTRL-ORD-006",
+   "category": "ordering_value_desc_imperative",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "mantenimiento"
+    ],
+    "ciudad": "Cali",
+    "ordering_signal": "valor_desc"
+   }
+  },
+  {
+   "id": "CTRL-ORD-010",
+   "category": "ordering_time_desc",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "ciudad": "Pasto",
+    "ordering_signal": "fecha_desc"
+   }
+  },
+  {
+   "id": "CTRL-ORD-011",
+   "category": "ordering_time_asc",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "ciudad": "Cali",
+    "ordering_signal": "fecha_asc"
+   }
+  },
+  {
+   "id": "CTRL-ORD-012",
+   "category": "ordering_time_asc",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "ciudad": "Cali",
+    "ordering_signal": "fecha_asc"
+   }
+  },
+  {
+   "id": "CTRL-ORD-013",
+   "category": "ordering_time_desc",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "ciudad": "Cali",
+    "ordering_signal": "fecha_desc"
+   }
+  },
+  {
+   "id": "CTRL-SRC-001",
+   "category": "source_order_by",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "ciudad": "Cali",
+    "ordering_signal": "valor_desc"
+   }
+  },
+  {
+   "id": "CTRL-SRC-002",
+   "category": "source_order_by",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "ciudad": "Cali",
+    "ordering_signal": "valor_asc"
+   }
+  },
+  {
+   "id": "CTRL-SRC-003",
+   "category": "source_order_by",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "ciudad": "Cali",
+    "ordering_signal": "fecha_asc"
+   }
+  },
+  {
+   "id": "CTRL-FU-001A",
+   "category": "followup_ordering_baseline",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "mantenimiento"
+    ],
+    "ciudad": "Cali"
+   }
+  },
+  {
+   "id": "CTRL-FU-001B",
+   "category": "followup_ordering",
+   "severity_if_failed": null,
+   "notes": "only ORDER BY may move — same topic, same city, same dataset",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "mantenimiento"
+    ],
+    "ciudad": "Cali",
+    "ordering_signal": "valor_desc"
+   }
+  },
+  {
+   "id": "CTRL-FU-002",
+   "category": "followup_ordering_time_asc",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "mantenimiento"
+    ],
+    "valor_min": 300000000,
+    "ciudad": "Cali",
+    "ordering_signal": "fecha_asc"
+   }
+  },
+  {
+   "id": "CTRL-FU-003",
+   "category": "followup_ordering_preserves_time_range",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2026-06-01",
+    "fecha_hasta": "2026-06-30",
+    "ciudad": "Cali",
+    "ordering_signal": "valor_desc"
+   }
+  },
+  {
+   "id": "CTRL-FU-004",
+   "category": "followup_ordering_no_pagination_carryover",
+   "severity_if_failed": null,
+   "notes": "a new ordering restarts paging — an inherited cursor would skip rows",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "ciudad": "Cali",
+    "ordering_signal": "valor_desc"
+   }
+  },
+  {
+   "id": "CTRL-NAV-001",
+   "category": "show_more",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "ciudad": "Cali"
+   }
+  },
+  {
+   "id": "CTRL-NAV-002",
+   "category": "new_search",
+   "severity_if_failed": null,
+   "notes": "\"ahora muestrame\" is control, but software/Bogotá are content",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "software"
+    ],
+    "departamento_resolved": "Distrito Capital de Bogotá"
+   }
+  },
+  {
+   "id": "CTRL-NAV-003",
+   "category": "new_search_after_ordering",
+   "severity_if_failed": null,
+   "notes": "an ordering follow-up must not block a genuinely new search after it",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "software"
+    ],
+    "departamento_resolved": "Distrito Capital de Bogotá"
+   }
+  },
+  {
+   "id": "CTRL-VERB-001",
+   "category": "intent_verb",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"
+   }
+  },
+  {
+   "id": "CTRL-VERB-002",
+   "category": "intent_verb",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "entidad_resolved": "DEPARTAMENTO DE CORDOBA"
+   }
+  },
+  {
+   "id": "CTRL-VERB-003",
+   "category": "intent_verb_keeps_complement",
+   "severity_if_failed": null,
+   "notes": "the verb is control, the noun after it is still content",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "mantenimiento"
+    ],
+    "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA"
+   }
+  },
+  {
+   "id": "CTRL-VERB-004",
+   "category": "deadline_verb",
+   "severity_if_failed": null,
+   "notes": "R6 only guarantees \"cierran\" is not a topic; deadline semantics unchanged",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "fecha_desde": "2026-08-26",
+    "fecha_hasta": "2026-08-26",
+    "departamento_resolved": "Atlántico"
+   }
+  },
+  {
+   "id": "CTRL-VERB-005",
+   "category": "bidder_intent_preserved",
+   "severity_if_failed": null,
+   "notes": "\"para licitar\" routing predates R6 and must not move. P15 blocks a territory-only opportunity search (ADR/OPP-SCOPE, Opción A); R6 only guarantees the verb never becomes a contractual topic.\n",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "ciudad": "Cali",
+    "estado_family": "oferta_abierta",
+    "intent_type": "opportunity_search"
+   }
+  },
+  {
+   "id": "CTRL-FP-001",
+   "category": "control_word_is_content",
+   "severity_if_failed": null,
+   "notes": "ordenamiento territorial is a real procurement object",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "ordenamiento",
+     "territorial"
+    ],
+    "ciudad": "Cali"
+   }
+  },
+  {
+   "id": "CTRL-FP-002",
+   "category": "control_word_is_content",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "acceso",
+     "control",
+     "tecnologia"
+    ],
+    "ciudad": "Medellin"
+   }
+  },
+  {
+   "id": "CTRL-FP-003",
+   "category": "control_word_is_content",
+   "severity_if_failed": null,
+   "notes": "menor cuantía is a MODALITY, never a sort direction",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "ciudad": "Cali",
+    "modalidad_include_procedure_ids": [
+     "seleccion_abreviada_menor_cuantia"
+    ]
+   }
+  },
+  {
+   "id": "CTRL-FP-004",
+   "category": "control_word_is_content",
+   "severity_if_failed": null,
+   "notes": "a non-final \"primeros\" modifies the noun after it",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "auxilios",
+     "primeros"
+    ],
+    "ciudad": "Cali"
+   }
+  },
+  {
+   "id": "CTRL-FP-005",
+   "category": "incomplete_command",
+   "severity_if_failed": null,
+   "notes": "a bare imperative is consumed but infers no direction",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "ciudad": "Cali"
+   }
+  },
+  {
+   "id": "CTRL-MONEY-001",
+   "category": "money_not_ordering",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "valor_min": 500000000,
+    "ciudad": "Cali"
+   }
+  },
+  {
+   "id": "CTRL-MONEY-002",
+   "category": "money_not_ordering",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "valor_max": 500000000,
+    "ciudad": "Cali"
+   }
+  },
+  {
+   "id": "CTRL-MONEY-003",
+   "category": "money_and_ordering",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "valor_min": 500000000,
+    "ciudad": "Cali",
+    "ordering_signal": "valor_desc"
+   }
+  },
+  {
+   "id": "CTRL-TIME-001",
+   "category": "time_and_ordering",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2026-06-01",
+    "fecha_hasta": "2026-06-30",
+    "ordering_signal": "valor_desc"
+   }
+  },
+  {
+   "id": "CTRL-TIME-002",
+   "category": "temporal_window_not_ordering",
+   "severity_if_failed": null,
+   "notes": "\"los últimos 30 días\" is a window, not a sort key",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2026-07-26",
+    "fecha_hasta": "2026-08-25",
+    "ciudad": "Cali"
+   }
+  },
+  {
+   "id": "CTRL-NEG-001",
+   "category": "negation_and_ordering",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "mantenimiento"
+    ],
+    "objeto_exclude": [
+     "alimentacion"
+    ],
+    "ciudad": "Cali",
+    "ordering_signal": "valor_desc"
+   }
+  },
+  {
+   "id": "CTRL-TOPN-001",
+   "category": "top_n_ordering",
+   "severity_if_failed": null,
+   "notes": "DEFERRED_CONTROL_LIMIT — the cardinality is not applied, the order is",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "departamento_resolved": "Antioquia",
+    "contract_type_include": [
+     "obra"
+    ],
+    "ordering_signal": "valor_desc"
+   }
+  },
+  {
+   "id": "CTRL-META-001A",
+   "category": "metamorphic_ordering",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "mantenimiento"
+    ],
+    "ciudad": "Cali"
+   }
+  },
+  {
+   "id": "CTRL-META-001B",
+   "category": "metamorphic_ordering",
+   "severity_if_failed": null,
+   "notes": "adding an ordering follow-up may only change ordering_signal",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "mantenimiento"
+    ],
+    "ciudad": "Cali",
+    "ordering_signal": "valor_desc"
+   }
+  },
+  {
+   "id": "CTRL-META-002A",
+   "category": "metamorphic_ordering_scope",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "ciudad": "Cali",
+    "ordering_signal": "valor_desc"
+   }
+  },
+  {
+   "id": "CTRL-META-002B",
+   "category": "metamorphic_ordering_scope",
+   "severity_if_failed": null,
+   "notes": "same universe reached through a follow-up instead of one turn",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "ciudad": "Cali",
+    "ordering_signal": "valor_desc"
+   }
+  }
+ ]
+}

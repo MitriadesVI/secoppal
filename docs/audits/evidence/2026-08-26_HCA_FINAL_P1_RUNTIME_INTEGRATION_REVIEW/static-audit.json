@@ -1,0 +1,167 @@
+{
+ "diff_groups": {
+  "runtime": [
+   "app/core/conversation_store.py",
+   "app/core/derived_execution_state.py",
+   "app/core/entity_resolver.py",
+   "app/core/estado_families.py",
+   "app/core/estado_projection.py",
+   "app/core/generic_buyer.py",
+   "app/core/money_admission.py",
+   "app/core/query_router.py",
+   "app/utils/money.py"
+  ],
+  "tests": [
+   "tests/test_modality_pipeline_integration.py",
+   "tests/test_ordering_followup_source_universe.py",
+   "tests/test_pagination_buffer.py",
+   "tests/test_plan_query_node.py"
+  ],
+  "fixtures": [
+   "tests/fixtures/audits/hca_final_p1_fixes.yaml"
+  ],
+  "docs": [
+   "docs/audits/2026-08-26_HCA_FINAL_P1_RUNTIME_FIXES.md",
+   "docs/decisions/2026-08-26_ADR-067_exact-state-vs-state-family.md",
+   "docs/decisions/2026-08-26_ADR-068_derived-execution-state.md",
+   "docs/decisions_log.md"
+  ],
+  "makefile": [
+   "Makefile"
+  ],
+  "evidence": [
+   "scripts/audits/probe_query.py"
+  ],
+  "unrelated": []
+ },
+ "commits": [
+  {
+   "sha": "f85f209f4897def731c6895cc13b8cb00fb04f84",
+   "subject": "fix(money): admit explicit monetary amounts below one million",
+   "paths": [
+    "app/core/money_admission.py",
+    "app/core/query_router.py",
+    "app/utils/money.py",
+    "scripts/audits/probe_query.py",
+    "tests/fixtures/audits/hca_final_p1_fixes.yaml"
+   ]
+  },
+  {
+   "sha": "d63fa26d2967c7e9154f7e3db59fbe9d66cff001",
+   "subject": "fix(state): separate exact state from semantic family",
+   "paths": [
+    "app/core/estado_families.py",
+    "app/core/estado_projection.py",
+    "app/core/query_router.py",
+    "tests/test_plan_query_node.py"
+   ]
+  },
+  {
+   "sha": "a8aa645d92176c57a6b1f46aebdac8b06a6e6bf0",
+   "subject": "fix(entity): stop an unqualified buyer from becoming a topic",
+   "paths": [
+    "app/core/entity_resolver.py",
+    "app/core/generic_buyer.py",
+    "app/core/query_router.py"
+   ]
+  },
+  {
+   "sha": "9169b8ee3187f4af5045e18a60baf0067ec34636",
+   "subject": "fix(followup): keep derived execution state out of the turn history",
+   "paths": [
+    "app/core/conversation_store.py",
+    "app/core/derived_execution_state.py",
+    "app/core/query_router.py",
+    "tests/fixtures/audits/hca_final_p1_fixes.yaml",
+    "tests/test_ordering_followup_source_universe.py",
+    "tests/test_pagination_buffer.py"
+   ]
+  },
+  {
+   "sha": "dc1bf79a2c0813b23f1306d5825b30605ac00ca6",
+   "subject": "docs(audit): record the HCA final P1 runtime remediation",
+   "paths": [
+    "Makefile",
+    "docs/audits/2026-08-26_HCA_FINAL_P1_RUNTIME_FIXES.md",
+    "docs/decisions/2026-08-26_ADR-067_exact-state-vs-state-family.md",
+    "docs/decisions/2026-08-26_ADR-068_derived-execution-state.md",
+    "docs/decisions_log.md",
+    "tests/test_modality_pipeline_integration.py",
+    "tests/test_ordering_followup_source_universe.py"
+   ]
+  },
+  {
+   "sha": "6719f2da941e3c3d87a06f2959ad09a8bd73964b",
+   "subject": "docs(audit): register the two out-of-scope buyer findings",
+   "paths": [
+    "docs/audits/2026-08-26_HCA_FINAL_P1_RUNTIME_FIXES.md"
+   ]
+  },
+  {
+   "sha": "dec589a21bf36844d595db80093e7824ea2a0189",
+   "subject": "docs(audit): close the P1 report with final suite figures",
+   "paths": [
+    "docs/audits/2026-08-26_HCA_FINAL_P1_RUNTIME_FIXES.md"
+   ]
+  }
+ ],
+ "fixture_hashes": {
+  "tests/fixtures/audits/conversation_holistic_v1.yaml": {
+   "base_sha256": "262c225c7939f04516ee95b3c77b4911f9f476058941a88a61d01c918499ffba",
+   "feature_sha256": "262c225c7939f04516ee95b3c77b4911f9f476058941a88a61d01c918499ffba",
+   "identical": true
+  },
+  "tests/fixtures/audits/negation_focal_v1.yaml": {
+   "base_sha256": "f4f64a33ea7009eb1da9fa7d3c910e67010e6dafc6b4c5b6932901c27fad9a1d",
+   "feature_sha256": "f4f64a33ea7009eb1da9fa7d3c910e67010e6dafc6b4c5b6932901c27fad9a1d",
+   "identical": true
+  },
+  "tests/fixtures/audits/time_v2_focal.yaml": {
+   "base_sha256": "7e535cb6323d41735e63e996aa7ed139ff513372ba8bd9a671158bd5685dcd13",
+   "feature_sha256": "7e535cb6323d41735e63e996aa7ed139ff513372ba8bd9a671158bd5685dcd13",
+   "identical": true
+  },
+  "tests/fixtures/audits/control_language_v1.yaml": {
+   "base_sha256": "b082f2d86952c28ce17d75d95b25c31706b147f857c126f82ef312b4b1501aba",
+   "feature_sha256": "b082f2d86952c28ce17d75d95b25c31706b147f857c126f82ef312b4b1501aba",
+   "identical": true
+  },
+  "tests/fixtures/audits/actor_hygiene_v1.yaml": {
+   "base_sha256": "217df608a9a5dfb0abd1c89cda27d1c79f04a3000d9086457eb54dc916418698",
+   "feature_sha256": "217df608a9a5dfb0abd1c89cda27d1c79f04a3000d9086457eb54dc916418698",
+   "identical": true
+  },
+  "tests/fixtures/query_corpus_v1.yaml": {
+   "base_sha256": "9d94b76817a1d97c1a0b1577ff6b3be41af1cf05f5da1d465b151e543c5535be",
+   "feature_sha256": "9d94b76817a1d97c1a0b1577ff6b3be41af1cf05f5da1d465b151e543c5535be",
+   "identical": true
+  },
+  "tests/fixtures/dialogue_policy_corpus.yaml": {
+   "base_sha256": "1da4c44ae0215710627a33c266a9ce47955c7220615aa989c88c36bbb1dab3b4",
+   "feature_sha256": "1da4c44ae0215710627a33c266a9ce47955c7220615aa989c88c36bbb1dab3b4",
+   "identical": true
+  }
+ },
+ "repins": {
+  "tests/test_plan_query_node.py": {
+   "base_asserts": 5,
+   "feature_asserts": 5,
+   "function_identical": false
+  },
+  "tests/test_pagination_buffer.py": {
+   "base_asserts": 5,
+   "feature_asserts": 6,
+   "function_identical": false
+  },
+  "tests/test_modality_pipeline_integration.py": {
+   "base_asserts": 7,
+   "feature_asserts": 7,
+   "function_identical": true
+  }
+ },
+ "new_script_settings_calls": [
+  "SecopalWorkflow(Settings(**stores.settings_overrides, deepseek_api_key=None))",
+  "Settings(**stores.settings_overrides, deepseek_api_key=None)"
+ ],
+ "query_plan_identical": true
+}
