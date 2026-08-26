@@ -7,6 +7,56 @@
 
 ## Estado canónico actual — 2026-08-26
 
+- **Main:** `dec589a21bf36844d595db80093e7824ea2a0189`, promovido mediante
+  `git merge --ff-only feature/hca-final-p1-runtime-fixes` desde
+  `eb8cfe1ed72ba5c9df0ab9c0ead5089ff5d09368`. Siete commits: cuatro runtime
+  y tres de cierre documental (el primero incluye tests y Makefile).
+  Sin merge commit, sin push; rama feature y untracked preexistentes preservados.
+- **`HCA_FINAL_P1_RUNTIME: CLOSED / INTEGRATED`**.
+  **`REAL_RUNTIME_BUGS: 6 / 6 CLOSED`**: ENTITY-005, MONEY-020/026,
+  STATE-005/007 y FOLLOWUP-016. No se añadieron features ni se corrigieron
+  defectos nuevos durante la revisión. Runtime, tests y fixtures del HEAD
+  permanecieron intactos.
+- **HCA congelado:** **177/195 → 182/195 PASS**, 13 FAIL, 0 ERROR;
+  comparación de los 195 IDs, **PASS→FAIL = 0**. SHA256 intacto:
+  `262c225c7939f04516ee95b3c77b4911f9f476058941a88a61d01c918499ffba`.
+- **Semánticamente sostenidos:** **183/195 → 189/195**.
+  **189/195 != runner score**: 182 PASS + cinco deudas de oráculo confirmadas
+  previas + un SAFE + la deuda secundaria de FOLLOWUP-016.
+  Restan **3 KNOWN_DEFERRED_PRODUCT_DEBT + 3 INSUFFICIENT_EVIDENCE**;
+  además, los raw failures de Oracle Debt permanecen hasta aplicar su patch.
+  `FINAL_HCA` no está completo.
+- **FOLLOWUP-016:** `PRIMARY_RUNTIME_BUG: CLOSED`;
+  `SECONDARY_ORACLE_DEBT: CONFIRMED`. WHERE preservado entre turnos,
+  dinero/Cali/Obra y orden correctos; el fallo restante exige `obra` como
+  objeto en lugar de tipo contractual. Añadido al Oracle Patch Plan posterior
+  del informe de integración; **no se modificó ningún oráculo**.
+- **Verificación final:** suite completa **8657 passed, 2 skipped,
+  24 xfailed, 0 failed**; focal P1 **40/40**, también post-merge;
+  tests focales de integración **82 PASS**, también post-merge.
+  Query **89/89**; dialogue **60/61**, mismo `GOB-DEPTO-001` basal.
+  Negación **22/24**, mismos dos fallos basales; tiempo **32/32**;
+  control **42/42**; actor **36/36**. Ruff cambiado, lint-core y diff-check PASS.
+  **Semgrep: TOOL_UNAVAILABLE**, no ejecutado ni instalado; regla de
+  persistencia inspeccionada manualmente. Runner HCA: **0 production writes**.
+- **Tests y autoridades:** plan_query_node y modality golden **JUSTIFIED**;
+  pagination **NONVACUOUS**. Modalidad tiene delta estructural **0**.
+  Mutación actual: seis fallos de ordering y uno de paginación sin el fix.
+  Baseline focal inicial versionado **25/40**; fixture final **26/40** en base
+  y **40/40** en feature. QueryPlan intacto en **299/300 LoC**;
+  `NEXT_TOUCH_RULE: PRESERVED`. Liquidación, identidad Actor, relaciones,
+  Control Limit y capacidades diferidas mantienen sus contratos.
+- **Informe y evidencia:**
+  [revisión final P1](audits/2026-08-26_HCA_FINAL_P1_RUNTIME_INTEGRATION_REVIEW.md).
+  Este cierre documental se registra en un commit docs-only sobre main,
+  posterior al HEAD promovido; no altera runtime, tests ni fixtures.
+- **Siguiente:** **`READY_FOR_HCA_ORACLE_PATCH`**.
+
+## Estado histórico de integración HCA-R7 — 2026-08-26
+
+El registro siguiente conserva el estado previo a Oracle Review y Final P1;
+las cifras y clasificaciones actuales son las del cierre canónico anterior.
+
 - **Main — integración funcional:** `23f307cf1c33cec029213d1707df91488f34f3bb`
   — **HCA-R7 Actor Hygiene V1**, integrado ff-only sobre
   `39234f873fb345b9de72ded7092afacadfdd646c`: un commit, sin commit de merge,
