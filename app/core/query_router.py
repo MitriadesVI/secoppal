@@ -35,6 +35,7 @@ from app.core.temporal_semantics import (
 from app.core.contract_type_resolver import resolve_contract_types
 from app.core.control_language import interpret_control_language
 from app.core.money_resolution import CARDINAL_WORD_PATTERN
+from app.core.estado_projection import project_estado_family
 from app.core.money_admission import (
     has_explicit_monetary_evidence,
     is_admissible_amount,
@@ -992,6 +993,10 @@ class QueryRouter:
 
         negation_policy = apply_negation_policy(negation_binding.requests, params)
         params = negation_policy.params
+        # INV-STATE-FAMILY-PROJECTS-COMPLETE: una familia declarada por
+        # cualquier ruta (detector de estado o intent) se materializa entera
+        # antes de salir del parser. Rellena; nunca pisa un estado ya acotado.
+        params = project_estado_family(params)
         negation_requests = attach_scope_anchors(
             negation_policy.requests, params,
         )

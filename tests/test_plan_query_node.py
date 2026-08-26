@@ -71,7 +71,15 @@ def test_state_only_builds_where_but_execution_requests_scope_or_topic():
         chat_id=f"test_state_only_guard_{uuid.uuid4().hex}",
     )
 
-    assert "estado_contrato = 'En ejecución'" in result.get("soql_query", "")
+    # INV-STATE-FAMILY-PROJECTS-COMPLETE (HCA-STATE-007): la aserción original
+    # fijaba el escalar truncado ``estado_contrato = 'En ejecución'``, que era
+    # el defecto — ADR-003 define contrato_activo como los tres estados. Lo que
+    # este test comprueba (hay WHERE de estado, pero no basta para ejecutar)
+    # queda intacto.
+    assert (
+        "estado_contrato IN ('En ejecución', 'Modificado', 'Prorrogado')"
+        in result.get("soql_query", "")
+    )
     assert result.get("needs_clarification") is True
     assert "filtro de entidad, lugar, tema o contratista" in result.get(
         "clarification_reason", ""

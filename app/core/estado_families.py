@@ -184,6 +184,53 @@ NATURAL_TO_FAMILY = {
 }
 
 
+# ── Estado LÉXICO EXACTO vs FAMILIA SEMÁNTICA ────────────────────────────
+#
+# INV-EXACT-STATE-DOES-NOT-WIDEN-TO-FAMILY (HCA-STATE-005).
+#
+# NATURAL_TO_FAMILY resuelve vocabulario que DESCRIBE una familia: "vigentes",
+# "disponibles", "convocatorias" no nombran ningún estado concreto de SECOP, así
+# que expandirlos al funnel completo es la lectura correcta.
+#
+# Estos tokens son distintos: nombran LITERALMENTE un valor del dataset. Quien
+# escribe "procesos publicados" pidió ``Publicado``; devolverle borradores y
+# procesos en aprobación no es ser generoso, es contestar otra pregunta.
+#
+# El catálogo es deliberadamente corto. Solo entra un token que cumpla las tres
+# condiciones:
+#   1. es el nombre literal de un valor real del dataset,
+#   2. su familia tiene MÁS de un valor para ese dataset (si no, exacto y
+#      familia coinciden y no hay nada que decidir),
+#   3. no es a la vez vocabulario que describe la familia entera.
+#
+# Por (3) quedan FUERA "abiertos" y "vigentes" — son el lenguaje natural de la
+# oferta abierta, no una petición de ``Abierto``, que además es un valor
+# residual de versiones antiguas. Y por (3) queda fuera "en ejecución": ADR-003
+# fija que un contrato activo es En ejecución + Modificado + Prorrogado, así que
+# ese token pide la familia, no un literal.
+LEXICAL_EXACT_STATE: dict[str, str] = {
+    "publicado": "Publicado",
+    "publicados": "Publicado",
+    "publicadas": "Publicado",
+    "borrador": "Borrador",
+    "borradores": "Borrador",
+    "en borrador": "Borrador",
+}
+
+
+def locate_state_literal(literal: str, dataset: str) -> tuple[str, str] | None:
+    """Devuelve (familia, campo) donde ``literal`` vive para ``dataset``.
+
+    Deriva la ubicación de ESTADO_FAMILIES en vez de duplicarla: un literal que
+    no exista en el catálogo no puede resolverse como estado exacto.
+    """
+    for family_name, family in ESTADO_FAMILIES.items():
+        for field, values in family.get(dataset, {}).items():
+            if literal in values:
+                return family_name, field
+    return None
+
+
 def collect_estado_values(dataset: str | None = None) -> tuple[str, ...]:
     """Return SECOP state literals declared in ESTADO_FAMILIES.
 
@@ -217,6 +264,21 @@ def resolve_estado(natural_token: str, dataset: str) -> dict | None:
         dict with 'family', 'filters' (field→list[value]), 'consumed_span', or None.
     """
     token_lower = natural_token.lower().strip()
+
+    # Precedencia léxica: si el token NOMBRA un estado del dataset, ese estado
+    # es la respuesta — la familia no lo ensancha.
+    literal = LEXICAL_EXACT_STATE.get(token_lower)
+    if literal is not None:
+        located = locate_state_literal(literal, dataset)
+        if located is not None:
+            exact_family, field = located
+            return {
+                "family": exact_family,
+                "filters": {field: [literal]},
+                "consumed_span": natural_token,
+                "kind": "exact",
+            }
+
     family_name = NATURAL_TO_FAMILY.get(token_lower)
     if family_name is None:
         return None
@@ -239,6 +301,7 @@ def resolve_estado(natural_token: str, dataset: str) -> dict | None:
         "family": family_name,
         "filters": filters,
         "consumed_span": natural_token,
+        "kind": "family",
     }
 
 
@@ -253,7 +316,8 @@ def detect_estado_family(normalized_query: str, dataset: str) -> dict | None:
     consumed span can be scrubbed from the query before object extraction.
     """
     # Check multi-word tokens first (longest match wins)
-    for multi_token in sorted(NATURAL_TO_FAMILY, key=len, reverse=True):
+    known_tokens = {*NATURAL_TO_FAMILY, *LEXICAL_EXACT_STATE}
+    for multi_token in sorted(known_tokens, key=len, reverse=True):
         if " " not in multi_token:
             continue
         if multi_token.lower() in normalized_query.lower():
