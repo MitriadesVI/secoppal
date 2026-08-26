@@ -8,6 +8,8 @@ from typing import TYPE_CHECKING
 from app.config import actor_profile_enabled
 from app.core.actor_conversation import (
     ActorConversationOperation,
+    ActorPendingTurn,
+    classify_actor_pending_turn,
     parse_actor_candidate_selection,
 )
 from app.core.actor_resolution import (
@@ -77,7 +79,7 @@ class _SelectionFeedback:
 
 
 def handle_actor_selection(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict | None:
-    """Apply a numbered candidate to the pending frame, then resume planning."""
+    """Apply an explicit list selection to its original frame, then plan."""
     structured = ctx.actor_candidate_selection
     if not actor_profile_enabled() or not ctx.chat_id:
         return _stale_selection_result() if structured is not None else None
@@ -95,10 +97,8 @@ def handle_actor_selection(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict 
         ):
             return _stale_selection_result()
     else:
-        selected_rank = parse_actor_candidate_selection(ctx.user_query)
+        selected_rank = None
         submitted_token = None
-        if selected_rank is None:
-            return None
 
     history = deps.conv_store.get_history(ctx.chat_id, last_n=1)
     if not history:
@@ -107,6 +107,20 @@ def handle_actor_selection(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict 
     pending = last_turn.parsed_params.get("actor_pending")
     if not isinstance(pending, dict):
         return _stale_selection_result() if structured is not None else None
+    if structured is None:
+        selected_rank = parse_actor_candidate_selection(ctx.user_query)
+        if selected_rank is None:
+            selected_rank = parse_actor_candidate_selection(
+                ctx.user_query, pending.get("candidates"),
+            )
+            if selected_rank is not None:
+                parsed = deps.query_router.parse(ctx.user_query, today=ctx.today)
+                if classify_actor_pending_turn(
+                    ctx.user_query, parsed.params, pending,
+                ) == ActorPendingTurn.NEW_SEARCH:
+                    return None
+        if selected_rank is None:
+            return None
     if structured is not None:
         current_token = pending.get("selection_token")
         if not isinstance(current_token, str):

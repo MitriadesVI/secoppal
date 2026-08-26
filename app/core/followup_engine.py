@@ -25,6 +25,7 @@ from datetime import datetime, timezone
 from decimal import Decimal
 from typing import Any
 
+from app.core.actor_conversation import ActorPendingTurn, classify_actor_pending_turn
 from app.core.query_frame import (
     QueryFrame,
     frame_from_params,
@@ -292,6 +293,12 @@ class FollowupClassifier:
             return "new_search"
 
         current_params = params_from_frame(current_frame)
+        pending = previous_frame.raw_params.get("actor_pending")
+        if isinstance(pending, dict) and classify_actor_pending_turn(
+            text, current_params, pending,
+        ) == ActorPendingTurn.NEW_SEARCH:
+            # R7 uses the existing full-frame replacement and mutation trace.
+            return "new_search"
         if current_frame.topic and is_contextual_topic_request(text):
             return "replace_topic"
 

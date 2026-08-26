@@ -9,6 +9,9 @@ from app.core.actor_intent import (
     strip_recognized_actor_modifier_tail,
 )
 from app.core.actor_name import normalize_actor_name
+from app.core.control_language import is_pure_control_turn
+from app.core.followup_control_tokens import classify_control_intent, requested_clear_fields
+from app.core.intent_vocabulary import COMMON_TOKENS
 from app.data.morphological_variants import MORPHOLOGICAL_VARIANTS
 
 __all__ = [
@@ -16,6 +19,7 @@ __all__ = [
     "detect_bare_actor_probe",
     "has_entity_like_name_evidence",
     "has_strong_topic_evidence",
+    "has_strong_search_intent",
     "scrub_strong_actor_leaks",
 ]
 
@@ -25,9 +29,11 @@ class BareActorProbe:
     actor_name: str
     unbounded_name: str
     surface_name: str
+    name_only: bool = False
 
 
 _BARE_ACTOR_RE = re.compile(r"\bcontratos?\s+de\s+(.+)$", re.IGNORECASE)
+_SEARCH_DATASET_RE = re.compile(r"\b(?:contratos?|procesos?|convenios?)\b")
 _REJECTED_LEADS = frozenset({"del", "de"})
 _ACTOR_SYNTAX_TOPIC_TERMS = frozenset({
     "adjudicatario", "contratista", "proveedor",
@@ -39,6 +45,7 @@ _LEGAL_FORM_SUFFIXES = (
     "sas", "s a s", "sa", "s a", "ltda", "limitada", "esp", "e s p",
     "sca", "s c a", "fundacion", "corporacion",
 )
+_INTERNAL_LEGAL_FORM_RE = re.compile(r"\b(?:sas|s a s|sa|s a|ltda|limitada)\b")
 _ORGANIZATION_NOUNS = frozenset({
     "agencia", "asilo", "asociacion", "camara", "cooperativa",
     "corporacion", "empresa", "fundacion", "grupo", "hogar", "hospital",
@@ -56,23 +63,59 @@ _KNOWN_TOPIC_TERMS = frozenset(
     if value
 )
 _KNOWN_TOPIC_TOKENS = frozenset(
-    term for term in _KNOWN_TOPIC_TERMS if " " not in term and len(term) >= 4
+    token for term in _KNOWN_TOPIC_TERMS for token in term.split() if len(token) >= 4
+) | frozenset(normalize_actor_name(token) for token in COMMON_TOKENS)
+
+_SEARCH_FILTER_KEYS = (
+    "ciudad", "departamento_resolved", "departamentos_in", "region",
+    "entidad", "entidad_resolved", "fecha_desde", "fecha_hasta",
+    "valor_min", "valor_max", "modalidad_include_procedure_ids",
+    "contract_type_include", "estado", "estado_family", "ordering_signal",
 )
 
 
+def has_strong_search_intent(raw_query: str, params: dict) -> bool:
+    """Dataset language + independently parsed content/filter, never casing.
+
+    This guards optional actor heuristics, not exact aliases or explicit roles.
+    Pure R6 control turns keep their existing owner.
+    """
+    control = classify_control_intent(raw_query, params)
+    if is_pure_control_turn(raw_query) or control in {
+        "pagination_more", "change_order", "change_dataset", "remove_filter", "refine_filter",
+    }:
+        return False
+    return bool(
+        _SEARCH_DATASET_RE.search(normalize_actor_name(raw_query))
+        and (params.get("objeto") or any(params.get(k) for k in _SEARCH_FILTER_KEYS))
+    )
+
+
 def detect_bare_actor_probe(raw_query: str, params: dict) -> BareActorProbe | None:
-    """Extract X only from bare ``contratos de X`` syntax.
+    """Extract X from ``contratos de X`` or a genuinely bare name.
 
     Strong role syntax is excluded by the caller before reaching this helper.
     Temporal, monetary and ordering tails are not part of the actor mention.
     """
-    if params.get("dataset") != "contratos":
-        return None
     normalized = normalize_actor_name(raw_query)
     match = _BARE_ACTOR_RE.search(normalized)
-    if match is None:
-        return None
-    unbounded = match.group(1).strip()
+    if match is not None:
+        if params.get("dataset") != "contratos":
+            return None
+        unbounded = match.group(1).strip()
+    else:
+        # A bare-name probe must not reinterpret a complete search, a control,
+        # or a recognized buyer. Unknown single words are exact-only probes.
+        if (
+            params.get("dataset_explicit")
+            or _SEARCH_DATASET_RE.search(normalized)
+            or any(params.get(k) for k in _SEARCH_FILTER_KEYS)
+            or classify_control_intent(raw_query, params)
+            or requested_clear_fields(raw_query)
+            or is_pure_control_turn(raw_query)
+        ):
+            return None
+        unbounded = normalized
     candidate = strip_recognized_actor_modifier_tail(
         unbounded,
         recognized_actor_modifier_tails(normalized, params),
@@ -80,15 +123,22 @@ def detect_bare_actor_probe(raw_query: str, params: dict) -> BareActorProbe | No
     words = candidate.split()
     if not words or words[0] in _REJECTED_LEADS:
         return None
-    if candidate.isdigit():
+    if candidate.isdigit() or len(candidate) < 3:
+        return None
+    if words[0] in _ACTOR_SYNTAX_TOPIC_TERMS or len(candidate) > 512:
         return None
     surface_match = _BARE_ACTOR_RE.search(raw_query)
     surface = surface_match.group(1).strip() if surface_match else unbounded
-    return BareActorProbe(
+    probe = BareActorProbe(
         actor_name=candidate,
         unbounded_name=unbounded,
         surface_name=surface,
+        name_only=match is None,
     )
+    if match is None and has_strong_topic_evidence(candidate, params):
+        if not has_entity_like_name_evidence(probe):
+            return None
+    return probe
 
 
 def has_entity_like_name_evidence(probe: BareActorProbe) -> bool:
@@ -104,11 +154,15 @@ def has_entity_like_name_evidence(probe: BareActorProbe) -> bool:
     if normalized in _KNOWN_TOPIC_TERMS:
         return False
     if any(
-        normalized == suffix or normalized.endswith(f" {suffix}")
+        normalized.endswith(f" {suffix}")
         for suffix in _LEGAL_FORM_SUFFIXES
     ):
         return True
-    if tokens and tokens[0] in _ORGANIZATION_NOUNS:
+    # Legal form may be followed by the registered descriptive name, e.g.
+    # LA PREVISORA S.A. COMPAÑÍA DE SEGUROS. It is semantic evidence, not case.
+    if _INTERNAL_LEGAL_FORM_RE.search(normalized) and len(tokens) >= 3:
+        return True
+    if len(tokens) >= 2 and tokens[0] in _ORGANIZATION_NOUNS:
         return True
 
     # Acronym-like distinctive material is independent actor-shape evidence
@@ -125,19 +179,16 @@ def has_entity_like_name_evidence(probe: BareActorProbe) -> bool:
     ):
         return True
 
-    # Case is evidence only for a multi-token proper-name structure.  This is
-    # deliberately unavailable after normalization, so inspect the original
-    # surface and ignore connectors rather than maintaining a name dictionary.
-    surface_words = re.findall(r"[^\W\d_]+", probe.surface_name, re.UNICODE)
-    substantive = [
-        word for word in surface_words
-        if normalize_actor_name(word) not in _NAME_CONNECTORS
-    ]
-    if len(substantive) < 2:
-        return False
-    return all(
-        word.isupper() or (word[:1].isupper() and word[1:].islower())
-        for word in substantive
+    # INV-ACTOR-EVIDENCE-MUST-BE-SEMANTIC. Name-like material is independent of
+    # typography, and domain words or query language defeat this weak door.
+    substantive = [word for word in tokens if word not in _NAME_CONNECTORS]
+    return bool(
+        probe.name_only
+        and 2 <= len(substantive) <= 6
+        and all(word.isalpha() and len(word) >= 2 for word in substantive)
+        and not set(tokens) & (_KNOWN_TOPIC_TOKENS | _ACTOR_SYNTAX_TOPIC_TERMS)
+        and not set(tokens) & {"en", "por", "para", "con", "desde", "hasta", "entre"}
+        and not _SEARCH_DATASET_RE.search(normalized)
     )
 
 

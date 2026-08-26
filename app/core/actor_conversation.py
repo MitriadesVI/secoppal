@@ -19,11 +19,20 @@ from dataclasses import dataclass
 from typing import Literal
 
 from app.core.actor_name import normalize_actor_name
+from app.core.actor_arbitration import (
+    BareActorProbe,
+    has_entity_like_name_evidence,
+    has_strong_search_intent,
+    has_strong_topic_evidence,
+)
+from app.core._followup_constants import NEW_SEARCH_VERBS
 from app.data.morphological_variants import MORPHOLOGICAL_VARIANTS
 
 __all__ = [
     "ActorConversationInstruction",
     "ActorConversationOperation",
+    "ActorPendingTurn",
+    "classify_actor_pending_turn",
     "actor_likeness",
     "interpret_actor_conversation",
     "parse_actor_candidate_selection",
@@ -75,12 +84,6 @@ _KNOWN_TOPICS = frozenset({
     )
     if value
 })
-_KNOWN_TOPIC_TOKENS = frozenset(
-    token
-    for topic in _KNOWN_TOPICS
-    for token in topic.split()
-    if len(token) >= 4
-)
 
 _LEGAL_FORM_RE = re.compile(
     r"(?:^|\s)(?:s\s*a\s*s|sas|s\s*a|sa|e\s*s\s*e|ese|ltda|limitada|"
@@ -91,10 +94,6 @@ _ORGANIZATION_MARKERS = frozenset({
     "agencia", "asociacion", "camara", "cooperativa", "corporacion",
     "empresa", "fundacion", "grupo", "hospital", "instituto", "ips",
     "sociedad", "universidad", "consorcio", "ese", "union", "ut",
-})
-_CONNECTORS = frozenset({
-    "a", "al", "con", "de", "del", "el", "en", "la", "las", "los",
-    "para", "por", "y",
 })
 
 
@@ -110,20 +109,19 @@ def actor_likeness(mention: str, *, strong_syntax: bool = False) -> ActorEvidenc
     if normalized in _KNOWN_TOPICS:
         return "topic"
     tokens = normalized.split()
-    if _LEGAL_FORM_RE.search(normalized):
+    legal = _LEGAL_FORM_RE.search(normalized)
+    if legal and normalized[:legal.start()].strip():
         return "independent"
-    if tokens and tokens[0] in _ORGANIZATION_MARKERS:
+    if len(tokens) >= 2 and tokens[0] in _ORGANIZATION_MARKERS:
         return "independent"
     if strong_syntax:
         return "strong"
 
-    substantive = [token for token in tokens if token not in _CONNECTORS]
-    distinctive = [
-        token for token in substantive
-        if token not in _KNOWN_TOPIC_TOKENS
-    ]
-    if len(substantive) >= 2 and distinctive:
+    probe = BareActorProbe(normalized, normalized, mention, name_only=True)
+    if has_entity_like_name_evidence(probe):
         return "independent"
+    if has_strong_topic_evidence(normalized, {}):
+        return "topic"
     return "probe"
 
 
@@ -145,14 +143,57 @@ _ORDINAL_RANKS = {
 }
 
 
-def parse_actor_candidate_selection(text: str) -> int | None:
-    """Return a natural V1 candidate rank, or ``None`` for another intent."""
+def parse_actor_candidate_selection(text: str, candidates: list[dict] | None = None) -> int | None:
+    """Rank/ordinal or unique exact list name; never fuzzy textual selection."""
     normalized = normalize_actor_name(text)
+    if not normalized:
+        return None
     number = _SELECTION_NUMBER_RE.fullmatch(normalized)
     if number is not None:
-        return int(number.group("rank"))
+        # Candidate ranks are small. Document-sized numbers belong to the
+        # existing identifier parser, not to a pending-list range error.
+        rank = number.group("rank")
+        return int(rank) if len(rank) <= 2 else None
+    matches = []
+    for candidate in candidates if isinstance(candidates, list) else []:
+        if not isinstance(candidate, dict):
+            continue
+        rank = candidate.get("rank")
+        if not isinstance(rank, int) or isinstance(rank, bool) or rank < 1:
+            continue
+        if any(
+            isinstance(value, str) and normalized == normalize_actor_name(value)
+            for value in (candidate.get("observed_name"), candidate.get("matched_alias"))
+        ):
+            matches.append(rank)
+    if len(matches) == 1:
+        return matches[0]
     normalized = re.sub(r"^(?:el|la)\s+", "", normalized)
     return _ORDINAL_RANKS.get(normalized)
+
+
+class ActorPendingTurn:
+    PLAUSIBLE_ACTOR_SELECTION = "PLAUSIBLE_ACTOR_SELECTION"
+    NEW_SEARCH = "NEW_SEARCH"
+    AMBIGUOUS = "AMBIGUOUS"
+
+
+def classify_actor_pending_turn(text: str, params: dict, pending: dict) -> str:
+    """Pending can request clarification, never absorb an independent search."""
+    normalized = normalize_actor_name(text)
+    if any(normalized.startswith(verb) for verb in NEW_SEARCH_VERBS):
+        return ActorPendingTurn.NEW_SEARCH
+    if has_strong_search_intent(text, params) or any(
+        params.get(key) for key in ("actor_scope", "contratista", "actor_conversation_probe")
+    ):
+        return ActorPendingTurn.NEW_SEARCH
+    if parse_actor_candidate_selection(text, pending.get("candidates")) is not None:
+        return ActorPendingTurn.PLAUSIBLE_ACTOR_SELECTION
+    if normalized in {"ese", "esa", "si ese", "si esa"}:
+        # No implicit top-1 selection: without a unique referent this still
+        # needs clarification, but is a plausible reply to the pending list.
+        return ActorPendingTurn.PLAUSIBLE_ACTOR_SELECTION
+    return ActorPendingTurn.AMBIGUOUS
 
 
 _RELATION_PATTERNS: tuple[tuple[str, re.Pattern[str], bool], ...] = (

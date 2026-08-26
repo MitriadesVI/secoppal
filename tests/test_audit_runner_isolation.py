@@ -13,6 +13,7 @@ import os
 import subprocess
 import sys
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 
@@ -143,3 +144,49 @@ def test_runner_reports_every_writable_store_inside_sandbox(tmp_path):
     # El sandbox de stores se borra al terminar; la salida sobrevive.
     assert not sandbox.exists()
     assert (out_dir / "results.jsonl").exists()
+
+
+def test_actor_audit_stubs_aggregate_and_disables_configured_llm(tmp_path, monkeypatch):
+    monkeypatch.setenv("DEEPSEEK_API_KEY", "fixture-key-must-not-be-used")
+    from scripts.audits.run_conversation_holistic_audit import run_audit
+    from app.core import orchestrator
+
+    monkeypatch.setenv("DEEPSEEK_API_KEY", "fixture-key-must-not-be-used")
+    real_workflow = orchestrator.SecopalWorkflow
+    transport_calls = []
+
+    class NoNetworkTransport:
+        def get(self, *args, **kwargs):
+            transport_calls.append(args)
+            return []
+
+    def construct(settings):
+        assert not settings.llm_enabled
+        workflow = real_workflow(settings)
+        workflow.secop_client.client = NoNetworkTransport()
+        return workflow
+
+    monkeypatch.setattr(orchestrator, "SecopalWorkflow", construct)
+    corpus = tmp_path / "actor.yaml"
+    corpus.write_text('cases:\n- id: PROFILE_OFFLINE\n  turns:\n  - {q: "contratos del NIT 900739049", expect: execute}\n')
+    out = tmp_path / "out"
+    with isolated_runtime_stores() as stores:
+        run_audit(SimpleNamespace(corpus=corpus, only=None), out, stores)
+    assert transport_calls == []
+    verdicts = json.loads((out / "verdicts.json").read_text())
+    assert verdicts["pass"] == 1
+
+
+@pytest.mark.parametrize("candidate,passes", [
+    ({"document_type": "NIT", "base_number": "900739049", "max_rank": 1}, True),
+    ({"document_type": "CC", "base_number": "900739049", "max_rank": 1}, False),
+    ({"document_type": "NIT", "base_number": "900739040", "max_rank": 1}, False),
+    ({"document_type": "NIT", "base_number": "900739049", "max_rank": 0}, False),
+])
+def test_candidate_oracle_checks_type_number_and_rank(candidate, passes, monkeypatch):
+    monkeypatch.setenv("DEEPSEEK_API_KEY", "")
+    from scripts.audits.run_conversation_holistic_audit import check_turn
+    record = {"params": {"actor_pending": {"candidates": [
+        {"document_type": "NIT", "base_number": "900739049", "rank": 1},
+    ]}}}
+    assert (not check_turn({"candidate_present": candidate}, record)) == passes

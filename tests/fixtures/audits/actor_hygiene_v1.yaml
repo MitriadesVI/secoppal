@@ -1,0 +1,268 @@
+# HCA-R7 focal: real immutable actor index, deterministic structural workflow.
+# No changes to conversation_holistic_v1.yaml. Missing/corrupt index is covered
+# by the isolated resolver/workflow tests; this fixture requires the real index.
+cases:
+- id: AH-01-LOWER-SEARCH
+  category: uppercase
+  turns:
+  - q: contratos de aseo en barranquilla por más de 100 millones
+    expect: execute
+    eq: {ciudad: Barranquilla, valor_min: 100000000}
+    objeto_has: [aseo]
+    absent: [actor_scope, actor_pending, actor_resolution_status]
+- id: AH-02-UPPER-SEARCH
+  category: uppercase
+  same_frame_as: AH-01-LOWER-SEARCH
+  turns:
+  - q: CONTRATOS DE ASEO EN BARRANQUILLA POR MÁS DE 100 MILLONES
+    expect: execute
+    absent: [actor_scope, actor_pending, actor_resolution_status]
+- id: AH-03-TITLE-SEARCH
+  category: uppercase
+  same_frame_as: AH-01-LOWER-SEARCH
+  turns:
+  - q: Contratos De Aseo En Barranquilla Por Más De 100 Millones
+    expect: execute
+    absent: [actor_scope, actor_pending]
+- id: AH-04-BARE-EXACT
+  category: exact
+  turns:
+  - q: FUNSOCOM
+    expect: execute
+    ds: contratos
+    eq: {actor_resolution_status: RESOLVED, actor_resolution_method: exact_unique_alias}
+    actor_identity: {document_type: NIT, base_number: '900334689'}
+    absent: [actor_pending, objeto]
+- id: AH-05-BARE-LOWER
+  category: exact
+  same_frame_as: AH-04-BARE-EXACT
+  turns:
+  - q: funsocom
+    expect: execute
+    eq: {actor_resolution_status: RESOLVED}
+    actor_identity: {document_type: NIT, base_number: '900334689'}
+    absent: [actor_pending, objeto]
+- id: AH-06-BARE-PERSON
+  category: ambiguity
+  turns:
+  - q: jorge verbel
+    expect: block
+    eq: {actor_resolution_status: CANDIDATES}
+    has: [actor_pending]
+    absent: [contratista]
+- id: AH-07-LEGAL-NAME
+  category: legal
+  turns:
+  - q: UNION TEMPORAL ASEO SCJ
+    expect: execute
+    has: [actor_scope]
+    absent: [actor_pending, actor_intent_conflict, objeto]
+- id: AH-08-LEGAL-SEARCH
+  category: legal
+  turns:
+  - q: CONTRATOS DE UNION TEMPORAL ASEO SCJ
+    expect: execute
+    has: [actor_scope]
+    absent: [actor_pending, actor_intent_conflict, objeto]
+- id: AH-09-ACTOR-YEAR
+  category: structured
+  turns:
+  - q: contratos de FUNSOCOM en 2026
+    expect: execute
+    eq: {fecha_desde: '2026-01-01', fecha_hasta: '2026-12-31'}
+    actor_identity: {document_type: NIT, base_number: '900334689'}
+    absent: [actor_pending, objeto]
+- id: AH-10-ACTOR-MONEY
+  category: structured
+  turns:
+  - q: contratos de FUNSOCOM por más de 500 millones
+    expect: execute
+    eq: {valor_min: 500000000}
+    actor_identity: {document_type: NIT, base_number: '900334689'}
+    absent: [actor_pending, objeto]
+- id: AH-11-ACTOR-GEO
+  category: structured
+  turns:
+  - q: contratos del proveedor FUNSOCOM en Barranquilla
+    expect: execute
+    eq: {ciudad: Barranquilla}
+    actor_identity: {document_type: NIT, base_number: '900334689'}
+- id: AH-12-ACTOR-MODALITY
+  category: structured
+  turns:
+  - q: contratos del proveedor FUNSOCOM por licitación pública
+    expect: execute
+    actor_identity: {document_type: NIT, base_number: '900334689'}
+    has: [modalidad_include_procedure_ids]
+- id: AH-13-PENDING-NUMBER
+  category: pending
+  turns:
+  - {q: 'jorge verbel', expect: block, has: [actor_pending]}
+  - q: '1'
+    expect: execute
+    eq: {actor_selection_rank: 1, actor_resolution_method: user_selected_candidate}
+    absent: [actor_pending]
+- id: AH-14-PENDING-ORDINAL
+  category: pending
+  turns:
+  - {q: 'buscate al proveedor jorge verbel', expect: block}
+  - q: el segundo
+    expect: execute
+    eq: {actor_selection_rank: 2, actor_resolution_method: user_selected_candidate}
+    absent: [actor_pending]
+- id: AH-15-PENDING-NAME
+  category: pending
+  turns:
+  - {q: 'jorge verbel', expect: block}
+  - q: JORGE VERBEL MARTELO
+    expect: execute
+    eq: {actor_resolution_method: user_selected_candidate}
+    absent: [actor_pending]
+- id: AH-16-PENDING-SEARCH
+  category: pending
+  turns:
+  - {q: 'jorge verbel', expect: block}
+  - q: contratos de aseo en barranquilla en 2025
+    expect: execute
+    eq: {ciudad: Barranquilla, fecha_desde: '2025-01-01'}
+    objeto_has: [aseo]
+    absent: [actor_pending, actor_scope, actor_resolution_status, contratista]
+    resp_not: [verbel]
+- id: AH-17-PENDING-PROCESSES
+  category: pending
+  turns:
+  - {q: 'buscate al proveedor jorge verbel', expect: block}
+  - q: procesos de vías en bolívar
+    expect: execute
+    ds: procesos
+    objeto_has: [vias]
+    absent: [actor_pending, actor_scope, contratista]
+- id: AH-18-PENDING-AGREEMENTS
+  category: pending
+  turns:
+  - {q: 'buscate al proveedor jorge verbel', expect: block}
+  - q: convenios de alimentación en 2026
+    expect: execute
+    objeto_has: [alimentacion]
+    eq: {fecha_desde: '2026-01-01'}
+    absent: [actor_pending, actor_scope, contratista]
+- id: AH-19-PENDING-MONEY
+  category: pending
+  notes: Money-only search may need ordinary scope clarification, never actor selection.
+  turns:
+  - {q: 'buscate al proveedor jorge verbel', expect: block}
+  - q: muéstrame contratos por más de 500 millones
+    eq: {valor_min: 500000000}
+    absent: [actor_pending, actor_scope, contratista]
+    resp_not: [verbel, 'perdi el contexto']
+- id: AH-20-PENDING-RESET
+  category: pending
+  turns:
+  - {q: 'jorge verbel', expect: block}
+  - {q: reset, absent: [actor_scope, actor_pending]}
+  - {q: 'contratos de aseo en Barranquilla', expect: execute, absent: [actor_pending, actor_scope]}
+- id: AH-21-LMP-CORRECT
+  category: recall
+  turns:
+  - q: lmp ingenieria
+    expect: block
+    eq: {actor_resolution_status: CANDIDATES}
+    absent: [contratista]
+    candidate_present: {document_type: NIT, base_number: '900739049', max_rank: 1}
+- id: AH-22-LMP-ROTATION
+  category: recall
+  turns:
+  - q: lmp ingieneria
+    expect: block
+    eq: {actor_resolution_status: CANDIDATES}
+    absent: [contratista]
+    candidate_present: {document_type: NIT, base_number: '900739049', max_rank: 1}
+- id: AH-23-LMP-DELETION
+  category: recall
+  turns:
+  - q: lmp ingeneria
+    expect: block
+    eq: {actor_resolution_status: CANDIDATES}
+    absent: [contratista]
+    candidate_present: {document_type: NIT, base_number: '900739049', max_rank: 1}
+- id: AH-24-LMP-DELETION-2
+  category: recall
+  turns:
+  - q: lmp ingeniera
+    expect: block
+    eq: {actor_resolution_status: CANDIDATES}
+    absent: [contratista]
+    candidate_present: {document_type: NIT, base_number: '900739049', max_rank: 1}
+- id: AH-25-LMP-FULL-EXACT
+  category: exact
+  turns:
+  - q: LMP INGENIERIA SAS
+    expect: execute
+    eq: {actor_resolution_status: RESOLVED, actor_resolution_method: exact_unique_alias}
+    actor_identity: {document_type: NIT, base_number: '900739049'}
+    absent: [actor_pending]
+- id: AH-26-NEGATIVE-ACTOR
+  category: negation
+  turns:
+  - q: contratos de aseo cuyo proveedor no sea FUNSOCOM
+    expect: block
+    absent: [actor_pending, actor_scope, contratista]
+- id: AH-27-NEGATIVE-OBJECT
+  category: negation
+  turns:
+  - q: CONTRATOS DE ASEO EN BARRANQUILLA SIN ALIMENTACIÓN
+    expect: execute
+    has: [objeto_exclude]
+    absent: [actor_pending, actor_scope]
+- id: AH-28-SHOW-MORE
+  category: control
+  notes: No candidate pagination capability exists; ordinary no-context clarification stays unchanged.
+  turns:
+  - {q: 'jorge verbel', expect: block}
+  - {q: 'muéstrame más', expect: block, absent: [contratista]}
+  - {q: '1', expect: execute, eq: {actor_resolution_method: user_selected_candidate}}
+- id: AH-29-MORE-SEARCH
+  category: control
+  turns:
+  - {q: 'jorge verbel', expect: block}
+  - q: muéstrame más contratos de aseo en Barranquilla
+    expect: execute
+    objeto_has: [aseo]
+    absent: [actor_pending, actor_scope]
+- id: AH-30-DEICTIC-AMBIGUITY
+  category: ambiguity
+  turns:
+  - {q: 'jorge verbel', expect: block}
+  - {q: 'sí, ese', expect: block, has: [actor_pending], absent: [contratista]}
+  - {q: 'esa', expect: block, has: [actor_pending], absent: [contratista]}
+- id: AH-31-EXPLICIT-NIT
+  category: identity
+  turns:
+  - {q: 'contratos del NIT 900739049', expect: execute, eq: {actor_resolution_method: explicit_document}, absent: [actor_pending]}
+- id: AH-32-EXPLICIT-CC
+  category: identity
+  turns:
+  - {q: 'contratos de la cédula 1020727022', expect: execute, eq: {actor_resolution_method: explicit_document}, absent: [actor_pending]}
+- id: AH-33-TOPIC
+  category: negative
+  turns:
+  - {q: 'ASEO', absent: [actor_scope, actor_pending, actor_resolution_status], objeto_has: [aseo]}
+- id: AH-34-SHORT
+  category: negative
+  turns:
+  - {q: 'xy', absent: [actor_pending, contratista]}
+- id: AH-35-LONG-NAME
+  category: legal
+  turns:
+  - q: contratos de FUNDACION HOGAR DE PASO MIS MEJORES AÑOS
+    has: [actor_resolution_status]
+    absent: [objeto]
+- id: AH-36-ORDER-PRESERVES-ACTOR
+  category: control
+  turns:
+  - {q: 'contratos de FUNSOCOM en 2026', expect: execute}
+  - q: ordénalos por mayor valor
+    expect: execute
+    eq: {fecha_desde: '2026-01-01', ordering_signal: valor_desc}
+    actor_identity: {document_type: NIT, base_number: '900334689'}
+    absent: [actor_pending, objeto]

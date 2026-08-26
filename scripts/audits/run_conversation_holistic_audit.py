@@ -34,6 +34,10 @@ Check DSL (per turn; all optional):
     soql_not: [substr, ...]          substring NOT in generated SoQL
     resp_has: [substr, ...]          substring in user-facing response
     resp_not: [substr, ...]          substring NOT in response
+    candidate_present: {document_type: NIT, base_number: '...', max_rank: 3}
+                                    typed identity in pending list (no resolution)
+    actor_identity: {document_type: NIT, base_number: '...'}
+                                    exact fields of the authoritative actor scope
 
 Case kinds:
     turns: [...]                     conversation (single- or multi-turn)
@@ -191,6 +195,19 @@ def check_turn(turn: dict, record: dict) -> list[str]:
     for sub in turn.get("resp_not") or []:
         if _norm(sub) in resp:
             fails.append(f"response contains {sub!r}")
+    candidate = turn.get("candidate_present")
+    if candidate:
+        candidates = (params.get("actor_pending") or {}).get("candidates") or []
+        if not any(
+            c.get("document_type") == candidate["document_type"]
+            and c.get("base_number") == str(candidate["base_number"])
+            and 0 < c.get("rank", 0) <= candidate.get("max_rank", 10)
+            for c in candidates
+        ):
+            fails.append(f"pending list lacks requested typed candidate within rank {candidate.get('max_rank', 10)}")
+    for key, value in (turn.get("actor_identity") or {}).items():
+        if (params.get("actor_scope") or {}).get(key) != value:
+            fails.append(f"actor_scope.{key} does not match expected identity")
     return fails
 
 
@@ -235,7 +252,9 @@ def run_audit(args, out_dir: Path, stores: AuditIsolation) -> None:
 
     # Overrides explícitos: el aislamiento no depende de que pydantic lea el
     # entorno ni de los defaults de producción de Settings.
-    wf = SecopalWorkflow(Settings(**stores.settings_overrides))
+    # Explicit None also defeats .env: removing the env key alone can silently
+    # re-enable the extractor. Structural audits never need a remote LLM.
+    wf = SecopalWorkflow(Settings(**stores.settings_overrides, deepseek_api_key=None))
 
     def _query(dataset_id, soql_query, **kw):
         return _mk_rows(5)
@@ -245,6 +264,8 @@ def run_audit(args, out_dir: Path, stores: AuditIsolation) -> None:
 
     wf.secop_client.query = _query  # type: ignore[method-assign]
     wf.secop_client.count = _count  # type: ignore[method-assign]
+    # Actor profiles/analytics use aggregate on the same derived client.
+    wf.secop_client.aggregate = lambda *args, **kw: []  # type: ignore[method-assign]
     try:
         wf.narrator.narrate_with_grounding = lambda **kw: None  # type: ignore
     except Exception:

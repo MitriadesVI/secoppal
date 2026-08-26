@@ -25,6 +25,8 @@ from app.core.query_plan import QueryPlan
 from app.core import modality_followup_wiring as modality_wiring
 from app.core.actor_conversation import (
     ActorConversationOperation,
+    ActorPendingTurn,
+    classify_actor_pending_turn,
     purge_actor_state,
 )
 from app.core.actor_resolution import is_authoritative_actor_resolution
@@ -474,6 +476,22 @@ def apply_context(state: State) -> State:
             query_plan=blocked_plan,
         )
 
+    pending = context_params.get("actor_pending")
+    if isinstance(pending, dict) and classify_actor_pending_turn(
+        user_query, parsed_params, pending,
+    ) != ActorPendingTurn.NEW_SEARCH:
+        # A rank/exact list name was already handled by actor_selection.
+        # An ambiguous reply must not mutate the original frame or guess a
+        # candidate. P17 will ask again using the same list and nonce.
+        return _with_timing(
+            state, "apply_context_ms", start,
+            parsed_params=dict(context_params),
+            resolved_params=dict(context_params),
+            needs_llm=False,
+            intent_type="actor_pending_ambiguous",
+            followup_intent_type="actor_pending_ambiguous",
+        )
+
     # AP3-F precedence: explicit actor operations and contextual buyer
     # relations mutate the conversational frame before the generic classifier
     # can reinterpret their words as topic/geography.
@@ -777,7 +795,12 @@ def _finish_apply_context(state, start, merged, intent, mutation_trace) -> State
     # Dejamos que P15 (plan_query) la gobierne, que da una aclaración mucho
     # mejor ("¿qué producto/servicio buscas?") que el genérico de abajo.
     is_opportunity = merged.get("intent_type") == "opportunity_search"
-    if not is_opportunity and not FollowupGuards.check_no_where_1_1(merged):
+    pending_yields = intent == "new_search" and bool(
+        (state.get("context_params") or {}).get("actor_pending")
+    )
+    # A fresh, possibly broad search is not lost follow-up context. Let the
+    # normal planner enforce scope while committing the replacement frame.
+    if not is_opportunity and not pending_yields and not FollowupGuards.check_no_where_1_1(merged):
         return _with_timing(
             state,
             "apply_context_ms",

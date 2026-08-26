@@ -61,6 +61,7 @@ def _resolve(query: str, resolver: ActorNameResolver) -> dict:
 def _workflow(tmp_path: Path, rows: list[dict]) -> SecopalWorkflow:
     resolver = _resolver(tmp_path, rows)
     settings = Settings(
+        deepseek_api_key=None,
         secop_actor_alias_index_path=resolver.index_path,
         secop_feedback_path=tmp_path / "feedback.jsonl",
         secop_feedback_db_path=tmp_path / "feedback.sqlite",
@@ -69,6 +70,7 @@ def _workflow(tmp_path: Path, rows: list[dict]) -> SecopalWorkflow:
     workflow = SecopalWorkflow(settings)
     workflow.secop_client.query = lambda *args, **kwargs: []
     workflow.secop_client.count = lambda *args, **kwargs: 0
+    workflow.secop_client.aggregate = lambda *args, **kwargs: []
     workflow.narrator.narrate_with_grounding = lambda **kwargs: None
     return workflow
 
@@ -279,6 +281,124 @@ def test_invalid_pending_rank_asks_again_instead_of_falling_through(tmp_path):
 
     assert invalid["needs_clarification"] is True
     assert invalid["route_reason"] == "actor_selection_invalid"
+
+
+@pytest.mark.parametrize("query", [
+    "contratos de aseo en barranquilla",
+    "CONTRATOS DE ASEO EN BARRANQUILLA EN 2025",
+    "procesos de vías en bolívar",
+    "convenios de alimentación en 2026",
+    "muéstrame contratos por más de 500 millones",
+    "muéstrame más contratos de aseo en barranquilla",
+    "busca mantenimiento en Bogotá",
+])
+def test_r7_pending_yields_transactionally_to_new_search(tmp_path, query):
+    workflow = _workflow(tmp_path, [
+        _row("NIT", "900111222", "ACTOR ALFA", 9),
+        _row("NIT", "900333444", "ACTOR ALFA", 8),
+    ])
+    first = workflow.run_query(
+        "contratos del proveedor ACTOR ALFA en 2024 por mayor valor", chat_id="yield",
+    )
+    token = first["resolved_params"]["actor_pending"]["selection_token"]
+    fresh = workflow.run_query(query, chat_id="fresh")
+    result = workflow.run_query(query, chat_id="yield")
+    params = result["resolved_params"]
+    assert params == purge_actor_state(params)
+    for key in ("dataset", "objeto", "ciudad", "departamento_resolved", "fecha_desde", "valor_min", "ordering_signal"):
+        assert (params.get(key) or None) == (fresh["resolved_params"].get(key) or None), key
+    assert "ACTOR ALFA" not in result["response"]
+    saved = workflow.conv_store.get_history("yield", last_n=1)[-1].parsed_params
+    assert saved == purge_actor_state(saved)
+    stale = workflow.select_actor_candidate(1, token, chat_id="yield")
+    assert stale["route_reason"] == "actor_selection_stale"
+
+
+@pytest.mark.parametrize("selection,base", [
+    ("1", "900111222"), ("el segundo", "900333444"),
+    ("ACTOR ALFA DOS", "900333444"),
+])
+def test_r7_pending_valid_selection_preserves_original_filters(tmp_path, selection, base):
+    workflow = _workflow(tmp_path, [
+        _row("NIT", "900111222", "ACTOR ALFA UNO", 9),
+        _row("NIT", "900333444", "ACTOR ALFA DOS", 8),
+    ])
+    first = workflow.run_query(
+        "contratos del proveedor ACTOR ALFA en 2024 por mayor valor", chat_id="valid",
+    )
+    candidates = first["resolved_params"]["actor_pending"]["candidates"]
+    if selection != "ACTOR ALFA DOS":
+        base = candidates[parse_actor_candidate_selection(selection) - 1]["base_number"]
+    result = workflow.run_query(selection, chat_id="valid")
+    params = result["resolved_params"]
+    assert params["actor_scope"]["base_number"] == base
+    assert params["actor_resolution_method"] == METHOD_USER_SELECTED_CANDIDATE
+    assert params["fecha_desde"] == "2024-01-01"
+    assert params["ordering_signal"] == "valor_desc"
+    assert not params.get("actor_pending")
+
+
+@pytest.mark.parametrize("selection", ["esa", "sí, ese", "no sé", "el actor alfa", "ACTOR ALFA"])
+def test_r7_ambiguous_pending_reply_never_selects_or_mutates_frame(tmp_path, selection):
+    workflow = _workflow(tmp_path, [
+        _row("NIT", "900111222", "ACTOR ALFA", 9),
+        _row("NIT", "900333444", "ACTOR ALFA", 8),
+    ])
+    first = workflow.run_query("busca proveedor ACTOR ALFA", chat_id="ambiguous")
+    result = workflow.run_query(selection, chat_id="ambiguous")
+    assert result["needs_clarification"]
+    assert not is_authoritative_actor_resolution(result["resolved_params"])
+    assert result["resolved_params"] == first["resolved_params"]
+
+
+@pytest.mark.parametrize("document", ["NIT 900739049", "CC 1020727022"])
+def test_r7_explicit_document_replaces_pending_using_existing_authority(tmp_path, document):
+    workflow = _workflow(tmp_path, [_row("NIT", "900111222", "ACTOR ALFA UNO")])
+    first = workflow.run_query("busca proveedor ACTOR ALFA", chat_id="document")
+    token = first["resolved_params"]["actor_pending"]["selection_token"]
+    result = workflow.run_query(document, chat_id="document")
+    params = result["resolved_params"]
+    assert params["actor_resolution_method"] == "explicit_document"
+    assert not params.get("actor_pending")
+    assert is_authoritative_actor_resolution(params)
+    assert workflow.select_actor_candidate(1, token, chat_id="document")["route_reason"] == "actor_selection_stale"
+
+
+def test_r7_document_sized_digits_are_not_candidate_ranks():
+    assert parse_actor_candidate_selection("900739049") is None
+    assert parse_actor_candidate_selection("1020727022") is None
+
+
+@pytest.mark.parametrize("candidates", [
+    None, 42, {}, [None],
+    [{"rank": [], "observed_name": "ACTOR"}],
+    [{"rank": 1, "observed_name": 42}],
+    [{"rank": True, "observed_name": "ACTOR"}],
+    [{"rank": 1, "observed_name": "ACTOR"}, {"rank": 1, "observed_name": "ACTOR"}],
+])
+def test_r7_text_selection_fails_closed_on_malformed_or_duplicate_candidates(candidates):
+    assert parse_actor_candidate_selection("ACTOR", candidates) is None
+
+
+@pytest.mark.parametrize("text", ["", " ", "..."])
+def test_r7_empty_text_never_selects_a_malformed_empty_name(text):
+    assert parse_actor_candidate_selection(text, [{"rank": 1, "observed_name": ""}]) is None
+
+
+def test_r7_search_shaped_candidate_name_cannot_capture_a_new_search(tmp_path):
+    workflow = _workflow(tmp_path, [_row("NIT", "900111222", "ACTOR ALFA")])
+    _append_pending_turn(workflow, "collision", status=ActorResolutionStatus.CANDIDATES)
+    params = workflow.conv_store.get_history("collision", last_n=1)[-1].parsed_params
+    query = "contratos de aseo en Barranquilla"
+    params["actor_pending"]["candidates"][0]["observed_name"] = query
+    workflow.conv_store.append_turn(
+        chat_id="collision", user_query="original", response="candidatos",
+        parsed_params=params, result_ids=[], trace_id="fixture",
+    )
+    result = workflow.run_query(query, chat_id="collision")
+    assert result["resolved_params"] == purge_actor_state(result["resolved_params"])
+    assert result["resolved_params"]["ciudad"] == "Barranquilla"
+    assert "aseo" in result["resolved_params"]["objeto"]
 
 
 def test_con_and_en_project_different_contextual_operations():

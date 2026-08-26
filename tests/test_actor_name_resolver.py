@@ -119,6 +119,52 @@ def test_exact_probe_never_returns_fuzzy_candidates(
     assert exact_only.candidates == ()
 
 
+@pytest.mark.parametrize("query", [
+    "lmp ingenieria", "lmp ingieneria", "lmp ingeneria", "lmp ingeniera",
+])
+def test_r7_typo_recall_survives_short_partial_bm25_competitors(tmp_path, query):
+    rows = [_row("NIT", "900739049", "LMP INGENIERIA SAS")]
+    rows += [
+        _row("NIT", f"901{i:06d}", f"LMP{chr(65+i)}") for i in range(25)
+    ]
+    resolver = ActorNameResolver(_build(tmp_path, rows))
+    result = resolver.resolve(query)
+    # FUZZY_TOP1_DOES_NOT_AUTO_RESOLVE: even with full near-token coverage.
+    assert result.status == ActorResolutionStatus.CANDIDATES
+    assert result.identity is None
+    assert result.candidates[0].identity == _nit("900739049")
+    assert len(result.candidates) <= ACTOR_RESOLUTION_TOP_K
+    assert resolver.resolve_exact(query).status == ActorResolutionStatus.UNRESOLVED
+
+
+def test_r7_exact_and_exact_ambiguity_bypass_fuzzy_entirely(tmp_path, monkeypatch):
+    resolver = ActorNameResolver(_build(tmp_path, [
+        _row("NIT", "900739049", "LMP INGENIERIA SAS"),
+        _row("NIT", "900111222", "LMP INGIENERIA"),
+        _row("NIT", "900333444", "LMP INGIENERIA"),
+    ]))
+
+    def forbidden(*args, **kwargs):
+        raise AssertionError("EXACT_DISPLACED_BY_FUZZY")
+
+    monkeypatch.setattr(resolver, "_fuzzy_candidates", forbidden)
+    assert resolver.resolve("LMP INGENIERIA SAS").identity == _nit("900739049")
+    ambiguous = resolver.resolve("lmp ingieneria")
+    assert ambiguous.status == ActorResolutionStatus.AMBIGUOUS
+    assert ambiguous.identity is None
+
+
+def test_r7_multiple_plausible_typo_candidates_remain_suggestions(tmp_path):
+    resolver = ActorNameResolver(_build(tmp_path, [
+        _row("NIT", "900739049", "LMP INGENIERIA SAS"),
+        _row("NIT", "900111222", "LMP INGENIERIA LTDA"),
+    ]))
+    result = resolver.resolve("lmp ingieneria")
+    assert result.status == ActorResolutionStatus.CANDIDATES
+    assert result.identity is None
+    assert len(result.candidates) == 2
+
+
 def test_exact_probe_preserves_exact_resolution_and_ambiguity(
     resolver: ActorNameResolver,
 ):

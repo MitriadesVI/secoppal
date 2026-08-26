@@ -5,16 +5,17 @@
 **Sistema:** SECOPPAL — asistente conversacional para consulta y análisis de contratación pública SECOP II  
 **Propósito del documento:** dejar una descripción comprensible para un tercero técnico o funcional sobre qué hace el sistema, cómo está construido, qué archivos lo componen, qué decisiones de arquitectura se han tomado, qué bugs relevantes se han detectado y cuál es el estado actual del proyecto.
 
-## Estado canónico actual — 2026-08-25
+## Estado canónico actual — 2026-08-26
 
-- **Main:** `8bd5467aa7aa203d55605a758eedc0bf18ca33b5` — **HCA-R6 Control
-  Language** (ADR-066) integrado ff-only sobre
+- **Main:** `39234f873fb345b9de72ded7092afacadfdd646c` — cierre docs-only R6
+  autorizado como base de R7. Integración funcional **HCA-R6 Control
+  Language** (ADR-066): `8bd5467aa7aa203d55605a758eedc0bf18ca33b5`, ff-only sobre
   `b661a09bfad5ecc180bab31aa9dc1a7e54d393aa`: un commit, sin commit de merge,
   **sin push**. Conserva HCA-R5 Time Semantics V2, el aislamiento del runner
   y HCA Core Remediation Fase 1 ya integrados.
 - **Integration review R6:** `PASS`; rama `feature/hca-r6-control-language`
-  conservada en el mismo commit. Sin cambios de runtime, tests u oráculos
-  durante esta revisión. Cierre documental en commit docs-only posterior,
+  conservada en `8bd5467`. Sin cambios de runtime, tests u oráculos
+  durante esta revisión. Cierre documental en commit docs-only `39234f8`,
   autorizado como base canónica de HCA-R7; `8bd5467` identifica la integración
   funcional de R6.
 - **Estado de cierre:** `HCA_CORE_PHASE_1: INTEGRATED` ·
@@ -54,7 +55,21 @@
   filas**, sin `LIKE '%ordenados%'`, orden correcto y **0 violaciones de
   filtros**. El desempate con fecha nula se contrastó con `NULLS FIRST/LAST`
   explícitos en Socrata; no se alteró el SoQL del runtime.
-- **Siguiente:** `READY_FOR_HCA_R7_ACTOR_HYGIENE`; HCA final sigue abierto.
+- **R7 en rama:** `feature/hca-r7-actor-hygiene` parte de `39234f8`;
+  **HCA_R7_ACTOR_HYGIENE: PASS · ACTOR_HYGIENE_V1: CLOSED**, pendiente de
+  integration review. **Sin merge ni push**; el estado de main sigue siendo R6.
+- **Validación R7:** suite completa **8641 passed, 2 skipped, 24 xfailed**;
+  focal **813 passed, 1 xfailed**, revisión final de pending **74 passed**
+  (subconjunto, no sumar); fixture actor **36/36**; adversarial **242/242**;
+  query **89/89**, dialogue **60/61** con el mismo `GOB-DEPTO-001`;
+  control **42/42**, tiempo **32/32**, negación **22/24** con los mismos dos
+  FAIL basales. Ruff cambiado, `lint-core` y diff-check limpios.
+- **HCA R7 frente a main:** **175/20/0 → 177/18/0 de 195**, mismo arnés offline
+  y corpus congelado; corregidos `HCA-ACTOR-011` y `HCA-META-002B`, **0 rotos**.
+  `HCA-ACTOR-004` sigue FAIL: exige scope antes de selección, aunque su texto
+  pide candidatos. El resultado conserva CANDIDATES y mejora LMP de rank 7 a 1;
+  no se cambia el oráculo ni se concede autoridad a fuzzy para ponerlo verde.
+- **Siguiente:** `READY_FOR_HCA_R7_INTEGRATION_REVIEW`; HCA final sigue abierto.
 
 ### Cierres acumulados
 
@@ -114,6 +129,22 @@
   conservan su complemento. HCA **171 → 175**, 0 rotos; focal 42/42;
   barrido adversarial original de R6: 516 comprobaciones, 0 fugas.
 
+- **`ACTOR_HYGIENE_V1`: CLOSED en rama R7**, aún no integrado en main.
+  Casing deja de ser evidencia de actor; los alias exactos y las menciones
+  explícitas conservan autoridad. Actor pending solo consume selecciones
+  plausibles: una nueva búsqueda usa el reemplazo completo del merger existente,
+  sin actor ni nonce residual; rango, ordinal y nombre exacto inequívoco siguen
+  seleccionando. FTS5/BM25 recupera un pool acotado de 100 identidades y ordena
+  por cobertura con ancla literal y como máximo un typo antes del top10.
+  **Fuzzy nunca resuelve identidad**; exactos, ambigüedad, CC/NIT, índice no
+  disponible y negación mantienen sus contratos. Con el índice actual el typo
+  histórico LMP estaba rank 7, no ausente: R7 lo lleva a rank 1. P50/P95 antes
+  → después (ms): exacto **0,165/0,270 → 0,163/0,218**; typo
+  **9,430/13,368 → 9,551/10,572**. Índice real immutable, hash intacto;
+  validación sin red, stores efímeros. No Actor Relationships, AP v2 ni ADR
+  duplicado. Autoridades, límites y evidencia en
+  `docs/audits/2026-08-26_HCA_R7_ACTOR_HYGIENE.md`.
+
 ### Deuda explícita — HCA **no** está completo
 
 - `TIME_AFTER_R5` — siguen fuera negación temporal ejecutable, NOT BETWEEN,
@@ -131,8 +162,9 @@
   `change_scope` no admite campos de topic y el merger hereda el anterior.
   Reproducido en `b661a09` y `8bd5467` — no es regresión de R6. Congelado como
   `xfail(strict=True)` en `tests/test_control_language.py`.
-- `ACTOR_HYGIENE` — `HCA-ACTOR-011` sigue FAIL basal; el arreglo general de
-  Actor Pending está reservado a HCA-R7 y **no** se coló en R4.
+- `ACTOR_HYGIENE_INTEGRATION` — el cierre R7 está validado en su rama;
+  falta integration review. `HCA-ACTOR-011` pasa allí y sigue FAIL en main R6
+  hasta que se autorice la integración.
 - `ORACLE_REVIEW` — `NEG-N15` (`VALID_DEFERRED`) y `NEG-ANTI-002`
   (`WRONG_ORACLE_CANDIDATE`) son **deuda de oráculo**, no bugs de runtime
   abiertos. `HCA-FOLLOWUP-016`: **`POTENTIAL_ORACLE_DEBT`**, confirmado como
@@ -143,9 +175,11 @@
   candidatos por la misma proyección. No se corrigieron los oráculos; el
   corpus HCA **no** se editó. El fixture pre-registrado `negation_focal_v1.yaml` (sha `f4f64a33…`,
   intacto) queda en 22 PASS / 2 FAIL; no se editó para fabricar 24/24.
+  R7 añade `HCA-ACTOR-004` a revisión: pide candidatos en sus notas pero exige
+  `actor_scope` en la aserción; la identidad no se autoriza hasta selección.
 - `SEMANTIC_AUTHORITY_CLEANUP` — pendiente.
 - `QUERY_PLAN_AT_LIMIT` — `app/core/query_plan.py` sigue en **299/300 LoC**;
-  R6 no lo tocó y no necesitó invocar la regla
+  R6 y R7 no lo tocaron ni necesitaron invocar la regla
   (`tests/test_module_size_limits.py`). Decisión: `ACCEPTED_AT_LIMIT`, sin
   refactor en este bloque. **`NEXT_TOUCH_RULE`:** cualquier nueva modificación
   funcional de `query_plan.py` debe extraer primero una responsabilidad

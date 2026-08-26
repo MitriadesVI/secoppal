@@ -378,7 +378,8 @@ def recognized_actor_modifier_tails(
     if params.get("ordering_signal"):
         spans.extend(match.span() for match in _ORDER_MODIFIER_RE.finditer(query))
     if params.get("valor_min") is not None or params.get("valor_max") is not None:
-        spans.extend(match.span() for match in _AMOUNT_MODIFIER_RE.finditer(query))
+        for match in _AMOUNT_MODIFIER_RE.finditer(query):
+            _append_span(spans, query, match.start(), match.end())
 
     geography_values: list[object] = []
     for key in (

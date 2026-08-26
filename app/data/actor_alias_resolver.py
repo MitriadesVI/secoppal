@@ -38,6 +38,10 @@ __all__ = [
 
 
 ACTOR_RESOLUTION_TOP_K = 10
+# Retrieval still uses the native index, never a fuzzy scan of identities.
+# Rerank BEFORE the user-visible cap, so short substring hits cannot evict a
+# complete name with one reasonable typo.
+ACTOR_CANDIDATE_POOL = 100
 _REQUIRED_TABLES = frozenset({
     "actor_aliases",
     "actor_aliases_fts",
@@ -169,7 +173,7 @@ class ActorNameResolver:
                     normalized_query=normalized_query,
                     method="no_exact_or_trigram_query",
                 )
-            candidates = self._fuzzy_candidates(connection, expression)
+            candidates = self._fuzzy_candidates(connection, expression, normalized_query)
             if not candidates:
                 return ActorResolutionResult(
                     status=ActorResolutionStatus.UNRESOLVED,
@@ -247,10 +251,12 @@ class ActorNameResolver:
         cls,
         connection: sqlite3.Connection,
         expression: str,
+        normalized_query: str,
     ) -> tuple[ActorResolutionCandidate, ...]:
         # MATERIALIZED fija el score BM25 por alias; ROW_NUMBER conserva el
         # mejor alias de cada IdentityKey antes del LIMIT. Top 10 significa así
-        # diez identidades distintas incluso si una tiene muchos aliases.
+        # identidades distintas incluso si una tiene muchos aliases. R7 retiene
+        # un pool acotado para ordenar por cobertura antes del top10 visible.
         rows = connection.execute(
             "WITH matches AS MATERIALIZED ("
             " SELECT a.alias_id,a.normalized_alias,a.raw_alias,a.raw_aliases_json,"
@@ -267,8 +273,13 @@ class ActorNameResolver:
             ")"
             " SELECT * FROM ranked WHERE identity_alias_rank = 1"
             " ORDER BY retrieval_score,alias_id LIMIT ?",
-            (expression, ACTOR_RESOLUTION_TOP_K),
+            (expression, ACTOR_CANDIDATE_POOL),
         ).fetchall()
+        tokens = tuple(token for token in normalized_query.split() if len(token) >= 3)
+        rows.sort(key=lambda row: (
+            _anchored_name_distance(tokens, str(row["normalized_alias"])),
+            float(row["retrieval_score"]), int(row["alias_id"]),
+        ))
         return tuple(
             cls._candidate(
                 cls._identity(row),
@@ -276,7 +287,7 @@ class ActorNameResolver:
                 rank=rank,
                 retrieval_score=float(row["retrieval_score"]),
             )
-            for rank, row in enumerate(rows, 1)
+            for rank, row in enumerate(rows[:ACTOR_RESOLUTION_TOP_K], 1)
         )
 
     @staticmethod
@@ -336,3 +347,45 @@ class ActorNameResolver:
             method="local_index",
             reason=reason,
         )
+
+
+def _anchored_name_distance(tokens: tuple[str, ...], alias: str) -> int:
+    """Rank evidence only: full token coverage, one literal anchor, <=1 typo.
+
+    No approximate matching of short tokens. A long token admits two edits
+    (including the historical ``ingieneria`` rotation); 5–6 letters admit one.
+    A partial hit keeps its BM25 order. This score NEVER resolves identity.
+    """
+    words = alias.split()
+    remaining = list(words)
+    missing = []
+    anchors = 0
+    for token in tokens:
+        if token in remaining:
+            anchors += 1
+            remaining.remove(token)
+        else:
+            missing.append(token)
+    if not missing:
+        return 0
+    if not anchors or len(missing) != 1 or len(missing[0]) < 5:
+        return 3
+    token = missing[0]
+    limit = 2 if len(token) >= 7 else 1
+    distance = min((_bounded_edit_distance(token, word, limit) for word in remaining), default=3)
+    return distance if distance <= limit else 3
+
+
+def _bounded_edit_distance(left: str, right: str, limit: int) -> int:
+    """Levenshtein on at most 100 retrieved aliases, with length/row cutoffs."""
+    if max(len(left), len(right)) > 64 or abs(len(left) - len(right)) > limit:
+        return limit + 1
+    previous = list(range(len(right) + 1))
+    for i, char in enumerate(left, 1):
+        current = [i]
+        for j, other in enumerate(right, 1):
+            current.append(min(current[-1] + 1, previous[j] + 1, previous[j - 1] + (char != other)))
+        if min(current) > limit:
+            return limit + 1
+        previous = current
+    return previous[-1]

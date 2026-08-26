@@ -114,6 +114,95 @@ def test_bare_exact_unique_becomes_actor_and_preserves_year_and_order(tmp_path):
     assert is_authoritative_actor_resolution(params)
 
 
+@pytest.mark.parametrize("casing", [str.lower, str.upper, str.title])
+def test_r7_structured_search_never_uses_case_as_actor_evidence(tmp_path, casing):
+    resolver = _resolver(tmp_path, [
+        _row("NIT", "900111222", "UNION TEMPORAL ASEO SCJ"),
+    ])
+    query = casing("contratos de aseo en barranquilla por más de 100 millones")
+    baseline = dict(QueryRouter().parse(query).params)
+    params = _resolve_action(query, resolver)
+    assert params == baseline
+    assert params["ciudad"] == "Barranquilla"
+    assert params["valor_min"] == 100_000_000
+    assert "aseo" in params["objeto"]
+    assert not params.get("actor_pending")
+
+
+@pytest.mark.parametrize("topic", [
+    "aseo", "mantenimiento", "servicios funerarios", "papelería",
+    "comedores comunitarios", "obra pública", "vías", "alimentación",
+])
+@pytest.mark.parametrize("casing", [str.lower, str.upper, str.title])
+def test_r7_natural_search_with_filters_cannot_seed_actor_fuzzy(tmp_path, topic, casing):
+    class ResolverMustNotRetrieve:
+        def resolve_exact(self, query):
+            from app.core.actor_name import ActorResolutionResult
+            return ActorResolutionResult(ActorResolutionStatus.UNRESOLVED, query)
+
+        def resolve(self, query):
+            raise AssertionError("SEARCH_TO_ACTOR_HIJACK")
+
+    query = casing(f"busca {topic} en Barranquilla por más de 100 millones")
+    params = _resolve_action(query, ResolverMustNotRetrieve())
+    assert not params.get("actor_scope")
+    assert not params.get("actor_pending")
+    assert params["valor_min"] == 100_000_000
+
+
+@pytest.mark.parametrize("query", [
+    "FUNSOCOM", "funsocom", "contratos de FUNSOCOM en 2026",
+    "contratos de FUNSOCOM por más de 500 millones",
+    "contratos del proveedor FUNSOCOM en Barranquilla",
+])
+def test_r7_bare_exact_actor_and_structured_filters_coexist(tmp_path, query):
+    resolver = _resolver(tmp_path, [_row("NIT", "900334689", "FUNSOCOM")])
+    params = _resolve_action(query, resolver)
+    assert is_authoritative_actor_resolution(params)
+    assert params["actor_scope"]["base_number"] == "900334689"
+    assert params["dataset"] == "contratos"
+    assert not params.get("objeto")
+    if "millones" in query:
+        assert params["valor_min"] == 500_000_000
+    if "2026" in query:
+        assert params["fecha_desde"] == "2026-01-01"
+    if "Barranquilla" in query:
+        assert params["ciudad"] == "Barranquilla"
+        assert not params.get("entidad_resolved")
+
+
+@pytest.mark.parametrize("prefix", ["", "contratos de "])
+@pytest.mark.parametrize("casing", [str.lower, str.upper, str.title])
+def test_r7_legal_name_with_domain_word_is_still_an_actor(tmp_path, prefix, casing):
+    name = "UNION TEMPORAL ASEO SCJ"
+    resolver = _resolver(tmp_path, [_row("NIT", "900111222", name)])
+    params = _resolve_action(casing(prefix + name), resolver)
+    assert is_authoritative_actor_resolution(params)
+    assert not params.get("actor_intent_conflict")
+    assert not params.get("objeto")
+
+
+@pytest.mark.parametrize("query", ["jorge verbel", "JORGE VERBEL", "Jorge Verbel"])
+def test_r7_bare_person_name_recovers_candidates_without_identity(tmp_path, query):
+    resolver = _resolver(tmp_path, [_row("CC", "1020727022", "JORGE LUIS VERBEL GARCIA")])
+    params = _resolve_action(query, resolver)
+    assert params["actor_resolution_status"] == ActorResolutionStatus.CANDIDATES
+    assert params["actor_pending"]["actor_name"] == "jorge verbel"
+    assert not is_authoritative_actor_resolution(params)
+    assert not params.get("contratista")
+
+
+def test_r7_bare_name_shape_requires_whole_token_index_evidence(tmp_path):
+    resolver = _resolver(tmp_path, [_row("NIT", "900111222", "CONQUISTA LA EXCLUSION SAS")])
+    query = "quita la exclusion"
+    baseline = dict(QueryRouter().parse(query).params)
+    assert _resolve_action(query, resolver) == baseline
+
+    query = "jorge verbel"
+    unrelated = _resolver(tmp_path, [_row("CC", "1020727022", "JORGE ALBERTO")])
+    assert _resolve_action(query, unrelated) == dict(QueryRouter().parse(query).params)
+
+
 @pytest.mark.parametrize(
     ("query", "expected_name"),
     [

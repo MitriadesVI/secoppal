@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import re
+from dataclasses import replace
 
 from burr.core import State, action
 
@@ -10,6 +11,7 @@ from app.core.actor_arbitration import (
     detect_bare_actor_probe,
     has_canonical_geography_evidence,
     has_entity_like_name_evidence,
+    has_strong_search_intent,
     has_strong_topic_evidence,
     scrub_strong_actor_leaks,
 )
@@ -83,6 +85,11 @@ def _parse_exact_boundary_modifier_suffix(
     from app.core.query_router import QueryRouter
 
     parsed = dict(QueryRouter().parse(f"contratos {suffix}").params)
+    # A city-to-buyer convenience projection is not an explicit buyer in the
+    # suffix. Keep its geography, without manufacturing an actor relationship.
+    if (parsed.get("entidad_resolution") or {}).get("method") == "city_to_entity":
+        for key in ("entidad", "entidad_resolved", "entidad_resolution", "entidad_like"):
+            parsed.pop(key, None)
     # Una entidad nombrada en el resto delata que el corte partió un nombre
     # propio por la mitad: las colas admisibles son fecha, orden, monto,
     # geografía, estado y modalidad, nunca una entidad.
@@ -104,7 +111,7 @@ def _parse_exact_boundary_modifier_suffix(
     writes=["parsed_params"],
 )
 def resolve_actor_name(state: State, actor_name_resolver: ActorNameResolver) -> State:
-    """Resolve strong mentions fully and bare names by exact lookup only."""
+    """Resolve exact identity or expose candidates after semantic arbitration."""
     # Negative ACTOR/BUYER spans are already bound. No directory probe,
     # candidate retrieval or actor_pending projection may run before the
     # fail-closed policy clarification.
@@ -231,6 +238,11 @@ def resolve_actor_name(state: State, actor_name_resolver: ActorNameResolver) -> 
         # miss, however, may be an uncovered actor and must not silently become
         # a morphology-expanded thematic answer.
         entity_like = has_entity_like_name_evidence(probe)
+        person_shape_only = probe.name_only and not has_entity_like_name_evidence(
+            replace(probe, name_only=False),
+        )
+        if has_strong_search_intent(raw_query, params) and not entity_like:
+            return state
         if has_strong_topic_evidence(probe.actor_name, params) and not entity_like:
             return state
         article_led_buyer = bool(re.match(
@@ -251,12 +263,22 @@ def resolve_actor_name(state: State, actor_name_resolver: ActorNameResolver) -> 
             return state
         if not entity_like:
             return state
+        if person_shape_only and result.status == ActorResolutionStatus.INDEX_UNAVAILABLE:
+            return state
+        if not params.get("dataset_explicit"):
+            params["dataset"] = "contratos"
         actor_name = probe.actor_name
         if result.status == ActorResolutionStatus.UNRESOLVED:
             # Independent entity-shaped evidence authorizes candidate
             # retrieval, but the candidates remain suggestions.  Retrieval
-            # itself is never used as evidence that the phrase was an actor.
+            # scores themselves never establish that the phrase was an actor.
             fuzzy = actor_name_resolver.resolve(actor_name)
+            if person_shape_only:
+                # A bare personal-name shape needs actual whole-token index
+                # evidence. Substrings/BM25 alone cannot establish intention.
+                words = set(actor_name.split()) - {"de", "del", "la", "las", "los", "el", "y"}
+                if not any(words <= set(c.matched_alias.split()) for c in fuzzy.candidates):
+                    return state
             if fuzzy.status in {
                 ActorResolutionStatus.CANDIDATES,
                 ActorResolutionStatus.AMBIGUOUS,
@@ -296,6 +318,8 @@ def resolve_actor_name(state: State, actor_name_resolver: ActorNameResolver) -> 
 
     baseline_params = params
     params = scrub_strong_actor_leaks(params, actor_name)
+    if not params.get("dataset_explicit"):
+        params["dataset"] = "contratos"
     params.pop("objeto", None)
     params.pop("objeto_phrases", None)
     projected = project_actor_resolution(
@@ -305,7 +329,10 @@ def resolve_actor_name(state: State, actor_name_resolver: ActorNameResolver) -> 
         original_query=raw_query,
         origin="bare_exact_probe",
     )
-    if has_strong_topic_evidence(probe.actor_name, baseline_params):
+    if (
+        has_strong_topic_evidence(probe.actor_name, baseline_params)
+        and not has_entity_like_name_evidence(probe)
+    ):
         # Restore baseline topic fields: neither interpretation won.  P17 will
         # ask whether X is the topic or the observed provider.
         for key in ("objeto", "objeto_phrases"):

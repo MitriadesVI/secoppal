@@ -33,6 +33,7 @@ def _require_production_index() -> Path:
 
 def _workflow(tmp_path: Path) -> SecopalWorkflow:
     workflow = SecopalWorkflow(Settings(
+        deepseek_api_key=None,
         secop_actor_alias_index_path=_require_production_index(),
         secop_feedback_path=tmp_path / "feedback.jsonl",
         secop_feedback_db_path=tmp_path / "feedback.sqlite",
@@ -40,6 +41,7 @@ def _workflow(tmp_path: Path) -> SecopalWorkflow:
     ))
     workflow.secop_client.query = lambda *args, **kwargs: []
     workflow.secop_client.count = lambda *args, **kwargs: 0
+    workflow.secop_client.aggregate = lambda *args, **kwargs: []
     workflow.narrator.narrate_with_grounding = lambda **kwargs: None
     return workflow
 
@@ -137,3 +139,14 @@ def test_d4_distinctive_actor_token_cannot_degrade_to_topic():
     }
     assert params.get("actor_pending", {}).get("actor_name") == "lmp ingieneria"
     assert params.get("objeto") in (None, [])
+
+
+@pytest.mark.parametrize("typo", ["ingenieria", "ingieneria", "ingeneria", "ingeniera"])
+def test_r7_real_lmp_top_candidate_is_never_identity_authority(typo):
+    params = _resolved_parse(f"contratos de lmp {typo} en 2025")
+    assert params["actor_resolution_status"] == ActorResolutionStatus.CANDIDATES
+    pending = params["actor_pending"]
+    first = pending["candidates"][0]
+    assert (first["document_type"], first["base_number"]) == ("NIT", "900739049")
+    assert not params.get("contratista")
+    assert params["fecha_desde"] == "2025-01-01"
