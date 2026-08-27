@@ -28,9 +28,53 @@ def _plain(text: str) -> str:
     return re.sub(r"\s+", " ", folded).strip(" ¿?¡!.,;:")
 
 
+# ── Paginación ───────────────────────────────────────────────────────────
+#
+# La gramática se compone de sus partes en vez de enumerar frases completas.
+# La versión anterior aceptaba "muéstrame los siguientes" y rechazaba
+# "muéstrame la siguiente página": la misma orden con otro sustantivo, que se
+# iba al extractor temático y consultaba `LIKE '%pagina%'` sobre el universo
+# heredado. Un hueco en una lista de frases, no en una regla.
+_PAGE_LEAD = (
+    r"(?:muestrame|muestreme|muestra|dame|damelos|damelas|traeme|trae|ver"
+    r"|pasa|pasame|continua|continuar|sigue|seguir)"
+)
+_PAGE_NEXT = r"(?:siguientes|siguiente|mas|proxim[oa]s?)"
+_PAGE_NOUN = r"(?:resultados?|paginas?|contratos?|procesos?|registros?)"
 _PAGINATION_CONTROL_RE = re.compile(
-    r"^(?:(?:muestra|muestrame|dame)\s+)?(?:los\s+)?siguientes(?:\s+resultados)?$|"
-    r"^(?:muestrame|muestra|dame|ver)\s+mas$|^(?:continuar|continua|sigue)$"
+    rf"^(?:{_PAGE_LEAD}\s+)?"
+    rf"(?:(?:a\s+la|con|hacia)\s+)?"
+    rf"(?:(?:los|las|el|la)\s+)?"
+    rf"{_PAGE_NEXT}"
+    rf"(?:\s+{_PAGE_NOUN})?$"
+    rf"|^(?:continuar|continua|sigue|seguir)$"
+)
+
+# ── Reinicio de contexto ─────────────────────────────────────────────────
+#
+# No existía. "limpia todos los filtros y empecemos de cero" conservaba Caldas
+# y 2024 y ejecutaba con las palabras de la orden como tema. Igual que arriba,
+# la gramática se compone: verbo de borrado + alcance, o una fórmula de
+# empezar otra vez, opcionalmente coordinadas.
+_RESET_VERB = (
+    r"(?:limpia|limpiar|limpiame|borra|borrar|borrame|elimina|eliminar"
+    r"|quita|quitar|quitalo|quitalos|quitame|reinicia|reiniciar|resetea|resetear)"
+)
+_RESET_ALL = r"(?:todos|todas|todo|toda)"
+_RESET_NOUN = r"(?:filtros?|criterios?|busqueda|consulta|contexto)"
+_RESET_START_OVER = (
+    r"(?:empecemos|empezemos|empezamos|comencemos|comenzamos|empezar|comenzar"
+    r"|arranquemos|arrancar)"
+    r"\s+(?:de\s+cero|desde\s+cero|de\s+nuevo|otra\s+vez)"
+)
+_RESET_CORE = (
+    rf"(?:{_RESET_VERB}(?:\s+{_RESET_ALL})?(?:\s+(?:los|las|el|la))?\s+{_RESET_NOUN})"
+    rf"|(?:{_RESET_VERB}\s+{_RESET_ALL})"
+    rf"|(?:{_RESET_START_OVER})"
+    rf"|(?:(?:nueva|otra)\s+busqueda)"
+)
+_RESET_CONTROL_RE = re.compile(
+    rf"^(?:ahora\s+)?(?:{_RESET_CORE})(?:\s+(?:y|e)\s+(?:{_RESET_CORE}))?$"
 )
 _REMOVE_RANGE_RE = re.compile(
     r"^(?:ahora\s+)?(?:quita|quitar|elimina|eliminar|borra|borrar)\s+"
@@ -68,10 +112,33 @@ def requested_clear_fields(text: str) -> frozenset[str]:
     return frozenset()
 
 
+def is_pure_navigation_turn(text: str) -> bool:
+    """True cuando el turno ENTERO es una orden de navegar o reiniciar.
+
+    Lo consume el parser para no fabricar un tema con las palabras de la orden.
+    Qué hacer con la orden sigue siendo autoridad de la capa conversacional:
+    esto solo garantiza que "muéstrame la siguiente página" no viaje como
+    ``LIKE '%pagina%'`` mientras tanto.
+    """
+    norm = _plain(text)
+    return bool(
+        _PAGINATION_CONTROL_RE.fullmatch(norm) or _RESET_CONTROL_RE.fullmatch(norm)
+    )
+
+
+def requests_context_reset(text: str) -> bool:
+    """True cuando el turno pide empezar de cero, no refinar."""
+    return bool(_RESET_CONTROL_RE.fullmatch(_plain(text)))
+
+
 def classify_control_intent(text: str, current_params: dict[str, Any]) -> str | None:
     norm = _plain(text)
     if _PAGINATION_CONTROL_RE.fullmatch(norm):
         return "pagination_more"
+    # Antes que cualquier borrado de campo concreto: "borra los filtros" no
+    # nombra un campo, los nombra todos.
+    if _RESET_CONTROL_RE.fullmatch(norm):
+        return "reset_context"
     # OBJECT exclusion removal is context-sensitive: a bare "quita X" is a
     # negative mutation only when X matches a persisted exclusion.  The
     # lifecycle classifier authorizes that operation and supplies an explicit
@@ -101,6 +168,7 @@ def is_control_only_turn(text: str, parsed_delta: dict[str, Any]) -> bool:
     norm = _plain(text)
     return bool(
         _PAGINATION_CONTROL_RE.fullmatch(norm)
+        or _RESET_CONTROL_RE.fullmatch(norm)
         or _REMOVE_RANGE_RE.fullmatch(norm)
         or _REMOVE_DATE_RE.fullmatch(norm)
         or _REMOVE_STATE_RE.fullmatch(norm)

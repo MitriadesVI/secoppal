@@ -118,6 +118,9 @@ MUTATION_POLICIES: dict[str, MutationPolicy] = {
         }),
         transition_cleanup="normalize_topic_transition",
     ),
+    # Un reinicio no acepta nada del turno: la orden es borrar, y las palabras
+    # de la orden no son contenido.
+    "reset_context": MutationPolicy(frozenset()),
     "unclear": MutationPolicy(frozenset()),
 }
 
@@ -240,12 +243,24 @@ def _normalize_filter_for_dataset(
     if not family_name or dataset not in {"procesos", "contratos"}:
         return accepted
 
-    from app.core.estado_families import ESTADO_FAMILIES
+    from app.core.estado_families import ESTADO_FAMILIES, rebase_family_to_dataset
 
-    dataset_filters = ESTADO_FAMILIES.get(str(family_name), {}).get(str(dataset), {})
-    filters = {key: list(values) for key, values in dataset_filters.items() if values}
+    def _project(name: str) -> dict[str, list[str]]:
+        declared = ESTADO_FAMILIES.get(name, {}).get(str(dataset), {})
+        return {key: list(values) for key, values in declared.items() if values}
+
+    filters = _project(str(family_name))
     if not filters:
-        return accepted
+        # La familia no existe en el dataset heredado. Conservarla dejaría los
+        # campos del otro dataset colgando de la consulta; releerla en este
+        # ciclo de vida devuelve la misma petición del usuario.
+        rebased = rebase_family_to_dataset(str(family_name), str(dataset))
+        if rebased == family_name:
+            return accepted
+        family_name = rebased
+        filters = _project(rebased)
+        if not filters:
+            return accepted
 
     normalized = {key: value for key, value in accepted.items() if key not in STATE_FIELDS}
     normalized["estado_family"] = family_name

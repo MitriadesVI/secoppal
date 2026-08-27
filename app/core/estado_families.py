@@ -135,10 +135,6 @@ NATURAL_TO_FAMILY = {
     "convocadas": "oferta_abierta",
     "borrador": "oferta_abierta",
     "borradores": "oferta_abierta",
-    "vigente": "oferta_abierta",
-    "vigentes": "oferta_abierta",
-    "disponible": "oferta_abierta",
-    "disponibles": "oferta_abierta",
     # ── multi-word tokens ──
     "en convocatoria": "oferta_abierta",
     "en borrador": "oferta_abierta",
@@ -151,10 +147,6 @@ NATURAL_TO_FAMILY = {
     "ejecucion": "contrato_activo",
     "ejecutando": "contrato_activo",
     "en ejecucion": "contrato_activo",
-    "activo": "contrato_activo",
-    "activos": "contrato_activo",
-    "vigente": "contrato_activo",       # en dataset procesos
-    "vigentes": "contrato_activo",
     # ── contrato_cerrado ──
     "cerrado": "contrato_cerrado",
     "cerrados": "contrato_cerrado",
@@ -182,6 +174,58 @@ NATURAL_TO_FAMILY = {
     "suspendida": "no_procede",
     "revocado": "no_procede",
 }
+
+
+# ── Vocabulario de VIGENCIA: la familia depende del dataset ──────────────
+#
+# INV-LIVENESS-STATE-IS-DATASET-AWARE (HCA fresh, FRESH-STATE-002).
+#
+# "vigente", "activo" y "disponible" no nombran ningún estado de SECOP: dicen
+# que la cosa está viva AHORA. Qué significa "vivo" depende de qué se mira.
+# Un proceso vivo todavía recibe ofertas (``oferta_abierta``); un contrato vivo
+# ya se firmó y se está ejecutando (``contrato_activo``). Son la MISMA petición
+# proyectada sobre dos ciclos de vida distintos.
+#
+# Antes esto se escribía como dos entradas del mismo literal en
+# ``NATURAL_TO_FAMILY``. Python conservaba la última en silencio, así que
+# "oportunidades vigentes" —una consulta sobre procesos— se proyectaba como
+# ``estado_de_apertura_del_proceso='Cerrado'`` + ``estado_del_procedimiento=
+# 'Seleccionado'``: literalmente el complemento de lo pedido, con la etiqueta
+# ``estado_family='oferta_abierta'`` encima. El canario vivo lo cazó como
+# violación de contrato semántico con cero violaciones de filtro duro.
+#
+# La familia se declara completa (todas las flexiones del mismo lema) para que
+# el comportamiento no dependa de qué forma escribió el usuario.
+LIVENESS_TOKENS: tuple[str, ...] = (
+    "vigente", "vigentes",
+    "activo", "activos", "activa", "activas",
+    "disponible", "disponibles",
+)
+
+DATASET_AWARE_FAMILY: dict[str, dict[str, str]] = {
+    token: {"procesos": "oferta_abierta", "contratos": "contrato_activo"}
+    for token in LIVENESS_TOKENS
+}
+
+LIVENESS_FAMILY_BY_DATASET: dict[str, str] = {
+    "procesos": "oferta_abierta",
+    "contratos": "contrato_activo",
+}
+_LIVENESS_FAMILIES = frozenset(LIVENESS_FAMILY_BY_DATASET.values())
+
+
+def rebase_family_to_dataset(family: str, dataset: str) -> str:
+    """Relee una familia de vigencia en el ciclo de vida de ``dataset``.
+
+    Solo tiene sentido cuando la familia declarada NO proyecta nada sobre el
+    dataset heredado: "solo los activos" sobre una conversación de contratos se
+    parsea sin contexto como ``oferta_abierta``, que en contratos no existe.
+    Conservarla dejaría filtros de procesos colgando de una consulta de
+    contratos; traducirla devuelve lo que el usuario pidió.
+    """
+    if family not in _LIVENESS_FAMILIES:
+        return family
+    return LIVENESS_FAMILY_BY_DATASET.get(dataset, family)
 
 
 # ── Estado LÉXICO EXACTO vs FAMILIA SEMÁNTICA ────────────────────────────
@@ -279,7 +323,13 @@ def resolve_estado(natural_token: str, dataset: str) -> dict | None:
                 "kind": "exact",
             }
 
-    family_name = NATURAL_TO_FAMILY.get(token_lower)
+    # Vigencia: misma petición, proyección distinta según el ciclo de vida.
+    dataset_aware = DATASET_AWARE_FAMILY.get(token_lower)
+    family_name = (
+        dataset_aware.get(dataset)
+        if dataset_aware is not None
+        else NATURAL_TO_FAMILY.get(token_lower)
+    )
     if family_name is None:
         return None
 
@@ -316,7 +366,7 @@ def detect_estado_family(normalized_query: str, dataset: str) -> dict | None:
     consumed span can be scrubbed from the query before object extraction.
     """
     # Check multi-word tokens first (longest match wins)
-    known_tokens = {*NATURAL_TO_FAMILY, *LEXICAL_EXACT_STATE}
+    known_tokens = {*NATURAL_TO_FAMILY, *LEXICAL_EXACT_STATE, *DATASET_AWARE_FAMILY}
     for multi_token in sorted(known_tokens, key=len, reverse=True):
         if " " not in multi_token:
             continue

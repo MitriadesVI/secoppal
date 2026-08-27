@@ -389,7 +389,14 @@ def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
         outcome, outcome_reason = Outcome.SUCCESS, OutcomeReason.RESULTS_FOUND
     else:
         outcome, outcome_reason = classify_outcome(
-            clarification_requested=(qp_should_execute is False),
+            # Una aclaración decidida ANTES de planear —contexto perdido, o un
+            # reinicio explícito— no deja `query_plan`, así que no se veía aquí
+            # y el turno acababa clasificado como "0 tras refinamiento". El
+            # mensaje de recuperación decía entonces que un filtro había vaciado
+            # la búsqueda: exactamente lo contrario de lo que pasó.
+            clarification_requested=(
+                qp_should_execute is False or bool(result.get("needs_clarification"))
+            ),
             query_failed=bool(result.get("query_error")),
             query_timed_out=bool(result.get("risk_flag_timeout")),
             count_approximate=bool(result.get("total_count_approximate")),

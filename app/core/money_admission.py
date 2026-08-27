@@ -35,6 +35,7 @@ Puro, determinista, sin estado, sin I/O.
 from __future__ import annotations
 
 import re
+from enum import Enum
 
 from app.utils.money import (
     CURRENCY_MARKER_PATTERN,
@@ -45,8 +46,12 @@ from app.utils.money import (
 
 __all__ = [
     "MIN_BARE_AMOUNT_COP",
+    "RANGE_PARTIAL_CLARIFICATION",
+    "RangeVerdict",
+    "admit_range",
     "has_explicit_monetary_evidence",
     "is_admissible_amount",
+    "shared_currency_marker",
 ]
 
 # Piso anti-ruido histórico. Sigue vigente, pero solo para cifras SIN unidad
@@ -75,3 +80,69 @@ def is_admissible_amount(amount: int | None, span: str) -> bool:
     if has_explicit_monetary_evidence(span):
         return True
     return amount >= MIN_BARE_AMOUNT_COP
+
+
+# ── Rangos explícitos ────────────────────────────────────────────────────
+#
+# INV-MONEY-RANGE-ATOMIC
+# ----------------------
+# Un rango con dos extremos declarados se aplica ENTERO o no se aplica. Nunca
+# se degrada a una cota unilateral.
+#
+# El caso que obligó a escribirlo: "entre 120 mil y 350 mil pesos". El bloque
+# de rango es todo-o-nada, así que al rechazar el extremo bajo descartaba el
+# rango completo… y un bucle genérico posterior volvía a leer el texto y fijaba
+# solo ``valor_max``. El usuario pedía un intervalo y recibía un techo sin
+# piso, sin ninguna señal de que la mitad de su petición se había perdido. Un
+# techo sin piso no es "menos preciso": es otra pregunta, y devuelve resultados
+# perfectamente plausibles por debajo de lo que el usuario quería ver.
+
+_CURRENCY_MARKER_RE = re.compile(CURRENCY_MARKER_PATTERN, re.IGNORECASE)
+
+
+class RangeVerdict(str, Enum):
+    """Qué puede hacerse con un rango de dos extremos ya convertidos."""
+
+    EXECUTE = "EXECUTE"   # los dos extremos son admisibles
+    BLOCK = "BLOCK"       # exactamente uno lo es → pedir precisión, no ejecutar
+    ABSENT = "ABSENT"     # ninguno lo es → el rango no era monetario
+
+
+def shared_currency_marker(*spans: str) -> str:
+    """Marcador de moneda que gobierna TODOS los operandos del rango.
+
+    El español lo escribe una sola vez, al final: "entre 120 mil y 350 mil
+    **pesos**". Leerlo como propiedad exclusiva del operando que lo lleva
+    literalmente deja al otro desnudo, bajo el piso anti-ruido, y convierte un
+    intervalo en una cota. La coordinación distribuye la unidad; el parser
+    también debe hacerlo.
+    """
+    for span in spans:
+        match = _CURRENCY_MARKER_RE.search(normalize_text(span or ""))
+        if match:
+            return match.group(0)
+    return ""
+
+
+def admit_range(
+    low_amount: int | None,
+    low_span: str,
+    high_amount: int | None,
+    high_span: str,
+) -> RangeVerdict:
+    """Decide el destino de un rango explícito, sin aplicarlo a medias."""
+    marker = shared_currency_marker(low_span, high_span)
+    low_ok = is_admissible_amount(low_amount, f"{low_span} {marker}")
+    high_ok = is_admissible_amount(high_amount, f"{high_span} {marker}")
+    if low_ok and high_ok:
+        return RangeVerdict.EXECUTE
+    if low_ok or high_ok:
+        return RangeVerdict.BLOCK
+    return RangeVerdict.ABSENT
+
+
+RANGE_PARTIAL_CLARIFICATION = (
+    "Entendí que quieres un rango de valor en \"{span}\", pero solo pude "
+    "interpretar uno de los dos extremos. Dime los dos con su unidad "
+    "—por ejemplo \"entre 120 mil pesos y 350 mil pesos\"— y lo aplico completo."
+)

@@ -18,8 +18,8 @@ from app.core.negation_markers import (
     find_dimensional_negative_markers,
 )
 from app.core.query_text_consumption import mask_consumed_spans
+from app.core.state_vocabulary import STATE_ALTERNATION, find_state_spans
 from app.data.departamentos import DEPARTAMENTOS
-from app.data.estados import ESTADO_SYNONYMS
 
 
 class NegationDimension(str, Enum):
@@ -143,10 +143,12 @@ _CONTRACT_TYPE_RE = re.compile(
     r"convenios?(?:\s+interadministrativos?|\s+solidarios?)?)\b",
     re.IGNORECASE,
 )
+# El reconocimiento de estado no puede depender de qué catálogo importó esta
+# capa: ``ESTADO_SYNONYMS`` no incluye ``estado_del_procedimiento``, así que
+# "publicados" y "adjudicados" no eran estado aquí y sí en el extractor
+# positivo. La autoridad léxica es única.
 _STATE_RE = re.compile(
-    r"\b(?:estado\s+)?(?:" + "|".join(
-        sorted((re.escape(alias) for alias in ESTADO_SYNONYMS), key=len, reverse=True)
-    ) + r")\b",
+    rf"\b(?:estado\s+)?(?:{STATE_ALTERNATION})\b",
     re.IGNORECASE,
 )
 _MONEY_POLARITY_RE = re.compile(
@@ -162,11 +164,50 @@ _NEGATED_MONEY_COMPARATOR_RE = re.compile(
 _SINO_RE = re.compile(r"\bsino(?:\s+tambien)?\b", re.IGNORECASE)
 _STRONG_BOUNDARY_RE = re.compile(r"[.;:?!\n\r]|\bpero\b", re.IGNORECASE)
 _NI_RE = re.compile(r"\s*,?\s*\bni\b\s*", re.IGNORECASE)
+# ── Gramática de la negación, no vocabulario semántico ───────────────────
+#
+# "no estén abiertos" es LA forma canónica de negar un atributo en español:
+# marcador + cópula + atributo. La cópula no aporta contenido; solo enlaza.
+#
+# Cuando el paradigma estaba a medias —``sea`` y ``sean`` sí, ``estén`` no—
+# el clasificador leía "estén" como residuo libre, concluía que la negación
+# hablaba de un OBJETO y **cortaba el span justo antes del atributo**. El
+# atributo quedaba suelto y el extractor positivo lo consumía: el usuario
+# pedía excluir X y recibía exactamente y solo X.
+#
+# El paradigma se declara CERRADO y completo (ser/estar en las formas que
+# introducen un atributo). No crece con el uso: es morfología, no catálogo.
+_COPULA_PARADIGM: tuple[str, ...] = (
+    # estar
+    "estar", "estando",
+    "esta", "estas", "estan", "este", "estes", "esten",
+    "estaba", "estabas", "estaban",
+    "estara", "estaran", "estare",
+    "estuvo", "estuvieron", "estuviera", "estuvieran", "estuviese", "estuviesen",
+    # ser
+    "ser", "siendo",
+    "es", "son", "sea", "seas", "sean",
+    "era", "eran",
+    "fue", "fueron", "fuera", "fueran", "fuese", "fuesen",
+    "sera", "seran",
+    # perífrasis de resultado ("no resulten adjudicados")
+    "resulte", "resulten", "resulto", "resultaron",
+    "quede", "queden", "quedo", "quedaron",
+)
+
+_GRAMMAR_WORDS: tuple[str, ...] = (
+    "de", "del", "en", "para", "la", "el", "las", "los", "al", "que",
+    *_COPULA_PARADIGM,
+)
+_GRAMMAR_ALTERNATION = "|".join(
+    sorted((re.escape(word) for word in _GRAMMAR_WORDS), key=len, reverse=True)
+)
+
 _LEADING_GRAMMAR_RE = re.compile(
-    r"^(?:(?:de|del|en|para|la|el|las|los|al|que)\s+)+", re.IGNORECASE,
+    rf"^(?:(?:{_GRAMMAR_ALTERNATION})\s+)+", re.IGNORECASE,
 )
 _ONLY_GRAMMAR_RE = re.compile(
-    r"^(?:(?:de|del|en|para|la|el|las|los|al|que|sean|sea)\s*)*$", re.IGNORECASE,
+    rf"^(?:(?:{_GRAMMAR_ALTERNATION})\s*)*$", re.IGNORECASE,
 )
 
 
@@ -190,6 +231,7 @@ def _trim_span(
         NegationDimension.DEPARTMENT,
         NegationDimension.BUYER,
         NegationDimension.TIME,
+        NegationDimension.STATE,
     }:
         match = _LEADING_GRAMMAR_RE.match(text[start:end])
         if match:
@@ -254,9 +296,15 @@ def _classify_target(
     structured = _first_structured_candidate(target, city_pattern=city_pattern)
     if structured is None:
         return NegationDimension.OBJECT, target_end
-    dimension, local_start, _ = structured
+    dimension, local_start, local_end = structured
     prefix = target[:local_start].strip(" ,")
     if not prefix or _ONLY_GRAMMAR_RE.fullmatch(prefix):
+        if dimension is NegationDimension.STATE:
+            # Un estado nombra un literal cerrado y se delimita solo. Lo que
+            # viene después abre una dimensión positiva nueva: en "que no
+            # estén adjudicados en Caldas", Caldas sigue siendo el territorio
+            # de la búsqueda, no parte de lo excluido.
+            return dimension, target_start + local_end
         return dimension, target_end
     # A free residual immediately following the marker owns the negation.  A
     # later resolved span starts a positive dimension and is not crossed.
@@ -322,6 +370,52 @@ def _modality_targets(
     return tuple(selected)
 
 
+def _seal_negated_state(
+    text: str,
+    regions: Iterable[tuple[int, int, NegativeMarker]],
+    requests: list[NegationRequest],
+    mask_spans: list[tuple[int, int]],
+) -> None:
+    """INV-NO-SILENT-SEMANTIC-FALLBACK, aplicado a la polaridad de estado.
+
+    Ninguna forma de estado que caiga bajo el alcance de un marcador negativo
+    puede quedar libre para el extractor positivo. El motivo por el que quedó
+    libre da igual —una gramática que esta capa no supo leer, un reparto de
+    dimensiones, un ``ni`` que abre un segundo atributo—: liberarla no produce
+    un resultado de más, produce **el complemento exacto de lo pedido**, que
+    es indistinguible de una respuesta correcta.
+
+    Esta es la garantía de propiedad, no de catálogo: opera sobre el alcance
+    del marcador, así que también cubre las formas que nadie enumeró.
+    """
+    covered: list[tuple[int, int]] = list(mask_spans)
+    for region_start, region_end, marker in regions:
+        if region_end <= region_start:
+            continue
+        for local_start, local_end in find_state_spans(text[region_start:region_end]):
+            span = (region_start + local_start, region_start + local_end)
+            if any(_overlaps(span, existing) for existing in covered):
+                continue
+            value_start, value_end = _trim_span(
+                text, span[0], span[1], NegationDimension.STATE,
+            )
+            if value_start >= value_end:
+                continue
+            requests.append(NegationRequest(
+                dimension=NegationDimension.STATE,
+                value=text[value_start:value_end],
+                value_start=value_start,
+                value_end=value_end,
+                marker=marker.text,
+                marker_start=marker.start,
+                marker_end=marker.end,
+                verdict=NegationVerdict.DEFER,
+                context="state_span_sealed",
+            ))
+            covered.append(span)
+            mask_spans.append(span)
+
+
 def bind_negations(
     text: str,
     *,
@@ -340,8 +434,15 @@ def bind_negations(
     requests: list[NegationRequest] = []
     mask_spans: list[tuple[int, int]] = []
 
+    governed_regions: list[tuple[int, int, NegativeMarker]] = []
+
     for index, marker in enumerate(markers):
         next_start = markers[index + 1].start if index + 1 < len(markers) else len(text)
+        # Alcance CRUDO del marcador, antes de repartir dimensiones. Es la
+        # referencia del sello de estado: da igual cómo acabe repartido, nada
+        # de aquí dentro puede llegar al extractor positivo de estado.
+        raw_end, sino_span = _target_end(text, marker, next_start)
+        governed_regions.append((marker.end, raw_end, marker))
         modality_targets = _modality_targets(text, marker, modality)
         if modality_targets:
             for start, end in modality_targets:
@@ -359,7 +460,7 @@ def bind_negations(
             mask_spans.append((marker.start, modality_targets[-1][1]))
             continue
 
-        end, sino_span = _target_end(text, marker, next_start)
+        end = raw_end
         raw_start = marker.end
         if not text[raw_start:end].strip(" ,"):
             continue
@@ -416,6 +517,8 @@ def bind_negations(
             mask_spans.append((mask_start, end))
             if sino_span is not None:
                 mask_spans.append(sino_span)
+
+    _seal_negated_state(text, governed_regions, requests, mask_spans)
 
     merged_mask_spans = tuple(sorted(set(mask_spans)))
     return NegationBinding(

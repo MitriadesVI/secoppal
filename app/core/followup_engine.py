@@ -66,7 +66,7 @@ FOLLOWUP_INTENTS = frozenset({
     "change_order", "change_scope", "change_dataset",
     "remove_filter", "replace_topic", "refine_topic", "exclude_topic",
     "contextual_requery", "suggestion_selection", "explain_result",
-    "new_search", "unclear",
+    "new_search", "reset_context", "unclear",
 })
 
 
@@ -875,6 +875,20 @@ def _merge_new_search(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
     )
 
 
+def _merge_reset_context(prev: QueryFrame, curr: QueryFrame) -> QueryFrame:
+    """No hereda nada y no acepta nada. El usuario pidió empezar de cero.
+
+    Deliberadamente NO ejecuta una búsqueda global: un marco vacío no supera el
+    guard de contexto y el turno termina preguntando qué buscar. Eso es lo que
+    el usuario pidió — borrar —, no un universo entero devuelto por descuido.
+    """
+    return QueryFrame(
+        dataset=curr.dataset or prev.dataset,
+        dataset_explicit=False,
+        intent_type="reset_context",
+    )
+
+
 # ── Mapa de políticas ─────────────────────────────────────────────────────
 
 _MERGE_POLICIES: dict[str, callable] = {
@@ -890,6 +904,7 @@ _MERGE_POLICIES: dict[str, callable] = {
     "exclude_topic":        _merge_refine_filter,
     "contextual_requery":   _merge_contextual_requery,
     "new_search":           _merge_new_search,
+    "reset_context":        _merge_reset_context,
     "unclear":              _merge_refine_filter,
 }
 

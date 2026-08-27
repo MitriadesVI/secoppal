@@ -46,7 +46,6 @@ _CMD_PREFIX = r"^(filtra|filtrar|filtre|ordena|ordenar|mu[eé]strame|ord[eé]nam
 # R1: slots detectables (departamento, ciudad, etc.)
 _SLOT_WORDS = {
     "departamento": "departamento",
-    "departamento": "departamento",
     "ciudad": "ciudad",
     "entidad": "entidad",
     "valor": "valor",

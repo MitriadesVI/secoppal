@@ -29,18 +29,88 @@ COMMON_TOKENS = {
     "construccion", "construcción", "rehabilitacion", "rehabilitación",
 }
 
-# Sprint 5 — PROCUREMENT-ACTION-001
-# Verbos de acción contractual que NO son objeto de contratación.
-# Deben eliminarse del objeto cuando aparecen junto con sustantivos reales.
-# Si la query solo contiene estos verbos (sin sustantivos), se mantienen.
-ACTION_VERBS: frozenset[str] = frozenset({
+# ── Acción de compra: quién la ejerce, no qué se compra ─────────────────
+#
+# Sprint 5 — PROCUREMENT-ACTION-001, revisado por HCA fresh.
+#
+# La lista original mezclaba dos cosas que se comportan distinto:
+#
+#   NOMINALIZACIONES ("contratación", "adquisición", "compras") sí pueden ser
+#   el tema de una consulta: "oportunidades de contratación" pregunta por eso.
+#   Por eso solo se descartan cuando la consulta trae además sustantivos
+#   reales — la regla conservadora que ya existía.
+#
+#   FORMAS CONJUGADAS ("compró", "adquirió", "celebró", "suscribió") no pueden
+#   serlo NUNCA. Un verbo conjugado no es un objeto contractual en ninguna
+#   lectura del español; es el predicado cuyo sujeto es el comprador.
+#
+# Tratarlas igual producía dos fallos opuestos según qué más hubiera en la
+# frase: "qué compró la alcaldía para salud" perdía el verbo por suerte (había
+# un sustantivo), y "qué celebró la alcaldía en 2025" lo conservaba como tema y
+# consultaba `LIKE '%celebro%'`. El criterio ahora es morfológico, no de
+# catálogo: si está conjugado, no es tema.
+#
+# Los lemas se declaran completos. Deliberadamente FUERA: "pagar"/"pago" e
+# "invertir"/"inversión", cuyas formas nominales son objetos contractuales
+# frecuentes y cuya ambigüedad no compensa; y "contrató", que al normalizar
+# pierde la tilde y colisiona con el sustantivo "contrato".
+PROCUREMENT_ACTION_NOUNS: frozenset[str] = frozenset({
     "adquisicion", "adquisición", "adquisiciones",
     "compra", "compras", "comprar",
     "contratar", "contratacion", "contratación", "contrataciones",
     "contractual", "contractuales",
-    # DOGFOOD-G: "qué contratos celebraron" — el verbo no es objeto contractual
-    "celebrar", "celebro", "celebró", "celebraron",
+    "adquirir", "celebrar", "suscribir", "gastar",
 })
+
+PROCUREMENT_ACTION_VERB_FORMS: frozenset[str] = frozenset({
+    # comprar
+    "compro", "compró", "compraron", "compraba", "compraban",
+    # adquirir
+    "adquirio", "adquirió", "adquirieron", "adquiere", "adquieren",
+    # celebrar  (DOGFOOD-G: "qué contratos celebraron")
+    "celebro", "celebró", "celebraron", "celebra", "celebran",
+    # suscribir
+    "suscribio", "suscribió", "suscribieron", "suscribe", "suscriben",
+    # gastar
+    "gasto", "gastó", "gastaron", "gasta", "gastan",
+})
+
+# Compatibilidad: los consumidores que solo preguntan "¿es acción de compra?".
+ACTION_VERBS: frozenset[str] = PROCUREMENT_ACTION_NOUNS | PROCUREMENT_ACTION_VERB_FORMS
+
+# Una acción de compra en PASADO describe una compra ya ejecutada, y eso vive
+# en contratos, no en procesos. Se comprueba con frontera de palabra: la tupla
+# de señales de dataset usa `in`, y "compro" es subcadena de "comprobante".
+PAST_PROCUREMENT_ACTION_RE = re.compile(
+    r"\b(?:compr[oó]|compraron"
+    r"|adquiri[oó]|adquirieron"
+    r"|celebr[oó]|celebraron"
+    r"|suscribi[oó]|suscribieron"
+    r"|gast[oó]|gastaron)\b",
+    re.IGNORECASE,
+)
+
+# ── Familia de intención de participación ────────────────────────────────
+#
+# "necesito participar" activaba la familia de oferta abierta y "necesito
+# licitar" no. Es la misma intención —quiero presentarme a un proceso— con otro
+# verbo, y la diferencia venía de que una alternancia del patrón enumeraba unos
+# verbos y otra alternancia enumeraba otros.
+#
+# La familia se declara UNA vez y todas las ramas se construyen desde ella, así
+# que ninguna puede volver a quedarse corta respecto de las demás.
+BIDDER_PARTICIPATION_VERBS: tuple[str, ...] = (
+    "presentarme", "presentarse", "presentar",
+    "participar",
+    "ofertar",
+    "licitar",
+    "postularme", "postularse", "postular",
+    "aplicarme", "aplicar",
+    "concursar",
+)
+_BIDDER_VERBS = "|".join(
+    sorted((re.escape(verb) for verb in BIDDER_PARTICIPATION_VERBS), key=len, reverse=True)
+)
 
 # Each entry: (compiled_regex, intent_config_dict)
 # intent_config can include:
@@ -53,11 +123,10 @@ INTENT_PATTERNS: list[tuple[re.Pattern, dict]] = [
     # CORPUS-003B: added quiero/necesito + verb, puedo variant of pueda
     (
         re.compile(
-            r"(?:para\s+(?:poder\s+)?(?:presentar(?:me)?|participar|ofertar|postular(?:me)?|aplicar(?:me)?))"
-            r"|(?:donde\s+(?:me\s+)?pued[ao]\s+(?:presentar|participar|ofertar|postular|aplicar))"
-            r"|(?:(?:quiero|necesito|quisiera|deseo)\s+(?:presentarme|participar|ofertar))"
-            r"|(?:(?:me\s+)?puedo\s+(?:presentar|participar|ofertar|postular))"
-            r"|(?:para\s+poder\s+(?:presentar|ofertar|participar))",
+            rf"(?:para\s+(?:poder\s+)?(?:{_BIDDER_VERBS}))"
+            rf"|(?:donde\s+(?:me\s+)?pued[ao]\s+(?:{_BIDDER_VERBS}))"
+            rf"|(?:(?:quiero|necesito|quisiera|deseo)\s+(?:{_BIDDER_VERBS}))"
+            rf"|(?:(?:me\s+)?puedo\s+(?:{_BIDDER_VERBS}))",
             re.IGNORECASE,
         ),
         {

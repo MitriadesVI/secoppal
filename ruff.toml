@@ -19,6 +19,9 @@ select = [
     "F63",     # comparaciones siempre falsas
     "F7",      # sintaxis mal usada (break fuera de bucle, etc.)
     "F82",     # nombres indefinidos  <- encontro Any sin importar en narrator.py
+    "F601",    # clave de dict repetida  <- encontro NATURAL_TO_FAMILY["vigente"],
+               #                             que proyectaba el complemento del
+               #                             estado pedido sin que nada fallara
     "B006",    # default mutable en argumento
     "B008",    # llamada a funcion en el default
     "S102",    # exec()

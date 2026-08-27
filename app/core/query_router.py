@@ -7,6 +7,7 @@ from datetime import date as Date
 from typing import TYPE_CHECKING
 
 from app.data.departamentos import DEPARTAMENTOS
+from app.data.stopwords import STOPWORDS
 from app.data.estados import (
     ESTADO_APERTURA_SYNONYMS,
     ESTADO_CONTRATO_SYNONYMS,
@@ -41,9 +42,13 @@ from app.core.generic_buyer import (
     detect_incomplete_buyer,
 )
 from app.core.money_admission import (
+    RANGE_PARTIAL_CLARIFICATION,
+    RangeVerdict,
+    admit_range,
     has_explicit_monetary_evidence,
     is_admissible_amount,
 )
+from app.core.intent_vocabulary import PAST_PROCUREMENT_ACTION_RE
 from app.core.negation_binding import (
     NegationDimension,
     NegationRequest,
@@ -160,147 +165,8 @@ def _number_role(text: str, match: re.Match[str]) -> str:
         return "money"
     return "identifier"
 
-STOPWORDS = {
-    # Conversational verbs
-    "muestrame", "muestreme", "muestra", "mostrar", "mostra",
-    "busca", "buscar", "buscame", "buscate", "buscando", "busco",
-    "mirame", "averigua", "revisa", "cambia",
-    "dame", "dime", "necesito", "quiero", "quisiera",
-    "encuentra", "encontrar", "encontrame", "encontra",
-    "lista", "listar", "listame",
-    "consulta", "consultar", "consultame",
-    "traeme", "traer", "trae",
-    "decime", "digame",
-    # Questions
-    "cuales", "cuantos", "cuantas", "cual",
-    "hay", "tiene", "tienen", "esta", "estan", "este", "esten",
-    "sea", "sean",
-    "encuentre", "encuentren",
-    "donde", "como", "cuando",
-    # Greetings (including variants with extra letters)
-    "hola", "holaa", "holaaa", "buenas", "buenass", "bueno", "buenos", "ey", "oye", "ok", "okay",
-    # Courtesy
-    "gracias", "favor", "podrias", "puedes", "puede", "porfa",
-    # Bidder intent noise
-    "poder", "pueda", "puedo", "puedan",
-    # Commercial bidder verbs (BIDDER-INTENT-003)
-    "vender", "vendo", "vendemos", "venderle", "venderles",
-    "ofrezco", "ofrecer", "ofrecemos", "ofrecen",
-    # Bidder opportunity signals (not contractual topics — RATED-016)
-    "oferta", "ofertas",
-    # Institutional labels (not contractual topics — RATED-041)
-    "oficial",
-    # OR-expansion noise (not contractual topics — RATED-067)
-    "similares", "similar",
-    "comercializo", "comercializar", "comercializamos",
-    "proveedor", "proveedores",
-    # States (extracted separately)
-    "abierta", "abiertas", "abierto", "abiertos",
-    "adjudicado", "adjudicados",
-    "celebrado", "celebrados",
-    "firmado", "firmados", "firmada", "firmadas",
-    "liquidado", "liquidados",
-    "cerrado", "cerrados",
-    # Search types
-    "contrato", "contratos", "convocatoria", "convocatorias",
-    "licitacion", "licitaciones", "concurso",
-    "proceso", "procesos",
-    "publica", "publico",
-    # Articles & prepositions
-    "de", "del", "en", "el", "la", "las", "los",
-    "por", "para", "que", "se", "un", "una", "con", "excepto", "sin",
-    "pero", "sino", "ni", "salvo",
-    # Comparators
-    "mayor", "mayores", "menor", "menores",
-    "superior", "superiores", "supere", "superen",
-    "exceda", "excedan", "rebase", "rebasen",
-    "mas", "menos",
-    "no", "maximo", "máximo", "minimo", "mínimo",
-    # Money units
-    "pesos", "millones", "millon", "smmlv", "smlmv", "smlv",
-    "salario", "salarios", "minimo", "minimos",
-    # Filler
-    "tipo", "tema", "temas", "asunto", "asuntos", "materia", "sector",
-    "area", "área", "linea", "línea", "relacionado", "relacionados",
-    "vigente", "vigentes", "sobre", "todos", "todas", "todo", "toda",
-    # Temporal adverbs (not contractual objects)
-    "actualmente", "ahora", "hoy", "recientemente", "momento",
-    # Temporal week/day (not contractual objects)
-    "semana", "dia", "dias", "día", "días", "ayer",
-    "mes", "meses",
-    # Interrogative verbs ("qué ha hecho/hizo/gastó X") — no son objetos
-    "hecho", "hizo", "hace", "hacen", "haciendo", "gastado", "tenido",
-    # Indefinite pronouns
-    "algun", "alguna", "algunos", "algunas", "alguno", "algunos", "ningun", "ninguna",
-    "otro", "otra", "otros", "otras",
-    # Demonstrative pronouns / anaphoric refinement words.
-    # Aparecen en follow-ups tipo "muestrame solo aquellos que sean mas de X".
-    # Sin scrub, contaminan 'objeto' y borran el topic heredado.
-    "solo", "solos", "sola", "solas", "solamente", "unicamente", "únicamente",
-    # Follow-up refinement verbs — "filtra por X", "aplicá filtro", "ponelo entre X y Y"
-    "filtra", "filtrar", "filtrame", "filtrarme", "filtrado", "filtrados",
-    "aplica", "aplicar", "aplicale", "aplicame",
-    "pon", "pone", "poner", "ponelo", "ponle", "poneme",
-    "deja", "dejar", "dejame",
-    "limita", "limitar", "limitame", "limitalo",
-    "acota", "acotar", "acotame", "acotalo",
-    "restringe", "restringir", "restrinjame",
-    "aquel", "aquella", "aquellos", "aquellas",
-    "eso", "esos", "esa", "esas",
-    "esto", "estos", "estas",  # nota: "esta"/"estan"/"este"/"esten" ya están arriba
-    "mismo", "misma", "mismos", "mismas",
-    # Value/size adjectives (ordering instructions, not objects)
-    "caro", "caros", "cara", "caras",
-    "costoso", "costosos", "costosa", "costosas",
-    "grande", "grandes", "importante", "importantes",
-    "barato", "baratos", "barata", "baratas",
-    "reciente", "recientes", "ultimo", "ultimos", "ultima", "ultimas",
-    "nuevo", "nuevos", "nueva", "nuevas",
-    "mejor", "mejores", "peor", "peores",
-    "alto", "altos", "alta", "altas",
-    "bajo", "bajos", "baja", "bajas",
-    "valor", "cuantia", "cuantía",
-    # Months (not contractual objects)
-    "enero", "febrero", "marzo", "abril", "mayo", "junio",
-    "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre",
-    # More temporal
-    "semestre", "trimestre", "bimestre", "periodo", "anual", "mensual",
-    "ano", "año",
-    "pasado", "pasada", "anterior", "siguiente", "proximo",
-    # Semantic-layer scrubbed terms (should already be consumed, safety net)
-    "departamento", "departamentos",
-    "oportunidades", "oportunidad",
-    "publicados", "publicadas",
-    "presentar", "presentarme", "presentarse",
-    "licitar",
-    "postular", "postularme", "postularse",
-    "aplicar", "aplicarme", "aplicarse",
-    "participar", "ofertar", "competir", "concursar",
-    "pueda", "puedas", "puedan", "puedo",
-    "tenga", "tengan", "tiene", "tienen",  # "que tiene la alcaldia..."
-    "provincia",  # sometimes used as synonym for departamento
-    # Conversational filler confirmed by feedback audit (1.2.a)
-    "sido", "han", "entre",  # rango "entre X y Y"
-    "convocadas", "convocado", "convocados",
-    "disponibles", "disponible",
-    "ver", "mirar", "revisar",
-    "conocer", "saber", "identificar",
-    "existe", "existen",
-    "ofrecen", "ofrece",
-    # CORPUS-AN003: verbos/cuantificadores analíticos. No son objeto
-    # contractual; son señal de pregunta agregada ("cuánto suma/n", "cuántos
-    # contratos hay", "total contratado"). El detector analítico vive en
-    # analytics.py; aquí solo se previene que contaminen 'objeto'.
-    "cuanto", "cuanta",
-    "suma", "suman", "sumaron", "sumo", "sumó",
-    "total", "totales",
-    # Sprint 5 — VALUE-POLARITY residual scrub:
-    # "por debajo de X" → polarity already sets valor_max, but "debajo"
-    # leaks into objeto when "por" is consumed as stopword earlier.
-    "debajo",
-    # PARSER-POLARITY-MONETARY-002: post-number polarity tokens
-    "adelante", "arriba", "abajo",
-}
+# El lenguaje funcional vive en app/data/stopwords.py: tiene dos consumidores
+# (este extractor y el corrector ortográfico) y una sola autoridad.
 
 # ── Cities / municipalities ──────────────────────────────────────────────────
 _COMMON_CITIES = frozenset({
@@ -404,6 +270,10 @@ class QueryRouter:
         #    from leaking into 'objeto' and poisoning LIKE clauses.
         consumed_spans: list[str] = []  # track consumed text for debugging
         actor_modifier_spans: list[str] = []
+        # Spans de texto CRUDO que sembraron una familia de estado antes de que
+        # la negación estuviera resuelta. Si la negación se los come, la
+        # siembra deja de valer (ver la revocación tras el binding).
+        state_seed_spans: list[str] = []
 
         # ── 0a. INTENT extraction (bidder intent → config overrides) ─────
         from app.core.intent_vocabulary import extract_intent
@@ -413,6 +283,7 @@ class QueryRouter:
                 params["dataset"] = intent_config["force_dataset"]
             if intent_config.get("estado_family"):
                 params["estado_family"] = intent_config["estado_family"]
+                state_seed_spans.append(intent_span)
             if intent_config.get("scrub_only") or "estado_family" in intent_config:
                 consumed_spans.append(intent_span)
                 if intent_config.get("estado_family"):
@@ -441,7 +312,9 @@ class QueryRouter:
             "licitaciones publicas abiertos",
             "procesos abiertos",
         )
-        if any(kw in normalized for kw in opportunity_keywords):
+        opportunity_hits = [kw for kw in opportunity_keywords if kw in normalized]
+        if opportunity_hits:
+            state_seed_spans.extend(opportunity_hits)
             params["intent_type"] = "opportunity_search"
             params.setdefault("dataset", "procesos")
             params.setdefault("estado_family", "oferta_abierta")
@@ -527,6 +400,24 @@ class QueryRouter:
             protected_spans=preliminary_amount_spans,
         )
         positive_text = negation_binding.masked_text
+        # ── 1.c.2 Revocación de siembras pre-negación ──────────────────
+        # INV-NO-SILENT-SEMANTIC-FALLBACK. El atajo de oportunidades y el
+        # vocabulario de intención escanean el texto CRUDO para poder elegir
+        # dataset antes de que exista un binding. Eso los deja leyendo tokens
+        # que el usuario negó: "procesos que no estén en convocatoria" sembraba
+        # la familia de oferta abierta —el universo exactamente contrario— sin
+        # que ninguna capa posterior pudiera notarlo. La negación se resuelve
+        # antes que cualquier polaridad positiva; si el span que sembró el
+        # estado ya no está en el texto positivo, la siembra se cae entera.
+        if state_seed_spans and any(
+            seed and seed not in positive_text for seed in state_seed_spans
+        ):
+            for key in (
+                "estado_family", "estado_del_procedimiento",
+                "estado_de_apertura_del_proceso", "estado_contrato",
+                "intent_type", "opportunity_mode", "filter_active_only",
+            ):
+                params.pop(key, None)
         scrubbed = mask_consumed_spans(
             modality_result.masked_text,
             negation_binding.masked_spans,
@@ -997,6 +888,15 @@ class QueryRouter:
                     unique_excluded.append(value)
             params["objeto_exclude"] = unique_excluded
 
+        # Un turno que es ÍNTEGRAMENTE una orden de navegación o de reinicio no
+        # tiene tema contractual. Reconocerlo aquí impide que sus palabras
+        # lleguen al extractor temático y viajen como `LIKE '%pagina%'` o
+        # `LIKE '%filtros%'`. Qué hacer con la orden sigue siendo autoridad de
+        # la capa conversacional; esto solo evita que sea contenido.
+        from app.core.followup_control_tokens import is_pure_navigation_turn
+        if is_pure_navigation_turn(normalized):
+            scrubbed = ""
+
         from app.core.phrase_catalog import detect_phrases
         objeto_phrases, objeto_text = detect_phrases(scrubbed)
         if objeto_phrases:
@@ -1056,6 +956,15 @@ class QueryRouter:
         if any(s in normalized_query for s in contract_signals):
             if re.search(r"\babiert[ao]s?\b", normalized_query):
                 return DATASET_PROCESOS
+            return DATASET_CONTRATOS
+        # Una acción de compra en PASADO describe una compra ya ejecutada, y una
+        # compra ejecutada es un contrato: "qué compró la alcaldía en 2024" no
+        # pregunta por procesos en curso. No pisa una mención explícita del otro
+        # dataset, que sigue mandando.
+        if PAST_PROCUREMENT_ACTION_RE.search(normalized_query) and not re.search(
+            r"\bprocesos?\b|\blicitaci(?:on|ones)\b|\bconvocatorias?\b",
+            normalized_query,
+        ):
             return DATASET_CONTRATOS
         return DATASET_PROCESOS
 
@@ -1265,12 +1174,20 @@ class QueryRouter:
             amount_lo = _to_cop(lo_text)
             amount_hi = _to_cop(hi_text)
 
-            if (is_admissible_amount(amount_lo, lo_text)
-                    and is_admissible_amount(amount_hi, hi_text)):
-                params["valor_min"] = min(amount_lo, amount_hi)
-                params["valor_max"] = max(amount_lo, amount_hi)
-                # Remove matched span so generic loop below doesn't re-parse it
-                span = normalized_query[range_match.start():range_match.end()]
+            # INV-MONEY-RANGE-ATOMIC: entero o nada. El span se consume en los
+            # dos desenlaces — si sobrevive, el bucle genérico de abajo lo relee
+            # y reconstruye justo la cota unilateral que el invariante existe
+            # para impedir.
+            span = normalized_query[range_match.start():range_match.end()]
+            verdict = admit_range(amount_lo, lo_text, amount_hi, hi_text)
+            if verdict is not RangeVerdict.ABSENT:
+                if verdict is RangeVerdict.EXECUTE:
+                    params["valor_min"] = min(amount_lo, amount_hi)
+                    params["valor_max"] = max(amount_lo, amount_hi)
+                else:
+                    params["money_clarification"] = (
+                        RANGE_PARTIAL_CLARIFICATION.format(span=span.strip())
+                    )
                 consumed_spans.append(span)
                 normalized_query = normalized_query[: range_match.start()] + " " + normalized_query[range_match.end() :]
 
@@ -1293,11 +1210,16 @@ class QueryRouter:
                 amount_lo = _to_cop(lo_text)
                 amount_hi = _to_cop(hi_text)
 
-                if (is_admissible_amount(amount_lo, lo_text)
-                        and is_admissible_amount(amount_hi, hi_text)):
-                    params["valor_min"] = min(amount_lo, amount_hi)
-                    params["valor_max"] = max(amount_lo, amount_hi)
-                    span = normalized_query[h_match.start():h_match.end()]
+                span = normalized_query[h_match.start():h_match.end()]
+                verdict = admit_range(amount_lo, lo_text, amount_hi, hi_text)
+                if verdict is not RangeVerdict.ABSENT:
+                    if verdict is RangeVerdict.EXECUTE:
+                        params["valor_min"] = min(amount_lo, amount_hi)
+                        params["valor_max"] = max(amount_lo, amount_hi)
+                    else:
+                        params["money_clarification"] = (
+                            RANGE_PARTIAL_CLARIFICATION.format(span=span.strip())
+                        )
                     consumed_spans.append(span)
                     normalized_query = normalized_query[: h_match.start()] + " " + normalized_query[h_match.end() :]
                 range_match = h_match  # prevent polarity patterns from re-parsing
@@ -1333,14 +1255,19 @@ class QueryRouter:
             amount_lo = _to_cop(lo_text)
             amount_hi = _to_cop(hi_text)
 
-            if (is_admissible_amount(amount_lo, lo_text)
-                    and is_admissible_amount(amount_hi, hi_text)):
-                # Unlike a symmetric ``entre X y Y`` range, these operands
-                # have explicit semantic roles.  Preserve them so P8 can see
-                # a contradictory lower bound instead of silently swapping it.
-                params["valor_min"] = amount_lo
-                params["valor_max"] = amount_hi
-                span = normalized_query[cr_match.start():cr_match.end()]
+            span = normalized_query[cr_match.start():cr_match.end()]
+            verdict = admit_range(amount_lo, lo_text, amount_hi, hi_text)
+            if verdict is not RangeVerdict.ABSENT:
+                if verdict is RangeVerdict.EXECUTE:
+                    # Unlike a symmetric ``entre X y Y`` range, these operands
+                    # have explicit semantic roles.  Preserve them so P8 can see
+                    # a contradictory lower bound instead of silently swapping it.
+                    params["valor_min"] = amount_lo
+                    params["valor_max"] = amount_hi
+                else:
+                    params["money_clarification"] = (
+                        RANGE_PARTIAL_CLARIFICATION.format(span=span.strip())
+                    )
                 consumed_spans.append(span)
                 normalized_query = normalized_query[: cr_match.start()] + " " + normalized_query[cr_match.end() :]
 
@@ -1978,10 +1905,23 @@ class QueryRouter:
         # Si hay tokens sustantivos (no verbos), eliminar los verbos de acción.
         # Los verbos solos (sin sustantivos) se mantienen para no romper queries
         # como "oportunidades de contratacion".
-        from app.core.intent_vocabulary import ACTION_VERBS
-        non_verb_tokens = [t for t in tokens if t != "o" and t not in ACTION_VERBS]
+        from app.core.intent_vocabulary import (
+            PROCUREMENT_ACTION_NOUNS,
+            PROCUREMENT_ACTION_VERB_FORMS,
+        )
+        # Un verbo conjugado no es un objeto contractual en ninguna lectura del
+        # español: es el predicado cuyo sujeto es el comprador. Se descarta
+        # siempre, haya o no sustantivos alrededor — "qué celebró la alcaldía en
+        # 2025" consultaba LIKE '%celebro%' solo porque no quedaba ningún otro
+        # token que activara la regla condicional.
+        tokens = [t for t in tokens if t not in PROCUREMENT_ACTION_VERB_FORMS]
+        # Las nominalizaciones SÍ pueden ser el tema ("oportunidades de
+        # contratación"), así que solo ceden ante sustantivos reales.
+        non_verb_tokens = [
+            t for t in tokens if t != "o" and t not in PROCUREMENT_ACTION_NOUNS
+        ]
         if non_verb_tokens:
-            tokens = [t for t in tokens if t not in ACTION_VERBS]
+            tokens = [t for t in tokens if t not in PROCUREMENT_ACTION_NOUNS]
 
         grouped_tokens: list[str | list[str]] = []
         i = 0

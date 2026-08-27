@@ -19,6 +19,7 @@ from app.data.estados import (
     ESTADO_PROCEDIMIENTO_SYNONYMS,
     ESTADO_SYNONYMS,
 )
+from app.data.stopwords import STOPWORDS
 from app.utils.money import normalize_text
 
 _MODALITY_LEXICON_PATH = (
@@ -90,13 +91,32 @@ def _load_state_protected_tokens() -> frozenset[str]:
     )
 
 
-# This set answers only "must this valid token remain identical?".  It is
-# deliberately separate from the fuzzy correction candidates below.
+# ── INV-SPELL-CORRECTION-CANNOT-CREATE-SEMANTIC-DIMENSION ────────────────
+#
+# Una corrección ortográfica puede arreglar cómo se escribió una palabra. No
+# puede decidir DE QUÉ habla la consulta.
+#
+# ``otra`` es una palabra corriente del español; ``obra`` es un tipo
+# contractual, y están a distancia 1. El corrector convertía la una en la otra,
+# así que "empecemos otra vez" pedía obras. Lo revelador es por qué pasaba la
+# defensa: ``otra`` SÍ estaba en el lenguaje funcional, pero ese scrub corre
+# DESPUÉS. Para cuando actuaba, la palabra ya era ``obra`` — que no es relleno,
+# sino un tema legítimo. Una capa reescribe el texto y las defensas de la
+# siguiente quedan apuntando a un texto que ya no existe.
+#
+# El arreglo es de orden, no de catálogo: el lenguaje funcional se protege por
+# identidad ANTES de que el corrector pueda tocarlo. No se sacrifica ninguna
+# corrección real —el vocabulario de destino no cambia—, solo se prohíbe que el
+# origen sea una palabra que el dominio ya declaró vacía.
 PROTECTED_MODALITY_VOCABULARY = _load_modality_protected_tokens()
 PROTECTED_STATE_VOCABULARY = _load_state_protected_tokens()
+PROTECTED_FUNCTIONAL_VOCABULARY = frozenset(
+    normalize_text(token) for token in STOPWORDS
+)
 PROTECTED_VOCABULARY: frozenset[str] = (
     PROTECTED_MODALITY_VOCABULARY
     | PROTECTED_STATE_VOCABULARY
+    | PROTECTED_FUNCTIONAL_VOCABULARY
     | _SEMANTIC_IDENTITY_FORMS
 )
 

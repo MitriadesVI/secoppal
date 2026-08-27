@@ -809,6 +809,9 @@ def _finish_apply_context(state, start, merged, intent, mutation_trace) -> State
             needs_llm=False,
             needs_clarification=True,
             clarification_reason=(
+                "Listo, borre los filtros anteriores. Que quieres buscar ahora?"
+                if intent == "reset_context"
+                else
                 "Te entendi como refinamiento, pero perdi el contexto anterior. "
                 "Haz una busqueda base primero o usa reset."
             ),
