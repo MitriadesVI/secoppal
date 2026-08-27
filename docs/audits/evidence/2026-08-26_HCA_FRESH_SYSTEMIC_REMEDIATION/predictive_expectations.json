@@ -1,0 +1,265 @@
+{
+  "schema_version": 1,
+  "source": "docs/audits/2026-08-26_FRESH_FINDINGS_CAUSALITY.md §4",
+  "materialization": "Exact post-remediation properties already stated by the predictive gate and systemic remediation report; no runtime observation was used to update them.",
+  "canonical_cases": [
+    {
+      "id": "P01",
+      "family": "STATE_NEGATION",
+      "query": "procesos que no esten adjudicados en caldas",
+      "expected": {
+        "dataset": "procesos",
+        "needs_clarification": true,
+        "outcome": "clarification",
+        "outcome_reason": "clarification_requested",
+        "query_plan_reason": "unsupported_negation",
+        "positive_state_projection": {},
+        "expected_execution": false
+      }
+    },
+    {
+      "id": "P02",
+      "family": "STATE_NEGATION",
+      "query": "contratos que no esten liquidados en 2025",
+      "expected": {
+        "dataset": "contratos",
+        "needs_clarification": true,
+        "outcome": "clarification",
+        "outcome_reason": "clarification_requested",
+        "query_plan_reason": "unsupported_negation",
+        "positive_state_projection": {},
+        "expected_execution": false
+      }
+    },
+    {
+      "id": "P03",
+      "family": "MONEY_RANGE",
+      "query": "contratos de obra entre 40 mil y 80 mil pesos",
+      "expected": {
+        "dataset": "contratos",
+        "expected_min": 40000,
+        "expected_max": 80000,
+        "expected_clarification": false,
+        "expected_execution": true
+      }
+    },
+    {
+      "id": "P04",
+      "family": "MONEY_RANGE",
+      "query": "contratos de obra entre 700 mil y 900 mil pesos en 2025",
+      "expected": {
+        "dataset": "contratos",
+        "expected_min": 700000,
+        "expected_max": 900000,
+        "expected_clarification": false,
+        "expected_execution": true
+      }
+    },
+    {
+      "id": "P05",
+      "family": "BUYER_ACTION",
+      "query": "que celebro la alcaldia de pasto en 2025",
+      "expected": {
+        "dataset": "contratos",
+        "buyer_entity": "ALCALDIA DE PASTO",
+        "buyer_kind": "buyer_entity",
+        "expected_topic": [],
+        "control_tokens_absent": ["celebro"],
+        "expected_execution": true
+      }
+    },
+    {
+      "id": "P06",
+      "family": "BUYER_ACTION",
+      "query": "que gasto la alcaldia de pasto en 2025",
+      "expected": {
+        "dataset": "contratos",
+        "buyer_entity": "ALCALDIA DE PASTO",
+        "buyer_kind": "buyer_entity",
+        "expected_topic": [],
+        "control_tokens_absent": ["gasto"],
+        "expected_execution": true
+      }
+    },
+    {
+      "id": "P07",
+      "family": "BUYER_ACTION",
+      "query": "que suscribio la alcaldia de pasto en 2025",
+      "expected": {
+        "dataset": "contratos",
+        "buyer_entity": "ALCALDIA DE PASTO",
+        "buyer_kind": "buyer_entity",
+        "expected_topic": [],
+        "control_tokens_absent": ["suscribio"],
+        "expected_execution": true
+      }
+    },
+    {
+      "id": "P08",
+      "family": "CONTROL",
+      "query": "continua con los siguientes",
+      "expected": {
+        "control_intent": "pagination_more",
+        "expected_topic": [],
+        "control_tokens_absent": ["continua", "siguientes"],
+        "needs_clarification": true,
+        "expected_execution": false
+      }
+    },
+    {
+      "id": "P09",
+      "family": "CONTROL",
+      "query": "dame mas resultados",
+      "expected": {
+        "control_intent": "pagination_more",
+        "expected_topic": [],
+        "control_tokens_absent": ["resultados"],
+        "needs_clarification": true,
+        "expected_execution": false
+      }
+    },
+    {
+      "id": "P10",
+      "family": "CONTROL",
+      "query": "borra los filtros",
+      "seed_successful_context": true,
+      "expected": {
+        "control_intent": "reset_context",
+        "workflow_intent": "reset_context",
+        "expected_topic": [],
+        "control_tokens_absent": ["borra", "filtros"],
+        "needs_clarification": true,
+        "outcome": "clarification",
+        "outcome_reason": "clarification_requested",
+        "expected_resolved_params": {},
+        "response_tokens_absent": ["zero_after_refinement", "zero_results_after_refinement"],
+        "expected_execution": false
+      }
+    },
+    {
+      "id": "P11",
+      "family": "CONTROL",
+      "query": "reinicia la busqueda",
+      "seed_successful_context": true,
+      "expected": {
+        "control_intent": "reset_context",
+        "workflow_intent": "reset_context",
+        "expected_topic": [],
+        "control_tokens_absent": ["reinicia", "busqueda"],
+        "needs_clarification": true,
+        "outcome": "clarification",
+        "outcome_reason": "clarification_requested",
+        "expected_resolved_params": {},
+        "response_tokens_absent": ["zero_after_refinement", "zero_results_after_refinement"],
+        "expected_execution": false
+      }
+    },
+    {
+      "id": "P12",
+      "family": "CONTROL",
+      "query": "quitalo todo y empezamos otra vez",
+      "seed_successful_context": true,
+      "expected": {
+        "control_intent": "reset_context",
+        "workflow_intent": "reset_context",
+        "expected_topic": [],
+        "control_tokens_absent": ["quitalo", "empezamos", "obra"],
+        "needs_clarification": true,
+        "outcome": "clarification",
+        "outcome_reason": "clarification_requested",
+        "expected_resolved_params": {},
+        "response_tokens_absent": ["zero_after_refinement", "zero_results_after_refinement"],
+        "expected_execution": false
+      }
+    }
+  ],
+  "sentinels": [
+    {
+      "id": "STATE-S01",
+      "family": "STATE_NEGATION",
+      "query": "procesos que no esten abiertos",
+      "expected": {
+        "dataset": "procesos",
+        "needs_clarification": true,
+        "outcome": "clarification",
+        "outcome_reason": "clarification_requested",
+        "query_plan_reason": "unsupported_negation",
+        "positive_state_projection": {},
+        "expected_execution": false
+      }
+    },
+    {
+      "id": "STATE-S02",
+      "family": "STATE_NEGATION",
+      "query": "procesos que no esten en convocatoria",
+      "expected": {
+        "dataset": "procesos",
+        "needs_clarification": true,
+        "outcome": "clarification",
+        "outcome_reason": "clarification_requested",
+        "query_plan_reason": "unsupported_negation",
+        "positive_state_projection": {},
+        "expected_execution": false
+      }
+    },
+    {
+      "id": "MONEY-S01",
+      "family": "MONEY_RANGE",
+      "query": "entre 700 mil y 900 mil",
+      "expected": {
+        "dataset": "procesos",
+        "expected_min": null,
+        "expected_max": null,
+        "expected_clarification": true,
+        "expected_execution": false
+      }
+    },
+    {
+      "id": "MONEY-S02",
+      "family": "MONEY_RANGE",
+      "query": "contratos de aseo entre 500 mil y 3 millones",
+      "expected": {
+        "dataset": "contratos",
+        "expected_min": null,
+        "expected_max": null,
+        "expected_clarification": true,
+        "expected_execution": false
+      }
+    },
+    {
+      "id": "BUYER-S01",
+      "family": "BUYER_ACTION",
+      "query": "que compro la alcaldia de pasto para salud en 2025",
+      "expected": {
+        "dataset": "contratos",
+        "buyer_entity": "ALCALDIA DE PASTO",
+        "buyer_kind": "buyer_entity",
+        "expected_topic": ["salud"],
+        "control_tokens_absent": ["compro"],
+        "expected_execution": true
+      }
+    },
+    {
+      "id": "BIDDER-S01",
+      "family": "BIDDER_CONTROL",
+      "query": "necesito licitar suministro de uniformes en cordoba",
+      "expected": {
+        "dataset": "procesos",
+        "intent_type": "opportunity_search",
+        "estado_family": "oferta_abierta",
+        "expected_topic": ["suministro", "uniforme"],
+        "control_tokens_absent": ["necesito", "licitar"],
+        "expected_execution": true
+      }
+    },
+    {
+      "id": "SPELL-S01",
+      "family": "SPELL",
+      "query": "empecemos otra vez",
+      "expected": {
+        "corrected_query": "empecemos otra vez",
+        "tokens_absent": ["obra"]
+      }
+    }
+  ]
+}

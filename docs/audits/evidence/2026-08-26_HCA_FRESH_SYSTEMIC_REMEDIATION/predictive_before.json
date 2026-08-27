@@ -1,0 +1,336 @@
+{
+ "minimal_pairs": [
+  {
+   "group": "ACTION_VERB_INFLECTION",
+   "vocabulary_authority": "intent_vocabulary.ACTION_VERBS",
+   "observations": [
+    {
+     "q": "que compra la alcaldia de pasto para salud durante 2025",
+     "frame": {
+      "objeto": [
+       "salud"
+      ],
+      "dataset": "procesos"
+     }
+    },
+    {
+     "q": "que compro la alcaldia de pasto para salud durante 2025",
+     "frame": {
+      "objeto": [
+       "compro",
+       "salud"
+      ],
+      "dataset": "procesos"
+     }
+    },
+    {
+     "q": "que adquirio la alcaldia de pasto para salud durante 2025",
+     "frame": {
+      "objeto": [
+       "adquirio",
+       "salud"
+      ],
+      "dataset": "procesos"
+     }
+    }
+   ]
+  },
+  {
+   "group": "CONTROL_PAGINATION",
+   "vocabulary_authority": "query_router.STOPWORDS",
+   "observations": [
+    {
+     "q": "muestrame la siguiente pagina",
+     "frame": {
+      "objeto": [
+       "pagina"
+      ],
+      "dataset": "procesos"
+     }
+    },
+    {
+     "q": "dame mas resultados",
+     "frame": {
+      "objeto": [
+       "resultados"
+      ],
+      "dataset": "procesos"
+     }
+    }
+   ]
+  },
+  {
+   "group": "CONTROL_RESET",
+   "vocabulary_authority": "query_router.STOPWORDS",
+   "observations": [
+    {
+     "q": "limpia todos los filtros y empecemos de cero",
+     "frame": {
+      "objeto": [
+       "limpia",
+       "filtros",
+       "empecemos",
+       "cero"
+      ],
+      "dataset": "procesos"
+     }
+    },
+    {
+     "q": "borra los filtros",
+     "frame": {
+      "objeto": [
+       "borra",
+       "filtros"
+      ],
+      "dataset": "procesos"
+     }
+    },
+    {
+     "q": "reinicia la busqueda",
+     "frame": {
+      "objeto": [
+       "reinicia",
+       "busqueda"
+      ],
+      "dataset": "procesos"
+     }
+    }
+   ]
+  },
+  {
+   "group": "BIDDER_INTENT_VERB",
+   "vocabulary_authority": "intent_vocabulary.INTENT_PATTERNS",
+   "observations": [
+    {
+     "q": "necesito participar suministro de uniformes en cordoba",
+     "frame": {
+      "objeto": [
+       "suministro",
+       "uniforme"
+      ],
+      "estado_family": "oferta_abierta",
+      "estado_del_procedimiento": [
+       "Publicado",
+       "Borrador",
+       "En aprobación",
+       "Aprobado",
+       "Abierto"
+      ],
+      "dataset": "procesos"
+     }
+    },
+    {
+     "q": "quiero ofertar suministro de uniformes en cordoba",
+     "frame": {
+      "objeto": [
+       "suministro",
+       "uniforme"
+      ],
+      "estado_family": "oferta_abierta",
+      "estado_del_procedimiento": [
+       "Publicado",
+       "Borrador",
+       "En aprobación",
+       "Aprobado",
+       "Abierto"
+      ],
+      "dataset": "procesos"
+     }
+    },
+    {
+     "q": "necesito licitar suministro de uniformes en cordoba",
+     "frame": {
+      "objeto": [
+       "suministro",
+       "uniforme"
+      ],
+      "dataset": "procesos"
+     }
+    }
+   ]
+  },
+  {
+   "group": "MONEY_SCALE_UNIT",
+   "vocabulary_authority": "money_admission.has_explicit_monetary_evidence",
+   "observations": [
+    {
+     "q": "contratos de aseo entre 120 millones y 350 millones en 2024",
+     "frame": {
+      "objeto": [
+       "aseo"
+      ],
+      "valor_min": 120000000,
+      "valor_max": 350000000,
+      "dataset": "contratos"
+     }
+    },
+    {
+     "q": "contratos de aseo entre 120 mil y 350 mil pesos en 2024",
+     "frame": {
+      "objeto": [
+       "aseo"
+      ],
+      "valor_max": 350000,
+      "dataset": "contratos"
+     }
+    },
+    {
+     "q": "contratos de aseo entre 2 mil y 5 mil millones",
+     "frame": {
+      "objeto": [
+       "aseo"
+      ],
+      "valor_max": 5000000000,
+      "dataset": "contratos"
+     }
+    }
+   ]
+  }
+ ],
+ "predictions": [
+  {
+   "prediction": "NEGATED_STATE_NOT_IN_ESTADO_SYNONYMS",
+   "observations": [
+    {
+     "q": "procesos que no esten adjudicados en caldas",
+     "frame": {
+      "dataset": "procesos"
+     }
+    },
+    {
+     "q": "contratos que no esten liquidados en 2025",
+     "frame": {
+      "dataset": "contratos"
+     }
+    }
+   ]
+  },
+  {
+   "prediction": "MIL_SCALE_RANGE_LOSES_LOWER_BOUND",
+   "observations": [
+    {
+     "q": "contratos de obra entre 40 mil y 80 mil pesos",
+     "frame": {
+      "valor_max": 80000,
+      "dataset": "contratos"
+     }
+    },
+    {
+     "q": "contratos de obra entre 700 mil y 900 mil pesos en 2025",
+     "frame": {
+      "valor_max": 900000,
+      "dataset": "contratos"
+     }
+    }
+   ]
+  },
+  {
+   "prediction": "UNCATALOGUED_VERB_INFLECTION_LEAKS",
+   "observations": [
+    {
+     "q": "que celebro la alcaldia de pasto en 2025",
+     "frame": {
+      "objeto": [
+       "celebro"
+      ],
+      "dataset": "procesos"
+     }
+    },
+    {
+     "q": "que gasto la alcaldia de pasto en 2025",
+     "frame": {
+      "objeto": [
+       "gasto"
+      ],
+      "dataset": "procesos"
+     }
+    },
+    {
+     "q": "que suscribio la alcaldia de pasto en 2025",
+     "frame": {
+      "objeto": [
+       "suscribio"
+      ],
+      "dataset": "procesos"
+     }
+    }
+   ]
+  },
+  {
+   "prediction": "CONTROL_PHRASING_LEAKS",
+   "observations": [
+    {
+     "q": "continua con los siguientes",
+     "frame": {
+      "objeto": [
+       "continua",
+       "siguientes"
+      ],
+      "dataset": "procesos"
+     }
+    },
+    {
+     "q": "quitalo todo y empezamos otra vez",
+     "frame": {
+      "objeto": [
+       "quitalo",
+       "empezamos",
+       "obra"
+      ],
+      "dataset": "procesos"
+     }
+    }
+   ]
+  }
+ ],
+ "polarity_end_to_end": [
+  {
+   "q": "procesos de obra en Caldas que no esten publicados",
+   "needs_clarification": false,
+   "source_calls": 2,
+   "state_projection": {},
+   "where": "WHERE departamento_entidad = 'Caldas' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%obra%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%obra%'))) ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50",
+   "verdict": "DROPPED"
+  },
+  {
+   "q": "procesos de obra en Caldas que no esten abiertos",
+   "needs_clarification": false,
+   "source_calls": 2,
+   "state_projection": {
+    "estado_family": "oferta_abierta",
+    "estado_del_procedimiento": [
+     "Publicado",
+     "Borrador",
+     "En aprobación",
+     "Aprobado",
+     "Abierto"
+    ]
+   },
+   "where": "WHERE departamento_entidad = 'Caldas' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%obra%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%obra%'))) AND estado_del_procedimiento IN ('Publicado', 'Borrador', 'En aprobación', 'Aprobado', 'Abierto') AND estado_de_apertura_del_proceso = 'Abierto' ORDER BY fecha_de_publicacion_del DESC, precio_base DESC,",
+   "verdict": "INVERTED"
+  },
+  {
+   "q": "contratos de aseo que no esten en ejecucion",
+   "needs_clarification": false,
+   "source_calls": 2,
+   "state_projection": {
+    "estado_family": "contrato_activo",
+    "estado_contrato": [
+     "En ejecución",
+     "Modificado",
+     "Prorrogado"
+    ]
+   },
+   "where": "WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descri",
+   "verdict": "INVERTED"
+  },
+  {
+   "q": "procesos de obra en Caldas que no esten adjudicados",
+   "needs_clarification": false,
+   "source_calls": 2,
+   "state_projection": {},
+   "where": "WHERE departamento_entidad = 'Caldas' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%obra%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%obra%'))) ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50",
+   "verdict": "DROPPED"
+  }
+ ]
+}

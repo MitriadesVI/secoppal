@@ -1,0 +1,509 @@
+{
+ "corpus": "tests/fixtures/audits/actor_hygiene_v1.yaml",
+ "corpus_sha256": "217df608a9a5dfb0abd1c89cda27d1c79f04a3000d9086457eb54dc916418698",
+ "cases": 36,
+ "pass": 36,
+ "fail": 0,
+ "error": 0,
+ "verdicts": [
+  {
+   "id": "AH-01-LOWER-SEARCH",
+   "category": "uppercase",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "valor_min": 100000000,
+    "ciudad": "Barranquilla"
+   }
+  },
+  {
+   "id": "AH-02-UPPER-SEARCH",
+   "category": "uppercase",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "valor_min": 100000000,
+    "ciudad": "Barranquilla"
+   }
+  },
+  {
+   "id": "AH-03-TITLE-SEARCH",
+   "category": "uppercase",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "valor_min": 100000000,
+    "ciudad": "Barranquilla"
+   }
+  },
+  {
+   "id": "AH-04-BARE-EXACT",
+   "category": "exact",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos"
+   }
+  },
+  {
+   "id": "AH-05-BARE-LOWER",
+   "category": "exact",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos"
+   }
+  },
+  {
+   "id": "AH-06-BARE-PERSON",
+   "category": "ambiguity",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos"
+   }
+  },
+  {
+   "id": "AH-07-LEGAL-NAME",
+   "category": "legal",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos"
+   }
+  },
+  {
+   "id": "AH-08-LEGAL-SEARCH",
+   "category": "legal",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos"
+   }
+  },
+  {
+   "id": "AH-09-ACTOR-YEAR",
+   "category": "structured",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "fecha_desde": "2026-01-01",
+    "fecha_hasta": "2026-12-31"
+   }
+  },
+  {
+   "id": "AH-10-ACTOR-MONEY",
+   "category": "structured",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "valor_min": 500000000
+   }
+  },
+  {
+   "id": "AH-11-ACTOR-GEO",
+   "category": "structured",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "ciudad": "Barranquilla"
+   }
+  },
+  {
+   "id": "AH-12-ACTOR-MODALITY",
+   "category": "structured",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "modalidad_include_procedure_ids": [
+     "licitacion_publica",
+     "licitacion_publica_obra"
+    ]
+   }
+  },
+  {
+   "id": "AH-13-PENDING-NUMBER",
+   "category": "pending",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos"
+   }
+  },
+  {
+   "id": "AH-14-PENDING-ORDINAL",
+   "category": "pending",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos"
+   }
+  },
+  {
+   "id": "AH-15-PENDING-NAME",
+   "category": "pending",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos"
+   }
+  },
+  {
+   "id": "AH-16-PENDING-SEARCH",
+   "category": "pending",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "ciudad": "Barranquilla"
+   }
+  },
+  {
+   "id": "AH-17-PENDING-PROCESSES",
+   "category": "pending",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "vias"
+    ],
+    "departamento_resolved": "Bolívar"
+   }
+  },
+  {
+   "id": "AH-18-PENDING-AGREEMENTS",
+   "category": "pending",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "alimentacion"
+    ],
+    "fecha_desde": "2026-01-01",
+    "fecha_hasta": "2026-12-31",
+    "contract_type_include": [
+     "convenio"
+    ]
+   }
+  },
+  {
+   "id": "AH-19-PENDING-MONEY",
+   "category": "pending",
+   "severity_if_failed": null,
+   "notes": "Money-only search may need ordinary scope clarification, never actor selection.",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "valor_min": 500000000
+   }
+  },
+  {
+   "id": "AH-20-PENDING-RESET",
+   "category": "pending",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "ciudad": "Barranquilla"
+   }
+  },
+  {
+   "id": "AH-21-LMP-CORRECT",
+   "category": "recall",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos"
+   }
+  },
+  {
+   "id": "AH-22-LMP-ROTATION",
+   "category": "recall",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos"
+   }
+  },
+  {
+   "id": "AH-23-LMP-DELETION",
+   "category": "recall",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos"
+   }
+  },
+  {
+   "id": "AH-24-LMP-DELETION-2",
+   "category": "recall",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos"
+   }
+  },
+  {
+   "id": "AH-25-LMP-FULL-EXACT",
+   "category": "exact",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos"
+   }
+  },
+  {
+   "id": "AH-26-NEGATIVE-ACTOR",
+   "category": "negation",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo",
+     "cuyo"
+    ]
+   }
+  },
+  {
+   "id": "AH-27-NEGATIVE-OBJECT",
+   "category": "negation",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "objeto_exclude": [
+     "alimentacion"
+    ],
+    "ciudad": "Barranquilla"
+   }
+  },
+  {
+   "id": "AH-28-SHOW-MORE",
+   "category": "control",
+   "severity_if_failed": null,
+   "notes": "No candidate pagination capability exists; ordinary no-context clarification stays unchanged.",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos"
+   }
+  },
+  {
+   "id": "AH-29-MORE-SEARCH",
+   "category": "control",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "ciudad": "Barranquilla"
+   }
+  },
+  {
+   "id": "AH-30-DEICTIC-AMBIGUITY",
+   "category": "ambiguity",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos"
+   }
+  },
+  {
+   "id": "AH-31-EXPLICIT-NIT",
+   "category": "identity",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos"
+   }
+  },
+  {
+   "id": "AH-32-EXPLICIT-CC",
+   "category": "identity",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos"
+   }
+  },
+  {
+   "id": "AH-33-TOPIC",
+   "category": "negative",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "aseo"
+    ]
+   }
+  },
+  {
+   "id": "AH-34-SHORT",
+   "category": "negative",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos"
+   }
+  },
+  {
+   "id": "AH-35-LONG-NAME",
+   "category": "legal",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos"
+   }
+  },
+  {
+   "id": "AH-36-ORDER-PRESERVES-ACTOR",
+   "category": "control",
+   "severity_if_failed": null,
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "fecha_desde": "2026-01-01",
+    "fecha_hasta": "2026-12-31",
+    "ordering_signal": "valor_desc"
+   }
+  }
+ ]
+}

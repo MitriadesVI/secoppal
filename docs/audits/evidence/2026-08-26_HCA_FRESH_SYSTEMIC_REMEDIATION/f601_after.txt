@@ -1,0 +1,7 @@
+F601 con la regla YA dentro del gate efectivo del proyecto (ruff.toml):
+
+  $ .venv/bin/python -m ruff check app/ tests/ scripts/
+  All checks passed!
+
+  $ .venv/bin/python -m ruff check --isolated --select F601 app/ tests/ scripts/
+  All checks passed!

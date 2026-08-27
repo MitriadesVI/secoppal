@@ -1,0 +1,16 @@
+F601 sobre el árbol de HEAD_BEFORE (85b11be), reglas aisladas:
+
+  $ .venv/bin/python -m ruff check --isolated --select F601 app/ tests/ scripts/
+
+  app/core/dialogue_policy.py:49:5:   F601 Dictionary key literal "departamento" repeated
+  app/core/estado_families.py:156:5: F601 Dictionary key literal "vigente" repeated
+  app/core/estado_families.py:157:5: F601 Dictionary key literal "vigentes" repeated
+  Found 3 errors.
+
+`app/core/estado_families.py` era, además, un bug de producto: la segunda
+declaración ganaba en silencio y "oportunidades vigentes" —una consulta sobre
+procesos— se proyectaba como el complemento de lo pedido. El mismo archivo pasaba
+`ruff check` con la configuración del repo porque F601 no estaba en el `select`.
+
+`app/core/dialogue_policy.py` era una repetición exacta (misma clave, mismo
+valor): sin efecto observable, pero es el mismo defecto de forma.

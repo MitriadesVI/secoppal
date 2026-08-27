@@ -1,0 +1,146 @@
+{
+ "gate": "PREDICTIVE",
+ "source": "docs/audits/2026-08-26_FRESH_FINDINGS_CAUSALITY.md §4",
+ "source_commit": "85b11be",
+ "baseline_evidence": "docs/audits/evidence/2026-08-26_FRESH_FINDINGS_CAUSALITY/causality_probe.json",
+ "baseline_sha256": "68179d0bcbcfbfac5aa7a925f8ec78c261dd151daca22f66d3794866c914f414",
+ "baseline_expected_sha256": "68179d0bcbcfbfac5aa7a925f8ec78c261dd151daca22f66d3794866c914f414",
+ "baseline_intact": true,
+ "expectations_changed": false,
+ "canonical_cases": 12,
+ "clear": 12,
+ "still_manifesting": [],
+ "verdict": "PASS",
+ "cases": [
+  {
+   "id": "P01",
+   "family": "NEGATED_STATE_NOT_IN_ESTADO_SYNONYMS",
+   "query": "procesos que no esten adjudicados en caldas",
+   "predicted_failure": "sin exclusión, ejecuta",
+   "property": "una negación de estado no soportada aclara sin consultar la fuente, y nunca proyecta el estado negado como filtro positivo",
+   "needs_clarification": true,
+   "source_calls": 0,
+   "positive_state_projection": {},
+   "still_manifests": false
+  },
+  {
+   "id": "P02",
+   "family": "NEGATED_STATE_NOT_IN_ESTADO_SYNONYMS",
+   "query": "contratos que no esten liquidados en 2025",
+   "predicted_failure": "sin exclusión, ejecuta",
+   "property": "una negación de estado no soportada aclara sin consultar la fuente, y nunca proyecta el estado negado como filtro positivo",
+   "needs_clarification": true,
+   "source_calls": 0,
+   "positive_state_projection": {},
+   "still_manifests": false
+  },
+  {
+   "id": "P03",
+   "family": "MIL_SCALE_RANGE_LOSES_LOWER_BOUND",
+   "query": "contratos de obra entre 40 mil y 80 mil pesos",
+   "predicted_failure": "min=None, max=80.000",
+   "property": "un rango explícito no puede degradarse a cota unilateral",
+   "valor_min": 40000,
+   "valor_max": 80000,
+   "asks_for_precision": false,
+   "still_manifests": false
+  },
+  {
+   "id": "P04",
+   "family": "MIL_SCALE_RANGE_LOSES_LOWER_BOUND",
+   "query": "contratos de obra entre 700 mil y 900 mil pesos en 2025",
+   "predicted_failure": "min=None, max=900.000",
+   "property": "un rango explícito no puede degradarse a cota unilateral",
+   "valor_min": 700000,
+   "valor_max": 900000,
+   "asks_for_precision": false,
+   "still_manifests": false
+  },
+  {
+   "id": "P04b",
+   "family": "MIL_SCALE_RANGE_LOSES_LOWER_BOUND",
+   "query": "contratos entre 700 mil y 900 mil pesos en 2025",
+   "predicted_failure": "min=None, max=900.000 (redacción de la adjudicación §4)",
+   "property": "un rango explícito no puede degradarse a cota unilateral",
+   "valor_min": 700000,
+   "valor_max": 900000,
+   "asks_for_precision": false,
+   "still_manifests": false
+  },
+  {
+   "id": "P05",
+   "family": "UNCATALOGUED_VERB_INFLECTION_LEAKS",
+   "query": "que celebro la alcaldia de pasto en 2025",
+   "predicted_failure": "objeto=[celebro]",
+   "property": "un verbo conjugado no puede ser objeto contractual",
+   "objeto": [],
+   "dataset": "contratos",
+   "still_manifests": false
+  },
+  {
+   "id": "P06",
+   "family": "UNCATALOGUED_VERB_INFLECTION_LEAKS",
+   "query": "que gasto la alcaldia de pasto en 2025",
+   "predicted_failure": "objeto=[gasto]",
+   "property": "un verbo conjugado no puede ser objeto contractual",
+   "objeto": [],
+   "dataset": "contratos",
+   "still_manifests": false
+  },
+  {
+   "id": "P07",
+   "family": "UNCATALOGUED_VERB_INFLECTION_LEAKS",
+   "query": "que suscribio la alcaldia de pasto en 2025",
+   "predicted_failure": "objeto=[suscribio]",
+   "property": "un verbo conjugado no puede ser objeto contractual",
+   "objeto": [],
+   "dataset": "contratos",
+   "still_manifests": false
+  },
+  {
+   "id": "P08",
+   "family": "CONTROL_PHRASING_LEAKS",
+   "query": "continua con los siguientes",
+   "predicted_failure": "objeto=['continua', 'siguientes']",
+   "property": "el lenguaje de control no puede convertirse en tema",
+   "objeto": [],
+   "still_manifests": false
+  },
+  {
+   "id": "P09",
+   "family": "CONTROL_PHRASING_LEAKS",
+   "query": "dame mas resultados",
+   "predicted_failure": "objeto=['resultados']",
+   "property": "el lenguaje de control no puede convertirse en tema",
+   "objeto": [],
+   "still_manifests": false
+  },
+  {
+   "id": "P10",
+   "family": "CONTROL_PHRASING_LEAKS",
+   "query": "borra los filtros",
+   "predicted_failure": "objeto=['borra', 'filtros']",
+   "property": "el lenguaje de control no puede convertirse en tema",
+   "objeto": [],
+   "still_manifests": false
+  },
+  {
+   "id": "P11",
+   "family": "CONTROL_PHRASING_LEAKS",
+   "query": "reinicia la busqueda",
+   "predicted_failure": "objeto=['reinicia', 'busqueda']",
+   "property": "el lenguaje de control no puede convertirse en tema",
+   "objeto": [],
+   "still_manifests": false
+  },
+  {
+   "id": "P12",
+   "family": "CONTROL_PHRASING_LEAKS",
+   "query": "quitalo todo y empezamos otra vez",
+   "predicted_failure": "objeto=['quitalo', 'empecemos', 'obra']",
+   "property": "el lenguaje de control no puede convertirse en tema",
+   "objeto": [],
+   "still_manifests": false
+  }
+ ]
+}

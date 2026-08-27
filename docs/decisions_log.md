@@ -3854,3 +3854,70 @@ una cuarta deny-list local.
 
 Detalle: `docs/decisions/2026-08-26_ADR-068_derived-execution-state.md`.
 Informe: `docs/audits/2026-08-26_HCA_FINAL_P1_RUNTIME_FIXES.md`.
+
+---
+
+## ADR-069: Una forma lingüística que una autoridad no resuelve no se degrada en silencio
+
+**Fecha:** 2026-08-26
+**Estado:** Accepted — `HCA_FRESH_SYSTEMIC_REMEDIATION: PASS`
+
+### Contexto
+
+La adjudicación causal de los hallazgos fresh demostró que las siete causas raíz
+declaradas eran siete síntomas de un solo mecanismo:
+`ENUMERATED_SURFACE_FORM_VOCABULARY_WITH_FAIL_OPEN_DEFAULT`. Cada dimensión
+semántica se reconoce con una lista de formas superficiales mantenida a mano, y
+un token ausente de su lista no produce error ni aclaración: cae al destino por
+defecto o desaparece, y el sistema ejecuta una consulta bien formada y
+semánticamente equivocada.
+
+Lo decisivo no es que hubiera huecos —siempre los habrá— sino qué pasa al
+encontrar uno. El comportamiento por defecto era continuar. Por eso el mismo
+lema con distinta flexión daba comportamientos opuestos (`compra` sí, `compró`
+no; `participar` sí, `licitar` no; `millones` sí, `mil` no), y por eso la peor
+manifestación no fue perder una restricción sino invertirla: `procesos que no
+estén abiertos` devolvía exactamente y solo los abiertos.
+
+### Decisión
+
+**INV-NO-SILENT-SEMANTIC-FALLBACK.** Una forma lingüística materialmente
+estructural que una autoridad no puede resolver no puede degradarse en silencio
+a otra dimensión: no puede volverse objeto, desaparecer, invertir su polaridad,
+activar una dimensión fabricada ni producir un filtro parcial.
+
+El invariante es común; las autoridades siguen separadas — no se crea un gestor
+semántico global. Reconocimiento léxico y semántica quedan en capas distintas y
+el reconocimiento se **construye** desde los catálogos semánticos. La polaridad
+se resuelve antes que cualquier extractor positivo. Un rango explícito se aplica
+entero o pide precisión. Una corrección ortográfica no puede crear una dimensión
+semántica, y por eso el lenguaje funcional se protege **antes** del corrector.
+Las familias lingüísticas se declaran una vez y todas sus ramas se construyen
+desde ellas. `F601` entra al gate: la clave duplicada que proyectaba el
+complemento del estado pedido era detectable por el linter.
+
+### Consecuencias y límites
+
+Fallar cerrado cuesta cobertura a propósito: `entre 500 mil y 3 millones` antes
+ejecutaba con un techo y ahora pide precisión. El invariante no promete cerrar
+todos los huecos de vocabulario —promete que un hueco produzca una pregunta y no
+una consulta equivocada—. La vigencia deja de ser un estado y pasa a ser una
+familia con proyección por dataset. No se introduce LLM-as-parser, embeddings ni
+dependencia NLP: el paradigma copulativo es morfología cerrada y las gramáticas
+de control se componen de sus partes. Queda fuera, declarado, la exclusión
+ejecutable de estado: sigue no soportada y aclara.
+
+### Evidencia de aceptación
+
+- Gate predictivo **12/12**, con la línea base congelada verificada por SHA y
+  sus expectativas sin tocar;
+- Gate anti-vocabulario sobre las familias completas —no las formas observadas—,
+  que encontró una fuga que los nueve escenarios nunca mostraron;
+- Canario vivo contra SECOP: `semantic_contract_violations = 0`,
+  `hard_filter_violations = 0`;
+- HCA canónico **188/195, 0 rotos**, corpus byte-idéntico;
+- Plan fresh congelado **30 → 37 de 52**, sin regresiones;
+- `F601`: 3 hallazgos antes, 0 después, ya dentro del gate.
+
+Detalle: `docs/decisions/2026-08-26_ADR-069_no-silent-semantic-fallback.md`.
+Informe: `docs/audits/2026-08-26_HCA_FRESH_SYSTEMIC_REMEDIATION.md`.

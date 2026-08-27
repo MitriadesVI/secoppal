@@ -103,9 +103,17 @@ BASELINE_FILE_SHA256 = {
 # of Date.today(). No predicate, projection or ordering moves: the oracles below
 # stay byte-identical, and tests/test_time_semantics_v2.py pins the determinism
 # this argument buys.
+# HCA-FRESH widens exactly one argument of classify_outcome: a clarification
+# decided BEFORE planning (lost context, or an explicit context reset) leaves no
+# query_plan, so it was invisible here and the turn got classified as "zero after
+# refinement" — whose recovery message then told the user a filter had emptied
+# the search, the opposite of what happened, and overwrote the question with it.
+# No predicate, projection or ordering moves; the oracles below stay
+# byte-identical and tests/test_linguistic_family_coverage.py pins the reset
+# behaviour this argument protects.
 SEARCH_SH1_MODIFIED_FILE_SHA256 = {
     "app/core/workflow/handlers/normal_flow.py": (
-        "405724be7f3aff06934314da50184515ddc384aa4c1381403843afb9d81ae8a5"
+        "28328fb9dd5f7b69c2336f8c84d29777de9e8dd0700a3937c3d70e4e9e5b88b9"
     ),
 }
 

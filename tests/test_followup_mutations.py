@@ -123,11 +123,19 @@ def test_pagination_control_does_not_mutate_topic(router: QueryRouter) -> None:
         "offset": 0,
         "limit": 10,
     }
+    parsed_control = router.parse("muéstrame los siguientes").params
     merged, trace = _followup(router, "muéstrame los siguientes", previous)
 
     assert merged["objeto"] == previous["objeto"]
     assert merged["offset"] == 10
-    assert "objeto" in trace["rejected_fields"]
+    # La aserción original exigía ver el tema basura RECHAZADO en el trace, lo
+    # que obligaba a que el parser lo produjera primero. Ahora el parser
+    # consume la orden entera, así que no hay nada que rechazar: se comprueba
+    # la propiedad más fuerte —el tema de control no existe en ninguna capa—
+    # en vez de la señal más débil de que alguien lo interceptó a tiempo.
+    assert not parsed_control.get("objeto")
+    assert "objeto" not in trace["accepted_fields"]
+    assert not {"siguientes", "pagina"} & set(merged.get("objeto") or [])
 
 
 def test_exclude_topic_is_own_field_and_builds_negative_where(router: QueryRouter) -> None:

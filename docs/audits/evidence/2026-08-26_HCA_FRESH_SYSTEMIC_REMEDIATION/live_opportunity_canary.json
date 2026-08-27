@@ -1,0 +1,24 @@
+{
+  "run_timestamp_utc": "2026-08-27T01:21:27.347910+00:00",
+  "method": "One bounded read-only Socrata GET; LIMIT 5; one attempt; rows not persisted.",
+  "query": "oportunidades vigentes de dotación escolar en Nariño",
+  "status": "PASS",
+  "source_status": "ok",
+  "latency_s": 2.5134,
+  "row_count": 5,
+  "state_projection": {
+    "estado_family": "oferta_abierta",
+    "estado_de_apertura_del_proceso": [],
+    "estado_del_procedimiento": [
+      "Publicado",
+      "Borrador",
+      "En aprobación",
+      "Aprobado",
+      "Abierto"
+    ]
+  },
+  "hard_filter_violations": 0,
+  "semantic_contract_violations": 0,
+  "violation_details": [],
+  "soql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE departamento_entidad = 'Nariño' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%dotacion%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%dotacion%'))) AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%escolar%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%escolar%'))) AND estado_del_procedimiento IN ('Publicado', 'Borrador', 'En aprobación', 'Aprobado', 'Abierto') AND estado_de_apertura_del_proceso = 'Abierto' ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 5"
+}
