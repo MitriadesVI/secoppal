@@ -1,0 +1,759 @@
+{
+ "corpus": "docs/audits/evidence/2026-08-27_HCA_FINAL_CLOSEOUT_V2/fresh_v2_plan.json",
+ "corpus_sha256": "151b1e4f6fdabbdd43340a38145acd37109f482e70902e2273f759e4721f36e1",
+ "cases": 36,
+ "pass": 21,
+ "fail": 15,
+ "error": 0,
+ "verdicts": [
+  {
+   "id": "FRESH-V2-STATE-001",
+   "category": "state",
+   "severity_if_failed": "P0",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "tecnologia"
+    ],
+    "objeto_exclude": [
+     "sigan"
+    ],
+    "departamento_resolved": "Tolima"
+   }
+  },
+  {
+   "id": "FRESH-V2-STATE-002",
+   "category": "state",
+   "severity_if_failed": "P0",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "objeto_exclude": [
+     "permanezcan"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31"
+   }
+  },
+  {
+   "id": "FRESH-V2-STATE-003",
+   "category": "state",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "consultoria"
+    ],
+    "departamento_resolved": "Huila",
+    "estado_family": "oferta_abierta",
+    "estado_del_procedimiento": [
+     "Abierto",
+     "Aprobado",
+     "Borrador",
+     "En aprobación",
+     "Publicado"
+    ],
+    "intent_type": "opportunity_search"
+   }
+  },
+  {
+   "id": "FRESH-V2-STATE-004",
+   "category": "state",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "continuen",
+     "transporte"
+    ],
+    "fecha_desde": "2024-01-01",
+    "fecha_hasta": "2024-12-31",
+    "estado_family": "contrato_activo",
+    "estado_contrato": [
+     "En ejecución",
+     "Modificado",
+     "Prorrogado"
+    ]
+   }
+  },
+  {
+   "id": "FRESH-V2-STATE-005",
+   "category": "state",
+   "severity_if_failed": "P0",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "obra"
+    ],
+    "departamento_resolved": "Meta"
+   }
+  },
+  {
+   "id": "FRESH-V2-STATE-006",
+   "category": "state",
+   "severity_if_failed": "P0",
+   "notes": null,
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'procesos de salud en Risaralda que jamás hayan sido publicados': expected block, got execution",
+    "turn 1 'procesos de salud en Risaralda que jamás hayan sido publicados': param estado present ('Publicado'), expected absent",
+    "turn 1 'procesos de salud en Risaralda que jamás hayan sido publicados': param estado_family present ('oferta_abierta'), expected absent",
+    "turn 1 'procesos de salud en Risaralda que jamás hayan sido publicados': param estado_del_procedimiento present (['Publicado']), expected absent"
+   ],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "hayan",
+     "jamas",
+     "salud"
+    ],
+    "departamento_resolved": "Risaralda",
+    "estado_family": "oferta_abierta",
+    "estado_del_procedimiento": [
+     "Publicado"
+    ],
+    "intent_type": "opportunity_search"
+   }
+  },
+  {
+   "id": "FRESH-V2-MONEY-001",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "papeleria"
+    ],
+    "valor_min": 15000,
+    "valor_max": 45000,
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31"
+   }
+  },
+  {
+   "id": "FRESH-V2-MONEY-002",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'contratos de aseo de 950 mil pesos a 1 millón de pesos en 2025': valor_min=1000000, expected 950000",
+    "turn 1 'contratos de aseo de 950 mil pesos a 1 millón de pesos en 2025': valor_max=950000000, expected 1000000"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "valor_min": 1000000,
+    "valor_max": 950000000,
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31"
+   }
+  },
+  {
+   "id": "FRESH-V2-MONEY-003",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'procesos de suministro entre 75 mil y 125 mil COP en Cauca': valor_min=None, expected 75000",
+    "turn 1 'procesos de suministro entre 75 mil y 125 mil COP en Cauca': valor_max=None, expected 125000"
+   ],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "suministro"
+    ],
+    "departamento_resolved": "Cauca"
+   }
+  },
+  {
+   "id": "FRESH-V2-MONEY-004",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "vigilancia"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31"
+   }
+  },
+  {
+   "id": "FRESH-V2-MONEY-005",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'contratos de transporte entre 300 mil y 800 mil en 2025': expected block, got execution"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "transporte"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31"
+   }
+  },
+  {
+   "id": "FRESH-V2-SPELL-001",
+   "category": "spell",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'empecemos otra búsqueda': expected block, got execution",
+    "turn 1 'empecemos otra búsqueda': param objeto present (['empecemos', 'busqueda']), expected absent"
+   ],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "busqueda",
+     "empecemos"
+    ]
+   }
+  },
+  {
+   "id": "FRESH-V2-SPELL-002",
+   "category": "spell",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'procesos de obrra en Caldas': contract_type_include=None, expected ['obra']"
+   ],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "obra"
+    ],
+    "departamento_resolved": "Caldas"
+   }
+  },
+  {
+   "id": "FRESH-V2-SPELL-003",
+   "category": "spell",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "mantenimiento",
+     "vial"
+    ],
+    "departamento_resolved": "Sucre"
+   }
+  },
+  {
+   "id": "FRESH-V2-BUYER-001",
+   "category": "buyer",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "salud"
+    ],
+    "fecha_desde": "2024-01-01",
+    "fecha_hasta": "2024-12-31",
+    "entidad_resolved": "MUNICIPIO DE TUNJA/"
+   }
+  },
+  {
+   "id": "FRESH-V2-BUYER-002",
+   "category": "buyer",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "entidad_resolved": "MUNICIPIO DE ARMENIA QUINDIO"
+   }
+  },
+  {
+   "id": "FRESH-V2-BUYER-003",
+   "category": "buyer",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "transporte"
+    ],
+    "fecha_desde": "2024-01-01",
+    "fecha_hasta": "2024-12-31",
+    "entidad_resolved": "DEPARTAMENTO DEL META"
+   }
+  },
+  {
+   "id": "FRESH-V2-BUYER-004",
+   "category": "buyer",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "tecnologia"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "entidad_resolved": "MUNICIPIO DE NEIVA"
+   }
+  },
+  {
+   "id": "FRESH-V2-BUYER-005",
+   "category": "buyer",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "parques"
+    ],
+    "entidad_resolved": "ALCALDIA  MUNICIPIO DE IBAGUE*"
+   }
+  },
+  {
+   "id": "FRESH-V2-CONTROL-001",
+   "category": "control",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 2 'descarta todo y arranquemos de nuevo': expected block, got execution",
+    "turn 2 'descarta todo y arranquemos de nuevo': param departamento_resolved present ('Quindío'), expected absent",
+    "turn 2 'descarta todo y arranquemos de nuevo': param fecha_desde present ('2024-01-01'), expected absent",
+    "turn 2 'descarta todo y arranquemos de nuevo': param fecha_hasta present ('2024-12-31'), expected absent",
+    "turn 2 'descarta todo y arranquemos de nuevo': param objeto present (['descarta', 'arranquemos']), expected absent",
+    "turn 2 'descarta todo y arranquemos de nuevo': objeto leaks 'descarta' (objeto=['descarta', 'arranquemos'])",
+    "turn 2 'descarta todo y arranquemos de nuevo': objeto leaks 'arranquemos' (objeto=['descarta', 'arranquemos'])"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "arranquemos",
+     "descarta"
+    ],
+    "fecha_desde": "2024-01-01",
+    "fecha_hasta": "2024-12-31",
+    "departamento_resolved": "Quindío"
+   }
+  },
+  {
+   "id": "FRESH-V2-CONTROL-002",
+   "category": "control",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "vigilancia"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "departamento_resolved": "Santander",
+    "ordering_signal": "valor_asc"
+   }
+  },
+  {
+   "id": "FRESH-V2-CONTROL-003",
+   "category": "control",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'me gustaría concursar por mantenimiento de parques en Cesar': intent_type=None, expected 'opportunity_search'",
+    "turn 1 'me gustaría concursar por mantenimiento de parques en Cesar': estado_family=None, expected 'oferta_abierta'"
+   ],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "gustaria",
+     "mantenimiento",
+     "parques"
+    ],
+    "departamento_resolved": "Cesar"
+   }
+  },
+  {
+   "id": "FRESH-V2-CONTROL-004",
+   "category": "control",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'busco competir por suministros médicos en Arauca': intent_type=None, expected 'opportunity_search'",
+    "turn 1 'busco competir por suministros médicos en Arauca': estado_family=None, expected 'oferta_abierta'",
+    "turn 1 'busco competir por suministros médicos en Arauca': objeto lacks 'medico' (objeto=['suministro', 'salud'])"
+   ],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "salud",
+     "suministro"
+    ],
+    "departamento_resolved": "Arauca"
+   }
+  },
+  {
+   "id": "FRESH-V2-CONTROL-005",
+   "category": "control",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 2 'avanza al próximo bloque': expected block, got execution",
+    "turn 2 'avanza al próximo bloque': objeto leaks 'avanza' (objeto=['avanza', 'bloque'])",
+    "turn 2 'avanza al próximo bloque': objeto leaks 'bloque' (objeto=['avanza', 'bloque'])"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "avanza",
+     "bloque"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "departamento_resolved": "Caldas"
+   }
+  },
+  {
+   "id": "FRESH-V2-CROSS-001",
+   "category": "cross_dimension",
+   "severity_if_failed": "P0",
+   "notes": null,
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'procesos de obra en Boyacá': contract_type_include=None, expected ['obra']"
+   ],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "obra"
+    ],
+    "departamento_resolved": "Boyacá"
+   }
+  },
+  {
+   "id": "FRESH-V2-CROSS-002",
+   "category": "cross_dimension",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "valor_min": 60000,
+    "valor_max": 140000,
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "entidad_resolved": "ALCALDIA DE PASTO"
+   }
+  },
+  {
+   "id": "FRESH-V2-CROSS-003",
+   "category": "cross_dimension",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "mantenimiento"
+    ],
+    "entidad_resolved": "SANTIAGO DE CALI DISTRITO ESPECIAL - SECRETARIA DEL DEPORTE Y LA RECREACIÓN",
+    "estado_family": "oferta_abierta",
+    "estado_del_procedimiento": [
+     "Abierto",
+     "Aprobado",
+     "Borrador",
+     "En aprobación",
+     "Publicado"
+    ],
+    "intent_type": "opportunity_search"
+   }
+  },
+  {
+   "id": "FRESH-V2-CROSS-004",
+   "category": "cross_dimension",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "vias"
+    ],
+    "fecha_desde": "2023-01-01",
+    "fecha_hasta": "2023-12-31",
+    "departamento_resolved": "Valle del Cauca",
+    "ordering_signal": "fecha_desc"
+   }
+  },
+  {
+   "id": "FRESH-V2-CROSS-005",
+   "category": "cross_dimension",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "interventoria"
+    ],
+    "departamento_resolved": "Chocó"
+   }
+  },
+  {
+   "id": "FRESH-V2-CROSS-006",
+   "category": "cross_dimension",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "valor_min": 80000,
+    "valor_max": 160000,
+    "fecha_desde": "2024-01-01",
+    "fecha_hasta": "2024-12-31",
+    "estado_family": "contrato_activo",
+    "estado_contrato": [
+     "En ejecución",
+     "Modificado",
+     "Prorrogado"
+    ]
+   }
+  },
+  {
+   "id": "FRESH-V2-CROSS-007",
+   "category": "cross_dimension",
+   "severity_if_failed": "P0",
+   "notes": null,
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'procesos de la alcaldía de Manizales para salud que no estén seleccionados': expected block, got execution"
+   ],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "salud"
+    ],
+    "objeto_exclude": [
+     "seleccionados"
+    ],
+    "entidad_resolved": "MUNICIPIO DE MANIZALES"
+   }
+  },
+  {
+   "id": "FRESH-V2-CROSS-008",
+   "category": "cross_dimension",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'contratos de equipos en Antioquia durante 2024': objeto lacks 'equipos' (objeto=['equipo'])",
+    "turn 2 'reinicia la búsqeuda y déjalo vacío': expected block, got execution",
+    "turn 2 'reinicia la búsqeuda y déjalo vacío': param departamento_resolved present ('Antioquia'), expected absent",
+    "turn 2 'reinicia la búsqeuda y déjalo vacío': param fecha_desde present ('2024-01-01'), expected absent",
+    "turn 2 'reinicia la búsqeuda y déjalo vacío': param fecha_hasta present ('2024-12-31'), expected absent",
+    "turn 2 'reinicia la búsqeuda y déjalo vacío': param objeto present (['reinicia', 'busqeuda', 'dejalo', 'vacio']), expected absent",
+    "turn 2 'reinicia la búsqeuda y déjalo vacío': objeto leaks 'reinicia' (objeto=['reinicia', 'busqeuda', 'dejalo', 'vacio'])",
+    "turn 2 'reinicia la búsqeuda y déjalo vacío': objeto leaks 'busqeuda' (objeto=['reinicia', 'busqeuda', 'dejalo', 'vacio'])",
+    "turn 2 'reinicia la búsqeuda y déjalo vacío': objeto leaks 'vacio' (objeto=['reinicia', 'busqeuda', 'dejalo', 'vacio'])"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "busqeuda",
+     "dejalo",
+     "reinicia",
+     "vacio"
+    ],
+    "fecha_desde": "2024-01-01",
+    "fecha_hasta": "2024-12-31",
+    "departamento_resolved": "Antioquia"
+   }
+  },
+  {
+   "id": "FRESH-V2-CROSS-009",
+   "category": "cross_dimension",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'quiero competir por suministros de laboratorio entre 90 mil y 180 mil pesos en Casanare': intent_type=None, expected 'opportunity_search'",
+    "turn 1 'quiero competir por suministros de laboratorio entre 90 mil y 180 mil pesos en Casanare': estado_family=None, expected 'oferta_abierta'"
+   ],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "laboratorio",
+     "suministro"
+    ],
+    "valor_min": 90000,
+    "valor_max": 180000,
+    "departamento_resolved": "Casanare"
+   }
+  },
+  {
+   "id": "FRESH-V2-CROSS-010",
+   "category": "cross_dimension",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "alimentacion"
+    ],
+    "fecha_desde": "2026-03-01",
+    "fecha_hasta": "2026-03-31",
+    "departamento_resolved": "Bolívar",
+    "estado_family": "oferta_abierta",
+    "estado_del_procedimiento": [
+     "Abierto",
+     "Aprobado",
+     "Borrador",
+     "En aprobación",
+     "Publicado"
+    ],
+    "intent_type": "opportunity_search"
+   }
+  },
+  {
+   "id": "FRESH-V2-CROSS-011",
+   "category": "cross_dimension",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "dotacion"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "entidad_resolved": "MUNICIPIO DE PEREIRA- OFICIAL",
+    "ordering_signal": "valor_desc"
+   }
+  },
+  {
+   "id": "FRESH-V2-CROSS-012",
+   "category": "cross_dimension",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'contratos activos de vigilancia entre 200 mil y 600 mil durante 2025': expected block, got execution"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "vigilancia"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "estado_family": "contrato_activo",
+    "estado_contrato": [
+     "En ejecución",
+     "Modificado",
+     "Prorrogado"
+    ]
+   }
+  }
+ ]
+}

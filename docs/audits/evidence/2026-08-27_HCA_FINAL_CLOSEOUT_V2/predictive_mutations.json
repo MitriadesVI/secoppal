@@ -1,0 +1,17 @@
+{
+  "gate": "PREDICTIVE_NON_VACUITY",
+  "mutations_detected": 5,
+  "mutations_total": 5,
+  "verdict": "PASS",
+  "families": {
+    "STATE": {"detected": true, "case": "P01", "failed_checks": ["query_plan_reason", "positive_state_projection", "expected_execution", "blocked_source_calls_total_zero"]},
+    "MONEY": {"detected": true, "case": "P03", "failed_checks": ["expected_min", "expected_clarification"]},
+    "SPELL": {"detected": true, "case": "SPELL-S01", "failed_checks": ["corrected_query", "tokens_absent"]},
+    "BUYER": {"detected": true, "case": "P05", "failed_checks": ["expected_topic", "semantic_residue_none"]},
+    "CONTROL": {"detected": true, "case": "BIDDER-S01", "failed_checks": ["intent_type", "estado_family"]}
+  },
+  "source_methods_instrumented": ["query", "count", "aggregate"],
+  "blocked_cases_with_source_calls": 0,
+  "expectation_change_count": 0,
+  "source": "predictive_results.json"
+}

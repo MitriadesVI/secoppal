@@ -1,0 +1,16 @@
+{
+  "python312": {
+    "final_p1": {"pass": 40, "total": 40, "fail": 0, "error": 0},
+    "actor": {"pass": 36, "total": 36, "fail": 0, "error": 0},
+    "control": {"pass": 42, "total": 42, "fail": 0, "error": 0},
+    "time": {"pass": 32, "total": 32, "fail": 0, "error": 0},
+    "negation": {"pass": 22, "total": 24, "fail": 2, "error": 0, "basal_failures": ["NEG-N15", "NEG-ANTI-002"]},
+    "query_corpus": {"pass": 89, "total": 89, "fail": 0},
+    "dialogue_corpus": {"pass": 60, "total": 61, "fail": 1, "basal_failure": "GOB-DEPTO-001"},
+    "systemic_targeted_tests": {"pass": 736, "fail": 0}
+  },
+  "python3145_focal_parity": {
+    "systemic_targeted_tests": {"pass": 736, "fail": 0},
+    "verdict": "PASS"
+  }
+}

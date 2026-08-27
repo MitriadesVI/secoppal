@@ -1,0 +1,50 @@
+HCA FINAL CLOSEOUT V2 — GIT SNAPSHOT
+captured: 2026-08-27 America/Bogota
+
+$ git branch --show-current
+audit/hca-final-closeout-v2
+
+$ git rev-parse HEAD
+1a11f0c659ce3ad0b5ff418b45b7c7ae82313051
+
+$ git rev-parse main
+1a11f0c659ce3ad0b5ff418b45b7c7ae82313051
+
+$ git status --short
+Tracked changes at preflight: 0
+Pre-existing untracked paths preserved: 178
+Pre-existing untracked status SHA256: 33f1a73a2438f6c721b656a7655b87f5188a13dd97d087f58a7eda65763aa2ce
+Audit-created paths before commit: docs/audits/2026-08-27_HCA_FINAL_CLOSEOUT_V2.md and docs/audits/evidence/2026-08-27_HCA_FINAL_CLOSEOUT_V2/**
+
+$ git log --oneline --decorate --max-count=20
+1a11f0c (HEAD, main, integration/hca-fresh-systemic-sanitized) test(audit): harden HCA fresh sanitized integration gates
+8c4e934 fix(query): fail closed across unresolved semantic surface forms
+85b11be (audit/fresh-findings-causality) docs(audit): adjudicate fresh findings as one systemic mechanism
+4d9e5c7 (audit/hca-final-closeout) docs(audit): record blocked holistic campaign closeout
+92476c5 docs(audit): close HCA oracle patch integration review
+f074402 test(audit): align HCA oracles with canonical semantics
+25d9eac docs(audit): track final HCA runtime integration evidence
+8833ba2 docs(audit): record final HCA runtime integration
+dec589a (feature/hca-final-p1-runtime-fixes) docs(audit): close the P1 report with final suite figures
+6719f2d docs(audit): register the two out-of-scope buyer findings
+dc1bf79 docs(audit): record the HCA final P1 runtime remediation
+9169b8e fix(followup): keep derived execution state out of the turn history
+a8aa645 fix(entity): stop an unqualified buyer from becoming a topic
+d63fa26 fix(state): separate exact state from semantic family
+f85f209 fix(money): admit explicit monetary amounts below one million
+eb8cfe1 docs(audit): adjudicate remaining HCA oracle failures
+df3cc96 (experiment/chatgpt-sandbox, chore/agent-tooling) chore(tooling): track CLAUDE.md with the tool selection policy
+963f51f chore(tooling): add ruff, semgrep laws and hypothesis properties
+0a77070 docs(bitacora): register HCA-R7 integration closeout
+23f307c (feature/hca-r7-actor-hygiene) fix(actor): harden actor routing and candidate recall
+
+$ git worktree list
+32 worktrees registered. The audit used only /Users/rodrigoortiz/Documents/secoppal.
+No worktree was removed or modified by Git operations.
+
+Forbidden operations performed:
+reset --hard: NO
+clean: NO
+merge: NO
+rebase: NO
+push: NO

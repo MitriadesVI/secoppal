@@ -1,0 +1,33 @@
+{
+  "status": "PASS",
+  "audit_output_scope": ["docs/audits/**"],
+  "runner_isolation": {
+    "hca": {"outside_sandbox": []},
+    "fresh_original": {"outside_sandbox": []},
+    "fresh_v2": {"outside_sandbox": []},
+    "focal_final_p1": {"outside_sandbox": []},
+    "focal_actor": {"outside_sandbox": []},
+    "focal_control": {"outside_sandbox": []},
+    "focal_time": {"outside_sandbox": []},
+    "focal_negation": {"outside_sandbox": []},
+    "predictive": "isolated_runtime_stores"
+  },
+  "full_suite_stores": "redirected to /private/tmp; telemetry disabled by default in the authoritative run",
+  "live_source": {"read_only": true, "limit_per_query": 5, "rows_persisted": false},
+  "production_store_content": {
+    "data/secoppal.db": {
+      "sha256_before": "895c48960225d59660b5dba24220168482e97fa06cd66a18b0abbd47e3bb80ff",
+      "sha256_after": "895c48960225d59660b5dba24220168482e97fa06cd66a18b0abbd47e3bb80ff",
+      "changed": false
+    },
+    "data/feedback.jsonl": {
+      "sha256_before": "f689709800fb0a20964e3d4d61ae7cb533f6d8d26346cbcf5c5e0fdc2ce1e656",
+      "sha256_after": "f689709800fb0a20964e3d4d61ae7cb533f6d8d26346cbcf5c5e0fdc2ce1e656",
+      "changed": false,
+      "mtime_changed_during_window": true,
+      "note": "A concurrent process touched mtime, but byte content was identical before and after; audit processes were redirected."
+    }
+  },
+  "audit_attributable_production_writes": 0,
+  "user_development_processes_stopped": false
+}

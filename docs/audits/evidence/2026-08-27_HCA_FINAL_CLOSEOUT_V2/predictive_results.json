@@ -1,0 +1,1177 @@
+{
+ "gate": "PREDICTIVE_HARDENED",
+ "verdict": "PASS",
+ "baseline_input_sha": "68179d0bcbcfbfac5aa7a925f8ec78c261dd151daca22f66d3794866c914f414",
+ "baseline_input_expected_sha": "68179d0bcbcfbfac5aa7a925f8ec78c261dd151daca22f66d3794866c914f414",
+ "expectation_sha": "9d18eae36a82c4af4585c6920aa9ab3df3356b9f48a31597067842d8274148a8",
+ "expectation_expected_sha": "9d18eae36a82c4af4585c6920aa9ab3df3356b9f48a31597067842d8274148a8",
+ "expectation_change_count": 0,
+ "canonical_cases": 12,
+ "canonical_clear": 12,
+ "sentinels": 7,
+ "sentinels_clear": 7,
+ "source_call_count_total": 13,
+ "source_calls_by_method": {
+  "query": 13,
+  "count": 0,
+  "aggregate": 0
+ },
+ "instrumented_source_methods": [
+  "query",
+  "count",
+  "aggregate"
+ ],
+ "mutations": {
+  "STATE": {
+   "family": "STATE_NEGATION",
+   "case": "P01",
+   "detected": true,
+   "failed_checks": [
+    "query_plan_reason",
+    "positive_state_projection",
+    "expected_execution",
+    "blocked_source_calls_total_zero"
+   ]
+  },
+  "MONEY": {
+   "family": "MONEY_RANGE",
+   "case": "P03",
+   "detected": true,
+   "failed_checks": [
+    "expected_min",
+    "expected_clarification"
+   ]
+  },
+  "SPELL": {
+   "family": "SPELL",
+   "case": "SPELL-S01",
+   "detected": true,
+   "failed_checks": [
+    "corrected_query",
+    "tokens_absent"
+   ]
+  },
+  "BUYER": {
+   "family": "BUYER_ACTION",
+   "case": "P05",
+   "detected": true,
+   "failed_checks": [
+    "expected_topic",
+    "semantic_residue_none"
+   ]
+  },
+  "CONTROL": {
+   "family": "CONTROL_BIDDER",
+   "case": "BIDDER-S01",
+   "detected": true,
+   "failed_checks": [
+    "intent_type",
+    "estado_family"
+   ]
+  }
+ },
+ "cases": [
+  {
+   "id": "P01",
+   "family": "STATE_NEGATION",
+   "query": "procesos que no esten adjudicados en caldas",
+   "dataset": "procesos",
+   "intent_type": null,
+   "estado_family": null,
+   "control_intent": null,
+   "workflow_intent": "",
+   "topic": [],
+   "buyer_entity": null,
+   "buyer_kind": null,
+   "valor_min": null,
+   "valor_max": null,
+   "money_clarification": false,
+   "needs_clarification": true,
+   "outcome": "clarification",
+   "outcome_reason": "clarification_requested",
+   "query_plan_reason": "unsupported_negation",
+   "positive_state_projection": {},
+   "resolved_params": {
+    "dataset": "procesos",
+    "dataset_explicit": true,
+    "departamento": "en caldas",
+    "departamento_resolved": "Caldas",
+    "departamento_resolution": {
+     "value": "Caldas",
+     "method": "scan_exact",
+     "kind": "territorial_department",
+     "confidence": "high",
+     "like_value": null,
+     "metadata": {}
+    }
+   },
+   "response": "Entendí que quieres excluir el estado 'adjudicados', pero esa exclusión todavía no es ejecutable de forma segura.",
+   "source_call_count_total": 0,
+   "source_calls_by_method": {
+    "query": 0,
+    "count": 0,
+    "aggregate": 0
+   },
+   "expected": {
+    "dataset": "procesos",
+    "needs_clarification": true,
+    "outcome": "clarification",
+    "outcome_reason": "clarification_requested",
+    "query_plan_reason": "unsupported_negation",
+    "positive_state_projection": {},
+    "expected_execution": false
+   },
+   "checks": {
+    "dataset": true,
+    "needs_clarification": true,
+    "outcome": true,
+    "outcome_reason": true,
+    "query_plan_reason": true,
+    "positive_state_projection": true,
+    "expected_execution": true,
+    "blocked_source_calls_total_zero": true
+   },
+   "passed": true
+  },
+  {
+   "id": "P02",
+   "family": "STATE_NEGATION",
+   "query": "contratos que no esten liquidados en 2025",
+   "dataset": "contratos",
+   "intent_type": null,
+   "estado_family": null,
+   "control_intent": null,
+   "workflow_intent": "",
+   "topic": [],
+   "buyer_entity": null,
+   "buyer_kind": null,
+   "valor_min": null,
+   "valor_max": null,
+   "money_clarification": false,
+   "needs_clarification": true,
+   "outcome": "clarification",
+   "outcome_reason": "clarification_requested",
+   "query_plan_reason": "unsupported_negation",
+   "positive_state_projection": {},
+   "resolved_params": {
+    "dataset": "contratos",
+    "dataset_explicit": true,
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "_temporal_replace_scope": true
+   },
+   "response": "Entendí que quieres excluir el estado 'liquidados', pero esa exclusión todavía no es ejecutable de forma segura.",
+   "source_call_count_total": 0,
+   "source_calls_by_method": {
+    "query": 0,
+    "count": 0,
+    "aggregate": 0
+   },
+   "expected": {
+    "dataset": "contratos",
+    "needs_clarification": true,
+    "outcome": "clarification",
+    "outcome_reason": "clarification_requested",
+    "query_plan_reason": "unsupported_negation",
+    "positive_state_projection": {},
+    "expected_execution": false
+   },
+   "checks": {
+    "dataset": true,
+    "needs_clarification": true,
+    "outcome": true,
+    "outcome_reason": true,
+    "query_plan_reason": true,
+    "positive_state_projection": true,
+    "expected_execution": true,
+    "blocked_source_calls_total_zero": true
+   },
+   "passed": true
+  },
+  {
+   "id": "P03",
+   "family": "MONEY_RANGE",
+   "query": "contratos de obra entre 40 mil y 80 mil pesos",
+   "dataset": "contratos",
+   "intent_type": null,
+   "estado_family": null,
+   "control_intent": null,
+   "workflow_intent": "",
+   "topic": [],
+   "buyer_entity": null,
+   "buyer_kind": null,
+   "valor_min": 40000,
+   "valor_max": 80000,
+   "money_clarification": false,
+   "needs_clarification": false,
+   "outcome": "empty",
+   "outcome_reason": "zero_results",
+   "query_plan_reason": "valid_query",
+   "positive_state_projection": {},
+   "resolved_params": {
+    "dataset": "contratos",
+    "contract_type_include": [
+     "obra"
+    ],
+    "valor_min": 40000,
+    "valor_max": 80000,
+    "limit": 50
+   },
+   "response": "No encontre resultados exactos con esos filtros.\n\nLa busqueda combinaba:\n- filtro económico: valor del contrato entre $40,000 y $80,000\n\nPuedo intentar:\n1. quitar el filtro de valor",
+   "source_call_count_total": 2,
+   "source_calls_by_method": {
+    "query": 2,
+    "count": 0,
+    "aggregate": 0
+   },
+   "expected": {
+    "dataset": "contratos",
+    "expected_min": 40000,
+    "expected_max": 80000,
+    "expected_clarification": false,
+    "expected_execution": true
+   },
+   "checks": {
+    "dataset": true,
+    "expected_min": true,
+    "expected_max": true,
+    "expected_clarification": true,
+    "expected_execution": true
+   },
+   "passed": true
+  },
+  {
+   "id": "P04",
+   "family": "MONEY_RANGE",
+   "query": "contratos de obra entre 700 mil y 900 mil pesos en 2025",
+   "dataset": "contratos",
+   "intent_type": null,
+   "estado_family": null,
+   "control_intent": null,
+   "workflow_intent": "",
+   "topic": [],
+   "buyer_entity": null,
+   "buyer_kind": null,
+   "valor_min": 700000,
+   "valor_max": 900000,
+   "money_clarification": false,
+   "needs_clarification": false,
+   "outcome": "empty",
+   "outcome_reason": "zero_results",
+   "query_plan_reason": "valid_query",
+   "positive_state_projection": {},
+   "resolved_params": {
+    "dataset": "contratos",
+    "contract_type_include": [
+     "obra"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "valor_min": 700000,
+    "valor_max": 900000,
+    "limit": 50
+   },
+   "response": "No encontre resultados exactos con esos filtros.\n\nLa busqueda combinaba:\n- fecha: 2025-01-01 a 2025-12-31\n- filtro económico: valor del contrato entre $700,000 y $900,000\n\nPuedo intentar:\n1. quitar el filtro de fecha\n2. quitar el filtro de valor",
+   "source_call_count_total": 2,
+   "source_calls_by_method": {
+    "query": 2,
+    "count": 0,
+    "aggregate": 0
+   },
+   "expected": {
+    "dataset": "contratos",
+    "expected_min": 700000,
+    "expected_max": 900000,
+    "expected_clarification": false,
+    "expected_execution": true
+   },
+   "checks": {
+    "dataset": true,
+    "expected_min": true,
+    "expected_max": true,
+    "expected_clarification": true,
+    "expected_execution": true
+   },
+   "passed": true
+  },
+  {
+   "id": "P05",
+   "family": "BUYER_ACTION",
+   "query": "que celebro la alcaldia de pasto en 2025",
+   "dataset": "contratos",
+   "intent_type": null,
+   "estado_family": null,
+   "control_intent": null,
+   "workflow_intent": "",
+   "topic": [],
+   "buyer_entity": "ALCALDIA DE PASTO",
+   "buyer_kind": "buyer_entity",
+   "valor_min": null,
+   "valor_max": null,
+   "money_clarification": false,
+   "needs_clarification": false,
+   "outcome": "empty",
+   "outcome_reason": "zero_results",
+   "query_plan_reason": "valid_query",
+   "positive_state_projection": {},
+   "resolved_params": {
+    "dataset": "contratos",
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "entidad": "Municipio de pasto",
+    "entidad_resolved": "ALCALDIA DE PASTO",
+    "entidad_resolution": {
+     "value": "ALCALDIA DE PASTO",
+     "method": "rewrite_alcald[ií]a",
+     "kind": "buyer_entity",
+     "confidence": "high",
+     "like_value": null,
+     "metadata": {
+      "rewritten_from": "alcaldia de pasto"
+     }
+    },
+    "limit": 50
+   },
+   "response": "No encontre resultados exactos con esos filtros.\n\nLa busqueda combinaba:\n- entidad: ALCALDIA DE PASTO\n- fecha: 2025-01-01 a 2025-12-31\n\nPuedo intentar:\n1. quitar el filtro de fecha",
+   "source_call_count_total": 2,
+   "source_calls_by_method": {
+    "query": 2,
+    "count": 0,
+    "aggregate": 0
+   },
+   "expected": {
+    "dataset": "contratos",
+    "buyer_entity": "ALCALDIA DE PASTO",
+    "buyer_kind": "buyer_entity",
+    "expected_topic": [],
+    "control_tokens_absent": [
+     "celebro"
+    ],
+    "expected_execution": true
+   },
+   "checks": {
+    "dataset": true,
+    "buyer_entity": true,
+    "buyer_kind": true,
+    "expected_execution": true,
+    "expected_topic": true,
+    "semantic_residue_none": true
+   },
+   "passed": true
+  },
+  {
+   "id": "P06",
+   "family": "BUYER_ACTION",
+   "query": "que gasto la alcaldia de pasto en 2025",
+   "dataset": "contratos",
+   "intent_type": null,
+   "estado_family": null,
+   "control_intent": null,
+   "workflow_intent": "",
+   "topic": [],
+   "buyer_entity": "ALCALDIA DE PASTO",
+   "buyer_kind": "buyer_entity",
+   "valor_min": null,
+   "valor_max": null,
+   "money_clarification": false,
+   "needs_clarification": false,
+   "outcome": "empty",
+   "outcome_reason": "zero_results",
+   "query_plan_reason": "valid_query",
+   "positive_state_projection": {},
+   "resolved_params": {
+    "dataset": "contratos",
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "entidad": "Municipio de pasto",
+    "entidad_resolved": "ALCALDIA DE PASTO",
+    "entidad_resolution": {
+     "value": "ALCALDIA DE PASTO",
+     "method": "rewrite_alcald[ií]a",
+     "kind": "buyer_entity",
+     "confidence": "high",
+     "like_value": null,
+     "metadata": {
+      "rewritten_from": "alcaldia de pasto"
+     }
+    },
+    "limit": 50
+   },
+   "response": "No encontre resultados exactos con esos filtros.\n\nLa busqueda combinaba:\n- entidad: ALCALDIA DE PASTO\n- fecha: 2025-01-01 a 2025-12-31\n\nPuedo intentar:\n1. quitar el filtro de fecha",
+   "source_call_count_total": 2,
+   "source_calls_by_method": {
+    "query": 2,
+    "count": 0,
+    "aggregate": 0
+   },
+   "expected": {
+    "dataset": "contratos",
+    "buyer_entity": "ALCALDIA DE PASTO",
+    "buyer_kind": "buyer_entity",
+    "expected_topic": [],
+    "control_tokens_absent": [
+     "gasto"
+    ],
+    "expected_execution": true
+   },
+   "checks": {
+    "dataset": true,
+    "buyer_entity": true,
+    "buyer_kind": true,
+    "expected_execution": true,
+    "expected_topic": true,
+    "semantic_residue_none": true
+   },
+   "passed": true
+  },
+  {
+   "id": "P07",
+   "family": "BUYER_ACTION",
+   "query": "que suscribio la alcaldia de pasto en 2025",
+   "dataset": "contratos",
+   "intent_type": null,
+   "estado_family": null,
+   "control_intent": null,
+   "workflow_intent": "",
+   "topic": [],
+   "buyer_entity": "ALCALDIA DE PASTO",
+   "buyer_kind": "buyer_entity",
+   "valor_min": null,
+   "valor_max": null,
+   "money_clarification": false,
+   "needs_clarification": false,
+   "outcome": "empty",
+   "outcome_reason": "zero_results",
+   "query_plan_reason": "valid_query",
+   "positive_state_projection": {},
+   "resolved_params": {
+    "dataset": "contratos",
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "entidad": "Municipio de pasto",
+    "entidad_resolved": "ALCALDIA DE PASTO",
+    "entidad_resolution": {
+     "value": "ALCALDIA DE PASTO",
+     "method": "rewrite_alcald[ií]a",
+     "kind": "buyer_entity",
+     "confidence": "high",
+     "like_value": null,
+     "metadata": {
+      "rewritten_from": "alcaldia de pasto"
+     }
+    },
+    "limit": 50
+   },
+   "response": "No encontre resultados exactos con esos filtros.\n\nLa busqueda combinaba:\n- entidad: ALCALDIA DE PASTO\n- fecha: 2025-01-01 a 2025-12-31\n\nPuedo intentar:\n1. quitar el filtro de fecha",
+   "source_call_count_total": 2,
+   "source_calls_by_method": {
+    "query": 2,
+    "count": 0,
+    "aggregate": 0
+   },
+   "expected": {
+    "dataset": "contratos",
+    "buyer_entity": "ALCALDIA DE PASTO",
+    "buyer_kind": "buyer_entity",
+    "expected_topic": [],
+    "control_tokens_absent": [
+     "suscribio"
+    ],
+    "expected_execution": true
+   },
+   "checks": {
+    "dataset": true,
+    "buyer_entity": true,
+    "buyer_kind": true,
+    "expected_execution": true,
+    "expected_topic": true,
+    "semantic_residue_none": true
+   },
+   "passed": true
+  },
+  {
+   "id": "P08",
+   "family": "CONTROL",
+   "query": "continua con los siguientes",
+   "dataset": "procesos",
+   "intent_type": null,
+   "estado_family": null,
+   "control_intent": "pagination_more",
+   "workflow_intent": "",
+   "topic": [],
+   "buyer_entity": null,
+   "buyer_kind": null,
+   "valor_min": null,
+   "valor_max": null,
+   "money_clarification": false,
+   "needs_clarification": true,
+   "outcome": "clarification",
+   "outcome_reason": "clarification_requested",
+   "query_plan_reason": "valid_query",
+   "positive_state_projection": {},
+   "resolved_params": {
+    "dataset": "procesos",
+    "limit": 50
+   },
+   "response": "Necesito al menos un filtro de entidad, lugar, tema o contratista para buscar. Sobre qué quieres saber?\n\nPuedo buscar de varias formas:\n1. Procesos mas recientes\n2. Procesos de mayor valor\n3. Procesos de mantenimiento vial\n\nCual camino quieres?",
+   "source_call_count_total": 0,
+   "source_calls_by_method": {
+    "query": 0,
+    "count": 0,
+    "aggregate": 0
+   },
+   "expected": {
+    "control_intent": "pagination_more",
+    "expected_topic": [],
+    "control_tokens_absent": [
+     "continua",
+     "siguientes"
+    ],
+    "needs_clarification": true,
+    "expected_execution": false
+   },
+   "checks": {
+    "needs_clarification": true,
+    "control_intent": true,
+    "expected_execution": true,
+    "blocked_source_calls_total_zero": true,
+    "expected_topic": true,
+    "semantic_residue_none": true
+   },
+   "passed": true
+  },
+  {
+   "id": "P09",
+   "family": "CONTROL",
+   "query": "dame mas resultados",
+   "dataset": "procesos",
+   "intent_type": null,
+   "estado_family": null,
+   "control_intent": "pagination_more",
+   "workflow_intent": "",
+   "topic": [],
+   "buyer_entity": null,
+   "buyer_kind": null,
+   "valor_min": null,
+   "valor_max": null,
+   "money_clarification": false,
+   "needs_clarification": true,
+   "outcome": "clarification",
+   "outcome_reason": "clarification_requested",
+   "query_plan_reason": "valid_query",
+   "positive_state_projection": {},
+   "resolved_params": {
+    "dataset": "procesos",
+    "limit": 50
+   },
+   "response": "Necesito al menos un filtro de entidad, lugar, tema o contratista para buscar. Sobre qué quieres saber?\n\nPuedo buscar de varias formas:\n1. Procesos mas recientes\n2. Procesos de mayor valor\n3. Procesos de mantenimiento vial\n\nCual camino quieres?",
+   "source_call_count_total": 0,
+   "source_calls_by_method": {
+    "query": 0,
+    "count": 0,
+    "aggregate": 0
+   },
+   "expected": {
+    "control_intent": "pagination_more",
+    "expected_topic": [],
+    "control_tokens_absent": [
+     "resultados"
+    ],
+    "needs_clarification": true,
+    "expected_execution": false
+   },
+   "checks": {
+    "needs_clarification": true,
+    "control_intent": true,
+    "expected_execution": true,
+    "blocked_source_calls_total_zero": true,
+    "expected_topic": true,
+    "semantic_residue_none": true
+   },
+   "passed": true
+  },
+  {
+   "id": "P10",
+   "family": "CONTROL",
+   "query": "borra los filtros",
+   "dataset": "procesos",
+   "intent_type": null,
+   "estado_family": null,
+   "control_intent": "reset_context",
+   "workflow_intent": "reset_context",
+   "topic": [],
+   "buyer_entity": null,
+   "buyer_kind": null,
+   "valor_min": null,
+   "valor_max": null,
+   "money_clarification": false,
+   "needs_clarification": true,
+   "outcome": "clarification",
+   "outcome_reason": "clarification_requested",
+   "query_plan_reason": null,
+   "positive_state_projection": {},
+   "resolved_params": {},
+   "response": "Listo, borre los filtros anteriores. Que quieres buscar ahora?\n\nPuedo buscar de varias formas:\n1. Procesos mas recientes\n2. Procesos de mayor valor\n3. Procesos de mantenimiento vial\n\nCual camino quieres?",
+   "source_call_count_total": 0,
+   "source_calls_by_method": {
+    "query": 0,
+    "count": 0,
+    "aggregate": 0
+   },
+   "expected": {
+    "control_intent": "reset_context",
+    "workflow_intent": "reset_context",
+    "expected_topic": [],
+    "control_tokens_absent": [
+     "borra",
+     "filtros"
+    ],
+    "needs_clarification": true,
+    "outcome": "clarification",
+    "outcome_reason": "clarification_requested",
+    "expected_resolved_params": {},
+    "response_tokens_absent": [
+     "zero_after_refinement",
+     "zero_results_after_refinement"
+    ],
+    "expected_execution": false
+   },
+   "checks": {
+    "needs_clarification": true,
+    "outcome": true,
+    "outcome_reason": true,
+    "control_intent": true,
+    "workflow_intent": true,
+    "expected_execution": true,
+    "blocked_source_calls_total_zero": true,
+    "expected_topic": true,
+    "expected_resolved_params": true,
+    "semantic_residue_none": true,
+    "misleading_zero_message_absent": true
+   },
+   "passed": true
+  },
+  {
+   "id": "P11",
+   "family": "CONTROL",
+   "query": "reinicia la busqueda",
+   "dataset": "procesos",
+   "intent_type": null,
+   "estado_family": null,
+   "control_intent": "reset_context",
+   "workflow_intent": "reset_context",
+   "topic": [],
+   "buyer_entity": null,
+   "buyer_kind": null,
+   "valor_min": null,
+   "valor_max": null,
+   "money_clarification": false,
+   "needs_clarification": true,
+   "outcome": "clarification",
+   "outcome_reason": "clarification_requested",
+   "query_plan_reason": null,
+   "positive_state_projection": {},
+   "resolved_params": {},
+   "response": "Listo, borre los filtros anteriores. Que quieres buscar ahora?\n\nPuedo buscar de varias formas:\n1. Procesos mas recientes\n2. Procesos de mayor valor\n3. Procesos de mantenimiento vial\n\nCual camino quieres?",
+   "source_call_count_total": 0,
+   "source_calls_by_method": {
+    "query": 0,
+    "count": 0,
+    "aggregate": 0
+   },
+   "expected": {
+    "control_intent": "reset_context",
+    "workflow_intent": "reset_context",
+    "expected_topic": [],
+    "control_tokens_absent": [
+     "reinicia",
+     "busqueda"
+    ],
+    "needs_clarification": true,
+    "outcome": "clarification",
+    "outcome_reason": "clarification_requested",
+    "expected_resolved_params": {},
+    "response_tokens_absent": [
+     "zero_after_refinement",
+     "zero_results_after_refinement"
+    ],
+    "expected_execution": false
+   },
+   "checks": {
+    "needs_clarification": true,
+    "outcome": true,
+    "outcome_reason": true,
+    "control_intent": true,
+    "workflow_intent": true,
+    "expected_execution": true,
+    "blocked_source_calls_total_zero": true,
+    "expected_topic": true,
+    "expected_resolved_params": true,
+    "semantic_residue_none": true,
+    "misleading_zero_message_absent": true
+   },
+   "passed": true
+  },
+  {
+   "id": "P12",
+   "family": "CONTROL",
+   "query": "quitalo todo y empezamos otra vez",
+   "dataset": "procesos",
+   "intent_type": null,
+   "estado_family": null,
+   "control_intent": "reset_context",
+   "workflow_intent": "reset_context",
+   "topic": [],
+   "buyer_entity": null,
+   "buyer_kind": null,
+   "valor_min": null,
+   "valor_max": null,
+   "money_clarification": false,
+   "needs_clarification": true,
+   "outcome": "clarification",
+   "outcome_reason": "clarification_requested",
+   "query_plan_reason": null,
+   "positive_state_projection": {},
+   "resolved_params": {},
+   "response": "Listo, borre los filtros anteriores. Que quieres buscar ahora?\n\nPuedo buscar de varias formas:\n1. Procesos mas recientes\n2. Procesos de mayor valor\n3. Procesos de mantenimiento vial\n\nCual camino quieres?",
+   "source_call_count_total": 0,
+   "source_calls_by_method": {
+    "query": 0,
+    "count": 0,
+    "aggregate": 0
+   },
+   "expected": {
+    "control_intent": "reset_context",
+    "workflow_intent": "reset_context",
+    "expected_topic": [],
+    "control_tokens_absent": [
+     "quitalo",
+     "empezamos",
+     "obra"
+    ],
+    "needs_clarification": true,
+    "outcome": "clarification",
+    "outcome_reason": "clarification_requested",
+    "expected_resolved_params": {},
+    "response_tokens_absent": [
+     "zero_after_refinement",
+     "zero_results_after_refinement"
+    ],
+    "expected_execution": false
+   },
+   "checks": {
+    "needs_clarification": true,
+    "outcome": true,
+    "outcome_reason": true,
+    "control_intent": true,
+    "workflow_intent": true,
+    "expected_execution": true,
+    "blocked_source_calls_total_zero": true,
+    "expected_topic": true,
+    "expected_resolved_params": true,
+    "semantic_residue_none": true,
+    "misleading_zero_message_absent": true
+   },
+   "passed": true
+  }
+ ],
+ "sentinel_cases": [
+  {
+   "id": "STATE-S01",
+   "family": "STATE_NEGATION",
+   "query": "procesos que no esten abiertos",
+   "dataset": "procesos",
+   "intent_type": null,
+   "estado_family": null,
+   "control_intent": null,
+   "workflow_intent": "",
+   "topic": [],
+   "buyer_entity": null,
+   "buyer_kind": null,
+   "valor_min": null,
+   "valor_max": null,
+   "money_clarification": false,
+   "needs_clarification": true,
+   "outcome": "clarification",
+   "outcome_reason": "clarification_requested",
+   "query_plan_reason": "unsupported_negation",
+   "positive_state_projection": {},
+   "resolved_params": {
+    "dataset": "procesos",
+    "dataset_explicit": true
+   },
+   "response": "Entendí que quieres excluir el estado 'abiertos', pero esa exclusión todavía no es ejecutable de forma segura.",
+   "source_call_count_total": 0,
+   "source_calls_by_method": {
+    "query": 0,
+    "count": 0,
+    "aggregate": 0
+   },
+   "expected": {
+    "dataset": "procesos",
+    "needs_clarification": true,
+    "outcome": "clarification",
+    "outcome_reason": "clarification_requested",
+    "query_plan_reason": "unsupported_negation",
+    "positive_state_projection": {},
+    "expected_execution": false
+   },
+   "checks": {
+    "dataset": true,
+    "needs_clarification": true,
+    "outcome": true,
+    "outcome_reason": true,
+    "query_plan_reason": true,
+    "positive_state_projection": true,
+    "expected_execution": true,
+    "blocked_source_calls_total_zero": true
+   },
+   "passed": true
+  },
+  {
+   "id": "STATE-S02",
+   "family": "STATE_NEGATION",
+   "query": "procesos que no esten en convocatoria",
+   "dataset": "procesos",
+   "intent_type": null,
+   "estado_family": null,
+   "control_intent": null,
+   "workflow_intent": "",
+   "topic": [],
+   "buyer_entity": null,
+   "buyer_kind": null,
+   "valor_min": null,
+   "valor_max": null,
+   "money_clarification": false,
+   "needs_clarification": true,
+   "outcome": "clarification",
+   "outcome_reason": "clarification_requested",
+   "query_plan_reason": "unsupported_negation",
+   "positive_state_projection": {},
+   "resolved_params": {
+    "dataset": "procesos",
+    "dataset_explicit": true
+   },
+   "response": "Entendí que quieres excluir el estado 'convocatoria', pero esa exclusión todavía no es ejecutable de forma segura.",
+   "source_call_count_total": 0,
+   "source_calls_by_method": {
+    "query": 0,
+    "count": 0,
+    "aggregate": 0
+   },
+   "expected": {
+    "dataset": "procesos",
+    "needs_clarification": true,
+    "outcome": "clarification",
+    "outcome_reason": "clarification_requested",
+    "query_plan_reason": "unsupported_negation",
+    "positive_state_projection": {},
+    "expected_execution": false
+   },
+   "checks": {
+    "dataset": true,
+    "needs_clarification": true,
+    "outcome": true,
+    "outcome_reason": true,
+    "query_plan_reason": true,
+    "positive_state_projection": true,
+    "expected_execution": true,
+    "blocked_source_calls_total_zero": true
+   },
+   "passed": true
+  },
+  {
+   "id": "MONEY-S01",
+   "family": "MONEY_RANGE",
+   "query": "entre 700 mil y 900 mil",
+   "dataset": "procesos",
+   "intent_type": null,
+   "estado_family": null,
+   "control_intent": null,
+   "workflow_intent": "",
+   "topic": [],
+   "buyer_entity": null,
+   "buyer_kind": null,
+   "valor_min": null,
+   "valor_max": null,
+   "money_clarification": false,
+   "needs_clarification": true,
+   "outcome": "clarification",
+   "outcome_reason": "clarification_requested",
+   "query_plan_reason": "valid_query",
+   "positive_state_projection": {},
+   "resolved_params": {
+    "dataset": "procesos",
+    "limit": 50
+   },
+   "response": "Necesito al menos un filtro de entidad, lugar, tema o contratista para buscar. Sobre qué quieres saber?\n\nPuedo buscar de varias formas:\n1. Procesos mas recientes\n2. Procesos de mayor valor\n3. Procesos de mantenimiento vial\n\nCual camino quieres?",
+   "source_call_count_total": 0,
+   "source_calls_by_method": {
+    "query": 0,
+    "count": 0,
+    "aggregate": 0
+   },
+   "expected": {
+    "dataset": "procesos",
+    "expected_min": null,
+    "expected_max": null,
+    "expected_clarification": true,
+    "expected_execution": false
+   },
+   "checks": {
+    "dataset": true,
+    "expected_min": true,
+    "expected_max": true,
+    "expected_clarification": true,
+    "expected_execution": true,
+    "blocked_source_calls_total_zero": true
+   },
+   "passed": true
+  },
+  {
+   "id": "MONEY-S02",
+   "family": "MONEY_RANGE",
+   "query": "contratos de aseo entre 500 mil y 3 millones",
+   "dataset": "contratos",
+   "intent_type": null,
+   "estado_family": null,
+   "control_intent": null,
+   "workflow_intent": "",
+   "topic": [
+    "aseo"
+   ],
+   "buyer_entity": null,
+   "buyer_kind": null,
+   "valor_min": null,
+   "valor_max": null,
+   "money_clarification": true,
+   "needs_clarification": true,
+   "outcome": "clarification",
+   "outcome_reason": "clarification_requested",
+   "query_plan_reason": "smmlv_year_scope_unsupported",
+   "positive_state_projection": {},
+   "resolved_params": {
+    "dataset": "contratos",
+    "dataset_explicit": true,
+    "money_clarification": "Entendí que quieres un rango de valor en \"entre 500 mil y 3 millones\", pero solo pude interpretar uno de los dos extremos. Dime los dos con su unidad —por ejemplo \"entre 120 mil pesos y 350 mil pesos\"— y lo aplico completo.",
+    "objeto": [
+     "aseo"
+    ]
+   },
+   "response": "Entendí que quieres un rango de valor en \"entre 500 mil y 3 millones\", pero solo pude interpretar uno de los dos extremos. Dime los dos con su unidad —por ejemplo \"entre 120 mil pesos y 350 mil pesos\"— y lo aplico completo.",
+   "source_call_count_total": 0,
+   "source_calls_by_method": {
+    "query": 0,
+    "count": 0,
+    "aggregate": 0
+   },
+   "expected": {
+    "dataset": "contratos",
+    "expected_min": null,
+    "expected_max": null,
+    "expected_clarification": true,
+    "expected_execution": false
+   },
+   "checks": {
+    "dataset": true,
+    "expected_min": true,
+    "expected_max": true,
+    "expected_clarification": true,
+    "expected_execution": true,
+    "blocked_source_calls_total_zero": true
+   },
+   "passed": true
+  },
+  {
+   "id": "BUYER-S01",
+   "family": "BUYER_ACTION",
+   "query": "que compro la alcaldia de pasto para salud en 2025",
+   "dataset": "contratos",
+   "intent_type": null,
+   "estado_family": null,
+   "control_intent": null,
+   "workflow_intent": "",
+   "topic": [
+    "salud"
+   ],
+   "buyer_entity": "ALCALDIA DE PASTO",
+   "buyer_kind": "buyer_entity",
+   "valor_min": null,
+   "valor_max": null,
+   "money_clarification": false,
+   "needs_clarification": false,
+   "outcome": "empty",
+   "outcome_reason": "zero_results",
+   "query_plan_reason": "valid_query",
+   "positive_state_projection": {},
+   "resolved_params": {
+    "dataset": "contratos",
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "entidad": "Municipio de pasto",
+    "entidad_resolved": "ALCALDIA DE PASTO",
+    "entidad_resolution": {
+     "value": "ALCALDIA DE PASTO",
+     "method": "rewrite_alcald[ií]a",
+     "kind": "buyer_entity",
+     "confidence": "high",
+     "like_value": null,
+     "metadata": {
+      "rewritten_from": "alcaldia de pasto"
+     }
+    },
+    "objeto": [
+     "salud"
+    ],
+    "limit": 50
+   },
+   "response": "No encontre resultados exactos con esos filtros.\n\nLa busqueda combinaba:\n- tema: salud\n- entidad: ALCALDIA DE PASTO\n- fecha: 2025-01-01 a 2025-12-31\n\nPuedo intentar:\n1. quitar el filtro de fecha",
+   "source_call_count_total": 2,
+   "source_calls_by_method": {
+    "query": 2,
+    "count": 0,
+    "aggregate": 0
+   },
+   "expected": {
+    "dataset": "contratos",
+    "buyer_entity": "ALCALDIA DE PASTO",
+    "buyer_kind": "buyer_entity",
+    "expected_topic": [
+     "salud"
+    ],
+    "control_tokens_absent": [
+     "compro"
+    ],
+    "expected_execution": true
+   },
+   "checks": {
+    "dataset": true,
+    "buyer_entity": true,
+    "buyer_kind": true,
+    "expected_execution": true,
+    "expected_topic": true,
+    "semantic_residue_none": true
+   },
+   "passed": true
+  },
+  {
+   "id": "BIDDER-S01",
+   "family": "BIDDER_CONTROL",
+   "query": "necesito licitar suministro de uniformes en cordoba",
+   "dataset": "procesos",
+   "intent_type": "opportunity_search",
+   "estado_family": "oferta_abierta",
+   "control_intent": null,
+   "workflow_intent": "",
+   "topic": [
+    "suministro",
+    "uniforme"
+   ],
+   "buyer_entity": null,
+   "buyer_kind": null,
+   "valor_min": null,
+   "valor_max": null,
+   "money_clarification": false,
+   "needs_clarification": false,
+   "outcome": "empty",
+   "outcome_reason": "zero_results",
+   "query_plan_reason": "valid_query",
+   "positive_state_projection": {
+    "estado_family": "oferta_abierta",
+    "estado_del_procedimiento": [
+     "Publicado",
+     "Borrador",
+     "En aprobación",
+     "Aprobado",
+     "Abierto"
+    ]
+   },
+   "resolved_params": {
+    "estado_family": "oferta_abierta",
+    "intent_type": "opportunity_search",
+    "dataset": "procesos",
+    "departamento": "en cordoba",
+    "departamento_resolved": "Córdoba",
+    "departamento_resolution": {
+     "value": "Córdoba",
+     "method": "scan_exact",
+     "kind": "territorial_department",
+     "confidence": "high",
+     "like_value": null,
+     "metadata": {}
+    },
+    "objeto": [
+     "suministro",
+     "uniforme"
+    ],
+    "estado_del_procedimiento": [
+     "Publicado",
+     "Borrador",
+     "En aprobación",
+     "Aprobado",
+     "Abierto"
+    ],
+    "_opportunity_reference_instant": "2026-08-27T14:44:34+00:00",
+    "limit": 50
+   },
+   "response": "No encontre resultados exactos con esos filtros.\n\nLa busqueda combinaba:\n- tema: suministro, uniforme\n- departamento: Córdoba\n\nPuedo intentar:\n1. buscar en todo el pais",
+   "source_call_count_total": 1,
+   "source_calls_by_method": {
+    "query": 1,
+    "count": 0,
+    "aggregate": 0
+   },
+   "expected": {
+    "dataset": "procesos",
+    "intent_type": "opportunity_search",
+    "estado_family": "oferta_abierta",
+    "expected_topic": [
+     "suministro",
+     "uniforme"
+    ],
+    "control_tokens_absent": [
+     "necesito",
+     "licitar"
+    ],
+    "expected_execution": true
+   },
+   "checks": {
+    "dataset": true,
+    "intent_type": true,
+    "estado_family": true,
+    "expected_execution": true,
+    "expected_topic": true,
+    "semantic_residue_none": true
+   },
+   "passed": true
+  },
+  {
+   "id": "SPELL-S01",
+   "family": "SPELL",
+   "query": "empecemos otra vez",
+   "corrected_query": "empecemos otra vez",
+   "corrected_tokens": [
+    "empecemos",
+    "otra",
+    "vez"
+   ],
+   "source_call_count_total": 0,
+   "source_calls_by_method": {
+    "query": 0,
+    "count": 0,
+    "aggregate": 0
+   },
+   "expected": {
+    "corrected_query": "empecemos otra vez",
+    "tokens_absent": [
+     "obra"
+    ]
+   },
+   "checks": {
+    "corrected_query": true,
+    "tokens_absent": true
+   },
+   "passed": true
+  }
+ ]
+}

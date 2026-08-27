@@ -1,0 +1,28 @@
+{
+  "gate": "HCA_CANONICAL_REAUDIT",
+  "python": "3.12.12",
+  "corpus_sha256": "a341405a79d74cdb43872cf937cd2b58f4ebb736afe4a2135ced9b6d389c352e",
+  "cases": 195,
+  "pass": 188,
+  "fail": 7,
+  "error": 0,
+  "pass_to_fail": 0,
+  "status_changes": 0,
+  "runtime_bugs": 0,
+  "oracle_debt": 0,
+  "semantically_supported": {
+    "count": 189,
+    "total": 195,
+    "definition": "188 canonical oracle PASS plus HCA-TOPIC-012, a safe fail-closed unsupported case. This is not a runner score or product accuracy percentage."
+  },
+  "failures": [
+    {"id": "HCA-TOPIC-012", "classification": "SAFE_UNSUPPORTED", "runtime_bug": false, "oracle_debt": false},
+    {"id": "HCA-MODALITY-002", "classification": "DEFERRED", "runtime_bug": false, "oracle_debt": false},
+    {"id": "HCA-MODALITY-012", "classification": "DEFERRED", "runtime_bug": false, "oracle_debt": false},
+    {"id": "HCA-TYPO-003", "classification": "DEFERRED", "runtime_bug": false, "oracle_debt": false},
+    {"id": "HCA-ENTITY-004", "classification": "INSUFFICIENT", "runtime_bug": false, "oracle_debt": false},
+    {"id": "HCA-STATE-003", "classification": "INSUFFICIENT", "runtime_bug": false, "oracle_debt": false},
+    {"id": "HCA-SOURCE-002", "classification": "INSUFFICIENT", "runtime_bug": false, "oracle_debt": false}
+  ],
+  "raw_evidence": "hca-run/verdicts.json"
+}

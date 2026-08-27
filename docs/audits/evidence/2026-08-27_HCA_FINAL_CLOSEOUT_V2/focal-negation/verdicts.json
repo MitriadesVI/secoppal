@@ -1,0 +1,385 @@
+{
+ "corpus": "tests/fixtures/audits/negation_focal_v1.yaml",
+ "corpus_sha256": "f4f64a33ea7009eb1da9fa7d3c910e67010e6dafc6b4c5b6932901c27fad9a1d",
+ "cases": 24,
+ "pass": 22,
+ "fail": 2,
+ "error": 0,
+ "verdicts": [
+  {
+   "id": "NEG-N1",
+   "category": "negation_object",
+   "severity_if_failed": "P1",
+   "notes": "\"sin X\" es exclusión temática. Hoy produce objeto=[alimentacion] positivo. El marcador \"sin\" no está en la regex del parser (solo excluye|excluir|excepto).",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto_exclude": [
+     "alimentacion"
+    ]
+   }
+  },
+  {
+   "id": "NEG-N5",
+   "category": "negation_object",
+   "severity_if_failed": "P1",
+   "notes": "Alcance del marcador: \"sin\" gobierna solo el span que le sigue. Hoy: objeto=[alimentacion, transporte] — ambos positivos.",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "alimentacion"
+    ],
+    "objeto_exclude": [
+     "transporte"
+    ]
+   }
+  },
+  {
+   "id": "NEG-N6",
+   "category": "negation_object",
+   "severity_if_failed": "P1",
+   "notes": "\"ni\" propaga el marcador anterior. Dos exclusiones, cero positivos. Hoy: idéntico a NEG-N5 — dos significados opuestos, un solo frame.",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto_exclude": [
+     "alimentacion",
+     "transporte"
+    ]
+   }
+  },
+  {
+   "id": "NEG-N16",
+   "category": "negation_object",
+   "severity_if_failed": "P2",
+   "notes": "Subjuntivo. Hoy: objeto=[excluyan, alimentacion] — el verbo fuga al objeto (familia HCA-TOPIC-VERB-001) y la exclusión se pierde.",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto_exclude": [
+     "alimentacion"
+    ]
+   }
+  },
+  {
+   "id": "NEG-N4",
+   "category": "negation_modality",
+   "severity_if_failed": "P0",
+   "notes": "Autoridad existente. PASA hoy. Cualquier regresión aquí invalida el bloque.",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "vigilancia"
+    ],
+    "modalidad_exclude_procedure_ids": [
+     "minima_cuantia"
+    ]
+   }
+  },
+  {
+   "id": "NEG-N15",
+   "category": "negation_modality",
+   "severity_if_failed": "P0",
+   "notes": "\"sin\" DENTRO de un alias (modality_lexicon_v1.yaml:137) es inclusión, no exclusión. Disciplina de gap. PASA hoy; protegerlo es el riesgo #1 de ampliar el vocabulario de marcadores.",
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'contratacion directa sin ofertas': expected execution, got clarification"
+   ],
+   "final_frame": {
+    "dataset": "procesos",
+    "modalidad_include_procedure_ids": [
+     "contratacion_directa"
+    ]
+   }
+  },
+  {
+   "id": "NEG-N14",
+   "category": "negation_anti",
+   "severity_if_failed": "P1",
+   "notes": "Anti-negación de dominio: \"sin ánimo de lucro\" (ESAL) es terminología jurídica, no exclusión. Un detector ingenuo de \"sin\" produciría objeto_exclude=[animo, lucro]: mal dimensión y mal valor.",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "animo",
+     "entidades",
+     "lucro"
+    ]
+   }
+  },
+  {
+   "id": "NEG-N2",
+   "category": "negation_geography",
+   "severity_if_failed": "P0",
+   "notes": "Hoy ejecuta lo CONTRARIO: ciudad=Barranquilla positivo Y entidad_resolved=DISTRITO ... DE BARRANQUILLA vía _CITY_TO_ENTITY. La inversión es doble. Mínimo innegociable: el valor negado nunca positivo, en ninguna dimensión.",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ]
+   }
+  },
+  {
+   "id": "NEG-N17",
+   "category": "negation_geography",
+   "severity_if_failed": "P0",
+   "notes": "El span de ciudad se consume en el paso 10.5, antes de que la regex de exclusión corra en el paso 11: la cola de \"excepto\" queda vacía y el resultado es ciudad positiva. Prueba de que la arbitración actual por orden de archivo es accidental.",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ]
+   }
+  },
+  {
+   "id": "NEG-N3",
+   "category": "negation_geography",
+   "severity_if_failed": "P0",
+   "notes": "Hoy: departamento=Atlántico + ciudad=Barranquilla + entidad de Barranquilla = el complemento EXACTO de lo pedido. La aclaración debe conservar el alcance positivo, nunca sustituirlo por el valor negado.",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "departamento_resolved": "Atlántico"
+   }
+  },
+  {
+   "id": "NEG-N3B",
+   "category": "negation_geography",
+   "severity_if_failed": "P1",
+   "notes": "SET_EXCLUSION sobre vocabulario cerrado con alcance positivo explícito: se resta de departamentos_in ANTES del SoQL. Sin predicado negativo, sin semántica de NULL, sin tocar SoQLBuilder. La exclusión más barata.",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ]
+   }
+  },
+  {
+   "id": "NEG-N8",
+   "category": "negation_time",
+   "severity_if_failed": "P1",
+   "notes": "Un rango cerrado único no puede expresar un hueco. Hoy produce fecha_desde=2025-01-01 + fecha_hasta=2025-12-31: el complemento exacto. Mínimo obligatorio: NO producir el rango positivo.",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "ciudad": "Valledupar"
+   }
+  },
+  {
+   "id": "NEG-N13",
+   "category": "negation_money_control",
+   "severity_if_failed": "P0",
+   "notes": "CONTROL ANTI-REGRESIÓN. \"menos de <cantidad>\" es POLARITY_INVERSION, no exclusión: el span monetario se consume en el paso 9. Protege ADR-063. Ampliar el vocabulario de marcadores con \"menos\" sin respetar spans consumidos rompe este caso.",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "vigilancia"
+    ],
+    "valor_max": 500000000
+   }
+  },
+  {
+   "id": "NEG-N7",
+   "category": "negation_contradiction",
+   "severity_if_failed": "P1",
+   "notes": "Hoy: objeto=[alimentacion, pero] — el duplicado se deduplica, la contradicción se evapora y el conector fuga al objeto. ModalityFilter ya lanza ValueError ante include∩exclude; objeto no.",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "alimentacion"
+    ],
+    "objeto_exclude": [
+     "alimentacion"
+    ]
+   }
+  },
+  {
+   "id": "NEG-N9",
+   "category": "negation_contradiction",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ]
+   }
+  },
+  {
+   "id": "NEG-N7B",
+   "category": "negation_contradiction",
+   "severity_if_failed": "P1",
+   "notes": "Contradicción por herencia. Hoy: objeto=[alimentacion] Y objeto_exclude=[alimentacion] coexisten y el SoQL resultante es (LIKE '%alimentacion%') AND NOT (LIKE '%alimentacion%'): cero filas GARANTIZADAS, presentadas como \"no encontré resultados\". Un cero fabricado es indistinguible de un cero real.",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "alimentacion"
+    ],
+    "ciudad": "Barranquilla"
+   }
+  },
+  {
+   "id": "NEG-N10",
+   "category": "negation_followup",
+   "severity_if_failed": "P1",
+   "notes": "Hoy: intent=contextual_requery y el frame merged es IDÉNTICO al de T1. No-op silencioso: el turno del usuario no cambia nada y nadie se lo dice. Viola INV-NO-SILENT-NEGATION-DROP.",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "alimentacion"
+    ],
+    "ciudad": "Barranquilla"
+   }
+  },
+  {
+   "id": "NEG-N11",
+   "category": "negation_followup",
+   "severity_if_failed": "P0",
+   "notes": "El peor caso del bloque. Hoy: intent=change_scope usando como evidencia el valor que el usuario acaba de RECHAZAR; normalize_scope_transition borra Atlántico y deja ciudad=Barranquilla + entidad de Barranquilla. Regla estructural: un valor gobernado por marcador negativo nunca puede servir de evidencia para clasificar la intención del turno.",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "departamento_resolved": "Atlántico"
+   }
+  },
+  {
+   "id": "NEG-N11B",
+   "category": "negation_followup",
+   "severity_if_failed": "P1",
+   "notes": "Ciclo de vida de la exclusión. requested_clear_fields no tiene hoy slot para objeto_exclude: una exclusión heredada NO se puede retirar por lenguaje, aunque refinement_recovery ya la etiquete como \"exclusión\".",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ]
+   }
+  },
+  {
+   "id": "NEG-N18",
+   "category": "negation_buyer",
+   "severity_if_failed": "P0",
+   "notes": "Hoy: entidad_resolved=DISTRITO ... DE BARRANQUILLA positivo y objeto vacío ⇒ la consulta ejecutada es \"todo lo de la entidad que el usuario excluyó\". Diferido no significa invertido.",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos"
+   }
+  },
+  {
+   "id": "NEG-N19",
+   "category": "negation_actor",
+   "severity_if_failed": "P0",
+   "notes": "Hoy los params quedan en {dataset: contratos}: DROP TOTAL. Se ejecuta \"todos los contratos de Colombia\". Diferido no significa descartado.",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos"
+   }
+  },
+  {
+   "id": "NEG-N12",
+   "category": "negation_control",
+   "severity_if_failed": "P0",
+   "notes": "Control. Ninguna maquinaria de negación puede activarse aquí.",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "alimentacion"
+    ],
+    "ciudad": "Barranquilla"
+   }
+  },
+  {
+   "id": "NEG-ANTI-001",
+   "category": "negation_anti_metamorphic",
+   "severity_if_failed": "P1",
+   "notes": "\"de alimentación SIN transporte\" vs \"SIN alimentación NI transporte\": significados opuestos. Hoy producen el MISMO frame (objeto=[alimentacion, transporte]).",
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto_exclude": [
+     "alimentacion",
+     "transporte"
+    ]
+   }
+  },
+  {
+   "id": "NEG-ANTI-002",
+   "category": "negation_anti_metamorphic",
+   "severity_if_failed": "P0",
+   "notes": "Una consulta y su negación no pueden producir el mismo frame material. Hoy NEG-N2 y NEG-N12 difieren solo en objeto, nunca en polaridad.",
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "anti-metamorphic: field entidad_resolved identical to NEG-N12 (None)"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "alimentacion"
+    ]
+   }
+  }
+ ]
+}

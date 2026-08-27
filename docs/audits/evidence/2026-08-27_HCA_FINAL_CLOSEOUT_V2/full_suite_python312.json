@@ -1,0 +1,24 @@
+{
+  "gate": "FULL_SUITE_PYTHON_312",
+  "python": "3.12.12",
+  "authoritative_run": {
+    "passed": 9393,
+    "skipped": 2,
+    "xfailed": 24,
+    "failed": 0,
+    "duration_seconds": 751.31,
+    "verdict": "PASS",
+    "environment": "Feedback, SQLite, and conversation stores redirected to /private/tmp; modality telemetry left at its required disabled default."
+  },
+  "superseded_harness_attempt": {
+    "passed": 9392,
+    "skipped": 2,
+    "xfailed": 24,
+    "failed": 1,
+    "duration_seconds": 667.27,
+    "failure": "test_telemetry_disabled_by_default",
+    "cause": "Audit environment explicitly set MODALITY_FOLLOWUP_TELEMETRY_PATH, contradicting the test's default-is-None precondition.",
+    "runtime_regression": false,
+    "superseded": true
+  }
+}

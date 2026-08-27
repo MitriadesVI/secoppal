@@ -1,0 +1,982 @@
+{
+ "corpus": "docs/audits/evidence/2026-08-26_HCA_FINAL_CLOSEOUT/fresh_adversarial_plan.json",
+ "corpus_sha256": "72a0c95f8a30019f77fbb3f6e9c82dfc851ccf3cb1d050607313086ce850ecce",
+ "cases": 52,
+ "pass": 37,
+ "fail": 15,
+ "error": 0,
+ "verdicts": [
+  {
+   "id": "FRESH-MONEY-001",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "cuadernos"
+    ],
+    "valor_min": 75000,
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31"
+   }
+  },
+  {
+   "id": "FRESH-MONEY-002",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "computadores"
+    ],
+    "valor_max": 600000,
+    "departamento_resolved": "Antioquia"
+   }
+  },
+  {
+   "id": "FRESH-MONEY-003",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "valor_min": 120000,
+    "valor_max": 350000,
+    "fecha_desde": "2024-01-01",
+    "fecha_hasta": "2024-12-31"
+   }
+  },
+  {
+   "id": "FRESH-MONEY-004",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "valor_min": 2000000,
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31"
+   }
+  },
+  {
+   "id": "FRESH-MONEY-005",
+   "category": "money",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "mantenimiento"
+    ],
+    "valor_min": 300000,
+    "valor_max": 900000,
+    "fecha_desde": "2026-01-01",
+    "fecha_hasta": "2026-12-31"
+   }
+  },
+  {
+   "id": "FRESH-MONEY-006",
+   "category": "money",
+   "severity_if_failed": "P0",
+   "notes": null,
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'contratos de uniformes por más de un millón y medio en Córdoba': objeto lacks 'uniformes' (objeto=['uniforme', 'medio'])"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "medio",
+     "uniforme"
+    ],
+    "departamento_resolved": "Córdoba"
+   }
+  },
+  {
+   "id": "FRESH-STATE-001",
+   "category": "state",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "senalizacion"
+    ],
+    "departamento_resolved": "Huila",
+    "estado_family": "oferta_abierta",
+    "estado_del_procedimiento": [
+     "Publicado"
+    ],
+    "intent_type": "opportunity_search"
+   }
+  },
+  {
+   "id": "FRESH-STATE-002",
+   "category": "state",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "dotacion",
+     "escolar"
+    ],
+    "departamento_resolved": "Nariño",
+    "estado_family": "oferta_abierta",
+    "estado_del_procedimiento": [
+     "Abierto",
+     "Aprobado",
+     "Borrador",
+     "En aprobación",
+     "Publicado"
+    ],
+    "intent_type": "opportunity_search"
+   }
+  },
+  {
+   "id": "FRESH-STATE-003",
+   "category": "state",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'contratos activos de vigilancia en 2025': soql lacks 'Activo'",
+    "turn 1 'contratos activos de vigilancia en 2025': soql lacks 'Firmado'"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "vigilancia"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "estado_family": "contrato_activo",
+    "estado_contrato": [
+     "En ejecución",
+     "Modificado",
+     "Prorrogado"
+    ]
+   }
+  },
+  {
+   "id": "FRESH-STATE-004",
+   "category": "state",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "consultoria"
+    ],
+    "fecha_desde": "2024-01-01",
+    "fecha_hasta": "2024-12-31",
+    "estado_family": "contrato_cerrado",
+    "estado_contrato": [
+     "Cerrado"
+    ]
+   }
+  },
+  {
+   "id": "FRESH-STATE-005",
+   "category": "state",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "alimentacion"
+    ],
+    "departamento_resolved": "Sucre",
+    "estado_family": "no_procede",
+    "estado_del_procedimiento": [
+     "Cancelado",
+     "Suspendido"
+    ]
+   }
+  },
+  {
+   "id": "FRESH-BUYER-001",
+   "category": "buyer",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "parques"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "entidad_resolved": "SANTIAGO DE CALI DISTRITO ESPECIAL - SECRETARIA DEL DEPORTE Y LA RECREACIÓN"
+   }
+  },
+  {
+   "id": "FRESH-BUYER-002",
+   "category": "buyer",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "fecha_desde": "2024-01-01",
+    "fecha_hasta": "2024-12-31",
+    "entidad_resolved": "DEPARTAMENTO DE CUNDINAMARCA- SECRETARIA DE SALUD"
+   }
+  },
+  {
+   "id": "FRESH-BUYER-003",
+   "category": "buyer",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos"
+   }
+  },
+  {
+   "id": "FRESH-BUYER-004",
+   "category": "buyer",
+   "severity_if_failed": "P2",
+   "notes": null,
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'qué adquirió el departamento de Boyacá durante 2025': expected block, got execution"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "departamento_resolved": "Boyacá"
+   }
+  },
+  {
+   "id": "FRESH-BUYER-005",
+   "category": "buyer",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "puentes"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "departamento_resolved": "Boyacá"
+   }
+  },
+  {
+   "id": "FRESH-FOLLOWUP-001",
+   "category": "followup",
+   "severity_if_failed": "P0",
+   "notes": null,
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'contratos de obra en Meta durante 2025': objeto lacks 'obra' (objeto=[])",
+    "turn 2 'ordénalos del menor valor al mayor': objeto lacks 'obra' (objeto=[])"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "departamento_resolved": "Meta",
+    "contract_type_include": [
+     "obra"
+    ],
+    "ordering_signal": "valor_asc"
+   }
+  },
+  {
+   "id": "FRESH-FOLLOWUP-002",
+   "category": "followup",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "aseo"
+    ],
+    "ciudad": "Cartagena",
+    "estado_family": "oferta_abierta",
+    "estado_del_procedimiento": [
+     "Abierto",
+     "Aprobado",
+     "Borrador",
+     "En aprobación",
+     "Publicado"
+    ],
+    "intent_type": "opportunity_search"
+   }
+  },
+  {
+   "id": "FRESH-FOLLOWUP-003",
+   "category": "followup",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'contratos de mobiliario en Bogotá durante 2025': ciudad=None, expected 'Bogotá'"
+   ],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "alimentacion_escolar"
+    ],
+    "departamento_resolved": "Cauca"
+   }
+  },
+  {
+   "id": "FRESH-FOLLOWUP-004",
+   "category": "followup",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "mantenimiento"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "departamento_resolved": "Antioquia"
+   }
+  },
+  {
+   "id": "FRESH-FOLLOWUP-005",
+   "category": "followup",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos"
+   }
+  },
+  {
+   "id": "FRESH-ACTOR-001",
+   "category": "actor",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'CONTRATOS SOBRE SALUD EN AMAZONAS': expected block, got execution",
+    "turn 1 'CONTRATOS SOBRE SALUD EN AMAZONAS': missing param actor_intent_conflict"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "salud"
+    ],
+    "departamento_resolved": "Amazonas"
+   }
+  },
+  {
+   "id": "FRESH-ACTOR-002",
+   "category": "actor",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "fecha_desde": "2024-01-01",
+    "fecha_hasta": "2024-12-31"
+   }
+  },
+  {
+   "id": "FRESH-ACTOR-003",
+   "category": "actor",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "departamento_resolved": "Amazonas"
+   }
+  },
+  {
+   "id": "FRESH-ACTOR-004",
+   "category": "actor",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31"
+   }
+  },
+  {
+   "id": "FRESH-ACTOR-005",
+   "category": "actor",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "puentes"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "departamento_resolved": "Tolima"
+   }
+  },
+  {
+   "id": "FRESH-NEGATION-001",
+   "category": "negation",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "objeto_exclude": [
+     "vigilancia"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "departamento_resolved": "Quindío"
+   }
+  },
+  {
+   "id": "FRESH-NEGATION-002",
+   "category": "negation",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "mantenimiento"
+    ],
+    "fecha_desde": "2026-01-01",
+    "fecha_hasta": "2026-12-31",
+    "departamento_resolved": "Tolima",
+    "modalidad_exclude_procedure_ids": [
+     "contratacion_directa",
+     "contratacion_directa_con_ofertas"
+    ]
+   }
+  },
+  {
+   "id": "FRESH-NEGATION-003",
+   "category": "negation",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto_exclude": [
+     "interventoria"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "departamento_resolved": "Risaralda"
+   }
+  },
+  {
+   "id": "FRESH-NEGATION-004",
+   "category": "negation",
+   "severity_if_failed": "P0",
+   "notes": null,
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'contratos de obra excepto los de la alcaldía de Pereira en 2025': fecha_desde=None, expected '2025-01-01'",
+    "turn 1 'contratos de obra excepto los de la alcaldía de Pereira en 2025': fecha_hasta=None, expected '2025-12-31'",
+    "turn 1 'contratos de obra excepto los de la alcaldía de Pereira en 2025': objeto lacks 'obra' (objeto=[])"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "contract_type_include": [
+     "obra"
+    ]
+   }
+  },
+  {
+   "id": "FRESH-NEGATION-005",
+   "category": "negation",
+   "severity_if_failed": "P0",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "obra"
+    ],
+    "departamento_resolved": "Caldas"
+   }
+  },
+  {
+   "id": "FRESH-TIME-001",
+   "category": "time",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'contratos de aseo del 14 de febrero de 2025 en Bogotá': ciudad=None, expected 'Bogotá'"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2025-02-14",
+    "fecha_hasta": "2025-02-14",
+    "departamento_resolved": "Distrito Capital de Bogotá"
+   }
+  },
+  {
+   "id": "FRESH-TIME-002",
+   "category": "time",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "obra"
+    ],
+    "fecha_desde": "2025-03-01",
+    "fecha_hasta": "2025-03-31",
+    "departamento_resolved": "Huila"
+   }
+  },
+  {
+   "id": "FRESH-TIME-003",
+   "category": "time",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "vigilancia"
+    ],
+    "fecha_desde": "2025-04-03",
+    "fecha_hasta": "2025-05-18",
+    "departamento_resolved": "Meta"
+   }
+  },
+  {
+   "id": "FRESH-TIME-004",
+   "category": "time",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "software"
+    ],
+    "fecha_desde": "2025-01-01",
+    "ciudad": "Cali"
+   }
+  },
+  {
+   "id": "FRESH-TIME-005",
+   "category": "time",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "papeleria"
+    ],
+    "fecha_hasta": "2024-12-31",
+    "departamento_resolved": "Valle del Cauca"
+   }
+  },
+  {
+   "id": "FRESH-TIME-006",
+   "category": "time",
+   "severity_if_failed": "P0",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ]
+   }
+  },
+  {
+   "id": "FRESH-TIME-007",
+   "category": "time",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "alimentacion"
+    ],
+    "fecha_desde": "2026-07-01",
+    "fecha_hasta": "2026-07-31",
+    "departamento_resolved": "Antioquia"
+   }
+  },
+  {
+   "id": "FRESH-TIME-008",
+   "category": "time",
+   "severity_if_failed": "P0",
+   "notes": null,
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'contratos de obra en Cundinamarca pero no de 2025': objeto lacks 'obra' (objeto=[])"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "departamento_resolved": "Cundinamarca",
+    "contract_type_include": [
+     "obra"
+    ]
+   }
+  },
+  {
+   "id": "FRESH-CONTROL-001",
+   "category": "control",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "aseo"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "departamento_resolved": "Cesar",
+    "ordering_signal": "valor_asc"
+   }
+  },
+  {
+   "id": "FRESH-CONTROL-002",
+   "category": "control",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "mantenimiento",
+     "vias"
+    ],
+    "departamento_resolved": "Santander",
+    "estado_family": "oferta_abierta",
+    "estado_del_procedimiento": [
+     "Abierto",
+     "Aprobado",
+     "Borrador",
+     "En aprobación",
+     "Publicado"
+    ],
+    "intent_type": "opportunity_search"
+   }
+  },
+  {
+   "id": "FRESH-CONTROL-003",
+   "category": "control",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'muéstrame contratos de menor cuantía para escuelas en Magdalena en 2025': objeto lacks 'escuelas' (objeto=['educacion'])"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "educacion"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "departamento_resolved": "Magdalena",
+    "modalidad_include_procedure_ids": [
+     "seleccion_abreviada_menor_cuantia"
+    ]
+   }
+  },
+  {
+   "id": "FRESH-CONTROL-004",
+   "category": "control",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "papeleria"
+    ],
+    "valor_max": 800000,
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "departamento_resolved": "Boyacá"
+   }
+  },
+  {
+   "id": "FRESH-CONTROL-005",
+   "category": "control",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'necesito licitar suministro de uniformes en Córdoba': objeto lacks 'uniformes' (objeto=['suministro', 'uniforme'])"
+   ],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "suministro",
+     "uniforme"
+    ],
+    "departamento_resolved": "Córdoba",
+    "estado_family": "oferta_abierta",
+    "estado_del_procedimiento": [
+     "Abierto",
+     "Aprobado",
+     "Borrador",
+     "En aprobación",
+     "Publicado"
+    ],
+    "intent_type": "opportunity_search"
+   }
+  },
+  {
+   "id": "FRESH-LOOKUP-001",
+   "category": "direct_lookup",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'consulta el contrato con referencia LP-047-2025': dataset=None, expected 'contratos'"
+   ],
+   "final_frame": {}
+  },
+  {
+   "id": "FRESH-LOOKUP-002",
+   "category": "direct_lookup",
+   "severity_if_failed": "P0",
+   "notes": null,
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'necesito contratos para el proceso de nutrición escolar': objeto lacks 'nutricion' (objeto=['alimentacion', 'escolar'])"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "alimentacion",
+     "escolar"
+    ]
+   }
+  },
+  {
+   "id": "FRESH-LOOKUP-003",
+   "category": "direct_lookup",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'buscar contratos con referencia ABC-2025-0198': soql lacks 'ABC-2025-0198'"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "referencia"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31"
+   }
+  },
+  {
+   "id": "FRESH-CROSS-001",
+   "category": "cross_dimension",
+   "severity_if_failed": "P0",
+   "notes": null,
+   "status": "FAIL",
+   "error": null,
+   "fails": [
+    "turn 1 'contratos sobre SALUD por más de 200 mil pesos en Amazonas durante 2025': expected block, got execution",
+    "turn 1 'contratos sobre SALUD por más de 200 mil pesos en Amazonas durante 2025': missing param actor_intent_conflict"
+   ],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "salud"
+    ],
+    "valor_min": 200000,
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "departamento_resolved": "Amazonas"
+   }
+  },
+  {
+   "id": "FRESH-CROSS-002",
+   "category": "cross_dimension",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "procesos",
+    "objeto": [
+     "obra"
+    ],
+    "fecha_desde": "2025-04-01",
+    "fecha_hasta": "2025-06-30",
+    "departamento_resolved": "Arauca",
+    "estado_family": "oferta_abierta",
+    "estado_del_procedimiento": [
+     "Publicado"
+    ],
+    "intent_type": "opportunity_search"
+   }
+  },
+  {
+   "id": "FRESH-CROSS-003",
+   "category": "cross_dimension",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto_exclude": [
+     "consultoria"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "departamento_resolved": "Nariño",
+    "ordering_signal": "valor_desc"
+   }
+  },
+  {
+   "id": "FRESH-CROSS-004",
+   "category": "cross_dimension",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "objeto": [
+     "salud"
+    ],
+    "fecha_desde": "2025-01-01",
+    "fecha_hasta": "2025-12-31",
+    "entidad_resolved": "ALCALDIA DE PASTO"
+   }
+  },
+  {
+   "id": "FRESH-CROSS-005",
+   "category": "cross_dimension",
+   "severity_if_failed": "P1",
+   "notes": null,
+   "status": "PASS",
+   "error": null,
+   "fails": [],
+   "final_frame": {
+    "dataset": "contratos",
+    "valor_max": 5000000,
+    "departamento_resolved": "Amazonas"
+   }
+  }
+ ]
+}

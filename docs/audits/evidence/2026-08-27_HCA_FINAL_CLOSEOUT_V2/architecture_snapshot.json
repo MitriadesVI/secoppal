@@ -1,0 +1,29 @@
+{
+  "query_plan": {
+    "path": "app/core/query_plan.py",
+    "physical_lines": 371,
+    "effective_g8_loc": 299,
+    "limit": 300,
+    "status": "AT_LIMIT",
+    "next_touch_rule": "ACTIVE"
+  },
+  "systemic_campaign_modules": {
+    "introduced": ["app/core/state_vocabulary.py", "app/data/stopwords.py"],
+    "reinforced": [
+      "app/core/dialogue_policy.py",
+      "app/core/estado_families.py",
+      "app/core/followup_control_tokens.py",
+      "app/core/followup_engine.py",
+      "app/core/followup_mutations.py",
+      "app/core/intent_vocabulary.py",
+      "app/core/money_admission.py",
+      "app/core/negation_binding.py",
+      "app/core/query_router.py",
+      "app/core/workflow/actions/parsing.py",
+      "app/core/workflow/handlers/normal_flow.py",
+      "app/utils/spell_correction.py"
+    ],
+    "universal_semantic_manager": false
+  },
+  "runtime_files_changed_by_audit": 0
+}

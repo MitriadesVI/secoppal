@@ -1,0 +1,27 @@
+{
+  "product_decisions": [
+    "ONLY_MODALITY_SCOPE_POLICY",
+    "BUYER_SUBJECT_VS_TERRITORY_POLICY",
+    "LIQUIDATION_QUERY_SEMANTICS",
+    "LIQUIDATION_SOURCE_DATASET_CAPABILITY",
+    "CONTROL_LIMIT_SEMANTICS",
+    "DEFERRED_FOLLOWUP_SCOPE_TOPIC"
+  ],
+  "known_nonblocking": [
+    "NEG-N15",
+    "NEG-ANTI-002",
+    "GOB-DEPTO-001",
+    "change_scope topic loss",
+    "SEMANTIC_AUTHORITY_CLEANUP",
+    "QUERY_PLAN_AT_LIMIT",
+    "CI_LINT_ENFORCEMENT"
+  ],
+  "new_blocking_runtime_findings": [
+    {"root_cause": "FLEXIBLE_NEGATED_STATE_FAIL_OPEN_OR_DIMENSION_COLLAPSE", "severity": "P0", "scenario_count": 2},
+    {"root_cause": "MONEY_RANGE_GRAMMAR_FAIL_OPEN", "severity": "P1", "scenario_count": 4},
+    {"root_cause": "UNRESOLVED_STRUCTURAL_CONTROL_EXECUTES_AS_TOPIC", "severity": "P1", "scenario_count": 4},
+    {"root_cause": "BIDDER_LEAD_FORM_DROPS_OPPORTUNITY_CONSTRAINT", "severity": "P1", "scenario_count": 3},
+    {"root_cause": "STATE_ASPECT_TOKEN_LEAKS_INTO_TOPIC", "severity": "P1", "scenario_count": 1}
+  ],
+  "f601": {"configured": true, "manual_integration_gate": true, "ci_enforced": false, "findings": 0}
+}

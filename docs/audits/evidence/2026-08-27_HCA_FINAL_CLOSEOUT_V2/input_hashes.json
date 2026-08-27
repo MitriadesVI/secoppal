@@ -1,0 +1,33 @@
+{
+  "hca": {
+    "path": "tests/fixtures/audits/conversation_holistic_v1.yaml",
+    "sha256": "a341405a79d74cdb43872cf937cd2b58f4ebb736afe4a2135ced9b6d389c352e",
+    "expected_sha256": "a341405a79d74cdb43872cf937cd2b58f4ebb736afe4a2135ced9b6d389c352e",
+    "match": true
+  },
+  "fresh_original": {
+    "path": "docs/audits/evidence/2026-08-26_HCA_FINAL_CLOSEOUT/fresh_adversarial_plan.json",
+    "sha256": "72a0c95f8a30019f77fbb3f6e9c82dfc851ccf3cb1d050607313086ce850ecce",
+    "expected_sha256": "72a0c95f8a30019f77fbb3f6e9c82dfc851ccf3cb1d050607313086ce850ecce",
+    "match": true
+  },
+  "predictive_baseline": {
+    "path": "docs/audits/evidence/2026-08-26_FRESH_FINDINGS_CAUSALITY/causality_probe.json",
+    "sha256": "68179d0bcbcfbfac5aa7a925f8ec78c261dd151daca22f66d3794866c914f414",
+    "expected_sha256": "68179d0bcbcfbfac5aa7a925f8ec78c261dd151daca22f66d3794866c914f414",
+    "match": true
+  },
+  "predictive_expectations": {
+    "path": "docs/audits/evidence/2026-08-26_HCA_FRESH_SYSTEMIC_REMEDIATION/predictive_expectations.json",
+    "sha256": "9d18eae36a82c4af4585c6920aa9ab3df3356b9f48a31597067842d8274148a8",
+    "expected_sha256": "9d18eae36a82c4af4585c6920aa9ab3df3356b9f48a31597067842d8274148a8",
+    "match": true,
+    "change_count": 0
+  },
+  "fresh_v2": {
+    "path": "docs/audits/evidence/2026-08-27_HCA_FINAL_CLOSEOUT_V2/fresh_v2_plan.json",
+    "sha256": "151b1e4f6fdabbdd43340a38145acd37109f482e70902e2273f759e4721f36e1",
+    "written_before_execution": true,
+    "query_overlap_with_hca_fresh_original_or_predictive": 0
+  }
+}

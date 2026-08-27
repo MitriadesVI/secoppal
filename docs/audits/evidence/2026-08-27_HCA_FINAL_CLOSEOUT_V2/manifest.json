@@ -1,0 +1,43 @@
+{
+  "audit": "HCA_FINAL_CLOSEOUT_V2",
+  "date": "2026-08-27",
+  "branch": "audit/hca-final-closeout-v2",
+  "audited_head": "1a11f0c659ce3ad0b5ff418b45b7c7ae82313051",
+  "verdict": "BLOCKED_FOR_NEW_RUNTIME_BUG",
+  "previous_final_audit": "BLOCKED_FOR_NEW_RUNTIME_BUG",
+  "systemic_remediation": "INTEGRATED",
+  "final_reaudit": "BLOCKED_FOR_NEW_RUNTIME_BUG",
+  "scope": "AUDIT_ONLY",
+  "runtime_files_changed": 0,
+  "fixtures_changed": false,
+  "product_tests_changed": false,
+  "push": false,
+  "required_artifacts": [
+    "manifest.json",
+    "git_snapshot.txt",
+    "input_hashes.json",
+    "hca_results.json",
+    "hca_delta.json",
+    "predictive_results.json",
+    "predictive_mutations.json",
+    "fresh_original_results.json",
+    "fresh_v2_plan.json",
+    "fresh_v2_results.json",
+    "live_canary.json",
+    "focal_results.json",
+    "full_suite_python312.json",
+    "architecture_snapshot.json",
+    "remaining_debt.json",
+    "isolation.json"
+  ],
+  "raw_run_directories": [
+    "hca-run",
+    "fresh-original-run",
+    "fresh-v2-run",
+    "focal-final-p1",
+    "focal-actor",
+    "focal-control",
+    "focal-time",
+    "focal-negation"
+  ]
+}

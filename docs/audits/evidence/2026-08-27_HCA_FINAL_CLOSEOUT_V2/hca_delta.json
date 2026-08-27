@@ -1,0 +1,12 @@
+{
+  "campaign_delta": [
+    {"stage": "INITIAL_HCA", "pass": 156, "nature": "baseline"},
+    {"stage": "RUNTIME_HCA_IMPROVEMENT", "pass": 182, "delta_from_initial": 26, "nature": "runtime"},
+    {"stage": "ORACLE_CORRECTION", "pass": 188, "delta_from_runtime": 6, "nature": "oracle_correction_not_runtime_accuracy"},
+    {"stage": "SYSTEMIC_FRESH_REMEDIATION", "pass": 188, "delta_from_oracle": 0, "nature": "fresh_systemic_P0_P1_reduction_not_HCA_points"}
+  ],
+  "current_hca": {"pass": 188, "total": 195, "pass_to_fail": 0},
+  "fresh_original_systemic_p0_p1": {"before": ">0", "after": 0},
+  "fresh_v2_new_runtime_p0_p1": {"p0_scenarios": 2, "p1_scenarios": 12},
+  "campaign_status": "OPEN_BLOCKED_FOR_NEW_RUNTIME_BUG"
+}
