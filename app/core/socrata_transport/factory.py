@@ -1,8 +1,8 @@
-"""Selección del transporte — fail closed, default clásico.
+"""Selección del transporte — fail closed, default SODA3.
 
-Una configuración inválida **no** selecciona SODA3 por accidente ni cae
-silenciosamente al clásico: revienta al construir el workflow con un mensaje
-que dice qué valor llegó y cuáles son los válidos.
+Una configuración inválida no selecciona ningún transporte por accidente:
+revienta al construir el workflow con un mensaje que dice qué valor llegó y
+cuáles son los válidos. El clásico queda disponible como rollback explícito.
 """
 from __future__ import annotations
 
@@ -29,8 +29,8 @@ class TransportKind(str, Enum):
     SODA3 = TRANSPORT_SODA3
 
 
-#: Lo que ve producción mientras nadie decida lo contrario.
-DEFAULT_TRANSPORT_KIND = TransportKind.CLASSIC
+#: Ausencia de configuración → SODA3; ``classic`` queda como rollback explícito.
+DEFAULT_TRANSPORT_KIND = TransportKind.SODA3
 
 #: Variable de entorno que gobierna la selección.
 TRANSPORT_ENV_VAR = "SECOPPAL_SOCRATA_TRANSPORT"
@@ -52,7 +52,7 @@ def parse_transport_kind(value: Any) -> TransportKind:
 
 
 def transport_kind_from_settings(settings: Any) -> TransportKind:
-    """Lee el flag desde ``Settings``. Ausente → clásico."""
+    """Lee el flag desde ``Settings``. Ausente → SODA3."""
     return parse_transport_kind(
         getattr(settings, "secoppal_socrata_transport", DEFAULT_TRANSPORT_KIND.value)
     )

@@ -608,7 +608,7 @@ python scripts/build_gazetteer.py full --top 500
 | `SECOP_TIMEOUT_SECONDS` | Timeout para API SECOP (default: `30`) | No |
 | `SECOP_RESULTS_LIMIT` | Máximo resultados por query (default: `25`) | No |
 | `SECOP_ALIAS_DB_PATH` | Ruta al gazetteer de aliases | No |
-| `SECOPPAL_SOCRATA_TRANSPORT` | Transporte Socrata: `classic` (default) o `soda3`. Valor inválido = error al arrancar, nunca selección silenciosa | No |
+| `SECOPPAL_SOCRATA_TRANSPORT` | Transporte Socrata: `soda3` (default) o `classic` (rollback). Valor inválido = error al arrancar, nunca selección silenciosa | No |
 | `TELEGRAM_BOT_TOKEN` | Token del bot de Telegram | Para canal Telegram |
 | `TELEGRAM_WEBHOOK_SECRET` | Secret para verificar webhook | Para canal Telegram |
 | `TWILIO_WHATSAPP_NUMBER` | Número Twilio WhatsApp | Para canal WhatsApp |

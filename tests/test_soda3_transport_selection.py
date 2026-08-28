@@ -1,11 +1,7 @@
-"""T1B — selección de transporte por configuración.
+"""Selección de transporte por configuración tras el cutover SODA3.
 
-Gates cubiertos: CLASSIC_DEFAULT, SODA3_FLAG_DEFAULT_OFF, NO_AUTOMATIC_FALLBACK,
-SODAPY_RETAINED.
-
-El veredicto ``GO_INTEGRATION`` autoriza SODA3 como candidato **apagado**. Lo
-que estos tests fijan es que encenderlo requiera un acto explícito del entorno
-y que una configuración rota no lo encienda —ni lo apague— por accidente.
+Gates cubiertos: SODA3_DEFAULT, CLASSIC_EXPLICIT_ROLLBACK,
+NO_AUTOMATIC_FALLBACK, SODAPY_RETAINED.
 """
 from __future__ import annotations
 
@@ -26,13 +22,13 @@ from app.core.socrata_transport import (
 from app.core.socrata_transport.soda3 import Soda3HttpTransport
 
 
-# ── Default: clásico ─────────────────────────────────────────────────────
+# ── Default: SODA3; classic: rollback explícito ──────────────────────────
 
-def test_default_settings_select_classic(monkeypatch):
+def test_default_settings_select_soda3(monkeypatch):
     monkeypatch.delenv("SECOPPAL_SOCRATA_TRANSPORT", raising=False)
-    assert Settings().secoppal_socrata_transport == "classic"
-    assert transport_kind_from_settings(Settings()) is TransportKind.CLASSIC
-    assert DEFAULT_TRANSPORT_KIND is TransportKind.CLASSIC
+    assert Settings().secoppal_socrata_transport == "soda3"
+    assert transport_kind_from_settings(Settings()) is TransportKind.SODA3
+    assert DEFAULT_TRANSPORT_KIND is TransportKind.SODA3
 
 
 def test_explicit_classic_selects_classic(monkeypatch):
@@ -96,9 +92,11 @@ def _workflow(tmp_path):
     ))
 
 
-def test_workflow_default_wires_the_classic_transport(tmp_path):
+def test_workflow_default_wires_the_soda3_transport(tmp_path, monkeypatch):
+    monkeypatch.delenv("SECOPPAL_SOCRATA_TRANSPORT", raising=False)
     workflow = _workflow(tmp_path)
-    assert workflow.secop_client.transport_name == TRANSPORT_CLASSIC
+    assert workflow.secop_client.transport_name == TRANSPORT_SODA3
+    assert isinstance(workflow.secop_client.transport, Soda3HttpTransport)
 
 
 def test_workflow_with_classic_flag_never_constructs_a_soda3_client(tmp_path, monkeypatch):
@@ -190,26 +188,32 @@ def fake_socrata(monkeypatch):
     return FakeSocrata
 
 
-def test_classic_workflow_does_not_receive_an_explicit_transport(tmp_path, fake_socrata):
+def test_classic_workflow_does_not_receive_an_explicit_transport(
+    tmp_path, monkeypatch, fake_socrata,
+):
     """El clásico usa el camino implícito legacy: sin transporte explícito.
 
     Es la condición estructural de la que dependen las dos propiedades de
     abajo; comprobarla aquí hace que el diagnóstico sea legible cuando alguna
     de ellas falle.
     """
+    monkeypatch.setenv("SECOPPAL_SOCRATA_TRANSPORT", "classic")
     client = _workflow(tmp_path).secop_client
     assert client._explicit_transport is None
     assert isinstance(client.client, FakeSocrata)
     assert client.transport_name == TRANSPORT_CLASSIC
 
 
-def test_classic_derived_client_gets_its_own_bounded_socrata(tmp_path, fake_socrata):
+def test_classic_derived_client_gets_its_own_bounded_socrata(
+    tmp_path, monkeypatch, fake_socrata,
+):
     """El acote por deadline debe llegar al transporte, no solo al atributo.
 
     No basta con ``derived.timeout == 3``: el timeout clásico vive dentro del
     objeto ``Socrata``, así que la prueba es que la llamada real salga por un
     ``Socrata`` construido con 3.
     """
+    monkeypatch.setenv("SECOPPAL_SOCRATA_TRANSPORT", "classic")
     original = _workflow(tmp_path).secop_client
     original_socrata = original.client
     original_timeout = original.timeout
@@ -232,7 +236,9 @@ def test_classic_derived_client_gets_its_own_bounded_socrata(tmp_path, fake_socr
     assert original_socrata.calls == []
 
 
-def test_classic_workflow_client_can_still_be_replaced_to_cut_the_network(tmp_path, fake_socrata):
+def test_classic_workflow_client_can_still_be_replaced_to_cut_the_network(
+    tmp_path, monkeypatch, fake_socrata,
+):
     """Reasignar ``.client`` sigue redirigiendo el transporte del workflow.
 
     ``tests/test_audit_runner_isolation.py`` corta la red exactamente así. Con
@@ -240,6 +246,7 @@ def test_classic_workflow_client_can_still_be_replaced_to_cut_the_network(tmp_pa
     assert ``transport_calls == []`` pasaba trivialmente mientras la corrida
     hacía red real: un falso verde, no un fallo visible.
     """
+    monkeypatch.setenv("SECOPPAL_SOCRATA_TRANSPORT", "classic")
     client = _workflow(tmp_path).secop_client
     cut = FakeSocrata("offline", timeout=1)
 

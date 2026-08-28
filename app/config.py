@@ -70,14 +70,12 @@ class Settings(BaseSettings):
     )
 
     # ── Transporte Socrata (SODA3_TRANSPORT_V1) ──────────────────────────────
-    # `classic` = sodapy sobre GET /resource/ — lo que produccion usa hoy.
-    # `soda3`   = POST /api/v3/views/{dataset}/query — candidato validado por el
-    #             discovery (GO_INTEGRATION) pero APAGADO: el veredicto autoriza
-    #             integrarlo reversible, no convertirlo en default ni hacer
-    #             cutover. Un valor distinto de esos dos es un error explicito al
-    #             construir el workflow, no una seleccion silenciosa.
+    # `soda3`   = transporte productivo default validado.
+    # `classic` = rollback explicito sobre sodapy y GET /resource/.
+    # Un valor distinto de esos dos es un error explicito al construir el
+    # workflow, no una seleccion silenciosa.
     secoppal_socrata_transport: str = Field(
-        default="classic", alias="SECOPPAL_SOCRATA_TRANSPORT",
+        default="soda3", alias="SECOPPAL_SOCRATA_TRANSPORT",
     )
 
     # ── Autenticación de la UI ───────────────────────────────────────────────
