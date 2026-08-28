@@ -12,6 +12,7 @@ import extra_streamlit_components as stx
 import streamlit as st
 
 from app.core.actor_candidate_ui import actor_candidate_options
+from app.core.export_xlsx import build_results_xlsx, export_filename, xlsx_mime_type
 from app.core.formatter import _estado_raw_nota
 from app.core.radar import follows
 from app.core.radar.builder import has_scope_or_topic, save_radar_from_params
@@ -374,7 +375,7 @@ def _clean_resolved(resolved: dict) -> dict:
     return clean
 
 
-def _assistant_history_item(result: dict) -> dict:
+def _assistant_history_item(result: dict, *, query: str = "") -> dict:
     """Build one rerun-stable assistant item, including safe actor controls."""
     resolved_params = result.get("resolved_params", {})
     debug_payload = {
@@ -389,6 +390,7 @@ def _assistant_history_item(result: dict) -> dict:
     return {
         "role": "assistant",
         "content": result.get("response", ""),
+        "query": query,
         "rows": result.get("rows", []),
         "debug": debug_payload,
         "trace_id": result.get("trace_id"),
@@ -399,6 +401,29 @@ def _assistant_history_item(result: dict) -> dict:
             option.as_dict() for option in actor_candidate_options(resolved_params)
         ],
     }
+
+
+def _render_excel_export(item: dict, history_idx: int) -> None:
+    """Offer an XLSX for exactly the rows already shown in this assistant turn."""
+    rows = item.get("rows") or []
+    if not rows:
+        return
+    debug = item.get("debug") or {}
+    payload = build_results_xlsx(
+        rows=rows,
+        query=item.get("query", ""),
+        resolved_params=debug.get("resolved_params") or {},
+        dataset_id=debug.get("dataset_id", ""),
+        total_count=item.get("total_count", 0),
+    )
+    st.download_button(
+        "⬇️ Descargar Excel",
+        data=payload,
+        file_name=export_filename(),
+        mime=xlsx_mime_type(),
+        key=f"export_xlsx_{history_idx}",
+        help="Exporta las filas mostradas y los filtros interpretados de esta búsqueda.",
+    )
 
 
 def _render_actor_candidates(candidates: list[dict], history_idx: int) -> None:
@@ -1150,6 +1175,9 @@ with tab_buscar:
             elif rows:
                 st.dataframe(rows, use_container_width=True)
 
+            if rows:
+                _render_excel_export(item, idx)
+
             # Botón "Ver más resultados" — solo en el turno actual, cuando hay
             # más resultados de los mostrados y no es un direct lookup.
             if (
@@ -1258,5 +1286,5 @@ if incoming_query:
                                      user_identity=user_identity,
                                      seed_resolved_params=seed_resolved_params)
 
-    st.session_state.history.append(_assistant_history_item(result))
+    st.session_state.history.append(_assistant_history_item(result, query=incoming_query))
     st.rerun()
