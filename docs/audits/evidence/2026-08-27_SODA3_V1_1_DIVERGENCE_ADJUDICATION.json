@@ -1,0 +1,1266 @@
+{
+  "document": "SODA3 V1.1 — Adjudicación causal de divergencias",
+  "phase": "V1.1_ADJUDICATION_ONLY",
+  "generated_at_utc": "2026-08-28T03:29:12.506249+00:00",
+  "branch": "experiment/soda3-discovery-v1",
+  "head": "7f082f2c9f756365159b23c8c44b1f2302507b16",
+  "evidence": {
+    "manifest_path": "/tmp/soda3_runtime_canary_manifest_frozen_v3.json",
+    "manifest_sha256": "880e63ecaf2672e217238c234db09d2847c89d95da6648c8c8490d9952c5076a",
+    "replay_path": "/tmp/soda3_runtime_canary_replay_v3.jsonl",
+    "replay_sha256": "0e35f51afb5483d98352ab6420e809266283546afddb103fbdc3e3735feb7bb7",
+    "manifest_sha256_expected": "880e63ecaf2672e217238c234db09d2847c89d95da6648c8c8490d9952c5076a",
+    "replay_sha256_expected": "0e35f51afb5483d98352ab6420e809266283546afddb103fbdc3e3735feb7bb7",
+    "hashes_verified": true
+  },
+  "historic_gates_unchanged": {
+    "V0": "GO_SODA3_QUERY",
+    "V1": "NO_GO_DIVERGENCE"
+  },
+  "universe": {
+    "pairs_total": 249,
+    "both_success_pairs": 194,
+    "strict_parity_pairs": 176,
+    "successful_non_strict_pairs": 18,
+    "causal_operations": 6,
+    "soda3_only_timeout_pairs": 6,
+    "classic_only_timeout_pairs": 27
+  },
+  "operations": [
+    {
+      "call_id": "RT-ACTOR-001__call_003",
+      "human_case_id": "RT-ACTOR-001",
+      "human_query": "contratos del NIT 860002400",
+      "dataset_id": "jbjy-vk9h",
+      "operation": "aggregate",
+      "family": "aggregate",
+      "runtime_route": "actor_profile",
+      "category": "actor_profile",
+      "call_order": 3,
+      "captured_timeout_seconds": 5.0,
+      "or_branch_count": 2,
+      "soql_length": 363,
+      "soql_sha256": "de5fbf1974b3ebfc718dd6ba106e7e3a554fccfb4058a4fb252514aebad1c96b",
+      "exact_soql": "SELECT nombre_entidad, count(*) AS cnt WHERE (documento_proveedor = '860002400') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('Cédula de Ciudadanía', 'Cédula de Extranjería', 'Tarjeta de Identidad', 'Pasaporte', 'Registro Civil', 'Permiso por Protección Temporal', 'Permiso especial de permanencia')) GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5",
+      "has_order_by": true,
+      "classification": "ORDER_TIE_NON_SEMANTIC",
+      "migration_blocking": false,
+      "pair_records": [
+        {
+          "call_id": "RT-ACTOR-001__call_003",
+          "round": 1,
+          "soql_equal": true,
+          "classic": {
+            "status": "ok",
+            "http": 200,
+            "rows": 5,
+            "elapsed_ms": 288.797,
+            "raw_set_hash": "481b05b2a35d0e0a18698678c06d9b3a0522d778c1de460c88631e1fd30550a7",
+            "canonical_set_hash": "38233cf848f65339d980e7e660c3c0983adf029a8dc2ee2fa9b1a553ec093cf9",
+            "n_canonical_ids": 0,
+            "n_ordered_ids": 0
+          },
+          "soda3": {
+            "status": "ok",
+            "http": 200,
+            "rows": 5,
+            "elapsed_ms": 207.764,
+            "raw_set_hash": "481b05b2a35d0e0a18698678c06d9b3a0522d778c1de460c88631e1fd30550a7",
+            "canonical_set_hash": "38233cf848f65339d980e7e660c3c0983adf029a8dc2ee2fa9b1a553ec093cf9",
+            "n_canonical_ids": 0,
+            "n_ordered_ids": 0
+          },
+          "set_identical": true,
+          "ordered_ids_identical": true,
+          "ids_only_in_classic": 0,
+          "ids_only_in_soda3": 0,
+          "harness_divergences": [
+            "ordering_only"
+          ],
+          "performance_eligible": true
+        },
+        {
+          "call_id": "RT-ACTOR-001__call_003",
+          "round": 2,
+          "soql_equal": true,
+          "classic": {
+            "status": "ok",
+            "http": 200,
+            "rows": 5,
+            "elapsed_ms": 513.225,
+            "raw_set_hash": "481b05b2a35d0e0a18698678c06d9b3a0522d778c1de460c88631e1fd30550a7",
+            "canonical_set_hash": "38233cf848f65339d980e7e660c3c0983adf029a8dc2ee2fa9b1a553ec093cf9",
+            "n_canonical_ids": 0,
+            "n_ordered_ids": 0
+          },
+          "soda3": {
+            "status": "ok",
+            "http": 200,
+            "rows": 5,
+            "elapsed_ms": 176.471,
+            "raw_set_hash": "481b05b2a35d0e0a18698678c06d9b3a0522d778c1de460c88631e1fd30550a7",
+            "canonical_set_hash": "38233cf848f65339d980e7e660c3c0983adf029a8dc2ee2fa9b1a553ec093cf9",
+            "n_canonical_ids": 0,
+            "n_ordered_ids": 0
+          },
+          "set_identical": true,
+          "ordered_ids_identical": true,
+          "ids_only_in_classic": 0,
+          "ids_only_in_soda3": 0,
+          "harness_divergences": [
+            "ordering_only"
+          ],
+          "performance_eligible": true
+        },
+        {
+          "call_id": "RT-ACTOR-001__call_003",
+          "round": 3,
+          "soql_equal": true,
+          "classic": {
+            "status": "ok",
+            "http": 200,
+            "rows": 5,
+            "elapsed_ms": 257.409,
+            "raw_set_hash": "481b05b2a35d0e0a18698678c06d9b3a0522d778c1de460c88631e1fd30550a7",
+            "canonical_set_hash": "38233cf848f65339d980e7e660c3c0983adf029a8dc2ee2fa9b1a553ec093cf9",
+            "n_canonical_ids": 0,
+            "n_ordered_ids": 0
+          },
+          "soda3": {
+            "status": "ok",
+            "http": 200,
+            "rows": 5,
+            "elapsed_ms": 425.212,
+            "raw_set_hash": "481b05b2a35d0e0a18698678c06d9b3a0522d778c1de460c88631e1fd30550a7",
+            "canonical_set_hash": "38233cf848f65339d980e7e660c3c0983adf029a8dc2ee2fa9b1a553ec093cf9",
+            "n_canonical_ids": 0,
+            "n_ordered_ids": 0
+          },
+          "set_identical": true,
+          "ordered_ids_identical": true,
+          "ids_only_in_classic": 0,
+          "ids_only_in_soda3": 0,
+          "harness_divergences": [
+            "ordering_only"
+          ],
+          "performance_eligible": true
+        }
+      ]
+    },
+    {
+      "call_id": "RT-ACTOR-001__call_007",
+      "human_case_id": "RT-ACTOR-001",
+      "human_query": "contratos del NIT 860002400",
+      "dataset_id": "jbjy-vk9h",
+      "operation": "aggregate",
+      "family": "aggregate",
+      "runtime_route": "actor_profile",
+      "category": "actor_profile",
+      "call_order": 7,
+      "captured_timeout_seconds": 5.0,
+      "or_branch_count": 2,
+      "soql_length": 454,
+      "soql_sha256": "445fa6475cd3cd3e25efc7575421fb474a19745f112262c5185e5ab566ee592f",
+      "exact_soql": "SELECT proveedor_adjudicado, documento_proveedor, tipodocproveedor, count(*) AS cnt WHERE (documento_proveedor = '860002400') AND (tipodocproveedor IS NULL OR tipodocproveedor NOT IN ('Cédula de Ciudadanía', 'Cédula de Extranjería', 'Tarjeta de Identidad', 'Pasaporte', 'Registro Civil', 'Permiso por Protección Temporal', 'Permiso especial de permanencia')) GROUP BY proveedor_adjudicado, documento_proveedor, tipodocproveedor ORDER BY cnt DESC LIMIT 10",
+      "has_order_by": true,
+      "classification": "ORDER_TIE_NON_SEMANTIC",
+      "migration_blocking": false,
+      "pair_records": [
+        {
+          "call_id": "RT-ACTOR-001__call_007",
+          "round": 1,
+          "soql_equal": true,
+          "classic": {
+            "status": "ok",
+            "http": 200,
+            "rows": 9,
+            "elapsed_ms": 211.879,
+            "raw_set_hash": "466576ceb0580efc6c3693ea6c29cff718f22bad010de4ac1ac9b2a55b4d43fd",
+            "canonical_set_hash": "ce6a8fcbdb72b58f1596c4a967e3c053c12188992fe6f17e39a8a9c93a282c89",
+            "n_canonical_ids": 0,
+            "n_ordered_ids": 0
+          },
+          "soda3": {
+            "status": "ok",
+            "http": 200,
+            "rows": 9,
+            "elapsed_ms": 194.895,
+            "raw_set_hash": "466576ceb0580efc6c3693ea6c29cff718f22bad010de4ac1ac9b2a55b4d43fd",
+            "canonical_set_hash": "ce6a8fcbdb72b58f1596c4a967e3c053c12188992fe6f17e39a8a9c93a282c89",
+            "n_canonical_ids": 0,
+            "n_ordered_ids": 0
+          },
+          "set_identical": true,
+          "ordered_ids_identical": true,
+          "ids_only_in_classic": 0,
+          "ids_only_in_soda3": 0,
+          "harness_divergences": [
+            "ordering_only"
+          ],
+          "performance_eligible": true
+        },
+        {
+          "call_id": "RT-ACTOR-001__call_007",
+          "round": 2,
+          "soql_equal": true,
+          "classic": {
+            "status": "ok",
+            "http": 200,
+            "rows": 9,
+            "elapsed_ms": 164.785,
+            "raw_set_hash": "466576ceb0580efc6c3693ea6c29cff718f22bad010de4ac1ac9b2a55b4d43fd",
+            "canonical_set_hash": "ce6a8fcbdb72b58f1596c4a967e3c053c12188992fe6f17e39a8a9c93a282c89",
+            "n_canonical_ids": 0,
+            "n_ordered_ids": 0
+          },
+          "soda3": {
+            "status": "ok",
+            "http": 200,
+            "rows": 9,
+            "elapsed_ms": 196.992,
+            "raw_set_hash": "466576ceb0580efc6c3693ea6c29cff718f22bad010de4ac1ac9b2a55b4d43fd",
+            "canonical_set_hash": "ce6a8fcbdb72b58f1596c4a967e3c053c12188992fe6f17e39a8a9c93a282c89",
+            "n_canonical_ids": 0,
+            "n_ordered_ids": 0
+          },
+          "set_identical": true,
+          "ordered_ids_identical": true,
+          "ids_only_in_classic": 0,
+          "ids_only_in_soda3": 0,
+          "harness_divergences": [
+            "ordering_only"
+          ],
+          "performance_eligible": true
+        },
+        {
+          "call_id": "RT-ACTOR-001__call_007",
+          "round": 3,
+          "soql_equal": true,
+          "classic": {
+            "status": "ok",
+            "http": 200,
+            "rows": 9,
+            "elapsed_ms": 193.617,
+            "raw_set_hash": "466576ceb0580efc6c3693ea6c29cff718f22bad010de4ac1ac9b2a55b4d43fd",
+            "canonical_set_hash": "ce6a8fcbdb72b58f1596c4a967e3c053c12188992fe6f17e39a8a9c93a282c89",
+            "n_canonical_ids": 0,
+            "n_ordered_ids": 0
+          },
+          "soda3": {
+            "status": "ok",
+            "http": 200,
+            "rows": 9,
+            "elapsed_ms": 170.372,
+            "raw_set_hash": "466576ceb0580efc6c3693ea6c29cff718f22bad010de4ac1ac9b2a55b4d43fd",
+            "canonical_set_hash": "ce6a8fcbdb72b58f1596c4a967e3c053c12188992fe6f17e39a8a9c93a282c89",
+            "n_canonical_ids": 0,
+            "n_ordered_ids": 0
+          },
+          "set_identical": true,
+          "ordered_ids_identical": true,
+          "ids_only_in_classic": 0,
+          "ids_only_in_soda3": 0,
+          "harness_divergences": [
+            "ordering_only"
+          ],
+          "performance_eligible": true
+        }
+      ]
+    },
+    {
+      "call_id": "RT-TAB-006__call_001",
+      "human_case_id": "RT-TAB-006",
+      "human_query": "licitaciones publicas de obra en atlantico",
+      "dataset_id": "p6dx-8zbt",
+      "operation": "query",
+      "family": "query",
+      "runtime_route": "heuristic_only",
+      "category": "modality_topic_territory",
+      "call_order": 1,
+      "captured_timeout_seconds": 8.0,
+      "or_branch_count": 2,
+      "soql_length": 727,
+      "soql_sha256": "3e9fa8a15b5831321bcc53a6e87c9edef21342f1865a1d03b69f5d2fc5058863",
+      "exact_soql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE departamento_entidad = 'Atlántico' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%obra%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%obra%'))) AND modalidad_de_contratacion IN ('Licitación pública', 'Licitación pública Obra Publica') ORDER BY fecha_de_publicacion_del DESC, precio_base DESC, id_del_proceso DESC LIMIT 50",
+      "has_order_by": true,
+      "classification": "ORDER_TIE_NON_SEMANTIC",
+      "migration_blocking": false,
+      "pair_records": [
+        {
+          "call_id": "RT-TAB-006__call_001",
+          "round": 1,
+          "soql_equal": true,
+          "classic": {
+            "status": "ok",
+            "http": 200,
+            "rows": 50,
+            "elapsed_ms": 544.217,
+            "raw_set_hash": "5dd78e724de938c30ffa07f3dc0bb60689184c0e434963d1cf3ce7f3625191f2",
+            "canonical_set_hash": "9040d8eaf7f395e293a7d7466c7a99c9df8f92efedc24b97d7eff5236416cbea",
+            "n_canonical_ids": 40,
+            "n_ordered_ids": 50
+          },
+          "soda3": {
+            "status": "ok",
+            "http": 200,
+            "rows": 50,
+            "elapsed_ms": 153.038,
+            "raw_set_hash": "5dd78e724de938c30ffa07f3dc0bb60689184c0e434963d1cf3ce7f3625191f2",
+            "canonical_set_hash": "9040d8eaf7f395e293a7d7466c7a99c9df8f92efedc24b97d7eff5236416cbea",
+            "n_canonical_ids": 40,
+            "n_ordered_ids": 50
+          },
+          "set_identical": true,
+          "ordered_ids_identical": true,
+          "ids_only_in_classic": 0,
+          "ids_only_in_soda3": 0,
+          "harness_divergences": [
+            "ordering_only"
+          ],
+          "performance_eligible": true
+        },
+        {
+          "call_id": "RT-TAB-006__call_001",
+          "round": 2,
+          "soql_equal": true,
+          "classic": {
+            "status": "ok",
+            "http": 200,
+            "rows": 50,
+            "elapsed_ms": 380.577,
+            "raw_set_hash": "5dd78e724de938c30ffa07f3dc0bb60689184c0e434963d1cf3ce7f3625191f2",
+            "canonical_set_hash": "9040d8eaf7f395e293a7d7466c7a99c9df8f92efedc24b97d7eff5236416cbea",
+            "n_canonical_ids": 40,
+            "n_ordered_ids": 50
+          },
+          "soda3": {
+            "status": "ok",
+            "http": 200,
+            "rows": 50,
+            "elapsed_ms": 232.451,
+            "raw_set_hash": "5dd78e724de938c30ffa07f3dc0bb60689184c0e434963d1cf3ce7f3625191f2",
+            "canonical_set_hash": "9040d8eaf7f395e293a7d7466c7a99c9df8f92efedc24b97d7eff5236416cbea",
+            "n_canonical_ids": 40,
+            "n_ordered_ids": 50
+          },
+          "set_identical": true,
+          "ordered_ids_identical": true,
+          "ids_only_in_classic": 0,
+          "ids_only_in_soda3": 0,
+          "harness_divergences": [
+            "ordering_only"
+          ],
+          "performance_eligible": true
+        },
+        {
+          "call_id": "RT-TAB-006__call_001",
+          "round": 3,
+          "soql_equal": true,
+          "classic": {
+            "status": "ok",
+            "http": 200,
+            "rows": 50,
+            "elapsed_ms": 265.039,
+            "raw_set_hash": "5dd78e724de938c30ffa07f3dc0bb60689184c0e434963d1cf3ce7f3625191f2",
+            "canonical_set_hash": "9040d8eaf7f395e293a7d7466c7a99c9df8f92efedc24b97d7eff5236416cbea",
+            "n_canonical_ids": 40,
+            "n_ordered_ids": 50
+          },
+          "soda3": {
+            "status": "ok",
+            "http": 200,
+            "rows": 50,
+            "elapsed_ms": 252.221,
+            "raw_set_hash": "5dd78e724de938c30ffa07f3dc0bb60689184c0e434963d1cf3ce7f3625191f2",
+            "canonical_set_hash": "9040d8eaf7f395e293a7d7466c7a99c9df8f92efedc24b97d7eff5236416cbea",
+            "n_canonical_ids": 40,
+            "n_ordered_ids": 50
+          },
+          "set_identical": true,
+          "ordered_ids_identical": true,
+          "ids_only_in_classic": 0,
+          "ids_only_in_soda3": 0,
+          "harness_divergences": [
+            "ordering_only"
+          ],
+          "performance_eligible": true
+        }
+      ]
+    },
+    {
+      "call_id": "RT-TAB-004__call_002",
+      "human_case_id": "RT-TAB-004",
+      "human_query": "contratos activos de la gobernacion del atlantico",
+      "dataset_id": "jbjy-vk9h",
+      "operation": "query",
+      "family": "query",
+      "runtime_route": "heuristic_only",
+      "category": "state_entity",
+      "call_order": 2,
+      "captured_timeout_seconds": 3.0,
+      "or_branch_count": 0,
+      "soql_length": 450,
+      "soql_sha256": "55e47f189f2835e3a1053d84cb094827c8326043abb4be3369f9ea923d717bbf",
+      "exact_soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DEPARTAMENTO DEL ATLANTICO**%')) AND estado_contrato IN ('En ejecución', 'Modificado', 'Prorrogado') LIMIT 50",
+      "has_order_by": false,
+      "classification": "UNORDERED_SAMPLE_EXPECTED_VARIANCE",
+      "migration_blocking": false,
+      "pair_records": [
+        {
+          "call_id": "RT-TAB-004__call_002",
+          "round": 1,
+          "soql_equal": true,
+          "classic": {
+            "status": "ok",
+            "http": 200,
+            "rows": 50,
+            "elapsed_ms": 179.482,
+            "raw_set_hash": "678d5a378c084581b4d1e67bc58aada203b5c8080da9e1af84f0b6011bee25d9",
+            "canonical_set_hash": "def39faaf95acabe4251178ed0e10b67e8286dd89dbb0a02bee85d8f81a54969",
+            "n_canonical_ids": 50,
+            "n_ordered_ids": 50
+          },
+          "soda3": {
+            "status": "ok",
+            "http": 200,
+            "rows": 50,
+            "elapsed_ms": 166.619,
+            "raw_set_hash": "db8f1573551cb5855309c55e261c994f8f7256c01892d1b4493a9b0862fdd143",
+            "canonical_set_hash": "447e76626f59b469e8cdac20bdf6e1248d8389b67e2dca3646774c4b7e3c9faf",
+            "n_canonical_ids": 50,
+            "n_ordered_ids": 50
+          },
+          "set_identical": false,
+          "ordered_ids_identical": false,
+          "ids_only_in_classic": 12,
+          "ids_only_in_soda3": 12,
+          "harness_divergences": [
+            "missing_rows",
+            "extra_rows"
+          ],
+          "performance_eligible": false
+        },
+        {
+          "call_id": "RT-TAB-004__call_002",
+          "round": 2,
+          "soql_equal": true,
+          "classic": {
+            "status": "ok",
+            "http": 200,
+            "rows": 50,
+            "elapsed_ms": 553.985,
+            "raw_set_hash": "678d5a378c084581b4d1e67bc58aada203b5c8080da9e1af84f0b6011bee25d9",
+            "canonical_set_hash": "def39faaf95acabe4251178ed0e10b67e8286dd89dbb0a02bee85d8f81a54969",
+            "n_canonical_ids": 50,
+            "n_ordered_ids": 50
+          },
+          "soda3": {
+            "status": "ok",
+            "http": 200,
+            "rows": 50,
+            "elapsed_ms": 151.296,
+            "raw_set_hash": "db8f1573551cb5855309c55e261c994f8f7256c01892d1b4493a9b0862fdd143",
+            "canonical_set_hash": "447e76626f59b469e8cdac20bdf6e1248d8389b67e2dca3646774c4b7e3c9faf",
+            "n_canonical_ids": 50,
+            "n_ordered_ids": 50
+          },
+          "set_identical": false,
+          "ordered_ids_identical": false,
+          "ids_only_in_classic": 12,
+          "ids_only_in_soda3": 12,
+          "harness_divergences": [
+            "missing_rows",
+            "extra_rows"
+          ],
+          "performance_eligible": false
+        },
+        {
+          "call_id": "RT-TAB-004__call_002",
+          "round": 3,
+          "soql_equal": true,
+          "classic": {
+            "status": "ok",
+            "http": 200,
+            "rows": 50,
+            "elapsed_ms": 241.203,
+            "raw_set_hash": "678d5a378c084581b4d1e67bc58aada203b5c8080da9e1af84f0b6011bee25d9",
+            "canonical_set_hash": "def39faaf95acabe4251178ed0e10b67e8286dd89dbb0a02bee85d8f81a54969",
+            "n_canonical_ids": 50,
+            "n_ordered_ids": 50
+          },
+          "soda3": {
+            "status": "ok",
+            "http": 200,
+            "rows": 50,
+            "elapsed_ms": 148.516,
+            "raw_set_hash": "db8f1573551cb5855309c55e261c994f8f7256c01892d1b4493a9b0862fdd143",
+            "canonical_set_hash": "447e76626f59b469e8cdac20bdf6e1248d8389b67e2dca3646774c4b7e3c9faf",
+            "n_canonical_ids": 50,
+            "n_ordered_ids": 50
+          },
+          "set_identical": false,
+          "ordered_ids_identical": false,
+          "ids_only_in_classic": 12,
+          "ids_only_in_soda3": 12,
+          "harness_divergences": [
+            "missing_rows",
+            "extra_rows"
+          ],
+          "performance_eligible": false
+        }
+      ]
+    },
+    {
+      "call_id": "RT-TAB-007__call_003",
+      "human_case_id": "RT-TAB-007",
+      "human_query": "contratos de aseo entre el 1 de febrero y el 15 de marzo de 2026",
+      "dataset_id": "jbjy-vk9h",
+      "operation": "aggregate",
+      "family": "aggregate",
+      "runtime_route": "heuristic_only",
+      "category": "date_range",
+      "call_order": 3,
+      "captured_timeout_seconds": 4.0,
+      "or_branch_count": 6,
+      "soql_length": 617,
+      "soql_sha256": "9d3d7f1062dc32710a3b8a0eb2ddc6786d38580904224de84d09c8cbd2672853",
+      "exact_soql": "SELECT nombre_entidad, count(*) AS cnt WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseos%')) OR unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aseo urbano%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aseo urbano%'))) AND fecha_de_firma >= '2026-02-01' AND fecha_de_firma <= '2026-03-15' GROUP BY nombre_entidad ORDER BY cnt DESC LIMIT 5",
+      "has_order_by": true,
+      "classification": "TOPN_BOUNDARY_TIE_DEBT_POST_MIGRATION",
+      "migration_blocking": false,
+      "pair_records": [
+        {
+          "call_id": "RT-TAB-007__call_003",
+          "round": 1,
+          "soql_equal": true,
+          "classic": {
+            "status": "ok",
+            "http": 200,
+            "rows": 5,
+            "elapsed_ms": 1308.009,
+            "raw_set_hash": "13c6750c1b64f50ef22c571930e9bcf38ac8ba6029a68403b2dad2b421d1cb31",
+            "canonical_set_hash": "82f18b3771a3a44e8002cc269ce49d085972dfc8bc3bb0a79aecceb8f730a397",
+            "n_canonical_ids": 0,
+            "n_ordered_ids": 0
+          },
+          "soda3": {
+            "status": "ok",
+            "http": 200,
+            "rows": 5,
+            "elapsed_ms": 168.2,
+            "raw_set_hash": "7562145332a8f9116ec9eafd4eb4f8c0c111604337c559131dfae1b5a7c68072",
+            "canonical_set_hash": "ba660ee1a7567df52aaeeaa6e68788808a7bd39b6807e6d3d32ba508a3678799",
+            "n_canonical_ids": 0,
+            "n_ordered_ids": 0
+          },
+          "set_identical": false,
+          "ordered_ids_identical": true,
+          "ids_only_in_classic": 0,
+          "ids_only_in_soda3": 0,
+          "harness_divergences": [
+            "unknown"
+          ],
+          "performance_eligible": false
+        },
+        {
+          "call_id": "RT-TAB-007__call_003",
+          "round": 2,
+          "soql_equal": true,
+          "classic": {
+            "status": "ok",
+            "http": 200,
+            "rows": 5,
+            "elapsed_ms": 2175.017,
+            "raw_set_hash": "13c6750c1b64f50ef22c571930e9bcf38ac8ba6029a68403b2dad2b421d1cb31",
+            "canonical_set_hash": "82f18b3771a3a44e8002cc269ce49d085972dfc8bc3bb0a79aecceb8f730a397",
+            "n_canonical_ids": 0,
+            "n_ordered_ids": 0
+          },
+          "soda3": {
+            "status": "ok",
+            "http": 200,
+            "rows": 5,
+            "elapsed_ms": 138.016,
+            "raw_set_hash": "7562145332a8f9116ec9eafd4eb4f8c0c111604337c559131dfae1b5a7c68072",
+            "canonical_set_hash": "ba660ee1a7567df52aaeeaa6e68788808a7bd39b6807e6d3d32ba508a3678799",
+            "n_canonical_ids": 0,
+            "n_ordered_ids": 0
+          },
+          "set_identical": false,
+          "ordered_ids_identical": true,
+          "ids_only_in_classic": 0,
+          "ids_only_in_soda3": 0,
+          "harness_divergences": [
+            "unknown"
+          ],
+          "performance_eligible": false
+        },
+        {
+          "call_id": "RT-TAB-007__call_003",
+          "round": 3,
+          "soql_equal": true,
+          "classic": {
+            "status": "ok",
+            "http": 200,
+            "rows": 5,
+            "elapsed_ms": 1268.603,
+            "raw_set_hash": "13c6750c1b64f50ef22c571930e9bcf38ac8ba6029a68403b2dad2b421d1cb31",
+            "canonical_set_hash": "82f18b3771a3a44e8002cc269ce49d085972dfc8bc3bb0a79aecceb8f730a397",
+            "n_canonical_ids": 0,
+            "n_ordered_ids": 0
+          },
+          "soda3": {
+            "status": "ok",
+            "http": 200,
+            "rows": 5,
+            "elapsed_ms": 178.079,
+            "raw_set_hash": "7562145332a8f9116ec9eafd4eb4f8c0c111604337c559131dfae1b5a7c68072",
+            "canonical_set_hash": "ba660ee1a7567df52aaeeaa6e68788808a7bd39b6807e6d3d32ba508a3678799",
+            "n_canonical_ids": 0,
+            "n_ordered_ids": 0
+          },
+          "set_identical": false,
+          "ordered_ids_identical": true,
+          "ids_only_in_classic": 0,
+          "ids_only_in_soda3": 0,
+          "harness_divergences": [
+            "unknown"
+          ],
+          "performance_eligible": false
+        }
+      ]
+    },
+    {
+      "call_id": "RT-OPP-003__call_003",
+      "human_case_id": "RT-OPP-003",
+      "human_query": "convocatorias abiertas de consultoria en narino",
+      "dataset_id": "p6dx-8zbt",
+      "operation": "aggregate",
+      "family": "aggregate",
+      "runtime_route": "heuristic_only",
+      "category": "opportunity_topic_territory",
+      "call_order": 3,
+      "captured_timeout_seconds": 4.0,
+      "or_branch_count": 2,
+      "soql_length": 431,
+      "soql_sha256": "7b25eed0ceac7f9e6ef745cfa4a6eaa0db31a20fb3c51cf1d7043e08d59b8415",
+      "exact_soql": "SELECT entidad, count(*) AS cnt WHERE departamento_entidad = 'Nariño' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%consultoria%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%consultoria%'))) AND estado_del_procedimiento IN ('Publicado', 'Borrador', 'En aprobación', 'Aprobado', 'Abierto') AND estado_de_apertura_del_proceso = 'Abierto' GROUP BY entidad ORDER BY cnt DESC LIMIT 5",
+      "has_order_by": true,
+      "classification": "TOPN_BOUNDARY_TIE_DEBT_POST_MIGRATION",
+      "migration_blocking": false,
+      "pair_records": [
+        {
+          "call_id": "RT-OPP-003__call_003",
+          "round": 1,
+          "soql_equal": true,
+          "classic": {
+            "status": "ok",
+            "http": 200,
+            "rows": 5,
+            "elapsed_ms": 1040.111,
+            "raw_set_hash": "cde40f282182b0596a8b6fd03e3f79641234b0bf33bf1c9e99cba9e2d151c068",
+            "canonical_set_hash": "2c9fb059395229ddd23fed5bec7296302fea4a0279b05137ddfbc43112db3203",
+            "n_canonical_ids": 0,
+            "n_ordered_ids": 0
+          },
+          "soda3": {
+            "status": "ok",
+            "http": 200,
+            "rows": 5,
+            "elapsed_ms": 155.784,
+            "raw_set_hash": "eb08dc3bd2d8f3904ec8a4403ba19ee0b543753ab00c86c615e76c63ec1c5b0b",
+            "canonical_set_hash": "65a77b6d64ddb9685b9eedba8cf4307aaa1698dbd765ce3d72a204953ba6b006",
+            "n_canonical_ids": 0,
+            "n_ordered_ids": 0
+          },
+          "set_identical": false,
+          "ordered_ids_identical": true,
+          "ids_only_in_classic": 0,
+          "ids_only_in_soda3": 0,
+          "harness_divergences": [
+            "unknown"
+          ],
+          "performance_eligible": false
+        },
+        {
+          "call_id": "RT-OPP-003__call_003",
+          "round": 2,
+          "soql_equal": true,
+          "classic": {
+            "status": "ok",
+            "http": 200,
+            "rows": 5,
+            "elapsed_ms": 2185.085,
+            "raw_set_hash": "cde40f282182b0596a8b6fd03e3f79641234b0bf33bf1c9e99cba9e2d151c068",
+            "canonical_set_hash": "2c9fb059395229ddd23fed5bec7296302fea4a0279b05137ddfbc43112db3203",
+            "n_canonical_ids": 0,
+            "n_ordered_ids": 0
+          },
+          "soda3": {
+            "status": "ok",
+            "http": 200,
+            "rows": 5,
+            "elapsed_ms": 416.876,
+            "raw_set_hash": "eb08dc3bd2d8f3904ec8a4403ba19ee0b543753ab00c86c615e76c63ec1c5b0b",
+            "canonical_set_hash": "65a77b6d64ddb9685b9eedba8cf4307aaa1698dbd765ce3d72a204953ba6b006",
+            "n_canonical_ids": 0,
+            "n_ordered_ids": 0
+          },
+          "set_identical": false,
+          "ordered_ids_identical": true,
+          "ids_only_in_classic": 0,
+          "ids_only_in_soda3": 0,
+          "harness_divergences": [
+            "unknown"
+          ],
+          "performance_eligible": false
+        },
+        {
+          "call_id": "RT-OPP-003__call_003",
+          "round": 3,
+          "soql_equal": true,
+          "classic": {
+            "status": "ok",
+            "http": 200,
+            "rows": 5,
+            "elapsed_ms": 2267.718,
+            "raw_set_hash": "cde40f282182b0596a8b6fd03e3f79641234b0bf33bf1c9e99cba9e2d151c068",
+            "canonical_set_hash": "2c9fb059395229ddd23fed5bec7296302fea4a0279b05137ddfbc43112db3203",
+            "n_canonical_ids": 0,
+            "n_ordered_ids": 0
+          },
+          "soda3": {
+            "status": "ok",
+            "http": 200,
+            "rows": 5,
+            "elapsed_ms": 139.915,
+            "raw_set_hash": "eb08dc3bd2d8f3904ec8a4403ba19ee0b543753ab00c86c615e76c63ec1c5b0b",
+            "canonical_set_hash": "65a77b6d64ddb9685b9eedba8cf4307aaa1698dbd765ce3d72a204953ba6b006",
+            "n_canonical_ids": 0,
+            "n_ordered_ids": 0
+          },
+          "set_identical": false,
+          "ordered_ids_identical": true,
+          "ids_only_in_classic": 0,
+          "ids_only_in_soda3": 0,
+          "harness_divergences": [
+            "unknown"
+          ],
+          "performance_eligible": false
+        }
+      ]
+    },
+    {
+      "call_id": "RT-NEG-002__call_002",
+      "human_case_id": "RT-NEG-002",
+      "human_query": "contratos de la gobernacion de sucre sin alimentacion",
+      "dataset_id": "jbjy-vk9h",
+      "operation": "query",
+      "family": "query",
+      "runtime_route": "heuristic_only",
+      "category": "negation_entity_topic",
+      "call_order": 2,
+      "captured_timeout_seconds": 3.0,
+      "or_branch_count": 12,
+      "soql_length": 1529,
+      "soql_sha256": "861e822956f22aff59818089749799ddf297c9d056186bc5cbad6884fb43b268",
+      "exact_soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%GOBERNACION DE SUCRE%')) AND NOT (coalesce(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%comedor%')), false) OR coalesce(unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%comedor%')), false) OR coalesce(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutricion%')), false) OR coalesce(unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutricion%')), false) OR coalesce(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentos%')), false) OR coalesce(unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentos%')), false) OR coalesce(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%nutrición%')), false) OR coalesce(unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%nutrición%')), false) OR coalesce(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentación%')), false) OR coalesce(unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentación%')), false) OR coalesce(unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alimentacion%')), false) OR coalesce(unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alimentacion%')), false)) LIMIT 50",
+      "has_order_by": false,
+      "classification": "FALLBACK_UNREACHABLE_WITH_SODA3_PRIMARY",
+      "migration_blocking": false,
+      "pair_records": [
+        {
+          "call_id": "RT-NEG-002__call_002",
+          "round": 1,
+          "soql_equal": true,
+          "classic": {
+            "status": "ok",
+            "http": 200,
+            "rows": 50,
+            "elapsed_ms": 209.59,
+            "raw_set_hash": "0363f78411f80a5a67612cff93a8c567690c7dbb58ea129dd55c41e4bab4fa09",
+            "canonical_set_hash": "85d73f83a9929cc286f4eadac37a361265d898bb6e332213ebf04b022b838b29",
+            "n_canonical_ids": 50,
+            "n_ordered_ids": 50
+          },
+          "soda3": {
+            "status": "timeout",
+            "http": null,
+            "rows": null,
+            "elapsed_ms": 3003.41,
+            "raw_set_hash": null,
+            "canonical_set_hash": null,
+            "n_canonical_ids": 0,
+            "n_ordered_ids": 0
+          },
+          "set_identical": false,
+          "ordered_ids_identical": false,
+          "ids_only_in_classic": 50,
+          "ids_only_in_soda3": 0,
+          "harness_divergences": [
+            "remote_variance"
+          ],
+          "performance_eligible": false
+        },
+        {
+          "call_id": "RT-NEG-002__call_002",
+          "round": 2,
+          "soql_equal": true,
+          "classic": {
+            "status": "ok",
+            "http": 200,
+            "rows": 50,
+            "elapsed_ms": 482.836,
+            "raw_set_hash": "0363f78411f80a5a67612cff93a8c567690c7dbb58ea129dd55c41e4bab4fa09",
+            "canonical_set_hash": "85d73f83a9929cc286f4eadac37a361265d898bb6e332213ebf04b022b838b29",
+            "n_canonical_ids": 50,
+            "n_ordered_ids": 50
+          },
+          "soda3": {
+            "status": "timeout",
+            "http": null,
+            "rows": null,
+            "elapsed_ms": 3004.257,
+            "raw_set_hash": null,
+            "canonical_set_hash": null,
+            "n_canonical_ids": 0,
+            "n_ordered_ids": 0
+          },
+          "set_identical": false,
+          "ordered_ids_identical": false,
+          "ids_only_in_classic": 50,
+          "ids_only_in_soda3": 0,
+          "harness_divergences": [
+            "remote_variance"
+          ],
+          "performance_eligible": false
+        },
+        {
+          "call_id": "RT-NEG-002__call_002",
+          "round": 3,
+          "soql_equal": true,
+          "classic": {
+            "status": "ok",
+            "http": 200,
+            "rows": 50,
+            "elapsed_ms": 300.639,
+            "raw_set_hash": "0363f78411f80a5a67612cff93a8c567690c7dbb58ea129dd55c41e4bab4fa09",
+            "canonical_set_hash": "85d73f83a9929cc286f4eadac37a361265d898bb6e332213ebf04b022b838b29",
+            "n_canonical_ids": 50,
+            "n_ordered_ids": 50
+          },
+          "soda3": {
+            "status": "timeout",
+            "http": null,
+            "rows": null,
+            "elapsed_ms": 3002.662,
+            "raw_set_hash": null,
+            "canonical_set_hash": null,
+            "n_canonical_ids": 0,
+            "n_ordered_ids": 0
+          },
+          "set_identical": false,
+          "ordered_ids_identical": false,
+          "ids_only_in_classic": 50,
+          "ids_only_in_soda3": 0,
+          "harness_divergences": [
+            "remote_variance"
+          ],
+          "performance_eligible": false
+        }
+      ]
+    },
+    {
+      "call_id": "RT-TAB-002__call_002",
+      "human_case_id": "RT-TAB-002",
+      "human_query": "contratos de interventoria tecnica de obra",
+      "dataset_id": "jbjy-vk9h",
+      "operation": "query",
+      "family": "query",
+      "runtime_route": "heuristic_only",
+      "category": "tabular_topic",
+      "call_order": 2,
+      "captured_timeout_seconds": 3.0,
+      "or_branch_count": 4,
+      "soql_length": 762,
+      "soql_sha256": "3fea8b47e5bc3aa844c54ec05668cd95357c6a6459355a6e759e3c96af8df7cf",
+      "exact_soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%interventoria%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%interventoria%'))) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%tecnica%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%tecnica%'))) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%obra%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%obra%'))) LIMIT 50",
+      "has_order_by": false,
+      "classification": "SODA3_REACHABLE_REGRESSION",
+      "migration_blocking": true,
+      "pair_records": [
+        {
+          "call_id": "RT-TAB-002__call_002",
+          "round": 1,
+          "soql_equal": true,
+          "classic": {
+            "status": "ok",
+            "http": 200,
+            "rows": 50,
+            "elapsed_ms": 1019.073,
+            "raw_set_hash": "c17dab2e952c1cef87098f0a56e27807d0f05d105c1d0f87e05bd63e2b61983c",
+            "canonical_set_hash": "07dcba2325fb22091b47da62716d4a020c1024e042d58937cd1f49ac9dce566d",
+            "n_canonical_ids": 50,
+            "n_ordered_ids": 50
+          },
+          "soda3": {
+            "status": "timeout",
+            "http": null,
+            "rows": null,
+            "elapsed_ms": 3003.666,
+            "raw_set_hash": null,
+            "canonical_set_hash": null,
+            "n_canonical_ids": 0,
+            "n_ordered_ids": 0
+          },
+          "set_identical": false,
+          "ordered_ids_identical": false,
+          "ids_only_in_classic": 50,
+          "ids_only_in_soda3": 0,
+          "harness_divergences": [
+            "remote_variance"
+          ],
+          "performance_eligible": false
+        },
+        {
+          "call_id": "RT-TAB-002__call_002",
+          "round": 2,
+          "soql_equal": true,
+          "classic": {
+            "status": "ok",
+            "http": 200,
+            "rows": 50,
+            "elapsed_ms": 788.487,
+            "raw_set_hash": "c17dab2e952c1cef87098f0a56e27807d0f05d105c1d0f87e05bd63e2b61983c",
+            "canonical_set_hash": "07dcba2325fb22091b47da62716d4a020c1024e042d58937cd1f49ac9dce566d",
+            "n_canonical_ids": 50,
+            "n_ordered_ids": 50
+          },
+          "soda3": {
+            "status": "timeout",
+            "http": null,
+            "rows": null,
+            "elapsed_ms": 3002.484,
+            "raw_set_hash": null,
+            "canonical_set_hash": null,
+            "n_canonical_ids": 0,
+            "n_ordered_ids": 0
+          },
+          "set_identical": false,
+          "ordered_ids_identical": false,
+          "ids_only_in_classic": 50,
+          "ids_only_in_soda3": 0,
+          "harness_divergences": [
+            "remote_variance"
+          ],
+          "performance_eligible": false
+        },
+        {
+          "call_id": "RT-TAB-002__call_002",
+          "round": 3,
+          "soql_equal": true,
+          "classic": {
+            "status": "ok",
+            "http": 200,
+            "rows": 50,
+            "elapsed_ms": 1072.651,
+            "raw_set_hash": "c17dab2e952c1cef87098f0a56e27807d0f05d105c1d0f87e05bd63e2b61983c",
+            "canonical_set_hash": "07dcba2325fb22091b47da62716d4a020c1024e042d58937cd1f49ac9dce566d",
+            "n_canonical_ids": 50,
+            "n_ordered_ids": 50
+          },
+          "soda3": {
+            "status": "timeout",
+            "http": null,
+            "rows": null,
+            "elapsed_ms": 3003.003,
+            "raw_set_hash": null,
+            "canonical_set_hash": null,
+            "n_canonical_ids": 0,
+            "n_ordered_ids": 0
+          },
+          "set_identical": false,
+          "ordered_ids_identical": false,
+          "ids_only_in_classic": 50,
+          "ids_only_in_soda3": 0,
+          "harness_divergences": [
+            "remote_variance"
+          ],
+          "performance_eligible": false
+        }
+      ]
+    }
+  ],
+  "fallback_control_flow": [
+    {
+      "fallback_call_id": "RT-NEG-002__call_002",
+      "primary_call_id": "RT-NEG-002__call_001",
+      "primary_rounds": [
+        {
+          "round": 1,
+          "classic": "timeout",
+          "classic_ms": 8005.8,
+          "soda3": "ok",
+          "soda3_ms": 233.4
+        },
+        {
+          "round": 2,
+          "classic": "timeout",
+          "classic_ms": 8003.6,
+          "soda3": "ok",
+          "soda3_ms": 511.2
+        },
+        {
+          "round": 3,
+          "classic": "timeout",
+          "classic_ms": 8005.1,
+          "soda3": "ok",
+          "soda3_ms": 253.2
+        }
+      ],
+      "fallback_rounds": [
+        {
+          "round": 1,
+          "classic": "ok",
+          "classic_ms": 209.6,
+          "soda3": "timeout",
+          "soda3_ms": 3003.4
+        },
+        {
+          "round": 2,
+          "classic": "ok",
+          "classic_ms": 482.8,
+          "soda3": "timeout",
+          "soda3_ms": 3004.3
+        },
+        {
+          "round": 3,
+          "classic": "ok",
+          "classic_ms": 300.6,
+          "soda3": "timeout",
+          "soda3_ms": 3002.7
+        }
+      ],
+      "count_call_id": "RT-NEG-002__call_003",
+      "count_rounds": [
+        {
+          "round": 1,
+          "classic": "timeout",
+          "classic_ms": 3316.3,
+          "soda3": "timeout",
+          "soda3_ms": 3003.3
+        },
+        {
+          "round": 2,
+          "classic": "timeout",
+          "classic_ms": 3004.7,
+          "soda3": "timeout",
+          "soda3_ms": 3259.1
+        },
+        {
+          "round": 3,
+          "classic": "timeout",
+          "classic_ms": 3269.7,
+          "soda3": "timeout",
+          "soda3_ms": 3250.8
+        }
+      ],
+      "soda3_primary_succeeds": true,
+      "fallback_reachable_under_soda3_primary": "inalcanzable",
+      "classification": "FALLBACK_UNREACHABLE_WITH_SODA3_PRIMARY",
+      "migration_blocking": false
+    },
+    {
+      "fallback_call_id": "RT-TAB-002__call_002",
+      "primary_call_id": "RT-TAB-002__call_001",
+      "primary_rounds": [
+        {
+          "round": 1,
+          "classic": "timeout",
+          "classic_ms": 8264.3,
+          "soda3": "timeout",
+          "soda3_ms": 8254.1
+        },
+        {
+          "round": 2,
+          "classic": "timeout",
+          "classic_ms": 8004.5,
+          "soda3": "timeout",
+          "soda3_ms": 8256.0
+        },
+        {
+          "round": 3,
+          "classic": "timeout",
+          "classic_ms": 8303.1,
+          "soda3": "timeout",
+          "soda3_ms": 8308.0
+        }
+      ],
+      "fallback_rounds": [
+        {
+          "round": 1,
+          "classic": "ok",
+          "classic_ms": 1019.1,
+          "soda3": "timeout",
+          "soda3_ms": 3003.7
+        },
+        {
+          "round": 2,
+          "classic": "ok",
+          "classic_ms": 788.5,
+          "soda3": "timeout",
+          "soda3_ms": 3002.5
+        },
+        {
+          "round": 3,
+          "classic": "ok",
+          "classic_ms": 1072.7,
+          "soda3": "timeout",
+          "soda3_ms": 3003.0
+        }
+      ],
+      "count_call_id": "RT-TAB-002__call_003",
+      "count_rounds": [
+        {
+          "round": 1,
+          "classic": "timeout",
+          "classic_ms": 2278.0,
+          "soda3": "timeout",
+          "soda3_ms": 2333.5
+        },
+        {
+          "round": 2,
+          "classic": "timeout",
+          "classic_ms": 2291.8,
+          "soda3": "timeout",
+          "soda3_ms": 2335.3
+        },
+        {
+          "round": 3,
+          "classic": "timeout",
+          "classic_ms": 2004.2,
+          "soda3": "timeout",
+          "soda3_ms": 2226.8
+        }
+      ],
+      "soda3_primary_succeeds": false,
+      "fallback_reachable_under_soda3_primary": "siempre_alcanzable",
+      "classification": "SODA3_REACHABLE_REGRESSION",
+      "migration_blocking": true
+    }
+  ],
+  "classic_only_timeout_distribution": [
+    {
+      "human_case_id": "RT-AN-003",
+      "call_id": "RT-AN-003__call_001",
+      "operation": "aggregate",
+      "dataset": "jbjy-vk9h",
+      "pairs": 1
+    },
+    {
+      "human_case_id": "RT-NEG-002",
+      "call_id": "RT-NEG-002__call_001",
+      "operation": "query",
+      "dataset": "jbjy-vk9h",
+      "pairs": 3
+    },
+    {
+      "human_case_id": "RT-OPP-002",
+      "call_id": "RT-OPP-002__call_001",
+      "operation": "query",
+      "dataset": "p6dx-8zbt",
+      "pairs": 1
+    },
+    {
+      "human_case_id": "RT-OPP-003",
+      "call_id": "RT-OPP-003__call_002",
+      "operation": "count",
+      "dataset": "p6dx-8zbt",
+      "pairs": 1
+    },
+    {
+      "human_case_id": "RT-OPP-003",
+      "call_id": "RT-OPP-003__call_007",
+      "operation": "aggregate",
+      "dataset": "p6dx-8zbt",
+      "pairs": 1
+    },
+    {
+      "human_case_id": "RT-OPP-004",
+      "call_id": "RT-OPP-004__call_001",
+      "operation": "query",
+      "dataset": "p6dx-8zbt",
+      "pairs": 1
+    },
+    {
+      "human_case_id": "RT-OR-001",
+      "call_id": "RT-OR-001__call_001",
+      "operation": "query",
+      "dataset": "p6dx-8zbt",
+      "pairs": 3
+    },
+    {
+      "human_case_id": "RT-PHRASE-001",
+      "call_id": "RT-PHRASE-001__call_001",
+      "operation": "query",
+      "dataset": "jbjy-vk9h",
+      "pairs": 3
+    },
+    {
+      "human_case_id": "RT-PHRASE-001",
+      "call_id": "RT-PHRASE-001__call_002",
+      "operation": "count",
+      "dataset": "jbjy-vk9h",
+      "pairs": 3
+    },
+    {
+      "human_case_id": "RT-PHRASE-002",
+      "call_id": "RT-PHRASE-002__call_001",
+      "operation": "query",
+      "dataset": "jbjy-vk9h",
+      "pairs": 2
+    },
+    {
+      "human_case_id": "RT-TAB-001",
+      "call_id": "RT-TAB-001__call_003",
+      "operation": "count",
+      "dataset": "jbjy-vk9h",
+      "pairs": 3
+    },
+    {
+      "human_case_id": "RT-TAB-004",
+      "call_id": "RT-TAB-004__call_001",
+      "operation": "query",
+      "dataset": "jbjy-vk9h",
+      "pairs": 1
+    },
+    {
+      "human_case_id": "RT-TAB-004",
+      "call_id": "RT-TAB-004__call_003",
+      "operation": "count",
+      "dataset": "jbjy-vk9h",
+      "pairs": 2
+    },
+    {
+      "human_case_id": "RT-TAB-005",
+      "call_id": "RT-TAB-005__call_002",
+      "operation": "count",
+      "dataset": "p6dx-8zbt",
+      "pairs": 2
+    }
+  ],
+  "verdict_counts": {
+    "SUCCESSFUL_NON_STRICT_PAIRS": 18,
+    "TRUE_MIGRATION_BLOCKERS": 1,
+    "NON_BLOCKING_TOPN_TIES": 6,
+    "NON_BLOCKING_ORDER_VARIANCE": 9,
+    "NON_BLOCKING_UNORDERED_SAMPLE": 3,
+    "NEEDS_POLICY_AWARE_REPLAY": 0,
+    "EVIDENCE_GAPS": 2,
+    "SODA3_ONLY_TIMEOUT_PAIRS": 6,
+    "REACHABLE_SODA3_REGRESSIONS": 3,
+    "UNREACHABLE_FALLBACK_REGRESSIONS": 3,
+    "UNRESOLVED_FALLBACK_REGRESSIONS": 0
+  },
+  "verdict": "V1_1_BLOCKERS_CONFIRMED"
+}
