@@ -9,13 +9,25 @@ except ImportError:  # pragma: no cover - guarded for environments without deps
     Socrata = None
 
 from app.core.instrumentation import http_span, record_http
+from app.core.socrata_transport import (
+    DEFAULT_ORDERING_SPECIFIER,
+    ClassicSocrataTransport,
+    Soda3OrderingSpecifier,
+    SocrataTransport,
+)
 from app.utils.logging import get_logger
 
 logger = get_logger(__name__)
 
 
 class SecopClient:
-    """Thin wrapper around Socrata with retries and SECOP quirks handling."""
+    """Thin wrapper around Socrata with retries and SECOP quirks handling.
+
+    Desde SODA3_TRANSPORT_V1 la salida a la red pasa por un
+    ``SocrataTransport`` (ver ``app/core/socrata_transport/``). El default es
+    el clasico y el comportamiento visible es identico al previo; SODA3 es un
+    transporte seleccionable por configuracion, apagado por defecto.
+    """
 
     def __init__(
         self,
@@ -24,16 +36,40 @@ class SecopClient:
         timeout: int = 30,
         client: Any | None = None,
         max_retries: int = 1,
+        transport: SocrataTransport | None = None,
     ) -> None:
-        if client is None and Socrata is None:
+        if client is None and transport is None and Socrata is None:
             raise RuntimeError("sodapy is required to instantiate SecopClient without a custom client.")
 
         self.domain = domain
         self.app_token = app_token
         self.timeout = timeout
         self._injected_client = client  # None salvo en tests / clientes custom
-        self.client = client or Socrata(domain, app_token=app_token, timeout=timeout)
+        # Transporte explicito (factory / tests de transporte). Cuando es None el
+        # cliente opera en clasico y `self.client` sigue siendo el objeto sodapy.
+        self._explicit_transport = transport
+        if transport is not None:
+            self.client = client
+        else:
+            self.client = client or Socrata(domain, app_token=app_token, timeout=timeout)
         self.max_retries = max_retries
+
+    @property
+    def transport(self) -> SocrataTransport:
+        """Transporte activo de esta instancia.
+
+        Sin transporte explicito se envuelve ``self.client`` **en cada acceso**:
+        la envoltura clasica no tiene estado propio y asi reasignar
+        ``secop_client.client`` --como hacen los harnesses de auditoria para
+        cortar la red-- sigue surtiendo efecto inmediato.
+        """
+        if self._explicit_transport is not None:
+            return self._explicit_transport
+        return ClassicSocrataTransport(self.client)
+
+    @property
+    def transport_name(self) -> str:
+        return self.transport.name
 
     def derived_for_timeout(self, timeout_s: int) -> "SecopClient":
         """Cliente derivado acotado a ``timeout_s``, **thread-safe** (no muta esta
@@ -48,28 +84,20 @@ class SecopClient:
         """
         if "query" in self.__dict__ or "count" in self.__dict__:
             return self  # métodos mockeados en la instancia: preservarlos, no mutar
-        if self._injected_client is not None:
-            return SecopClient(
-                domain=self.domain, app_token=self.app_token, timeout=timeout_s,
-                client=self._injected_client, max_retries=self.max_retries,
-            )
+        if self._explicit_transport is not None or self._injected_client is not None:
+            return self._respawn(timeout_s)
         return self.with_timeout(timeout_s)
 
     def with_timeout(self, timeout: int) -> "SecopClient":
         """Return a new SecopClient with a different transport timeout.
 
-        Preserva el cliente inyectado (tests/custom): cambiar el timeout no debe
-        descartar un cliente mockeado ni abrir un Socrata real. Solo se crea un
+        Preserva el cliente inyectado (tests/custom) y el transporte explícito:
+        cambiar el timeout no debe descartar un cliente mockeado, abrir un
+        Socrata real ni degradar un transporte SODA3 a clásico. Solo se crea un
         Socrata nuevo cuando este cliente usa uno propio.
         """
-        if self._injected_client is not None:
-            return SecopClient(
-                domain=self.domain,
-                app_token=self.app_token,
-                timeout=timeout,
-                client=self._injected_client,
-                max_retries=self.max_retries,
-            )
+        if self._explicit_transport is not None or self._injected_client is not None:
+            return self._respawn(timeout)
         if Socrata is None:
             raise RuntimeError("sodapy is required for with_timeout.")
         return SecopClient(
@@ -79,21 +107,65 @@ class SecopClient:
             max_retries=self.max_retries,
         )
 
-    def aggregate(self, dataset_id: str, soql: str) -> list[dict]:
-        """Execute a single aggregation query. No retries — best-effort for observer."""
+    def _respawn(self, timeout: int) -> "SecopClient":
+        """Copia acotada a ``timeout`` que conserva cliente y transporte.
+
+        El transporte SODA3 se comparte a propósito: no guarda el timeout (lo
+        recibe por llamada) y reutilizar su pool de conexiones es correcto.
+        """
+        return SecopClient(
+            domain=self.domain,
+            app_token=self.app_token,
+            timeout=timeout,
+            client=self._injected_client,
+            max_retries=self.max_retries,
+            transport=self._explicit_transport,
+        )
+
+    def aggregate(
+        self,
+        dataset_id: str,
+        soql: str,
+        *,
+        ordering_specifier: Soda3OrderingSpecifier = DEFAULT_ORDERING_SPECIFIER,
+    ) -> list[dict]:
+        """Execute a single aggregation query. No retries — best-effort for observer.
+
+        Declara ``TOTAL`` de forma consciente: es la política que el discovery
+        midió para los 37 ``aggregate`` del corpus. Un ``aggregate`` sin
+        ``ORDER BY`` **no** es un fallback H4 y no hereda su política.
+        """
         with http_span("aggregate", dataset_id, soql) as span:
-            rows = list(self.client.get(dataset_id, query=soql))
+            rows = list(self.transport.aggregate(
+                dataset_id, soql,
+                timeout_seconds=self.timeout,
+                ordering_specifier=ordering_specifier,
+            ))
             span["rows_received"] = len(rows)
         return rows
 
-    def count(self, dataset_id: str, soql_count_query: str) -> int:
-        """Execute a SELECT count(*) query and return the integer result."""
+    def count(
+        self,
+        dataset_id: str,
+        soql_count_query: str,
+        *,
+        ordering_specifier: Soda3OrderingSpecifier = DEFAULT_ORDERING_SPECIFIER,
+    ) -> int:
+        """Execute a SELECT count(*) query and return the integer result.
+
+        Declara ``TOTAL`` de forma consciente. Un ``count`` no lleva
+        ``ORDER BY`` por naturaleza: esa ausencia **no** lo convierte en H4.
+        """
         last_error: Exception | None = None
 
         for attempt in range(self.max_retries):
             try:
                 with http_span("count", dataset_id, soql_count_query, attempt=attempt + 1) as span:
-                    rows = self.client.get(dataset_id, query=soql_count_query)
+                    rows = self.transport.count(
+                        dataset_id, soql_count_query,
+                        timeout_seconds=self.timeout,
+                        ordering_specifier=ordering_specifier,
+                    )
                     span["rows_received"] = len(rows)
                 if rows:
                     raw = list(rows[0].values())[0]
@@ -113,14 +185,31 @@ class SecopClient:
 
         raise RuntimeError(f"Unable to count SECOP dataset {dataset_id}") from last_error
 
-    def query(self, dataset_id: str, soql_query: str) -> list[dict]:
+    def query(
+        self,
+        dataset_id: str,
+        soql_query: str,
+        *,
+        ordering_specifier: Soda3OrderingSpecifier = DEFAULT_ORDERING_SPECIFIER,
+    ) -> list[dict]:
+        """Ejecuta el SoQL recibido y normaliza las filas.
+
+        ``ordering_specifier`` es la **intención semántica de la ruta**, no una
+        lectura del texto del SoQL. El default ``TOTAL`` cubre toda operación
+        normal; solo el fallback H4 —que retira el ``ORDER BY`` a propósito—
+        pasa ``NO_PRESERVE``, y lo hace explícitamente desde ``execution.py``.
+        """
         last_error: Exception | None = None
 
         for attempt in range(self.max_retries):
             try:
                 logger.info("Executing SECOP query against %s", dataset_id)
                 with http_span("query", dataset_id, soql_query, attempt=attempt + 1) as span:
-                    rows = self.client.get(dataset_id, query=soql_query)
+                    rows = self.transport.query(
+                        dataset_id, soql_query,
+                        timeout_seconds=self.timeout,
+                        ordering_specifier=ordering_specifier,
+                    )
                     span["rows_received"] = len(rows)
                 return [self._normalize_row(dataset_id, row) for row in rows]
             except Exception as exc:  # pragma: no cover - network/runtime path
