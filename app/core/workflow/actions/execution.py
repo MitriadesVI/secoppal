@@ -27,6 +27,7 @@ from app.core.actor_profile.turn import maybe_handle_actor_profile
 from app.core.analytics import maybe_handle_analytical_query
 from app.core.observer import observe as observe_universe_fn
 from app.core.secop_client import SecopClient
+from app.core.socrata_transport import Soda3OrderingSpecifier
 from app.core.soql_builder import SoQLBuilder
 from app.core.deadline import FALLBACK_FETCH_SECONDS
 from app.core.order_semantics import (
@@ -197,6 +198,14 @@ def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
                     secop_client, did, fb_count_soql, fb_soql,
                     limit=int(fb_params["limit"]),
                     fetch_cap_s=FALLBACK_FETCH_SECONDS,
+                    # Esta rama —y solo esta— es la que el discovery adjudicó como
+                    # H4: aquí el ORDER BY se retira A PROPÓSITO. La señal se
+                    # declara desde el control flow, no leyendo el SoQL: la
+                    # ausencia de ORDER BY también es legítima en count,
+                    # aggregate y direct lookup, que NO son H4.
+                    # docs/audits/2026-08-27_SODA3_QUERY_FINAL_ADJUDICATION.md §7.
+                    # El count del fallback no hereda esta política: es otro eje.
+                    query_ordering_specifier=Soda3OrderingSpecifier.NO_PRESERVE,
                 )
                 if fb_results:
                     spec = soql_builder.SPECS[did]

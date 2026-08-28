@@ -15,6 +15,7 @@ from app.core.narrator import NarratorHandler
 from app.core.query_router import QueryRouter
 from app.core.radar.store import RadarStore
 from app.core.secop_client import SecopClient
+from app.core.socrata_transport import build_transport, transport_kind_from_settings
 from app.core.soql_builder import SoQLBuilder
 from app.core.workflow.context import HandlerContext
 from app.core.workflow.deps import WorkflowDeps
@@ -84,10 +85,19 @@ class SecopalWorkflow:
         self.actor_name_resolver = ActorNameResolver(settings.secop_actor_alias_index_path)
         self.llm_handler = LLMHandler(api_key=settings.deepseek_api_key, model=settings.deepseek_model)
         self.soql_builder = SoQLBuilder()
+        # Transporte seleccionado por configuracion (default: clasico). La
+        # seleccion vive aqui y solo aqui: nada aguas abajo lee Settings para
+        # decidir por donde sale la red.
         self.secop_client = SecopClient(
             domain=settings.datos_gov_domain,
             app_token=settings.secop_app_token,
             timeout=settings.secop_timeout_seconds,
+            transport=build_transport(
+                transport_kind_from_settings(settings),
+                domain=settings.datos_gov_domain,
+                app_token=settings.secop_app_token,
+                timeout_seconds=settings.secop_timeout_seconds,
+            ),
         )
         self.formatter = Formatter(max_results=settings.secop_results_limit)
         self.feedback = FeedbackStore(

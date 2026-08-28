@@ -25,6 +25,7 @@ from burr.core import State
 
 from app.core._followup_constants import SCOPE_TOPIC_KEYS
 from app.core.secop_client import SecopClient
+from app.core.socrata_transport import Soda3OrderingSpecifier
 from app.core.soql_builder import SoQLBuilder
 
 if TYPE_CHECKING:
@@ -144,6 +145,27 @@ def _client_for(client, timeout_s):
     return client.derived_for_timeout(timeout_s)
 
 
+def _query_with_ordering(
+    client,
+    dataset_id: str,
+    soql: str,
+    ordering_specifier: "Soda3OrderingSpecifier | None",
+):
+    """Ejecuta la query declarando el ordering SOLO cuando la ruta lo pidió.
+
+    El eje de ordering pertenece al transporte SODA3. Un cliente que no es un
+    ``SecopClient`` es un fake de test: no tiene transporte, no tiene ese eje y
+    su firma es ``query(dataset_id, soql)``. Mismo criterio que ``_client_for``
+    aplica para el presupuesto de timeout.
+
+    No es un fallback silencioso: cuando el destinatario **sí** es un
+    ``SecopClient``, la señal viaja siempre y sin condiciones.
+    """
+    if ordering_specifier is None or not isinstance(client, SecopClient):
+        return client.query(dataset_id, soql)
+    return client.query(dataset_id, soql, ordering_specifier=ordering_specifier)
+
+
 def _query_first_then_count(
     secop_client: SecopClient,
     dataset_id: str,
@@ -152,6 +174,7 @@ def _query_first_then_count(
     limit: int = 50,
     count_budget_s: int = COUNT_BUDGET_SECONDS,
     fetch_cap_s: float | None = None,
+    query_ordering_specifier: "Soda3OrderingSpecifier | None" = None,
 ) -> tuple[int, list[dict], dict[str, float], bool]:
     """Run query first; skip count if <limit rows. If ==limit, count within a short
     budget so it never blocks the delivery of valid rows (Etapa 6 H1).
@@ -159,6 +182,13 @@ def _query_first_then_count(
     ``fetch_cap_s`` topa el presupuesto de la query (H4): por defecto la principal usa
     ``PRIMARY_FETCH_SECONDS`` (8s) para reservar sitio a un fallback; el fallback pasa
     ``FALLBACK_FETCH_SECONDS`` (3s).
+
+    ``query_ordering_specifier`` transporta la **intención semántica de la ruta**
+    al transporte SODA3. ``None`` (el default de toda operación normal) significa
+    «no declares nada distinto»: el cliente usa su política de siempre, ``total``.
+    Solo el fallback H4 pasa ``NO_PRESERVE``, y lo pasa explícitamente. Este
+    parámetro afecta ÚNICAMENTE al eje de la query: el ``count`` de abajo
+    conserva su propia política, porque es un eje independiente.
 
     Returns (total, results, timings, approximate).
     approximate=True when count failed/timed out but query returned limit rows.
@@ -194,7 +224,10 @@ def _query_first_then_count(
 
     query_start = time.perf_counter()
     try:
-        results = _client_for(secop_client, query_budget).query(dataset_id, soql_query)
+        results = _query_with_ordering(
+            _client_for(secop_client, query_budget),
+            dataset_id, soql_query, query_ordering_specifier,
+        )
     except Exception as exc:
         if dl is not None:
             record_deadline(
