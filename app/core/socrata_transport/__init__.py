@@ -1,4 +1,4 @@
-"""Transporte Socrata reversible: clásico (default) y SODA3 (candidato apagado)."""
+"""Transporte Socrata reversible: SODA3 (default productivo) y classic (rollback)."""
 from __future__ import annotations
 
 from app.core.socrata_transport.base import (

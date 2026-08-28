@@ -89,9 +89,10 @@ class SecopalWorkflow:
         self.actor_name_resolver = ActorNameResolver(settings.secop_actor_alias_index_path)
         self.llm_handler = LLMHandler(api_key=settings.deepseek_api_key, model=settings.deepseek_model)
         self.soql_builder = SoQLBuilder()
-        # Transporte seleccionado por configuracion (default: clasico). La
-        # seleccion vive aqui y solo aqui: nada aguas abajo lee Settings para
-        # decidir por donde sale la red. Un valor invalido revienta aqui.
+        # Transporte seleccionado por configuración (default: SODA3; classic
+        # como rollback explícito). La seleccion vive aqui y solo aqui: nada
+        # aguas abajo lee Settings para decidir por donde sale la red. Un
+        # valor invalido revienta aqui.
         #
         # El clasico se construye por su camino IMPLICITO, sin `transport=`.
         # No es un detalle de estilo: el timeout clasico esta horneado en el

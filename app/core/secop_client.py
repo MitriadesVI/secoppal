@@ -24,9 +24,9 @@ class SecopClient:
     """Thin wrapper around Socrata with retries and SECOP quirks handling.
 
     Desde SODA3_TRANSPORT_V1 la salida a la red pasa por un
-    ``SocrataTransport`` (ver ``app/core/socrata_transport/``). El default es
-    el clasico y el comportamiento visible es identico al previo; SODA3 es un
-    transporte seleccionable por configuracion, apagado por defecto.
+    ``SocrataTransport`` (ver ``app/core/socrata_transport/``). Ambos
+    transportes siguen siendo seleccionables por configuración: ``soda3`` es
+    el default productivo y ``classic`` permanece como rollback explícito.
     """
 
     def __init__(

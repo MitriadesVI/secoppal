@@ -14,7 +14,8 @@ Dos implementaciones conviven:
         ├── classic  (sodapy — GET /resource/{dataset}.json)
         └── soda3    (POST /api/v3/views/{dataset}/query.json)
 
-El default visible es ``classic``. SODA3 es un candidato apagado.
+SODA3 es el default productivo; ``classic`` permanece disponible como
+rollback explícito.
 """
 from __future__ import annotations
 

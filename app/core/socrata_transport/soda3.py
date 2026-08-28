@@ -1,4 +1,4 @@
-"""Transporte SODA3 — candidato productivo, apagado por defecto.
+"""Transporte SODA3 — el transporte productivo default.
 
 Implementa el contrato exacto que el discovery validó y congeló en
 ``scripts/audits/soda3_probe.py``, ``soda3_runtime_canary.py`` y
