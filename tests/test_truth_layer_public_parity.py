@@ -67,9 +67,16 @@ M2_MODIFIED_FILE_SHA256 = {
 # M2.1 corrigió dos consumidores visibles. AP3-G autoriza además controles de
 # candidato dentro del consumidor Streamlit; el nuevo pin se acota con
 # tests/test_actor_candidate_ux.py y no modifica el consumidor direct_lookup.
+# EXPORT-XLSX-001 V1 re-pinea el consumidor Streamlit una vez más: añade un
+# download_button que serializa a XLSX exactamente las filas ya presentes en
+# item["rows"] del turno renderizado. No consulta SECOP, no reordena, no toca
+# cursor, buffer, fingerprint ni el bloque de paginación — se inserta antes de
+# él. Lo acotan tests/test_export_xlsx.py (contenido y alcance del libro) y
+# test_m2_does_not_move_ranking_ordering_counts_or_pagination más abajo, que
+# sigue verde y es lo que sostiene la afirmación de no-movimiento.
 M2_1_MODIFIED_FILE_SHA256 = {
     "app/core/workflow/handlers/direct_lookup.py": "6dcfc63405824e82b46a4b07bbdd503fd2bd504ec65a5640a0c3cc628ee90b6b",
-    "streamlit_app.py": "ff24ccd886ce6b0e86b085fa77b5c8b14c22f0860d9d52e0127742ca37941fb4",
+    "streamlit_app.py": "785f647c03c0267596565b741bf59399120ecd82a6dead0714d5b232ca9e5122",
 }
 
 # HCA-R6 re-pins ONE previously byte-frozen file. The pagination header carried
