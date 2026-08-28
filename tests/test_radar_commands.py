@@ -304,7 +304,7 @@ def test_run_end_to_end(env):
     assert "Radar PAE Atlántico" in res["response"]
     # segunda corrida: sin novedades
     res2 = handle_radar_command(deps, _ctx("ejecutar radar PAE Atlántico"))
-    assert "Sin novedades" in res2["response"]
+    assert "No hay novedades desde la última revisión completa" in res2["response"]
 
 
 # ── P1A · route_reason no confunde control con error ──────────────────────

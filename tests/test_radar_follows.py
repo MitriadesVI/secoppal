@@ -156,7 +156,8 @@ def test_scheduler_skips_follows_radar_on_query_side(store, monkeypatch):
 
     ran = []
     monkeypatch.setattr(scheduler, "run_radar",
-                        lambda deps, st, radar: ran.append(radar.name) or SimpleNamespace(
+                        lambda deps, st, radar, **kwargs:
+                        ran.append(radar.name) or SimpleNamespace(
                             status="ok",
                             diff=SimpleNamespace(new_count=0, changed_count=0),
                             digest={}, error=None))

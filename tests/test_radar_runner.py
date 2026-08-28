@@ -22,6 +22,10 @@ from app.core.radar import scheduler
 from app.core.radar.diff import classify
 from app.core.radar.lease import LEASE_DURATION
 from app.core.radar.runner import (
+    COVERAGE_COMPLETE,
+    COVERAGE_PARTIAL_DISCOVERY,
+    COVERAGE_PARTIAL_MAINTENANCE,
+    COVERAGE_UNKNOWN,
     MAX_SEEN_REFRESH,
     RADAR_ALREADY_RUNNING,
     RADAR_EMPTY,
@@ -45,13 +49,14 @@ class FakeClient:
 
     def __init__(
         self, rows, count_value=None, lookup_rows=None, lookup_error=False,
-        query_error=None,
+        query_error=None, count_error=None,
     ):
         self.rows = rows
         self.count_value = count_value
         self.lookup_rows = lookup_rows if lookup_rows is not None else []
         self.lookup_error = lookup_error
         self.query_error = query_error
+        self.count_error = count_error
         self.queries = []
 
     def query(self, dataset_id, soql):
@@ -67,6 +72,8 @@ class FakeClient:
         return list(self.rows)
 
     def count(self, dataset_id, soql):
+        if self.count_error:
+            raise self.count_error
         return self.count_value if self.count_value is not None else len(self.rows)
 
 
@@ -126,7 +133,7 @@ def _make_phrase_radar(store):
 def test_first_run_all_new(store):
     radar = _make_radar(store)
     client = FakeClient([_proc("P-1"), _proc("P-2")])
-    res = run_radar(_deps(client), store, radar)
+    res = run_radar(_deps(client), store, radar, run_trigger="create")
 
     assert res.status == "ok"
     assert res.outcome == RADAR_OK
@@ -140,6 +147,13 @@ def test_first_run_all_new(store):
     assert len(runs) == 1
     assert runs[0].soql and runs[0].params_json
     assert runs[0].new_count == 2
+    assert runs[0].run_kind == "baseline"
+    assert runs[0].baseline_count == 2
+    assert runs[0].run_trigger == "create"
+    assert runs[0].coverage_status == COVERAGE_COMPLETE
+    assert "2 novedades" not in res.digest["text"]
+    assert "Línea base creada · 2 resultados bajo vigilancia." in res.digest["text"]
+    assert [event["kind"] for event in store.get_feed(radar.owner)] == ["baseline"]
 
 
 def test_second_run_no_novelty(store):
@@ -152,7 +166,12 @@ def test_second_run_no_novelty(store):
     assert res.diff.new_count == 0
     assert res.diff.changed_count == 0
     assert res.digest["has_novelty"] is False
-    assert "Sin novedades" in res.digest["text"]
+    assert "No hay novedades desde la última revisión completa" in res.digest["text"]
+    runs = store.get_runs(radar.id)
+    assert runs[0].run_kind == "review"
+    assert runs[0].baseline_count == 0
+    assert runs[0].run_trigger == "manual"
+    assert runs[0].coverage_status == COVERAGE_COMPLETE
 
 
 def test_empty_radar_run_is_outcome_not_error(store):
@@ -171,6 +190,19 @@ def test_empty_radar_run_is_outcome_not_error(store):
     stored = store.get_radar(radar.id)
     assert stored.failure_count == 0
     assert stored.last_failure_reason is None
+
+
+def test_empty_success_still_establishes_baseline_once(store):
+    radar = _make_radar(store)
+    deps = _deps(FakeClient([]))
+
+    first = run_radar(deps, store, radar)
+    second = run_radar(deps, store, radar)
+
+    assert first.run_kind == "baseline" and first.baseline_count == 0
+    assert second.run_kind == "review" and second.baseline_count == 0
+    assert "Línea base creada · 0 resultados bajo vigilancia" in first.digest["text"]
+    assert "No hay novedades desde la última revisión completa" in second.digest["text"]
 
 
 def test_third_run_detects_state_change(store):
@@ -209,6 +241,39 @@ def test_wide_radar_risk_flag(store):
     res = run_radar(_deps(client), store, radar)
     assert res.total == 250
     assert any("Radar amplio" in f for f in res.digest["risk_flags"])
+    run = store.get_runs(radar.id)[0]
+    assert res.outcome == RADAR_OK
+    assert run.coverage_status == COVERAGE_PARTIAL_DISCOVERY
+    assert run.coverage_reason == "universe_exceeds_window"
+
+
+def test_wide_review_without_changes_never_claims_absolute_absence(store):
+    radar = _make_radar(store)
+    rows = [_proc(f"P-{i}") for i in range(WINDOW_LIMIT)]
+    client = FakeClient(rows, count_value=250)
+    run_radar(_deps(client), store, radar)
+
+    res = run_radar(_deps(client), store, radar)
+
+    assert res.diff.new_count == 0
+    assert res.coverage_status == COVERAGE_PARTIAL_DISCOVERY
+    assert "No detecté novedades en la cobertura revisada" in res.digest["text"]
+    assert "Sin novedades" not in res.digest["text"]
+    assert res.digest["text"].count("no fue exhaustiva") == 1
+
+
+def test_approximate_total_is_partial_discovery(store):
+    radar = _make_radar(store)
+    rows = [_proc(f"P-{i}") for i in range(WINDOW_LIMIT)]
+    res = run_radar(
+        _deps(FakeClient(rows, count_error=TimeoutError("count timeout"))),
+        store,
+        radar,
+    )
+
+    assert res.coverage_status == COVERAGE_PARTIAL_DISCOVERY
+    assert res.coverage_reason == "approximate_total"
+    assert store.get_runs(radar.id)[0].coverage_reason == "approximate_total"
 
 
 # ── Feed events ──────────────────────────────────────────────────────────
@@ -277,7 +342,7 @@ def test_window_churn_does_not_open_novelty_or_feed_events(store):
     assert res.digest["disappeared_count"] == 0
     assert res.digest["window_churn_count"] == 1
     assert "desaparecid" not in res.digest["text"].lower()
-    assert "Sin novedades" in res.digest["text"]
+    assert "No hay novedades" in res.digest["text"]
     feed = store.get_feed(radar.owner)
     assert [e["kind"] for e in feed] == ["baseline"]
 
@@ -349,6 +414,8 @@ def test_lookup_error_does_not_confirm_disappeared(store):
     assert len(res.diff.window_churn) == 1
     assert not res.diff.disappeared
     assert res.digest["has_novelty"] is False
+    assert res.coverage_status == COVERAGE_PARTIAL_MAINTENANCE
+    assert "no pude actualizar todo el conjunto vigilado" in res.digest["text"]
 
 
 def test_window_key_is_not_refreshed_by_lookup(store):
@@ -442,6 +509,8 @@ def test_seen_refresh_limit_is_explicit(store):
     assert res.digest["seen_refresh_checked"] == MAX_SEEN_REFRESH
     assert res.digest["seen_refresh_limited"] is True
     assert any("límite" in flag for flag in res.digest["risk_flags"])
+    assert res.coverage_status == COVERAGE_PARTIAL_MAINTENANCE
+    assert store.get_runs(radar.id)[0].coverage_reason == "seen_refresh_limited"
 
 
 # ── PhraseSpec validation in radar runner ─────────────────────────────────
@@ -539,6 +608,24 @@ def test_timeout_outcome_sets_backoff_without_events_or_seen_loss(store):
     run = store.get_runs(radar.id)[0]
     assert run.outcome == RADAR_TIMEOUT
     assert run.reason == "socrata_timeout"
+    assert run.coverage_status == COVERAGE_UNKNOWN
+    assert run.coverage_reason == "run_did_not_complete"
+    assert "sin novedades" not in res.digest["text"].lower()
+    assert "No puedo confirmar el estado completo" in res.digest["text"]
+
+
+def test_run_trigger_accepts_only_the_product_contract(store):
+    radar = _make_radar(store)
+    client = FakeClient([_proc("P-1")])
+    run_radar(_deps(client), store, radar, run_trigger=" CREATE ")
+    run_radar(_deps(client), store, radar, run_trigger="manual")
+    run_radar(_deps(client), store, radar, run_trigger="scheduler")
+
+    assert [run.run_trigger for run in store.get_runs(radar.id)] == [
+        "scheduler", "manual", "create",
+    ]
+    with pytest.raises(ValueError, match="run_trigger inválido"):
+        run_radar(_deps(client), store, radar, run_trigger="cron")
 
 
 def test_transient_error_outcome_sets_backoff(store):

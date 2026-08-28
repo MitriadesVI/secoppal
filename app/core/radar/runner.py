@@ -55,6 +55,15 @@ RADAR_TIMEOUT = "radar_timeout"
 RADAR_TRANSIENT_ERROR = "radar_transient_error"
 RADAR_PERMANENT_ERROR = "radar_permanent_error"
 
+RUN_KIND_BASELINE = "baseline"
+RUN_KIND_REVIEW = "review"
+RUN_TRIGGERS = frozenset({"create", "manual", "scheduler"})
+
+COVERAGE_COMPLETE = "COMPLETE"
+COVERAGE_PARTIAL_DISCOVERY = "PARTIAL_DISCOVERY"
+COVERAGE_PARTIAL_MAINTENANCE = "PARTIAL_MAINTENANCE"
+COVERAGE_UNKNOWN = "UNKNOWN"
+
 # Estados de control: no son corridas. No se registran en radar_runs, no tocan
 # failure_count/backoff/seen/eventos y no consultan Socrata. Quedan fuera de la
 # taxonomía de outcomes de corrida (P0D) a propósito.
@@ -84,6 +93,11 @@ class RadarRunResult:
     reason: str | None = None
     message: str | None = None
     error: str | None = None
+    run_kind: str | None = None
+    baseline_count: int | None = None
+    run_trigger: str | None = None
+    coverage_status: str | None = None
+    coverage_reason: str | None = None
 
 
 @dataclass(frozen=True)
@@ -112,10 +126,22 @@ def _after(**delta) -> str:
     return (datetime.now(timezone.utc) + timedelta(**delta)).isoformat()
 
 
-def _error_digest(radar_name: str, message: str, outcome: str, reason: str,
-                  icon: str = "⚠️") -> dict:
+def _error_digest(
+    radar_name: str,
+    message: str,
+    outcome: str,
+    reason: str,
+    icon: str = "⚠️",
+    *,
+    run_kind: str | None = None,
+    run_trigger: str | None = None,
+) -> dict:
     return {
-        "text": f"🔔 Radar {radar_name}\n\n{icon} {message}",
+        "text": (
+            f"🔔 Radar {radar_name}\n\n"
+            "No puedo confirmar el estado completo de este Radar en esta revisión.\n\n"
+            f"{icon} {message}"
+        ),
         "has_novelty": False,
         "risk_flags": [],
         "new_count": 0,
@@ -126,7 +152,36 @@ def _error_digest(radar_name: str, message: str, outcome: str, reason: str,
         "atypical_keys": [],
         "outcome": outcome,
         "reason": reason,
+        "run_kind": run_kind,
+        "baseline_count": 0,
+        "run_trigger": run_trigger,
+        "coverage_status": COVERAGE_UNKNOWN,
+        "coverage_reason": "run_did_not_complete",
     }
+
+
+def _normalize_run_trigger(value: str) -> str:
+    if not isinstance(value, str):
+        raise ValueError("run_trigger debe ser create, manual o scheduler")
+    normalized = value.strip().lower()
+    if normalized not in RUN_TRIGGERS:
+        raise ValueError(f"run_trigger inválido: {value!r}")
+    return normalized
+
+
+def _coverage_for_success(
+    execution: _RadarExecution, refresh_meta: dict,
+) -> tuple[str, str]:
+    """Deriva solo la cobertura demostrable por el runtime TOP-N actual."""
+    if execution.approximate:
+        return COVERAGE_PARTIAL_DISCOVERY, "approximate_total"
+    if execution.total > WINDOW_LIMIT:
+        return COVERAGE_PARTIAL_DISCOVERY, "universe_exceeds_window"
+    if refresh_meta.get("seen_refresh_limited"):
+        return COVERAGE_PARTIAL_MAINTENANCE, "seen_refresh_limited"
+    if int(refresh_meta.get("seen_refresh_errors", 0) or 0) > 0:
+        return COVERAGE_PARTIAL_MAINTENANCE, "seen_refresh_errors"
+    return COVERAGE_COMPLETE, "bounded_run_complete"
 
 
 def _validate_frame_json(radar: Radar) -> _RadarFailure | None:
@@ -422,18 +477,26 @@ def _materialize_failure(
     started_at: str,
     execution_ms: int,
     params_json: str | None,
+    run_kind: str,
+    run_trigger: str,
 ) -> RadarRunResult:
     """Registra un fallo real: corrida y backoff en una sola transacción.
 
     Un run sin su backoff (o al revés) deja el radar mintiendo sobre su propio
     estado, así que ambos comparten transacción y fence de lease.
     """
-    digest = _error_digest(radar.name, failure.message, failure.outcome, failure.reason)
+    digest = _error_digest(
+        radar.name, failure.message, failure.outcome, failure.reason,
+        run_kind=run_kind, run_trigger=run_trigger,
+    )
     run = RunRecord(
         id=new_run_id(), started_at=started_at, status="error",
         error=failure.message, digest_json=json.dumps(digest, ensure_ascii=False),
         params_json=params_json, execution_ms=execution_ms,
         outcome=failure.outcome, reason=failure.reason,
+        run_kind=run_kind, baseline_count=0, run_trigger=run_trigger,
+        coverage_status=COVERAGE_UNKNOWN,
+        coverage_reason="run_did_not_complete",
     )
     materialized = store.materialize_failed_run(
         radar_id=radar.id, token=token, run=run,
@@ -450,6 +513,9 @@ def _materialize_failure(
         digest=digest, total=0, execution_ms=execution_ms,
         outcome=failure.outcome, reason=failure.reason,
         message=failure.message, error=failure.message,
+        run_kind=run_kind, baseline_count=0, run_trigger=run_trigger,
+        coverage_status=COVERAGE_UNKNOWN,
+        coverage_reason="run_did_not_complete",
     )
 
 
@@ -469,6 +535,8 @@ def run_radar(
     deps: "WorkflowDeps",
     store: RadarStore,
     radar: Radar,
+    *,
+    run_trigger: str = "manual",
 ) -> RadarRunResult:
     """Ejecuta un radar bajo exclusión mutua interproceso.
 
@@ -476,13 +544,16 @@ def run_radar(
     que el lease se toma aquí: ningún ejecutor —ni uno manual con force— llega
     a Socrata sin ser el dueño. El lease se libera pase lo que pase.
     """
+    run_trigger = _normalize_run_trigger(run_trigger)
     claim = store.try_acquire_run_lease(radar.id)
     if not claim.acquired:
         if claim.status == lease.LEASE_RADAR_NOT_FOUND:
             return _not_found_result(radar)
         return _already_running_result(radar)
     try:
-        return _run_radar_locked(deps, store, radar, claim.token)
+        return _run_radar_locked(
+            deps, store, radar, claim.token, run_trigger=run_trigger,
+        )
     finally:
         store.release_run_lease(radar.id, claim.token)
 
@@ -492,15 +563,20 @@ def _run_radar_locked(
     store: RadarStore,
     radar: Radar,
     token: str,
+    *,
+    run_trigger: str,
 ) -> RadarRunResult:
     """Ejecuta un radar: búsqueda → diff → persistencia → digest."""
     started_at = _now()
+    is_first_run = not store.has_successful_run(radar.id)
+    run_kind = RUN_KIND_BASELINE if is_first_run else RUN_KIND_REVIEW
     frame_failure = _validate_frame_json(radar)
     if frame_failure is not None:
         return _materialize_failure(
             store, radar, token, frame_failure,
             started_at=started_at, execution_ms=0,
             params_json=radar.query_frame_json,
+            run_kind=run_kind, run_trigger=run_trigger,
         )
 
     params = _apply_window_policy(params_from_radar(radar))
@@ -516,6 +592,7 @@ def _run_radar_locked(
             store, radar, token, execution,
             started_at=started_at, execution_ms=execution_ms,
             params_json=json.dumps(params, ensure_ascii=False),
+            run_kind=run_kind, run_trigger=run_trigger,
         )
 
     ds_id = execution.dataset_id
@@ -532,11 +609,18 @@ def _run_radar_locked(
     diff = classify(current_for_diff, seen_map, ds_id, current_window_keys=current_keys)
     outcome = RADAR_EMPTY if not execution.results and not refreshed and not diff.has_novelty else RADAR_OK
     reason = "no_results" if outcome == RADAR_EMPTY else "ok"
+    coverage_status, coverage_reason = _coverage_for_success(execution, refresh_meta)
+    baseline_count = len(deduped) if is_first_run else 0
 
     run_meta = {
         "total": execution.total,
         "approximate": execution.approximate,
         "window_limit": WINDOW_LIMIT,
+        "run_kind": run_kind,
+        "baseline_count": baseline_count,
+        "run_trigger": run_trigger,
+        "coverage_status": coverage_status,
+        "coverage_reason": coverage_reason,
         **refresh_meta,
     }
     digest = build_digest(radar.name, diff, run_meta, seen_map)
@@ -553,11 +637,13 @@ def _run_radar_locked(
         soql=execution.soql, params_json=json.dumps(params, ensure_ascii=False),
         dataset_id=ds_id, approx_total=approx_total, execution_ms=execution_ms,
         outcome=outcome, reason=reason,
+        run_kind=run_kind, baseline_count=baseline_count,
+        run_trigger=run_trigger, coverage_status=coverage_status,
+        coverage_reason=coverage_reason,
     )
 
     # Lo visto en esta corrida (todo lo presente: nuevos + cambios + iguales).
     dataset_name = params.get("dataset") or radar.dataset
-    is_first_run = not seen_map  # seen_map es el estado PREVIO al upsert
     seen_records = [
         SeenRecord(
             result_key=item.key, dataset=dataset_name, fields=item.fields,
@@ -584,4 +670,7 @@ def _run_radar_locked(
         run_id=run_id, radar_id=radar.id, status="ok", diff=diff,
         digest=digest, total=execution.total, execution_ms=execution_ms,
         outcome=outcome, reason=reason, message=None,
+        run_kind=run_kind, baseline_count=baseline_count,
+        run_trigger=run_trigger, coverage_status=coverage_status,
+        coverage_reason=coverage_reason,
     )

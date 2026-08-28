@@ -119,6 +119,7 @@ def run_due_radars(
     """
     now = now or datetime.now(timezone.utc)
     summary = SchedulerSummary()
+    store.start_scheduler_pass(now.isoformat())
 
     for radar in store.list_all_enabled_radars():
         summary.checked += 1
@@ -156,7 +157,7 @@ def run_due_radars(
             summary.outcomes.append(RadarOutcome(radar=radar, status="skipped"))
             continue
         try:
-            result = run_radar(deps, store, radar)
+            result = run_radar(deps, store, radar, run_trigger="scheduler")
         except Exception as exc:  # cinturón: un radar no debe tumbar la pasada
             logger.exception("radar scheduler: falló radar id=%s name=%s",
                              radar.id, radar.name)
@@ -185,5 +186,7 @@ def run_due_radars(
             )
         )
 
+    final_status = "completed_with_errors" if summary.errors else "completed"
+    store.finish_scheduler_pass(final_status, now.isoformat())
     logger.info("radar scheduler: %s", summary.as_line())
     return summary

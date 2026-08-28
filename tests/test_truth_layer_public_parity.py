@@ -74,9 +74,12 @@ M2_MODIFIED_FILE_SHA256 = {
 # él. Lo acotan tests/test_export_xlsx.py (contenido y alcance del libro) y
 # test_m2_does_not_move_ranking_ordering_counts_or_pagination más abajo, que
 # sigue verde y es lo que sostiene la afirmación de no-movimiento.
+# RADAR-R0 repinea el mismo consumidor para corregir únicamente verdad horaria,
+# baseline, cobertura y evidencia del scheduler en la pestaña Radar. Las rutas
+# de Search continúan acotadas por el oracle de paridad de este archivo.
 M2_1_MODIFIED_FILE_SHA256 = {
     "app/core/workflow/handlers/direct_lookup.py": "6dcfc63405824e82b46a4b07bbdd503fd2bd504ec65a5640a0c3cc628ee90b6b",
-    "streamlit_app.py": "785f647c03c0267596565b741bf59399120ecd82a6dead0714d5b232ca9e5122",
+    "streamlit_app.py": "9bf292912b36603221a899e61df2d36ee8c56675d37e2ac0ab6b1c16eb7cf8c2",
 }
 
 # HCA-R6 re-pins ONE previously byte-frozen file. The pagination header carried

@@ -101,15 +101,18 @@ def test_runs_only_due_radars(store, monkeypatch):
 
     called = []
     monkeypatch.setattr(scheduler, "run_radar",
-                        lambda deps, st, radar: called.append(radar.name) or _ok_result(new=2))
+                        lambda deps, st, radar, **kwargs:
+                        called.append((radar.name, kwargs.get("run_trigger")))
+                        or _ok_result(new=2))
 
     summary = run_due_radars(deps=None, store=store, now=NOW)
 
-    assert called == ["due-nuevo"]            # solo el due (manual/no-due no; deshabilitado ni se lista)
+    assert called == [("due-nuevo", "scheduler")]  # solo el due, con trigger formal
     assert summary.checked == 3               # los 3 enabled (el deshabilitado no entra)
     assert summary.ran == 1
     assert summary.skipped == 2               # manual + no-due
     assert summary.new_total == 2
+    assert store.get_scheduler_state().last_pass_status == "completed"
 
 
 def test_force_runs_all_enabled(store, monkeypatch):
@@ -118,7 +121,8 @@ def test_force_runs_all_enabled(store, monkeypatch):
 
     called = []
     monkeypatch.setattr(scheduler, "run_radar",
-                        lambda deps, st, radar: called.append(radar.name) or _ok_result())
+                        lambda deps, st, radar, **kwargs:
+                        called.append(radar.name) or _ok_result())
 
     summary = run_due_radars(deps=None, store=store, now=NOW, force=True)
     assert sorted(called) == ["a", "b"]
@@ -130,7 +134,7 @@ def test_one_failure_does_not_stop_others(store, monkeypatch):
     _make(store, "malo", "diaria", last_run=None)
     _make(store, "bueno-2", "diaria", last_run=None)
 
-    def fake_run(deps, st, radar):
+    def fake_run(deps, st, radar, **kwargs):
         if radar.name == "malo":
             raise RuntimeError("boom")
         return _ok_result(new=1)
@@ -143,12 +147,13 @@ def test_one_failure_does_not_stop_others(store, monkeypatch):
     assert summary.new_total == 2
     bad = [o for o in summary.outcomes if o.status == "error"]
     assert len(bad) == 1 and bad[0].radar.name == "malo"
+    assert store.get_scheduler_state().last_pass_status == "completed_with_errors"
 
 
 def test_run_error_status_counts_as_error(store, monkeypatch):
     _make(store, "x", "diaria", last_run=None)
     monkeypatch.setattr(scheduler, "run_radar",
-                        lambda deps, st, radar: SimpleNamespace(
+                        lambda deps, st, radar, **kwargs: SimpleNamespace(
                             status="error", diff=None, digest={}, error="sin alcance"))
     summary = run_due_radars(deps=None, store=store, now=NOW)
     assert summary.errors == 1 and summary.ran == 0
@@ -157,10 +162,21 @@ def test_run_error_status_counts_as_error(store, monkeypatch):
 def test_summary_line_format(store, monkeypatch):
     _make(store, "a", "diaria", last_run=None)
     monkeypatch.setattr(scheduler, "run_radar",
-                        lambda deps, st, radar: _ok_result(new=3, changed=1))
+                        lambda deps, st, radar, **kwargs: _ok_result(new=3, changed=1))
     summary = run_due_radars(deps=None, store=store, now=NOW)
     line = summary.as_line()
     assert "corridos=1" in line and "nuevos=3" in line and "cambios=1" in line
+
+
+def test_pass_without_due_radars_still_updates_heartbeat(store):
+    summary = run_due_radars(deps=None, store=store, now=NOW)
+
+    state = store.get_scheduler_state()
+    assert summary.checked == 0
+    assert state.last_heartbeat_at == NOW.isoformat()
+    assert state.last_pass_started_at == NOW.isoformat()
+    assert state.last_pass_finished_at == NOW.isoformat()
+    assert state.last_pass_status == "completed"
 
 
 # ── P1B-Preflight 2 · el scheduler distingue omisión de fallo ──────────────

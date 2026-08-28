@@ -113,6 +113,8 @@ def test_record_run_and_get(store):
         digest_json=json.dumps({"text": "hola"}), soql="SELECT 1",
         params_json="{}", dataset_id="jbjy-vk9h", approx_total=None,
         execution_ms=42, outcome="radar_ok", reason="ok",
+        run_kind="baseline", baseline_count=3, run_trigger="create",
+        coverage_status="COMPLETE", coverage_reason="bounded_run_complete",
     )
     runs = store.get_runs(rid)
     assert len(runs) == 1
@@ -122,6 +124,11 @@ def test_record_run_and_get(store):
     assert runs[0].execution_ms == 42
     assert runs[0].outcome == "radar_ok"
     assert runs[0].reason == "ok"
+    assert runs[0].run_kind == "baseline"
+    assert runs[0].baseline_count == 3
+    assert runs[0].run_trigger == "create"
+    assert runs[0].coverage_status == "COMPLETE"
+    assert runs[0].coverage_reason == "bounded_run_complete"
     assert runs[0].digest()["text"] == "hola"
 
 
@@ -955,6 +962,53 @@ def _seed_legacy_db(db_path) -> None:
         conn.commit()
     finally:
         conn.close()
+
+
+def test_legacy_radar_runs_gain_truth_columns_without_backfill(tmp_path):
+    db_path = tmp_path / "legacy_runs.db"
+    conn = sqlite3.connect(db_path)
+    try:
+        conn.executescript(_PRE_P1A_RADARS)
+        conn.execute("""
+            CREATE TABLE radar_runs (
+                id TEXT PRIMARY KEY, radar_id TEXT NOT NULL,
+                started_at TEXT NOT NULL, finished_at TEXT,
+                status TEXT NOT NULL, total_count INTEGER NOT NULL DEFAULT 0,
+                new_count INTEGER NOT NULL DEFAULT 0,
+                changed_count INTEGER NOT NULL DEFAULT 0, digest_json TEXT,
+                error TEXT, soql TEXT, params_json TEXT, dataset_id TEXT,
+                approx_total INTEGER, execution_ms INTEGER,
+                outcome TEXT, reason TEXT
+            )
+        """)
+        conn.execute(
+            "INSERT INTO radars (id, name, query_frame_json, owner, created_at) "
+            "VALUES ('r-old', 'Viejo', '{}', 'u1', '2026-01-01T00:00:00+00:00')"
+        )
+        conn.execute(
+            "INSERT INTO radar_runs "
+            "(id, radar_id, started_at, status, total_count, new_count) "
+            "VALUES ('run-old', 'r-old', '2026-01-02T00:00:00+00:00', 'ok', 2, 2)"
+        )
+        conn.commit()
+    finally:
+        conn.close()
+
+    store = RadarStore(db_path)
+    RadarStore(db_path)  # migración idempotente
+
+    expected = {
+        "run_kind", "baseline_count", "run_trigger",
+        "coverage_status", "coverage_reason",
+    }
+    assert expected <= _columns(db_path, "radar_runs")
+    legacy = store.get_runs("r-old")[0]
+    assert legacy.id == "run-old" and legacy.new_count == 2
+    assert legacy.run_kind is None
+    assert legacy.baseline_count is None
+    assert legacy.run_trigger is None
+    assert legacy.coverage_status is None
+    assert legacy.coverage_reason is None
 
 
 def test_legacy_db_gets_lease_columns_without_losing_data(tmp_path):

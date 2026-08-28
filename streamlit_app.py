@@ -18,6 +18,12 @@ from app.core.radar import follows
 from app.core.radar.builder import has_scope_or_topic, save_radar_from_params
 from app.core.radar.commands import radar_owner
 from app.core.radar.keys import radar_result_key
+from app.core.radar.presentation import (
+    format_colombia_timestamp,
+    format_relative_timestamp,
+    scheduler_heartbeat_recent,
+    timeline_label,
+)
 from app.core.radar.runner import run_radar
 from app.core.radar.store import RadarExistsError
 from app.config import get_settings
@@ -757,9 +763,14 @@ def _render_radar_detail(store, radar) -> None:
     estado = "● activo" if radar.is_enabled else "⏸ pausado"
     st.subheader(f"📡 {radar.name}")
     st.caption(f"{estado} · dataset: {radar.dataset or 'procesos'} · "
-               f"última revisión: {radar.last_run_at[:16] if radar.last_run_at else 'nunca'}")
+               f"última revisión: {format_colombia_timestamp(radar.last_run_at)} "
+               "(hora Colombia)")
+    if radar.needs_attention:
+        detail = radar.last_failure_reason or radar.last_error_message
+        st.error(f"⚠ Requiere atención{f': {detail}' if detail else ''}")
     if radar.last_error_message:
         st.warning(f"Último error: {radar.last_error_message}")
+    _render_scheduler_status(store, radar.frequency, enabled=radar.is_enabled)
 
     c1, c2 = st.columns(2)
     if c1.button("▶ Ejecutar ahora", key="radar_detail_run", use_container_width=True):
@@ -780,13 +791,7 @@ def _render_radar_detail(store, radar) -> None:
     st.markdown("#### Línea de tiempo")
     for i, run in enumerate(runs):
         digest = run.digest()
-        when = run.started_at[:16].replace("T", " ")
-        if run.status == "error":
-            label = f"⚠️ {when} · error"
-        elif run.new_count or run.changed_count:
-            label = f"🆕 {when} · {run.new_count} nuevos · {run.changed_count} cambios"
-        else:
-            label = f"✓ {when} · sin novedades"
+        label = timeline_label(run)
         with st.expander(label, expanded=(i == 0)):
             st.text(digest.get("text", "(sin digest)"))
 
@@ -797,6 +802,37 @@ _FREQ_LABELS = {
     "diaria": "Diaria",
     "semanal": "Semanal",
 }
+
+
+def _render_scheduler_status(store, frequency: str, *, enabled: bool = True) -> None:
+    """Muestra automatización solo cuando existe evidencia persistida."""
+    if frequency == "manual":
+        return
+    frequency_label = _FREQ_LABELS.get(frequency, frequency)
+    if not enabled:
+        st.info(
+            "⏸ Automatización pausada para este Radar.\n\n"
+            f"Frecuencia configurada: {frequency_label}."
+        )
+        return
+    state = store.get_scheduler_state()
+    if scheduler_heartbeat_recent(state):
+        last_pass = format_relative_timestamp(state.last_heartbeat_at)
+        suffix = (
+            " La última pasada terminó con errores aislados."
+            if state.last_pass_status == "completed_with_errors" else ""
+        )
+        st.success(
+            f"● Automatización activa\n\n"
+            f"Última pasada del scheduler: {last_pass}.\n\n"
+            f"Frecuencia configurada: {frequency_label}.{suffix}"
+        )
+    else:
+        st.warning(
+            "⚠ No hay heartbeat reciente de la automatización.\n\n"
+            "El Radar puede ejecutarse manualmente.\n\n"
+            f"Frecuencia configurada: {frequency_label}."
+        )
 
 
 def _do_crear_radar(store, owner, nombre, consulta, dataset, tema, departamento,
@@ -861,7 +897,7 @@ def _do_crear_radar(store, owner, nombre, consulta, dataset, tema, departamento,
     # vacíos tras crear (establece la línea base).
     radar = store.get_radar(rid)
     with st.spinner("Ejecutando primera revisión..."):
-        run_radar(workflow.deps, store, radar)
+        run_radar(workflow.deps, store, radar, run_trigger="create")
     st.session_state["_radar_refresh_ts"] = time.time()
     st.success(f"📡 Radar «{nombre}» creado y revisado. Mira sus movimientos abajo.")
     st.rerun()
@@ -900,8 +936,7 @@ def _render_crear_radar(store, owner) -> None:
             format_func=lambda k: _FREQ_LABELS[k], key="cr_freq",
         )
         if freq != "manual":
-            st.caption("⏳ La revisión automática llega con el scheduler (roadmap). "
-                       "Por ahora se revisa cuando pulsas 🔄 Actualizar.")
+            _render_scheduler_status(store, freq)
 
         if st.button("Crear radar", key="cr_submit", type="primary"):
             _do_crear_radar(store, owner, nombre, consulta, dataset, tema,
@@ -930,7 +965,7 @@ def _fmt_feed_ts(ts) -> str:
             if dt.tzinfo is None:
                 dt = dt.replace(tzinfo=timezone.utc)
     except (ValueError, TypeError):
-        return str(ts)[:16]
+        return "fecha desconocida"
     delta = datetime.now(timezone.utc) - dt
     secs = int(delta.total_seconds())
     if secs < 60:
@@ -1008,8 +1043,16 @@ def _refresh_all_radares(store, owner) -> None:
 
 def _render_manage_row(store, radar) -> None:
     estado = "● activo" if radar.is_enabled else "⏸ pausado"
-    last = radar.last_run_at[:16].replace("T", " ") if radar.last_run_at else "nunca"
-    st.markdown(f"**📡 {radar.name}** — {estado} · última revisión: {last}")
+    last = format_colombia_timestamp(radar.last_run_at)
+    st.markdown(
+        f"**📡 {radar.name}** — {estado} · última revisión: {last} (hora Colombia)"
+    )
+    if radar.needs_attention:
+        detail = radar.last_failure_reason or radar.last_error_message
+        st.error(f"⚠ Requiere atención{f': {detail}' if detail else ''}")
+        if radar.last_error_message and radar.last_error_message != detail:
+            st.caption(f"Último error: {radar.last_error_message}")
+    _render_scheduler_status(store, radar.frequency, enabled=radar.is_enabled)
     c1, c2, c3, c4 = st.columns(4)
     if c1.button("Abrir", key=f"mng_open_{radar.id}", use_container_width=True):
         st.session_state["_open_radar"] = radar.id

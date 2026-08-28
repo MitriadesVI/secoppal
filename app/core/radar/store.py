@@ -1,12 +1,13 @@
 """store.py — persistencia SQLite del Radar.
 
-Cuatro tablas sobre la misma base que feedback (``data/secoppal.db``), creadas
+Cinco autoridades sobre la misma base que feedback (``data/secoppal.db``), creadas
 de forma idempotente:
 
 - ``radars``              — la definición del radar (QueryFrame serializado + metadatos).
 - ``radar_runs``          — una fila por corrida, con auditoría (soql/params/execution_ms).
 - ``radar_events``        — el feed de movimientos (nuevo/cambio de estado/valor).
 - ``radar_seen_results``  — memoria de lo visto, para diffear corridas sucesivas.
+- ``radar_scheduler_state`` — heartbeat singleton de la última pasada automática.
 
 El ``RadarStore`` abre conexiones cortas por operación vía ``connect_sqlite``
 (WAL + FK + busy_timeout ya aplicados).
@@ -158,6 +159,11 @@ class RadarRun:
     execution_ms: int | None
     outcome: str | None = None
     reason: str | None = None
+    run_kind: str | None = None
+    baseline_count: int | None = None
+    run_trigger: str | None = None
+    coverage_status: str | None = None
+    coverage_reason: str | None = None
 
     @classmethod
     def from_row(cls, row: sqlite3.Row) -> "RadarRun":
@@ -168,6 +174,16 @@ class RadarRun:
             return json.loads(self.digest_json) if self.digest_json else {}
         except (json.JSONDecodeError, TypeError):
             return {}
+
+
+@dataclass(frozen=True)
+class RadarSchedulerState:
+    """Última evidencia persistida de una pasada real del scheduler."""
+
+    last_heartbeat_at: str | None = None
+    last_pass_started_at: str | None = None
+    last_pass_finished_at: str | None = None
+    last_pass_status: str | None = None
 
 
 # ---------------------------------------------------------------------------
@@ -196,6 +212,11 @@ class RunRecord:
     execution_ms: int | None = None
     outcome: str | None = None
     reason: str | None = None
+    run_kind: str | None = None
+    baseline_count: int | None = None
+    run_trigger: str | None = None
+    coverage_status: str | None = None
+    coverage_reason: str | None = None
     finished_at: str | None = None
 
 
@@ -379,7 +400,12 @@ CREATE TABLE IF NOT EXISTS radar_runs (
     approx_total  INTEGER,
     execution_ms  INTEGER,
     outcome       TEXT,
-    reason        TEXT
+    reason        TEXT,
+    run_kind      TEXT,
+    baseline_count INTEGER,
+    run_trigger   TEXT,
+    coverage_status TEXT,
+    coverage_reason TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_radar_runs_radar ON radar_runs(radar_id, started_at DESC);
 
@@ -444,6 +470,14 @@ CREATE TABLE IF NOT EXISTS radar_event_seq (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     ts TEXT NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS radar_scheduler_state (
+    singleton_id          INTEGER PRIMARY KEY CHECK (singleton_id = 1),
+    last_heartbeat_at     TEXT,
+    last_pass_started_at  TEXT,
+    last_pass_finished_at TEXT,
+    last_pass_status      TEXT
+);
 """
 
 
@@ -458,8 +492,9 @@ _INSERT_RUN_SQL = """
 INSERT INTO radar_runs
    (id, radar_id, started_at, finished_at, status, total_count,
     new_count, changed_count, digest_json, error, soql, params_json,
-    dataset_id, approx_total, execution_ms, outcome, reason)
-   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    dataset_id, approx_total, execution_ms, outcome, reason, run_kind,
+    baseline_count, run_trigger, coverage_status, coverage_reason)
+   VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 """
 
 _INSERT_EVENT_SQL = """
@@ -608,7 +643,9 @@ def _insert_run(conn: sqlite3.Connection, radar_id: str, run: RunRecord) -> str:
         (run.id, radar_id, run.started_at, run.finished_at or _now(), run.status,
          run.total_count, run.new_count, run.changed_count, run.digest_json,
          run.error, run.soql, run.params_json, run.dataset_id, run.approx_total,
-         run.execution_ms, run.outcome, run.reason),
+         run.execution_ms, run.outcome, run.reason, run.run_kind,
+         run.baseline_count, run.run_trigger, run.coverage_status,
+         run.coverage_reason),
     )
     return run.id
 
@@ -871,7 +908,16 @@ class RadarStore:
                 conn.execute(f"ALTER TABLE radars ADD COLUMN {name} {ddl}")
 
         run_cols = {row["name"] for row in conn.execute("PRAGMA table_info(radar_runs)")}
-        for name, ddl in {"outcome": "TEXT", "reason": "TEXT"}.items():
+        for name, ddl in {
+            "outcome": "TEXT",
+            "reason": "TEXT",
+            # Sin defaults: no se inventa semántica para corridas heredadas.
+            "run_kind": "TEXT",
+            "baseline_count": "INTEGER",
+            "run_trigger": "TEXT",
+            "coverage_status": "TEXT",
+            "coverage_reason": "TEXT",
+        }.items():
             if name not in run_cols:
                 conn.execute(f"ALTER TABLE radar_runs ADD COLUMN {name} {ddl}")
 
@@ -1028,6 +1074,61 @@ class RadarStore:
         finally:
             conn.close()
         return [Radar.from_row(r) for r in rows]
+
+    # -- scheduler heartbeat ---------------------------------------------
+
+    def start_scheduler_pass(self, ts: str | None = None) -> None:
+        """Registra el inicio de una pasada, incluso si no hay radares due.
+
+        ``last_pass_finished_at=NULL`` + ``last_pass_status='running'`` deja
+        evidencia observable si el proceso muere antes de finalizar.
+        """
+        heartbeat_at = ts or _now()
+        conn = self._connect()
+        try:
+            conn.execute(
+                """INSERT INTO radar_scheduler_state
+                   (singleton_id, last_heartbeat_at, last_pass_started_at,
+                    last_pass_finished_at, last_pass_status)
+                   VALUES (1, ?, ?, NULL, 'running')
+                   ON CONFLICT(singleton_id) DO UPDATE SET
+                       last_heartbeat_at = excluded.last_heartbeat_at,
+                       last_pass_started_at = excluded.last_pass_started_at,
+                       last_pass_finished_at = NULL,
+                       last_pass_status = 'running'""",
+                (heartbeat_at, heartbeat_at),
+            )
+        finally:
+            conn.close()
+
+    def finish_scheduler_pass(self, status: str, ts: str | None = None) -> None:
+        """Registra la finalización observable de la pasada actual."""
+        if status not in {"completed", "completed_with_errors"}:
+            raise ValueError(f"Estado final de scheduler inválido: {status!r}")
+        finished_at = ts or _now()
+        conn = self._connect()
+        try:
+            conn.execute(
+                """UPDATE radar_scheduler_state
+                      SET last_heartbeat_at = ?, last_pass_finished_at = ?,
+                          last_pass_status = ?
+                    WHERE singleton_id = 1""",
+                (finished_at, finished_at, status),
+            )
+        finally:
+            conn.close()
+
+    def get_scheduler_state(self) -> RadarSchedulerState | None:
+        conn = self._connect()
+        try:
+            row = conn.execute(
+                "SELECT last_heartbeat_at, last_pass_started_at, "
+                "last_pass_finished_at, last_pass_status "
+                "FROM radar_scheduler_state WHERE singleton_id = 1"
+            ).fetchone()
+        finally:
+            conn.close()
+        return RadarSchedulerState(**dict(row)) if row else None
 
     def set_enabled(self, radar_id: str, enabled: bool) -> None:
         conn = self._connect()
@@ -1255,6 +1356,11 @@ class RadarStore:
         execution_ms: int | None = None,
         outcome: str | None = None,
         reason: str | None = None,
+        run_kind: str | None = None,
+        baseline_count: int | None = None,
+        run_trigger: str | None = None,
+        coverage_status: str | None = None,
+        coverage_reason: str | None = None,
         finished_at: str | None = None,
     ) -> str:
         run = RunRecord(
@@ -1263,6 +1369,9 @@ class RadarStore:
             digest_json=digest_json, error=error, soql=soql, params_json=params_json,
             dataset_id=dataset_id, approx_total=approx_total,
             execution_ms=execution_ms, outcome=outcome, reason=reason,
+            run_kind=run_kind, baseline_count=baseline_count,
+            run_trigger=run_trigger, coverage_status=coverage_status,
+            coverage_reason=coverage_reason,
             finished_at=finished_at,
         )
         conn = self._connect()
@@ -1282,6 +1391,18 @@ class RadarStore:
         finally:
             conn.close()
         return [RadarRun.from_row(r) for r in rows]
+
+    def has_successful_run(self, radar_id: str) -> bool:
+        """Si ya se materializó una corrida OK (incluida baseline vacía)."""
+        conn = self._connect()
+        try:
+            row = conn.execute(
+                "SELECT 1 FROM radar_runs WHERE radar_id = ? AND status = 'ok' LIMIT 1",
+                (radar_id,),
+            ).fetchone()
+        finally:
+            conn.close()
+        return row is not None
 
     # -- events (feed) -----------------------------------------------------
 

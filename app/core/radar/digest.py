@@ -16,6 +16,20 @@ from __future__ import annotations
 from app.core.radar.diff import DiffItem, RadarDiff
 
 
+def _coverage_note(status: str | None, *, baseline: bool = False) -> str | None:
+    if status == "PARTIAL_DISCOVERY":
+        if baseline:
+            return "La cobertura inicial de nuevos resultados no fue exhaustiva."
+        return "La revisión de nuevos resultados no fue exhaustiva."
+    if status == "PARTIAL_MAINTENANCE":
+        if baseline:
+            return "No pude actualizar por completo el conjunto incorporado a vigilancia."
+        return "No pude actualizar todo el conjunto vigilado."
+    if status == "UNKNOWN":
+        return "No puedo confirmar el estado completo de este Radar en esta revisión."
+    return None
+
+
 def _fmt_money(raw: str) -> str:
     if not raw:
         return "s/d"
@@ -102,12 +116,44 @@ def build_digest(
             "No se marcaron como desaparecidos."
         )
 
+    coverage_status = run_meta.get("coverage_status")
+    run_kind = run_meta.get("run_kind")
+    baseline_count = int(run_meta.get("baseline_count", 0) or 0)
+    structural_risk_count = len(risk_flags)
+
+    # La primera materialización tiene novedades técnicas respecto de un store
+    # vacío, pero en producto establece vigilancia: nunca se presenta como
+    # oportunidades nuevas ni muestra el top de backfill.
+    if run_kind == "baseline":
+        lines.append("")
+        lines.append(
+            f"Línea base creada · {baseline_count} resultados bajo vigilancia."
+        )
+        coverage_note = _coverage_note(coverage_status, baseline=True)
+        if coverage_note:
+            lines.append(coverage_note)
+        return _result(lines, diff, risk_flags, atypical=[], run_meta=run_meta)
+
     if not diff.has_novelty:
         lines.append("")
-        lines.append("Sin novedades frente a la última revisión.")
-        for flag in risk_flags:
-            lines.append("")
-            lines.append(flag)
+        if coverage_status == "COMPLETE":
+            lines.append(
+                "Todo al día. No hay novedades desde la última revisión completa."
+            )
+        elif coverage_status == "PARTIAL_DISCOVERY":
+            lines.append(
+                "No detecté novedades en la cobertura revisada. "
+                "La revisión de nuevos resultados no fue exhaustiva."
+            )
+        elif coverage_status == "PARTIAL_MAINTENANCE":
+            lines.append(
+                "No detecté cambios en los procesos revisados, pero no pude "
+                "actualizar todo el conjunto vigilado."
+            )
+        else:
+            lines.append(
+                "No puedo confirmar el estado completo de este Radar en esta revisión."
+            )
         return _result(lines, diff, risk_flags, atypical=[], run_meta=run_meta)
 
     # Resumen de conteos.
@@ -157,7 +203,19 @@ def build_digest(
                 f"{item.fields.get('status') or 's/d'}"
             )
 
-    for flag in risk_flags:
+    coverage_note = _coverage_note(coverage_status)
+    if coverage_note:
+        lines.append("")
+        lines.append(coverage_note)
+
+    # Con coverage explícita, el copy anterior ya comunica la limitación una
+    # vez. Conservamos todos los flags en la estructura de auditoría y solo
+    # renderizamos aquí riesgos adicionales (p. ej. valor atípico).
+    human_flags = (
+        risk_flags[structural_risk_count:]
+        if coverage_status is not None else risk_flags
+    )
+    for flag in human_flags:
         lines.append("")
         lines.append(flag)
 
@@ -179,4 +237,9 @@ def _result(lines: list[str], diff: RadarDiff, risk_flags: list[str],
         "risk_flags": risk_flags,
         "atypical_keys": atypical,
         "has_novelty": diff.has_novelty,
+        "run_kind": run_meta.get("run_kind"),
+        "baseline_count": run_meta.get("baseline_count"),
+        "run_trigger": run_meta.get("run_trigger"),
+        "coverage_status": run_meta.get("coverage_status"),
+        "coverage_reason": run_meta.get("coverage_reason"),
     }
