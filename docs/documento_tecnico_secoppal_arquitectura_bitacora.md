@@ -5,7 +5,67 @@
 **Sistema:** SECOPPAL — asistente conversacional para consulta y análisis de contratación pública SECOP II  
 **Propósito del documento:** dejar una descripción comprensible para un tercero técnico o funcional sobre qué hace el sistema, cómo está construido, qué archivos lo componen, qué decisiones de arquitectura se han tomado, qué bugs relevantes se han detectado y cuál es el estado actual del proyecto.
 
-## Estado canónico actual — 2026-08-26
+## Estado canónico actual — 2026-08-28
+
+### SODA3 `/query` — transporte productivo integrado
+
+- **`SODA3_TRANSPORT_V1 = INTEGRATED`** (ADR-070). Integrado a `main` por
+  fast-forward en `dd51ccd`. La salida a la red de SECOPPAL dejó de ser
+  `GET /resource/{dataset}.json` vía `sodapy` y pasó a
+  `POST /api/v3/views/{dataset}/query.json`.
+- **El buscador no cambió.** Esta decisión sustituyó *por dónde sale* la consulta,
+  no *qué* consulta se hace. El SoQL sigue siendo autoridad exclusiva de SECOPPAL:
+  el transporte lo emite literal, sin construirlo, reescribirlo ni normalizarlo, y
+  la normalización de filas sigue en `SecopClient._normalize_row`. La semántica del
+  buscador, el ranking y la resolución de valores son idénticos.
+- **`classic` sigue disponible como rollback**, no como red automática:
+  `SECOPPAL_SOCRATA_TRANSPORT=classic` reactiva el camino `sodapy` legacy, y
+  `sodapy` permanece instalado para que ese rollback sea real y no teórico. La
+  selección falla cerrado: cualquier otro valor aborta la construcción del
+  workflow en vez de elegir uno en silencio. Cambiar de transporte exige
+  reconstruir o reiniciar el workflow.
+- **No existe fallback automático SODA3 → classic.** Son dos transportes
+  seleccionables, no una cascada. Un fallo HTTP, de JSON o de forma levanta
+  excepción tipada y **nunca** se degrada a `[]`.
+- **H4 conserva `no_preserve`.** El fallback H4 —la ruta donde el runtime retira el
+  `ORDER BY` a propósito para abaratar la consulta— es la única excepción a
+  `orderingSpecifier=total`. La señal se declara desde el control flow, no leyendo
+  el texto del SoQL: la ausencia de `ORDER BY` también es legítima en `count`,
+  `aggregate` y direct lookup, que no son H4. El `count` del propio fallback
+  conserva `total`.
+- **Probado sobre el producto entero, no sobre el transporte aislado.** El full
+  runtime dogfood ejercitó 19 turnos humanos y 41 llamadas remotas contra ambos
+  datasets, con búsqueda, follow-ups, paginación, direct lookup, Actor Profile,
+  analytics/observer, H4 y **Radar** en `PASS`; `HTTP_CONTRACT_ERRORS = 0`,
+  `SODA3_ONLY_REPRODUCIBLE_FAILURES = 0`, regresiones semánticas 0.
+- **Suite completa verde** en el cutover: `9461 passed, 2 skipped, 24 xfailed,
+  0 failed`, con default live smoke `PASS` y rollback classic explícito `PASS`.
+- **`SODA3_QUERY_MIGRATION = CLOSED`.** El discovery de `/query` está cerrado y no
+  se reabre; lo que siga son capacidades nuevas, no esta migración.
+
+Decisión: `docs/decisions/2026-08-28_ADR-070_soda3-default-transport.md`.
+Informes: `docs/audits/2026-08-28_SODA3_PRODUCTIVE_LIVE_SMOKE.md`,
+`docs/audits/2026-08-28_SODA3_FULL_RUNTIME_DOGFOOD.md`.
+
+### Capacidades SODA3 pendientes de evaluación
+
+SODA3 expone capacidades que el discovery de `/query` **no** probó y que ADR-070
+**no** autoriza. Se registran para no perderlas de vista:
+
+```text
+EXP-01  orderingSpecifier=discard      prioridad muy alta
+EXP-02  /export para Warehouse         prioridad muy alta
+EXP-03  SEARCH candidate retrieval     exploratorio
+EXP-04  :updated_at incremental        Warehouse
+EXP-05  page API                       diferido
+```
+
+**Pendiente de evaluación ≠ autorizado para runtime.** Ninguna de estas
+capacidades tiene evidencia de aceptación, y cada una necesita su propio ciclo de
+discovery y su propia decisión antes de tocar producción. La deuda
+`deterministic TOP-N` también sigue abierta y es posterior a esta migración.
+
+## Estado canónico — 2026-08-26 (histórico)
 
 ### Adjudicación causal de los hallazgos fresh — siete síntomas, un mecanismo
 

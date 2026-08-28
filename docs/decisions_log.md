@@ -3921,3 +3921,84 @@ ejecutable de estado: sigue no soportada y aclara.
 
 Detalle: `docs/decisions/2026-08-26_ADR-069_no-silent-semantic-fallback.md`.
 Informe: `docs/audits/2026-08-26_HCA_FRESH_SYSTEMIC_REMEDIATION.md`.
+
+## ADR-070: SODA3 `/query` como transporte Socrata productivo por defecto
+
+**Fecha:** 2026-08-28
+**Estado:** Accepted — `SODA3_TRANSPORT_V1_INTEGRATED`
+
+### Contexto
+
+SECOPPAL hablaba con Socrata por un único camino: `GET /resource/{dataset}.json`
+vía `sodapy`, con el timeout horneado en el objeto `Socrata` y una sola llamada en
+línea dentro de `SecopClient`. El discovery de `/query` midió ese camino contra el
+endpoint moderno y encontró mejora de rendimiento sostenida con paridad estricta de
+filas en los pares comparables.
+
+La migración no era un cambio de URL. El camino clásico no tiene el eje
+`orderingSpecifier`, y el discovery descubrió que imponerlo indiscriminadamente
+rompía justo la ruta donde el runtime retira el `ORDER BY` a propósito para
+abaratar la consulta —el fallback H4—. El problema real era decidir qué declararle
+al backend y desde dónde; el transporte HTTP era la parte fácil.
+
+### Decisión
+
+**SODA3 `/query` es el transporte productivo por defecto**; `classic` permanece
+como rollback explícito, no como red de seguridad automática.
+
+La selección se hace con `SECOPPAL_SOCRATA_TRANSPORT`, vive en
+`SecopalWorkflow.__init__` y solo ahí, y **falla cerrado**: ausencia de
+configuración resuelve a `soda3`, `classic` activa el camino legacy y cualquier
+otro valor aborta la construcción del workflow. Cambiar de transporte exige
+reconstruir o reiniciar el workflow: no es un interruptor caliente. **No existe
+fallback automático SODA3 → classic**: son dos transportes seleccionables, no una
+cascada.
+
+`orderingSpecifier` es **intención de ejecución declarada por la ruta**, nunca una
+lectura del texto del SoQL —la ausencia de `ORDER BY` también es legítima en
+`count`, `aggregate` y direct lookup, que no son H4—:
+
+```text
+query normal → total    count → total    aggregate → total
+fallback H4 query → no_preserve          fallback H4 count → total
+```
+
+SECOPPAL sigue siendo autoridad única sobre el SoQL: el transporte lo emite
+literal, sin reescribirlo ni normalizarlo, contra
+`POST /api/v3/views/{dataset}/query.json`. Errores HTTP, JSON o de forma levantan
+excepción tipada y **no se degradan a `[]`** —eso convertiría un 400 de SoQL en un
+«no hay resultados» indistinguible, el fallo que ADR-069 prohibió en el plano
+semántico, aquí en el del transporte—.
+
+### Consecuencias y límites
+
+`sodapy` permanece instalado: sin él el rollback sería teórico; retirarlo no es
+parte de esta decisión. El timeout deja de estar horneado en el transporte y viaja
+por llamada, lo que permite compartir la instancia SODA3 y su pool entre clientes
+derivados; el camino clásico conserva su semántica previa. La mejora de latencia es
+un efecto medido, **no una promesa contractual**: lo que se congela es la
+corrección del transporte y la política de ordering. Quedan **fuera de alcance**,
+declarados: `orderingSpecifier=discard`, `/export`, SODA3 `page`, `SEARCH`,
+`:updated_at`, la retirada de `sodapy`, el fallback automático y deterministic
+TOP-N.
+
+### Evidencia de aceptación
+
+- Discovery V0 `GO_SODA3_QUERY`; runtime canary V1 `NO_GO_DIVERGENCE` y
+  adjudicación V1.1 `V1_1_BLOCKERS_CONFIRMED`, con las divergencias resueltas una
+  por una hasta `GO_INTEGRATION`;
+- Microprobe H4 `ORDERING_SPECIFIER_CAUSAL_SIGNAL`: sobre el mismo SoQL, `total`
+  0/5 contra `no_preserve` 5/5; replay H4 `H4_NO_PRESERVE_POLICY = PASS` con
+  **0 regresiones SODA3-only alcanzables**;
+- Productive live smoke `PRODUCTIVE_LIVE_SMOKE_GO`;
+- Full runtime dogfood `GO`: **19 turnos, 41 llamadas remotas**, ambos datasets,
+  con búsqueda, follow-ups, paginación, direct lookup, Actor Profile,
+  analytics/observer, H4 y Radar en `PASS`; `HTTP_CONTRACT_ERRORS = 0`,
+  `SODA3_ONLY_REPRODUCIBLE_FAILURES = 0`, regresiones semánticas 0;
+- Cutover `dd51ccd`: default live smoke `PASS`, rollback classic `PASS`, suite
+  completa **9461 passed, 2 skipped, 24 xfailed, 0 failed**.
+
+Detalle: `docs/decisions/2026-08-28_ADR-070_soda3-default-transport.md`.
+Informes: `docs/audits/2026-08-27_SODA3_QUERY_FINAL_ADJUDICATION.md`,
+`docs/audits/2026-08-28_SODA3_PRODUCTIVE_LIVE_SMOKE.md`,
+`docs/audits/2026-08-28_SODA3_FULL_RUNTIME_DOGFOOD.md`.
