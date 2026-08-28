@@ -155,3 +155,110 @@ def test_sodapy_is_still_installed_and_usable():
     client = SecopClient(domain="www.datos.gov.co", app_token=None)
     assert client.transport_name == TRANSPORT_CLASSIC
     assert isinstance(client.transport, ClassicSocrataTransport)
+
+
+# ── T1C — el clásico conserva su semántica de timeout derivado ───────────
+#
+# Regresión que cierra este bloque: T1B pasaba SIEMPRE un transporte explícito
+# al SecopClient, también en clásico. Un ClassicSocrataTransport explícito se
+# propaga tal cual por `_respawn`, y el timeout clásico está horneado en el
+# objeto `Socrata` que ese transporte envuelve. Resultado: derived.timeout
+# valía 3 mientras la llamada real seguía usando el Socrata de 60 s — y el
+# contrato de deadlines/H4 depende de que ese acote sea efectivo.
+
+class FakeSocrata:
+    """Socrata de mentira que recuerda con qué timeout fue construido."""
+
+    instances: list["FakeSocrata"] = []
+
+    def __init__(self, domain, app_token=None, timeout=None):
+        self.domain = domain
+        self.app_token = app_token
+        self.timeout = timeout
+        self.calls: list[tuple] = []
+        FakeSocrata.instances.append(self)
+
+    def get(self, dataset_id, query=None):
+        self.calls.append((dataset_id, query))
+        return []
+
+
+@pytest.fixture
+def fake_socrata(monkeypatch):
+    FakeSocrata.instances = []
+    monkeypatch.setattr("app.core.secop_client.Socrata", FakeSocrata)
+    return FakeSocrata
+
+
+def test_classic_workflow_does_not_receive_an_explicit_transport(tmp_path, fake_socrata):
+    """El clásico usa el camino implícito legacy: sin transporte explícito.
+
+    Es la condición estructural de la que dependen las dos propiedades de
+    abajo; comprobarla aquí hace que el diagnóstico sea legible cuando alguna
+    de ellas falle.
+    """
+    client = _workflow(tmp_path).secop_client
+    assert client._explicit_transport is None
+    assert isinstance(client.client, FakeSocrata)
+    assert client.transport_name == TRANSPORT_CLASSIC
+
+
+def test_classic_derived_client_gets_its_own_bounded_socrata(tmp_path, fake_socrata):
+    """El acote por deadline debe llegar al transporte, no solo al atributo.
+
+    No basta con ``derived.timeout == 3``: el timeout clásico vive dentro del
+    objeto ``Socrata``, así que la prueba es que la llamada real salga por un
+    ``Socrata`` construido con 3.
+    """
+    original = _workflow(tmp_path).secop_client
+    original_socrata = original.client
+    original_timeout = original.timeout
+
+    derived = original.derived_for_timeout(3)
+
+    # Un transporte propio, no el compartido del original.
+    assert derived.client is not original_socrata
+    assert derived.transport.raw_client is not original.transport.raw_client
+
+    # Y el timeout EFECTIVO —el del Socrata que emite— es el acotado.
+    assert derived.client.timeout == 3
+    derived.query("ds", "SELECT * LIMIT 1")
+    emitting = [s for s in FakeSocrata.instances if s.calls]
+    assert [s.timeout for s in emitting] == [3]
+
+    # El original no se mutó: sigue con su presupuesto y sin llamadas.
+    assert original.timeout == original_timeout
+    assert original_socrata.timeout == original_timeout
+    assert original_socrata.calls == []
+
+
+def test_classic_workflow_client_can_still_be_replaced_to_cut_the_network(tmp_path, fake_socrata):
+    """Reasignar ``.client`` sigue redirigiendo el transporte del workflow.
+
+    ``tests/test_audit_runner_isolation.py`` corta la red exactamente así. Con
+    un transporte explícito de por medio la sustitución quedaba ignorada y el
+    assert ``transport_calls == []`` pasaba trivialmente mientras la corrida
+    hacía red real: un falso verde, no un fallo visible.
+    """
+    client = _workflow(tmp_path).secop_client
+    cut = FakeSocrata("offline", timeout=1)
+
+    client.client = cut
+    client.query("ds", "SELECT * LIMIT 1")
+
+    assert cut.calls == [("ds", "SELECT * LIMIT 1")]
+    assert client.transport.raw_client is cut
+
+
+def test_soda3_derived_clients_reuse_the_transport_and_open_no_socrata(
+    tmp_path, monkeypatch, fake_socrata,
+):
+    """SODA3 sí comparte transporte: su timeout viaja por llamada, no horneado."""
+    monkeypatch.setenv("SECOPPAL_SOCRATA_TRANSPORT", "soda3")
+    client = _workflow(tmp_path).secop_client
+
+    derived = client.derived_for_timeout(3)
+
+    assert derived.transport is client.transport  # mismo pool, a propósito
+    assert derived.timeout == 3 and derived.transport_name == TRANSPORT_SODA3
+    assert FakeSocrata.instances == []  # ningún Socrata abierto en la ruta SODA3

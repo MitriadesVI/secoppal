@@ -15,7 +15,11 @@ from app.core.narrator import NarratorHandler
 from app.core.query_router import QueryRouter
 from app.core.radar.store import RadarStore
 from app.core.secop_client import SecopClient
-from app.core.socrata_transport import build_transport, transport_kind_from_settings
+from app.core.socrata_transport import (
+    TransportKind,
+    build_transport,
+    transport_kind_from_settings,
+)
 from app.core.soql_builder import SoQLBuilder
 from app.core.workflow.context import HandlerContext
 from app.core.workflow.deps import WorkflowDeps
@@ -87,17 +91,30 @@ class SecopalWorkflow:
         self.soql_builder = SoQLBuilder()
         # Transporte seleccionado por configuracion (default: clasico). La
         # seleccion vive aqui y solo aqui: nada aguas abajo lee Settings para
-        # decidir por donde sale la red.
+        # decidir por donde sale la red. Un valor invalido revienta aqui.
+        #
+        # El clasico se construye por su camino IMPLICITO, sin `transport=`.
+        # No es un detalle de estilo: el timeout clasico esta horneado en el
+        # objeto `Socrata`, y un transporte explicito se propaga tal cual por
+        # `_respawn`, de modo que `derived_for_timeout(3)` acotaria el atributo
+        # pero seguiria emitiendo por el Socrata original. El camino implicito
+        # deja que `with_timeout` abra un Socrata propio por llamada -que es lo
+        # que el contrato de deadlines y H4 espera- y que reasignar `.client`
+        # siga redirigiendo el transporte.
+        transport_kind = transport_kind_from_settings(settings)
+        explicit_transport = None
+        if transport_kind is TransportKind.SODA3:
+            explicit_transport = build_transport(
+                transport_kind,
+                domain=settings.datos_gov_domain,
+                app_token=settings.secop_app_token,
+                timeout_seconds=settings.secop_timeout_seconds,
+            )
         self.secop_client = SecopClient(
             domain=settings.datos_gov_domain,
             app_token=settings.secop_app_token,
             timeout=settings.secop_timeout_seconds,
-            transport=build_transport(
-                transport_kind_from_settings(settings),
-                domain=settings.datos_gov_domain,
-                app_token=settings.secop_app_token,
-                timeout_seconds=settings.secop_timeout_seconds,
-            ),
+            transport=explicit_transport,
         )
         self.formatter = Formatter(max_results=settings.secop_results_limit)
         self.feedback = FeedbackStore(
