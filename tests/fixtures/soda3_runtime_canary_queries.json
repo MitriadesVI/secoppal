@@ -1,0 +1,194 @@
+{
+  "schema_version": 1,
+  "reference_date": "2026-08-27",
+  "campaign": {
+    "rounds": 3,
+    "seed": 20260828,
+    "orderingSpecifier": "total",
+    "includeSynthetic": false
+  },
+  "cases": [
+    {
+      "case_id": "RT-TAB-001",
+      "category": "phrase_aware",
+      "human_query": "contratos de primera infancia de barranquilla en 2026",
+      "source": "tests/fixtures/query_corpus_v1.yaml#CORPUS-F001",
+      "expected_empty": false
+    },
+    {
+      "case_id": "RT-TAB-002",
+      "category": "tabular_topic",
+      "human_query": "contratos de interventoria tecnica de obra",
+      "source": "tests/fixtures/audits/conversation_holistic_v1.yaml#HCA-TOPIC-010",
+      "expected_empty": false
+    },
+    {
+      "case_id": "RT-TAB-003",
+      "category": "entity_topic_value_date",
+      "human_query": "contratos de alimentacion de la gobernacion de sucre por mas de 200 millones en 2025",
+      "source": "tests/fixtures/audits/conversation_holistic_v1.yaml#HCA-MONEY-022",
+      "expected_empty": false
+    },
+    {
+      "case_id": "RT-TAB-004",
+      "category": "state_entity",
+      "human_query": "contratos activos de la gobernacion del atlantico",
+      "source": "tests/fixtures/audits/conversation_holistic_v1.yaml#HCA-STATE-002",
+      "expected_empty": false
+    },
+    {
+      "case_id": "RT-TAB-005",
+      "category": "process_territory",
+      "human_query": "procesos de salud en valle del cauca",
+      "source": "tests/fixtures/audits/conversation_holistic_v1.yaml#HCA-GEO-006",
+      "expected_empty": false
+    },
+    {
+      "case_id": "RT-TAB-006",
+      "category": "modality_topic_territory",
+      "human_query": "licitaciones publicas de obra en atlantico",
+      "source": "tests/fixtures/audits/conversation_holistic_v1.yaml#HCA-MODALITY-001",
+      "expected_empty": false
+    },
+    {
+      "case_id": "RT-TAB-007",
+      "category": "date_range",
+      "human_query": "contratos de aseo entre el 1 de febrero y el 15 de marzo de 2026",
+      "source": "tests/fixtures/audits/conversation_holistic_v1.yaml#HCA-TIME-014",
+      "expected_empty": false
+    },
+    {
+      "case_id": "RT-TAB-008",
+      "category": "ordering_value",
+      "human_query": "top 10 contratos de obra por valor en antioquia",
+      "source": "tests/fixtures/audits/conversation_holistic_v1.yaml#HCA-ORDER-004",
+      "expected_empty": false
+    },
+    {
+      "case_id": "RT-OPP-001",
+      "category": "opportunity_value_territory",
+      "human_query": "licitaciones de mantenimiento vial en Atlantico por mas de 500 millones abiertas",
+      "source": "tests/fixtures/query_corpus_v1.yaml#CORPUS-F006",
+      "expected_empty": false
+    },
+    {
+      "case_id": "RT-OPP-002",
+      "category": "opportunity_or",
+      "human_query": "que oportunidades hay para construccion de canchas o parques?",
+      "source": "tests/fixtures/query_corpus_v1.yaml#CORPUS-R020",
+      "expected_empty": false
+    },
+    {
+      "case_id": "RT-OPP-003",
+      "category": "opportunity_topic_territory",
+      "human_query": "convocatorias abiertas de consultoria en narino",
+      "source": "tests/fixtures/audits/conversation_holistic_v1.yaml#HCA-INTENT-014",
+      "expected_empty": false
+    },
+    {
+      "case_id": "RT-OPP-004",
+      "category": "opportunity_topic_city",
+      "human_query": "oportunidades de construccion en cali",
+      "source": "tests/fixtures/query_corpus_v1.yaml#CORPUS-SM004",
+      "expected_empty": false
+    },
+    {
+      "case_id": "RT-PHRASE-001",
+      "category": "phrase_date_ordering",
+      "human_query": "contratos de adulto mayor mas caros del distrito de barranquilla entre 2025 y 2026",
+      "source": "tests/fixtures/query_corpus_v1.yaml#CORPUS-R023",
+      "expected_empty": false
+    },
+    {
+      "case_id": "RT-OR-001",
+      "category": "wide_or_topic",
+      "human_query": "construcción o aseo o vigilancia o dotación o transporte o salud",
+      "source": "tests/fixtures/stress_broad_queries.yaml#STRESS-OR-001",
+      "expected_empty": false
+    },
+    {
+      "case_id": "RT-NEG-001",
+      "category": "negation_object",
+      "human_query": "contratos de alimentacion sin transporte",
+      "source": "tests/fixtures/audits/negation_focal_v1.yaml#NEG-N5",
+      "expected_empty": false
+    },
+    {
+      "case_id": "RT-NEG-002",
+      "category": "negation_entity_topic",
+      "human_query": "contratos de la gobernacion de sucre sin alimentacion",
+      "source": "tests/fixtures/audits/conversation_holistic_v1.yaml#HCA-NEG-005",
+      "expected_empty": false
+    },
+    {
+      "case_id": "RT-ACTOR-001",
+      "category": "actor_profile",
+      "human_query": "contratos del NIT 860002400",
+      "source": "tests/fixtures/actor_profile_corpus_v1.yaml#AP2-DOC001",
+      "expected_empty": false
+    },
+    {
+      "case_id": "RT-ACTOR-002",
+      "category": "actor_profile",
+      "human_query": "contratos del NIT 860.034.594-1",
+      "source": "tests/fixtures/actor_profile_corpus_v1.yaml#AP2-DOC002",
+      "expected_empty": false
+    },
+    {
+      "case_id": "RT-AN-001",
+      "category": "analytics_sum",
+      "human_query": "cuanto suman los contratos de primera infancia en barranquilla 2026",
+      "source": "tests/fixtures/query_corpus_v1.yaml#CORPUS-AN001",
+      "expected_empty": false
+    },
+    {
+      "case_id": "RT-AN-002",
+      "category": "analytics_value_stats",
+      "human_query": "valor promedio de los contratos de obra en Antioquia",
+      "source": "tests/test_analytics_orphans.py#value_stats",
+      "expected_empty": false
+    },
+    {
+      "case_id": "RT-AN-003",
+      "category": "analytics_sum_integration",
+      "human_query": "cuánto se contrató en mantenimiento en Barranquilla en 2026",
+      "source": "tests/test_analytical_queries.py#test_query_directa_aggregate_sum",
+      "expected_empty": false
+    },
+    {
+      "case_id": "RT-LOOKUP-001",
+      "category": "direct_lookup_contract",
+      "human_query": "CO1.PCCNTR.7754467",
+      "source": "tests/fixtures/audits/conversation_holistic_v1.yaml#HCA-LOOKUP-001",
+      "expected_empty": false
+    },
+    {
+      "case_id": "RT-LOOKUP-002",
+      "category": "direct_lookup_process",
+      "human_query": "CO1.REQ.9445488",
+      "source": "SODA3_DISCOVERY_V0#proc_date_filter-live-id",
+      "expected_empty": false
+    },
+    {
+      "case_id": "RT-PHRASE-002",
+      "category": "phrase_candidate_limit_200",
+      "human_query": "contratos para elaboracion o actualizacion de manuales de contratacion en 2024",
+      "source": "tests/test_objeto_phrases.py#test_parser_separates_phrase_from_actions",
+      "expected_empty": false
+    },
+    {
+      "case_id": "RT-EMPTY-001",
+      "category": "expected_empty_contract_lookup",
+      "human_query": "CO1.PCCNTR.999999999999999",
+      "source": "deliberate_negative_control",
+      "expected_empty": true
+    },
+    {
+      "case_id": "RT-EMPTY-002",
+      "category": "expected_empty_process_lookup",
+      "human_query": "CO1.NTC.999999999999999",
+      "source": "deliberate_negative_control",
+      "expected_empty": true
+    }
+  ]
+}
