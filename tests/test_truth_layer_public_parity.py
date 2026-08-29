@@ -109,9 +109,18 @@ M2_MODIFIED_FILE_SHA256 = {
 # Radar: no toca Search, ranking, cursor de paginación ni sus fingerprints. Lo
 # protegen tests/test_radar_receipts.py, tests/test_radar_inbox.py y los casos
 # R5A de tests/test_radar_ui_truth.py.
+# BETA-P0-ISOLATION lo repinea por la frontera de sesión: el logout vacía todo el
+# session_state en vez de cinco claves, el ``chat_id`` pasa a ser identidad de
+# sesión (``st_<uuid>``) en vez de derivarse del email, y las rutas Radar de la
+# web leen y mutan con dueño (``*_for_owner``). El diff vive en tres helpers de
+# sesión, en el botón de cerrar sesión y en las cinco llamadas al RadarStore de
+# la superficie Radar: no toca Search, ranking, cursor de paginación ni sus
+# fingerprints —los oráculos de Search de este archivo siguen byte-idénticos—.
+# Lo acotan tests/test_auth.py (frontera de sesión), tests/test_web_session.py,
+# tests/test_radar_detail.py (dueño en el enrutado) y tests/test_radar_store.py.
 M2_1_MODIFIED_FILE_SHA256 = {
     "app/core/workflow/handlers/direct_lookup.py": "6dcfc63405824e82b46a4b07bbdd503fd2bd504ec65a5640a0c3cc628ee90b6b",
-    "streamlit_app.py": "72c53a15ee9e6a5dd4fae5f67b2d23583f404d94db58c7e937477d56246c2345",
+    "streamlit_app.py": "7e795c4318c862c57c17411f2769a3dc9d94779b0688b100fa3ef11bb5f2ab8f",
 }
 
 # HCA-R6 re-pins ONE previously byte-frozen file. The pagination header carried

@@ -3,7 +3,6 @@ SECOPPAL — Streamlit UI
 """
 from __future__ import annotations
 
-import re
 import time
 import uuid
 from datetime import datetime, timedelta, timezone
@@ -46,6 +45,11 @@ from app.core.radar.workspace import (
 )
 from app.config import get_settings
 from app.core.auth import AccountError, AccountExistsError, AccountStore
+from app.core.web_session import (
+    new_streamlit_chat_id,
+    reset_user_session,
+    scratch_chat_id,
+)
 from app.core.workspace_store import WorkspaceIntegrityError, WorkspaceStore
 from app.service import get_workflow
 
@@ -488,16 +492,19 @@ def _render_actor_candidates(candidates: list[dict], history_idx: int) -> None:
                 st.rerun()
 
 
-def _safe_key(value: str) -> str:
-    return re.sub(r"[^a-zA-Z0-9_]+", "_", value).strip("_")[:80]
-
-
 def _current_user_identity() -> dict:
+    """Quién es el usuario. **No decide dónde vive su conversación.**
+
+    Antes fijaba aquí ``chat_id = st_email_<email>``: ataba el hilo a la cuenta,
+    con dos consecuencias. El email quedaba en el nombre de un archivo de
+    ``data/conversations/``, y la conversación sobrevivía al cambio de identidad
+    en el mismo navegador. El ``chat_id`` lo asigna ahora la sesión (ver
+    ``_seed_session_defaults``), que es de quien realmente es.
+    """
     email = (st.session_state.get("user_email") or "").strip().lower()
     name = (st.session_state.get("user_name") or "").strip()
     if email:
         channel_user_key = f"email:{email}"
-        st.session_state.chat_id = f"st_email_{_safe_key(email)}"
         return {
             "channel": "streamlit",
             "channel_user_key": channel_user_key,
@@ -507,7 +514,6 @@ def _current_user_identity() -> dict:
         }
 
     anon_id = st.session_state.anonymous_user_id
-    st.session_state.chat_id = f"st_anon_{anon_id}"
     return {
         "channel": "streamlit",
         "channel_user_key": f"anon:{anon_id}",
@@ -563,11 +569,66 @@ def _render_flash() -> None:
 # ═══════════════════════════════════════════════════════════════════════════
 
 
+def _seed_session_defaults() -> None:
+    """Estado mínimo de una sesión recién nacida. Idempotente.
+
+    Se llama al arrancar el script y otra vez después de cada frontera de sesión
+    (``_end_user_session``), que deja el estado vacío a mitad de la pasada: sin
+    volver a sembrar, lo que queda del render buscaría un ``history`` y un
+    ``chat_id`` que ya no existen.
+
+    ``anonymous_user_id`` se persiste en la URL a propósito: Streamlit crea una
+    sesión nueva en cada F5, y sin esto el dueño anónimo cambiaría al refrescar
+    y sus radares —guardados bajo el dueño anterior— "desaparecerían".
+    """
+    st.session_state.setdefault("history", [])
+    st.session_state.setdefault("chat_id", new_streamlit_chat_id())
+    if "anonymous_user_id" not in st.session_state:
+        _qp_uid = st.query_params.get("uid")
+        if _qp_uid:
+            st.session_state.anonymous_user_id = _qp_uid
+        else:
+            _new_uid = uuid.uuid4().hex[:12]
+            st.session_state.anonymous_user_id = _new_uid
+            st.query_params["uid"] = _new_uid
+    st.session_state.setdefault("user_name", "")
+    st.session_state.setdefault("user_email", "")
+
+
+def _end_user_session() -> None:
+    """Frontera dura entre dos personas en el mismo navegador.
+
+    Nada ligado al usuario anterior puede sobrevivir a este punto: ni su
+    ``history`` (calificable desde la UI), ni el ``_open_radar`` que dejó
+    abierto, ni ``_open_event``, ni su ``chat_id``, ni filtros, cachés o avisos.
+    Por eso borra **todo** y vuelve a sembrar los valores por defecto, en vez de
+    quitar las claves que hoy conocemos: la lista de claves era el bug, y volver
+    a escribirla —más larga— solo aplaza el mismo fallo a la próxima feature.
+
+    El ``chat_id`` que siembra es nuevo: la conversación siguiente empieza
+    limpia, y no puede volver a direccionar el hilo del usuario anterior.
+    """
+    reset_user_session(st.session_state)
+    _seed_session_defaults()
+
+
 def _activate_session(acc) -> None:
     """Marca la cuenta como autenticada en session_state.
 
     Atar email/nombre → cada trace queda a nombre del usuario real.
+
+    **Empieza por vaciar la sesión.** El aislamiento no puede depender de que el
+    usuario anterior pulsara "Cerrar sesión": también se llega aquí desde la
+    cookie "recordarme" y desde el formulario de login, y un navegador donde
+    alguien cerró la pestaña sin salir todavía tiene su estado en pie. Autenticar
+    es el momento en que se decide de quién es esta sesión, así que es el momento
+    de que no quede nada del anterior.
+
+    Solo corre en la activación real de una identidad: una vez presente
+    ``account``, ``_require_login`` retorna antes de llegar aquí, de modo que los
+    reruns de una sesión ya autenticada no tocan nada.
     """
+    _end_user_session()
     st.session_state.account = {"email": acc.email, "name": acc.name, "role": acc.role}
     st.session_state.user_email = acc.email
     st.session_state.user_name = acc.name or ""
@@ -700,30 +761,7 @@ def _render_admin_panel() -> None:
 # Session state
 # ═══════════════════════════════════════════════════════════════════════════
 
-if "history" not in st.session_state:
-    st.session_state.history: list[dict] = []
-
-if "chat_id" not in st.session_state:
-    st.session_state.chat_id = "st_default"
-
-if "anonymous_user_id" not in st.session_state:
-    # Persistir el id anónimo en la URL (query_params): Streamlit crea una
-    # sesión nueva en cada refresco de página (F5), perdiendo session_state.
-    # Sin esto, el owner del usuario cambia al refrescar y sus radares
-    # (guardados bajo el owner anterior) "desaparecen".
-    _qp_uid = st.query_params.get("uid")
-    if _qp_uid:
-        st.session_state.anonymous_user_id = _qp_uid
-    else:
-        _new_uid = uuid.uuid4().hex[:12]
-        st.session_state.anonymous_user_id = _new_uid
-        st.query_params["uid"] = _new_uid
-
-if "user_name" not in st.session_state:
-    st.session_state.user_name = ""
-
-if "user_email" not in st.session_state:
-    st.session_state.user_email = ""
+_seed_session_defaults()
 
 # ═══════════════════════════════════════════════════════════════════════════
 # Gate de autenticación — bloquea todo lo que sigue hasta iniciar sesión
@@ -769,13 +807,17 @@ with st.sidebar:
         st.write(f"**{_account['email']}**")
         st.caption(f"Rol: {_account['role']}")
         if st.button("Cerrar sesión", use_container_width=True):
-            get_account_store().revoke_session(st.session_state.get("_session_token"))
+            # El orden importa: el token y el gestor de cookies viven en el
+            # estado que estamos a punto de vaciar, así que se usan antes.
+            # Revocar es lo que de verdad cierra la sesión: si el navegador se
+            # queda con la cookie, el token ya no resuelve a nadie.
+            _token = st.session_state.get("_session_token")
+            get_account_store().revoke_session(_token)
             try:
                 get_cookie_manager().delete(_COOKIE_NAME, key="del_login_cookie")
             except Exception:
                 pass  # la cookie puede no existir (sesión sin "recordarme")
-            for _k in ("account", "user_email", "user_name", "_session_token", "_cookie_probed"):
-                st.session_state.pop(_k, None)
+            _end_user_session()
             st.rerun()
     else:
         # Modo sin auth: identidad de texto libre (comportamiento legacy).
@@ -826,8 +868,19 @@ with st.sidebar:
 # Radar tab
 # ═══════════════════════════════════════════════════════════════════════════
 
-def _render_radar_detail(store, radar) -> None:
-    """Vista de detalle: timeline de corridas con digests expandibles."""
+def _render_radar_detail(store, owner: str, radar) -> None:
+    """Vista de detalle: timeline de corridas con digests expandibles.
+
+    Recibe ``owner`` explícito —no lo deduce de una global— porque cada acción de
+    esta vista escribe o lee, y el dueño es la autorización. El ``radar`` que
+    llega ya viene validado por ``get_radar_for_owner``; las lecturas y
+    escrituras del store que hay aquí lo exigen otra vez, para que la vista no
+    dependa de cómo la invocaron.
+
+    ``run_radar`` es la excepción deliberada: recibe un radar ya autorizado y no
+    autentica. Meterle la sesión web dentro lo obligaría a saber de cuentas, y el
+    scheduler —que corre los radares de todos los dueños— no tiene ninguna.
+    """
     if st.button("← Volver a mis radares", key="radar_back"):
         del st.session_state["_open_radar"]
         st.rerun()
@@ -851,11 +904,11 @@ def _render_radar_detail(store, radar) -> None:
         st.rerun()
     toggle_label = "⏸ Pausar" if radar.is_enabled else "● Reactivar"
     if c2.button(toggle_label, key="radar_detail_toggle", use_container_width=True):
-        store.set_enabled(radar.id, not radar.is_enabled)
+        store.set_enabled_for_owner(owner, radar.id, not radar.is_enabled)
         st.rerun()
 
     st.divider()
-    runs = store.get_runs(radar.id, limit=50)
+    runs = store.get_runs_for_owner(owner, radar.id, limit=50)
     if not runs:
         st.info("Este radar no se ha ejecutado todavía. Pulsa «Ejecutar ahora».")
         return
@@ -940,7 +993,7 @@ def _do_crear_radar(store, owner, nombre, consulta, dataset, tema, departamento,
 
     with st.spinner("Resolviendo búsqueda contra SECOP..."):
         result = workflow.run_query(
-            base, channel="streamlit", chat_id=f"_radarcreate_{owner}",
+            base, channel="streamlit", chat_id=scratch_chat_id("radarcreate", owner),
             user_identity={"channel": "streamlit", "channel_user_key": owner},
         )
     params = dict(result.get("resolved_params") or {})
@@ -967,7 +1020,9 @@ def _do_crear_radar(store, owner, nombre, consulta, dataset, tema, departamento,
 
     # Ejecutar la primera revisión ya, para que el feed y el timeline no queden
     # vacíos tras crear (establece la línea base).
-    radar = store.get_radar(rid)
+    # Por ``rid`` bastaría —acaba de crearse bajo este dueño—, pero la frontera
+    # web lee siempre con dueño: una sola regla, sin excepciones que revisar.
+    radar = store.get_radar_for_owner(owner, rid)
     with st.spinner("Ejecutando primera revisión..."):
         run_radar(workflow.deps, store, radar, run_trigger="create")
     st.session_state["_radar_refresh_ts"] = time.time()
@@ -1354,7 +1409,7 @@ def _refresh_all_radares(store, owner) -> None:
     st.session_state["_radar_refresh_ts"] = time.time()
 
 
-def _render_manage_row(store, radar) -> None:
+def _render_manage_row(store, owner: str, radar) -> None:
     estado = "● activo" if radar.is_enabled else "⏸ pausado"
     last = format_colombia_timestamp(radar.last_run_at)
     st.markdown(
@@ -1376,11 +1431,14 @@ def _render_manage_row(store, radar) -> None:
             run_radar(workflow.deps, store, radar)
         st.rerun()
     toggle = "Pausar" if radar.is_enabled else "Reactivar"
+    # Las filas vienen de ``list_radars(owner)``, que ya es una lectura del
+    # dueño. Las mutaciones lo exigen igualmente: si mañana esta lista se
+    # construye de otra forma, el ``id`` no habrá vuelto a ser la autorización.
     if c3.button(toggle, key=f"mng_toggle_{radar.id}", use_container_width=True):
-        store.set_enabled(radar.id, not radar.is_enabled)
+        store.set_enabled_for_owner(owner, radar.id, not radar.is_enabled)
         st.rerun()
     if c4.button("Eliminar", key=f"mng_del_{radar.id}", use_container_width=True):
-        store.delete_radar(radar.id)
+        store.delete_radar_for_owner(owner, radar.id)
         st.rerun()
     st.divider()
 
@@ -1434,11 +1492,15 @@ def _render_radares() -> None:
         del st.session_state["_open_event"]
 
     # Vista de detalle si hay un radar abierto.
+    # El id abierto es un dato que sobrevive en ``session_state``: si por lo que
+    # sea cruzó una frontera de sesión, el dueño —no el id— decide qué se ve.
+    # Un radar ajeno se trata como uno inexistente: se vuelve a "mis radares"
+    # sin un error que confirme que existe.
     open_id = st.session_state.get("_open_radar")
     if open_id:
-        radar = store.get_radar(open_id)
+        radar = store.get_radar_for_owner(owner, open_id)
         if radar is not None:
-            _render_radar_detail(store, radar)
+            _render_radar_detail(store, owner, radar)
             return
         del st.session_state["_open_radar"]
 
@@ -1513,7 +1575,7 @@ def _render_radares() -> None:
     if radars:
         with st.expander(f"⚙️ Gestionar radares ({len(radars)})"):
             for radar in radars:
-                _render_manage_row(store, radar)
+                _render_manage_row(store, owner, radar)
 
 
 # ═══════════════════════════════════════════════════════════════════════════

@@ -1030,6 +1030,30 @@ class RadarStore:
             conn.close()
         return Radar.from_row(row) if row else None
 
+    def get_radar_for_owner(self, owner: str, radar_id: str) -> Radar | None:
+        """El radar, **solo si es de ese dueño**. ``None`` en cualquier otro caso.
+
+        La frontera web entra por aquí. ``get_radar`` sigue existiendo para el
+        scheduler, el runner y las migraciones —procesos de confianza que operan
+        sobre todos los dueños—, pero en una petición de navegador el ``id`` no
+        puede ser la autorización: es un dato que el cliente controla (queda en
+        ``session_state``, sobrevive a un cambio de identidad y se puede teclear).
+
+        Un radar ajeno y un radar inexistente devuelven lo mismo a propósito. Si
+        distinguiéramos, el "no existe" vs "no es tuyo" confirmaría la existencia
+        de radares ajenos a quien fuera probando ids.
+        """
+        conn = self._connect()
+        try:
+            row = conn.execute(
+                "SELECT * FROM radars "
+                " WHERE id = ? AND owner = ? AND archived_at IS NULL",
+                (radar_id, owner),
+            ).fetchone()
+        finally:
+            conn.close()
+        return Radar.from_row(row) if row else None
+
     def get_radar_by_name(self, owner: str, name: str) -> Radar | None:
         conn = self._connect()
         try:
@@ -1154,6 +1178,30 @@ class RadarStore:
                 "UPDATE radars SET enabled = ? WHERE id = ?",
                 (1 if enabled else 0, radar_id),
             )
+        finally:
+            conn.close()
+
+    def set_enabled_for_owner(self, owner: str, radar_id: str, enabled: bool) -> bool:
+        """Pausa/reactiva **si el radar es de ese dueño**. ``True`` si escribió.
+
+        El dueño va en el ``WHERE`` de la propia escritura, no en una lectura
+        previa. Comprobar con ``get_radar_for_owner`` y después actualizar por
+        ``id`` deja una ventana entre las dos conexiones y, sobre todo, deja la
+        garantía en manos de que el siguiente que edite este método recuerde la
+        comprobación. En el predicado, la autorización no se puede omitir sin
+        borrarla a la vista.
+
+        ``archived_at IS NULL`` porque un radar archivado no vuelve a circulación
+        por esta puerta: para eso está ``restore_radar``.
+        """
+        conn = self._connect()
+        try:
+            cur = conn.execute(
+                "UPDATE radars SET enabled = ? "
+                " WHERE id = ? AND owner = ? AND archived_at IS NULL",
+                (1 if enabled else 0, radar_id, owner),
+            )
+            return cur.rowcount > 0
         finally:
             conn.close()
 
@@ -1299,18 +1347,55 @@ class RadarStore:
         la alerta ni cambia lo que el usuario pidió. Si se restaura, el radar
         vuelve tal como estaba, alerta incluida.
         """
+        self._archive(radar_id, ts=ts)
+
+    def _archive(
+        self, radar_id: str, *, ts: str | None = None, owner: str | None = None,
+    ) -> bool:
+        """La escritura de archivado, una sola vez. ``True`` si tocó una fila.
+
+        Las dos puertas —la interna por ``id`` y la del navegador, que además
+        exige dueño— tienen que archivar *exactamente* igual: mismo ``COALESCE``
+        idempotente y misma revocación del lease en la misma sentencia. Copiar el
+        SQL para añadirle un ``AND owner = ?`` es cómo dos versiones divergen sin
+        que nadie lo note: la copia se quedaría sin la próxima corrección.
+        """
+        where = " WHERE id = ?" + (" AND owner = ?" if owner is not None else "")
+        params: tuple = (ts or _now(), radar_id)
+        if owner is not None:
+            params += (owner,)
         conn = self._connect()
         try:
-            conn.execute(
+            cur = conn.execute(
                 "UPDATE radars "
                 "   SET archived_at = COALESCE(archived_at, ?), "
                 "       run_lease_token = NULL, run_lease_acquired_at = NULL, "
                 "       run_lease_expires_at = NULL "
-                " WHERE id = ?",
-                (ts or _now(), radar_id),
+                + where,
+                params,
             )
+            return cur.rowcount > 0
         finally:
             conn.close()
+
+    def archive_radar_for_owner(
+        self, owner: str, radar_id: str, ts: str | None = None,
+    ) -> bool:
+        """Archiva **si el radar es de ese dueño**. ``True`` si escribió.
+
+        Conserva todas las garantías de ``archive_radar`` —no borra, preserva el
+        historial, ``archived_at`` idempotente y revocación del lease en la misma
+        sentencia— porque es literalmente la misma escritura con un candado más.
+        """
+        return self._archive(radar_id, ts=ts, owner=owner)
+
+    def delete_radar_for_owner(self, owner: str, radar_id: str) -> bool:
+        """Archiva. **No borra** — igual que ``delete_radar``, y por lo mismo.
+
+        Existe para que la UI, cuyo botón dice "Eliminar", no tenga que traducir
+        la intención del usuario a "archivar" en cada sitio donde la expresa.
+        """
+        return self.archive_radar_for_owner(owner, radar_id)
 
     def restore_radar(self, radar_id: str) -> None:
         """Devuelve a circulación la misma fila, con su historial intacto.
@@ -1404,6 +1489,34 @@ class RadarStore:
                 "SELECT * FROM radar_runs WHERE radar_id = ? "
                 "ORDER BY started_at DESC LIMIT ?",
                 (radar_id, limit),
+            ).fetchall()
+        finally:
+            conn.close()
+        return [RadarRun.from_row(r) for r in rows]
+
+    def get_runs_for_owner(
+        self, owner: str, radar_id: str, limit: int = 50,
+    ) -> list[RadarRun]:
+        """Timeline del radar, **solo si es de ese dueño**. Vacío si no lo es.
+
+        El ``JOIN`` demuestra la propiedad en la misma consulta que lee. Podría
+        argumentarse que basta con que el caller haya obtenido antes el radar por
+        ``get_radar_for_owner``: eso es cierto hoy y deja de serlo la primera vez
+        que alguien añada una vista que lea el timeline por su cuenta. La lectura
+        se defiende sola.
+
+        No filtra por ``archived_at``: un radar archivado conserva su historial a
+        propósito, y quien lo archivó sigue siendo su dueño. La puerta que decide
+        si se puede *llegar* a esa vista es ``get_radar_for_owner``.
+        """
+        conn = self._connect()
+        try:
+            rows = conn.execute(
+                "SELECT radar_runs.* FROM radar_runs "
+                "  JOIN radars ON radars.id = radar_runs.radar_id "
+                " WHERE radar_runs.radar_id = ? AND radars.owner = ? "
+                " ORDER BY radar_runs.started_at DESC LIMIT ?",
+                (radar_id, owner, limit),
             ).fetchall()
         finally:
             conn.close()

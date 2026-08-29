@@ -12,6 +12,7 @@ import json
 import re
 from datetime import datetime, timezone
 from pathlib import Path
+from types import SimpleNamespace
 
 import pytest
 
@@ -531,3 +532,222 @@ def test_the_save_button_is_backed_by_a_real_write():
     assert "get_workspace_store()" in fuente
     assert "save_item(" in fuente
     assert "archive_item(" in fuente
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# Frontera de dueño en la vista — el _open_radar rancio
+# ══════════════════════════════════════════════════════════════════════════════
+#
+# El bloqueador del gate: ``_open_radar`` sobrevivía al logout y el detalle se
+# resolvía por id. Estos tests ejecutan el enrutado REAL de ``_render_radares``
+# —cargado del AST, porque el módulo levanta la app al importarse— contra un
+# ``RadarStore`` de verdad, con el estado exacto que dejaba el bug: B mirando
+# el id de A. La defensa se prueba **con el cleanup deliberadamente roto**: si
+# mañana el vaciado de sesión falla, esta puerta tiene que aguantar sola.
+
+ANA = "email:ana@empresa.com"
+BRUNO = "email:bruno@empresa.com"
+
+
+class _SessionState(dict):
+    def __getattr__(self, name):
+        try:
+            return self[name]
+        except KeyError as exc:
+            raise AttributeError(name) from exc
+
+    def __setattr__(self, name, value):
+        self[name] = value
+
+
+class _Rerun(Exception):
+    """Streamlit corta la pasada; aquí también, para no seguir pintando."""
+
+
+class _FakeSt:
+    """Suficiente Streamlit para que el enrutado corra. Ningún botón se pulsa."""
+
+    def __init__(self):
+        self.session_state = _SessionState()
+        self.query_params: dict = {}
+
+    def button(self, *_a, **_k):
+        return False
+
+    def columns(self, spec):
+        n = spec if isinstance(spec, int) else len(spec)
+        return [self for _ in range(n)]
+
+    def expander(self, *_a, **_k):
+        return self
+
+    def container(self, *_a, **_k):
+        return self
+
+    def spinner(self, *_a, **_k):
+        return self
+
+    def progress(self, *_a, **_k):
+        return self
+
+    def rerun(self):
+        raise _Rerun
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *_a):
+        return False
+
+    def __getattr__(self, _name):
+        return lambda *_a, **_k: None
+
+
+class _FakeReceipts:
+    def get_viewed_event_ids(self, _owner, _ids):
+        return set()
+
+    def get_current_dispositions(self, _owner):
+        return {}
+
+    def list_suppressed(self, _owner):
+        return []
+
+
+def _load_radar_routing(store, owner, *, detalle_spy, gestion_spy=None):
+    """Carga ``_render_radares`` real con todo lo demás sustituido."""
+    ruta = Path(__file__).parents[1] / "streamlit_app.py"
+    tree = ast.parse(ruta.read_text(), filename=str(ruta))
+    fn = next(
+        node for node in tree.body
+        if isinstance(node, ast.FunctionDef) and node.name == "_render_radares"
+    )
+    fake_st = _FakeSt()
+    ns = {
+        "st": fake_st,
+        "workflow": SimpleNamespace(radar_store=store, deps=None),
+        "_current_user_identity": lambda: {"channel_user_key": owner},
+        "radar_owner": lambda identity, chat_id: owner,
+        "get_radar_receipt_store": _FakeReceipts,
+        "_render_opportunity_detail": lambda *_a, **_k: False,
+        "_render_radar_detail": detalle_spy,
+        "_render_crear_radar": lambda *_a, **_k: None,
+        "_render_follows_section": lambda *_a, **_k: None,
+        "_render_event_card": lambda *_a, **_k: None,
+        "_render_manage_row": gestion_spy or (lambda *_a, **_k: None),
+        "_refresh_all_radares": lambda *_a, **_k: None,
+        "_fmt_feed_ts": lambda _ts: "hace un rato",
+        "project_inbox": lambda feed, **_k: SimpleNamespace(
+            unread_count=0, visible_events=[], unread_event_ids=set(),
+        ),
+        "follows": SimpleNamespace(FOLLOWS_FREQUENCY="__follows__"),
+        "DISCARDED": "discarded",
+    }
+    exec(  # noqa: S102 - se ejecuta el enrutado real, no una copia
+        compile(ast.Module(body=[fn], type_ignores=[]), str(ruta), "exec"), ns,
+    )
+    return ns, fake_st.session_state
+
+
+def _radar_de_ana(tmp_path):
+    store = RadarStore(tmp_path / "radar.db")
+    rid = store.create_radar(
+        name="Vías Atlántico", owner=ANA,
+        query_frame_json=json.dumps({"dataset": "procesos"}),
+    )
+    store.record_run(
+        radar_id=rid, started_at="2026-08-01T00:00:00+00:00", status="ok",
+        new_count=3, digest_json=json.dumps({"text": "tres nuevos"}),
+    )
+    return store, rid
+
+
+def test_a_stale_open_radar_never_opens_someone_elses_detail(tmp_path):
+    """El estado exacto del bug: B autenticado, _open_radar de A en pie."""
+    store, radar_de_ana = _radar_de_ana(tmp_path)
+    abiertos = []
+    ns, state = _load_radar_routing(
+        store, BRUNO, detalle_spy=lambda *args: abiertos.append(args),
+    )
+    state["_open_radar"] = radar_de_ana        # cleanup roto a propósito
+
+    ns["_render_radares"]()
+
+    assert abiertos == []                      # nunca se pintó el detalle ajeno
+    assert "_open_radar" not in state          # y el id rancio se soltó
+
+
+def test_the_owner_does_open_their_own_detail(tmp_path):
+    """El guard no puede lograr el aislamiento rompiendo el caso normal."""
+    store, radar_de_ana = _radar_de_ana(tmp_path)
+    abiertos = []
+    ns, state = _load_radar_routing(
+        store, ANA, detalle_spy=lambda *args: abiertos.append(args),
+    )
+    state["_open_radar"] = radar_de_ana
+
+    ns["_render_radares"]()
+
+    assert len(abiertos) == 1
+    store_arg, owner_arg, radar_arg = abiertos[0]
+    assert owner_arg == ANA                    # el detalle recibe dueño explícito
+    assert radar_arg.id == radar_de_ana
+
+
+def test_the_management_list_of_the_other_user_is_empty(tmp_path):
+    """B no ve el radar de A ni siquiera para gestionarlo."""
+    store, radar_de_ana = _radar_de_ana(tmp_path)
+    gestionados = []
+    ns, _state = _load_radar_routing(
+        store, BRUNO,
+        detalle_spy=lambda *_a: None,
+        gestion_spy=lambda *args: gestionados.append(args),
+    )
+
+    ns["_render_radares"]()
+
+    assert gestionados == []
+
+
+def test_management_row_receives_the_owner_for_its_mutations(tmp_path):
+    """Pausar y eliminar tienen que poder exigir dueño: se les pasa."""
+    store, radar_de_ana = _radar_de_ana(tmp_path)
+    gestionados = []
+    ns, _state = _load_radar_routing(
+        store, ANA,
+        detalle_spy=lambda *_a: None,
+        gestion_spy=lambda *args: gestionados.append(args),
+    )
+
+    ns["_render_radares"]()
+
+    assert len(gestionados) == 1
+    _store_arg, owner_arg, radar_arg = gestionados[0]
+    assert owner_arg == ANA
+    assert radar_arg.id == radar_de_ana
+
+
+def test_the_web_frontier_never_reads_a_radar_by_id_alone():
+    """Ninguna ruta de la UI puede volver a usar el id como autorización."""
+    ruta = Path(__file__).parents[1] / "streamlit_app.py"
+    fuente = ruta.read_text()
+    assert "store.get_radar(" not in fuente
+    assert "store.get_runs(" not in fuente
+    assert "store.set_enabled(" not in fuente
+    assert "store.delete_radar(" not in fuente
+    assert "store.archive_radar(" not in fuente
+
+
+def test_cross_owner_mutations_are_refused_by_the_store_itself(tmp_path):
+    """Defensa en profundidad: aunque B llegara con el id, no muta nada."""
+    store, radar_de_ana = _radar_de_ana(tmp_path)
+
+    assert store.get_radar_for_owner(BRUNO, radar_de_ana) is None
+    assert store.set_enabled_for_owner(BRUNO, radar_de_ana, False) is False
+    assert store.archive_radar_for_owner(BRUNO, radar_de_ana) is False
+    assert store.delete_radar_for_owner(BRUNO, radar_de_ana) is False
+    assert store.get_runs_for_owner(BRUNO, radar_de_ana) == []
+
+    intacto = store.get_radar_for_owner(ANA, radar_de_ana)
+    assert intacto is not None and intacto.is_enabled
+    assert len(store.get_runs_for_owner(ANA, radar_de_ana)) == 1

@@ -2951,3 +2951,165 @@ def test_db_stores_null_for_single_long_token_description(store, leased):
     row = [e for e in _read_state(store.db_path, rid)["events"]
            if e["result_key"] == key][0]
     assert row["object_excerpt"] is None
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# Frontera de dueño — el id no es la autorización
+# ══════════════════════════════════════════════════════════════════════════════
+#
+# Las APIs por id (``get_radar``, ``set_enabled``, ``archive_radar``,
+# ``get_runs``) siguen existiendo para el scheduler, el runner y las
+# migraciones. Estas son las que usa la web, donde el id lo controla el cliente:
+# vive en ``session_state``, sobrevive a un cambio de identidad y se puede
+# teclear. Cada una demuestra la propiedad en su propio SQL.
+
+ANA = "email:ana@empresa.com"
+BRUNO = "email:bruno@empresa.com"
+
+
+@pytest.fixture
+def radar_de_ana(store):
+    rid = store.create_radar(
+        name="Vías Atlántico", owner=ANA, query_frame_json=_frame_json(),
+    )
+    store.record_run(
+        radar_id=rid, started_at="2026-06-11T00:00:00+00:00", status="ok",
+        total_count=12, new_count=3, changed_count=1,
+        digest_json=json.dumps({"text": "tres procesos nuevos"}),
+    )
+    return rid
+
+
+def test_get_radar_for_owner_returns_the_radar_to_its_owner(store, radar_de_ana):
+    radar = store.get_radar_for_owner(ANA, radar_de_ana)
+    assert radar is not None
+    assert radar.id == radar_de_ana
+    assert radar.owner == ANA
+
+
+def test_get_radar_for_owner_hides_someone_elses_radar(store, radar_de_ana):
+    assert store.get_radar_for_owner(BRUNO, radar_de_ana) is None
+
+
+def test_a_foreign_radar_is_indistinguishable_from_one_that_does_not_exist(
+    store, radar_de_ana,
+):
+    """Si se distinguiera, probar ids confirmaría radares ajenos."""
+    ajeno = store.get_radar_for_owner(BRUNO, radar_de_ana)
+    inexistente = store.get_radar_for_owner(BRUNO, "radar-que-no-existe")
+    assert ajeno is inexistente is None
+
+
+def test_get_radar_for_owner_hides_an_archived_radar(store, radar_de_ana):
+    store.archive_radar(radar_de_ana)
+    assert store.get_radar_for_owner(ANA, radar_de_ana) is None
+
+
+def test_set_enabled_for_owner_does_not_touch_someone_elses_radar(
+    store, radar_de_ana,
+):
+    assert store.set_enabled_for_owner(BRUNO, radar_de_ana, False) is False
+    assert store.get_radar(radar_de_ana).is_enabled          # sigue activo
+
+
+def test_set_enabled_for_owner_works_for_the_owner(store, radar_de_ana):
+    assert store.set_enabled_for_owner(ANA, radar_de_ana, False) is True
+    assert not store.get_radar(radar_de_ana).is_enabled
+    assert store.set_enabled_for_owner(ANA, radar_de_ana, True) is True
+    assert store.get_radar(radar_de_ana).is_enabled
+
+
+def test_set_enabled_for_owner_refuses_an_archived_radar(store, radar_de_ana):
+    store.archive_radar(radar_de_ana)
+    assert store.set_enabled_for_owner(ANA, radar_de_ana, False) is False
+
+
+def test_archive_for_owner_does_not_touch_someone_elses_radar(store, radar_de_ana):
+    assert store.archive_radar_for_owner(BRUNO, radar_de_ana) is False
+    assert store.get_radar(radar_de_ana) is not None         # sigue sin archivar
+
+
+def test_delete_for_owner_does_not_touch_someone_elses_radar(store, radar_de_ana):
+    assert store.delete_radar_for_owner(BRUNO, radar_de_ana) is False
+    assert store.get_radar(radar_de_ana) is not None
+
+
+def test_archive_for_owner_keeps_every_guarantee_of_archive_radar(
+    store, radar_de_ana,
+):
+    """Misma escritura que la puerta interna, con un candado más."""
+    store.try_acquire_run_lease(radar_de_ana)
+
+    assert store.archive_radar_for_owner(
+        ANA, radar_de_ana, ts="2026-06-11T10:00:00+00:00",
+    ) is True
+
+    conn = sqlite3.connect(store.db_path)
+    conn.row_factory = sqlite3.Row
+    fila = conn.execute(
+        "SELECT archived_at, run_lease_token FROM radars WHERE id = ?",
+        (radar_de_ana,),
+    ).fetchone()
+    conn.close()
+    assert fila["archived_at"] == "2026-06-11T10:00:00+00:00"  # no borró la fila
+    assert fila["run_lease_token"] is None                     # lease revocado
+    assert len(store.get_runs(radar_de_ana)) == 1              # historial intacto
+
+    # Idempotente en la fecha: la segunda vez conserva la original.
+    assert store.archive_radar_for_owner(
+        ANA, radar_de_ana, ts="2026-12-01T00:00:00+00:00",
+    ) is True
+    assert store.get_runs(radar_de_ana)[0].new_count == 3
+    conn = sqlite3.connect(store.db_path)
+    archivado = conn.execute(
+        "SELECT archived_at FROM radars WHERE id = ?", (radar_de_ana,),
+    ).fetchone()[0]
+    conn.close()
+    assert archivado == "2026-06-11T10:00:00+00:00"
+
+
+def test_get_runs_for_owner_returns_the_timeline_to_its_owner(store, radar_de_ana):
+    runs = store.get_runs_for_owner(ANA, radar_de_ana)
+    assert len(runs) == 1
+    assert runs[0].new_count == 3
+    assert runs[0].digest()["text"] == "tres procesos nuevos"
+
+
+def test_get_runs_for_owner_hides_someone_elses_timeline(store, radar_de_ana):
+    assert store.get_runs_for_owner(BRUNO, radar_de_ana) == []
+
+
+def test_get_runs_for_owner_proves_ownership_in_its_own_query(store, radar_de_ana):
+    """No se apoya en que el caller ya hubiera leído un radar autorizado."""
+    fuente = inspect.getsource(store.get_runs_for_owner)
+    assert "JOIN radars" in fuente
+    assert "radars.owner = ?" in fuente
+
+
+def test_get_runs_for_owner_honours_the_limit(store, radar_de_ana):
+    for i in range(3):
+        store.record_run(
+            radar_id=radar_de_ana, started_at=f"2026-06-1{i+2}T00:00:00+00:00",
+            status="ok", new_count=i,
+        )
+    assert len(store.get_runs_for_owner(ANA, radar_de_ana, limit=2)) == 2
+
+
+def test_the_owner_still_sees_the_history_of_an_archived_radar(store, radar_de_ana):
+    """Archivar preserva el historial: ocultarlo aquí lo haría irrecuperable."""
+    store.archive_radar_for_owner(ANA, radar_de_ana)
+    assert len(store.get_runs_for_owner(ANA, radar_de_ana)) == 1
+    assert store.get_runs_for_owner(BRUNO, radar_de_ana) == []
+
+
+def test_owner_scoped_reads_do_not_leak_through_a_shared_id_prefix(store):
+    """Dos dueños, ids distintos: ninguna vista cruza."""
+    de_ana = store.create_radar(name="A", owner=ANA, query_frame_json=_frame_json())
+    de_bruno = store.create_radar(
+        name="B", owner=BRUNO, query_frame_json=_frame_json(),
+    )
+
+    assert store.get_radar_for_owner(ANA, de_bruno) is None
+    assert store.get_radar_for_owner(BRUNO, de_ana) is None
+    assert [r.id for r in store.list_radars(ANA)] == [de_ana]
+    assert [r.id for r in store.list_radars(BRUNO)] == [de_bruno]
