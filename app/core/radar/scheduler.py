@@ -119,7 +119,7 @@ def run_due_radars(
     """
     now = now or datetime.now(timezone.utc)
     summary = SchedulerSummary()
-    store.start_scheduler_pass(now.isoformat())
+    store.start_scheduler_pass()
 
     for radar in store.list_all_enabled_radars():
         summary.checked += 1
@@ -187,6 +187,6 @@ def run_due_radars(
         )
 
     final_status = "completed_with_errors" if summary.errors else "completed"
-    store.finish_scheduler_pass(final_status, now.isoformat())
+    store.finish_scheduler_pass(final_status)
     logger.info("radar scheduler: %s", summary.as_line())
     return summary

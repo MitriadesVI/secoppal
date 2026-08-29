@@ -168,14 +168,44 @@ def test_summary_line_format(store, monkeypatch):
     assert "corridos=1" in line and "nuevos=3" in line and "cambios=1" in line
 
 
-def test_pass_without_due_radars_still_updates_heartbeat(store):
+def test_pass_without_due_radars_uses_real_operational_clock(store, monkeypatch):
+    start_calls = []
+    finish_calls = []
+    original_start = store.start_scheduler_pass
+    original_finish = store.finish_scheduler_pass
+
+    def start_spy(*args, **kwargs):
+        start_calls.append((args, kwargs))
+        return original_start(*args, **kwargs)
+
+    def finish_spy(*args, **kwargs):
+        finish_calls.append((args, kwargs))
+        return original_finish(*args, **kwargs)
+
+    monkeypatch.setattr(store, "start_scheduler_pass", start_spy)
+    monkeypatch.setattr(store, "finish_scheduler_pass", finish_spy)
+
+    before = datetime.now(timezone.utc)
     summary = run_due_radars(deps=None, store=store, now=NOW)
+    after = datetime.now(timezone.utc)
 
     state = store.get_scheduler_state()
+    heartbeat = datetime.fromisoformat(state.last_heartbeat_at)
+    started = datetime.fromisoformat(state.last_pass_started_at)
+    finished = datetime.fromisoformat(state.last_pass_finished_at)
+
     assert summary.checked == 0
-    assert state.last_heartbeat_at == NOW.isoformat()
-    assert state.last_pass_started_at == NOW.isoformat()
-    assert state.last_pass_finished_at == NOW.isoformat()
+    assert start_calls == [((), {})]
+    assert finish_calls == [(('completed',), {})]
+    assert before <= started <= after
+    assert before <= finished <= after
+    assert finished >= started
+    assert heartbeat == finished
+    assert NOW.isoformat() not in {
+        state.last_heartbeat_at,
+        state.last_pass_started_at,
+        state.last_pass_finished_at,
+    }
     assert state.last_pass_status == "completed"
 
 
