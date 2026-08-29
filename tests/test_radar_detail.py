@@ -464,7 +464,7 @@ def _detail_visible_strings() -> set[str]:
     objetivo = {
         "_render_opportunity_detail", "_render_detail_header",
         "_render_detail_change", "_render_detail_fields",
-        "_render_workspace_action",
+        "_render_workspace_action", "_render_radar_management",
     }
     literales: set[str] = set()
     for node in ast.walk(tree):
@@ -505,8 +505,23 @@ def test_streamlit_shows_no_dead_buttons_for_deferred_actions():
     # (app/core/workspace_store.py) y la ruta completa guardar → volver a
     # encontrar → quitar. El test siguiente es el que sostiene esa afirmación;
     # si la escritura desapareciera, "Guardar" volvería a estar prohibido aquí.
-    for pendiente in ("Descartar", "No es relevante", "Me interesa", "Preparando"):
+    for pendiente in ("Me interesa", "Preparando"):
         assert pendiente not in etiquetas
+
+
+def test_r5a_buttons_are_backed_by_receipt_writes():
+    """Descartar y relevancia dejaron de ser acciones diferidas en R5A."""
+    fuente = (Path(__file__).parents[1] / "streamlit_app.py").read_text()
+    cuerpo = ast.get_source_segment(
+        fuente,
+        next(
+            node for node in ast.walk(ast.parse(fuente))
+            if isinstance(node, ast.FunctionDef)
+            and node.name == "_render_radar_management"
+        ),
+    )
+    assert '"Descartar"' in cuerpo and ".discard(" in cuerpo
+    assert '"No es relevante"' in cuerpo and ".mark_not_relevant(" in cuerpo
 
 
 def test_the_save_button_is_backed_by_a_real_write():

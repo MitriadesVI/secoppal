@@ -121,10 +121,9 @@ def test_the_two_readers_answer_different_questions_and_do_not_overlap():
 
 # ── R2: dónde vive Guardar, y qué NO se convirtió en un CRM ─────────────────
 #
-# El escritorio tiene que demostrar una sola cosa: guardar, volver a encontrar,
-# abrir, quitar. Cada botón de más ("me interesa", "preparando", "descartar")
-# promete un pipeline comercial que no existe y que el plan V2.1 §9.4 excluye
-# explícitamente de V1.
+# El escritorio sigue demostrando una sola cosa: guardar, volver a encontrar,
+# abrir, quitar. R5A añade decisiones de Inbox en el detalle de Radar, no estados
+# comerciales en Workspace.
 
 
 def _streamlit_source() -> str:
@@ -180,6 +179,39 @@ def test_the_detail_offers_only_save_and_secop():
     }
 
 
+def test_r5a_management_actions_live_in_the_opportunity_detail():
+    assert _button_labels("_render_radar_management") == {
+        "Descartar", "No es relevante",
+    }
+    calls = {
+        node.func.id
+        for node in ast.walk(_function_node("_render_opportunity_detail"))
+        if isinstance(node, ast.Call) and isinstance(node.func, ast.Name)
+    }
+    assert "_render_radar_management" in calls
+
+
+def test_r5a_copy_distinguishes_discard_from_relevance_feedback():
+    source = _streamlit_source()
+    body = ast.get_source_segment(
+        source, _function_node("_render_radar_management")
+    )
+    assert "No quiero seguir viendo esta oportunidad en este Radar." in body
+    assert "no corresponde a lo que este Radar debería encontrar" in body
+    assert "Oportunidad descartada" in body
+    assert "guardé tu señal para mejorar la selección" in body
+    assert "Radar aprendió" not in source
+
+
+def test_suppressed_surface_has_restore_without_exposing_receipt_history():
+    assert "Restaurar" in _button_labels("_render_radares")
+    source = _streamlit_source()
+    assert "Ocultadas (" in source
+    assert "receipt_seq" not in ast.get_source_segment(
+        source, _function_node("_render_radares")
+    )
+
+
 def test_the_workspace_card_offers_only_secop_and_remove():
     """R2 no es un CRM: sin estados, sin pin, sin notas, sin compartir."""
     assert _button_labels("_render_workspace_card") == {"Abrir en SECOP", "Quitar"}
@@ -187,9 +219,9 @@ def test_the_workspace_card_offers_only_secop_and_remove():
 
 def test_no_commercial_pipeline_verbs_reached_the_ui():
     source = _streamlit_source()
-    for prohibido in ("Me interesa", "Preparando", "No es relevante", "Descartar",
-                      "Preparar oferta", "Analizar pliego"):
+    for prohibido in ("Me interesa", "Preparando", "Preparar oferta", "Analizar pliego"):
         assert prohibido not in source
+    assert "por_revisar" not in source
 
 
 def test_no_parallel_persistence_table_was_introduced():

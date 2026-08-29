@@ -103,9 +103,15 @@ M2_MODIFIED_FILE_SHA256 = {
 # tests/test_workspace_store.py, tests/test_radar_workspace.py y los casos R2 de
 # tests/test_radar_ui_truth.py; los oracles de Search de este archivo y
 # test_m2_does_not_move_ranking_ordering_counts_or_pagination siguen verdes.
+# RADAR-R5A lo repinea para proyectar el feed raw como Inbox, registrar ``viewed``
+# al abrir el detalle y ofrecer Descartar/No es relevante/Restaurar sobre la
+# autoridad append-only de receipts. El cambio sigue acotado a la superficie
+# Radar: no toca Search, ranking, cursor de paginación ni sus fingerprints. Lo
+# protegen tests/test_radar_receipts.py, tests/test_radar_inbox.py y los casos
+# R5A de tests/test_radar_ui_truth.py.
 M2_1_MODIFIED_FILE_SHA256 = {
     "app/core/workflow/handlers/direct_lookup.py": "6dcfc63405824e82b46a4b07bbdd503fd2bd504ec65a5640a0c3cc628ee90b6b",
-    "streamlit_app.py": "1d3691febf9357ba8667e9e2046bc273e718ab299675f03380451375d5bd8cbf",
+    "streamlit_app.py": "72c53a15ee9e6a5dd4fae5f67b2d23583f404d94db58c7e937477d56246c2345",
 }
 
 # HCA-R6 re-pins ONE previously byte-frozen file. The pagination header carried

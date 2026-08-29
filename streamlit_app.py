@@ -22,6 +22,7 @@ from app.core.radar.detail import (
     is_opportunity_event,
     observed_secop_url,
 )
+from app.core.radar.inbox import project_inbox
 from app.core.radar.keys import radar_result_key
 from app.core.radar.presentation import (
     format_colombia_timestamp,
@@ -30,6 +31,11 @@ from app.core.radar.presentation import (
     timeline_label,
 )
 from app.core.radar.runner import run_radar
+from app.core.radar.receipts import (
+    DISCARDED,
+    RadarReceiptError,
+    RadarReceiptStore,
+)
 from app.core.radar.store import RadarExistsError
 from app.core.radar.workspace import (
     build_workspace_snapshot,
@@ -69,6 +75,12 @@ def get_account_store() -> AccountStore:
 def get_workspace_store() -> WorkspaceStore:
     """WorkspaceStore singleton sobre la misma SQLite del feedback."""
     return WorkspaceStore(get_settings().secop_feedback_db_path)
+
+
+@st.cache_resource
+def get_radar_receipt_store() -> RadarReceiptStore:
+    """Interacciones humanas de Radar sobre la misma SQLite del feedback."""
+    return RadarReceiptStore(get_settings().secop_feedback_db_path)
 
 
 _COOKIE_NAME = "secoppal_session"
@@ -1073,13 +1085,15 @@ def _closing_hint(closing) -> str:
     return ""
 
 
-def _render_event_card(ev: dict) -> None:
+def _render_event_card(ev: dict, *, unread: bool = False) -> None:
     icon, label = _EVENT_META.get(ev.get("kind", ""), ("•", ""))
     with st.container(border=True):
         st.markdown(
             f"{icon} **{ev.get('radar_name', '')}** · {label} · "
             f"{_fmt_feed_ts(ev.get('ts'))}"
         )
+        if unread:
+            st.caption("● Sin revisar")
         title = (ev.get("title") or "").strip()
         kind = ev.get("kind")
         if kind == "baseline":
@@ -1233,7 +1247,46 @@ def _render_workspace_action(evento: dict, detail) -> None:
         st.rerun()
 
 
-def _render_opportunity_detail(store, owner: str, event_id: str) -> bool:
+def _render_radar_management(
+    receipts: RadarReceiptStore, owner: str, evento: dict,
+) -> None:
+    """Dos decisiones de Inbox; ninguna modifica Workspace ni el evento."""
+    st.markdown("#### Gestionar en Radar")
+    descartar, no_relevante = st.columns(2)
+    with descartar:
+        st.caption("No quiero seguir viendo esta oportunidad en este Radar.")
+        discard_clicked = st.button(
+            "Descartar", key="opp_discard", use_container_width=True,
+        )
+    with no_relevante:
+        st.caption(
+            "Esta oportunidad no corresponde a lo que este Radar debería encontrar."
+        )
+        not_relevant_clicked = st.button(
+            "No es relevante", key="opp_not_relevant", use_container_width=True,
+        )
+
+    try:
+        if discard_clicked:
+            receipts.discard(owner, str(evento.get("id") or ""))
+            _flash("Oportunidad descartada")
+        elif not_relevant_clicked:
+            receipts.mark_not_relevant(owner, str(evento.get("id") or ""))
+            _flash(
+                "Gracias. La oculté y guardé tu señal para mejorar la selección."
+            )
+        else:
+            return
+    except RadarReceiptError as exc:
+        st.error(str(exc))
+        return
+    st.session_state.pop("_open_event", None)
+    st.rerun()
+
+
+def _render_opportunity_detail(
+    store, receipts: RadarReceiptStore, owner: str, event_id: str,
+) -> bool:
     """Detalle de una oportunidad detectada. False si ya no se puede abrir."""
     evento = store.get_event(owner, event_id)
     if evento is None:
@@ -1241,6 +1294,13 @@ def _render_opportunity_detail(store, owner: str, event_id: str) -> bool:
     detail = build_opportunity_detail(evento, now=datetime.now(timezone.utc))
     if detail is None:
         return False
+
+    try:
+        # Abrir la ficha —no pintar su tarjeta— es el hecho humano ``viewed``.
+        # La store lo vuelve idempotente para que los reruns no generen ruido.
+        receipts.mark_viewed(owner, event_id)
+    except RadarReceiptError as exc:
+        st.warning(f"No pude registrar que revisaste esta oportunidad: {exc}")
 
     if st.button("← Volver a movimientos", key="opp_back"):
         del st.session_state["_open_event"]
@@ -1261,6 +1321,8 @@ def _render_opportunity_detail(store, owner: str, event_id: str) -> bool:
         st.link_button("Abrir en SECOP", detail.secop_url, type="primary")
     else:
         st.caption("Enlace a SECOP no disponible en este registro.")
+
+    _render_radar_management(receipts, owner, evento)
 
     st.caption(
         "Estos datos son los que el radar observó el "
@@ -1359,12 +1421,13 @@ def _render_radares() -> None:
 
     identity = _current_user_identity()
     owner = radar_owner(identity, st.session_state.get("chat_id"))
+    receipts = get_radar_receipt_store()
 
     # Detalle de una oportunidad concreta (tiene prioridad: se llega a él
     # desde el feed, y el botón que lo abre cierra cualquier radar abierto).
     open_event = st.session_state.get("_open_event")
     if open_event:
-        if _render_opportunity_detail(store, owner, open_event):
+        if _render_opportunity_detail(store, receipts, owner, open_event):
             return
         # El evento ya no existe o no identifica un proceso: se vuelve al feed
         # en vez de dejar una vista muerta.
@@ -1401,12 +1464,50 @@ def _render_radares() -> None:
 
     # Feed de movimientos (todos los radares juntos, cronológico).
     feed = store.get_feed(owner, limit=80)
-    if not feed:
+    viewed = receipts.get_viewed_event_ids(
+        owner, [str(event.get("id") or "") for event in feed]
+    )
+    dispositions = receipts.get_current_dispositions(owner)
+    inbox = project_inbox(
+        feed, viewed_event_ids=viewed, dispositions=dispositions,
+    )
+    suppressed = receipts.list_suppressed(owner)
+    if not feed and not suppressed:
         st.info("Sin movimientos todavía. Crea un radar y pulsa 🔄 Actualizar.")
     else:
         st.markdown("#### Movimientos")
-        for ev in feed:
-            _render_event_card(ev)
+        st.caption(f"{inbox.unread_count} sin revisar")
+        if not inbox.visible_events:
+            st.info("No hay movimientos visibles en este momento.")
+        for ev in inbox.visible_events:
+            _render_event_card(
+                dict(ev), unread=str(ev.get("id") or "") in inbox.unread_event_ids,
+            )
+
+    if suppressed:
+        with st.expander(f"Ocultadas ({len(suppressed)})"):
+            for item in suppressed:
+                with st.container(border=True):
+                    st.markdown(f"**{item.title or item.result_key}**")
+                    if item.radar_name:
+                        st.caption(f"📡 {item.radar_name}")
+                    reason = (
+                        "Descartada" if item.disposition == DISCARDED
+                        else "Marcada como no relevante"
+                    )
+                    st.caption(f"Motivo: {reason}")
+                    if st.button(
+                        "Restaurar",
+                        key=f"restore_{item.radar_id}_{item.result_key}",
+                        use_container_width=True,
+                    ):
+                        try:
+                            receipts.restore(owner, item.radar_id, item.result_key)
+                        except RadarReceiptError as exc:
+                            st.error(str(exc))
+                        else:
+                            _flash("Oportunidad restaurada")
+                            st.rerun()
 
     # Gestión de radares (secundario): pausar, abrir detalle, eliminar.
     if radars:

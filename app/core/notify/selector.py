@@ -31,6 +31,7 @@ from app.core.notify.outbox_store import (
 )
 from app.core.notify.render import build_payload, render_payload
 from app.core.notify.schema import FREQUENCIES, ensure_schema
+from app.core.radar.receipts import RadarReceiptStore
 
 
 PHASE_AFTER_WINDOW_READ = "after_window_read"
@@ -191,6 +192,10 @@ def _event_from_row(row: Mapping) -> SelectableRadarEvent:
 class NotificationSelector:
     def __init__(self, db_path: str | Path) -> None:
         self.db_path = Path(db_path)
+        # Misma SQLite, autoridad separada. El store crea su tabla de forma
+        # idempotente; select_pair lee suppressions sobre SU propia conexión y
+        # transacción para ordenar decisión humana ↔ batch.
+        self.receipt_store = RadarReceiptStore(self.db_path)
         conn = self._connect()
         try:
             ensure_schema(conn)
@@ -287,7 +292,23 @@ class NotificationSelector:
                     include_disappeared=bool(target["include_disappeared"]),
                 )
                 window = [_event_from_row(row) for row in rows]
-                eligible = [event for event in window if is_event_eligible(event, flags)]
+                try:
+                    suppressed = self.receipt_store.get_suppressed_result_keys(
+                        str(target["owner"]), radar_id, connection=conn,
+                    )
+                except Exception as exc:
+                    # Una decisión humana explícita pesa más que la puntualidad
+                    # del push: sin poder resolverla de forma confiable no se
+                    # materializa batch ni se mueve el cursor.
+                    raise SelectorError(
+                        "No se pudieron resolver las supresiones del Radar; "
+                        "la selección falla cerrada."
+                    ) from exc
+                eligible = [
+                    event for event in window
+                    if event.result_key not in suppressed
+                    and is_event_eligible(event, flags)
+                ]
                 notification_id: str | None = None
                 created = False
                 associated = 0

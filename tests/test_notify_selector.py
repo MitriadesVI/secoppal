@@ -214,6 +214,96 @@ def test_legacy_null_seq_is_ignored_and_baseline_window_advances(env):
     assert env["outbox"].count_batches() == 0
 
 
+# ── R5A · decisiones de Inbox antes de materializar un nuevo batch ─────────
+
+
+@pytest.mark.parametrize("action", ["discard", "mark_not_relevant"])
+def test_suppressed_event_is_examined_without_creating_a_batch(env, action):
+    event = _events(env, ["new"])[0]
+    getattr(env["selector"].receipt_store, action)(env["owner"], event["id"])
+
+    result = env["selector"].select_pair(env["endpoint"], env["radar"], now=NOW)
+
+    assert (result.examined, result.eligible, result.associated) == (1, 0, 0)
+    assert result.created is False
+    assert result.notification_id is None
+    assert result.cursor_after == event["event_seq"]
+    assert _cursor(env) == event["event_seq"]
+    assert env["outbox"].count_batches() == 0
+
+
+def test_mixed_window_batches_only_active_event_and_advances_over_both(env):
+    suppressed, active = _events(env, ["new", "new"])
+    env["selector"].receipt_store.discard(env["owner"], suppressed["id"])
+
+    result = env["selector"].select_pair(env["endpoint"], env["radar"], now=NOW)
+
+    assert (result.examined, result.eligible, result.associated) == (2, 1, 1)
+    refs = env["outbox"].list_batch_events(result.notification_id)
+    assert [(ref.event_id, ref.event_seq) for ref in refs] == [
+        (active["id"], active["event_seq"]),
+    ]
+    assert result.cursor_after == active["event_seq"]
+
+
+def test_restore_does_not_replay_examined_event_but_allows_future_event(env):
+    original = _events(env, ["new"], same_key=True)[0]
+    receipts = env["selector"].receipt_store
+    receipts.discard(env["owner"], original["id"])
+    first = env["selector"].select_pair(env["endpoint"], env["radar"], now=NOW)
+    assert first.created is False
+
+    receipts.restore(env["owner"], env["radar"], "SAME")
+    no_replay = env["selector"].select_pair(
+        env["endpoint"], env["radar"], now=NOW
+    )
+    assert no_replay.skipped_reason == "empty_window"
+    assert no_replay.cursor_after == original["event_seq"]
+
+    future = _events(env, ["changed_state"], start=2, same_key=True)[0]
+    selected = env["selector"].select_pair(
+        env["endpoint"], env["radar"], now=NOW
+    )
+    assert selected.created is True
+    assert selected.associated == 1
+    assert (
+        env["outbox"].list_batch_events(selected.notification_id)[0].event_id
+        == future["id"]
+    )
+
+
+def test_receipt_read_failure_is_fail_closed_and_keeps_cursor(env, monkeypatch):
+    _events(env, ["new"])
+
+    def fail(*args, **kwargs):
+        raise sqlite3.OperationalError("receipt table unavailable")
+
+    monkeypatch.setattr(
+        env["selector"].receipt_store, "get_suppressed_result_keys", fail
+    )
+    with pytest.raises(SelectorError, match="falla cerrada"):
+        env["selector"].select_pair(env["endpoint"], env["radar"], now=NOW)
+
+    assert _cursor(env) == 0
+    assert env["outbox"].count_batches() == 0
+
+
+def test_suppression_does_not_revoke_an_already_materialized_batch(env):
+    event = _events(env, ["new"])[0]
+    selected = env["selector"].select_pair(
+        env["endpoint"], env["radar"], now=NOW
+    )
+    assert selected.created is True
+
+    env["selector"].receipt_store.mark_not_relevant(env["owner"], event["id"])
+
+    assert env["outbox"].count_batches() == 1
+    assert (
+        env["outbox"].list_batch_events(selected.notification_id)[0].event_id
+        == event["id"]
+    )
+
+
 @pytest.mark.parametrize("phase", [
     PHASE_AFTER_WINDOW_READ, PHASE_AFTER_BATCH_INSERT, PHASE_AFTER_ASSOCIATIONS,
     PHASE_BEFORE_CURSOR_UPDATE, PHASE_AFTER_CURSOR_UPDATE, PHASE_BEFORE_COMMIT,
