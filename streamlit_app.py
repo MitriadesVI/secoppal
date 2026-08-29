@@ -1078,7 +1078,10 @@ def _render_detail_header(detail) -> None:
             delta=pista or None,
             delta_color="off",
         )
-        der.caption("Hora Colombia, según la fecha registrada en SECOP.")
+        # Sin hora ni mención de zona: la columna es un calendar_date y solo
+        # afirma el día. Un "hora Colombia" aquí sugeriría una precisión que
+        # la fuente no da.
+        der.caption("Fecha registrada en SECOP.")
     elif detail.closing.supported:
         # §6: no se inventa un plazo ni se sustituye por la publicación.
         der.info("Fecha de cierre no disponible en los datos observados.")
@@ -1149,10 +1152,6 @@ def _render_opportunity_detail(store, owner: str, event_id: str) -> bool:
         "Estos datos son los que el radar observó el "
         f"{format_colombia_timestamp(detail.observed_at)} (hora Colombia) y no "
         "cambian después. SECOP sigue siendo la fuente para ofertar."
-    )
-    st.caption(
-        "Guardar, descartar y marcar como no relevante llegarán en las "
-        "próximas entregas."
     )
     return True
 

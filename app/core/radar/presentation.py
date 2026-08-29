@@ -5,64 +5,54 @@ Dos relojes distintos pasan por aquí y NO se pueden leer con la misma función:
 * Lo que **Radar persiste** (``ts``, ``last_run_at``, heartbeats) se escribe en
   UTC; un naive heredado se interpreta conservadoramente como UTC. Eso es
   ``parse_persisted_timestamp``.
-* Lo que **SECOP publica** dentro de un resultado (``fecha_de_recepcion_de``)
-  llega sin offset y ya es hora local colombiana. Leerlo como UTC lo adelantaría
-  cinco horas — mostraría las 11:00 donde la entidad publicó las 16:00. Eso es
-  ``parse_secop_timestamp``.
+* Lo que **SECOP publica** como fecha dentro de un resultado
+  (``fecha_de_recepcion_de``, ``fecha_de_publicacion_del``) no es un instante:
+  son columnas Socrata ``calendar_date``. Solo se puede leer el día civil. Eso
+  es ``parse_secop_calendar_date``.
 
-Las dos comparten ``COLOMBIA_TZ``, que sigue definida una sola vez, y se
-declaran juntas para que la diferencia esté a la vista de quien elija una.
+``COLOMBIA_TZ`` sigue definida una sola vez y las dos lecturas se declaran
+juntas para que la diferencia esté a la vista de quien elija una: la zona
+convierte instantes persistidos y sitúa el día de hoy, nunca le pone hora a una
+fecha de SECOP.
 """
 from __future__ import annotations
 
 from datetime import date, datetime, timedelta, timezone
-from typing import Literal
 from zoneinfo import ZoneInfo
 
 COLOMBIA_TZ = ZoneInfo("America/Bogota")
 SCHEDULER_HEARTBEAT_MAX_AGE = timedelta(hours=7)
 
-SecopTimestampKind = Literal["civil_date", "instant", "unreadable"]
+def parse_secop_calendar_date(raw: str | None) -> date | None:
+    """Día civil de una fecha publicada por SECOP, o ``None`` si no se lee.
 
+    ``fecha_de_recepcion_de`` y ``fecha_de_publicacion_del`` son columnas
+    Socrata ``calendar_date`` (auditoría O1B.1, 2026-08-17), materializadas
+    como ``YYYY-MM-DDT00:00:00.000``. Esa parte horaria es el relleno del tipo,
+    no una hora de cierre observada: las 62 lecturas reales disponibles en
+    ``radar_seen_results.last_snapshot_json`` son medianoche sin excepción.
 
-def parse_secop_timestamp(
-    raw: str | None,
-) -> tuple[SecopTimestampKind, date | datetime | None]:
-    """Lee una fecha publicada por SECOP en la zona en que fue publicada.
+    Por eso la función devuelve un ``date`` y no un instante. Anclar el texto a
+    ``COLOMBIA_TZ`` y mostrar la hora resultante presentaría "cierra a las
+    00:00" —una precisión que la fuente no tiene y una afirmación falsa sobre
+    el plazo—. El resto del repo ya lee esta columna así: el estado operativo
+    recorta a ``[:10]`` y el SoQL compara contra un límite de día civil.
 
-    Devuelve QUÉ se leyó, no solo el valor, porque las dos formas se muestran
-    distinto y confundirlas afirma algo falso:
+    No se adivina ningún formato ni se aplica locale: un texto que no empieza
+    por una fecha ISO válida devuelve ``None``, nunca una fecha inventada.
 
-    * ``civil_date`` — un día sin hora ("2026-09-02"). No se promueve a
-      medianoche: eso daría por vencido, desde las 00:00, un plazo que corre
-      todo el día.
-    * ``instant`` — un momento con hora. Un texto sin offset se ancla en
-      ``COLOMBIA_TZ`` (America/Bogota no observa horario de verano, así que no
-      hay huecos ni solapamientos que resolver); uno con offset explícito se
-      respeta y se convierte.
-    * ``unreadable`` — no se adivina ningún formato ni se aplica locale. Un
-      texto que no sabemos leer se reporta como tal; nunca se muestra crudo ni
-      se trata como ausente.
-
-    El orden importa: la fecha civil se intenta primero, porque
-    ``datetime.fromisoformat`` acepta "2026-09-02" y le inventaría las 00:00.
+    La zona horaria no participa en esta lectura. Su papel, con la misma
+    ``COLOMBIA_TZ``, es situar el día de HOY para comparar contra él.
     """
     if raw is None:
-        return "unreadable", None
+        return None
     text = str(raw).strip()
     if not text:
-        return "unreadable", None
+        return None
     try:
-        return "civil_date", date.fromisoformat(text)
+        return date.fromisoformat(text[:10])
     except ValueError:
-        pass
-    try:
-        parsed = datetime.fromisoformat(text)
-    except ValueError:
-        return "unreadable", None
-    if parsed.tzinfo is None or parsed.utcoffset() is None:
-        return "instant", parsed.replace(tzinfo=COLOMBIA_TZ)
-    return "instant", parsed.astimezone(COLOMBIA_TZ)
+        return None
 
 
 def parse_persisted_timestamp(raw: str | None) -> datetime | None:

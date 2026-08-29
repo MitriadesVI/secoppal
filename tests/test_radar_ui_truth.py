@@ -10,7 +10,7 @@ from app.core.radar.presentation import (
     COLOMBIA_TZ,
     SCHEDULER_HEARTBEAT_MAX_AGE,
     format_colombia_timestamp,
-    parse_secop_timestamp,
+    parse_secop_calendar_date,
     scheduler_heartbeat_recent,
     timeline_label,
 )
@@ -70,41 +70,49 @@ def test_tzdata_is_declared_for_linux_without_system_zoneinfo():
 
 
 # ── R1: los dos relojes de la pestaña Radar ─────────────────────────────────
+#
+# Radar escribe INSTANTES en UTC (ts, last_run_at, heartbeats). SECOP publica
+# DÍAS: fecha_de_recepcion_de es una columna Socrata calendar_date, según la
+# auditoría O1B.1 del 2026-08-17. Mezclarlas produce dos errores distintos, y
+# cada helper existe para no cometer el suyo.
 
 
-def test_secop_naive_timestamp_is_colombian_wall_time_not_utc():
-    """El contraste que hace peligroso reutilizar el helper equivocado.
+def test_secop_calendar_date_reads_the_day_and_drops_the_padding():
+    """La medianoche del ISO es relleno del tipo, no una hora de cierre.
 
-    ``format_colombia_timestamp`` lee un naive como UTC —correcto, porque lo
-    que Radar persiste se escribe en UTC—. Un ``fecha_de_recepcion_de`` de
-    SECOP también llega sin offset, pero YA es hora local: pasarlo por el
-    primer helper adelantaría el cierre cinco horas.
+    Las lecturas reales de la columna (radar_seen_results.last_snapshot_json)
+    son todas 'T00:00:00.000'. Mostrar esa hora afirmaría que el proceso cierra
+    a medianoche, que es falso y además accionable en la dirección equivocada.
     """
-    crudo = "2026-09-02T16:00:00.000"
+    from datetime import date
 
-    kind, momento = parse_secop_timestamp(crudo)
-
-    assert kind == "instant"
-    assert momento.tzinfo is COLOMBIA_TZ
-    assert momento.strftime("%Y-%m-%d %H:%M") == "2026-09-02 16:00"
-    # El helper de lo persistido daría otra hora sobre el MISMO texto.
-    assert format_colombia_timestamp(crudo) == "2026-09-02 11:00"
+    assert parse_secop_calendar_date("2026-09-02T00:00:00.000") == date(2026, 9, 2)
+    assert parse_secop_calendar_date("2026-09-02") == date(2026, 9, 2)
 
 
-def test_secop_timestamp_with_offset_is_converted_to_colombia():
-    kind, momento = parse_secop_timestamp("2026-09-02T21:00:00+00:00")
-    assert kind == "instant"
-    assert momento.strftime("%Y-%m-%d %H:%M") == "2026-09-02 16:00"
+def test_secop_calendar_date_ignores_any_clock_or_offset_it_receives():
+    """Aunque llegara una hora, el tipo de la columna es lo que manda.
+
+    Este es el caso que hace falta fijar: anclar 'T16:00' a America/Bogota
+    parece más informativo y es precisamente la precisión que la fuente no
+    sostiene.
+    """
+    from datetime import date
+
+    assert parse_secop_calendar_date("2026-09-02T16:00:00.000") == date(2026, 9, 2)
+    assert parse_secop_calendar_date("2026-09-02T21:00:00+00:00") == date(2026, 9, 2)
 
 
-def test_secop_civil_date_is_not_promoted_to_midnight():
-    """Un día sin hora se conserva como día: medianoche sería una hora inventada."""
-    kind, valor = parse_secop_timestamp("2026-09-02")
-    assert kind == "civil_date"
-    assert valor.isoformat() == "2026-09-02"
-    assert not isinstance(valor, datetime)
+def test_unreadable_secop_date_is_none_never_a_guess():
+    for basura in (None, "", "   ", "no aplica", "02/09/2026", "2026-13-45"):
+        assert parse_secop_calendar_date(basura) is None
 
 
-def test_unreadable_secop_timestamp_is_reported_not_guessed():
-    for basura in (None, "", "   ", "no aplica", "02/09/2026"):
-        assert parse_secop_timestamp(basura) == ("unreadable", None)
+def test_the_two_readers_answer_different_questions_and_do_not_overlap():
+    """El helper de lo persistido sigue leyendo instantes, y debe seguir así.
+
+    Un naive persistido por Radar SÍ es UTC; aplicarle la lectura de día civil
+    perdería la hora que ahí sí existe. La separación es el punto.
+    """
+    assert format_colombia_timestamp("2026-08-28T15:00:00+00:00") == "2026-08-28 10:00"
+    assert COLOMBIA_TZ == ZoneInfo("America/Bogota")

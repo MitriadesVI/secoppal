@@ -29,16 +29,13 @@ módulo puro en vez de vivir dentro de Streamlit:
 
 Las autoridades que sí se reutilizan, y por qué esas:
 
-* Zona horaria → ``radar.presentation``, el módulo de presentación del Radar,
-  que declara ``COLOMBIA_TZ`` una sola vez. Se usa ``parse_secop_timestamp`` y
-  NO ``format_colombia_timestamp``: un ``fecha_de_recepcion_de`` viene SIN
-  offset y ya es hora local colombiana, mientras que el segundo lee un naive
-  como UTC —correcto para lo que Radar persiste (``ts``, ``last_run_at``) y
-  equivocado por cinco horas para un dato de SECOP—. Son dos preguntas
-  distintas sobre la misma zona, no dos implementaciones de zona.
-  (El Truth Layer declara la misma decisión en ``temporal_value``, pero sus
-  módulos temporales siguen sin consumidores en runtime por diseño; el guard
-  ``test_temporal_modules_have_no_runtime_consumers`` es quien lo sostiene.)
+* Fechas de SECOP → ``radar.presentation.parse_secop_calendar_date``, y NO
+  ``format_colombia_timestamp``. ``fecha_de_recepcion_de`` es una columna
+  Socrata ``calendar_date`` (auditoría O1B.1) materializada a ``00:00:00``:
+  solo se puede afirmar el día. Tratarla como instante mostraría "cierra a las
+  00:00", una precisión que la fuente no tiene. ``COLOMBIA_TZ`` sigue siendo la
+  autoridad única, pero para situar el día de HOY contra el que se compara, no
+  para ponerle hora al dato.
 * Nombres de columna por dataset → ``SoQLBuilder.SPECS``. Aquí solo se consulta
   si el dataset EXPONE el cierre de ofertas, para no decir "sin fecha de cierre"
   sobre un contrato, que por definición no la tiene.
@@ -53,7 +50,7 @@ from typing import Any, Literal
 from collections.abc import Mapping
 
 from app.core.radar.object_excerpt import build_object_excerpt
-from app.core.radar.presentation import COLOMBIA_TZ, parse_secop_timestamp
+from app.core.radar.presentation import COLOMBIA_TZ, parse_secop_calendar_date
 from app.core.soql_builder import SoQLBuilder
 from app.utils.money import format_cop, safe_money
 
@@ -133,10 +130,14 @@ class ClosingFact:
     necesita saber que no se sabe) y un contrato, que no tiene cierre de ofertas
     porque el proceso ya terminó (callar es lo correcto).
 
-    ``relation`` compara la fecha observada con ``now``. Es aritmética sobre un
-    dato, no un veredicto sobre el proceso: dice si ESA FECHA ya pasó, nunca si
-    la oportunidad sigue abierta —eso depende de estado y fase, que el evento no
-    conserva—. ``unknown`` cubre tanto la ausencia como el texto ilegible.
+    ``relation`` compara el DÍA observado con el día de hoy en Colombia. Es
+    aritmética de calendario sobre un dato, no un veredicto sobre el proceso:
+    dice si ESA FECHA ya pasó, nunca si la oportunidad sigue abierta —eso
+    depende de estado y fase, que el evento no conserva—. ``unknown`` cubre
+    tanto la ausencia como el texto ilegible.
+
+    ``display`` es siempre un día civil ISO, sin hora. La columna es un
+    ``calendar_date``: cualquier hora que se muestre sería inventada.
     """
 
     supported: bool = False
@@ -158,10 +159,9 @@ def _build_closing_fact(
 ) -> ClosingFact:
     """Interpreta el texto crudo del cierre. No adivina formatos.
 
-    Una fecha civil ("2026-09-02") se compara como día calendario colombiano y
-    se muestra sin hora: promoverla a medianoche la daría por vencida durante
-    todo el día que todavía corre. La lectura de la zona la hace
-    ``parse_secop_timestamp``; aquí solo se compara y se rotula.
+    La fecha se compara como día calendario colombiano, así que un plazo
+    fechado hoy sigue siendo "hoy" a cualquier hora del día. La lectura la hace
+    ``parse_secop_calendar_date``; aquí solo se compara y se rotula.
     """
     if not supported:
         return ClosingFact(supported=False)
@@ -169,25 +169,16 @@ def _build_closing_fact(
     if text is None:
         return ClosingFact(supported=True)
 
-    kind, parsed = parse_secop_timestamp(text)
-    if kind == "unreadable":
+    civil = parse_secop_calendar_date(text)
+    if civil is None:
         # No se muestra un texto que no sabemos leer, ni se afirma ausencia:
         # el campo queda como desconocido, que es lo que de verdad se sabe.
         return ClosingFact(supported=True)
 
-    today = _civil_date_in_source_zone(now)
-    if kind == "civil_date":
-        civil: date = parsed  # type: ignore[assignment]
-        display = civil.isoformat()
-    else:
-        local: datetime = parsed  # type: ignore[assignment]
-        civil = local.date()
-        display = local.strftime("%Y-%m-%d %H:%M")
-
-    delta = (civil - today).days
+    delta = (civil - _civil_date_in_source_zone(now)).days
     return ClosingFact(
         supported=True,
-        display=display,
+        display=civil.isoformat(),
         relation=_relation_from_days(delta),
         days_remaining=delta,
     )
@@ -206,6 +197,12 @@ def _location(city: object, department: object) -> str | None:
     if ciudad and depto and ciudad.casefold() != depto.casefold():
         return f"{ciudad}, {depto}"
     return ciudad or depto
+
+
+def _civil_display(raw: object) -> str | None:
+    """Día civil ISO de una fecha de SECOP, o ``None`` si no se puede leer."""
+    civil = parse_secop_calendar_date(_text(raw))
+    return civil.isoformat() if civil else None
 
 
 def _money(value: object) -> str | None:
@@ -299,7 +296,10 @@ def build_opportunity_detail(
         modality=_text(event.get("modality")),
         source_status=_text(event.get("status")),
         contractor=_text(event.get("contractor")),
-        signature_date=_text(event.get("signature_date")),
+        # Mismo criterio que el cierre: es una fecha de SECOP, así que se
+        # muestra el día. Antes salía el ISO crudo ("2026-03-11T00:00:00.000"),
+        # que además de ilegible exhibía una hora que la columna no tiene.
+        signature_date=_civil_display(event.get("signature_date")),
         reference=_text(event.get("referencia")),
         secop_url=observed_secop_url(event.get("urlproceso")),
         closing=_build_closing_fact(

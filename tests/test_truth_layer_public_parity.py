@@ -86,9 +86,14 @@ M2_MODIFIED_FILE_SHA256 = {
 # Search de este archivo y test_m2_does_not_move_ranking_ordering_counts_and_
 # pagination siguen verdes, y tests/test_radar_detail.py acota lo que la vista
 # puede afirmar.
+# RADAR-R1.1 lo repinea por dos ediciones de copy dentro de esa misma vista:
+# la fecha de recepción de ofertas deja de mostrarse con hora (fecha_de_
+# recepcion_de es un calendar_date, auditoría O1B.1) y se retira un aviso de
+# roadmap. Ninguna toca lógica; el diff son dos hunks contiguos dentro de
+# "# Radar tab".
 M2_1_MODIFIED_FILE_SHA256 = {
     "app/core/workflow/handlers/direct_lookup.py": "6dcfc63405824e82b46a4b07bbdd503fd2bd504ec65a5640a0c3cc628ee90b6b",
-    "streamlit_app.py": "db4a6c2ad1e424bc3c1d5247dee10ab01ead6871e2907b8a73ad963c4b9e361f",
+    "streamlit_app.py": "29e0b7051b21df7e9917357143600f50f66e4729af6359650df031382038df52",
 }
 
 # HCA-R6 re-pins ONE previously byte-frozen file. The pagination header carried

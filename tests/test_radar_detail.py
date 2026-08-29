@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import ast
 import json
+import re
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -16,6 +17,7 @@ import pytest
 
 from app.core.radar.detail import (
     OPPORTUNITY_EVENT_KINDS,
+    ClosingFact,
     build_opportunity_detail,
     is_opportunity_event,
     observed_secop_url,
@@ -45,7 +47,10 @@ def _event(**overrides) -> dict:
         "value": "1250000000",
         "status": "Abierto",
         "modality": "Licitación pública",
-        "closing_date": "2026-09-02T16:00:00.000",
+        # Forma real de la columna: calendar_date materializado a medianoche.
+        # Las 62 lecturas disponibles en radar_seen_results son así, sin
+        # excepción. La medianoche es relleno del tipo, no una hora de cierre.
+        "closing_date": "2026-09-02T00:00:00.000",
         "referencia": "LP-004-2026",
         "urlproceso": "https://community.secop.gov.co/Public/Tendering/x",
     }
@@ -126,7 +131,7 @@ def test_detail_projects_every_observed_field():
     assert detail.source_status == "Abierto"
     assert detail.reference == "LP-004-2026"
     assert detail.secop_url == "https://community.secop.gov.co/Public/Tendering/x"
-    assert detail.closing.display == "2026-09-02 16:00"
+    assert detail.closing.display == "2026-09-02"
 
 
 def test_location_does_not_repeat_a_city_that_is_its_own_department():
@@ -147,7 +152,9 @@ def test_contract_movement_shows_signature_not_a_closing_date():
         ),
         now=NOW,
     )
-    assert detail.signature_date == "2026-03-11T00:00:00.000"
+    # Día civil, no el ISO crudo: la firma es otra fecha de SECOP y mostrar su
+    # "T00:00:00.000" exhibiría una hora que la columna tampoco tiene.
+    assert detail.signature_date == "2026-03-11"
     assert detail.contractor == "UNIÓN TEMPORAL VÍAS 2026"
     assert detail.closing.supported is False
     assert detail.closing.is_known is False
@@ -225,56 +232,111 @@ def test_non_http_url_text_is_rejected():
     assert observed_secop_url("https://secop/ok") == "https://secop/ok"
 
 
-# ── Zona horaria del cierre ─────────────────────────────────────────────────
+# ── El cierre es un calendar_date, no un instante ───────────────────────────
+#
+# Autoridad: docs/audits/2026-08-17_O1B_CURRENT_OPPORTUNITY_RETRIEVAL.md,
+# sección "O1B.1 — frontera calendar_date". fecha_de_recepcion_de es una
+# columna Socrata calendar_date materializada a 00:00:00, y el resto del
+# runtime ya la lee así (process_operational_state recorta a [:10]; el SoQL
+# compara contra un límite de día civil). Estos tests impiden que la vista de
+# Radar vuelva a prometer una hora de cierre que la fuente no da.
 
 
-def test_closing_with_explicit_offset_is_shown_in_colombia_time():
-    """Un instante UTC conocido se presenta en America/Bogota (UTC-5)."""
-    detail = build_opportunity_detail(
-        _event(closing_date="2026-09-02T21:00:00+00:00"), now=NOW
-    )
-    assert detail.closing.display == "2026-09-02 16:00"
+@pytest.mark.parametrize(
+    "crudo",
+    [
+        "2026-09-02",                 # día puro
+        "2026-09-02T00:00:00.000",    # la forma real, medianoche de relleno
+        "2026-09-02T16:00:00.000",    # aunque trajera hora, sigue siendo el día
+        "2026-09-02T21:00:00+00:00",  # ni un offset la convierte en instante
+    ],
+)
+def test_closing_calendar_date_never_exposes_clock_precision(crudo):
+    """Guardián del contrato: ninguna forma del dato produce una hora visible.
 
-
-def test_naive_closing_is_read_as_colombian_wall_time_not_as_utc():
-    """El hallazgo que hace falso el atajo: SECOP entrega el cierre SIN offset,
-    y ese texto ya es hora local. Leerlo como UTC —lo que hace
-    ``presentation.format_colombia_timestamp``, correcto para lo que Radar
-    persiste— adelantaría el cierre cinco horas y mostraría las 11:00 donde la
-    entidad publicó las 16:00.
+    El caso peligroso es el tercero. Anclar "T16:00" a America/Bogota y
+    mostrarlo parece más informativo y es una afirmación que la columna no
+    sostiene; el cuarto es el mismo error por la vía del offset. Todos colapsan
+    al día porque el tipo de la columna es lo que manda, no el texto que llegue.
     """
-    detail = build_opportunity_detail(
-        _event(closing_date="2026-09-02T16:00:00.000"), now=NOW
-    )
-    assert detail.closing.display == "2026-09-02 16:00"
+    closing = build_opportunity_detail(_event(closing_date=crudo), now=NOW).closing
+
+    assert closing.display == "2026-09-02"
+    assert ":" not in closing.display
+    assert "00:00" not in closing.display
+    assert "16:00" not in closing.display
 
 
-def test_civil_closing_date_keeps_the_whole_day_and_shows_no_invented_hour():
-    """Una fecha sin hora no se promueve a medianoche: seguiría siendo hoy."""
-    hoy = build_opportunity_detail(_event(closing_date="2026-08-29"), now=NOW)
-    assert hoy.closing.display == "2026-08-29"
-    assert hoy.closing.relation == "today"
-    assert hoy.closing.days_remaining == 0
+def test_closing_day_stays_today_for_the_whole_colombian_day():
+    """Un plazo fechado hoy no vence a las 00:00.
+
+    Promover el día a medianoche y comparar instantes lo daría por pasado desde
+    el primer segundo del propio día en que todavía se puede presentar oferta.
+    """
+    manana_temprano = datetime(2026, 9, 2, 12, 0, tzinfo=timezone.utc)   # 07:00 CO
+    noche = datetime(2026, 9, 2, 23, 30, tzinfo=timezone.utc)            # 18:30 CO
+    for instante in (manana_temprano, noche):
+        closing = build_opportunity_detail(
+            _event(closing_date="2026-09-02T00:00:00.000"), now=instante
+        ).closing
+        assert closing.relation == "today"
+        assert closing.days_remaining == 0
 
 
-def test_closing_relation_is_arithmetic_over_the_observed_date():
+def test_closing_relation_flips_at_the_colombian_day_boundary_not_the_utc_one():
+    """El corte es 05:00 UTC, como fija O1B.1 — no la medianoche UTC.
+
+    A las 04:59Z del día 3 en Colombia todavía es día 2: un cierre fechado el 2
+    sigue siendo de hoy. Comparar contra el día UTC lo habría vencido cinco
+    horas antes.
+    """
+    aun_dia_2 = datetime(2026, 9, 3, 4, 59, tzinfo=timezone.utc)
+    ya_dia_3 = datetime(2026, 9, 3, 5, 1, tzinfo=timezone.utc)
+
+    assert build_opportunity_detail(
+        _event(closing_date="2026-09-02T00:00:00.000"), now=aun_dia_2
+    ).closing.relation == "today"
+    assert build_opportunity_detail(
+        _event(closing_date="2026-09-02T00:00:00.000"), now=ya_dia_3
+    ).closing.relation == "past"
+
+
+def test_closing_relation_counts_whole_days():
     futuro = build_opportunity_detail(_event(), now=NOW)
     pasado = build_opportunity_detail(
-        _event(closing_date="2026-08-01T16:00:00.000"), now=NOW
+        _event(closing_date="2026-08-01T00:00:00.000"), now=NOW
     )
     assert (futuro.closing.relation, futuro.closing.days_remaining) == ("future", 4)
     assert (pasado.closing.relation, pasado.closing.days_remaining) == ("past", -28)
 
 
-def test_closing_relation_uses_the_colombian_calendar_day():
-    """A las 21:00 UTC ya es el día siguiente en UTC pero no en Bogotá.
+def test_calendar_date_is_read_as_written_never_shifted_by_a_timezone():
+    """El día es el que la fuente escribió; no se reubica convirtiendo zonas.
 
-    Comparar contra el día UTC daría por vencido un cierre que en Colombia
-    todavía corre.
+    Distingue dos implementaciones que en casi todo el dominio coinciden: leer
+    el componente de día (correcto para un calendar_date) frente a parsear un
+    instante, convertirlo a Colombia y tomar SU día. Con este valor las dos
+    difieren — convertir lo movería al 2 de septiembre — y la columna no
+    autoriza esa reubicación: no denota un instante que se pueda trasladar.
     """
-    tarde_utc = datetime(2026, 9, 2, 23, 30, tzinfo=timezone.utc)  # 18:30 en Bogotá
-    detail = build_opportunity_detail(_event(closing_date="2026-09-02"), now=tarde_utc)
-    assert detail.closing.relation == "today"
+    closing = build_opportunity_detail(
+        _event(closing_date="2026-09-03T03:00:00+00:00"), now=NOW
+    ).closing
+    assert closing.display == "2026-09-03"
+
+
+def test_every_known_closing_display_is_a_bare_iso_day():
+    """Invariante de la clase, no de un caso: si hay display, es un día ISO."""
+    for crudo in ("2026-09-02", "2026-09-02T00:00:00.000", "2026-01-01T09:30:00",
+                  "2025-12-31T23:59:59.999"):
+        closing = build_opportunity_detail(_event(closing_date=crudo), now=NOW).closing
+        assert re.fullmatch(r"\d{4}-\d{2}-\d{2}", closing.display), crudo
+
+
+def test_closing_fact_default_asserts_nothing():
+    vacio = ClosingFact()
+    assert (vacio.supported, vacio.display, vacio.relation) == (False, None, "unknown")
+    assert vacio.is_known is False
 
 
 # ── Snapshot: el detalle histórico no se contamina con el estado de hoy ─────
@@ -303,7 +365,7 @@ def test_detail_reads_the_frozen_event_not_the_current_state(tmp_path):
     assert detail.value_display == "$1,250,000,000"
     assert detail.previous_value_display == "$900,000,000"
     assert detail.location == "Soledad, Atlántico"
-    assert detail.closing.display == "2026-09-02 16:00"
+    assert detail.closing.display == "2026-09-02"
 
 
 def test_get_event_is_scoped_to_its_owner(tmp_path):
