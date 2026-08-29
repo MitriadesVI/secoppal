@@ -31,52 +31,18 @@ if str(ROOT) not in sys.path:
 
 from app.core.db import connect_sqlite
 from app.core.feedback import TRACE_COLUMNS, _trace_to_row, ensure_feedback_schema
+from app.core.workspace_store import ensure_workspace_schema
 
 
 MIGRATION_NAME = "feedback_jsonl_to_sqlite_001"
 WORKSPACE_ITEMS_MIGRATION_NAME = "workspace_items_schema_001"
 
 
-WORKSPACE_ITEMS_TABLE_SQL = """
-CREATE TABLE IF NOT EXISTS workspace_items (
-    item_id TEXT PRIMARY KEY,
-    user_id TEXT NOT NULL,
-    item_type TEXT NOT NULL CHECK (
-        item_type IN (
-            'proceso', 'contrato', 'contratista', 'entidad',
-            'busqueda', 'analisis', 'nota', 'radar_ref',
-            'documento', 'paa_rubro'
-        )
-    ),
-    reference_id TEXT,
-    title TEXT NOT NULL,
-    note TEXT,
-    status TEXT NOT NULL DEFAULT 'active',
-    deadline TEXT,
-    source_trace_id TEXT,
-    metadata_json TEXT,
-    save_reason TEXT,
-    is_pinned INTEGER NOT NULL DEFAULT 0 CHECK (is_pinned IN (0, 1)),
-    created_at TEXT NOT NULL,
-    updated_at TEXT NOT NULL,
-    archived INTEGER NOT NULL DEFAULT 0 CHECK (archived IN (0, 1)),
-    FOREIGN KEY (user_id) REFERENCES users(user_id)
-) WITHOUT ROWID
-"""
-
-WORKSPACE_ITEMS_INDEX_SQL = (
-    "CREATE INDEX IF NOT EXISTS idx_workspace_user ON workspace_items(user_id, archived)",
-    "CREATE INDEX IF NOT EXISTS idx_workspace_user_deadline ON workspace_items(user_id, deadline)",
-    """
-    CREATE INDEX IF NOT EXISTS idx_workspace_user_type
-      ON workspace_items(user_id, item_type, archived)
-    """,
-    """
-    CREATE INDEX IF NOT EXISTS idx_workspace_user_pinned
-      ON workspace_items(user_id, is_pinned) WHERE is_pinned = 1
-    """,
-    "CREATE INDEX IF NOT EXISTS idx_workspace_reference ON workspace_items(reference_id)",
-)
+# El DDL de ``workspace_items`` NO vive aquí: la autoridad es
+# ``app.core.workspace_store.ensure_workspace_schema``, para que una instalación
+# nueva pueda inicializar la tabla sin que ``app/`` importe de ``scripts/``.
+# Este módulo conserva lo que sí es suyo: el saneo de la tabla legacy con rowid
+# y el registro en ``schema_migrations``.
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -217,6 +183,13 @@ def insert_trace(conn: sqlite3.Connection, trace: dict[str, Any], migrated_at: s
 
 
 def ensure_workspace_items_schema(conn: sqlite3.Connection, applied_at: str | None = None) -> None:
+    """Aplica el schema de Workspace y lo registra en ``schema_migrations``.
+
+    El DROP condicional es comportamiento heredado de la migración y se queda
+    aquí, fuera de la autoridad core: solo elimina una tabla VACÍA que todavía
+    tenga ``sqlite_autoindex_`` —la forma con rowid previa al ``WITHOUT ROWID``
+    desplegado—. Sobre una tabla con datos no hace nada.
+    """
     table = conn.execute(
         """
         SELECT name FROM sqlite_master
@@ -236,9 +209,7 @@ def ensure_workspace_items_schema(conn: sqlite3.Connection, applied_at: str | No
         if row_count == 0 and autoindex is not None:
             conn.execute("DROP TABLE workspace_items")
 
-    conn.execute(WORKSPACE_ITEMS_TABLE_SQL)
-    for statement in WORKSPACE_ITEMS_INDEX_SQL:
-        conn.execute(statement)
+    ensure_workspace_schema(conn)
     conn.execute(
         """
         INSERT INTO schema_migrations (name, applied_at)

@@ -287,3 +287,102 @@ def test_workspace_items_table_exists_and_accepts_inserts(tmp_path):
         "archived": 0,
         "is_pinned": 0,
     }
+
+
+# ── R2: ensure_user, la única autoridad de identidad ────────────────────────
+#
+# Workspace necesita una FK válida contra ``users`` y NO puede reconstruir el
+# ``user_id`` por su cuenta. Estos casos fijan que la apertura delega en el
+# mismo algoritmo que ya usaba log_trace, y que no lo altera.
+
+
+def _store(tmp_path) -> FeedbackStore:
+    return FeedbackStore(
+        tmp_path / "feedback.jsonl",
+        db_path=tmp_path / "secoppal.db",
+        jsonl_dual_write=False,
+    )
+
+
+def test_ensure_user_materializes_a_stable_user_id_for_an_authenticated_email(tmp_path):
+    store = _store(tmp_path)
+    identity = {
+        "channel": "streamlit",
+        "channel_user_key": "email:foo@bar.com",
+        "name": "Foo",
+        "email": "foo@bar.com",
+        "is_anonymous": False,
+    }
+
+    primero = store.ensure_user("streamlit", identity)
+    segundo = store.ensure_user("streamlit", dict(identity))
+
+    assert primero == "streamlit:email:foo@bar.com"
+    assert segundo == primero
+    users = _db_rows(tmp_path / "secoppal.db", "SELECT user_id, email FROM users")
+    assert [(r["user_id"], r["email"]) for r in users] == [
+        ("streamlit:email:foo@bar.com", "foo@bar.com")
+    ]
+
+
+def test_ensure_user_produces_the_same_id_that_log_trace_would(tmp_path):
+    """Un solo algoritmo: dos autoridades no pueden divergir en la identidad."""
+    store = _store(tmp_path)
+    identity = {
+        "channel": "streamlit",
+        "channel_user_key": "email:foo@bar.com",
+        "email": "foo@bar.com",
+        "is_anonymous": False,
+    }
+
+    store.log_trace("consulta", "streamlit", _workflow_result(), user_identity=identity)
+    desde_traces = _db_rows(tmp_path / "secoppal.db", "SELECT user_id FROM traces")[0]
+
+    assert store.ensure_user("streamlit", dict(identity)) == desde_traces["user_id"]
+    assert len(_db_rows(tmp_path / "secoppal.db", "SELECT user_id FROM users")) == 1
+
+
+def test_ensure_user_gives_workspace_a_usable_foreign_key(tmp_path):
+    """El id devuelto sirve como FK real, no es un string decorativo."""
+    from app.core.workspace_store import WorkspaceStore
+
+    db_path = tmp_path / "secoppal.db"
+    user_id = _store(tmp_path).ensure_user(
+        "streamlit",
+        {
+            "channel": "streamlit",
+            "channel_user_key": "email:foo@bar.com",
+            "email": "foo@bar.com",
+            "is_anonymous": False,
+        },
+    )
+
+    guardado = WorkspaceStore(db_path).save_item(
+        user_id, "proceso", "p6dx-8zbt/CO1.NTC.1",
+        title="Mantenimiento vial", metadata={"source": "radar"},
+    )
+    filas = _db_rows(db_path, "SELECT item_id, user_id FROM workspace_items")
+    assert [(r["item_id"], r["user_id"]) for r in filas] == [
+        (guardado.item_id, user_id)
+    ]
+
+
+def test_ensure_user_returns_none_when_the_identity_identifies_nobody(tmp_path):
+    store = _store(tmp_path)
+
+    assert store.ensure_user("streamlit", None) is None
+    assert store.ensure_user("streamlit", {}) is None
+    assert store.ensure_user("streamlit", {"name": "sin clave"}) is None
+    assert _db_rows(tmp_path / "secoppal.db", "SELECT user_id FROM users") == []
+
+
+def test_ensure_user_does_not_write_any_trace(tmp_path):
+    """Materializar el usuario no puede fabricar actividad que no existió."""
+    store = _store(tmp_path)
+    store.ensure_user(
+        "streamlit",
+        {"channel": "streamlit", "channel_user_key": "anon:abc", "is_anonymous": True},
+    )
+
+    assert _db_rows(tmp_path / "secoppal.db", "SELECT trace_id FROM traces") == []
+    assert len(_db_rows(tmp_path / "secoppal.db", "SELECT user_id FROM users")) == 1

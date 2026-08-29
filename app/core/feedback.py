@@ -388,6 +388,37 @@ class FeedbackStore:
             logger.exception("failed to compute usage by user from sqlite")
             return []
 
+    def ensure_user(
+        self,
+        channel: str,
+        user_identity: dict[str, Any] | None,
+    ) -> str | None:
+        """Materializa ``users.user_id`` para esa identidad y lo devuelve.
+
+        Existe porque otras autoridades —Workspace, en R2— necesitan una FK
+        válida contra ``users`` y NO pueden reconstruir el ``user_id`` por su
+        cuenta: la forma de la clave (``streamlit:email:...``) y la resolución
+        del conflicto por ``(channel, channel_user_key)`` viven en un solo sitio
+        y deben seguir viviendo en uno solo. Duplicar el algoritmo produciría
+        dos usuarios para la misma persona el día que cualquiera de los dos
+        cambie.
+
+        Es la misma escritura que ya hace ``log_trace``, expuesta sin trace de
+        por medio; no altera en nada la semántica de traces. Devuelve ``None``
+        si la identidad no alcanza para identificar a nadie (sin
+        ``channel_user_key``, sin email y sin ``user_id``) o si SQLite está
+        deshabilitado: el caller decide qué hacer con esa ausencia.
+        """
+        if not self.sqlite_enabled:
+            return None
+        try:
+            with self._connect() as conn:
+                ensure_feedback_schema(conn)
+                return self._upsert_user(conn, channel, user_identity)
+        except sqlite3.Error:
+            logger.exception("failed to ensure user in sqlite channel=%s", channel)
+            return None
+
     def _connect(self) -> sqlite3.Connection:
         return connect_sqlite(self.db_path)
 

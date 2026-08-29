@@ -31,8 +31,16 @@ from app.core.radar.presentation import (
 )
 from app.core.radar.runner import run_radar
 from app.core.radar.store import RadarExistsError
+from app.core.radar.workspace import (
+    build_workspace_snapshot,
+    is_saveable,
+    workspace_item_type,
+    workspace_reference_id,
+    workspace_title,
+)
 from app.config import get_settings
 from app.core.auth import AccountError, AccountExistsError, AccountStore
+from app.core.workspace_store import WorkspaceIntegrityError, WorkspaceStore
 from app.service import get_workflow
 
 # ---------------------------------------------------------------------------
@@ -55,6 +63,12 @@ def get_account_store() -> AccountStore:
         settings.secoppal_admin_name,
     )
     return store
+
+
+@st.cache_resource
+def get_workspace_store() -> WorkspaceStore:
+    """WorkspaceStore singleton sobre la misma SQLite del feedback."""
+    return WorkspaceStore(get_settings().secop_feedback_db_path)
 
 
 _COOKIE_NAME = "secoppal_session"
@@ -489,6 +503,47 @@ def _current_user_identity() -> dict:
         "email": None,
         "is_anonymous": True,
     }
+
+
+def _workspace_user_id() -> str | None:
+    """``users.user_id`` del usuario actual, o ``None`` si no puede guardar.
+
+    La forma del id la decide una sola autoridad —``FeedbackStore.ensure_user``,
+    la misma que ata cada trace a su usuario—; aquí no se construye ninguna.
+
+    Un usuario anónimo devuelve ``None`` a propósito: puede usar Radar y abrir
+    una oportunidad, pero no guardarla. La alternativa sería inventar un
+    ``user_id="anonymous"`` compartido, que mezclaría los escritorios de todas
+    las sesiones sin dueño en uno solo.
+
+    El resultado se cachea por identidad en ``session_state`` para no escribir
+    en ``users`` una vez por rerun de Streamlit.
+    """
+    identity = _current_user_identity()
+    if identity.get("is_anonymous") or not identity.get("email"):
+        return None
+    cache_key = identity.get("channel_user_key") or ""
+    cached = st.session_state.get("_workspace_user")
+    if cached and cached.get("key") == cache_key:
+        return cached["user_id"]
+    feedback = getattr(workflow, "feedback", None)
+    if feedback is None:
+        return None
+    user_id = feedback.ensure_user("streamlit", identity)
+    if user_id:
+        st.session_state["_workspace_user"] = {"key": cache_key, "user_id": user_id}
+    return user_id
+
+
+def _flash(message: str) -> None:
+    """Deja un aviso para el rerun siguiente (el actual ya no se pinta)."""
+    st.session_state["_workspace_flash"] = message
+
+
+def _render_flash() -> None:
+    message = st.session_state.pop("_workspace_flash", None)
+    if message:
+        st.toast(message)
 
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -1120,6 +1175,64 @@ def _render_detail_fields(detail) -> None:
             st.markdown(f"**{etiqueta}** — {valor}")
 
 
+def _render_workspace_action(evento: dict, detail) -> None:
+    """Guardar / ✓ Guardada / Quitar, sobre la oportunidad abierta.
+
+    Guardar es una escritura LOCAL: copia el snapshot que el radar ya observó.
+    No consulta SECOP —eso haría el click lento, no determinista y dependiente
+    de la red para conservar algo que ya se tenía—.
+    """
+    if not is_saveable(detail):
+        # Sin dataset reconocido o sin clave de resultado no hay identidad
+        # estable: guardarlo produciría algo que después no se puede reconocer.
+        return
+    user_id = _workspace_user_id()
+    if user_id is None:
+        st.button("Inicia sesión para guardar", key="opp_save_locked",
+                  disabled=True, use_container_width=True)
+        return
+
+    store = get_workspace_store()
+    item_type = workspace_item_type(detail)
+    reference_id = workspace_reference_id(detail)
+    try:
+        guardada = store.get_by_reference(user_id, item_type, reference_id)
+    except WorkspaceIntegrityError:
+        st.warning(
+            "Esta oportunidad aparece más de una vez en tu escritorio. "
+            "No la modifico hasta resolverlo."
+        )
+        return
+
+    if guardada is not None and not guardada.archived:
+        izq, der = st.columns(2)
+        izq.button("✓ Guardada", key="opp_saved", disabled=True,
+                   use_container_width=True)
+        if der.button("Quitar de guardadas", key="opp_unsave",
+                      use_container_width=True):
+            store.archive_item(user_id, guardada.item_id)
+            _flash("Quitada de tu escritorio")
+            st.rerun()
+        return
+
+    if st.button("Guardar", key="opp_save", use_container_width=True):
+        saved_at = datetime.now(timezone.utc).isoformat()
+        resultado = store.save_item(
+            user_id,
+            item_type,
+            reference_id,
+            title=workspace_title(detail),
+            metadata=build_workspace_snapshot(evento, detail, saved_at),
+        )
+        if resultado.created:
+            _flash("Guardada en tu escritorio")
+        elif resultado.restored:
+            _flash("Volvió a tu escritorio")
+        else:
+            _flash("Ya estaba guardada — actualicé la ficha")
+        st.rerun()
+
+
 def _render_opportunity_detail(store, owner: str, event_id: str) -> bool:
     """Detalle de una oportunidad detectada. False si ya no se puede abrir."""
     evento = store.get_event(owner, event_id)
@@ -1143,6 +1256,7 @@ def _render_opportunity_detail(store, owner: str, event_id: str) -> bool:
     st.divider()
     _render_detail_fields(detail)
 
+    _render_workspace_action(evento, detail)
     if detail.has_secop_link:
         st.link_button("Abrir en SECOP", detail.secop_url, type="primary")
     else:
@@ -1302,13 +1416,88 @@ def _render_radares() -> None:
 
 
 # ═══════════════════════════════════════════════════════════════════════════
+# Mi escritorio tab
+# ═══════════════════════════════════════════════════════════════════════════
+
+# Las filas de la tarjeta salen del snapshot guardado, nunca de una relectura.
+# Una clave ausente se OMITE: una ficha llena de "s/d" no informa más, solo
+# estorba, y aquí además mentiría sobre lo que se observó el día que se guardó.
+_WORKSPACE_CARD_ROWS = (
+    ("Objeto", "object_excerpt"),
+    ("Entidad", "entity"),
+    ("Departamento / ciudad", "location"),
+    ("Valor", "value_display"),
+    ("Estado (según SECOP)", "source_status"),
+    ("Modalidad", "modality"),
+    ("Fecha de cierre", "closing_date"),
+    ("Contratista", "contractor"),
+    ("Fecha de firma", "signature_date"),
+    ("Referencia", "reference"),
+)
+
+
+def _render_workspace_card(item, user_id: str) -> None:
+    """Una oportunidad guardada. Se pinta solo con lo que trae el snapshot."""
+    meta = item.metadata or {}
+    with st.container(border=True):
+        st.markdown(f"**{item.title}**")
+        guardada = meta.get("saved_at") or item.created_at
+        radar = meta.get("radar_name")
+        origen = f"📡 {radar} · " if radar else ""
+        st.caption(f"{origen}guardada {format_relative_timestamp(guardada)}")
+
+        for etiqueta, clave in _WORKSPACE_CARD_ROWS:
+            valor = meta.get(clave)
+            if valor:
+                st.markdown(f"**{etiqueta}** — {valor}")
+
+        url = meta.get("secop_url")
+        izq, der = st.columns(2)
+        if url:
+            izq.link_button("Abrir en SECOP", url, use_container_width=True)
+        if der.button("Quitar", key=f"ws_remove_{item.item_id}",
+                      use_container_width=True):
+            # Archivar, no borrar: quitar del escritorio es una decisión
+            # reversible y la UI normal no expone hard-delete.
+            get_workspace_store().archive_item(user_id, item.item_id)
+            _flash("Quitada de tu escritorio")
+            st.rerun()
+
+
+def _render_escritorio() -> None:
+    """Pestaña 🗂 Mi escritorio: lo que el usuario decidió conservar."""
+    user_id = _workspace_user_id()
+    if user_id is None:
+        st.info(
+            "Inicia sesión para guardar oportunidades y volver a encontrarlas aquí."
+        )
+        return
+
+    items = get_workspace_store().list_items(user_id, limit=100)
+    if not items:
+        st.info(
+            "Todavía no has guardado oportunidades.\n\n"
+            "Cuando encuentres una interesante en Radar, ábrela y pulsa Guardar."
+        )
+        return
+
+    st.caption(f"{len(items)} guardadas")
+    for item in items:
+        _render_workspace_card(item, user_id)
+
+
+# ═══════════════════════════════════════════════════════════════════════════
 # Main area
 # ═══════════════════════════════════════════════════════════════════════════
 
 st.title("SECOPPAL")
 st.caption("Busqueda conversacional sobre contratacion publica colombiana — SECOP II")
 
-tab_buscar, tab_radares = st.tabs(["🔎 Buscar", "📡 Radares"])
+_render_flash()
+
+tab_buscar, tab_radares, tab_escritorio = st.tabs(
+    ["🔎 Buscar", "📡 Radares", "🗂 Mi escritorio"]
+)
 
 with tab_buscar:
     # Onboarding cuando no hay historial
@@ -1397,6 +1586,9 @@ with tab_buscar:
 
 with tab_radares:
     _render_radares()
+
+with tab_escritorio:
+    _render_escritorio()
 
 # ═══════════════════════════════════════════════════════════════════════════
 # Chat input — handle pending refinement and examples

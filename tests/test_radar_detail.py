@@ -451,12 +451,40 @@ def test_streamlit_detail_uses_the_shared_authorities():
     assert "OpportunityDetail/Index" not in surface
 
 
+def _detail_visible_strings() -> set[str]:
+    """Literales de texto que las funciones del detalle pueden llegar a pintar.
+
+    R2 añadió al archivo una superficie nueva (Mi escritorio) cuyos COMENTARIOS
+    explican el snapshot guardado. El corte "desde _render_opportunity_detail
+    hasta el final del archivo" que usaba este oráculo empezó a leer esos
+    comentarios como si fueran copy. Se acota a las funciones del detalle y a
+    sus cadenas: lo que el usuario ve son cadenas, no comentarios.
+    """
+    tree = ast.parse((Path(__file__).parents[1] / "streamlit_app.py").read_text())
+    objetivo = {
+        "_render_opportunity_detail", "_render_detail_header",
+        "_render_detail_change", "_render_detail_fields",
+        "_render_workspace_action",
+    }
+    literales: set[str] = set()
+    for node in ast.walk(tree):
+        if not (isinstance(node, ast.FunctionDef) and node.name in objetivo):
+            continue
+        cuerpo = node.body[1:] if ast.get_docstring(node) else node.body
+        for sub in cuerpo:
+            for inner in ast.walk(sub):
+                if isinstance(inner, ast.Constant) and isinstance(inner.value, str):
+                    literales.add(inner.value)
+    assert literales, "no se encontraron las funciones del detalle"
+    return literales
+
+
 def test_streamlit_does_not_expose_internal_vocabulary_in_the_detail():
     """Copy de producto: el usuario no lee result_key ni kinds crudos (§16)."""
-    surface = _radar_surface()
-    detalle = surface[surface.index("def _render_opportunity_detail"):]
-    for jerga in ("result_key:", "snapshot", "run_kind", "coverage", "event kind"):
-        assert jerga not in detalle
+    visibles = " · ".join(_detail_visible_strings())
+    for jerga in ("result_key", "snapshot", "run_kind", "coverage", "event kind",
+                  "dataset_id", "metadata_json", "item_type"):
+        assert jerga not in visibles
 
 
 def test_streamlit_shows_no_dead_buttons_for_deferred_actions():
@@ -472,5 +500,19 @@ def test_streamlit_shows_no_dead_buttons_for_deferred_actions():
         and isinstance(node.args[0], ast.Constant)
         and isinstance(node.args[0].value, str)
     }
-    for pendiente in ("Guardar", "Descartar", "No es relevante"):
+    # "Guardar" salió de esta lista en R2 y NO por relajación: dejó de ser un
+    # botón muerto porque existe la escritura que lo respalda
+    # (app/core/workspace_store.py) y la ruta completa guardar → volver a
+    # encontrar → quitar. El test siguiente es el que sostiene esa afirmación;
+    # si la escritura desapareciera, "Guardar" volvería a estar prohibido aquí.
+    for pendiente in ("Descartar", "No es relevante", "Me interesa", "Preparando"):
         assert pendiente not in etiquetas
+
+
+def test_the_save_button_is_backed_by_a_real_write():
+    """Lo que R1 difería, R2 lo implementa: Guardar tiene consecuencia."""
+    fuente = (Path(__file__).parents[1] / "streamlit_app.py").read_text()
+    assert "Guardar" in fuente
+    assert "get_workspace_store()" in fuente
+    assert "save_item(" in fuente
+    assert "archive_item(" in fuente

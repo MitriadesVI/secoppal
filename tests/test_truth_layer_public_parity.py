@@ -91,9 +91,21 @@ M2_MODIFIED_FILE_SHA256 = {
 # recepcion_de es un calendar_date, auditoría O1B.1) y se retira un aviso de
 # roadmap. Ninguna toca lógica; el diff son dos hunks contiguos dentro de
 # "# Radar tab".
+# RADAR-R2 lo repinea para que Guardar tenga consecuencia: la vista de detalle
+# de R1 gana una acción que ESCRIBE en ``workspace_items`` —la autoridad
+# persistente que ya existía, sin tabla paralela ni cambio de schema— y la app
+# gana una tercera pestaña ("Mi escritorio") que LEE esa misma tabla. Ninguna
+# de las dos consulta SECOP: guardar copia el snapshot que el radar ya observó,
+# y el escritorio se pinta con ese snapshot. No se toca cursor, buffer,
+# fingerprint, ranking ni el bloque de paginación, y no se construyen URLs. El
+# diff vive en la superficie Radar, en un bloque nuevo "# Mi escritorio tab",
+# en cuatro helpers de identidad/aviso y en la línea de ``st.tabs``. Lo acotan
+# tests/test_workspace_store.py, tests/test_radar_workspace.py y los casos R2 de
+# tests/test_radar_ui_truth.py; los oracles de Search de este archivo y
+# test_m2_does_not_move_ranking_ordering_counts_or_pagination siguen verdes.
 M2_1_MODIFIED_FILE_SHA256 = {
     "app/core/workflow/handlers/direct_lookup.py": "6dcfc63405824e82b46a4b07bbdd503fd2bd504ec65a5640a0c3cc628ee90b6b",
-    "streamlit_app.py": "29e0b7051b21df7e9917357143600f50f66e4729af6359650df031382038df52",
+    "streamlit_app.py": "1d3691febf9357ba8667e9e2046bc273e718ab299675f03380451375d5bd8cbf",
 }
 
 # HCA-R6 re-pins ONE previously byte-frozen file. The pagination header carried
