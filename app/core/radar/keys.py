@@ -11,8 +11,9 @@ Tres piezas:
   contractor). Lee los nombres de campo de ``SoQLBuilder.SPECS`` para no
   hardcodearlos por dataset.
 - ``extract_event_metadata`` — proyecta los datos que describen un evento ya
-  decidido (modalidad, cierre, contratista, firma, extracto del objeto). NO
-  participa en la decisión de cambio: ver su docstring.
+  decidido (modalidad, cierre, contratista, firma, extracto del objeto,
+  departamento, ciudad). NO participa en la decisión de cambio: ver su
+  docstring.
 - ``snapshot_hash``     — sha1 de los campos sensibles a cambio (estado y
   valor). Si el hash difiere entre corridas, hubo un cambio que el diff
   clasifica como ``changed_state`` o ``changed_value``.
@@ -103,6 +104,19 @@ def extract_event_metadata(row: dict, dataset_id: str) -> dict:
     toca; para un hecho que se congela y luego se le muestra a alguien, adivinar
     el dataset es peor que no saber.
 
+    ``department``/``city`` (R1) siguen exactamente la misma regla que los cinco
+    anteriores: describen dónde ocurre el hecho ya decidido, nadie los compara y
+    salen de ``spec.department``/``spec.city``, ambos ya declarados y ya
+    recuperados por ``select_fields`` en los dos datasets (no se amplía ningún
+    SELECT). Se añaden porque el detalle de una oportunidad los necesita y el
+    evento era la única fuente posible: ``radar_seen_results`` es el estado de
+    hoy, y leer de ahí mostraría la ubicación actual junto al cambio de ayer.
+    NO se incorpora la fecha de publicación: el spec solo declara ``date`` como
+    "fecha primaria del dataset" —publicación en procesos, firma en contratos—,
+    así que proyectarla bajo una etiqueta de publicación mentiría sobre
+    contratos, y declararla aparte tocaría ``DatasetSpec``, fuera del alcance de
+    un bloque de presentación.
+
     ``object_excerpt`` sale de ``spec.description`` — el mismo campo público que
     ``select_fields`` YA recupera para ambos datasets (no se amplía ningún
     SELECT). Se guarda YA normalizado y acotado a ~180 caracteres vía
@@ -119,6 +133,7 @@ def extract_event_metadata(row: dict, dataset_id: str) -> dict:
             "modality": None, "closing_date": None,
             "contractor": None, "signature_date": None,
             "object_excerpt": None,
+            "department": None, "city": None,
         }
     return {
         "modality": _or_none(row, spec.modality),
@@ -126,6 +141,8 @@ def extract_event_metadata(row: dict, dataset_id: str) -> dict:
         "contractor": _or_none(row, spec.contractor),
         "signature_date": _or_none(row, spec.signature_date),
         "object_excerpt": build_object_excerpt(_or_none(row, spec.description)),
+        "department": _or_none(row, spec.department),
+        "city": _or_none(row, spec.city),
     }
 
 

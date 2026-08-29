@@ -17,6 +17,11 @@ from app.core.formatter import _estado_raw_nota
 from app.core.radar import follows
 from app.core.radar.builder import has_scope_or_topic, save_radar_from_params
 from app.core.radar.commands import radar_owner
+from app.core.radar.detail import (
+    build_opportunity_detail,
+    is_opportunity_event,
+    observed_secop_url,
+)
 from app.core.radar.keys import radar_result_key
 from app.core.radar.presentation import (
     format_colombia_timestamp,
@@ -989,6 +994,30 @@ _EVENT_META = {
 }
 
 
+# Encabezado del detalle por tipo de movimiento. Lenguaje de producto: el
+# usuario lee "Nueva oportunidad", nunca `kind: new`.
+_DETAIL_HEADLINE = {
+    "new": "Nueva oportunidad",
+    "changed_state": "Cambió el estado",
+    "changed_value": "Cambió el valor",
+    "disappeared": "Ya no aparece en el radar",
+    "followed": "Proceso que sigues",
+}
+
+
+def _closing_hint(closing) -> str:
+    """Relación de la fecha registrada con hoy. No afirma que el proceso esté
+    abierto ni cerrado: eso depende de estado y fase, que el evento no guarda."""
+    if closing.relation == "future":
+        dias = closing.days_remaining or 0
+        return "falta 1 día" if dias == 1 else f"faltan {dias} días"
+    if closing.relation == "today":
+        return "es hoy"
+    if closing.relation == "past":
+        return "ya pasó"
+    return ""
+
+
 def _render_event_card(ev: dict) -> None:
     icon, label = _EVENT_META.get(ev.get("kind", ""), ("•", ""))
     with st.container(border=True):
@@ -999,6 +1028,8 @@ def _render_event_card(ev: dict) -> None:
         title = (ev.get("title") or "").strip()
         kind = ev.get("kind")
         if kind == "baseline":
+            # Un hecho operativo del radar, no una oportunidad: no ofrece
+            # ficha ni enlace a SECOP porque no hay un proceso que abrir.
             st.caption(title)
             return
         if title:
@@ -1015,8 +1046,115 @@ def _render_event_card(ev: dict) -> None:
         else:  # new
             st.caption(f"{entity} · {_fmt_money_feed(ev.get('value'))} · "
                        f"{ev.get('status') or 's/d'}")
-        if ev.get("urlproceso"):
-            st.markdown(f"[🔗 Ver en SECOP]({ev['urlproceso']})")
+        # Enlace solo si SECOP entregó uno: nunca se arma a partir del id.
+        url = observed_secop_url(ev.get("urlproceso"))
+        event_id = str(ev.get("id") or "")
+        accion, enlace = st.columns([1, 2])
+        if is_opportunity_event(kind) and event_id and ev.get("result_key"):
+            if accion.button("Ver oportunidad", key=f"open_ev_{event_id}",
+                             use_container_width=True):
+                st.session_state["_open_event"] = event_id
+                st.session_state.pop("_open_radar", None)
+                st.rerun()
+        if url:
+            enlace.markdown(f"[🔗 Ver en SECOP]({url})")
+
+
+def _render_detail_header(detail) -> None:
+    """Cabecera compacta: qué es, quién contrata, cuánto vale, cuándo cierra."""
+    st.subheader(detail.title or "(sin nombre en los datos observados)")
+    encabezado = " · ".join(x for x in (detail.entity, detail.location) if x)
+    if encabezado:
+        st.caption(encabezado)
+
+    izq, der = st.columns(2)
+    if detail.value_display:
+        izq.metric("Valor", detail.value_display)
+    if detail.closing.is_known:
+        pista = _closing_hint(detail.closing)
+        der.metric(
+            "Recepción de ofertas",
+            detail.closing.display,
+            delta=pista or None,
+            delta_color="off",
+        )
+        der.caption("Hora Colombia, según la fecha registrada en SECOP.")
+    elif detail.closing.supported:
+        # §6: no se inventa un plazo ni se sustituye por la publicación.
+        der.info("Fecha de cierre no disponible en los datos observados.")
+
+
+def _render_detail_change(detail) -> None:
+    """Qué cambió, cuando el movimiento fue un cambio."""
+    if detail.kind == "changed_state" and detail.previous_status:
+        st.markdown(f"Estado: *{detail.previous_status} → "
+                    f"{detail.source_status or 's/d'}*")
+    elif detail.kind == "changed_value" and detail.previous_value_display:
+        st.markdown(f"Valor: *{detail.previous_value_display} → "
+                    f"{detail.value_display or 's/d'}*")
+
+
+def _render_detail_fields(detail) -> None:
+    """Ficha. Solo lo observado: un campo ausente se omite, no se rotula s/d."""
+    filas = [
+        ("Objeto", detail.object_excerpt),
+        ("Entidad", detail.entity),
+        ("Departamento / ciudad", detail.location),
+        ("Valor", detail.value_display),
+        ("Modalidad", detail.modality),
+        # El estado se muestra tal como lo reporta la fuente. SECOPPAL no
+        # deriva aquí una lectura operativa ("recibe ofertas", "ya no"): esa
+        # interpretación tiene dueño (process_operational_state, sobre el Truth
+        # Layer) y exige estado_del_procedimiento y fase, que el snapshot del
+        # evento no conserva. Inventar una segunda respuesta sería peor.
+        ("Estado (según SECOP)", detail.source_status),
+        ("Contratista", detail.contractor),
+        ("Fecha de firma", detail.signature_date),
+        ("Referencia", detail.reference),
+    ]
+    for etiqueta, valor in filas:
+        if valor:
+            st.markdown(f"**{etiqueta}** — {valor}")
+
+
+def _render_opportunity_detail(store, owner: str, event_id: str) -> bool:
+    """Detalle de una oportunidad detectada. False si ya no se puede abrir."""
+    evento = store.get_event(owner, event_id)
+    if evento is None:
+        return False
+    detail = build_opportunity_detail(evento, now=datetime.now(timezone.utc))
+    if detail is None:
+        return False
+
+    if st.button("← Volver a movimientos", key="opp_back"):
+        del st.session_state["_open_event"]
+        st.rerun()
+
+    titular = _DETAIL_HEADLINE.get(detail.kind, "Movimiento del radar")
+    origen = f" · 📡 {detail.radar_name}" if detail.radar_name else ""
+    st.markdown(f"**{titular}**{origen} · detectado "
+                f"{format_relative_timestamp(detail.observed_at)}")
+
+    _render_detail_header(detail)
+    _render_detail_change(detail)
+    st.divider()
+    _render_detail_fields(detail)
+
+    if detail.has_secop_link:
+        st.link_button("Abrir en SECOP", detail.secop_url, type="primary")
+    else:
+        st.caption("Enlace a SECOP no disponible en este registro.")
+
+    st.caption(
+        "Estos datos son los que el radar observó el "
+        f"{format_colombia_timestamp(detail.observed_at)} (hora Colombia) y no "
+        "cambian después. SECOP sigue siendo la fuente para ofertar."
+    )
+    st.caption(
+        "Guardar, descartar y marcar como no relevante llegarán en las "
+        "próximas entregas."
+    )
+    return True
 
 
 def _refresh_all_radares(store, owner) -> None:
@@ -1056,6 +1194,7 @@ def _render_manage_row(store, radar) -> None:
     c1, c2, c3, c4 = st.columns(4)
     if c1.button("Abrir", key=f"mng_open_{radar.id}", use_container_width=True):
         st.session_state["_open_radar"] = radar.id
+        st.session_state.pop("_open_event", None)
         st.rerun()
     if c2.button("Ejecutar", key=f"mng_run_{radar.id}", use_container_width=True):
         with st.spinner("Revisando SECOP..."):
@@ -1107,6 +1246,16 @@ def _render_radares() -> None:
 
     identity = _current_user_identity()
     owner = radar_owner(identity, st.session_state.get("chat_id"))
+
+    # Detalle de una oportunidad concreta (tiene prioridad: se llega a él
+    # desde el feed, y el botón que lo abre cierra cualquier radar abierto).
+    open_event = st.session_state.get("_open_event")
+    if open_event:
+        if _render_opportunity_detail(store, owner, open_event):
+            return
+        # El evento ya no existe o no identifica un proceso: se vuelve al feed
+        # en vez de dejar una vista muerta.
+        del st.session_state["_open_event"]
 
     # Vista de detalle si hay un radar abierto.
     open_id = st.session_state.get("_open_radar")

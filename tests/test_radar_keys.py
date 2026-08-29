@@ -105,6 +105,8 @@ def test_event_metadata_procesos_projects_modality_and_closing():
         "contractor": None,
         "signature_date": None,
         "object_excerpt": None,
+        "department": None,
+        "city": None,
     }
 
 
@@ -121,6 +123,8 @@ def test_event_metadata_contratos_projects_contractor_and_signature():
         "contractor": "UNION TEMPORAL PAE 2026",
         "signature_date": "2026-03-11T00:00:00.000",
         "object_excerpt": None,
+        "department": None,
+        "city": None,
     }
 
 
@@ -136,6 +140,7 @@ def test_event_metadata_missing_and_whitespace_normalize_to_none():
         "modality": None, "closing_date": None,
         "contractor": None, "signature_date": None,
         "object_excerpt": None,
+        "department": None, "city": None,
     }
 
 
@@ -169,6 +174,7 @@ def test_unknown_dataset_with_process_shaped_fields_returns_no_metadata():
         "modality": None, "closing_date": None,
         "contractor": None, "signature_date": None,
         "object_excerpt": None,
+        "department": None, "city": None,
     }
 
 
@@ -179,6 +185,7 @@ def test_event_metadata_unknown_dataset_with_foreign_row_also_empty():
         "modality": None, "closing_date": None,
         "contractor": None, "signature_date": None,
         "object_excerpt": None,
+        "department": None, "city": None,
     }
 
 
@@ -281,3 +288,28 @@ def test_event_metadata_is_not_part_of_the_diff_contract():
         "contractor",
     }
     assert "modality" not in extract_fields(row, PROC)
+
+
+def test_event_metadata_projects_location_from_spec_in_both_datasets():
+    """R1: departamento y ciudad salen del spec, con los nombres de cada dataset."""
+    proceso = extract_event_metadata(
+        {"departamento_entidad": "Atlántico", "ciudad_entidad": "Barranquilla"},
+        PROC,
+    )
+    contrato = extract_event_metadata(
+        {"departamento": "Huila", "ciudad": "Neiva"}, CONT
+    )
+
+    assert (proceso["department"], proceso["city"]) == ("Atlántico", "Barranquilla")
+    assert (contrato["department"], contrato["city"]) == ("Huila", "Neiva")
+    # Las columnas del OTRO dataset no se leen por casualidad.
+    assert extract_event_metadata({"departamento": "Huila"}, PROC)["department"] is None
+
+
+def test_event_metadata_location_absence_stays_none():
+    """Ausente y vacío colapsan a None, igual que el resto de la proyección."""
+    meta = extract_event_metadata(
+        {"departamento_entidad": "   ", "modalidad_de_contratacion": "X"}, PROC
+    )
+    assert meta["department"] is None
+    assert meta["city"] is None

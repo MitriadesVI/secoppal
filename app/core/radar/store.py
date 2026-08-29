@@ -266,6 +266,11 @@ class EventRecord:
     # de llegar aquí: radar_events.object_excerpt nunca guarda la descripción
     # completa. Nullable — un evento sin descripción queda en NULL.
     object_excerpt: str | None = None
+    # Dónde ocurre el hecho (R1). Mismo criterio que los anteriores: describen,
+    # no deciden. El detalle de la oportunidad los muestra desde el snapshot
+    # congelado, nunca releyendo radar_seen_results (que es el estado de hoy).
+    department: str | None = None
+    city: str | None = None
 
 
 @dataclass(frozen=True)
@@ -437,7 +442,12 @@ CREATE TABLE IF NOT EXISTS radar_events (
     signature_date TEXT,
     -- TG-P2C: extracto del objeto/descripción público. Aditiva y nullable,
     -- mismo criterio que las cuatro de arriba: sin backfill sobre lo heredado.
-    object_excerpt TEXT
+    object_excerpt TEXT,
+    -- R1: ubicación observada del hecho. Aditivas, nullable y sin backfill,
+    -- por la misma razón: el dato de un evento viejo solo existe en el SECOP
+    -- de hoy, y copiarlo inventaría un pasado que nadie observó.
+    department    TEXT,
+    city          TEXT
 );
 CREATE INDEX IF NOT EXISTS idx_radar_events_owner ON radar_events(owner, ts DESC);
 
@@ -502,11 +512,13 @@ INSERT INTO radar_events
    (id, radar_id, owner, radar_name, run_id, ts, kind, result_key,
     dataset, title, entity, value, status, prev_status, prev_value,
     urlproceso, referencia, event_seq,
-    modality, closing_date, contractor, signature_date, object_excerpt)
+    modality, closing_date, contractor, signature_date, object_excerpt,
+    department, city)
    VALUES (:id, :radar_id, :owner, :radar_name, :run_id, :ts, :kind,
     :result_key, :dataset, :title, :entity, :value, :status,
     :prev_status, :prev_value, :urlproceso, :referencia, :event_seq,
-    :modality, :closing_date, :contractor, :signature_date, :object_excerpt)
+    :modality, :closing_date, :contractor, :signature_date, :object_excerpt,
+    :department, :city)
 """
 
 _RESERVE_EVENT_SEQ_SQL = "INSERT INTO radar_event_seq (ts) VALUES (?)"
@@ -699,6 +711,8 @@ def _insert_event_dicts(conn: sqlite3.Connection, events: list[dict]) -> None:
                 "contractor": e.get("contractor"),
                 "signature_date": e.get("signature_date"),
                 "object_excerpt": e.get("object_excerpt"),
+                "department": e.get("department"),
+                "city": e.get("city"),
             },
         )
 
@@ -734,6 +748,7 @@ def _insert_events(
             "modality": e.modality, "closing_date": e.closing_date,
             "contractor": e.contractor, "signature_date": e.signature_date,
             "object_excerpt": e.object_excerpt,
+            "department": e.department, "city": e.city,
         }
         for e in events
     ])
@@ -935,6 +950,8 @@ class RadarStore:
             "modality", "closing_date", "contractor", "signature_date",
             # TG-P2C: mismo patrón aditivo/nullable que las cuatro anteriores.
             "object_excerpt",
+            # R1: ubicación observada, mismo patrón aditivo/nullable.
+            "department", "city",
         ):
             if name not in event_cols:
                 conn.execute(f"ALTER TABLE radar_events ADD COLUMN {name} TEXT")
@@ -1425,6 +1442,26 @@ class RadarStore:
             _insert_event_dicts(conn, events)
         finally:
             conn.close()
+
+    def get_event(self, owner: str, event_id: str) -> dict | None:
+        """Un movimiento concreto del feed del owner, o ``None``.
+
+        Lectura pura sobre la tabla append-only: abrir el detalle de un evento
+        no lo modifica ni lo marca. El ``owner`` es parte del predicado, no un
+        filtro que el caller pueda olvidar — un id de evento adivinado no puede
+        devolver el movimiento de otra persona.
+        """
+        if not event_id:
+            return None
+        conn = self._connect()
+        try:
+            row = conn.execute(
+                "SELECT * FROM radar_events WHERE owner = ? AND id = ?",
+                (owner, event_id),
+            ).fetchone()
+        finally:
+            conn.close()
+        return dict(row) if row is not None else None
 
     def get_feed(self, owner: str, limit: int = 60) -> list[dict]:
         """Feed cronológico de movimientos de todos los radares del owner."""

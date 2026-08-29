@@ -77,9 +77,18 @@ M2_MODIFIED_FILE_SHA256 = {
 # RADAR-R0 repinea el mismo consumidor para corregir únicamente verdad horaria,
 # baseline, cobertura y evidencia del scheduler en la pestaña Radar. Las rutas
 # de Search continúan acotadas por el oracle de paridad de este archivo.
+# RADAR-R1 lo repinea una vez más para añadir el detalle de una oportunidad
+# detectada: una vista que se abre desde el feed del Radar y que solo LEE el
+# evento ya persistido (app/core/radar/detail.py). No consulta SECOP, no
+# reordena, no toca cursor, buffer, fingerprint ni el bloque de paginación, y
+# no construye URLs. Todo el diff vive dentro de la superficie "# Radar tab"
+# salvo tres símbolos importados de app.core.radar.detail; los oracles de
+# Search de este archivo y test_m2_does_not_move_ranking_ordering_counts_and_
+# pagination siguen verdes, y tests/test_radar_detail.py acota lo que la vista
+# puede afirmar.
 M2_1_MODIFIED_FILE_SHA256 = {
     "app/core/workflow/handlers/direct_lookup.py": "6dcfc63405824e82b46a4b07bbdd503fd2bd504ec65a5640a0c3cc628ee90b6b",
-    "streamlit_app.py": "9bf292912b36603221a899e61df2d36ee8c56675d37e2ac0ab6b1c16eb7cf8c2",
+    "streamlit_app.py": "db4a6c2ad1e424bc3c1d5247dee10ab01ead6871e2907b8a73ad963c4b9e361f",
 }
 
 # HCA-R6 re-pins ONE previously byte-frozen file. The pagination header carried

@@ -1,11 +1,68 @@
-"""Presentación humana de hechos Radar sin alterar su persistencia UTC."""
+"""Presentación humana de hechos Radar sin alterar su persistencia UTC.
+
+Dos relojes distintos pasan por aquí y NO se pueden leer con la misma función:
+
+* Lo que **Radar persiste** (``ts``, ``last_run_at``, heartbeats) se escribe en
+  UTC; un naive heredado se interpreta conservadoramente como UTC. Eso es
+  ``parse_persisted_timestamp``.
+* Lo que **SECOP publica** dentro de un resultado (``fecha_de_recepcion_de``)
+  llega sin offset y ya es hora local colombiana. Leerlo como UTC lo adelantaría
+  cinco horas — mostraría las 11:00 donde la entidad publicó las 16:00. Eso es
+  ``parse_secop_timestamp``.
+
+Las dos comparten ``COLOMBIA_TZ``, que sigue definida una sola vez, y se
+declaran juntas para que la diferencia esté a la vista de quien elija una.
+"""
 from __future__ import annotations
 
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
+from typing import Literal
 from zoneinfo import ZoneInfo
 
 COLOMBIA_TZ = ZoneInfo("America/Bogota")
 SCHEDULER_HEARTBEAT_MAX_AGE = timedelta(hours=7)
+
+SecopTimestampKind = Literal["civil_date", "instant", "unreadable"]
+
+
+def parse_secop_timestamp(
+    raw: str | None,
+) -> tuple[SecopTimestampKind, date | datetime | None]:
+    """Lee una fecha publicada por SECOP en la zona en que fue publicada.
+
+    Devuelve QUÉ se leyó, no solo el valor, porque las dos formas se muestran
+    distinto y confundirlas afirma algo falso:
+
+    * ``civil_date`` — un día sin hora ("2026-09-02"). No se promueve a
+      medianoche: eso daría por vencido, desde las 00:00, un plazo que corre
+      todo el día.
+    * ``instant`` — un momento con hora. Un texto sin offset se ancla en
+      ``COLOMBIA_TZ`` (America/Bogota no observa horario de verano, así que no
+      hay huecos ni solapamientos que resolver); uno con offset explícito se
+      respeta y se convierte.
+    * ``unreadable`` — no se adivina ningún formato ni se aplica locale. Un
+      texto que no sabemos leer se reporta como tal; nunca se muestra crudo ni
+      se trata como ausente.
+
+    El orden importa: la fecha civil se intenta primero, porque
+    ``datetime.fromisoformat`` acepta "2026-09-02" y le inventaría las 00:00.
+    """
+    if raw is None:
+        return "unreadable", None
+    text = str(raw).strip()
+    if not text:
+        return "unreadable", None
+    try:
+        return "civil_date", date.fromisoformat(text)
+    except ValueError:
+        pass
+    try:
+        parsed = datetime.fromisoformat(text)
+    except ValueError:
+        return "unreadable", None
+    if parsed.tzinfo is None or parsed.utcoffset() is None:
+        return "instant", parsed.replace(tzinfo=COLOMBIA_TZ)
+    return "instant", parsed.astimezone(COLOMBIA_TZ)
 
 
 def parse_persisted_timestamp(raw: str | None) -> datetime | None:
