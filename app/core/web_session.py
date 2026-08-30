@@ -26,20 +26,29 @@ STREAMLIT_CHAT_PREFIX = "st_"
 def new_streamlit_chat_id() -> str:
     """Identidad de **conversación** para una sesión Streamlit nueva.
 
-    Un ``chat_id`` nombra una conversación, no una cuenta. Derivarlo del email
-    —como se hacía— tenía dos consecuencias: escribía PII en el nombre de un
-    archivo de ``data/conversations/``, y ataba la memoria a la identidad, de
-    modo que quien iniciara sesión después heredaba el hilo del anterior.
+    El esquema anterior derivaba ``chat_id`` de la cuenta autenticada como
+    ``st_email_<email>``. Esto escribía PII en el identificador persistido y
+    hacía que la misma cuenta reutilizara el hilo entre sesiones o después de
+    un F5. No hacía que una cuenta B heredara el ``ConversationStore`` de A:
+    ``_current_user_identity()`` reasignaba el id con el email de B en cada
+    rerun.
 
-    ``uuid4`` es aleatorio criptográficamente: dos sesiones no colisionan y
-    nadie puede adivinar el hilo ajeno. El prefijo ``st_`` es el que
-    ``ConversationStore._sanitize_chat_id`` reconoce y deja intacto.
+    ``st_<uuid>`` es una decisión deliberada para este beta: no contiene PII,
+    queda aislado por sesión y rota en cada logout/login. Como Streamlit crea
+    una sesión nueva en un F5, también crea entonces una conversación nueva.
+    El tradeoff conocido es que la memoria conversacional no sobrevive el F5 y
+    puede quedar un archivo adicional de ``ConversationStore`` por sesión. Es
+    P2 / future session-continuity design, no el P0 de aislamiento entre
+    usuarios.
+
+    ``uuid4`` hace despreciable una colisión entre sesiones. El prefijo ``st_``
+    es el que ``ConversationStore._sanitize_chat_id`` reconoce y deja intacto.
     """
     return f"{STREAMLIT_CHAT_PREFIX}{uuid.uuid4().hex}"
 
 
 def scratch_chat_id(purpose: str, owner: str) -> str:
-    """Hilo de trabajo interno, estable por dueño y sin PII.
+    """Hilo de trabajo interno, estable por dueño y sin email en claro.
 
     Algunas operaciones (resolver la búsqueda al crear un radar) pasan por el
     pipeline conversacional pero no son la conversación del usuario: necesitan
@@ -47,8 +56,8 @@ def scratch_chat_id(purpose: str, owner: str) -> str:
     —si no, cada creación deja un archivo nuevo— pero el dueño es ``email:...``,
     y concatenarlo escribía el email en el nombre del archivo.
 
-    El hash es one-way y determinista: mismo dueño, mismo hilo; y del nombre no
-    se recupera el email.
+    El hash produce un identificador pseudónimo determinista: mismo dueño,
+    mismo hilo, sin incluir el email en claro.
     """
     digest = hashlib.sha256(owner.encode("utf-8")).hexdigest()[:16]
     return f"_{purpose}_{digest}"

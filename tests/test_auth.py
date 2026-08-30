@@ -365,11 +365,11 @@ def test_the_anonymous_id_is_re_derived_from_the_url_not_carried_over():
 def test_resolving_the_identity_does_not_rewrite_the_conversation_id():
     """La regresión exacta que hay que impedir.
 
-    El bug vivía aquí: ``_current_user_identity`` se llama en cada rerun y
-    reescribía ``chat_id`` a partir del email. Aunque el logout vaciara la
-    sesión, el primer rerun del usuario siguiente volvía a derivar el hilo de la
-    cuenta —y con él la PII en disco y la memoria heredada—. Leer quién es el
-    usuario no puede escribir dónde vive su conversación.
+    ``_current_user_identity`` se llama en cada rerun y antes reescribía
+    ``chat_id`` a partir del email. Así exponía PII en el identificador
+    persistido y hacía que la misma cuenta reutilizara su hilo entre sesiones;
+    no hacía que una cuenta heredara el ``ConversationStore`` de otra. Leer
+    quién es el usuario no puede escribir dónde vive su conversación.
     """
     ns, state = _load_session_helpers()
     ns["_activate_session"](SimpleNamespace(

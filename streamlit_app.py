@@ -495,11 +495,17 @@ def _render_actor_candidates(candidates: list[dict], history_idx: int) -> None:
 def _current_user_identity() -> dict:
     """Quién es el usuario. **No decide dónde vive su conversación.**
 
-    Antes fijaba aquí ``chat_id = st_email_<email>``: ataba el hilo a la cuenta,
-    con dos consecuencias. El email quedaba en el nombre de un archivo de
-    ``data/conversations/``, y la conversación sobrevivía al cambio de identidad
-    en el mismo navegador. El ``chat_id`` lo asigna ahora la sesión (ver
-    ``_seed_session_defaults``), que es de quien realmente es.
+    Antes fijaba aquí ``chat_id = st_email_<email>`` en cada rerun. El id
+    representaba la cuenta, no la conversación: dejaba el email en el nombre de
+    un archivo de ``data/conversations/`` y hacía que la misma cuenta reutilizara
+    ese hilo entre sesiones o después de un F5. Una cuenta B no heredaba el
+    ``ConversationStore`` de A, porque este helper reasignaba el id usando el
+    email de B.
+
+    El P0 cross-user era distinto: ``session_state`` no se limpiaba por completo
+    y las operaciones Radar se autorizaban únicamente por id. El ``chat_id`` lo
+    asigna ahora la sesión (ver ``_seed_session_defaults``), que es de quien
+    realmente es.
     """
     email = (st.session_state.get("user_email") or "").strip().lower()
     name = (st.session_state.get("user_name") or "").strip()

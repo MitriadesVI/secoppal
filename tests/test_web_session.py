@@ -1,10 +1,14 @@
 """Frontera de sesión web: identidad de conversación y vaciado de estado.
 
-El defecto que originó este módulo: el ``chat_id`` de Streamlit se derivaba del
-email (``st_email_<email>``), de modo que era identidad de cuenta y no de
-conversación —escribía PII en disco y hacía que la siguiente identidad heredara
-el hilo de la anterior—; y el logout quitaba una lista de cinco claves conocidas,
-dejando en pie ``history``, ``_open_radar`` y todo lo demás.
+El antiguo ``chat_id`` de Streamlit se derivaba del email
+(``st_email_<email>``): era identidad de cuenta, no de conversación, escribía PII
+en disco y hacía que la misma cuenta reutilizara el hilo entre sesiones o tras
+un F5. No transfería el ``ConversationStore`` de A a una cuenta B, porque cada
+rerun derivaba el id del email autenticado en ese momento.
+
+El P0 cross-user provenía de otra frontera: el logout quitaba solo cinco claves
+y dejaba en pie ``history``, ``_open_radar`` y el resto de ``session_state``;
+además, las operaciones Radar se autorizaban únicamente por id.
 """
 from __future__ import annotations
 
