@@ -5,9 +5,102 @@
 **Sistema:** SECOPPAL — asistente conversacional para consulta y análisis de contratación pública SECOP II  
 **Propósito del documento:** dejar una descripción comprensible para un tercero técnico o funcional sobre qué hace el sistema, cómo está construido, qué archivos lo componen, qué decisiones de arquitectura se han tomado, qué bugs relevantes se han detectado y cuál es el estado actual del proyecto.
 
-## Estado canónico actual — 2026-08-28
+## Estado canónico actual — 2026-08-31
 
-### SODA3 `/query` — transporte productivo integrado
+### SECOP Access V2 — navegación segura y separada de semántica
+
+- **`SECOP_ACCESS_V2 = CLOSED`** (ADR-071). La pregunta "¿cómo llega esta persona
+  a la fuente oficial?" tiene desde ahora **una sola autoridad**:
+  `app/core/secop_access.py`. Antes vivía dispersa —cada vista y cada canal
+  miraba `row["url"]` con sus propias reglas de host y de `/login`—.
+- **El camino del dato:**
+
+```text
+Socrata row
+   ↓
+normalización existente  (SecopClient._normalize_row)
+   ↓
+secop_access             (resolve_secop_access)
+   ├── direct                   vista pública del proceso, observada
+   ├── search_with_reference    sin vista propia, pero con referencia
+   └── search                   ni vista ni referencia
+   ↓
+Streamlit / Telegram / WhatsApp / Radar / Workspace
+```
+
+- **Dos premisas heredadas quedaron falsificadas:**
+
+```text
+CO1.REQ  ≠  prepublicación
+ausencia de URL  ≠  etapa
+```
+
+  Censo completo de `p6dx-8zbt` al 2026-08-31: los **9.096.877** procesos llevan
+  `id_del_proceso = CO1.REQ.*` —el **100%**— y **9.002.823 (98,97%)** traen vista
+  pública `OpportunityDetail` con `noticeUID=CO1.NTC.*`; las filas con
+  `noticeUID=CO1.REQ.*` son **0**. El prefijo lo llevan todas las filas: no
+  predice nada. El predictor real es `estado_del_procedimiento='Borrador'`
+  (**42.580 / 43.304 = 98,3%** sin vista), no el régimen especial
+  (**34.163 / 3.563.571 = 0,96%**, la tasa base del dataset es 1,03%).
+- **El enlace directo se observa, nunca se construye.** Exige `http(s)`, host de
+  la allow-list de SECOP y ser una VISTA del proceso. Se rechazan la pantalla de
+  autenticación (`/login`), el buscador de avisos (`/ContractNoticeManagement`),
+  los hosts externos, los esquemas inseguros y la URL malformada. El buscador se
+  reconoce por su RUTA, no por el parámetro `Page=login` —que forma parte del
+  literal oficial y **no** significa que la página exija sesión—.
+- **Las tres clases y qué significan:**
+
+```text
+direct                 SECOP entregó la vista pública → "Abrir en SECOP"
+search_with_reference  sin ficha → buscador oficial + referencia observada
+search                 sin ficha ni referencia → buscador oficial a secas
+```
+
+  `search_url` está SIEMPRE poblada, incluso en `direct`, para que ninguna
+  superficie improvise qué hacer cuando el enlace directo falla.
+- **`SECOP_PUBLIC_SEARCH_URL` no es una ruta deducida:** es el literal que el
+  propio SECOP publica en `urlproceso` para los 4.130 contratos de `jbjy-vk9h`
+  sin ficha pública. El destino del fallback lo declara la fuente.
+- **La falta de enlace no oculta ni degrada nada.** No elimina la oportunidad, no
+  reduce su ranking, no implica prepublicación y no implica borrador. El usuario
+  conserva siempre una vía hacia SECOP. Es el principio de ADR-027 —señalizar, no
+  omitir— conservado; lo que cambió es que lo señalizado dejó de nombrar una
+  etapa y pasó a ser una acción ejecutable.
+- **Nueve superficies, una decisión.** Comparten la misma autoridad el feed de
+  Radar, el detalle de Radar, el Workspace, las tarjetas de búsqueda, el detalle
+  de direct lookup, los procesos seguidos, las tarjetas agrupadas, Telegram y
+  WhatsApp. Hay un test que exige la MISMA decisión en los tres canales de texto
+  para la misma fila (`tests/test_url_fallback_channel_parity.py`).
+- **Guardar sigue siendo local:** el Workspace no hace lookup remoto al guardar,
+  copia el snapshot observado. Los ítems legacy sin `secop_url` usan su
+  `reference` para ofrecer el buscador, sin migración del histórico.
+- **Cada capa responde lo suyo y nada más:**
+
+```text
+SECOP Access            → navegación a la fuente
+Truth Layer visibility  → evidencia sobre visibilidad
+Opportunity Stage       → etapa del proceso
+Operational State       → lectura operativa
+Radar                   → detección / monitoreo
+```
+
+- **`CO1_REQ_DIRECT_RESOLUTION = NO_GO`.** Sobre una muestra congelada de 31
+  filas en 10 estratos, las 18 sin vista pública dieron **0/18** resueltas por
+  `referencia_del_proceso`+`nit_entidad` y **0/18** por `id_del_portafolio`, que
+  además no es clave determinista. No se fabrica REQ → NTC ni se recurre a
+  terceros.
+- **Deudas registradas, no corregidas:**
+  `TRUTH_LAYER_SEARCH_URL_CLASSIFICATION_DEBT` (`DEFERRED`; el
+  `visibility_resolver` clasifica el buscador como `public_view_available`
+  porque solo mira `/login` en el path — impacto en esta UI: **ninguno**) y
+  `SECOP_SYNTHETIC_URL_PROVENANCE_DEBT` (`_safe_url` y `_normalize_row` aún
+  pueden fabricar URLs desde ids/referencias, y `secop_access` no puede
+  distinguir `observed` de `synthetic`).
+
+Decisión: `docs/decisions/2026-08-31_ADR-071_secop-access-authority.md`.
+Informe: `docs/audits/2026-08-31_CO1_REQ_PUBLIC_LINK_SPIKE.md`.
+
+### SODA3 `/query` — transporte productivo integrado (2026-08-28)
 
 - **`SODA3_TRANSPORT_V1 = INTEGRATED`** (ADR-070). Integrado a `main` por
   fast-forward en `dd51ccd`. La salida a la red de SECOPPAL dejó de ser
@@ -1984,11 +2077,32 @@ trabajo con tests 945 passed.
   `seed_resolved_params` a `run_query()`.
 
 **Fix B — URLs por tipo de proceso (DOGFOOD-URL-005):**
+
+> **HISTÓRICO — premisa re-auditada y parcialmente revocada el 2026-08-31.** Lo
+> que sigue es lo que se creyó en mayo de 2026 y se conserva sin reescribir. La
+> corrección va inmediatamente después.
+
 - `formatter.py:_safe_url()` + `secop_client.py:_normalize_row()` detectan
   prefijo CO1.REQ.X vs CO1.NTC.X.
 - REQ → "" (pre-publicación, SECOP devuelve "argument out of range").
 - NTC → reconstruir `OpportunityDetail/Index?noticeUID=`.
 - UI: "Vista pública no disponible (proceso pre-publicación)".
+
+**Corrección 2026-08-31 (ADR-071):**
+- **CO1.REQ no implica prepublicación.** La interpretación original era errónea,
+  y así se registra: no envejeció, nació sin medición detrás.
+- **100% de `p6dx-8zbt` usa CO1.REQ** (9.096.877 de 9.096.877 filas), de modo que
+  el prefijo no distingue nada.
+- **98,97% tiene vista pública** (9.002.823 filas con `OpportunityDetail` y
+  `noticeUID=CO1.NTC.*`). El predictor real de la ausencia es
+  `estado_del_procedimiento='Borrador'` (98,3%), no el prefijo ni el régimen
+  especial (0,96%, la tasa base).
+- **El guard sobre CO1.REQ permanece, por otro motivo:** `id_del_proceso` no es
+  un `noticeUID` — cero filas usan su propio id como tal —, así que construir la
+  URL desde él daría un enlace roto en el 100% de los casos.
+- **La presentación vigente es otra:** ADR-071 y `app/core/secop_access.py`. La
+  nota que afirmaba una etapa fue reemplazada por el buscador público oficial más
+  la referencia observada.
 
 **Fix C — Fecha fallback cascada (DOGFOOD-DATE-002):**
 - `formatter.py:_best_date_for_row()` busca: publicacion_del → publicacion_fase_3

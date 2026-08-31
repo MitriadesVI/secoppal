@@ -71,14 +71,16 @@
 
 | id | categoría | query | expected | fix | status |
 |---|---|---|---|---|---|
-| D1 | URL | proceso CO1.REQ.1274538 | link vacío, "Vista pública no disponible" | DOGFOOD-URL-005 | ✅ |
+| D1 | URL | fila `CO1.REQ.*` con URL directa válida / sin ficha directa | URL directa válida → "Abrir en SECOP"; sin ficha → "Buscar en SECOP II" + referencia; el prefijo `CO1.REQ` por sí solo no implica etapa | DOGFOOD-URL-005 / SECOP-ACCESS-V2 | ✅ |
 | D2 | fecha | proceso en Borrador | muestra fecha fallback con etiqueta | DOGFOOD-DATE-002 | ✅ |
 | D3 | refinamiento | click "Últimos 30 días" | nueva query con fecha aplicada | DOGFOOD-REFINE-004 | ✅ |
 | D4 | rango | "entre 500 y mil millones" | valor_min=500M, valor_max=1000M | DOGFOOD-RANGE-005 | ✅ |
 | D5 | scrub | "se celebraron en 2025" | "celebraron" NO en objeto | DOGFOOD-ACTION-005B | ✅ |
 | D6 | SoQL | contratos en jbjy-vk9h | no CASE WHEN en ORDER BY | DOGFOOD-SOQL-006 | ✅ |
 
-**Tests automatizados:** test_url_repair.py, test_best_date.py, test_refinement.py, test_range_parsing.py, test_action_verbs.py
+**Tests automatizados:** test_secop_access.py, test_url_fallback_channel_parity.py, test_url_repair.py, test_best_date.py, test_refinement.py, test_range_parsing.py, test_action_verbs.py
+
+> **D1 re-auditado el 2026-08-31 (ADR-071).** El caso original fijaba un id concreto (`CO1.REQ.1274538`) y esperaba link vacío más la nota "Vista pública no disponible". La premisa detrás —`CO1.REQ` = prepublicación— quedó falsificada por el censo de `p6dx-8zbt` (100% de las filas llevan el prefijo, 98,97% tiene vista pública), y el comportamiento de esa fila concreta no se volvió a verificar, así que no se afirma. Lo que D1 prueba ahora es el contrato vigente de `app/core/secop_access.py`.
 
 ---
 

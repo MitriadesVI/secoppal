@@ -186,7 +186,13 @@ Los 22 FAIL se documentan en docs/CORPUS_BACKLOG.md y se priorizan por severidad
 **Estado:** 88/88 PASS + fixes de UX aplicados fuera de corpus.
 
 Nuevos casos para agregar al corpus (descubiertos en dogfooding real):
-- DOGFOOD-URL-005: URLs CO1.REQ.X → "Vista pública no disponible"
+- DOGFOOD-URL-005 — **re-auditado 2026-08-31 (ADR-071)**: el prefijo `CO1.REQ`
+  **no** decide la visibilidad. URL directa válida → "Abrir en SECOP"; sin ficha
+  directa → "Buscar en SECOP II" + referencia observada. Nunca inferir
+  prepublicación desde el id. (Redacción original del dogfooding de 2026-05-25:
+  `URLs CO1.REQ.X → "Vista pública no disponible"`, sobre una premisa que el
+  censo de `p6dx-8zbt` falsificó — 100% de las filas llevan el prefijo y el
+  98,97% sí tiene vista pública.)
 - DOGFOOD-DATE-002: Fecha fallback cascada (publicacion → fase_3 → recepcion → apertura)
 - DOGFOOD-REFINE-004: Refinement buttons funcionales vía bypass SoQL
 - DOGFOOD-RANGE-005: "entre 500 y mil millones" → herencia de unidad compuesta
