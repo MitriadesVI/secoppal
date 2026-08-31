@@ -32,7 +32,13 @@ M2_MODIFIED_FILE_SHA256 = {
     # directions R6 adds are not announced as "de mayor valor"/"más recientes".
     # The label for every pre-R6 signal is unchanged and the oracles below stay
     # byte-identical, which bounds the change to the new signals.
-    "app/core/formatter.py": "0d43d654df3a0072572ec404d8d9d1ded26c4a2b9d5f1981b2b540fa92650aa2",
+    # RADAR-SECOP-ACCESS-V2 re-pins it for a COMMENT-ONLY edit: the docstring of
+    # _safe_url attributed the CO1.REQ guard to "pre-publication", a cause the
+    # 2026-08-31 census falsified (100% of p6dx-8zbt ids carry that prefix and
+    # 98.97% do have a public view). The guard and every returned value are
+    # unchanged — test_m2_card_divergence_is_purely_additive below is what
+    # bounds that claim, and the Search oracles stay byte-identical.
+    "app/core/formatter.py": "7ef59d1c5cee2bcc166b25879670c8e570971447414fe9cbceffc0033b758e63",
     # Money V2 / M7 adds a section gated strictly by valor_min/valor_max. The
     # no-money oracle below remains byte-identical and bounds that condition;
     # tests/test_money_presentation.py pins the authorized monetary divergence.
@@ -121,7 +127,18 @@ M2_MODIFIED_FILE_SHA256 = {
 M2_1_MODIFIED_FILE_SHA256 = {
     "app/core/workflow/handlers/direct_lookup.py": "6dcfc63405824e82b46a4b07bbdd503fd2bd504ec65a5640a0c3cc628ee90b6b",
     # 078fb1b was a documentation-only microfix after the isolation hotfix.
-    "streamlit_app.py": "f75994dbaf3a40e82fd8e7a3494785390d782015d8d5a681e70775739cbccc70",
+    # RADAR-SECOP-ACCESS-V2 lo repinea por la vía a SECOP. Dos cambios y ambos
+    # de presentación: (a) la app deja de INFERIR etapa de la ausencia de enlace
+    # ("proceso pre-publicación"), que ADR-032 #4 ya prohibía y el censo del
+    # 2026-08-31 falsificó; (b) donde no hay enlace directo se ofrece el
+    # buscador público oficial con la referencia observada, en vez de un hueco.
+    # La decisión vive en una autoridad pura nueva (app/core/secop_access.py) y
+    # la superficie solo la consume: no construye URLs, no consulta SECOP, no
+    # toca Search, ranking, cursor de paginación ni sus fingerprints —los
+    # oráculos de Search de este archivo siguen byte-idénticos—. Lo acotan
+    # tests/test_secop_access.py, tests/test_radar_detail.py y los casos de
+    # superficie de tests/test_radar_ui_truth.py.
+    "streamlit_app.py": "fff6ba33d084ed981c81c718f9854ee7135d62966035730b556f376a41a30880",
 }
 
 # HCA-R6 re-pins ONE previously byte-frozen file. The pagination header carried

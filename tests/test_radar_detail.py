@@ -447,9 +447,14 @@ def test_streamlit_feed_offers_the_detail_only_for_opportunities():
 def test_streamlit_detail_uses_the_shared_authorities():
     surface = _radar_surface()
     assert "build_opportunity_detail" in surface
-    assert "observed_secop_url" in surface
+    # La vía a SECOP la decide una sola autoridad pura, no la vista. Sustituyó a
+    # `observed_secop_url` en la superficie porque responde la pregunta completa
+    # (enlace directo O búsqueda pública), no solo media.
+    assert "resolve_secop_access" in surface
     # El detalle no puede construir un enlace: solo publica el observado.
     assert "OpportunityDetail/Index" not in surface
+    # Y tampoco escribe la URL del buscador: es un literal de la autoridad.
+    assert "ContractNoticeManagement" not in surface
 
 
 def _detail_visible_strings() -> set[str]:

@@ -175,7 +175,7 @@ def test_the_detail_offers_only_save_and_secop():
         "Guardar", "✓ Guardada", "Quitar de guardadas", "Inicia sesión para guardar",
     }
     assert _button_labels("_render_opportunity_detail") <= {
-        "← Volver a movimientos", "Abrir en SECOP",
+        "← Volver a movimientos", "Abrir en SECOP", "Buscar en SECOP II",
     }
 
 
@@ -213,8 +213,15 @@ def test_suppressed_surface_has_restore_without_exposing_receipt_history():
 
 
 def test_the_workspace_card_offers_only_secop_and_remove():
-    """R2 no es un CRM: sin estados, sin pin, sin notas, sin compartir."""
-    assert _button_labels("_render_workspace_card") == {"Abrir en SECOP", "Quitar"}
+    """R2 no es un CRM: sin estados, sin pin, sin notas, sin compartir.
+
+    "Buscar en SECOP II" no relaja este cierre: es la MISMA acción —ir a la
+    fuente— para el item guardado que no trae enlace directo. Los items viejos
+    siguen siendo útiles sin migrar su snapshot.
+    """
+    assert _button_labels("_render_workspace_card") == {
+        "Abrir en SECOP", "Buscar en SECOP II", "Quitar",
+    }
 
 
 def test_no_commercial_pipeline_verbs_reached_the_ui():

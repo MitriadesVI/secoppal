@@ -1,0 +1,740 @@
+[
+ {
+  "_stratum": "login_borrador",
+  "id_del_proceso": "CO1.REQ.10000557",
+  "referencia_del_proceso": "CPS-513-2026",
+  "id_del_portafolio": "CO1.BDOS.9832238",
+  "estado_del_procedimiento": "Borrador",
+  "fase": null,
+  "entidad": "GOBERNACION DE SUCRE",
+  "nit_entidad": "892280021",
+  "urlproceso_raw": "https://community.secop.gov.co/STS/Users/Login/Index",
+  "url_class": "login",
+  "by_reference": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  },
+  "by_portfolio": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  }
+ },
+ {
+  "_stratum": "login_borrador",
+  "id_del_proceso": "CO1.REQ.10001641",
+  "referencia_del_proceso": "SGSC-CD-PSP-411-2026",
+  "id_del_portafolio": "CO1.BDOS.9833349",
+  "estado_del_procedimiento": "Borrador",
+  "fase": null,
+  "entidad": "DEPARTAMENTO DE CUNDINAMARCA -SECRETARIA DE GOBIERNO",
+  "nit_entidad": "899999114",
+  "urlproceso_raw": "https://community.secop.gov.co/STS/Users/Login/Index",
+  "url_class": "login",
+  "by_reference": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  },
+  "by_portfolio": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  }
+ },
+ {
+  "_stratum": "login_borrador",
+  "id_del_proceso": "CO1.REQ.10001793",
+  "referencia_del_proceso": "ICFES-CD-377-2026",
+  "id_del_portafolio": "CO1.BDOS.9833770",
+  "estado_del_procedimiento": "Borrador",
+  "fase": null,
+  "entidad": "INSTITUTO COLOMBIANO PARA LA EVALUACIÓN DE LA EDUCACIÓN - ICFES",
+  "nit_entidad": "860024301",
+  "urlproceso_raw": "https://community.secop.gov.co/STS/Users/Login/Index",
+  "url_class": "login",
+  "by_reference": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  },
+  "by_portfolio": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  }
+ },
+ {
+  "_stratum": "login_borrador",
+  "id_del_proceso": "CO1.REQ.10001897",
+  "referencia_del_proceso": "CD-694-2026",
+  "id_del_portafolio": "CO1.BDOS.9833493",
+  "estado_del_procedimiento": "Borrador",
+  "fase": null,
+  "entidad": "ENTerritorio S.A",
+  "nit_entidad": "899999316",
+  "urlproceso_raw": "https://community.secop.gov.co/STS/Users/Login/Index",
+  "url_class": "login",
+  "by_reference": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  },
+  "by_portfolio": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  }
+ },
+ {
+  "_stratum": "login_en_aprobacion",
+  "id_del_proceso": "CO1.REQ.10005141",
+  "referencia_del_proceso": "SDIS-CPS-330319-2026",
+  "id_del_portafolio": "CO1.BDOS.9835603",
+  "estado_del_procedimiento": "En aprobación",
+  "fase": null,
+  "entidad": "(Secretaría Distrital de Integración Social)",
+  "nit_entidad": "8999990619",
+  "urlproceso_raw": "https://community.secop.gov.co/STS/Users/Login/Index",
+  "url_class": "login",
+  "by_reference": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  },
+  "by_portfolio": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  }
+ },
+ {
+  "_stratum": "login_en_aprobacion",
+  "id_del_proceso": "CO1.REQ.10025852",
+  "referencia_del_proceso": "ICBF-CA-269942-2026SAN",
+  "id_del_portafolio": "CO1.BDOS.9857807",
+  "estado_del_procedimiento": "En aprobación",
+  "fase": null,
+  "entidad": "ICBF REGIONAL SANTANDER",
+  "nit_entidad": "8999992391",
+  "urlproceso_raw": "https://community.secop.gov.co/STS/Users/Login/Index",
+  "url_class": "login",
+  "by_reference": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  },
+  "by_portfolio": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  }
+ },
+ {
+  "_stratum": "login_en_aprobacion",
+  "id_del_proceso": "CO1.REQ.10030052",
+  "referencia_del_proceso": "SI-CDPS-152-2026",
+  "id_del_portafolio": "CO1.BDOS.9861276",
+  "estado_del_procedimiento": "En aprobación",
+  "fase": null,
+  "entidad": "GOBERNACIÓN DE RISARALDA**",
+  "nit_entidad": "891480085",
+  "urlproceso_raw": "https://community.secop.gov.co/STS/Users/Login/Index",
+  "url_class": "login",
+  "by_reference": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  },
+  "by_portfolio": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  }
+ },
+ {
+  "_stratum": "login_aprobado",
+  "id_del_proceso": "CO1.REQ.10000080",
+  "referencia_del_proceso": "ICBF-CPS-273272-2026MAG",
+  "id_del_portafolio": "CO1.BDOS.9831327",
+  "estado_del_procedimiento": "Aprobado",
+  "fase": null,
+  "entidad": "ICBF REGIONAL MAGDALENA",
+  "nit_entidad": "899999239",
+  "urlproceso_raw": "https://community.secop.gov.co/STS/Users/Login/Index",
+  "url_class": "login",
+  "by_reference": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  },
+  "by_portfolio": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  }
+ },
+ {
+  "_stratum": "login_aprobado",
+  "id_del_proceso": "CO1.REQ.10000468",
+  "referencia_del_proceso": "ICBF-CPS-273392-2026MAG",
+  "id_del_portafolio": "CO1.BDOS.9832431",
+  "estado_del_procedimiento": "Aprobado",
+  "fase": null,
+  "entidad": "ICBF REGIONAL MAGDALENA",
+  "nit_entidad": "899999239",
+  "urlproceso_raw": "https://community.secop.gov.co/STS/Users/Login/Index",
+  "url_class": "login",
+  "by_reference": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  },
+  "by_portfolio": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  }
+ },
+ {
+  "_stratum": "login_aprobado",
+  "id_del_proceso": "CO1.REQ.10001191",
+  "referencia_del_proceso": "ICBF-CPS-273430-2026MAG",
+  "id_del_portafolio": "CO1.BDOS.9833228",
+  "estado_del_procedimiento": "Aprobado",
+  "fase": null,
+  "entidad": "ICBF REGIONAL MAGDALENA",
+  "nit_entidad": "899999239",
+  "urlproceso_raw": "https://community.secop.gov.co/STS/Users/Login/Index",
+  "url_class": "login",
+  "by_reference": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  },
+  "by_portfolio": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  }
+ },
+ {
+  "_stratum": "login_cancelado",
+  "id_del_proceso": "CO1.REQ.10000512",
+  "referencia_del_proceso": "CD-DESPACHO-5552-2026",
+  "id_del_portafolio": "CO1.BDOS.9832029",
+  "estado_del_procedimiento": "Cancelado",
+  "fase": null,
+  "entidad": "ALCALDÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS",
+  "nit_entidad": "890480184",
+  "urlproceso_raw": "https://community.secop.gov.co/STS/Users/Login/Index",
+  "url_class": "login",
+  "by_reference": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  },
+  "by_portfolio": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  }
+ },
+ {
+  "_stratum": "login_cancelado",
+  "id_del_proceso": "CO1.REQ.10000585",
+  "referencia_del_proceso": "CD-367-2026",
+  "id_del_portafolio": "CO1.BDOS.9832504",
+  "estado_del_procedimiento": "Cancelado",
+  "fase": null,
+  "entidad": "ENTerritorio S.A",
+  "nit_entidad": "899999316",
+  "urlproceso_raw": "https://community.secop.gov.co/STS/Users/Login/Index",
+  "url_class": "login",
+  "by_reference": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  },
+  "by_portfolio": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  }
+ },
+ {
+  "_stratum": "login_cancelado",
+  "id_del_proceso": "CO1.REQ.10000638",
+  "referencia_del_proceso": "CPS-UNP-2067-2026",
+  "id_del_portafolio": "CO1.BDOS.9832349",
+  "estado_del_procedimiento": "Cancelado",
+  "fase": null,
+  "entidad": "UNP",
+  "nit_entidad": "900475780",
+  "urlproceso_raw": "https://community.secop.gov.co/STS/Users/Login/Index",
+  "url_class": "login",
+  "by_reference": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  },
+  "by_portfolio": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  }
+ },
+ {
+  "_stratum": "login_publicado",
+  "id_del_proceso": "CO1.REQ.10061542",
+  "referencia_del_proceso": "DG-8090-39-2026-1",
+  "id_del_portafolio": "CO1.BDOS.9893055",
+  "estado_del_procedimiento": "Publicado",
+  "fase": null,
+  "entidad": "SENA SECRETARIA GENERAL",
+  "nit_entidad": "899999034",
+  "urlproceso_raw": "https://community.secop.gov.co/STS/Users/Login/Index",
+  "url_class": "login",
+  "by_reference": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  },
+  "by_portfolio": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  }
+ },
+ {
+  "_stratum": "login_publicado",
+  "id_del_proceso": "CO1.REQ.10063453",
+  "referencia_del_proceso": "CPS-004-2026",
+  "id_del_portafolio": "CO1.BDOS.9895059",
+  "estado_del_procedimiento": "Publicado",
+  "fase": null,
+  "entidad": "CONTRALORIA DEPARTAMENTAL DE BOLIVAR",
+  "nit_entidad": "890480306",
+  "urlproceso_raw": "https://community.secop.gov.co/STS/Users/Login/Index",
+  "url_class": "login",
+  "by_reference": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  },
+  "by_portfolio": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  }
+ },
+ {
+  "_stratum": "login_publicado",
+  "id_del_proceso": "CO1.REQ.10065000",
+  "referencia_del_proceso": "089/2026",
+  "id_del_portafolio": "CO1.BDOS.9896783",
+  "estado_del_procedimiento": "Publicado",
+  "fase": null,
+  "entidad": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SANTA ANA NIVEL I",
+  "nit_entidad": "800193490",
+  "urlproceso_raw": "https://community.secop.gov.co/STS/Users/Login/Index",
+  "url_class": "login",
+  "by_reference": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  },
+  "by_portfolio": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  }
+ },
+ {
+  "_stratum": "login_seleccionado",
+  "id_del_proceso": "CO1.REQ.10267255",
+  "referencia_del_proceso": "PN UPRES DEANT CD PSP 034-2026",
+  "id_del_portafolio": "CO1.BDOS.10097559",
+  "estado_del_procedimiento": "Seleccionado",
+  "fase": null,
+  "entidad": "UNIDAD PRESTADORA DE SALUD ANTIOQUIA",
+  "nit_entidad": "901363087",
+  "urlproceso_raw": "https://community.secop.gov.co/STS/Users/Login/Index",
+  "url_class": "login",
+  "by_reference": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  },
+  "by_portfolio": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  }
+ },
+ {
+  "_stratum": "login_seleccionado",
+  "id_del_proceso": "CO1.REQ.10267370",
+  "referencia_del_proceso": "CPS-101-2026",
+  "id_del_portafolio": "CO1.BDOS.10097870",
+  "estado_del_procedimiento": "Seleccionado",
+  "fase": null,
+  "entidad": "HSVPG",
+  "nit_entidad": "890000448",
+  "urlproceso_raw": "https://community.secop.gov.co/STS/Users/Login/Index",
+  "url_class": "login",
+  "by_reference": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  },
+  "by_portfolio": {
+   "rows": 1,
+   "distinct_public_urls": 0,
+   "urls": []
+  }
+ },
+ {
+  "_stratum": "public_presentacion_oferta",
+  "id_del_proceso": "CO1.REQ.10000000",
+  "referencia_del_proceso": "RE 01 2026",
+  "id_del_portafolio": "CO1.BDOS.9831050",
+  "estado_del_procedimiento": "Publicado",
+  "fase": "Presentación de oferta",
+  "entidad": "COLEGIO ANTONIO BARAYA. INSTITUCION EDUCATIVA DISTRITAL",
+  "nit_entidad": "800206329",
+  "urlproceso_raw": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.9851252",
+  "url_class": "public",
+  "by_reference": {
+   "rows": 1,
+   "distinct_public_urls": 1,
+   "urls": [
+    "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.9851252"
+   ]
+  },
+  "by_portfolio": {
+   "rows": 1,
+   "distinct_public_urls": 1,
+   "urls": [
+    "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.9851252"
+   ]
+  }
+ },
+ {
+  "_stratum": "public_presentacion_oferta",
+  "id_del_proceso": "CO1.REQ.10000001",
+  "referencia_del_proceso": "SCJ-CD-494-2026",
+  "id_del_portafolio": "CO1.BDOS.9831711",
+  "estado_del_procedimiento": "Seleccionado",
+  "fase": "Presentación de oferta",
+  "entidad": "SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA",
+  "nit_entidad": "899999061",
+  "urlproceso_raw": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.9872684",
+  "url_class": "public",
+  "by_reference": {
+   "rows": 1,
+   "distinct_public_urls": 1,
+   "urls": [
+    "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.9872684"
+   ]
+  },
+  "by_portfolio": {
+   "rows": 1,
+   "distinct_public_urls": 1,
+   "urls": [
+    "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.9872684"
+   ]
+  }
+ },
+ {
+  "_stratum": "public_presentacion_oferta",
+  "id_del_proceso": "CO1.REQ.10000002",
+  "referencia_del_proceso": "PS-PSP-060-2026",
+  "id_del_portafolio": "CO1.BDOS.9831377",
+  "estado_del_procedimiento": "Seleccionado",
+  "fase": "Presentación de oferta",
+  "entidad": "ALCALDIA MUNICIPAL DE VIOTÁ",
+  "nit_entidad": "890680142",
+  "urlproceso_raw": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.9849961",
+  "url_class": "public",
+  "by_reference": {
+   "rows": 1,
+   "distinct_public_urls": 1,
+   "urls": [
+    "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.9849961"
+   ]
+  },
+  "by_portfolio": {
+   "rows": 1,
+   "distinct_public_urls": 1,
+   "urls": [
+    "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.9849961"
+   ]
+  }
+ },
+ {
+  "_stratum": "public_presentacion_oferta",
+  "id_del_proceso": "CO1.REQ.10000003",
+  "referencia_del_proceso": "012-2026",
+  "id_del_portafolio": "CO1.BDOS.9831620",
+  "estado_del_procedimiento": "Publicado",
+  "fase": "Presentación de oferta",
+  "entidad": "EMPRESA DE SERVICIOS PÚBLICOS DOMICILIARIOS DE BARBOSA//",
+  "nit_entidad": "804003025",
+  "urlproceso_raw": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.9850712",
+  "url_class": "public",
+  "by_reference": {
+   "rows": 1,
+   "distinct_public_urls": 1,
+   "urls": [
+    "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.9850712"
+   ]
+  },
+  "by_portfolio": {
+   "rows": 1,
+   "distinct_public_urls": 1,
+   "urls": [
+    "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.9850712"
+   ]
+  }
+ },
+ {
+  "_stratum": "public_publicado",
+  "id_del_proceso": "CO1.REQ.10000000",
+  "referencia_del_proceso": "RE 01 2026",
+  "id_del_portafolio": "CO1.BDOS.9831050",
+  "estado_del_procedimiento": "Publicado",
+  "fase": "Presentación de oferta",
+  "entidad": "COLEGIO ANTONIO BARAYA. INSTITUCION EDUCATIVA DISTRITAL",
+  "nit_entidad": "800206329",
+  "urlproceso_raw": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.9851252",
+  "url_class": "public",
+  "by_reference": {
+   "rows": 1,
+   "distinct_public_urls": 1,
+   "urls": [
+    "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.9851252"
+   ]
+  },
+  "by_portfolio": {
+   "rows": 1,
+   "distinct_public_urls": 1,
+   "urls": [
+    "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.9851252"
+   ]
+  }
+ },
+ {
+  "_stratum": "public_publicado",
+  "id_del_proceso": "CO1.REQ.10000003",
+  "referencia_del_proceso": "012-2026",
+  "id_del_portafolio": "CO1.BDOS.9831620",
+  "estado_del_procedimiento": "Publicado",
+  "fase": "Presentación de oferta",
+  "entidad": "EMPRESA DE SERVICIOS PÚBLICOS DOMICILIARIOS DE BARBOSA//",
+  "nit_entidad": "804003025",
+  "urlproceso_raw": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.9850712",
+  "url_class": "public",
+  "by_reference": {
+   "rows": 1,
+   "distinct_public_urls": 1,
+   "urls": [
+    "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.9850712"
+   ]
+  },
+  "by_portfolio": {
+   "rows": 1,
+   "distinct_public_urls": 1,
+   "urls": [
+    "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.9850712"
+   ]
+  }
+ },
+ {
+  "_stratum": "public_publicado",
+  "id_del_proceso": "CO1.REQ.10000011",
+  "referencia_del_proceso": "CPS-2025-01575",
+  "id_del_portafolio": "CO1.BDOS.9831259",
+  "estado_del_procedimiento": "Publicado",
+  "fase": "Presentación de oferta",
+  "entidad": "E.S.E CENTRO DE SALUD PAZ DEL RIO",
+  "nit_entidad": "819002551",
+  "urlproceso_raw": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.9849946",
+  "url_class": "public",
+  "by_reference": {
+   "rows": 1,
+   "distinct_public_urls": 1,
+   "urls": [
+    "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.9849946"
+   ]
+  },
+  "by_portfolio": {
+   "rows": 1,
+   "distinct_public_urls": 1,
+   "urls": [
+    "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.9849946"
+   ]
+  }
+ },
+ {
+  "_stratum": "public_evaluacion",
+  "id_del_proceso": "CO1.REQ.10000021",
+  "referencia_del_proceso": "PN DISAN SA 001 2026 (Manifestación de interés (Menor Cuantía))",
+  "id_del_portafolio": "CO1.BDOS.9628765",
+  "estado_del_procedimiento": "Evaluación",
+  "fase": "Manifestación de interés (Menor Cuantía)",
+  "entidad": "DIRECCION DE SANIDAD DE LA POLICIA NACIONAL - DISAN PONAL",
+  "nit_entidad": "830041314",
+  "urlproceso_raw": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.9857328",
+  "url_class": "public",
+  "by_reference": {
+   "rows": 1,
+   "distinct_public_urls": 1,
+   "urls": [
+    "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.9857328"
+   ]
+  },
+  "by_portfolio": {
+   "rows": 3,
+   "distinct_public_urls": 3,
+   "urls": [
+    "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.9659272",
+    "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.9857328",
+    "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.9962081"
+   ]
+  }
+ },
+ {
+  "_stratum": "public_evaluacion",
+  "id_del_proceso": "CO1.REQ.100001",
+  "referencia_del_proceso": "SA DG-0018 de 2016 (Manifestación de interés (Menor Cuantía))",
+  "id_del_portafolio": "CO1.BDOS.92009",
+  "estado_del_procedimiento": "Evaluación",
+  "fase": "Manifestación de interés (Menor Cuantía)",
+  "entidad": "SENA DIRECCION GENERAL",
+  "nit_entidad": "899999034",
+  "urlproceso_raw": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.96602",
+  "url_class": "public",
+  "by_reference": {
+   "rows": 1,
+   "distinct_public_urls": 1,
+   "urls": [
+    "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.96602"
+   ]
+  },
+  "by_portfolio": {
+   "rows": 3,
+   "distinct_public_urls": 3,
+   "urls": [
+    "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.91801",
+    "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.96602",
+    "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.98203"
+   ]
+  }
+ },
+ {
+  "_stratum": "public_evaluacion",
+  "id_del_proceso": "CO1.REQ.10000124",
+  "referencia_del_proceso": "270-2026000150",
+  "id_del_portafolio": "CO1.BDOS.9831797",
+  "estado_del_procedimiento": "Evaluación",
+  "fase": "Presentación de oferta",
+  "entidad": "UNIVERSIDAD INDUSTRIAL DE SANTANDER",
+  "nit_entidad": "890201213",
+  "urlproceso_raw": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.9851154",
+  "url_class": "public",
+  "by_reference": {
+   "rows": 1,
+   "distinct_public_urls": 1,
+   "urls": [
+    "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.9851154"
+   ]
+  },
+  "by_portfolio": {
+   "rows": 1,
+   "distinct_public_urls": 1,
+   "urls": [
+    "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.9851154"
+   ]
+  }
+ },
+ {
+  "_stratum": "public_cancelado",
+  "id_del_proceso": "CO1.REQ.1000106",
+  "referencia_del_proceso": "PN DIRAN MIC 099 DE 2019",
+  "id_del_portafolio": "CO1.BDOS.963701",
+  "estado_del_procedimiento": "Cancelado",
+  "fase": "Presentación de oferta",
+  "entidad": "DIRECCION DE ANTINARCOTICOS",
+  "nit_entidad": "800141379",
+  "urlproceso_raw": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.966502",
+  "url_class": "public",
+  "by_reference": {
+   "rows": 1,
+   "distinct_public_urls": 1,
+   "urls": [
+    "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.966502"
+   ]
+  },
+  "by_portfolio": {
+   "rows": 1,
+   "distinct_public_urls": 1,
+   "urls": [
+    "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.966502"
+   ]
+  }
+ },
+ {
+  "_stratum": "public_cancelado",
+  "id_del_proceso": "CO1.REQ.10001558",
+  "referencia_del_proceso": "SA_MNC_002_2026",
+  "id_del_portafolio": "CO1.BDOS.9833516",
+  "estado_del_procedimiento": "Cancelado",
+  "fase": "Presentación de oferta",
+  "entidad": "MUNICIPIO DE SAN AGUSTIN",
+  "nit_entidad": "891180056",
+  "urlproceso_raw": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.9852699",
+  "url_class": "public",
+  "by_reference": {
+   "rows": 1,
+   "distinct_public_urls": 1,
+   "urls": [
+    "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.9852699"
+   ]
+  },
+  "by_portfolio": {
+   "rows": 1,
+   "distinct_public_urls": 1,
+   "urls": [
+    "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.9852699"
+   ]
+  }
+ },
+ {
+  "_stratum": "public_cancelado",
+  "id_del_proceso": "CO1.REQ.10001605",
+  "referencia_del_proceso": "007-JINAV-DADIN-2026",
+  "id_del_portafolio": "CO1.BDOS.9831573",
+  "estado_del_procedimiento": "Cancelado",
+  "fase": "Presentación de observaciones",
+  "entidad": "ARMADA NACIONAL - DADIN",
+  "nit_entidad": "900039527",
+  "urlproceso_raw": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.9889963",
+  "url_class": "public",
+  "by_reference": {
+   "rows": 1,
+   "distinct_public_urls": 1,
+   "urls": [
+    "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.9889963"
+   ]
+  },
+  "by_portfolio": {
+   "rows": 1,
+   "distinct_public_urls": 1,
+   "urls": [
+    "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.9889963"
+   ]
+  }
+ }
+]

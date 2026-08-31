@@ -16,11 +16,7 @@ from app.core.formatter import _estado_raw_nota
 from app.core.radar import follows
 from app.core.radar.builder import has_scope_or_topic, save_radar_from_params
 from app.core.radar.commands import radar_owner
-from app.core.radar.detail import (
-    build_opportunity_detail,
-    is_opportunity_event,
-    observed_secop_url,
-)
+from app.core.radar.detail import build_opportunity_detail, is_opportunity_event
 from app.core.radar.inbox import project_inbox
 from app.core.radar.keys import radar_result_key
 from app.core.radar.presentation import (
@@ -43,6 +39,7 @@ from app.core.radar.workspace import (
     workspace_reference_id,
     workspace_title,
 )
+from app.core.secop_access import resolve_secop_access
 from app.config import get_settings
 from app.core.auth import AccountError, AccountExistsError, AccountStore
 from app.core.web_session import (
@@ -219,6 +216,8 @@ def _render_cards(rows: list[dict], owner: str | None = None, idx: int = 0) -> N
         fecha_label = row.get("fecha_label", "")
         contratista = row.get("contratista", "")
         url = row.get("url", "")
+        referencia = (row.get("referencia_del_proceso")
+                      or row.get("referencia_del_contrato") or "")
         # Warning for duplicate/test entries
         warning = detect_test_or_duplicate_from_row(row)
         if warning:
@@ -241,10 +240,18 @@ def _render_cards(rows: list[dict], owner: str | None = None, idx: int = 0) -> N
             parts.append(f"📅 _{fecha_label or 'Pendiente de publicación'}_")
         if contratista:
             parts.append(f"🤝 {contratista}")
-        if url:
-            parts.append(f"[🔗 Ver en SECOP]({url})")
+        # ADR-032 #4: la URL no determina publicación. Sin enlace directo se
+        # ofrece el buscador oficial con la referencia observada, nunca una
+        # afirmación de etapa que estos datos no sostienen.
+        acceso = resolve_secop_access(url, referencia)
+        if acceso.has_direct_link:
+            parts.append(f"[🔗 Ver en SECOP]({acceso.direct_url})")
         else:
-            parts.append("🔒 _Vista pública no disponible (proceso pre-publicación)_")
+            parts.append(f"[🔎 Buscar en SECOP II]({acceso.search_url})")
+            if acceso.reference:
+                parts.append(f"🏷️ Referencia: `{acceso.reference}`")
+            else:
+                parts.append("🔒 _Enlace directo no disponible en los datos observados._")
 
         with st.container(border=True):
             st.markdown("  \n".join(parts))
@@ -317,11 +324,18 @@ def _render_detail_card(row: dict, dataset_id: str = "") -> None:
         if descripcion and descripcion != titulo:
             st.markdown(f"**Descripcion:** {descripcion}")
 
-    # Link prominente a SECOP
-    if url:
-        st.markdown(f"### 🔗 [Ver proceso completo en SECOP II]({url})")
+    # Link prominente a SECOP. Sin enlace directo NO se afirma una etapa: solo
+    # se dice lo que se sabe (no hay enlace) y se ofrece la búsqueda oficial.
+    acceso = resolve_secop_access(url, referencia)
+    if acceso.has_direct_link:
+        st.markdown(f"### 🔗 [Ver proceso completo en SECOP II]({acceso.direct_url})")
     else:
-        st.info("🔒 Vista pública no disponible — este proceso está en etapa de requisición pre-publicación (CO1.REQ).")
+        st.markdown(f"### 🔎 [Buscar en SECOP II]({acceso.search_url})")
+        if acceso.reference:
+            st.info("Enlace directo no disponible en los datos observados. "
+                    f"Busca el proceso en SECOP II con la referencia `{acceso.reference}`.")
+        else:
+            st.info("Enlace directo no disponible en los datos observados.")
 
     # Sugerencia de lookup relacionado
     if not es_contrato and estado == "Adjudicado" and id_proceso:
@@ -1176,8 +1190,10 @@ def _render_event_card(ev: dict, *, unread: bool = False) -> None:
         else:  # new
             st.caption(f"{entity} · {_fmt_money_feed(ev.get('value'))} · "
                        f"{ev.get('status') or 's/d'}")
-        # Enlace solo si SECOP entregó uno: nunca se arma a partir del id.
-        url = observed_secop_url(ev.get("urlproceso"))
+        # Enlace directo solo si SECOP entregó uno: nunca se arma a partir del
+        # id. Sin él queda la búsqueda pública, para que ningún movimiento del
+        # feed deje al usuario sin camino a la fuente.
+        acceso = resolve_secop_access(ev.get("urlproceso"), ev.get("referencia"))
         event_id = str(ev.get("id") or "")
         accion, enlace = st.columns([1, 2])
         if is_opportunity_event(kind) and event_id and ev.get("result_key"):
@@ -1186,8 +1202,10 @@ def _render_event_card(ev: dict, *, unread: bool = False) -> None:
                 st.session_state["_open_event"] = event_id
                 st.session_state.pop("_open_radar", None)
                 st.rerun()
-        if url:
-            enlace.markdown(f"[🔗 Ver en SECOP]({url})")
+        if acceso.has_direct_link:
+            enlace.markdown(f"[🔗 Ver en SECOP]({acceso.direct_url})")
+        else:
+            enlace.markdown(f"[🔎 Buscar en SECOP II]({acceso.search_url})")
 
 
 def _render_detail_header(detail) -> None:
@@ -1378,10 +1396,18 @@ def _render_opportunity_detail(
     _render_detail_fields(detail)
 
     _render_workspace_action(evento, detail)
-    if detail.has_secop_link:
-        st.link_button("Abrir en SECOP", detail.secop_url, type="primary")
+    # Siempre hay una vía a la fuente: la ficha observada si SECOP la entregó,
+    # y si no el buscador oficial con la referencia que el evento congeló.
+    acceso = resolve_secop_access(detail.secop_url, detail.reference)
+    if acceso.has_direct_link:
+        st.link_button("Abrir en SECOP", acceso.direct_url, type="primary")
     else:
-        st.caption("Enlace a SECOP no disponible en este registro.")
+        st.link_button("Buscar en SECOP II", acceso.search_url, type="primary")
+        if acceso.reference:
+            st.caption("Enlace directo no disponible en los datos observados. "
+                       f"Busca el proceso en SECOP II con la referencia {acceso.reference}.")
+        else:
+            st.caption("Enlace directo no disponible en los datos observados.")
 
     _render_radar_management(receipts, owner, evento)
 
@@ -1463,13 +1489,16 @@ def _render_follows_section(store, owner) -> None:
             entidad = rec.get("entity") or ""
             estado = rec.get("status") or "s/d"
             valor = _fmt_money_feed(rec.get("value"))
-            url = rec.get("urlproceso") or ""
+            acceso = resolve_secop_access(rec.get("urlproceso"),
+                                          rec.get("referencia"))
             with st.container(border=True):
                 st.markdown(f"**{titulo}**")
                 st.caption(f"{entidad} · {valor} · {estado}")
                 c1, c2 = st.columns([3, 1])
-                if url:
-                    c1.markdown(f"[🔗 Ver en SECOP]({url})")
+                if acceso.has_direct_link:
+                    c1.markdown(f"[🔗 Ver en SECOP]({acceso.direct_url})")
+                else:
+                    c1.markdown(f"[🔎 Buscar en SECOP II]({acceso.search_url})")
                 if c2.button("Dejar de seguir", key=f"unfollow_{key}",
                              use_container_width=True):
                     follows.unfollow(store, owner, key)
@@ -1620,10 +1649,16 @@ def _render_workspace_card(item, user_id: str) -> None:
             if valor:
                 st.markdown(f"**{etiqueta}** — {valor}")
 
-        url = meta.get("secop_url")
+        # R2 no migra snapshots: un item viejo sin `secop_url` sigue siendo útil
+        # porque su referencia observada alimenta la búsqueda pública.
+        acceso = resolve_secop_access(meta.get("secop_url"), meta.get("reference"))
         izq, der = st.columns(2)
-        if url:
-            izq.link_button("Abrir en SECOP", url, use_container_width=True)
+        if acceso.has_direct_link:
+            izq.link_button("Abrir en SECOP", acceso.direct_url,
+                            use_container_width=True)
+        else:
+            izq.link_button("Buscar en SECOP II", acceso.search_url,
+                            use_container_width=True)
         if der.button("Quitar", key=f"ws_remove_{item.item_id}",
                       use_container_width=True):
             # Archivar, no borrar: quitar del escritorio es una decisión

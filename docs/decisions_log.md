@@ -1138,6 +1138,18 @@ datos sino en la **señalización**:
 **Consecuencias:** Los tres canales explican por qué un proceso no tiene link, en
 vez de dejar un hueco confuso. Útil para Radar (futuro): un proceso pre-publicación
 es señal de oportunidad temprana y ahora el sistema lo distingue explícitamente.
+
+> **Corrección posterior (2026-08-31, RADAR-SECOP-ACCESS-V2).** La DECISIÓN de
+> este ADR (señalizar en vez de omitir; política de URL centralizada) sigue en
+> pie. Su CAUSA no: "`CO1.REQ.*` = requisición pre-publicación sin link" quedó
+> falsificada. Censo completo de `p6dx-8zbt`: los 9.096.877 procesos llevan id
+> `CO1.REQ.*` —el 100%— y el 98,97% trae vista pública entregada por SECOP; el
+> predictor real de la ausencia es `estado_del_procedimiento='Borrador'` (98,3%
+> sin vista), no el prefijo ni el régimen especial (0,96%, la tasa base). Lo que
+> sí quedó demostrado es que ninguna fila usa su propio id como `noticeUID`
+> (0 de 9.096.877), así que el guard que impide construir la URL se conserva
+> por ESE motivo. La redacción pública ya no infiere etapa (ADR-032 #4).
+> Evidencia: `docs/audits/2026-08-31_CO1_REQ_PUBLIC_LINK_SPIKE.md`.
 Nota de producto pendiente (no es bug): muchos resultados "Abierto" de adulto mayor
 son ESAL sin página pública — evaluar si etiquetarlos o priorizarlos distinto.
 

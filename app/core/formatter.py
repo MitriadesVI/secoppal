@@ -437,12 +437,22 @@ class Formatter:
     def _safe_url(item: dict) -> str:
         """Extract URL, handling dict format and broken login URLs.
 
-        URL repair hierarchy (FIX-URL-FREEFORM-001 + DOGFOOD-URL-005):
-        1. Original URL if valid
-        2. Build from CO1.NTC IDs (públicos)
-        3. CO1.REQ.X → vacío (requisición pre-publicación, no consultable)
-        4. Fallback referencia url-encoded
-        5. Empty string
+        Jerarquía (FIX-URL-FREEFORM-001 + DOGFOOD-URL-005), re-auditada el
+        2026-08-31 contra datos.gov.co
+        (docs/audits/2026-08-31_CO1_REQ_PUBLIC_LINK_SPIKE.md):
+        1. La URL original si es usable.
+        2. Construir desde el id del proceso / contrato.
+        3. Un id ``CO1.REQ.*`` → cadena vacía.
+        4. Fallback a la referencia url-encoded.
+        5. Cadena vacía.
+
+        El paso 3 se conserva y su motivo se corrige: NO es que ``CO1.REQ`` sea
+        pre-publicación (los 9.096.877 procesos de p6dx-8zbt llevan ese prefijo
+        y el 98,97% trae vista pública). Es que ninguna fila usa su propio id
+        como ``noticeUID`` —0 de 9.096.877—, así que construir desde él da un
+        enlace roto, y el spike no encontró vía oficial de resolución. Devolver
+        vacío es fallar cerrado; quien presenta decide qué ofrecer en su lugar
+        (``app/core/secop_access.py``: la búsqueda pública con la referencia).
         """
         url_raw = item.get("urlproceso", "")
         if isinstance(url_raw, dict):
@@ -454,8 +464,8 @@ class Formatter:
         from urllib.parse import quote
 
         pid = str(item.get("id_del_proceso") or item.get("id_contrato") or "").strip()
-        # CO1.REQ.X = requisiciones pre-publicación; OpportunityDetail
-        # devuelve "argument out of range". No mostrar link roto.
+        # Un id CO1.REQ.* nunca es un noticeUID válido (medido: 0 de
+        # 9.096.877). No mostrar link roto.
         if pid.upper().startswith("CO1.REQ."):
             return ""
         if pid:

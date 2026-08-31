@@ -12,6 +12,21 @@ from pathlib import Path
 from types import SimpleNamespace
 
 from app.core.formatter import Formatter, _estado_raw_nota
+from app.core.secop_access import resolve_secop_access
+
+# Host real de SECOP: cero filas de p6dx-8zbt y de jbjy-vk9h traen un
+# `urlproceso` fuera de community.secop.gov.co (medición 2026-08-31), y
+# `secop_access` solo confía en ese host para un enlace directo. Un host
+# inventado haría que estos oráculos —que son sobre el ESTADO operativo—
+# midieran la política de URL en vez del estado.
+_URL_PROCESO = (
+    "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/"
+    "Index?noticeUID=CO1.NTC.1"
+)
+_URL_CONTRATO = (
+    "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/"
+    "Index?noticeUID=CO1.NTC.2"
+)
 
 
 REF = datetime(2026, 8, 17, 12, 0, tzinfo=timezone.utc)
@@ -68,6 +83,9 @@ def _load_renderers():
         "workflow": SimpleNamespace(radar_store=None),
         "detect_test_or_duplicate_from_row": lambda _row: None,
         "_estado_raw_nota": _estado_raw_nota,
+        # La autoridad real, no un doble: la vía a SECOP que pinta la tarjeta
+        # tiene que ser la que corre en producción.
+        "resolve_secop_access": resolve_secop_access,
     }
     exec(compile(ast.Module(body=functions, type_ignores=[]), str(STREAMLIT_APP), "exec"), namespace)
     return namespace, namespace["st"]
@@ -83,7 +101,7 @@ def _process_card(procedure_state: str, *, phase: str | None = None) -> dict:
         "estado_de_apertura_del_proceso": "Abierto",
         "estado_del_procedimiento": procedure_state,
         "fecha_de_publicacion_del": "2026-08-01T00:00:00.000",
-        "urlproceso": {"url": "https://example.test/proceso"},
+        "urlproceso": {"url": _URL_PROCESO},
     }
     if phase is not None:
         row["fase"] = phase
@@ -101,7 +119,7 @@ def _contract_card() -> dict:
         "valor_del_contrato": "2000000",
         "estado_contrato": "En ejecucion",
         "fecha_de_firma": "2026-08-01T00:00:00.000",
-        "urlproceso": "https://example.test/contrato",
+        "urlproceso": _URL_CONTRATO,
     }], "jbjy-vk9h", {}, reference_instant=REF)[0]
 
 
@@ -143,7 +161,7 @@ def test_streamlit_contract_card_keeps_raw_baseline_render():
         "🏛️ ENTIDAD CONTRATO  \n"
         "💰 $2,000,000 🔵 En ejecucion  \n"
         "📅 2026-08-01 _(Firma)_  \n"
-        "[🔗 Ver en SECOP](https://example.test/contrato)"
+        f"[🔗 Ver en SECOP]({_URL_CONTRATO})"
     )
 
 
@@ -178,6 +196,6 @@ def test_streamlit_contract_detail_keeps_raw_baseline_render():
         "**Ciudad:** \n"
         "**Modalidad:** \n"
         "**Fecha:** 2026-08-01 _(Firma)_\n"
-        "### 🔗 [Ver proceso completo en SECOP II](https://example.test/contrato)\n"
+        f"### 🔗 [Ver proceso completo en SECOP II]({_URL_CONTRATO})\n"
         "💡 Esto es un contrato. Busca el proceso original con su ID si lo tienes a mano."
     )

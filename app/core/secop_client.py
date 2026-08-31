@@ -233,11 +233,23 @@ class SecopClient:
             url_value = url_value.get("url", "")
         url_value = str(url_value or "")
 
-        # URL repair hierarchy (FIX-URL-FREEFORM-001 + DOGFOOD-URL-005):
-        # 1. Use original URL if valid (not empty, not "Login")
-        # 2. Build from id_del_proceso / id_contrato (CO1.NTC = público; CO1.REQ = pre-publicación, no link)
-        # 3. Fallback to url-encoded referencia
-        # 4. Empty string (UI muestra "Vista pública no disponible")
+        # Jerarquía de reparación de URL (FIX-URL-FREEFORM-001 + DOGFOOD-URL-005),
+        # re-auditada el 2026-08-31 contra datos.gov.co
+        # (docs/audits/2026-08-31_CO1_REQ_PUBLIC_LINK_SPIKE.md):
+        # 1. La URL original si es usable (no vacía, no la pantalla "Login").
+        # 2. Construir desde id_del_proceso / id_contrato.
+        # 3. Fallback a la referencia url-encoded.
+        # 4. Cadena vacía → la vista ofrece la búsqueda pública oficial.
+        #
+        # El guard CO1.REQ se CONSERVA, pero su motivo era falso y se corrige
+        # aquí: no es que "CO1.REQ = pre-publicación". Los 9.096.877 procesos de
+        # p6dx-8zbt llevan id CO1.REQ.* —el 100%— y el 98,97% trae vista pública
+        # entregada por SECOP. Lo que el guard evita es lo único demostrado:
+        # NINGUNA fila usa su propio id como noticeUID (0 de 9.096.877), así que
+        # construir la URL desde él produce un enlace roto. El spike tampoco
+        # halló vía oficial de resolución (0/18 filas sin vista pública se
+        # resolvieron por referencia+NIT o por id_del_portafolio), de modo que
+        # fallar cerrado sigue siendo la respuesta correcta.
         if not url_value or "Login" in url_value:
             if dataset_id == "p6dx-8zbt":
                 process_id = normalized.get("id_del_proceso", "")
@@ -248,9 +260,8 @@ class SecopClient:
 
             url_value = ""
             pid = str(process_id or "").strip()
-            # CO1.REQ.X son requisiciones pre-publicación; SECOP devuelve
-            # "argument out of range" si las consultamos vía OpportunityDetail.
-            # Mejor no mostrar link que mostrar uno roto.
+            # Un id CO1.REQ.* nunca es un noticeUID válido (medido: 0 de
+            # 9.096.877). Mejor no mostrar link que mostrar uno roto.
             if pid and not pid.upper().startswith("CO1.REQ."):
                 from urllib.parse import quote
                 url_value = (
