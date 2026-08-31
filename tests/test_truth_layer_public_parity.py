@@ -120,7 +120,8 @@ M2_MODIFIED_FILE_SHA256 = {
 # tests/test_radar_detail.py (dueño en el enrutado) y tests/test_radar_store.py.
 M2_1_MODIFIED_FILE_SHA256 = {
     "app/core/workflow/handlers/direct_lookup.py": "6dcfc63405824e82b46a4b07bbdd503fd2bd504ec65a5640a0c3cc628ee90b6b",
-    "streamlit_app.py": "7e795c4318c862c57c17411f2769a3dc9d94779b0688b100fa3ef11bb5f2ab8f",
+    # 078fb1b was a documentation-only microfix after the isolation hotfix.
+    "streamlit_app.py": "f75994dbaf3a40e82fd8e7a3494785390d782015d8d5a681e70775739cbccc70",
 }
 
 # HCA-R6 re-pins ONE previously byte-frozen file. The pagination header carried
