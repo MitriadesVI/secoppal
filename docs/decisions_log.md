@@ -1122,18 +1122,29 @@ datos sino en la **señalización**:
 
 **Alternativas descartadas:**
 - *Fabricar un link igual para CO1.REQ* (p.ej. `OpportunityDetail?noticeUID=CO1.REQ…`):
-  da error en SECOP; mostrar un link roto es peor que señalizar la ausencia.
-- *Filtrar/ocultar los procesos sin URL*: pierden visibilidad oportunidades reales
-  (varios ESAL "Abierto" de alto valor); el usuario debe verlos aunque no sean
-  consultables online.
+  produce un enlace roto. La razón original ("da error en SECOP") NO se pudo
+  reverificar en 2026-08-31 —community.secop.gov.co responde 403/reCAPTCHA a
+  cliente no-navegador— pero la conclusión se sostiene sobre evidencia más
+  fuerte: ninguna fila del dataset usa su propio id como `noticeUID`
+  (0 de 9.096.877). Mostrar un link roto sigue siendo peor que no mostrarlo.
+- *Filtrar/ocultar los procesos sin URL*: pierden visibilidad oportunidades
+  reales; el usuario debe verlos aunque no tengan ficha pública. La
+  justificación original citaba "varios ESAL 'Abierto' de alto valor"; esa
+  atribución se ELIMINA por venir de la premisa falsificada y no de una medición
+  independiente. El censo del 2026-08-31 la contradice además de frente: la tasa
+  de ausencia en `Contratación régimen especial` es 34.163/3.563.571 = 0,96%,
+  indistinguible de la tasa base del dataset (1,03%). La decisión no dependía de
+  ese dato y no cambia.
 - *Resolver la nota por canal con texto distinto en cada formatter*: rompería la
   paridad; se reusó la redacción exacta de Streamlit.
 
 **Tests:**
-- Nuevo `tests/test_url_fallback_channel_parity.py` (5 tests): CO1.REQ → nota en
-  Telegram y WhatsApp; CO1.NTC → link real; conteo de notas = filas sin url;
-  blindaje de que `_safe_url` deja `url=""` para CO1.REQ y URL válida para CO1.NTC
-  (Streamlit intacto).
+- `tests/test_url_fallback_channel_parity.py`. Reescrito en 2026-08-31: el
+  PRINCIPIO de este ADR (los tres canales dicen lo mismo; ninguno omite en
+  silencio) se conserva y se refuerza —ahora hay un test que exige la misma
+  decisión en los tres para la misma fila—, pero lo señalizado dejó de ser una
+  nota que nombraba una etapa y pasó a ser una acción: el buscador público
+  oficial con la referencia observada.
 
 **Consecuencias:** Los tres canales explican por qué un proceso no tiene link, en
 vez de dejar un hueco confuso. Útil para Radar (futuro): un proceso pre-publicación
@@ -1150,6 +1161,25 @@ es señal de oportunidad temprana y ahora el sistema lo distingue explícitament
 > (0 de 9.096.877), así que el guard que impide construir la URL se conserva
 > por ESE motivo. La redacción pública ya no infiere etapa (ADR-032 #4).
 > Evidencia: `docs/audits/2026-08-31_CO1_REQ_PUBLIC_LINK_SPIKE.md`.
+>
+> **Deuda aceptada: `TRUTH_LAYER_SEARCH_URL_CLASSIFICATION_DEBT`.** SECOP
+> publica el buscador público de avisos
+> (`/Public/Tendering/ContractNoticeManagement/Index?...&Page=login&...`) en
+> `urlproceso` para los 4.130 contratos de `jbjy-vk9h` sin ficha pública. El
+> `_classify_url` de `truth_layer/visibility_resolver.py` solo busca `/login` en
+> el PATH, así que clasifica esa pantalla como `public` y la fila resuelve a
+> `public_view_available` —una vista pública que no muestra ningún contrato—.
+> NO se corrige aquí y la decisión es deliberada: el contrato semántico de T1B
+> está congelado por sus documentos vinculantes, corregirlo cambiaría un
+> veredicto de evidencia (no una etiqueta de UI) y merece su propia
+> adjudicación. Impacto en runtime de SECOP Access V2: **ninguno**. Las cuatro
+> superficies web y los tres canales de texto deciden con
+> `app/core/secop_access.py`, que rechaza esa página por su ruta y no por el
+> parámetro `Page=login`; ninguna de ellas consulta el Truth Layer para decidir
+> la vía a SECOP. Regresión que lo fija: `tests/test_secop_access.py`
+> (`test_the_contract_management_page_never_becomes_a_direct_link`) y
+> `tests/test_url_fallback_channel_parity.py`
+> (`test_the_contract_search_page_is_never_presented_as_a_process_view`).
 Nota de producto pendiente (no es bug): muchos resultados "Abierto" de adulto mayor
 son ESAL sin página pública — evaluar si etiquetarlos o priorizarlos distinto.
 

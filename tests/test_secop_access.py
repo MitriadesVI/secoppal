@@ -181,6 +181,48 @@ def test_login_and_search_pages_are_not_a_process_view(no_es_ficha):
     assert resolve_secop_access(no_es_ficha, "ABC-123").direct_url is None
 
 
+# ── El caso contractual: la URL que SECOP publica cuando no hay ficha ───────
+#
+# SECOP entrega literalmente esta URL en `urlproceso` para los 4.130 contratos
+# de jbjy-vk9h sin vista pública. Es la trampa del bloque: vive en el host
+# bueno, no dispara el filtro heredado `"Login" not in url` de `_safe_url`
+# —el literal trae `Page=login` en minúscula— y aun así no muestra ningún
+# contrato. Sin esta regla, los tres canales la rotularían como si fuera la
+# ficha. Ver docs/audits/2026-08-31_CO1_REQ_PUBLIC_LINK_SPIKE.md §5.
+
+
+def test_the_official_search_url_is_never_its_own_direct_link():
+    acceso = resolve_secop_access(SECOP_PUBLIC_SEARCH_URL, "ABC-123")
+    assert acceso.kind == "search_with_reference"
+    assert acceso.direct_url is None
+    assert acceso.search_url == SECOP_PUBLIC_SEARCH_URL
+
+
+def test_the_legacy_login_filter_alone_would_have_let_it_through():
+    """Se documenta la trampa midiéndola, no describiéndola."""
+    assert "Login" not in SECOP_PUBLIC_SEARCH_URL   # el filtro heredado falla
+    assert "Page=login" in SECOP_PUBLIC_SEARCH_URL  # y este es el motivo
+    assert resolve_secop_access(SECOP_PUBLIC_SEARCH_URL).direct_url is None
+
+
+@pytest.mark.parametrize(
+    "variante",
+    [
+        SECOP_PUBLIC_SEARCH_URL,
+        SECOP_PUBLIC_SEARCH_URL.replace("Page=login", "page=LOGIN"),
+        SECOP_PUBLIC_SEARCH_URL.replace("&Page=login", ""),
+    ],
+)
+def test_the_contract_management_page_never_becomes_a_direct_link(variante):
+    """Ni con otra capitalización ni sin el parámetro: sigue sin ser una ficha.
+
+    La tercera variante NO lleva `Page=login`, así que la regla de query no la
+    atrapa. La atrapa que tampoco es una ficha: no hay proceso que mostrar.
+    """
+    acceso = resolve_secop_access(variante, "ABC-123")
+    assert acceso.direct_url is None, variante
+
+
 # ── Wording: la etapa no se infiere del enlace ──────────────────────────────
 
 

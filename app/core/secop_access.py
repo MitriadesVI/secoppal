@@ -124,16 +124,26 @@ def _is_process_view(url: str) -> bool:
 
     Dos páginas reales viven en el host bueno y no muestran ningún proceso: la
     de autenticación (``/STS/Users/Login/Index``, 94.054 filas de p6dx-8zbt) y
-    el buscador (``...?Page=login``, 4.130 filas de jbjy-vk9h). Se descartan por
-    lo que son, no por una lista blanca de rutas de detalle: las rutas de ficha
-    son varias (``OpportunityDetail``, ``NoticeDetail``, …) y enumerarlas haría
-    que una ficha nueva de SECOP dejara de tener enlace.
+    el buscador de avisos (``/Public/Tendering/ContractNoticeManagement/Index``,
+    4.130 filas de jbjy-vk9h). Se descartan por lo que SON —puertas de entrada—
+    y no por una lista blanca de rutas de detalle: las rutas de ficha son varias
+    (``OpportunityDetail``, ``NoticeDetail``, …) y enumerarlas haría que una
+    ficha nueva de SECOP dejara de tener enlace.
+
+    El buscador se reconoce por su RUTA y no solo por el ``Page=login`` que
+    trae el literal oficial. Depender del parámetro dejaría pasar la misma
+    pantalla sin él —o con otra capitalización—, y seguiría sin haber ningún
+    proceso que mostrar. ``ContractNoticeManagement`` es el índice de gestión de
+    avisos: no cuelga de él ninguna vista por proceso.
     """
     partes = urlsplit(url)
     host = partes.hostname or ""
     if host.casefold().startswith("login."):
         return False
-    if "/login" in partes.path.casefold():
+    ruta = partes.path.casefold()
+    if "/login" in ruta:
+        return False
+    if "/contractnoticemanagement" in ruta:
         return False
     return "page=login" not in partes.query.casefold()
 

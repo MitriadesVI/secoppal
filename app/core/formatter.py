@@ -11,6 +11,7 @@ from app.core.phrase_ranking import (
     _reorder_active_first,
     prepare_results_for_display,
 )
+from app.core.secop_access import resolve_secop_access
 from app.utils.money import format_cop, format_money
 from app.utils.value_sanity import detect_value_anomaly
 
@@ -279,6 +280,36 @@ class Formatter:
     }
 
     @staticmethod
+    def _access_lines(row: dict, *, direct_prefix: str) -> list[str]:
+        """Las líneas que llevan a la fuente oficial, para un canal de texto.
+
+        Delegación íntegra a ``app.core.secop_access``: quién decide si hay
+        enlace directo, qué host es confiable, qué página es una ficha y cuál es
+        el buscador oficial vive allí y en ningún otro sitio. Aquí solo se elige
+        la presentación, que es lo único propio del canal.
+
+        Existe porque ADR-027 exige que los tres canales digan lo mismo, y
+        SECOP-ACCESS-V2 cambió QUÉ se dice: donde antes había una nota de
+        cortesía —que además nombraba una etapa que los datos no sostienen— hoy
+        hay una acción, la misma que ve quien usa la web.
+
+        ``direct_prefix`` es lo único que varía: Telegram publica la URL desnuda
+        (su cliente la enlaza solo), WhatsApp y las tarjetas agrupadas la
+        anteceden con 🔗. El bloque de búsqueda es idéntico en los tres a
+        propósito: la paridad de ADR-027 es de redacción, no solo de presencia.
+        """
+        access = resolve_secop_access(
+            row.get("url"),
+            row.get("referencia_del_proceso") or row.get("referencia_del_contrato"),
+        )
+        if access.has_direct_link:
+            return [f"{direct_prefix}{access.direct_url}"]
+        lines = ["🔎 Buscar en SECOP II:", access.search_url]
+        if access.reference:
+            lines.append(f"🏷️ Referencia: {access.reference}")
+        return lines
+
+    @staticmethod
     def _grouped_card_lines(rows: list[dict]) -> list[str]:
         lines: list[str] = []
         for i, row in enumerate(rows, start=1):
@@ -298,7 +329,7 @@ class Formatter:
                 lines.append(nota)
             if row.get("contratista"):
                 lines.append(f"🤝 {row['contratista']}")
-            lines.append(f"🔗 {row['url']}" if row.get("url") else "🔒 Sin enlace público")
+            lines.extend(Formatter._access_lines(row, direct_prefix="🔗 "))
         return lines
 
     def format_grouped(self, groups: dict, channel: str, params: dict | None = None,
@@ -521,10 +552,7 @@ class Formatter:
                 ref_val = row.get("value_reference")
                 ref_str = f" (valor facturado: {format_cop(ref_val)})" if ref_val else ""
                 lines.append(f"⚠️ valor atípico en datos abiertos{ref_str}")
-            if row.get("url"):
-                lines.append(f"🔗 {row['url']}")
-            else:
-                lines.append("🔒 Sin enlace público disponible en datos abiertos")
+            lines.extend(self._access_lines(row, direct_prefix="🔗 "))
             lines.append("")
         result = "\n".join(lines).strip()
         sug_text = self._format_suggestions(suggestions)
@@ -571,10 +599,7 @@ class Formatter:
                 ref_val = row.get("value_reference")
                 ref_str = f" (valor facturado: {format_cop(ref_val)})" if ref_val else ""
                 lines.append(f"⚠️ valor atípico en datos abiertos{ref_str}")
-            if row.get("url"):
-                lines.append(str(row["url"]))
-            else:
-                lines.append("🔒 Sin enlace público disponible en datos abiertos")
+            lines.extend(self._access_lines(row, direct_prefix=""))
             lines.append("")
         result = "\n".join(lines).strip()
         sug_text = self._format_suggestions(suggestions)

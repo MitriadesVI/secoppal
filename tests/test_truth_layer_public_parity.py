@@ -38,7 +38,19 @@ M2_MODIFIED_FILE_SHA256 = {
     # 98.97% do have a public view). The guard and every returned value are
     # unchanged — test_m2_card_divergence_is_purely_additive below is what
     # bounds that claim, and the Search oracles stay byte-identical.
-    "app/core/formatter.py": "7ef59d1c5cee2bcc166b25879670c8e570971447414fe9cbceffc0033b758e63",
+    # SECOP-ACCESS-V2 channel parity re-pins it once more, this time for a real
+    # text change: format_telegram, format_whatsapp and _grouped_card_lines stop
+    # reading row["url"] themselves and delegate to app/core/secop_access.py via
+    # one helper (_access_lines). Where there is no direct link they now offer
+    # the official public search plus the observed reference, instead of a note
+    # that named a lifecycle stage the data does not support (ADR-027's parity
+    # principle is kept; what is signalled changed). Nothing else moves: the
+    # helper adds no field to to_rows — test_m2_card_divergence_is_purely_
+    # additive still holds — and touches no WHERE/ORDER/LIMIT, ranking, cursor
+    # or fingerprint, which test_m2_does_not_move_ranking_ordering_counts_or_
+    # pagination bounds. tests/test_url_fallback_channel_parity.py pins the new
+    # copy and proves the three channels take the SAME decision per row.
+    "app/core/formatter.py": "6f6391988d698c3765d133bd6d089fca4347d255df75180fbfcbd18abf441db5",
     # Money V2 / M7 adds a section gated strictly by valor_min/valor_max. The
     # no-money oracle below remains byte-identical and bounds that condition;
     # tests/test_money_presentation.py pins the authorized monetary divergence.
