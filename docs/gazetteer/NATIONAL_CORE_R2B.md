@@ -1,8 +1,8 @@
 # NATIONAL-CORE-COVERAGE-R2B — núcleo nacional de la Rama Ejecutiva
 
-**Tipo:** discovery registry-first + reconciliación de gazetteer  
-**Fecha:** 2026-09-01 · **Rama:** `main`  
-**HEAD antes:** `2791fa9cf80721e13f6204390c4a876a947da2b7`  
+**Tipo:** discovery registry-first + reconciliación de gazetteer
+**Fecha:** 2026-09-01 · **Rama:** `main`
+**HEAD antes:** `2791fa9cf80721e13f6204390c4a876a947da2b7`
 **Evidencia congelada antes de mutar:**
 [`national_core_r2b_candidates.json`](../../artifacts/audits/national_core_r2b_candidates.json)
 
@@ -78,7 +78,7 @@ publica ambos NIT por separado. El sitio oficial usa “Cancillería” para el
 Ministerio, de modo que el alias tiene autoridad institucional; no se transfiere
 ninguna frase del Fondo al Ministerio.
 
-El registro físico del Fondo ya existe como `FONDO ROTATORIO**`. Se reconciliará
+El registro físico del Fondo ya existe como `FONDO ROTATORIO**`. Se reconcilió
 la frase completa del Fondo con ese registro para que el nuevo alias largo del
 Ministerio nunca capture al comprador distinto por substring.
 
@@ -97,7 +97,7 @@ Ministerio; cada una tiene su propio nombre físico y NIT.
 ### Cultura
 
 SECOP muestra una sola identidad: `Ministerio de las Culturas, las Artes y los
-Saberes`, NIT `830034348`, en ambos datasets. “Ministerio de Cultura” será alias
+Saberes`, NIT `830034348`, en ambos datasets. “Ministerio de Cultura” es alias
 histórico/humano del registro existente. No se crea duplicado.
 
 ### DAFP y DNI
@@ -111,7 +111,7 @@ Función Pública.
 La DNI compra con NIT `900475460`. El [Decreto 4179 de
 2011](https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=44666)
 crea el departamento administrativo que se denomina Dirección Nacional de
-Inteligencia. La sigla desnuda `DNI` no se incluirá: es polisémica y los
+Inteligencia. La sigla desnuda `DNI` no se incluyó: es polisémica y los
 canarios adversariales exigen que no capture intenciones documentales.
 
 ## 5. Política de aliases
@@ -127,9 +127,83 @@ descritas; los canarios adversariales de `DNI` ya pasaban.
 
 ## 6. Post-remediación
 
-Pendiente en este commit de discovery. El commit de datos completará aquí la
-matriz 18+6, aliases aplicados, dataset smoke, collision gate, auditor R1C y
-validación final, sin reescribir la evidencia anterior.
+Las nueve deudas quedan cerradas sin cambiar runtime. Las cinco identidades
+nuevas usan literalmente el nombre físico observado; las cuatro existentes se
+reconciliaron sin duplicarlas.
+
+| Métrica | Antes | Después |
+|---|---:|---:|
+| Entidades | 562 | **567** |
+| Aliases crudos | 10 718 | **10 749** |
+| Aliases normalizados únicos | 8 577 | **8 608** |
+| `EXACT_MULTI_OWNER_GROUPS` | 173 | **173** |
+| `NEW_MULTI_OWNER_KEYS` | 0 | **0** |
+| Remociones propuestas por auditor R1C | 0 | **0** |
+
+Se añadieron 31 aliases: 23 en las cinco entidades nuevas, 7 para reconciliar
+las cuatro parciales y 1 defensivo en el Fondo Rotatorio. Los aliases mínimos
+que cierran deuda son:
+
+| Identidad | Aliases nuevos |
+|---|---|
+| Relaciones Exteriores | `ministerio de relaciones exteriores`; `cancillería`; `cancillería de colombia`; `ministerio de exteriores`; `ministerio de relaciones exteriores de colombia` |
+| Defensa Nacional | `ministerio de defensa nacional`; `ministerio de defensa`; `mindefensa`; `mindefensa colombia` |
+| MinTIC | nombre institucional; nombre físico con `de Colombia`; `mintic`; `ministerio tic`; `ministerio de tic`; `ministerio de las tic` |
+| DAFP | nombre institucional; `función pública`; `dafp`; `función pública de colombia`; `departamento de la función pública` |
+| DNI | nombre institucional y dos formas largas con `departamento administrativo`; **no** `DNI` |
+| MinCIT | `mincomercio` |
+| MinAmbiente | `minambiente`; `ministerio de ambiente` |
+| MinVivienda | nombre institucional; `ministerio de vivienda` |
+| Cultura | `ministerio de cultura`; `mincultura` |
+| Fondo Rotatorio | `fondo rotatorio del ministerio de relaciones exteriores` |
+
+El auditor R1C pasa sin remociones. Sus dos `MANUAL_REVIEW` adicionales son las
+formas humanas de `MINVIVIENDA`: el nombre físico opaco no contiene la palabra
+“ministerio”, pero la reconciliación por NIT `900463725` está congelada en el
+artefacto de discovery. No son colisiones ni ownership ajeno.
+
+### Matriz nacional
+
+| Universo | PASS | PARTIAL | MISSING | WRONG_OWNER |
+|---|---:|---:|---:|---:|
+| Ministerios activos (18) | **18** | **0** | **0** | **0** |
+| Departamentos administrativos (6) | **6** | **0** | **0** | **0** |
+
+El Ministerio de Igualdad y Equidad sigue fuera de la primera fila como
+`HISTORICAL_IN_LIQUIDATION`.
+
+### Dataset smoke
+
+Cada identidad nueva recorrió la cadena
+`frase humana → resolver exacto → nombre físico → filas SECOP`:
+
+| Comprador resuelto | Procesos | Contratos |
+|---|---:|---:|
+| `MINISTERIO DE RELACIONES EXTERIORES` | 84 | 71 |
+| `MINISTERIO DE DEFENSA NACIONAL` | 3 592 | 2 586 |
+| `MINISTERIO DE TECNOLOGÍAS… DE COLOMBIA.` | 359 | 314 |
+| `DEPARTAMENTO ADMINISTRATIVO DE LA FUNCIÓN PÚBLICA ENTIDAD` | 2 764 | 2 391 |
+| `DIRECCION NACIONAL DE INTELIGENCIA` | 742 | 408 |
+
+`ZERO_ROW_ANOMALIES=0`. Procesos y contratos usan el mismo nombre físico en
+los cinco casos.
+
+### Validación
+
+```text
+tests/test_national_core_r2b.py                         66 passed
+R2B + R2A.1 + R2A + R1D + R1C + manager/resolver/router
+                                                        373 passed
+scripts/run_query_corpus.py --mode all                  89/89 PASS
+scripts/gazetteer_manager.py validate                   0 errores
+audit_gazetteer_alias_ownership.py                      0 remociones
+ruff check app/ tests/ scripts/                         All checks passed
+make lint-core                                          app/core/ limpio
+suite completa                                          9993 passed,
+                                                        2 skipped, 24 xfailed
+```
+
+Los xfails permanecen en 24: aumento 0.
 
 ## 7. Fuera de alcance
 

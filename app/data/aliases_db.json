@@ -1608,7 +1608,9 @@
       "de la ministerio de culturas",
       "alcaldía de bogotá ministerio de las culturas",
       "gobierno de bogotá ministerio de las culturas",
-      "ministerio de las culturas, las artes y los saberes"
+      "ministerio de las culturas, las artes y los saberes",
+      "ministerio de cultura",
+      "mincultura"
     ]
   },
   {
@@ -4264,7 +4266,9 @@
       "contratos"
     ],
     "aliases": [
-      "minvivienda"
+      "minvivienda",
+      "ministerio de vivienda, ciudad y territorio",
+      "ministerio de vivienda"
     ]
   },
   {
@@ -4390,7 +4394,9 @@
       "contratos"
     ],
     "aliases": [
-      "ministerio de ambiente y desarrollo sostenible"
+      "ministerio de ambiente y desarrollo sostenible",
+      "minambiente",
+      "ministerio de ambiente"
     ]
   },
   {
@@ -11456,7 +11462,8 @@
       "fondo rotatorio de la ciudad",
       "fr",
       "fondo rotatorio de la gobernación de cundinamarca",
-      "fondo rotatorio**"
+      "fondo rotatorio**",
+      "fondo rotatorio del ministerio de relaciones exteriores"
     ]
   },
   {
@@ -13077,7 +13084,8 @@
       "mincit colombia",
       "ministerio de comercio industria turismo",
       "mincit",
-      "ministerio de comercio industria y turismo - mincit"
+      "ministerio de comercio industria y turismo - mincit",
+      "mincomercio"
     ]
   },
   {
@@ -17271,6 +17279,89 @@
       "sena regional regional caqueta",
       "servicio nacional de aprendizaje caqueta",
       "servicio nacional de aprendizaje regional caqueta"
+    ]
+  },
+  {
+    "official_name": "MINISTERIO DE RELACIONES EXTERIORES",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 84,
+    "total_contratos": 71,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "aliases": [
+      "ministerio de relaciones exteriores",
+      "cancillería",
+      "cancillería de colombia",
+      "ministerio de exteriores",
+      "ministerio de relaciones exteriores de colombia"
+    ]
+  },
+  {
+    "official_name": "MINISTERIO DE DEFENSA NACIONAL",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 3592,
+    "total_contratos": 2586,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "aliases": [
+      "ministerio de defensa nacional",
+      "ministerio de defensa",
+      "mindefensa",
+      "mindefensa colombia"
+    ]
+  },
+  {
+    "official_name": "MINISTERIO DE TECNOLOGÍAS DE LA INFORMACIÓN Y LAS COMUNICACIONES DE COLOMBIA.",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 359,
+    "total_contratos": 314,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "aliases": [
+      "ministerio de tecnologías de la información y las comunicaciones",
+      "ministerio de tecnologías de la información y las comunicaciones de colombia",
+      "mintic",
+      "ministerio tic",
+      "ministerio de tic",
+      "ministerio de las tic"
+    ]
+  },
+  {
+    "official_name": "DEPARTAMENTO ADMINISTRATIVO DE LA FUNCIÓN PÚBLICA ENTIDAD",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 2764,
+    "total_contratos": 2391,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "aliases": [
+      "departamento administrativo de la función pública",
+      "función pública",
+      "dafp",
+      "función pública de colombia",
+      "departamento de la función pública"
+    ]
+  },
+  {
+    "official_name": "DIRECCION NACIONAL DE INTELIGENCIA",
+    "departamento": "No Definido",
+    "total_procesos": 742,
+    "total_contratos": 408,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "aliases": [
+      "dirección nacional de inteligencia",
+      "departamento administrativo dirección nacional de inteligencia",
+      "departamento administrativo de dirección nacional de inteligencia"
     ]
   },
   {

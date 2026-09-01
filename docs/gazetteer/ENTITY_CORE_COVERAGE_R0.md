@@ -587,3 +587,36 @@ archipiélago ya tiene ownership raíz verificado por NIT (892400038) y
 `san andrés` sigue sin pertenecer a ningún comprador, y el residuo `fuzzy(95)`
 hacia `HOSPITAL SAN ANDRES` descrito arriba permanece **abierto**: R2A no lo
 toca porque no es corregible con datos.
+
+---
+
+## POST-R2B — cobertura del núcleo nacional
+
+**Fecha:** 2026-09-01 · Informe completo:
+[`NATIONAL_CORE_R2B.md`](NATIONAL_CORE_R2B.md)
+
+R2B reproduce las nueve deudas nacionales contra el HEAD actual antes de tocar
+datos. Las cinco identidades ausentes sufrían `WRONG_OWNER` por fuzzy en la
+resolución directa, no un simple `MISSING`; las cuatro parciales conservaban la
+identidad pero no ownership exacto para todas sus frases humanas.
+
+Discovery SECOP II verifica una sola identidad física por NIT y el mismo nombre
+en procesos y contratos para los nueve casos. Se añaden cinco compradores
+(`Relaciones Exteriores`, `Defensa Nacional`, `MinTIC`, `DAFP`, `DNI`) y se
+reconcilian cuatro (`MinCIT`, `MinAmbiente`, `MinVivienda`, `Cultura`). Cultura
+no se duplica; Defensa no se agrega como ecosistema; Ministerio/Fondo permanecen
+separados tanto en Relaciones Exteriores como en TIC. La sigla desnuda `DNI` no
+entra al gazetteer.
+
+| Universo | Antes | Después |
+|---|---|---|
+| Ministerios activos (18) | 11 PASS · 4 PARTIAL · 3 WRONG_OWNER | **18 PASS · 0 deuda** |
+| Departamentos administrativos (6) | 4 PASS · 2 WRONG_OWNER | **6 PASS · 0 deuda** |
+
+El Ministerio de Igualdad y Equidad conserva su categoría histórica en
+liquidación y no participa en los 18. La puerta de ownership permanece en 173
+grupos, con `NEW_MULTI_OWNER_KEYS=0`; las cinco identidades nuevas devuelven
+filas reales en ambos datasets y `ZERO_ROW_ANOMALIES=0`.
+
+Validación de cierre: 66 tests R2B; 373 focales R2B→R1C; corpus 89/89; ruff y
+`make lint-core` limpios; suite completa `9993 passed, 2 skipped, 24 xfailed`.
