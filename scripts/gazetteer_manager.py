@@ -32,6 +32,11 @@ from pathlib import Path
 _PROJECT_ROOT = Path(__file__).resolve().parent.parent
 if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
+# Los módulos hermanos de scripts/ (gazetteer_ownership_baseline) deben poder
+# importarse tanto al ejecutar el CLI como al importarlo desde tests/.
+_SCRIPTS_DIR = Path(__file__).resolve().parent
+if str(_SCRIPTS_DIR) not in sys.path:
+    sys.path.insert(0, str(_SCRIPTS_DIR))
 
 from app.config import get_settings
 from app.core.secop_client import SecopClient
@@ -97,6 +102,11 @@ ALL_FORBIDDEN = FORBIDDEN_GENERIC_ALIASES | FORBIDDEN_WITH_ARTICLE
 # convierte el backlog en un fallo global —rompería el baseline por deuda
 # conocida— pero cualquier entrada nueva que lo aumente falla. El tope BAJA
 # cuando se salda deuda; no sube.
+#
+# R2A: el cardinal no es la puerta, sólo su cota superior. Con baseline
+# {A, B, C}, retirar C e introducir D deja 3 grupos y pasa el tope mientras
+# crea una colisión nueva. La puerta real compara CONJUNTOS y vive en
+# ``scripts/gazetteer_ownership_baseline.py``.
 EXACT_MULTI_OWNER_BASELINE = 173
 
 # ---------------------------------------------------------------------------
@@ -547,6 +557,7 @@ def do_validate(
     new_entities: list[dict] | None = None,
     test_path: str | None = None,
     full_scan: bool = False,
+    baseline_path: Path | None = None,
 ) -> dict:
     """Validate gazetteer integrity and optionally run tests.
 
@@ -555,6 +566,7 @@ def do_validate(
         new_entities: List of entities to check for collision
         test_path: Path to pytest tests to run
         full_scan: Scan EVERY alias of EVERY entity against the resolver
+        baseline_path: Conjunto congelado de aliases con dueño múltiple
     """
     with aliases_db_path.open("r", encoding="utf-8") as f:
         data: list[dict] = json.load(f)
@@ -624,20 +636,31 @@ def do_validate(
     #    No lo cubre el collision scan: `scan_entity` devuelve un solo ganador,
     #    así que una colisión cuyo ganador coincide con el dueño esperado pasa
     #    invisible. Este chequeo mira el dato, no la resolución.
-    from app.utils.money import normalize_text
+    from gazetteer_ownership_baseline import (
+        load_baseline,
+        multi_owner_groups,
+    )
 
-    owners_by_alias: dict[str, set[str]] = {}
-    for entity in data:
-        for alias in entity.get("aliases", []):
-            key = normalize_text(alias)
-            if key:
-                owners_by_alias.setdefault(key, set()).add(entity["official_name"])
-    multi_owner = {k: sorted(v) for k, v in owners_by_alias.items() if len(v) > 1}
+    multi_owner = multi_owner_groups(data)
     if len(multi_owner) > EXACT_MULTI_OWNER_BASELINE:
         errors.append(
             f"EXACT_MULTI_OWNER: {len(multi_owner)} grupos, baseline "
             f"{EXACT_MULTI_OWNER_BASELINE}. Un alias nuevo quedó reclamado por "
             f"más de una entidad; el runtime sólo puede honrar a una."
+        )
+
+    # 5b. Identidad del conjunto, no su tamaño. El cardinal deja pasar una
+    #     sustitución (una colisión vieja se salda, otra nueva aparece); esto
+    #     no. La deuda puede encogerse; no puede renovarse.
+    baseline_keys = load_baseline(baseline_path)
+    new_keys = sorted(set(multi_owner) - baseline_keys)
+    if new_keys:
+        sample = ", ".join(
+            f"{key!r} -> {multi_owner[key]}" for key in new_keys[:5]
+        )
+        errors.append(
+            f"NEW_MULTI_OWNER_KEYS: {len(new_keys)} aliases nuevos con dueño "
+            f"múltiple que el baseline no acepta: {sample}"
         )
 
     # 6. Check official_name is not empty
@@ -665,6 +688,8 @@ def do_validate(
         "total_aliases": sum(len(e.get("aliases", [])) for e in data),
         "exact_multi_owner_groups": len(multi_owner),
         "exact_multi_owner_baseline": EXACT_MULTI_OWNER_BASELINE,
+        "exact_multi_owner_baseline_keys": len(baseline_keys),
+        "new_multi_owner_keys": new_keys,
         "errors": errors,
         "warnings": warnings,
         "test_result": test_result,
