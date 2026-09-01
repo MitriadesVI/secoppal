@@ -346,7 +346,7 @@ diferencia entre las dos columnas es precisamente el defecto que se cerró.
 |---|---|
 | D4 — identidad Alcaldía Local / FDL | `OPEN_UNTOUCHED` |
 | D5 — `SAME_LOGICAL_IDENTITY` | `OPEN_UNTOUCHED` |
-| D6 — regla `_is_unqualified_dept` | `OPEN_UNTOUCHED` |
+| D6 — regla `_is_unqualified_dept` | `OPEN_UNTOUCHED` · cerrada después en R2D.1 |
 | `CANONICAL_ENTITY_SOURCE_NAMES_REQUIRED` | **NUEVA**, documentada §6, frente propio |
 | `BUYER_CAPTURE_TRUNCATION_DEBT` | **CLOSED** por R2A.1 — [`GOVERNORATE_CORE_R2A_1.md`](GOVERNORATE_CORE_R2A_1.md) |
 | `UNGATED_FUZZY_FOR_HEALTH_AND_EDU_NAMES` | **NUEVA**, abierta — ver R2A.1 §5 |

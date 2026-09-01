@@ -135,8 +135,11 @@ class TestLote01Resolution:
     """Verify new entities resolve via scan_entity.
 
     Uses unambiguous queries that should resolve to specific new entities.
-    SENA/ICBF regional queries are inherently ambiguous (multiple entities
-    share aliases like "sena regional cundinamarca") and marked xfail.
+    Las regionales SENA/ICBF que TIENEN alias propio resuelven desde R2D.1: la
+    deuda D6 las descartaba porque su alias termina en un departamento
+    ("icbf caldas", "sena antioquia"). Las que siguen en xfail no tienen alias
+    en el gazetteer —"sena chocó", "sena casanare"— y caen en la sede nacional
+    por la sigla; eso es un hueco de datos, no la regla de geografía.
     """
 
     ENTITY_QUERIES = [
@@ -149,29 +152,21 @@ class TestLote01Resolution:
         ("hospital san rafael el cerrito", "SAN RAFAEL"),
         pytest.param("hospital municipal de acacias", "ACACIAS",
                      marks=pytest.mark.xfail(reason="'hospital municipal' alias on existing entity steals resolution")),
-        # These are ambiguous due to SENA/ICBF alias overlap — xfail
-        pytest.param("sena regional cundinamarca", "SENA REGIONAL CUNDINAMARCA",
-                     marks=pytest.mark.xfail(strict=True, reason="Multiple SENA Cundinamarca share aliases")),
-        pytest.param("icbf cordoba", "ICBF REGIONAL CORDOBA",
-                     marks=pytest.mark.xfail(strict=True, reason="'icbf' resolves to ICBF SEDE NACIONAL first")),
+        # Con alias propio: resuelven desde R2D.1 (antes bloqueadas por D6).
+        # Sin alias propio: siguen cayendo en la sede nacional por la sigla.
+        ("sena regional cundinamarca", "SENA REGIONAL CUNDINAMARCA"),
+        ("icbf cordoba", "ICBF REGIONAL CORDOBA"),
         pytest.param("sena choco", "SENA REGIONAL CHOCO",
                      marks=pytest.mark.xfail(strict=True, reason="'sena' resolves to SENA SECRETARIA GENERAL first")),
-        pytest.param("icbf magdalena", "ICBF REGIONAL MAGDALENA",
-                     marks=pytest.mark.xfail(strict=True, reason="'icbf' resolves to ICBF SEDE NACIONAL first")),
-        pytest.param("sena antioquia", "SENA REGIONAL ANTIOQUIA",
-                     marks=pytest.mark.xfail(strict=True, reason="'sena' resolves to SENA SECRETARIA GENERAL first")),
-        pytest.param("icbf norte de santander", "ICBF REGIONAL NORTE DE SANTANDER",
-                     marks=pytest.mark.xfail(strict=True, reason="'icbf' resolves to ICBF SEDE NACIONAL first")),
-        pytest.param("sena santander", "SENA REGIONAL SANTANDER",
-                     marks=pytest.mark.xfail(strict=True, reason="'sena' resolves to SENA SECRETARIA GENERAL first")),
+        ("icbf magdalena", "ICBF REGIONAL MAGDALENA"),
+        ("sena antioquia", "SENA REGIONAL ANTIOQUIA"),
+        ("icbf norte de santander", "ICBF REGIONAL NORTE DE SANTANDER"),
+        ("sena santander", "SENA REGIONAL SANTANDER"),
         pytest.param("sena casanare", "SENA REGIONAL CASANARE",
                      marks=pytest.mark.xfail(strict=True, reason="'sena' resolves to SENA SECRETARIA GENERAL first")),
-        pytest.param("icbf caldas", "ICBF REGIONAL CALDAS",
-                     marks=pytest.mark.xfail(strict=True, reason="'icbf' resolves to ICBF SEDE NACIONAL first")),
-        pytest.param("icbf cesar", "ICBF REGIONAL CESAR",
-                     marks=pytest.mark.xfail(strict=True, reason="'icbf' resolves to ICBF SEDE NACIONAL first")),
-        pytest.param("sena caqueta", "SENA REGIONAL CAQUETA",
-                     marks=pytest.mark.xfail(strict=True, reason="'sena' resolves to SENA SECRETARIA GENERAL first")),
+        ("icbf caldas", "ICBF REGIONAL CALDAS"),
+        ("icbf cesar", "ICBF REGIONAL CESAR"),
+        ("sena caqueta", "SENA REGIONAL CAQUETA"),
         # MINJUSTICIA.. exists in gazetteer with aliases that collide with new
         pytest.param("ministerio de justicia", "MINISTERIO DE JUSTICIA",
                      marks=pytest.mark.xfail(strict=True, reason="'ministerio de justicia' resolves to MINJUSTICIA.. first")),

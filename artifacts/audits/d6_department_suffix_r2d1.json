@@ -1,0 +1,669 @@
+{
+  "audit": "D6-DEPARTMENT-SUFFIX-R2D1",
+  "type": "read-only/offline",
+  "aliases_db_changed": false,
+  "TOTAL_ALIASES": 8645,
+  "DEPARTAMENTOS_KEYS": 122,
+  "GEOGRAPHY_ALIAS_REGISTRY_DEBT": [
+    "bogota d.c.",
+    "bogota dc",
+    "cucuta",
+    "cundi",
+    "departamento de atlantico",
+    "departamento del atlantico",
+    "depto del atlantico",
+    "norte santander",
+    "san andres providencia",
+    "san andres y providencia"
+  ],
+  "LIVE_RULE_MATCHES": [
+    "B_PRIME"
+  ],
+  "BASELINE": {
+    "rule": "alias == clave or alias.endswith(clave)",
+    "REJECTED_ALIASES": 2124,
+    "buckets": {
+      "BARE_GEOGRAPHY": {
+        "count": 15,
+        "examples": [
+          [
+            "antioquia",
+            "antioquia",
+            [
+              "DEPARTAMENTO DE ANTIOQUIA//"
+            ]
+          ],
+          [
+            "arauca",
+            "arauca",
+            [
+              "DEPARTAMENTO DEL ARAUCA"
+            ]
+          ],
+          [
+            "atlantico",
+            "atlantico",
+            [
+              "DEPARTAMENTO DEL ATLANTICO**"
+            ]
+          ],
+          [
+            "boyaca",
+            "boyaca",
+            [
+              "GOBERNACIÓN DE BOYACÁ"
+            ]
+          ],
+          [
+            "caldas",
+            "caldas",
+            [
+              "MUNICIPIO DE CALDAS ANTIOQUIA"
+            ]
+          ],
+          [
+            "casanare",
+            "casanare",
+            [
+              "GOBERNACION DEL CASANARE"
+            ]
+          ],
+          [
+            "cordoba",
+            "cordoba",
+            [
+              "DEPARTAMENTO DE CORDOBA"
+            ]
+          ],
+          [
+            "cucuta",
+            "cucuta",
+            [
+              "MUNICIPIO DE SAN JOSE DE CUCUTA"
+            ]
+          ]
+        ]
+      },
+      "LEADING_WRAPPER_GEOGRAPHY": {
+        "count": 5,
+        "examples": [
+          [
+            "el arauca",
+            "arauca",
+            [
+              "DEPARTAMENTO DEL ARAUCA"
+            ]
+          ],
+          [
+            "el cauca",
+            "cauca",
+            [
+              "UNIVERSIDAD DEL CAUCA"
+            ]
+          ],
+          [
+            "el distrito capital de bogota",
+            "distrito capital de bogota",
+            [
+              "UNIVERSIDAD PEDAGÓGICA NACIONAL"
+            ]
+          ],
+          [
+            "el valle",
+            "valle",
+            [
+              "GOBERNACION DEL VALLE DEL CAUCA - SECRETARIA DE EDUCACION",
+              "UNIVERSIDAD DEL VALLE"
+            ]
+          ],
+          [
+            "el valle del cauca",
+            "valle del cauca",
+            [
+              "GOBERNACION DEL VALLE DEL CAUCA - DADI",
+              "GOBERNACION DEL VALLE DEL CAUCA - SECRETARIA DE EDUCACION"
+            ]
+          ]
+        ]
+      },
+      "LEGITIMATE_INSTITUTION_ENDING_IN_GEOGRAPHY": {
+        "count": 2015,
+        "examples": [
+          [
+            "acacias meta",
+            "meta",
+            [
+              "ALCALDIA DEL MUNICIPIO DE ACACIAS"
+            ]
+          ],
+          [
+            "acueducto de bogota",
+            "de bogota",
+            [
+              "EMPRESA DE ACUEDUCTO Y ALCANTARILLADO DE BOGOTÁ - E.S.P."
+            ]
+          ],
+          [
+            "acueducto y alcantarillado de bogota",
+            "de bogota",
+            [
+              "EMPRESA DE ACUEDUCTO Y ALCANTARILLADO DE BOGOTÁ - E.S.P."
+            ]
+          ],
+          [
+            "administrativo mixto sena huila",
+            "huila",
+            [
+              "SENA Regional Huila Grupo de Apoyo Administrativo Mixto"
+            ]
+          ],
+          [
+            "adr bogota",
+            "bogota",
+            [
+              "AGENCIA DE DESARROLLO RURAL"
+            ]
+          ],
+          [
+            "adr distrito capital",
+            "distrito capital",
+            [
+              "AGENCIA DE DESARROLLO RURAL"
+            ]
+          ],
+          [
+            "adres bogota",
+            "bogota",
+            [
+              "ADRES"
+            ]
+          ],
+          [
+            "adres distrito capital",
+            "distrito capital",
+            [
+              "ADRES"
+            ]
+          ]
+        ]
+      },
+      "TEXTUAL_SUFFIX_FALSE_POSITIVE": {
+        "count": 45,
+        "examples": [
+          [
+            "canal teleantioquia",
+            "antioquia",
+            [
+              "SOCIEDAD TELEVISION DE ANTIOQUIA LTDA"
+            ]
+          ],
+          [
+            "carsucre",
+            "sucre",
+            [
+              "CORPORACION AUTONOMA REGIONAL DE SUCRE"
+            ]
+          ],
+          [
+            "codechoco",
+            "choco",
+            [
+              "CORPORACIÓN AUTÓNOMA REGIONAL PARA EL DESARROLLO SOSTENIBLE DEL CHOCO"
+            ]
+          ],
+          [
+            "corantioquia",
+            "antioquia",
+            [
+              "CORPORACIÓN AUTÓNOMA REGIONAL DEL CENTRO DE ANTIOQUIA"
+            ]
+          ],
+          [
+            "cormagdalena",
+            "magdalena",
+            [
+              "CORPORACIÓN AUTÓNOMA DEL RÍO GRANDE DE LA MAGDALENA**"
+            ]
+          ],
+          [
+            "corpoboyaca",
+            "boyaca",
+            [
+              "CORPOBOYACA"
+            ]
+          ],
+          [
+            "corpocaldas",
+            "caldas",
+            [
+              "CORPOCALDAS."
+            ]
+          ],
+          [
+            "corpocesar",
+            "cesar",
+            [
+              "CORPOCESAR"
+            ]
+          ]
+        ]
+      },
+      "GEOGRAPHY_ALIAS_DEBT": {
+        "count": 44,
+        "examples": [
+          [
+            "acueducto de bogota d.c.",
+            "bogota d.c.",
+            [
+              "EMPRESA DE ACUEDUCTO Y ALCANTARILLADO DE BOGOTÁ - E.S.P."
+            ]
+          ],
+          [
+            "agencia distrital de infraestructura del departamento del atlantico",
+            "departamento del atlantico",
+            [
+              "AGENCIA DISTRITAL DE INFRAESTRUCTURA DEL DISTRITO DE BARRANQUILLA"
+            ]
+          ],
+          [
+            "ambiente bogota d.c.",
+            "bogota d.c.",
+            [
+              "SECRETARIA DISTRITAL DE AMBIENTE"
+            ]
+          ],
+          [
+            "canal capital bogota d.c.",
+            "bogota d.c.",
+            [
+              "CANAL CAPITAL"
+            ]
+          ],
+          [
+            "comando general de las fuerzas militares bogota d.c.",
+            "bogota d.c.",
+            [
+              "COMANDO GENERAL DE LAS FUERZAS MILITARES"
+            ]
+          ],
+          [
+            "comando general de las fuerzas militares colombia, bogota d.c.",
+            "bogota d.c.",
+            [
+              "COMANDO GENERAL DE LAS FUERZAS MILITARES"
+            ]
+          ],
+          [
+            "contraloria de bogota d.c.",
+            "bogota d.c.",
+            [
+              "CONTRALORIA DE BOGOTA"
+            ]
+          ],
+          [
+            "contratos san jose de cucuta",
+            "cucuta",
+            [
+              "MUNICIPIO DE SAN JOSE DE CUCUTA"
+            ]
+          ]
+        ]
+      },
+      "OTHER": {
+        "count": 0,
+        "examples": []
+      }
+    },
+    "CAR_ANY_FORM_REACHABLE": 22,
+    "CAR_NAME_REACHABLE": 14,
+    "VOLUME_ANY_FORM": {
+      "processes": 78.8,
+      "contracts": 77.9
+    },
+    "NAME_BLOCKED": [
+      "CAM",
+      "CAR",
+      "CARDER",
+      "CARSUCRE",
+      "CAS",
+      "CODECHOCÓ",
+      "CORANTIOQUIA",
+      "CORPAMAG",
+      "CORPOBOYACÁ",
+      "CORPOCALDAS",
+      "CORPOCESAR",
+      "CORPOGUAJIRA",
+      "CORPONARIÑO",
+      "CORTOLIMA",
+      "CRA",
+      "CRC",
+      "CRQ",
+      "CSB",
+      "CVC"
+    ]
+  },
+  "EXACT_ONLY_REFUTATION": {
+    "rule": "alias == clave",
+    "REJECTED_ALIASES": 15,
+    "NEW_UNSAFE_TERRITORY_TO_BUYER": {
+      "licitaciones en el arauca": [
+        "DEPARTAMENTO DEL ARAUCA",
+        "el arauca"
+      ],
+      "licitaciones en el cauca": [
+        "UNIVERSIDAD DEL CAUCA",
+        "el cauca"
+      ],
+      "licitaciones en el distrito capital de bogota": [
+        "UNIVERSIDAD PEDAGÓGICA NACIONAL",
+        "el distrito capital de bogota"
+      ],
+      "licitaciones en el valle del cauca": [
+        "GOBERNACION DEL VALLE DEL CAUCA - DADI",
+        "el valle del cauca"
+      ]
+    },
+    "LOST": {}
+  },
+  "B_PRIME_EVIDENCE": {
+    "rule": "alias o alias sin wrappers iniciales ∈ DEPARTAMENTOS",
+    "leading_wrappers": [
+      "el",
+      "la",
+      "los",
+      "las",
+      "de",
+      "del",
+      "en",
+      "al"
+    ],
+    "REJECTED_ALIASES": 20,
+    "FREED_VS_CURRENT": 2104,
+    "KEPT_VS_EXACT_ONLY": [
+      "el arauca",
+      "el cauca",
+      "el distrito capital de bogota",
+      "el valle",
+      "el valle del cauca"
+    ],
+    "NEW_UNSAFE_TERRITORY_TO_BUYER": {},
+    "LOST": {},
+    "CAR_NAME_REACHABLE": 33,
+    "CAR_ACRONYM_BLOCKED": [
+      "CDA",
+      "CRA",
+      "CRC"
+    ],
+    "WRONG_OWNER": [],
+    "FABRICATED_TERRITORY": [],
+    "VOLUME_BY_NAME": {
+      "processes": 100.0,
+      "contracts": 100.0
+    },
+    "TERRITORY_CANARIES": {
+      "licitaciones en el Cauca": {
+        "entidad": null,
+        "departamento": "Cauca",
+        "method": null
+      },
+      "licitaciones en el Valle del Cauca": {
+        "entidad": null,
+        "departamento": "Valle del Cauca",
+        "method": null
+      },
+      "licitaciones en el Distrito Capital de Bogotá": {
+        "entidad": null,
+        "departamento": "Distrito Capital de Bogotá",
+        "method": "generic_buyer_unqualified"
+      },
+      "licitaciones en el Arauca": {
+        "entidad": null,
+        "departamento": "Arauca",
+        "method": null
+      },
+      "contratos en Meta": {
+        "entidad": null,
+        "departamento": "Meta",
+        "method": null
+      },
+      "contratos en el Meta": {
+        "entidad": null,
+        "departamento": "Meta",
+        "method": null
+      },
+      "contratos en Antioquia": {
+        "entidad": null,
+        "departamento": "Antioquia",
+        "method": null
+      },
+      "procesos en Santander": {
+        "entidad": null,
+        "departamento": "Santander",
+        "method": null
+      },
+      "contratos en Norte de Santander": {
+        "entidad": null,
+        "departamento": "Norte de Santander",
+        "method": null
+      },
+      "procesos en San Andrés": {
+        "entidad": null,
+        "departamento": "San Andrés, Providencia y Santa Catalina",
+        "method": null
+      }
+    },
+    "BUYER_ROOT_CANARIES": {
+      "contratos del Departamento del Meta": {
+        "entidad": null,
+        "departamento": "Meta",
+        "method": null
+      },
+      "contratos de la Gobernación de Santander": {
+        "entidad": "DEPARTAMENTO DE SANTANDER",
+        "departamento": null,
+        "method": "rewrite_gobernaci[oó]n"
+      },
+      "contratos de la Gobernación del Cauca": {
+        "entidad": "GOBERNACIÓN DEL CAUCA",
+        "departamento": null,
+        "method": "rewrite_gobernaci[oó]n"
+      },
+      "contratos del Gobierno Departamental del Tolima": {
+        "entidad": "GOBIERNO DEPARTAMENTAL",
+        "departamento": null,
+        "method": "rewrite_gobierno"
+      },
+      "contratos de la Gobernación de San Andrés": {
+        "entidad": "GOBERNACIÓN DEL DEPARTAMENTO ARCHIPIELAGO DE SAN ANDRES PROVIDENCIA Y SANTA CATALINA",
+        "departamento": null,
+        "method": "rewrite_gobernaci[oó]n"
+      },
+      "contratos del Departamento de San Andrés": {
+        "entidad": null,
+        "departamento": "San Andrés, Providencia y Santa Catalina",
+        "method": null
+      }
+    },
+    "NON_CAR_CANARIES": {
+      "secretaría general de la alcaldía mayor de Bogotá": {
+        "entidad": "SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ",
+        "departamento": null,
+        "method": "scan_exact"
+      },
+      "ESE del departamento de Meta": {
+        "entidad": null,
+        "departamento": "Meta",
+        "method": null
+      },
+      "Empresa de Acueducto y Alcantarillado de Bogotá": {
+        "entidad": "EMPRESA DE ACUEDUCTO Y ALCANTARILLADO DE BOGOTÁ - E.S.P.",
+        "departamento": null,
+        "method": "scan_exact"
+      },
+      "Instituto de Caminos y Construcciones de Cundinamarca": {
+        "entidad": "INSTITUTO DE CAMINOS Y CONSTRUCCIONES DE CUNDINAMARCA - ICCU",
+        "departamento": null,
+        "method": "scan_exact"
+      },
+      "Canal Teleantioquia": {
+        "entidad": "SOCIEDAD TELEVISION DE ANTIOQUIA LTDA",
+        "departamento": null,
+        "method": "scan_exact"
+      },
+      "Industria Licorera de Caldas": {
+        "entidad": null,
+        "departamento": "Caldas",
+        "method": null
+      },
+      "Terminal de Transportes de Santa Marta Magdalena": {
+        "entidad": "ALCALDÍA DISTRITAL DE SANTA MARTA",
+        "departamento": null,
+        "method": "scan_exact"
+      }
+    }
+  },
+  "POST_IMPLEMENTATION": {
+    "matches_reference_rule": [
+      "B_PRIME"
+    ],
+    "REJECTED_ALIASES": 20,
+    "CAR_NAME_REACHABLE": 33,
+    "CAR_ACRONYM_BLOCKED": [
+      "CDA",
+      "CRA",
+      "CRC"
+    ],
+    "WRONG_OWNER": [],
+    "FABRICATED_TERRITORY": [],
+    "VOLUME_BY_NAME": {
+      "processes": 100.0,
+      "contracts": 100.0
+    },
+    "VOLUME_ANY_FORM": {
+      "processes": 100.0,
+      "contracts": 100.0
+    },
+    "NEW_UNSAFE_TERRITORY_TO_BUYER": {},
+    "TERRITORY_CANARIES": {
+      "licitaciones en el Cauca": {
+        "entidad": null,
+        "departamento": "Cauca",
+        "method": null
+      },
+      "licitaciones en el Valle del Cauca": {
+        "entidad": null,
+        "departamento": "Valle del Cauca",
+        "method": null
+      },
+      "licitaciones en el Distrito Capital de Bogotá": {
+        "entidad": null,
+        "departamento": "Distrito Capital de Bogotá",
+        "method": "generic_buyer_unqualified"
+      },
+      "licitaciones en el Arauca": {
+        "entidad": null,
+        "departamento": "Arauca",
+        "method": null
+      },
+      "contratos en Meta": {
+        "entidad": null,
+        "departamento": "Meta",
+        "method": null
+      },
+      "contratos en el Meta": {
+        "entidad": null,
+        "departamento": "Meta",
+        "method": null
+      },
+      "contratos en Antioquia": {
+        "entidad": null,
+        "departamento": "Antioquia",
+        "method": null
+      },
+      "procesos en Santander": {
+        "entidad": null,
+        "departamento": "Santander",
+        "method": null
+      },
+      "contratos en Norte de Santander": {
+        "entidad": null,
+        "departamento": "Norte de Santander",
+        "method": null
+      },
+      "procesos en San Andrés": {
+        "entidad": null,
+        "departamento": "San Andrés, Providencia y Santa Catalina",
+        "method": null
+      }
+    },
+    "BUYER_ROOT_CANARIES": {
+      "contratos del Departamento del Meta": {
+        "entidad": null,
+        "departamento": "Meta",
+        "method": null
+      },
+      "contratos de la Gobernación de Santander": {
+        "entidad": "DEPARTAMENTO DE SANTANDER",
+        "departamento": null,
+        "method": "rewrite_gobernaci[oó]n"
+      },
+      "contratos de la Gobernación del Cauca": {
+        "entidad": "GOBERNACIÓN DEL CAUCA",
+        "departamento": null,
+        "method": "rewrite_gobernaci[oó]n"
+      },
+      "contratos del Gobierno Departamental del Tolima": {
+        "entidad": "GOBIERNO DEPARTAMENTAL",
+        "departamento": null,
+        "method": "rewrite_gobierno"
+      },
+      "contratos de la Gobernación de San Andrés": {
+        "entidad": "GOBERNACIÓN DEL DEPARTAMENTO ARCHIPIELAGO DE SAN ANDRES PROVIDENCIA Y SANTA CATALINA",
+        "departamento": null,
+        "method": "rewrite_gobernaci[oó]n"
+      },
+      "contratos del Departamento de San Andrés": {
+        "entidad": null,
+        "departamento": "San Andrés, Providencia y Santa Catalina",
+        "method": null
+      }
+    },
+    "NON_CAR_CANARIES": {
+      "secretaría general de la alcaldía mayor de Bogotá": {
+        "entidad": "SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ",
+        "departamento": null,
+        "method": "scan_exact"
+      },
+      "ESE del departamento de Meta": {
+        "entidad": null,
+        "departamento": "Meta",
+        "method": null
+      },
+      "Empresa de Acueducto y Alcantarillado de Bogotá": {
+        "entidad": "EMPRESA DE ACUEDUCTO Y ALCANTARILLADO DE BOGOTÁ - E.S.P.",
+        "departamento": null,
+        "method": "scan_exact"
+      },
+      "Instituto de Caminos y Construcciones de Cundinamarca": {
+        "entidad": "INSTITUTO DE CAMINOS Y CONSTRUCCIONES DE CUNDINAMARCA - ICCU",
+        "departamento": null,
+        "method": "scan_exact"
+      },
+      "Canal Teleantioquia": {
+        "entidad": "SOCIEDAD TELEVISION DE ANTIOQUIA LTDA",
+        "departamento": null,
+        "method": "scan_exact"
+      },
+      "Industria Licorera de Caldas": {
+        "entidad": null,
+        "departamento": "Caldas",
+        "method": null
+      },
+      "Terminal de Transportes de Santa Marta Magdalena": {
+        "entidad": "ALCALDÍA DISTRITAL DE SANTA MARTA",
+        "departamento": null,
+        "method": "scan_exact"
+      }
+    }
+  }
+}

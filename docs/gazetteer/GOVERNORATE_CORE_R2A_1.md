@@ -301,7 +301,7 @@ dentro de la deuda abierta de §5.
 | `BUYER_CAPTURE_TRUNCATION_DEBT` | **CLOSED** |
 | `UNGATED_FUZZY_FOR_HEALTH_AND_EDU_NAMES` | **NUEVA**, abierta (§5) — acotada por §3.5, no cerrada |
 | `CANONICAL_ENTITY_SOURCE_NAMES_REQUIRED` | `OPEN_UNTOUCHED` |
-| D6 | `OPEN_UNTOUCHED` |
+| D6 | `OPEN_UNTOUCHED` · cerrada después en R2D.1 |
 | `SAME_LOGICAL_IDENTITY` (D5) | `OPEN_UNTOUCHED` |
 
 No se tocó `aliases_db.json`, SoQL, Radar/SODA3/Actor, ministerios, la

@@ -18,6 +18,7 @@ from app.core.generic_buyer import (
     incomplete_buyer_hint,
     is_unqualified_buyer_name,
 )
+from app.core.geography_alias import is_geography_alias
 from app.data.colombia_geography import REGION_ALIASES
 from app.data.departamentos import DEPARTAMENTOS, DEPARTAMENTOS_OFICIALES
 from app.utils.money import normalize_text
@@ -272,25 +273,20 @@ class EntityResolver:
         - "gobernacion de santander" → alias itself contains qualifier → KEEP
         - "alcaldia de barranquilla" → alias contains qualifier → KEEP  
         - "en atlantico" → "en" is not qualifier → REJECT
+        - "corpocaldas" → institución que termina en un departamento → KEEP
         """
         alias_stripped = alias.strip()
 
         # ``gobierno departamental del Tolima`` es una mención de comprador
         # calificada aunque su primera palabra no esté en _ENTITY_QUALIFIERS.
-        # Esto reconoce únicamente la nueva gramática raíz; no cambia la deuda
-        # D6 del ``endswith`` para aliases arbitrarios.
+        # La gramática raíz conserva precedencia sobre el catálogo territorial.
         root_target = department_root_buyer_target(alias_stripped)
         if root_target and root_target in DEPARTAMENTOS:
             return False
 
-        # Check if alias is/contains a department name
-        is_dept = False
-        for dept_key in DEPARTAMENTOS:
-            if dept_key == alias_stripped or alias_stripped.endswith(dept_key):
-                is_dept = True
-                break
-
-        if not is_dept:
+        # ¿El alias nombra territorio? La autoridad es la pertenencia al
+        # catálogo, no el sufijo textual: ver app/core/geography_alias.py.
+        if not is_geography_alias(alias_stripped):
             return False  # Not a dept name at all → don't reject
 
         # Check if the alias ITSELF starts with an entity qualifier

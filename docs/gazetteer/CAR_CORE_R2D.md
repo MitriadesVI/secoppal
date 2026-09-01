@@ -203,6 +203,15 @@ dueño ajeno**: el modo de falla es cerrado. Arreglarlo es tocar D6, excluido
 del alcance de R2D, y por eso se dejó congelado en un test que falla si el
 conjunto crece o si alguna pasa a `WRONG_OWNER`.
 
+> **POST-REMEDIACIÓN (R2D.1, 2026-09-01).** D6 quedó cerrada: la regla pasó del
+> sufijo textual a la pertenencia al catálogo territorial. Las once entran hoy
+> por su nombre institucional —33/33 por el router, 100 % del volumen reciente,
+> `WRONG_OWNER = 0`— y la política de siglas no se movió: `CDA`, `CRA` y `CRC`
+> siguen bloqueadas como sigla. La deuda resultó ser general y no de las CAR:
+> afectaba a 2.104 aliases, la mayoría ajenos a este universo. Ver
+> [`D6_DEPARTMENT_SUFFIX_R2D1.md`](D6_DEPARTMENT_SUFFIX_R2D1.md). El conjunto
+> histórico se conserva en el test como `ROUTER_BLOCKED_BY_D6_R2D`.
+
 ## 8. Validación
 
 ```text

@@ -559,4 +559,4 @@ exceso de aliases que documenta §7 se evita no generándola.
 | D3 | `CLOSED` (R1D) |
 | D4 | `OPEN_UNTOUCHED` |
 | D5 | `OPEN_UNTOUCHED` · R2A aporta evidencia nueva, no la resuelve |
-| D6 | `OPEN_UNTOUCHED` |
+| D6 | `CLOSED` (R2D.1) · la autoridad pasa del sufijo textual a la pertenencia al catálogo territorial; ver [`D6_DEPARTMENT_SUFFIX_R2D1.md`](D6_DEPARTMENT_SUFFIX_R2D1.md) |

@@ -528,9 +528,13 @@ _NO_MODALITY_GOLDEN = {
         "a4760d90c47c745c2067e45a952bcd5637684b54975d14ef9aedd56427b530f6",
         ("id_del_proceso", "Barranquilla"),
     ),
+    # R2D.1: "sena bolivar" dejó de descartarse como topónimo desnudo. Antes la
+    # consulta se partía en un comprador genérico —SENA— más el territorio
+    # Bolívar; ahora nombra a la regional, que es lo que el usuario pidió. El
+    # fingerprint cambia porque cambió el WHERE, no la modalidad.
     "contratos de alimentación de la regional SENA Bolívar": (
-        "b94c3213da4448bff91a4c3a5620f9a2efbec4d060fe0708f43dff7085572028",
-        ("departamento = 'Bolívar'", "SENA"),
+        "a55f462444d86196ea012f4eb8ff5f0636b75a9d022b264f4c91015ac2901bd1",
+        ("SENA REGIONAL BOLIVAR",),
     ),
     "contratos de manual de contratación en Barranquilla": (
         "2083d9dc97e4039209cfb140077221ccc3b0e6ae33f18e7a71168494aefac7cc",

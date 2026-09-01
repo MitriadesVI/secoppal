@@ -196,21 +196,16 @@ REMOVED_ALIASES: list[tuple[str, str]] = [
 ]
 
 
-# Alcanzables por el ``QueryRouter`` con el nombre institucional. El resto sólo
-# llega por sigla o sólo por ``resolve_entidad``; ver ``ROUTER_BLOCKED_BY_D6``.
-ROUTER_REACHABLE = [
-    (acronym, name, physical)
-    for acronym, name, physical, _ in CAR_CORE_33
-    if acronym in {
-        "CARDIQUE", "CDA", "CDMB", "CORALINA", "CORMACARENA", "CORNARE", "CORPOAMAZONIA",
-        "CORPOCHIVOR", "CORPOGUAVIO", "CORPOMOJANA", "CORPONOR", "CORPORINOQUIA",
-        "CORPOURABÁ", "CVS",
-    }
-]
+# Las 33 son alcanzables por el ``QueryRouter`` con su nombre institucional
+# desde R2D.1. Hasta entonces sólo llegaban 14: ver ``ROUTER_BLOCKED_BY_D6_R2D``.
+ROUTER_REACHABLE = [(acronym, name, physical) for acronym, name, physical, _ in CAR_CORE_33]
 
-# Corporaciones que ningún formulario alcanza por el router: su sigla o su
-# nombre termina con el nombre de un departamento y el scan las descarta.
-ROUTER_BLOCKED_BY_D6 = {
+# Línea base histórica de R2D §7. ``_is_unqualified_dept`` comparaba con
+# ``endswith`` sin frontera de palabra, así que *corpocaldas* "terminaba en"
+# Caldas y el scan lo descartaba como topónimo. R2D.1 cerró la deuda
+# (docs/gazetteer/D6_DEPARTMENT_SUFFIX_R2D1.md); el conjunto queda como
+# testigo de que no puede reaparecer.
+ROUTER_BLOCKED_BY_D6_R2D = {
     "CARSUCRE", "CODECHOCÓ", "CORANTIOQUIA", "CORPOBOYACÁ", "CORPOCALDAS", "CORPOCESAR",
     "CORPOGUAJIRA", "CORPONARIÑO", "CORTOLIMA", "CRA", "CRC",
 }
@@ -292,13 +287,13 @@ def test_router_reaches_the_buyer_without_fabricating_territory(
     assert not str(resolution.get("method", "")).startswith("fuzzy")
 
 
-def test_router_blocked_set_does_not_grow(router: QueryRouter) -> None:
-    """La deuda D6 no puede crecer en silencio ni convertirse en dueño ajeno.
+def test_router_blocked_set_is_empty_after_r2d1(router: QueryRouter) -> None:
+    """Ninguna corporación queda fuera del router, y ninguna cae en dueño ajeno.
 
-    ``_is_unqualified_dept`` compara con ``endswith`` sin frontera de palabra,
-    de modo que ``corpocaldas`` "termina en" el departamento *Caldas* y el scan
-    lo descarta como topónimo desnudo. Las once corporaciones de abajo sólo son
-    alcanzables por ``resolve_entidad``; arreglarlo es tocar D6, fuera de R2D.
+    R2D dejó once bloqueadas por la deuda D6 —``endswith`` sin frontera de
+    palabra— y las congeló en ``ROUTER_BLOCKED_BY_D6_R2D``. R2D.1 sustituyó ese
+    criterio por pertenencia al catálogo territorial; el conjunto vacío es la
+    afirmación de que la deuda está cerrada, no de que se dejó de medir.
     """
     blocked = set()
     for acronym, name, physical, admitted in CAR_CORE_33:
@@ -310,7 +305,7 @@ def test_router_blocked_set_does_not_grow(router: QueryRouter) -> None:
         assert resolved <= {physical, None}
         if physical not in resolved:
             blocked.add(acronym)
-    assert blocked == ROUTER_BLOCKED_BY_D6
+    assert blocked == set()
 
 
 @pytest.mark.parametrize(("phrase", "expected"), TERRITORIAL_CANARIES)
