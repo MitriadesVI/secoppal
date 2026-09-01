@@ -40,6 +40,7 @@ __all__ = [
     "GENERIC_BUYER_TOKENS",
     "build_incomplete_buyer_resolution",
     "department_root_buyer_target",
+    "is_territory_fragment_of_buyer",
     "detect_incomplete_buyer",
     "incomplete_buyer_hint",
     "is_generic_buyer_token",
@@ -136,6 +137,37 @@ def department_root_buyer_target(text: str) -> str | None:
         return None
     target = match.group("target").strip()
     return target or None
+
+
+def is_territory_fragment_of_buyer(scanned: str, buyer_department: str) -> bool:
+    """True si ``scanned`` es un trozo del territorio que el comprador ya nombró.
+
+    La gramática de comprador corta la captura en " de/del ": de
+    "gobernación del Valle del Cauca" sólo consume "gobernación del Valle" y
+    deja "del Cauca" en el texto. El scan territorial lo lee después como
+    *Cauca* — un departamento que el usuario nunca nombró — y el WHERE termina
+    filtrando por el territorio equivocado. Lo mismo con "Norte de Santander",
+    cuya cola se lee como *Santander*.
+
+    No es un filtro: es la cola de una frase ya consumida. Se exige que el
+    departamento escaneado sea parte estricta del territorio del comprador,
+    para no descartar un territorio genuinamente distinto ("la gobernación del
+    Cauca en Antioquia"), que sí es una intersección legítima.
+    """
+    if not scanned or not buyer_department:
+        return False
+    scanned_key = _normalize(scanned).strip()
+    buyer_key = _normalize(buyer_department).strip()
+    if not scanned_key or scanned_key == buyer_key:
+        return False
+    buyer_tokens = buyer_key.split()
+    scanned_tokens = scanned_key.split()
+    if len(scanned_tokens) >= len(buyer_tokens):
+        return False
+    return any(
+        buyer_tokens[i:i + len(scanned_tokens)] == scanned_tokens
+        for i in range(len(buyer_tokens) - len(scanned_tokens) + 1)
+    )
 
 
 def detect_incomplete_buyer(text: str) -> str | None:

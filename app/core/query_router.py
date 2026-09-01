@@ -40,6 +40,7 @@ from app.core.estado_projection import project_estado_family
 from app.core.generic_buyer import (
     build_incomplete_buyer_resolution,
     detect_incomplete_buyer,
+    is_territory_fragment_of_buyer,
 )
 from app.core.money_admission import (
     RANGE_PARTIAL_CLARIFICATION,
@@ -651,6 +652,19 @@ class QueryRouter:
         #    drop any zone captured in step 6.
         if self.entity_resolver:
             dept_scan = self.entity_resolver.scan_departamento(scrubbed)
+            # INV-NO-SILENT-SEMANTIC-FALLBACK (ADR-069). Si el comprador ya
+            # declaró su jurisdicción, un departamento escaneado que sea trozo
+            # de ESE mismo nombre es la cola de la frase consumida, no un
+            # filtro: "gobernación del Valle del Cauca" dejaba "del Cauca" y el
+            # WHERE terminaba en el departamento del Cauca.
+            if dept_scan:
+                _buyer_meta = (params.get("entidad_resolution") or {}).get("metadata") or {}
+                _buyer_department = _buyer_meta.get("canonical_department")
+                if _buyer_department and is_territory_fragment_of_buyer(
+                    dept_scan.official_name, str(_buyer_department)
+                ):
+                    scrubbed = dept_scan.remaining_text
+                    dept_scan = None
             if dept_scan:
                 params["departamento"] = dept_scan.matched_alias
                 params["departamento_resolved"] = dept_scan.official_name
