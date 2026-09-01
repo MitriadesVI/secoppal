@@ -381,3 +381,131 @@ SAME_LOGICAL_IDENTITY_REVIEW: 6 grupos (9 hallazgos de alias)
 MANUAL_REVIEW:                166
 PROPOSED_REMOVALS:            114 sobre 28 entidades
 ```
+
+---
+
+## 11. POST-R1D — evidencia institucional para compradores raíz
+
+**Fecha:** 2026-09-01 · **HEAD antes:** `a63a7809210c577fdcd6b45ecf7ba8c559decafe`
+
+R1D no modifica la evidencia histórica anterior ni amplía el gazetteer. Cierra
+la separación que R1C dejó pendiente:
+
+```text
+SOURCE_PHYSICAL_NAME != SCAN_ALIAS != ALIAS_OWNERSHIP
+```
+
+Una petición raíz departamental reconocida por gramática sólo acepta un
+comprador que posea al menos un alias institucional de la misma jurisdicción.
+El alias debe tener **un único owner normalizado** y todos los aliases raíz de
+esa jurisdicción deben converger en el mismo comprador. El `official_name` no
+aporta esa autoridad: puede ser opaco (`GOBIERNO DEPARTAMENTAL`) o contener el
+nombre del padre dentro de una subentidad.
+
+### Matriz 32/32 congelada antes de implementar
+
+La columna `resolution_method` corresponde al resultado final del router; el
+`supporting_alias` se comprueba contra todos los owners del JSON, no contra el
+valor lossless de `alias_index`.
+
+| natural_query | resolved_entity | resolution_method | supporting_alias | official_name | status |
+|---|---|---|---|---|---|
+| Gobernación del Amazonas | `GOBERNACION DEL AMAZONAS` | `rewrite_gobernaci[oó]n` | `gobernacion del amazonas` | `GOBERNACION DEL AMAZONAS` | `ROOT_EXACT_ALIAS` |
+| Gobernación de Antioquia | `DEPARTAMENTO DE ANTIOQUIA//` | `rewrite_gobernaci[oó]n` | `gobernacion de antioquia` | `DEPARTAMENTO DE ANTIOQUIA//` | `ROOT_EXACT_ALIAS` |
+| Gobernación de Arauca | `DEPARTAMENTO DEL ARAUCA` | `rewrite_gobernaci[oó]n` | `gobernacion de arauca` | `DEPARTAMENTO DEL ARAUCA` | `ROOT_EXACT_ALIAS` |
+| Gobernación del Atlántico | `DEPARTAMENTO DEL ATLANTICO**` | `rewrite_gobernaci[oó]n` | `gobernacion del atlantico` | `DEPARTAMENTO DEL ATLANTICO**` | `ROOT_EXACT_ALIAS` |
+| Gobernación de Bolívar | `GOBERNACIÓN DE BOLÍVAR//` | `rewrite_gobernaci[oó]n` | `gobernacion de bolivar` | `GOBERNACIÓN DE BOLÍVAR//` | `ROOT_EXACT_ALIAS` |
+| Gobernación de Boyacá | `GOBERNACIÓN DE BOYACÁ` | `rewrite_gobernaci[oó]n` | `gobernacion de boyaca` | `GOBERNACIÓN DE BOYACÁ` | `ROOT_EXACT_ALIAS` |
+| Gobernación de Caldas | `GOBERNACION DE CALDAS` | `rewrite_gobernaci[oó]n` | `gobernacion de caldas` | `GOBERNACION DE CALDAS` | `ROOT_EXACT_ALIAS` |
+| Gobernación del Caquetá | `GOBERNACION DEL CAQUETA**` | `rewrite_gobernaci[oó]n` | `gobernacion del caqueta` | `GOBERNACION DEL CAQUETA**` | `ROOT_EXACT_ALIAS` |
+| Gobernación de Casanare | `GOBERNACION DEL CASANARE` | `rewrite_gobernaci[oó]n` | `gobernacion de casanare` | `GOBERNACION DEL CASANARE` | `ROOT_EXACT_ALIAS` |
+| Gobernación del Cauca | `GOBERNACIÓN DEL CAUCA` | `rewrite_gobernaci[oó]n` | `gobernacion del cauca` | `GOBERNACIÓN DEL CAUCA` | `ROOT_EXACT_ALIAS` |
+| Gobernación del Cesar | `GOBERNACION DEL DEPARTAMENTO DEL CESAR` | `rewrite_gobernaci[oó]n` | `gobernacion del cesar` | `GOBERNACION DEL DEPARTAMENTO DEL CESAR` | `ROOT_EXACT_ALIAS` |
+| Gobernación del Chocó | `GOBERNACION DEL CHOCÓ.` | `rewrite_gobernaci[oó]n` | `gobernacion del choco` | `GOBERNACION DEL CHOCÓ.` | `ROOT_EXACT_ALIAS` |
+| Gobernación de Córdoba | `DEPARTAMENTO DE CORDOBA` | `rewrite_gobernaci[oó]n` | `gobernacion de cordoba` | `DEPARTAMENTO DE CORDOBA` | `ROOT_EXACT_ALIAS` |
+| Gobernación de Cundinamarca | `DEPARTAMENTO DE CUNDINAMARCA- SECRETARIA DE SALUD` | `rewrite_gobernaci[oó]n` | — | `DEPARTAMENTO DE CUNDINAMARCA- SECRETARIA DE SALUD` | `WRONG_CHILD` |
+| Gobernación del Guainía | — | `rewrite_gobernaci[oó]n_unresolved` | — | — | `FAIL_CLOSED` |
+| Gobernación del Guaviare | — | `rewrite_gobernaci[oó]n_unresolved` | — | — | `FAIL_CLOSED` |
+| Gobernación del Huila | `GOBERNACION DEL HUILA*` | `rewrite_gobernaci[oó]n` | `gobernacion del huila` | `GOBERNACION DEL HUILA*` | `ROOT_EXACT_ALIAS` |
+| Gobernación de La Guajira | `GOBERNACIÓN DE LA GUAJIRA` | `rewrite_gobernaci[oó]n` | `gobernacion de la guajira` | `GOBERNACIÓN DE LA GUAJIRA` | `ROOT_EXACT_ALIAS` |
+| Gobernación del Magdalena | `GOBERNACION DEL MAGDALENA` | `rewrite_gobernaci[oó]n` | `gobernacion del magdalena` | `GOBERNACION DEL MAGDALENA` | `ROOT_EXACT_ALIAS` |
+| Gobernación del Meta | `DEPARTAMENTO DEL META` | `rewrite_gobernaci[oó]n` | `gobernacion del meta` | `DEPARTAMENTO DEL META` | `ROOT_EXACT_ALIAS` |
+| Gobernación de Nariño | `GOBERNACION DE NARIÑO` | `rewrite_gobernaci[oó]n` | `gobernacion de narino` | `GOBERNACION DE NARIÑO` | `ROOT_EXACT_ALIAS` |
+| Gobernación de Norte de Santander | `Gobernación Norte de Santander*` | `rewrite_gobernaci[oó]n` | `gobernacion de norte de santander` | `Gobernación Norte de Santander*` | `ROOT_EXACT_ALIAS` |
+| Gobernación del Putumayo | `GOBERNACIÓN DEPARTAMENTO DEL PUTUMAYO` | `rewrite_gobernaci[oó]n` | `gobernacion del putumayo` | `GOBERNACIÓN DEPARTAMENTO DEL PUTUMAYO` | `ROOT_EXACT_ALIAS` |
+| Gobernación del Quindío | `GOBERNACION DEL QUINDIO ARMENIA` | `rewrite_gobernaci[oó]n` | `gobernacion del quindio` | `GOBERNACION DEL QUINDIO ARMENIA` | `ROOT_EXACT_ALIAS` |
+| Gobernación de Risaralda | `GOBERNACIÓN DE RISARALDA**` | `rewrite_gobernaci[oó]n` | `gobernacion de risaralda` | `GOBERNACIÓN DE RISARALDA**` | `ROOT_EXACT_ALIAS` |
+| Gobernación de San Andrés | `DEPARTAMENTO DE SANTANDER` | `rewrite_gobernaci[oó]n` | — | `DEPARTAMENTO DE SANTANDER` | `OTHER` |
+| Gobernación de Santander | `DEPARTAMENTO DE SANTANDER` | `rewrite_gobernaci[oó]n` | `gobernacion de santander` | `DEPARTAMENTO DE SANTANDER` | `ROOT_EXACT_ALIAS` |
+| Gobernación de Sucre | `GOBERNACION DE SUCRE` | `rewrite_gobernaci[oó]n` | `gobernacion de sucre` | `GOBERNACION DE SUCRE` | `ROOT_EXACT_ALIAS` |
+| Gobernación del Tolima | — | `rewrite_gobernaci[oó]n_unresolved` | — | — | `FAIL_CLOSED` |
+| Gobernación del Valle del Cauca | `SECRETARIA DE INFRAESTRUCTURA - GOBERNACION DEL VALLE` | `rewrite_gobernaci[oó]n` | — | `SECRETARIA DE INFRAESTRUCTURA - GOBERNACION DEL VALLE` | `WRONG_CHILD` |
+| Gobernación del Vaupés | — | `rewrite_gobernaci[oó]n_unresolved` | — | — | `FAIL_CLOSED` |
+| Gobernación del Vichada | — | `rewrite_gobernaci[oó]n_unresolved` | — | — | `FAIL_CLOSED` |
+
+```text
+BASELINE_32
+PASS:               24
+FAIL_CLOSED:         5
+WRONG_CHILD:         2
+ROOT_EXACT_ALIAS:   24
+ROOT_FUZZY:          0
+ROOT_OFFICIAL_ONLY:  0
+OTHER:               1  (San Andrés -> Santander)
+```
+
+La predicción de D2 necesitó una precisión causal: la llamada directa
+`resolve_entidad("gobernación de Cundinamarca")` ya devolvía
+`rewrite_unresolved`; era el primer candidato del router,
+`Departamento de Cundinamarca`, el que entraba por fuzzy al nombre físico de
+la Secretaría de Salud. Valle fallaba tanto de forma directa como en el router.
+
+### Resultado post-R1D
+
+| Métrica | Antes | Después |
+|---|---:|---:|
+| `ROOT_EXACT_ALIAS` | 24 | **25** |
+| `ROOT_FUZZY` | 0 | **0** |
+| `ROOT_OFFICIAL_ONLY` | 0 | **0** |
+| `FAIL_CLOSED` | 5 | **7** |
+| `WRONG_CHILD` | 2 | **0** |
+| `OTHER` | 1 | **0** |
+
+Tolima pasa a los 25 roots respaldados. Cundinamarca, Valle, San Andrés,
+Guainía, Guaviare, Vaupés y Vichada fallan cerrado. San Andrés se incluye porque
+su único alias físico largo no respalda la frase natural corta; además se hizo
+terminal el fail-closed del target válido para impedir que el shrink
+`San Andrés -> San` reabriera el fuzzy hacia Santander.
+
+`gobierno departamental de/del X` entra en la autoridad lingüística de buyer
+departamental. Por eso `gobierno departamental del Cauca` resuelve de forma
+determinista a `GOBERNACIÓN DEL CAUCA` mediante el ownership de
+`departamento de cauca`; nunca a Tolima ni al territorio. La misma forma para
+Tolima resuelve por su alias exacto.
+
+### Estado de deuda
+
+| Deuda | Estado POST-R1D | Evidencia |
+|---|---|---|
+| D1 | **CLOSED** | `GOBIERNO DEPARTAMENTAL` se conserva como `SOURCE_PHYSICAL_NAME`, pero un nombre estructural no calificado no entra a `_scan_index`; el alias calificado de Tolima sí. |
+| D2 | **CLOSED** | Cundinamarca y Valle no tienen owner raíz; ambas peticiones quedan `rewrite_unresolved`, sin child ni territorio. |
+| D3 | **CLOSED** | Tolima se acepta por ownership raíz único aunque su nombre físico omita el territorio. |
+| D4 | **OPEN** | No se decide identidad Alcaldía Local / FDL. |
+| D5 | **OPEN** | No se consolidan identidades lógicas ni nombres físicos por dataset. |
+| D6 | **OPEN** | No se cambia la regla general `_is_unqualified_dept(... endswith ...)`; sólo se reconoce la nueva gramática raíz calificada. |
+
+R1D corrige `EntityResolver` conforme a ADR-069 y al ownership establecido por
+R1C; no introduce una autoridad arquitectónica independiente y no requiere ADR
+nuevo.
+
+### Validación R1D
+
+```text
+tests/test_root_buyer_evidence_r1d.py                  22 passed
+focales resolver/types/router/gazetteer                264 passed, 13 xfailed
+scripts/run_query_corpus.py --mode all                  89/89 PASS
+make lint-core                                          app/core/ limpio
+ruff (archivos R1D)                                     All checks passed
+suite completa                                          9803 passed, 2 skipped, 24 xfailed
+aliases_db.json                                         sin cambios
+```

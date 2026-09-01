@@ -537,7 +537,7 @@ R0/R0.1. Esta tabla registra únicamente el cierre posterior de sus causas raíz
 | RC1 | **CLOSED** — `8cecc69` | `ENTITY-TYPED-GEO-R1B`: el contexto explícito `departamento de/del X` consulta la autoridad de departamentos sin cambiar la precedencia ciudad-first de menciones desnudas. |
 | RC2 | **PARTIAL** — `GAZETTEER-ALIAS-OWNERSHIP-R1C` | Retirados los 14 aliases territoriales desnudos en manos de entidades de otro territorio, `san andres` incluido: ninguna entidad no territorial los posee ya. **Residuo:** `resolve_entidad("san andrés")` sigue devolviendo `HOSPITAL SAN ANDRES` por `fuzzy(95)` contra su propio `official_name`, que entra siempre a `choice_to_official`. No es corregible con datos (deuda D1 de R1C). El daño está contenido: por RC1 el router devuelve el departamento. |
 | RC3 | **CLOSED** — `4d82210` | Compradores calificados ausentes fallan cerrado y no degradan a territorio. |
-| RC4 | **PARTIAL** — `GAZETTEER-ALIAS-OWNERSHIP-R1C` | Retirados los 6 aliases genéricos estructurales, `gobierno departamental` (WB-04) incluido. **Residuo:** la entidad del Tolima **se llama** `GOBIERNO DEPARTAMENTAL`, y el `official_name` entra al índice de scan como un alias más; "gobierno departamental del Cauca" sigue produciendo comprador Tolima ∧ territorio Cauca. Cerrarlo exige que `EntityResolver` rechace nombres oficiales genéricos sin calificador, no un cambio de gazetteer (deuda D1 de R1C). |
+| RC4 | **CLOSED** — `ROOT-BUYER-EVIDENCE-R1D` | R1C retiró los aliases genéricos; R1D separa `SOURCE_PHYSICAL_NAME` de `SCAN_ALIAS`, de modo que `GOBIERNO DEPARTAMENTAL` ya no captura cualquier territorio. La forma calificada `gobierno departamental de/del X` usa ownership raíz único: Cauca → su Gobernación; Tolima → `GOBIERNO DEPARTAMENTAL`. |
 
 Detalle y evidencia en
 [`GAZETTEER_ALIAS_OWNERSHIP_R1C.md`](GAZETTEER_ALIAS_OWNERSHIP_R1C.md). Ese
@@ -547,4 +547,12 @@ no una grafía viva y una muerta.
 
 Post-R1B, el gate territorial tipado cubre las cuatro colisiones enumeradas en
 R0 (`arauca`, `bogota`, `cucuta`, `san andres`). La semántica no tipada y la
-resolución institucional de `Gobernación de/del X` permanecen sin cambios.
+resolución institucional de `Gobernación de/del X` permanecían sin cambios.
+
+Post-R1D, la matriz de gobernaciones queda en **25 compradores raíz con alias
+exacto + 7 fail-closed**, sin `WRONG_CHILD`, fuzzy de raíz ni resolución basada
+sólo en `official_name`. Cundinamarca y Valle dejan de promover secretarías;
+Tolima se recupera por sus aliases territoriales; San Andrés deja de encogerse
+a `San` y resolver lateralmente a Santander. Las cuatro gobernaciones ausentes
+continúan fail-closed. La evidencia completa y la matriz 32/32 están en
+[`GAZETTEER_ALIAS_OWNERSHIP_R1C.md`](GAZETTEER_ALIAS_OWNERSHIP_R1C.md#11-post-r1d--evidencia-institucional-para-compradores-raíz).

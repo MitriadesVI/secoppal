@@ -574,6 +574,12 @@ class QueryRouter:
                     break
                 if match and match.clarification_needed and unresolved_rewrite is None:
                     unresolved_rewrite = (canonical, consumed, rtype, match)
+                # A complete, valid department name with no unique root owner
+                # is a terminal fail-closed result.  Trying shorter rewrite
+                # candidates would turn "San Andrés" into "San" and reopen
+                # lexical fuzzy against an unrelated buyer (Santander).
+                if match and match.metadata.get("canonical_department"):
+                    break
             if rewritten_entity:
                 canonical, consumed, rtype, match = rewritten_entity
                 params["entidad"] = canonical
@@ -584,7 +590,10 @@ class QueryRouter:
                     "kind": "buyer_entity",
                     "confidence": "high",
                     "like_value": None,
-                    "metadata": {"rewritten_from": consumed},
+                    "metadata": {
+                        **match.metadata,
+                        "rewritten_from": consumed,
+                    },
                 }
                 consumed_spans.append(consumed)
                 scrubbed = scrubbed.replace(consumed, " ", 1)

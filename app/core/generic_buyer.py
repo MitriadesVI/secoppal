@@ -39,9 +39,11 @@ import unicodedata
 __all__ = [
     "GENERIC_BUYER_TOKENS",
     "build_incomplete_buyer_resolution",
+    "department_root_buyer_target",
     "detect_incomplete_buyer",
     "incomplete_buyer_hint",
     "is_generic_buyer_token",
+    "is_unqualified_buyer_name",
 ]
 
 # Sustantivos que nombran un TIPO de entidad pública, nunca una entidad.
@@ -83,6 +85,24 @@ _INCOMPLETE_BUYER_RE = re.compile(
     re.IGNORECASE,
 )
 
+# Una mención departamental raíz tiene dos piezas de autoridad: una cabeza
+# institucional y un territorio explícito.  El helper sólo reconoce la
+# gramática; EntityResolver valida después que el territorio pertenezca a la
+# autoridad geográfica y que el gazetteer tenga ownership raíz inequívoco.
+_DEPARTMENT_ROOT_BUYER_RE = re.compile(
+    r"^(?:(?:el|la)\s+)?"
+    r"(?:gobernacion|departamento|gobierno\s+departamental)"
+    r"\s+de(?:l)?\s+(?P<target>.+)$",
+)
+
+# Un nombre físico de SECOP puede ser real y, a la vez, no ser una frase de
+# búsqueda nacional segura.  "GOBIERNO DEPARTAMENTAL" no incluye el territorio
+# que lo convierte en la Gobernación del Tolima; como scan alias desnudo puede
+# secuestrar cualquier otro departamento.
+_UNQUALIFIED_STRUCTURAL_BUYER_RE = re.compile(
+    r"^(?:gobierno|gobernacion)\s+departamental$",
+)
+
 
 def _normalize(text: str) -> str:
     nfkd = unicodedata.normalize("NFKD", (text or "").lower())
@@ -93,6 +113,29 @@ def is_generic_buyer_token(text: str) -> bool:
     """True si ``text`` es un genérico desnudo, con o sin artículo."""
     words = [w for w in _normalize(text).strip().split() if w not in _ARTICLES]
     return len(words) == 1 and words[0] in GENERIC_BUYER_TOKENS
+
+
+def is_unqualified_buyer_name(text: str) -> bool:
+    """True si el nombre sólo expresa una clase institucional sin identidad."""
+    normalized = _normalize(text).strip()
+    return (
+        is_generic_buyer_token(normalized)
+        or bool(_UNQUALIFIED_STRUCTURAL_BUYER_RE.fullmatch(normalized))
+    )
+
+
+def department_root_buyer_target(text: str) -> str | None:
+    """Extrae X de una mención raíz ``gobernación/departamento de X``.
+
+    También reconoce ``gobierno departamental de/del X``.  No decide si X es
+    un departamento ni quién lo representa: esas autoridades viven en el
+    catálogo territorial y en el ownership del gazetteer, respectivamente.
+    """
+    match = _DEPARTMENT_ROOT_BUYER_RE.fullmatch(_normalize(text).strip())
+    if not match:
+        return None
+    target = match.group("target").strip()
+    return target or None
 
 
 def detect_incomplete_buyer(text: str) -> str | None:

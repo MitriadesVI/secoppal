@@ -10,8 +10,9 @@ from rapidfuzz import fuzz, process
 
 from app.core.generic_buyer import (
     GENERIC_BUYER_TOKENS,
+    department_root_buyer_target,
     incomplete_buyer_hint,
-    is_generic_buyer_token,
+    is_unqualified_buyer_name,
 )
 from app.data.colombia_geography import REGION_ALIASES
 from app.data.departamentos import DEPARTAMENTOS, DEPARTAMENTOS_OFICIALES
@@ -169,6 +170,14 @@ class EntityResolver:
         self.choice_to_official: dict[str, str] = {}    # all choices for fuzzy
         self.entities_by_department: dict[str, list[str]] = {}
 
+        # Alias ownership and SECOP physical names are different evidence.
+        # ``alias_index`` remains for backward-compatible non-root resolution;
+        # strict departmental roots use the non-lossy ownership structures.
+        self.owners_by_alias: dict[str, set[str]] = {}
+        self.aliases_by_official: dict[str, set[str]] = {}
+        self.source_names_to_official: dict[str, set[str]] = {}
+        self._root_evidence_by_department: dict[str, dict[str, tuple[str, ...]]] = {}
+
         # For scan (substring detection in text)
         # Index: first_word → [(normalized_alias, official_name), ...] sorted by alias length DESC
         self._scan_index: dict[str, list[tuple[str, str]]] = {}
@@ -240,6 +249,14 @@ class EntityResolver:
         """
         alias_stripped = alias.strip()
 
+        # ``gobierno departamental del Tolima`` es una mención de comprador
+        # calificada aunque su primera palabra no esté en _ENTITY_QUALIFIERS.
+        # Esto reconoce únicamente la nueva gramática raíz; no cambia la deuda
+        # D6 del ``endswith`` para aliases arbitrarios.
+        root_target = department_root_buyer_target(alias_stripped)
+        if root_target and root_target in DEPARTAMENTOS:
+            return False
+
         # Check if alias is/contains a department name
         is_dept = False
         for dept_key in DEPARTAMENTOS:
@@ -287,6 +304,9 @@ class EntityResolver:
         department names.  Together they prevent ENTITY-MISRESOLUTION.
         """
         alias_lower = alias.strip().lower()
+
+        if is_unqualified_buyer_name(alias_lower):
+            return True
 
         # Exact match against generic tokens
         if alias_lower in self._GENERIC_ENTITY_TOKENS:
@@ -400,7 +420,7 @@ class EntityResolver:
         # el genérico desnudo, pero esta puerta quedaba abierta: los tiers de
         # fuzzy global le encuentran vecino a cualquier cosa y "alcaldia" salía
         # resuelto —con confianza alta— a una entidad que nadie pidió.
-        if is_generic_buyer_token(normalized):
+        if is_unqualified_buyer_name(normalized):
             return ResolutionResult(
                 value=None,
                 method="generic_buyer_unqualified",
@@ -411,6 +431,21 @@ class EntityResolver:
             )
 
         strict_rewrite = self._strict_rewrite_target(normalized)
+
+        # A recognized departmental root never enters lexical fuzzy.  Its
+        # identity comes from unique alias ownership for the same canonical
+        # territory, not from words that happen to occur in an SECOP physical
+        # name.  This simultaneously rejects child hijacks and admits Tolima's
+        # opaque but correctly-owned ``GOBIERNO DEPARTAMENTAL`` record.
+        if strict_rewrite and strict_rewrite[0] == "department":
+            canonical_department = DEPARTAMENTOS.get(strict_rewrite[1])
+            if canonical_department:
+                return self._resolve_department_root(
+                    user_input,
+                    normalized,
+                    strict_rewrite[1],
+                    canonical_department,
+                )
 
         # Tier 1: Exact alias match
         if normalized in self.alias_index:
@@ -459,6 +494,90 @@ class EntityResolver:
         logger.info("Entity '%s' fell through to LIKE fallback", user_input)
         return ResolutionResult(value=None, like_value=normalized.upper(), method="like", confidence="low")
 
+    def _resolve_department_root(
+        self,
+        user_input: str,
+        normalized: str,
+        target: str,
+        canonical_department: str,
+    ) -> ResolutionResult:
+        """Resolve a strict root request only from unambiguous alias ownership."""
+        exact_owners = self.owners_by_alias.get(normalized, set())
+        if len(exact_owners) > 1:
+            return self._ambiguous_root_alias(
+                user_input,
+                target,
+                canonical_department,
+                exact_owners,
+            )
+
+        evidence = self._root_evidence_by_department.get(canonical_department, {})
+        if len(evidence) > 1:
+            return self._ambiguous_root_alias(
+                user_input,
+                target,
+                canonical_department,
+                set(evidence),
+            )
+        if not evidence:
+            unresolved = self._unresolved_rewrite(
+                user_input, ("department", target)
+            )
+            unresolved.metadata.update({
+                "canonical_department": canonical_department,
+                "root_evidence": "missing",
+            })
+            return unresolved
+
+        official, supporting_aliases = next(iter(evidence.items()))
+        if exact_owners and exact_owners != {official}:
+            # Defensive consistency guard: a phrase cannot be accepted through
+            # evidence owned by a different institution.
+            return self._ambiguous_root_alias(
+                user_input,
+                target,
+                canonical_department,
+                exact_owners | {official},
+            )
+
+        exact = normalized in supporting_aliases and exact_owners == {official}
+        supporting_alias = normalized if exact else supporting_aliases[0]
+        return ResolutionResult(
+            value=official,
+            method="exact" if exact else "root_alias_evidence",
+            confidence="high",
+            metadata={
+                "target": target,
+                "canonical_department": canonical_department,
+                "supporting_alias": supporting_alias,
+                "root_evidence": "unique_alias_owner",
+            },
+        )
+
+    def _ambiguous_root_alias(
+        self,
+        user_input: str,
+        target: str,
+        canonical_department: str,
+        owners: set[str],
+    ) -> ResolutionResult:
+        return ResolutionResult(
+            value=None,
+            method="root_alias_ambiguous",
+            confidence="none",
+            metadata={
+                "target": target,
+                "canonical_department": canonical_department,
+                "owner_count": str(len(owners)),
+                "root_evidence": "ambiguous",
+            },
+            clarification_needed=True,
+            clarification_hint=(
+                f"Encontré más de un comprador que reclama '{user_input}'. "
+                "¿Cuál es el nombre oficial de la entidad?"
+            ),
+        )
+
     def _unresolved_rewrite(self, user_input: str, strict_rewrite: tuple[str, str]) -> ResolutionResult:
         _kind, target = strict_rewrite
         return ResolutionResult(
@@ -489,11 +608,9 @@ class EntityResolver:
         # SANTANDER (ENTITY-CORE-COVERAGE-R0, WB-03)—. Cuando no hay candidato
         # que satisfaga la reescritura, el resolver pide precisión en vez de
         # adivinar (Tier 4 → _unresolved_rewrite).
-        department_match = re.match(
-            r"^(?:departamento|gobernacion)\s+de(?:l)?\s+(.+)$", normalized,
-        )
-        if department_match:
-            return ("department", department_match.group(1).strip())
+        department_target = department_root_buyer_target(normalized)
+        if department_target:
+            return ("department", department_target)
 
         return None
 
@@ -525,31 +642,80 @@ class EntityResolver:
         with self.alias_path.open("r", encoding="utf-8") as handle:
             data = json.load(handle)
 
-        scan_entries: list[tuple[str, str]] = []  # (normalized_alias, official_name)
-
+        normalized_records: list[tuple[str, str, list[str]]] = []
         for record in data:
             official = record["official_name"]
             official_key = normalize_text(official)
-            self.choice_to_official[official_key] = official
+            self.source_names_to_official.setdefault(official_key, set()).add(official)
+            if not is_unqualified_buyer_name(official_key):
+                self.choice_to_official[official_key] = official
 
             dept = record.get("departamento")
             if dept:
                 self.entities_by_department.setdefault(dept, []).append(official)
 
-            # Collect all aliases for scan index
-            all_aliases = [official_key]
+            alias_keys: list[str] = []
             for alias in record.get("aliases", []):
                 alias_key = normalize_text(alias)
+                if not alias_key:
+                    continue
                 self.alias_index[alias_key] = official
                 self.choice_to_official[alias_key] = official
-                all_aliases.append(alias_key)
+                self.owners_by_alias.setdefault(alias_key, set()).add(official)
+                self.aliases_by_official.setdefault(official, set()).add(alias_key)
+                alias_keys.append(alias_key)
+
+            normalized_records.append((official, official_key, alias_keys))
+
+        # Derive root authority only after every alias owner is known.  A
+        # normalized alias with more than one owner supplies no evidence, and
+        # multiple independently-owned root aliases for one territory make the
+        # territory ambiguous rather than load-order dependent.
+        root_evidence: dict[str, dict[str, set[str]]] = {}
+        for alias, owners in self.owners_by_alias.items():
+            target = department_root_buyer_target(alias)
+            canonical_department = DEPARTAMENTOS.get(target or "")
+            if not canonical_department or len(owners) != 1:
+                continue
+            official = next(iter(owners))
+            root_evidence.setdefault(canonical_department, {}).setdefault(
+                official, set()
+            ).add(alias)
+
+        self._root_evidence_by_department = {
+            department: {
+                official: tuple(sorted(aliases))
+                for official, aliases in sorted(owners.items())
+            }
+            for department, owners in root_evidence.items()
+        }
+
+        scan_entries: list[tuple[str, str]] = []  # (normalized_alias, official_name)
+        for official, official_key, alias_keys in normalized_records:
+            # SOURCE_PHYSICAL_NAME is not automatically a SCAN_ALIAS.  Physical
+            # names remain available to ordinary fuzzy resolution, except when
+            # the name itself is structurally unqualified nationwide.
+            all_scan_aliases = list(alias_keys)
+            if not is_unqualified_buyer_name(official_key):
+                all_scan_aliases.append(official_key)
 
             # Add unique aliases to scan entries
             seen = set()
-            for a in all_aliases:
-                if a and a not in seen and len(a) >= 3:
-                    scan_entries.append((a, official))
-                    seen.add(a)
+            for alias in all_scan_aliases:
+                if not alias or alias in seen or len(alias) < 3:
+                    continue
+                seen.add(alias)
+
+                target = department_root_buyer_target(alias)
+                canonical_department = DEPARTAMENTOS.get(target or "")
+                if canonical_department:
+                    evidence = self._root_evidence_by_department.get(
+                        canonical_department, {}
+                    )
+                    if len(evidence) != 1 or official not in evidence:
+                        continue
+
+                scan_entries.append((alias, official))
 
         # Build first-word index, sorted by alias length DESC within each group
         self._scan_index = self._build_scan_index(scan_entries)

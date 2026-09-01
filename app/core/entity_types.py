@@ -47,6 +47,21 @@ ENTITY_REWRITES: list[tuple[re.Pattern, Callable]] = [
             f"Gobernación de {x}",
         ],
     ),
+    # ── Gobierno departamental variants ──
+    # Es la forma física real del comprador Tolima, pero la frase sólo expresa
+    # buyer intent cuando incluye territorio.  Los candidatos entran al mismo
+    # guard de evidencia raíz que la gramática de gobernación.
+    (
+        re.compile(
+            r"\bgobierno\s+departamental\s+de(?:l)?\s+(.+?)(?=\s*(?:para|donde|por\b|con\b|en\b|del\b|de\b|sobre\b|$))",
+            re.IGNORECASE,
+        ),
+        lambda x: [
+            f"Departamento de {x}",
+            f"Gobernación de {x}",
+            f"Gobierno departamental de {x}",
+        ],
+    ),
     # ── ESE / Empresa Social del Estado ──
     (
         re.compile(
