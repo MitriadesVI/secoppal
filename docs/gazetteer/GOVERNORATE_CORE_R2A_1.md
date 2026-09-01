@@ -259,7 +259,7 @@ ruff · make lint-core                                limpios
 aliases_db.json                                      SIN CAMBIOS
 ```
 
-Cada una de las cinco piezas se verificó **por mutación**: desactivada una a
+Cada una de las seis piezas se verificó **por mutación**: desactivada una a
 una, cae el test que le corresponde y sólo ese grupo.
 
 | Pieza desactivada | Tests que caen |

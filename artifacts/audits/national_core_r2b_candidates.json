@@ -1,0 +1,308 @@
+{
+  "audit": "NATIONAL-CORE-COVERAGE-R2B",
+  "type": "discovery registry-first frozen before gazetteer mutation",
+  "date": "2026-09-01",
+  "head_before": "2791fa9cf80721e13f6204390c4a876a947da2b7",
+  "branch": "main",
+  "universe_authority": {
+    "source": "Manual de Estructura del Estado Colombiano — Función Pública",
+    "url": "https://www.funcionpublica.gov.co/gestor-normativo/manual-estructura-del-estado/rama-ejecutiva-orden-nacional",
+    "active_ministries": 18,
+    "administrative_departments": 6,
+    "historical_in_liquidation": "Ministerio de Igualdad y Equidad"
+  },
+  "secop_authority": {
+    "primary": [
+      "SECOP II Procesos — Socrata p6dx-8zbt (entidad, nit_entidad, departamento_entidad)",
+      "SECOP II Contratos — Socrata jbjy-vk9h (nombre_entidad, nit_entidad, departamento)"
+    ],
+    "identity_order": ["dataset", "NIT/documento", "nombre físico observado"],
+    "discovery_time_zone": "America/Bogota"
+  },
+  "baseline": {
+    "entities": 562,
+    "total_aliases": 10718,
+    "exact_multi_owner_groups": 173,
+    "new_multi_owner_keys": 0,
+    "matrix": {
+      "ministries": {"pass": 11, "partial": 4, "missing": 0, "wrong_owner": 3},
+      "administrative_departments": {"pass": 4, "partial": 0, "missing": 0, "wrong_owner": 2}
+    }
+  },
+  "cases": [
+    {
+      "id": "relaciones_exteriores",
+      "logical_entity": "Ministerio de Relaciones Exteriores",
+      "nit": "899999042",
+      "process_source_names": ["MINISTERIO DE RELACIONES EXTERIORES"],
+      "contract_source_names": ["MINISTERIO DE RELACIONES EXTERIORES"],
+      "process_rows": 84,
+      "contract_rows": 71,
+      "existing_gazetteer_records": [],
+      "existing_aliases": [],
+      "baseline": {
+        "status": "WRONG_OWNER",
+        "natural_queries": [
+          {"query": "Ministerio de Relaciones Exteriores", "resolution_value": "(Secretaría Distrital de Integración Social)", "resolution_method": "fuzzy(85)", "supporting_alias": null, "owner_count": 0},
+          {"query": "Cancillería", "resolution_value": null, "resolution_method": "like", "supporting_alias": null, "owner_count": 0}
+        ]
+      },
+      "classification": "IDENTITY_MISSING",
+      "decision": "ACCEPT_REGISTRY_VERIFIED",
+      "evidence": [
+        "El mismo nombre físico y NIT aparecen en ambos datasets SECOP II.",
+        "La web oficial usa Cancillería como nombre público del Ministerio.",
+        "El Fondo Rotatorio es otra identidad: NIT 8605110716 frente a 899999042."
+      ]
+    },
+    {
+      "id": "defensa",
+      "logical_entity": "Ministerio de Defensa Nacional",
+      "nit": "899999003",
+      "process_source_names": ["MINISTERIO DE DEFENSA NACIONAL"],
+      "contract_source_names": ["MINISTERIO DE DEFENSA NACIONAL"],
+      "process_rows": 3592,
+      "contract_rows": 2586,
+      "existing_gazetteer_records": [],
+      "existing_aliases": [],
+      "baseline": {
+        "status": "WRONG_OWNER",
+        "natural_queries": [
+          {"query": "Ministerio de Defensa Nacional", "resolution_value": "MINSALUD", "resolution_method": "fuzzy(86)", "supporting_alias": null, "owner_count": 0},
+          {"query": "MinDefensa", "resolution_value": null, "resolution_method": "like", "supporting_alias": null, "owner_count": 0}
+        ]
+      },
+      "classification": "IDENTITY_MISSING",
+      "decision": "ACCEPT_REGISTRY_VERIFIED",
+      "evidence": [
+        "Existe una raíz física única en ambos datasets; no es ROOT_IDENTITY_FRAGMENTED.",
+        "Ejército, Armada, Fuerza Aeroespacial, Policía, Agencia Logística y Hospital Militar no se fusionan."
+      ]
+    },
+    {
+      "id": "mintic",
+      "logical_entity": "Ministerio de Tecnologías de la Información y las Comunicaciones",
+      "nit": "899999053",
+      "process_source_names": ["MINISTERIO DE TECNOLOGÍAS DE LA INFORMACIÓN Y LAS COMUNICACIONES DE COLOMBIA."],
+      "contract_source_names": ["MINISTERIO DE TECNOLOGÍAS DE LA INFORMACIÓN Y LAS COMUNICACIONES DE COLOMBIA."],
+      "process_rows": 359,
+      "contract_rows": 314,
+      "existing_gazetteer_records": ["FONDO UNICO DE TECNOLOGÍAS DE LA INFORMACIÓN Y LAS COMUNICACIONES"],
+      "existing_aliases": [],
+      "baseline": {
+        "status": "WRONG_OWNER",
+        "natural_queries": [
+          {"query": "Ministerio de Tecnologías de la Información y las Comunicaciones", "resolution_value": "FONDO UNICO DE TECNOLOGÍAS DE LA INFORMACIÓN Y LAS COMUNICACIONES", "resolution_method": "fuzzy(88)", "supporting_alias": null, "owner_count": 0},
+          {"query": "MinTIC", "resolution_value": "MINISTERIO DE TRANSPORTE*", "resolution_method": "fuzzy(90)", "supporting_alias": null, "owner_count": 0},
+          {"query": "Ministerio TIC", "resolution_value": "INVIAS", "resolution_method": "fuzzy(85)", "supporting_alias": null, "owner_count": 0}
+        ]
+      },
+      "classification": "IDENTITY_MISSING",
+      "decision": "ACCEPT_REGISTRY_VERIFIED",
+      "evidence": [
+        "El Ministerio tiene nombre físico único y NIT 899999053 en ambos datasets.",
+        "El Fondo Único tiene NIT 8001316486 y conserva identidad independiente."
+      ]
+    },
+    {
+      "id": "mincit",
+      "logical_entity": "Ministerio de Comercio, Industria y Turismo",
+      "nit": "830115297",
+      "process_source_names": ["MINISTERIO DE COMERCIO INDUSTRIA Y TURISMO - MINCIT"],
+      "contract_source_names": ["MINISTERIO DE COMERCIO INDUSTRIA Y TURISMO - MINCIT"],
+      "process_rows": 4319,
+      "contract_rows": 3641,
+      "existing_gazetteer_records": ["MINISTERIO DE COMERCIO INDUSTRIA Y TURISMO - MINCIT"],
+      "existing_aliases": [
+        "ministerio de comercio e industria",
+        "el ministerio de comercio",
+        "el ministerio de comercio y turismo",
+        "ministerio de industria y comercio",
+        "gobierno de comercio industria y turismo",
+        "comercio industria y turismo",
+        "la cartera de comercio",
+        "el ministerio de comercio industria y turismo",
+        "el ministerio de comercio e industria",
+        "ministerio de industria y turismo",
+        "ministerio de comercio y turismo",
+        "ministerio de comercio industria y turismo",
+        "el mincit",
+        "ministerio de industria comercio y turismo",
+        "ministerio de comercio",
+        "ministerio de comercio, industria y turismo",
+        "ministerio de comercio industria",
+        "el ministerio de comercio, industria y turismo",
+        "mincit colombia",
+        "ministerio de comercio industria turismo",
+        "mincit",
+        "ministerio de comercio industria y turismo - mincit"
+      ],
+      "baseline": {
+        "status": "PARTIAL",
+        "natural_queries": [
+          {"query": "Ministerio de Comercio, Industria y Turismo", "resolution_value": "MINISTERIO DE COMERCIO INDUSTRIA Y TURISMO - MINCIT", "resolution_method": "exact", "supporting_alias": "ministerio de comercio industria y turismo", "owner_count": 1},
+          {"query": "Mincomercio", "resolution_value": null, "resolution_method": "like", "supporting_alias": null, "owner_count": 0}
+        ]
+      },
+      "classification": "IDENTITY_PRESENT_ALIAS_GAP",
+      "decision": "ACCEPT_ALIAS_RECONCILIATION",
+      "evidence": ["La identidad ya existe; sólo falta la forma humana Mincomercio."]
+    },
+    {
+      "id": "minambiente",
+      "logical_entity": "Ministerio de Ambiente y Desarrollo Sostenible",
+      "nit": "830115395",
+      "process_source_names": ["MINISTERIO DE AMBIENTE Y DESARROLLO SOSTENIBLE"],
+      "contract_source_names": ["MINISTERIO DE AMBIENTE Y DESARROLLO SOSTENIBLE"],
+      "process_rows": 10506,
+      "contract_rows": 10159,
+      "existing_gazetteer_records": ["MINISTERIO DE AMBIENTE Y DESARROLLO SOSTENIBLE"],
+      "existing_aliases": ["ministerio de ambiente y desarrollo sostenible"],
+      "baseline": {
+        "status": "PARTIAL",
+        "natural_queries": [
+          {"query": "Ministerio de Ambiente y Desarrollo Sostenible", "resolution_value": "MINISTERIO DE AMBIENTE Y DESARROLLO SOSTENIBLE", "resolution_method": "exact", "supporting_alias": "ministerio de ambiente y desarrollo sostenible", "owner_count": 1},
+          {"query": "Minambiente", "resolution_value": "AREA METROPOLITANA DE BUCARAMANGA", "resolution_method": "fuzzy(90)", "supporting_alias": null, "owner_count": 0},
+          {"query": "Ministerio de Ambiente", "resolution_value": "MINISTERIO DE AMBIENTE Y DESARROLLO SOSTENIBLE", "resolution_method": "fuzzy(90)", "supporting_alias": null, "owner_count": 0}
+        ]
+      },
+      "classification": "IDENTITY_PRESENT_ALIAS_GAP",
+      "decision": "ACCEPT_ALIAS_RECONCILIATION",
+      "evidence": ["Una sola identidad por NIT y dataset; se amplía de uno a tres aliases de alta precisión."]
+    },
+    {
+      "id": "minvivienda",
+      "logical_entity": "Ministerio de Vivienda, Ciudad y Territorio",
+      "nit": "900463725",
+      "process_source_names": ["MINVIVIENDA"],
+      "contract_source_names": ["MINVIVIENDA"],
+      "process_rows": 10661,
+      "contract_rows": 10591,
+      "existing_gazetteer_records": ["MINVIVIENDA"],
+      "existing_aliases": ["minvivienda"],
+      "baseline": {
+        "status": "PARTIAL",
+        "natural_queries": [
+          {"query": "Ministerio de Vivienda, Ciudad y Territorio", "resolution_value": "SUBRED INTEGRADA DE SERVICIOS DE SALUD NORTE E.S.E. (OFICIAL)", "resolution_method": "fuzzy(85)", "supporting_alias": null, "owner_count": 0},
+          {"query": "Minvivienda", "resolution_value": "MINVIVIENDA", "resolution_method": "exact", "supporting_alias": "minvivienda", "owner_count": 1}
+        ]
+      },
+      "classification": "IDENTITY_PRESENT_ALIAS_GAP",
+      "decision": "ACCEPT_ALIAS_RECONCILIATION",
+      "evidence": ["MINVIVIENDA es el nombre físico único del NIT 900463725 en ambos datasets; no se fabrica departamento."]
+    },
+    {
+      "id": "cultura",
+      "logical_entity": "Ministerio de las Culturas, las Artes y los Saberes / Ministerio de Cultura",
+      "nit": "830034348",
+      "process_source_names": ["Ministerio de las Culturas, las Artes y los Saberes"],
+      "contract_source_names": ["Ministerio de las Culturas, las Artes y los Saberes"],
+      "process_rows": 28284,
+      "contract_rows": 11860,
+      "existing_gazetteer_records": ["Ministerio de las Culturas, las Artes y los Saberes"],
+      "existing_aliases": [
+        "ministerio de las culturas de bogotá",
+        "el ministerio de las culturas",
+        "del ministerio de las culturas",
+        "la ministerio de culturas",
+        "minculturas bogotá",
+        "ministerio de las culturas, artes y saberes",
+        "ministerio de las culturas en bogotá",
+        "ministerio de las culturas",
+        "la ministerio de las culturas",
+        "ministerio de las culturas bogotá",
+        "ministerio de artes y saberes",
+        "ministerio de saberes",
+        "ministerio de las culturas del distrito capital",
+        "minculturas distrito capital",
+        "ministerio de culturas artes y saberes",
+        "el ministerio de culturas",
+        "ministerio de los saberes",
+        "ministerio de culturas, las artes y los saberes",
+        "ministerio de las culturas las artes y los saberes",
+        "entidad del distrito ministerio de las culturas",
+        "minculturas",
+        "de la ministerio de las culturas",
+        "ministerio de las artes y los saberes",
+        "culturas artes saberes distrito",
+        "culturas artes y saberes bogotá",
+        "ministerio de culturas",
+        "ministerio de las artes",
+        "del ministerio de culturas",
+        "de la ministerio de culturas",
+        "alcaldía de bogotá ministerio de las culturas",
+        "gobierno de bogotá ministerio de las culturas",
+        "ministerio de las culturas, las artes y los saberes"
+      ],
+      "baseline": {
+        "status": "PARTIAL",
+        "natural_queries": [
+          {"query": "Ministerio de las Culturas, las Artes y los Saberes", "resolution_value": "Ministerio de las Culturas, las Artes y los Saberes", "resolution_method": "exact", "supporting_alias": "ministerio de las culturas las artes y los saberes", "owner_count": 1},
+          {"query": "Ministerio de Cultura", "resolution_value": "Ministerio de las Culturas, las Artes y los Saberes", "resolution_method": "fuzzy(97)", "supporting_alias": null, "owner_count": 0}
+        ]
+      },
+      "classification": "IDENTITY_PRESENT_ALIAS_GAP",
+      "decision": "ACCEPT_ALIAS_RECONCILIATION",
+      "evidence": ["El mismo NIT y nombre físico aparecen en ambos datasets; el nombre histórico se reconcilia como alias, sin duplicar entidad."]
+    },
+    {
+      "id": "dafp",
+      "logical_entity": "Departamento Administrativo de la Función Pública",
+      "nit": "899999020",
+      "process_source_names": ["DEPARTAMENTO ADMINISTRATIVO DE LA FUNCIÓN PÚBLICA ENTIDAD"],
+      "contract_source_names": ["DEPARTAMENTO ADMINISTRATIVO DE LA FUNCIÓN PÚBLICA ENTIDAD"],
+      "process_rows": 2764,
+      "contract_rows": 2391,
+      "existing_gazetteer_records": [],
+      "existing_aliases": [],
+      "baseline": {
+        "status": "WRONG_OWNER",
+        "natural_queries": [
+          {"query": "Departamento Administrativo de la Función Pública", "resolution_value": "PLANEACIÓN MUNICIPAL CALI**", "resolution_method": "fuzzy(86)", "supporting_alias": null, "owner_count": 0},
+          {"query": "Función Pública", "resolution_value": "INSTITUTO COLOMBIANO AGROPECUARIO - ICA", "resolution_method": "fuzzy(90)", "supporting_alias": null, "owner_count": 0},
+          {"query": "DAFP", "resolution_value": null, "resolution_method": "like", "supporting_alias": null, "owner_count": 0}
+        ]
+      },
+      "classification": "IDENTITY_MISSING",
+      "decision": "ACCEPT_REGISTRY_VERIFIED",
+      "evidence": ["El nombre físico terminado en ENTIDAD y el NIT 899999020 coinciden en ambos datasets; el registro homónimo de Cundinamarca tiene NIT 899999114 y no se fusiona."]
+    },
+    {
+      "id": "dni",
+      "logical_entity": "Dirección Nacional de Inteligencia",
+      "nit": "900475460",
+      "process_source_names": ["DIRECCION NACIONAL DE INTELIGENCIA"],
+      "contract_source_names": ["DIRECCION NACIONAL DE INTELIGENCIA"],
+      "process_rows": 742,
+      "contract_rows": 408,
+      "existing_gazetteer_records": [],
+      "existing_aliases": [],
+      "baseline": {
+        "status": "WRONG_OWNER",
+        "natural_queries": [
+          {"query": "Dirección Nacional de Inteligencia", "resolution_value": "(Secretaría Distrital de Integración Social)", "resolution_method": "fuzzy(85)", "supporting_alias": null, "owner_count": 0},
+          {"query": "DNI", "resolution_value": null, "resolution_method": "like", "supporting_alias": null, "owner_count": 0}
+        ]
+      },
+      "classification": "IDENTITY_MISSING",
+      "decision": "ACCEPT_REGISTRY_VERIFIED",
+      "evidence": [
+        "El nombre físico y NIT 900475460 coinciden en ambos datasets.",
+        "El Manual de Función Pública la clasifica entre los seis departamentos administrativos.",
+        "La sigla desnuda DNI se bloquea como alias por polisemia y queda cubierta por canarios adversariales."
+      ]
+    }
+  ],
+  "summary": {
+    "accept_registry_verified": 5,
+    "accept_alias_reconciliation": 4,
+    "blocked": 0,
+    "source_name_splits": 0,
+    "multiple_physical_same_identity": 0,
+    "entities_to_add": 5,
+    "notes": [
+      "La reconciliación defensiva del Fondo Rotatorio no añade una décima identidad: impide que el alias del Ministerio secuestre al comprador distinto ya existente.",
+      "No se acepta el alias desnudo DNI."
+    ]
+  }
+}
