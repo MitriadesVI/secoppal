@@ -1,0 +1,172 @@
+{
+  "audit": "GOVERNORATE-CORE-COVERAGE-R2A",
+  "type": "discovery registry-first",
+  "date": "2026-09-01",
+  "head_before": "1554886ffd2c2a473b979d03f787e62aa8ccd266",
+  "branch": "main",
+  "authority": {
+    "primary": [
+      "SECOP II Procesos — Socrata p6dx-8zbt (entidad, nit_entidad, departamento_entidad)",
+      "SECOP II Contratos — Socrata jbjy-vk9h (nombre_entidad, nit_entidad, departamento)"
+    ],
+    "auxiliary_only": [
+      "SECOP Integrado — Socrata rpmr-utcd (origen SECOPI/SECOPII). Se usa SOLO para corroborar identidad por NIT y para explicar ausencias. La evidencia SECOP I NO confiere identidad SECOP II."
+    ],
+    "rejected": [
+      "similitud de nombre",
+      "buscadores web"
+    ]
+  },
+  "matrix_before": {"PASS": 25, "FAIL_CLOSED": 7, "WRONG_CHILD": 0},
+  "cases": [
+    {
+      "department": "Cundinamarca",
+      "logical_entity": "Departamento de Cundinamarca",
+      "nit": "899999114",
+      "process_source_names": 28,
+      "contract_source_names": 28,
+      "root_source_name": null,
+      "process_rows": null,
+      "contract_rows": null,
+      "closest_to_root": [
+        {"name": "GOBERNACIÓN DE CUNDINAMARCA - DESPACHO DEL GOBERNADOR", "procesos": 9, "contratos": 8},
+        {"name": "DEPARTAMENTO DE CUNDINAMARCA- SECRETARIA DE SALUD", "procesos": 9664, "contratos": 8990}
+      ],
+      "existing_gazetteer_records": [
+        "DEPARTAMENTO DE CUNDINAMARCA- SECRETARIA DE SALUD",
+        "DEPARTAMENTO DE CUNDINAMARCA - SECRETARIA DE EDUCACION",
+        "DEPARTAMENTO DE CUNDINAMARCA -SECRETARIA DE GOBIERNO",
+        "FONDO DE DESARROLLO DE PROYECTOS DE CUNDINAMARCA"
+      ],
+      "existing_root_aliases": [],
+      "same_source_name_both_datasets": true,
+      "classification": "ROOT_IDENTITY_FRAGMENTED",
+      "verdict": "BLOCK_NO_EVIDENCE",
+      "confidence": "high",
+      "evidence": "Bajo el NIT 899999114 SECOP II registra 28 nombres físicos en procesos y 28 en contratos. Ninguno es el comprador raíz: todos son secretarías, departamentos administrativos, oficinas o el despacho del gobernador. La consulta exacta por 'DEPARTAMENTO DE CUNDINAMARCA' / 'GOBERNACION DE CUNDINAMARCA' devuelve 0 filas en ambos datasets. No existe raíz que registrar; elegir una de las 28 sería el WRONG_CHILD que R1D cerró."
+    },
+    {
+      "department": "Valle del Cauca",
+      "logical_entity": "Departamento del Valle del Cauca",
+      "nit": "890399029",
+      "nit_variants": ["890399029", "8903990295", "8903990291"],
+      "process_source_names": 29,
+      "contract_source_names": 29,
+      "root_source_name": null,
+      "process_rows": null,
+      "contract_rows": null,
+      "closest_to_root": [
+        {"name": "GOBERNACION DEL VALLE DEL CAUCA - SECRETARIA DE EDUCACION", "procesos": 9217},
+        {"name": "SECRETARIA DE INFRAESTRUCTURA - GOBERNACION DEL VALLE", "procesos": 3967},
+        {"name": "GOBERNACION DEL VALLE DEL CAUCA - DADI", "procesos": 13885, "nit": "8903990295"}
+      ],
+      "existing_gazetteer_records": [
+        "GOBERNACION DEL VALLE DEL CAUCA - DADI",
+        "SECRETARIA DE INFRAESTRUCTURA - GOBERNACION DEL VALLE",
+        "SECRETARIA GENERAL- GOBERNACION DEL VALLE",
+        "GOBERNACIÓN DEL VALLE DEL CAUCA - SECRETARÍA DE DESARROLLO RURAL, AGRICULTURA Y PESCA"
+      ],
+      "existing_root_aliases": [],
+      "same_source_name_both_datasets": true,
+      "classification": "ROOT_IDENTITY_FRAGMENTED",
+      "verdict": "BLOCK_NO_EVIDENCE",
+      "confidence": "high",
+      "evidence": "Bajo los NIT 890399029 / 8903990295 / 8903990291 SECOP II registra 29 nombres físicos en cada dataset. Ninguno es el comprador raíz. La consulta exacta por 'DEPARTAMENTO DEL VALLE DEL CAUCA' / 'GOBERNACION DEL VALLE DEL CAUCA' / 'GOBERNACION DEL VALLE' devuelve 0 filas en ambos datasets. Mismo patrón que Cundinamarca."
+    },
+    {
+      "department": "San Andrés, Providencia y Santa Catalina",
+      "logical_entity": "Gobernación del Departamento Archipiélago de San Andrés, Providencia y Santa Catalina",
+      "nit": "892400038",
+      "process_source_names": 1,
+      "contract_source_names": 1,
+      "root_source_name": "GOBERNACIÓN DEL DEPARTAMENTO ARCHIPIELAGO DE SAN ANDRES PROVIDENCIA Y SANTA CATALINA",
+      "process_rows": 31349,
+      "contract_rows": 34240,
+      "existing_gazetteer_records": [
+        "GOBERNACIÓN DEL DEPARTAMENTO ARCHIPIELAGO DE SAN ANDRES PROVIDENCIA Y SANTA CATALINA"
+      ],
+      "existing_root_aliases": [],
+      "same_source_name_both_datasets": true,
+      "classification": "IDENTITY_PRESENT_ALIAS_GAP",
+      "verdict": "ACCEPT_ALIAS_RECONCILIATION",
+      "confidence": "high",
+      "evidence": "El NIT 892400038 tiene UN solo nombre físico, idéntico en procesos y contratos, y es inequívocamente el comprador raíz del archipiélago. El registro ya existe en el gazetteer con un único alias: su propio nombre oficial. La frase natural corta no tiene dueño. Es reconciliación de aliases, no expansión: no se crea entidad nueva."
+    },
+    {
+      "department": "Guainía",
+      "logical_entity": "Departamento del Guainía",
+      "nit": null,
+      "process_source_names": 0,
+      "contract_source_names": 0,
+      "root_source_name": null,
+      "process_rows": 0,
+      "contract_rows": 0,
+      "existing_gazetteer_records": [],
+      "existing_root_aliases": [],
+      "same_source_name_both_datasets": null,
+      "classification": "NO_SECOP_II_EVIDENCE",
+      "verdict": "BLOCK_NO_EVIDENCE",
+      "confidence": "high",
+      "evidence": "Ninguna entidad cuyo nombre contenga 'GUAIN' en p6dx-8zbt o jbjy-vk9h corresponde a la Gobernación: sólo SENA, ICBF, Policía, energía, ICA y la Contraloría departamental. El Integrado (rpmr-utcd) sí registra 'GUAINÍA - GOBERNACIÓN' con 18070 filas, pero origen=SECOPI y nit_de_la_entidad='NO DEFINIDO'. No hay ancla de identidad ni nombre físico SECOP II: registrarla produciría un comprador que resuelve y devuelve cero filas."
+    },
+    {
+      "department": "Guaviare",
+      "logical_entity": "Departamento del Guaviare",
+      "nit": "800103196",
+      "process_source_names": 1,
+      "contract_source_names": 1,
+      "root_source_name": "GOBERNACION DEL GUAVIARE",
+      "process_rows": 16,
+      "contract_rows": 13,
+      "existing_gazetteer_records": [],
+      "existing_root_aliases": [],
+      "same_source_name_both_datasets": true,
+      "classification": "IDENTITY_MISSING",
+      "verdict": "ACCEPT_REGISTRY_VERIFIED",
+      "confidence": "high",
+      "evidence": "NIT 800103196 con un único nombre físico idéntico en ambos datasets. El NIT coincide con 'GUAVIARE - GOBERNACIÓN' (origen SECOPI, 21827 filas) en el Integrado: misma identidad lógica, dos épocas de plataforma. Los objetos contratados confirman la autoridad raíz ('AUNAR ESFUERZOS ENTRE EL DEPARTAMENTO DEL GUAVIARE Y ENTERRITORIO S.A.'), con actividad reciente (2025-11-26). Volumen bajo en SECOP II porque el histórico vive en SECOP I; eso no altera la identidad.",
+      "volume_caveat": "16/13 filas en SECOP II. La entidad resuelve correctamente y devuelve pocos resultados; es el estado real del dato, no un defecto de resolución."
+    },
+    {
+      "department": "Vaupés",
+      "logical_entity": "Departamento del Vaupés",
+      "nit": "845000021",
+      "process_source_names": 1,
+      "contract_source_names": 1,
+      "root_source_name": "GOBERNACION DEL VAUPES",
+      "process_rows": 2,
+      "contract_rows": 1,
+      "existing_gazetteer_records": [],
+      "existing_root_aliases": [],
+      "same_source_name_both_datasets": true,
+      "classification": "IDENTITY_MISSING",
+      "verdict": "ACCEPT_REGISTRY_VERIFIED",
+      "confidence": "high",
+      "evidence": "NIT 845000021 con un único nombre físico idéntico en ambos datasets. El mismo NIT identifica a 'VAUPÉS - GOBERNACIÓN' (origen SECOPI, 10678 filas). Los objetos confirman autoridad raíz ('AUNAR ESFUERZOS ... ENTRE EL DEPARTAMENTO DE VAUPES Y UNA ESAL'), con actividad reciente (2025-11-28).",
+      "volume_caveat": "2/1 filas en SECOP II. Es el volumen real publicado; la resolución es correcta aunque el resultado sea corto."
+    },
+    {
+      "department": "Vichada",
+      "logical_entity": "Departamento del Vichada",
+      "nit": "800094067",
+      "process_source_names": 1,
+      "contract_source_names": 1,
+      "root_source_name": "DEPARTAMENTO DE VICHADA",
+      "process_rows": 507,
+      "contract_rows": 513,
+      "existing_gazetteer_records": [],
+      "existing_root_aliases": [],
+      "same_source_name_both_datasets": true,
+      "classification": "IDENTITY_MISSING",
+      "verdict": "ACCEPT_REGISTRY_VERIFIED",
+      "confidence": "high",
+      "evidence": "NIT 800094067 con un único nombre físico idéntico en ambos datasets. El nombre físico NO dice 'gobernación', pero el mismo NIT identifica a 'VICHADA - GOBERNACIÓN' (origen SECOPI, 14389 filas) en el Integrado: el NIT es lo que demuestra que 'DEPARTAMENTO DE VICHADA' ES la Gobernación. Los objetos lo confirman (gestión tributaria departamental, infraestructura de transporte del departamento). Caso testigo de la regla: el nombre físico no expresa la identidad; el NIT sí.",
+      "nit_reconciliation": "SOURCE_PHYSICAL_NAME 'DEPARTAMENTO DE VICHADA' (SECOP II) == 'VICHADA - GOBERNACIÓN' (SECOP I) por NIT 800094067."
+    }
+  ],
+  "source_name_splits": [],
+  "notes": {
+    "no_dataset_split_found": "Ninguna de las siete jurisdicciones presenta DATASET_SPECIFIC_SOURCE_NAMES. El patrón 'MUNICIPIO DE SOACHA..' / 'MUNICIPIO DE SOACHA.' de R1C no reaparece aquí. BLOCK_DATASET_NAME_SPLIT queda sin instancias en este lote.",
+    "fragmentation_is_a_different_gap": "Cundinamarca y Valle no fallan por split entre datasets: fallan porque el comprador raíz no tiene NINGÚN nombre físico. Su contratación se reparte en 28 y 29 registros bajo un mismo NIT. El modelo actual (official_name único) no puede representar esa raíz. Ver CANONICAL_ENTITY_SOURCE_NAMES_REQUIRED."
+  }
+}
