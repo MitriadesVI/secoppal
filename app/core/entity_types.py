@@ -30,9 +30,16 @@ ENTITY_REWRITES: list[tuple[re.Pattern, Callable]] = [
         ],
     ),
     # ── Gobernación variants ──
+    # ``de(?:l)?`` — INV-NO-SILENT-SEMANTIC-FALLBACK (ADR-069). Con solo "de",
+    # "gobernación DEL Vichada" no generaba ningún candidato de entidad: el span
+    # sobrevivía hasta el scan de departamento y una pregunta por el COMPRADOR
+    # se contestaba con TODO el territorio. "del" es la forma natural para la
+    # mitad de los departamentos (del Atlántico, del Huila, del Valle), así que
+    # la asimetría no era un borde raro. ``generic_buyer._NAME_QUALIFIER`` ya
+    # trataba ambas formas como comprador calificado; esto lo alinea.
     (
         re.compile(
-            r"\bgobernaci[oó]n\s+de\s+(.+?)(?=\s*(?:para|donde|por\b|con\b|en\b|del\b|de\b|sobre\b|$))",
+            r"\bgobernaci[oó]n\s+de(?:l)?\s+(.+?)(?=\s*(?:para|donde|por\b|con\b|en\b|del\b|de\b|sobre\b|$))",
             re.IGNORECASE,
         ),
         lambda x: [

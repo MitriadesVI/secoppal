@@ -464,7 +464,16 @@ class EntityResolver:
         if municipality_match:
             return ("municipality", municipality_match.group(1).strip())
 
-        department_match = re.match(r"^(?:departamento|gobernacion)\s+de\s+(.+)$", normalized)
+        # ``de(?:l)?`` por la misma razón que en ``entity_types.ENTITY_REWRITES``:
+        # esta guardia es lo que impide que el fuzzy global elija cualquier
+        # vecino léxico. Sin ella, "gobernacion del X" quedaba a merced del
+        # fuzzy —así "gobernación de San Andrés" terminaba en DEPARTAMENTO DE
+        # SANTANDER (ENTITY-CORE-COVERAGE-R0, WB-03)—. Cuando no hay candidato
+        # que satisfaga la reescritura, el resolver pide precisión en vez de
+        # adivinar (Tier 4 → _unresolved_rewrite).
+        department_match = re.match(
+            r"^(?:departamento|gobernacion)\s+de(?:l)?\s+(.+)$", normalized,
+        )
         if department_match:
             return ("department", department_match.group(1).strip())
 
