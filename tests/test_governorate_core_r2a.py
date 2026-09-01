@@ -166,12 +166,31 @@ class TestSanAndresReconciliation:
     """San Andrés se reconcilia: no se crea una entidad nueva."""
 
     def test_the_archipelago_root_is_a_single_record(self, resolver: EntityResolver) -> None:
-        owners = {
-            official
-            for official in resolver.aliases_by_official
-            if "ARCHIPIELAGO" in official.upper()
-        }
-        assert owners == {SAN_ANDRES}
+        """La raíz territorial del archipiélago tiene un solo dueño.
+
+        El oráculo medía esto por substring ``ARCHIPIELAGO`` en el nombre
+        oficial, y R2D demostró que ese proxy era más ancho que el invariante:
+        CORALINA lleva el archipiélago en su nombre físico SECOP y sin embargo
+        es otro comprador, con NIT propio, que no compite por la raíz. Lo que
+        no puede duplicarse es la evidencia raíz y el ownership de las frases
+        raíz; eso es lo que se afirma aquí.
+        """
+        department = "San Andrés, Providencia y Santa Catalina"
+        assert list(resolver._root_evidence_by_department.get(department, {})) == [SAN_ANDRES]
+        for phrase in ("gobernacion de san andres", "departamento de san andres"):
+            assert resolver.owners_by_alias.get(phrase) == {SAN_ANDRES}
+
+    def test_the_archipelago_corporation_is_not_the_territorial_root(
+        self, resolver: EntityResolver
+    ) -> None:
+        """CORALINA es autoridad ambiental, no gobierno del archipiélago."""
+        coralina = resolver.resolve_entidad("CORALINA").value
+        assert coralina is not None
+        assert coralina != SAN_ANDRES
+        assert coralina not in resolver._root_evidence_by_department.get(
+            "San Andrés, Providencia y Santa Catalina", {}
+        )
+        assert resolver.resolve_entidad("gobernación de San Andrés").value == SAN_ANDRES
 
     def test_bare_toponym_is_not_a_buyer_alias(self, resolver: EntityResolver) -> None:
         """'san andrés' desnudo pertenece también a la autoridad geográfica."""

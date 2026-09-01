@@ -7872,7 +7872,8 @@
       "contratos"
     ],
     "aliases": [
-      "cortolima"
+      "cortolima",
+      "corporación autónoma regional del tolima"
     ]
   },
   {
@@ -7987,23 +7988,21 @@
     ],
     "aliases": [
       "corporación autónoma de la frontera nororiental",
-      "la corporación autónoma",
       "autoridad ambiental de norte de santander",
       "corporación autónoma regional del norte de santander",
       "car norte de santander",
       "corporación del nororiente",
       "corporación nororiental",
       "corporación de la frontera nororiental",
-      "corporación autónoma regional",
       "corporación autónoma regional de la frontera nororiental",
-      "corporación regional",
       "corporación ambiental de norte de santander",
       "car frontera nororiental",
       "corporación autónoma regional frontera nororiental",
       "frontera nororiental",
       "carfn",
       "corporación de norte de santander",
-      "corporacion autonoma regional de la frontera nororiental+"
+      "corporacion autonoma regional de la frontera nororiental+",
+      "corponor"
     ]
   },
   {
@@ -10129,24 +10128,15 @@
       "corporación autónoma regional del departamento de boyacá",
       "corporación autónoma regional boyacá",
       "la corporación de boyacá",
-      "corpochivor",
-      "corpochivor boyacá",
-      "corporación corpochivor",
-      "la corpochivor",
-      "el corpochivor",
       "la autoridad ambiental de boyacá",
       "la corporación autónoma regional de boyacá",
       "corporación autónoma regional de boyacá corpoboyaca",
       "corporación autónoma de boyacá",
       "la corporación autónoma regional car de boyacá",
       "corporación de boyacá",
-      "corporación autónoma regional corpochivor",
-      "corporación autónoma regional de chivor",
       "corporación autónoma regional de boyacá",
       "la corporación autónoma de boyacá",
-      "corporación autónoma regional corpochivor de boyacá",
       "la car de boyacá",
-      "corporación autónoma regional corpochivor boyacá",
       "la corporación ambiental de boyacá",
       "corpoboyaca"
     ]
@@ -11829,7 +11819,8 @@
       "orinoquia",
       "corporacion autonoma regional orinoquia",
       "corporacion autonoma regional de la orinoquia",
-      "corporación autónoma regional de la orinoquia"
+      "corporación autónoma regional de la orinoquia",
+      "corporinoquia"
     ]
   },
   {
@@ -12213,13 +12204,13 @@
       "corporacion autonoma regional de nariño",
       "car de nariño",
       "autoridad ambiental de nariño",
-      "cor",
       "la corporacion autonoma regional de nariño",
       "corporación ambiental de nariño",
       "ambiental de nariño",
       "corporación autónoma regional del departamento de nariño",
       "la corporación autónoma regional de nariño",
-      "corporacion autonoma regional de nariño"
+      "corporacion autonoma regional de nariño",
+      "corponariño"
     ]
   },
   {
@@ -16507,7 +16498,9 @@
       "corporacion autonoma autonoma regional de las cuencas de los rios negro - nare",
       "corporacion autonoma las cuencas de los rios negro - nare",
       "corporacion autonoma regional de las cuencas de los rios negro - nare",
-      "corporacion las cuencas de los rios negro - nare"
+      "corporacion las cuencas de los rios negro - nare",
+      "cornare",
+      "corporación autónoma regional de las cuencas de los ríos negro y nare"
     ]
   },
   {
@@ -17416,6 +17409,316 @@
       "departamento de Vichada",
       "gobierno departamental del Vichada",
       "gobierno del Vichada"
+    ]
+  },
+  {
+    "official_name": "CORPORACION AUTONOMA REGIONAL DEL ALTO MAGDALENA",
+    "departamento": "Huila",
+    "total_procesos": 3186,
+    "total_contratos": 2716,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "nit": "800255580",
+    "entity_type": "corporacion_autonoma",
+    "aliases": [
+      "Corporación Autónoma Regional del Alto Magdalena",
+      "cam"
+    ]
+  },
+  {
+    "official_name": "CORPORACIÓN AUTÓNOMA REGIONAL DEL CANAL DEL DIQUE",
+    "departamento": "Bolívar",
+    "total_procesos": 1581,
+    "total_contratos": 1081,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "nit": "800254453",
+    "entity_type": "corporacion_autonoma",
+    "aliases": [
+      "Corporación Autónoma Regional del Canal del Dique",
+      "cardique"
+    ]
+  },
+  {
+    "official_name": "CORPORACION AUTONOMA REGIONAL DE SUCRE",
+    "departamento": "Sucre",
+    "total_procesos": 1261,
+    "total_contratos": 1258,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "nit": "823000050",
+    "entity_type": "corporacion_autonoma",
+    "aliases": [
+      "Corporación Autónoma Regional de Sucre",
+      "carsucre"
+    ]
+  },
+  {
+    "official_name": "CORPORACION PARA EL DESARROLLO SOSTENIBLE DEL NORTE Y DEL ORIENTE AMAZONICO",
+    "departamento": "Guaviare",
+    "total_procesos": 854,
+    "total_contratos": 839,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "nit": "838000009",
+    "entity_type": "corporacion_autonoma",
+    "aliases": [
+      "Corporación para el Desarrollo Sostenible del Norte y Oriente Amazónico",
+      "corporacion para el desarrollo sostenible del norte y del oriente amazonico"
+    ]
+  },
+  {
+    "official_name": "CORPORACIÓN AUTÓNOMA REGIONAL PARA EL DESARROLLO SOSTENIBLE DEL CHOCO",
+    "departamento": "Chocó",
+    "total_procesos": 1240,
+    "total_contratos": 1229,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "nit": "899999238",
+    "entity_type": "corporacion_autonoma",
+    "aliases": [
+      "Corporación Autónoma Regional para el Desarrollo Sostenible del Chocó",
+      "codechocó"
+    ]
+  },
+  {
+    "official_name": "CORPORACION PARA EL DESARROLLO SOSTENIBLE DEL ARCHIPIELAGO DE SAN ANDRES PROVIDENCIA Y SANTA CATALINA - CORALINA",
+    "departamento": "San Andrés, Providencia y Santa Catalina",
+    "total_procesos": 1800,
+    "total_contratos": 1911,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "nit": "827000031",
+    "entity_type": "corporacion_autonoma",
+    "aliases": [
+      "Corporación para el Desarrollo Sostenible del Archipiélago de San Andrés, Providencia y Santa Catalina",
+      "corporacion para el desarrollo sostenible del archipielago de san andres providencia y santa catalina - coralina",
+      "coralina"
+    ]
+  },
+  {
+    "official_name": "CORPORACIÓN AUTÓNOMA REGIONAL DEL CENTRO DE ANTIOQUIA",
+    "departamento": "Antioquia",
+    "total_procesos": 3565,
+    "total_contratos": 2853,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "nit": "811000231",
+    "entity_type": "corporacion_autonoma",
+    "aliases": [
+      "Corporación Autónoma Regional del Centro de Antioquia",
+      "corantioquia"
+    ]
+  },
+  {
+    "official_name": "CORPORACION AUTONOMA REGIONAL DEL MAGDALENA",
+    "departamento": "Magdalena",
+    "total_procesos": 3312,
+    "total_contratos": 3055,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "nit": "800099287",
+    "entity_type": "corporacion_autonoma",
+    "aliases": [
+      "Corporación Autónoma Regional del Magdalena",
+      "corpamag"
+    ]
+  },
+  {
+    "official_name": "CORPOCALDAS.",
+    "departamento": "Caldas",
+    "total_procesos": 2013,
+    "total_contratos": 1856,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "nit": "890803005",
+    "entity_type": "corporacion_autonoma",
+    "aliases": [
+      "Corporación Autónoma Regional de Caldas",
+      "corpocaldas.",
+      "corpocaldas"
+    ]
+  },
+  {
+    "official_name": "CORPOCESAR",
+    "departamento": "Cesar",
+    "total_procesos": 1733,
+    "total_contratos": 1373,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "nit": "892301483",
+    "entity_type": "corporacion_autonoma",
+    "aliases": [
+      "Corporación Autónoma Regional del Cesar",
+      "corpocesar"
+    ]
+  },
+  {
+    "official_name": "CORPORACIÓN AUTONOMA REGIONAL DE CHIVOR CORPOCHIVOR",
+    "departamento": "Boyacá",
+    "total_procesos": 59,
+    "total_contratos": 35,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "nit": "800252037",
+    "entity_type": "corporacion_autonoma",
+    "aliases": [
+      "Corporación Autónoma Regional de Chivor",
+      "corporación autonoma regional de chivor corpochivor",
+      "corpochivor"
+    ]
+  },
+  {
+    "official_name": "CORPORACION AUTONOMA REGIONAL DE LA GUAJIRA",
+    "departamento": "La Guajira",
+    "total_procesos": 1088,
+    "total_contratos": 777,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "nit": "892115314",
+    "entity_type": "corporacion_autonoma",
+    "aliases": [
+      "Corporación Autónoma Regional de La Guajira",
+      "corpoguajira"
+    ]
+  },
+  {
+    "official_name": "CORPORACION AUTONOMA REGIONAL DEL GUAVIO - CORPOGUAVIO (OFICIAL)",
+    "departamento": "Cundinamarca",
+    "total_procesos": 2269,
+    "total_contratos": 2383,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "nit": "832000171",
+    "entity_type": "corporacion_autonoma",
+    "aliases": [
+      "Corporación Autónoma Regional del Guavio",
+      "corporacion autonoma regional del guavio - corpoguavio (oficial)",
+      "corpoguavio"
+    ]
+  },
+  {
+    "official_name": "CORPORACION PARA EL DESARROLLO SOSTENIBLE DE LA MOJANA Y EL SAN JORGE CORPOMOJANA",
+    "departamento": "Sucre",
+    "total_procesos": 1,
+    "total_contratos": 1,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "nit": "823000077",
+    "entity_type": "corporacion_autonoma",
+    "aliases": [
+      "Corporación para el Desarrollo Sostenible de La Mojana y el San Jorge",
+      "corporacion para el desarrollo sostenible de la mojana y el san jorge corpomojana",
+      "corpomojana"
+    ]
+  },
+  {
+    "official_name": "CORPORACION PARA EL DESARROLLO SOSTENIBLE DEL URABA",
+    "departamento": "Antioquia",
+    "total_procesos": 1881,
+    "total_contratos": 1673,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "nit": "890907748",
+    "entity_type": "corporacion_autonoma",
+    "aliases": [
+      "Corporación para el Desarrollo Sostenible del Urabá",
+      "corpourabá"
+    ]
+  },
+  {
+    "official_name": "CORPORACIÓN AUTÓNOMA REGIONAL DEL ATLÁNTICO",
+    "departamento": "Atlántico",
+    "total_procesos": 1372,
+    "total_contratos": 2207,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "nit": "802000339",
+    "entity_type": "corporacion_autonoma",
+    "aliases": [
+      "Corporación Autónoma Regional del Atlántico"
+    ]
+  },
+  {
+    "official_name": "CSB",
+    "departamento": "Bolívar",
+    "total_procesos": 952,
+    "total_contratos": 940,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "nit": "806000327",
+    "entity_type": "corporacion_autonoma",
+    "aliases": [
+      "Corporación Autónoma Regional del Sur de Bolívar",
+      "csb"
+    ]
+  },
+  {
+    "official_name": "CORPORACIÓN AUTÓNOMA REGIONAL DE LOS VALLES DEL SINÚ Y DEL SAN JORGE - CVS",
+    "departamento": "Córdoba",
+    "total_procesos": 790,
+    "total_contratos": 524,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "nit": "891000627",
+    "entity_type": "corporacion_autonoma",
+    "aliases": [
+      "Corporación Autónoma Regional de los Valles del Sinú y del San Jorge",
+      "corporación autónoma regional de los valles del sinú y del san jorge - cvs",
+      "cvs"
+    ]
+  },
+  {
+    "official_name": "CORPORACIÓN AUTÓNOMA DEL RÍO GRANDE DE LA MAGDALENA**",
+    "departamento": "Bolívar",
+    "total_procesos": 2831,
+    "total_contratos": 2601,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "nit": "829000127",
+    "entity_type": "corporacion_autonoma",
+    "aliases": [
+      "Corporación Autónoma Regional del Río Grande de la Magdalena",
+      "corporación autónoma del río grande de la magdalena",
+      "cormagdalena"
     ]
   }
 ]
