@@ -240,14 +240,21 @@ una entidad ajena.
 | # | Deuda | Por qué no se cierra aquí |
 |---|---|---|
 | D1 | `GOBIERNO DEPARTAMENTAL` **se llama así**. Retirado el alias, el `official_name` sigue en el índice de scan y "gobierno departamental del Cauca" lo seguirá encontrando. | Arreglarlo exige tocar `EntityResolver` (rechazar nombres oficiales genéricos sin calificador), no el gazetteer. |
-| D2 | "Gobernación de Cundinamarca" seguirá resolviendo a `DEPARTAMENTO DE CUNDINAMARCA- SECRETARIA DE SALUD`. | Esa secretaría **no tiene** el alias: llega por `fuzzy` Tier-3 sobre su `official_name`, que satisface la reescritura estricta. Es un defecto del resolver, no de ownership. |
+| D2 | **Los canarios A y B no se cierran en la capa de resolución.** "Gobernación de Cundinamarca" sigue devolviendo `DEPARTAMENTO DE CUNDINAMARCA- SECRETARIA DE SALUD`, y "Gobernación del Valle", `SECRETARIA DE INFRAESTRUCTURA - GOBERNACION DEL VALLE`. | Ninguna de las dos **tiene ya** el alias: llegan por `fuzzy` Tier-3 contra su `official_name`, que contiene literalmente la frase del padre ("DEPARTAMENTO DE CUNDINAMARCA…", "…GOBERNACION DEL VALLE") y por eso satisface `_strict_rewrite_target`. Es la misma causa que D1: **el nombre oficial actúa como alias y R1C no puede tocarlo.** Cerrarlo exige que el resolver rechace una subentidad cuando la frase pide la raíz. |
 | D3 | `resolve_entidad("gobernación del Tolima")` devuelve `rewrite_unresolved` pese a que el ownership es correcto. | `_strict_rewrite_target` exige que el `official_name` contenga el territorio; `GOBIERNO DEPARTAMENTAL` no lo contiene. Preexistente. |
 | D4 | 116 aliases de Fondos de Desarrollo Local de Bogotá. | Requiere decidir si la alcaldía local y su FDL son un comprador o dos. |
 | D5 | Los 6 grupos de identidad lógica. | Frente propio (§6). |
 | D6 | `_is_unqualified_dept` rechaza **todo** alias que *termine* en un nombre de departamento (`endswith`), sea o no un departamento desnudo. "secretaría general de la alcaldía mayor de **bogotá**" y "ese del departamento de **meta**" quedan rechazados pese a nombrar la entidad. | Preexistente y de runtime. R1C lo hace visible porque cambia a qué cae el scan cuando el hijack desaparece. |
 
-D1, D2 y D3 comparten causa: **el runtime compensa con fuzzy lo que el dato no
-sostiene**. R1C limpia el dato y deja los tres visibles.
+D1, D2 y D3 comparten causa: **el `official_name` entra al índice como un alias
+más, y el fuzzy compensa con él lo que el dato ya no sostiene**. R1C limpia el
+dato y deja los tres visibles.
+
+Es la conclusión operativa del bloque: la higiene de aliases **es necesaria pero
+no suficiente**. De los cinco casos que motivaron R1C, tres (C, D, E) quedan
+cerrados con datos; dos (A y B) quedan cerrados **sólo en el ownership**, porque
+la subentidad se llama como su padre. El siguiente frente es de `EntityResolver`,
+no de gazetteer.
 
 ---
 
@@ -280,9 +287,11 @@ nombre oficial. Aliases: 10 840 → 10 695. Grupos con dueño múltiple: 217 →
 
 | # | Sonda | Antes | Después |
 |---|---|---|---|
-| A | `gobernación de cundinamarca` (ownership) | E.S.E. Hospital Divino Salvador de Sopó | *(nadie)* → `FAIL_CLOSED` |
+| A | `gobernación de cundinamarca` — ownership | E.S.E. Hospital Divino Salvador de Sopó | *(nadie)* |
+| A | `gobernación de cundinamarca` — router | Secretaría de Salud de Cundinamarca | **igual** — ver D2 |
 | A | `hospital divino salvador de sopó` | hospital | **hospital** (sin cambio) |
-| B | `gobernación del valle` | Secretaría de Infraestructura / DADI | *(nadie)* → `FAIL_CLOSED` |
+| B | `gobernación del valle` — ownership | Secretaría de Infraestructura / DADI | *(nadie)* |
+| B | `gobernación del valle` — router | Secretaría de Infraestructura | **igual** — ver D2 |
 | B | `dadi valle` | DADI | **DADI** (sin cambio) |
 | C | `san andrés` (ownership) | `HOSPITAL SAN ANDRES` | *(nadie)* |
 | C | `hospital san andrés` | hospital | **hospital** (sin cambio) |
