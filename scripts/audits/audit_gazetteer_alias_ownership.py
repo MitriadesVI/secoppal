@@ -54,6 +54,7 @@ DEFAULT_OUT = ROOT / "artifacts" / "audits" / "gazetteer_alias_ownership_r1c.jso
 # ---------------------------------------------------------------------------
 
 STOPWORDS = {"de", "del", "la", "el", "los", "las", "y", "en", "e", "al", "a"}
+_ARTICLES = {"el", "la", "los", "las"}
 
 # Cabezas inequívocas por eje institucional.
 DEPARTMENTAL_HEADS = {"gobernacion"}
@@ -434,10 +435,13 @@ class Audit:
     def _generic(self, alias_norm: str, alias_tokens: set[str]) -> dict | None:
         if not all(t in STRUCTURAL_TOKENS for t in alias_tokens):
             return None
-        # Un adjetivo institucional suelto ("la distrital", "la nacional") es
-        # el apodo real de una universidad. Es genérico y peligroso, pero
-        # retirarlo borra una identidad de uso corriente: manual review.
-        if not (alias_tokens & GOVERNMENT_HEAD_TOKENS):
+        # Un adjetivo institucional CON artículo ("la distrital", "la
+        # nacional") es el apodo real de una universidad: genérico y peligroso,
+        # pero retirarlo borra una identidad de uso corriente. Sin artículo no
+        # es el apodo, y sí captura cualquier frase que lleve la palabra
+        # ("gobierno distrital de Cali" → Universidad Distrital).
+        has_article = bool(set(tokens_of(alias_norm)) & _ARTICLES)
+        if has_article and not (alias_tokens & GOVERNMENT_HEAD_TOKENS):
             return {
                 "classification": "GENERIC_STRUCTURAL_ALIAS",
                 "action": "MANUAL_REVIEW",
@@ -622,17 +626,21 @@ class Audit:
                         f"'{owner.official}' no lo es."
                     ),
                 }
+            # Sin raíz alternativa el resultado será FAIL_CLOSED, y eso es lo
+            # correcto: una entidad que no es un gobierno de ningún tipo no
+            # puede poseer la frase desnuda de un gobierno. Es la misma regla
+            # que TERRITORY_AS_ENTITY_HIJACK, un nivel más arriba.
             return {
-                "classification": "MANUAL_REVIEW",
-                "action": "MANUAL_REVIEW",
-                "confidence": "low",
+                "classification": "PARENT_TO_CHILD_HIJACK",
+                "action": "REMOVE_WRONG_ALIAS",
+                "confidence": "high",
                 "owner_expected": None,
                 "evidence": (
-                    f"'{alias_norm}' declara un comprador "
-                    f"{'/'.join(sorted(root_axes))} y el dueño '{owner.official}' "
-                    f"no declara tipo institucional legible (eje='{owner.axis}'). "
-                    f"No hay comprador raíz alternativo en el gazetteer: sin "
-                    f"evidencia suficiente para retirar el alias."
+                    f"'{alias_norm}' es la frase desnuda de un comprador "
+                    f"{'/'.join(sorted(root_axes))}; el dueño '{owner.official}' "
+                    f"no es un gobierno (eje='{owner.axis}'). No hay raíz "
+                    f"alternativa en el gazetteer: el resultado correcto es "
+                    f"FAIL_CLOSED, no este dueño."
                 ),
             }
 

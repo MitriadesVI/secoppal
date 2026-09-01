@@ -53,13 +53,13 @@ que lo que aquí se llama colisión es exactamente lo que el runtime ve.
 
 | Clasificación | Hallazgos | Acción |
 |---|---:|---|
-| `PARENT_TO_CHILD_HIJACK` | 85 | `REMOVE_WRONG_ALIAS` |
+| `PARENT_TO_CHILD_HIJACK` | 91 | `REMOVE_WRONG_ALIAS` |
 | `TERRITORY_AS_ENTITY_HIJACK` | 14 | `REMOVE_WRONG_ALIAS` |
-| `GENERIC_STRUCTURAL_ALIAS` | 9 | 5 `REMOVE`, 4 `MANUAL_REVIEW` |
+| `GENERIC_STRUCTURAL_ALIAS` | 9 | 6 `REMOVE`, 3 `MANUAL_REVIEW` |
 | `CROSS_ENTITY_HIJACK` | 3 | `REMOVE_WRONG_ALIAS` |
 | `POSSIBLE_SAME_LOGICAL_IDENTITY` | 9 | `SAME_IDENTITY_REVIEW` |
-| `MANUAL_REVIEW` | 172 | — |
-| **Remociones propuestas** | **107** | sobre **25** entidades |
+| `MANUAL_REVIEW` | 166 | — |
+| **Remociones propuestas** | **114** | sobre **28** entidades |
 
 ---
 
@@ -107,13 +107,17 @@ sólo tokens estructurales. Capturan la frase de cualquier territorio.
 
 | Caso | Por qué se deja en `MANUAL_REVIEW` |
 |---|---|
-| `la distrital`, `la nacional` (116→4 casos) | Es un apodo real de una universidad. Genérico y peligroso, pero retirarlo borra una identidad de uso corriente. |
+| `la distrital`, `la nacional` (3 casos) | Con artículo es el apodo real de una universidad. Sin artículo no lo es: `distrital` a secas capturaba "gobierno distrital de Cali" y se retira. |
 | Fondos de Desarrollo Local de Bogotá (116 casos) | En SECOP la alcaldía local y su FDL son el mismo comprador. Retirarle al fondo la frase de "su" alcaldía no corrige un ownership ajeno. |
 | Dueños con nombre opaco y sin raíz alternativa (24) | `DILOF` ← "alcaldía de Fontibón". Sin comprador raíz demostrable, la remoción no está respaldada. |
 | Cabezas nacionales desnudas y sin candidato (50) | `contraloría` a secas no pertenece a nadie en particular. |
 
-Un dueño opaco **sí** se corrige cuando existe la raíz: `UPTC` ← "gobernación de
-Boyacá" se retira porque `GOBERNACIÓN DE BOYACÁ` existe en el gazetteer.
+Un dueño opaco **sí** se corrige: `UPTC` ← "gobernación de Boyacá" se retira
+porque `GOBERNACIÓN DE BOYACÁ` existe. Y también cuando **no** existe raíz
+alternativa —`PROSPERIDAD SOCIAL` ← "gobernación de Bogotá"—: una entidad que no
+es un gobierno de ningún tipo no puede poseer la frase desnuda de un gobierno, y
+el resultado correcto es `FAIL_CLOSED`. Es la misma regla que
+`TERRITORY_AS_ENTITY_HIJACK`, un nivel más arriba.
 
 ---
 
@@ -240,6 +244,7 @@ una entidad ajena.
 | D3 | `resolve_entidad("gobernación del Tolima")` devuelve `rewrite_unresolved` pese a que el ownership es correcto. | `_strict_rewrite_target` exige que el `official_name` contenga el territorio; `GOBIERNO DEPARTAMENTAL` no lo contiene. Preexistente. |
 | D4 | 116 aliases de Fondos de Desarrollo Local de Bogotá. | Requiere decidir si la alcaldía local y su FDL son un comprador o dos. |
 | D5 | Los 6 grupos de identidad lógica. | Frente propio (§6). |
+| D6 | `_is_unqualified_dept` rechaza **todo** alias que *termine* en un nombre de departamento (`endswith`), sea o no un departamento desnudo. "secretaría general de la alcaldía mayor de **bogotá**" y "ese del departamento de **meta**" quedan rechazados pese a nombrar la entidad. | Preexistente y de runtime. R1C lo hace visible porque cambia a qué cae el scan cuando el hijack desaparece. |
 
 D1, D2 y D3 comparten causa: **el runtime compensa con fuzzy lo que el dato no
 sostiene**. R1C limpia el dato y deja los tres visibles.
@@ -265,7 +270,92 @@ contada y cualquier entrada nueva que la aumente falla.
 
 ---
 
-## 9. Salida
+## 9. Estado post-remediación — lo que cambió, medido
+
+**114 aliases retirados** (145 cadenas crudas, contando grafías con y sin tilde)
+de **28** entidades. Ninguna quedó por debajo de 3 aliases; ninguna perdió su
+nombre oficial. Aliases: 10 840 → 10 695. Grupos con dueño múltiple: 217 → **173**.
+
+### Canarios
+
+| # | Sonda | Antes | Después |
+|---|---|---|---|
+| A | `gobernación de cundinamarca` (ownership) | E.S.E. Hospital Divino Salvador de Sopó | *(nadie)* → `FAIL_CLOSED` |
+| A | `hospital divino salvador de sopó` | hospital | **hospital** (sin cambio) |
+| B | `gobernación del valle` | Secretaría de Infraestructura / DADI | *(nadie)* → `FAIL_CLOSED` |
+| B | `dadi valle` | DADI | **DADI** (sin cambio) |
+| C | `san andrés` (ownership) | `HOSPITAL SAN ANDRES` | *(nadie)* |
+| C | `hospital san andrés` | hospital | **hospital** (sin cambio) |
+| D | `gobierno departamental` (ownership) | `GOBIERNO DEPARTAMENTAL` (Tolima) | *(nadie)* |
+| D | `gobierno departamental del tolima` | Tolima | **Tolima** (sin cambio) |
+| E | `ministerio de minas` | **`ANM`** | **`MINISTERIO DE MINAS Y ENERGIA`** |
+| E | `agencia nacional de minería` | `ANM` | **`ANM`** (sin cambio) |
+
+### Dos canarios que dejaron de aprobar por accidente
+
+| Sonda | Antes (exacto) | Después (exacto) |
+|---|---|---|
+| `gobernación del atlántico` | `EMPRESA SOCIAL DEL ESTADO UNIVERSITARIA DEL ATLANTICO//` | **`DEPARTAMENTO DEL ATLANTICO**`** |
+| `gobernación de boyacá` | `UPTC` | **`GOBERNACIÓN DE BOYACÁ`** |
+
+Ambas ya devolvían la entidad correcta, pero por `fuzzy`. Ahora también por
+ownership: el canario ADR-040 pasa a estar sostenido por el dato (§5).
+
+### Compradores correctos que estaban tapados
+
+Retirar el hijack no siempre deja un hueco: en tres casos destapó a la entidad
+que sí existía y perdía por longitud de alias.
+
+| Sonda | Antes | Después |
+|---|---|---|
+| `alcaldía de fontibón` | `DILOF` | **`ALCALDIA LOCAL DE FONTIBON`** |
+| `municipio de fontibón` | `DILOF` | **`ALCALDIA LOCAL DE FONTIBON`** |
+| `alcaldía de armenia` | `GOBERNACION DEL QUINDIO ARMENIA` | **`MUNICIPIO DE ARMENIA QUINDIO`** |
+| `departamento de meta` | `EMPRESA SOCIAL DEL ESTADO DEL DEPARTAMENTO DEL META E.S.E` | **`DEPARTAMENTO DEL META`** |
+
+### Cobertura perdida, declarada
+
+De 519 sondas (los aliases retirados más los conservados de las entidades
+tocadas), **48 pasan a `FAIL_CLOSED`**. Todas eran frases de comprador raíz en
+manos ajenas. Las que más pesan:
+
+* **Bogotá.** `alcaldía de bogotá`, `municipio de bogotá`, `alcaldía mayor
+  bogotá` y `la alcaldía mayor` no resuelven a nada. El gazetteer **no tiene**
+  la Alcaldía Mayor de Bogotá: la frase pertenecía a tres secretarías
+  distritales a la vez. Es la pérdida más visible y el mejor argumento para un
+  lote de expansión que la agregue —fuera del alcance de R1C—.
+* **Valle del Cauca.** Ninguna de las cuatro subentidades responde ya por la
+  Gobernación. Cuatro registros con el mismo prefijo y ninguna raíz.
+* **Municipios sin comprador raíz**: Sopó, Yarumal, Remedios, Fusagasugá. Sus
+  hospitales dejaron de hacer de alcaldía.
+
+Tres sondas empeoran por la deuda **D6**, no por el dato: `ese del departamento
+de meta` y dos variantes resuelven ahora a `DEPARTAMENTO DEL META` en vez de a
+la E.S.E., porque `_is_unqualified_dept` rechaza el alias largo de la E.S.E. por
+terminar en "meta". El alias sigue siendo suyo y la resolución exacta lo honra;
+es el `scan` el que no.
+
+### Validación
+
+```
+tests/test_gazetteer_alias_ownership_r1c.py   44 passed   (18 rojos antes)
+tests focales del gazetteer y el resolver     123 passed, 13 xfailed
+suite completa                                9781 passed, 2 skipped, 24 xfailed
+scripts/run_query_corpus.py --mode all        89/89 PASS
+gazetteer_manager.py validate                 0 errores · 173/173 multi-owner
+make lint-core                                app/core/ limpio
+ruff check app/ tests/ scripts/               All checks passed
+```
+
+Un test existente cambió de sujeto:
+`test_v3_scan_entity_keeps_qualified_alcaldia` usaba "alcaldía de Bogotá" para
+comprobar que `_is_unqualified_generic` no rechaza un alias con calificador
+territorial. Como esa frase ya no tiene dueño válido, el sujeto pasa a
+"alcaldía de Cartagena". Lo que el test verifica no cambió.
+
+---
+
+## 10. Salida
 
 ```
 GAZETTEER_ALIAS_OWNERSHIP_R1C — evidencia congelada
@@ -274,11 +364,11 @@ ENTITIES:                     559
 TOTAL_ALIASES:                10840
 UNIQUE_NORMALIZED_ALIASES:    8609
 EXACT_MULTI_OWNER_GROUPS:     217
-PARENT_CHILD_HIJACKS:         85
+PARENT_CHILD_HIJACKS:         91
 CROSS_ENTITY_HIJACKS:         3
-GENERIC_STRUCTURAL:           9   (5 remove / 4 manual review)
+GENERIC_STRUCTURAL:           9   (6 remove / 3 manual review)
 TERRITORY_HIJACKS:            14
 SAME_LOGICAL_IDENTITY_REVIEW: 6 grupos (9 hallazgos de alias)
-MANUAL_REVIEW:                172
-PROPOSED_REMOVALS:            107 sobre 25 entidades
+MANUAL_REVIEW:                166
+PROPOSED_REMOVALS:            114 sobre 28 entidades
 ```

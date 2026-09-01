@@ -87,6 +87,18 @@ FORBIDDEN_WITH_ARTICLE: set[str] = {
 
 ALL_FORBIDDEN = FORBIDDEN_GENERIC_ALIASES | FORBIDDEN_WITH_ARTICLE
 
+# Deuda histórica de aliases reclamados por más de una entidad. El runtime sólo
+# puede honrar a UNA: `EntityResolver._load_aliases` sobrescribe (gana la última
+# del JSON) y `_scan_index` desempata por longitud (gana la primera). Quién de
+# las dos responde no es una decisión de nadie.
+#
+# El baseline sale de GAZETTEER_ALIAS_OWNERSHIP_R1C tras retirar los 114 aliases
+# con ownership demostrablemente ajeno: 217 grupos antes, 173 después. No se
+# convierte el backlog en un fallo global —rompería el baseline por deuda
+# conocida— pero cualquier entrada nueva que lo aumente falla. El tope BAJA
+# cuando se salda deuda; no sube.
+EXACT_MULTI_OWNER_BASELINE = 173
+
 # ---------------------------------------------------------------------------
 # Type inference
 # ---------------------------------------------------------------------------
@@ -608,12 +620,32 @@ def do_validate(
                 print(f"  Full scan: {i+1}/{total} entidades, {collisions} colisiones", file=sys.stderr)
         print(f"  Full scan completo: {total} entidades, {collisions} colisiones", file=sys.stderr)
 
-    # 5. Check official_name is not empty
+    # 5. Ownership múltiple exacto: dos entidades reclamando la misma frase.
+    #    No lo cubre el collision scan: `scan_entity` devuelve un solo ganador,
+    #    así que una colisión cuyo ganador coincide con el dueño esperado pasa
+    #    invisible. Este chequeo mira el dato, no la resolución.
+    from app.utils.money import normalize_text
+
+    owners_by_alias: dict[str, set[str]] = {}
+    for entity in data:
+        for alias in entity.get("aliases", []):
+            key = normalize_text(alias)
+            if key:
+                owners_by_alias.setdefault(key, set()).add(entity["official_name"])
+    multi_owner = {k: sorted(v) for k, v in owners_by_alias.items() if len(v) > 1}
+    if len(multi_owner) > EXACT_MULTI_OWNER_BASELINE:
+        errors.append(
+            f"EXACT_MULTI_OWNER: {len(multi_owner)} grupos, baseline "
+            f"{EXACT_MULTI_OWNER_BASELINE}. Un alias nuevo quedó reclamado por "
+            f"más de una entidad; el runtime sólo puede honrar a una."
+        )
+
+    # 6. Check official_name is not empty
     for i, entity in enumerate(data):
         if not entity.get("official_name", "").strip():
             errors.append(f"ERROR: Entidad #{i} tiene official_name vacio")
 
-    # 6. Run pytest if path provided
+    # 7. Run pytest if path provided
     test_result = None
     if test_path:
         result = subprocess.run(
@@ -631,6 +663,8 @@ def do_validate(
     return {
         "total_entities": len(data),
         "total_aliases": sum(len(e.get("aliases", [])) for e in data),
+        "exact_multi_owner_groups": len(multi_owner),
+        "exact_multi_owner_baseline": EXACT_MULTI_OWNER_BASELINE,
         "errors": errors,
         "warnings": warnings,
         "test_result": test_result,
@@ -830,6 +864,10 @@ Examples:
 
         print(f"Entidades: {result['total_entities']}")
         print(f"Aliases total: {result['total_aliases']:,}")
+        print(
+            f"Aliases con dueño múltiple: {result['exact_multi_owner_groups']} "
+            f"(baseline {result['exact_multi_owner_baseline']})"
+        )
         print(f"Errores: {len(result['errors'])}")
         for e in result["errors"]:
             print(f"  [ERROR] {e}")

@@ -534,10 +534,16 @@ R0/R0.1. Esta tabla registra únicamente el cierre posterior de sus causas raíz
 
 | Causa raíz | Estado | Remediación |
 |---|---|---|
-| RC1 | **CLOSED** | `ENTITY-TYPED-GEO-R1B` (este commit): el contexto explícito `departamento de/del X` consulta la autoridad de departamentos sin cambiar la precedencia ciudad-first de menciones desnudas. |
-| RC2 | **OPEN** | Pendiente de hygiene/reconciliation de aliases territoriales pertenecientes a entidades de otro territorio. |
-| RC3 | **CLOSED** | `4d82210`: compradores calificados ausentes fallan cerrado y no degradan a territorio. |
-| RC4 | **OPEN** | Pendiente de hygiene de aliases genéricos contaminantes. |
+| RC1 | **CLOSED** — `8cecc69` | `ENTITY-TYPED-GEO-R1B`: el contexto explícito `departamento de/del X` consulta la autoridad de departamentos sin cambiar la precedencia ciudad-first de menciones desnudas. |
+| RC2 | **PARTIAL** — `GAZETTEER-ALIAS-OWNERSHIP-R1C` | Retirados los 14 aliases territoriales desnudos en manos de entidades de otro territorio, `san andres` incluido: ninguna entidad no territorial los posee ya. **Residuo:** `resolve_entidad("san andrés")` sigue devolviendo `HOSPITAL SAN ANDRES` por `fuzzy(95)` contra su propio `official_name`, que entra siempre a `choice_to_official`. No es corregible con datos (deuda D1 de R1C). El daño está contenido: por RC1 el router devuelve el departamento. |
+| RC3 | **CLOSED** — `4d82210` | Compradores calificados ausentes fallan cerrado y no degradan a territorio. |
+| RC4 | **PARTIAL** — `GAZETTEER-ALIAS-OWNERSHIP-R1C` | Retirados los 6 aliases genéricos estructurales, `gobierno departamental` (WB-04) incluido. **Residuo:** la entidad del Tolima **se llama** `GOBIERNO DEPARTAMENTAL`, y el `official_name` entra al índice de scan como un alias más; "gobierno departamental del Cauca" sigue produciendo comprador Tolima ∧ territorio Cauca. Cerrarlo exige que `EntityResolver` rechace nombres oficiales genéricos sin calificador, no un cambio de gazetteer (deuda D1 de R1C). |
+
+Detalle y evidencia en
+[`GAZETTEER_ALIAS_OWNERSHIP_R1C.md`](GAZETTEER_ALIAS_OWNERSHIP_R1C.md). Ese
+bloque además **refuta** la lectura de "rama muerta" de §8: los 6 grupos son
+pares complementarios por dataset (una identidad lógica, dos nombres físicos),
+no una grafía viva y una muerta.
 
 Post-R1B, el gate territorial tipado cubre las cuatro colisiones enumeradas en
 R0 (`arauca`, `bogota`, `cucuta`, `san andres`). La semántica no tipada y la

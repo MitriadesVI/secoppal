@@ -588,6 +588,63 @@ alias: alcaldia municipal de el carmen de bolivar
 alias: el carmen de bolivar
 ```
 
+### 11.5 Regla de ownership — el alias de una subentidad debe distinguirla
+
+*(GAZETTEER-ALIAS-OWNERSHIP-R1C)*
+
+Un alias no significa "esta frase podría tener alguna relación con esta
+entidad". Significa **"cuando el usuario usa esta frase como comprador, esta
+entidad es una interpretación institucionalmente válida"**. De ahí:
+
+> **La cobertura no justifica un ownership incorrecto.**
+> Si el comprador raíz no está en el gazetteer, `FAIL_CLOSED` es el resultado
+> correcto. Nadie hereda su frase por descarte.
+
+Tres prohibiciones que un lote nuevo debe respetar:
+
+1. **Una subentidad no puede llevar la frase desnuda de su raíz.** Cada alias
+   suyo debe contener al menos un token que la distinga del comprador padre.
+
+   ```text
+   official_name: GOBERNACION DEL VALLE DEL CAUCA - DADI
+   ✗ gobernacion del valle              ← es la frase del padre
+   ✓ gobernacion del valle del cauca dadi
+   ✓ dadi valle
+   ```
+
+   Vale como distinción nombrar la identidad de la unidad (`… dadi`,
+   `… secretaría de educación`) **o** su tipo (`municipio de Malambo
+   **hospital**`). Un token geográfico no distingue: es lo que la unidad
+   comparte con su raíz.
+
+2. **Un tipo institucional no puede llevar la frase de otro.** Un hospital, una
+   universidad o un instituto no son un gobierno municipal ni departamental.
+
+   ```text
+   official_name: E.S.E. HOSPITAL DIVINO SALVADOR DE SOPO
+   ✗ alcaldia de sopo · gobernacion de cundinamarca
+   ✓ hospital de sopo · hospital divino salvador de sopo
+   ```
+
+3. **Un territorio desnudo pertenece a la autoridad geográfica**, no a una
+   entidad que resida en él. `san andres` no es `HOSPITAL SAN ANDRES`;
+   `atlantico` no es una E.S.E.
+
+Y una prohibición cruzada: ningún alias puede nombrar **otra** institución
+existente (`ministerio de minas` en `ANM`) ni **otro** territorio
+(`gobernación del cauca` en una entidad del Valle).
+
+**Cómo verificarlo antes de cerrar el lote:**
+
+```bash
+python scripts/audits/audit_gazetteer_alias_ownership.py
+```
+
+`gazetteer_manager.py validate` gatea además el conteo de aliases con dueño
+múltiple contra `EXACT_MULTI_OWNER_BASELINE`: la deuda histórica queda contada,
+pero **una entrada nueva que la aumente falla**. Ese tope baja cuando se salda
+deuda; no sube.
+
 ---
 
 ## 12. Manual review

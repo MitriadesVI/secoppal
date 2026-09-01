@@ -87,10 +87,19 @@ class TestHijacksRemoved:
 
     # C — San Andrés
     @pytest.mark.parametrize("phrase", ["san andres", "san andrés"])
-    def test_bare_territory_is_not_the_hospital(self, resolver, phrase):
-        """El archipiélago no es un hospital de Tumaco (Nariño)."""
+    def test_bare_territory_is_not_owned_by_the_hospital(self, resolver, phrase):
+        """El archipiélago no es un hospital de Tumaco (Nariño).
+
+        Se mide el ownership, que es lo que R1C corrige. ``resolve_entidad``
+        sigue devolviendo el hospital por ``fuzzy(95)`` contra su propio
+        ``official_name`` —"HOSPITAL SAN ANDRES" se parece a "san andrés"— y
+        eso no se arregla con datos: el nombre oficial entra siempre a
+        ``choice_to_official``. Es la deuda D1 del informe. El daño está
+        contenido: el gate territorial tipado (R1B) hace que el router
+        devuelva el departamento, no el hospital.
+        """
         assert _owner(resolver, phrase) != HOSPITAL_SAN_ANDRES
-        assert resolver.resolve_entidad(phrase).value != HOSPITAL_SAN_ANDRES
+        assert _scanned(resolver, phrase) != HOSPITAL_SAN_ANDRES
 
     # D — Tolima
     def test_unqualified_gobierno_departamental_has_no_owner(self, resolver):

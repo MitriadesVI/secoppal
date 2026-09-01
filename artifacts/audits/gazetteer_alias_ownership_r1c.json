@@ -7,12 +7,12 @@
     "unique_normalized_aliases": 8609,
     "exact_multi_owner_groups": 217,
     "possible_same_logical_identity_groups": 6,
-    "proposed_removals": 107,
-    "entities_affected_by_removals": 25,
+    "proposed_removals": 114,
+    "entities_affected_by_removals": 28,
     "cross_entity_hijack": 3,
     "generic_structural_alias": 9,
-    "manual_review": 172,
-    "parent_to_child_hijack": 85,
+    "manual_review": 166,
+    "parent_to_child_hijack": 91,
     "possible_same_logical_identity": 9,
     "territory_as_entity_hijack": 14
   },
@@ -2553,11 +2553,11 @@
         "procesos",
         "contratos"
       ],
-      "classification": "MANUAL_REVIEW",
-      "action": "MANUAL_REVIEW",
-      "confidence": "low",
+      "classification": "PARENT_TO_CHILD_HIJACK",
+      "action": "REMOVE_WRONG_ALIAS",
+      "confidence": "high",
       "owner_expected": null,
-      "evidence": "'alcaldia de armenia' declara un comprador municipal y el dueño 'GOBERNACION DEL QUINDIO ARMENIA' no declara tipo institucional legible (eje='departamental'). No hay comprador raíz alternativo en el gazetteer: sin evidencia suficiente para retirar el alias."
+      "evidence": "'alcaldia de armenia' es la frase desnuda de un comprador municipal; el dueño 'GOBERNACION DEL QUINDIO ARMENIA' no es un gobierno (eje='departamental'). No hay raíz alternativa en el gazetteer: el resultado correcto es FAIL_CLOSED, no este dueño."
     },
     {
       "alias": "alcaldia de bogota",
@@ -2723,11 +2723,11 @@
         "procesos",
         "contratos"
       ],
-      "classification": "MANUAL_REVIEW",
-      "action": "MANUAL_REVIEW",
-      "confidence": "low",
+      "classification": "PARENT_TO_CHILD_HIJACK",
+      "action": "REMOVE_WRONG_ALIAS",
+      "confidence": "high",
       "owner_expected": null,
-      "evidence": "'alcaldia de fontibon' declara un comprador municipal y el dueño 'DILOF' no declara tipo institucional legible (eje='otro'). No hay comprador raíz alternativo en el gazetteer: sin evidencia suficiente para retirar el alias."
+      "evidence": "'alcaldia de fontibon' es la frase desnuda de un comprador municipal; el dueño 'DILOF' no es un gobierno (eje='otro'). No hay raíz alternativa en el gazetteer: el resultado correcto es FAIL_CLOSED, no este dueño."
     },
     {
       "alias": "alcaldia de fontibon",
@@ -4542,10 +4542,10 @@
         "procesos"
       ],
       "classification": "GENERIC_STRUCTURAL_ALIAS",
-      "action": "MANUAL_REVIEW",
-      "confidence": "low",
+      "action": "REMOVE_WRONG_ALIAS",
+      "confidence": "high",
       "owner_expected": null,
-      "evidence": "'distrital' es puramente estructural (['distrital']) pero no nombra una forma de gobierno; puede ser el apodo real de la entidad. Retirarlo exige juicio humano."
+      "evidence": "'distrital' está compuesto sólo por tokens estructurales (['distrital']) y nombra una forma de gobierno sin territorio: captura la frase de cualquier otro territorio."
     },
     {
       "alias": "distrito capital",
@@ -4927,11 +4927,11 @@
         "procesos",
         "contratos"
       ],
-      "classification": "MANUAL_REVIEW",
-      "action": "MANUAL_REVIEW",
-      "confidence": "low",
+      "classification": "PARENT_TO_CHILD_HIJACK",
+      "action": "REMOVE_WRONG_ALIAS",
+      "confidence": "high",
       "owner_expected": null,
-      "evidence": "'gobernacion de bogota' declara un comprador departamental y el dueño 'PROSPERIDAD SOCIAL' no declara tipo institucional legible (eje='otro'). No hay comprador raíz alternativo en el gazetteer: sin evidencia suficiente para retirar el alias."
+      "evidence": "'gobernacion de bogota' es la frase desnuda de un comprador departamental; el dueño 'PROSPERIDAD SOCIAL' no es un gobierno (eje='otro'). No hay raíz alternativa en el gazetteer: el resultado correcto es FAIL_CLOSED, no este dueño."
     },
     {
       "alias": "gobernacion de bolivar",
@@ -5314,11 +5314,11 @@
         "procesos",
         "contratos"
       ],
-      "classification": "MANUAL_REVIEW",
-      "action": "MANUAL_REVIEW",
-      "confidence": "low",
+      "classification": "PARENT_TO_CHILD_HIJACK",
+      "action": "REMOVE_WRONG_ALIAS",
+      "confidence": "high",
       "owner_expected": null,
-      "evidence": "'gobierno de bogota' declara un comprador departamental/municipal y el dueño 'PROSPERIDAD SOCIAL' no declara tipo institucional legible (eje='otro'). No hay comprador raíz alternativo en el gazetteer: sin evidencia suficiente para retirar el alias."
+      "evidence": "'gobierno de bogota' es la frase desnuda de un comprador departamental/municipal; el dueño 'PROSPERIDAD SOCIAL' no es un gobierno (eje='otro'). No hay raíz alternativa en el gazetteer: el resultado correcto es FAIL_CLOSED, no este dueño."
     },
     {
       "alias": "gobierno de bogota",
@@ -6971,11 +6971,11 @@
         "procesos",
         "contratos"
       ],
-      "classification": "MANUAL_REVIEW",
-      "action": "MANUAL_REVIEW",
-      "confidence": "low",
+      "classification": "PARENT_TO_CHILD_HIJACK",
+      "action": "REMOVE_WRONG_ALIAS",
+      "confidence": "high",
       "owner_expected": null,
-      "evidence": "'municipio de armenia' declara un comprador municipal y el dueño 'GOBERNACION DEL QUINDIO ARMENIA' no declara tipo institucional legible (eje='departamental'). No hay comprador raíz alternativo en el gazetteer: sin evidencia suficiente para retirar el alias."
+      "evidence": "'municipio de armenia' es la frase desnuda de un comprador municipal; el dueño 'GOBERNACION DEL QUINDIO ARMENIA' no es un gobierno (eje='departamental'). No hay raíz alternativa en el gazetteer: el resultado correcto es FAIL_CLOSED, no este dueño."
     },
     {
       "alias": "municipio de bogota",
@@ -7073,11 +7073,11 @@
         "procesos",
         "contratos"
       ],
-      "classification": "MANUAL_REVIEW",
-      "action": "MANUAL_REVIEW",
-      "confidence": "low",
+      "classification": "PARENT_TO_CHILD_HIJACK",
+      "action": "REMOVE_WRONG_ALIAS",
+      "confidence": "high",
       "owner_expected": null,
-      "evidence": "'municipio de fontibon' declara un comprador municipal y el dueño 'DILOF' no declara tipo institucional legible (eje='otro'). No hay comprador raíz alternativo en el gazetteer: sin evidencia suficiente para retirar el alias."
+      "evidence": "'municipio de fontibon' es la frase desnuda de un comprador municipal; el dueño 'DILOF' no es un gobierno (eje='otro'). No hay raíz alternativa en el gazetteer: el resultado correcto es FAIL_CLOSED, no este dueño."
     },
     {
       "alias": "municipio de fontibon",
@@ -7347,6 +7347,11 @@
   ],
   "proposed_removals": [
     {
+      "alias": "alcaldia de armenia",
+      "owner": "GOBERNACION DEL QUINDIO ARMENIA",
+      "classification": "PARENT_TO_CHILD_HIJACK"
+    },
+    {
       "alias": "alcaldia de bogota",
       "owner": "SECRETARIA DISTRITAL DE GOBIERNO 1",
       "classification": "PARENT_TO_CHILD_HIJACK"
@@ -7359,6 +7364,11 @@
     {
       "alias": "alcaldia de bogota",
       "owner": "SECRETARIA GENERAL Y DE CERCANIA AL CIUDADANO",
+      "classification": "PARENT_TO_CHILD_HIJACK"
+    },
+    {
+      "alias": "alcaldia de fontibon",
+      "owner": "DILOF",
       "classification": "PARENT_TO_CHILD_HIJACK"
     },
     {
@@ -7472,6 +7482,11 @@
       "classification": "PARENT_TO_CHILD_HIJACK"
     },
     {
+      "alias": "distrital",
+      "owner": "UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS",
+      "classification": "GENERIC_STRUCTURAL_ALIAS"
+    },
+    {
       "alias": "distrito capital",
       "owner": "UNIVERSIDAD PEDAGÓGICA NACIONAL",
       "classification": "GENERIC_STRUCTURAL_ALIAS"
@@ -7524,6 +7539,11 @@
     {
       "alias": "gobernacion de bogota",
       "owner": "SECRETARIA DISTRITAL DE GOBIERNO 1",
+      "classification": "PARENT_TO_CHILD_HIJACK"
+    },
+    {
+      "alias": "gobernacion de bogota",
+      "owner": "PROSPERIDAD SOCIAL",
       "classification": "PARENT_TO_CHILD_HIJACK"
     },
     {
@@ -7634,6 +7654,11 @@
     {
       "alias": "gobernacion vallecaucana",
       "owner": "GOBERNACION DEL VALLE DEL CAUCA - DADI",
+      "classification": "PARENT_TO_CHILD_HIJACK"
+    },
+    {
+      "alias": "gobierno de bogota",
+      "owner": "PROSPERIDAD SOCIAL",
       "classification": "PARENT_TO_CHILD_HIJACK"
     },
     {
@@ -7817,6 +7842,11 @@
       "classification": "CROSS_ENTITY_HIJACK"
     },
     {
+      "alias": "municipio de armenia",
+      "owner": "GOBERNACION DEL QUINDIO ARMENIA",
+      "classification": "PARENT_TO_CHILD_HIJACK"
+    },
+    {
       "alias": "municipio de bogota",
       "owner": "SECRETARIA DISTRITAL DE GOBIERNO 1",
       "classification": "PARENT_TO_CHILD_HIJACK"
@@ -7829,6 +7859,11 @@
     {
       "alias": "municipio de bogota",
       "owner": "SECRETARIA GENERAL Y DE CERCANIA AL CIUDADANO",
+      "classification": "PARENT_TO_CHILD_HIJACK"
+    },
+    {
+      "alias": "municipio de fontibon",
+      "owner": "DILOF",
       "classification": "PARENT_TO_CHILD_HIJACK"
     },
     {

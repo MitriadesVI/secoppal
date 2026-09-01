@@ -148,10 +148,21 @@ def test_v3_scan_entity_rejects_bare_atlantico(er_v3) -> None:
 
 
 def test_v3_scan_entity_keeps_qualified_alcaldia(er_v3) -> None:
-    """'alcaldia de bogota' debe ser detectada como entidad (tiene calificador)."""
-    result = er_v3.scan_entity("procesos de la alcaldia de bogota de infraestructura")
-    assert result is not None, "V3 debería detectar 'alcaldia de bogota'"
-    assert "bogot" in result.matched_alias or "bogot" in result.official_name.lower()
+    """'alcaldia de cartagena' debe ser detectada como entidad (tiene calificador).
+
+    El sujeto era "alcaldía de Bogotá" hasta GAZETTEER-ALIAS-OWNERSHIP-R1C. El
+    gazetteer no tiene la Alcaldía Mayor de Bogotá: la frase pertenecía a tres
+    secretarías distritales a la vez, y ninguna de ellas es la alcaldía. R1C
+    retiró ese ownership, así que "alcaldía de Bogotá" ahora falla cerrado —el
+    resultado correcto mientras el comprador raíz no exista—.
+
+    Lo que este test verifica no cambia: que ``_is_unqualified_generic`` NO
+    rechace un "alcaldía de X" con calificador territorial. Se comprueba sobre
+    un municipio cuyo comprador raíz sí está en el gazetteer.
+    """
+    result = er_v3.scan_entity("procesos de la alcaldia de cartagena de infraestructura")
+    assert result is not None, "V3 debería detectar 'alcaldia de cartagena'"
+    assert "cartagena" in result.matched_alias or "cartagena" in result.official_name.lower()
 
 
 def test_v3_scan_entity_acronym(er_v3) -> None:
