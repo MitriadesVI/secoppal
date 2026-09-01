@@ -9,6 +9,8 @@ from __future__ import annotations
 
 import re
 
+import pytest
+
 from app.core.query_router import QueryRouter
 from app.core.soql_builder import SoQLBuilder
 
@@ -42,6 +44,26 @@ def test_gobernacion_narino_is_buyer_entity_named_gobernacion():
     assert not p.get("departamento_resolved")
 
 
+@pytest.mark.parametrize(
+    ("query", "buyer"),
+    [
+        (
+            "contratos de la Gobernación de Arauca en 2025",
+            "DEPARTAMENTO DEL ARAUCA",
+        ),
+        (
+            "contratos de la Gobernación del Atlántico en 2025",
+            "DEPARTAMENTO DEL ATLANTICO**",
+        ),
+    ],
+)
+def test_governacion_context_remains_buyer(query, buyer):
+    p = _parse(query)
+    assert p.get("entidad_resolved") == buyer
+    assert p["entidad_resolution"]["kind"] == "buyer_entity"
+    assert not p.get("departamento_resolved")
+
+
 # ── Territorio (territorial_department) ───────────────────────────────────────
 
 def test_departamento_atlantico_is_territorial():
@@ -58,6 +80,34 @@ def test_departamento_multiword_territorial():
     assert p.get("departamento_resolved") == "Valle del Cauca"
     assert p["departamento_resolution"]["kind"] == "territorial_department"
     assert not p.get("entidad_resolved")
+
+
+@pytest.mark.parametrize(
+    ("query", "canonical"),
+    [
+        ("contratos en el departamento de Arauca en 2025", "Arauca"),
+        ("contratos en el departamento del Arauca en 2025", "Arauca"),
+        (
+            "contratos en el departamento de San Andrés en 2025",
+            "San Andrés, Providencia y Santa Catalina",
+        ),
+        ("contratos en el departamento de Antioquia en 2025", "Antioquia"),
+    ],
+)
+def test_explicit_department_context_uses_territorial_authority(query, canonical):
+    p = _parse(query)
+    assert p.get("departamento_resolved") == canonical
+    assert p["departamento_resolution"]["kind"] == "territorial_department"
+    assert not p.get("entidad_resolved")
+    assert not p.get("ciudad")
+
+
+def test_untyped_arauca_query_preserves_current_routing():
+    p = _parse("contratos en Arauca en 2025")
+    assert p.get("departamento_resolved") == "Arauca"
+    assert p["departamento_resolution"]["method"] == "scan_exact"
+    assert not p.get("entidad_resolved")
+    assert not p.get("ciudad")
 
 
 # ── Canarios (asesor): el patrón territorial NO debe colapsar lateralmente ───

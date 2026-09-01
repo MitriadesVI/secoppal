@@ -103,6 +103,24 @@ def geo_mention_resolution(token: str) -> GeoMention:
     return GeoMention(kind="unknown")
 
 
+def department_mention_resolution(token: str) -> GeoMention:
+    """Resolve an explicitly typed department token by exact authority lookup.
+
+    Unlike ``geo_mention_resolution()``, this lookup has no city precedence:
+    the caller already obtained the geographic type from the user's grammar.
+    """
+    if not isinstance(token, str):
+        return GeoMention(kind="unknown")
+    key = normalize_text(token.strip())
+    if not key or key not in DEPARTAMENTOS:
+        return GeoMention(kind="unknown")
+    return GeoMention(
+        kind="department",
+        canonical=DEPARTAMENTOS[key],
+        confidence="high",
+    )
+
+
 @dataclass(slots=True)
 class ResolutionResult:
     value: str | None

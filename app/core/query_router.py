@@ -532,7 +532,7 @@ class QueryRouter:
         #    y resuelve al comprador real (kind=buyer_entity). Así INV-7: ambos generan
         #    WHERE distintos (departamento vs entidad).
         if "departamento_resolved" not in params:
-            from app.core.entity_resolver import geo_mention_resolution
+            from app.core.entity_resolver import department_mention_resolution
             _km = re.search(
                 r"\b(?:departamento|depto\.?)\s+de(?:l)?\s+(.+)", scrubbed, re.IGNORECASE,
             )
@@ -540,7 +540,7 @@ class QueryRouter:
                 _rest = _km.group(1).split()
                 for _n in (3, 2, 1):
                     _cand = " ".join(_rest[:_n])
-                    _geo = geo_mention_resolution(_cand)
+                    _geo = department_mention_resolution(_cand)
                     if _geo.kind == "department" and _geo.canonical:
                         params["departamento"] = _cand
                         params["departamento_resolved"] = _geo.canonical

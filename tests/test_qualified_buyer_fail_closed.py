@@ -173,20 +173,8 @@ def test_territorial_del_still_territorial(router):
     assert not params.get("entidad_resolved")
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason=(
-        "RC1 (ENTITY-CORE-COVERAGE-R0), NO el defecto de|del de R1A. "
-        "geo_mention_resolution() consulta GAZETTEER_CIUDADES antes que "
-        "DEPARTAMENTOS y el patrón territorial exige kind=='department', así "
-        "que los 4 departamentos con capital homónima —arauca, bogota, cucuta, "
-        "san andres— nunca activan el gate territorial y caen al scan de "
-        "entidad. Congelado aquí como regresión permanente: el arreglo es de "
-        "otro mecanismo y de otro ciclo."
-    ),
-)
 def test_territorial_de_arauca_still_territorial(router):
-    """Caso 6 — "departamento de Arauca" debería ser territorio. Hoy no lo es."""
+    """Caso 6 — "departamento de Arauca" es territorio explícito."""
     params = _parse(router, "contratos en el departamento de Arauca en 2025")
     assert params.get("departamento_resolved") == "Arauca"
     assert not params.get("entidad_resolved")

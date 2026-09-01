@@ -1,6 +1,12 @@
-"""Tests for geo_mention_resolution — pure gazetteer lookup."""
+"""Tests for typed and untyped pure geography gazetteer lookups."""
 
-from app.core.entity_resolver import GeoMention, geo_mention_resolution
+import pytest
+
+from app.core.entity_resolver import (
+    GeoMention,
+    department_mention_resolution,
+    geo_mention_resolution,
+)
 
 
 def test_geo_mention_city_known():
@@ -57,3 +63,25 @@ def test_geo_mention_city_before_department():
     res = geo_mention_resolution("arauca")
     assert res.kind == "city"
     assert res.canonical == "Arauca"
+
+
+@pytest.mark.parametrize(
+    ("token", "canonical"),
+    [
+        ("arauca", "Arauca"),
+        ("bogota", "Distrito Capital de Bogotá"),
+        ("cucuta", "Norte de Santander"),
+        ("san andres", "San Andrés, Providencia y Santa Catalina"),
+    ],
+)
+def test_department_mention_uses_department_authority(token, canonical):
+    res = department_mention_resolution(token)
+    assert res.kind == "department"
+    assert res.canonical == canonical
+    assert res.confidence == "high"
+
+
+def test_department_mention_unknown_returns_unknown():
+    res = department_mention_resolution("xyzzyfoobar")
+    assert res.kind == "unknown"
+    assert res.canonical is None

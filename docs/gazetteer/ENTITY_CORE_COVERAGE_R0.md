@@ -524,3 +524,21 @@ NEXT_RECOMMENDED_LOT:
 
 RUNTIME_FILES_CHANGED: 0
 ```
+
+---
+
+## 13. Estado post-remediación
+
+Las métricas y hallazgos anteriores se conservan como baseline histórico de
+R0/R0.1. Esta tabla registra únicamente el cierre posterior de sus causas raíz.
+
+| Causa raíz | Estado | Remediación |
+|---|---|---|
+| RC1 | **CLOSED** | `ENTITY-TYPED-GEO-R1B` (este commit): el contexto explícito `departamento de/del X` consulta la autoridad de departamentos sin cambiar la precedencia ciudad-first de menciones desnudas. |
+| RC2 | **OPEN** | Pendiente de hygiene/reconciliation de aliases territoriales pertenecientes a entidades de otro territorio. |
+| RC3 | **CLOSED** | `4d82210`: compradores calificados ausentes fallan cerrado y no degradan a territorio. |
+| RC4 | **OPEN** | Pendiente de hygiene de aliases genéricos contaminantes. |
+
+Post-R1B, el gate territorial tipado cubre las cuatro colisiones enumeradas en
+R0 (`arauca`, `bogota`, `cucuta`, `san andres`). La semántica no tipada y la
+resolución institucional de `Gobernación de/del X` permanecen sin cambios.
