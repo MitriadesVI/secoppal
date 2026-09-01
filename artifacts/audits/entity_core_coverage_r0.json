@@ -1,0 +1,4112 @@
+{
+  "audit": "ENTITY-CORE-COVERAGE-R0",
+  "type": "read-only coverage audit",
+  "date": "2026-08-31",
+  "head": "bfda67df4f252e9cdc569301bfcede12479e2a4c",
+  "branch": "main",
+  "worktree_tracked_dirty": false,
+  "runtime_files_changed": 0,
+  "method": {
+    "entry_point": "app.core.query_router.QueryRouter().parse(q).params",
+    "probes_per_entity": [
+      "nombre institucional natural",
+      "sigla/corto",
+      "variante sin tildes",
+      "consulta completa de usuario"
+    ],
+    "note": "Gate 4: el veredicto sale de lo que el runtime RESUELVE, no de que una cadena exista en aliases_db.json.",
+    "no_network": true,
+    "persistence_redirected_to": "/private/tmp/claude-501/-Users-rodrigoortiz-Documents-secoppal/a661ce22-86f8-4afc-a5d1-9f22765bfdb0/scratchpad/audit_data"
+  },
+  "tests_run": {
+    "command": "pytest tests/test_geo_vs_entity_typed.py tests/test_geo_mention_resolution.py tests/test_entity_resolver*.py tests/test_entity_ecosystem*.py tests/test_gazetteer_*.py tests/test_entity_multi_regional.py tests/test_entity_trailing_token_robustness.py",
+    "result": "183 passed, 13 xfailed",
+    "interpretation": "Baseline verde. Ningún defecto de este informe está cubierto por los tests actuales — pasan y los defectos existen."
+  },
+  "universes": {
+    "A_gobernaciones": [
+      {
+        "id": "amazonas",
+        "universe": "A_gobernaciones",
+        "entity_expected": "Gobernación de Amazonas (comprador)",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Gobernación del Amazonas",
+            "entity_expected": "Gobernación de Amazonas (comprador)",
+            "entity_resolved": "GOBERNACION DEL AMAZONAS",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DEL AMAZONAS'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "corto",
+            "user_phrase": "Gobernación Amazonas",
+            "entity_expected": "Gobernación de Amazonas (comprador)",
+            "entity_resolved": "GOBERNACION DEL AMAZONAS",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DEL AMAZONAS'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de la Gobernación del Amazonas en 2025",
+            "entity_expected": "Gobernación de Amazonas (comprador)",
+            "entity_resolved": "GOBERNACION DEL AMAZONAS",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DEL AMAZONAS'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ],
+        "territorial_gate": {
+          "user_phrase": "contratos en el departamento de Amazonas",
+          "departamento_resolved": "Amazonas",
+          "departamento_method": "territorial_pattern",
+          "entity_resolved": null,
+          "resulting_entity_filter": "departamento = 'Amazonas'  [TERRITORIO]",
+          "status": "PASS"
+        },
+        "departamento": "Amazonas"
+      },
+      {
+        "id": "antioquia",
+        "universe": "A_gobernaciones",
+        "entity_expected": "Gobernación de Antioquia (comprador)",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Gobernación de Antioquia",
+            "entity_expected": "Gobernación de Antioquia (comprador)",
+            "entity_resolved": "DEPARTAMENTO DE ANTIOQUIA//",
+            "resolution_method": "rewrite_gobernaci[oó]n",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO DE ANTIOQUIA//'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "corto",
+            "user_phrase": "Gobernación Antioquia",
+            "entity_expected": "Gobernación de Antioquia (comprador)",
+            "entity_resolved": "DEPARTAMENTO DE ANTIOQUIA//",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO DE ANTIOQUIA//'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de la Gobernación de Antioquia en 2025",
+            "entity_expected": "Gobernación de Antioquia (comprador)",
+            "entity_resolved": "DEPARTAMENTO DE ANTIOQUIA//",
+            "resolution_method": "rewrite_gobernaci[oó]n",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO DE ANTIOQUIA//'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ],
+        "territorial_gate": {
+          "user_phrase": "contratos en el departamento de Antioquia",
+          "departamento_resolved": "Antioquia",
+          "departamento_method": "territorial_pattern",
+          "entity_resolved": null,
+          "resulting_entity_filter": "departamento = 'Antioquia'  [TERRITORIO]",
+          "status": "PASS"
+        },
+        "departamento": "Antioquia"
+      },
+      {
+        "id": "arauca",
+        "universe": "A_gobernaciones",
+        "entity_expected": "Gobernación de Arauca (comprador)",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Gobernación de Arauca",
+            "entity_expected": "Gobernación de Arauca (comprador)",
+            "entity_resolved": "DEPARTAMENTO DEL ARAUCA",
+            "resolution_method": "rewrite_gobernaci[oó]n",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO DEL ARAUCA'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "corto",
+            "user_phrase": "Gobernación Arauca",
+            "entity_expected": "Gobernación de Arauca (comprador)",
+            "entity_resolved": "DEPARTAMENTO DEL ARAUCA",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO DEL ARAUCA'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de la Gobernación de Arauca en 2025",
+            "entity_expected": "Gobernación de Arauca (comprador)",
+            "entity_resolved": "DEPARTAMENTO DEL ARAUCA",
+            "resolution_method": "rewrite_gobernaci[oó]n",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO DEL ARAUCA'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ],
+        "territorial_gate": {
+          "user_phrase": "contratos en el departamento de Arauca",
+          "departamento_resolved": null,
+          "departamento_method": null,
+          "entity_resolved": "DEPARTAMENTO DEL ARAUCA",
+          "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO DEL ARAUCA'",
+          "status": "FAIL"
+        },
+        "departamento": "Arauca"
+      },
+      {
+        "id": "atlantico",
+        "universe": "A_gobernaciones",
+        "entity_expected": "Gobernación de Atlántico (comprador)",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Gobernación del Atlántico",
+            "entity_expected": "Gobernación de Atlántico (comprador)",
+            "entity_resolved": "DEPARTAMENTO DEL ATLANTICO**",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO DEL ATLANTICO**'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "corto",
+            "user_phrase": "Gobernación Atlántico",
+            "entity_expected": "Gobernación de Atlántico (comprador)",
+            "entity_resolved": "DEPARTAMENTO DEL ATLANTICO**",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO DEL ATLANTICO**'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sin_tildes",
+            "user_phrase": "Gobernacion del Atlantico",
+            "entity_expected": "Gobernación de Atlántico (comprador)",
+            "entity_resolved": "DEPARTAMENTO DEL ATLANTICO**",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO DEL ATLANTICO**'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de la Gobernación del Atlántico en 2025",
+            "entity_expected": "Gobernación de Atlántico (comprador)",
+            "entity_resolved": "DEPARTAMENTO DEL ATLANTICO**",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO DEL ATLANTICO**'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ],
+        "territorial_gate": {
+          "user_phrase": "contratos en el departamento de Atlántico",
+          "departamento_resolved": "Atlántico",
+          "departamento_method": "territorial_pattern",
+          "entity_resolved": null,
+          "resulting_entity_filter": "departamento = 'Atlántico'  [TERRITORIO]",
+          "status": "PASS"
+        },
+        "departamento": "Atlántico"
+      },
+      {
+        "id": "bolivar",
+        "universe": "A_gobernaciones",
+        "entity_expected": "Gobernación de Bolívar (comprador)",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Gobernación de Bolívar",
+            "entity_expected": "Gobernación de Bolívar (comprador)",
+            "entity_resolved": "GOBERNACIÓN DE BOLÍVAR//",
+            "resolution_method": "rewrite_gobernaci[oó]n",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACIÓN DE BOLÍVAR//'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "corto",
+            "user_phrase": "Gobernación Bolívar",
+            "entity_expected": "Gobernación de Bolívar (comprador)",
+            "entity_resolved": "GOBERNACIÓN DE BOLÍVAR//",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACIÓN DE BOLÍVAR//'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sin_tildes",
+            "user_phrase": "Gobernacion de Bolivar",
+            "entity_expected": "Gobernación de Bolívar (comprador)",
+            "entity_resolved": "GOBERNACIÓN DE BOLÍVAR//",
+            "resolution_method": "rewrite_gobernaci[oó]n",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACIÓN DE BOLÍVAR//'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de la Gobernación de Bolívar en 2025",
+            "entity_expected": "Gobernación de Bolívar (comprador)",
+            "entity_resolved": "GOBERNACIÓN DE BOLÍVAR//",
+            "resolution_method": "rewrite_gobernaci[oó]n",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACIÓN DE BOLÍVAR//'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ],
+        "territorial_gate": {
+          "user_phrase": "contratos en el departamento de Bolívar",
+          "departamento_resolved": "Bolívar",
+          "departamento_method": "territorial_pattern",
+          "entity_resolved": null,
+          "resulting_entity_filter": "departamento = 'Bolívar'  [TERRITORIO]",
+          "status": "PASS"
+        },
+        "departamento": "Bolívar"
+      },
+      {
+        "id": "boyaca",
+        "universe": "A_gobernaciones",
+        "entity_expected": "Gobernación de Boyacá (comprador)",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Gobernación de Boyacá",
+            "entity_expected": "Gobernación de Boyacá (comprador)",
+            "entity_resolved": "GOBERNACIÓN DE BOYACÁ",
+            "resolution_method": "rewrite_gobernaci[oó]n",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACIÓN DE BOYACÁ'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "corto",
+            "user_phrase": "Gobernación Boyacá",
+            "entity_expected": "Gobernación de Boyacá (comprador)",
+            "entity_resolved": "GOBERNACIÓN DE BOYACÁ",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACIÓN DE BOYACÁ'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sin_tildes",
+            "user_phrase": "Gobernacion de Boyaca",
+            "entity_expected": "Gobernación de Boyacá (comprador)",
+            "entity_resolved": "GOBERNACIÓN DE BOYACÁ",
+            "resolution_method": "rewrite_gobernaci[oó]n",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACIÓN DE BOYACÁ'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de la Gobernación de Boyacá en 2025",
+            "entity_expected": "Gobernación de Boyacá (comprador)",
+            "entity_resolved": "GOBERNACIÓN DE BOYACÁ",
+            "resolution_method": "rewrite_gobernaci[oó]n",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACIÓN DE BOYACÁ'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ],
+        "territorial_gate": {
+          "user_phrase": "contratos en el departamento de Boyacá",
+          "departamento_resolved": "Boyacá",
+          "departamento_method": "territorial_pattern",
+          "entity_resolved": null,
+          "resulting_entity_filter": "departamento = 'Boyacá'  [TERRITORIO]",
+          "status": "PASS"
+        },
+        "departamento": "Boyacá"
+      },
+      {
+        "id": "caldas",
+        "universe": "A_gobernaciones",
+        "entity_expected": "Gobernación de Caldas (comprador)",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Gobernación de Caldas",
+            "entity_expected": "Gobernación de Caldas (comprador)",
+            "entity_resolved": "GOBERNACION DE CALDAS",
+            "resolution_method": "rewrite_gobernaci[oó]n",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DE CALDAS'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "corto",
+            "user_phrase": "Gobernación Caldas",
+            "entity_expected": "Gobernación de Caldas (comprador)",
+            "entity_resolved": "GOBERNACION DE CALDAS",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DE CALDAS'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de la Gobernación de Caldas en 2025",
+            "entity_expected": "Gobernación de Caldas (comprador)",
+            "entity_resolved": "GOBERNACION DE CALDAS",
+            "resolution_method": "rewrite_gobernaci[oó]n",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DE CALDAS'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ],
+        "territorial_gate": {
+          "user_phrase": "contratos en el departamento de Caldas",
+          "departamento_resolved": "Caldas",
+          "departamento_method": "territorial_pattern",
+          "entity_resolved": null,
+          "resulting_entity_filter": "departamento = 'Caldas'  [TERRITORIO]",
+          "status": "PASS"
+        },
+        "departamento": "Caldas"
+      },
+      {
+        "id": "caqueta",
+        "universe": "A_gobernaciones",
+        "entity_expected": "Gobernación de Caquetá (comprador)",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Gobernación del Caquetá",
+            "entity_expected": "Gobernación de Caquetá (comprador)",
+            "entity_resolved": "GOBERNACION DEL CAQUETA**",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DEL CAQUETA**'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "corto",
+            "user_phrase": "Gobernación Caquetá",
+            "entity_expected": "Gobernación de Caquetá (comprador)",
+            "entity_resolved": "GOBERNACION DEL CAQUETA**",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DEL CAQUETA**'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sin_tildes",
+            "user_phrase": "Gobernacion del Caqueta",
+            "entity_expected": "Gobernación de Caquetá (comprador)",
+            "entity_resolved": "GOBERNACION DEL CAQUETA**",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DEL CAQUETA**'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de la Gobernación del Caquetá en 2025",
+            "entity_expected": "Gobernación de Caquetá (comprador)",
+            "entity_resolved": "GOBERNACION DEL CAQUETA**",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DEL CAQUETA**'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ],
+        "territorial_gate": {
+          "user_phrase": "contratos en el departamento de Caquetá",
+          "departamento_resolved": "Caquetá",
+          "departamento_method": "territorial_pattern",
+          "entity_resolved": null,
+          "resulting_entity_filter": "departamento = 'Caquetá'  [TERRITORIO]",
+          "status": "PASS"
+        },
+        "departamento": "Caquetá"
+      },
+      {
+        "id": "casanare",
+        "universe": "A_gobernaciones",
+        "entity_expected": "Gobernación de Casanare (comprador)",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Gobernación de Casanare",
+            "entity_expected": "Gobernación de Casanare (comprador)",
+            "entity_resolved": "GOBERNACION DEL CASANARE",
+            "resolution_method": "rewrite_gobernaci[oó]n",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DEL CASANARE'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "corto",
+            "user_phrase": "Gobernación Casanare",
+            "entity_expected": "Gobernación de Casanare (comprador)",
+            "entity_resolved": "GOBERNACION DEL CASANARE",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DEL CASANARE'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de la Gobernación de Casanare en 2025",
+            "entity_expected": "Gobernación de Casanare (comprador)",
+            "entity_resolved": "GOBERNACION DEL CASANARE",
+            "resolution_method": "rewrite_gobernaci[oó]n",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DEL CASANARE'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ],
+        "territorial_gate": {
+          "user_phrase": "contratos en el departamento de Casanare",
+          "departamento_resolved": "Casanare",
+          "departamento_method": "territorial_pattern",
+          "entity_resolved": null,
+          "resulting_entity_filter": "departamento = 'Casanare'  [TERRITORIO]",
+          "status": "PASS"
+        },
+        "departamento": "Casanare"
+      },
+      {
+        "id": "cauca",
+        "universe": "A_gobernaciones",
+        "entity_expected": "Gobernación de Cauca (comprador)",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Gobernación del Cauca",
+            "entity_expected": "Gobernación de Cauca (comprador)",
+            "entity_resolved": "GOBERNACIÓN DEL CAUCA",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACIÓN DEL CAUCA'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "corto",
+            "user_phrase": "Gobernación Cauca",
+            "entity_expected": "Gobernación de Cauca (comprador)",
+            "entity_resolved": "GOBERNACIÓN DEL CAUCA",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACIÓN DEL CAUCA'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de la Gobernación del Cauca en 2025",
+            "entity_expected": "Gobernación de Cauca (comprador)",
+            "entity_resolved": "GOBERNACIÓN DEL CAUCA",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACIÓN DEL CAUCA'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ],
+        "territorial_gate": {
+          "user_phrase": "contratos en el departamento de Cauca",
+          "departamento_resolved": "Cauca",
+          "departamento_method": "territorial_pattern",
+          "entity_resolved": null,
+          "resulting_entity_filter": "departamento = 'Cauca'  [TERRITORIO]",
+          "status": "PASS"
+        },
+        "departamento": "Cauca"
+      },
+      {
+        "id": "cesar",
+        "universe": "A_gobernaciones",
+        "entity_expected": "Gobernación de Cesar (comprador)",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Gobernación del Cesar",
+            "entity_expected": "Gobernación de Cesar (comprador)",
+            "entity_resolved": "GOBERNACION DEL DEPARTAMENTO DEL CESAR",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DEL DEPARTAMENTO DEL CESAR'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "corto",
+            "user_phrase": "Gobernación Cesar",
+            "entity_expected": "Gobernación de Cesar (comprador)",
+            "entity_resolved": "GOBERNACION DEL DEPARTAMENTO DEL CESAR",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DEL DEPARTAMENTO DEL CESAR'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de la Gobernación del Cesar en 2025",
+            "entity_expected": "Gobernación de Cesar (comprador)",
+            "entity_resolved": "GOBERNACION DEL DEPARTAMENTO DEL CESAR",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DEL DEPARTAMENTO DEL CESAR'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ],
+        "territorial_gate": {
+          "user_phrase": "contratos en el departamento de Cesar",
+          "departamento_resolved": "Cesar",
+          "departamento_method": "territorial_pattern",
+          "entity_resolved": null,
+          "resulting_entity_filter": "departamento = 'Cesar'  [TERRITORIO]",
+          "status": "PASS"
+        },
+        "departamento": "Cesar"
+      },
+      {
+        "id": "choco",
+        "universe": "A_gobernaciones",
+        "entity_expected": "Gobernación de Chocó (comprador)",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Gobernación del Chocó",
+            "entity_expected": "Gobernación de Chocó (comprador)",
+            "entity_resolved": "GOBERNACION DEL CHOCÓ.",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DEL CHOCÓ.'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "corto",
+            "user_phrase": "Gobernación Chocó",
+            "entity_expected": "Gobernación de Chocó (comprador)",
+            "entity_resolved": "GOBERNACION DEL CHOCÓ.",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DEL CHOCÓ.'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sin_tildes",
+            "user_phrase": "Gobernacion del Choco",
+            "entity_expected": "Gobernación de Chocó (comprador)",
+            "entity_resolved": "GOBERNACION DEL CHOCÓ.",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DEL CHOCÓ.'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de la Gobernación del Chocó en 2025",
+            "entity_expected": "Gobernación de Chocó (comprador)",
+            "entity_resolved": "GOBERNACION DEL CHOCÓ.",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DEL CHOCÓ.'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ],
+        "territorial_gate": {
+          "user_phrase": "contratos en el departamento de Chocó",
+          "departamento_resolved": "Chocó",
+          "departamento_method": "territorial_pattern",
+          "entity_resolved": null,
+          "resulting_entity_filter": "departamento = 'Chocó'  [TERRITORIO]",
+          "status": "PASS"
+        },
+        "departamento": "Chocó"
+      },
+      {
+        "id": "cordoba",
+        "universe": "A_gobernaciones",
+        "entity_expected": "Gobernación de Córdoba (comprador)",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Gobernación de Córdoba",
+            "entity_expected": "Gobernación de Córdoba (comprador)",
+            "entity_resolved": "DEPARTAMENTO DE CORDOBA",
+            "resolution_method": "rewrite_gobernaci[oó]n",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO DE CORDOBA'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "corto",
+            "user_phrase": "Gobernación Córdoba",
+            "entity_expected": "Gobernación de Córdoba (comprador)",
+            "entity_resolved": "DEPARTAMENTO DE CORDOBA",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO DE CORDOBA'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sin_tildes",
+            "user_phrase": "Gobernacion de Cordoba",
+            "entity_expected": "Gobernación de Córdoba (comprador)",
+            "entity_resolved": "DEPARTAMENTO DE CORDOBA",
+            "resolution_method": "rewrite_gobernaci[oó]n",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO DE CORDOBA'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de la Gobernación de Córdoba en 2025",
+            "entity_expected": "Gobernación de Córdoba (comprador)",
+            "entity_resolved": "DEPARTAMENTO DE CORDOBA",
+            "resolution_method": "rewrite_gobernaci[oó]n",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO DE CORDOBA'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ],
+        "territorial_gate": {
+          "user_phrase": "contratos en el departamento de Córdoba",
+          "departamento_resolved": "Córdoba",
+          "departamento_method": "territorial_pattern",
+          "entity_resolved": null,
+          "resulting_entity_filter": "departamento = 'Córdoba'  [TERRITORIO]",
+          "status": "PASS"
+        },
+        "departamento": "Córdoba"
+      },
+      {
+        "id": "cundinamarca",
+        "universe": "A_gobernaciones",
+        "entity_expected": "Gobernación de Cundinamarca (comprador)",
+        "status": "WRONG_BUYER",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Gobernación de Cundinamarca",
+            "entity_expected": "Gobernación de Cundinamarca (comprador)",
+            "entity_resolved": "DEPARTAMENTO DE CUNDINAMARCA- SECRETARIA DE SALUD",
+            "resolution_method": "rewrite_gobernaci[oó]n",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": true,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO DE CUNDINAMARCA- SECRETARIA DE SALUD'",
+            "status": "WRONG_BUYER",
+            "note": "resolvió a subentidad: 'DEPARTAMENTO DE CUNDINAMARCA- SECRETARIA DE SALUD'",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "corto",
+            "user_phrase": "Gobernación Cundinamarca",
+            "entity_expected": "Gobernación de Cundinamarca (comprador)",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": true,
+            "resulting_entity_filter": "departamento = 'Cundinamarca'  [TERRITORIO]",
+            "status": "WRONG_BUYER",
+            "note": "colapsó a territorio (Cundinamarca)",
+            "departamento_resolved": "Cundinamarca"
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de la Gobernación de Cundinamarca en 2025",
+            "entity_expected": "Gobernación de Cundinamarca (comprador)",
+            "entity_resolved": "DEPARTAMENTO DE CUNDINAMARCA- SECRETARIA DE SALUD",
+            "resolution_method": "rewrite_gobernaci[oó]n",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": true,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO DE CUNDINAMARCA- SECRETARIA DE SALUD'",
+            "status": "WRONG_BUYER",
+            "note": "resolvió a subentidad: 'DEPARTAMENTO DE CUNDINAMARCA- SECRETARIA DE SALUD'",
+            "departamento_resolved": null
+          }
+        ],
+        "territorial_gate": {
+          "user_phrase": "contratos en el departamento de Cundinamarca",
+          "departamento_resolved": "Cundinamarca",
+          "departamento_method": "territorial_pattern",
+          "entity_resolved": null,
+          "resulting_entity_filter": "departamento = 'Cundinamarca'  [TERRITORIO]",
+          "status": "PASS"
+        },
+        "departamento": "Cundinamarca"
+      },
+      {
+        "id": "guainia",
+        "universe": "A_gobernaciones",
+        "entity_expected": "Gobernación de Guainía (comprador)",
+        "status": "WRONG_BUYER",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Gobernación del Guainía",
+            "entity_expected": "Gobernación de Guainía (comprador)",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": true,
+            "resulting_entity_filter": "departamento = 'Guainía'  [TERRITORIO]",
+            "status": "WRONG_BUYER",
+            "note": "colapsó a territorio (Guainía)",
+            "departamento_resolved": "Guainía"
+          },
+          {
+            "probe_kind": "corto",
+            "user_phrase": "Gobernación Guainía",
+            "entity_expected": "Gobernación de Guainía (comprador)",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": true,
+            "resulting_entity_filter": "departamento = 'Guainía'  [TERRITORIO]",
+            "status": "WRONG_BUYER",
+            "note": "colapsó a territorio (Guainía)",
+            "departamento_resolved": "Guainía"
+          },
+          {
+            "probe_kind": "sin_tildes",
+            "user_phrase": "Gobernacion del Guainia",
+            "entity_expected": "Gobernación de Guainía (comprador)",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": true,
+            "resulting_entity_filter": "departamento = 'Guainía'  [TERRITORIO]",
+            "status": "WRONG_BUYER",
+            "note": "colapsó a territorio (Guainía)",
+            "departamento_resolved": "Guainía"
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de la Gobernación del Guainía en 2025",
+            "entity_expected": "Gobernación de Guainía (comprador)",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": true,
+            "resulting_entity_filter": "departamento = 'Guainía'  [TERRITORIO]",
+            "status": "WRONG_BUYER",
+            "note": "colapsó a territorio (Guainía)",
+            "departamento_resolved": "Guainía"
+          }
+        ],
+        "territorial_gate": {
+          "user_phrase": "contratos en el departamento de Guainía",
+          "departamento_resolved": "Guainía",
+          "departamento_method": "territorial_pattern",
+          "entity_resolved": null,
+          "resulting_entity_filter": "departamento = 'Guainía'  [TERRITORIO]",
+          "status": "PASS"
+        },
+        "departamento": "Guainía"
+      },
+      {
+        "id": "guaviare",
+        "universe": "A_gobernaciones",
+        "entity_expected": "Gobernación de Guaviare (comprador)",
+        "status": "WRONG_BUYER",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Gobernación del Guaviare",
+            "entity_expected": "Gobernación de Guaviare (comprador)",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": true,
+            "resulting_entity_filter": "departamento = 'Guaviare'  [TERRITORIO]",
+            "status": "WRONG_BUYER",
+            "note": "colapsó a territorio (Guaviare)",
+            "departamento_resolved": "Guaviare"
+          },
+          {
+            "probe_kind": "corto",
+            "user_phrase": "Gobernación Guaviare",
+            "entity_expected": "Gobernación de Guaviare (comprador)",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": true,
+            "resulting_entity_filter": "departamento = 'Guaviare'  [TERRITORIO]",
+            "status": "WRONG_BUYER",
+            "note": "colapsó a territorio (Guaviare)",
+            "departamento_resolved": "Guaviare"
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de la Gobernación del Guaviare en 2025",
+            "entity_expected": "Gobernación de Guaviare (comprador)",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": true,
+            "resulting_entity_filter": "departamento = 'Guaviare'  [TERRITORIO]",
+            "status": "WRONG_BUYER",
+            "note": "colapsó a territorio (Guaviare)",
+            "departamento_resolved": "Guaviare"
+          }
+        ],
+        "territorial_gate": {
+          "user_phrase": "contratos en el departamento de Guaviare",
+          "departamento_resolved": "Guaviare",
+          "departamento_method": "territorial_pattern",
+          "entity_resolved": null,
+          "resulting_entity_filter": "departamento = 'Guaviare'  [TERRITORIO]",
+          "status": "PASS"
+        },
+        "departamento": "Guaviare"
+      },
+      {
+        "id": "huila",
+        "universe": "A_gobernaciones",
+        "entity_expected": "Gobernación de Huila (comprador)",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Gobernación del Huila",
+            "entity_expected": "Gobernación de Huila (comprador)",
+            "entity_resolved": "GOBERNACION DEL HUILA*",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DEL HUILA*'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "corto",
+            "user_phrase": "Gobernación Huila",
+            "entity_expected": "Gobernación de Huila (comprador)",
+            "entity_resolved": "GOBERNACION DEL HUILA*",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DEL HUILA*'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de la Gobernación del Huila en 2025",
+            "entity_expected": "Gobernación de Huila (comprador)",
+            "entity_resolved": "GOBERNACION DEL HUILA*",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DEL HUILA*'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ],
+        "territorial_gate": {
+          "user_phrase": "contratos en el departamento de Huila",
+          "departamento_resolved": "Huila",
+          "departamento_method": "territorial_pattern",
+          "entity_resolved": null,
+          "resulting_entity_filter": "departamento = 'Huila'  [TERRITORIO]",
+          "status": "PASS"
+        },
+        "departamento": "Huila"
+      },
+      {
+        "id": "guajira",
+        "universe": "A_gobernaciones",
+        "entity_expected": "Gobernación de La Guajira (comprador)",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Gobernación de La Guajira",
+            "entity_expected": "Gobernación de La Guajira (comprador)",
+            "entity_resolved": "GOBERNACIÓN DE LA GUAJIRA",
+            "resolution_method": "rewrite_gobernaci[oó]n",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACIÓN DE LA GUAJIRA'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "corto",
+            "user_phrase": "Gobernación Guajira",
+            "entity_expected": "Gobernación de La Guajira (comprador)",
+            "entity_resolved": "GOBERNACIÓN DE LA GUAJIRA",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACIÓN DE LA GUAJIRA'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de la Gobernación de La Guajira en 2025",
+            "entity_expected": "Gobernación de La Guajira (comprador)",
+            "entity_resolved": "GOBERNACIÓN DE LA GUAJIRA",
+            "resolution_method": "rewrite_gobernaci[oó]n",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACIÓN DE LA GUAJIRA'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ],
+        "territorial_gate": {
+          "user_phrase": "contratos en el departamento de La Guajira",
+          "departamento_resolved": "La Guajira",
+          "departamento_method": "territorial_pattern",
+          "entity_resolved": null,
+          "resulting_entity_filter": "departamento = 'La Guajira'  [TERRITORIO]",
+          "status": "PASS"
+        },
+        "departamento": "La Guajira"
+      },
+      {
+        "id": "magdalena",
+        "universe": "A_gobernaciones",
+        "entity_expected": "Gobernación de Magdalena (comprador)",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Gobernación del Magdalena",
+            "entity_expected": "Gobernación de Magdalena (comprador)",
+            "entity_resolved": "GOBERNACION DEL MAGDALENA",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DEL MAGDALENA'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "corto",
+            "user_phrase": "Gobernación Magdalena",
+            "entity_expected": "Gobernación de Magdalena (comprador)",
+            "entity_resolved": "GOBERNACION DEL MAGDALENA",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DEL MAGDALENA'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de la Gobernación del Magdalena en 2025",
+            "entity_expected": "Gobernación de Magdalena (comprador)",
+            "entity_resolved": "GOBERNACION DEL MAGDALENA",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DEL MAGDALENA'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ],
+        "territorial_gate": {
+          "user_phrase": "contratos en el departamento de Magdalena",
+          "departamento_resolved": "Magdalena",
+          "departamento_method": "territorial_pattern",
+          "entity_resolved": null,
+          "resulting_entity_filter": "departamento = 'Magdalena'  [TERRITORIO]",
+          "status": "PASS"
+        },
+        "departamento": "Magdalena"
+      },
+      {
+        "id": "meta",
+        "universe": "A_gobernaciones",
+        "entity_expected": "Gobernación de Meta (comprador)",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Gobernación del Meta",
+            "entity_expected": "Gobernación de Meta (comprador)",
+            "entity_resolved": "DEPARTAMENTO DEL META",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO DEL META'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "corto",
+            "user_phrase": "Gobernación Meta",
+            "entity_expected": "Gobernación de Meta (comprador)",
+            "entity_resolved": "DEPARTAMENTO DEL META",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO DEL META'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de la Gobernación del Meta en 2025",
+            "entity_expected": "Gobernación de Meta (comprador)",
+            "entity_resolved": "DEPARTAMENTO DEL META",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO DEL META'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ],
+        "territorial_gate": {
+          "user_phrase": "contratos en el departamento de Meta",
+          "departamento_resolved": "Meta",
+          "departamento_method": "territorial_pattern",
+          "entity_resolved": null,
+          "resulting_entity_filter": "departamento = 'Meta'  [TERRITORIO]",
+          "status": "PASS"
+        },
+        "departamento": "Meta"
+      },
+      {
+        "id": "narino",
+        "universe": "A_gobernaciones",
+        "entity_expected": "Gobernación de Nariño (comprador)",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Gobernación de Nariño",
+            "entity_expected": "Gobernación de Nariño (comprador)",
+            "entity_resolved": "GOBERNACION DE NARIÑO",
+            "resolution_method": "rewrite_gobernaci[oó]n",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DE NARIÑO'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "corto",
+            "user_phrase": "Gobernación Nariño",
+            "entity_expected": "Gobernación de Nariño (comprador)",
+            "entity_resolved": "GOBERNACION DE NARIÑO",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DE NARIÑO'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sin_tildes",
+            "user_phrase": "Gobernacion de Narino",
+            "entity_expected": "Gobernación de Nariño (comprador)",
+            "entity_resolved": "GOBERNACION DE NARIÑO",
+            "resolution_method": "rewrite_gobernaci[oó]n",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DE NARIÑO'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de la Gobernación de Nariño en 2025",
+            "entity_expected": "Gobernación de Nariño (comprador)",
+            "entity_resolved": "GOBERNACION DE NARIÑO",
+            "resolution_method": "rewrite_gobernaci[oó]n",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DE NARIÑO'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ],
+        "territorial_gate": {
+          "user_phrase": "contratos en el departamento de Nariño",
+          "departamento_resolved": "Nariño",
+          "departamento_method": "territorial_pattern",
+          "entity_resolved": null,
+          "resulting_entity_filter": "departamento = 'Nariño'  [TERRITORIO]",
+          "status": "PASS"
+        },
+        "departamento": "Nariño"
+      },
+      {
+        "id": "nsantander",
+        "universe": "A_gobernaciones",
+        "entity_expected": "Gobernación de Norte de Santander (comprador)",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Gobernación de Norte de Santander",
+            "entity_expected": "Gobernación de Norte de Santander (comprador)",
+            "entity_resolved": "Gobernación Norte de Santander*",
+            "resolution_method": "rewrite_gobernaci[oó]n",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'Gobernación Norte de Santander*'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": "Santander"
+          },
+          {
+            "probe_kind": "corto",
+            "user_phrase": "Gobernación Norte de Santander",
+            "entity_expected": "Gobernación de Norte de Santander (comprador)",
+            "entity_resolved": "Gobernación Norte de Santander*",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'Gobernación Norte de Santander*'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de la Gobernación de Norte de Santander en 2025",
+            "entity_expected": "Gobernación de Norte de Santander (comprador)",
+            "entity_resolved": "Gobernación Norte de Santander*",
+            "resolution_method": "rewrite_gobernaci[oó]n",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'Gobernación Norte de Santander*'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": "Santander"
+          }
+        ],
+        "territorial_gate": {
+          "user_phrase": "contratos en el departamento de Norte de Santander",
+          "departamento_resolved": "Norte de Santander",
+          "departamento_method": "territorial_pattern",
+          "entity_resolved": null,
+          "resulting_entity_filter": "departamento = 'Norte de Santander'  [TERRITORIO]",
+          "status": "PASS"
+        },
+        "departamento": "Norte de Santander"
+      },
+      {
+        "id": "putumayo",
+        "universe": "A_gobernaciones",
+        "entity_expected": "Gobernación de Putumayo (comprador)",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Gobernación del Putumayo",
+            "entity_expected": "Gobernación de Putumayo (comprador)",
+            "entity_resolved": "GOBERNACIÓN DEPARTAMENTO DEL PUTUMAYO",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACIÓN DEPARTAMENTO DEL PUTUMAYO'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "corto",
+            "user_phrase": "Gobernación Putumayo",
+            "entity_expected": "Gobernación de Putumayo (comprador)",
+            "entity_resolved": "GOBERNACIÓN DEPARTAMENTO DEL PUTUMAYO",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACIÓN DEPARTAMENTO DEL PUTUMAYO'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de la Gobernación del Putumayo en 2025",
+            "entity_expected": "Gobernación de Putumayo (comprador)",
+            "entity_resolved": "GOBERNACIÓN DEPARTAMENTO DEL PUTUMAYO",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACIÓN DEPARTAMENTO DEL PUTUMAYO'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ],
+        "territorial_gate": {
+          "user_phrase": "contratos en el departamento de Putumayo",
+          "departamento_resolved": "Putumayo",
+          "departamento_method": "territorial_pattern",
+          "entity_resolved": null,
+          "resulting_entity_filter": "departamento = 'Putumayo'  [TERRITORIO]",
+          "status": "PASS"
+        },
+        "departamento": "Putumayo"
+      },
+      {
+        "id": "quindio",
+        "universe": "A_gobernaciones",
+        "entity_expected": "Gobernación de Quindío (comprador)",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Gobernación del Quindío",
+            "entity_expected": "Gobernación de Quindío (comprador)",
+            "entity_resolved": "GOBERNACION DEL QUINDIO ARMENIA",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DEL QUINDIO ARMENIA'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "corto",
+            "user_phrase": "Gobernación Quindío",
+            "entity_expected": "Gobernación de Quindío (comprador)",
+            "entity_resolved": "GOBERNACION DEL QUINDIO ARMENIA",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DEL QUINDIO ARMENIA'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sin_tildes",
+            "user_phrase": "Gobernacion del Quindio",
+            "entity_expected": "Gobernación de Quindío (comprador)",
+            "entity_resolved": "GOBERNACION DEL QUINDIO ARMENIA",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DEL QUINDIO ARMENIA'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de la Gobernación del Quindío en 2025",
+            "entity_expected": "Gobernación de Quindío (comprador)",
+            "entity_resolved": "GOBERNACION DEL QUINDIO ARMENIA",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DEL QUINDIO ARMENIA'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ],
+        "territorial_gate": {
+          "user_phrase": "contratos en el departamento de Quindío",
+          "departamento_resolved": "Quindío",
+          "departamento_method": "territorial_pattern",
+          "entity_resolved": null,
+          "resulting_entity_filter": "departamento = 'Quindío'  [TERRITORIO]",
+          "status": "PASS"
+        },
+        "departamento": "Quindío"
+      },
+      {
+        "id": "risaralda",
+        "universe": "A_gobernaciones",
+        "entity_expected": "Gobernación de Risaralda (comprador)",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Gobernación de Risaralda",
+            "entity_expected": "Gobernación de Risaralda (comprador)",
+            "entity_resolved": "GOBERNACIÓN DE RISARALDA**",
+            "resolution_method": "rewrite_gobernaci[oó]n",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACIÓN DE RISARALDA**'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "corto",
+            "user_phrase": "Gobernación Risaralda",
+            "entity_expected": "Gobernación de Risaralda (comprador)",
+            "entity_resolved": "GOBERNACIÓN DE RISARALDA**",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACIÓN DE RISARALDA**'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de la Gobernación de Risaralda en 2025",
+            "entity_expected": "Gobernación de Risaralda (comprador)",
+            "entity_resolved": "GOBERNACIÓN DE RISARALDA**",
+            "resolution_method": "rewrite_gobernaci[oó]n",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACIÓN DE RISARALDA**'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ],
+        "territorial_gate": {
+          "user_phrase": "contratos en el departamento de Risaralda",
+          "departamento_resolved": "Risaralda",
+          "departamento_method": "territorial_pattern",
+          "entity_resolved": null,
+          "resulting_entity_filter": "departamento = 'Risaralda'  [TERRITORIO]",
+          "status": "PASS"
+        },
+        "departamento": "Risaralda"
+      },
+      {
+        "id": "sanandres",
+        "universe": "A_gobernaciones",
+        "entity_expected": "Gobernación de San Andrés, Providencia y Santa Catalina (comprador)",
+        "status": "WRONG_BUYER",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Gobernación de San Andrés",
+            "entity_expected": "Gobernación de San Andrés, Providencia y Santa Catalina (comprador)",
+            "entity_resolved": "DEPARTAMENTO DE SANTANDER",
+            "resolution_method": "rewrite_gobernaci[oó]n",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": true,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO DE SANTANDER'",
+            "status": "WRONG_BUYER",
+            "note": "resolvió a otra institución: 'DEPARTAMENTO DE SANTANDER'",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "corto",
+            "user_phrase": "Gobernación San Andrés",
+            "entity_expected": "Gobernación de San Andrés, Providencia y Santa Catalina (comprador)",
+            "entity_resolved": "HOSPITAL SAN ANDRES",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": true,
+            "resulting_entity_filter": "nombre_entidad = 'HOSPITAL SAN ANDRES'",
+            "status": "WRONG_BUYER",
+            "note": "resolvió a subentidad: 'HOSPITAL SAN ANDRES'",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sin_tildes",
+            "user_phrase": "Gobernacion de San Andres",
+            "entity_expected": "Gobernación de San Andrés, Providencia y Santa Catalina (comprador)",
+            "entity_resolved": "DEPARTAMENTO DE SANTANDER",
+            "resolution_method": "rewrite_gobernaci[oó]n",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": true,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO DE SANTANDER'",
+            "status": "WRONG_BUYER",
+            "note": "resolvió a otra institución: 'DEPARTAMENTO DE SANTANDER'",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de la Gobernación de San Andrés en 2025",
+            "entity_expected": "Gobernación de San Andrés, Providencia y Santa Catalina (comprador)",
+            "entity_resolved": "DEPARTAMENTO DE SANTANDER",
+            "resolution_method": "rewrite_gobernaci[oó]n",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": true,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO DE SANTANDER'",
+            "status": "WRONG_BUYER",
+            "note": "resolvió a otra institución: 'DEPARTAMENTO DE SANTANDER'",
+            "departamento_resolved": null
+          }
+        ],
+        "territorial_gate": {
+          "user_phrase": "contratos en el departamento de San Andrés, Providencia y Santa Catalina",
+          "departamento_resolved": null,
+          "departamento_method": null,
+          "entity_resolved": "HOSPITAL SAN ANDRES",
+          "resulting_entity_filter": "nombre_entidad = 'HOSPITAL SAN ANDRES'",
+          "status": "FAIL"
+        },
+        "departamento": "San Andrés, Providencia y Santa Catalina"
+      },
+      {
+        "id": "santander",
+        "universe": "A_gobernaciones",
+        "entity_expected": "Gobernación de Santander (comprador)",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Gobernación de Santander",
+            "entity_expected": "Gobernación de Santander (comprador)",
+            "entity_resolved": "DEPARTAMENTO DE SANTANDER",
+            "resolution_method": "rewrite_gobernaci[oó]n",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO DE SANTANDER'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "corto",
+            "user_phrase": "Gobernación Santander",
+            "entity_expected": "Gobernación de Santander (comprador)",
+            "entity_resolved": "DEPARTAMENTO DE SANTANDER",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO DE SANTANDER'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de la Gobernación de Santander en 2025",
+            "entity_expected": "Gobernación de Santander (comprador)",
+            "entity_resolved": "DEPARTAMENTO DE SANTANDER",
+            "resolution_method": "rewrite_gobernaci[oó]n",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO DE SANTANDER'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ],
+        "territorial_gate": {
+          "user_phrase": "contratos en el departamento de Santander",
+          "departamento_resolved": "Santander",
+          "departamento_method": "territorial_pattern",
+          "entity_resolved": null,
+          "resulting_entity_filter": "departamento = 'Santander'  [TERRITORIO]",
+          "status": "PASS"
+        },
+        "departamento": "Santander"
+      },
+      {
+        "id": "sucre",
+        "universe": "A_gobernaciones",
+        "entity_expected": "Gobernación de Sucre (comprador)",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Gobernación de Sucre",
+            "entity_expected": "Gobernación de Sucre (comprador)",
+            "entity_resolved": "GOBERNACION DE SUCRE",
+            "resolution_method": "rewrite_gobernaci[oó]n",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DE SUCRE'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "corto",
+            "user_phrase": "Gobernación Sucre",
+            "entity_expected": "Gobernación de Sucre (comprador)",
+            "entity_resolved": "GOBERNACION DE SUCRE",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DE SUCRE'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de la Gobernación de Sucre en 2025",
+            "entity_expected": "Gobernación de Sucre (comprador)",
+            "entity_resolved": "GOBERNACION DE SUCRE",
+            "resolution_method": "rewrite_gobernaci[oó]n",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DE SUCRE'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ],
+        "territorial_gate": {
+          "user_phrase": "contratos en el departamento de Sucre",
+          "departamento_resolved": "Sucre",
+          "departamento_method": "territorial_pattern",
+          "entity_resolved": null,
+          "resulting_entity_filter": "departamento = 'Sucre'  [TERRITORIO]",
+          "status": "PASS"
+        },
+        "departamento": "Sucre"
+      },
+      {
+        "id": "tolima",
+        "universe": "A_gobernaciones",
+        "entity_expected": "Gobernación de Tolima (comprador)",
+        "status": "PASS_ALIAS",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Gobernación del Tolima",
+            "entity_expected": "Gobernación de Tolima (comprador)",
+            "entity_resolved": "GOBIERNO DEPARTAMENTAL",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": true,
+            "resulting_entity_filter": "nombre_entidad = 'GOBIERNO DEPARTAMENTAL'",
+            "status": "WRONG_BUYER",
+            "note": "resolvió a otra institución: 'GOBIERNO DEPARTAMENTAL'",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "corto",
+            "user_phrase": "Gobernación Tolima",
+            "entity_expected": "Gobernación de Tolima (comprador)",
+            "entity_resolved": "GOBIERNO DEPARTAMENTAL",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": true,
+            "resulting_entity_filter": "nombre_entidad = 'GOBIERNO DEPARTAMENTAL'",
+            "status": "WRONG_BUYER",
+            "note": "resolvió a otra institución: 'GOBIERNO DEPARTAMENTAL'",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de la Gobernación del Tolima en 2025",
+            "entity_expected": "Gobernación de Tolima (comprador)",
+            "entity_resolved": "GOBIERNO DEPARTAMENTAL",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": true,
+            "resulting_entity_filter": "nombre_entidad = 'GOBIERNO DEPARTAMENTAL'",
+            "status": "WRONG_BUYER",
+            "note": "resolvió a otra institución: 'GOBIERNO DEPARTAMENTAL'",
+            "departamento_resolved": null
+          }
+        ],
+        "territorial_gate": {
+          "user_phrase": "contratos en el departamento de Tolima",
+          "departamento_resolved": "Tolima",
+          "departamento_method": "territorial_pattern",
+          "entity_resolved": null,
+          "resulting_entity_filter": "departamento = 'Tolima'  [TERRITORIO]",
+          "status": "PASS"
+        },
+        "departamento": "Tolima",
+        "override_note": "Resuelve al comprador REAL 'GOBIERNO DEPARTAMENTAL' (dep=Tolima, 27.694 procesos). Patrón ADR-040 (nombre SECOP no evidente). Reclasificado desde WRONG_BUYER: era falso positivo de la heurística. PERO arrastra el alias genérico puro 'gobierno departamental' → ver finding WB-04."
+      },
+      {
+        "id": "valle",
+        "universe": "A_gobernaciones",
+        "entity_expected": "Gobernación de Valle del Cauca (comprador)",
+        "status": "WRONG_BUYER",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Gobernación del Valle del Cauca",
+            "entity_expected": "Gobernación de Valle del Cauca (comprador)",
+            "entity_resolved": "GOBERNACION DEL VALLE DEL CAUCA - DADI",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": true,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DEL VALLE DEL CAUCA - DADI'",
+            "status": "WRONG_BUYER",
+            "note": "resolvió a subentidad: 'GOBERNACION DEL VALLE DEL CAUCA - DADI'",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "corto",
+            "user_phrase": "Gobernación del Valle",
+            "entity_expected": "Gobernación de Valle del Cauca (comprador)",
+            "entity_resolved": "GOBERNACION DEL VALLE DEL CAUCA - DADI",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": true,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DEL VALLE DEL CAUCA - DADI'",
+            "status": "WRONG_BUYER",
+            "note": "resolvió a subentidad: 'GOBERNACION DEL VALLE DEL CAUCA - DADI'",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de la Gobernación del Valle del Cauca en 2025",
+            "entity_expected": "Gobernación de Valle del Cauca (comprador)",
+            "entity_resolved": "GOBERNACION DEL VALLE DEL CAUCA - DADI",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": true,
+            "resulting_entity_filter": "nombre_entidad = 'GOBERNACION DEL VALLE DEL CAUCA - DADI'",
+            "status": "WRONG_BUYER",
+            "note": "resolvió a subentidad: 'GOBERNACION DEL VALLE DEL CAUCA - DADI'",
+            "departamento_resolved": null
+          }
+        ],
+        "territorial_gate": {
+          "user_phrase": "contratos en el departamento de Valle del Cauca",
+          "departamento_resolved": "Valle del Cauca",
+          "departamento_method": "territorial_pattern",
+          "entity_resolved": null,
+          "resulting_entity_filter": "departamento = 'Valle del Cauca'  [TERRITORIO]",
+          "status": "PASS"
+        },
+        "departamento": "Valle del Cauca"
+      },
+      {
+        "id": "vaupes",
+        "universe": "A_gobernaciones",
+        "entity_expected": "Gobernación de Vaupés (comprador)",
+        "status": "WRONG_BUYER",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Gobernación del Vaupés",
+            "entity_expected": "Gobernación de Vaupés (comprador)",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": true,
+            "resulting_entity_filter": "departamento = 'Vaupés'  [TERRITORIO]",
+            "status": "WRONG_BUYER",
+            "note": "colapsó a territorio (Vaupés)",
+            "departamento_resolved": "Vaupés"
+          },
+          {
+            "probe_kind": "corto",
+            "user_phrase": "Gobernación Vaupés",
+            "entity_expected": "Gobernación de Vaupés (comprador)",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": true,
+            "resulting_entity_filter": "departamento = 'Vaupés'  [TERRITORIO]",
+            "status": "WRONG_BUYER",
+            "note": "colapsó a territorio (Vaupés)",
+            "departamento_resolved": "Vaupés"
+          },
+          {
+            "probe_kind": "sin_tildes",
+            "user_phrase": "Gobernacion del Vaupes",
+            "entity_expected": "Gobernación de Vaupés (comprador)",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": true,
+            "resulting_entity_filter": "departamento = 'Vaupés'  [TERRITORIO]",
+            "status": "WRONG_BUYER",
+            "note": "colapsó a territorio (Vaupés)",
+            "departamento_resolved": "Vaupés"
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de la Gobernación del Vaupés en 2025",
+            "entity_expected": "Gobernación de Vaupés (comprador)",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": true,
+            "resulting_entity_filter": "departamento = 'Vaupés'  [TERRITORIO]",
+            "status": "WRONG_BUYER",
+            "note": "colapsó a territorio (Vaupés)",
+            "departamento_resolved": "Vaupés"
+          }
+        ],
+        "territorial_gate": {
+          "user_phrase": "contratos en el departamento de Vaupés",
+          "departamento_resolved": "Vaupés",
+          "departamento_method": "territorial_pattern",
+          "entity_resolved": null,
+          "resulting_entity_filter": "departamento = 'Vaupés'  [TERRITORIO]",
+          "status": "PASS"
+        },
+        "departamento": "Vaupés"
+      },
+      {
+        "id": "vichada",
+        "universe": "A_gobernaciones",
+        "entity_expected": "Gobernación de Vichada (comprador)",
+        "status": "WRONG_BUYER",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Gobernación del Vichada",
+            "entity_expected": "Gobernación de Vichada (comprador)",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": true,
+            "resulting_entity_filter": "departamento = 'Vichada'  [TERRITORIO]",
+            "status": "WRONG_BUYER",
+            "note": "colapsó a territorio (Vichada)",
+            "departamento_resolved": "Vichada"
+          },
+          {
+            "probe_kind": "corto",
+            "user_phrase": "Gobernación Vichada",
+            "entity_expected": "Gobernación de Vichada (comprador)",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": true,
+            "resulting_entity_filter": "departamento = 'Vichada'  [TERRITORIO]",
+            "status": "WRONG_BUYER",
+            "note": "colapsó a territorio (Vichada)",
+            "departamento_resolved": "Vichada"
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de la Gobernación del Vichada en 2025",
+            "entity_expected": "Gobernación de Vichada (comprador)",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": true,
+            "resulting_entity_filter": "departamento = 'Vichada'  [TERRITORIO]",
+            "status": "WRONG_BUYER",
+            "note": "colapsó a territorio (Vichada)",
+            "departamento_resolved": "Vichada"
+          }
+        ],
+        "territorial_gate": {
+          "user_phrase": "contratos en el departamento de Vichada",
+          "departamento_resolved": "Vichada",
+          "departamento_method": "territorial_pattern",
+          "entity_resolved": null,
+          "resulting_entity_filter": "departamento = 'Vichada'  [TERRITORIO]",
+          "status": "PASS"
+        },
+        "departamento": "Vichada"
+      }
+    ],
+    "B_ministerios": [
+      {
+        "id": "interior",
+        "universe": "B_ministerios",
+        "entity_expected": "Ministerio del Interior",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Ministerio del Interior",
+            "entity_expected": "Ministerio del Interior",
+            "entity_resolved": "MINISTERIO DEL INTERIOR",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINISTERIO DEL INTERIOR'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sigla",
+            "user_phrase": "Mininterior",
+            "entity_expected": "Ministerio del Interior",
+            "entity_resolved": "MINISTERIO DEL INTERIOR",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINISTERIO DEL INTERIOR'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de Ministerio del Interior en 2025",
+            "entity_expected": "Ministerio del Interior",
+            "entity_resolved": "MINISTERIO DEL INTERIOR",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINISTERIO DEL INTERIOR'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ]
+      },
+      {
+        "id": "exteriores",
+        "universe": "B_ministerios",
+        "entity_expected": "Ministerio de Relaciones Exteriores",
+        "status": "MISSING",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Ministerio de Relaciones Exteriores",
+            "entity_expected": "Ministerio de Relaciones Exteriores",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(ninguno)",
+            "status": "MISSING",
+            "note": "no resuelve nada",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sigla",
+            "user_phrase": "Cancillería",
+            "entity_expected": "Ministerio de Relaciones Exteriores",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(ninguno)",
+            "status": "MISSING",
+            "note": "no resuelve nada",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sin_tildes",
+            "user_phrase": "Ministerio de Relaciones Exteriores",
+            "entity_expected": "Ministerio de Relaciones Exteriores",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(ninguno)",
+            "status": "MISSING",
+            "note": "no resuelve nada",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de Ministerio de Relaciones Exteriores en 2025",
+            "entity_expected": "Ministerio de Relaciones Exteriores",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(ninguno)",
+            "status": "MISSING",
+            "note": "no resuelve nada",
+            "departamento_resolved": null
+          }
+        ]
+      },
+      {
+        "id": "hacienda",
+        "universe": "B_ministerios",
+        "entity_expected": "Ministerio de Hacienda y Crédito Público",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Ministerio de Hacienda y Crédito Público",
+            "entity_expected": "Ministerio de Hacienda y Crédito Público",
+            "entity_resolved": "MINISTERIO DE HACIENDA Y CREDITO PUBLICO",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINISTERIO DE HACIENDA Y CREDITO PUBLICO'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sigla",
+            "user_phrase": "Minhacienda",
+            "entity_expected": "Ministerio de Hacienda y Crédito Público",
+            "entity_resolved": "MINISTERIO DE HACIENDA Y CREDITO PUBLICO",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINISTERIO DE HACIENDA Y CREDITO PUBLICO'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sin_tildes",
+            "user_phrase": "Ministerio de Hacienda y Credito Publico",
+            "entity_expected": "Ministerio de Hacienda y Crédito Público",
+            "entity_resolved": "MINISTERIO DE HACIENDA Y CREDITO PUBLICO",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINISTERIO DE HACIENDA Y CREDITO PUBLICO'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de Ministerio de Hacienda y Crédito Público en 2025",
+            "entity_expected": "Ministerio de Hacienda y Crédito Público",
+            "entity_resolved": "MINISTERIO DE HACIENDA Y CREDITO PUBLICO",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINISTERIO DE HACIENDA Y CREDITO PUBLICO'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ]
+      },
+      {
+        "id": "justicia",
+        "universe": "B_ministerios",
+        "entity_expected": "Ministerio de Justicia y del Derecho",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Ministerio de Justicia y del Derecho",
+            "entity_expected": "Ministerio de Justicia y del Derecho",
+            "entity_resolved": "MINJUSTICIA..",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINJUSTICIA..'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sigla",
+            "user_phrase": "Minjusticia",
+            "entity_expected": "Ministerio de Justicia y del Derecho",
+            "entity_resolved": "MINJUSTICIA..",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINJUSTICIA..'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de Ministerio de Justicia y del Derecho en 2025",
+            "entity_expected": "Ministerio de Justicia y del Derecho",
+            "entity_resolved": "MINJUSTICIA..",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINJUSTICIA..'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ]
+      },
+      {
+        "id": "defensa",
+        "universe": "B_ministerios",
+        "entity_expected": "Ministerio de Defensa Nacional",
+        "status": "MISSING",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Ministerio de Defensa Nacional",
+            "entity_expected": "Ministerio de Defensa Nacional",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(ninguno)",
+            "status": "MISSING",
+            "note": "no resuelve nada",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sigla",
+            "user_phrase": "Mindefensa",
+            "entity_expected": "Ministerio de Defensa Nacional",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(ninguno)",
+            "status": "MISSING",
+            "note": "no resuelve nada",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de Ministerio de Defensa Nacional en 2025",
+            "entity_expected": "Ministerio de Defensa Nacional",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(ninguno)",
+            "status": "MISSING",
+            "note": "no resuelve nada",
+            "departamento_resolved": null
+          }
+        ]
+      },
+      {
+        "id": "agricultura",
+        "universe": "B_ministerios",
+        "entity_expected": "Ministerio de Agricultura y Desarrollo Rural",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Ministerio de Agricultura y Desarrollo Rural",
+            "entity_expected": "Ministerio de Agricultura y Desarrollo Rural",
+            "entity_resolved": "MINISTERIO DE AGRICULTURA Y DESARROLLO RURAL",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINISTERIO DE AGRICULTURA Y DESARROLLO RURAL'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sigla",
+            "user_phrase": "Minagricultura",
+            "entity_expected": "Ministerio de Agricultura y Desarrollo Rural",
+            "entity_resolved": "MINISTERIO DE AGRICULTURA Y DESARROLLO RURAL",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINISTERIO DE AGRICULTURA Y DESARROLLO RURAL'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de Ministerio de Agricultura y Desarrollo Rural en 2025",
+            "entity_expected": "Ministerio de Agricultura y Desarrollo Rural",
+            "entity_resolved": "MINISTERIO DE AGRICULTURA Y DESARROLLO RURAL",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINISTERIO DE AGRICULTURA Y DESARROLLO RURAL'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ]
+      },
+      {
+        "id": "salud",
+        "universe": "B_ministerios",
+        "entity_expected": "Ministerio de Salud y Protección Social",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Ministerio de Salud y Protección Social",
+            "entity_expected": "Ministerio de Salud y Protección Social",
+            "entity_resolved": "MINSALUD",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINSALUD'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sigla",
+            "user_phrase": "Minsalud",
+            "entity_expected": "Ministerio de Salud y Protección Social",
+            "entity_resolved": "MINSALUD",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINSALUD'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sin_tildes",
+            "user_phrase": "Ministerio de Salud y Proteccion Social",
+            "entity_expected": "Ministerio de Salud y Protección Social",
+            "entity_resolved": "MINSALUD",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINSALUD'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de Ministerio de Salud y Protección Social en 2025",
+            "entity_expected": "Ministerio de Salud y Protección Social",
+            "entity_resolved": "MINSALUD",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINSALUD'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ]
+      },
+      {
+        "id": "trabajo",
+        "universe": "B_ministerios",
+        "entity_expected": "Ministerio del Trabajo",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Ministerio del Trabajo",
+            "entity_expected": "Ministerio del Trabajo",
+            "entity_resolved": "MINISTERIO DEL TRABAJO NIVEL CENTRAL*/",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINISTERIO DEL TRABAJO NIVEL CENTRAL*/'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sigla",
+            "user_phrase": "Mintrabajo",
+            "entity_expected": "Ministerio del Trabajo",
+            "entity_resolved": "MINISTERIO DEL TRABAJO NIVEL CENTRAL*/",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINISTERIO DEL TRABAJO NIVEL CENTRAL*/'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de Ministerio del Trabajo en 2025",
+            "entity_expected": "Ministerio del Trabajo",
+            "entity_resolved": "MINISTERIO DEL TRABAJO NIVEL CENTRAL*/",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINISTERIO DEL TRABAJO NIVEL CENTRAL*/'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ]
+      },
+      {
+        "id": "minas",
+        "universe": "B_ministerios",
+        "entity_expected": "Ministerio de Minas y Energía",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Ministerio de Minas y Energía",
+            "entity_expected": "Ministerio de Minas y Energía",
+            "entity_resolved": "MINISTERIO DE MINAS Y ENERGIA",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINISTERIO DE MINAS Y ENERGIA'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sigla",
+            "user_phrase": "Minminas",
+            "entity_expected": "Ministerio de Minas y Energía",
+            "entity_resolved": "MINISTERIO DE MINAS Y ENERGIA",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINISTERIO DE MINAS Y ENERGIA'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sin_tildes",
+            "user_phrase": "Ministerio de Minas y Energia",
+            "entity_expected": "Ministerio de Minas y Energía",
+            "entity_resolved": "MINISTERIO DE MINAS Y ENERGIA",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINISTERIO DE MINAS Y ENERGIA'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de Ministerio de Minas y Energía en 2025",
+            "entity_expected": "Ministerio de Minas y Energía",
+            "entity_resolved": "MINISTERIO DE MINAS Y ENERGIA",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINISTERIO DE MINAS Y ENERGIA'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ]
+      },
+      {
+        "id": "comercio",
+        "universe": "B_ministerios",
+        "entity_expected": "Ministerio de Comercio, Industria y Turismo",
+        "status": "PARTIAL_ALIASES",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Ministerio de Comercio, Industria y Turismo",
+            "entity_expected": "Ministerio de Comercio, Industria y Turismo",
+            "entity_resolved": "MINISTERIO DE COMERCIO INDUSTRIA Y TURISMO - MINCIT",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINISTERIO DE COMERCIO INDUSTRIA Y TURISMO - MINCIT'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sigla",
+            "user_phrase": "Mincomercio",
+            "entity_expected": "Ministerio de Comercio, Industria y Turismo",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(ninguno)",
+            "status": "MISSING",
+            "note": "no resuelve nada",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de Ministerio de Comercio, Industria y Turismo en 2025",
+            "entity_expected": "Ministerio de Comercio, Industria y Turismo",
+            "entity_resolved": "MINISTERIO DE COMERCIO INDUSTRIA Y TURISMO - MINCIT",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINISTERIO DE COMERCIO INDUSTRIA Y TURISMO - MINCIT'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ]
+      },
+      {
+        "id": "educacion",
+        "universe": "B_ministerios",
+        "entity_expected": "Ministerio de Educación Nacional",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Ministerio de Educación Nacional",
+            "entity_expected": "Ministerio de Educación Nacional",
+            "entity_resolved": "MINISTERIO DE EDUCACION NACIONAL (MEN)",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINISTERIO DE EDUCACION NACIONAL (MEN)'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sigla",
+            "user_phrase": "Mineducación",
+            "entity_expected": "Ministerio de Educación Nacional",
+            "entity_resolved": "MINISTERIO DE EDUCACION NACIONAL (MEN)",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINISTERIO DE EDUCACION NACIONAL (MEN)'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sin_tildes",
+            "user_phrase": "Ministerio de Educacion Nacional",
+            "entity_expected": "Ministerio de Educación Nacional",
+            "entity_resolved": "MINISTERIO DE EDUCACION NACIONAL (MEN)",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINISTERIO DE EDUCACION NACIONAL (MEN)'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de Ministerio de Educación Nacional en 2025",
+            "entity_expected": "Ministerio de Educación Nacional",
+            "entity_resolved": "MINISTERIO DE EDUCACION NACIONAL (MEN)",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINISTERIO DE EDUCACION NACIONAL (MEN)'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ]
+      },
+      {
+        "id": "ambiente",
+        "universe": "B_ministerios",
+        "entity_expected": "Ministerio de Ambiente y Desarrollo Sostenible",
+        "status": "PARTIAL_ALIASES",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Ministerio de Ambiente y Desarrollo Sostenible",
+            "entity_expected": "Ministerio de Ambiente y Desarrollo Sostenible",
+            "entity_resolved": "MINISTERIO DE AMBIENTE Y DESARROLLO SOSTENIBLE",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINISTERIO DE AMBIENTE Y DESARROLLO SOSTENIBLE'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sigla",
+            "user_phrase": "Minambiente",
+            "entity_expected": "Ministerio de Ambiente y Desarrollo Sostenible",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(ninguno)",
+            "status": "MISSING",
+            "note": "no resuelve nada",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de Ministerio de Ambiente y Desarrollo Sostenible en 2025",
+            "entity_expected": "Ministerio de Ambiente y Desarrollo Sostenible",
+            "entity_resolved": "MINISTERIO DE AMBIENTE Y DESARROLLO SOSTENIBLE",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINISTERIO DE AMBIENTE Y DESARROLLO SOSTENIBLE'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ]
+      },
+      {
+        "id": "vivienda",
+        "universe": "B_ministerios",
+        "entity_expected": "Ministerio de Vivienda, Ciudad y Territorio",
+        "status": "PARTIAL_ALIASES",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Ministerio de Vivienda, Ciudad y Territorio",
+            "entity_expected": "Ministerio de Vivienda, Ciudad y Territorio",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(ninguno)",
+            "status": "MISSING",
+            "note": "no resuelve nada",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sigla",
+            "user_phrase": "Minvivienda",
+            "entity_expected": "Ministerio de Vivienda, Ciudad y Territorio",
+            "entity_resolved": "MINVIVIENDA",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINVIVIENDA'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de Ministerio de Vivienda, Ciudad y Territorio en 2025",
+            "entity_expected": "Ministerio de Vivienda, Ciudad y Territorio",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(ninguno)",
+            "status": "MISSING",
+            "note": "no resuelve nada",
+            "departamento_resolved": null
+          }
+        ]
+      },
+      {
+        "id": "tic",
+        "universe": "B_ministerios",
+        "entity_expected": "Ministerio de Tecnologías de la Información y las Comunicaciones",
+        "status": "MISSING",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Ministerio de Tecnologías de la Información y las Comunicaciones",
+            "entity_expected": "Ministerio de Tecnologías de la Información y las Comunicaciones",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(ninguno)",
+            "status": "MISSING",
+            "note": "no resuelve nada",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sigla",
+            "user_phrase": "MinTIC",
+            "entity_expected": "Ministerio de Tecnologías de la Información y las Comunicaciones",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(ninguno)",
+            "status": "MISSING",
+            "note": "no resuelve nada",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sin_tildes",
+            "user_phrase": "Ministerio de Tecnologias de la Informacion y las Comunicaciones",
+            "entity_expected": "Ministerio de Tecnologías de la Información y las Comunicaciones",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(ninguno)",
+            "status": "MISSING",
+            "note": "no resuelve nada",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de Ministerio de Tecnologías de la Información y las Comunicaciones en 2025",
+            "entity_expected": "Ministerio de Tecnologías de la Información y las Comunicaciones",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(ninguno)",
+            "status": "MISSING",
+            "note": "no resuelve nada",
+            "departamento_resolved": null
+          }
+        ]
+      },
+      {
+        "id": "transporte",
+        "universe": "B_ministerios",
+        "entity_expected": "Ministerio de Transporte",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Ministerio de Transporte",
+            "entity_expected": "Ministerio de Transporte",
+            "entity_resolved": "MINISTERIO DE TRANSPORTE*",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINISTERIO DE TRANSPORTE*'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sigla",
+            "user_phrase": "Mintransporte",
+            "entity_expected": "Ministerio de Transporte",
+            "entity_resolved": "MINISTERIO DE TRANSPORTE*",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINISTERIO DE TRANSPORTE*'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de Ministerio de Transporte en 2025",
+            "entity_expected": "Ministerio de Transporte",
+            "entity_resolved": "MINISTERIO DE TRANSPORTE*",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINISTERIO DE TRANSPORTE*'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ]
+      },
+      {
+        "id": "cultura",
+        "universe": "B_ministerios",
+        "entity_expected": "Ministerio de Cultura",
+        "status": "PARTIAL_ALIASES",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Ministerio de Cultura",
+            "entity_expected": "Ministerio de Cultura",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(ninguno)",
+            "status": "MISSING",
+            "note": "no resuelve nada",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sigla",
+            "user_phrase": "Mincultura",
+            "entity_expected": "Ministerio de Cultura",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(ninguno)",
+            "status": "MISSING",
+            "note": "no resuelve nada",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de Ministerio de Cultura en 2025",
+            "entity_expected": "Ministerio de Cultura",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(ninguno)",
+            "status": "MISSING",
+            "note": "no resuelve nada",
+            "departamento_resolved": null
+          }
+        ],
+        "override_note": "La identidad SÍ existe: 'Ministerio de las Culturas, las Artes y los Saberes' (28.102 procesos, 32 aliases). Lo que falta es el alias del nombre histórico que la gente usa: 'Ministerio de Cultura' / 'Mincultura'. Deuda de alias, no de identidad."
+      },
+      {
+        "id": "deporte",
+        "universe": "B_ministerios",
+        "entity_expected": "Ministerio del Deporte",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Ministerio del Deporte",
+            "entity_expected": "Ministerio del Deporte",
+            "entity_resolved": "MINISTERIO DEL DEPORTE",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINISTERIO DEL DEPORTE'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sigla",
+            "user_phrase": "Mindeporte",
+            "entity_expected": "Ministerio del Deporte",
+            "entity_resolved": "MINISTERIO DEL DEPORTE",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINISTERIO DEL DEPORTE'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de Ministerio del Deporte en 2025",
+            "entity_expected": "Ministerio del Deporte",
+            "entity_resolved": "MINISTERIO DEL DEPORTE",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINISTERIO DEL DEPORTE'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ]
+      },
+      {
+        "id": "ciencia",
+        "universe": "B_ministerios",
+        "entity_expected": "Ministerio de Ciencia, Tecnología e Innovación",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Ministerio de Ciencia, Tecnología e Innovación",
+            "entity_expected": "Ministerio de Ciencia, Tecnología e Innovación",
+            "entity_resolved": "MINCIENCIAS",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINCIENCIAS'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sigla",
+            "user_phrase": "Minciencias",
+            "entity_expected": "Ministerio de Ciencia, Tecnología e Innovación",
+            "entity_resolved": "MINCIENCIAS",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINCIENCIAS'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sin_tildes",
+            "user_phrase": "Ministerio de Ciencia, Tecnologia e Innovacion",
+            "entity_expected": "Ministerio de Ciencia, Tecnología e Innovación",
+            "entity_resolved": "MINCIENCIAS",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINCIENCIAS'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de Ministerio de Ciencia, Tecnología e Innovación en 2025",
+            "entity_expected": "Ministerio de Ciencia, Tecnología e Innovación",
+            "entity_resolved": "MINCIENCIAS",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'MINCIENCIAS'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ]
+      },
+      {
+        "id": "igualdad",
+        "universe": "B_ministerios",
+        "entity_expected": "Ministerio de Igualdad y Equidad",
+        "status": "MISSING",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Ministerio de Igualdad y Equidad",
+            "entity_expected": "Ministerio de Igualdad y Equidad",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(ninguno)",
+            "status": "MISSING",
+            "note": "no resuelve nada",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sigla",
+            "user_phrase": "Minigualdad",
+            "entity_expected": "Ministerio de Igualdad y Equidad",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(ninguno)",
+            "status": "MISSING",
+            "note": "no resuelve nada",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de Ministerio de Igualdad y Equidad en 2025",
+            "entity_expected": "Ministerio de Igualdad y Equidad",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(ninguno)",
+            "status": "MISSING",
+            "note": "no resuelve nada",
+            "departamento_resolved": null
+          }
+        ]
+      }
+    ],
+    "C_departamentos_admin": [
+      {
+        "id": "dapre",
+        "universe": "C_departamentos_admin",
+        "entity_expected": "Departamento Administrativo de la Presidencia de la República",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Departamento Administrativo de la Presidencia de la República",
+            "entity_expected": "Departamento Administrativo de la Presidencia de la República",
+            "entity_resolved": "DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPÚBLICA",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPÚBLICA'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sigla",
+            "user_phrase": "DAPRE",
+            "entity_expected": "Departamento Administrativo de la Presidencia de la República",
+            "entity_resolved": "DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPÚBLICA",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPÚBLICA'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sin_tildes",
+            "user_phrase": "Departamento Administrativo de la Presidencia de la Republica",
+            "entity_expected": "Departamento Administrativo de la Presidencia de la República",
+            "entity_resolved": "DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPÚBLICA",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPÚBLICA'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de Departamento Administrativo de la Presidencia de la República en 2025",
+            "entity_expected": "Departamento Administrativo de la Presidencia de la República",
+            "entity_resolved": "DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPÚBLICA",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPÚBLICA'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ]
+      },
+      {
+        "id": "dane",
+        "universe": "C_departamentos_admin",
+        "entity_expected": "Departamento Administrativo Nacional de Estadística",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Departamento Administrativo Nacional de Estadística",
+            "entity_expected": "Departamento Administrativo Nacional de Estadística",
+            "entity_resolved": "DEPARTAMENTO ADMINISTRATIVO NACIONAL DE ESTADISTICA (DANE)",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO NACIONAL DE ESTADISTICA (DANE)'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sigla",
+            "user_phrase": "DANE",
+            "entity_expected": "Departamento Administrativo Nacional de Estadística",
+            "entity_resolved": "DEPARTAMENTO ADMINISTRATIVO NACIONAL DE ESTADISTICA (DANE)",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO NACIONAL DE ESTADISTICA (DANE)'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sin_tildes",
+            "user_phrase": "Departamento Administrativo Nacional de Estadistica",
+            "entity_expected": "Departamento Administrativo Nacional de Estadística",
+            "entity_resolved": "DEPARTAMENTO ADMINISTRATIVO NACIONAL DE ESTADISTICA (DANE)",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO NACIONAL DE ESTADISTICA (DANE)'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de Departamento Administrativo Nacional de Estadística en 2025",
+            "entity_expected": "Departamento Administrativo Nacional de Estadística",
+            "entity_resolved": "DEPARTAMENTO ADMINISTRATIVO NACIONAL DE ESTADISTICA (DANE)",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO NACIONAL DE ESTADISTICA (DANE)'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ]
+      },
+      {
+        "id": "dnp",
+        "universe": "C_departamentos_admin",
+        "entity_expected": "Departamento Nacional de Planeación",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Departamento Nacional de Planeación",
+            "entity_expected": "Departamento Nacional de Planeación",
+            "entity_resolved": "DEPARTAMENTO NACIONAL DE PLANEACIÓN",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO NACIONAL DE PLANEACIÓN'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sigla",
+            "user_phrase": "DNP",
+            "entity_expected": "Departamento Nacional de Planeación",
+            "entity_resolved": "DEPARTAMENTO NACIONAL DE PLANEACIÓN",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO NACIONAL DE PLANEACIÓN'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sin_tildes",
+            "user_phrase": "Departamento Nacional de Planeacion",
+            "entity_expected": "Departamento Nacional de Planeación",
+            "entity_resolved": "DEPARTAMENTO NACIONAL DE PLANEACIÓN",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO NACIONAL DE PLANEACIÓN'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de Departamento Nacional de Planeación en 2025",
+            "entity_expected": "Departamento Nacional de Planeación",
+            "entity_resolved": "DEPARTAMENTO NACIONAL DE PLANEACIÓN",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'DEPARTAMENTO NACIONAL DE PLANEACIÓN'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ]
+      },
+      {
+        "id": "dafp",
+        "universe": "C_departamentos_admin",
+        "entity_expected": "Departamento Administrativo de la Función Pública",
+        "status": "MISSING",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Departamento Administrativo de la Función Pública",
+            "entity_expected": "Departamento Administrativo de la Función Pública",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(ninguno)",
+            "status": "MISSING",
+            "note": "no resuelve nada",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sigla",
+            "user_phrase": "Función Pública",
+            "entity_expected": "Departamento Administrativo de la Función Pública",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(ninguno)",
+            "status": "MISSING",
+            "note": "no resuelve nada",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sin_tildes",
+            "user_phrase": "Departamento Administrativo de la Funcion Publica",
+            "entity_expected": "Departamento Administrativo de la Función Pública",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(ninguno)",
+            "status": "MISSING",
+            "note": "no resuelve nada",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de Departamento Administrativo de la Función Pública en 2025",
+            "entity_expected": "Departamento Administrativo de la Función Pública",
+            "entity_resolved": null,
+            "resolution_method": "generic_buyer_unqualified",
+            "confidence": "none",
+            "clarification_needed": true,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(clarificación — sin filtro)",
+            "status": "MISSING",
+            "note": "pide clarificación, no resuelve comprador",
+            "departamento_resolved": null
+          }
+        ]
+      },
+      {
+        "id": "dps",
+        "universe": "C_departamentos_admin",
+        "entity_expected": "Departamento Administrativo para la Prosperidad Social",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Departamento Administrativo para la Prosperidad Social",
+            "entity_expected": "Departamento Administrativo para la Prosperidad Social",
+            "entity_resolved": "PROSPERIDAD SOCIAL",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'PROSPERIDAD SOCIAL'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sigla",
+            "user_phrase": "Prosperidad Social",
+            "entity_expected": "Departamento Administrativo para la Prosperidad Social",
+            "entity_resolved": "PROSPERIDAD SOCIAL",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'PROSPERIDAD SOCIAL'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de Departamento Administrativo para la Prosperidad Social en 2025",
+            "entity_expected": "Departamento Administrativo para la Prosperidad Social",
+            "entity_resolved": "PROSPERIDAD SOCIAL",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'PROSPERIDAD SOCIAL'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ]
+      },
+      {
+        "id": "dni",
+        "universe": "C_departamentos_admin",
+        "entity_expected": "Dirección Nacional de Inteligencia (DNI)",
+        "status": "MISSING",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Dirección Nacional de Inteligencia",
+            "entity_expected": "Dirección Nacional de Inteligencia",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(ninguno)",
+            "status": "MISSING",
+            "note": "no resuelve nada",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sigla",
+            "user_phrase": "DNI",
+            "entity_expected": "Dirección Nacional de Inteligencia",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(ninguno)",
+            "status": "MISSING",
+            "note": "no resuelve nada",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sin_tildes",
+            "user_phrase": "Direccion Nacional de Inteligencia",
+            "entity_expected": "Dirección Nacional de Inteligencia",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(ninguno)",
+            "status": "MISSING",
+            "note": "no resuelve nada",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de Dirección Nacional de Inteligencia en 2025",
+            "entity_expected": "Dirección Nacional de Inteligencia",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(ninguno)",
+            "status": "MISSING",
+            "note": "no resuelve nada",
+            "departamento_resolved": null
+          }
+        ],
+        "gazetteer_records": 0,
+        "note": "R0.1 — añadida al universo (no probada en R0). 0 registros en aliases_db.json; 4/4 sondas sin resolución. A diferencia de las gobernaciones ausentes, NO degrada a territorio: falla en blanco, sin filtro. Riesgo de alias si se agrega: 'DNI' es una sigla sobrecargada (documento de identidad).",
+        "revised_in": "R0.1"
+      }
+    ],
+    "D_fiduprevisora": [
+      {
+        "id": "fiduprevisora",
+        "universe": "D_fiduprevisora",
+        "entity_expected": "Fiduciaria La Previsora S.A.",
+        "status": "PASS_EXACT",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Fiduciaria La Previsora",
+            "entity_expected": "Fiduciaria La Previsora S.A.",
+            "entity_resolved": "FIDUCIARIA LA PREVISORA S.A.- FIDUPREVISORA S.A.",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'FIDUCIARIA LA PREVISORA S.A.- FIDUPREVISORA S.A.'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sigla",
+            "user_phrase": "Fiduprevisora",
+            "entity_expected": "Fiduciaria La Previsora S.A.",
+            "entity_resolved": "FIDUCIARIA LA PREVISORA S.A.- FIDUPREVISORA S.A.",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'FIDUCIARIA LA PREVISORA S.A.- FIDUPREVISORA S.A.'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de Fiduprevisora en 2025",
+            "entity_expected": "Fiduciaria La Previsora S.A.",
+            "entity_resolved": "FIDUCIARIA LA PREVISORA S.A.- FIDUPREVISORA S.A.",
+            "resolution_method": "scan_exact",
+            "confidence": "high",
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "nombre_entidad = 'FIDUCIARIA LA PREVISORA S.A.- FIDUPREVISORA S.A.'",
+            "status": "PASS_EXACT",
+            "note": "",
+            "departamento_resolved": null
+          }
+        ]
+      }
+    ],
+    "E_baranoa": [
+      {
+        "id": "baranoa_alcaldia",
+        "universe": "E_baranoa",
+        "entity_expected": "Alcaldía de Baranoa",
+        "status": "MISSING",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Alcaldía de Baranoa",
+            "entity_expected": "Alcaldía de Baranoa",
+            "entity_resolved": null,
+            "resolution_method": "rewrite_alcald[ií]a_unresolved",
+            "confidence": "low",
+            "clarification_needed": true,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(clarificación — sin filtro)",
+            "status": "MISSING",
+            "note": "pide clarificación, no resuelve comprador",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "corto",
+            "user_phrase": "Alcaldía Baranoa",
+            "entity_expected": "Alcaldía de Baranoa",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(ninguno)",
+            "status": "MISSING",
+            "note": "no resuelve nada",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "sin_tildes",
+            "user_phrase": "Alcaldia de Baranoa",
+            "entity_expected": "Alcaldía de Baranoa",
+            "entity_resolved": null,
+            "resolution_method": "rewrite_alcald[ií]a_unresolved",
+            "confidence": "low",
+            "clarification_needed": true,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(clarificación — sin filtro)",
+            "status": "MISSING",
+            "note": "pide clarificación, no resuelve comprador",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de la Alcaldía de Baranoa en 2025",
+            "entity_expected": "Alcaldía de Baranoa",
+            "entity_resolved": null,
+            "resolution_method": "rewrite_alcald[ií]a_unresolved",
+            "confidence": "low",
+            "clarification_needed": true,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(clarificación — sin filtro)",
+            "status": "MISSING",
+            "note": "pide clarificación, no resuelve comprador",
+            "departamento_resolved": null
+          }
+        ]
+      },
+      {
+        "id": "baranoa_municipio",
+        "universe": "E_baranoa",
+        "entity_expected": "Municipio de Baranoa",
+        "status": "WRONG_BUYER",
+        "probes": [
+          {
+            "probe_kind": "natural",
+            "user_phrase": "Municipio de Baranoa",
+            "entity_expected": "Municipio de Baranoa",
+            "entity_resolved": null,
+            "resolution_method": "rewrite_municipio_unresolved",
+            "confidence": "low",
+            "clarification_needed": true,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(clarificación — sin filtro)",
+            "status": "MISSING",
+            "note": "pide clarificación, no resuelve comprador",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "corto",
+            "user_phrase": "Baranoa Atlántico",
+            "entity_expected": "Municipio de Baranoa",
+            "entity_resolved": null,
+            "resolution_method": null,
+            "confidence": null,
+            "clarification_needed": false,
+            "wrong_parent_or_child": true,
+            "resulting_entity_filter": "departamento = 'Atlántico'  [TERRITORIO]",
+            "status": "WRONG_BUYER",
+            "note": "colapsó a territorio (Atlántico)",
+            "departamento_resolved": "Atlántico"
+          },
+          {
+            "probe_kind": "sin_tildes",
+            "user_phrase": "Municipio de Baranoa",
+            "entity_expected": "Municipio de Baranoa",
+            "entity_resolved": null,
+            "resolution_method": "rewrite_municipio_unresolved",
+            "confidence": "low",
+            "clarification_needed": true,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(clarificación — sin filtro)",
+            "status": "MISSING",
+            "note": "pide clarificación, no resuelve comprador",
+            "departamento_resolved": null
+          },
+          {
+            "probe_kind": "consulta_completa",
+            "user_phrase": "contratos de la Municipio de Baranoa en 2025",
+            "entity_expected": "Municipio de Baranoa",
+            "entity_resolved": null,
+            "resolution_method": "rewrite_municipio_unresolved",
+            "confidence": "low",
+            "clarification_needed": true,
+            "wrong_parent_or_child": false,
+            "resulting_entity_filter": "(clarificación — sin filtro)",
+            "status": "MISSING",
+            "note": "pide clarificación, no resuelve comprador",
+            "departamento_resolved": null
+          }
+        ]
+      }
+    ]
+  },
+  "root_cause_mechanisms": {
+    "RC1_city_shadows_department": {
+      "claim": "geo_mention_resolution() consulta GAZETTEER_CIUDADES ANTES que DEPARTAMENTOS y el patrón territorial (query_router 4.55) exige kind=='department'. Un homónimo ciudad/departamento desactiva el gate territorial en silencio.",
+      "collisions": [
+        "arauca",
+        "bogota",
+        "cucuta",
+        "san andres"
+      ],
+      "probes": [
+        {
+          "user_phrase": "contratos en el departamento de Arauca",
+          "entity_resolved": "DEPARTAMENTO DEL ARAUCA",
+          "resolution_method": "scan_exact",
+          "confidence": "high",
+          "clarification_needed": false,
+          "departamento_resolved": null,
+          "departamento_method": null,
+          "gazetteer_total_procesos": 4909
+        },
+        {
+          "user_phrase": "contratos del departamento de Arauca",
+          "entity_resolved": "DEPARTAMENTO DEL ARAUCA",
+          "resolution_method": "scan_exact",
+          "confidence": "high",
+          "clarification_needed": false,
+          "departamento_resolved": null,
+          "departamento_method": null,
+          "gazetteer_total_procesos": 4909
+        },
+        {
+          "user_phrase": "contratos en el departamento de San Andrés",
+          "entity_resolved": "HOSPITAL SAN ANDRES",
+          "resolution_method": "scan_exact",
+          "confidence": "high",
+          "clarification_needed": false,
+          "departamento_resolved": null,
+          "departamento_method": null,
+          "gazetteer_total_procesos": 5030
+        },
+        {
+          "user_phrase": "contratos del departamento de Antioquia",
+          "entity_resolved": null,
+          "resolution_method": null,
+          "confidence": null,
+          "clarification_needed": false,
+          "departamento_resolved": "Antioquia",
+          "departamento_method": "territorial_pattern",
+          "gazetteer_total_procesos": null
+        },
+        {
+          "user_phrase": "contratos en el departamento del Atlántico",
+          "entity_resolved": null,
+          "resolution_method": null,
+          "confidence": null,
+          "clarification_needed": false,
+          "departamento_resolved": "Atlántico",
+          "departamento_method": "territorial_pattern",
+          "gazetteer_total_procesos": null
+        }
+      ]
+    },
+    "RC2_qualifier_unlocks_foreign_alias": {
+      "claim": "_is_unqualified_dept() acepta un alias territorial desnudo en cuanto hay un cualificador delante, sin comprobar que la entidad dueña de ese alias pertenezca a ese territorio. 'HOSPITAL SAN ANDRES' (Tumaco, NARIÑO) lleva el alias 'san andres' y captura el archipiélago.",
+      "probes": [
+        {
+          "user_phrase": "contratos en San Andrés",
+          "entity_resolved": null,
+          "resolution_method": null,
+          "confidence": null,
+          "clarification_needed": false,
+          "departamento_resolved": "San Andrés, Providencia y Santa Catalina",
+          "departamento_method": "scan_exact",
+          "gazetteer_total_procesos": null
+        },
+        {
+          "user_phrase": "contratos en el departamento de San Andrés",
+          "entity_resolved": "HOSPITAL SAN ANDRES",
+          "resolution_method": "scan_exact",
+          "confidence": "high",
+          "clarification_needed": false,
+          "departamento_resolved": null,
+          "departamento_method": null,
+          "gazetteer_total_procesos": 5030
+        },
+        {
+          "user_phrase": "Gobernación San Andrés",
+          "entity_resolved": "HOSPITAL SAN ANDRES",
+          "resolution_method": "scan_exact",
+          "confidence": "high",
+          "clarification_needed": false,
+          "departamento_resolved": null,
+          "departamento_method": null,
+          "gazetteer_total_procesos": 5030
+        },
+        {
+          "user_phrase": "Gobernación de San Andrés",
+          "entity_resolved": "DEPARTAMENTO DE SANTANDER",
+          "resolution_method": "rewrite_gobernaci[oó]n",
+          "confidence": "high",
+          "clarification_needed": false,
+          "departamento_resolved": null,
+          "departamento_method": null,
+          "gazetteer_total_procesos": 29241
+        }
+      ],
+      "hospital_aliases_toxicos": [
+        "san andres",
+        "san andrés"
+      ],
+      "gobernacion_archipielago": {
+        "official_name": "GOBERNACIÓN DEL DEPARTAMENTO ARCHIPIELAGO DE SAN ANDRES PROVIDENCIA Y SANTA CATALINA",
+        "total_procesos": 30752,
+        "aliases": [
+          "gobernación del departamento archipielago de san andres providencia y santa catalina"
+        ]
+      }
+    },
+    "RC3_missing_buyer_degrades_to_territory": {
+      "claim": "Cuando la gobernación NO está en el gazetteer, scan_entity falla y scan_departamento captura el token: 'Gobernación del Vichada' produce departamento='Vichada'. El usuario pide UN comprador y recibe TODO el territorio, sin aviso. Viola el gate 3 de la auditoría y la política INV-NO-SILENT-SEMANTIC-FALLBACK (ADR-069).",
+      "probes": [
+        {
+          "user_phrase": "contratos de la Gobernación del Vichada en 2025",
+          "entity_resolved": null,
+          "resolution_method": null,
+          "confidence": null,
+          "clarification_needed": false,
+          "departamento_resolved": "Vichada",
+          "departamento_method": "scan_exact",
+          "gazetteer_total_procesos": null
+        },
+        {
+          "user_phrase": "contratos de la Gobernación del Guainía en 2025",
+          "entity_resolved": null,
+          "resolution_method": null,
+          "confidence": null,
+          "clarification_needed": false,
+          "departamento_resolved": "Guainía",
+          "departamento_method": "scan_exact",
+          "gazetteer_total_procesos": null
+        },
+        {
+          "user_phrase": "contratos de la Gobernación del Guaviare en 2025",
+          "entity_resolved": null,
+          "resolution_method": null,
+          "confidence": null,
+          "clarification_needed": false,
+          "departamento_resolved": "Guaviare",
+          "departamento_method": "scan_exact",
+          "gazetteer_total_procesos": null
+        },
+        {
+          "user_phrase": "contratos de la Gobernación del Vaupés en 2025",
+          "entity_resolved": null,
+          "resolution_method": null,
+          "confidence": null,
+          "clarification_needed": false,
+          "departamento_resolved": "Vaupés",
+          "departamento_method": "scan_exact",
+          "gazetteer_total_procesos": null
+        }
+      ]
+    },
+    "RC4_generic_alias_captures_any_department": {
+      "claim": "'GOBIERNO DEPARTAMENTAL' (Tolima) lleva el alias genérico puro 'gobierno departamental' —prohibido por la regla 11.1 de la guía—. Cualquier consulta que use esa frase para OTRO departamento produce un WHERE contradictorio: comprador del Tolima ∧ territorio ajeno.",
+      "probes": [
+        {
+          "user_phrase": "contratos del gobierno departamental",
+          "entity_resolved": "GOBIERNO DEPARTAMENTAL",
+          "resolution_method": "scan_exact",
+          "confidence": "high",
+          "clarification_needed": false,
+          "departamento_resolved": null,
+          "departamento_method": null,
+          "gazetteer_total_procesos": 27694
+        },
+        {
+          "user_phrase": "contratos del gobierno departamental del Cauca",
+          "entity_resolved": "GOBIERNO DEPARTAMENTAL",
+          "resolution_method": "scan_exact",
+          "confidence": "high",
+          "clarification_needed": false,
+          "departamento_resolved": "Cauca",
+          "departamento_method": "scan_exact",
+          "gazetteer_total_procesos": 27694
+        },
+        {
+          "user_phrase": "contratos del gobierno departamental de Nariño",
+          "entity_resolved": "GOBIERNO DEPARTAMENTAL",
+          "resolution_method": "scan_exact",
+          "confidence": "high",
+          "clarification_needed": false,
+          "departamento_resolved": "Nariño",
+          "departamento_method": "scan_exact",
+          "gazetteer_total_procesos": 27694
+        }
+      ]
+    }
+  },
+  "duplicate_identity": {
+    "groups": [
+      {
+        "identity": "FONDO FINANCIERO DISTRITAL DE SALUD",
+        "variants": [
+          {
+            "official_name": "FONDO FINANCIERO DISTRITAL DE SALUD..",
+            "departamento": "Distrito Capital de Bogotá",
+            "total_procesos": 23264,
+            "n_aliases": 1
+          },
+          {
+            "official_name": "FONDO FINANCIERO DISTRITAL DE SALUD.",
+            "departamento": "Distrito Capital de Bogotá",
+            "total_procesos": 0,
+            "n_aliases": 52
+          }
+        ],
+        "has_dead_branch": true
+      },
+      {
+        "identity": "MINISTERIO DE JUSTICIA Y DEL DERECHO",
+        "variants": [
+          {
+            "official_name": "MINISTERIO DE JUSTICIA Y DEL DERECHO..",
+            "departamento": "Distrito Capital de Bogotá",
+            "total_procesos": 7548,
+            "n_aliases": 5
+          },
+          {
+            "official_name": "MINISTERIO DE JUSTICIA Y DEL DERECHO.",
+            "departamento": "Distrito Capital de Bogotá",
+            "total_procesos": 0,
+            "n_aliases": 5
+          }
+        ],
+        "has_dead_branch": true
+      },
+      {
+        "identity": "MINJUSTICIA",
+        "variants": [
+          {
+            "official_name": "MINJUSTICIA..",
+            "departamento": "Distrito Capital de Bogotá",
+            "total_procesos": 7449,
+            "n_aliases": 14
+          },
+          {
+            "official_name": "MINJUSTICIA.",
+            "departamento": "Distrito Capital de Bogotá",
+            "total_procesos": 0,
+            "n_aliases": 20
+          }
+        ],
+        "has_dead_branch": true
+      },
+      {
+        "identity": "MUNICIPIO DE SOACHA",
+        "variants": [
+          {
+            "official_name": "MUNICIPIO DE SOACHA..",
+            "departamento": "Cundinamarca",
+            "total_procesos": 20463,
+            "n_aliases": 15
+          },
+          {
+            "official_name": "MUNICIPIO DE SOACHA.",
+            "departamento": "Cundinamarca",
+            "total_procesos": 0,
+            "n_aliases": 17
+          }
+        ],
+        "has_dead_branch": true
+      },
+      {
+        "identity": "MUNICIPIO DE YOPAL",
+        "variants": [
+          {
+            "official_name": "MUNICIPIO DE YOPAL..",
+            "departamento": "Casanare",
+            "total_procesos": 0,
+            "n_aliases": 15
+          },
+          {
+            "official_name": "MUNICIPIO DE YOPAL...",
+            "departamento": "Casanare",
+            "total_procesos": 16779,
+            "n_aliases": 13
+          }
+        ],
+        "has_dead_branch": true
+      },
+      {
+        "identity": "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PUBLICOS",
+        "variants": [
+          {
+            "official_name": "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS..",
+            "departamento": "Distrito Capital de Bogotá",
+            "total_procesos": 6029,
+            "n_aliases": 1
+          },
+          {
+            "official_name": "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS.",
+            "departamento": "Distrito Capital de Bogotá",
+            "total_procesos": 0,
+            "n_aliases": 24
+          }
+        ],
+        "has_dead_branch": true
+      }
+    ],
+    "runtime_probes": [
+      {
+        "user_phrase": "contratos del municipio de Soacha",
+        "entity_resolved": "MUNICIPIO DE SOACHA.",
+        "resolution_method": "rewrite_municipio",
+        "confidence": "high",
+        "clarification_needed": false,
+        "departamento_resolved": null,
+        "departamento_method": null,
+        "gazetteer_total_procesos": 0
+      },
+      {
+        "user_phrase": "alcaldía de Soacha",
+        "entity_resolved": "MUNICIPIO DE SOACHA.",
+        "resolution_method": "rewrite_alcald[ií]a",
+        "confidence": "high",
+        "clarification_needed": false,
+        "departamento_resolved": null,
+        "departamento_method": null,
+        "gazetteer_total_procesos": 0
+      },
+      {
+        "user_phrase": "Fondo Financiero Distrital de Salud",
+        "entity_resolved": "FONDO FINANCIERO DISTRITAL DE SALUD.",
+        "resolution_method": "scan_exact",
+        "confidence": "high",
+        "clarification_needed": false,
+        "departamento_resolved": null,
+        "departamento_method": null,
+        "gazetteer_total_procesos": 0
+      },
+      {
+        "user_phrase": "UAESP",
+        "entity_resolved": "SANTIAGO DE CALI DISTRITO ESPECIAL - UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PUBLICOS",
+        "resolution_method": "scan_exact",
+        "confidence": "high",
+        "clarification_needed": false,
+        "departamento_resolved": null,
+        "departamento_method": null,
+        "gazetteer_total_procesos": 5039
+      },
+      {
+        "user_phrase": "Unidad Administrativa Especial de Servicios Públicos",
+        "entity_resolved": "SANTIAGO DE CALI DISTRITO ESPECIAL - UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PUBLICOS",
+        "resolution_method": "scan_exact",
+        "confidence": "high",
+        "clarification_needed": false,
+        "departamento_resolved": null,
+        "departamento_method": null,
+        "gazetteer_total_procesos": 5039
+      },
+      {
+        "user_phrase": "municipio de Yopal",
+        "entity_resolved": "MUNICIPIO DE YOPAL...",
+        "resolution_method": "rewrite_municipio",
+        "confidence": "high",
+        "clarification_needed": false,
+        "departamento_resolved": null,
+        "departamento_method": null,
+        "gazetteer_total_procesos": 16779
+      },
+      {
+        "user_phrase": "Ministerio de Justicia y del Derecho",
+        "entity_resolved": "MINJUSTICIA..",
+        "resolution_method": "scan_exact",
+        "confidence": "high",
+        "clarification_needed": false,
+        "departamento_resolved": null,
+        "departamento_method": null,
+        "gazetteer_total_procesos": 7449
+      },
+      {
+        "user_phrase": "Minjusticia",
+        "entity_resolved": "MINJUSTICIA..",
+        "resolution_method": "scan_exact",
+        "confidence": "high",
+        "clarification_needed": false,
+        "departamento_resolved": null,
+        "departamento_method": null,
+        "gazetteer_total_procesos": 7449
+      }
+    ]
+  },
+  "revision": "R0.1",
+  "revision_note": "R0.1 — cierre documental. Se corrige el conteo del universo institucional y se añade la evidencia faltante de la DNI. NINGUNA observación original de R0 fue alterada: los veredictos, sondas y hallazgos de R0 se conservan tal cual.",
+  "universe_accounting": {
+    "ACTIVE_MINISTRIES_TOTAL": 18,
+    "HISTORICAL_MINISTRIES_TESTED": 1,
+    "HISTORICAL_MINISTRIES_DETAIL": [
+      {
+        "name": "Ministerio de Igualdad y Equidad",
+        "category": "HISTORICAL_IN_LIQUIDATION",
+        "probe_status": "MISSING",
+        "note": "Probado en R0 y contado allí como activo. R0.1 lo reclasifica: no integra el universo de 18 ministerios activos. Su ausencia del gazetteer NO es deuda de cobertura prioritaria."
+      }
+    ],
+    "ADMIN_DEPARTMENTS_TOTAL": 6,
+    "ADMIN_DEPARTMENTS_DETAIL": [
+      "DAPRE",
+      "DNP",
+      "DAFP",
+      "Prosperidad Social",
+      "Dirección Nacional de Inteligencia",
+      "DANE"
+    ],
+    "correction_of_R0": "R0 reportó 19 ministerios activos (incluía Igualdad) y 5 departamentos administrativos (omitía la DNI). El universo correcto es 18 activos + 1 histórico, y 6 departamentos administrativos."
+  },
+  "revised_totals": {
+    "B_ministerios_active_18": {
+      "PASS_EXACT": 11,
+      "MISSING": 3,
+      "PARTIAL_ALIASES": 4
+    },
+    "B_ministerios_historical": {
+      "MISSING": 1
+    },
+    "C_departamentos_admin_6": {
+      "PASS_EXACT": 4,
+      "MISSING": 2
+    }
+  }
+}
