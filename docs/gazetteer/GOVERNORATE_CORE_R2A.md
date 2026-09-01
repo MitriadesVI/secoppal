@@ -236,7 +236,7 @@ declaró en su metadata. `"la gobernación del Cauca en Antioquia"` conserva la
 intersección; `"contratos en el departamento del Cauca"` sigue siendo
 territorio.
 
-### Deuda hermana NO corregida — `Norte de Santander`
+### Deuda hermana — `Norte de Santander` · **CERRADA en R2A.1**
 
 El mismo corte produce un segundo caso, **fuera de las siete de R2A**:
 
@@ -256,14 +256,29 @@ BUYER_CAPTURE_TRUNCATION_DEBT
   síntoma  : departamentos multipalabra con " de/del " se truncan al capturar
   víctimas : Norte de Santander (PASS con territorio contaminado)
   ámbito   : app/core/entity_types.py — gramática de captura, no gazetteer
-  estado   : OPEN, fuera del alcance de R2A
+  estado   : CLOSED por R2A.1 — ver GOVERNORATE_CORE_R2A_1.md
 ```
+
+R2A.1 midió el alcance y resultó ser mucho mayor que este canario: las siete
+familias de reescritura compartían la misma frontera, y la truncación no sólo
+contaminaba con territorio residual — también entregaba **compradores
+equivocados en silencio** (`municipio de Villa de Leyva` → Villavicencio).
 
 ---
 
 ## 10. Matriz 32/32 · POST-R2A
 
-| natural_query | resolved_entity | supporting_alias | status |
+> **Nomenclatura corregida en R2A.1.** La columna `status` de esta tabla
+> reporta `ROOT_EXACT_ALIAS` cuando existe un alias raíz que respalda la
+> identidad: es una propiedad del **dato**, no del método que el runtime usó.
+> Son dos ejes distintos, y confundirlos ocultó exactamente un caso —
+> Norte de Santander tenía su alias exacto y resolvía por `fuzzy(90)`.
+> La matriz con ambos ejes (`supporting_alias` · `runtime_method` ·
+> `residual_department`) la produce
+> [`scripts/audits/governorate_core_matrix.py`](../../scripts/audits/governorate_core_matrix.py).
+> Los conteos de abajo se conservan como quedaron en R2A.
+
+| natural_query | resolved_entity | supporting_alias | status *(soporte del dato)* |
 |---|---|---|---|
 | Gobernación del Amazonas | `GOBERNACION DEL AMAZONAS` | `gobernacion del amazonas` | `ROOT_EXACT_ALIAS` |
 | Gobernación de Antioquia | `DEPARTAMENTO DE ANTIOQUIA//` | `gobernacion de antioquia` | `ROOT_EXACT_ALIAS` |
@@ -299,15 +314,29 @@ BUYER_CAPTURE_TRUNCATION_DEBT
 | **Gobernación del Vichada** | `DEPARTAMENTO DE VICHADA` | `gobernacion del vichada` | **`ROOT_EXACT_ALIAS`** *(R2A)* |
 
 ```text
-MATRIX_AFTER
+MATRIX_AFTER (R2A — soporte del dato)
 PASS:               29
 FAIL_CLOSED:         3   (Cundinamarca, Valle del Cauca, Guainía)
 WRONG_CHILD:         0
 ROOT_EXACT_ALIAS:   29
-ROOT_FUZZY:          0
+ROOT_FUZZY:          0     <- medido sobre el gazetteer, NO sobre la ejecución
 ROOT_OFFICIAL_ONLY:  0
 OTHER:               0
 ```
+
+```text
+MATRIX_AFTER (R2A.1 — ejecución medida)
+PASS:                       29
+FAIL_CLOSED:                 3
+RUNTIME_EXACT:              29
+RUNTIME_FUZZY:               0     <- ahora sí, sobre el método real
+SUPPORTING_ALIAS_COUNT:     29
+RESIDUAL_TERRITORY_ERRORS:   0
+```
+
+Antes de R2A.1 la misma sonda daba `RUNTIME_EXACT 28 · RUNTIME_FUZZY 1 ·
+RESIDUAL_TERRITORY_ERRORS 1` con `SUPPORTING_ALIAS_COUNT 29` intacto: la
+diferencia entre las dos columnas es precisamente el defecto que se cerró.
 
 ---
 
@@ -319,7 +348,8 @@ OTHER:               0
 | D5 — `SAME_LOGICAL_IDENTITY` | `OPEN_UNTOUCHED` |
 | D6 — regla `_is_unqualified_dept` | `OPEN_UNTOUCHED` |
 | `CANONICAL_ENTITY_SOURCE_NAMES_REQUIRED` | **NUEVA**, documentada §6, frente propio |
-| `BUYER_CAPTURE_TRUNCATION_DEBT` | **NUEVA**, documentada §9, `entity_types.py` |
+| `BUYER_CAPTURE_TRUNCATION_DEBT` | **CLOSED** por R2A.1 — [`GOVERNORATE_CORE_R2A_1.md`](GOVERNORATE_CORE_R2A_1.md) |
+| `UNGATED_FUZZY_FOR_HEALTH_AND_EDU_NAMES` | **NUEVA**, abierta — ver R2A.1 §5 |
 
 No se creó ecosystem Gobernaciones. No se añadieron ministerios, DAFP/DNI,
 Alcaldía Mayor de Bogotá ni municipios. No se modificó SoQL. No se introdujo

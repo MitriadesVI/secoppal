@@ -1,0 +1,333 @@
+{
+  "rows": [
+    {
+      "department": "Amazonas",
+      "natural_query": "Gobernación del Amazonas",
+      "resolved_entity": "GOBERNACION DEL AMAZONAS",
+      "runtime_method": "root_alias_evidence",
+      "direct_method": "exact",
+      "supporting_alias": "departamento de amazonas",
+      "residual_department": null,
+      "status": "PASS"
+    },
+    {
+      "department": "Antioquia",
+      "natural_query": "Gobernación de Antioquia",
+      "resolved_entity": "DEPARTAMENTO DE ANTIOQUIA//",
+      "runtime_method": "root_alias_evidence",
+      "direct_method": "exact",
+      "supporting_alias": "departamento de antioquia",
+      "residual_department": null,
+      "status": "PASS"
+    },
+    {
+      "department": "Arauca",
+      "natural_query": "Gobernación de Arauca",
+      "resolved_entity": "DEPARTAMENTO DEL ARAUCA",
+      "runtime_method": "root_alias_evidence",
+      "direct_method": "exact",
+      "supporting_alias": "departamento de arauca",
+      "residual_department": null,
+      "status": "PASS"
+    },
+    {
+      "department": "Atlántico",
+      "natural_query": "Gobernación del Atlántico",
+      "resolved_entity": "DEPARTAMENTO DEL ATLANTICO**",
+      "runtime_method": "root_alias_evidence",
+      "direct_method": "exact",
+      "supporting_alias": "departamento de atlantico",
+      "residual_department": null,
+      "status": "PASS"
+    },
+    {
+      "department": "Bolívar",
+      "natural_query": "Gobernación de Bolívar",
+      "resolved_entity": "GOBERNACIÓN DE BOLÍVAR//",
+      "runtime_method": "root_alias_evidence",
+      "direct_method": "exact",
+      "supporting_alias": "departamento de bolivar",
+      "residual_department": null,
+      "status": "PASS"
+    },
+    {
+      "department": "Boyacá",
+      "natural_query": "Gobernación de Boyacá",
+      "resolved_entity": "GOBERNACIÓN DE BOYACÁ",
+      "runtime_method": "root_alias_evidence",
+      "direct_method": "exact",
+      "supporting_alias": "departamento de boyaca",
+      "residual_department": null,
+      "status": "PASS"
+    },
+    {
+      "department": "Caldas",
+      "natural_query": "Gobernación de Caldas",
+      "resolved_entity": "GOBERNACION DE CALDAS",
+      "runtime_method": "root_alias_evidence",
+      "direct_method": "exact",
+      "supporting_alias": "departamento de caldas",
+      "residual_department": null,
+      "status": "PASS"
+    },
+    {
+      "department": "Caquetá",
+      "natural_query": "Gobernación del Caquetá",
+      "resolved_entity": "GOBERNACION DEL CAQUETA**",
+      "runtime_method": "root_alias_evidence",
+      "direct_method": "exact",
+      "supporting_alias": "departamento de caqueta",
+      "residual_department": null,
+      "status": "PASS"
+    },
+    {
+      "department": "Casanare",
+      "natural_query": "Gobernación de Casanare",
+      "resolved_entity": "GOBERNACION DEL CASANARE",
+      "runtime_method": "root_alias_evidence",
+      "direct_method": "exact",
+      "supporting_alias": "departamento de casanare",
+      "residual_department": null,
+      "status": "PASS"
+    },
+    {
+      "department": "Cauca",
+      "natural_query": "Gobernación del Cauca",
+      "resolved_entity": "GOBERNACIÓN DEL CAUCA",
+      "runtime_method": "root_alias_evidence",
+      "direct_method": "exact",
+      "supporting_alias": "departamento de cauca",
+      "residual_department": null,
+      "status": "PASS"
+    },
+    {
+      "department": "Cesar",
+      "natural_query": "Gobernación del Cesar",
+      "resolved_entity": "GOBERNACION DEL DEPARTAMENTO DEL CESAR",
+      "runtime_method": "root_alias_evidence",
+      "direct_method": "exact",
+      "supporting_alias": "departamento de cesar",
+      "residual_department": null,
+      "status": "PASS"
+    },
+    {
+      "department": "Chocó",
+      "natural_query": "Gobernación del Chocó",
+      "resolved_entity": "GOBERNACION DEL CHOCÓ.",
+      "runtime_method": "root_alias_evidence",
+      "direct_method": "exact",
+      "supporting_alias": "gobernacion de choco",
+      "residual_department": null,
+      "status": "PASS"
+    },
+    {
+      "department": "Cundinamarca",
+      "natural_query": "Gobernación de Cundinamarca",
+      "resolved_entity": null,
+      "runtime_method": "root_evidence_missing",
+      "direct_method": "rewrite_unresolved",
+      "supporting_alias": null,
+      "residual_department": null,
+      "status": "FAIL_CLOSED"
+    },
+    {
+      "department": "Córdoba",
+      "natural_query": "Gobernación de Córdoba",
+      "resolved_entity": "DEPARTAMENTO DE CORDOBA",
+      "runtime_method": "root_alias_evidence",
+      "direct_method": "exact",
+      "supporting_alias": "departamento de cordoba",
+      "residual_department": null,
+      "status": "PASS"
+    },
+    {
+      "department": "Guainía",
+      "natural_query": "Gobernación del Guainía",
+      "resolved_entity": null,
+      "runtime_method": "root_evidence_missing",
+      "direct_method": "rewrite_unresolved",
+      "supporting_alias": null,
+      "residual_department": null,
+      "status": "FAIL_CLOSED"
+    },
+    {
+      "department": "Guaviare",
+      "natural_query": "Gobernación del Guaviare",
+      "resolved_entity": "GOBERNACION DEL GUAVIARE",
+      "runtime_method": "root_alias_evidence",
+      "direct_method": "exact",
+      "supporting_alias": "departamento de guaviare",
+      "residual_department": null,
+      "status": "PASS"
+    },
+    {
+      "department": "Huila",
+      "natural_query": "Gobernación del Huila",
+      "resolved_entity": "GOBERNACION DEL HUILA*",
+      "runtime_method": "root_alias_evidence",
+      "direct_method": "exact",
+      "supporting_alias": "departamento de huila",
+      "residual_department": null,
+      "status": "PASS"
+    },
+    {
+      "department": "La Guajira",
+      "natural_query": "Gobernación de La Guajira",
+      "resolved_entity": "GOBERNACIÓN DE LA GUAJIRA",
+      "runtime_method": "root_alias_evidence",
+      "direct_method": "exact",
+      "supporting_alias": "departamento de la guajira",
+      "residual_department": null,
+      "status": "PASS"
+    },
+    {
+      "department": "Magdalena",
+      "natural_query": "Gobernación del Magdalena",
+      "resolved_entity": "GOBERNACION DEL MAGDALENA",
+      "runtime_method": "root_alias_evidence",
+      "direct_method": "exact",
+      "supporting_alias": "departamento de magdalena",
+      "residual_department": null,
+      "status": "PASS"
+    },
+    {
+      "department": "Meta",
+      "natural_query": "Gobernación del Meta",
+      "resolved_entity": "DEPARTAMENTO DEL META",
+      "runtime_method": "root_alias_evidence",
+      "direct_method": "exact",
+      "supporting_alias": "departamento del meta",
+      "residual_department": null,
+      "status": "PASS"
+    },
+    {
+      "department": "Nariño",
+      "natural_query": "Gobernación de Nariño",
+      "resolved_entity": "GOBERNACION DE NARIÑO",
+      "runtime_method": "root_alias_evidence",
+      "direct_method": "exact",
+      "supporting_alias": "departamento de narino",
+      "residual_department": null,
+      "status": "PASS"
+    },
+    {
+      "department": "Norte de Santander",
+      "natural_query": "Gobernación de Norte de Santander",
+      "resolved_entity": "Gobernación Norte de Santander*",
+      "runtime_method": "root_alias_evidence",
+      "direct_method": "exact",
+      "supporting_alias": "departamento de norte de santander",
+      "residual_department": null,
+      "status": "PASS"
+    },
+    {
+      "department": "Putumayo",
+      "natural_query": "Gobernación del Putumayo",
+      "resolved_entity": "GOBERNACIÓN DEPARTAMENTO DEL PUTUMAYO",
+      "runtime_method": "root_alias_evidence",
+      "direct_method": "exact",
+      "supporting_alias": "departamento del putumayo",
+      "residual_department": null,
+      "status": "PASS"
+    },
+    {
+      "department": "Quindío",
+      "natural_query": "Gobernación del Quindío",
+      "resolved_entity": "GOBERNACION DEL QUINDIO ARMENIA",
+      "runtime_method": "root_alias_evidence",
+      "direct_method": "exact",
+      "supporting_alias": "departamento de quindio",
+      "residual_department": null,
+      "status": "PASS"
+    },
+    {
+      "department": "Risaralda",
+      "natural_query": "Gobernación de Risaralda",
+      "resolved_entity": "GOBERNACIÓN DE RISARALDA**",
+      "runtime_method": "root_alias_evidence",
+      "direct_method": "exact",
+      "supporting_alias": "departamento de risaralda",
+      "residual_department": null,
+      "status": "PASS"
+    },
+    {
+      "department": "San Andrés, Providencia y Santa Catalina",
+      "natural_query": "Gobernación de San Andrés",
+      "resolved_entity": "GOBERNACIÓN DEL DEPARTAMENTO ARCHIPIELAGO DE SAN ANDRES PROVIDENCIA Y SANTA CATALINA",
+      "runtime_method": "root_alias_evidence",
+      "direct_method": "exact",
+      "supporting_alias": "departamento de san andres",
+      "residual_department": null,
+      "status": "PASS"
+    },
+    {
+      "department": "Santander",
+      "natural_query": "Gobernación de Santander",
+      "resolved_entity": "DEPARTAMENTO DE SANTANDER",
+      "runtime_method": "root_alias_evidence",
+      "direct_method": "exact",
+      "supporting_alias": "departamento de santander",
+      "residual_department": null,
+      "status": "PASS"
+    },
+    {
+      "department": "Sucre",
+      "natural_query": "Gobernación de Sucre",
+      "resolved_entity": "GOBERNACION DE SUCRE",
+      "runtime_method": "root_alias_evidence",
+      "direct_method": "exact",
+      "supporting_alias": "departamento de sucre",
+      "residual_department": null,
+      "status": "PASS"
+    },
+    {
+      "department": "Tolima",
+      "natural_query": "Gobernación del Tolima",
+      "resolved_entity": "GOBIERNO DEPARTAMENTAL",
+      "runtime_method": "root_alias_evidence",
+      "direct_method": "exact",
+      "supporting_alias": "departamento de tolima",
+      "residual_department": null,
+      "status": "PASS"
+    },
+    {
+      "department": "Valle del Cauca",
+      "natural_query": "Gobernación del Valle del Cauca",
+      "resolved_entity": null,
+      "runtime_method": "root_evidence_missing",
+      "direct_method": "rewrite_unresolved",
+      "supporting_alias": null,
+      "residual_department": null,
+      "status": "FAIL_CLOSED"
+    },
+    {
+      "department": "Vaupés",
+      "natural_query": "Gobernación del Vaupés",
+      "resolved_entity": "GOBERNACION DEL VAUPES",
+      "runtime_method": "root_alias_evidence",
+      "direct_method": "exact",
+      "supporting_alias": "departamento de vaupes",
+      "residual_department": null,
+      "status": "PASS"
+    },
+    {
+      "department": "Vichada",
+      "natural_query": "Gobernación del Vichada",
+      "resolved_entity": "DEPARTAMENTO DE VICHADA",
+      "runtime_method": "root_alias_evidence",
+      "direct_method": "exact",
+      "supporting_alias": "departamento de vichada",
+      "residual_department": null,
+      "status": "PASS"
+    }
+  ],
+  "summary": {
+    "PASS": 29,
+    "FAIL_CLOSED": 3,
+    "OTHER": 0,
+    "RUNTIME_EXACT": 29,
+    "RUNTIME_FUZZY": 0,
+    "SUPPORTING_ALIAS_COUNT": 29,
+    "RESIDUAL_TERRITORY_ERRORS": 0
+  }
+}

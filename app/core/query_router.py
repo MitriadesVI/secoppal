@@ -563,14 +563,50 @@ class QueryRouter:
         # ── 4.6. ENTITY REWRITE: try canonical variants for entity patterns ──
         #    "alcaldía de X" → "Municipio de X" / "Alcaldía de X"
         #    Runs BEFORE gazetteer scan so variants feed into alias matching.
+        from app.core.entity_resolver import is_department_root_name
         from app.core.entity_types import rewrite_entity
         entity_candidates = rewrite_entity(scrubbed)
         rewritten_entity = None
         unresolved_rewrite = None
         if entity_candidates and self.entity_resolver:
-            for canonical, consumed, rtype in entity_candidates:
+            # Los candidatos llegan agrupados por span, del más largo al más
+            # corto. Dentro de UN span compiten formas canónicas rivales
+            # ("Empresa Social del Estado X" vs "ESE X"): ahí un exacto le gana
+            # a un fuzzy aunque llegue después, porque el orden del replacer es
+            # una preferencia de redacción, no evidencia. Sin esto "ESE Hospital
+            # San Rafael de Fusagasugá" —que existe— perdía contra el fuzzy(95)
+            # del hospital de Facatativá.
+            pending_fuzzy = None
+            terminal = False
+            for candidate in entity_candidates:
+                canonical = candidate.canonical
+                consumed = candidate.consumed_span
+                rtype = candidate.rewrite_type
+                if pending_fuzzy and pending_fuzzy[1] != consumed:
+                    rewritten_entity = pending_fuzzy
+                    break
                 match = self.entity_resolver.resolve_entidad(canonical)
                 if match and match.value and match.method != "fallback_like":
+                    # Un hospital no se llama "DEPARTAMENTO DE SANTANDER". Al
+                    # capturar el nombre completo, el fuzzy sin puerta de las
+                    # familias sectoriales empezaba a contestar una pregunta por
+                    # un hospital con el comprador raíz del territorio: error de
+                    # categoría, peor que no responder.
+                    if candidate.rejects_territorial_root and is_department_root_name(
+                        str(match.value)
+                    ):
+                        continue
+                    # COMPOUND-BUYER-CAPTURE (R2A.1). El span salió de acortar
+                    # un nombre articulado con ``de|del``: es un FRAGMENTO. Un
+                    # fragmento se acredita por alias exacto, nunca por parecido
+                    # — si no, "Villa" (de "Villa de Leyva") resuelve a
+                    # VILLAVICENCIO con confianza media y nadie se entera.
+                    if match.method.startswith("fuzzy"):
+                        if candidate.requires_deterministic:
+                            continue
+                        if pending_fuzzy is None:
+                            pending_fuzzy = (canonical, consumed, rtype, match)
+                        continue
                     rewritten_entity = (canonical, consumed, rtype, match)
                     break
                 if match and match.clarification_needed and unresolved_rewrite is None:
@@ -580,7 +616,10 @@ class QueryRouter:
                 # candidates would turn "San Andrés" into "San" and reopen
                 # lexical fuzzy against an unrelated buyer (Santander).
                 if match and match.metadata.get("canonical_department"):
+                    terminal = True
                     break
+            if not rewritten_entity and pending_fuzzy and not terminal:
+                rewritten_entity = pending_fuzzy
             if rewritten_entity:
                 canonical, consumed, rtype, match = rewritten_entity
                 params["entidad"] = canonical
@@ -594,6 +633,12 @@ class QueryRouter:
                     "metadata": {
                         **match.metadata,
                         "rewritten_from": consumed,
+                        # El method de arriba nombra la GRAMÁTICA que disparó
+                        # ("rewrite_gobernación"), no cómo se acreditó la
+                        # identidad. Sin esto, un fuzzy interno queda invisible
+                        # y cualquier auditoría declara ROOT_FUZZY=0 mirando el
+                        # dato en vez de la ejecución (R2A.1 §5).
+                        "resolution_method": match.method,
                     },
                 }
                 consumed_spans.append(consumed)
@@ -605,7 +650,11 @@ class QueryRouter:
                 params["entidad_resolution"] = {
                     **match.to_dict(),
                     "method": f"rewrite_{rtype}_unresolved",
-                    "metadata": {**match.metadata, "rewritten_from": consumed},
+                    "metadata": {
+                        **match.metadata,
+                        "rewritten_from": consumed,
+                        "resolution_method": match.method,
+                    },
                 }
                 consumed_spans.append(consumed)
                 scrubbed = scrubbed.replace(consumed, " ", 1)

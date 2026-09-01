@@ -8,6 +8,10 @@ from pathlib import Path
 
 from rapidfuzz import fuzz, process
 
+# ``entity_types`` no importa nada de ``app.core``: la arista resolver→types
+# no cierra ciclo. Allí vive la autoridad de tokenización de nombres, junto a
+# la gramática de captura que la produce.
+from app.core.entity_types import name_tokens
 from app.core.generic_buyer import (
     GENERIC_BUYER_TOKENS,
     department_root_buyer_target,
@@ -148,6 +152,28 @@ class ScanResult:
     matched_alias: str  # the alias that was found in text
     remaining_text: str  # text with the matched alias removed
     method: str  # "scan_exact"
+
+
+def is_department_root_name(official: str) -> bool:
+    """True si ``official`` ES un comprador raíz departamental.
+
+    "DEPARTAMENTO DE SANTANDER" lo es; "GOBERNACION DEL VALLE DEL CAUCA - DADI"
+    no, porque lo que sigue al conector no es un departamento del catálogo.
+    """
+    target = department_root_buyer_target(normalize_text(official))
+    return bool(target and DEPARTAMENTOS.get(target))
+
+
+def _contains_token_sequence(haystack: str, needle: str) -> bool:
+    """True si ``needle`` aparece en ``haystack`` como secuencia de palabras."""
+    hay = name_tokens(haystack)
+    want = name_tokens(needle)
+    if not want or len(want) > len(hay):
+        return False
+    return any(
+        hay[i:i + len(want)] == want
+        for i in range(len(hay) - len(want) + 1)
+    )
 
 
 class EntityResolver:
@@ -618,7 +644,13 @@ class EntityResolver:
     def _official_matches_strict_rewrite(official: str, strict_rewrite: tuple[str, str]) -> bool:
         kind, target = strict_rewrite
         official_norm = normalize_text(official)
-        if target not in official_norm:
+        # COMPOUND-BUYER-CAPTURE (R2A.1). La contención se mide por TOKENS
+        # completos, no por substring: "villa" es prefijo de "villavicencio"
+        # pero no es una palabra suya, y por esa rendija "Municipio de Villa"
+        # —fragmento de "Villa de Leyva"— acreditaba a la alcaldía de
+        # Villavicencio. El ruido de registro de SECOP ("ANTIOQUIA//",
+        # "ATLANTICO**") se descarta al tokenizar, no al comparar.
+        if not _contains_token_sequence(official_norm, target):
             return False
         if kind == "municipality":
             return any(marker in official_norm for marker in ("municipio", "alcaldia", "distrito"))
