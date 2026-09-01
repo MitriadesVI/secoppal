@@ -1,0 +1,2446 @@
+{
+  "audit": "CAR-CORE-R2D",
+  "type": "discovery/read-only",
+  "as_of": "2026-09-01",
+  "recent_since": "2025-09-01",
+  "secop_authority": {
+    "processes": "p6dx-8zbt",
+    "contracts": "jbjy-vk9h"
+  },
+  "official_sources": [
+    {
+      "scope": "car_cds_33",
+      "authority": "Ministerio de Ambiente",
+      "url": "https://www.minambiente.gov.co/eleccion-car/"
+    },
+    {
+      "scope": "cormagdalena",
+      "authority": "Ley 161 de 1994",
+      "url": "https://www.funcionpublica.gov.co/eva/gestornormativo/norma.php?i=68533"
+    }
+  ],
+  "universe": {
+    "car_cds": 33,
+    "car": 26,
+    "cds": 7,
+    "cormagdalena": {
+      "acronym": "CORMAGDALENA",
+      "official_institutional_name": "Corporación Autónoma Regional del Río Grande de la Magdalena",
+      "nit": "829000127",
+      "secop_physical_name": "CORPORACIÓN AUTÓNOMA DEL RÍO GRANDE DE LA MAGDALENA**",
+      "classification": "SPECIAL_AUTONOMOUS_CORPORATION",
+      "scope": "OUTSIDE_R2D_CORE",
+      "authority": "Ley 161 de 1994 — ente corporativo especial del orden nacional (EICE)"
+    },
+    "excluded": [
+      "urban environmental authorities (7)",
+      "Cormagdalena"
+    ]
+  },
+  "methodology": {
+    "identity_order": [
+      "MinAmbiente universe",
+      "SECOP II NIT",
+      "physical source name"
+    ],
+    "volume_note": "Counts by NIT; processes and contracts remain separate.",
+    "recent_date_fields": {
+      "processes": "fecha_de_publicacion_del",
+      "contracts": "fecha_de_firma"
+    },
+    "acronym_note": "Risk is measured against the full SECOP II buyer catalog and gazetteer ownership, never assumed from length."
+  },
+  "buyer_catalog_size": 12338,
+  "matrix_scope": "PRE_MUTATION — gazetteer at HEAD bcb8a5f",
+  "matrix": {
+    "WRONG_OWNER": 23,
+    "PASS_EXACT": 9,
+    "FUZZY_ONLY": 1
+  },
+  "volume": {
+    "recent_12m_processes": 26645,
+    "recent_12m_contracts": 24213,
+    "all_time_processes": 134940,
+    "all_time_contracts": 126759
+  },
+  "entities": [
+    {
+      "acronym": "CAM",
+      "official_institutional_name": "Corporación Autónoma Regional del Alto Magdalena",
+      "class": "CAR",
+      "nit": "800255580",
+      "seat_department": "Huila",
+      "jurisdiction": "Huila",
+      "natural_queries": [
+        "CAM",
+        "Corporación Autónoma Regional del Alto Magdalena"
+      ],
+      "proceso_source_names": [
+        "CORPORACION AUTONOMA REGIONAL DEL ALTO MAGDALENA"
+      ],
+      "contrato_source_names": [
+        "CORPORACION AUTONOMA REGIONAL DEL ALTO MAGDALENA"
+      ],
+      "physical_names": [
+        "CORPORACION AUTONOMA REGIONAL DEL ALTO MAGDALENA"
+      ],
+      "all_time_procesos": 3186,
+      "all_time_contratos": 2716,
+      "recent_12m_procesos": 627,
+      "recent_12m_contratos": 556,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "existing_gazetteer_records": [],
+      "existing_aliases": [],
+      "acronym_risk": {
+        "acronym": "CAM",
+        "secop_token_buyers": 0,
+        "secop_foreign_buyers": [],
+        "secop_foreign_buyer_count": 0,
+        "gazetteer_exact_owners": [],
+        "gazetteer_token_owners": []
+      },
+      "resolution_probes": [
+        {
+          "query": "CAM",
+          "resolved_owner": "CAMARA DE REPRESENTANTES",
+          "resolution_method": "fuzzy(90)",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": []
+        },
+        {
+          "query": "Corporación Autónoma Regional del Alto Magdalena",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DE LA FRONTERA NORORIENTAL+",
+          "resolution_method": "fuzzy(90)",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": []
+        }
+      ],
+      "classification": "WRONG_OWNER",
+      "root_cause": "IDENTITY_MISSING",
+      "acronym_decision": "ADMITTED",
+      "acronym_block_reason": null,
+      "decision": "ACCEPT_REGISTRY_VERIFIED"
+    },
+    {
+      "acronym": "CAR",
+      "official_institutional_name": "Corporación Autónoma Regional de Cundinamarca",
+      "class": "CAR",
+      "nit": "899999062",
+      "seat_department": "Cundinamarca",
+      "jurisdiction": "Cundinamarca",
+      "natural_queries": [
+        "CAR",
+        "Corporación Autónoma Regional de Cundinamarca"
+      ],
+      "proceso_source_names": [
+        "CORPORACION AUTONOMA REGIONAL DE CUNDINAMARCA - CAR."
+      ],
+      "contrato_source_names": [
+        "CORPORACION AUTONOMA REGIONAL DE CUNDINAMARCA - CAR."
+      ],
+      "physical_names": [
+        "CORPORACION AUTONOMA REGIONAL DE CUNDINAMARCA - CAR."
+      ],
+      "all_time_procesos": 23664,
+      "all_time_contratos": 22330,
+      "recent_12m_procesos": 5858,
+      "recent_12m_contratos": 5137,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "existing_gazetteer_records": [
+        "CORPORACION AUTONOMA REGIONAL DE CUNDINAMARCA - CAR."
+      ],
+      "existing_aliases": [
+        "autoridad ambiental de cundinamarca",
+        "car",
+        "car bogotá",
+        "car cundinamarca",
+        "car cundinamarca bogotá",
+        "car distrito capital",
+        "corporacion autonoma regional de cundinamarca",
+        "corporacion autonoma regional de cundinamarca - car.",
+        "corporación ambiental de cundinamarca",
+        "corporación autónoma de cundinamarca",
+        "corporación autónoma regional cundinamarca",
+        "corporación autónoma regional de cundinamarca",
+        "corporación autónoma regional de cundinamarca - bogotá",
+        "corporación autónoma regional del departamento de cundinamarca",
+        "la car",
+        "la corporación autónoma regional de cundinamarca"
+      ],
+      "acronym_risk": {
+        "acronym": "CAR",
+        "secop_token_buyers": 1,
+        "secop_foreign_buyers": [],
+        "secop_foreign_buyer_count": 0,
+        "gazetteer_exact_owners": [
+          "CORPORACION AUTONOMA REGIONAL DE CUNDINAMARCA - CAR."
+        ],
+        "gazetteer_token_owners": [
+          "CORPOBOYACA",
+          "CORPORACION AUTONOMA REGIONAL DE CUNDINAMARCA - CAR.",
+          "CORPORACION AUTONOMA REGIONAL DE LA FRONTERA NORORIENTAL+",
+          "CORPORACION AUTONOMA REGIONAL DE NARIÑO",
+          "CORPORACION AUTONOMA REGIONAL DE RISARALDA",
+          "CORPORACION AUTONOMA REGIONAL DE SANTANDER+",
+          "CORPORACION AUTONOMA REGIONAL DEL QUINDIO"
+        ]
+      },
+      "resolution_probes": [
+        {
+          "query": "CAR",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DE CUNDINAMARCA - CAR.",
+          "resolution_method": "exact",
+          "classification": "PASS_EXACT",
+          "exact_alias_owners": [
+            "CORPORACION AUTONOMA REGIONAL DE CUNDINAMARCA - CAR."
+          ]
+        },
+        {
+          "query": "Corporación Autónoma Regional de Cundinamarca",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DE CUNDINAMARCA - CAR.",
+          "resolution_method": "exact",
+          "classification": "PASS_EXACT",
+          "exact_alias_owners": [
+            "CORPORACION AUTONOMA REGIONAL DE CUNDINAMARCA - CAR."
+          ]
+        }
+      ],
+      "classification": "PASS_EXACT",
+      "root_cause": "NONE_ALREADY_VERIFIED",
+      "acronym_decision": "ADMITTED",
+      "acronym_block_reason": null,
+      "decision": "UNCHANGED_ALREADY_VERIFIED"
+    },
+    {
+      "acronym": "CARDER",
+      "official_institutional_name": "Corporación Autónoma Regional de Risaralda",
+      "class": "CAR",
+      "nit": "891410354",
+      "seat_department": "Risaralda",
+      "jurisdiction": "Risaralda",
+      "natural_queries": [
+        "CARDER",
+        "Corporación Autónoma Regional de Risaralda"
+      ],
+      "proceso_source_names": [
+        "CORPORACION AUTONOMA REGIONAL DE RISARALDA"
+      ],
+      "contrato_source_names": [
+        "CORPORACION AUTONOMA REGIONAL DE RISARALDA"
+      ],
+      "physical_names": [
+        "CORPORACION AUTONOMA REGIONAL DE RISARALDA"
+      ],
+      "all_time_procesos": 8314,
+      "all_time_contratos": 7371,
+      "recent_12m_procesos": 1156,
+      "recent_12m_contratos": 1105,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "existing_gazetteer_records": [
+        "CORPORACION AUTONOMA REGIONAL DE RISARALDA"
+      ],
+      "existing_aliases": [
+        "autoridad ambiental de risaralda",
+        "car de risaralda",
+        "car risaralda",
+        "carder",
+        "corporacion ambiental de risaralda",
+        "corporacion autonoma de risaralda",
+        "corporacion autonoma regional de risaralda",
+        "corporacion autonoma regional risaralda",
+        "corporacion risaralda",
+        "corporación ambiental de risaralda",
+        "corporación autónoma de risaralda",
+        "corporación autónoma regional de risaralda",
+        "corporación autónoma regional risaralda",
+        "corporación risaralda",
+        "entidad ambiental de risaralda",
+        "la autoridad ambiental de risaralda",
+        "la car de risaralda",
+        "la car risaralda",
+        "la carder"
+      ],
+      "acronym_risk": {
+        "acronym": "CARDER",
+        "secop_token_buyers": 0,
+        "secop_foreign_buyers": [],
+        "secop_foreign_buyer_count": 0,
+        "gazetteer_exact_owners": [
+          "CORPORACION AUTONOMA REGIONAL DE RISARALDA"
+        ],
+        "gazetteer_token_owners": [
+          "CORPORACION AUTONOMA REGIONAL DE RISARALDA"
+        ]
+      },
+      "resolution_probes": [
+        {
+          "query": "CARDER",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DE RISARALDA",
+          "resolution_method": "exact",
+          "classification": "PASS_EXACT",
+          "exact_alias_owners": [
+            "CORPORACION AUTONOMA REGIONAL DE RISARALDA"
+          ]
+        },
+        {
+          "query": "Corporación Autónoma Regional de Risaralda",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DE RISARALDA",
+          "resolution_method": "exact",
+          "classification": "PASS_EXACT",
+          "exact_alias_owners": [
+            "CORPORACION AUTONOMA REGIONAL DE RISARALDA"
+          ]
+        }
+      ],
+      "classification": "PASS_EXACT",
+      "root_cause": "NONE_ALREADY_VERIFIED",
+      "acronym_decision": "ADMITTED",
+      "acronym_block_reason": null,
+      "decision": "UNCHANGED_ALREADY_VERIFIED"
+    },
+    {
+      "acronym": "CARDIQUE",
+      "official_institutional_name": "Corporación Autónoma Regional del Canal del Dique",
+      "class": "CAR",
+      "nit": "800254453",
+      "seat_department": "Bolívar",
+      "jurisdiction": "Norte de Bolívar",
+      "natural_queries": [
+        "CARDIQUE",
+        "Corporación Autónoma Regional del Canal del Dique"
+      ],
+      "proceso_source_names": [
+        "CORPORACIÓN AUTÓNOMA REGIONAL DEL CANAL DEL DIQUE"
+      ],
+      "contrato_source_names": [
+        "CORPORACIÓN AUTÓNOMA REGIONAL DEL CANAL DEL DIQUE"
+      ],
+      "physical_names": [
+        "CORPORACIÓN AUTÓNOMA REGIONAL DEL CANAL DEL DIQUE"
+      ],
+      "all_time_procesos": 1581,
+      "all_time_contratos": 1081,
+      "recent_12m_procesos": 265,
+      "recent_12m_contratos": 194,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "existing_gazetteer_records": [],
+      "existing_aliases": [],
+      "acronym_risk": {
+        "acronym": "CARDIQUE",
+        "secop_token_buyers": 0,
+        "secop_foreign_buyers": [],
+        "secop_foreign_buyer_count": 0,
+        "gazetteer_exact_owners": [],
+        "gazetteer_token_owners": []
+      },
+      "resolution_probes": [
+        {
+          "query": "CARDIQUE",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DE CUNDINAMARCA - CAR.",
+          "resolution_method": "fuzzy(90)",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": []
+        },
+        {
+          "query": "Corporación Autónoma Regional del Canal del Dique",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DE LA FRONTERA NORORIENTAL+",
+          "resolution_method": "fuzzy(90)",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": []
+        }
+      ],
+      "classification": "WRONG_OWNER",
+      "root_cause": "IDENTITY_MISSING",
+      "acronym_decision": "ADMITTED",
+      "acronym_block_reason": null,
+      "decision": "ACCEPT_REGISTRY_VERIFIED"
+    },
+    {
+      "acronym": "CARSUCRE",
+      "official_institutional_name": "Corporación Autónoma Regional de Sucre",
+      "class": "CAR",
+      "nit": "823000050",
+      "seat_department": "Sucre",
+      "jurisdiction": "Sucre",
+      "natural_queries": [
+        "CARSUCRE",
+        "Corporación Autónoma Regional de Sucre"
+      ],
+      "proceso_source_names": [
+        "CORPORACION AUTONOMA REGIONAL DE SUCRE"
+      ],
+      "contrato_source_names": [
+        "CORPORACION AUTONOMA REGIONAL DE SUCRE"
+      ],
+      "physical_names": [
+        "CORPORACION AUTONOMA REGIONAL DE SUCRE"
+      ],
+      "all_time_procesos": 1261,
+      "all_time_contratos": 1258,
+      "recent_12m_procesos": 468,
+      "recent_12m_contratos": 424,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "existing_gazetteer_records": [],
+      "existing_aliases": [],
+      "acronym_risk": {
+        "acronym": "CARSUCRE",
+        "secop_token_buyers": 0,
+        "secop_foreign_buyers": [],
+        "secop_foreign_buyer_count": 0,
+        "gazetteer_exact_owners": [],
+        "gazetteer_token_owners": []
+      },
+      "resolution_probes": [
+        {
+          "query": "CARSUCRE",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DE CUNDINAMARCA - CAR.",
+          "resolution_method": "fuzzy(90)",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": []
+        },
+        {
+          "query": "Corporación Autónoma Regional de Sucre",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DE LA FRONTERA NORORIENTAL+",
+          "resolution_method": "fuzzy(95)",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": []
+        }
+      ],
+      "classification": "WRONG_OWNER",
+      "root_cause": "IDENTITY_MISSING",
+      "acronym_decision": "ADMITTED",
+      "acronym_block_reason": null,
+      "decision": "ACCEPT_REGISTRY_VERIFIED"
+    },
+    {
+      "acronym": "CAS",
+      "official_institutional_name": "Corporación Autónoma Regional de Santander",
+      "class": "CAR",
+      "nit": "804000292",
+      "seat_department": "Santander",
+      "jurisdiction": "Santander",
+      "natural_queries": [
+        "CAS",
+        "Corporación Autónoma Regional de Santander"
+      ],
+      "proceso_source_names": [
+        "CORPORACION AUTONOMA REGIONAL DE SANTANDER+"
+      ],
+      "contrato_source_names": [
+        "CORPORACION AUTONOMA REGIONAL DE SANTANDER+"
+      ],
+      "physical_names": [
+        "CORPORACION AUTONOMA REGIONAL DE SANTANDER+"
+      ],
+      "all_time_procesos": 8915,
+      "all_time_contratos": 8653,
+      "recent_12m_procesos": 1600,
+      "recent_12m_contratos": 1477,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "existing_gazetteer_records": [
+        "CORPORACION AUTONOMA REGIONAL DE SANTANDER+"
+      ],
+      "existing_aliases": [
+        "autonoma regional de santander",
+        "autoridad ambiental de santander",
+        "autoridad ambiental del departamento de santander",
+        "autónoma regional de santander",
+        "car de santander",
+        "car santander",
+        "cas",
+        "cas santander",
+        "corporacion ambiental de santander",
+        "corporacion autonoma de santander",
+        "corporacion autonoma regional de santander",
+        "corporacion autonoma regional de santander+",
+        "corporacion de santander",
+        "corporación ambiental de santander",
+        "corporación autónoma de santander",
+        "corporación autónoma de santander cas",
+        "corporación autónoma regional de santander",
+        "corporación de santander",
+        "la autoridad ambiental de santander",
+        "la car de santander",
+        "la cas",
+        "la cas santander",
+        "la corporacion ambiental de santander",
+        "la corporacion autonoma de santander",
+        "la corporacion autonoma regional de santander",
+        "la corporacion de santander",
+        "la corporación ambiental de santander",
+        "la corporación autónoma regional de santander",
+        "la corporación de santander"
+      ],
+      "acronym_risk": {
+        "acronym": "CAS",
+        "secop_token_buyers": 0,
+        "secop_foreign_buyers": [],
+        "secop_foreign_buyer_count": 0,
+        "gazetteer_exact_owners": [
+          "CORPORACION AUTONOMA REGIONAL DE SANTANDER+"
+        ],
+        "gazetteer_token_owners": [
+          "CORPORACION AUTONOMA REGIONAL DE SANTANDER+"
+        ]
+      },
+      "resolution_probes": [
+        {
+          "query": "CAS",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DE SANTANDER+",
+          "resolution_method": "exact",
+          "classification": "PASS_EXACT",
+          "exact_alias_owners": [
+            "CORPORACION AUTONOMA REGIONAL DE SANTANDER+"
+          ]
+        },
+        {
+          "query": "Corporación Autónoma Regional de Santander",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DE SANTANDER+",
+          "resolution_method": "exact",
+          "classification": "PASS_EXACT",
+          "exact_alias_owners": [
+            "CORPORACION AUTONOMA REGIONAL DE SANTANDER+"
+          ]
+        }
+      ],
+      "classification": "PASS_EXACT",
+      "root_cause": "NONE_ALREADY_VERIFIED",
+      "acronym_decision": "ADMITTED",
+      "acronym_block_reason": null,
+      "decision": "UNCHANGED_ALREADY_VERIFIED"
+    },
+    {
+      "acronym": "CDA",
+      "official_institutional_name": "Corporación para el Desarrollo Sostenible del Norte y Oriente Amazónico",
+      "class": "CDS",
+      "nit": "838000009",
+      "seat_department": "Guaviare",
+      "jurisdiction": "Guainía, Guaviare y Vaupés",
+      "natural_queries": [
+        "CDA",
+        "Corporación para el Desarrollo Sostenible del Norte y Oriente Amazónico"
+      ],
+      "proceso_source_names": [
+        "CORPORACION PARA EL DESARROLLO SOSTENIBLE DEL NORTE Y DEL ORIENTE AMAZONICO"
+      ],
+      "contrato_source_names": [
+        "CORPORACION PARA EL DESARROLLO SOSTENIBLE DEL NORTE Y DEL ORIENTE AMAZONICO"
+      ],
+      "physical_names": [
+        "CORPORACION PARA EL DESARROLLO SOSTENIBLE DEL NORTE Y DEL ORIENTE AMAZONICO"
+      ],
+      "all_time_procesos": 854,
+      "all_time_contratos": 839,
+      "recent_12m_procesos": 314,
+      "recent_12m_contratos": 301,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "existing_gazetteer_records": [],
+      "existing_aliases": [],
+      "acronym_risk": {
+        "acronym": "CDA",
+        "secop_token_buyers": 1,
+        "secop_foreign_buyers": [
+          {
+            "nit": "899999034",
+            "name": "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CDA",
+            "rows": 6447
+          }
+        ],
+        "secop_foreign_buyer_count": 1,
+        "gazetteer_exact_owners": [],
+        "gazetteer_token_owners": [
+          "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CDA"
+        ]
+      },
+      "resolution_probes": [
+        {
+          "query": "CDA",
+          "resolved_owner": null,
+          "resolution_method": "like",
+          "classification": "FAIL_CLOSED",
+          "exact_alias_owners": []
+        },
+        {
+          "query": "Corporación para el Desarrollo Sostenible del Norte y Oriente Amazónico",
+          "resolved_owner": "CORPOAMAZONIA - CORPORACIÓN PARA EL DESARROLLO SOSTENIBLE DEL SUR DE LA AMAZONIA1",
+          "resolution_method": "fuzzy(86)",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": []
+        }
+      ],
+      "classification": "WRONG_OWNER",
+      "root_cause": "IDENTITY_MISSING",
+      "acronym_decision": "BLOCKED",
+      "acronym_block_reason": "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CDA; centros de diagnóstico automotor",
+      "decision": "BLOCK_AMBIGUOUS"
+    },
+    {
+      "acronym": "CDMB",
+      "official_institutional_name": "Corporación Autónoma Regional para la Defensa de la Meseta de Bucaramanga",
+      "class": "CAR",
+      "nit": "890201573",
+      "seat_department": "Santander",
+      "jurisdiction": "Meseta de Bucaramanga",
+      "natural_queries": [
+        "CDMB",
+        "Corporación Autónoma Regional para la Defensa de la Meseta de Bucaramanga"
+      ],
+      "proceso_source_names": [
+        "CORPORACIÓN AUTÓNOMA REGIONAL PARA LA DEFENSA DE LA MESETA DE BUCARAMANGA"
+      ],
+      "contrato_source_names": [
+        "CORPORACIÓN AUTÓNOMA REGIONAL PARA LA DEFENSA DE LA MESETA DE BUCARAMANGA"
+      ],
+      "physical_names": [
+        "CORPORACIÓN AUTÓNOMA REGIONAL PARA LA DEFENSA DE LA MESETA DE BUCARAMANGA"
+      ],
+      "all_time_procesos": 5595,
+      "all_time_contratos": 5253,
+      "recent_12m_procesos": 1330,
+      "recent_12m_contratos": 1181,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "existing_gazetteer_records": [
+        "CORPORACIÓN AUTÓNOMA REGIONAL PARA LA DEFENSA DE LA MESETA DE BUCARAMANGA"
+      ],
+      "existing_aliases": [
+        "autoridad ambiental de bucaramanga",
+        "cdmb",
+        "corporacion autonoma regional de bucaramanga",
+        "corporacion autonoma regional de la meseta de bucaramanga",
+        "corporacion autonoma regional defensa de la meseta de bucaramanga",
+        "corporacion autonoma regional meseta de bucaramanga",
+        "corporacion autonoma regional para la defensa de la meseta de bucaramanga",
+        "corporacion autonoma regional santander",
+        "corporacion de bucaramanga",
+        "corporación ambiental de bucaramanga",
+        "corporación ambiental de santander",
+        "corporación autónoma regional de bucaramanga",
+        "corporación autónoma regional de la meseta de bucaramanga",
+        "corporación autónoma regional defensa de la meseta de bucaramanga",
+        "corporación autónoma regional meseta de bucaramanga",
+        "corporación autónoma regional para la defensa de la meseta de bucaramanga",
+        "corporación autónoma regional santander",
+        "corporación de bucaramanga",
+        "defensa de la meseta",
+        "el cdmb",
+        "entidad ambiental de bucaramanga",
+        "entidad ambiental de santander",
+        "la cdmb",
+        "la corporación ambiental",
+        "meseta de bucaramanga"
+      ],
+      "acronym_risk": {
+        "acronym": "CDMB",
+        "secop_token_buyers": 0,
+        "secop_foreign_buyers": [],
+        "secop_foreign_buyer_count": 0,
+        "gazetteer_exact_owners": [
+          "CORPORACIÓN AUTÓNOMA REGIONAL PARA LA DEFENSA DE LA MESETA DE BUCARAMANGA"
+        ],
+        "gazetteer_token_owners": [
+          "CORPORACIÓN AUTÓNOMA REGIONAL PARA LA DEFENSA DE LA MESETA DE BUCARAMANGA"
+        ]
+      },
+      "resolution_probes": [
+        {
+          "query": "CDMB",
+          "resolved_owner": "CORPORACIÓN AUTÓNOMA REGIONAL PARA LA DEFENSA DE LA MESETA DE BUCARAMANGA",
+          "resolution_method": "exact",
+          "classification": "PASS_EXACT",
+          "exact_alias_owners": [
+            "CORPORACIÓN AUTÓNOMA REGIONAL PARA LA DEFENSA DE LA MESETA DE BUCARAMANGA"
+          ]
+        },
+        {
+          "query": "Corporación Autónoma Regional para la Defensa de la Meseta de Bucaramanga",
+          "resolved_owner": "CORPORACIÓN AUTÓNOMA REGIONAL PARA LA DEFENSA DE LA MESETA DE BUCARAMANGA",
+          "resolution_method": "exact",
+          "classification": "PASS_EXACT",
+          "exact_alias_owners": [
+            "CORPORACIÓN AUTÓNOMA REGIONAL PARA LA DEFENSA DE LA MESETA DE BUCARAMANGA"
+          ]
+        }
+      ],
+      "classification": "PASS_EXACT",
+      "root_cause": "NONE_ALREADY_VERIFIED",
+      "acronym_decision": "ADMITTED",
+      "acronym_block_reason": null,
+      "decision": "UNCHANGED_ALREADY_VERIFIED"
+    },
+    {
+      "acronym": "CODECHOCÓ",
+      "official_institutional_name": "Corporación Autónoma Regional para el Desarrollo Sostenible del Chocó",
+      "class": "CDS",
+      "nit": "899999238",
+      "seat_department": "Chocó",
+      "jurisdiction": "Chocó",
+      "natural_queries": [
+        "CODECHOCÓ",
+        "Corporación Autónoma Regional para el Desarrollo Sostenible del Chocó"
+      ],
+      "proceso_source_names": [
+        "CORPORACIÓN AUTÓNOMA REGIONAL PARA EL DESARROLLO SOSTENIBLE DEL CHOCO"
+      ],
+      "contrato_source_names": [
+        "CORPORACIÓN AUTÓNOMA REGIONAL PARA EL DESARROLLO SOSTENIBLE DEL CHOCO"
+      ],
+      "physical_names": [
+        "CORPORACIÓN AUTÓNOMA REGIONAL PARA EL DESARROLLO SOSTENIBLE DEL CHOCO"
+      ],
+      "all_time_procesos": 1240,
+      "all_time_contratos": 1229,
+      "recent_12m_procesos": 222,
+      "recent_12m_contratos": 185,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "existing_gazetteer_records": [],
+      "existing_aliases": [],
+      "acronym_risk": {
+        "acronym": "CODECHOCÓ",
+        "secop_token_buyers": 0,
+        "secop_foreign_buyers": [],
+        "secop_foreign_buyer_count": 0,
+        "gazetteer_exact_owners": [],
+        "gazetteer_token_owners": []
+      },
+      "resolution_probes": [
+        {
+          "query": "CODECHOCÓ",
+          "resolved_owner": null,
+          "resolution_method": "like",
+          "classification": "FAIL_CLOSED",
+          "exact_alias_owners": []
+        },
+        {
+          "query": "Corporación Autónoma Regional para el Desarrollo Sostenible del Chocó",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DE LA FRONTERA NORORIENTAL+",
+          "resolution_method": "fuzzy(90)",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": []
+        }
+      ],
+      "classification": "WRONG_OWNER",
+      "root_cause": "IDENTITY_MISSING",
+      "acronym_decision": "ADMITTED",
+      "acronym_block_reason": null,
+      "decision": "ACCEPT_REGISTRY_VERIFIED"
+    },
+    {
+      "acronym": "CORALINA",
+      "official_institutional_name": "Corporación para el Desarrollo Sostenible del Archipiélago de San Andrés, Providencia y Santa Catalina",
+      "class": "CDS",
+      "nit": "827000031",
+      "seat_department": "San Andrés, Providencia y Santa Catalina",
+      "jurisdiction": "Archipiélago",
+      "natural_queries": [
+        "CORALINA",
+        "Corporación para el Desarrollo Sostenible del Archipiélago de San Andrés, Providencia y Santa Catalina"
+      ],
+      "proceso_source_names": [
+        "CORPORACION PARA EL DESARROLLO SOSTENIBLE DEL ARCHIPIELAGO DE SAN ANDRES PROVIDENCIA Y SANTA CATALINA - CORALINA"
+      ],
+      "contrato_source_names": [
+        "CORPORACION PARA EL DESARROLLO SOSTENIBLE DEL ARCHIPIELAGO DE SAN ANDRES PROVIDENCIA Y SANTA CATALINA - CORALINA"
+      ],
+      "physical_names": [
+        "CORPORACION PARA EL DESARROLLO SOSTENIBLE DEL ARCHIPIELAGO DE SAN ANDRES PROVIDENCIA Y SANTA CATALINA - CORALINA"
+      ],
+      "all_time_procesos": 1800,
+      "all_time_contratos": 1911,
+      "recent_12m_procesos": 429,
+      "recent_12m_contratos": 407,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "existing_gazetteer_records": [],
+      "existing_aliases": [],
+      "acronym_risk": {
+        "acronym": "CORALINA",
+        "secop_token_buyers": 1,
+        "secop_foreign_buyers": [],
+        "secop_foreign_buyer_count": 0,
+        "gazetteer_exact_owners": [],
+        "gazetteer_token_owners": []
+      },
+      "resolution_probes": [
+        {
+          "query": "CORALINA",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DE NARIÑO",
+          "resolution_method": "fuzzy(90)",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": []
+        },
+        {
+          "query": "Corporación para el Desarrollo Sostenible del Archipiélago de San Andrés, Providencia y Santa Catalina",
+          "resolved_owner": "(Secretaría Distrital de Integración Social)",
+          "resolution_method": "fuzzy(85)",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": []
+        }
+      ],
+      "classification": "WRONG_OWNER",
+      "root_cause": "IDENTITY_MISSING",
+      "acronym_decision": "ADMITTED",
+      "acronym_block_reason": null,
+      "decision": "ACCEPT_REGISTRY_VERIFIED"
+    },
+    {
+      "acronym": "CORANTIOQUIA",
+      "official_institutional_name": "Corporación Autónoma Regional del Centro de Antioquia",
+      "class": "CAR",
+      "nit": "811000231",
+      "seat_department": "Antioquia",
+      "jurisdiction": "Centro de Antioquia",
+      "natural_queries": [
+        "CORANTIOQUIA",
+        "Corporación Autónoma Regional del Centro de Antioquia"
+      ],
+      "proceso_source_names": [
+        "CORPORACIÓN AUTÓNOMA REGIONAL DEL CENTRO DE ANTIOQUIA"
+      ],
+      "contrato_source_names": [
+        "CORPORACIÓN AUTÓNOMA REGIONAL DEL CENTRO DE ANTIOQUIA"
+      ],
+      "physical_names": [
+        "CORPORACIÓN AUTÓNOMA REGIONAL DEL CENTRO DE ANTIOQUIA"
+      ],
+      "all_time_procesos": 3565,
+      "all_time_contratos": 2853,
+      "recent_12m_procesos": 580,
+      "recent_12m_contratos": 530,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "existing_gazetteer_records": [],
+      "existing_aliases": [],
+      "acronym_risk": {
+        "acronym": "CORANTIOQUIA",
+        "secop_token_buyers": 0,
+        "secop_foreign_buyers": [],
+        "secop_foreign_buyer_count": 0,
+        "gazetteer_exact_owners": [],
+        "gazetteer_token_owners": []
+      },
+      "resolution_probes": [
+        {
+          "query": "CORANTIOQUIA",
+          "resolved_owner": "AGENCIA NACIONAL DE TIERRAS - ANT",
+          "resolution_method": "fuzzy(90)",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": []
+        },
+        {
+          "query": "Corporación Autónoma Regional del Centro de Antioquia",
+          "resolved_owner": "DEPARTAMENTO DE ANTIOQUIA//",
+          "resolution_method": "fuzzy(90)",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": []
+        }
+      ],
+      "classification": "WRONG_OWNER",
+      "root_cause": "IDENTITY_MISSING",
+      "acronym_decision": "ADMITTED",
+      "acronym_block_reason": null,
+      "decision": "ACCEPT_REGISTRY_VERIFIED"
+    },
+    {
+      "acronym": "CORMACARENA",
+      "official_institutional_name": "Corporación para el Desarrollo Sostenible del Área de Manejo Especial La Macarena",
+      "class": "CDS",
+      "nit": "822000091",
+      "seat_department": "Meta",
+      "jurisdiction": "Meta",
+      "natural_queries": [
+        "CORMACARENA",
+        "Corporación para el Desarrollo Sostenible del Área de Manejo Especial La Macarena"
+      ],
+      "proceso_source_names": [
+        "CORMACARENA"
+      ],
+      "contrato_source_names": [
+        "CORMACARENA"
+      ],
+      "physical_names": [
+        "CORMACARENA"
+      ],
+      "all_time_procesos": 8223,
+      "all_time_contratos": 7741,
+      "recent_12m_procesos": 1563,
+      "recent_12m_contratos": 1414,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "existing_gazetteer_records": [
+        "CORMACARENA"
+      ],
+      "existing_aliases": [
+        "autoridad ambiental del meta",
+        "cormacarena",
+        "cormacarena meta",
+        "corporación ambiental de la macarena",
+        "corporación ambiental del meta",
+        "corporación autónoma regional de la macarena",
+        "corporación autónoma regional del área de manejo especial la macarena",
+        "corporación de la macarena",
+        "corporación del departamento del meta",
+        "corporación del meta",
+        "corporación macarena",
+        "corporación para el desarrollo sostenible del área de manejo especial de la macarena",
+        "corporación para el desarrollo sostenible del área de manejo especial la macarena",
+        "la cormacarena",
+        "la corporación del meta"
+      ],
+      "acronym_risk": {
+        "acronym": "CORMACARENA",
+        "secop_token_buyers": 1,
+        "secop_foreign_buyers": [],
+        "secop_foreign_buyer_count": 0,
+        "gazetteer_exact_owners": [
+          "CORMACARENA"
+        ],
+        "gazetteer_token_owners": [
+          "CORMACARENA"
+        ]
+      },
+      "resolution_probes": [
+        {
+          "query": "CORMACARENA",
+          "resolved_owner": "CORMACARENA",
+          "resolution_method": "exact",
+          "classification": "PASS_EXACT",
+          "exact_alias_owners": [
+            "CORMACARENA"
+          ]
+        },
+        {
+          "query": "Corporación para el Desarrollo Sostenible del Área de Manejo Especial La Macarena",
+          "resolved_owner": "CORMACARENA",
+          "resolution_method": "exact",
+          "classification": "PASS_EXACT",
+          "exact_alias_owners": [
+            "CORMACARENA"
+          ]
+        }
+      ],
+      "classification": "PASS_EXACT",
+      "root_cause": "NONE_ALREADY_VERIFIED",
+      "acronym_decision": "ADMITTED",
+      "acronym_block_reason": null,
+      "decision": "UNCHANGED_ALREADY_VERIFIED"
+    },
+    {
+      "acronym": "CORNARE",
+      "official_institutional_name": "Corporación Autónoma Regional de las Cuencas de los Ríos Negro y Nare",
+      "class": "CAR",
+      "nit": "890985138",
+      "seat_department": "Antioquia",
+      "jurisdiction": "Oriente antioqueño",
+      "natural_queries": [
+        "CORNARE",
+        "Corporación Autónoma Regional de las Cuencas de los Ríos Negro y Nare"
+      ],
+      "proceso_source_names": [
+        "CORPORACION AUTONOMA REGIONAL DE LAS CUENCAS DE LOS RIOS NEGRO - NARE"
+      ],
+      "contrato_source_names": [
+        "CORPORACION AUTONOMA REGIONAL DE LAS CUENCAS DE LOS RIOS NEGRO - NARE"
+      ],
+      "physical_names": [
+        "CORPORACION AUTONOMA REGIONAL DE LAS CUENCAS DE LOS RIOS NEGRO - NARE"
+      ],
+      "all_time_procesos": 3779,
+      "all_time_contratos": 4504,
+      "recent_12m_procesos": 593,
+      "recent_12m_contratos": 772,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "existing_gazetteer_records": [
+        "CORPORACION AUTONOMA REGIONAL DE LAS CUENCAS DE LOS RIOS NEGRO - NARE"
+      ],
+      "existing_aliases": [
+        "autoridad ambiental autonoma regional de las cuencas de los rios negro - nare",
+        "autoridad ambiental las cuencas de los rios negro - nare",
+        "corp autonoma regional de las cuencas de los rios negro - nare",
+        "corp las cuencas de los rios negro - nare",
+        "corporacion autonoma autonoma regional de las cuencas de los rios negro - nare",
+        "corporacion autonoma las cuencas de los rios negro - nare",
+        "corporacion autonoma regional de las cuencas de los rios negro - nare",
+        "corporacion las cuencas de los rios negro - nare"
+      ],
+      "acronym_risk": {
+        "acronym": "CORNARE",
+        "secop_token_buyers": 0,
+        "secop_foreign_buyers": [],
+        "secop_foreign_buyer_count": 0,
+        "gazetteer_exact_owners": [],
+        "gazetteer_token_owners": []
+      },
+      "resolution_probes": [
+        {
+          "query": "CORNARE",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DE NARIÑO",
+          "resolution_method": "fuzzy(90)",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": []
+        },
+        {
+          "query": "Corporación Autónoma Regional de las Cuencas de los Ríos Negro y Nare",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DE LAS CUENCAS DE LOS RIOS NEGRO - NARE",
+          "resolution_method": "fuzzy(98)",
+          "classification": "FUZZY_ONLY",
+          "exact_alias_owners": []
+        }
+      ],
+      "classification": "WRONG_OWNER",
+      "root_cause": "IDENTITY_PRESENT_ALIAS_GAP",
+      "acronym_decision": "ADMITTED",
+      "acronym_block_reason": null,
+      "decision": "ACCEPT_ALIAS_RECONCILIATION"
+    },
+    {
+      "acronym": "CORPAMAG",
+      "official_institutional_name": "Corporación Autónoma Regional del Magdalena",
+      "class": "CAR",
+      "nit": "800099287",
+      "seat_department": "Magdalena",
+      "jurisdiction": "Magdalena",
+      "natural_queries": [
+        "CORPAMAG",
+        "Corporación Autónoma Regional del Magdalena"
+      ],
+      "proceso_source_names": [
+        "CORPORACION AUTONOMA REGIONAL DEL MAGDALENA"
+      ],
+      "contrato_source_names": [
+        "CORPORACION AUTONOMA REGIONAL DEL MAGDALENA"
+      ],
+      "physical_names": [
+        "CORPORACION AUTONOMA REGIONAL DEL MAGDALENA"
+      ],
+      "all_time_procesos": 3312,
+      "all_time_contratos": 3055,
+      "recent_12m_procesos": 525,
+      "recent_12m_contratos": 492,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "existing_gazetteer_records": [],
+      "existing_aliases": [],
+      "acronym_risk": {
+        "acronym": "CORPAMAG",
+        "secop_token_buyers": 0,
+        "secop_foreign_buyers": [],
+        "secop_foreign_buyer_count": 0,
+        "gazetteer_exact_owners": [],
+        "gazetteer_token_owners": []
+      },
+      "resolution_probes": [
+        {
+          "query": "CORPAMAG",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DE NARIÑO",
+          "resolution_method": "fuzzy(90)",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": []
+        },
+        {
+          "query": "Corporación Autónoma Regional del Magdalena",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DE LA FRONTERA NORORIENTAL+",
+          "resolution_method": "fuzzy(95)",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": []
+        }
+      ],
+      "classification": "WRONG_OWNER",
+      "root_cause": "IDENTITY_MISSING",
+      "acronym_decision": "ADMITTED",
+      "acronym_block_reason": null,
+      "decision": "ACCEPT_REGISTRY_VERIFIED"
+    },
+    {
+      "acronym": "CORPOAMAZONIA",
+      "official_institutional_name": "Corporación para el Desarrollo Sostenible del Sur de la Amazonia",
+      "class": "CDS",
+      "nit": "800252844",
+      "seat_department": "Putumayo",
+      "jurisdiction": "Amazonas, Caquetá y Putumayo",
+      "natural_queries": [
+        "CORPOAMAZONIA",
+        "Corporación para el Desarrollo Sostenible del Sur de la Amazonia"
+      ],
+      "proceso_source_names": [
+        "CORPOAMAZONIA - CORPORACIÓN PARA EL DESARROLLO SOSTENIBLE DEL SUR DE LA AMAZONIA1"
+      ],
+      "contrato_source_names": [
+        "CORPOAMAZONIA - CORPORACIÓN PARA EL DESARROLLO SOSTENIBLE DEL SUR DE LA AMAZONIA1"
+      ],
+      "physical_names": [
+        "CORPOAMAZONIA - CORPORACIÓN PARA EL DESARROLLO SOSTENIBLE DEL SUR DE LA AMAZONIA1"
+      ],
+      "all_time_procesos": 4493,
+      "all_time_contratos": 4217,
+      "recent_12m_procesos": 707,
+      "recent_12m_contratos": 641,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "existing_gazetteer_records": [
+        "CORPOAMAZONIA - CORPORACIÓN PARA EL DESARROLLO SOSTENIBLE DEL SUR DE LA AMAZONIA1"
+      ],
+      "existing_aliases": [
+        "corpoamazonia",
+        "corpoamazonia - corporación para el desarrollo sostenible del sur de la amazonia1",
+        "corpoamazonia putumayo",
+        "corporación amazonia",
+        "corporación amazonía",
+        "corporación amazónica",
+        "corporación amazónica del putumayo",
+        "corporación de la amazonia",
+        "corporación de la amazonia del putumayo",
+        "corporación de la amazonía",
+        "corporación de la amazonía del putumayo",
+        "corporación del sur amazónico",
+        "corporación del sur amazónico putumayo",
+        "corporación del sur de la amazonia",
+        "corporación del sur de la amazonia putumayo",
+        "corporación del sur de la amazonía",
+        "corporación del sur de la amazonía putumayo",
+        "corporación desarrollo sostenible amazonia",
+        "corporación desarrollo sostenible amazonía",
+        "corporación desarrollo sostenible sur amazonia",
+        "corporación desarrollo sostenible sur amazonía",
+        "corporación para el desarrollo sostenible de la amazonia",
+        "corporación para el desarrollo sostenible de la amazonia sur",
+        "corporación para el desarrollo sostenible de la amazonía",
+        "corporación para el desarrollo sostenible de la amazonía sur",
+        "corporación para el desarrollo sostenible del amazonas",
+        "corporación para el desarrollo sostenible del amazonas sur",
+        "corporación para el desarrollo sostenible del sur amazónico putumayo",
+        "corporación para el desarrollo sostenible del sur de la amazonia",
+        "corporación para el desarrollo sostenible del sur de la amazonia putumayo",
+        "corporación para el desarrollo sostenible del sur de la amazonia1",
+        "corporación para el desarrollo sostenible del sur de la amazonía",
+        "corporación para el desarrollo sostenible del sur de la amazonía putumayo",
+        "corporación para el desarrollo sostenible del sur de la amazonía1",
+        "corporación sur amazónico",
+        "corporación sur de la amazonia",
+        "corporación sur de la amazonía",
+        "la corporación amazónica",
+        "la corporación de la amazonia",
+        "la corporación de la amazonía",
+        "la corporación del sur de la amazonia",
+        "la corporación del sur de la amazonía",
+        "la corporación para el desarrollo sostenible del sur de la amazonia",
+        "la corporación para el desarrollo sostenible del sur de la amazonía"
+      ],
+      "acronym_risk": {
+        "acronym": "CORPOAMAZONIA",
+        "secop_token_buyers": 1,
+        "secop_foreign_buyers": [],
+        "secop_foreign_buyer_count": 0,
+        "gazetteer_exact_owners": [
+          "CORPOAMAZONIA - CORPORACIÓN PARA EL DESARROLLO SOSTENIBLE DEL SUR DE LA AMAZONIA1"
+        ],
+        "gazetteer_token_owners": [
+          "CORPOAMAZONIA - CORPORACIÓN PARA EL DESARROLLO SOSTENIBLE DEL SUR DE LA AMAZONIA1"
+        ]
+      },
+      "resolution_probes": [
+        {
+          "query": "CORPOAMAZONIA",
+          "resolved_owner": "CORPOAMAZONIA - CORPORACIÓN PARA EL DESARROLLO SOSTENIBLE DEL SUR DE LA AMAZONIA1",
+          "resolution_method": "exact",
+          "classification": "PASS_EXACT",
+          "exact_alias_owners": [
+            "CORPOAMAZONIA - CORPORACIÓN PARA EL DESARROLLO SOSTENIBLE DEL SUR DE LA AMAZONIA1"
+          ]
+        },
+        {
+          "query": "Corporación para el Desarrollo Sostenible del Sur de la Amazonia",
+          "resolved_owner": "CORPOAMAZONIA - CORPORACIÓN PARA EL DESARROLLO SOSTENIBLE DEL SUR DE LA AMAZONIA1",
+          "resolution_method": "exact",
+          "classification": "PASS_EXACT",
+          "exact_alias_owners": [
+            "CORPOAMAZONIA - CORPORACIÓN PARA EL DESARROLLO SOSTENIBLE DEL SUR DE LA AMAZONIA1"
+          ]
+        }
+      ],
+      "classification": "PASS_EXACT",
+      "root_cause": "NONE_ALREADY_VERIFIED",
+      "acronym_decision": "ADMITTED",
+      "acronym_block_reason": null,
+      "decision": "UNCHANGED_ALREADY_VERIFIED"
+    },
+    {
+      "acronym": "CORPOBOYACÁ",
+      "official_institutional_name": "Corporación Autónoma Regional de Boyacá",
+      "class": "CAR",
+      "nit": "800252843",
+      "seat_department": "Boyacá",
+      "jurisdiction": "Boyacá",
+      "natural_queries": [
+        "CORPOBOYACÁ",
+        "Corporación Autónoma Regional de Boyacá"
+      ],
+      "proceso_source_names": [
+        "CORPOBOYACA"
+      ],
+      "contrato_source_names": [
+        "CORPOBOYACA"
+      ],
+      "physical_names": [
+        "CORPOBOYACA"
+      ],
+      "all_time_procesos": 5010,
+      "all_time_contratos": 4810,
+      "recent_12m_procesos": 888,
+      "recent_12m_contratos": 839,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "existing_gazetteer_records": [
+        "CORPOBOYACA"
+      ],
+      "existing_aliases": [
+        "corpoboyaca",
+        "corpochivor",
+        "corpochivor boyacá",
+        "corporación autónoma de boyacá",
+        "corporación autónoma regional boyacá",
+        "corporación autónoma regional corpochivor",
+        "corporación autónoma regional corpochivor boyacá",
+        "corporación autónoma regional corpochivor de boyacá",
+        "corporación autónoma regional de boyacá",
+        "corporación autónoma regional de boyacá corpoboyaca",
+        "corporación autónoma regional de chivor",
+        "corporación autónoma regional del departamento de boyacá",
+        "corporación autónoma regional para el desarrollo de boyacá",
+        "corporación corpochivor",
+        "corporación de boyacá",
+        "el corpochivor",
+        "la autoridad ambiental de boyacá",
+        "la car de boyacá",
+        "la corpochivor",
+        "la corporación ambiental de boyacá",
+        "la corporación autónoma de boyacá",
+        "la corporación autónoma regional car boyacá",
+        "la corporación autónoma regional car de boyacá",
+        "la corporación autónoma regional de boyacá",
+        "la corporación de boyacá"
+      ],
+      "acronym_risk": {
+        "acronym": "CORPOBOYACÁ",
+        "secop_token_buyers": 1,
+        "secop_foreign_buyers": [],
+        "secop_foreign_buyer_count": 0,
+        "gazetteer_exact_owners": [
+          "CORPOBOYACA"
+        ],
+        "gazetteer_token_owners": [
+          "CORPOBOYACA"
+        ]
+      },
+      "resolution_probes": [
+        {
+          "query": "CORPOBOYACÁ",
+          "resolved_owner": "CORPOBOYACA",
+          "resolution_method": "exact",
+          "classification": "PASS_EXACT",
+          "exact_alias_owners": [
+            "CORPOBOYACA"
+          ]
+        },
+        {
+          "query": "Corporación Autónoma Regional de Boyacá",
+          "resolved_owner": "CORPOBOYACA",
+          "resolution_method": "exact",
+          "classification": "PASS_EXACT",
+          "exact_alias_owners": [
+            "CORPOBOYACA"
+          ]
+        }
+      ],
+      "classification": "PASS_EXACT",
+      "root_cause": "NONE_ALREADY_VERIFIED",
+      "acronym_decision": "ADMITTED",
+      "acronym_block_reason": null,
+      "decision": "UNCHANGED_ALREADY_VERIFIED"
+    },
+    {
+      "acronym": "CORPOCALDAS",
+      "official_institutional_name": "Corporación Autónoma Regional de Caldas",
+      "class": "CAR",
+      "nit": "890803005",
+      "seat_department": "Caldas",
+      "jurisdiction": "Caldas",
+      "natural_queries": [
+        "CORPOCALDAS",
+        "Corporación Autónoma Regional de Caldas"
+      ],
+      "proceso_source_names": [
+        "CORPOCALDAS."
+      ],
+      "contrato_source_names": [
+        "CORPOCALDAS."
+      ],
+      "physical_names": [
+        "CORPOCALDAS."
+      ],
+      "all_time_procesos": 2013,
+      "all_time_contratos": 1856,
+      "recent_12m_procesos": 334,
+      "recent_12m_contratos": 373,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "existing_gazetteer_records": [],
+      "existing_aliases": [],
+      "acronym_risk": {
+        "acronym": "CORPOCALDAS",
+        "secop_token_buyers": 1,
+        "secop_foreign_buyers": [],
+        "secop_foreign_buyer_count": 0,
+        "gazetteer_exact_owners": [],
+        "gazetteer_token_owners": []
+      },
+      "resolution_probes": [
+        {
+          "query": "CORPOCALDAS",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DE NARIÑO",
+          "resolution_method": "fuzzy(90)",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": []
+        },
+        {
+          "query": "Corporación Autónoma Regional de Caldas",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DE LA FRONTERA NORORIENTAL+",
+          "resolution_method": "fuzzy(95)",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": []
+        }
+      ],
+      "classification": "WRONG_OWNER",
+      "root_cause": "IDENTITY_MISSING",
+      "acronym_decision": "ADMITTED",
+      "acronym_block_reason": null,
+      "decision": "ACCEPT_REGISTRY_VERIFIED"
+    },
+    {
+      "acronym": "CORPOCESAR",
+      "official_institutional_name": "Corporación Autónoma Regional del Cesar",
+      "class": "CAR",
+      "nit": "892301483",
+      "seat_department": "Cesar",
+      "jurisdiction": "Cesar",
+      "natural_queries": [
+        "CORPOCESAR",
+        "Corporación Autónoma Regional del Cesar"
+      ],
+      "proceso_source_names": [
+        "CORPOCESAR"
+      ],
+      "contrato_source_names": [
+        "CORPOCESAR"
+      ],
+      "physical_names": [
+        "CORPOCESAR"
+      ],
+      "all_time_procesos": 1733,
+      "all_time_contratos": 1373,
+      "recent_12m_procesos": 482,
+      "recent_12m_contratos": 364,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "existing_gazetteer_records": [],
+      "existing_aliases": [],
+      "acronym_risk": {
+        "acronym": "CORPOCESAR",
+        "secop_token_buyers": 1,
+        "secop_foreign_buyers": [],
+        "secop_foreign_buyer_count": 0,
+        "gazetteer_exact_owners": [],
+        "gazetteer_token_owners": []
+      },
+      "resolution_probes": [
+        {
+          "query": "CORPOCESAR",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DE NARIÑO",
+          "resolution_method": "fuzzy(90)",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": []
+        },
+        {
+          "query": "Corporación Autónoma Regional del Cesar",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DE LA FRONTERA NORORIENTAL+",
+          "resolution_method": "fuzzy(95)",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": []
+        }
+      ],
+      "classification": "WRONG_OWNER",
+      "root_cause": "IDENTITY_MISSING",
+      "acronym_decision": "ADMITTED",
+      "acronym_block_reason": null,
+      "decision": "ACCEPT_REGISTRY_VERIFIED"
+    },
+    {
+      "acronym": "CORPOCHIVOR",
+      "official_institutional_name": "Corporación Autónoma Regional de Chivor",
+      "class": "CAR",
+      "nit": "800252037",
+      "seat_department": "Boyacá",
+      "jurisdiction": "Suroriente de Boyacá",
+      "natural_queries": [
+        "CORPOCHIVOR",
+        "Corporación Autónoma Regional de Chivor"
+      ],
+      "proceso_source_names": [
+        "CORPORACIÓN AUTONOMA REGIONAL DE CHIVOR CORPOCHIVOR"
+      ],
+      "contrato_source_names": [
+        "CORPORACIÓN AUTONOMA REGIONAL DE CHIVOR CORPOCHIVOR"
+      ],
+      "physical_names": [
+        "CORPORACIÓN AUTONOMA REGIONAL DE CHIVOR CORPOCHIVOR"
+      ],
+      "all_time_procesos": 59,
+      "all_time_contratos": 35,
+      "recent_12m_procesos": 11,
+      "recent_12m_contratos": 13,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "existing_gazetteer_records": [],
+      "existing_aliases": [],
+      "acronym_risk": {
+        "acronym": "CORPOCHIVOR",
+        "secop_token_buyers": 1,
+        "secop_foreign_buyers": [],
+        "secop_foreign_buyer_count": 0,
+        "gazetteer_exact_owners": [
+          "CORPOBOYACA"
+        ],
+        "gazetteer_token_owners": [
+          "CORPOBOYACA"
+        ]
+      },
+      "resolution_probes": [
+        {
+          "query": "CORPOCHIVOR",
+          "resolved_owner": "CORPOBOYACA",
+          "resolution_method": "exact",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": [
+            "CORPOBOYACA"
+          ]
+        },
+        {
+          "query": "Corporación Autónoma Regional de Chivor",
+          "resolved_owner": "CORPOBOYACA",
+          "resolution_method": "exact",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": [
+            "CORPOBOYACA"
+          ]
+        }
+      ],
+      "classification": "WRONG_OWNER",
+      "root_cause": "WRONG_ALIAS_OWNER",
+      "acronym_decision": "ADMITTED",
+      "acronym_block_reason": null,
+      "decision": "REMOVE_WRONG_ALIAS"
+    },
+    {
+      "acronym": "CORPOGUAJIRA",
+      "official_institutional_name": "Corporación Autónoma Regional de La Guajira",
+      "class": "CAR",
+      "nit": "892115314",
+      "seat_department": "La Guajira",
+      "jurisdiction": "La Guajira",
+      "natural_queries": [
+        "CORPOGUAJIRA",
+        "Corporación Autónoma Regional de La Guajira"
+      ],
+      "proceso_source_names": [
+        "CORPORACION AUTONOMA REGIONAL DE LA GUAJIRA"
+      ],
+      "contrato_source_names": [
+        "CORPORACION AUTONOMA REGIONAL DE LA GUAJIRA"
+      ],
+      "physical_names": [
+        "CORPORACION AUTONOMA REGIONAL DE LA GUAJIRA"
+      ],
+      "all_time_procesos": 1088,
+      "all_time_contratos": 777,
+      "recent_12m_procesos": 174,
+      "recent_12m_contratos": 140,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "existing_gazetteer_records": [],
+      "existing_aliases": [],
+      "acronym_risk": {
+        "acronym": "CORPOGUAJIRA",
+        "secop_token_buyers": 0,
+        "secop_foreign_buyers": [],
+        "secop_foreign_buyer_count": 0,
+        "gazetteer_exact_owners": [],
+        "gazetteer_token_owners": []
+      },
+      "resolution_probes": [
+        {
+          "query": "CORPOGUAJIRA",
+          "resolved_owner": "UNIATLANTICO",
+          "resolution_method": "fuzzy(90)",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": []
+        },
+        {
+          "query": "Corporación Autónoma Regional de La Guajira",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DE LA FRONTERA NORORIENTAL+",
+          "resolution_method": "fuzzy(95)",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": []
+        }
+      ],
+      "classification": "WRONG_OWNER",
+      "root_cause": "IDENTITY_MISSING",
+      "acronym_decision": "ADMITTED",
+      "acronym_block_reason": null,
+      "decision": "ACCEPT_REGISTRY_VERIFIED"
+    },
+    {
+      "acronym": "CORPOGUAVIO",
+      "official_institutional_name": "Corporación Autónoma Regional del Guavio",
+      "class": "CAR",
+      "nit": "832000171",
+      "seat_department": "Cundinamarca",
+      "jurisdiction": "Región del Guavio",
+      "natural_queries": [
+        "CORPOGUAVIO",
+        "Corporación Autónoma Regional del Guavio"
+      ],
+      "proceso_source_names": [
+        "CORPORACION AUTONOMA REGIONAL DEL GUAVIO - CORPOGUAVIO (OFICIAL)"
+      ],
+      "contrato_source_names": [
+        "CORPORACION AUTONOMA REGIONAL DEL GUAVIO - CORPOGUAVIO (OFICIAL)"
+      ],
+      "physical_names": [
+        "CORPORACION AUTONOMA REGIONAL DEL GUAVIO - CORPOGUAVIO (OFICIAL)"
+      ],
+      "all_time_procesos": 2269,
+      "all_time_contratos": 2383,
+      "recent_12m_procesos": 535,
+      "recent_12m_contratos": 527,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "existing_gazetteer_records": [],
+      "existing_aliases": [],
+      "acronym_risk": {
+        "acronym": "CORPOGUAVIO",
+        "secop_token_buyers": 1,
+        "secop_foreign_buyers": [],
+        "secop_foreign_buyer_count": 0,
+        "gazetteer_exact_owners": [],
+        "gazetteer_token_owners": []
+      },
+      "resolution_probes": [
+        {
+          "query": "CORPOGUAVIO",
+          "resolved_owner": "UNIATLANTICO",
+          "resolution_method": "fuzzy(90)",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": []
+        },
+        {
+          "query": "Corporación Autónoma Regional del Guavio",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DE LA FRONTERA NORORIENTAL+",
+          "resolution_method": "fuzzy(95)",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": []
+        }
+      ],
+      "classification": "WRONG_OWNER",
+      "root_cause": "IDENTITY_MISSING",
+      "acronym_decision": "ADMITTED",
+      "acronym_block_reason": null,
+      "decision": "ACCEPT_REGISTRY_VERIFIED"
+    },
+    {
+      "acronym": "CORPOMOJANA",
+      "official_institutional_name": "Corporación para el Desarrollo Sostenible de La Mojana y el San Jorge",
+      "class": "CDS",
+      "nit": "823000077",
+      "seat_department": "Sucre",
+      "jurisdiction": "La Mojana y San Jorge",
+      "natural_queries": [
+        "CORPOMOJANA",
+        "Corporación para el Desarrollo Sostenible de La Mojana y el San Jorge"
+      ],
+      "proceso_source_names": [
+        "CORPORACION PARA EL DESARROLLO SOSTENIBLE DE LA MOJANA Y EL SAN JORGE CORPOMOJANA"
+      ],
+      "contrato_source_names": [
+        "CORPORACION PARA EL DESARROLLO SOSTENIBLE DE LA MOJANA Y EL SAN JORGE CORPOMOJANA"
+      ],
+      "physical_names": [
+        "CORPORACION PARA EL DESARROLLO SOSTENIBLE DE LA MOJANA Y EL SAN JORGE CORPOMOJANA"
+      ],
+      "all_time_procesos": 1,
+      "all_time_contratos": 1,
+      "recent_12m_procesos": 0,
+      "recent_12m_contratos": 0,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "existing_gazetteer_records": [],
+      "existing_aliases": [],
+      "acronym_risk": {
+        "acronym": "CORPOMOJANA",
+        "secop_token_buyers": 1,
+        "secop_foreign_buyers": [],
+        "secop_foreign_buyer_count": 0,
+        "gazetteer_exact_owners": [],
+        "gazetteer_token_owners": []
+      },
+      "resolution_probes": [
+        {
+          "query": "CORPOMOJANA",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DE NARIÑO",
+          "resolution_method": "fuzzy(90)",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": []
+        },
+        {
+          "query": "Corporación para el Desarrollo Sostenible de La Mojana y el San Jorge",
+          "resolved_owner": "CORPOAMAZONIA - CORPORACIÓN PARA EL DESARROLLO SOSTENIBLE DEL SUR DE LA AMAZONIA1",
+          "resolution_method": "fuzzy(86)",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": []
+        }
+      ],
+      "classification": "WRONG_OWNER",
+      "root_cause": "IDENTITY_MISSING",
+      "acronym_decision": "ADMITTED",
+      "acronym_block_reason": null,
+      "decision": "ACCEPT_REGISTRY_VERIFIED"
+    },
+    {
+      "acronym": "CORPONARIÑO",
+      "official_institutional_name": "Corporación Autónoma Regional de Nariño",
+      "class": "CAR",
+      "nit": "891222322",
+      "seat_department": "Nariño",
+      "jurisdiction": "Nariño",
+      "natural_queries": [
+        "CORPONARIÑO",
+        "Corporación Autónoma Regional de Nariño"
+      ],
+      "proceso_source_names": [
+        "CORPORACION AUTONOMA REGIONAL DE NARIÑO"
+      ],
+      "contrato_source_names": [
+        "CORPORACION AUTONOMA REGIONAL DE NARIÑO"
+      ],
+      "physical_names": [
+        "CORPORACION AUTONOMA REGIONAL DE NARIÑO"
+      ],
+      "all_time_procesos": 4123,
+      "all_time_contratos": 4099,
+      "recent_12m_procesos": 513,
+      "recent_12m_contratos": 457,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "existing_gazetteer_records": [
+        "CORPORACION AUTONOMA REGIONAL DE NARIÑO"
+      ],
+      "existing_aliases": [
+        "ambiental de nariño",
+        "autoridad ambiental de nariño",
+        "car de nariño",
+        "car nariño",
+        "cor",
+        "corporacion ambiental de nariño",
+        "corporacion autonoma de nariño",
+        "corporacion autonoma regional de nariño",
+        "corporacion autonoma regional del departamento de nariño",
+        "corporacion de nariño",
+        "corporación ambiental de nariño",
+        "corporación autónoma de nariño",
+        "corporación autónoma regional de nariño",
+        "corporación autónoma regional del departamento de nariño",
+        "corporación de nariño",
+        "la autoridad ambiental de nariño",
+        "la car de nariño",
+        "la car nariño",
+        "la corporacion autonoma de nariño",
+        "la corporacion autonoma regional de nariño",
+        "la corporacion de nariño",
+        "la corporación autónoma de nariño",
+        "la corporación autónoma regional de nariño",
+        "la corporación de nariño"
+      ],
+      "acronym_risk": {
+        "acronym": "CORPONARIÑO",
+        "secop_token_buyers": 0,
+        "secop_foreign_buyers": [],
+        "secop_foreign_buyer_count": 0,
+        "gazetteer_exact_owners": [],
+        "gazetteer_token_owners": []
+      },
+      "resolution_probes": [
+        {
+          "query": "CORPONARIÑO",
+          "resolved_owner": "GOBERNACION DE NARIÑO",
+          "resolution_method": "fuzzy(90)",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": []
+        },
+        {
+          "query": "Corporación Autónoma Regional de Nariño",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DE NARIÑO",
+          "resolution_method": "exact",
+          "classification": "PASS_EXACT",
+          "exact_alias_owners": [
+            "CORPORACION AUTONOMA REGIONAL DE NARIÑO"
+          ]
+        }
+      ],
+      "classification": "WRONG_OWNER",
+      "root_cause": "IDENTITY_PRESENT_ALIAS_GAP",
+      "acronym_decision": "ADMITTED",
+      "acronym_block_reason": null,
+      "decision": "ACCEPT_ALIAS_RECONCILIATION"
+    },
+    {
+      "acronym": "CORPONOR",
+      "official_institutional_name": "Corporación Autónoma Regional de la Frontera Nororiental",
+      "class": "CAR",
+      "nit": "890505253",
+      "seat_department": "Norte de Santander",
+      "jurisdiction": "Norte de Santander",
+      "natural_queries": [
+        "CORPONOR",
+        "Corporación Autónoma Regional de la Frontera Nororiental"
+      ],
+      "proceso_source_names": [
+        "CORPORACION AUTONOMA REGIONAL DE LA FRONTERA NORORIENTAL+"
+      ],
+      "contrato_source_names": [
+        "CORPORACION AUTONOMA REGIONAL DE LA FRONTERA NORORIENTAL+"
+      ],
+      "physical_names": [
+        "CORPORACION AUTONOMA REGIONAL DE LA FRONTERA NORORIENTAL+"
+      ],
+      "all_time_procesos": 6176,
+      "all_time_contratos": 5974,
+      "recent_12m_procesos": 1021,
+      "recent_12m_contratos": 882,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "existing_gazetteer_records": [
+        "CORPORACION AUTONOMA REGIONAL DE LA FRONTERA NORORIENTAL+"
+      ],
+      "existing_aliases": [
+        "autoridad ambiental de norte de santander",
+        "car frontera nororiental",
+        "car norte de santander",
+        "carfn",
+        "corporacion autonoma regional de la frontera nororiental+",
+        "corporación ambiental de norte de santander",
+        "corporación autónoma de la frontera nororiental",
+        "corporación autónoma regional",
+        "corporación autónoma regional de la frontera nororiental",
+        "corporación autónoma regional del norte de santander",
+        "corporación autónoma regional frontera nororiental",
+        "corporación de la frontera nororiental",
+        "corporación de norte de santander",
+        "corporación del nororiente",
+        "corporación nororiental",
+        "corporación regional",
+        "frontera nororiental",
+        "la corporación autónoma"
+      ],
+      "acronym_risk": {
+        "acronym": "CORPONOR",
+        "secop_token_buyers": 0,
+        "secop_foreign_buyers": [],
+        "secop_foreign_buyer_count": 0,
+        "gazetteer_exact_owners": [],
+        "gazetteer_token_owners": []
+      },
+      "resolution_probes": [
+        {
+          "query": "CORPONOR",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DE NARIÑO",
+          "resolution_method": "fuzzy(90)",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": []
+        },
+        {
+          "query": "Corporación Autónoma Regional de la Frontera Nororiental",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DE LA FRONTERA NORORIENTAL+",
+          "resolution_method": "exact",
+          "classification": "PASS_EXACT",
+          "exact_alias_owners": [
+            "CORPORACION AUTONOMA REGIONAL DE LA FRONTERA NORORIENTAL+"
+          ]
+        }
+      ],
+      "classification": "WRONG_OWNER",
+      "root_cause": "IDENTITY_PRESENT_ALIAS_GAP",
+      "acronym_decision": "ADMITTED",
+      "acronym_block_reason": null,
+      "decision": "ACCEPT_ALIAS_RECONCILIATION"
+    },
+    {
+      "acronym": "CORPORINOQUIA",
+      "official_institutional_name": "Corporación Autónoma Regional de la Orinoquia",
+      "class": "CAR",
+      "nit": "832000283",
+      "seat_department": "Casanare",
+      "jurisdiction": "Orinoquia",
+      "natural_queries": [
+        "CORPORINOQUIA",
+        "Corporación Autónoma Regional de la Orinoquia"
+      ],
+      "proceso_source_names": [
+        "CORPORACIÓN AUTÓNOMA REGIONAL DE LA ORINOQUIA"
+      ],
+      "contrato_source_names": [
+        "CORPORACIÓN AUTÓNOMA REGIONAL DE LA ORINOQUIA"
+      ],
+      "physical_names": [
+        "CORPORACIÓN AUTÓNOMA REGIONAL DE LA ORINOQUIA"
+      ],
+      "all_time_procesos": 4531,
+      "all_time_contratos": 4315,
+      "recent_12m_procesos": 966,
+      "recent_12m_contratos": 869,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "existing_gazetteer_records": [
+        "CORPORACIÓN AUTÓNOMA REGIONAL DE LA ORINOQUIA"
+      ],
+      "existing_aliases": [
+        "autonoma orinoquia",
+        "autonoma regional de la orinoquia",
+        "autónoma orinoquia",
+        "autónoma regional de la orinoquia",
+        "corporacion autonoma de la orinoquia",
+        "corporacion autonoma orinoquia",
+        "corporacion autonoma regional de la orinoquia",
+        "corporacion autonoma regional de la orinoquia casanare",
+        "corporacion autonoma regional orinoquia",
+        "corporacion autonoma regional orinoquia casanare",
+        "corporacion de la orinoquia",
+        "corporacion del orinoquia",
+        "corporacion orinoquia",
+        "corporacion orinoquia casanare",
+        "corporación autónoma de la orinoquia",
+        "corporación autónoma orinoquia",
+        "corporación autónoma regional de la orinoquia",
+        "corporación autónoma regional de la orinoquia casanare",
+        "corporación autónoma regional orinoquia",
+        "corporación autónoma regional orinoquia casanare",
+        "corporación de la orinoquia",
+        "corporación del orinoquia",
+        "corporación orinoquia",
+        "corporación orinoquia casanare",
+        "la autonoma regional de la orinoquia",
+        "la autónoma regional de la orinoquia",
+        "la corporacion autonoma regional de la orinoquia",
+        "la corporacion de la orinoquia",
+        "la corporacion orinoquia",
+        "la corporación autónoma regional de la orinoquia",
+        "la corporación de la orinoquia",
+        "la corporación orinoquia",
+        "orinoquia",
+        "orinoquia casanare"
+      ],
+      "acronym_risk": {
+        "acronym": "CORPORINOQUIA",
+        "secop_token_buyers": 0,
+        "secop_foreign_buyers": [],
+        "secop_foreign_buyer_count": 0,
+        "gazetteer_exact_owners": [],
+        "gazetteer_token_owners": []
+      },
+      "resolution_probes": [
+        {
+          "query": "CORPORINOQUIA",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DE NARIÑO",
+          "resolution_method": "fuzzy(90)",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": []
+        },
+        {
+          "query": "Corporación Autónoma Regional de la Orinoquia",
+          "resolved_owner": "CORPORACIÓN AUTÓNOMA REGIONAL DE LA ORINOQUIA",
+          "resolution_method": "exact",
+          "classification": "PASS_EXACT",
+          "exact_alias_owners": [
+            "CORPORACIÓN AUTÓNOMA REGIONAL DE LA ORINOQUIA"
+          ]
+        }
+      ],
+      "classification": "WRONG_OWNER",
+      "root_cause": "IDENTITY_PRESENT_ALIAS_GAP",
+      "acronym_decision": "ADMITTED",
+      "acronym_block_reason": null,
+      "decision": "ACCEPT_ALIAS_RECONCILIATION"
+    },
+    {
+      "acronym": "CORPOURABÁ",
+      "official_institutional_name": "Corporación para el Desarrollo Sostenible del Urabá",
+      "class": "CDS",
+      "nit": "890907748",
+      "seat_department": "Antioquia",
+      "jurisdiction": "Urabá",
+      "natural_queries": [
+        "CORPOURABÁ",
+        "Corporación para el Desarrollo Sostenible del Urabá"
+      ],
+      "proceso_source_names": [
+        "CORPORACION PARA EL DESARROLLO SOSTENIBLE DEL URABA"
+      ],
+      "contrato_source_names": [
+        "CORPORACION PARA EL DESARROLLO SOSTENIBLE DEL URABA"
+      ],
+      "physical_names": [
+        "CORPORACION PARA EL DESARROLLO SOSTENIBLE DEL URABA"
+      ],
+      "all_time_procesos": 1881,
+      "all_time_contratos": 1673,
+      "recent_12m_procesos": 320,
+      "recent_12m_contratos": 284,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "existing_gazetteer_records": [],
+      "existing_aliases": [],
+      "acronym_risk": {
+        "acronym": "CORPOURABÁ",
+        "secop_token_buyers": 0,
+        "secop_foreign_buyers": [],
+        "secop_foreign_buyer_count": 0,
+        "gazetteer_exact_owners": [],
+        "gazetteer_token_owners": []
+      },
+      "resolution_probes": [
+        {
+          "query": "CORPOURABÁ",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DE NARIÑO",
+          "resolution_method": "fuzzy(90)",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": []
+        },
+        {
+          "query": "Corporación para el Desarrollo Sostenible del Urabá",
+          "resolved_owner": "CORPOAMAZONIA - CORPORACIÓN PARA EL DESARROLLO SOSTENIBLE DEL SUR DE LA AMAZONIA1",
+          "resolution_method": "fuzzy(91)",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": []
+        }
+      ],
+      "classification": "WRONG_OWNER",
+      "root_cause": "IDENTITY_MISSING",
+      "acronym_decision": "ADMITTED",
+      "acronym_block_reason": null,
+      "decision": "ACCEPT_REGISTRY_VERIFIED"
+    },
+    {
+      "acronym": "CORTOLIMA",
+      "official_institutional_name": "Corporación Autónoma Regional del Tolima",
+      "class": "CAR",
+      "nit": "890704536",
+      "seat_department": "Tolima",
+      "jurisdiction": "Tolima",
+      "natural_queries": [
+        "CORTOLIMA",
+        "Corporación Autónoma Regional del Tolima"
+      ],
+      "proceso_source_names": [
+        "CORTOLIMA"
+      ],
+      "contrato_source_names": [
+        "CORTOLIMA"
+      ],
+      "physical_names": [
+        "CORTOLIMA"
+      ],
+      "all_time_procesos": 6605,
+      "all_time_contratos": 6020,
+      "recent_12m_procesos": 979,
+      "recent_12m_contratos": 854,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "existing_gazetteer_records": [
+        "CORTOLIMA"
+      ],
+      "existing_aliases": [
+        "cortolima"
+      ],
+      "acronym_risk": {
+        "acronym": "CORTOLIMA",
+        "secop_token_buyers": 1,
+        "secop_foreign_buyers": [],
+        "secop_foreign_buyer_count": 0,
+        "gazetteer_exact_owners": [
+          "CORTOLIMA"
+        ],
+        "gazetteer_token_owners": [
+          "CORTOLIMA"
+        ]
+      },
+      "resolution_probes": [
+        {
+          "query": "CORTOLIMA",
+          "resolved_owner": "CORTOLIMA",
+          "resolution_method": "exact",
+          "classification": "PASS_EXACT",
+          "exact_alias_owners": [
+            "CORTOLIMA"
+          ]
+        },
+        {
+          "query": "Corporación Autónoma Regional del Tolima",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DE LA FRONTERA NORORIENTAL+",
+          "resolution_method": "fuzzy(95)",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": []
+        }
+      ],
+      "classification": "WRONG_OWNER",
+      "root_cause": "IDENTITY_PRESENT_ALIAS_GAP",
+      "acronym_decision": "ADMITTED",
+      "acronym_block_reason": null,
+      "decision": "ACCEPT_ALIAS_RECONCILIATION"
+    },
+    {
+      "acronym": "CRA",
+      "official_institutional_name": "Corporación Autónoma Regional del Atlántico",
+      "class": "CAR",
+      "nit": "802000339",
+      "seat_department": "Atlántico",
+      "jurisdiction": "Atlántico",
+      "natural_queries": [
+        "CRA",
+        "Corporación Autónoma Regional del Atlántico"
+      ],
+      "proceso_source_names": [
+        "CORPORACIÓN AUTÓNOMA REGIONAL DEL ATLÁNTICO"
+      ],
+      "contrato_source_names": [
+        "CORPORACIÓN AUTÓNOMA REGIONAL DEL ATLÁNTICO"
+      ],
+      "physical_names": [
+        "CORPORACIÓN AUTÓNOMA REGIONAL DEL ATLÁNTICO"
+      ],
+      "all_time_procesos": 1372,
+      "all_time_contratos": 2207,
+      "recent_12m_procesos": 170,
+      "recent_12m_contratos": 425,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "existing_gazetteer_records": [],
+      "existing_aliases": [],
+      "acronym_risk": {
+        "acronym": "CRA",
+        "secop_token_buyers": 0,
+        "secop_foreign_buyers": [],
+        "secop_foreign_buyer_count": 0,
+        "gazetteer_exact_owners": [],
+        "gazetteer_token_owners": []
+      },
+      "resolution_probes": [
+        {
+          "query": "CRA",
+          "resolved_owner": null,
+          "resolution_method": "like",
+          "classification": "FAIL_CLOSED",
+          "exact_alias_owners": []
+        },
+        {
+          "query": "Corporación Autónoma Regional del Atlántico",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DE LA FRONTERA NORORIENTAL+",
+          "resolution_method": "fuzzy(95)",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": []
+        }
+      ],
+      "classification": "WRONG_OWNER",
+      "root_cause": "IDENTITY_MISSING",
+      "acronym_decision": "BLOCKED",
+      "acronym_block_reason": "Comisión de Regulación de Agua Potable y Saneamiento Básico; abrevia 'carrera'",
+      "decision": "BLOCK_AMBIGUOUS"
+    },
+    {
+      "acronym": "CRC",
+      "official_institutional_name": "Corporación Autónoma Regional del Cauca",
+      "class": "CAR",
+      "nit": "891501885",
+      "seat_department": "Cauca",
+      "jurisdiction": "Cauca",
+      "natural_queries": [
+        "CRC",
+        "Corporación Autónoma Regional del Cauca"
+      ],
+      "proceso_source_names": [
+        "CORPORACION AUTONOMA REGIONAL DEL CAUCA  12"
+      ],
+      "contrato_source_names": [
+        "CORPORACION AUTONOMA REGIONAL DEL CAUCA  12"
+      ],
+      "physical_names": [
+        "CORPORACION AUTONOMA REGIONAL DEL CAUCA  12"
+      ],
+      "all_time_procesos": 3947,
+      "all_time_contratos": 3513,
+      "recent_12m_procesos": 848,
+      "recent_12m_contratos": 768,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "existing_gazetteer_records": [
+        "CORPORACION AUTONOMA REGIONAL DEL CAUCA  12"
+      ],
+      "existing_aliases": [
+        "autoridad ambiental cauca",
+        "autoridad ambiental del cauca",
+        "carc",
+        "carc 12",
+        "carc doce",
+        "carc no. 12",
+        "carc n° 12",
+        "corporacion ambiental cauca",
+        "corporacion ambiental del cauca",
+        "corporacion autonoma del cauca",
+        "corporacion autonoma del cauca 12",
+        "corporacion autonoma regional del cauca",
+        "corporacion autonoma regional del cauca  12",
+        "corporacion autonoma regional del cauca 12",
+        "corporacion cauca",
+        "corporacion del cauca",
+        "corporación ambiental cauca",
+        "corporación ambiental del cauca",
+        "corporación autonoma del cauca",
+        "corporación autonoma del cauca 12",
+        "corporación autonoma regional del cauca",
+        "corporación autonoma regional del cauca 12",
+        "corporación autónoma del cauca",
+        "corporación autónoma del cauca 12",
+        "corporación autónoma regional del cauca",
+        "corporación autónoma regional del cauca 12",
+        "corporación autónoma regional del cauca doce",
+        "corporación autónoma regional del cauca no. 12",
+        "corporación autónoma regional del cauca n° 12",
+        "corporación autónoma regional del cauca número 12",
+        "corporación cauca",
+        "corporación del cauca",
+        "corporación regional del cauca",
+        "entidad ambiental cauca",
+        "entidad ambiental del cauca",
+        "la autoridad ambiental del cauca",
+        "la carc",
+        "la carc 12",
+        "la corporación ambiental cauca",
+        "la corporación ambiental del cauca",
+        "la corporación autónoma regional del cauca",
+        "la corporación cauca",
+        "la corporación del cauca",
+        "la entidad ambiental del cauca"
+      ],
+      "acronym_risk": {
+        "acronym": "CRC",
+        "secop_token_buyers": 0,
+        "secop_foreign_buyers": [],
+        "secop_foreign_buyer_count": 0,
+        "gazetteer_exact_owners": [],
+        "gazetteer_token_owners": []
+      },
+      "resolution_probes": [
+        {
+          "query": "CRC",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DEL CAUCA  12",
+          "resolution_method": "fuzzy(85)",
+          "classification": "FUZZY_ONLY",
+          "exact_alias_owners": []
+        },
+        {
+          "query": "Corporación Autónoma Regional del Cauca",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DEL CAUCA  12",
+          "resolution_method": "exact",
+          "classification": "PASS_EXACT",
+          "exact_alias_owners": [
+            "CORPORACION AUTONOMA REGIONAL DEL CAUCA  12"
+          ]
+        }
+      ],
+      "classification": "FUZZY_ONLY",
+      "root_cause": "IDENTITY_PRESENT_ALIAS_GAP",
+      "acronym_decision": "BLOCKED",
+      "acronym_block_reason": "Comisión de Regulación de Comunicaciones",
+      "decision": "BLOCK_AMBIGUOUS"
+    },
+    {
+      "acronym": "CRQ",
+      "official_institutional_name": "Corporación Autónoma Regional del Quindío",
+      "class": "CAR",
+      "nit": "8900004478",
+      "seat_department": "Quindío",
+      "jurisdiction": "Quindío",
+      "natural_queries": [
+        "CRQ",
+        "Corporación Autónoma Regional del Quindío"
+      ],
+      "proceso_source_names": [
+        "CORPORACION AUTONOMA REGIONAL DEL QUINDIO"
+      ],
+      "contrato_source_names": [
+        "CORPORACION AUTONOMA REGIONAL DEL QUINDIO"
+      ],
+      "physical_names": [
+        "CORPORACION AUTONOMA REGIONAL DEL QUINDIO"
+      ],
+      "all_time_procesos": 5524,
+      "all_time_contratos": 5361,
+      "recent_12m_procesos": 1212,
+      "recent_12m_contratos": 1103,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "existing_gazetteer_records": [
+        "CORPORACION AUTONOMA REGIONAL DEL QUINDIO"
+      ],
+      "existing_aliases": [
+        "autoridad ambiental del quindio",
+        "autoridad ambiental del quindío",
+        "car del quindio",
+        "car del quindío",
+        "corporacion ambiental del quindio",
+        "corporacion autonoma del quindio",
+        "corporacion autonoma regional del quindio",
+        "corporacion autonoma regional quindio",
+        "corporacion quindio",
+        "corporación ambiental del quindío",
+        "corporación autónoma del quindío",
+        "corporación autónoma regional del quindío",
+        "corporación autónoma regional quindío",
+        "corporación quindío",
+        "crq",
+        "el crq",
+        "entidad ambiental del quindio",
+        "entidad ambiental del quindío",
+        "la car del quindio",
+        "la car del quindío",
+        "la crq"
+      ],
+      "acronym_risk": {
+        "acronym": "CRQ",
+        "secop_token_buyers": 0,
+        "secop_foreign_buyers": [],
+        "secop_foreign_buyer_count": 0,
+        "gazetteer_exact_owners": [
+          "CORPORACION AUTONOMA REGIONAL DEL QUINDIO"
+        ],
+        "gazetteer_token_owners": [
+          "CORPORACION AUTONOMA REGIONAL DEL QUINDIO"
+        ]
+      },
+      "resolution_probes": [
+        {
+          "query": "CRQ",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DEL QUINDIO",
+          "resolution_method": "exact",
+          "classification": "PASS_EXACT",
+          "exact_alias_owners": [
+            "CORPORACION AUTONOMA REGIONAL DEL QUINDIO"
+          ]
+        },
+        {
+          "query": "Corporación Autónoma Regional del Quindío",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DEL QUINDIO",
+          "resolution_method": "exact",
+          "classification": "PASS_EXACT",
+          "exact_alias_owners": [
+            "CORPORACION AUTONOMA REGIONAL DEL QUINDIO"
+          ]
+        }
+      ],
+      "classification": "PASS_EXACT",
+      "root_cause": "NONE_ALREADY_VERIFIED",
+      "acronym_decision": "ADMITTED",
+      "acronym_block_reason": null,
+      "decision": "UNCHANGED_ALREADY_VERIFIED"
+    },
+    {
+      "acronym": "CSB",
+      "official_institutional_name": "Corporación Autónoma Regional del Sur de Bolívar",
+      "class": "CAR",
+      "nit": "806000327",
+      "seat_department": "Bolívar",
+      "jurisdiction": "Sur de Bolívar",
+      "natural_queries": [
+        "CSB",
+        "Corporación Autónoma Regional del Sur de Bolívar"
+      ],
+      "proceso_source_names": [
+        "CSB"
+      ],
+      "contrato_source_names": [
+        "CSB"
+      ],
+      "physical_names": [
+        "CSB"
+      ],
+      "all_time_procesos": 952,
+      "all_time_contratos": 940,
+      "recent_12m_procesos": 135,
+      "recent_12m_contratos": 89,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "existing_gazetteer_records": [],
+      "existing_aliases": [],
+      "acronym_risk": {
+        "acronym": "CSB",
+        "secop_token_buyers": 1,
+        "secop_foreign_buyers": [],
+        "secop_foreign_buyer_count": 0,
+        "gazetteer_exact_owners": [],
+        "gazetteer_token_owners": []
+      },
+      "resolution_probes": [
+        {
+          "query": "CSB",
+          "resolved_owner": null,
+          "resolution_method": "like",
+          "classification": "FAIL_CLOSED",
+          "exact_alias_owners": []
+        },
+        {
+          "query": "Corporación Autónoma Regional del Sur de Bolívar",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DE LA FRONTERA NORORIENTAL+",
+          "resolution_method": "fuzzy(90)",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": []
+        }
+      ],
+      "classification": "WRONG_OWNER",
+      "root_cause": "IDENTITY_MISSING",
+      "acronym_decision": "ADMITTED",
+      "acronym_block_reason": null,
+      "decision": "ACCEPT_REGISTRY_VERIFIED"
+    },
+    {
+      "acronym": "CVC",
+      "official_institutional_name": "Corporación Autónoma Regional del Valle del Cauca",
+      "class": "CAR",
+      "nit": "890399002",
+      "seat_department": "Valle del Cauca",
+      "jurisdiction": "Valle del Cauca",
+      "natural_queries": [
+        "CVC",
+        "Corporación Autónoma Regional del Valle del Cauca"
+      ],
+      "proceso_source_names": [
+        "CVC"
+      ],
+      "contrato_source_names": [
+        "CVC"
+      ],
+      "physical_names": [
+        "CVC"
+      ],
+      "all_time_procesos": 7084,
+      "all_time_contratos": 5887,
+      "recent_12m_procesos": 1697,
+      "recent_12m_contratos": 1322,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "existing_gazetteer_records": [
+        "CVC"
+      ],
+      "existing_aliases": [
+        "autoridad ambiental del valle del cauca",
+        "corporacion ambiental vallecaucana",
+        "corporacion autonoma regional del valle",
+        "corporacion autonoma regional del valle del cauca",
+        "corporacion del valle",
+        "corporacion valle del cauca",
+        "corporacion vallecaucana",
+        "corporación ambiental vallecaucana",
+        "corporación autónoma regional del valle",
+        "corporación autónoma regional del valle del cauca",
+        "corporación del valle",
+        "corporación valle del cauca",
+        "corporación vallecaucana",
+        "cvc",
+        "cvc colombia",
+        "cvc valle",
+        "la corporacion del valle del cauca",
+        "la corporación ambiental del valle",
+        "la corporación del valle",
+        "la corporación del valle del cauca",
+        "la cvc"
+      ],
+      "acronym_risk": {
+        "acronym": "CVC",
+        "secop_token_buyers": 1,
+        "secop_foreign_buyers": [],
+        "secop_foreign_buyer_count": 0,
+        "gazetteer_exact_owners": [
+          "CVC"
+        ],
+        "gazetteer_token_owners": [
+          "CVC"
+        ]
+      },
+      "resolution_probes": [
+        {
+          "query": "CVC",
+          "resolved_owner": "CVC",
+          "resolution_method": "exact",
+          "classification": "PASS_EXACT",
+          "exact_alias_owners": [
+            "CVC"
+          ]
+        },
+        {
+          "query": "Corporación Autónoma Regional del Valle del Cauca",
+          "resolved_owner": "CVC",
+          "resolution_method": "exact",
+          "classification": "PASS_EXACT",
+          "exact_alias_owners": [
+            "CVC"
+          ]
+        }
+      ],
+      "classification": "PASS_EXACT",
+      "root_cause": "NONE_ALREADY_VERIFIED",
+      "acronym_decision": "ADMITTED",
+      "acronym_block_reason": null,
+      "decision": "UNCHANGED_ALREADY_VERIFIED"
+    },
+    {
+      "acronym": "CVS",
+      "official_institutional_name": "Corporación Autónoma Regional de los Valles del Sinú y del San Jorge",
+      "class": "CAR",
+      "nit": "891000627",
+      "seat_department": "Córdoba",
+      "jurisdiction": "Córdoba",
+      "natural_queries": [
+        "CVS",
+        "Corporación Autónoma Regional de los Valles del Sinú y del San Jorge"
+      ],
+      "proceso_source_names": [
+        "CORPORACIÓN AUTÓNOMA REGIONAL DE LOS VALLES DEL SINÚ Y DEL SAN JORGE - CVS"
+      ],
+      "contrato_source_names": [
+        "CORPORACIÓN AUTÓNOMA REGIONAL DE LOS VALLES DEL SINÚ Y DEL SAN JORGE - CVS"
+      ],
+      "physical_names": [
+        "CORPORACIÓN AUTÓNOMA REGIONAL DE LOS VALLES DEL SINÚ Y DEL SAN JORGE - CVS"
+      ],
+      "all_time_procesos": 790,
+      "all_time_contratos": 524,
+      "recent_12m_procesos": 123,
+      "recent_12m_contratos": 88,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "existing_gazetteer_records": [],
+      "existing_aliases": [],
+      "acronym_risk": {
+        "acronym": "CVS",
+        "secop_token_buyers": 1,
+        "secop_foreign_buyers": [],
+        "secop_foreign_buyer_count": 0,
+        "gazetteer_exact_owners": [],
+        "gazetteer_token_owners": []
+      },
+      "resolution_probes": [
+        {
+          "query": "CVS",
+          "resolved_owner": null,
+          "resolution_method": "like",
+          "classification": "FAIL_CLOSED",
+          "exact_alias_owners": []
+        },
+        {
+          "query": "Corporación Autónoma Regional de los Valles del Sinú y del San Jorge",
+          "resolved_owner": "CORPORACION AUTONOMA REGIONAL DE LA FRONTERA NORORIENTAL+",
+          "resolution_method": "fuzzy(90)",
+          "classification": "WRONG_OWNER",
+          "exact_alias_owners": []
+        }
+      ],
+      "classification": "WRONG_OWNER",
+      "root_cause": "IDENTITY_MISSING",
+      "acronym_decision": "ADMITTED",
+      "acronym_block_reason": null,
+      "decision": "ACCEPT_REGISTRY_VERIFIED"
+    }
+  ]
+}
