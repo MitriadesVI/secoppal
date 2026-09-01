@@ -36,17 +36,22 @@ import pytest
 from app.core.query_router import QueryRouter
 from app.core.query_plan import compute_query_plan
 
-# Gobernaciones ausentes del gazetteer al escribir este test (ENTITY-CORE-
-# COVERAGE-R0). Si alguna se agrega en un lote futuro, su caso debe MOVERSE a
-# las de comprador preservado — no borrarse.
-MISSING_GOVERNORSHIPS = ["Vichada", "Guainía", "Guaviare", "Vaupés"]
+# Gobernaciones sin comprador raíz en SECOP II. Vichada, Guaviare y Vaupés
+# salieron de esta lista en R2A —se verificó su registro y se movieron abajo,
+# como este archivo prescribía—. Guainía se queda: su Gobernación sólo existe
+# en SECOP I, con nit "NO DEFINIDO" (GOVERNORATE_CORE_R2A §4).
+MISSING_GOVERNORSHIPS = ["Guainía"]
 
 # Gobernaciones que hoy resuelven a un comprador real. Cubren los dos estilos
-# de nombre en SECOP documentados en ADR-040: el que NO se llama "gobernación"
-# (Atlántico) y el que sí (Nariño).
+# de nombre en SECOP documentados en ADR-040 —el que NO se llama "gobernación"
+# (Atlántico) y el que sí (Nariño)— y los tres roots que R2A verificó contra
+# el registro, incluido Vichada, cuyo nombre físico tampoco dice "gobernación".
 KNOWN_GOVERNORSHIPS = [
     ("Atlántico", "DEPARTAMENTO DEL ATLANTICO**"),
     ("Nariño", "GOBERNACION DE NARIÑO"),
+    ("Vichada", "DEPARTAMENTO DE VICHADA"),
+    ("Guaviare", "GOBERNACION DEL GUAVIARE"),
+    ("Vaupés", "GOBERNACION DEL VAUPES"),
 ]
 
 
@@ -117,14 +122,17 @@ def test_missing_governorship_de_fails_closed(router, departamento):
     _assert_buyer_fail_closed(router, _parse(router, query), query)
 
 
-def test_missing_governorship_both_forms_agree(router):
+@pytest.mark.parametrize("departamento", ["Guainía", "Vichada"])
+def test_governorship_both_forms_agree(router, departamento):
     """de/del son la misma pregunta: no pueden dar respuestas distintas.
 
     Este es el invariante que el bug violaba de forma más visible: "de
     Vichada" pedía clarificación y "del Vichada" devolvía el departamento.
+    Se prueba sobre una jurisdicción sin comprador raíz (Guainía) y sobre una
+    que R2A pobló (Vichada): la simetría debe valer resuelva o no.
     """
-    con_del = _parse(router, "contratos de la gobernación del Vichada en 2025")
-    con_de = _parse(router, "contratos de la gobernación de Vichada en 2025")
+    con_del = _parse(router, f"contratos de la gobernación del {departamento} en 2025")
+    con_de = _parse(router, f"contratos de la gobernación de {departamento} en 2025")
     for key in ("entidad_resolved", "departamento_resolved"):
         assert con_del.get(key) == con_de.get(key), (
             f"de/del divergen en {key!r}: "
@@ -230,7 +238,9 @@ def test_r1a_does_not_add_coverage(router, departamento):
     """Las gobernaciones ausentes siguen ausentes: R1A no las agrega.
 
     Si este test empieza a fallar es porque alguien pobló el gazetteer — que es
-    el lote B1, no R1A. En ese caso mover el caso a KNOWN_GOVERNORSHIPS.
+    un lote de cobertura, no R1A. En ese caso mover el caso a
+    KNOWN_GOVERNORSHIPS, como hizo R2A con Vichada, Guaviare y Vaupés, y sólo
+    con evidencia de registro: nombre físico SECOP II y NIT.
     """
     params = _parse(router, f"contratos de la gobernación del {departamento} en 2025")
     assert params.get("entidad_resolved") is None

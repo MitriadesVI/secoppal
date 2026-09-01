@@ -28,7 +28,11 @@ CAUCA = "GOBERNACIÓN DEL CAUCA"
 ATLANTICO = "DEPARTAMENTO DEL ATLANTICO**"
 BOYACA = "GOBERNACIÓN DE BOYACÁ"
 
-MISSING_GOVERNORSHIPS = ("Guainía", "Guaviare", "Vaupés", "Vichada")
+# R2A verificó el registro SECOP II de Guaviare, Vaupés y Vichada y las
+# pobló. Guainía sigue aquí: su Gobernación sólo aparece en SECOP I, con
+# nit "NO DEFINIDO" (GOVERNORATE_CORE_R2A §4). Cundinamarca y Valle tienen
+# sus propios canarios arriba: su raíz no tiene ningún nombre físico.
+MISSING_GOVERNORSHIPS = ("Guainía",)
 
 
 @pytest.fixture(scope="module")
@@ -133,15 +137,31 @@ def test_missing_roots_continue_to_fail_closed(
     _assert_router_fails_closed(router, buyer)
 
 
-def test_san_andres_without_natural_root_ownership_never_becomes_santander(
+def test_san_andres_never_becomes_santander(
     resolver: EntityResolver,
     router: QueryRouter,
 ) -> None:
+    """El invariante de R1D sobrevive a la cobertura que le dio R2A.
+
+    R1D dejaba la frase corta sin dueño y por eso fallaba cerrada; lo que el
+    caso realmente protege es que el shrink ``San Andrés -> San`` no reabra el
+    fuzzy hacia Santander. R2A le dio ownership raíz verificado por NIT
+    (892400038), así que ahora resuelve — pero al archipiélago, nunca a
+    Santander, y nunca por fuzzy.
+    """
     buyer = "gobernación de San Andrés"
+    archipelago = (
+        "GOBERNACIÓN DEL DEPARTAMENTO ARCHIPIELAGO DE SAN ANDRES "
+        "PROVIDENCIA Y SANTA CATALINA"
+    )
     result = resolver.resolve_entidad(buyer)
-    assert result.value is None
-    assert result.clarification_needed is True
-    _assert_router_fails_closed(router, buyer)
+    assert result.value == archipelago
+    assert result.value != "DEPARTAMENTO DE SANTANDER"
+    assert not result.method.startswith("fuzzy")
+
+    params = router.parse(f"contratos de {buyer} en 2025").params
+    assert params.get("entidad_resolved") == archipelago
+    assert not params.get("departamento_resolved")
 
 
 @pytest.mark.parametrize(

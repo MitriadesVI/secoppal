@@ -399,7 +399,12 @@
       "contratos"
     ],
     "aliases": [
-      "gobernación del departamento archipielago de san andres providencia y santa catalina"
+      "gobernación del departamento archipielago de san andres providencia y santa catalina",
+      "gobernación de San Andrés",
+      "gobernación de San Andrés y Providencia",
+      "gobernación del archipiélago de San Andrés",
+      "departamento de San Andrés",
+      "gobierno departamental de San Andrés"
     ]
   },
   {
@@ -17266,6 +17271,60 @@
       "sena regional regional caqueta",
       "servicio nacional de aprendizaje caqueta",
       "servicio nacional de aprendizaje regional caqueta"
+    ]
+  },
+  {
+    "official_name": "GOBERNACION DEL GUAVIARE",
+    "departamento": "Guaviare",
+    "total_procesos": 16,
+    "total_contratos": 13,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "aliases": [
+      "gobernación del Guaviare",
+      "gobernación de Guaviare",
+      "departamento del Guaviare",
+      "departamento de Guaviare",
+      "gobierno departamental del Guaviare",
+      "gobierno del Guaviare"
+    ]
+  },
+  {
+    "official_name": "GOBERNACION DEL VAUPES",
+    "departamento": "Vaupés",
+    "total_procesos": 2,
+    "total_contratos": 1,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "aliases": [
+      "gobernación del Vaupés",
+      "gobernación de Vaupés",
+      "departamento del Vaupés",
+      "departamento de Vaupés",
+      "gobierno departamental del Vaupés",
+      "gobierno del Vaupés"
+    ]
+  },
+  {
+    "official_name": "DEPARTAMENTO DE VICHADA",
+    "departamento": "Vichada",
+    "total_procesos": 507,
+    "total_contratos": 513,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "aliases": [
+      "gobernación del Vichada",
+      "gobernación de Vichada",
+      "departamento del Vichada",
+      "departamento de Vichada",
+      "gobierno departamental del Vichada",
+      "gobierno del Vichada"
     ]
   }
 ]

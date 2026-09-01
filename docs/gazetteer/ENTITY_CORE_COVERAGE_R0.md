@@ -556,3 +556,34 @@ Tolima se recupera por sus aliases territoriales; San Andrés deja de encogerse
 a `San` y resolver lateralmente a Santander. Las cuatro gobernaciones ausentes
 continúan fail-closed. La evidencia completa y la matriz 32/32 están en
 [`GAZETTEER_ALIAS_OWNERSHIP_R1C.md`](GAZETTEER_ALIAS_OWNERSHIP_R1C.md#11-post-r1d--evidencia-institucional-para-compradores-raíz).
+
+---
+
+## POST-R2A — cobertura verificada en registro
+
+**Fecha:** 2026-09-01 · Informe completo:
+[`GOVERNORATE_CORE_R2A.md`](GOVERNORATE_CORE_R2A.md)
+
+R2A cerró cuatro de los siete `FAIL_CLOSED` que dejó R1D, y bloqueó tres con
+evidencia. El universo A de esta auditoría queda:
+
+| Universo | Total | PASS | FAIL_CLOSED | WRONG_CHILD |
+|---|---:|---:|---:|---:|
+| A. Gobernaciones | 32 | **29** | **3** | **0** |
+
+Los tres restantes no son laguna de cobertura: son ausencia de comprador raíz
+en SECOP II, verificada dataset por dataset.
+
+* **Guainía** — la Gobernación no aparece en `p6dx-8zbt` ni en `jbjy-vk9h`.
+  Sólo existe en el Integrado con `origen=SECOPI` y `nit="NO DEFINIDO"`.
+* **Cundinamarca** y **Valle del Cauca** — su contratación se reparte entre 28
+  y 29 nombres físicos bajo un mismo NIT, y **ninguno** representa la raíz. Un
+  `official_name` único no puede expresar esa identidad
+  (`CANONICAL_ENTITY_SOURCE_NAMES_REQUIRED`, frente separado).
+
+La deuda **RC2** cambia de estado sólo en su mitad de San Andrés: el
+archipiélago ya tiene ownership raíz verificado por NIT (892400038) y
+`gobernación de San Andrés` resuelve al comprador correcto. El topónimo desnudo
+`san andrés` sigue sin pertenecer a ningún comprador, y el residuo `fuzzy(95)`
+hacia `HOSPITAL SAN ANDRES` descrito arriba permanece **abierto**: R2A no lo
+toca porque no es corregible con datos.

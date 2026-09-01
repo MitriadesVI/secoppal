@@ -509,3 +509,54 @@ ruff (archivos R1D)                                     All checks passed
 suite completa                                          9803 passed, 2 skipped, 24 xfailed
 aliases_db.json                                         sin cambios
 ```
+
+---
+
+## 12. POST-R2A — la puerta de ownership pasa a comparar conjuntos
+
+**Fecha:** 2026-09-01 · Informe completo:
+[`GOVERNORATE_CORE_R2A.md`](GOVERNORATE_CORE_R2A.md)
+
+R2A no altera ninguna evidencia de R1C ni de R1D. Añade dos cosas.
+
+### La puerta
+
+`EXACT_MULTI_OWNER_BASELINE = 173` comparaba **cardinales**, y un cardinal no
+distingue conjuntos: con baseline `{A, B, C}`, un lote que salda `C` e
+introduce `D` deja 3 grupos y pasa. Se congela el conjunto de las 173 claves en
+[`scripts/gazetteer_multi_owner_baseline.json`](../../scripts/gazetteer_multi_owner_baseline.json)
+y se exige `NEW_MULTI_OWNER_KEYS = current − baseline = ∅`. La deuda puede
+encogerse; no puede renovarse. El caso lo fija un test de mutación a cardinal
+constante.
+
+### El lote
+
+Cuatro compradores raíz con identidad verificada en registro. El auditor de
+ownership no produce ningún hallazgo sobre ellos.
+
+```text
+                              ANTES (R1C/R1D)   DESPUÉS (R2A)
+entidades                                 559             562
+aliases                                10 695          10 718
+EXACT_MULTI_OWNER_GROUPS                  173             173
+NEW_MULTI_OWNER_KEYS                        —               0
+PROPOSED_REMOVALS                         114               0
+findings                                  292             178
+```
+
+Los aliases nuevos son 23 para cuatro entidades — seis por registro nuevo, cinco
+para la reconciliación de San Andrés — frente a las ~23 *por entidad* de los
+lotes antiguos. `normalize_text` colapsa los acentos, así que registrar la
+variante sin tilde de cada frase sólo duplicaba claves idénticas: la deuda por
+exceso de aliases que documenta §7 se evita no generándola.
+
+### Estado de deuda POST-R2A
+
+| Deuda | Estado |
+|---|---|
+| D1 | `CLOSED` (R1D) · residuo `fuzzy(95)` de `san andrés` sigue abierto, ajeno a datos |
+| D2 | `CLOSED` (R1D) · R2A confirma la causa: la raíz no existe en SECOP II |
+| D3 | `CLOSED` (R1D) |
+| D4 | `OPEN_UNTOUCHED` |
+| D5 | `OPEN_UNTOUCHED` · R2A aporta evidencia nueva, no la resuelve |
+| D6 | `OPEN_UNTOUCHED` |
