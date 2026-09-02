@@ -2442,7 +2442,6 @@
     "aliases": [
       "banco emisor",
       "banco de la república de colombia",
-      "la república",
       "banrepública",
       "el emisor",
       "br",
@@ -2455,6 +2454,9 @@
       "banco de la republica de colombia",
       "banco republica",
       "banco de la republica"
+    ],
+    "resolution_blocked_aliases": [
+      "la república"
     ]
   },
   {
