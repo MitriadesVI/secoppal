@@ -238,3 +238,26 @@ Los xfail bajan de 24 a 15: son los nueve del lote 01 que dejaron de fallar. Los
 skips difieren porque el baseline se corrió en un worktree temporal sin índice
 local de actores (`test_actor_conversation_dogfood`, `test_actor_index_isolation`),
 condición del entorno y no del cambio.
+
+---
+
+## 14. Post-remediación (R2D.2 → R2D.3)
+
+Sección añadida en `debf2e3`. No modifica la evidencia PRE.
+
+El veredicto de R2D.1 quedó pendiente de la auditoría de seguridad de los 2.104
+aliases liberados. R2D.2 encontró nueve de ellos capturando 17 compradores
+físicos ajenos —no por D6, sino porque la misma lista alimentaba `_scan_index`—
+y R2D.3 separó las dos autoridades (ADR-072).
+
+```text
+NEW_WRONG_OWNER_FROM_FREED_ALIASES   17 → 0
+R2D1_VERDICT                         PASS_CONFIRMED
+```
+
+La regla B' y `app/core/geography_alias.py` no se tocaron: la remediación fue
+metadata declarativa del gazetteer, no un cambio del sufijo departamental. Los
+nueve xfail que D6 eliminó siguen resolviendo, y los canarios CAR/CDS siguen en
+33/33 por nombre institucional.
+
+Detalle: [`SCAN_ALIAS_ELIGIBILITY_R2D3.md`](SCAN_ALIAS_ELIGIBILITY_R2D3.md).

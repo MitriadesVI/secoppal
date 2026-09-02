@@ -589,7 +589,17 @@ def build_canaries(
             for owner in verified
         )
         if canary["id"] == "TERMINAL_SANTA_MARTA":
-            verdict = "ALIAS_HIJACK"
+            live_entity = probe["live"]["entity"]
+            if live_entity == canary["gazetteer_owner"]:
+                verdict = "ALIAS_HIJACK"
+            elif any(
+                catalog_norm(str(owner.get("physical_name") or ""))
+                == catalog_norm(str(live_entity or ""))
+                for owner in terminal
+            ):
+                verdict = "REMEDIATED_SPECIFIC_IDENTITY"
+            else:
+                verdict = "FAIL_CLOSED"
         elif verified_matches_gazetteer and probe["live"]["entity"] == canary["gazetteer_owner"]:
             verdict = "VERIFIED_SECOP_OWNER"
         elif (
@@ -715,13 +725,35 @@ def adversarial_matrix(
         )
 
     terminal_record = next(
-        record for record in alias_records if record["alias"] == "santa marta magdalena"
+        (
+            record
+            for record in alias_records
+            if record["alias"] == "santa marta magdalena"
+        ),
+        {
+            "alias": "santa marta magdalena",
+            "current_owners": ["ALCALDÍA DISTRITAL DE SANTA MARTA"],
+            "risk_class": "GENERIC_LOCATION_ALIAS",
+        },
     )
     if terminal_buyers:
         probe = dual_rule_probe(
             resolver, router, "Terminal de Transportes de Santa Marta Magdalena"
         )
         live_owner = probe["live"]["entity"]
+        scan_alias = (probe.get("live_scan") or {}).get("matched_alias")
+        activated = bool(
+            scan_alias in freed
+            and live_owner in set(terminal_record["current_owners"])
+        )
+        if live_owner is None:
+            outcome = "FAIL_CLOSED"
+        elif same_logical_identity(
+            resolver, str(live_owner), terminal_buyers[0], directory
+        ):
+            outcome = "CORRECT_OWNER"
+        else:
+            outcome = "WRONG_OWNER"
         result.append(
             {
                 "alias": terminal_record["alias"],
@@ -729,12 +761,13 @@ def adversarial_matrix(
                 "risk_class": terminal_record["risk_class"],
                 "expected_secop_buyer": terminal_buyers[0],
                 "probe": probe,
-                "d6_activated_current_owner": True,
+                "d6_activated_current_owner": activated,
                 "new_wrong_owner_confirmed": bool(
-                    live_owner in set(terminal_record["current_owners"])
+                    outcome == "WRONG_OWNER"
+                    and activated
                     and probe["old"]["entity"] != live_owner
                 ),
-                "outcome": "WRONG_OWNER",
+                "outcome": outcome,
                 "canary": "TERMINAL_SANTA_MARTA",
             }
         )
@@ -803,16 +836,28 @@ def main() -> int:
     terminal_transaction_evidence = fetch_identity_by_nit(token, TERMINAL_SANTA_MARTA_NIT)
 
     alias_records, other_rows = build_alias_records(resolver, gazetteer, directory)
+    retired_freed_aliases = sorted(
+        alias
+        for alias in resolver.resolution_blocked_aliases
+        if _old_reject(resolver, alias, alias)
+        and not resolver._is_unqualified_dept(alias, alias)
+    )
     canaries = build_canaries(resolver, router, directory)
     terminal_buyers = terminal_identities(directory)
     terminal_alias = next(
-        record for record in alias_records if record["alias"] == "santa marta magdalena"
+        (
+            record
+            for record in alias_records
+            if record["alias"] == "santa marta magdalena"
+        ),
+        None,
     )
-    terminal_alias["risk_level"] = "HIGH"
-    terminal_alias["adversarial_cross_owner_evidence"] = {
-        "phrase": "Terminal de Transportes de Santa Marta Magdalena",
-        "verified_secop_buyers": terminal_buyers,
-    }
+    if terminal_alias is not None:
+        terminal_alias["risk_level"] = "HIGH"
+        terminal_alias["adversarial_cross_owner_evidence"] = {
+            "phrase": "Terminal de Transportes de Santa Marta Magdalena",
+            "verified_secop_buyers": terminal_buyers,
+        }
     adversarial = adversarial_matrix(
         resolver,
         router,
@@ -822,6 +867,15 @@ def main() -> int:
         terminal_buyers,
     )
     confirmed = confirmed_wrong_owners(adversarial)
+    terminal_probe = dual_rule_probe(
+        resolver, router, "Terminal de Transportes de Santa Marta Magdalena"
+    )
+    terminal_live_owner = terminal_probe["live"]["entity"]
+    terminal_scan_alias = (terminal_probe.get("live_scan") or {}).get("matched_alias")
+    terminal_identity_present = any(
+        catalog_norm(owner) == catalog_norm("CENTRAL DE TRANSPORTE DE SANTA MARTA LTDA.")
+        for owner in resolver.aliases_by_official
+    )
 
     risk_counts = Counter(str(record["risk_level"]) for record in alias_records)
     class_counts = Counter(str(record["risk_class"]) for record in alias_records)
@@ -839,6 +893,10 @@ def main() -> int:
             "b_prime_rejected": r2d1["B_PRIME_EVIDENCE"]["REJECTED_ALIASES"],
             "freed_aliases_expected": r2d1["B_PRIME_EVIDENCE"]["FREED_VS_CURRENT"],
             "freed_aliases_reconstructed": len(alias_records),
+            "freed_aliases_retired_by_policy": retired_freed_aliases,
+            "freed_aliases_reconstructed_plus_retired": (
+                len(alias_records) + len(retired_freed_aliases)
+            ),
         },
         "secop_buyer_directory": {
             "dataset_id": BUYER_DIRECTORY_ID,
@@ -869,11 +927,17 @@ def main() -> int:
                     "INFORME_DE_GESTI%C3%93N_2024_CTSM.pdf"
                 ),
             },
-            "gazetteer_specific_identity_present": False,
-            "current_owner": "ALCALDÍA DISTRITAL DE SANTA MARTA",
-            "matched_alias": "santa marta magdalena",
+            "gazetteer_specific_identity_present": terminal_identity_present,
+            "current_owner": terminal_live_owner,
+            "matched_alias": terminal_scan_alias,
             "alias_assessment": "GENERIC_LOCATION_ALIAS",
-            "verdict": "ALIAS_HIJACK",
+            "verdict": (
+                "ALIAS_HIJACK"
+                if terminal_live_owner == "ALCALDÍA DISTRITAL DE SANTA MARTA"
+                else "REMEDIATED_SPECIFIC_IDENTITY"
+                if terminal_identity_present
+                else "FAIL_CLOSED"
+            ),
         },
         "adversarial_sample": {
             "count": len(adversarial),
@@ -885,8 +949,11 @@ def main() -> int:
         "r2d1_verdict": ("REMEDIATION_REQUIRED" if confirmed else "PASS_CONFIRMED"),
         "status": "PASS",
     }
-    if payload["universe"]["freed_aliases_reconstructed"] != 2_104:
-        raise RuntimeError("FREED_BY_D6 reconstruction drifted from 2,104")
+    if payload["universe"]["freed_aliases_reconstructed_plus_retired"] != 2_104:
+        raise RuntimeError(
+            "FREED_BY_D6 reconstruction plus explicitly retired aliases "
+            "drifted from 2,104"
+        )
 
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(

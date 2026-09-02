@@ -144,3 +144,161 @@ PREEXISTING_WRONG_OWNER:            19
 
 Los resultados POST, gates de ownership, mutaciones y validación se añadirán
 sin reescribir esta evidencia PRE.
+
+---
+
+## 7. POST_REMEDIATION
+
+**HEAD auditado:** `debf2e3489572368ab564cfc6b8decb2f10def6b`
+
+**Commits de implementación:**
+
+```text
+1e84e82  docs(audit): classify freed scan aliases
+bd7867e  fix(entity): separate exact alias from scan eligibility
+debf2e3  feat(gazetteer): add verified Santa Marta transport buyer
+```
+
+**Artefacto POST:**
+[`scan_alias_eligibility_r2d3.json`](../../artifacts/audits/scan_alias_eligibility_r2d3.json)
+
+### 7.1 Matriz adversarial POST
+
+Replay de las 52 sondas HIGH/MEDIUM congeladas por R2D.2 contra el runtime
+actual.
+
+```text
+                                     PRE   POST
+CORRECT_OWNER                         14     15
+WRONG_OWNER                           36     20
+FAIL_CLOSED                            2     17
+
+NEW_WRONG_OWNER_FROM_FREED_ALIASES    17      0
+PREEXISTING_WRONG_OWNER               19     20
+TOTAL                                 52     52
+```
+
+El gate del lote es causal, no absoluto: `NEW_WRONG_OWNER = 17 → 0`. Los 20
+`WRONG_OWNER` que quedan son deuda subyacente anterior a D6 — ninguno se activa
+por un alias liberado, y R2D.3 no los aborda. Los 15 hijacks que se convierten
+en `FAIL_CLOSED` son la consecuencia esperada de bloquear seis aliases: el
+sistema deja de nombrar un owner equivocado y pide desambiguación.
+
+### 7.2 Las dos autoridades
+
+Núcleo de ADR-072, verificado contra el runtime:
+
+```text
+resolve_entidad("puerto boyaca")                      → ALCALDIA MUNICIPAL DE PUERTO BOYACA   (exact)
+scan_entity("Concejo Municipal de Puerto Boyacá")     → None
+
+resolve_entidad("candelaria valle")                   → ALCALDÍA MUNICIPAL DE CANDELARIA VALLE (exact)
+scan_entity("Hospital de Candelaria Valle")           → None
+
+resolve_entidad("soledad atlantico")                  → MUNICIPIO DE SOLEDAD                   (exact)
+scan_entity("Concejo Municipal de Soledad Atlántico") → None
+```
+
+La abreviatura municipal sobrevive donde el usuario la escribe como nombre
+completo; muere donde sólo era la jurisdicción de otra institución.
+
+### 7.3 Aliases bloqueados
+
+Los seis retirados no reabren por fuzzy:
+
+```text
+ciudad bolivar            method=alias_resolution_blocked  confidence=none  clarification=True
+corporacion quindio       method=alias_resolution_blocked  confidence=none  clarification=True
+francisco jose de caldas  method=alias_resolution_blocked  confidence=none  clarification=True
+salud arauca              method=alias_resolution_blocked  confidence=none  clarification=True
+salud narino              method=alias_resolution_blocked  confidence=none  clarification=True
+santa marta magdalena     method=alias_resolution_blocked  confidence=none  clarification=True
+```
+
+`FUZZY_RESURRECTIONS = 0`.
+
+### 7.4 Terminal Santa Marta
+
+```text
+IDENTITY:      CENTRAL DE TRANSPORTE DE SANTA MARTA LTDA.
+NIT:           891701694    SECOP_CODE: 724398862
+```
+
+```text
+"Terminal de Transportes de Santa Marta"            → CENTRAL DE TRANSPORTE …  (exact)
+"Central de Transporte de Santa Marta"              → CENTRAL DE TRANSPORTE …  (exact)
+"Central de Transporte de Santa Marta Ltda"         → CENTRAL DE TRANSPORTE …  (fuzzy 98)
+"Terminal de Transportes de Santa Marta Magdalena"  → CENTRAL DE TRANSPORTE …  + departamento Magdalena
+```
+
+La frase adversarial de R2D.2 ya no alcanza a la Alcaldía Distrital por ninguna
+vía: el alias territorial está bloqueado y la identidad específica gana por
+nombre propio, no por longest-match.
+
+Smoke sobre el dataset, con el `WHERE` que emite el builder
+(`UPPER(entidad) LIKE UPPER('%…%')`, insensible a mayúsculas):
+
+```text
+PROCESS_ROWS   (p6dx-8zbt, por NIT 891701694)   227
+PROCESS_ROWS   (p6dx-8zbt, WHERE del runtime)   227
+CONTRACT_ROWS  (jbjy-vk9h, por NIT 891701694)     0
+```
+
+Los 0 contratos son evidencia conocida del comprador, no una anomalía
+`ZERO_ROW`: la identidad está acreditada y los procesos existen y son
+alcanzables de punta a punta.
+
+### 7.5 No regresión D6
+
+```text
+CAR/CDS por nombre institucional        33/33
+SENA/ICBF regionales, fail-closed        0/8
+Canarios no-CAR (EAAB, ICCU,
+  Teleantioquia, Secretaría General)      4/4
+```
+
+`app/core/geography_alias.py` no se modificó en este lote (último cambio:
+`cafe9fc`, previo a R2D.3).
+
+### 7.6 Collision gate
+
+```text
+EXACT_MULTI_OWNER baseline   173
+EXACT_MULTI_OWNER actual     173
+NEW_MULTI_OWNER_KEYS           0   → PASS
+```
+
+### 7.7 R2D.2 POST-aware
+
+`scripts/audits/audit_freed_alias_safety.py` se hizo POST-aware: reconstruye el
+universo D6 sumando los aliases todavía activos y los explícitamente retirados
+en `resolution_blocked_aliases`, de modo que la invariante de universo sigue
+siendo verificable después de remediar.
+
+```text
+FREED_BY_D6 reconstruidos activos          2.098
+FREED_BY_D6 retirados por política             6
+TOTAL                                      2.104   ✓
+
+NEW_WRONG_OWNER_CONFIRMED                      0
+SANTA_MARTA_TERMINAL verdict   REMEDIATED_SPECIFIC_IDENTITY
+R2D1_VERDICT                   PASS_CONFIRMED
+```
+
+Artefacto de la corrida POST:
+[`freed_alias_safety_r2d2_post.json`](../../artifacts/audits/freed_alias_safety_r2d2_post.json).
+El artefacto histórico `freed_alias_safety_r2d2.json` no se reescribió.
+
+### 7.8 Validación
+
+```text
+tests/test_scan_alias_eligibility_r2d3.py         15 tests PASS
+focales del lote (R2D.3 + R2D.1 + CAR R2D)      348 passed
+corpus (scripts/run_query_corpus.py --mode all)   89/89 PASS
+ruff check app/ tests/ scripts/                   PASS
+make lint-core                                    PASS
+suite completa                                    10.351 passed · 2 skipped · 15 xfailed · 0 failed
+xfails                                            15 — mismos que el baseline post-D6; ninguno nuevo
+```
+
+**R2D1_FINAL_VERDICT = PASS_CONFIRMED**

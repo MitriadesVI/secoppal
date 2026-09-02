@@ -1,0 +1,3492 @@
+{
+  "audit": "SCAN-ALIAS-ELIGIBILITY-R2D3",
+  "type": "offline-post-remediation",
+  "as_of": "2026-09-01",
+  "status": "PASS",
+  "head_before": "db8329802339d672ee15b01dac7c98ecbb4b8720",
+  "head_runtime_audited": "debf2e3489572368ab564cfc6b8decb2f10def6b",
+  "runtime_changed": true,
+  "aliases_db_changed": true,
+  "source_artifact": "artifacts/audits/freed_alias_safety_r2d2.json",
+  "aliases_audited": 9,
+  "decisions": {
+    "candelaria valle": "KEEP_EXACT_DISABLE_SCAN",
+    "ciudad bolivar": "REMOVE_ALIAS_COMPLETELY",
+    "corporacion quindio": "REMOVE_ALIAS_COMPLETELY",
+    "francisco jose de caldas": "REMOVE_ALIAS_COMPLETELY",
+    "puerto boyaca": "KEEP_EXACT_DISABLE_SCAN",
+    "salud arauca": "REMOVE_ALIAS_COMPLETELY",
+    "salud narino": "REMOVE_ALIAS_COMPLETELY",
+    "santa marta magdalena": "REMOVE_ALIAS_COMPLETELY",
+    "soledad atlantico": "KEEP_EXACT_DISABLE_SCAN"
+  },
+  "decision_counts": {
+    "KEEP_EXACT_DISABLE_SCAN": 3,
+    "REMOVE_ALIAS_COMPLETELY": 6,
+    "ADD_SPECIFIC_IDENTITY": 1
+  },
+  "alias_discovery": [
+    {
+      "alias": "candelaria valle",
+      "current_owner_pre": "ALCALDÍA MUNICIPAL DE CANDELARIA VALLE",
+      "exact_query_result_pre": "ALCALDÍA MUNICIPAL DE CANDELARIA VALLE",
+      "exact_query_result_post": {
+        "owner": "ALCALDÍA MUNICIPAL DE CANDELARIA VALLE",
+        "method": "exact",
+        "confidence": "high",
+        "clarification": false
+      },
+      "other_physical_buyers_containing_alias": [
+        {
+          "code": "704248053",
+          "nit": "891380184",
+          "nit_base": "891380184",
+          "physical_name": "E.S.E HOSPITAL LOCAL DE CANDELARIA VALLE",
+          "active": true,
+          "department": "VALLE DEL CAUCA",
+          "city": "CANDELARIA"
+        },
+        {
+          "code": "700583123",
+          "nit": "81500395",
+          "nit_base": "81500395",
+          "physical_name": "INSTITUTO MUNICIPAL DEL DEPORTE Y LA RECREACION DE CANDELARIA VALLE",
+          "active": true,
+          "department": "No Provisto",
+          "city": "No Provisto"
+        },
+        {
+          "code": "715163333",
+          "nit": "1113533504",
+          "nit_base": "1113533504",
+          "physical_name": "ALCALDiA CANDELARIA VALLE",
+          "active": false,
+          "department": "VALLE DEL CAUCA",
+          "city": "CANDELARIA"
+        }
+      ],
+      "other_physical_buyer_count": 3,
+      "current_scan_hijacks_pre": [
+        {
+          "code": "700583123",
+          "nit": "81500395",
+          "nit_base": "81500395",
+          "physical_name": "INSTITUTO MUNICIPAL DEL DEPORTE Y LA RECREACION DE CANDELARIA VALLE",
+          "active": true,
+          "department": "No Provisto",
+          "city": "No Provisto"
+        }
+      ],
+      "current_scan_hijack_count_pre": 1,
+      "token_count": 2,
+      "institutional_head_present": false,
+      "institutional_heads": [],
+      "location_like": true,
+      "functional_fragment": false,
+      "risk_class": "GENERIC_LOCATION_ALIAS",
+      "decision": "KEEP_EXACT_DISABLE_SCAN",
+      "post_exact_owner_set": [
+        "ALCALDÍA MUNICIPAL DE CANDELARIA VALLE"
+      ],
+      "post_scan_of_alias": null
+    },
+    {
+      "alias": "ciudad bolivar",
+      "current_owner_pre": "ALCALDIA LOCAL DE CIUDAD BOLIVAR //",
+      "exact_query_result_pre": "ALCALDIA LOCAL DE CIUDAD BOLIVAR //",
+      "exact_query_result_post": {
+        "owner": null,
+        "method": "alias_resolution_blocked",
+        "confidence": "none",
+        "clarification": true
+      },
+      "other_physical_buyers_containing_alias": [
+        {
+          "code": "704297852",
+          "nit": "890980330",
+          "nit_base": "890980330",
+          "physical_name": "ALCALDIA DE CIUDAD BOLIVAR",
+          "active": true,
+          "department": "ANTIOQUIA",
+          "city": "No Provisto"
+        },
+        {
+          "code": "709852008",
+          "nit": "80211630",
+          "nit_base": "80211630",
+          "physical_name": "ALCALDIA LOCAL DE CIUDAD BOLIVAR 2",
+          "active": true,
+          "department": "No Provisto",
+          "city": "No Provisto"
+        },
+        {
+          "code": "719605123",
+          "nit": "900072146",
+          "nit_base": "900072146",
+          "physical_name": "ASOCIACION DE JUNTAS DE ACCION COMUNAL DE LA LOCALIDAD 19, CIUDAD BOLIVAR",
+          "active": true,
+          "department": "DISTRITO CAPITAL DE BOGOTa",
+          "city": "BOGOTa"
+        },
+        {
+          "code": "704193689",
+          "nit": "830000758",
+          "nit_base": "830000758",
+          "physical_name": "COLEGIO CEDID CIUDAD BOLIVAR INSTITUCION EDUCATIVA DISTRITAL",
+          "active": true,
+          "department": "No Provisto",
+          "city": "No Provisto"
+        },
+        {
+          "code": "704193747",
+          "nit": "830066973",
+          "nit_base": "830066973",
+          "physical_name": "COLEGIO CIUDAD BOLIVAR ARGENTINA IED",
+          "active": true,
+          "department": "DISTRITO CAPITAL DE BOGOTa",
+          "city": "BOGOTa"
+        },
+        {
+          "code": "700555014",
+          "nit": "811015728",
+          "nit_base": "811015728",
+          "physical_name": "EMPRESA PRESTADORA DEL SERVICIO PuBLICO DE ASEO DEL MUNICIPIO DE CIUDAD BOLiVAR",
+          "active": true,
+          "department": "ANTIOQUIA",
+          "city": "CIUDAD BOLiVAR"
+        },
+        {
+          "code": "722426574",
+          "nit": "830091314",
+          "nit_base": "830091314",
+          "physical_name": "JUNTA DE ACCIoN COMUNAL DEL BARRIO SUBNORMAL LA PLAYA DE LA LOCALIDAD 19 CIUDAD BOLIVAR",
+          "active": true,
+          "department": "DISTRITO CAPITAL DE BOGOTa",
+          "city": "BOGOTa"
+        },
+        {
+          "code": "714716347",
+          "nit": "1033699148",
+          "nit_base": "1033699148",
+          "physical_name": "ALCALDIA CIUDAD BOLIVAR",
+          "active": false,
+          "department": "DISTRITO CAPITAL DE BOGOTa",
+          "city": "BOGOTa"
+        },
+        {
+          "code": "722345527",
+          "nit": "79499610",
+          "nit_base": "79499610",
+          "physical_name": "FONDO DE DESAROLLO LOCAL CIUDAD BOLIVAR",
+          "active": false,
+          "department": "DISTRITO CAPITAL DE BOGOTa",
+          "city": "BOGOTa"
+        },
+        {
+          "code": "711835306",
+          "nit": "1032464565",
+          "nit_base": "103246456",
+          "physical_name": "FONDO DE DESARROLO LOCAL DE CIUDAD BOLIVAR",
+          "active": false,
+          "department": "No Provisto",
+          "city": "No Provisto"
+        }
+      ],
+      "other_physical_buyer_count": 11,
+      "current_scan_hijacks_pre": [
+        {
+          "code": "719605123",
+          "nit": "900072146",
+          "nit_base": "900072146",
+          "physical_name": "ASOCIACION DE JUNTAS DE ACCION COMUNAL DE LA LOCALIDAD 19, CIUDAD BOLIVAR",
+          "active": true,
+          "department": "DISTRITO CAPITAL DE BOGOTa",
+          "city": "BOGOTa"
+        },
+        {
+          "code": "704193689",
+          "nit": "830000758",
+          "nit_base": "830000758",
+          "physical_name": "COLEGIO CEDID CIUDAD BOLIVAR INSTITUCION EDUCATIVA DISTRITAL",
+          "active": true,
+          "department": "No Provisto",
+          "city": "No Provisto"
+        },
+        {
+          "code": "704193747",
+          "nit": "830066973",
+          "nit_base": "830066973",
+          "physical_name": "COLEGIO CIUDAD BOLIVAR ARGENTINA IED",
+          "active": true,
+          "department": "DISTRITO CAPITAL DE BOGOTa",
+          "city": "BOGOTa"
+        },
+        {
+          "code": "722426574",
+          "nit": "830091314",
+          "nit_base": "830091314",
+          "physical_name": "JUNTA DE ACCIoN COMUNAL DEL BARRIO SUBNORMAL LA PLAYA DE LA LOCALIDAD 19 CIUDAD BOLIVAR",
+          "active": true,
+          "department": "DISTRITO CAPITAL DE BOGOTa",
+          "city": "BOGOTa"
+        }
+      ],
+      "current_scan_hijack_count_pre": 4,
+      "token_count": 2,
+      "institutional_head_present": false,
+      "institutional_heads": [],
+      "location_like": true,
+      "functional_fragment": false,
+      "risk_class": "GENERIC_LOCATION_ALIAS",
+      "decision": "REMOVE_ALIAS_COMPLETELY",
+      "post_exact_owner_set": [],
+      "post_scan_of_alias": null
+    },
+    {
+      "alias": "corporacion quindio",
+      "current_owner_pre": "CORPORACION AUTONOMA REGIONAL DEL QUINDIO",
+      "exact_query_result_pre": "CORPORACION AUTONOMA REGIONAL DEL QUINDIO",
+      "exact_query_result_post": {
+        "owner": null,
+        "method": "alias_resolution_blocked",
+        "confidence": "none",
+        "clarification": true
+      },
+      "other_physical_buyers_containing_alias": [
+        {
+          "code": "720474246",
+          "nit": "901068969",
+          "nit_base": "901068969",
+          "physical_name": "CORPORACION QUINDIO CONVENTION BUREAU",
+          "active": true,
+          "department": "No Provisto",
+          "city": "No Provisto"
+        }
+      ],
+      "other_physical_buyer_count": 1,
+      "current_scan_hijacks_pre": [
+        {
+          "code": "720474246",
+          "nit": "901068969",
+          "nit_base": "901068969",
+          "physical_name": "CORPORACION QUINDIO CONVENTION BUREAU",
+          "active": true,
+          "department": "No Provisto",
+          "city": "No Provisto"
+        }
+      ],
+      "current_scan_hijack_count_pre": 1,
+      "token_count": 2,
+      "institutional_head_present": true,
+      "institutional_heads": [
+        "corporacion"
+      ],
+      "location_like": false,
+      "functional_fragment": false,
+      "risk_class": "CHILD_ALIAS_IN_UNRELATED_NAME",
+      "decision": "REMOVE_ALIAS_COMPLETELY",
+      "post_exact_owner_set": [],
+      "post_scan_of_alias": null
+    },
+    {
+      "alias": "francisco jose de caldas",
+      "current_owner_pre": "UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS",
+      "exact_query_result_pre": "UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS",
+      "exact_query_result_post": {
+        "owner": null,
+        "method": "alias_resolution_blocked",
+        "confidence": "none",
+        "clarification": true
+      },
+      "other_physical_buyers_containing_alias": [
+        {
+          "code": "718739600",
+          "nit": "901004821",
+          "nit_base": "901004821",
+          "physical_name": "CENTRO EDUCATIVO FRANCISCO JOSE DE CALDAS",
+          "active": true,
+          "department": "META",
+          "city": "GRANADA"
+        },
+        {
+          "code": "710168238",
+          "nit": "860532521",
+          "nit_base": "86053252",
+          "physical_name": "COLEGIO INSTITUTO TECNICO INDUSTRIAL FRANCISCO JOSE DE CALDAS (IED)",
+          "active": true,
+          "department": "No Provisto",
+          "city": "No Provisto"
+        },
+        {
+          "code": "718375819",
+          "nit": "835000850",
+          "nit_base": "835000850",
+          "physical_name": "FRANCISCO JOSE DE CALDAS",
+          "active": true,
+          "department": "VALLE DEL CAUCA",
+          "city": "BUENAVENTURA"
+        },
+        {
+          "code": "726767031",
+          "nit": "1073722421",
+          "nit_base": "107372242",
+          "physical_name": "HOSPITAL SAN FRANCISCO JOSE DE CALDAS",
+          "active": true,
+          "department": "CUNDINAMARCA",
+          "city": "VIOTa"
+        },
+        {
+          "code": "700552011",
+          "nit": "800062427",
+          "nit_base": "800062427",
+          "physical_name": "I.E FRANCISCO JOSE DE CALDAS",
+          "active": true,
+          "department": "ARAUCA",
+          "city": "ARAUCA"
+        },
+        {
+          "code": "709285084",
+          "nit": "890103051",
+          "nit_base": "890103051",
+          "physical_name": "IE FRANCISCO JOSE DE CALDAS OFICIAL",
+          "active": true,
+          "department": "No Provisto",
+          "city": "No Provisto"
+        },
+        {
+          "code": "719126708",
+          "nit": "890680084",
+          "nit_base": "890680084",
+          "physical_name": "IED FRANCISCO JOSe DE CALDAS",
+          "active": true,
+          "department": "CUNDINAMARCA",
+          "city": "VIOTa"
+        },
+        {
+          "code": "719667594",
+          "nit": "900043979",
+          "nit_base": "900043979",
+          "physical_name": "IED FRANCISCO JOSE DE CALDAS",
+          "active": true,
+          "department": "MAGDALENA",
+          "city": "CHIBOLO"
+        },
+        {
+          "code": "717872303",
+          "nit": "890506425",
+          "nit_base": "890506425",
+          "physical_name": "INSTITUCION EDUCATIVA COLEGIO FRANCISCO JOSE DE CALDAS*",
+          "active": true,
+          "department": "NORTE DE SANTANDER",
+          "city": "CuCUTA"
+        },
+        {
+          "code": "719439275",
+          "nit": "8905016625",
+          "nit_base": "890501662",
+          "physical_name": "INSTITUCION EDUCATIVA COLEGIO FRANCISCO JOSE DE CALDAS DE TIBU",
+          "active": true,
+          "department": "NORTE DE SANTANDER",
+          "city": "TIBu"
+        }
+      ],
+      "other_physical_buyer_count": 36,
+      "current_scan_hijacks_pre": [
+        {
+          "code": "718739600",
+          "nit": "901004821",
+          "nit_base": "901004821",
+          "physical_name": "CENTRO EDUCATIVO FRANCISCO JOSE DE CALDAS",
+          "active": true,
+          "department": "META",
+          "city": "GRANADA"
+        }
+      ],
+      "current_scan_hijack_count_pre": 1,
+      "token_count": 4,
+      "institutional_head_present": false,
+      "institutional_heads": [],
+      "location_like": false,
+      "functional_fragment": true,
+      "risk_class": "INSTITUTIONAL_FRAGMENT",
+      "decision": "REMOVE_ALIAS_COMPLETELY",
+      "post_exact_owner_set": [],
+      "post_scan_of_alias": null
+    },
+    {
+      "alias": "puerto boyaca",
+      "current_owner_pre": "ALCALDIA MUNICIPAL DE PUERTO BOYACA",
+      "exact_query_result_pre": "ALCALDIA MUNICIPAL DE PUERTO BOYACA",
+      "exact_query_result_post": {
+        "owner": "ALCALDIA MUNICIPAL DE PUERTO BOYACA",
+        "method": "exact",
+        "confidence": "high",
+        "clarification": false
+      },
+      "other_physical_buyers_containing_alias": [
+        {
+          "code": "710552290",
+          "nit": "891800466",
+          "nit_base": "891800466",
+          "physical_name": "ALCALDIA MUNICIPAL DE PUERTO BOYACA - BOYACA",
+          "active": true,
+          "department": "BOYACa",
+          "city": "PUERTO BOYACa"
+        },
+        {
+          "code": "730508496",
+          "nit": "8908011567",
+          "nit_base": "890801156",
+          "physical_name": "CaMARA DE COMERCIO DE LA DORADA, PUERTO BOYACa, PUERTO SALGAR Y ORIENTE DE CALDAS",
+          "active": true,
+          "department": "CALDAS",
+          "city": "LA DORADA"
+        },
+        {
+          "code": "719893216",
+          "nit": "820000370",
+          "nit_base": "82000037",
+          "physical_name": "CONCEJO MUNICIPAL DE PUERTO BOYACA",
+          "active": true,
+          "department": "BOYACa",
+          "city": "PUERTO BOYACa"
+        },
+        {
+          "code": "700567035",
+          "nit": "891800570",
+          "nit_base": "891800570",
+          "physical_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL JOSE CAYETANO VASQUEZ DE PUERTO BOYACA",
+          "active": true,
+          "department": "BOYACa",
+          "city": "PUERTO BOYACa"
+        },
+        {
+          "code": "718375983",
+          "nit": "8200014059",
+          "nit_base": "820001405",
+          "physical_name": "EMPRESAS PUBLICAS DE PUERTO BOYACA",
+          "active": true,
+          "department": "BOYACa",
+          "city": "PUERTO BOYACa"
+        },
+        {
+          "code": "700588098",
+          "nit": "820000992",
+          "nit_base": "820000992",
+          "physical_name": "ESTABLECIMIENTO PENITENCIARIO DE MEDIANA SEGURIDAD Y CARCELARIO DE PUERTO BOYACa",
+          "active": true,
+          "department": "No Provisto",
+          "city": "No Provisto"
+        },
+        {
+          "code": "702293143",
+          "nit": "820000484",
+          "nit_base": "820000484",
+          "physical_name": "INSTITUTO MUNICIPAL DE DEPORTE Y RECREACION DE PUERTO BOYACA",
+          "active": true,
+          "department": "No Provisto",
+          "city": "No Provisto"
+        },
+        {
+          "code": "721008191",
+          "nit": "800255019",
+          "nit_base": "800255019",
+          "physical_name": "PERSONERiA MUNICIPAL DE PUERTO BOYACa",
+          "active": true,
+          "department": "BOYACa",
+          "city": "PUERTO BOYACa"
+        },
+        {
+          "code": "724860960",
+          "nit": "899999034",
+          "nit_base": "899999034",
+          "physical_name": "SENA PUERTO BOYACA",
+          "active": true,
+          "department": "BOYACa",
+          "city": "BOYACa"
+        }
+      ],
+      "other_physical_buyer_count": 9,
+      "current_scan_hijacks_pre": [
+        {
+          "code": "730508496",
+          "nit": "8908011567",
+          "nit_base": "890801156",
+          "physical_name": "CaMARA DE COMERCIO DE LA DORADA, PUERTO BOYACa, PUERTO SALGAR Y ORIENTE DE CALDAS",
+          "active": true,
+          "department": "CALDAS",
+          "city": "LA DORADA"
+        },
+        {
+          "code": "719893216",
+          "nit": "820000370",
+          "nit_base": "82000037",
+          "physical_name": "CONCEJO MUNICIPAL DE PUERTO BOYACA",
+          "active": true,
+          "department": "BOYACa",
+          "city": "PUERTO BOYACa"
+        },
+        {
+          "code": "700588098",
+          "nit": "820000992",
+          "nit_base": "820000992",
+          "physical_name": "ESTABLECIMIENTO PENITENCIARIO DE MEDIANA SEGURIDAD Y CARCELARIO DE PUERTO BOYACa",
+          "active": true,
+          "department": "No Provisto",
+          "city": "No Provisto"
+        },
+        {
+          "code": "702293143",
+          "nit": "820000484",
+          "nit_base": "820000484",
+          "physical_name": "INSTITUTO MUNICIPAL DE DEPORTE Y RECREACION DE PUERTO BOYACA",
+          "active": true,
+          "department": "No Provisto",
+          "city": "No Provisto"
+        },
+        {
+          "code": "721008191",
+          "nit": "800255019",
+          "nit_base": "800255019",
+          "physical_name": "PERSONERiA MUNICIPAL DE PUERTO BOYACa",
+          "active": true,
+          "department": "BOYACa",
+          "city": "PUERTO BOYACa"
+        },
+        {
+          "code": "724860960",
+          "nit": "899999034",
+          "nit_base": "899999034",
+          "physical_name": "SENA PUERTO BOYACA",
+          "active": true,
+          "department": "BOYACa",
+          "city": "BOYACa"
+        }
+      ],
+      "current_scan_hijack_count_pre": 6,
+      "token_count": 2,
+      "institutional_head_present": false,
+      "institutional_heads": [],
+      "location_like": true,
+      "functional_fragment": false,
+      "risk_class": "GENERIC_LOCATION_ALIAS",
+      "decision": "KEEP_EXACT_DISABLE_SCAN",
+      "post_exact_owner_set": [
+        "ALCALDIA MUNICIPAL DE PUERTO BOYACA"
+      ],
+      "post_scan_of_alias": null
+    },
+    {
+      "alias": "salud arauca",
+      "current_owner_pre": "UNIDAD ADMINISTRATIVA ESPECIAL DE SALUD DE ARAUCA",
+      "exact_query_result_pre": "UNIDAD ADMINISTRATIVA ESPECIAL DE SALUD DE ARAUCA",
+      "exact_query_result_post": {
+        "owner": null,
+        "method": "alias_resolution_blocked",
+        "confidence": "none",
+        "clarification": true
+      },
+      "other_physical_buyers_containing_alias": [
+        {
+          "code": "702767732",
+          "nit": "9008012094",
+          "nit_base": "900801209",
+          "physical_name": "UNIDAD PRESTADORA DE SALUD ARAUCA",
+          "active": true,
+          "department": "ARAUCA",
+          "city": "ARAUCA"
+        }
+      ],
+      "other_physical_buyer_count": 1,
+      "current_scan_hijacks_pre": [
+        {
+          "code": "702767732",
+          "nit": "9008012094",
+          "nit_base": "900801209",
+          "physical_name": "UNIDAD PRESTADORA DE SALUD ARAUCA",
+          "active": true,
+          "department": "ARAUCA",
+          "city": "ARAUCA"
+        }
+      ],
+      "current_scan_hijack_count_pre": 1,
+      "token_count": 2,
+      "institutional_head_present": false,
+      "institutional_heads": [],
+      "location_like": false,
+      "functional_fragment": true,
+      "risk_class": "INSTITUTIONAL_FRAGMENT",
+      "decision": "REMOVE_ALIAS_COMPLETELY",
+      "post_exact_owner_set": [],
+      "post_scan_of_alias": null
+    },
+    {
+      "alias": "salud narino",
+      "current_owner_pre": "INSTITUTO DEPARTAMENTAL DE SALUD DE NARIÑO",
+      "exact_query_result_pre": "INSTITUTO DEPARTAMENTAL DE SALUD DE NARIÑO",
+      "exact_query_result_post": {
+        "owner": null,
+        "method": "alias_resolution_blocked",
+        "confidence": "none",
+        "clarification": true
+      },
+      "other_physical_buyers_containing_alias": [
+        {
+          "code": "702743162",
+          "nit": "900807338",
+          "nit_base": "900807338",
+          "physical_name": "UNIDAD PRESTADORA DE SALUD NARIÑO",
+          "active": true,
+          "department": "NARIÑO",
+          "city": "No Provisto"
+        }
+      ],
+      "other_physical_buyer_count": 1,
+      "current_scan_hijacks_pre": [
+        {
+          "code": "702743162",
+          "nit": "900807338",
+          "nit_base": "900807338",
+          "physical_name": "UNIDAD PRESTADORA DE SALUD NARIÑO",
+          "active": true,
+          "department": "NARIÑO",
+          "city": "No Provisto"
+        }
+      ],
+      "current_scan_hijack_count_pre": 1,
+      "token_count": 2,
+      "institutional_head_present": false,
+      "institutional_heads": [],
+      "location_like": false,
+      "functional_fragment": true,
+      "risk_class": "INSTITUTIONAL_FRAGMENT",
+      "decision": "REMOVE_ALIAS_COMPLETELY",
+      "post_exact_owner_set": [],
+      "post_scan_of_alias": null
+    },
+    {
+      "alias": "santa marta magdalena",
+      "current_owner_pre": "ALCALDÍA DISTRITAL DE SANTA MARTA",
+      "exact_query_result_pre": "ALCALDÍA DISTRITAL DE SANTA MARTA",
+      "exact_query_result_post": {
+        "owner": null,
+        "method": "alias_resolution_blocked",
+        "confidence": "none",
+        "clarification": true
+      },
+      "other_physical_buyers_containing_alias": [],
+      "other_physical_buyer_count": 0,
+      "current_scan_hijacks_pre": [
+        {
+          "code": "724398862",
+          "nit": "891701694",
+          "nit_base": "891701694",
+          "physical_name": "CENTRAL DE TRANSPORTE DE SANTA MARTA LTDA.",
+          "active": true,
+          "department": "MAGDALENA",
+          "city": "SANTA MARTA"
+        }
+      ],
+      "current_scan_hijack_count_pre": 1,
+      "token_count": 3,
+      "institutional_head_present": false,
+      "institutional_heads": [],
+      "location_like": true,
+      "functional_fragment": false,
+      "risk_class": "GENERIC_LOCATION_ALIAS",
+      "decision": "REMOVE_ALIAS_COMPLETELY",
+      "post_exact_owner_set": [],
+      "post_scan_of_alias": null
+    },
+    {
+      "alias": "soledad atlantico",
+      "current_owner_pre": "MUNICIPIO DE SOLEDAD",
+      "exact_query_result_pre": "MUNICIPIO DE SOLEDAD",
+      "exact_query_result_post": {
+        "owner": "MUNICIPIO DE SOLEDAD",
+        "method": "exact",
+        "confidence": "high",
+        "clarification": false
+      },
+      "other_physical_buyers_containing_alias": [
+        {
+          "code": "712463280",
+          "nit": "8001997416",
+          "nit_base": "800199741",
+          "physical_name": "CONTRALORIA MUNICIPAL DE SOLEDAD - ATLaNTICO",
+          "active": true,
+          "department": "ATLaNTICO",
+          "city": "BARRANQUILLA"
+        },
+        {
+          "code": "707363891",
+          "nit": "802003453",
+          "nit_base": "802003453",
+          "physical_name": "INSTITUCION EDUCATIVA POLICARPA SALAVARRIETA SOLEDAD ATLANTICO",
+          "active": true,
+          "department": "No Provisto",
+          "city": "No Provisto"
+        }
+      ],
+      "other_physical_buyer_count": 2,
+      "current_scan_hijacks_pre": [
+        {
+          "code": "707363891",
+          "nit": "802003453",
+          "nit_base": "802003453",
+          "physical_name": "INSTITUCION EDUCATIVA POLICARPA SALAVARRIETA SOLEDAD ATLANTICO",
+          "active": true,
+          "department": "No Provisto",
+          "city": "No Provisto"
+        }
+      ],
+      "current_scan_hijack_count_pre": 1,
+      "token_count": 2,
+      "institutional_head_present": false,
+      "institutional_heads": [],
+      "location_like": true,
+      "functional_fragment": false,
+      "risk_class": "GENERIC_LOCATION_ALIAS",
+      "decision": "KEEP_EXACT_DISABLE_SCAN",
+      "post_exact_owner_set": [
+        "MUNICIPIO DE SOLEDAD"
+      ],
+      "post_scan_of_alias": null
+    }
+  ],
+  "terminal_santa_marta": {
+    "identity_added": true,
+    "official_name": "CENTRAL DE TRANSPORTE DE SANTA MARTA LTDA.",
+    "nit": "891701694",
+    "secop_code": "724398862",
+    "exact_result": {
+      "owner": "CENTRAL DE TRANSPORTE DE SANTA MARTA LTDA.",
+      "method": "exact",
+      "confidence": "high",
+      "clarification": false
+    },
+    "territorial_exact_result": {
+      "owner": null,
+      "method": "alias_resolution_blocked",
+      "confidence": "none",
+      "clarification": true
+    },
+    "scan_result": {
+      "owner": "CENTRAL DE TRANSPORTE DE SANTA MARTA LTDA.",
+      "matched_alias": "terminal de transportes de santa marta",
+      "remaining_text": "magdalena",
+      "method": "scan_exact"
+    },
+    "router_result": {
+      "entity": "CENTRAL DE TRANSPORTE DE SANTA MARTA LTDA.",
+      "department": "Magdalena",
+      "method": "scan_exact",
+      "clarification": null
+    },
+    "generic_alias_still_blocked": true
+  },
+  "adversarial_sample": {
+    "baseline": {
+      "CORRECT_OWNER": 14,
+      "FAIL_CLOSED": 2,
+      "WRONG_OWNER": 36
+    },
+    "post": {
+      "CORRECT_OWNER": 15,
+      "FAIL_CLOSED": 17,
+      "WRONG_OWNER": 20,
+      "NEW_WRONG_OWNER_BEFORE": 17,
+      "NEW_WRONG_OWNER_AFTER": 0,
+      "NEW_WRONG_OWNER_FROM_FREED_ALIASES": 0,
+      "PREEXISTING_WRONG_OWNER": 20,
+      "TOTAL": 52
+    },
+    "records": [
+      {
+        "alias": "candelaria valle",
+        "expected_secop_buyer": {
+          "code": "704248053",
+          "nit": "891380184",
+          "nit_base": "891380184",
+          "physical_name": "E.S.E HOSPITAL LOCAL DE CANDELARIA VALLE",
+          "active": true,
+          "department": "VALLE DEL CAUCA",
+          "city": "CANDELARIA"
+        },
+        "current_owners_pre": [
+          "ALCALDÍA MUNICIPAL DE CANDELARIA VALLE"
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "ALCALDÍA MUNICIPAL DE CANDELARIA VALLE",
+          "department": null,
+          "method": "rewrite_(?:el",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": "ALCALDÍA MUNICIPAL DE CANDELARIA VALLE",
+          "department": null,
+          "method": "rewrite_(?:el",
+          "clarification": null
+        },
+        "post_route": {
+          "entity": "ALCALDÍA MUNICIPAL DE CANDELARIA VALLE",
+          "department": null,
+          "method": "rewrite_(?:el",
+          "clarification": null
+        },
+        "post_scan": {
+          "owner": "EMPRESA SOCIAL DEL ESTADO HOSPITAL LOCAL",
+          "matched_alias": "hospital local",
+          "remaining_text": "e.s.e de candelaria valle",
+          "method": "scan_exact"
+        },
+        "post_outcome": "WRONG_OWNER",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": true
+      },
+      {
+        "alias": "candelaria valle",
+        "expected_secop_buyer": {
+          "code": "700583123",
+          "nit": "81500395",
+          "nit_base": "81500395",
+          "physical_name": "INSTITUTO MUNICIPAL DEL DEPORTE Y LA RECREACION DE CANDELARIA VALLE",
+          "active": true,
+          "department": "No Provisto",
+          "city": "No Provisto"
+        },
+        "current_owners_pre": [
+          "ALCALDÍA MUNICIPAL DE CANDELARIA VALLE"
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "ALCALDÍA MUNICIPAL DE CANDELARIA VALLE",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": null,
+          "department": "Valle del Cauca",
+          "method": null,
+          "clarification": null
+        },
+        "post_route": {
+          "entity": null,
+          "department": "Valle del Cauca",
+          "method": null,
+          "clarification": null
+        },
+        "post_scan": null,
+        "post_outcome": "FAIL_CLOSED",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": false
+      },
+      {
+        "alias": "ciudad bolivar",
+        "expected_secop_buyer": {
+          "code": "704297852",
+          "nit": "890980330",
+          "nit_base": "890980330",
+          "physical_name": "ALCALDIA DE CIUDAD BOLIVAR",
+          "active": true,
+          "department": "ANTIOQUIA",
+          "city": "No Provisto"
+        },
+        "current_owners_pre": [
+          "ALCALDIA LOCAL DE CIUDAD BOLIVAR //"
+        ],
+        "baseline_outcome": "CORRECT_OWNER",
+        "baseline_live": {
+          "entity": "ALCALDIA LOCAL DE CIUDAD BOLIVAR //",
+          "department": null,
+          "method": "rewrite_alcald[ií]a",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": "ALCALDIA LOCAL DE CIUDAD BOLIVAR //",
+          "department": null,
+          "method": "rewrite_alcald[ií]a",
+          "clarification": null
+        },
+        "post_route": {
+          "entity": "ALCALDIA LOCAL DE CIUDAD BOLIVAR //",
+          "department": null,
+          "method": "rewrite_alcald[ií]a",
+          "clarification": null
+        },
+        "post_scan": {
+          "owner": "ALCALDIA LOCAL DE CIUDAD BOLIVAR //",
+          "matched_alias": "alcaldia de ciudad bolivar",
+          "remaining_text": "",
+          "method": "scan_exact"
+        },
+        "post_outcome": "CORRECT_OWNER",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": false
+      },
+      {
+        "alias": "ciudad bolivar",
+        "expected_secop_buyer": {
+          "code": "709852008",
+          "nit": "80211630",
+          "nit_base": "80211630",
+          "physical_name": "ALCALDIA LOCAL DE CIUDAD BOLIVAR 2",
+          "active": true,
+          "department": "No Provisto",
+          "city": "No Provisto"
+        },
+        "current_owners_pre": [
+          "ALCALDIA LOCAL DE CIUDAD BOLIVAR //"
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "ALCALDIA LOCAL DE CIUDAD BOLIVAR //",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": "ALCALDIA LOCAL DE CIUDAD BOLIVAR //",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "post_route": {
+          "entity": "ALCALDIA LOCAL DE CIUDAD BOLIVAR //",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "post_scan": {
+          "owner": "ALCALDIA LOCAL DE CIUDAD BOLIVAR //",
+          "matched_alias": "alcaldia local de ciudad bolivar",
+          "remaining_text": "2",
+          "method": "scan_exact"
+        },
+        "post_outcome": "WRONG_OWNER",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": true
+      },
+      {
+        "alias": "ciudad bolivar",
+        "expected_secop_buyer": {
+          "code": "719605123",
+          "nit": "900072146",
+          "nit_base": "900072146",
+          "physical_name": "ASOCIACION DE JUNTAS DE ACCION COMUNAL DE LA LOCALIDAD 19, CIUDAD BOLIVAR",
+          "active": true,
+          "department": "DISTRITO CAPITAL DE BOGOTa",
+          "city": "BOGOTa"
+        },
+        "current_owners_pre": [
+          "ALCALDIA LOCAL DE CIUDAD BOLIVAR //"
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "ALCALDIA LOCAL DE CIUDAD BOLIVAR //",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": null,
+          "department": "Bolívar",
+          "method": null,
+          "clarification": null
+        },
+        "post_route": {
+          "entity": null,
+          "department": "Bolívar",
+          "method": null,
+          "clarification": null
+        },
+        "post_scan": null,
+        "post_outcome": "FAIL_CLOSED",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": false
+      },
+      {
+        "alias": "ciudad bolivar",
+        "expected_secop_buyer": {
+          "code": "704193689",
+          "nit": "830000758",
+          "nit_base": "830000758",
+          "physical_name": "COLEGIO CEDID CIUDAD BOLIVAR INSTITUCION EDUCATIVA DISTRITAL",
+          "active": true,
+          "department": "No Provisto",
+          "city": "No Provisto"
+        },
+        "current_owners_pre": [
+          "ALCALDIA LOCAL DE CIUDAD BOLIVAR //"
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "ALCALDIA LOCAL DE CIUDAD BOLIVAR //",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": null,
+          "department": "Bolívar",
+          "method": null,
+          "clarification": null
+        },
+        "post_route": {
+          "entity": null,
+          "department": "Bolívar",
+          "method": null,
+          "clarification": null
+        },
+        "post_scan": null,
+        "post_outcome": "FAIL_CLOSED",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": false
+      },
+      {
+        "alias": "ciudad bolivar",
+        "expected_secop_buyer": {
+          "code": "704193747",
+          "nit": "830066973",
+          "nit_base": "830066973",
+          "physical_name": "COLEGIO CIUDAD BOLIVAR ARGENTINA IED",
+          "active": true,
+          "department": "DISTRITO CAPITAL DE BOGOTa",
+          "city": "BOGOTa"
+        },
+        "current_owners_pre": [
+          "ALCALDIA LOCAL DE CIUDAD BOLIVAR //"
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "ALCALDIA LOCAL DE CIUDAD BOLIVAR //",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": null,
+          "department": "Bolívar",
+          "method": null,
+          "clarification": null
+        },
+        "post_route": {
+          "entity": null,
+          "department": "Bolívar",
+          "method": null,
+          "clarification": null
+        },
+        "post_scan": null,
+        "post_outcome": "FAIL_CLOSED",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": false
+      },
+      {
+        "alias": "ciudad bolivar",
+        "expected_secop_buyer": {
+          "code": "700555014",
+          "nit": "811015728",
+          "nit_base": "811015728",
+          "physical_name": "EMPRESA PRESTADORA DEL SERVICIO PuBLICO DE ASEO DEL MUNICIPIO DE CIUDAD BOLiVAR",
+          "active": true,
+          "department": "ANTIOQUIA",
+          "city": "CIUDAD BOLiVAR"
+        },
+        "current_owners_pre": [
+          "ALCALDIA LOCAL DE CIUDAD BOLIVAR //"
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "ALCALDIA LOCAL DE CIUDAD BOLIVAR //",
+          "department": null,
+          "method": "rewrite_municipio",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": "ALCALDIA LOCAL DE CIUDAD BOLIVAR //",
+          "department": null,
+          "method": "rewrite_municipio",
+          "clarification": null
+        },
+        "post_route": {
+          "entity": "ALCALDIA LOCAL DE CIUDAD BOLIVAR //",
+          "department": null,
+          "method": "rewrite_municipio",
+          "clarification": null
+        },
+        "post_scan": null,
+        "post_outcome": "WRONG_OWNER",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": true
+      },
+      {
+        "alias": "ciudad bolivar",
+        "expected_secop_buyer": {
+          "code": "722426574",
+          "nit": "830091314",
+          "nit_base": "830091314",
+          "physical_name": "JUNTA DE ACCIoN COMUNAL DEL BARRIO SUBNORMAL LA PLAYA DE LA LOCALIDAD 19 CIUDAD BOLIVAR",
+          "active": true,
+          "department": "DISTRITO CAPITAL DE BOGOTa",
+          "city": "BOGOTa"
+        },
+        "current_owners_pre": [
+          "ALCALDIA LOCAL DE CIUDAD BOLIVAR //"
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "ALCALDIA LOCAL DE CIUDAD BOLIVAR //",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": null,
+          "department": "Bolívar",
+          "method": null,
+          "clarification": null
+        },
+        "post_route": {
+          "entity": null,
+          "department": "Bolívar",
+          "method": null,
+          "clarification": null
+        },
+        "post_scan": null,
+        "post_outcome": "FAIL_CLOSED",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": false
+      },
+      {
+        "alias": "corporacion autonoma regional de cundinamarca",
+        "expected_secop_buyer": {
+          "code": "725368971",
+          "nit": "800197268",
+          "nit_base": "800197268",
+          "physical_name": "CORPORACION AUTONOMA REGIONAL DE CUNDINAMARCA",
+          "active": true,
+          "department": "DISTRITO CAPITAL DE BOGOTa",
+          "city": "BOGOTa"
+        },
+        "current_owners_pre": [
+          "CORPORACION AUTONOMA REGIONAL DE CUNDINAMARCA - CAR."
+        ],
+        "baseline_outcome": "CORRECT_OWNER",
+        "baseline_live": {
+          "entity": "CORPORACION AUTONOMA REGIONAL DE CUNDINAMARCA - CAR.",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": null,
+          "department": "Cundinamarca",
+          "method": "generic_buyer_unqualified",
+          "clarification": null
+        },
+        "post_route": {
+          "entity": "CORPORACION AUTONOMA REGIONAL DE CUNDINAMARCA - CAR.",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "post_scan": {
+          "owner": "CORPORACION AUTONOMA REGIONAL DE CUNDINAMARCA - CAR.",
+          "matched_alias": "corporacion autonoma regional de cundinamarca",
+          "remaining_text": "",
+          "method": "scan_exact"
+        },
+        "post_outcome": "CORRECT_OWNER",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": false
+      },
+      {
+        "alias": "corporacion autonoma regional del cauca",
+        "expected_secop_buyer": {
+          "code": "720989011",
+          "nit": "76304603",
+          "nit_base": "7630460",
+          "physical_name": "CORPORACION AUTONOMA REGIONAL DEL CAUCA",
+          "active": true,
+          "department": "No Provisto",
+          "city": "No Provisto"
+        },
+        "current_owners_pre": [
+          "CORPORACION AUTONOMA REGIONAL DEL CAUCA  12"
+        ],
+        "baseline_outcome": "CORRECT_OWNER",
+        "baseline_live": {
+          "entity": "CORPORACION AUTONOMA REGIONAL DEL CAUCA  12",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": null,
+          "department": "Cauca",
+          "method": "generic_buyer_unqualified",
+          "clarification": null
+        },
+        "post_route": {
+          "entity": "CORPORACION AUTONOMA REGIONAL DEL CAUCA  12",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "post_scan": {
+          "owner": "CORPORACION AUTONOMA REGIONAL DEL CAUCA  12",
+          "matched_alias": "corporacion autonoma regional del cauca",
+          "remaining_text": "",
+          "method": "scan_exact"
+        },
+        "post_outcome": "CORRECT_OWNER",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": false
+      },
+      {
+        "alias": "corporacion autonoma regional del tolima",
+        "expected_secop_buyer": {
+          "code": "734762180",
+          "nit": "8907045367",
+          "nit_base": "890704536",
+          "physical_name": "CORPORACIoN AUToNOMA REGIONAL DEL TOLIMA",
+          "active": true,
+          "department": "TOLIMA",
+          "city": "IBAGUe"
+        },
+        "current_owners_pre": [
+          "CORTOLIMA"
+        ],
+        "baseline_outcome": "CORRECT_OWNER",
+        "baseline_live": {
+          "entity": "CORTOLIMA",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": null,
+          "department": "Tolima",
+          "method": "generic_buyer_unqualified",
+          "clarification": null
+        },
+        "post_route": {
+          "entity": "CORTOLIMA",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "post_scan": {
+          "owner": "CORTOLIMA",
+          "matched_alias": "corporacion autonoma regional del tolima",
+          "remaining_text": "",
+          "method": "scan_exact"
+        },
+        "post_outcome": "CORRECT_OWNER",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": false
+      },
+      {
+        "alias": "corporacion autonoma regional del valle",
+        "expected_secop_buyer": {
+          "code": "715749180",
+          "nit": "89099027",
+          "nit_base": "89099027",
+          "physical_name": "CORPORACIoN AUToNOMA REGIONAL DEL VALLE DEL CAUCA -CVC",
+          "active": true,
+          "department": "VALLE DEL CAUCA",
+          "city": "CALI"
+        },
+        "current_owners_pre": [
+          "CVC"
+        ],
+        "baseline_outcome": "CORRECT_OWNER",
+        "baseline_live": {
+          "entity": "CVC",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": null,
+          "department": "Valle del Cauca",
+          "method": "generic_buyer_unqualified",
+          "clarification": null
+        },
+        "post_route": {
+          "entity": "CVC",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "post_scan": {
+          "owner": "CVC",
+          "matched_alias": "corporacion autonoma regional del valle del cauca",
+          "remaining_text": "-cvc",
+          "method": "scan_exact"
+        },
+        "post_outcome": "CORRECT_OWNER",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": false
+      },
+      {
+        "alias": "corporacion autonoma regional del valle del cauca",
+        "expected_secop_buyer": {
+          "code": "715749180",
+          "nit": "89099027",
+          "nit_base": "89099027",
+          "physical_name": "CORPORACIoN AUToNOMA REGIONAL DEL VALLE DEL CAUCA -CVC",
+          "active": true,
+          "department": "VALLE DEL CAUCA",
+          "city": "CALI"
+        },
+        "current_owners_pre": [
+          "CVC"
+        ],
+        "baseline_outcome": "CORRECT_OWNER",
+        "baseline_live": {
+          "entity": "CVC",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": null,
+          "department": "Valle del Cauca",
+          "method": "generic_buyer_unqualified",
+          "clarification": null
+        },
+        "post_route": {
+          "entity": "CVC",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "post_scan": {
+          "owner": "CVC",
+          "matched_alias": "corporacion autonoma regional del valle del cauca",
+          "remaining_text": "-cvc",
+          "method": "scan_exact"
+        },
+        "post_outcome": "CORRECT_OWNER",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": false
+      },
+      {
+        "alias": "corporacion quindio",
+        "expected_secop_buyer": {
+          "code": "720474246",
+          "nit": "901068969",
+          "nit_base": "901068969",
+          "physical_name": "CORPORACION QUINDIO CONVENTION BUREAU",
+          "active": true,
+          "department": "No Provisto",
+          "city": "No Provisto"
+        },
+        "current_owners_pre": [
+          "CORPORACION AUTONOMA REGIONAL DEL QUINDIO"
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "CORPORACION AUTONOMA REGIONAL DEL QUINDIO",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": null,
+          "department": "Quindío",
+          "method": "generic_buyer_unqualified",
+          "clarification": null
+        },
+        "post_route": {
+          "entity": null,
+          "department": "Quindío",
+          "method": "generic_buyer_unqualified",
+          "clarification": null
+        },
+        "post_scan": null,
+        "post_outcome": "FAIL_CLOSED",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": false
+      },
+      {
+        "alias": "dorada caldas",
+        "expected_secop_buyer": {
+          "code": "702730698",
+          "nit": "810006053",
+          "nit_base": "810006053",
+          "physical_name": "CARCEL Y PENITENCIARIA CON ALTA Y MEDIA SEGURIDAD DE LA DORADA CALDAS - INPEC",
+          "active": true,
+          "department": "No Provisto",
+          "city": "No Provisto"
+        },
+        "current_owners_pre": [
+          "MUNICIPIO LA DORADA"
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "MUNICIPIO LA DORADA",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": "MUNICIPIO LA DORADA",
+          "department": "Caldas",
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "post_route": {
+          "entity": "MUNICIPIO LA DORADA",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "post_scan": {
+          "owner": "MUNICIPIO LA DORADA",
+          "matched_alias": "la dorada caldas",
+          "remaining_text": "carcel y penitenciaria con alta y media seguridad de - inpec",
+          "method": "scan_exact"
+        },
+        "post_outcome": "WRONG_OWNER",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": true
+      },
+      {
+        "alias": "florencia caqueta",
+        "expected_secop_buyer": {
+          "code": "717883680",
+          "nit": "800045645",
+          "nit_base": "800045645",
+          "physical_name": "INSTITUCION EDUCATIVA RURAL EL SALITRE FLORENCIA - CAQUETA",
+          "active": true,
+          "department": "CAQUETa",
+          "city": "FLORENCIA"
+        },
+        "current_owners_pre": [
+          "MUNICIPIO DE FLORENCIA"
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "MUNICIPIO DE FLORENCIA",
+          "department": "Caquetá",
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": "MUNICIPIO DE FLORENCIA",
+          "department": "Caquetá",
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "post_route": {
+          "entity": "MUNICIPIO DE FLORENCIA",
+          "department": "Caquetá",
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "post_scan": {
+          "owner": "MUNICIPIO DE FLORENCIA",
+          "matched_alias": "florencia",
+          "remaining_text": "institucion educativa rural el salitre - caqueta",
+          "method": "scan_exact"
+        },
+        "post_outcome": "WRONG_OWNER",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": true
+      },
+      {
+        "alias": "francisco jose de caldas",
+        "expected_secop_buyer": {
+          "code": "718739600",
+          "nit": "901004821",
+          "nit_base": "901004821",
+          "physical_name": "CENTRO EDUCATIVO FRANCISCO JOSE DE CALDAS",
+          "active": true,
+          "department": "META",
+          "city": "GRANADA"
+        },
+        "current_owners_pre": [
+          "UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS"
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": null,
+          "department": "Caldas",
+          "method": null,
+          "clarification": null
+        },
+        "post_route": {
+          "entity": null,
+          "department": "Caldas",
+          "method": null,
+          "clarification": null
+        },
+        "post_scan": null,
+        "post_outcome": "FAIL_CLOSED",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": false
+      },
+      {
+        "alias": "galapa, atlantico",
+        "expected_secop_buyer": {
+          "code": "724819677",
+          "nit": "802011807",
+          "nit_base": "802011807",
+          "physical_name": "PERSONERIA MUNICIPAL DE GALAPA ATLANTICO",
+          "active": true,
+          "department": "ATLaNTICO",
+          "city": "GALAPA"
+        },
+        "current_owners_pre": [
+          "MUNICIPIO DE GALAPA."
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "MUNICIPIO DE GALAPA.",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": "MUNICIPIO DE GALAPA.",
+          "department": "Atlántico",
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "post_route": {
+          "entity": "MUNICIPIO DE GALAPA.",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "post_scan": {
+          "owner": "MUNICIPIO DE GALAPA.",
+          "matched_alias": "galapa atlantico",
+          "remaining_text": "personeria municipal de",
+          "method": "scan_exact"
+        },
+        "post_outcome": "WRONG_OWNER",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": true
+      },
+      {
+        "alias": "hospital de caldas",
+        "expected_secop_buyer": {
+          "code": "718891419",
+          "nit": "800155633",
+          "nit_base": "800155633",
+          "physical_name": "ESE HOSPITAL DE CALDAS",
+          "active": true,
+          "department": "CALDAS",
+          "city": "MANIZALES"
+        },
+        "current_owners_pre": [
+          "ESE HOSPITAL SAN VICENTE DE PAUL DE CALDAS"
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "EMPRESA SOCIAL DEL ESTADO HOSPITAL LOCAL",
+          "department": null,
+          "method": "rewrite_ese",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": "EMPRESA SOCIAL DEL ESTADO HOSPITAL LOCAL",
+          "department": null,
+          "method": "rewrite_ese",
+          "clarification": null
+        },
+        "post_route": {
+          "entity": "EMPRESA SOCIAL DEL ESTADO HOSPITAL LOCAL",
+          "department": null,
+          "method": "rewrite_ese",
+          "clarification": null
+        },
+        "post_scan": {
+          "owner": "ESE HOSPITAL SAN VICENTE DE PAUL DE CALDAS",
+          "matched_alias": "hospital de caldas",
+          "remaining_text": "ese",
+          "method": "scan_exact"
+        },
+        "post_outcome": "WRONG_OWNER",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": true
+      },
+      {
+        "alias": "hospital san andres",
+        "expected_secop_buyer": {
+          "code": "711903534",
+          "nit": "812001332",
+          "nit_base": "812001332",
+          "physical_name": "E.S.E.HOSPITAL SAN ANDRES APOSTOL DE SAN ANDRES DE SOTAVENTO",
+          "active": true,
+          "department": "CoRDOBA",
+          "city": "SAN ANDReS SOTAVENTO"
+        },
+        "current_owners_pre": [
+          "HOSPITAL SAN ANDRES"
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "HOSPITAL SAN ANDRES",
+          "department": null,
+          "method": "rewrite_(?:el",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": "HOSPITAL SAN ANDRES",
+          "department": null,
+          "method": "rewrite_(?:el",
+          "clarification": null
+        },
+        "post_route": {
+          "entity": "HOSPITAL SAN ANDRES",
+          "department": null,
+          "method": "rewrite_(?:el",
+          "clarification": null
+        },
+        "post_scan": null,
+        "post_outcome": "WRONG_OWNER",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": true
+      },
+      {
+        "alias": "hospital san vicente de arauca",
+        "expected_secop_buyer": {
+          "code": "704019769",
+          "nit": "800218978",
+          "nit_base": "800218978",
+          "physical_name": "HOSPITAL SAN VICENTE DE ARAUCA",
+          "active": true,
+          "department": "ARAUCA",
+          "city": "ARAUCA"
+        },
+        "current_owners_pre": [
+          "HOSPITAL SAN VICENTE DE ARAUCA ESE"
+        ],
+        "baseline_outcome": "CORRECT_OWNER",
+        "baseline_live": {
+          "entity": "HOSPITAL SAN VICENTE DE ARAUCA ESE",
+          "department": null,
+          "method": "rewrite_(?:el",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": "HOSPITAL SAN VICENTE DE ARAUCA ESE",
+          "department": null,
+          "method": "rewrite_(?:el",
+          "clarification": null
+        },
+        "post_route": {
+          "entity": "HOSPITAL SAN VICENTE DE ARAUCA ESE",
+          "department": null,
+          "method": "rewrite_(?:el",
+          "clarification": null
+        },
+        "post_scan": {
+          "owner": "HOSPITAL SAN VICENTE DE ARAUCA ESE",
+          "matched_alias": "hospital san vicente de arauca",
+          "remaining_text": "",
+          "method": "scan_exact"
+        },
+        "post_outcome": "CORRECT_OWNER",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": false
+      },
+      {
+        "alias": "hospital santander",
+        "expected_secop_buyer": {
+          "code": "704143098",
+          "nit": "891900356",
+          "nit_base": "891900356",
+          "physical_name": "HOSPITAL SANTANDER ESE",
+          "active": true,
+          "department": "VALLE DEL CAUCA",
+          "city": "CAICEDONIA"
+        },
+        "current_owners_pre": [
+          "E.S.E. HOSPITAL SANTANDER HERRERA"
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "E.S.E. HOSPITAL SANTANDER HERRERA",
+          "department": null,
+          "method": "rewrite_(?:el",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": "E.S.E. HOSPITAL SANTANDER HERRERA",
+          "department": null,
+          "method": "rewrite_(?:el",
+          "clarification": null
+        },
+        "post_route": {
+          "entity": "E.S.E. HOSPITAL SANTANDER HERRERA",
+          "department": null,
+          "method": "rewrite_(?:el",
+          "clarification": null
+        },
+        "post_scan": {
+          "owner": "E.S.E. HOSPITAL SANTANDER HERRERA",
+          "matched_alias": "hospital santander",
+          "remaining_text": "ese",
+          "method": "scan_exact"
+        },
+        "post_outcome": "WRONG_OWNER",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": true
+      },
+      {
+        "alias": "instituto colombiano de bienestar familiar regional bogota",
+        "expected_secop_buyer": {
+          "code": "732796016",
+          "nit": "899999009",
+          "nit_base": "899999009",
+          "physical_name": "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR  REGIONAL BOGOTa",
+          "active": true,
+          "department": "DISTRITO CAPITAL DE BOGOTa",
+          "city": "BOGOTa"
+        },
+        "current_owners_pre": [
+          "ICBF REGIONAL BOGOTA"
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "ICBF SEDE DIRECCIÓN GENERAL",
+          "department": "Distrito Capital de Bogotá",
+          "method": "multi_regional",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": "ICBF SEDE DIRECCIÓN GENERAL",
+          "department": "Distrito Capital de Bogotá",
+          "method": "multi_regional",
+          "clarification": null
+        },
+        "post_route": {
+          "entity": "ICBF SEDE DIRECCIÓN GENERAL",
+          "department": "Distrito Capital de Bogotá",
+          "method": "multi_regional",
+          "clarification": null
+        },
+        "post_scan": {
+          "owner": "ICBF SEDE NACIONAL",
+          "matched_alias": "instituto colombiano de bienestar familiar",
+          "remaining_text": " regional bogota",
+          "method": "scan_exact"
+        },
+        "post_outcome": "WRONG_OWNER",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": true
+      },
+      {
+        "alias": "jardin botanico de bogota",
+        "expected_secop_buyer": {
+          "code": "725422406",
+          "nit": "860197030",
+          "nit_base": "860197030",
+          "physical_name": "JARDIN BOTANICO DE BOGOTA",
+          "active": true,
+          "department": "DISTRITO CAPITAL DE BOGOTa",
+          "city": "BOGOTa"
+        },
+        "current_owners_pre": [
+          "Jardín Botánico José Celestino Mutis"
+        ],
+        "baseline_outcome": "CORRECT_OWNER",
+        "baseline_live": {
+          "entity": "Jardín Botánico José Celestino Mutis",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": "Jardín Botánico José Celestino Mutis",
+          "department": "Distrito Capital de Bogotá",
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "post_route": {
+          "entity": "Jardín Botánico José Celestino Mutis",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "post_scan": {
+          "owner": "Jardín Botánico José Celestino Mutis",
+          "matched_alias": "jardin botanico de bogota",
+          "remaining_text": "",
+          "method": "scan_exact"
+        },
+        "post_outcome": "CORRECT_OWNER",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": false
+      },
+      {
+        "alias": "la dorada caldas",
+        "expected_secop_buyer": {
+          "code": "702730698",
+          "nit": "810006053",
+          "nit_base": "810006053",
+          "physical_name": "CARCEL Y PENITENCIARIA CON ALTA Y MEDIA SEGURIDAD DE LA DORADA CALDAS - INPEC",
+          "active": true,
+          "department": "No Provisto",
+          "city": "No Provisto"
+        },
+        "current_owners_pre": [
+          "MUNICIPIO LA DORADA"
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "MUNICIPIO LA DORADA",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": "MUNICIPIO LA DORADA",
+          "department": "Caldas",
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "post_route": {
+          "entity": "MUNICIPIO LA DORADA",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "post_scan": {
+          "owner": "MUNICIPIO LA DORADA",
+          "matched_alias": "la dorada caldas",
+          "remaining_text": "carcel y penitenciaria con alta y media seguridad de - inpec",
+          "method": "scan_exact"
+        },
+        "post_outcome": "WRONG_OWNER",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": true
+      },
+      {
+        "alias": "neiva huila",
+        "expected_secop_buyer": {
+          "code": "718528896",
+          "nit": "891180264",
+          "nit_base": "891180264",
+          "physical_name": "INSTITUCION EDUCATIVA ESCUELA NORMAL SUPERIOR DE NEIVA -HUILA",
+          "active": true,
+          "department": "HUILA",
+          "city": "NEIVA"
+        },
+        "current_owners_pre": [
+          "MUNICIPIO DE NEIVA"
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "MUNICIPIO DE NEIVA",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": "MUNICIPIO DE NEIVA",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "post_route": {
+          "entity": "MUNICIPIO DE NEIVA",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "post_scan": {
+          "owner": "MUNICIPIO DE NEIVA",
+          "matched_alias": "neiva",
+          "remaining_text": "institucion educativa escuela normal superior de -huila",
+          "method": "scan_exact"
+        },
+        "post_outcome": "WRONG_OWNER",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": true
+      },
+      {
+        "alias": "pitalito huila",
+        "expected_secop_buyer": {
+          "code": "700562036",
+          "nit": "891180134",
+          "nit_base": "891180134",
+          "physical_name": "ESE HOSPITAL DEPARTAMENTAL SAN ANTONIO DE PITALITO HUILA",
+          "active": true,
+          "department": "HUILA",
+          "city": "PITALITO"
+        },
+        "current_owners_pre": [
+          "MUNICIPIO DE PITALITO"
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "HOSPITAL DEPARTAMENTAL SAN JUAN DE DIOS DE PUERTO CARREÑO1",
+          "department": null,
+          "method": "rewrite_ese",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": "HOSPITAL DEPARTAMENTAL SAN JUAN DE DIOS DE PUERTO CARREÑO1",
+          "department": null,
+          "method": "rewrite_ese",
+          "clarification": null
+        },
+        "post_route": {
+          "entity": "HOSPITAL DEPARTAMENTAL SAN JUAN DE DIOS DE PUERTO CARREÑO1",
+          "department": null,
+          "method": "rewrite_ese",
+          "clarification": null
+        },
+        "post_scan": {
+          "owner": "HOSPITAL DEPARTAMENTAL SAN JUAN DE DIOS DE PUERTO CARREÑO1",
+          "matched_alias": "hospital departamental",
+          "remaining_text": "ese san antonio de pitalito huila",
+          "method": "scan_exact"
+        },
+        "post_outcome": "WRONG_OWNER",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": true
+      },
+      {
+        "alias": "puerto boyaca",
+        "expected_secop_buyer": {
+          "code": "710552290",
+          "nit": "891800466",
+          "nit_base": "891800466",
+          "physical_name": "ALCALDIA MUNICIPAL DE PUERTO BOYACA - BOYACA",
+          "active": true,
+          "department": "BOYACa",
+          "city": "PUERTO BOYACa"
+        },
+        "current_owners_pre": [
+          "ALCALDIA MUNICIPAL DE PUERTO BOYACA"
+        ],
+        "baseline_outcome": "CORRECT_OWNER",
+        "baseline_live": {
+          "entity": "ALCALDIA MUNICIPAL DE PUERTO BOYACA",
+          "department": "Boyacá",
+          "method": "rewrite_alcald[ií]a",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": "ALCALDIA MUNICIPAL DE PUERTO BOYACA",
+          "department": "Boyacá",
+          "method": "rewrite_alcald[ií]a",
+          "clarification": null
+        },
+        "post_route": {
+          "entity": "ALCALDIA MUNICIPAL DE PUERTO BOYACA",
+          "department": "Boyacá",
+          "method": "rewrite_alcald[ií]a",
+          "clarification": null
+        },
+        "post_scan": {
+          "owner": "ALCALDIA MUNICIPAL DE PUERTO BOYACA",
+          "matched_alias": "alcaldia municipal de puerto boyaca",
+          "remaining_text": "- boyaca",
+          "method": "scan_exact"
+        },
+        "post_outcome": "CORRECT_OWNER",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": false
+      },
+      {
+        "alias": "puerto boyaca",
+        "expected_secop_buyer": {
+          "code": "730508496",
+          "nit": "8908011567",
+          "nit_base": "890801156",
+          "physical_name": "CaMARA DE COMERCIO DE LA DORADA, PUERTO BOYACa, PUERTO SALGAR Y ORIENTE DE CALDAS",
+          "active": true,
+          "department": "CALDAS",
+          "city": "LA DORADA"
+        },
+        "current_owners_pre": [
+          "ALCALDIA MUNICIPAL DE PUERTO BOYACA"
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "ALCALDIA MUNICIPAL DE PUERTO BOYACA",
+          "department": "Caldas",
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": "MUNICIPIO LA DORADA",
+          "department": "Caldas",
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "post_route": {
+          "entity": "MUNICIPIO LA DORADA",
+          "department": "Caldas",
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "post_scan": {
+          "owner": "MUNICIPIO LA DORADA",
+          "matched_alias": "la dorada",
+          "remaining_text": "camara de comercio de , puerto boyaca, puerto salgar y oriente de caldas",
+          "method": "scan_exact"
+        },
+        "post_outcome": "WRONG_OWNER",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": true
+      },
+      {
+        "alias": "puerto boyaca",
+        "expected_secop_buyer": {
+          "code": "719893216",
+          "nit": "820000370",
+          "nit_base": "82000037",
+          "physical_name": "CONCEJO MUNICIPAL DE PUERTO BOYACA",
+          "active": true,
+          "department": "BOYACa",
+          "city": "PUERTO BOYACa"
+        },
+        "current_owners_pre": [
+          "ALCALDIA MUNICIPAL DE PUERTO BOYACA"
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "ALCALDIA MUNICIPAL DE PUERTO BOYACA",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": null,
+          "department": "Boyacá",
+          "method": null,
+          "clarification": null
+        },
+        "post_route": {
+          "entity": null,
+          "department": "Boyacá",
+          "method": null,
+          "clarification": null
+        },
+        "post_scan": null,
+        "post_outcome": "FAIL_CLOSED",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": false
+      },
+      {
+        "alias": "puerto boyaca",
+        "expected_secop_buyer": {
+          "code": "700567035",
+          "nit": "891800570",
+          "nit_base": "891800570",
+          "physical_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL JOSE CAYETANO VASQUEZ DE PUERTO BOYACA",
+          "active": true,
+          "department": "BOYACa",
+          "city": "PUERTO BOYACa"
+        },
+        "current_owners_pre": [
+          "ALCALDIA MUNICIPAL DE PUERTO BOYACA"
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "ALCALDIA MUNICIPAL DE PUERTO BOYACA",
+          "department": null,
+          "method": "rewrite_(?:el",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": "ALCALDIA MUNICIPAL DE PUERTO BOYACA",
+          "department": null,
+          "method": "rewrite_(?:el",
+          "clarification": null
+        },
+        "post_route": {
+          "entity": "ALCALDIA MUNICIPAL DE PUERTO BOYACA",
+          "department": null,
+          "method": "rewrite_(?:el",
+          "clarification": null
+        },
+        "post_scan": null,
+        "post_outcome": "WRONG_OWNER",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": true
+      },
+      {
+        "alias": "puerto boyaca",
+        "expected_secop_buyer": {
+          "code": "718375983",
+          "nit": "8200014059",
+          "nit_base": "820001405",
+          "physical_name": "EMPRESAS PUBLICAS DE PUERTO BOYACA",
+          "active": true,
+          "department": "BOYACa",
+          "city": "PUERTO BOYACa"
+        },
+        "current_owners_pre": [
+          "ALCALDIA MUNICIPAL DE PUERTO BOYACA"
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "ALCALDIA MUNICIPAL DE PUERTO BOYACA",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": null,
+          "department": "Boyacá",
+          "method": "generic_buyer_unqualified",
+          "clarification": null
+        },
+        "post_route": {
+          "entity": null,
+          "department": "Boyacá",
+          "method": "generic_buyer_unqualified",
+          "clarification": null
+        },
+        "post_scan": {
+          "owner": "EMPRESAS PUBLICAS DE MEDELLIN E.S.P.",
+          "matched_alias": "empresas publicas",
+          "remaining_text": "de puerto boyaca",
+          "method": "scan_exact"
+        },
+        "post_outcome": "FAIL_CLOSED",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": false
+      },
+      {
+        "alias": "puerto boyaca",
+        "expected_secop_buyer": {
+          "code": "700588098",
+          "nit": "820000992",
+          "nit_base": "820000992",
+          "physical_name": "ESTABLECIMIENTO PENITENCIARIO DE MEDIANA SEGURIDAD Y CARCELARIO DE PUERTO BOYACa",
+          "active": true,
+          "department": "No Provisto",
+          "city": "No Provisto"
+        },
+        "current_owners_pre": [
+          "ALCALDIA MUNICIPAL DE PUERTO BOYACA"
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "ALCALDIA MUNICIPAL DE PUERTO BOYACA",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": null,
+          "department": "Boyacá",
+          "method": null,
+          "clarification": null
+        },
+        "post_route": {
+          "entity": null,
+          "department": "Boyacá",
+          "method": null,
+          "clarification": null
+        },
+        "post_scan": null,
+        "post_outcome": "FAIL_CLOSED",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": false
+      },
+      {
+        "alias": "puerto boyaca",
+        "expected_secop_buyer": {
+          "code": "702293143",
+          "nit": "820000484",
+          "nit_base": "820000484",
+          "physical_name": "INSTITUTO MUNICIPAL DE DEPORTE Y RECREACION DE PUERTO BOYACA",
+          "active": true,
+          "department": "No Provisto",
+          "city": "No Provisto"
+        },
+        "current_owners_pre": [
+          "ALCALDIA MUNICIPAL DE PUERTO BOYACA"
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "ALCALDIA MUNICIPAL DE PUERTO BOYACA",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": null,
+          "department": "Boyacá",
+          "method": null,
+          "clarification": null
+        },
+        "post_route": {
+          "entity": null,
+          "department": "Boyacá",
+          "method": null,
+          "clarification": null
+        },
+        "post_scan": null,
+        "post_outcome": "FAIL_CLOSED",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": false
+      },
+      {
+        "alias": "puerto boyaca",
+        "expected_secop_buyer": {
+          "code": "721008191",
+          "nit": "800255019",
+          "nit_base": "800255019",
+          "physical_name": "PERSONERiA MUNICIPAL DE PUERTO BOYACa",
+          "active": true,
+          "department": "BOYACa",
+          "city": "PUERTO BOYACa"
+        },
+        "current_owners_pre": [
+          "ALCALDIA MUNICIPAL DE PUERTO BOYACA"
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "ALCALDIA MUNICIPAL DE PUERTO BOYACA",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": null,
+          "department": "Boyacá",
+          "method": null,
+          "clarification": null
+        },
+        "post_route": {
+          "entity": null,
+          "department": "Boyacá",
+          "method": null,
+          "clarification": null
+        },
+        "post_scan": null,
+        "post_outcome": "FAIL_CLOSED",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": false
+      },
+      {
+        "alias": "puerto boyaca",
+        "expected_secop_buyer": {
+          "code": "724860960",
+          "nit": "899999034",
+          "nit_base": "899999034",
+          "physical_name": "SENA PUERTO BOYACA",
+          "active": true,
+          "department": "BOYACa",
+          "city": "BOYACa"
+        },
+        "current_owners_pre": [
+          "ALCALDIA MUNICIPAL DE PUERTO BOYACA"
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "ALCALDIA MUNICIPAL DE PUERTO BOYACA",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": "SENA REGIONAL BOYACÁ",
+          "department": "Boyacá",
+          "method": "multi_regional",
+          "clarification": null
+        },
+        "post_route": {
+          "entity": "SENA REGIONAL BOYACÁ",
+          "department": "Boyacá",
+          "method": "multi_regional",
+          "clarification": null
+        },
+        "post_scan": {
+          "owner": "SENA SECRETARIA GENERAL",
+          "matched_alias": "sena",
+          "remaining_text": "puerto boyaca",
+          "method": "scan_exact"
+        },
+        "post_outcome": "WRONG_OWNER",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": true
+      },
+      {
+        "alias": "salud arauca",
+        "expected_secop_buyer": {
+          "code": "702767732",
+          "nit": "9008012094",
+          "nit_base": "900801209",
+          "physical_name": "UNIDAD PRESTADORA DE SALUD ARAUCA",
+          "active": true,
+          "department": "ARAUCA",
+          "city": "ARAUCA"
+        },
+        "current_owners_pre": [
+          "UNIDAD ADMINISTRATIVA ESPECIAL DE SALUD DE ARAUCA"
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "UNIDAD ADMINISTRATIVA ESPECIAL DE SALUD DE ARAUCA",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": null,
+          "department": "Arauca",
+          "method": null,
+          "clarification": null
+        },
+        "post_route": {
+          "entity": null,
+          "department": "Arauca",
+          "method": null,
+          "clarification": null
+        },
+        "post_scan": null,
+        "post_outcome": "FAIL_CLOSED",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": false
+      },
+      {
+        "alias": "salud de arauca",
+        "expected_secop_buyer": {
+          "code": "714624830",
+          "nit": "900036089",
+          "nit_base": "90003608",
+          "physical_name": "UNIDAD ADMINISTRATIVA ES PECIAL DE SALUD DE ARAUCA",
+          "active": true,
+          "department": "ARAUCA",
+          "city": "ARAUCA"
+        },
+        "current_owners_pre": [
+          "UNIDAD ADMINISTRATIVA ESPECIAL DE SALUD DE ARAUCA"
+        ],
+        "baseline_outcome": "CORRECT_OWNER",
+        "baseline_live": {
+          "entity": "UNIDAD ADMINISTRATIVA ESPECIAL DE SALUD DE ARAUCA",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": null,
+          "department": "Arauca",
+          "method": null,
+          "clarification": null
+        },
+        "post_route": {
+          "entity": "UNIDAD ADMINISTRATIVA ESPECIAL DE SALUD DE ARAUCA",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "post_scan": {
+          "owner": "UNIDAD ADMINISTRATIVA ESPECIAL DE SALUD DE ARAUCA",
+          "matched_alias": "salud de arauca",
+          "remaining_text": "unidad administrativa es pecial de",
+          "method": "scan_exact"
+        },
+        "post_outcome": "CORRECT_OWNER",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": false
+      },
+      {
+        "alias": "salud narino",
+        "expected_secop_buyer": {
+          "code": "702743162",
+          "nit": "900807338",
+          "nit_base": "900807338",
+          "physical_name": "UNIDAD PRESTADORA DE SALUD NARIÑO",
+          "active": true,
+          "department": "NARIÑO",
+          "city": "No Provisto"
+        },
+        "current_owners_pre": [
+          "INSTITUTO DEPARTAMENTAL DE SALUD DE NARIÑO"
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "INSTITUTO DEPARTAMENTAL DE SALUD DE NARIÑO",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": null,
+          "department": "Nariño",
+          "method": null,
+          "clarification": null
+        },
+        "post_route": {
+          "entity": null,
+          "department": "Nariño",
+          "method": null,
+          "clarification": null
+        },
+        "post_scan": null,
+        "post_outcome": "FAIL_CLOSED",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": false
+      },
+      {
+        "alias": "san jose de cucuta",
+        "expected_secop_buyer": {
+          "code": "720086370",
+          "nit": "1010082267",
+          "nit_base": "1010082267",
+          "physical_name": "ALCALDiA DE SAN JOSe DE CuCUTA",
+          "active": true,
+          "department": "NORTE DE SANTANDER",
+          "city": "CuCUTA"
+        },
+        "current_owners_pre": [
+          "MUNICIPIO DE SAN JOSE DE CUCUTA"
+        ],
+        "baseline_outcome": "CORRECT_OWNER",
+        "baseline_live": {
+          "entity": "MUNICIPIO DE SAN JOSE DE CUCUTA",
+          "department": null,
+          "method": "rewrite_alcald[ií]a",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": "MUNICIPIO DE SAN JOSE DE CUCUTA",
+          "department": null,
+          "method": "rewrite_alcald[ií]a",
+          "clarification": null
+        },
+        "post_route": {
+          "entity": "MUNICIPIO DE SAN JOSE DE CUCUTA",
+          "department": null,
+          "method": "rewrite_alcald[ií]a",
+          "clarification": null
+        },
+        "post_scan": {
+          "owner": "MUNICIPIO DE SAN JOSE DE CUCUTA",
+          "matched_alias": "alcaldia de san jose de cucuta",
+          "remaining_text": "",
+          "method": "scan_exact"
+        },
+        "post_outcome": "CORRECT_OWNER",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": false
+      },
+      {
+        "alias": "sena de sucre",
+        "expected_secop_buyer": {
+          "code": "701365371",
+          "nit": "823000281",
+          "nit_base": "82300028",
+          "physical_name": "ESE HOSPITAL SANTA CATALINA DE SENA DE SUCRE",
+          "active": true,
+          "department": "No Provisto",
+          "city": "No Provisto"
+        },
+        "current_owners_pre": [
+          "SENA REGIONAL SUCRE"
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "SENA REGIONAL SUCRE",
+          "department": null,
+          "method": "rewrite_ese",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": "SENA REGIONAL SUCRE",
+          "department": null,
+          "method": "rewrite_ese",
+          "clarification": null
+        },
+        "post_route": {
+          "entity": "SENA REGIONAL SUCRE",
+          "department": null,
+          "method": "rewrite_ese",
+          "clarification": null
+        },
+        "post_scan": {
+          "owner": "SENA REGIONAL SUCRE",
+          "matched_alias": "sena de sucre",
+          "remaining_text": "ese hospital santa catalina de",
+          "method": "scan_exact"
+        },
+        "post_outcome": "WRONG_OWNER",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": true
+      },
+      {
+        "alias": "sena valle",
+        "expected_secop_buyer": {
+          "code": "706347192",
+          "nit": "89999903",
+          "nit_base": "8999990",
+          "physical_name": "SERVICIO NACIONAL DE APRENDIZAJE SENA-VALLE DEL CAUCA",
+          "active": true,
+          "department": "No Provisto",
+          "city": "No Provisto"
+        },
+        "current_owners_pre": [
+          "SENA REGIONAL VALLE Grupo de Apoyo Administrativo Mixto"
+        ],
+        "baseline_outcome": "FAIL_CLOSED",
+        "baseline_live": {
+          "entity": null,
+          "department": "Cauca",
+          "method": null,
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": null,
+          "department": "Cauca",
+          "method": null,
+          "clarification": null
+        },
+        "post_route": {
+          "entity": null,
+          "department": "Cauca",
+          "method": null,
+          "clarification": null
+        },
+        "post_scan": {
+          "owner": "SENA REGIONAL SANTANDER Grupo de Apoyo Administrativo Mixto",
+          "matched_alias": "servicio nacional de aprendizaje",
+          "remaining_text": "sena-valle del cauca",
+          "method": "scan_exact"
+        },
+        "post_outcome": "FAIL_CLOSED",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": false
+      },
+      {
+        "alias": "sena valle del cauca",
+        "expected_secop_buyer": {
+          "code": "706347192",
+          "nit": "89999903",
+          "nit_base": "8999990",
+          "physical_name": "SERVICIO NACIONAL DE APRENDIZAJE SENA-VALLE DEL CAUCA",
+          "active": true,
+          "department": "No Provisto",
+          "city": "No Provisto"
+        },
+        "current_owners_pre": [
+          "SENA REGIONAL VALLE Grupo de Apoyo Administrativo Mixto"
+        ],
+        "baseline_outcome": "FAIL_CLOSED",
+        "baseline_live": {
+          "entity": null,
+          "department": "Cauca",
+          "method": null,
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": null,
+          "department": "Cauca",
+          "method": null,
+          "clarification": null
+        },
+        "post_route": {
+          "entity": null,
+          "department": "Cauca",
+          "method": null,
+          "clarification": null
+        },
+        "post_scan": {
+          "owner": "SENA REGIONAL SANTANDER Grupo de Apoyo Administrativo Mixto",
+          "matched_alias": "servicio nacional de aprendizaje",
+          "remaining_text": "sena-valle del cauca",
+          "method": "scan_exact"
+        },
+        "post_outcome": "FAIL_CLOSED",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": false
+      },
+      {
+        "alias": "soledad atlantico",
+        "expected_secop_buyer": {
+          "code": "712463280",
+          "nit": "8001997416",
+          "nit_base": "800199741",
+          "physical_name": "CONTRALORIA MUNICIPAL DE SOLEDAD - ATLaNTICO",
+          "active": true,
+          "department": "ATLaNTICO",
+          "city": "BARRANQUILLA"
+        },
+        "current_owners_pre": [
+          "MUNICIPIO DE SOLEDAD"
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "CGR-NIVEL CENTRAL",
+          "department": "Atlántico",
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": "CGR-NIVEL CENTRAL",
+          "department": "Atlántico",
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "post_route": {
+          "entity": "CGR-NIVEL CENTRAL",
+          "department": "Atlántico",
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "post_scan": {
+          "owner": "CGR-NIVEL CENTRAL",
+          "matched_alias": "contraloria",
+          "remaining_text": "municipal de soledad - atlantico",
+          "method": "scan_exact"
+        },
+        "post_outcome": "WRONG_OWNER",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": true
+      },
+      {
+        "alias": "soledad atlantico",
+        "expected_secop_buyer": {
+          "code": "707363891",
+          "nit": "802003453",
+          "nit_base": "802003453",
+          "physical_name": "INSTITUCION EDUCATIVA POLICARPA SALAVARRIETA SOLEDAD ATLANTICO",
+          "active": true,
+          "department": "No Provisto",
+          "city": "No Provisto"
+        },
+        "current_owners_pre": [
+          "MUNICIPIO DE SOLEDAD"
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "MUNICIPIO DE SOLEDAD",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": null,
+          "department": "Atlántico",
+          "method": null,
+          "clarification": null
+        },
+        "post_route": {
+          "entity": null,
+          "department": "Atlántico",
+          "method": null,
+          "clarification": null
+        },
+        "post_scan": null,
+        "post_outcome": "FAIL_CLOSED",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": false
+      },
+      {
+        "alias": "turbaco bolivar",
+        "expected_secop_buyer": {
+          "code": "702768342",
+          "nit": "890481149",
+          "nit_base": "890481149",
+          "physical_name": "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR",
+          "active": true,
+          "department": "BOLiVAR",
+          "city": "TURBACO"
+        },
+        "current_owners_pre": [
+          "ALCALDIA DE TURBACO BOLIVAR"
+        ],
+        "baseline_outcome": "CORRECT_OWNER",
+        "baseline_live": {
+          "entity": "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR",
+          "department": null,
+          "method": "rewrite_alcald[ií]a",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR",
+          "department": null,
+          "method": "rewrite_alcald[ií]a",
+          "clarification": null
+        },
+        "post_route": {
+          "entity": "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR",
+          "department": null,
+          "method": "rewrite_alcald[ií]a",
+          "clarification": null
+        },
+        "post_scan": {
+          "owner": "ALCALDIA DE TURBACO BOLIVAR",
+          "matched_alias": "alcaldia municipal de turbaco bolivar",
+          "remaining_text": "",
+          "method": "scan_exact"
+        },
+        "post_outcome": "CORRECT_OWNER",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": false
+      },
+      {
+        "alias": "universidad del atlantico",
+        "expected_secop_buyer": {
+          "code": "718600463",
+          "nit": "890102257",
+          "nit_base": "89010225",
+          "physical_name": "UNIVERSIDAD DEL ATLaNTICO",
+          "active": true,
+          "department": "ATLaNTICO",
+          "city": "PUERTO COLOMBIA"
+        },
+        "current_owners_pre": [
+          "UNIATLANTICO"
+        ],
+        "baseline_outcome": "CORRECT_OWNER",
+        "baseline_live": {
+          "entity": "UNIATLANTICO",
+          "department": null,
+          "method": "rewrite_(?:la",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": "UNIATLANTICO",
+          "department": null,
+          "method": "rewrite_(?:la",
+          "clarification": null
+        },
+        "post_route": {
+          "entity": "UNIATLANTICO",
+          "department": null,
+          "method": "rewrite_(?:la",
+          "clarification": null
+        },
+        "post_scan": {
+          "owner": "UNIATLANTICO",
+          "matched_alias": "universidad del atlantico",
+          "remaining_text": "",
+          "method": "scan_exact"
+        },
+        "post_outcome": "CORRECT_OWNER",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": false
+      },
+      {
+        "alias": "universidad del quindio",
+        "expected_secop_buyer": {
+          "code": "733257331",
+          "nit": "1007376350",
+          "nit_base": "1007376350",
+          "physical_name": "UNIVERSIDAD DEL QUINDIO",
+          "active": true,
+          "department": "RISARALDA",
+          "city": "PEREIRA"
+        },
+        "current_owners_pre": [
+          "UNIQUINDIO"
+        ],
+        "baseline_outcome": "CORRECT_OWNER",
+        "baseline_live": {
+          "entity": "UNIQUINDIO",
+          "department": null,
+          "method": "rewrite_(?:la",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": "UNIQUINDIO",
+          "department": null,
+          "method": "rewrite_(?:la",
+          "clarification": null
+        },
+        "post_route": {
+          "entity": "UNIQUINDIO",
+          "department": null,
+          "method": "rewrite_(?:la",
+          "clarification": null
+        },
+        "post_scan": {
+          "owner": "UNIQUINDIO",
+          "matched_alias": "universidad del quindio",
+          "remaining_text": "",
+          "method": "scan_exact"
+        },
+        "post_outcome": "CORRECT_OWNER",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": false
+      },
+      {
+        "alias": "universidad del valle",
+        "expected_secop_buyer": {
+          "code": "702950254",
+          "nit": "800187151",
+          "nit_base": "800187151",
+          "physical_name": "FUNDACION UNIVERSIDAD DEL VALLE",
+          "active": true,
+          "department": "VALLE DEL CAUCA",
+          "city": "CALI"
+        },
+        "current_owners_pre": [
+          "UNIVERSIDAD DEL VALLE"
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "UNIVERSIDAD DEL VALLE",
+          "department": null,
+          "method": "rewrite_(?:la",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": "UNIVERSIDAD DEL VALLE",
+          "department": null,
+          "method": "rewrite_(?:la",
+          "clarification": null
+        },
+        "post_route": {
+          "entity": "UNIVERSIDAD DEL VALLE",
+          "department": null,
+          "method": "rewrite_(?:la",
+          "clarification": null
+        },
+        "post_scan": {
+          "owner": "UNIVERSIDAD DEL VALLE",
+          "matched_alias": "universidad del valle",
+          "remaining_text": "fundacion",
+          "method": "scan_exact"
+        },
+        "post_outcome": "WRONG_OWNER",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": true
+      },
+      {
+        "alias": "universidad francisco de paula santander",
+        "expected_secop_buyer": {
+          "code": "718488075",
+          "nit": "8001631300",
+          "nit_base": "800163130",
+          "physical_name": "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)",
+          "active": true,
+          "department": "NORTE DE SANTANDER",
+          "city": "OCAÑA"
+        },
+        "current_owners_pre": [
+          "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER"
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER",
+          "department": null,
+          "method": "rewrite_(?:la",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER",
+          "department": null,
+          "method": "rewrite_(?:la",
+          "clarification": null
+        },
+        "post_route": {
+          "entity": "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER",
+          "department": null,
+          "method": "rewrite_(?:la",
+          "clarification": null
+        },
+        "post_scan": {
+          "owner": "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER",
+          "matched_alias": "universidad francisco de paula santander",
+          "remaining_text": "seccional ocana (entidad)",
+          "method": "scan_exact"
+        },
+        "post_outcome": "WRONG_OWNER",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": true
+      },
+      {
+        "alias": "santa marta magdalena",
+        "expected_secop_buyer": {
+          "code": "724398862",
+          "nit": "891701694",
+          "nit_base": "891701694",
+          "physical_name": "CENTRAL DE TRANSPORTE DE SANTA MARTA LTDA.",
+          "active": true,
+          "department": "MAGDALENA",
+          "city": "SANTA MARTA"
+        },
+        "current_owners_pre": [
+          "ALCALDÍA DISTRITAL DE SANTA MARTA"
+        ],
+        "baseline_outcome": "WRONG_OWNER",
+        "baseline_live": {
+          "entity": "ALCALDÍA DISTRITAL DE SANTA MARTA",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "baseline_old": {
+          "entity": null,
+          "department": "Magdalena",
+          "method": null,
+          "clarification": null
+        },
+        "post_route": {
+          "entity": "CENTRAL DE TRANSPORTE DE SANTA MARTA LTDA.",
+          "department": "Magdalena",
+          "method": "scan_exact",
+          "clarification": null
+        },
+        "post_scan": {
+          "owner": "CENTRAL DE TRANSPORTE DE SANTA MARTA LTDA.",
+          "matched_alias": "terminal de transportes de santa marta",
+          "remaining_text": "magdalena",
+          "method": "scan_exact"
+        },
+        "post_outcome": "CORRECT_OWNER",
+        "new_wrong_owner_from_freed_alias": false,
+        "preexisting_wrong_owner": false
+      }
+    ]
+  },
+  "d6_good_cases": {
+    "sena_icbf": {
+      "count": 8,
+      "fail_closed": 0,
+      "records": [
+        {
+          "query": "SENA regional Cundinamarca",
+          "entity": "SENA REGIONAL CUNDINAMARCA Grupo de Apoyo Administrativo Mixto+",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        {
+          "query": "SENA Antioquia",
+          "entity": "SENA REGIONAL ANTIOQUIA Grupo de Apoyo Administrativo Mixto",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        {
+          "query": "SENA Santander",
+          "entity": "SENA REGIONAL SANTANDER Grupo de Apoyo Administrativo Mixto",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        {
+          "query": "ICBF Córdoba",
+          "entity": "ICBF REGIONAL CORDOBA",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        {
+          "query": "ICBF Magdalena",
+          "entity": "ICBF REGIONAL MAGDALENA",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        {
+          "query": "ICBF Caldas",
+          "entity": "ICBF REGIONAL CALDAS",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        {
+          "query": "ICBF Cesar",
+          "entity": "ICBF REGIONAL CESAR",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        },
+        {
+          "query": "ICBF Norte de Santander",
+          "entity": "ICBF REGIONAL NORTE DE SANTANDER",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null
+        }
+      ]
+    },
+    "car": {
+      "count": 33,
+      "correct": 33,
+      "records": [
+        {
+          "acronym": "CAM",
+          "query": "Corporación Autónoma Regional del Alto Magdalena",
+          "expected_physical_names": [
+            "CORPORACION AUTONOMA REGIONAL DEL ALTO MAGDALENA"
+          ],
+          "entity": "CORPORACION AUTONOMA REGIONAL DEL ALTO MAGDALENA",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        },
+        {
+          "acronym": "CAR",
+          "query": "Corporación Autónoma Regional de Cundinamarca",
+          "expected_physical_names": [
+            "CORPORACION AUTONOMA REGIONAL DE CUNDINAMARCA - CAR."
+          ],
+          "entity": "CORPORACION AUTONOMA REGIONAL DE CUNDINAMARCA - CAR.",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        },
+        {
+          "acronym": "CARDER",
+          "query": "Corporación Autónoma Regional de Risaralda",
+          "expected_physical_names": [
+            "CORPORACION AUTONOMA REGIONAL DE RISARALDA"
+          ],
+          "entity": "CORPORACION AUTONOMA REGIONAL DE RISARALDA",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        },
+        {
+          "acronym": "CARDIQUE",
+          "query": "Corporación Autónoma Regional del Canal del Dique",
+          "expected_physical_names": [
+            "CORPORACIÓN AUTÓNOMA REGIONAL DEL CANAL DEL DIQUE"
+          ],
+          "entity": "CORPORACIÓN AUTÓNOMA REGIONAL DEL CANAL DEL DIQUE",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        },
+        {
+          "acronym": "CARSUCRE",
+          "query": "Corporación Autónoma Regional de Sucre",
+          "expected_physical_names": [
+            "CORPORACION AUTONOMA REGIONAL DE SUCRE"
+          ],
+          "entity": "CORPORACION AUTONOMA REGIONAL DE SUCRE",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        },
+        {
+          "acronym": "CAS",
+          "query": "Corporación Autónoma Regional de Santander",
+          "expected_physical_names": [
+            "CORPORACION AUTONOMA REGIONAL DE SANTANDER+"
+          ],
+          "entity": "CORPORACION AUTONOMA REGIONAL DE SANTANDER+",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        },
+        {
+          "acronym": "CDA",
+          "query": "Corporación para el Desarrollo Sostenible del Norte y Oriente Amazónico",
+          "expected_physical_names": [
+            "CORPORACION PARA EL DESARROLLO SOSTENIBLE DEL NORTE Y DEL ORIENTE AMAZONICO"
+          ],
+          "entity": "CORPORACION PARA EL DESARROLLO SOSTENIBLE DEL NORTE Y DEL ORIENTE AMAZONICO",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        },
+        {
+          "acronym": "CDMB",
+          "query": "Corporación Autónoma Regional para la Defensa de la Meseta de Bucaramanga",
+          "expected_physical_names": [
+            "CORPORACIÓN AUTÓNOMA REGIONAL PARA LA DEFENSA DE LA MESETA DE BUCARAMANGA"
+          ],
+          "entity": "CORPORACIÓN AUTÓNOMA REGIONAL PARA LA DEFENSA DE LA MESETA DE BUCARAMANGA",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        },
+        {
+          "acronym": "CODECHOCÓ",
+          "query": "Corporación Autónoma Regional para el Desarrollo Sostenible del Chocó",
+          "expected_physical_names": [
+            "CORPORACIÓN AUTÓNOMA REGIONAL PARA EL DESARROLLO SOSTENIBLE DEL CHOCO"
+          ],
+          "entity": "CORPORACIÓN AUTÓNOMA REGIONAL PARA EL DESARROLLO SOSTENIBLE DEL CHOCO",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        },
+        {
+          "acronym": "CORALINA",
+          "query": "Corporación para el Desarrollo Sostenible del Archipiélago de San Andrés, Providencia y Santa Catalina",
+          "expected_physical_names": [
+            "CORPORACION PARA EL DESARROLLO SOSTENIBLE DEL ARCHIPIELAGO DE SAN ANDRES PROVIDENCIA Y SANTA CATALINA - CORALINA"
+          ],
+          "entity": "CORPORACION PARA EL DESARROLLO SOSTENIBLE DEL ARCHIPIELAGO DE SAN ANDRES PROVIDENCIA Y SANTA CATALINA - CORALINA",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        },
+        {
+          "acronym": "CORANTIOQUIA",
+          "query": "Corporación Autónoma Regional del Centro de Antioquia",
+          "expected_physical_names": [
+            "CORPORACIÓN AUTÓNOMA REGIONAL DEL CENTRO DE ANTIOQUIA"
+          ],
+          "entity": "CORPORACIÓN AUTÓNOMA REGIONAL DEL CENTRO DE ANTIOQUIA",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        },
+        {
+          "acronym": "CORMACARENA",
+          "query": "Corporación para el Desarrollo Sostenible del Área de Manejo Especial La Macarena",
+          "expected_physical_names": [
+            "CORMACARENA"
+          ],
+          "entity": "CORMACARENA",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        },
+        {
+          "acronym": "CORNARE",
+          "query": "Corporación Autónoma Regional de las Cuencas de los Ríos Negro y Nare",
+          "expected_physical_names": [
+            "CORPORACION AUTONOMA REGIONAL DE LAS CUENCAS DE LOS RIOS NEGRO - NARE"
+          ],
+          "entity": "CORPORACION AUTONOMA REGIONAL DE LAS CUENCAS DE LOS RIOS NEGRO - NARE",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        },
+        {
+          "acronym": "CORPAMAG",
+          "query": "Corporación Autónoma Regional del Magdalena",
+          "expected_physical_names": [
+            "CORPORACION AUTONOMA REGIONAL DEL MAGDALENA"
+          ],
+          "entity": "CORPORACION AUTONOMA REGIONAL DEL MAGDALENA",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        },
+        {
+          "acronym": "CORPOAMAZONIA",
+          "query": "Corporación para el Desarrollo Sostenible del Sur de la Amazonia",
+          "expected_physical_names": [
+            "CORPOAMAZONIA - CORPORACIÓN PARA EL DESARROLLO SOSTENIBLE DEL SUR DE LA AMAZONIA1"
+          ],
+          "entity": "CORPOAMAZONIA - CORPORACIÓN PARA EL DESARROLLO SOSTENIBLE DEL SUR DE LA AMAZONIA1",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        },
+        {
+          "acronym": "CORPOBOYACÁ",
+          "query": "Corporación Autónoma Regional de Boyacá",
+          "expected_physical_names": [
+            "CORPOBOYACA"
+          ],
+          "entity": "CORPOBOYACA",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        },
+        {
+          "acronym": "CORPOCALDAS",
+          "query": "Corporación Autónoma Regional de Caldas",
+          "expected_physical_names": [
+            "CORPOCALDAS."
+          ],
+          "entity": "CORPOCALDAS.",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        },
+        {
+          "acronym": "CORPOCESAR",
+          "query": "Corporación Autónoma Regional del Cesar",
+          "expected_physical_names": [
+            "CORPOCESAR"
+          ],
+          "entity": "CORPOCESAR",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        },
+        {
+          "acronym": "CORPOCHIVOR",
+          "query": "Corporación Autónoma Regional de Chivor",
+          "expected_physical_names": [
+            "CORPORACIÓN AUTONOMA REGIONAL DE CHIVOR CORPOCHIVOR"
+          ],
+          "entity": "CORPORACIÓN AUTONOMA REGIONAL DE CHIVOR CORPOCHIVOR",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        },
+        {
+          "acronym": "CORPOGUAJIRA",
+          "query": "Corporación Autónoma Regional de La Guajira",
+          "expected_physical_names": [
+            "CORPORACION AUTONOMA REGIONAL DE LA GUAJIRA"
+          ],
+          "entity": "CORPORACION AUTONOMA REGIONAL DE LA GUAJIRA",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        },
+        {
+          "acronym": "CORPOGUAVIO",
+          "query": "Corporación Autónoma Regional del Guavio",
+          "expected_physical_names": [
+            "CORPORACION AUTONOMA REGIONAL DEL GUAVIO - CORPOGUAVIO (OFICIAL)"
+          ],
+          "entity": "CORPORACION AUTONOMA REGIONAL DEL GUAVIO - CORPOGUAVIO (OFICIAL)",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        },
+        {
+          "acronym": "CORPOMOJANA",
+          "query": "Corporación para el Desarrollo Sostenible de La Mojana y el San Jorge",
+          "expected_physical_names": [
+            "CORPORACION PARA EL DESARROLLO SOSTENIBLE DE LA MOJANA Y EL SAN JORGE CORPOMOJANA"
+          ],
+          "entity": "CORPORACION PARA EL DESARROLLO SOSTENIBLE DE LA MOJANA Y EL SAN JORGE CORPOMOJANA",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        },
+        {
+          "acronym": "CORPONARIÑO",
+          "query": "Corporación Autónoma Regional de Nariño",
+          "expected_physical_names": [
+            "CORPORACION AUTONOMA REGIONAL DE NARIÑO"
+          ],
+          "entity": "CORPORACION AUTONOMA REGIONAL DE NARIÑO",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        },
+        {
+          "acronym": "CORPONOR",
+          "query": "Corporación Autónoma Regional de la Frontera Nororiental",
+          "expected_physical_names": [
+            "CORPORACION AUTONOMA REGIONAL DE LA FRONTERA NORORIENTAL+"
+          ],
+          "entity": "CORPORACION AUTONOMA REGIONAL DE LA FRONTERA NORORIENTAL+",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        },
+        {
+          "acronym": "CORPORINOQUIA",
+          "query": "Corporación Autónoma Regional de la Orinoquia",
+          "expected_physical_names": [
+            "CORPORACIÓN AUTÓNOMA REGIONAL DE LA ORINOQUIA"
+          ],
+          "entity": "CORPORACIÓN AUTÓNOMA REGIONAL DE LA ORINOQUIA",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        },
+        {
+          "acronym": "CORPOURABÁ",
+          "query": "Corporación para el Desarrollo Sostenible del Urabá",
+          "expected_physical_names": [
+            "CORPORACION PARA EL DESARROLLO SOSTENIBLE DEL URABA"
+          ],
+          "entity": "CORPORACION PARA EL DESARROLLO SOSTENIBLE DEL URABA",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        },
+        {
+          "acronym": "CORTOLIMA",
+          "query": "Corporación Autónoma Regional del Tolima",
+          "expected_physical_names": [
+            "CORTOLIMA"
+          ],
+          "entity": "CORTOLIMA",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        },
+        {
+          "acronym": "CRA",
+          "query": "Corporación Autónoma Regional del Atlántico",
+          "expected_physical_names": [
+            "CORPORACIÓN AUTÓNOMA REGIONAL DEL ATLÁNTICO"
+          ],
+          "entity": "CORPORACIÓN AUTÓNOMA REGIONAL DEL ATLÁNTICO",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        },
+        {
+          "acronym": "CRC",
+          "query": "Corporación Autónoma Regional del Cauca",
+          "expected_physical_names": [
+            "CORPORACION AUTONOMA REGIONAL DEL CAUCA  12"
+          ],
+          "entity": "CORPORACION AUTONOMA REGIONAL DEL CAUCA  12",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        },
+        {
+          "acronym": "CRQ",
+          "query": "Corporación Autónoma Regional del Quindío",
+          "expected_physical_names": [
+            "CORPORACION AUTONOMA REGIONAL DEL QUINDIO"
+          ],
+          "entity": "CORPORACION AUTONOMA REGIONAL DEL QUINDIO",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        },
+        {
+          "acronym": "CSB",
+          "query": "Corporación Autónoma Regional del Sur de Bolívar",
+          "expected_physical_names": [
+            "CSB"
+          ],
+          "entity": "CSB",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        },
+        {
+          "acronym": "CVC",
+          "query": "Corporación Autónoma Regional del Valle del Cauca",
+          "expected_physical_names": [
+            "CVC"
+          ],
+          "entity": "CVC",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        },
+        {
+          "acronym": "CVS",
+          "query": "Corporación Autónoma Regional de los Valles del Sinú y del San Jorge",
+          "expected_physical_names": [
+            "CORPORACIÓN AUTÓNOMA REGIONAL DE LOS VALLES DEL SINÚ Y DEL SAN JORGE - CVS"
+          ],
+          "entity": "CORPORACIÓN AUTÓNOMA REGIONAL DE LOS VALLES DEL SINÚ Y DEL SAN JORGE - CVS",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        }
+      ]
+    },
+    "non_car": {
+      "count": 4,
+      "correct": 4,
+      "records": [
+        {
+          "query": "Secretaría General Alcaldía Mayor Bogotá",
+          "expected": "SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ",
+          "entity": "SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        },
+        {
+          "query": "Empresa de Acueducto y Alcantarillado de Bogotá",
+          "expected": "EMPRESA DE ACUEDUCTO Y ALCANTARILLADO DE BOGOTÁ - E.S.P.",
+          "entity": "EMPRESA DE ACUEDUCTO Y ALCANTARILLADO DE BOGOTÁ - E.S.P.",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        },
+        {
+          "query": "Instituto de Caminos y Construcciones de Cundinamarca",
+          "expected": "INSTITUTO DE CAMINOS Y CONSTRUCCIONES DE CUNDINAMARCA - ICCU",
+          "entity": "INSTITUTO DE CAMINOS Y CONSTRUCCIONES DE CUNDINAMARCA - ICCU",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        },
+        {
+          "query": "Canal Teleantioquia",
+          "expected": "SOCIEDAD TELEVISION DE ANTIOQUIA LTDA",
+          "entity": "SOCIEDAD TELEVISION DE ANTIOQUIA LTDA",
+          "department": null,
+          "method": "scan_exact",
+          "clarification": null,
+          "pass": true
+        }
+      ]
+    }
+  },
+  "collision_gate": {
+    "baseline_keys": 173,
+    "current_keys": 173,
+    "new_multi_owner_keys": [],
+    "status": "PASS"
+  },
+  "mutation_tests": {
+    "required": [
+      "puerto boyaca",
+      "ciudad bolivar",
+      "santa marta magdalena"
+    ],
+    "test": "tests/test_scan_alias_eligibility_r2d3.py",
+    "result": "PASS"
+  },
+  "validation": {
+    "closeout_head": "debf2e3489572368ab564cfc6b8decb2f10def6b",
+    "r2d3_tests": "tests/test_scan_alias_eligibility_r2d3.py — 15 tests PASS",
+    "focal_suites": "test_scan_alias_eligibility_r2d3 + test_d6_department_suffix_r2d1 + test_car_core_r2d — 348 passed",
+    "r2d2_auditor": "POST-aware run PASS — freed 2098 active + 6 retired = 2104, NEW_WRONG_OWNER_CONFIRMED=0, R2D1_VERDICT=PASS_CONFIRMED",
+    "corpus": "scripts/run_query_corpus.py --mode all — 89/89 PASS",
+    "lint": "ruff check app/ tests/ scripts/ — PASS; make lint-core — PASS",
+    "full_suite": "10351 passed, 2 skipped, 15 xfailed, 0 failed",
+    "xfails": "15 — same as the post-D6 baseline; no new xfail"
+  },
+  "r2d1_final_verdict": "PASS_CONFIRMED"
+}

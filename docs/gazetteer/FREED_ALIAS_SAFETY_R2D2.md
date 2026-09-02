@@ -202,3 +202,38 @@ push                                                NO
 No se ejecutó la suite completa porque el lote sólo añade auditoría y
 documentación. El reproductor vuelve a leer la regla viva, el artefacto R2D.1,
 el gazetteer y fuentes SECOP; aborta si `FREED_BY_D6` deja de ser 2.104.
+
+---
+
+## 9. Post-remediación (R2D.3)
+
+La evidencia PRE de las secciones 1–8 no se modifica. Se registra aquí lo que
+cambió después, en `debf2e3`.
+
+`scripts/audits/audit_freed_alias_safety.py` dejó de asumir que todo alias
+liberado por D6 sigue vivo en `aliases`. Ahora reconstruye el universo sumando
+los aliases activos y los retirados que quedaron declarados en
+`resolution_blocked_aliases`, y la invariante de 2.104 se verifica sobre esa
+suma. Sin ese cambio el reproductor abortaba después de remediar: la
+remediación misma habría destruido la posibilidad de reverificarla.
+
+```text
+FREED_BY_D6 activos                        2.098
+FREED_BY_D6 retirados por política             6
+TOTAL                                      2.104   ✓ (invariante intacta)
+
+NEW_WRONG_OWNER_CONFIRMED   17 → 0
+SANTA_MARTA_TERMINAL        ALIAS_HIJACK → REMEDIATED_SPECIFIC_IDENTITY
+R2D1_VERDICT                REMEDIATION_REQUIRED → PASS_CONFIRMED
+```
+
+El artefacto histórico `freed_alias_safety_r2d2.json` se conserva sin
+reescribir; la corrida POST vive en
+[`freed_alias_safety_r2d2_post.json`](../../artifacts/audits/freed_alias_safety_r2d2_post.json).
+
+Las tres causas de la sección 7 quedaron adjudicadas en R2D.3
+([`SCAN_ALIAS_ELIGIBILITY_R2D3.md`](SCAN_ALIAS_ELIGIBILITY_R2D3.md), ADR-072):
+`SCAN_SUBSTRING_POLICY` con `scan_disabled_aliases` (3 aliases),
+`OVER_GENERIC_ALIAS` con `resolution_blocked_aliases` (6 aliases), y
+`MISSING_SPECIFIC_IDENTITY` con la identidad verificada de CENTRAL DE
+TRANSPORTE DE SANTA MARTA LTDA.
