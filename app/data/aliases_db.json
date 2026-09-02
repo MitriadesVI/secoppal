@@ -129,6 +129,9 @@
       "la u. nacional",
       "u. nacional de colombia",
       "universidad nacional de colombia"
+    ],
+    "resolution_blocked_aliases": [
+      "universidad autónoma indígena intercultural"
     ]
   },
   {
@@ -11329,6 +11332,8 @@
       "procesos",
       "contratos"
     ],
+    "nit": "890102257",
+    "entity_type": "universidad_publica",
     "aliases": [
       "uniatlántico",
       "la universidad de atlántico",
@@ -13546,6 +13551,8 @@
     "source_datasets": [
       "procesos"
     ],
+    "nit": "890500622",
+    "entity_type": "universidad_publica",
     "aliases": [
       "la ufps",
       "universidad f. de paula santander",
@@ -13564,6 +13571,10 @@
       "universidad francisco de paula",
       "licitaciones ufps",
       "universidad francisco de paula santander",
+      "universidad francisco de paula santander",
+      "universidad francisco de paula santander - cúcuta"
+    ],
+    "scan_disabled_aliases": [
       "universidad francisco de paula santander"
     ]
   },
@@ -17851,6 +17862,71 @@
       "instituto de estudios del ministerio público",
       "el instituto de estudios del ministerio público",
       "iemp"
+    ]
+  },
+  {
+    "official_name": "UNIVERSIDAD DE LA AMAZONIA",
+    "departamento": "Caquetá",
+    "total_procesos": 2549,
+    "total_contratos": 2,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "nit": "891190346",
+    "entity_type": "universidad_publica",
+    "aliases": [
+      "universidad de la amazonia"
+    ]
+  },
+  {
+    "official_name": "UNIVERSIDAD DE CÓRDOBA",
+    "departamento": "Córdoba",
+    "total_procesos": 3708,
+    "total_contratos": 2,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "nit": "891080031",
+    "entity_type": "universidad_publica",
+    "aliases": [
+      "universidad de córdoba"
+    ]
+  },
+  {
+    "official_name": "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA",
+    "departamento": "Norte de Santander",
+    "total_procesos": 1509,
+    "total_contratos": 1,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "nit": "8001631300",
+    "entity_type": "universidad_publica_seccional",
+    "aliases": [
+      "universidad francisco de paula santander - ocaña",
+      "universidad francisco de paula santander ocaña",
+      "universidad francisco de paula santander seccional ocaña",
+      "ufps ocaña"
+    ]
+  },
+  {
+    "official_name": "UNIVERSIDAD INTERNACIONAL DEL TRÓPICO AMERICANO UNITRÓPICO",
+    "departamento": "Casanare",
+    "total_procesos": 1725,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ],
+    "nit": "8440020714",
+    "entity_type": "universidad_publica",
+    "aliases": [
+      "universidad internacional del trópico americano",
+      "universidad internacional del trópico americano unitrópico",
+      "unitrópico",
+      "unitropico"
     ]
   }
 ]

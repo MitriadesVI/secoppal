@@ -258,10 +258,10 @@ def test_dapre_projection_reaches_analytics_builders(builder):
         assert "entidad = 'DAPRE'" in soql, method
 
 
-def test_sidecar_binds_only_dapre_in_v1():
-    """V1 liga una sola identidad. Soacha/Yopal/FFDS/UAESP siguen abiertos."""
+def test_sidecar_keeps_v1_dapre_and_accumulates_reviewed_bindings():
+    """El sidecar es acumulativo; Soacha/Yopal/FFDS/UAESP siguen abiertos."""
     registry = load_registry()
-    assert len(registry) == 1
+    assert len(registry) == 5
     assert registry.project(DAPRE_CANONICAL, PROCESOS) == ("DAPRE",)
     assert registry.project("MUNICIPIO DE SOACHA.", PROCESOS) is None
 
@@ -396,7 +396,9 @@ def test_observed_metadata_is_not_query_semantics(builder):
 
 def test_provenance_is_exposed_for_audit():
     registry = load_registry()
-    assert registry.provenance.evidence == "artifacts/audits/source_name_projection_v1.json"
+    assert registry.provenance.evidence == (
+        "artifacts/audits/public_university_pilot_r2fa.json"
+    )
     assert registry.provenance.schema_version == SCHEMA_VERSION
     binding = registry.binding_for(DAPRE_CANONICAL)
     assert binding.observed_at == date(2026, 9, 2)

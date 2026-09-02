@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "authority": "ADR-073 — SOURCE_NAME_PROJECTION_V1",
-  "evidence": "artifacts/audits/source_name_projection_v1.json",
-  "note": "Los nombres físicos se guardan tal como la fuente los publica, byte-for-byte. Puntuación, acentos y mayúsculas son parte del binding: se comparan con igualdad exacta, no con LIKE.",
+  "authority": "ADR-073",
+  "evidence": "artifacts/audits/public_university_pilot_r2fa.json",
+  "note": "Artefacto acumulativo: conserva DAPRE e incorpora las identidades verificadas por PUBLIC-UNIVERSITY-PILOT-R2FA. Los nombres físicos se guardan tal como la fuente los publica, byte-for-byte. Puntuación, acentos y mayúsculas son parte del binding: se comparan con igualdad exacta, no con LIKE.",
   "bindings": [
     {
       "canonical_name": "DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPÚBLICA",
@@ -18,6 +18,70 @@
       "observed_rows": {
         "p6dx-8zbt": 17128,
         "jbjy-vk9h": 4351
+      }
+    },
+    {
+      "canonical_name": "UNIATLANTICO",
+      "identity_key": {
+        "type": "NIT",
+        "value": "890102257"
+      },
+      "observed_at": "2026-09-02",
+      "sources": {
+        "p6dx-8zbt": ["Universidad del Atlántico"],
+        "jbjy-vk9h": ["Universidad del Atlántico"]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 4592,
+        "jbjy-vk9h": 4546
+      }
+    },
+    {
+      "canonical_name": "UNIVERSIDAD DE LA AMAZONIA",
+      "identity_key": {
+        "type": "NIT",
+        "value": "891190346"
+      },
+      "observed_at": "2026-09-02",
+      "sources": {
+        "p6dx-8zbt": ["UNIVERSIDAD DE LA AMAZONIA (Entidad)"],
+        "jbjy-vk9h": ["UNIVERSIDAD DE LA AMAZONIA (Entidad)"]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 2549,
+        "jbjy-vk9h": 2
+      }
+    },
+    {
+      "canonical_name": "UNIVERSIDAD DE CÓRDOBA",
+      "identity_key": {
+        "type": "NIT",
+        "value": "891080031"
+      },
+      "observed_at": "2026-09-02",
+      "sources": {
+        "p6dx-8zbt": ["UNIVERSIDAD DE CORDOBA"],
+        "jbjy-vk9h": ["UNIVERSIDAD DE CORDOBA"]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 3708,
+        "jbjy-vk9h": 2
+      }
+    },
+    {
+      "canonical_name": "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA",
+      "identity_key": {
+        "type": "NIT",
+        "value": "8001631300"
+      },
+      "observed_at": "2026-09-02",
+      "sources": {
+        "p6dx-8zbt": ["UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)"],
+        "jbjy-vk9h": ["UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)"]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 1509,
+        "jbjy-vk9h": 1
       }
     }
   ]
