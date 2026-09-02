@@ -1,7 +1,9 @@
 # ADR-073 — La proyección de comprador por fuente es una autoridad independiente
 
 **Fecha:** 2026-09-02  
-**Estado:** Accepted for implementation — `SOURCE_NAME_PROJECTION_V1`
+**Estado:** Accepted — implementado el 2026-09-02.
+Detalle: [`SOURCE_NAME_PROJECTION_V1_IMPLEMENTATION.md`](../gazetteer/SOURCE_NAME_PROJECTION_V1_IMPLEMENTATION.md).
+La decisión no cambió; V1 liga sólo a DAPRE y la comparación es exacta.
 
 **Evidencia:**
 [`SOURCE_NAME_PROJECTION_V1.md`](../gazetteer/SOURCE_NAME_PROJECTION_V1.md) y
