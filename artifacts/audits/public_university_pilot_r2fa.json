@@ -1,0 +1,2003 @@
+{
+  "audit": "PUBLIC-UNIVERSITY-PILOT-R2FA",
+  "type": "supervised-curation/replay",
+  "as_of": "2026-09-02",
+  "observed_at": "2026-09-02",
+  "recent_since": "2025-09-02",
+  "head_before": "8849f0d",
+  "pre_data_commit": "97008a0",
+  "authorities": {
+    "identity": "NIT + physical source name + SECOP activity",
+    "alias_policy": "ADR-072",
+    "source_projection": "ADR-073",
+    "processes": "p6dx-8zbt",
+    "contracts": "jbjy-vk9h",
+    "buyer_directory": "4ex9-j3n8"
+  },
+  "methodology": {
+    "similarity_is_identity_authority": false,
+    "source_name_split_rule": "Different physical names for one NIT across datasets; absence in one dataset is not a split.",
+    "selection_is_automatic_after_frozen_pre": true,
+    "implementation_is_supervised": true
+  },
+  "full_universe_current_pre": {
+    "total": 34,
+    "pass_exact": 19,
+    "fail_closed": 10,
+    "wrong_owner": 4,
+    "fuzzy_only": 1,
+    "like": 0,
+    "ambiguous": 0,
+    "no_secop_evidence": 1,
+    "drift_from_r2c": 11
+  },
+  "pilot_selection_rationale": {
+    "size": 8,
+    "selection": [
+      "Universidad de la Amazonia",
+      "Universidad de Antioquia",
+      "Universidad del Atlántico",
+      "Universidad de Córdoba",
+      "Universidad Francisco de Paula Santander - Cúcuta",
+      "Universidad Francisco de Paula Santander - Ocaña",
+      "Universidad Internacional del Trópico Americano",
+      "Universidad Autónoma Indígena Intercultural"
+    ],
+    "wrong_owner_included": 4,
+    "fuzzy_only_included": 1,
+    "fail_closed_included": 2,
+    "pass_exact_control_included": 1,
+    "source_name_split_in_universe": 0,
+    "source_name_split_note": "No qualifying case exists; missing contract rows are not a split."
+  },
+  "pilot_matrix_pre": {
+    "FAIL_CLOSED": 2,
+    "FUZZY_ONLY": 1,
+    "PASS_EXACT": 1,
+    "WRONG_OWNER": 4
+  },
+  "pilot_matrix_post": {
+    "FAIL_CLOSED": 1,
+    "PASS_EXACT": 7
+  },
+  "full_universe_post": {
+    "total": 34,
+    "pass_exact": 25,
+    "fail_closed": 9,
+    "wrong_owner": 0,
+    "fuzzy_only": 0,
+    "like": 0,
+    "ambiguous": 0,
+    "new_wrong_owner_outside_pilot": 0,
+    "outside_regressions": []
+  },
+  "identity_changes": {
+    "identities_added": [
+      "UNIVERSIDAD DE LA AMAZONIA",
+      "UNIVERSIDAD DE CÓRDOBA",
+      "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA",
+      "UNIVERSIDAD INTERNACIONAL DEL TRÓPICO AMERICANO UNITRÓPICO"
+    ],
+    "aliases_added_normalized": [
+      "ufps ocaña",
+      "unitrópico",
+      "universidad de córdoba",
+      "universidad de la amazonia",
+      "universidad francisco de paula santander - cúcuta",
+      "universidad francisco de paula santander - ocaña",
+      "universidad francisco de paula santander ocaña",
+      "universidad francisco de paula santander seccional ocaña",
+      "universidad internacional del trópico americano",
+      "universidad internacional del trópico americano unitrópico"
+    ],
+    "aliases_removed": [],
+    "scan_disabled": [
+      "universidad francisco de paula santander"
+    ],
+    "resolution_blocked": [
+      "universidad autonoma indigena intercultural"
+    ]
+  },
+  "source_projection": {
+    "bindings_added": [
+      "UNIVERSIDAD DE LA AMAZONIA",
+      "UNIATLANTICO",
+      "UNIVERSIDAD DE CÓRDOBA",
+      "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA"
+    ],
+    "sidecar_total_bindings": 5,
+    "sidecar_evidence": "artifacts/audits/public_university_pilot_r2fa.json",
+    "canaries": [
+      {
+        "canonical_name": "UNIVERSIDAD DE LA AMAZONIA",
+        "identity_key": {
+          "type": "NIT",
+          "value": "NIT:891190346"
+        },
+        "observed_at": "2026-09-02",
+        "observed_rows": {
+          "p6dx-8zbt": 2549,
+          "jbjy-vk9h": 2
+        },
+        "datasets": {
+          "p6dx-8zbt": {
+            "names": [
+              "UNIVERSIDAD DE LA AMAZONIA (Entidad)"
+            ],
+            "soql": "SELECT count(*) WHERE entidad = 'UNIVERSIDAD DE LA AMAZONIA (Entidad)'",
+            "exact_only": true,
+            "params_immutable": true
+          },
+          "jbjy-vk9h": {
+            "names": [
+              "UNIVERSIDAD DE LA AMAZONIA (Entidad)"
+            ],
+            "soql": "SELECT count(*) WHERE nombre_entidad = 'UNIVERSIDAD DE LA AMAZONIA (Entidad)'",
+            "exact_only": true,
+            "params_immutable": true
+          }
+        }
+      },
+      {
+        "canonical_name": "UNIATLANTICO",
+        "identity_key": {
+          "type": "NIT",
+          "value": "NIT:890102257"
+        },
+        "observed_at": "2026-09-02",
+        "observed_rows": {
+          "p6dx-8zbt": 4592,
+          "jbjy-vk9h": 4546
+        },
+        "datasets": {
+          "p6dx-8zbt": {
+            "names": [
+              "Universidad del Atlántico"
+            ],
+            "soql": "SELECT count(*) WHERE entidad = 'Universidad del Atlántico'",
+            "exact_only": true,
+            "params_immutable": true
+          },
+          "jbjy-vk9h": {
+            "names": [
+              "Universidad del Atlántico"
+            ],
+            "soql": "SELECT count(*) WHERE nombre_entidad = 'Universidad del Atlántico'",
+            "exact_only": true,
+            "params_immutable": true
+          }
+        }
+      },
+      {
+        "canonical_name": "UNIVERSIDAD DE CÓRDOBA",
+        "identity_key": {
+          "type": "NIT",
+          "value": "NIT:891080031"
+        },
+        "observed_at": "2026-09-02",
+        "observed_rows": {
+          "p6dx-8zbt": 3708,
+          "jbjy-vk9h": 2
+        },
+        "datasets": {
+          "p6dx-8zbt": {
+            "names": [
+              "UNIVERSIDAD DE CORDOBA"
+            ],
+            "soql": "SELECT count(*) WHERE entidad = 'UNIVERSIDAD DE CORDOBA'",
+            "exact_only": true,
+            "params_immutable": true
+          },
+          "jbjy-vk9h": {
+            "names": [
+              "UNIVERSIDAD DE CORDOBA"
+            ],
+            "soql": "SELECT count(*) WHERE nombre_entidad = 'UNIVERSIDAD DE CORDOBA'",
+            "exact_only": true,
+            "params_immutable": true
+          }
+        }
+      },
+      {
+        "canonical_name": "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA",
+        "identity_key": {
+          "type": "NIT",
+          "value": "NIT:8001631300"
+        },
+        "observed_at": "2026-09-02",
+        "observed_rows": {
+          "p6dx-8zbt": 1509,
+          "jbjy-vk9h": 1
+        },
+        "datasets": {
+          "p6dx-8zbt": {
+            "names": [
+              "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)"
+            ],
+            "soql": "SELECT count(*) WHERE entidad = 'UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)'",
+            "exact_only": true,
+            "params_immutable": true
+          },
+          "jbjy-vk9h": {
+            "names": [
+              "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)"
+            ],
+            "soql": "SELECT count(*) WHERE nombre_entidad = 'UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)'",
+            "exact_only": true,
+            "params_immutable": true
+          }
+        }
+      }
+    ]
+  },
+  "gates": {
+    "new_scan_cross_owner": 0,
+    "scan_cross_owner_hits": [],
+    "exact_multi_owner_before": 172,
+    "exact_multi_owner_after": 172,
+    "new_multi_owner_keys": [],
+    "wrong_owner_post": 0,
+    "fuzzy_only_post": 0
+  },
+  "verification": {
+    "focused_regressions": {
+      "command": ".venv/bin/python -m pytest -q tests/test_public_university_pilot_r2fa.py tests/test_source_name_projection_v1.py tests/test_fuzzy_identity_multiword_r2e1a.py tests/test_institutional_fuzzy_safety_r2e1.py tests/test_control_national_r2e.py tests/test_scan_alias_eligibility_r2d3.py tests/test_car_core_r2d.py tests/test_national_core_r2b.py tests/test_root_buyer_evidence_r1d.py tests/test_gazetteer_alias_ownership_r1c.py tests/test_sena_resolver.py tests/test_icbf_regionals.py",
+      "result": "829 passed"
+    },
+    "query_corpus": "89/89 PASS, 0 FAIL",
+    "ruff": "PASS",
+    "lint_core": "PASS",
+    "full_suite": "10656 passed, 2 skipped, 15 xfailed",
+    "new_xfails": 0
+  },
+  "cases": [
+    {
+      "logical_name": "Universidad de la Amazonia",
+      "nit": "891190346",
+      "registry_names": [
+        "UNIVERSIDAD DE LA AMAZONIA (ENTIDAD)"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD DE LA AMAZONIA (Entidad)"
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD DE LA AMAZONIA (Entidad)"
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD DE LA AMAZONIA (Entidad)": 2549
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD DE LA AMAZONIA (Entidad)": 2
+      },
+      "all_time_processes": 2549,
+      "all_time_contracts": 2,
+      "recent_12m_processes": 515,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD DE LA AMAZONIA"
+      ],
+      "existing_aliases": [
+        "universidad de la amazonia"
+      ],
+      "current_resolution": "UNIVERSIDAD DE LA AMAZONIA",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD DE LA AMAZONIA",
+      "current_scan_alias": "universidad de la amazonia",
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "r2c_classification": "WRONG_OWNER",
+      "pre_classification": "FAIL_CLOSED",
+      "drift_from_r2c": "WRONG_OWNER -> FAIL_CLOSED",
+      "post_classification": "PASS_EXACT",
+      "in_pilot": true,
+      "decision": "ADD_EXACT_AND_SCAN + SOURCE_PROJECTION",
+      "source_projection": true
+    },
+    {
+      "logical_name": "Universidad de Antioquia",
+      "nit": "890980040",
+      "registry_names": [
+        "UNIVERSIDAD DE ANTIOQUIA"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD DE ANTIOQUIA"
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD DE ANTIOQUIA"
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD DE ANTIOQUIA": 44152
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD DE ANTIOQUIA": 34
+      },
+      "all_time_processes": 44152,
+      "all_time_contracts": 34,
+      "recent_12m_processes": 8060,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD DE ANTIOQUIA"
+      ],
+      "existing_aliases": [
+        "universidad de antioquia"
+      ],
+      "current_resolution": "UNIVERSIDAD DE ANTIOQUIA",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD DE ANTIOQUIA",
+      "current_scan_alias": "universidad de antioquia",
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "r2c_classification": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "drift_from_r2c": "UNCHANGED",
+      "post_classification": "PASS_EXACT",
+      "in_pilot": true,
+      "decision": "NO_CHANGE_REQUIRED",
+      "source_projection": false
+    },
+    {
+      "logical_name": "Universidad del Atlántico",
+      "nit": "890102257",
+      "registry_names": [
+        "UNIVERSIDAD DEL ATLaNTICO"
+      ],
+      "process_source_names": [
+        "Universidad del Atlántico"
+      ],
+      "contract_source_names": [
+        "Universidad del Atlántico"
+      ],
+      "process_observed_rows": {
+        "Universidad del Atlántico": 4592
+      },
+      "contract_observed_rows": {
+        "Universidad del Atlántico": 4546
+      },
+      "all_time_processes": 4592,
+      "all_time_contracts": 4546,
+      "recent_12m_processes": 853,
+      "recent_12m_contracts": 797,
+      "existing_gazetteer_records": [
+        "UNIATLANTICO"
+      ],
+      "existing_aliases": [
+        "el uniatlántico",
+        "la u de atlántico",
+        "la uni",
+        "la universidad de atlántico",
+        "la universidad del atlántico",
+        "ua",
+        "uni atlántico",
+        "uniatlantico",
+        "uniatlántico",
+        "universidad atlantico",
+        "universidad de atlántico",
+        "universidad del atlántico"
+      ],
+      "current_resolution": "UNIATLANTICO",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIATLANTICO",
+      "current_scan_alias": "universidad del atlantico",
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "r2c_classification": "WRONG_OWNER",
+      "pre_classification": "WRONG_OWNER",
+      "drift_from_r2c": "UNCHANGED",
+      "post_classification": "PASS_EXACT",
+      "in_pilot": true,
+      "decision": "KEEP + SOURCE_PROJECTION",
+      "source_projection": true
+    },
+    {
+      "logical_name": "Universidad de Caldas",
+      "nit": "890801063",
+      "registry_names": [
+        "UNIVERSIDAD DE CALDAS."
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD DE CALDAS."
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD DE CALDAS."
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD DE CALDAS.": 9069
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD DE CALDAS.": 10
+      },
+      "all_time_processes": 9069,
+      "all_time_contracts": 10,
+      "recent_12m_processes": 1719,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD DE CALDAS."
+      ],
+      "existing_aliases": [
+        "el alma mater de caldas",
+        "la u de manizales",
+        "la universidad de caldas",
+        "la universidad de caldas sede manizales",
+        "la universidad de manizales",
+        "la universidad nacional de caldas",
+        "la universidad publica de caldas",
+        "u de caldas",
+        "u de manizales",
+        "u. de caldas",
+        "u. de manizales",
+        "unicaldas",
+        "unimanizales",
+        "universidad caldas",
+        "universidad de caldas",
+        "universidad de caldas manizales",
+        "universidad de caldas.",
+        "universidad de manizales",
+        "universidad del caldas",
+        "universidad manizales",
+        "universidad nacional caldas",
+        "universidad nacional de caldas"
+      ],
+      "current_resolution": "UNIVERSIDAD DE CALDAS.",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD DE CALDAS.",
+      "current_scan_alias": "universidad de caldas",
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "r2c_classification": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "drift_from_r2c": "UNCHANGED",
+      "post_classification": "PASS_EXACT",
+      "in_pilot": false
+    },
+    {
+      "logical_name": "Universidad de Cartagena",
+      "nit": "890480123",
+      "registry_names": [
+        "GGGGGGG",
+        "UNIVERSIDAD DE CARTAGENA"
+      ],
+      "process_source_names": [
+        "Universidad de Cartagena"
+      ],
+      "contract_source_names": [
+        "Universidad de Cartagena"
+      ],
+      "process_observed_rows": {
+        "Universidad de Cartagena": 6319
+      },
+      "contract_observed_rows": {
+        "Universidad de Cartagena": 2
+      },
+      "all_time_processes": 6319,
+      "all_time_contracts": 2,
+      "recent_12m_processes": 1426,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "Universidad de Cartagena"
+      ],
+      "existing_aliases": [
+        "alma mater de cartagena",
+        "el centro de estudios superiores de cartagena",
+        "el claustro universitario de cartagena",
+        "la u de c",
+        "la udc",
+        "la udc bolivar",
+        "la universidad de cartagena",
+        "la universidad publica de cartagena",
+        "la universidad publica de cartagena bolivar",
+        "u de c",
+        "udc",
+        "uni cartagena",
+        "unicartagena",
+        "unicartagena bolívar",
+        "universidad cartagena",
+        "universidad de cartagena",
+        "universidad de cartagena bolívar",
+        "universidad de cartagena sede bolivar",
+        "universidad de cartagena sede principal",
+        "universidad distrital de cartagena"
+      ],
+      "current_resolution": "Universidad de Cartagena",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "Universidad de Cartagena",
+      "current_scan_alias": "universidad de cartagena",
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "r2c_classification": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "drift_from_r2c": "UNCHANGED",
+      "post_classification": "PASS_EXACT",
+      "in_pilot": false
+    },
+    {
+      "logical_name": "Universidad del Cauca",
+      "nit": "891500319",
+      "registry_names": [
+        "UNIVERSIDAD DEL CAUCA"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD DEL CAUCA"
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD DEL CAUCA"
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD DEL CAUCA": 8659
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD DEL CAUCA": 1
+      },
+      "all_time_processes": 8659,
+      "all_time_contracts": 1,
+      "recent_12m_processes": 2479,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD DEL CAUCA"
+      ],
+      "existing_aliases": [
+        "el cauca",
+        "la u de cauca",
+        "la u del cauca",
+        "la unicauca",
+        "la universidad de popayán",
+        "la universidad del cauca",
+        "u. de cauca",
+        "u. del cauca",
+        "udc",
+        "uni cauca",
+        "unicauca",
+        "universidad cauca",
+        "universidad de cauca",
+        "universidad de popayán",
+        "universidad del cauca",
+        "universidad del cauca popayán",
+        "universidad nacional del cauca",
+        "universidad publica del cauca"
+      ],
+      "current_resolution": "UNIVERSIDAD DEL CAUCA",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD DEL CAUCA",
+      "current_scan_alias": "universidad del cauca",
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "r2c_classification": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "drift_from_r2c": "UNCHANGED",
+      "post_classification": "PASS_EXACT",
+      "in_pilot": false
+    },
+    {
+      "logical_name": "Universidad Colegio Mayor de Cundinamarca",
+      "nit": "800144829",
+      "registry_names": [
+        "UNIVERSIDAD COLEGIO MAYOR DE CUNDINAMARCA"
+      ],
+      "process_source_names": [
+        "Universidad Colegio Mayor de Cundinamarca"
+      ],
+      "contract_source_names": [],
+      "process_observed_rows": {
+        "Universidad Colegio Mayor de Cundinamarca": 16
+      },
+      "contract_observed_rows": {},
+      "all_time_processes": 16,
+      "all_time_contracts": 0,
+      "recent_12m_processes": 1,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [],
+      "existing_aliases": [],
+      "current_resolution": null,
+      "current_method": "like",
+      "current_like_value": "UNIVERSIDAD COLEGIO MAYOR DE CUNDINAMARCA",
+      "current_clarification_needed": false,
+      "current_scan_owner": "INSTITUCIÓN UNIVERSITARIA COLEGIO MAYOR DE ANTIOQUIA",
+      "current_scan_alias": "colegio mayor",
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "r2c_classification": "WRONG_OWNER",
+      "pre_classification": "FAIL_CLOSED",
+      "drift_from_r2c": "WRONG_OWNER -> FAIL_CLOSED",
+      "post_classification": "FAIL_CLOSED",
+      "in_pilot": false
+    },
+    {
+      "logical_name": "Universidad de Córdoba",
+      "nit": "891080031",
+      "registry_names": [
+        "UNIVERSIDAD DE CORDOBA"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD DE CORDOBA"
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD DE CORDOBA"
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD DE CORDOBA": 3708
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD DE CORDOBA": 2
+      },
+      "all_time_processes": 3708,
+      "all_time_contracts": 2,
+      "recent_12m_processes": 1102,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD DE CÓRDOBA"
+      ],
+      "existing_aliases": [
+        "universidad de córdoba"
+      ],
+      "current_resolution": "UNIVERSIDAD DE CÓRDOBA",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD DE CÓRDOBA",
+      "current_scan_alias": "universidad de cordoba",
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "r2c_classification": "WRONG_OWNER",
+      "pre_classification": "FAIL_CLOSED",
+      "drift_from_r2c": "WRONG_OWNER -> FAIL_CLOSED",
+      "post_classification": "PASS_EXACT",
+      "in_pilot": true,
+      "decision": "ADD_EXACT_AND_SCAN + SOURCE_PROJECTION",
+      "source_projection": true
+    },
+    {
+      "logical_name": "Universidad de Cundinamarca",
+      "nit": "890680062",
+      "registry_names": [
+        "CENTROACADEMICODEPORTIVO",
+        "UNIVERSIDAD DE CUNDINAMARCA"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD DE CUNDINAMARCA"
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD DE CUNDINAMARCA"
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD DE CUNDINAMARCA": 3551
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD DE CUNDINAMARCA": 10
+      },
+      "all_time_processes": 3551,
+      "all_time_contracts": 10,
+      "recent_12m_processes": 469,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [],
+      "existing_aliases": [],
+      "current_resolution": null,
+      "current_method": "like",
+      "current_like_value": "UNIVERSIDAD DE CUNDINAMARCA",
+      "current_clarification_needed": false,
+      "current_scan_owner": null,
+      "current_scan_alias": null,
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "r2c_classification": "WRONG_OWNER",
+      "pre_classification": "FAIL_CLOSED",
+      "drift_from_r2c": "WRONG_OWNER -> FAIL_CLOSED",
+      "post_classification": "FAIL_CLOSED",
+      "in_pilot": false
+    },
+    {
+      "logical_name": "Universidad Distrital Francisco José de Caldas",
+      "nit": "899999230",
+      "registry_names": [
+        "UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS"
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS"
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS": 29500
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS": 557
+      },
+      "all_time_processes": 29500,
+      "all_time_contracts": 557,
+      "recent_12m_processes": 4927,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS"
+      ],
+      "existing_aliases": [
+        "el distrital",
+        "la distrital",
+        "la u distrital",
+        "la ud",
+        "la universidad distrital",
+        "ud",
+        "ud bogotá",
+        "udistrital",
+        "universidad distrital",
+        "universidad distrital bogotá",
+        "universidad distrital de bogotá",
+        "universidad distrital de la bogotá",
+        "universidad distrital fjc",
+        "universidad distrital francisco jose de caldas",
+        "universidad distrital francisco jose de caldas bogotá",
+        "universidad distrital francisco josé de caldas"
+      ],
+      "current_resolution": "UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS",
+      "current_scan_alias": "universidad distrital francisco jose de caldas",
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "r2c_classification": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "drift_from_r2c": "UNCHANGED",
+      "post_classification": "PASS_EXACT",
+      "in_pilot": false
+    },
+    {
+      "logical_name": "Universidad Francisco de Paula Santander - Cúcuta",
+      "nit": "890500622",
+      "registry_names": [
+        "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER"
+      ],
+      "contract_source_names": [],
+      "process_observed_rows": {
+        "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER": 7866
+      },
+      "contract_observed_rows": {},
+      "all_time_processes": 7866,
+      "all_time_contracts": 0,
+      "recent_12m_processes": 1273,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER"
+      ],
+      "existing_aliases": [
+        "contratos ufps",
+        "departamento de norte de santander universidad",
+        "gobierno de norte de santander universidad",
+        "la ufps",
+        "la ufps de cúcuta",
+        "la universidad de paula santander",
+        "la universidad francisco de paula santander",
+        "la universidad francisco de paula santander de cúcuta",
+        "licitaciones ufps",
+        "ufps",
+        "ufps cúcuta",
+        "ufps norte de santander",
+        "universidad f. de paula santander",
+        "universidad francisco de paula",
+        "universidad francisco de paula santander",
+        "universidad francisco de paula santander - cúcuta",
+        "universidad francisco de paula santander cúcuta",
+        "universidad francisco de paula santander norte de santander"
+      ],
+      "current_resolution": "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER",
+      "current_scan_alias": "universidad francisco de paula santander - cucuta",
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "r2c_classification": "FUZZY_ONLY",
+      "pre_classification": "FUZZY_ONLY",
+      "drift_from_r2c": "UNCHANGED",
+      "post_classification": "PASS_EXACT",
+      "in_pilot": true,
+      "decision": "ADD_EXACT_AND_SCAN + KEEP_EXACT_DISABLE_SCAN(base physical name)",
+      "source_projection": false
+    },
+    {
+      "logical_name": "Universidad Francisco de Paula Santander - Ocaña",
+      "nit": "8001631300",
+      "registry_names": [
+        "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)"
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)"
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)": 1509
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)": 1
+      },
+      "all_time_processes": 1509,
+      "all_time_contracts": 1,
+      "recent_12m_processes": 229,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA"
+      ],
+      "existing_aliases": [
+        "ufps ocaña",
+        "universidad francisco de paula santander - ocaña",
+        "universidad francisco de paula santander ocaña",
+        "universidad francisco de paula santander seccional ocaña"
+      ],
+      "current_resolution": "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA",
+      "current_scan_alias": "universidad francisco de paula santander - ocana",
+      "identity_classification": "SEPARATE_BUYERS",
+      "r2c_classification": "FUZZY_ONLY",
+      "pre_classification": "WRONG_OWNER",
+      "drift_from_r2c": "FUZZY_ONLY -> WRONG_OWNER",
+      "post_classification": "PASS_EXACT",
+      "in_pilot": true,
+      "decision": "SEPARATE_BUYER + ADD_EXACT_AND_SCAN + SOURCE_PROJECTION",
+      "source_projection": true
+    },
+    {
+      "logical_name": "Universidad Industrial de Santander",
+      "nit": "890201213",
+      "registry_names": [
+        "UNIVERSIDAD INDUSTRIAL DE SANTANDER"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD INDUSTRIAL DE SANTANDER"
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD INDUSTRIAL DE SANTANDER"
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD INDUSTRIAL DE SANTANDER": 27430
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD INDUSTRIAL DE SANTANDER": 2
+      },
+      "all_time_processes": 27430,
+      "all_time_contracts": 2,
+      "recent_12m_processes": 6458,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD INDUSTRIAL DE SANTANDER"
+      ],
+      "existing_aliases": [
+        "el industrial de santander",
+        "industrial de santander",
+        "la uis",
+        "la universidad industrial",
+        "la universidad industrial de santander",
+        "u i s",
+        "u.i.s.",
+        "uis",
+        "uis santander",
+        "universidad industrial",
+        "universidad industrial de santander",
+        "universidad industrial santander"
+      ],
+      "current_resolution": "UNIVERSIDAD INDUSTRIAL DE SANTANDER",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD INDUSTRIAL DE SANTANDER",
+      "current_scan_alias": "universidad industrial de santander",
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "r2c_classification": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "drift_from_r2c": "UNCHANGED",
+      "post_classification": "PASS_EXACT",
+      "in_pilot": false
+    },
+    {
+      "logical_name": "Universidad de La Guajira",
+      "nit": "892115029",
+      "registry_names": [
+        "UNIVERSIDA DE LA GUAJIRA",
+        "UNIVERSIDAD DE LA GUAJIRA"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD DE LA GUAJIRA"
+      ],
+      "contract_source_names": [],
+      "process_observed_rows": {
+        "UNIVERSIDAD DE LA GUAJIRA": 3828
+      },
+      "contract_observed_rows": {},
+      "all_time_processes": 3828,
+      "all_time_contracts": 0,
+      "recent_12m_processes": 1001,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [],
+      "existing_aliases": [],
+      "current_resolution": null,
+      "current_method": "like",
+      "current_like_value": "UNIVERSIDAD DE LA GUAJIRA",
+      "current_clarification_needed": false,
+      "current_scan_owner": null,
+      "current_scan_alias": null,
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "r2c_classification": "WRONG_OWNER",
+      "pre_classification": "FAIL_CLOSED",
+      "drift_from_r2c": "WRONG_OWNER -> FAIL_CLOSED",
+      "post_classification": "FAIL_CLOSED",
+      "in_pilot": false
+    },
+    {
+      "logical_name": "Universidad de los Llanos",
+      "nit": "892000757",
+      "registry_names": [
+        "UNIVERSIDAD DE LOS LLANOS"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD DE LOS LLANOS"
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD DE LOS LLANOS"
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD DE LOS LLANOS": 5872
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD DE LOS LLANOS": 12
+      },
+      "all_time_processes": 5872,
+      "all_time_contracts": 12,
+      "recent_12m_processes": 1297,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD DE LOS LLANOS"
+      ],
+      "existing_aliases": [
+        "el unillanos",
+        "la universidad de los llanos",
+        "la universidad del llano",
+        "uni llanos",
+        "unillanos",
+        "unillanos - meta",
+        "unillanos meta",
+        "unillanos villavicencio",
+        "unillanos, meta",
+        "universidad de los llanos",
+        "universidad de los llanos (unillanos)",
+        "universidad de los llanos - meta",
+        "universidad de los llanos de colombia",
+        "universidad de los llanos del meta",
+        "universidad de los llanos meta",
+        "universidad de los llanos sede villavicencio",
+        "universidad de los llanos villavicencio",
+        "universidad de los llanos, meta",
+        "universidad del llano",
+        "universidad del llano meta",
+        "universidad del llano villavicencio",
+        "universidad del meta",
+        "universidad del meta villavicencio",
+        "universidad nacional de los llanos"
+      ],
+      "current_resolution": "UNIVERSIDAD DE LOS LLANOS",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD DE LOS LLANOS",
+      "current_scan_alias": "universidad de los llanos",
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "r2c_classification": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "drift_from_r2c": "UNCHANGED",
+      "post_classification": "PASS_EXACT",
+      "in_pilot": false
+    },
+    {
+      "logical_name": "Universidad del Magdalena",
+      "nit": "891780111",
+      "registry_names": [
+        "UNIMAGDALENA"
+      ],
+      "process_source_names": [
+        "UNIMAGDALENA"
+      ],
+      "contract_source_names": [
+        "UNIMAGDALENA"
+      ],
+      "process_observed_rows": {
+        "UNIMAGDALENA": 20118
+      },
+      "contract_observed_rows": {
+        "UNIMAGDALENA": 2
+      },
+      "all_time_processes": 20118,
+      "all_time_contracts": 2,
+      "recent_12m_processes": 5308,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIMAGDALENA"
+      ],
+      "existing_aliases": [
+        "el unimagdalena",
+        "el universidad del magdalena",
+        "la unimagdalena",
+        "la universidad del magdalena",
+        "la universidad magdalena",
+        "unimagdalena",
+        "universidad de magdalena",
+        "universidad del departamento del magdalena",
+        "universidad del depto. del magdalena",
+        "universidad del magdalena",
+        "universidad magdalena"
+      ],
+      "current_resolution": "UNIMAGDALENA",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIMAGDALENA",
+      "current_scan_alias": "universidad del magdalena",
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "r2c_classification": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "drift_from_r2c": "UNCHANGED",
+      "post_classification": "PASS_EXACT",
+      "in_pilot": false
+    },
+    {
+      "logical_name": "Universidad Militar Nueva Granada",
+      "nit": "800225340",
+      "registry_names": [
+        "UNIVERSIDAD MILITAR NUEVA GRANADA**"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD MILITAR NUEVA GRANADA**"
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD MILITAR NUEVA GRANADA**"
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD MILITAR NUEVA GRANADA**": 10770
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD MILITAR NUEVA GRANADA**": 157
+      },
+      "all_time_processes": 10770,
+      "all_time_contracts": 157,
+      "recent_12m_processes": 2415,
+      "recent_12m_contracts": 136,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD MILITAR NUEVA GRANADA**"
+      ],
+      "existing_aliases": [
+        "de la universidad militar nueva granada",
+        "del universidad militar nueva granada",
+        "el umng",
+        "el universidad militar nueva granada",
+        "la militar nueva granada",
+        "la nueva granada",
+        "la umng",
+        "la universidad militar nueva granada",
+        "nueva granada militar",
+        "umng",
+        "umng bogotá",
+        "umng d.c.",
+        "universidad militar",
+        "universidad militar nueva granada",
+        "universidad militar nueva granada - umng",
+        "universidad militar nueva granada bogota",
+        "universidad militar nueva granada bogotá",
+        "universidad militar nueva granada d.c.",
+        "universidad militar nueva granada distrito capital",
+        "universidad militar nueva granada**"
+      ],
+      "current_resolution": "UNIVERSIDAD MILITAR NUEVA GRANADA**",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD MILITAR NUEVA GRANADA**",
+      "current_scan_alias": "universidad militar nueva granada",
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "r2c_classification": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "drift_from_r2c": "UNCHANGED",
+      "post_classification": "PASS_EXACT",
+      "in_pilot": false
+    },
+    {
+      "logical_name": "Universidad Nacional Abierta y a Distancia",
+      "nit": "860512780",
+      "registry_names": [
+        "UNAD",
+        "UNIVERSIDAD NACIONAL ABIERTA Y A DISTANCIA."
+      ],
+      "process_source_names": [
+        "UNAD"
+      ],
+      "contract_source_names": [
+        "UNAD"
+      ],
+      "process_observed_rows": {
+        "UNAD": 6451
+      },
+      "contract_observed_rows": {
+        "UNAD": 22
+      },
+      "all_time_processes": 6451,
+      "all_time_contracts": 22,
+      "recent_12m_processes": 1500,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNAD"
+      ],
+      "existing_aliases": [
+        "el unad",
+        "la unad",
+        "unad",
+        "unad bogotá",
+        "unad colombia",
+        "unad d.c.",
+        "unad distrito capital",
+        "unad distrito capital de bogotá",
+        "universidad a distancia",
+        "universidad abierta y a distancia",
+        "universidad abierta y distancia",
+        "universidad distancia",
+        "universidad nacional abierta y a distancia",
+        "universidad nacional abierta y a distancia (unad)",
+        "universidad nacional abierta y a distancia bogotá",
+        "universidad nacional abierta y a distancia de colombia",
+        "universidad nacional abierta y a distancia distrito capital",
+        "universidad nacional abierta y a distancia unad",
+        "universidad nacional abierta y distancia",
+        "universidad nacional abierta y distancia unad"
+      ],
+      "current_resolution": "UNAD",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNAD",
+      "current_scan_alias": "universidad nacional abierta y a distancia",
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "r2c_classification": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "drift_from_r2c": "UNCHANGED",
+      "post_classification": "PASS_EXACT",
+      "in_pilot": false
+    },
+    {
+      "logical_name": "Universidad Nacional de Colombia",
+      "nit": "899999063",
+      "registry_names": [
+        "DOCTORADO SALUD PUBLICA - FACULTAD MEDICINA BOGOTA - UNIVERSIDAD NACIONAL DE COLOMBIA",
+        "UNIVERSIDAD NACIONAL DE COLOMBIA"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD NACIONAL DE COLOMBIA"
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD NACIONAL DE COLOMBIA"
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD NACIONAL DE COLOMBIA": 110849
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD NACIONAL DE COLOMBIA": 14
+      },
+      "all_time_processes": 110849,
+      "all_time_contracts": 14,
+      "recent_12m_processes": 28548,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD NACIONAL DE COLOMBIA"
+      ],
+      "existing_aliases": [
+        "el alma máter",
+        "la nacional",
+        "la u nacional",
+        "la u. nacional",
+        "la universidad nacional",
+        "la universidad nacional de colombia",
+        "nacional de colombia",
+        "u nacional",
+        "u nacional colombia",
+        "u. nacional",
+        "u. nacional de colombia",
+        "un colombia",
+        "unal",
+        "unal colombia",
+        "universidad nacional",
+        "universidad nacional - bogotá",
+        "universidad nacional bogotá",
+        "universidad nacional colombia",
+        "universidad nacional de colombia",
+        "universidad nacional sede bogotá"
+      ],
+      "current_resolution": "UNIVERSIDAD NACIONAL DE COLOMBIA",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD NACIONAL DE COLOMBIA",
+      "current_scan_alias": "universidad nacional de colombia",
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "r2c_classification": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "drift_from_r2c": "UNCHANGED",
+      "post_classification": "PASS_EXACT",
+      "in_pilot": false
+    },
+    {
+      "logical_name": "Universidad de Nariño",
+      "nit": "800118954",
+      "registry_names": [
+        "UNIVERSIDAD DE NARIÑO"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD DE NARIÑO"
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD DE NARIÑO"
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD DE NARIÑO": 21469
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD DE NARIÑO": 3
+      },
+      "all_time_processes": 21469,
+      "all_time_contracts": 3,
+      "recent_12m_processes": 5441,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD DE NARIÑO"
+      ],
+      "existing_aliases": [
+        "el alma máter de nariño",
+        "la udenar",
+        "la universidad de nariño",
+        "la universidad del departamento de nariño",
+        "udenar",
+        "udenar narino",
+        "uni de nariño",
+        "uni nariño",
+        "uninariño",
+        "universidad de narino",
+        "universidad de nariño",
+        "universidad nacional de nariño",
+        "universidad nariño",
+        "universidad pública de nariño"
+      ],
+      "current_resolution": "UNIVERSIDAD DE NARIÑO",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD DE NARIÑO",
+      "current_scan_alias": "universidad de narino",
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "r2c_classification": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "drift_from_r2c": "UNCHANGED",
+      "post_classification": "PASS_EXACT",
+      "in_pilot": false
+    },
+    {
+      "logical_name": "Universidad del Pacífico",
+      "nit": "835000300",
+      "registry_names": [
+        "UNIVERSIDAD DEL PACIFICO//"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD DEL PACIFICO//"
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD DEL PACIFICO//"
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD DEL PACIFICO//": 987
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD DEL PACIFICO//": 5
+      },
+      "all_time_processes": 987,
+      "all_time_contracts": 5,
+      "recent_12m_processes": 224,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [],
+      "existing_aliases": [],
+      "current_resolution": null,
+      "current_method": "like",
+      "current_like_value": "UNIVERSIDAD DEL PACIFICO",
+      "current_clarification_needed": false,
+      "current_scan_owner": null,
+      "current_scan_alias": null,
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "r2c_classification": "WRONG_OWNER",
+      "pre_classification": "FAIL_CLOSED",
+      "drift_from_r2c": "WRONG_OWNER -> FAIL_CLOSED",
+      "post_classification": "FAIL_CLOSED",
+      "in_pilot": false
+    },
+    {
+      "logical_name": "Universidad de Pamplona",
+      "nit": "890501510",
+      "registry_names": [],
+      "process_source_names": [
+        "UNIVERSIDAD DE PAMPLONA"
+      ],
+      "contract_source_names": [],
+      "process_observed_rows": {
+        "UNIVERSIDAD DE PAMPLONA": 10101
+      },
+      "contract_observed_rows": {},
+      "all_time_processes": 10101,
+      "all_time_contracts": 0,
+      "recent_12m_processes": 2581,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD DE PAMPLONA"
+      ],
+      "existing_aliases": [
+        "la u de pamplona",
+        "la universidad de pamplona",
+        "pamplona university",
+        "u de pamplona",
+        "u. de pamplona",
+        "udep",
+        "uni pamplona",
+        "unipamplona",
+        "univ. de pamplona",
+        "universidad de pamplona",
+        "universidad de pamplona colombia",
+        "universidad de pamplona norte de santander",
+        "universidad del norte de santander",
+        "universidad nacional de pamplona",
+        "universidad norte de santander",
+        "universidad pamplona",
+        "universidad publica de pamplona",
+        "up"
+      ],
+      "current_resolution": "UNIVERSIDAD DE PAMPLONA",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD DE PAMPLONA",
+      "current_scan_alias": "universidad de pamplona",
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "r2c_classification": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "drift_from_r2c": "UNCHANGED",
+      "post_classification": "PASS_EXACT",
+      "in_pilot": false
+    },
+    {
+      "logical_name": "Universidad Pedagógica Nacional",
+      "nit": "899999124",
+      "registry_names": [
+        "UNIVERSIDAD PEDAGoGICA NACIONAL"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD PEDAGÓGICA NACIONAL"
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD PEDAGÓGICA NACIONAL"
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD PEDAGÓGICA NACIONAL": 4587
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD PEDAGÓGICA NACIONAL": 476
+      },
+      "all_time_processes": 4587,
+      "all_time_contracts": 476,
+      "recent_12m_processes": 777,
+      "recent_12m_contracts": 23,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD PEDAGÓGICA NACIONAL"
+      ],
+      "existing_aliases": [
+        "bogotá distrito capital",
+        "bogotá distrito especial",
+        "el distrito capital de bogotá",
+        "la nacional pedagógica",
+        "la pedagógica nacional",
+        "la universidad de formación docente",
+        "la universidad de pedagogía",
+        "la universidad pedagógica",
+        "la universidad pedagógica nacional",
+        "la universidad pedagógica nacional de bogotá",
+        "la upn",
+        "pedagógica nacional",
+        "universidad de pedagogía nacional",
+        "universidad nacional pedagógica",
+        "universidad pedagogica nacional",
+        "universidad pedagogica nacional bogota",
+        "universidad pedagógica",
+        "universidad pedagógica nacional",
+        "upn",
+        "upn bogotá"
+      ],
+      "current_resolution": "UNIVERSIDAD PEDAGÓGICA NACIONAL",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD PEDAGÓGICA NACIONAL",
+      "current_scan_alias": "universidad pedagogica nacional",
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "r2c_classification": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "drift_from_r2c": "UNCHANGED",
+      "post_classification": "PASS_EXACT",
+      "in_pilot": false
+    },
+    {
+      "logical_name": "Universidad Pedagógica y Tecnológica de Colombia",
+      "nit": "891800330",
+      "registry_names": [
+        "UPTC"
+      ],
+      "process_source_names": [
+        "UPTC"
+      ],
+      "contract_source_names": [
+        "UPTC"
+      ],
+      "process_observed_rows": {
+        "UPTC": 22366
+      },
+      "contract_observed_rows": {
+        "UPTC": 4
+      },
+      "all_time_processes": 22366,
+      "all_time_contracts": 4,
+      "recent_12m_processes": 5339,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UPTC"
+      ],
+      "existing_aliases": [
+        "el uptc",
+        "la universidad pedagogica y tecnologica",
+        "la universidad uptc",
+        "la uptc",
+        "universidad boyacense",
+        "universidad de boyaca",
+        "universidad de tunja",
+        "universidad pedagogica nacional de boyaca",
+        "universidad pedagogica y tecnologica",
+        "universidad pedagogica y tecnologica colombiana",
+        "universidad pedagogica y tecnologica de colombia",
+        "universidad pedagógica",
+        "universidad pedagógica y tecnológica de colombia",
+        "universidad publica de boyaca",
+        "universidad tecnologica",
+        "uptc",
+        "uptc boyaca",
+        "uptc colombia",
+        "uptc sede principal",
+        "uptc sede tunja",
+        "uptc tunja"
+      ],
+      "current_resolution": "UPTC",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UPTC",
+      "current_scan_alias": "universidad pedagogica y tecnologica de colombia",
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "r2c_classification": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "drift_from_r2c": "UNCHANGED",
+      "post_classification": "PASS_EXACT",
+      "in_pilot": false
+    },
+    {
+      "logical_name": "Universidad Popular del Cesar",
+      "nit": "8923002856",
+      "registry_names": [
+        "UNIVERSIDAD POPULAR DEL CESAR."
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD POPULAR DEL CESAR."
+      ],
+      "contract_source_names": [],
+      "process_observed_rows": {
+        "UNIVERSIDAD POPULAR DEL CESAR.": 57
+      },
+      "contract_observed_rows": {},
+      "all_time_processes": 57,
+      "all_time_contracts": 0,
+      "recent_12m_processes": 32,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [],
+      "existing_aliases": [],
+      "current_resolution": null,
+      "current_method": "like",
+      "current_like_value": "UNIVERSIDAD POPULAR DEL CESAR",
+      "current_clarification_needed": false,
+      "current_scan_owner": null,
+      "current_scan_alias": null,
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "r2c_classification": "WRONG_OWNER",
+      "pre_classification": "FAIL_CLOSED",
+      "drift_from_r2c": "WRONG_OWNER -> FAIL_CLOSED",
+      "post_classification": "FAIL_CLOSED",
+      "in_pilot": false
+    },
+    {
+      "logical_name": "Universidad del Quindío",
+      "nit": "890000432",
+      "registry_names": [
+        "UNIQUINDIO",
+        "UNIVERSIDAD DEL QUINDIO"
+      ],
+      "process_source_names": [
+        "UNIQUINDIO"
+      ],
+      "contract_source_names": [],
+      "process_observed_rows": {
+        "UNIQUINDIO": 5978
+      },
+      "contract_observed_rows": {},
+      "all_time_processes": 5978,
+      "all_time_contracts": 0,
+      "recent_12m_processes": 1019,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIQUINDIO"
+      ],
+      "existing_aliases": [
+        "el uniquindío",
+        "la universidad de quindío",
+        "la universidad del quindío",
+        "la uq",
+        "uniquindio",
+        "uniquindío",
+        "universidad de quindio",
+        "universidad de quindío",
+        "universidad del quindio",
+        "universidad del quindío",
+        "uq"
+      ],
+      "current_resolution": "UNIQUINDIO",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIQUINDIO",
+      "current_scan_alias": "universidad del quindio",
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "r2c_classification": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "drift_from_r2c": "UNCHANGED",
+      "post_classification": "PASS_EXACT",
+      "in_pilot": false
+    },
+    {
+      "logical_name": "Universidad de Sucre",
+      "nit": "892200323",
+      "registry_names": [
+        "UNIVERSIDAD DE SUCRE"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD DE SUCRE"
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD DE SUCRE"
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD DE SUCRE": 1719
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD DE SUCRE": 1
+      },
+      "all_time_processes": 1719,
+      "all_time_contracts": 1,
+      "recent_12m_processes": 395,
+      "recent_12m_contracts": 1,
+      "existing_gazetteer_records": [],
+      "existing_aliases": [],
+      "current_resolution": null,
+      "current_method": "like",
+      "current_like_value": "UNIVERSIDAD DE SUCRE",
+      "current_clarification_needed": false,
+      "current_scan_owner": null,
+      "current_scan_alias": null,
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "r2c_classification": "WRONG_OWNER",
+      "pre_classification": "FAIL_CLOSED",
+      "drift_from_r2c": "WRONG_OWNER -> FAIL_CLOSED",
+      "post_classification": "FAIL_CLOSED",
+      "in_pilot": false
+    },
+    {
+      "logical_name": "Universidad Surcolombiana",
+      "nit": "891180084",
+      "registry_names": [
+        "UNIVERSIDAD SURCOLOMBIANA"
+      ],
+      "process_source_names": [
+        "Universidad Surcolombiana"
+      ],
+      "contract_source_names": [
+        "Universidad Surcolombiana"
+      ],
+      "process_observed_rows": {
+        "Universidad Surcolombiana": 12664
+      },
+      "contract_observed_rows": {
+        "Universidad Surcolombiana": 8
+      },
+      "all_time_processes": 12664,
+      "all_time_contracts": 8,
+      "recent_12m_processes": 2462,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "Universidad Surcolombiana"
+      ],
+      "existing_aliases": [
+        "la surcolombiana",
+        "la surcolombiana de neiva",
+        "la surcolombiana del huila",
+        "la universidad surcolombiana",
+        "la universidad surcolombiana (usco)",
+        "la universidad surcolombiana de neiva",
+        "la universidad surcolombiana del huila",
+        "la universidad surcolombiana huila",
+        "la universidad surcolombiana, huila",
+        "la usco",
+        "la usco de neiva",
+        "la usco del huila",
+        "surcolombiana",
+        "surcolombiana de neiva",
+        "universidad surcolombiana",
+        "universidad surcolombiana (usco)",
+        "universidad surcolombiana - usco",
+        "universidad surcolombiana de neiva",
+        "universidad surcolombiana del huila",
+        "universidad surcolombiana en neiva",
+        "universidad surcolombiana huila",
+        "universidad surcolombiana, huila",
+        "usco",
+        "usco huila",
+        "usco neiva"
+      ],
+      "current_resolution": "Universidad Surcolombiana",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "Universidad Surcolombiana",
+      "current_scan_alias": "universidad surcolombiana",
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "r2c_classification": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "drift_from_r2c": "UNCHANGED",
+      "post_classification": "PASS_EXACT",
+      "in_pilot": false
+    },
+    {
+      "logical_name": "Universidad Tecnológica del Chocó Diego Luis Córdoba",
+      "nit": "891680089",
+      "registry_names": [
+        "UNIVERSIDAD TECNOLOGICA DEL CHOCO"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD TECNOLOGICA DEL CHOCO"
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD TECNOLOGICA DEL CHOCO"
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD TECNOLOGICA DEL CHOCO": 2257
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD TECNOLOGICA DEL CHOCO": 1
+      },
+      "all_time_processes": 2257,
+      "all_time_contracts": 1,
+      "recent_12m_processes": 188,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [],
+      "existing_aliases": [],
+      "current_resolution": null,
+      "current_method": "like",
+      "current_like_value": "UNIVERSIDAD TECNOLOGICA DEL CHOCO DIEGO LUIS CORDOBA",
+      "current_clarification_needed": false,
+      "current_scan_owner": "UPTC",
+      "current_scan_alias": "universidad tecnologica",
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "r2c_classification": "WRONG_OWNER",
+      "pre_classification": "FAIL_CLOSED",
+      "drift_from_r2c": "WRONG_OWNER -> FAIL_CLOSED",
+      "post_classification": "FAIL_CLOSED",
+      "in_pilot": false
+    },
+    {
+      "logical_name": "Universidad Tecnológica de Pereira",
+      "nit": "891480035",
+      "registry_names": [
+        "CCE ENTIDAD DE PRUEBAS (ENTIDAD DE SISTEMA)",
+        "UNIVERSIDAD TECNOLoGICA DE PEREIRA"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD TECNOLÓGICA DE PEREIRA",
+        "CCE ENTIDAD DE PRUEBAS (Entidad de Sistema)"
+      ],
+      "contract_source_names": [],
+      "process_observed_rows": {
+        "UNIVERSIDAD TECNOLÓGICA DE PEREIRA": 22384,
+        "CCE ENTIDAD DE PRUEBAS (Entidad de Sistema)": 199
+      },
+      "contract_observed_rows": {},
+      "all_time_processes": 22583,
+      "all_time_contracts": 0,
+      "recent_12m_processes": 3857,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD TECNOLÓGICA DE PEREIRA"
+      ],
+      "existing_aliases": [
+        "el utp",
+        "la tecnologica de pereira",
+        "la tecnologica pereira",
+        "la tecnológica de pereira",
+        "la tecnológica pereira",
+        "la universidad tecnologica",
+        "la universidad tecnologica de pereira",
+        "la universidad tecnológica",
+        "la universidad tecnológica de pereira",
+        "la utp",
+        "la utp de pereira",
+        "la utp risaralda",
+        "universidad tecnologica de pereira",
+        "universidad tecnologica de pereira risaralda",
+        "universidad tecnologica del pereira",
+        "universidad tecnologica pereira",
+        "universidad tecnológica de pereira",
+        "universidad tecnológica de pereira risaralda",
+        "universidad tecnológica del pereira",
+        "universidad tecnológica pereira",
+        "utp",
+        "utp pereira"
+      ],
+      "current_resolution": "UNIVERSIDAD TECNOLÓGICA DE PEREIRA",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD TECNOLÓGICA DE PEREIRA",
+      "current_scan_alias": "universidad tecnologica de pereira",
+      "identity_classification": "REGISTRY_NOISE",
+      "r2c_classification": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "drift_from_r2c": "UNCHANGED",
+      "post_classification": "PASS_EXACT",
+      "in_pilot": false
+    },
+    {
+      "logical_name": "Universidad del Tolima",
+      "nit": "890700640",
+      "registry_names": [
+        "UNIVERSIDAD DEL TOLIMA"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD DEL TOLIMA"
+      ],
+      "contract_source_names": [],
+      "process_observed_rows": {
+        "UNIVERSIDAD DEL TOLIMA": 4085
+      },
+      "contract_observed_rows": {},
+      "all_time_processes": 4085,
+      "all_time_contracts": 0,
+      "recent_12m_processes": 1229,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [],
+      "existing_aliases": [],
+      "current_resolution": null,
+      "current_method": "like",
+      "current_like_value": "UNIVERSIDAD DEL TOLIMA",
+      "current_clarification_needed": false,
+      "current_scan_owner": null,
+      "current_scan_alias": null,
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "r2c_classification": "WRONG_OWNER",
+      "pre_classification": "FAIL_CLOSED",
+      "drift_from_r2c": "WRONG_OWNER -> FAIL_CLOSED",
+      "post_classification": "FAIL_CLOSED",
+      "in_pilot": false
+    },
+    {
+      "logical_name": "Universidad del Valle",
+      "nit": "890399010",
+      "registry_names": [
+        "UNIVERSIDAD DEL VALLE"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD DEL VALLE"
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD DEL VALLE"
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD DEL VALLE": 14177
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD DEL VALLE": 34
+      },
+      "all_time_processes": 14177,
+      "all_time_contracts": 34,
+      "recent_12m_processes": 3014,
+      "recent_12m_contracts": 1,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD DEL VALLE"
+      ],
+      "existing_aliases": [
+        "el valle",
+        "el valle cali",
+        "la univalle",
+        "la univalle cali",
+        "la universidad del valle",
+        "u del valle",
+        "uni valle",
+        "univalle",
+        "univalle cali",
+        "universidad de valle",
+        "universidad del valle",
+        "universidad del valle (cali)",
+        "universidad del valle - cali",
+        "universidad del valle - sede cali",
+        "universidad del valle cali",
+        "universidad del valle del cauca",
+        "universidad del valle sede cali",
+        "universidad del valle sede principal",
+        "universidad del valle, cali",
+        "universidad del valle, campus cali",
+        "universidad del valle, campus de cali",
+        "universidad del valle, campus de melendez",
+        "universidad del valle, campus de san fernando",
+        "universidad del valle, campus melendez",
+        "universidad del valle, campus san fernando",
+        "universidad del valle, campus universitario",
+        "universidad del valle, campus universitario de cali",
+        "universidad del valle, campus universitario de cali, colombia",
+        "universidad del valle, campus universitario de cali, valle del cauca",
+        "universidad del valle, campus universitario de cali, valle del cauca, colombia",
+        "universidad del valle, campus universitario de cali, valle del cauca, colombia, sur america",
+        "universidad del valle, campus universitario de cali, valle del cauca, colombia, sur america, america",
+        "universidad del valle, campus universitario de cali, valle del cauca, colombia, sur america, america, mundo",
+        "universidad del valle, campus universitario de cali, valle del cauca, colombia, sur america, america, mundo, tierra",
+        "universidad del valle, campus universitario de cali, valle del cauca, colombia, sur america, america, mundo, tierra, universo",
+        "universidad del valle, campus universitario de cali, valle del cauca, colombia, sur america, america, mundo, tierra, universo, multiverso",
+        "universidad del valle, campus universitario de cali, valle del cauca, colombia, sur america, america, mundo, tierra, universo, multiverso, omniverso",
+        "universidad del valle, campus universitario de cali, valle del cauca, colombia, sur america, america, mundo, tierra, universo, multiverso, omniverso, todo",
+        "universidad del valle, campus universitario de cali, valle del cauca, colombia, sur america, america, mundo, tierra, universo, multiverso, omniverso, todo, nada",
+        "universidad del valle, campus universitario de cali, valle del cauca, colombia, sur america, america, mundo, tierra, universo, multiverso, omniverso, todo, nada, algo",
+        "universidad del valle, campus universitario de cali, valle del cauca, colombia, sur america, america, mundo, tierra, universo, multiverso, omniverso, todo, nada, algo, nada mas",
+        "universidad del valle, campus universitario de cali, valle del cauca, colombia, sur america, america, mundo, tierra, universo, multiverso, omniverso, todo, nada, algo, nada mas, fin",
+        "universidad del valle, campus universitario de melendez",
+        "universidad del valle, campus universitario de melendez, colombia",
+        "universidad del valle, campus universitario de melendez, valle del cauca",
+        "universidad del valle, campus universitario de melendez, valle del cauca, colombia",
+        "universidad del valle, campus universitario de melendez, valle del cauca, colombia, sur america",
+        "universidad del valle, campus universitario de melendez, valle del cauca, colombia, sur america, america",
+        "universidad del valle, campus universitario de melendez, valle del cauca, colombia, sur america, america, mundo",
+        "universidad del valle, campus universitario de melendez, valle del cauca, colombia, sur america, america, mundo, tierra",
+        "universidad del valle, campus universitario de melendez, valle del cauca, colombia, sur america, america, mundo, tierra, universo",
+        "universidad del valle, campus universitario de melendez, valle del cauca, colombia, sur america, america, mundo, tierra, universo, multiverso",
+        "universidad del valle, campus universitario de melendez, valle del cauca, colombia, sur america, america, mundo, tierra, universo, multiverso, omniverso",
+        "universidad del valle, campus universitario de melendez, valle del cauca, colombia, sur america, america, mundo, tierra, universo, multiverso, omniverso, todo",
+        "universidad del valle, campus universitario de melendez, valle del cauca, colombia, sur america, america, mundo, tierra, universo, multiverso, omniverso, todo, nada",
+        "universidad del valle, campus universitario de melendez, valle del cauca, colombia, sur america, america, mundo, tierra, universo, multiverso, omniverso, todo, nada, algo",
+        "universidad del valle, campus universitario de melendez, valle del cauca, colombia, sur america, america, mundo, tierra, universo, multiverso, omniverso, todo, nada, algo, nada mas",
+        "universidad del valle, campus universitario de melendez, valle del cauca, colombia, sur america, america, mundo, tierra, universo, multiverso, omniverso, todo, nada, algo, nada mas, fin",
+        "universidad del valle, campus universitario de san fernando",
+        "universidad del valle, campus universitario de san fernando, colombia",
+        "universidad del valle, campus universitario de san fernando, valle del cauca",
+        "universidad del valle, campus universitario de san fernando, valle del cauca, colombia",
+        "universidad del valle, campus universitario de san fernando, valle del cauca, colombia, sur america",
+        "universidad del valle, campus universitario de san fernando, valle del cauca, colombia, sur america, america",
+        "universidad del valle, campus universitario de san fernando, valle del cauca, colombia, sur america, america, mundo",
+        "universidad del valle, campus universitario de san fernando, valle del cauca, colombia, sur america, america, mundo, tierra",
+        "universidad del valle, campus universitario de san fernando, valle del cauca, colombia, sur america, america, mundo, tierra, universo",
+        "universidad del valle, campus universitario de san fernando, valle del cauca, colombia, sur america, america, mundo, tierra, universo, multiverso",
+        "universidad del valle, campus universitario de san fernando, valle del cauca, colombia, sur america, america, mundo, tierra, universo, multiverso, omniverso",
+        "universidad del valle, campus universitario de san fernando, valle del cauca, colombia, sur america, america, mundo, tierra, universo, multiverso, omniverso, todo",
+        "universidad del valle, campus universitario de san fernando, valle del cauca, colombia, sur america, america, mundo, tierra, universo, multiverso, omniverso, todo, nada",
+        "universidad del valle, campus universitario de san fernando, valle del cauca, colombia, sur america, america, mundo, tierra, universo, multiverso, omniverso, todo, nada, algo",
+        "universidad del valle, campus universitario de san fernando, valle del cauca, colombia, sur america, america, mundo, tierra, universo, multiverso, omniverso, todo, nada, algo, nada mas",
+        "universidad del valle, campus universitario de san fernando, valle del cauca, colombia, sur america, america, mundo, tierra, universo, multiverso, omniverso, todo, nada, algo, nada mas, fin",
+        "universidad del valle, sede cali",
+        "universidad del valle, sede principal",
+        "universidad del valle, valle del cauca",
+        "universidad nacional del valle",
+        "uv",
+        "uv cali"
+      ],
+      "current_resolution": "UNIVERSIDAD DEL VALLE",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD DEL VALLE",
+      "current_scan_alias": "universidad del valle",
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "r2c_classification": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "drift_from_r2c": "UNCHANGED",
+      "post_classification": "PASS_EXACT",
+      "in_pilot": false
+    },
+    {
+      "logical_name": "Universidad Internacional del Trópico Americano",
+      "nit": "8440020714",
+      "registry_names": [
+        "UNIVERSIDAD INTERNACIONAL DEL TRoPICO AMERICANO UNITRoPICO"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD INTERNACIONAL DEL TRÓPICO AMERICANO UNITRÓPICO"
+      ],
+      "contract_source_names": [],
+      "process_observed_rows": {
+        "UNIVERSIDAD INTERNACIONAL DEL TRÓPICO AMERICANO UNITRÓPICO": 1725
+      },
+      "contract_observed_rows": {},
+      "all_time_processes": 1725,
+      "all_time_contracts": 0,
+      "recent_12m_processes": 362,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD INTERNACIONAL DEL TRÓPICO AMERICANO UNITRÓPICO"
+      ],
+      "existing_aliases": [
+        "unitropico",
+        "unitrópico",
+        "universidad internacional del trópico americano",
+        "universidad internacional del trópico americano unitrópico"
+      ],
+      "current_resolution": "UNIVERSIDAD INTERNACIONAL DEL TRÓPICO AMERICANO UNITRÓPICO",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD INTERNACIONAL DEL TRÓPICO AMERICANO UNITRÓPICO",
+      "current_scan_alias": "universidad internacional del tropico americano",
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "r2c_classification": "WRONG_OWNER",
+      "pre_classification": "WRONG_OWNER",
+      "drift_from_r2c": "UNCHANGED",
+      "post_classification": "PASS_EXACT",
+      "in_pilot": true,
+      "decision": "ADD_EXACT_AND_SCAN",
+      "source_projection": false
+    },
+    {
+      "logical_name": "Universidad Autónoma Indígena Intercultural",
+      "nit": null,
+      "registry_names": [],
+      "process_source_names": [],
+      "contract_source_names": [],
+      "process_observed_rows": {},
+      "contract_observed_rows": {},
+      "all_time_processes": null,
+      "all_time_contracts": null,
+      "recent_12m_processes": null,
+      "recent_12m_contracts": null,
+      "existing_gazetteer_records": [],
+      "existing_aliases": [],
+      "current_resolution": null,
+      "current_method": "alias_resolution_blocked",
+      "current_like_value": null,
+      "current_clarification_needed": true,
+      "current_scan_owner": null,
+      "current_scan_alias": null,
+      "identity_classification": "NO_SECOP_EVIDENCE",
+      "r2c_classification": "WRONG_OWNER",
+      "pre_classification": "WRONG_OWNER",
+      "drift_from_r2c": "UNCHANGED",
+      "post_classification": "FAIL_CLOSED",
+      "in_pilot": true,
+      "decision": "RESOLUTION_BLOCK",
+      "source_projection": false
+    }
+  ],
+  "generated_at": "2026-09-02",
+  "recent_window_days": 365,
+  "recommended_replay": ".venv/bin/python scripts/audits/audit_public_university_pilot_r2fa.py"
+}
