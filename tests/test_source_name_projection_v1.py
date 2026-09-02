@@ -8,13 +8,15 @@ por substring y el defecto vuelve sin que ningún test caiga.
 
 from __future__ import annotations
 
+from datetime import date
 import json
+import re
 
 import pytest
 
 from app.core.buyer_source_names import (
+    SCHEMA_VERSION,
     BuyerSourceNameError,
-    BuyerSourceNameRegistry,
     load_registry,
     parse_registry,
     project_buyer_names,
@@ -278,12 +280,9 @@ def test_unknown_identity_returns_none_not_empty_tuple():
 
 
 def test_bound_identity_in_unbound_dataset_returns_none():
-    registry = BuyerSourceNameRegistry.__new__(BuyerSourceNameRegistry)
-    registry = parse_registry({"bindings": [{
-        "canonical_name": "SOLO PROCESOS",
-        "identity_key": {"type": "NIT", "value": "1"},
-        "sources": {PROCESOS: ["SOLO P"]},
-    }]})
+    registry = parse_registry(_sidecar(
+        canonical_name="SOLO PROCESOS", sources={PROCESOS: ["SOLO P"]},
+    ))
     assert registry.project("SOLO PROCESOS", PROCESOS) == ("SOLO P",)
     assert registry.project("SOLO PROCESOS", CONTRATOS) is None
 
@@ -292,44 +291,123 @@ def test_bound_identity_in_unbound_dataset_returns_none():
 # VALIDACIÓN DEL SIDECAR — fail fast, nunca silently malformed
 # =====================================================================
 
-def _binding(**overrides):
+_ROOT_KEYS = ("schema_version", "evidence", "authority")
+_UNSET = object()
+
+
+def _sidecar(**overrides):
+    """Un sidecar VÁLIDO de un binding, con las claves pedidas sobrescritas.
+
+    Que el caso base sea válido es lo que da valor a los negativos: si al
+    payload le faltara metadata de raíz, cada caso reventaría en la validación
+    de procedencia antes de llegar a su causa declarada, y la parametrización
+    probaría una sola cosa doce veces.
+    """
+    root = {
+        "schema_version": SCHEMA_VERSION,
+        "evidence": "artifacts/audits/source_name_projection_v1.json",
+        "authority": "ADR-073",
+    }
     record = {
         "canonical_name": "X",
         "identity_key": {"type": "NIT", "value": "1"},
+        "observed_at": "2026-09-02",
         "sources": {PROCESOS: ["NAME"]},
     }
-    record.update(overrides)
-    return {"bindings": [record]}
+    for key, value in overrides.items():
+        target = root if key in _ROOT_KEYS else record
+        if value is _UNSET:
+            target.pop(key, None)
+        else:
+            target[key] = value
+    return {**root, "bindings": [record]}
 
 
-@pytest.mark.parametrize("payload,reason", [
-    (_binding(canonical_name=""), "canonical vacío"),
-    (_binding(canonical_name=None), "canonical ausente"),
-    (_binding(identity_key={}), "identity_key vacía"),
-    (_binding(identity_key={"type": "NIT"}), "identity_key sin valor"),
-    (_binding(sources={}), "sources vacío"),
-    (_binding(sources={"no-existe": ["NAME"]}), "dataset desconocido"),
-    (_binding(sources={PROCESOS: []}), "lista vacía"),
-    (_binding(sources={PROCESOS: [""]}), "nombre vacío"),
-    (_binding(sources={PROCESOS: ["NAME", "name"]}), "duplicado normalizado"),
-    (_binding(sources={PROCESOS: "NAME"}), "tipo inválido"),
-    ({"bindings": "no-es-lista"}, "bindings no es lista"),
-    ({}, "sin bindings"),
+def test_the_negative_baseline_is_actually_valid():
+    """Control positivo: sin esto los negativos no prueban lo que dicen."""
+    registry = parse_registry(_sidecar())
+    assert len(registry) == 1
+    assert registry.provenance.schema_version == SCHEMA_VERSION
+
+
+@pytest.mark.parametrize("payload,expected_fragment", [
+    # --- contratos ya vigentes en V1 ---
+    (_sidecar(canonical_name=""), "canonical_name"),
+    (_sidecar(canonical_name=_UNSET), "canonical_name"),
+    (_sidecar(identity_key={}), "identity_key"),
+    (_sidecar(identity_key={"type": "NIT"}), "identity_key"),
+    (_sidecar(sources={}), "sources"),
+    (_sidecar(sources={"no-existe": ["NAME"]}), "dataset desconocido"),
+    (_sidecar(sources={PROCESOS: []}), "lista vacía"),
+    (_sidecar(sources={PROCESOS: [""]}), PROCESOS),
+    (_sidecar(sources={PROCESOS: ["NAME", "name"]}), "duplicados"),
+    (_sidecar(sources={PROCESOS: "NAME"}), "deben venir en una lista"),
+    # --- contratos de metadata que ADR-073 exigía y V1 no validaba ---
+    (_sidecar(schema_version=_UNSET), "schema_version"),
+    (_sidecar(schema_version=2), "schema_version"),
+    (_sidecar(schema_version="1"), "schema_version"),
+    (_sidecar(schema_version=True), "schema_version"),
+    (_sidecar(evidence=_UNSET), "evidence"),
+    (_sidecar(evidence=""), "evidence"),
+    (_sidecar(evidence="   "), "evidence"),
+    (_sidecar(authority=""), "authority"),
+    (_sidecar(observed_at=_UNSET), "observed_at"),
+    (_sidecar(observed_at=""), "observed_at"),
+    (_sidecar(observed_at="2026-99-99"), "observed_at"),
+    (_sidecar(observed_at="2026-02-30"), "observed_at"),
+    (_sidecar(observed_at="02/09/2026"), "observed_at"),
+    (_sidecar(observed_at="2026-9-2"), "observed_at"),
+    # `date.fromisoformat` acepta estas dos y NO son YYYY-MM-DD: la forma
+    # declarada la impone la regex, no el parser. Sin estos casos, quitar
+    # la regex no haría caer ningún test.
+    (_sidecar(observed_at="20260902"), "YYYY-MM-DD"),
+    (_sidecar(observed_at="2026-W36-3"), "YYYY-MM-DD"),
+    (_sidecar(observed_at=20260902), "observed_at"),
+    # --- observed_rows: evidencia, pero coherente ---
+    (_sidecar(observed_rows={"no-existe": 1}), "dataset desconocido"),
+    (_sidecar(observed_rows={CONTRATOS: 1}), "no declara nombres"),
+    (_sidecar(observed_rows={PROCESOS: -1}), "observed_rows"),
+    (_sidecar(observed_rows={PROCESOS: "17128"}), "observed_rows"),
+    (_sidecar(observed_rows={PROCESOS: True}), "observed_rows"),
+    (_sidecar(observed_rows=[1, 2]), "observed_rows"),
+    # --- raíz ---
+    ({"schema_version": SCHEMA_VERSION, "evidence": "x", "bindings": "no-es-lista"}, "bindings"),
+    ({}, "schema_version"),
 ])
-def test_malformed_sidecar_fails_loudly(payload, reason):
-    with pytest.raises(BuyerSourceNameError):
+def test_malformed_sidecar_fails_loudly(payload, expected_fragment):
+    """Falla, y falla por la razón declarada — no por otra que llegó antes."""
+    with pytest.raises(BuyerSourceNameError, match=re.escape(expected_fragment)):
         parse_registry(payload)
 
 
+def test_observed_rows_is_optional():
+    """Ausente es válido: es evidencia, no contrato de proyección."""
+    registry = parse_registry(_sidecar(observed_rows=_UNSET))
+    assert registry.binding_for("X").observed_rows == {}
+
+
+def test_observed_metadata_is_not_query_semantics(builder):
+    """La metadata no entra al WHERE por ninguna vía."""
+    soql = builder.build_count(PROCESOS, {"entidad_resolved": DAPRE_CANONICAL})
+    assert soql == "SELECT count(*) WHERE entidad = 'DAPRE'"
+    assert "2026" not in soql
+    assert "17128" not in soql
+
+
+def test_provenance_is_exposed_for_audit():
+    registry = load_registry()
+    assert registry.provenance.evidence == "artifacts/audits/source_name_projection_v1.json"
+    assert registry.provenance.schema_version == SCHEMA_VERSION
+    binding = registry.binding_for(DAPRE_CANONICAL)
+    assert binding.observed_at == date(2026, 9, 2)
+    assert binding.observed_rows == {PROCESOS: 17128, CONTRATOS: 4351}
+
+
 def test_duplicate_identity_key_is_rejected():
-    record = {
-        "canonical_name": "A",
-        "identity_key": {"type": "NIT", "value": "1"},
-        "sources": {PROCESOS: ["A"]},
-    }
-    other = dict(record, canonical_name="B")
-    with pytest.raises(BuyerSourceNameError):
-        parse_registry({"bindings": [record, other]})
+    payload = _sidecar()
+    payload["bindings"].append(dict(payload["bindings"][0], canonical_name="B"))
+    with pytest.raises(BuyerSourceNameError, match="identity_key duplicada"):
+        parse_registry(payload)
 
 
 def test_missing_sidecar_yields_empty_registry_not_an_error(tmp_path):

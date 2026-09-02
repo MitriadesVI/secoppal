@@ -22,7 +22,9 @@ from __future__ import annotations
 
 import json
 import logging
+import re
 from dataclasses import dataclass
+from datetime import date
 from pathlib import Path
 from typing import Any
 
@@ -38,6 +40,13 @@ DEFAULT_SIDECAR_PATH = Path(__file__).resolve().parent.parent / "data" / "buyer_
 # fallo que ADR-073 prohíbe (INV-NO-SILENT-SEMANTIC-FALLBACK).
 KNOWN_DATASET_IDS: frozenset[str] = frozenset({"p6dx-8zbt", "jbjy-vk9h"})
 
+# Versión de schema que este loader sabe leer. Un sidecar con otra versión no
+# se interpreta "lo mejor posible": se rechaza. Leer un schema futuro con las
+# reglas de hoy es la forma silenciosa de proyectar un filtro que nadie revisó.
+SCHEMA_VERSION = 1
+
+_ISO_DATE_RE = re.compile(r"\d{4}-\d{2}-\d{2}")
+
 
 class BuyerSourceNameError(ValueError):
     """El sidecar está malformado. Falla al cargar, no en la primera query."""
@@ -45,20 +54,42 @@ class BuyerSourceNameError(ValueError):
 
 @dataclass(frozen=True, slots=True)
 class BuyerSourceBinding:
-    """Los nombres físicos de UNA identidad, declarados por dataset."""
+    """Los nombres físicos de UNA identidad, declarados por dataset.
+
+    `observed_at` y `observed_rows` son evidencia de auditoría, no semántica de
+    consulta: dicen cuándo se verificó el binding y cuántas filas devolvía
+    entonces. Nada en el runtime los lee para filtrar. Existen porque un
+    binding sin fecha es indistinguible de un binding que dejó de ser cierto.
+    """
 
     canonical_name: str
     identity_key: str
     sources: dict[str, tuple[str, ...]]
+    observed_at: date
+    observed_rows: dict[str, int]
 
     def names_for(self, dataset_id: str) -> tuple[str, ...] | None:
         return self.sources.get(dataset_id)
 
 
+@dataclass(frozen=True, slots=True)
+class SidecarProvenance:
+    """De dónde salió el sidecar. Declarada, no inferida."""
+
+    schema_version: int
+    evidence: str
+    authority: str | None
+
+
 class BuyerSourceNameRegistry:
     """Índice O(1) de identidad canónica normalizada → binding."""
 
-    def __init__(self, bindings: list[BuyerSourceBinding]) -> None:
+    def __init__(
+        self,
+        bindings: list[BuyerSourceBinding],
+        provenance: SidecarProvenance | None = None,
+    ) -> None:
+        self.provenance = provenance
         self._by_canonical: dict[str, BuyerSourceBinding] = {}
         for binding in bindings:
             key = normalize_text(binding.canonical_name)
@@ -95,6 +126,75 @@ def _require_str(value: Any, field: str) -> str:
     return value
 
 
+def _require_iso_date(value: Any, field: str) -> date:
+    """`YYYY-MM-DD` real. `2026-99-99` tiene la forma y no es una fecha."""
+    text = _require_str(value, field)
+    if not _ISO_DATE_RE.fullmatch(text):
+        raise BuyerSourceNameError(f"{field} debe tener formato YYYY-MM-DD, recibido {text!r}")
+    try:
+        return date.fromisoformat(text)
+    except ValueError as exc:
+        raise BuyerSourceNameError(f"{field} no es una fecha válida: {text!r}") from exc
+
+
+def _parse_observed_rows(
+    raw: Any, canonical: str, declared_datasets: set[str],
+) -> dict[str, int]:
+    """Conteos observados. Opcional; si está, tiene que ser coherente.
+
+    Se exige que cada dataset con filas observadas tenga también nombres
+    declarados: medir un dataset que el binding no proyecta es evidencia de
+    otra cosa, y aceptarlo en silencio dejaría pasar un sidecar a medio editar.
+    """
+    if raw is None:
+        return {}
+    if not isinstance(raw, dict):
+        raise BuyerSourceNameError(f"{canonical}: 'observed_rows' debe ser un objeto")
+
+    rows: dict[str, int] = {}
+    for dataset_id, value in raw.items():
+        if dataset_id not in KNOWN_DATASET_IDS:
+            raise BuyerSourceNameError(
+                f"{canonical}/observed_rows: dataset desconocido {dataset_id!r}"
+            )
+        if dataset_id not in declared_datasets:
+            raise BuyerSourceNameError(
+                f"{canonical}/observed_rows: {dataset_id} no declara nombres físicos"
+            )
+        if isinstance(value, bool) or not isinstance(value, int) or value < 0:
+            raise BuyerSourceNameError(
+                f"{canonical}/observed_rows/{dataset_id} debe ser un entero >= 0, "
+                f"recibido {value!r}"
+            )
+        rows[dataset_id] = value
+    return rows
+
+
+def _parse_provenance(payload: dict[str, Any]) -> SidecarProvenance:
+    raw_version = payload.get("schema_version")
+    if isinstance(raw_version, bool) or not isinstance(raw_version, int):
+        raise BuyerSourceNameError(
+            f"schema_version debe ser un entero, recibido {raw_version!r}"
+        )
+    if raw_version != SCHEMA_VERSION:
+        raise BuyerSourceNameError(
+            f"schema_version {raw_version} no soportado; este loader lee {SCHEMA_VERSION}"
+        )
+
+    # La procedencia se valida como metadata declarada, no como archivo en
+    # disco: un despliegue puede no empaquetar artifacts/, y exigir el fichero
+    # convertiría una afirmación de auditoría en una dependencia de runtime.
+    evidence = _require_str(payload.get("evidence"), "evidence")
+
+    authority = payload.get("authority")
+    if authority is not None:
+        authority = _require_str(authority, "authority")
+
+    return SidecarProvenance(
+        schema_version=raw_version, evidence=evidence, authority=authority,
+    )
+
+
 def _parse_sources(raw: Any, canonical: str) -> dict[str, tuple[str, ...]]:
     if not isinstance(raw, dict) or not raw:
         raise BuyerSourceNameError(f"{canonical}: 'sources' debe ser un objeto no vacío")
@@ -103,7 +203,12 @@ def _parse_sources(raw: Any, canonical: str) -> dict[str, tuple[str, ...]]:
     for dataset_id, names in raw.items():
         if dataset_id not in KNOWN_DATASET_IDS:
             raise BuyerSourceNameError(f"{canonical}: dataset desconocido {dataset_id!r}")
-        if not isinstance(names, list) or not names:
+        if not isinstance(names, list):
+            raise BuyerSourceNameError(
+                f"{canonical}/{dataset_id}: los nombres deben venir en una lista, "
+                f"recibido {type(names).__name__}"
+            )
+        if not names:
             raise BuyerSourceNameError(
                 f"{canonical}/{dataset_id}: se declaró el dataset con una lista vacía"
             )
@@ -132,6 +237,8 @@ def parse_registry(payload: Any) -> BuyerSourceNameRegistry:
     if not isinstance(payload, dict):
         raise BuyerSourceNameError("el sidecar debe ser un objeto JSON")
 
+    provenance = _parse_provenance(payload)
+
     raw_bindings = payload.get("bindings")
     if not isinstance(raw_bindings, list):
         raise BuyerSourceNameError("'bindings' debe ser una lista")
@@ -146,14 +253,21 @@ def parse_registry(payload: Any) -> BuyerSourceNameRegistry:
         if identity_key in identity_keys:
             raise BuyerSourceNameError(f"identity_key duplicada: {identity_key}")
         identity_keys.add(identity_key)
+        sources = _parse_sources(record.get("sources"), canonical)
         bindings.append(
             BuyerSourceBinding(
                 canonical_name=canonical,
                 identity_key=identity_key,
-                sources=_parse_sources(record.get("sources"), canonical),
+                sources=sources,
+                observed_at=_require_iso_date(
+                    record.get("observed_at"), f"{canonical}/observed_at",
+                ),
+                observed_rows=_parse_observed_rows(
+                    record.get("observed_rows"), canonical, set(sources),
+                ),
             )
         )
-    return BuyerSourceNameRegistry(bindings)
+    return BuyerSourceNameRegistry(bindings, provenance)
 
 
 def load_registry(path: Path | None = None) -> BuyerSourceNameRegistry:

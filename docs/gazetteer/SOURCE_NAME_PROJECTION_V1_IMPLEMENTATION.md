@@ -127,8 +127,8 @@ el canónico ligado, que es el único valor con el que el guard es observable.
 ## 8. Gates
 
 ```text
-tests nuevos      48 PASS   (tests/test_source_name_projection_v1.py)
-suite completa    10.609 PASS · 2 skipped · 15 xfailed · 0 fallos
+tests nuevos      75 PASS   (tests/test_source_name_projection_v1.py)
+suite completa    10.636 PASS · 2 skipped · 15 xfailed · 0 fallos
 corpus            89/89 PASS
 ruff app/         limpio
 make lint-core    app/core/ limpio
@@ -141,7 +141,58 @@ condición de código: sólo diverge una identidad con binding, y V1 liga
 únicamente a DAPRE, que ninguna consulta ordinaria menciona. Por eso el oráculo
 público siguió byte-idéntico sin intervención.
 
-## 9. Deuda
+## 9. V1.1 — el contrato de metadata
+
+```text
+ADR_METADATA_CONTRACT: IMPLEMENTED
+```
+
+ADR-073 exigía que el loader validara cinco cosas: `identity_key` y
+`canonical_name` únicos, datasets conocidos, 1..N nombres no vacíos, nombres
+sin duplicados, **y fecha y procedencia de la evidencia**. V1 implementó las
+cuatro primeras. El sidecar traía `schema_version`, `evidence` y `observed_at`
+desde el primer commit, y el loader no los miraba.
+
+La discrepancia importa porque la metadata que nadie valida es peor que la
+metadata ausente: aparenta procedencia sin acreditarla. Un binding sin fecha
+verificada es indistinguible de uno que dejó de ser cierto, y esa es justo la
+pregunta que `observed_at` existe para responder.
+
+Lo que ahora se valida al cargar:
+
+| Campo | Contrato |
+|---|---|
+| `schema_version` | requerido · entero · exactamente `1` |
+| `evidence` | requerido · string no vacío |
+| `authority` | si está, string no vacío |
+| `observed_at` | requerido por binding · `YYYY-MM-DD` real |
+| `observed_rows` | opcional · datasets conocidos y declarados · enteros ≥ 0 |
+
+`evidence` se valida como metadata declarada, **no** como archivo en disco: un
+despliegue puede no empaquetar `artifacts/`, y exigir el fichero convertiría
+una afirmación de auditoría en una dependencia de runtime.
+
+Nada de esto entra en la semántica de consulta. `SoQLBuilder` no cambió, el
+sidecar no cambió, DAPRE proyecta igual. Es evidencia de auditoría expuesta en
+`registry.provenance` y en el binding.
+
+### Dos cosas que las mutaciones corrigieron
+
+**La forma de la fecha la impone la regex, no el parser.**
+`date.fromisoformat` acepta `20260902` y `2026-W36-3`: son ISO válidos y no son
+`YYYY-MM-DD`. Quitar la comprobación de forma no hacía caer ningún test hasta
+que se añadieron esos dos casos. Un `observed_at` en formato de semana ISO es
+ilegible como evidencia de auditoría, que es su única razón de existir.
+
+**El caso base de los negativos tenía que ser válido.**
+Al añadir la validación de raíz, los doce casos negativos de V1 pasaron a
+reventar todos en procedencia —les faltaba `schema_version`— antes de llegar a
+su causa declarada: doce tests probando una sola cosa. El helper construye
+ahora un sidecar completo y válido, cada caso afirma contra el fragmento de
+error que le corresponde, y un control positivo prueba que la línea base
+efectivamente carga.
+
+## 10. Deuda
 
 ```text
 DAPRE_SOURCE_NAME_SPLIT
