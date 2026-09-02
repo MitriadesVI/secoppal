@@ -17739,5 +17739,24 @@
       "corporación autónoma del río grande de la magdalena",
       "cormagdalena"
     ]
+  },
+  {
+    "official_name": "CENTRAL DE TRANSPORTE DE SANTA MARTA LTDA.",
+    "departamento": "Magdalena",
+    "total_procesos": 227,
+    "total_contratos": 0,
+    "source_datasets": [
+      "procesos"
+    ],
+    "nit": "891701694",
+    "entity_type": "empresa_transporte",
+    "aliases": [
+      "Central de Transporte de Santa Marta Ltda.",
+      "central de transporte de santa marta",
+      "terminal de transportes de santa marta",
+      "terminal de transporte de santa marta",
+      "terminal de santa marta",
+      "la terminal de transportes de santa marta"
+    ]
   }
 ]

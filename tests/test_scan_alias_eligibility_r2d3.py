@@ -23,6 +23,7 @@ from app.utils.money import normalize_text
 
 ALIASES_DB = Path("app/data/aliases_db.json")
 R2D2_ARTIFACT = Path("artifacts/audits/freed_alias_safety_r2d2.json")
+TERMINAL_SANTA_MARTA = "CENTRAL DE TRANSPORTE DE SANTA MARTA LTDA."
 
 KEEP_EXACT_DISABLE_SCAN = {
     "candelaria valle": "ALCALDÍA MUNICIPAL DE CANDELARIA VALLE",
@@ -133,6 +134,59 @@ def test_data_schema_expresses_the_nine_decisions_without_code_denylist() -> Non
         assert alias not in owned
         assert alias not in scan_disabled
         assert alias in resolution_blocked
+
+
+def test_verified_terminal_identity_is_registered_separately() -> None:
+    data = _load_gazetteer()
+    record = next(item for item in data if item["official_name"] == TERMINAL_SANTA_MARTA)
+    assert record["nit"] == "891701694"
+    assert record["departamento"] == "Magdalena"
+    assert record["total_procesos"] == 227
+    assert record["total_contratos"] == 0
+    assert {normalize_text(value) for value in record["aliases"]} >= {
+        "central de transporte de santa marta ltda.",
+        "terminal de transportes de santa marta",
+        "terminal de transporte de santa marta",
+    }
+
+
+@pytest.mark.parametrize(
+    "alias",
+    [
+        "Central de Transporte de Santa Marta Ltda.",
+        "terminal de transportes de santa marta",
+        "terminal de transporte de santa marta",
+    ],
+)
+def test_terminal_specific_aliases_resolve_exactly(
+    resolver: EntityResolver, alias: str
+) -> None:
+    result = resolver.resolve_entidad(alias)
+    assert result.value == TERMINAL_SANTA_MARTA
+    assert result.method == "exact"
+
+
+def test_terminal_specific_longest_match_wins_but_generic_alias_stays_blocked(
+    resolver: EntityResolver,
+) -> None:
+    phrase = "Terminal de Transportes de Santa Marta Magdalena"
+    result = resolver.scan_entity(normalize_text(phrase))
+    assert result is not None
+    assert result.official_name == TERMINAL_SANTA_MARTA
+    assert result.matched_alias == "terminal de transportes de santa marta"
+    assert result.remaining_text == "magdalena"
+
+    generic = resolver.resolve_entidad("santa marta magdalena")
+    assert generic.value is None
+    assert generic.method == "alias_resolution_blocked"
+
+
+def test_product_route_returns_terminal_specific_identity(router: QueryRouter) -> None:
+    params = router.parse(
+        "contratos del Terminal de Transportes de Santa Marta Magdalena"
+    ).params
+    assert params.get("entidad_resolved") == TERMINAL_SANTA_MARTA
+    assert params.get("departamento_resolved") == "Magdalena"
 
 
 def test_r2d2_frozen_universe_is_exactly_nine_aliases_and_seventeen_buyers() -> None:

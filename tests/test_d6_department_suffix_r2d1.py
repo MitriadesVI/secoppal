@@ -175,12 +175,13 @@ def test_institution_ending_in_geography_is_reachable(
     assert _department(router, phrase) is None
 
 
-def test_terminal_santa_marta_no_longer_falls_into_the_district_mayor(
+def test_terminal_santa_marta_resolves_to_its_specific_buyer(
     router: QueryRouter,
 ) -> None:
-    """R2D.3 defense A is valid before the specific identity is registered."""
+    """R2D.3 keeps D6 open while replacing the old wrong owner."""
     phrase = "contratos del Terminal de Transportes de Santa Marta Magdalena"
-    assert _entity(router, phrase) is None
+    assert _entity(router, phrase) == "CENTRAL DE TRANSPORTE DE SANTA MARTA LTDA."
+    assert _department(router, phrase) == "Magdalena"
 
 
 def test_ese_del_meta_stops_resolving_to_the_department(resolver: EntityResolver) -> None:
