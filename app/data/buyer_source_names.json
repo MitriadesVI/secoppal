@@ -1,8 +1,7 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "authority": "ADR-073",
-  "evidence": "artifacts/audits/public_university_pilot_r2fa.json",
-  "note": "Artefacto acumulativo: conserva DAPRE e incorpora las identidades verificadas por PUBLIC-UNIVERSITY-PILOT-R2FA. Los nombres físicos se guardan tal como la fuente los publica, byte-for-byte. Puntuación, acentos y mayúsculas son parte del binding: se comparan con igualdad exacta, no con LIKE.",
+  "note": "Cada binding conserva su procedencia individual en su propio campo 'evidence': el artefacto que acredita ESE binding, no el último lote que tocó el archivo. Los nombres físicos se guardan tal como la fuente los publica, byte-for-byte. Puntuación, acentos y mayúsculas son parte del binding: se comparan con igualdad exacta, no con LIKE.",
   "bindings": [
     {
       "canonical_name": "DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPÚBLICA",
@@ -11,6 +10,7 @@
         "value": "899999083"
       },
       "observed_at": "2026-09-02",
+      "evidence": "artifacts/audits/source_name_projection_v1.json",
       "sources": {
         "p6dx-8zbt": ["DAPRE"],
         "jbjy-vk9h": ["DAPRE"]
@@ -27,6 +27,7 @@
         "value": "890102257"
       },
       "observed_at": "2026-09-02",
+      "evidence": "artifacts/audits/public_university_pilot_r2fa.json",
       "sources": {
         "p6dx-8zbt": ["Universidad del Atlántico"],
         "jbjy-vk9h": ["Universidad del Atlántico"]
@@ -43,6 +44,7 @@
         "value": "891190346"
       },
       "observed_at": "2026-09-02",
+      "evidence": "artifacts/audits/public_university_pilot_r2fa.json",
       "sources": {
         "p6dx-8zbt": ["UNIVERSIDAD DE LA AMAZONIA (Entidad)"],
         "jbjy-vk9h": ["UNIVERSIDAD DE LA AMAZONIA (Entidad)"]
@@ -59,6 +61,7 @@
         "value": "891080031"
       },
       "observed_at": "2026-09-02",
+      "evidence": "artifacts/audits/public_university_pilot_r2fa.json",
       "sources": {
         "p6dx-8zbt": ["UNIVERSIDAD DE CORDOBA"],
         "jbjy-vk9h": ["UNIVERSIDAD DE CORDOBA"]
@@ -75,6 +78,7 @@
         "value": "8001631300"
       },
       "observed_at": "2026-09-02",
+      "evidence": "artifacts/audits/public_university_pilot_r2fa.json",
       "sources": {
         "p6dx-8zbt": ["UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)"],
         "jbjy-vk9h": ["UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)"]

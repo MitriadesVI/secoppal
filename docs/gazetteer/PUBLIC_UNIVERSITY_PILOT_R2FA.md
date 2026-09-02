@@ -135,8 +135,10 @@ aliases.
 ## Source Name Projection (ADR-073)
 
 Se agregaron cuatro bindings acumulativos; el sidecar conserva el binding
-historico de DAPRE y ahora suma cinco. Su procedencia raiz apunta a este
-artefacto, que contiene tanto DAPRE como la nueva evidencia.
+historico de DAPRE y ahora suma cinco. El sidecar es acumulativo; la
+procedencia no lo es: cada binding conserva su procedencia individual. Los
+cuatro de este piloto los acredita este artefacto; DAPRE lo acredita
+`source_name_projection_v1.json`, que es de otro lote.
 
 | Canonical preservado | NIT | Procesos exacto (filas) | Contratos exacto (filas) |
 |---|---|---|---|
@@ -148,6 +150,14 @@ artefacto, que contiene tanto DAPRE como la nueva evidencia.
 Las grafias completas byte-for-byte, incluidos acentos, estan en el JSON. Los
 ocho canarios dataset/binding prueban igualdad exacta, ausencia de `LIKE`,
 `UPPER`, `unaccent` y wildcard, canonical estable y params inmutables.
+
+**Correccion R2FA.1 (2026-09-02).** El cierre original declaraba una
+procedencia raiz unica que apuntaba a este artefacto para los cinco bindings.
+Era falsa para DAPRE: este artefacto no menciona `DAPRE` ni el NIT
+`899999083`. El sidecar migro a schema 2, donde `evidence` es por binding y el
+campo de raiz deja de existir; ninguna resolucion, SoQL, alias ni nombre fisico
+cambio. Detalle en
+[`SOURCE_NAME_PROJECTION_V1_IMPLEMENTATION.md`](SOURCE_NAME_PROJECTION_V1_IMPLEMENTATION.md).
 
 ## Replay de las 34 y no regresion
 

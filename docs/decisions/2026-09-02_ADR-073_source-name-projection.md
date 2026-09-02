@@ -4,6 +4,9 @@
 **Estado:** Accepted — implementado el 2026-09-02.
 Detalle: [`SOURCE_NAME_PROJECTION_V1_IMPLEMENTATION.md`](../gazetteer/SOURCE_NAME_PROJECTION_V1_IMPLEMENTATION.md).
 La decisión no cambió; V1 liga sólo a DAPRE y la comparación es exacta.
+Evoluciones de implementación, sin cambio de principio: **V1.1** valida la
+metadata que el ADR ya exigía; **V2** hace la procedencia granular por binding
+(ver *Evolución de implementación* al final).
 
 **Evidencia:**
 [`SOURCE_NAME_PROJECTION_V1.md`](../gazetteer/SOURCE_NAME_PROJECTION_V1.md) y
@@ -38,7 +41,7 @@ validar:
 - datasets conocidos;
 - 1..N nombres no vacíos por binding;
 - nombres sin duplicados;
-- fecha y procedencia de la evidencia.
+- fecha y procedencia de la evidencia, **por binding** (schema 2; ver abajo).
 
 La API será plural:
 
@@ -83,3 +86,40 @@ de geografía, Radar, Actor ni transporte SODA3.
 4. **Cambiar el canonical a `DAPRE`:** arregla el WHERE destruyendo la identidad
    humana y no generaliza a splits por dataset.
 
+
+## Evolución de implementación — schema 2 (R2FA.1, 2026-09-02)
+
+El principio no cambia: la proyección sigue siendo una autoridad tipada e
+independiente, la comparación sigue siendo exacta unida por `OR`, el sidecar
+sigue siendo la representación persistente. Lo que cambia es **dónde vive la
+procedencia**, porque la forma de schema 1 no podía sostener lo que el ADR ya
+exigía.
+
+Schema 1 declaraba un `evidence` único en la raíz. Con un solo binding eso era
+suficiente. Con dos lotes dejó de serlo: al incorporar las cuatro identidades
+de PUBLIC-UNIVERSITY-PILOT-R2FA, la raíz pasó a nombrar el artefacto del
+piloto, que no menciona DAPRE ni su NIT `899999083`. El campo tenía la forma
+correcta, el loader lo validaba, y la afirmación era falsa para el binding
+histórico.
+
+La pregunta que la procedencia debe contestar es *"¿qué artefacto acredita ESTE
+binding?"*. Un campo de raíz sólo puede contestar *"¿qué lote editó el archivo
+por última vez?"*, que es otra pregunta y no acredita nada.
+
+Schema 2:
+
+- `evidence` es **por binding**, requerido, string no vacío;
+- `evidence` de raíz **deja de existir** y su presencia es un error de carga —
+  tolerarlo permitiría que un lote futuro volviera a declarar una procedencia
+  acumulativa que no acredita a los bindings anteriores;
+- la raíz conserva `schema_version`, `authority` y `note`;
+- `observed_at` y `observed_rows` siguen siendo por binding, sin cambios;
+- se descartó explícitamente construir un artefacto acumulativo que copiara la
+  evidencia histórica: escala mal y obliga a reduplicarla en cada lote.
+
+Como en V1.1, `evidence` se valida como metadata declarada y **no** como
+archivo en disco: un despliegue puede no empaquetar `artifacts/`, y exigir el
+fichero convertiría una afirmación de auditoría en una dependencia de runtime.
+
+La migración de los cinco bindings no tocó resolución, SoQL, aliases, nombres
+físicos, `observed_at` ni `observed_rows`: `SEMANTIC_BINDING_DIFF = 0`.

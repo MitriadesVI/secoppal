@@ -291,7 +291,9 @@ def test_bound_identity_in_unbound_dataset_returns_none():
 # VALIDACIÓN DEL SIDECAR — fail fast, nunca silently malformed
 # =====================================================================
 
-_ROOT_KEYS = ("schema_version", "evidence", "authority")
+# `evidence` ya NO es raíz: en schema 2 la procedencia es por binding, así que
+# un override de `evidence` tiene que aterrizar en el record, no en el root.
+_ROOT_KEYS = ("schema_version", "authority")
 _UNSET = object()
 
 
@@ -305,13 +307,13 @@ def _sidecar(**overrides):
     """
     root = {
         "schema_version": SCHEMA_VERSION,
-        "evidence": "artifacts/audits/source_name_projection_v1.json",
         "authority": "ADR-073",
     }
     record = {
         "canonical_name": "X",
         "identity_key": {"type": "NIT", "value": "1"},
         "observed_at": "2026-09-02",
+        "evidence": "artifacts/audits/source_name_projection_v1.json",
         "sources": {PROCESOS: ["NAME"]},
     }
     for key, value in overrides.items():
@@ -344,12 +346,16 @@ def test_the_negative_baseline_is_actually_valid():
     (_sidecar(sources={PROCESOS: "NAME"}), "deben venir en una lista"),
     # --- contratos de metadata que ADR-073 exigía y V1 no validaba ---
     (_sidecar(schema_version=_UNSET), "schema_version"),
-    (_sidecar(schema_version=2), "schema_version"),
-    (_sidecar(schema_version="1"), "schema_version"),
+    # Schema 1 es el que declaraba procedencia acumulativa en la raíz: leerlo
+    # con las reglas de hoy resucitaría exactamente el defecto que V2 cierra.
+    (_sidecar(schema_version=1), "schema_version"),
+    (_sidecar(schema_version=3), "schema_version"),
+    (_sidecar(schema_version="2"), "schema_version"),
     (_sidecar(schema_version=True), "schema_version"),
     (_sidecar(evidence=_UNSET), "evidence"),
     (_sidecar(evidence=""), "evidence"),
     (_sidecar(evidence="   "), "evidence"),
+    (_sidecar(evidence=17128), "evidence"),
     (_sidecar(authority=""), "authority"),
     (_sidecar(observed_at=_UNSET), "observed_at"),
     (_sidecar(observed_at=""), "observed_at"),
@@ -371,8 +377,15 @@ def test_the_negative_baseline_is_actually_valid():
     (_sidecar(observed_rows={PROCESOS: True}), "observed_rows"),
     (_sidecar(observed_rows=[1, 2]), "observed_rows"),
     # --- raíz ---
-    ({"schema_version": SCHEMA_VERSION, "evidence": "x", "bindings": "no-es-lista"}, "bindings"),
+    ({"schema_version": SCHEMA_VERSION, "bindings": "no-es-lista"}, "bindings"),
     ({}, "schema_version"),
+    # Un `evidence` de raíz no se tolera en silencio: aceptarlo dejaría que un
+    # lote futuro volviera a declarar una procedencia que no acredita a los
+    # bindings anteriores, que es el defecto que V2 vino a cerrar.
+    (
+        {**_sidecar(), "evidence": "artifacts/audits/public_university_pilot_r2fa.json"},
+        "'evidence' de raíz no existe en schema 2",
+    ),
 ])
 def test_malformed_sidecar_fails_loudly(payload, expected_fragment):
     """Falla, y falla por la razón declarada — no por otra que llegó antes."""
@@ -396,13 +409,66 @@ def test_observed_metadata_is_not_query_semantics(builder):
 
 def test_provenance_is_exposed_for_audit():
     registry = load_registry()
-    assert registry.provenance.evidence == (
-        "artifacts/audits/public_university_pilot_r2fa.json"
-    )
     assert registry.provenance.schema_version == SCHEMA_VERSION
+    assert registry.provenance.authority == "ADR-073"
+    assert not hasattr(registry.provenance, "evidence")
     binding = registry.binding_for(DAPRE_CANONICAL)
     assert binding.observed_at == date(2026, 9, 2)
     assert binding.observed_rows == {PROCESOS: 17128, CONTRATOS: 4351}
+
+
+# =====================================================================
+# PROVENANCE V2 — la adjudicación, no la mera presencia del campo
+# =====================================================================
+
+# Qué artefacto acredita cada binding. Congelar la ADJUDICACIÓN y no sólo
+# "evidence no vacío" es la diferencia entre trazabilidad y decoración: bajo la
+# raíz única de V1 los cinco bindings apuntaban al artefacto del piloto
+# universitario, que no contiene DAPRE ni su NIT 899999083. El campo estaba
+# presente, con la forma correcta, y la afirmación era falsa.
+EXPECTED_EVIDENCE = {
+    DAPRE_CANONICAL: "artifacts/audits/source_name_projection_v1.json",
+    "UNIATLANTICO": "artifacts/audits/public_university_pilot_r2fa.json",
+    "UNIVERSIDAD DE LA AMAZONIA": "artifacts/audits/public_university_pilot_r2fa.json",
+    "UNIVERSIDAD DE CÓRDOBA": "artifacts/audits/public_university_pilot_r2fa.json",
+    "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA": (
+        "artifacts/audits/public_university_pilot_r2fa.json"
+    ),
+}
+
+
+@pytest.mark.parametrize("canonical,artifact", sorted(EXPECTED_EVIDENCE.items()))
+def test_each_binding_names_the_artifact_that_accredits_it(canonical, artifact):
+    """La procedencia es por binding y la adjudicación está congelada."""
+    binding = load_registry().binding_for(canonical)
+    assert binding is not None, canonical
+    assert binding.evidence == artifact
+
+
+def test_dapre_provenance_is_not_the_university_pilot():
+    """El defecto R2FA.1, fijado como regresión.
+
+    El artefacto del piloto no menciona DAPRE ni su NIT: adjudicárselo sería
+    afirmar una evidencia que no existe. Este test cae si alguien vuelve a
+    colapsar los cinco bindings en una sola procedencia raíz.
+    """
+    dapre = load_registry().binding_for(DAPRE_CANONICAL)
+    assert dapre.evidence == "artifacts/audits/source_name_projection_v1.json"
+    assert dapre.evidence != "artifacts/audits/public_university_pilot_r2fa.json"
+
+
+def test_no_binding_lacks_provenance():
+    registry = load_registry()
+    assert len(registry.bindings()) == 5
+    for binding in registry.bindings():
+        assert binding.evidence.strip(), binding.canonical_name
+
+
+def test_provenance_is_not_query_semantics():
+    """`evidence` es trazabilidad: no toca el WHERE por ninguna vía."""
+    soql = SoQLBuilder().build_count(PROCESOS, {"entidad_resolved": DAPRE_CANONICAL})
+    assert soql == "SELECT count(*) WHERE entidad = 'DAPRE'"
+    assert "artifacts" not in soql
 
 
 def test_duplicate_identity_key_is_rejected():

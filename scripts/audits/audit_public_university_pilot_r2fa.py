@@ -582,7 +582,13 @@ def main() -> int:
         "source_projection": {
             "bindings_added": [AMAZONIA, ATLANTICO, CORDOBA, UFPS_OCANA],
             "sidecar_total_bindings": len(source_registry),
-            "sidecar_evidence": source_registry.provenance.evidence,
+            "sidecar_schema_version": source_registry.provenance.schema_version,
+            # Procedencia por binding: el sidecar es acumulativo y ningún
+            # artefacto único acredita a todos. DAPRE viene de otro lote.
+            "sidecar_evidence_by_binding": {
+                binding.canonical_name: binding.evidence
+                for binding in source_registry.bindings()
+            },
             "canaries": projection_canaries,
         },
         "gates": {

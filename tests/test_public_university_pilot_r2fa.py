@@ -32,6 +32,7 @@ from gazetteer_ownership_baseline import (  # noqa: E402
 
 ALIASES_DB = Path("app/data/aliases_db.json")
 SOURCE_NAMES = Path("app/data/buyer_source_names.json")
+ARTIFACT = Path("artifacts/audits/public_university_pilot_r2fa.json")
 PROCESSES = SoQLBuilder.PROCESOS_DATASET
 CONTRACTS = SoQLBuilder.CONTRATOS_DATASET
 
@@ -43,6 +44,8 @@ UFPS_CUCUTA = "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER"
 UFPS_OCANA = "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA"
 UNITROPICO = "UNIVERSIDAD INTERNACIONAL DEL TRÓPICO AMERICANO UNITRÓPICO"
 UAIIN = "Universidad Autónoma Indígena Intercultural"
+# Fuera del piloto: comparte sidecar, no procedencia.
+DAPRE = "DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPÚBLICA"
 
 # Congelado antes de cualquier mutacion de datos en HEAD 8849f0d. Ocaña
 # corrige la identidad historica R2C: es un comprador separado, NIT 8001631300.
@@ -205,8 +208,38 @@ def test_exact_multi_owner_does_not_increase(gazetteer: list[dict]) -> None:
     assert len(multi_owner_groups(gazetteer)) <= len(baseline)
 
 
-def test_sidecar_provenance_points_to_accumulated_audit() -> None:
+R2FA_ARTIFACT = "artifacts/audits/public_university_pilot_r2fa.json"
+
+
+def test_sidecar_binds_each_identity_to_its_own_artifact() -> None:
+    """El sidecar es acumulativo; la procedencia NO lo es.
+
+    Los cuatro bindings del piloto los acredita este artefacto. El quinto,
+    DAPRE, viene de otro lote y de otro artefacto: adjudicarle el del piloto
+    afirmaría una evidencia que ese archivo no contiene.
+    """
     payload = json.loads(SOURCE_NAMES.read_text(encoding="utf-8"))
-    assert payload["evidence"] == "artifacts/audits/public_university_pilot_r2fa.json"
+    assert payload["schema_version"] == 2
     assert payload["authority"] == "ADR-073"
+    assert "evidence" not in payload
     assert len(payload["bindings"]) == 5
+
+    by_canonical = {row["canonical_name"]: row for row in payload["bindings"]}
+    for canonical in SOURCE_BINDINGS:
+        assert by_canonical[canonical]["evidence"] == R2FA_ARTIFACT
+
+
+def test_pilot_artifact_does_not_accredit_bindings_from_other_batches() -> None:
+    """El oráculo del defecto: el artefacto no menciona DAPRE ni su NIT."""
+    payload = json.loads(SOURCE_NAMES.read_text(encoding="utf-8"))
+    foreign = [
+        row
+        for row in payload["bindings"]
+        if row["canonical_name"] not in SOURCE_BINDINGS
+    ]
+    assert [row["canonical_name"] for row in foreign] == [DAPRE]
+
+    artifact = ARTIFACT.read_text(encoding="utf-8")
+    assert "DAPRE" not in artifact
+    assert "899999083" not in artifact
+    assert foreign[0]["evidence"] != R2FA_ARTIFACT

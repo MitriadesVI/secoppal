@@ -168,6 +168,9 @@ Lo que ahora se valida al cargar:
 | `observed_at` | requerido por binding · `YYYY-MM-DD` real |
 | `observed_rows` | opcional · datasets conocidos y declarados · enteros ≥ 0 |
 
+(La tabla describe schema 1. En schema 2 —§10— `evidence` deja la raíz y pasa a
+ser un campo requerido de cada binding.)
+
 `evidence` se valida como metadata declarada, **no** como archivo en disco: un
 despliegue puede no empaquetar `artifacts/`, y exigir el fichero convertiría
 una afirmación de auditoría en una dependencia de runtime.
@@ -192,7 +195,95 @@ ahora un sidecar completo y válido, cada caso afirma contra el fragmento de
 error que le corresponde, y un control positivo prueba que la línea base
 efectivamente carga.
 
-## 10. Deuda
+## 10. V2 — la procedencia es POR BINDING (R2FA.1)
+
+```text
+BUYER_SOURCE_BINDING_PROVENANCE_V2: PASS
+SCHEMA: 1 → 2 · BINDINGS 5 · SEMANTIC_BINDING_DIFF 0
+```
+
+V1.1 acreditó que la metadata existía y estaba bien formada. No acreditó que
+fuera **cierta**, y con un segundo lote dejó de serlo.
+
+El sidecar de schema 1 declaraba un `evidence` en la raíz. Al incorporar las
+cuatro identidades del piloto universitario, esa raíz pasó a apuntar a
+`public_university_pilot_r2fa.json` para los cinco bindings — incluido DAPRE,
+que ese artefacto no menciona:
+
+```text
+grep -c DAPRE     public_university_pilot_r2fa.json  → 0
+grep -c 899999083 public_university_pilot_r2fa.json  → 0
+grep -c DAPRE     source_name_projection_v1.json     → 15
+grep -c 899999083 source_name_projection_v1.json     → 14
+```
+
+Un campo de raíz sólo puede contestar *qué lote tocó el archivo al final*. La
+pregunta de auditoría es *qué artefacto acredita ESTE binding*. Son distintas,
+y la primera miente sobre todos los bindings salvo el más reciente.
+
+### Lo que cambió
+
+| | Schema 1 | Schema 2 |
+|---|---|---|
+| `evidence` de raíz | requerido | **error de carga** |
+| `evidence` por binding | no existe | requerido · string no vacío |
+| `SidecarProvenance` | `schema_version`, `evidence`, `authority` | `schema_version`, `authority` |
+| `BuyerSourceBinding` | +`observed_at`, `observed_rows` | +`evidence` |
+
+Que un `evidence` de raíz sea un **error** y no un campo tolerado es lo que
+impide que el defecto vuelva por copiar el archivo viejo: aceptarlo en silencio
+dejaría que un lote futuro redeclare la procedencia acumulativa que se acaba de
+retirar.
+
+Se descartó la alternativa de generar un artefacto acumulativo que copiara la
+evidencia histórica de DAPRE junto a la nueva: escala mal y obliga a reduplicar
+todo en cada lote.
+
+### Adjudicación congelada
+
+| Binding | Artefacto que lo acredita |
+|---|---|
+| DAPRE | `source_name_projection_v1.json` |
+| `UNIATLANTICO` | `public_university_pilot_r2fa.json` |
+| `UNIVERSIDAD DE LA AMAZONIA` | `public_university_pilot_r2fa.json` |
+| `UNIVERSIDAD DE CÓRDOBA` | `public_university_pilot_r2fa.json` |
+| `UNIVERSIDAD ... SECCIONAL OCAÑA` | `public_university_pilot_r2fa.json` |
+
+`assert evidence != ""` no habría detectado nada: bajo schema 1 los cinco
+campos estaban presentes y bien formados. Los oráculos fijan la **adjudicación
+concreta**, no la presencia del campo.
+
+### Migración
+
+Cinco bindings migrados, ninguno añadido. No cambió ningún canonical, NIT,
+nombre físico, `observed_at` ni `observed_rows`; el SoQL de las cinco
+identidades por dataset es byte-idéntico antes y después.
+
+```text
+SEMANTIC_BINDING_DIFF  0
+SOURCE_NAMES_CHANGED   NO
+SOQL_CHANGED           NO
+ALIASES_CHANGED        NO
+```
+
+`evidence` no entra al WHERE por ninguna vía: es trazabilidad, y el runtime de
+SoQL no lo consume.
+
+### Mutaciones
+
+| # | Mutación | Resultado |
+|---|---|---|
+| 1 | quitar `evidence` de DAPRE | 40 tests caen |
+| 2 | adjudicar a DAPRE el artefacto universitario | 3 tests caen |
+| 3 | adjudicar a Amazonia el artefacto de DAPRE | 2 tests caen |
+| 4 | volver a `schema_version` 1 | 40 tests caen |
+| 5 | reintroducir `evidence` de raíz | 40 tests caen |
+| 6 | aflojar el loader y quitar un `evidence` | 8 tests caen |
+
+Las mutaciones 2 y 3 son las que separan trazabilidad de decoración: sólo caen
+porque los oráculos fijan qué artefacto acredita a quién.
+
+## 11. Deuda
 
 ```text
 DAPRE_SOURCE_NAME_SPLIT

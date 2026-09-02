@@ -43,7 +43,12 @@ KNOWN_DATASET_IDS: frozenset[str] = frozenset({"p6dx-8zbt", "jbjy-vk9h"})
 # Versión de schema que este loader sabe leer. Un sidecar con otra versión no
 # se interpreta "lo mejor posible": se rechaza. Leer un schema futuro con las
 # reglas de hoy es la forma silenciosa de proyectar un filtro que nadie revisó.
-SCHEMA_VERSION = 1
+#
+# V2 mueve la procedencia de la raíz al binding. En V1 el archivo declaraba UN
+# `evidence` para todo el sidecar, lo que sólo responde "qué lote tocó el
+# archivo al final", no "qué artefacto acredita ESTE binding" — y con dos lotes
+# la respuesta de raíz pasó a ser falsa para el binding más antiguo.
+SCHEMA_VERSION = 2
 
 _ISO_DATE_RE = re.compile(r"\d{4}-\d{2}-\d{2}")
 
@@ -56,16 +61,24 @@ class BuyerSourceNameError(ValueError):
 class BuyerSourceBinding:
     """Los nombres físicos de UNA identidad, declarados por dataset.
 
-    `observed_at` y `observed_rows` son evidencia de auditoría, no semántica de
-    consulta: dicen cuándo se verificó el binding y cuántas filas devolvía
-    entonces. Nada en el runtime los lee para filtrar. Existen porque un
-    binding sin fecha es indistinguible de un binding que dejó de ser cierto.
+    `observed_at`, `evidence` y `observed_rows` son evidencia de auditoría, no
+    semántica de consulta: dicen cuándo se verificó el binding, qué artefacto
+    lo acredita y cuántas filas devolvía entonces. Nada en el runtime los lee
+    para filtrar. Existen porque un binding sin fecha es indistinguible de un
+    binding que dejó de ser cierto, y uno sin artefacto propio no puede
+    contestar quién lo acreditó.
+
+    `evidence` es POR BINDING a propósito. La procedencia contesta "¿qué
+    artefacto acredita ESTE binding?", no "¿qué lote editó el archivo por
+    última vez?": son preguntas distintas y la segunda miente sobre todos los
+    bindings salvo el más reciente.
     """
 
     canonical_name: str
     identity_key: str
     sources: dict[str, tuple[str, ...]]
     observed_at: date
+    evidence: str
     observed_rows: dict[str, int]
 
     def names_for(self, dataset_id: str) -> tuple[str, ...] | None:
@@ -74,10 +87,15 @@ class BuyerSourceBinding:
 
 @dataclass(frozen=True, slots=True)
 class SidecarProvenance:
-    """De dónde salió el sidecar. Declarada, no inferida."""
+    """Metadata del REGISTRO. Deliberadamente sin `evidence`.
+
+    La procedencia de una identidad vive en su binding. Un `evidence` de raíz
+    sólo podría nombrar un artefacto, y en un sidecar acumulativo ese artefacto
+    acredita a lo sumo el último lote: para todos los demás bindings sería una
+    afirmación de auditoría falsa con forma de metadata válida.
+    """
 
     schema_version: int
-    evidence: str
     authority: str | None
 
 
@@ -101,6 +119,17 @@ class BuyerSourceNameRegistry:
 
     def __len__(self) -> int:
         return len(self._by_canonical)
+
+    def bindings(self) -> tuple[BuyerSourceBinding, ...]:
+        """Todos los bindings, por canónico. Existe para auditar procedencia.
+
+        Recorrer el registro es una pregunta de trazabilidad —"¿qué acredita
+        cada binding?"— y no de consulta: el runtime siempre entra por
+        `project`, que resuelve una identidad concreta.
+        """
+        return tuple(
+            sorted(self._by_canonical.values(), key=lambda item: item.canonical_name)
+        )
 
     def binding_for(self, canonical_name: str) -> BuyerSourceBinding | None:
         if not canonical_name:
@@ -181,18 +210,22 @@ def _parse_provenance(payload: dict[str, Any]) -> SidecarProvenance:
             f"schema_version {raw_version} no soportado; este loader lee {SCHEMA_VERSION}"
         )
 
-    # La procedencia se valida como metadata declarada, no como archivo en
-    # disco: un despliegue puede no empaquetar artifacts/, y exigir el fichero
-    # convertiría una afirmación de auditoría en una dependencia de runtime.
-    evidence = _require_str(payload.get("evidence"), "evidence")
+    # `evidence` de raíz es un error, no un campo tolerado: si se aceptara en
+    # silencio, un lote futuro volvería a declarar procedencia acumulativa que
+    # no acredita a los bindings anteriores. Rechazarlo es lo que impide que el
+    # defecto reaparezca por copiar el archivo viejo.
+    if "evidence" in payload:
+        raise BuyerSourceNameError(
+            "'evidence' de raíz no existe en schema 2: la procedencia es por "
+            "binding, porque un artefacto de raíz no acredita bindings de otros "
+            "lotes"
+        )
 
     authority = payload.get("authority")
     if authority is not None:
         authority = _require_str(authority, "authority")
 
-    return SidecarProvenance(
-        schema_version=raw_version, evidence=evidence, authority=authority,
-    )
+    return SidecarProvenance(schema_version=raw_version, authority=authority)
 
 
 def _parse_sources(raw: Any, canonical: str) -> dict[str, tuple[str, ...]]:
@@ -261,6 +294,13 @@ def parse_registry(payload: Any) -> BuyerSourceNameRegistry:
                 sources=sources,
                 observed_at=_require_iso_date(
                     record.get("observed_at"), f"{canonical}/observed_at",
+                ),
+                # Igual que en V1, la procedencia se valida como metadata
+                # declarada y no como archivo en disco: un despliegue puede no
+                # empaquetar artifacts/, y exigir el fichero convertiría una
+                # afirmación de auditoría en una dependencia de runtime.
+                evidence=_require_str(
+                    record.get("evidence"), f"{canonical}/evidence",
                 ),
                 observed_rows=_parse_observed_rows(
                     record.get("observed_rows"), canonical, set(sources),
