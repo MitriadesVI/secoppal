@@ -79,7 +79,17 @@ M2_MODIFIED_FILE_SHA256 = {
     # id tie-break follow the requested direction. Both are gated strictly by
     # ordering_signal values the parser could not emit before R6; the ordinary
     # oracle below is byte-identical, which bounds the divergence to them.
-    "app/core/soql_builder.py": "ebdf1d1a14aae2695fdc26211f207266676ebe111609f1a8d2672c1246d0037c",
+    # SOURCE-NAME-PROJECTION-V1 (ADR-073) hace que el filtro de comprador
+    # consulte un registro de nombres físicos por dataset y, cuando hay
+    # binding, compare con igualdad exacta en vez de LIKE. La divergencia
+    # está acotada por el sidecar, no por una condición de código: sólo
+    # diverge una identidad con binding, y V1 liga únicamente a DAPRE, que
+    # ninguna consulta ordinaria menciona. Por eso el oráculo de abajo sigue
+    # byte-idéntico. tests/test_source_name_projection_v1.py prueba además
+    # que ocho identidades SIN binding emiten el mismo SoQL byte por byte,
+    # que entidad_like nunca se proyecta y que los guards de
+    # entidad_ecosystem e entidad_in_candidates no se movieron.
+    "app/core/soql_builder.py": "9f98620eb22ab82adde421b3ecdc5f5cbbf7233556f566b9b6e05878629b285b",
 }
 
 # M2.1 corrigió dos consumidores visibles. AP3-G autoriza además controles de

@@ -4,6 +4,7 @@ import logging
 from dataclasses import dataclass
 
 from app.core.actor_document_types import incompatible_source_types
+from app.core.buyer_source_names import project_buyer_names
 from app.core.contract_type_projection import project_contract_types
 from app.core.modality_dataset_projection import (
     DatasetModalityProjection,
@@ -366,7 +367,13 @@ class SoQLBuilder:
             where_clauses.append(
                 self._accent_fold_like(spec.city, self._escape(str(params['ciudad'])))
             )
-        entidad_value = params.get("entidad_like") or params.get("entidad_resolved")
+        entidad_like = params.get("entidad_like")
+        # `entidad_value` conserva EXACTAMENTE la precedencia previa porque
+        # gobierna los guards `not entidad_value` de entidad_ecosystem e
+        # entidad_in_candidates. Separar los dos campos aquí cambiaría cuándo
+        # disparan esas ramas, y la regresión no se vería en DAPRE sino en
+        # consultas que no tienen nada que ver con la proyección.
+        entidad_value = entidad_like or params.get("entidad_resolved")
         entidad_ecosystem = params.get("entidad_ecosystem")
         if entidad_ecosystem and isinstance(entidad_ecosystem, list) and not entidad_value:
             # ENTITY-ECOSYSTEM-001: expand to OR across all ecosystem entities
@@ -377,7 +384,7 @@ class SoQLBuilder:
             where_clauses.append(f"({entity_likes})")
         elif entidad_value:
             where_clauses.append(
-                self._accent_fold_like(spec.entity, self._escape(str(entidad_value)))
+                self._entity_clause(spec, entidad_value, is_like_fallback=bool(entidad_like))
             )
 
         # G7C: entity ecosystem contains_all — AND of LIKEs (e.g. SENA + MAGDALENA)
@@ -722,6 +729,43 @@ class SoQLBuilder:
         if include_clause and exclude_clause:
             return f"({include_clause}) AND ({exclude_clause})"
         return include_clause or exclude_clause
+
+    def _entity_clause(
+        self, spec: DatasetSpec, entidad_value: str, *, is_like_fallback: bool,
+    ) -> str:
+        """Filtro por comprador. Tres caminos, uno solo proyecta (ADR-073).
+
+        1. `entidad_like`: palabras del usuario sin identidad acreditada. LIKE
+           previo intacto; nunca se busca binding para ellas.
+        2. `entidad_resolved` sin binding: LIKE previo intacto, byte-for-byte.
+        3. `entidad_resolved` con binding: igualdad EXACTA contra los nombres
+           físicos del dataset.
+
+        La igualdad no lleva `%`, ni `UPPER()`, ni accent folding: relajarla
+        deja que la grafía de un dataset alcance la del otro por substring
+        —Soacha publica `MUNICIPIO DE SOACHA..` en procesos y
+        `MUNICIPIO DE SOACHA.` en contratos— y eso es el defecto, no la
+        tolerancia.
+        """
+        projected = (
+            None if is_like_fallback
+            else project_buyer_names(str(entidad_value), spec.dataset_id)
+        )
+        if projected:
+            return self._exact_entity_clause(spec.entity, projected)
+        return self._accent_fold_like(spec.entity, self._escape(str(entidad_value)))
+
+    @classmethod
+    def _exact_entity_clause(cls, field: str, names: tuple[str, ...]) -> str:
+        """`campo = 'A'`, o `(campo = 'A' OR campo = 'B')` con varios nombres.
+
+        El OR va explícito y no `IN (...)`: es lo que declara ADR-073 y lo que
+        leen los tests que impiden que la comparación se relaje.
+        """
+        equalities = [f"{field} = '{cls._escape(name)}'" for name in names]
+        if len(equalities) == 1:
+            return equalities[0]
+        return f"({' OR '.join(equalities)})"
 
     @classmethod
     def _accent_fold_like(cls, field: str, escaped_pattern: str) -> str:
