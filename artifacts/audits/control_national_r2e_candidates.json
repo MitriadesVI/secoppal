@@ -1,0 +1,3233 @@
+{
+  "audit": "CONTROL-NATIONAL-R2E",
+  "label": "POST",
+  "type": "discovery + remediation verification",
+  "as_of": "2026-09-01",
+  "recent_since": "2025-09-01",
+  "authority": {
+    "state_structure": "https://www.funcionpublica.gov.co/eva/gestornormativo/manual-estado/organismos-control.php",
+    "processes": "p6dx-8zbt",
+    "contracts": "jbjy-vk9h",
+    "buyer_directory": "4ex9-j3n8"
+  },
+  "adr": "ADR-072",
+  "gazetteer": "app/data/aliases_db.json",
+  "methodology": {
+    "containment": "secuencia completa de tokens normalizados, no substring",
+    "identity": "NIT normalizado sin dígito de verificación",
+    "cross_owner_rule": "un comprador contenedor sólo cuenta como dueño ajeno si tiene actividad transaccional en SECOP II; los registros con cédula y el nombre de la propia institución son duplicados registrales",
+    "buyer_directory_size": 27286
+  },
+  "universe": {
+    "control_roots": 4,
+    "related_buyers": 2,
+    "total": 6
+  },
+  "identity": [
+    {
+      "code": "CGR",
+      "logical_name": "Contraloría General de la República",
+      "institutional_role": "CONTROL_ROOT",
+      "nit": "899999067",
+      "expected_physical_name": "CGR-NIVEL CENTRAL",
+      "published_nit_variants": [
+        "899999067",
+        "8999990672"
+      ],
+      "process_source_names": [
+        "CGR - GERENCIA DEPARTAMENTAL COLEGIADA DE GUAVIARE",
+        "CGR GERENCIA DEPARTAMENTAL HUILA",
+        "CGR- GERENCIA DEPARTAMENTAL QUINDIO",
+        "CGR-GERENCIA DEPARTAMENTAL CAUCA",
+        "CGR-GERENCIA DEPARTAMENTAL VAUPES",
+        "CGR-GERENCIA RISARALDA",
+        "CGR-NIVEL CENTRAL",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - CGR - GERENCIA DEPARTAMENTAL MAGDALENA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - CGR - GERENCIA DEPARTAMENTAL VALLE DEL CAUCA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - CGR - UNIDAD DE SEGUIMIENTO Y AUDITORIA REGALIAS",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - CGR DEPARTAMENTAL PUTUMAYO",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - CGR-GERENCIA DEPARTAMENTAL CESAR",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - GERENCIA DEPARTAMENTAL  CALDAS",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - GERENCIA DEPARTAMENTAL CHOCO",
+        "CONTRALORIA GENERAL DE LA REPUBLICA -GERENCIA DEPARTAMENTAL VICHADA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA GERENCIA COLEGIADA CAQUETA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA GERENCIA DEPARTAMENTAL COLEGIADA DE BOLIVAR",
+        "CONTRALORIA GENERAL DE LA REPUBLICA- CGR GERENCIA DEPARTAMENTAL ARAUCA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA- CGR- DEPARTAMENTAL GUAJIRA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR- GERENCIA DEPARTAMENTAL ANTIOQUIA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR- GERENCIA DEPARTAMENTAL ATLÁNTICO",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR- GERENCIA DEPARTAMENTAL BOYACA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR- GERENCIA DEPARTAMENTAL CASANARE",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR- GERENCIA DEPARTAMENTAL NORTE DE SANTANDER",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR-GERENCIA DEPARTAMENTAL AMAZONAS",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR-GERENCIA DEPARTAMENTAL CORDOBA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR-GERENCIA DEPARTAMENTAL SAN ANDRES",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR-GERENCIA DEPARTAMENTAL SANTANDER",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR-GERENCIA DEPARTAMENTAL SUCRE",
+        "CONTRALORIA GENERAL DE LA REPÚBLICA - CGR GERENCIA DEPARTAMENTAL COLEGIADA NARIÑO",
+        "CONTRALORIA GENERAL DE LA REPÚBLICA - CGR GERENCIA DEPARTAMENTAL META",
+        "CONTRALORIA GENERAL DE LA REPÚBLICA-CGR- GERENCIA DEPARTAMENTAL GUANIA",
+        "CONTRALORÍA GENERAL DE LA REPÚBLICA- CGR-GERENCIA DEPARTAMENTAL TOLIMA"
+      ],
+      "contract_source_names": [
+        "CGR - GERENCIA DEPARTAMENTAL COLEGIADA DE GUAVIARE",
+        "CGR GERENCIA DEPARTAMENTAL HUILA",
+        "CGR- GERENCIA DEPARTAMENTAL QUINDIO",
+        "CGR-GERENCIA DEPARTAMENTAL CAUCA",
+        "CGR-GERENCIA DEPARTAMENTAL VAUPES",
+        "CGR-GERENCIA RISARALDA",
+        "CGR-NIVEL CENTRAL",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - CGR - GERENCIA DEPARTAMENTAL MAGDALENA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - CGR - GERENCIA DEPARTAMENTAL VALLE DEL CAUCA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - CGR - UNIDAD DE SEGUIMIENTO Y AUDITORIA REGALIAS",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - CGR DEPARTAMENTAL PUTUMAYO",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - CGR-GERENCIA DEPARTAMENTAL CESAR",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - GERENCIA DEPARTAMENTAL  CALDAS",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - GERENCIA DEPARTAMENTAL CHOCO",
+        "CONTRALORIA GENERAL DE LA REPUBLICA -GERENCIA DEPARTAMENTAL VICHADA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA GERENCIA COLEGIADA CAQUETA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA GERENCIA DEPARTAMENTAL COLEGIADA DE BOLIVAR",
+        "CONTRALORIA GENERAL DE LA REPUBLICA- CGR GERENCIA DEPARTAMENTAL ARAUCA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA- CGR- DEPARTAMENTAL GUAJIRA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR- GERENCIA DEPARTAMENTAL ANTIOQUIA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR- GERENCIA DEPARTAMENTAL ATLÁNTICO",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR- GERENCIA DEPARTAMENTAL BOYACA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR- GERENCIA DEPARTAMENTAL CASANARE",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR- GERENCIA DEPARTAMENTAL NORTE DE SANTANDER",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR-GERENCIA DEPARTAMENTAL AMAZONAS",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR-GERENCIA DEPARTAMENTAL CORDOBA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR-GERENCIA DEPARTAMENTAL SAN ANDRES",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR-GERENCIA DEPARTAMENTAL SANTANDER",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR-GERENCIA DEPARTAMENTAL SUCRE",
+        "CONTRALORIA GENERAL DE LA REPÚBLICA - CGR GERENCIA DEPARTAMENTAL COLEGIADA NARIÑO",
+        "CONTRALORIA GENERAL DE LA REPÚBLICA - CGR GERENCIA DEPARTAMENTAL META",
+        "CONTRALORIA GENERAL DE LA REPÚBLICA-CGR- GERENCIA DEPARTAMENTAL GUANIA",
+        "CONTRALORÍA GENERAL DE LA REPÚBLICA- CGR-GERENCIA DEPARTAMENTAL TOLIMA"
+      ],
+      "all_time_processes": 8339,
+      "all_time_contracts": 7605,
+      "recent_processes": 705,
+      "recent_contracts": 598,
+      "expected_name_all_time_processes": 5654,
+      "expected_name_recent_processes": 360,
+      "expected_name_all_time_contracts": 5424,
+      "expected_name_recent_contracts": 326,
+      "secop_identity_shape": "MULTIPLE_PHYSICAL_SAME_IDENTITY",
+      "identity_verified": true
+    },
+    {
+      "code": "AGR",
+      "logical_name": "Auditoría General de la República",
+      "institutional_role": "CONTROL_ROOT",
+      "nit": "830065741",
+      "expected_physical_name": "AUDITORIA GENERAL DE LA REPUBLICA",
+      "published_nit_variants": [
+        "830065741"
+      ],
+      "process_source_names": [
+        "AUDITORIA GENERAL DE LA REPUBLICA"
+      ],
+      "contract_source_names": [
+        "AUDITORIA GENERAL DE LA REPUBLICA"
+      ],
+      "all_time_processes": 1274,
+      "all_time_contracts": 1092,
+      "recent_processes": 198,
+      "recent_contracts": 147,
+      "expected_name_all_time_processes": 1274,
+      "expected_name_recent_processes": 198,
+      "expected_name_all_time_contracts": 1092,
+      "expected_name_recent_contracts": 147,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "identity_verified": true
+    },
+    {
+      "code": "PGN",
+      "logical_name": "Procuraduría General de la Nación",
+      "institutional_role": "CONTROL_ROOT",
+      "nit": "899999119",
+      "expected_physical_name": "PROCURADURIA GENERAL DE LA NACION",
+      "published_nit_variants": [
+        "899999119"
+      ],
+      "process_source_names": [
+        "PROCURADURIA GENERAL DE LA NACION"
+      ],
+      "contract_source_names": [
+        "PROCURADURIA GENERAL DE LA NACION"
+      ],
+      "all_time_processes": 2224,
+      "all_time_contracts": 1549,
+      "recent_processes": 534,
+      "recent_contracts": 364,
+      "expected_name_all_time_processes": 2224,
+      "expected_name_recent_processes": 534,
+      "expected_name_all_time_contracts": 1549,
+      "expected_name_recent_contracts": 364,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "identity_verified": true
+    },
+    {
+      "code": "DP",
+      "logical_name": "Defensoría del Pueblo",
+      "institutional_role": "CONTROL_ROOT",
+      "nit": "800186061",
+      "expected_physical_name": "DEFENSORÍA DEL PUEBLO",
+      "published_nit_variants": [
+        "800186061"
+      ],
+      "process_source_names": [
+        "DEFENSORÍA DEL PUEBLO"
+      ],
+      "contract_source_names": [
+        "DEFENSORÍA DEL PUEBLO"
+      ],
+      "all_time_processes": 14240,
+      "all_time_contracts": 34915,
+      "recent_processes": 2098,
+      "recent_contracts": 9609,
+      "expected_name_all_time_processes": 14240,
+      "expected_name_recent_processes": 2098,
+      "expected_name_all_time_contracts": 34915,
+      "expected_name_recent_contracts": 9609,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "identity_verified": true
+    },
+    {
+      "code": "FBS",
+      "logical_name": "Fondo de Bienestar Social de la Contraloría General de la República",
+      "institutional_role": "RELATED_BUYER",
+      "parent_concept": "Contraloría General de la República",
+      "nit": "800252683",
+      "expected_physical_name": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+      "published_nit_variants": [
+        "800252683"
+      ],
+      "process_source_names": [
+        "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA"
+      ],
+      "contract_source_names": [
+        "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA"
+      ],
+      "all_time_processes": 1104,
+      "all_time_contracts": 782,
+      "recent_processes": 113,
+      "recent_contracts": 97,
+      "expected_name_all_time_processes": 1104,
+      "expected_name_recent_processes": 113,
+      "expected_name_all_time_contracts": 782,
+      "expected_name_recent_contracts": 97,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "identity_verified": true
+    },
+    {
+      "code": "IEMP",
+      "logical_name": "Instituto de Estudios del Ministerio Público",
+      "institutional_role": "RELATED_BUYER",
+      "parent_concept": "Procuraduría General de la Nación",
+      "nit": "830015728",
+      "expected_physical_name": "INSTITUTO DE ESTUDIOS DEL MINISTERIO PUBLICO.",
+      "published_nit_variants": [
+        "8300157281"
+      ],
+      "process_source_names": [
+        "INSTITUTO DE ESTUDIOS DEL MINISTERIO PUBLICO."
+      ],
+      "contract_source_names": [
+        "INSTITUTO DE ESTUDIOS DEL MINISTERIO PUBLICO."
+      ],
+      "all_time_processes": 205,
+      "all_time_contracts": 213,
+      "recent_processes": 22,
+      "recent_contracts": 20,
+      "expected_name_all_time_processes": 205,
+      "expected_name_recent_processes": 22,
+      "expected_name_all_time_contracts": 213,
+      "expected_name_recent_contracts": 20,
+      "secop_identity_shape": "SINGLE_PHYSICAL_NAME",
+      "identity_verified": true
+    }
+  ],
+  "resolution": {
+    "institutional_names": [
+      {
+        "query": "Contraloría General de la República",
+        "expected_owner": "CGR-NIVEL CENTRAL",
+        "resolved_owner": "CGR-NIVEL CENTRAL",
+        "method": "exact",
+        "classification": "PASS_EXACT"
+      },
+      {
+        "query": "Auditoría General de la República",
+        "expected_owner": "AUDITORIA GENERAL DE LA REPUBLICA",
+        "resolved_owner": "AUDITORIA GENERAL DE LA REPUBLICA",
+        "method": "exact",
+        "classification": "PASS_EXACT"
+      },
+      {
+        "query": "Procuraduría General de la Nación",
+        "expected_owner": "PROCURADURIA GENERAL DE LA NACION",
+        "resolved_owner": "PROCURADURIA GENERAL DE LA NACION",
+        "method": "exact",
+        "classification": "PASS_EXACT"
+      },
+      {
+        "query": "Defensoría del Pueblo",
+        "expected_owner": "DEFENSORÍA DEL PUEBLO",
+        "resolved_owner": "DEFENSORÍA DEL PUEBLO",
+        "method": "exact",
+        "classification": "PASS_EXACT"
+      },
+      {
+        "query": "Fondo de Bienestar Social de la Contraloría General de la República",
+        "expected_owner": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+        "resolved_owner": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+        "method": "exact",
+        "classification": "PASS_EXACT"
+      },
+      {
+        "query": "Instituto de Estudios del Ministerio Público",
+        "expected_owner": "INSTITUTO DE ESTUDIOS DEL MINISTERIO PUBLICO.",
+        "resolved_owner": "INSTITUTO DE ESTUDIOS DEL MINISTERIO PUBLICO.",
+        "method": "exact",
+        "classification": "PASS_EXACT"
+      }
+    ],
+    "human_forms": [
+      {
+        "query": "Auditoría General",
+        "expected_owner": "AUDITORIA GENERAL DE LA REPUBLICA",
+        "resolved_owner": "AUDITORIA GENERAL DE LA REPUBLICA",
+        "method": "exact",
+        "classification": "PASS_EXACT"
+      },
+      {
+        "query": "Contraloría",
+        "expected_owner": "CGR-NIVEL CENTRAL",
+        "resolved_owner": "CGR-NIVEL CENTRAL",
+        "method": "exact",
+        "classification": "PASS_EXACT"
+      },
+      {
+        "query": "Contraloría General",
+        "expected_owner": "CGR-NIVEL CENTRAL",
+        "resolved_owner": "CGR-NIVEL CENTRAL",
+        "method": "exact",
+        "classification": "PASS_EXACT"
+      },
+      {
+        "query": "Defensoría",
+        "expected_owner": "DEFENSORÍA DEL PUEBLO",
+        "resolved_owner": "DEFENSORÍA DEL PUEBLO",
+        "method": "exact",
+        "classification": "PASS_EXACT"
+      },
+      {
+        "query": "Defensoría Pública",
+        "expected_owner": "DEFENSORÍA DEL PUEBLO",
+        "resolved_owner": "DEFENSORÍA DEL PUEBLO",
+        "method": "exact",
+        "classification": "PASS_EXACT"
+      },
+      {
+        "query": "Fondo de Bienestar Social de la CGR",
+        "expected_owner": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+        "resolved_owner": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+        "method": "exact",
+        "classification": "PASS_EXACT"
+      },
+      {
+        "query": "Procuraduría",
+        "expected_owner": "PROCURADURIA GENERAL DE LA NACION",
+        "resolved_owner": "PROCURADURIA GENERAL DE LA NACION",
+        "method": "exact",
+        "classification": "PASS_EXACT"
+      },
+      {
+        "query": "Procuraduría General",
+        "expected_owner": "PROCURADURIA GENERAL DE LA NACION",
+        "resolved_owner": "PROCURADURIA GENERAL DE LA NACION",
+        "method": "exact",
+        "classification": "PASS_EXACT"
+      },
+      {
+        "query": "el Fondo de Bienestar Social de la Contraloría General de la República",
+        "expected_owner": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+        "resolved_owner": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+        "method": "exact",
+        "classification": "PASS_EXACT"
+      },
+      {
+        "query": "el Instituto de Estudios del Ministerio Público",
+        "expected_owner": "INSTITUTO DE ESTUDIOS DEL MINISTERIO PUBLICO.",
+        "resolved_owner": "INSTITUTO DE ESTUDIOS DEL MINISTERIO PUBLICO.",
+        "method": "exact",
+        "classification": "PASS_EXACT"
+      },
+      {
+        "query": "la Auditoría General",
+        "expected_owner": "AUDITORIA GENERAL DE LA REPUBLICA",
+        "resolved_owner": "AUDITORIA GENERAL DE LA REPUBLICA",
+        "method": "exact",
+        "classification": "PASS_EXACT"
+      },
+      {
+        "query": "la Auditoría General de la República",
+        "expected_owner": "AUDITORIA GENERAL DE LA REPUBLICA",
+        "resolved_owner": "AUDITORIA GENERAL DE LA REPUBLICA",
+        "method": "exact",
+        "classification": "PASS_EXACT"
+      },
+      {
+        "query": "la Contraloría",
+        "expected_owner": "CGR-NIVEL CENTRAL",
+        "resolved_owner": "CGR-NIVEL CENTRAL",
+        "method": "exact",
+        "classification": "PASS_EXACT"
+      },
+      {
+        "query": "la Contraloría General de la República",
+        "expected_owner": "CGR-NIVEL CENTRAL",
+        "resolved_owner": "CGR-NIVEL CENTRAL",
+        "method": "exact",
+        "classification": "PASS_EXACT"
+      },
+      {
+        "query": "la Defensoría",
+        "expected_owner": "DEFENSORÍA DEL PUEBLO",
+        "resolved_owner": "DEFENSORÍA DEL PUEBLO",
+        "method": "exact",
+        "classification": "PASS_EXACT"
+      },
+      {
+        "query": "la Defensoría del Pueblo",
+        "expected_owner": "DEFENSORÍA DEL PUEBLO",
+        "resolved_owner": "DEFENSORÍA DEL PUEBLO",
+        "method": "exact",
+        "classification": "PASS_EXACT"
+      },
+      {
+        "query": "la Procuraduría",
+        "expected_owner": "PROCURADURIA GENERAL DE LA NACION",
+        "resolved_owner": "PROCURADURIA GENERAL DE LA NACION",
+        "method": "exact",
+        "classification": "PASS_EXACT"
+      },
+      {
+        "query": "la Procuraduría General de la Nación",
+        "expected_owner": "PROCURADURIA GENERAL DE LA NACION",
+        "resolved_owner": "PROCURADURIA GENERAL DE LA NACION",
+        "method": "exact",
+        "classification": "PASS_EXACT"
+      }
+    ],
+    "acronyms": [
+      {
+        "query": "AGR",
+        "expected_owner": "AUDITORIA GENERAL DE LA REPUBLICA",
+        "resolved_owner": "AUDITORIA GENERAL DE LA REPUBLICA",
+        "method": "exact",
+        "classification": "PASS_EXACT"
+      },
+      {
+        "query": "CGR",
+        "expected_owner": "CGR-NIVEL CENTRAL",
+        "resolved_owner": "CGR-NIVEL CENTRAL",
+        "method": "exact",
+        "classification": "PASS_EXACT"
+      },
+      {
+        "query": "DP",
+        "expected_owner": "DEFENSORÍA DEL PUEBLO",
+        "resolved_owner": "DEFENSORÍA DEL PUEBLO",
+        "method": "exact",
+        "classification": "PASS_EXACT"
+      },
+      {
+        "query": "IEMP",
+        "expected_owner": "INSTITUTO DE ESTUDIOS DEL MINISTERIO PUBLICO.",
+        "resolved_owner": "INSTITUTO DE ESTUDIOS DEL MINISTERIO PUBLICO.",
+        "method": "exact",
+        "classification": "PASS_EXACT"
+      },
+      {
+        "query": "PGN",
+        "expected_owner": "PROCURADURIA GENERAL DE LA NACION",
+        "resolved_owner": "PROCURADURIA GENERAL DE LA NACION",
+        "method": "exact",
+        "classification": "PASS_EXACT"
+      }
+    ],
+    "matrix": {
+      "PASS_EXACT": 6,
+      "FAIL_CLOSED": 0,
+      "WRONG_OWNER": 0,
+      "FUZZY_ONLY": 0,
+      "AMBIGUOUS": 0,
+      "PARTIAL": 0,
+      "MISSING": 0
+    }
+  },
+  "alias_policy_records": {
+    "DEFENSORÍA DEL PUEBLO": {
+      "scan_disabled_aliases": [
+        "defensoria",
+        "la defensoria"
+      ],
+      "resolution_blocked_aliases": []
+    },
+    "ALCALDÍA DISTRITAL DE SANTA MARTA": {
+      "scan_disabled_aliases": [],
+      "resolution_blocked_aliases": [
+        "santa marta magdalena"
+      ]
+    },
+    "UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS": {
+      "scan_disabled_aliases": [],
+      "resolution_blocked_aliases": [
+        "francisco jose de caldas"
+      ]
+    },
+    "ALCALDÍA MUNICIPAL DE CANDELARIA VALLE": {
+      "scan_disabled_aliases": [
+        "candelaria valle"
+      ],
+      "resolution_blocked_aliases": []
+    },
+    "MUNICIPIO DE SOLEDAD": {
+      "scan_disabled_aliases": [
+        "soledad atlantico"
+      ],
+      "resolution_blocked_aliases": []
+    },
+    "ALCALDIA LOCAL DE CIUDAD BOLIVAR //": {
+      "scan_disabled_aliases": [],
+      "resolution_blocked_aliases": [
+        "ciudad bolivar"
+      ]
+    },
+    "INSTITUTO DEPARTAMENTAL DE SALUD DE NARIÑO": {
+      "scan_disabled_aliases": [],
+      "resolution_blocked_aliases": [
+        "salud narino"
+      ]
+    },
+    "CGR-NIVEL CENTRAL": {
+      "scan_disabled_aliases": [
+        "contraloria",
+        "contraloria general",
+        "la contraloria",
+        "la contraloria general"
+      ],
+      "resolution_blocked_aliases": []
+    },
+    "CORPORACION AUTONOMA REGIONAL DEL QUINDIO": {
+      "scan_disabled_aliases": [],
+      "resolution_blocked_aliases": [
+        "corporacion quindio"
+      ]
+    },
+    "ALCALDIA MUNICIPAL DE PUERTO BOYACA": {
+      "scan_disabled_aliases": [
+        "puerto boyaca"
+      ],
+      "resolution_blocked_aliases": []
+    },
+    "UNIDAD ADMINISTRATIVA ESPECIAL DE SALUD DE ARAUCA": {
+      "scan_disabled_aliases": [],
+      "resolution_blocked_aliases": [
+        "salud arauca"
+      ]
+    },
+    "PROCURADURIA GENERAL DE LA NACION": {
+      "scan_disabled_aliases": [],
+      "resolution_blocked_aliases": [
+        "ministerio publico"
+      ]
+    },
+    "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA": {
+      "scan_disabled_aliases": [],
+      "resolution_blocked_aliases": [
+        "fondo de bienestar social",
+        "fondo de bienestar social de la contraloria"
+      ]
+    }
+  },
+  "alias_safety": [
+    {
+      "alias": "contraloría",
+      "owner": "CGR-NIVEL CENTRAL",
+      "decision": "KEEP_EXACT_DISABLE_SCAN",
+      "exact_eligible": true,
+      "scan_eligible": false,
+      "exact_owner_count": 1,
+      "own_physical_names": [
+        "CONTRALORIA GENERAL DE LA REPUBLICA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - CGR - GERENCIA DEPARTAMENTAL MAGDALENA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - CGR - GERENCIA DEPARTAMENTAL VALLE DEL CAUCA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - CGR - UNIDAD DE SEGUIMIENTO Y AUDITORIA REGALIAS",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - CGR DEPARTAMENTAL PUTUMAYO",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - CGR-GERENCIA DEPARTAMENTAL CESAR",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - GERENCIA DEPARTAMENTAL  CALDAS",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - GERENCIA DEPARTAMENTAL CHOCO",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - GERENCIA DEPARTAMENTAL COLEGIADA DEL CHOCO",
+        "CONTRALORIA GENERAL DE LA REPUBLICA -GERENCIA DEPARTAMENTAL VICHADA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA GERENCIA CAQUETA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA GERENCIA COLEGIADA CAQUETA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA GERENCIA DEPARTAMENTAL ATLANTICO",
+        "CONTRALORIA GENERAL DE LA REPUBLICA GERENCIA DEPARTAMENTAL COLEGIADA DE BOLIVAR",
+        "CONTRALORIA GENERAL DE LA REPUBLICA GERENCIA DEPARTAMENTAL COLEGIADA DEL CHOCO",
+        "CONTRALORIA GENERAL DE LA REPUBLICA- CGR GERENCIA DEPARTAMENTAL ARAUCA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA- CGR- DEPARTAMENTAL GUAJIRA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR - DEPARTAMENTAL  META",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR- GERENCIA DEPARTAMENTAL ANTIOQUIA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR- GERENCIA DEPARTAMENTAL ATLaNTICO",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR- GERENCIA DEPARTAMENTAL BOYACA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR- GERENCIA DEPARTAMENTAL CASANARE",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR- GERENCIA DEPARTAMENTAL NORTE DE SANTANDER",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR-GERENCIA DEPARTAMENTAL AMAZONAS",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR-GERENCIA DEPARTAMENTAL CORDOBA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR-GERENCIA DEPARTAMENTAL SAN ANDRES",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR-GERENCIA DEPARTAMENTAL SANTANDER",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR-GERENCIA DEPARTAMENTAL SUCRE",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-GERENCIA DEPARTAMENTAL CAQUETA",
+        "CONTRALORIA GENERAL DE LA REPuBLCIA",
+        "CONTRALORIA GENERAL DE LA REPuBLICA - CGR GERENCIA DEPARTAMENTAL COLEGIADA NARIÑO",
+        "CONTRALORIA GENERAL DE LA REPuBLICA - CGR GERENCIA DEPARTAMENTAL META",
+        "CONTRALORIA GENERAL DE LA REPuBLICA CGR- GERENCIA COLEGIADA CHOCO",
+        "CONTRALORIA GENERAL DE LA REPuBLICA-CGR- GERENCIA DEPARTAMENTAL GUANIA",
+        "CONTRALORIA GNERAL DE LA REPUBLICA",
+        "CONTRALORiA GENERAL DE LA REPuBLICA- CGR-GERENCIA DEPARTAMENTAL TOLIMA"
+      ],
+      "other_physical_buyers_containing_alias": 105,
+      "scan_cross_owner_candidates": 0,
+      "inactive_registry_duplicates": 2,
+      "cross_owner_detail": [
+        {
+          "physical_name": "CONTRALORIA GENERAL DEL MUNICIPIO DE MANIZALES",
+          "identity": "800101441",
+          "secop_processes": 200,
+          "secop_contracts": 214,
+          "active_buyer": true,
+          "scan_owner": "MUNICIPIO DE MANIZALES",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA GENERAL DE CALDAS",
+          "identity": "800077897",
+          "secop_processes": 182,
+          "secop_contracts": 148,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA DEPARTAMENTAL DEL HUILA",
+          "identity": "800169790",
+          "secop_processes": 340,
+          "secop_contracts": 253,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORiA MUNICIPAL DE BARRANCABERMEJA",
+          "identity": "82900074",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORiA MUNICIPAL DE PASTO",
+          "identity": "800156682",
+          "secop_processes": 125,
+          "secop_contracts": 118,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA MUNICIPAL DE IBAGUE",
+          "identity": "890706867",
+          "secop_processes": 622,
+          "secop_contracts": 619,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA MUNICIPAL DE PALMIRA",
+          "identity": "800183276",
+          "secop_processes": 110,
+          "secop_contracts": 104,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORiA MUNICIPAL DE SOACHA",
+          "identity": "832000669",
+          "secop_processes": 99,
+          "secop_contracts": 91,
+          "active_buyer": true,
+          "scan_owner": "MUNICIPIO DE SOACHA..",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA DEPARTAMENTAL DE NARIÑO",
+          "identity": "800157830",
+          "secop_processes": 161,
+          "secop_contracts": 213,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORiA MUNICIPAL DE TULUa",
+          "identity": "900623073",
+          "secop_processes": 223,
+          "secop_contracts": 209,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA MUNICIPAL DE VILLAVICENCIO",
+          "identity": "892003636",
+          "secop_processes": 142,
+          "secop_contracts": 149,
+          "active_buyer": true,
+          "scan_owner": "ALCALDIA MUNICIPIO DE VILLAVICENCIO",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA MUNICIPAL DE NEIVA.",
+          "identity": "800095147",
+          "secop_processes": 132,
+          "secop_contracts": 125,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA MUNICIPAL DE FLORIDABLANCA",
+          "identity": "800005042",
+          "secop_processes": 129,
+          "secop_contracts": 130,
+          "active_buyer": true,
+          "scan_owner": "ALCALDIA DE FLORIDABLANCA",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA MUNICIPAL DE SINCELEJO",
+          "identity": "901052783",
+          "secop_processes": 166,
+          "secop_contracts": 172,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA MUNICIPAL DE ENVIGADO",
+          "identity": "811031484",
+          "secop_processes": 108,
+          "secop_contracts": 110,
+          "active_buyer": true,
+          "scan_owner": "MUNICIPIO DE ENVIGADO*",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA DE BOGOTA",
+          "identity": "800245133",
+          "secop_processes": 7018,
+          "secop_contracts": 6591,
+          "active_buyer": true,
+          "scan_owner": "CONTRALORIA DE BOGOTA",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA MUNICIPAL DE GIRON",
+          "identity": "901100944",
+          "secop_processes": 105,
+          "secop_contracts": 124,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA DISTRITAL DE CARTAGENA DE INDIAS",
+          "identity": "800194000",
+          "secop_processes": 651,
+          "secop_contracts": 639,
+          "active_buyer": true,
+          "scan_owner": "CONTRALORIA DE BOGOTA",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA DEPARTAMENTAL DEL VICHADA",
+          "identity": "832000034",
+          "secop_processes": 150,
+          "secop_contracts": 138,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA MUNICIPAL DE BARRANCABERMEJA.",
+          "identity": "829000745",
+          "secop_processes": 399,
+          "secop_contracts": 379,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA CALI",
+          "identity": "80021783",
+          "secop_processes": 1302,
+          "secop_contracts": 1156,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA DEPARTAMENTAL DEL TOLIMA",
+          "identity": "890706847",
+          "secop_processes": 541,
+          "secop_contracts": 487,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA DEPARTAMENTAL DEL ATLANTICO",
+          "identity": "890103037",
+          "secop_processes": 161,
+          "secop_contracts": 130,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA GENERAL DEL DEPARTAMENTO DEL MAGDALENA",
+          "identity": "891780092",
+          "secop_processes": 232,
+          "secop_contracts": 199,
+          "active_buyer": true,
+          "scan_owner": "GOBERNACION DEL MAGDALENA",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA MUNICIPAL DE YUMBO",
+          "identity": "800190982",
+          "secop_processes": 302,
+          "secop_contracts": 304,
+          "active_buyer": true,
+          "scan_owner": "MUNICIPIO DE YUMBO VALLE",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA DEL MUNICIPIO DE FLORIDABLANCA SANTANDER",
+          "identity": "800005042",
+          "secop_processes": 129,
+          "secop_contracts": 130,
+          "active_buyer": true,
+          "scan_owner": "ALCALDIA DE FLORIDABLANCA",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA MUNICIPAL DE BUCARAMANGA",
+          "identity": "890211142",
+          "secop_processes": 65,
+          "secop_contracts": 63,
+          "active_buyer": true,
+          "scan_owner": "MUNICIPIO DE BUCARAMANGA",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA DISTRITAL DE SANTA MARTA",
+          "identity": "891702569",
+          "secop_processes": 670,
+          "secop_contracts": 677,
+          "active_buyer": true,
+          "scan_owner": "CONTRALORIA DE BOGOTA",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA GENERAL DEPARTAMENTAL DE SUCRE 3",
+          "identity": "892280017",
+          "secop_processes": 144,
+          "secop_contracts": 122,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA MUNICIPAL DE DOSQUEBRADAS",
+          "identity": "800150130",
+          "secop_processes": 127,
+          "secop_contracts": 126,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA MUNICIPAL DE ARMENIA QUINDIO",
+          "identity": "800215818",
+          "secop_processes": 215,
+          "secop_contracts": 285,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA GENERAL DE SANTANDER",
+          "identity": "890201705",
+          "secop_processes": 108,
+          "secop_contracts": 92,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA DE CUNDINAMARCA",
+          "identity": "899999117",
+          "secop_processes": 317,
+          "secop_contracts": 227,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA GENERAL DE BOYACA",
+          "identity": "891800721",
+          "secop_processes": 169,
+          "secop_contracts": 159,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+          "identity": "800252683",
+          "secop_processes": 1104,
+          "secop_contracts": 782,
+          "active_buyer": true,
+          "scan_owner": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA GENERAL DEL CAUCA",
+          "identity": "891500403",
+          "secop_processes": 147,
+          "secop_contracts": 177,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA  GENERAL DEL QUINDIO",
+          "identity": "890003017",
+          "secop_processes": 178,
+          "secop_contracts": 181,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA MUNICIPAL DE BELLO",
+          "identity": "811040805",
+          "secop_processes": 127,
+          "secop_contracts": 124,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA MUNICIPAL ITAGUI",
+          "identity": "81103660",
+          "secop_processes": 118,
+          "secop_contracts": 122,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "AMAZONAS - CONTRALORIA DEPARTAMENTAL DEL AMAZONAS",
+          "identity": "838000110",
+          "secop_processes": 94,
+          "secop_contracts": 85,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA DEPARTAMENTAL DE CASANARE",
+          "identity": "800183912",
+          "secop_processes": 238,
+          "secop_contracts": 197,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORiA DISTRITAL DE MEDELLiN",
+          "identity": "811026988",
+          "secop_processes": 375,
+          "secop_contracts": 321,
+          "active_buyer": true,
+          "scan_owner": "CONTRALORIA DE BOGOTA",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA MUNICIPAL DE TUNJA",
+          "identity": "800107701",
+          "secop_processes": 103,
+          "secop_contracts": 98,
+          "active_buyer": true,
+          "scan_owner": "MUNICIPIO DE TUNJA/",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA MUNICIPAL DEL MUNICIPIO DE SAN JERONIMO DE MONTERIA",
+          "identity": "800193244",
+          "secop_processes": 65,
+          "secop_contracts": 68,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA DEPARTAMENTAL DEL META",
+          "identity": "892099119",
+          "secop_processes": 134,
+          "secop_contracts": 106,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA MUNICIPAL DE VILLAVICENCIO -A",
+          "identity": "892003636",
+          "secop_processes": 142,
+          "secop_contracts": 149,
+          "active_buyer": true,
+          "scan_owner": "ALCALDIA MUNICIPIO DE VILLAVICENCIO",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA DEPARTAMENTAL DEL VALLE DEL CAUCA",
+          "identity": "800090735",
+          "secop_processes": 269,
+          "secop_contracts": 233,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA GENERAL DEL DEPARTAMENTO DE SUCRE",
+          "identity": "892280017",
+          "secop_processes": 144,
+          "secop_contracts": 122,
+          "active_buyer": true,
+          "scan_owner": "GOBERNACION DE SUCRE",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORiA GENERAL DEL DEPARTAMENTO DE SUCRE",
+          "identity": "89228017",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "GOBERNACION DE SUCRE",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA MUNICIPAL DE POPAYAN",
+          "identity": "817005038",
+          "secop_processes": 91,
+          "secop_contracts": 97,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA GENERAL DEPARTAMENTAL DE SUCRE 2",
+          "identity": "892280017",
+          "secop_processes": 144,
+          "secop_contracts": 122,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORiA MUNICIPAL DE PEREIRA",
+          "identity": "800182573",
+          "secop_processes": 516,
+          "secop_contracts": 518,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORiA DEPARTAMENTAL DE ARAUCA",
+          "identity": "800212625",
+          "secop_processes": 88,
+          "secop_contracts": 77,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA DEPARTAMENTAL DEL CAQUETA1",
+          "identity": "891190246",
+          "secop_processes": 173,
+          "secop_contracts": 173,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA GENERAL DEL DEPARTAMENTO DE RISARALDA",
+          "identity": "891411091",
+          "secop_processes": 359,
+          "secop_contracts": 371,
+          "active_buyer": true,
+          "scan_owner": "GOBERNACIÓN DE RISARALDA**",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA GENERAL DEL DEPARTAMENTO DEL CHOCO",
+          "identity": "818000365",
+          "secop_processes": 108,
+          "secop_contracts": 99,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORiA MUNICIPAL ARMENIA - QUINDiO",
+          "identity": "800215818",
+          "secop_processes": 215,
+          "secop_contracts": 285,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORiA GENERAL DE LA REPuBLICA DE COLOMBIA.",
+          "identity": "56086020",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "CGR-NIVEL CENTRAL",
+          "scan_hijacked_by_this_owner": true
+        },
+        {
+          "physical_name": "CONTRALORIA DISTRITAL DE BUENAVENTURA",
+          "identity": "800093372",
+          "secop_processes": 380,
+          "secop_contracts": 375,
+          "active_buyer": true,
+          "scan_owner": "CONTRALORIA DE BOGOTA",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA DEPARTAMENTAL DE CORDOBA",
+          "identity": "800193833",
+          "secop_processes": 149,
+          "secop_contracts": 144,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA DEPARTAMENTAL DEL GUAVIARE",
+          "identity": "832000115",
+          "secop_processes": 143,
+          "secop_contracts": 144,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CURSO CONTRALORIA NORTE 2020",
+          "identity": "100100100",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CAPACITACION CONTRALORIA NORTE",
+          "identity": "100100123",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CAPACITACION CONTRALORIA",
+          "identity": "13500840",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CAPACCITACION CONTRALORIA",
+          "identity": "100100124",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CAPACCITACION CONTRALORIA",
+          "identity": "88030108",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA GENERAL DEL DEPARTAMENTO DE CORDOBA",
+          "identity": "800193833",
+          "secop_processes": 149,
+          "secop_contracts": 144,
+          "active_buyer": true,
+          "scan_owner": "DEPARTAMENTO DE CORDOBA",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "FONDO DE CAPACITACION, BIENESTAR SOCIAL Y ESTIMULOS PARA EL PERSONAL VICULADO A LA CONTRALORIA DEPARTAMENTAL DEL CAQUETA",
+          "identity": "900312757",
+          "secop_processes": 38,
+          "secop_contracts": 11,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA GENERAL DEL CAUCA",
+          "identity": "891500403",
+          "secop_processes": 147,
+          "secop_contracts": 177,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA GENERAL DEL DEPARTAMENTO DEL PUTUMAYO",
+          "identity": "800193022",
+          "secop_processes": 214,
+          "secop_contracts": 219,
+          "active_buyer": true,
+          "scan_owner": "GOBERNACIÓN DEPARTAMENTO DEL PUTUMAYO",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA DEPARTAMENTAL DEL ATLANTICO",
+          "identity": "802024910",
+          "secop_processes": 24,
+          "secop_contracts": 19,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA MUNICIPAL DE CUCUTA",
+          "identity": "800056348",
+          "secop_processes": 31,
+          "secop_contracts": 28,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA MUNICIPAL DE DOSQUEBRAS**",
+          "identity": "800150130",
+          "secop_processes": 127,
+          "secop_contracts": 126,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA DISTRITAL DE BARRANQUILLA",
+          "identity": "80002277",
+          "secop_processes": 89,
+          "secop_contracts": 63,
+          "active_buyer": true,
+          "scan_owner": "CONTRALORIA DE BOGOTA",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA DEPARTAMENTAL DE VAUPES",
+          "identity": "832000107",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "FONDO DE BIENESTAR SOCIAL Y DE CAPACITACIoN DE LA CONTRALORiA GENERAL DE NORTE DE SANTANDER",
+          "identity": "900003576",
+          "secop_processes": 89,
+          "secop_contracts": 83,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA GENERAL DEL DEPARTAMENTO NORTE DE SANTANDER",
+          "identity": "890501431",
+          "secop_processes": 202,
+          "secop_contracts": 198,
+          "active_buyer": true,
+          "scan_owner": "Gobernación Norte de Santander*",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA GENERAL DEL DEPARTAMENTO DE LA GUAJIRA",
+          "identity": "892115012",
+          "secop_processes": 104,
+          "secop_contracts": 94,
+          "active_buyer": true,
+          "scan_owner": "GOBERNACIÓN DE LA GUAJIRA",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA MUNICIPAL DE VALLEDUPAR",
+          "identity": "892300310",
+          "secop_processes": 244,
+          "secop_contracts": 274,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA MUNICIPAL DE SOLEDAD - ATLaNTICO",
+          "identity": "800199741",
+          "secop_processes": 56,
+          "secop_contracts": 54,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA MUNICIPAL DE VALLEDUPAR",
+          "identity": "892300310",
+          "secop_processes": 244,
+          "secop_contracts": 274,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA DEPARTAMENTAL DEL VALLE DEL CAUCA",
+          "identity": "800090735",
+          "secop_processes": 269,
+          "secop_contracts": 233,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA MUNICIPAL DE RIONEGRO",
+          "identity": "901449306",
+          "secop_processes": 325,
+          "secop_contracts": 287,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "FONDO DE BIENESTAR SOCIAL Y ESCUELA DE CAPACITACION DE LA CONTRALORIA MUNICIPAL DE MONTERIA",
+          "identity": "901080122",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA GENERAL DEL DEPARTAMENTO DEL CESAR",
+          "identity": "892300534",
+          "secop_processes": 61,
+          "secop_contracts": 60,
+          "active_buyer": true,
+          "scan_owner": "GOBERNACION DEL DEPARTAMENTO DEL CESAR",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "FONDO DE BIENESTAR SOCIAL Y ESCUELA DE FORMACIoN DE ESTUDIOS FISCALES DE LA CONTRALORIA GENERAL DEL DEPARTAMENTO DEL MAGDALENA",
+          "identity": "900903253",
+          "secop_processes": 31,
+          "secop_contracts": 26,
+          "active_buyer": true,
+          "scan_owner": "GOBERNACION DEL MAGDALENA",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA MUNICIPAL DE SOLEDAD",
+          "identity": "900233870",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA DEPARTAMENTAL DE SANANDRES",
+          "identity": "80018805",
+          "secop_processes": 278,
+          "secop_contracts": 279,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA",
+          "identity": "8601233744",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA DEPARTAMENTAL DE BOLIVAR",
+          "identity": "890480306",
+          "secop_processes": 126,
+          "secop_contracts": 100,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORiA MUNICIPAL ARMENIA",
+          "identity": "1097401112",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA DEPARTAMENTAL DE BOLIVAR",
+          "identity": "900834055",
+          "secop_processes": 31,
+          "secop_contracts": 27,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA DE LA GUAJIRA",
+          "identity": "900312050",
+          "secop_processes": 1,
+          "secop_contracts": 1,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "FONDO DE BIENESTAR SOCIAL Y ESCUELA DE CAPACITACION DE LA CONTRALORIA GENERAL DEL DEPARTAMENTO DE CORDOBA",
+          "identity": "900268501",
+          "secop_processes": 2,
+          "secop_contracts": 2,
+          "active_buyer": true,
+          "scan_owner": "DEPARTAMENTO DE CORDOBA",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA TERRITORIAL",
+          "identity": "135360051",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORiA GENERAL DE MEDELLiN",
+          "identity": "811026988",
+          "secop_processes": 375,
+          "secop_contracts": 321,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORiA MUNICIPAL DE SABANETA",
+          "identity": "901747507",
+          "secop_processes": 79,
+          "secop_contracts": 73,
+          "active_buyer": true,
+          "scan_owner": "MUNICIPIO DE SABANETA",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA GENERAL REPUBLICA",
+          "identity": "1037615750",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA DEPARTAMENTAL DEL GUAINIA",
+          "identity": "892000495",
+          "secop_processes": 45,
+          "secop_contracts": 48,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORiA GENERAL DE LA REPuBLICA",
+          "identity": "79433130",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "CGR-NIVEL CENTRAL",
+          "scan_hijacked_by_this_owner": true
+        },
+        {
+          "physical_name": "CONTRALORIA DISTRITAL DE BUENAVENTURA",
+          "identity": "800093372",
+          "secop_processes": 380,
+          "secop_contracts": 375,
+          "active_buyer": true,
+          "scan_owner": "CONTRALORIA DE BOGOTA",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA DE BOGOTA",
+          "identity": "1001298035",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "CONTRALORIA DE BOGOTA",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORiA GENERAL DE SANTIAGO DE CALI",
+          "identity": "80021783",
+          "secop_processes": 1302,
+          "secop_contracts": 1156,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA MUNICIPAL DE NEIVA",
+          "identity": "891180009",
+          "secop_processes": 23235,
+          "secop_contracts": 22580,
+          "active_buyer": true,
+          "scan_owner": "MUNICIPIO DE NEIVA",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORiA JAMUNDI",
+          "identity": "902065935",
+          "secop_processes": 11,
+          "secop_contracts": 10,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        }
+      ],
+      "observed_resolution": {
+        "owner": "CGR-NIVEL CENTRAL",
+        "method": "exact"
+      },
+      "observed_scan_eligible": false,
+      "safety_class": "SAFE_EXACT_DISABLE_SCAN"
+    },
+    {
+      "alias": "la contraloría",
+      "owner": "CGR-NIVEL CENTRAL",
+      "decision": "KEEP_EXACT_DISABLE_SCAN",
+      "exact_eligible": true,
+      "scan_eligible": false,
+      "exact_owner_count": 1,
+      "own_physical_names": [],
+      "other_physical_buyers_containing_alias": 10,
+      "scan_cross_owner_candidates": 0,
+      "inactive_registry_duplicates": 0,
+      "cross_owner_detail": [
+        {
+          "physical_name": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+          "identity": "800252683",
+          "secop_processes": 1104,
+          "secop_contracts": 782,
+          "active_buyer": true,
+          "scan_owner": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "FONDO DE CAPACITACION, BIENESTAR SOCIAL Y ESTIMULOS PARA EL PERSONAL VICULADO A LA CONTRALORIA DEPARTAMENTAL DEL CAQUETA",
+          "identity": "900312757",
+          "secop_processes": 38,
+          "secop_contracts": 11,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA DEPARTAMENTAL DEL ATLANTICO",
+          "identity": "802024910",
+          "secop_processes": 24,
+          "secop_contracts": 19,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "FONDO DE BIENESTAR SOCIAL Y DE CAPACITACIoN DE LA CONTRALORiA GENERAL DE NORTE DE SANTANDER",
+          "identity": "900003576",
+          "secop_processes": 89,
+          "secop_contracts": 83,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "FONDO DE BIENESTAR SOCIAL Y ESCUELA DE CAPACITACION DE LA CONTRALORIA MUNICIPAL DE MONTERIA",
+          "identity": "901080122",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "FONDO DE BIENESTAR SOCIAL Y ESCUELA DE FORMACIoN DE ESTUDIOS FISCALES DE LA CONTRALORIA GENERAL DEL DEPARTAMENTO DEL MAGDALENA",
+          "identity": "900903253",
+          "secop_processes": 31,
+          "secop_contracts": 26,
+          "active_buyer": true,
+          "scan_owner": "GOBERNACION DEL MAGDALENA",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA MUNICIPAL DE SOLEDAD",
+          "identity": "900233870",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA DEPARTAMENTAL DE BOLIVAR",
+          "identity": "900834055",
+          "secop_processes": 31,
+          "secop_contracts": 27,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA DE LA GUAJIRA",
+          "identity": "900312050",
+          "secop_processes": 1,
+          "secop_contracts": 1,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "FONDO DE BIENESTAR SOCIAL Y ESCUELA DE CAPACITACION DE LA CONTRALORIA GENERAL DEL DEPARTAMENTO DE CORDOBA",
+          "identity": "900268501",
+          "secop_processes": 2,
+          "secop_contracts": 2,
+          "active_buyer": true,
+          "scan_owner": "DEPARTAMENTO DE CORDOBA",
+          "scan_hijacked_by_this_owner": false
+        }
+      ],
+      "observed_resolution": {
+        "owner": "CGR-NIVEL CENTRAL",
+        "method": "exact"
+      },
+      "observed_scan_eligible": false,
+      "safety_class": "SAFE_EXACT_DISABLE_SCAN"
+    },
+    {
+      "alias": "contraloría general",
+      "owner": "CGR-NIVEL CENTRAL",
+      "decision": "KEEP_EXACT_DISABLE_SCAN",
+      "exact_eligible": true,
+      "scan_eligible": false,
+      "exact_owner_count": 1,
+      "own_physical_names": [
+        "CONTRALORIA GENERAL DE LA REPUBLICA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - CGR - GERENCIA DEPARTAMENTAL MAGDALENA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - CGR - GERENCIA DEPARTAMENTAL VALLE DEL CAUCA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - CGR - UNIDAD DE SEGUIMIENTO Y AUDITORIA REGALIAS",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - CGR DEPARTAMENTAL PUTUMAYO",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - CGR-GERENCIA DEPARTAMENTAL CESAR",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - GERENCIA DEPARTAMENTAL  CALDAS",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - GERENCIA DEPARTAMENTAL CHOCO",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - GERENCIA DEPARTAMENTAL COLEGIADA DEL CHOCO",
+        "CONTRALORIA GENERAL DE LA REPUBLICA -GERENCIA DEPARTAMENTAL VICHADA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA GERENCIA CAQUETA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA GERENCIA COLEGIADA CAQUETA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA GERENCIA DEPARTAMENTAL ATLANTICO",
+        "CONTRALORIA GENERAL DE LA REPUBLICA GERENCIA DEPARTAMENTAL COLEGIADA DE BOLIVAR",
+        "CONTRALORIA GENERAL DE LA REPUBLICA GERENCIA DEPARTAMENTAL COLEGIADA DEL CHOCO",
+        "CONTRALORIA GENERAL DE LA REPUBLICA- CGR GERENCIA DEPARTAMENTAL ARAUCA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA- CGR- DEPARTAMENTAL GUAJIRA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR - DEPARTAMENTAL  META",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR- GERENCIA DEPARTAMENTAL ANTIOQUIA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR- GERENCIA DEPARTAMENTAL ATLaNTICO",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR- GERENCIA DEPARTAMENTAL BOYACA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR- GERENCIA DEPARTAMENTAL CASANARE",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR- GERENCIA DEPARTAMENTAL NORTE DE SANTANDER",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR-GERENCIA DEPARTAMENTAL AMAZONAS",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR-GERENCIA DEPARTAMENTAL CORDOBA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR-GERENCIA DEPARTAMENTAL SAN ANDRES",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR-GERENCIA DEPARTAMENTAL SANTANDER",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR-GERENCIA DEPARTAMENTAL SUCRE",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-GERENCIA DEPARTAMENTAL CAQUETA",
+        "CONTRALORIA GENERAL DE LA REPuBLCIA",
+        "CONTRALORIA GENERAL DE LA REPuBLICA - CGR GERENCIA DEPARTAMENTAL COLEGIADA NARIÑO",
+        "CONTRALORIA GENERAL DE LA REPuBLICA - CGR GERENCIA DEPARTAMENTAL META",
+        "CONTRALORIA GENERAL DE LA REPuBLICA CGR- GERENCIA COLEGIADA CHOCO",
+        "CONTRALORIA GENERAL DE LA REPuBLICA-CGR- GERENCIA DEPARTAMENTAL GUANIA",
+        "CONTRALORiA GENERAL DE LA REPuBLICA- CGR-GERENCIA DEPARTAMENTAL TOLIMA"
+      ],
+      "other_physical_buyers_containing_alias": 28,
+      "scan_cross_owner_candidates": 0,
+      "inactive_registry_duplicates": 2,
+      "cross_owner_detail": [
+        {
+          "physical_name": "CONTRALORIA GENERAL DEL MUNICIPIO DE MANIZALES",
+          "identity": "800101441",
+          "secop_processes": 200,
+          "secop_contracts": 214,
+          "active_buyer": true,
+          "scan_owner": "MUNICIPIO DE MANIZALES",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA GENERAL DE CALDAS",
+          "identity": "800077897",
+          "secop_processes": 182,
+          "secop_contracts": 148,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA GENERAL DEL DEPARTAMENTO DEL MAGDALENA",
+          "identity": "891780092",
+          "secop_processes": 232,
+          "secop_contracts": 199,
+          "active_buyer": true,
+          "scan_owner": "GOBERNACION DEL MAGDALENA",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA GENERAL DEPARTAMENTAL DE SUCRE 3",
+          "identity": "892280017",
+          "secop_processes": 144,
+          "secop_contracts": 122,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA GENERAL DE SANTANDER",
+          "identity": "890201705",
+          "secop_processes": 108,
+          "secop_contracts": 92,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA GENERAL DE BOYACA",
+          "identity": "891800721",
+          "secop_processes": 169,
+          "secop_contracts": 159,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+          "identity": "800252683",
+          "secop_processes": 1104,
+          "secop_contracts": 782,
+          "active_buyer": true,
+          "scan_owner": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA GENERAL DEL CAUCA",
+          "identity": "891500403",
+          "secop_processes": 147,
+          "secop_contracts": 177,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA  GENERAL DEL QUINDIO",
+          "identity": "890003017",
+          "secop_processes": 178,
+          "secop_contracts": 181,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA GENERAL DEL DEPARTAMENTO DE SUCRE",
+          "identity": "892280017",
+          "secop_processes": 144,
+          "secop_contracts": 122,
+          "active_buyer": true,
+          "scan_owner": "GOBERNACION DE SUCRE",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORiA GENERAL DEL DEPARTAMENTO DE SUCRE",
+          "identity": "89228017",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "GOBERNACION DE SUCRE",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA GENERAL DEPARTAMENTAL DE SUCRE 2",
+          "identity": "892280017",
+          "secop_processes": 144,
+          "secop_contracts": 122,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA GENERAL DEL DEPARTAMENTO DE RISARALDA",
+          "identity": "891411091",
+          "secop_processes": 359,
+          "secop_contracts": 371,
+          "active_buyer": true,
+          "scan_owner": "GOBERNACIÓN DE RISARALDA**",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA GENERAL DEL DEPARTAMENTO DEL CHOCO",
+          "identity": "818000365",
+          "secop_processes": 108,
+          "secop_contracts": 99,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORiA GENERAL DE LA REPuBLICA DE COLOMBIA.",
+          "identity": "56086020",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "CGR-NIVEL CENTRAL",
+          "scan_hijacked_by_this_owner": true
+        },
+        {
+          "physical_name": "CONTRALORIA GENERAL DEL DEPARTAMENTO DE CORDOBA",
+          "identity": "800193833",
+          "secop_processes": 149,
+          "secop_contracts": 144,
+          "active_buyer": true,
+          "scan_owner": "DEPARTAMENTO DE CORDOBA",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA GENERAL DEL CAUCA",
+          "identity": "891500403",
+          "secop_processes": 147,
+          "secop_contracts": 177,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA GENERAL DEL DEPARTAMENTO DEL PUTUMAYO",
+          "identity": "800193022",
+          "secop_processes": 214,
+          "secop_contracts": 219,
+          "active_buyer": true,
+          "scan_owner": "GOBERNACIÓN DEPARTAMENTO DEL PUTUMAYO",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "FONDO DE BIENESTAR SOCIAL Y DE CAPACITACIoN DE LA CONTRALORiA GENERAL DE NORTE DE SANTANDER",
+          "identity": "900003576",
+          "secop_processes": 89,
+          "secop_contracts": 83,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA GENERAL DEL DEPARTAMENTO NORTE DE SANTANDER",
+          "identity": "890501431",
+          "secop_processes": 202,
+          "secop_contracts": 198,
+          "active_buyer": true,
+          "scan_owner": "Gobernación Norte de Santander*",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA GENERAL DEL DEPARTAMENTO DE LA GUAJIRA",
+          "identity": "892115012",
+          "secop_processes": 104,
+          "secop_contracts": 94,
+          "active_buyer": true,
+          "scan_owner": "GOBERNACIÓN DE LA GUAJIRA",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA GENERAL DEL DEPARTAMENTO DEL CESAR",
+          "identity": "892300534",
+          "secop_processes": 61,
+          "secop_contracts": 60,
+          "active_buyer": true,
+          "scan_owner": "GOBERNACION DEL DEPARTAMENTO DEL CESAR",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "FONDO DE BIENESTAR SOCIAL Y ESCUELA DE FORMACIoN DE ESTUDIOS FISCALES DE LA CONTRALORIA GENERAL DEL DEPARTAMENTO DEL MAGDALENA",
+          "identity": "900903253",
+          "secop_processes": 31,
+          "secop_contracts": 26,
+          "active_buyer": true,
+          "scan_owner": "GOBERNACION DEL MAGDALENA",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "FONDO DE BIENESTAR SOCIAL Y ESCUELA DE CAPACITACION DE LA CONTRALORIA GENERAL DEL DEPARTAMENTO DE CORDOBA",
+          "identity": "900268501",
+          "secop_processes": 2,
+          "secop_contracts": 2,
+          "active_buyer": true,
+          "scan_owner": "DEPARTAMENTO DE CORDOBA",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORiA GENERAL DE MEDELLiN",
+          "identity": "811026988",
+          "secop_processes": 375,
+          "secop_contracts": 321,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORIA GENERAL REPUBLICA",
+          "identity": "1037615750",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORiA GENERAL DE LA REPuBLICA",
+          "identity": "79433130",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "CGR-NIVEL CENTRAL",
+          "scan_hijacked_by_this_owner": true
+        },
+        {
+          "physical_name": "CONTRALORiA GENERAL DE SANTIAGO DE CALI",
+          "identity": "80021783",
+          "secop_processes": 1302,
+          "secop_contracts": 1156,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        }
+      ],
+      "observed_resolution": {
+        "owner": "CGR-NIVEL CENTRAL",
+        "method": "exact"
+      },
+      "observed_scan_eligible": false,
+      "safety_class": "SAFE_EXACT_DISABLE_SCAN"
+    },
+    {
+      "alias": "la contraloría general",
+      "owner": "CGR-NIVEL CENTRAL",
+      "decision": "KEEP_EXACT_DISABLE_SCAN",
+      "exact_eligible": true,
+      "scan_eligible": false,
+      "exact_owner_count": 1,
+      "own_physical_names": [],
+      "other_physical_buyers_containing_alias": 4,
+      "scan_cross_owner_candidates": 0,
+      "inactive_registry_duplicates": 0,
+      "cross_owner_detail": [
+        {
+          "physical_name": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+          "identity": "800252683",
+          "secop_processes": 1104,
+          "secop_contracts": 782,
+          "active_buyer": true,
+          "scan_owner": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "FONDO DE BIENESTAR SOCIAL Y DE CAPACITACIoN DE LA CONTRALORiA GENERAL DE NORTE DE SANTANDER",
+          "identity": "900003576",
+          "secop_processes": 89,
+          "secop_contracts": 83,
+          "active_buyer": true,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "FONDO DE BIENESTAR SOCIAL Y ESCUELA DE FORMACIoN DE ESTUDIOS FISCALES DE LA CONTRALORIA GENERAL DEL DEPARTAMENTO DEL MAGDALENA",
+          "identity": "900903253",
+          "secop_processes": 31,
+          "secop_contracts": 26,
+          "active_buyer": true,
+          "scan_owner": "GOBERNACION DEL MAGDALENA",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "FONDO DE BIENESTAR SOCIAL Y ESCUELA DE CAPACITACION DE LA CONTRALORIA GENERAL DEL DEPARTAMENTO DE CORDOBA",
+          "identity": "900268501",
+          "secop_processes": 2,
+          "secop_contracts": 2,
+          "active_buyer": true,
+          "scan_owner": "DEPARTAMENTO DE CORDOBA",
+          "scan_hijacked_by_this_owner": false
+        }
+      ],
+      "observed_resolution": {
+        "owner": "CGR-NIVEL CENTRAL",
+        "method": "exact"
+      },
+      "observed_scan_eligible": false,
+      "safety_class": "SAFE_EXACT_DISABLE_SCAN"
+    },
+    {
+      "alias": "contraloría general de la república",
+      "owner": "CGR-NIVEL CENTRAL",
+      "decision": "KEEP",
+      "exact_eligible": true,
+      "scan_eligible": true,
+      "exact_owner_count": 1,
+      "own_physical_names": [
+        "CONTRALORIA GENERAL DE LA REPUBLICA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - CGR - GERENCIA DEPARTAMENTAL MAGDALENA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - CGR - GERENCIA DEPARTAMENTAL VALLE DEL CAUCA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - CGR - UNIDAD DE SEGUIMIENTO Y AUDITORIA REGALIAS",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - CGR DEPARTAMENTAL PUTUMAYO",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - CGR-GERENCIA DEPARTAMENTAL CESAR",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - GERENCIA DEPARTAMENTAL  CALDAS",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - GERENCIA DEPARTAMENTAL CHOCO",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - GERENCIA DEPARTAMENTAL COLEGIADA DEL CHOCO",
+        "CONTRALORIA GENERAL DE LA REPUBLICA -GERENCIA DEPARTAMENTAL VICHADA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA GERENCIA CAQUETA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA GERENCIA COLEGIADA CAQUETA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA GERENCIA DEPARTAMENTAL ATLANTICO",
+        "CONTRALORIA GENERAL DE LA REPUBLICA GERENCIA DEPARTAMENTAL COLEGIADA DE BOLIVAR",
+        "CONTRALORIA GENERAL DE LA REPUBLICA GERENCIA DEPARTAMENTAL COLEGIADA DEL CHOCO",
+        "CONTRALORIA GENERAL DE LA REPUBLICA- CGR GERENCIA DEPARTAMENTAL ARAUCA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA- CGR- DEPARTAMENTAL GUAJIRA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR - DEPARTAMENTAL  META",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR- GERENCIA DEPARTAMENTAL ANTIOQUIA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR- GERENCIA DEPARTAMENTAL ATLaNTICO",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR- GERENCIA DEPARTAMENTAL BOYACA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR- GERENCIA DEPARTAMENTAL CASANARE",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR- GERENCIA DEPARTAMENTAL NORTE DE SANTANDER",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR-GERENCIA DEPARTAMENTAL AMAZONAS",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR-GERENCIA DEPARTAMENTAL CORDOBA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR-GERENCIA DEPARTAMENTAL SAN ANDRES",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR-GERENCIA DEPARTAMENTAL SANTANDER",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR-GERENCIA DEPARTAMENTAL SUCRE",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-GERENCIA DEPARTAMENTAL CAQUETA",
+        "CONTRALORIA GENERAL DE LA REPuBLICA - CGR GERENCIA DEPARTAMENTAL COLEGIADA NARIÑO",
+        "CONTRALORIA GENERAL DE LA REPuBLICA - CGR GERENCIA DEPARTAMENTAL META",
+        "CONTRALORIA GENERAL DE LA REPuBLICA CGR- GERENCIA COLEGIADA CHOCO",
+        "CONTRALORIA GENERAL DE LA REPuBLICA-CGR- GERENCIA DEPARTAMENTAL GUANIA",
+        "CONTRALORiA GENERAL DE LA REPuBLICA- CGR-GERENCIA DEPARTAMENTAL TOLIMA"
+      ],
+      "other_physical_buyers_containing_alias": 3,
+      "scan_cross_owner_candidates": 0,
+      "inactive_registry_duplicates": 2,
+      "cross_owner_detail": [
+        {
+          "physical_name": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+          "identity": "800252683",
+          "secop_processes": 1104,
+          "secop_contracts": 782,
+          "active_buyer": true,
+          "scan_owner": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "CONTRALORiA GENERAL DE LA REPuBLICA DE COLOMBIA.",
+          "identity": "56086020",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "CGR-NIVEL CENTRAL",
+          "scan_hijacked_by_this_owner": true
+        },
+        {
+          "physical_name": "CONTRALORiA GENERAL DE LA REPuBLICA",
+          "identity": "79433130",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "CGR-NIVEL CENTRAL",
+          "scan_hijacked_by_this_owner": true
+        }
+      ],
+      "observed_resolution": {
+        "owner": "CGR-NIVEL CENTRAL",
+        "method": "exact"
+      },
+      "observed_scan_eligible": true,
+      "safety_class": "SAFE_EXACT_SAFE_SCAN"
+    },
+    {
+      "alias": "la contraloría general de la república",
+      "owner": "CGR-NIVEL CENTRAL",
+      "decision": "KEEP",
+      "exact_eligible": true,
+      "scan_eligible": true,
+      "exact_owner_count": 1,
+      "own_physical_names": [],
+      "other_physical_buyers_containing_alias": 1,
+      "scan_cross_owner_candidates": 0,
+      "inactive_registry_duplicates": 0,
+      "cross_owner_detail": [
+        {
+          "physical_name": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+          "identity": "800252683",
+          "secop_processes": 1104,
+          "secop_contracts": 782,
+          "active_buyer": true,
+          "scan_owner": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+          "scan_hijacked_by_this_owner": false
+        }
+      ],
+      "observed_resolution": {
+        "owner": "CGR-NIVEL CENTRAL",
+        "method": "exact"
+      },
+      "observed_scan_eligible": true,
+      "safety_class": "SAFE_EXACT_SAFE_SCAN"
+    },
+    {
+      "alias": "cgr",
+      "owner": "CGR-NIVEL CENTRAL",
+      "decision": "KEEP",
+      "exact_eligible": true,
+      "scan_eligible": true,
+      "exact_owner_count": 1,
+      "own_physical_names": [
+        "CGR - GERENCIA DEPARTAMENTAL COLEGIADA DE GUAVIARE",
+        "CGR GERENCIA DEPARTAMENTAL HUILA",
+        "CGR GERENCIA DEPARTAMENTAL NORTE DE SANTANDER",
+        "CGR- GERENCIA DEPARTAMENTAL QUINDIO",
+        "CGR-GERENCIA DEPARTAMENTAL CAUCA",
+        "CGR-GERENCIA DEPARTAMENTAL VAUPES",
+        "CGR-GERENCIA RISARALDA",
+        "CGR-NIVEL CENTRAL",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - CGR - GERENCIA DEPARTAMENTAL MAGDALENA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - CGR - GERENCIA DEPARTAMENTAL VALLE DEL CAUCA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - CGR - UNIDAD DE SEGUIMIENTO Y AUDITORIA REGALIAS",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - CGR DEPARTAMENTAL PUTUMAYO",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - CGR-GERENCIA DEPARTAMENTAL CESAR",
+        "CONTRALORIA GENERAL DE LA REPUBLICA- CGR GERENCIA DEPARTAMENTAL ARAUCA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA- CGR- DEPARTAMENTAL GUAJIRA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR - DEPARTAMENTAL  META",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR- GERENCIA DEPARTAMENTAL ANTIOQUIA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR- GERENCIA DEPARTAMENTAL ATLaNTICO",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR- GERENCIA DEPARTAMENTAL BOYACA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR- GERENCIA DEPARTAMENTAL CASANARE",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR- GERENCIA DEPARTAMENTAL NORTE DE SANTANDER",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR-GERENCIA DEPARTAMENTAL AMAZONAS",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR-GERENCIA DEPARTAMENTAL CORDOBA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR-GERENCIA DEPARTAMENTAL SAN ANDRES",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR-GERENCIA DEPARTAMENTAL SANTANDER",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR-GERENCIA DEPARTAMENTAL SUCRE",
+        "CONTRALORIA GENERAL DE LA REPuBLICA - CGR GERENCIA DEPARTAMENTAL COLEGIADA NARIÑO",
+        "CONTRALORIA GENERAL DE LA REPuBLICA - CGR GERENCIA DEPARTAMENTAL META",
+        "CONTRALORIA GENERAL DE LA REPuBLICA CGR- GERENCIA COLEGIADA CHOCO",
+        "CONTRALORIA GENERAL DE LA REPuBLICA-CGR- GERENCIA DEPARTAMENTAL GUANIA",
+        "CONTRALORiA GENERAL DE LA REPuBLICA- CGR-GERENCIA DEPARTAMENTAL TOLIMA"
+      ],
+      "other_physical_buyers_containing_alias": 1,
+      "scan_cross_owner_candidates": 0,
+      "inactive_registry_duplicates": 1,
+      "cross_owner_detail": [
+        {
+          "physical_name": "CGR",
+          "identity": "900718378",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "CGR-NIVEL CENTRAL",
+          "scan_hijacked_by_this_owner": true
+        }
+      ],
+      "observed_resolution": {
+        "owner": "CGR-NIVEL CENTRAL",
+        "method": "exact"
+      },
+      "observed_scan_eligible": true,
+      "safety_class": "SAFE_EXACT_SAFE_SCAN"
+    },
+    {
+      "alias": "defensoría",
+      "owner": "DEFENSORÍA DEL PUEBLO",
+      "decision": "KEEP_EXACT_DISABLE_SCAN",
+      "exact_eligible": true,
+      "scan_eligible": false,
+      "exact_owner_count": 1,
+      "own_physical_names": [
+        "DEFENSORIA DEL PRUBLO",
+        "DEFENSORIA DEL PUEBLO",
+        "DEFENSORIA DEL PUEBLO1",
+        "DEFENSORIA DELPUEBLO",
+        "DEFENSORiA DEL PUEBLO"
+      ],
+      "other_physical_buyers_containing_alias": 17,
+      "scan_cross_owner_candidates": 0,
+      "inactive_registry_duplicates": 11,
+      "cross_owner_detail": [
+        {
+          "physical_name": "DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO",
+          "identity": "899999061",
+          "secop_processes": 370599,
+          "secop_contracts": 346060,
+          "active_buyer": true,
+          "scan_owner": "DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO",
+          "identity": "899999061",
+          "secop_processes": 370599,
+          "secop_contracts": 346060,
+          "active_buyer": true,
+          "scan_owner": "DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "DEFENSORIA DEL PUEBLO RIO HACHA LA GUAJIRA",
+          "identity": "84080267",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "DEFENSORÍA DEL PUEBLO",
+          "scan_hijacked_by_this_owner": true
+        },
+        {
+          "physical_name": "DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORiA DEL ESPACIO PuBLICO",
+          "identity": "899999061",
+          "secop_processes": 370599,
+          "secop_contracts": 346060,
+          "active_buyer": true,
+          "scan_owner": "DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "DEFENSORIA DEL PUEBLO",
+          "identity": "1007003367",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "DEFENSORÍA DEL PUEBLO",
+          "scan_hijacked_by_this_owner": true
+        },
+        {
+          "physical_name": "DEFENSORIA DEL PUEBLO",
+          "identity": "1052943245",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "DEFENSORÍA DEL PUEBLO",
+          "scan_hijacked_by_this_owner": true
+        },
+        {
+          "physical_name": "DEFENSORIA DEL PUEBLO",
+          "identity": "32756725",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "DEFENSORÍA DEL PUEBLO",
+          "scan_hijacked_by_this_owner": true
+        },
+        {
+          "physical_name": "DEFENSORIA DEL PUEBLO",
+          "identity": "24217845",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "DEFENSORÍA DEL PUEBLO",
+          "scan_hijacked_by_this_owner": true
+        },
+        {
+          "physical_name": "DEFENSORIA DEL PUEBLO",
+          "identity": "19472003",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "DEFENSORÍA DEL PUEBLO",
+          "scan_hijacked_by_this_owner": true
+        },
+        {
+          "physical_name": "DEFENSORIA DEL PUEBLO",
+          "identity": "1947969",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "DEFENSORÍA DEL PUEBLO",
+          "scan_hijacked_by_this_owner": true
+        },
+        {
+          "physical_name": "DEFENSORIA DEL PUEBLO",
+          "identity": "14236583",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "DEFENSORÍA DEL PUEBLO",
+          "scan_hijacked_by_this_owner": true
+        },
+        {
+          "physical_name": "DEFENSORIA DEL PUEBLO",
+          "identity": "1067808176",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "DEFENSORÍA DEL PUEBLO",
+          "scan_hijacked_by_this_owner": true
+        },
+        {
+          "physical_name": "DEFENSORIA CIVIL DE NOBSA",
+          "identity": "891856530",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "DEFENSORIA CIVIL DE NOBSA",
+          "identity": "891856530",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": null,
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "DEFENSORIA DEL PUEBLO",
+          "identity": "6497569",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "DEFENSORÍA DEL PUEBLO",
+          "scan_hijacked_by_this_owner": true
+        },
+        {
+          "physical_name": "DEFENSORIA DEL PUEBLO",
+          "identity": "1193125071",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "DEFENSORÍA DEL PUEBLO",
+          "scan_hijacked_by_this_owner": true
+        },
+        {
+          "physical_name": "DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO",
+          "identity": "79578468",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO",
+          "scan_hijacked_by_this_owner": false
+        }
+      ],
+      "observed_resolution": {
+        "owner": "DEFENSORÍA DEL PUEBLO",
+        "method": "exact"
+      },
+      "observed_scan_eligible": false,
+      "safety_class": "SAFE_EXACT_DISABLE_SCAN"
+    },
+    {
+      "alias": "la defensoría",
+      "owner": "DEFENSORÍA DEL PUEBLO",
+      "decision": "KEEP_EXACT_DISABLE_SCAN",
+      "exact_eligible": true,
+      "scan_eligible": false,
+      "exact_owner_count": 1,
+      "own_physical_names": [],
+      "other_physical_buyers_containing_alias": 4,
+      "scan_cross_owner_candidates": 0,
+      "inactive_registry_duplicates": 0,
+      "cross_owner_detail": [
+        {
+          "physical_name": "DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO",
+          "identity": "899999061",
+          "secop_processes": 370599,
+          "secop_contracts": 346060,
+          "active_buyer": true,
+          "scan_owner": "DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO",
+          "identity": "899999061",
+          "secop_processes": 370599,
+          "secop_contracts": 346060,
+          "active_buyer": true,
+          "scan_owner": "DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORiA DEL ESPACIO PuBLICO",
+          "identity": "899999061",
+          "secop_processes": 370599,
+          "secop_contracts": 346060,
+          "active_buyer": true,
+          "scan_owner": "DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO",
+          "scan_hijacked_by_this_owner": false
+        },
+        {
+          "physical_name": "DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO",
+          "identity": "79578468",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO",
+          "scan_hijacked_by_this_owner": false
+        }
+      ],
+      "observed_resolution": {
+        "owner": "DEFENSORÍA DEL PUEBLO",
+        "method": "exact"
+      },
+      "observed_scan_eligible": false,
+      "safety_class": "SAFE_EXACT_DISABLE_SCAN"
+    },
+    {
+      "alias": "defensoría del pueblo",
+      "owner": "DEFENSORÍA DEL PUEBLO",
+      "decision": "KEEP",
+      "exact_eligible": true,
+      "scan_eligible": true,
+      "exact_owner_count": 1,
+      "own_physical_names": [
+        "DEFENSORIA DEL PUEBLO",
+        "DEFENSORiA DEL PUEBLO"
+      ],
+      "other_physical_buyers_containing_alias": 11,
+      "scan_cross_owner_candidates": 0,
+      "inactive_registry_duplicates": 11,
+      "cross_owner_detail": [
+        {
+          "physical_name": "DEFENSORIA DEL PUEBLO RIO HACHA LA GUAJIRA",
+          "identity": "84080267",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "DEFENSORÍA DEL PUEBLO",
+          "scan_hijacked_by_this_owner": true
+        },
+        {
+          "physical_name": "DEFENSORIA DEL PUEBLO",
+          "identity": "1007003367",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "DEFENSORÍA DEL PUEBLO",
+          "scan_hijacked_by_this_owner": true
+        },
+        {
+          "physical_name": "DEFENSORIA DEL PUEBLO",
+          "identity": "1052943245",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "DEFENSORÍA DEL PUEBLO",
+          "scan_hijacked_by_this_owner": true
+        },
+        {
+          "physical_name": "DEFENSORIA DEL PUEBLO",
+          "identity": "32756725",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "DEFENSORÍA DEL PUEBLO",
+          "scan_hijacked_by_this_owner": true
+        },
+        {
+          "physical_name": "DEFENSORIA DEL PUEBLO",
+          "identity": "24217845",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "DEFENSORÍA DEL PUEBLO",
+          "scan_hijacked_by_this_owner": true
+        },
+        {
+          "physical_name": "DEFENSORIA DEL PUEBLO",
+          "identity": "19472003",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "DEFENSORÍA DEL PUEBLO",
+          "scan_hijacked_by_this_owner": true
+        },
+        {
+          "physical_name": "DEFENSORIA DEL PUEBLO",
+          "identity": "1947969",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "DEFENSORÍA DEL PUEBLO",
+          "scan_hijacked_by_this_owner": true
+        },
+        {
+          "physical_name": "DEFENSORIA DEL PUEBLO",
+          "identity": "14236583",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "DEFENSORÍA DEL PUEBLO",
+          "scan_hijacked_by_this_owner": true
+        },
+        {
+          "physical_name": "DEFENSORIA DEL PUEBLO",
+          "identity": "1067808176",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "DEFENSORÍA DEL PUEBLO",
+          "scan_hijacked_by_this_owner": true
+        },
+        {
+          "physical_name": "DEFENSORIA DEL PUEBLO",
+          "identity": "6497569",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "DEFENSORÍA DEL PUEBLO",
+          "scan_hijacked_by_this_owner": true
+        },
+        {
+          "physical_name": "DEFENSORIA DEL PUEBLO",
+          "identity": "1193125071",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "DEFENSORÍA DEL PUEBLO",
+          "scan_hijacked_by_this_owner": true
+        }
+      ],
+      "observed_resolution": {
+        "owner": "DEFENSORÍA DEL PUEBLO",
+        "method": "exact"
+      },
+      "observed_scan_eligible": true,
+      "safety_class": "SAFE_EXACT_SAFE_SCAN"
+    },
+    {
+      "alias": "defensoría pública",
+      "owner": "DEFENSORÍA DEL PUEBLO",
+      "decision": "KEEP",
+      "exact_eligible": true,
+      "scan_eligible": true,
+      "exact_owner_count": 1,
+      "own_physical_names": [],
+      "other_physical_buyers_containing_alias": 0,
+      "scan_cross_owner_candidates": 0,
+      "inactive_registry_duplicates": 0,
+      "cross_owner_detail": [],
+      "observed_resolution": {
+        "owner": "DEFENSORÍA DEL PUEBLO",
+        "method": "exact"
+      },
+      "observed_scan_eligible": true,
+      "safety_class": "SAFE_EXACT_SAFE_SCAN"
+    },
+    {
+      "alias": "dp",
+      "owner": "DEFENSORÍA DEL PUEBLO",
+      "decision": "KEEP",
+      "exact_eligible": true,
+      "scan_eligible": false,
+      "exact_owner_count": 1,
+      "own_physical_names": [],
+      "other_physical_buyers_containing_alias": 0,
+      "scan_cross_owner_candidates": 0,
+      "inactive_registry_duplicates": 0,
+      "cross_owner_detail": [],
+      "observed_resolution": {
+        "owner": "DEFENSORÍA DEL PUEBLO",
+        "method": "exact"
+      },
+      "observed_scan_eligible": false,
+      "safety_class": "SAFE_EXACT_DISABLE_SCAN"
+    },
+    {
+      "alias": "auditoría general de la república",
+      "owner": "AUDITORIA GENERAL DE LA REPUBLICA",
+      "decision": "ACCEPT_REGISTRY_VERIFIED",
+      "exact_eligible": true,
+      "scan_eligible": true,
+      "exact_owner_count": 1,
+      "own_physical_names": [
+        "AUDITORIA GENERAL DE LA REPUBLICA"
+      ],
+      "other_physical_buyers_containing_alias": 0,
+      "scan_cross_owner_candidates": 0,
+      "inactive_registry_duplicates": 0,
+      "cross_owner_detail": [],
+      "observed_resolution": {
+        "owner": "AUDITORIA GENERAL DE LA REPUBLICA",
+        "method": "exact"
+      },
+      "observed_scan_eligible": true,
+      "safety_class": "SAFE_EXACT_SAFE_SCAN"
+    },
+    {
+      "alias": "la auditoría general de la república",
+      "owner": "AUDITORIA GENERAL DE LA REPUBLICA",
+      "decision": "ACCEPT_REGISTRY_VERIFIED",
+      "exact_eligible": true,
+      "scan_eligible": true,
+      "exact_owner_count": 1,
+      "own_physical_names": [],
+      "other_physical_buyers_containing_alias": 0,
+      "scan_cross_owner_candidates": 0,
+      "inactive_registry_duplicates": 0,
+      "cross_owner_detail": [],
+      "observed_resolution": {
+        "owner": "AUDITORIA GENERAL DE LA REPUBLICA",
+        "method": "exact"
+      },
+      "observed_scan_eligible": true,
+      "safety_class": "SAFE_EXACT_SAFE_SCAN"
+    },
+    {
+      "alias": "auditoría general",
+      "owner": "AUDITORIA GENERAL DE LA REPUBLICA",
+      "decision": "ACCEPT_REGISTRY_VERIFIED",
+      "exact_eligible": true,
+      "scan_eligible": true,
+      "exact_owner_count": 1,
+      "own_physical_names": [
+        "AUDITORIA GENERAL DE LA REPUBLICA"
+      ],
+      "other_physical_buyers_containing_alias": 0,
+      "scan_cross_owner_candidates": 0,
+      "inactive_registry_duplicates": 0,
+      "cross_owner_detail": [],
+      "observed_resolution": {
+        "owner": "AUDITORIA GENERAL DE LA REPUBLICA",
+        "method": "exact"
+      },
+      "observed_scan_eligible": true,
+      "safety_class": "SAFE_EXACT_SAFE_SCAN"
+    },
+    {
+      "alias": "la auditoría general",
+      "owner": "AUDITORIA GENERAL DE LA REPUBLICA",
+      "decision": "ACCEPT_REGISTRY_VERIFIED",
+      "exact_eligible": true,
+      "scan_eligible": true,
+      "exact_owner_count": 1,
+      "own_physical_names": [],
+      "other_physical_buyers_containing_alias": 0,
+      "scan_cross_owner_candidates": 0,
+      "inactive_registry_duplicates": 0,
+      "cross_owner_detail": [],
+      "observed_resolution": {
+        "owner": "AUDITORIA GENERAL DE LA REPUBLICA",
+        "method": "exact"
+      },
+      "observed_scan_eligible": true,
+      "safety_class": "SAFE_EXACT_SAFE_SCAN"
+    },
+    {
+      "alias": "agr",
+      "owner": "AUDITORIA GENERAL DE LA REPUBLICA",
+      "decision": "ACCEPT_REGISTRY_VERIFIED",
+      "exact_eligible": true,
+      "scan_eligible": true,
+      "exact_owner_count": 1,
+      "own_physical_names": [],
+      "other_physical_buyers_containing_alias": 0,
+      "scan_cross_owner_candidates": 0,
+      "inactive_registry_duplicates": 0,
+      "cross_owner_detail": [],
+      "observed_resolution": {
+        "owner": "AUDITORIA GENERAL DE LA REPUBLICA",
+        "method": "exact"
+      },
+      "observed_scan_eligible": true,
+      "safety_class": "SAFE_EXACT_SAFE_SCAN"
+    },
+    {
+      "alias": "procuraduría general de la nación",
+      "owner": "PROCURADURIA GENERAL DE LA NACION",
+      "decision": "ACCEPT_REGISTRY_VERIFIED",
+      "exact_eligible": true,
+      "scan_eligible": true,
+      "exact_owner_count": 1,
+      "own_physical_names": [
+        "PROCURADURIA GENERAL DE LA NACION"
+      ],
+      "other_physical_buyers_containing_alias": 2,
+      "scan_cross_owner_candidates": 0,
+      "inactive_registry_duplicates": 2,
+      "cross_owner_detail": [
+        {
+          "physical_name": "PROCURADURÌA GENERAL DE LA NACIÒN",
+          "identity": "619785",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "PROCURADURIA GENERAL DE LA NACION",
+          "scan_hijacked_by_this_owner": true
+        },
+        {
+          "physical_name": "PROCURADURIA GENERAL DE LA NACION",
+          "identity": "12636000",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "PROCURADURIA GENERAL DE LA NACION",
+          "scan_hijacked_by_this_owner": true
+        }
+      ],
+      "observed_resolution": {
+        "owner": "PROCURADURIA GENERAL DE LA NACION",
+        "method": "exact"
+      },
+      "observed_scan_eligible": true,
+      "safety_class": "SAFE_EXACT_SAFE_SCAN"
+    },
+    {
+      "alias": "la procuraduría general de la nación",
+      "owner": "PROCURADURIA GENERAL DE LA NACION",
+      "decision": "ACCEPT_REGISTRY_VERIFIED",
+      "exact_eligible": true,
+      "scan_eligible": true,
+      "exact_owner_count": 1,
+      "own_physical_names": [],
+      "other_physical_buyers_containing_alias": 0,
+      "scan_cross_owner_candidates": 0,
+      "inactive_registry_duplicates": 0,
+      "cross_owner_detail": [],
+      "observed_resolution": {
+        "owner": "PROCURADURIA GENERAL DE LA NACION",
+        "method": "exact"
+      },
+      "observed_scan_eligible": true,
+      "safety_class": "SAFE_EXACT_SAFE_SCAN"
+    },
+    {
+      "alias": "procuraduría general",
+      "owner": "PROCURADURIA GENERAL DE LA NACION",
+      "decision": "ACCEPT_REGISTRY_VERIFIED",
+      "exact_eligible": true,
+      "scan_eligible": true,
+      "exact_owner_count": 1,
+      "own_physical_names": [
+        "PROCURADURIA GENERAL DE LA NACION"
+      ],
+      "other_physical_buyers_containing_alias": 2,
+      "scan_cross_owner_candidates": 0,
+      "inactive_registry_duplicates": 2,
+      "cross_owner_detail": [
+        {
+          "physical_name": "PROCURADURÌA GENERAL DE LA NACIÒN",
+          "identity": "619785",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "PROCURADURIA GENERAL DE LA NACION",
+          "scan_hijacked_by_this_owner": true
+        },
+        {
+          "physical_name": "PROCURADURIA GENERAL DE LA NACION",
+          "identity": "12636000",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "PROCURADURIA GENERAL DE LA NACION",
+          "scan_hijacked_by_this_owner": true
+        }
+      ],
+      "observed_resolution": {
+        "owner": "PROCURADURIA GENERAL DE LA NACION",
+        "method": "exact"
+      },
+      "observed_scan_eligible": true,
+      "safety_class": "SAFE_EXACT_SAFE_SCAN"
+    },
+    {
+      "alias": "la procuraduría general",
+      "owner": "PROCURADURIA GENERAL DE LA NACION",
+      "decision": "ACCEPT_REGISTRY_VERIFIED",
+      "exact_eligible": true,
+      "scan_eligible": true,
+      "exact_owner_count": 1,
+      "own_physical_names": [],
+      "other_physical_buyers_containing_alias": 0,
+      "scan_cross_owner_candidates": 0,
+      "inactive_registry_duplicates": 0,
+      "cross_owner_detail": [],
+      "observed_resolution": {
+        "owner": "PROCURADURIA GENERAL DE LA NACION",
+        "method": "exact"
+      },
+      "observed_scan_eligible": true,
+      "safety_class": "SAFE_EXACT_SAFE_SCAN"
+    },
+    {
+      "alias": "procuraduría",
+      "owner": "PROCURADURIA GENERAL DE LA NACION",
+      "decision": "ACCEPT_REGISTRY_VERIFIED",
+      "exact_eligible": true,
+      "scan_eligible": true,
+      "exact_owner_count": 1,
+      "own_physical_names": [
+        "PROCURADURIA",
+        "PROCURADURIA GENERAL DE LA NACION",
+        "PROCURADURiA PROVINCIAL DEL VALLE DE ABURRa"
+      ],
+      "other_physical_buyers_containing_alias": 3,
+      "scan_cross_owner_candidates": 0,
+      "inactive_registry_duplicates": 3,
+      "cross_owner_detail": [
+        {
+          "physical_name": "PROCURADURÌA GENERAL DE LA NACIÒN",
+          "identity": "619785",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "PROCURADURIA GENERAL DE LA NACION",
+          "scan_hijacked_by_this_owner": true
+        },
+        {
+          "physical_name": "PROCURADURIA JB",
+          "identity": "5231657",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "PROCURADURIA GENERAL DE LA NACION",
+          "scan_hijacked_by_this_owner": true
+        },
+        {
+          "physical_name": "PROCURADURIA GENERAL DE LA NACION",
+          "identity": "12636000",
+          "secop_processes": 0,
+          "secop_contracts": 0,
+          "active_buyer": false,
+          "scan_owner": "PROCURADURIA GENERAL DE LA NACION",
+          "scan_hijacked_by_this_owner": true
+        }
+      ],
+      "observed_resolution": {
+        "owner": "PROCURADURIA GENERAL DE LA NACION",
+        "method": "exact"
+      },
+      "observed_scan_eligible": true,
+      "safety_class": "SAFE_EXACT_SAFE_SCAN"
+    },
+    {
+      "alias": "la procuraduría",
+      "owner": "PROCURADURIA GENERAL DE LA NACION",
+      "decision": "ACCEPT_REGISTRY_VERIFIED",
+      "exact_eligible": true,
+      "scan_eligible": true,
+      "exact_owner_count": 1,
+      "own_physical_names": [],
+      "other_physical_buyers_containing_alias": 0,
+      "scan_cross_owner_candidates": 0,
+      "inactive_registry_duplicates": 0,
+      "cross_owner_detail": [],
+      "observed_resolution": {
+        "owner": "PROCURADURIA GENERAL DE LA NACION",
+        "method": "exact"
+      },
+      "observed_scan_eligible": true,
+      "safety_class": "SAFE_EXACT_SAFE_SCAN"
+    },
+    {
+      "alias": "pgn",
+      "owner": "PROCURADURIA GENERAL DE LA NACION",
+      "decision": "ACCEPT_REGISTRY_VERIFIED",
+      "exact_eligible": true,
+      "scan_eligible": true,
+      "exact_owner_count": 1,
+      "own_physical_names": [],
+      "other_physical_buyers_containing_alias": 0,
+      "scan_cross_owner_candidates": 0,
+      "inactive_registry_duplicates": 0,
+      "cross_owner_detail": [],
+      "observed_resolution": {
+        "owner": "PROCURADURIA GENERAL DE LA NACION",
+        "method": "exact"
+      },
+      "observed_scan_eligible": true,
+      "safety_class": "SAFE_EXACT_SAFE_SCAN"
+    },
+    {
+      "alias": "fondo de bienestar social de la contraloría general de la república",
+      "owner": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+      "decision": "ACCEPT_REGISTRY_VERIFIED",
+      "exact_eligible": true,
+      "scan_eligible": true,
+      "exact_owner_count": 1,
+      "own_physical_names": [
+        "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA"
+      ],
+      "other_physical_buyers_containing_alias": 0,
+      "scan_cross_owner_candidates": 0,
+      "inactive_registry_duplicates": 0,
+      "cross_owner_detail": [],
+      "observed_resolution": {
+        "owner": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+        "method": "exact"
+      },
+      "observed_scan_eligible": true,
+      "safety_class": "SAFE_EXACT_SAFE_SCAN"
+    },
+    {
+      "alias": "el fondo de bienestar social de la contraloría general de la república",
+      "owner": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+      "decision": "ACCEPT_REGISTRY_VERIFIED",
+      "exact_eligible": true,
+      "scan_eligible": true,
+      "exact_owner_count": 1,
+      "own_physical_names": [],
+      "other_physical_buyers_containing_alias": 0,
+      "scan_cross_owner_candidates": 0,
+      "inactive_registry_duplicates": 0,
+      "cross_owner_detail": [],
+      "observed_resolution": {
+        "owner": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+        "method": "exact"
+      },
+      "observed_scan_eligible": true,
+      "safety_class": "SAFE_EXACT_SAFE_SCAN"
+    },
+    {
+      "alias": "fondo de bienestar social de la cgr",
+      "owner": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+      "decision": "ACCEPT_REGISTRY_VERIFIED",
+      "exact_eligible": true,
+      "scan_eligible": true,
+      "exact_owner_count": 1,
+      "own_physical_names": [],
+      "other_physical_buyers_containing_alias": 0,
+      "scan_cross_owner_candidates": 0,
+      "inactive_registry_duplicates": 0,
+      "cross_owner_detail": [],
+      "observed_resolution": {
+        "owner": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+        "method": "exact"
+      },
+      "observed_scan_eligible": true,
+      "safety_class": "SAFE_EXACT_SAFE_SCAN"
+    },
+    {
+      "alias": "fondo de bienestar social cgr",
+      "owner": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+      "decision": "ACCEPT_REGISTRY_VERIFIED",
+      "exact_eligible": true,
+      "scan_eligible": true,
+      "exact_owner_count": 1,
+      "own_physical_names": [],
+      "other_physical_buyers_containing_alias": 0,
+      "scan_cross_owner_candidates": 0,
+      "inactive_registry_duplicates": 0,
+      "cross_owner_detail": [],
+      "observed_resolution": {
+        "owner": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+        "method": "exact"
+      },
+      "observed_scan_eligible": true,
+      "safety_class": "SAFE_EXACT_SAFE_SCAN"
+    },
+    {
+      "alias": "instituto de estudios del ministerio público",
+      "owner": "INSTITUTO DE ESTUDIOS DEL MINISTERIO PUBLICO.",
+      "decision": "ACCEPT_REGISTRY_VERIFIED",
+      "exact_eligible": true,
+      "scan_eligible": true,
+      "exact_owner_count": 1,
+      "own_physical_names": [
+        "INSTITUTO DE ESTUDIOS DEL MINISTERIO PUBLICO."
+      ],
+      "other_physical_buyers_containing_alias": 0,
+      "scan_cross_owner_candidates": 0,
+      "inactive_registry_duplicates": 0,
+      "cross_owner_detail": [],
+      "observed_resolution": {
+        "owner": "INSTITUTO DE ESTUDIOS DEL MINISTERIO PUBLICO.",
+        "method": "exact"
+      },
+      "observed_scan_eligible": true,
+      "safety_class": "SAFE_EXACT_SAFE_SCAN"
+    },
+    {
+      "alias": "el instituto de estudios del ministerio público",
+      "owner": "INSTITUTO DE ESTUDIOS DEL MINISTERIO PUBLICO.",
+      "decision": "ACCEPT_REGISTRY_VERIFIED",
+      "exact_eligible": true,
+      "scan_eligible": true,
+      "exact_owner_count": 1,
+      "own_physical_names": [],
+      "other_physical_buyers_containing_alias": 0,
+      "scan_cross_owner_candidates": 0,
+      "inactive_registry_duplicates": 0,
+      "cross_owner_detail": [],
+      "observed_resolution": {
+        "owner": "INSTITUTO DE ESTUDIOS DEL MINISTERIO PUBLICO.",
+        "method": "exact"
+      },
+      "observed_scan_eligible": true,
+      "safety_class": "SAFE_EXACT_SAFE_SCAN"
+    },
+    {
+      "alias": "iemp",
+      "owner": "INSTITUTO DE ESTUDIOS DEL MINISTERIO PUBLICO.",
+      "decision": "ACCEPT_REGISTRY_VERIFIED",
+      "exact_eligible": true,
+      "scan_eligible": true,
+      "exact_owner_count": 1,
+      "own_physical_names": [],
+      "other_physical_buyers_containing_alias": 0,
+      "scan_cross_owner_candidates": 0,
+      "inactive_registry_duplicates": 0,
+      "cross_owner_detail": [],
+      "observed_resolution": {
+        "owner": "INSTITUTO DE ESTUDIOS DEL MINISTERIO PUBLICO.",
+        "method": "exact"
+      },
+      "observed_scan_eligible": true,
+      "safety_class": "SAFE_EXACT_SAFE_SCAN"
+    }
+  ],
+  "rejected_alias_candidates": {
+    "ministerio público": "OVER_GENERIC_ALIAS — concepto institucional (PGN + Defensoría + personerías)",
+    "instituto de estudios": "OVER_GENERIC_ALIAS — cabeza genérica sin identidad",
+    "fondo de bienestar social": "OVER_GENERIC_ALIAS — 9 fondos físicos distintos",
+    "fondo de bienestar social de la contraloría": "OVER_GENERIC_ALIAS — 4 fondos territoriales",
+    "bienestar social": "OVER_GENERIC_ALIAS — 12 compradores físicos distintos",
+    "auditoría": "OVER_GENERIC_ALIAS — función, no identidad"
+  },
+  "canaries": {
+    "territorial_control": [
+      {
+        "text": "contratos de la contraloria departamental de bolivar",
+        "scan_owner": null,
+        "matched_alias": null,
+        "national_root_hijack": false
+      },
+      {
+        "text": "procesos de la contraloria general de santander",
+        "scan_owner": null,
+        "matched_alias": null,
+        "national_root_hijack": false
+      },
+      {
+        "text": "contratos de la contraloria general de caldas",
+        "scan_owner": null,
+        "matched_alias": null,
+        "national_root_hijack": false
+      },
+      {
+        "text": "contratos de la contraloria general de medellin",
+        "scan_owner": null,
+        "matched_alias": null,
+        "national_root_hijack": false
+      },
+      {
+        "text": "contratos de la contraloria municipal de ibague",
+        "scan_owner": null,
+        "matched_alias": null,
+        "national_root_hijack": false
+      },
+      {
+        "text": "contratos de la defensoria civil de nobsa",
+        "scan_owner": null,
+        "matched_alias": null,
+        "national_root_hijack": false
+      },
+      {
+        "text": "contratos de la personeria municipal de soledad",
+        "scan_owner": null,
+        "matched_alias": null,
+        "national_root_hijack": false
+      },
+      {
+        "text": "contratos del fondo de bienestar social de la contraloria departamental de bolivar",
+        "scan_owner": null,
+        "matched_alias": null,
+        "national_root_hijack": false
+      }
+    ],
+    "parent_related": [
+      {
+        "group": "CGR_VS_FONDO",
+        "text": "contratos del fondo de bienestar social de la contraloria general de la republica",
+        "expected_owner": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+        "scan_owner": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+        "matched_alias": "fondo de bienestar social de la contraloria general de la republica",
+        "pass": true
+      },
+      {
+        "group": "CGR_VS_FONDO",
+        "text": "licitaciones de la contraloria general de la republica",
+        "expected_owner": "CGR-NIVEL CENTRAL",
+        "scan_owner": "CGR-NIVEL CENTRAL",
+        "matched_alias": "la contraloria general de la republica",
+        "pass": true
+      },
+      {
+        "group": "PGN_VS_IEMP",
+        "text": "contratos del instituto de estudios del ministerio publico",
+        "expected_owner": "INSTITUTO DE ESTUDIOS DEL MINISTERIO PUBLICO.",
+        "scan_owner": "INSTITUTO DE ESTUDIOS DEL MINISTERIO PUBLICO.",
+        "matched_alias": "instituto de estudios del ministerio publico",
+        "pass": true
+      },
+      {
+        "group": "PGN_VS_IEMP",
+        "text": "contratos de la procuraduria general de la nacion",
+        "expected_owner": "PROCURADURIA GENERAL DE LA NACION",
+        "scan_owner": "PROCURADURIA GENERAL DE LA NACION",
+        "matched_alias": "la procuraduria general de la nacion",
+        "pass": true
+      }
+    ],
+    "blocked_phrases": [
+      {
+        "phrase": "Ministerio Público",
+        "owner": null,
+        "method": "alias_resolution_blocked",
+        "fail_closed": true
+      },
+      {
+        "phrase": "fondo de bienestar social",
+        "owner": null,
+        "method": "alias_resolution_blocked",
+        "fail_closed": true
+      },
+      {
+        "phrase": "Fondo de Bienestar Social de la Contraloría",
+        "owner": null,
+        "method": "alias_resolution_blocked",
+        "fail_closed": true
+      }
+    ],
+    "territorial_non_hijack": true
+  },
+  "dataset_smoke": [
+    {
+      "phrase": "Contraloría General de la República",
+      "expected_physical_name": "CGR-NIVEL CENTRAL",
+      "resolved_owner": "CGR-NIVEL CENTRAL",
+      "method": "exact",
+      "runtime_where": "unaccent(UPPER(<entidad>)) LIKE unaccent(UPPER('%<owner>%'))",
+      "process_rows": 5654,
+      "contract_rows": 5424,
+      "zero_row": false
+    },
+    {
+      "phrase": "Auditoría General de la República",
+      "expected_physical_name": "AUDITORIA GENERAL DE LA REPUBLICA",
+      "resolved_owner": "AUDITORIA GENERAL DE LA REPUBLICA",
+      "method": "exact",
+      "runtime_where": "unaccent(UPPER(<entidad>)) LIKE unaccent(UPPER('%<owner>%'))",
+      "process_rows": 1274,
+      "contract_rows": 1092,
+      "zero_row": false
+    },
+    {
+      "phrase": "Procuraduría General de la Nación",
+      "expected_physical_name": "PROCURADURIA GENERAL DE LA NACION",
+      "resolved_owner": "PROCURADURIA GENERAL DE LA NACION",
+      "method": "exact",
+      "runtime_where": "unaccent(UPPER(<entidad>)) LIKE unaccent(UPPER('%<owner>%'))",
+      "process_rows": 2224,
+      "contract_rows": 1549,
+      "zero_row": false
+    },
+    {
+      "phrase": "Defensoría del Pueblo",
+      "expected_physical_name": "DEFENSORÍA DEL PUEBLO",
+      "resolved_owner": "DEFENSORÍA DEL PUEBLO",
+      "method": "exact",
+      "runtime_where": "unaccent(UPPER(<entidad>)) LIKE unaccent(UPPER('%<owner>%'))",
+      "process_rows": 14240,
+      "contract_rows": 34915,
+      "zero_row": false
+    },
+    {
+      "phrase": "Fondo de Bienestar Social de la Contraloría General de la República",
+      "expected_physical_name": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+      "resolved_owner": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+      "method": "exact",
+      "runtime_where": "unaccent(UPPER(<entidad>)) LIKE unaccent(UPPER('%<owner>%'))",
+      "process_rows": 1104,
+      "contract_rows": 782,
+      "zero_row": false
+    },
+    {
+      "phrase": "Instituto de Estudios del Ministerio Público",
+      "expected_physical_name": "INSTITUTO DE ESTUDIOS DEL MINISTERIO PUBLICO.",
+      "resolved_owner": "INSTITUTO DE ESTUDIOS DEL MINISTERIO PUBLICO.",
+      "method": "exact",
+      "runtime_where": "unaccent(UPPER(<entidad>)) LIKE unaccent(UPPER('%<owner>%'))",
+      "process_rows": 205,
+      "contract_rows": 213,
+      "zero_row": false
+    }
+  ],
+  "gates": {
+    "exact_multi_owner": 172,
+    "new_multi_owner_keys": [],
+    "new_scan_cross_owner": 0,
+    "inactive_registry_duplicates": 36,
+    "territorial_non_hijack": true,
+    "parent_related_pass": true,
+    "recent_volume": {
+      "processes": 3670,
+      "contracts": 10835
+    }
+  }
+}
