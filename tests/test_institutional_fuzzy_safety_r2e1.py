@@ -28,8 +28,7 @@ from pathlib import Path
 
 import pytest
 
-from app.core.entity_resolver import GAZETTEER_CIUDADES, EntityResolver
-from app.data.departamentos import DEPARTAMENTOS
+from app.core.entity_resolver import TERRITORY_PHRASES, EntityResolver
 from app.utils.money import normalize_text
 
 sys.path.insert(0, str(Path("scripts").resolve()))
@@ -306,7 +305,7 @@ class TestFuzzyIdentityGuard:
     def test_head_token_must_survive(self) -> None:
         from app.core.fuzzy_identity_guard import candidate_keeps_requested_identity
 
-        territories = frozenset(DEPARTAMENTOS) | frozenset(GAZETTEER_CIUDADES)
+        territories = TERRITORY_PHRASES
         assert not candidate_keeps_requested_identity(
             "presidencia de la republica", "la republica", BANREP, territories
         )
@@ -320,7 +319,7 @@ class TestFuzzyIdentityGuard:
     def test_requested_territory_must_survive(self) -> None:
         from app.core.fuzzy_identity_guard import candidate_keeps_requested_identity
 
-        territories = frozenset(DEPARTAMENTOS) | frozenset(GAZETTEER_CIUDADES)
+        territories = TERRITORY_PHRASES
         assert not candidate_keeps_requested_identity(
             "contraloria departamental de bolivar", "contraloria", CGR, territories
         )
@@ -334,7 +333,7 @@ class TestFuzzyIdentityGuard:
     def test_phrase_without_extra_content_is_not_penalized(self) -> None:
         from app.core.fuzzy_identity_guard import candidate_keeps_requested_identity
 
-        territories = frozenset(DEPARTAMENTOS) | frozenset(GAZETTEER_CIUDADES)
+        territories = TERRITORY_PHRASES
         assert candidate_keeps_requested_identity(
             "contraloria general de la republica de colombia",
             "la contraloria general de la republica",

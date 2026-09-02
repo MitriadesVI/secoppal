@@ -18,9 +18,13 @@ from app.core.generic_buyer import (
     incomplete_buyer_hint,
     is_unqualified_buyer_name,
 )
-from app.core.fuzzy_identity_guard import candidate_keeps_requested_identity
+from app.core.fuzzy_identity_guard import (
+    FILLER_TOKENS,
+    candidate_keeps_requested_identity,
+)
 from app.core.geography_alias import is_geography_alias
 from app.core.scan_alias_policy import is_scan_eligible_alias, record_alias_policy
+from app.core.territory_phrase_index import TerritoryPhraseIndex
 from app.data.colombia_geography import REGION_ALIASES
 from app.data.departamentos import DEPARTAMENTOS, DEPARTAMENTOS_OFICIALES
 from app.utils.money import normalize_text
@@ -93,10 +97,13 @@ class GeoMention:
     confidence: str = "low"  # "high", "medium", "low"
 
 
-# Tokens que nombran territorio, no institución.  Los usa la puerta del fuzzy
-# para saber qué palabra de la petición es discriminante; la autoridad sigue
-# siendo el catálogo territorial, no una lista propia.
-TERRITORY_TOKENS: frozenset[str] = frozenset(DEPARTAMENTOS) | frozenset(GAZETTEER_CIUDADES)
+# Frases que nombran territorio, no institución.  Las usa la puerta del fuzzy
+# para saber qué pidió el usuario; la autoridad sigue siendo el catálogo
+# territorial, no una lista propia.  El índice es por FRASE porque el catálogo
+# lo es: "norte de santander" no es "santander" (R2E.1A).
+TERRITORY_PHRASES: TerritoryPhraseIndex = TerritoryPhraseIndex.from_alias_maps(
+    DEPARTAMENTOS, GAZETTEER_CIUDADES, connectors=FILLER_TOKENS
+)
 
 
 def geo_mention_resolution(token: str) -> GeoMention:
@@ -551,7 +558,7 @@ class EntityResolver:
     ) -> bool:
         """Puerta de los tiers inferenciales; el ownership exacto no la cruza."""
         return candidate_keeps_requested_identity(
-            normalized, matched_alias, official, TERRITORY_TOKENS
+            normalized, matched_alias, official, TERRITORY_PHRASES
         )
 
     def _unresolved_identity(self, user_input: str, normalized: str) -> ResolutionResult:

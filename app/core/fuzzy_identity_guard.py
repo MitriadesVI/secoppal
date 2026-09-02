@@ -19,15 +19,20 @@ gazetteer, es rellenarlo en silencio.  Sin candidato que conserve la identidad
 pedida el resolver cae al filtro literal con las palabras del usuario, que no
 atribuye contratos a nadie.
 
-El módulo no conoce instituciones ni topónimos: recibe el catálogo territorial
-de quien lo llama y opera sobre tokens.
+El territorio se compara como FRASE, no como tokens sueltos: el catálogo lo
+indexa así —`norte de santander`, `san andres y providencia`, `puerto carreño`—
+y mirarlo token a token confundía Norte de Santander con Santander y dejaba
+sin vigilancia los topónimos cuyas palabras no son claves por separado
+(R2E.1A). Esa autoridad vive en ``territory_phrase_index``.
+
+El módulo no conoce instituciones ni topónimos: recibe el índice territorial de
+quien lo llama y opera sobre tokens.
 """
 
 from __future__ import annotations
 
-from collections.abc import Container
-
 from app.core.entity_types import name_tokens
+from app.core.territory_phrase_index import TerritoryPhraseIndex, contains_span
 
 # Conectores sin contenido identitario.  Misma frontera que usan
 # ``geography_alias.LEADING_WRAPPERS`` y ``generic_buyer._ARTICLES``.
@@ -45,7 +50,7 @@ def candidate_keeps_requested_identity(
     query: str,
     matched_alias: str,
     official_name: str,
-    territory_tokens: Container[str],
+    territories: TerritoryPhraseIndex,
 ) -> bool:
     """Si el candidato conserva la cabeza y el territorio que el usuario pidió.
 
@@ -57,15 +62,28 @@ def candidate_keeps_requested_identity(
     if not requested:
         return True
 
-    evidence = set(name_tokens(matched_alias)) | set(name_tokens(official_name))
+    alias_tokens = _content_tokens(matched_alias)
+    official_tokens = _content_tokens(official_name)
 
     # La cabeza es lo primero que el usuario escribió: "contraloría", "hospital",
     # "presidencia".  Un candidato que no la lleva nombra otra cosa.
-    if requested[0] not in evidence:
+    if requested[0] not in set(alias_tokens) | set(official_tokens):
         return False
 
     # Un territorio explícito es discriminante, no decorado: la contraloría de
-    # Bolívar y la de Caldas son compradores distintos con NIT distinto.
+    # Bolívar y la de Caldas son compradores distintos con NIT distinto.  Se
+    # compara la FRASE territorial completa —o una forma que nombre el mismo
+    # territorio canónico—, nunca sus palabras por separado.
     return all(
-        token in evidence for token in requested if token in territory_tokens
+        any(
+            contains_span(sequence, form)
+            for form in territories.equivalent_forms(span)
+            for sequence in (alias_tokens, official_tokens)
+        )
+        for span in territories.spans_in(tuple(requested))
     )
+
+
+def _content_tokens(name: str) -> tuple[str, ...]:
+    """Tokens de un nombre sin conectores, en orden."""
+    return tuple(t for t in name_tokens(name) if t not in FILLER_TOKENS)
