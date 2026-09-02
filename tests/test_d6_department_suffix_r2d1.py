@@ -163,10 +163,6 @@ NON_CAR_FREED = [
         "INSTITUTO DE CAMINOS Y CONSTRUCCIONES DE CUNDINAMARCA - ICCU",
     ),
     ("contratos de Canal Teleantioquia", "SOCIEDAD TELEVISION DE ANTIOQUIA LTDA"),
-    (
-        "contratos del Terminal de Transportes de Santa Marta Magdalena",
-        "ALCALDÍA DISTRITAL DE SANTA MARTA",
-    ),
     ("contratos de la Gobernación de Boyacá", "GOBERNACIÓN DE BOYACÁ"),
 ]
 
@@ -177,6 +173,14 @@ def test_institution_ending_in_geography_is_reachable(
 ) -> None:
     assert _entity(router, phrase) == physical
     assert _department(router, phrase) is None
+
+
+def test_terminal_santa_marta_no_longer_falls_into_the_district_mayor(
+    router: QueryRouter,
+) -> None:
+    """R2D.3 defense A is valid before the specific identity is registered."""
+    phrase = "contratos del Terminal de Transportes de Santa Marta Magdalena"
+    assert _entity(router, phrase) is None
 
 
 def test_ese_del_meta_stops_resolving_to_the_department(resolver: EntityResolver) -> None:
@@ -208,7 +212,6 @@ def _mutate(monkeypatch: pytest.MonkeyPatch, is_geo) -> None:
 SUFFIX_DEPENDENT = [
     "contratos de la secretaría general de la alcaldía mayor de Bogotá",
     "contratos de Canal Teleantioquia",
-    "contratos del Terminal de Transportes de Santa Marta Magdalena",
     "contratos de CORPOCALDAS en 2025",
 ]
 

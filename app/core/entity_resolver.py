@@ -19,6 +19,7 @@ from app.core.generic_buyer import (
     is_unqualified_buyer_name,
 )
 from app.core.geography_alias import is_geography_alias
+from app.core.scan_alias_policy import is_scan_eligible_alias, record_alias_policy
 from app.data.colombia_geography import REGION_ALIASES
 from app.data.departamentos import DEPARTAMENTOS, DEPARTAMENTOS_OFICIALES
 from app.utils.money import normalize_text
@@ -203,6 +204,7 @@ class EntityResolver:
         self.owners_by_alias: dict[str, set[str]] = {}
         self.aliases_by_official: dict[str, set[str]] = {}
         self.source_names_to_official: dict[str, set[str]] = {}
+        self.resolution_blocked_aliases: set[str] = set()
         self._root_evidence_by_department: dict[str, dict[str, tuple[str, ...]]] = {}
 
         # For scan (substring detection in text)
@@ -438,6 +440,23 @@ class EntityResolver:
     def resolve_entidad(self, user_input: str, departamento: str | None = None) -> ResolutionResult:
         normalized = normalize_text(user_input)
 
+        # Some phrases were once aliases but the audited evidence shows that
+        # they do not identify a unique buyer even when written alone.  They
+        # are removed from ownership and declared as negative evidence in the
+        # gazetteer so global fuzzy cannot silently recreate the old owner.
+        if normalized in self.resolution_blocked_aliases:
+            return ResolutionResult(
+                value=None,
+                method="alias_resolution_blocked",
+                confidence="none",
+                metadata={"blocked_alias": normalized},
+                clarification_needed=True,
+                clarification_hint=(
+                    f"'{user_input}' no identifica un comprador único. "
+                    "¿Cuál es el nombre institucional completo?"
+                ),
+            )
+
         # INV-INCOMPLETE-BUYER-CANNOT-BECOME-TOPIC. ``scan_entity`` ya rechaza
         # el genérico desnudo, pero esta puerta quedaba abierta: los tiers de
         # fuzzy global le encuentran vecino a cualquier cosa y "alcaldia" salía
@@ -670,10 +689,14 @@ class EntityResolver:
         with self.alias_path.open("r", encoding="utf-8") as handle:
             data = json.load(handle)
 
-        normalized_records: list[tuple[str, str, list[str]]] = []
+        normalized_records: list[
+            tuple[str, str, list[str], frozenset[str]]
+        ] = []
         for record in data:
             official = record["official_name"]
             official_key = normalize_text(official)
+            scan_disabled, resolution_blocked = record_alias_policy(record)
+            self.resolution_blocked_aliases.update(resolution_blocked)
             self.source_names_to_official.setdefault(official_key, set()).add(official)
             if not is_unqualified_buyer_name(official_key):
                 self.choice_to_official[official_key] = official
@@ -693,7 +716,25 @@ class EntityResolver:
                 self.aliases_by_official.setdefault(official, set()).add(alias_key)
                 alias_keys.append(alias_key)
 
-            normalized_records.append((official, official_key, alias_keys))
+            unknown_scan_policy = scan_disabled - set(alias_keys)
+            if unknown_scan_policy:
+                aliases = ", ".join(sorted(unknown_scan_policy)[:5])
+                raise ValueError(
+                    "Gazetteer scan policy conflict: disabled aliases are not "
+                    f"owned by {official}: {aliases}"
+                )
+
+            normalized_records.append(
+                (official, official_key, alias_keys, scan_disabled)
+            )
+
+        policy_conflicts = self.resolution_blocked_aliases & self.owners_by_alias.keys()
+        if policy_conflicts:
+            aliases = ", ".join(sorted(policy_conflicts)[:5])
+            raise ValueError(
+                "Gazetteer alias policy conflict: resolution-blocked aliases "
+                f"still have owners: {aliases}"
+            )
 
         # Derive root authority only after every alias owner is known.  A
         # normalized alias with more than one owner supplies no evidence, and
@@ -719,7 +760,7 @@ class EntityResolver:
         }
 
         scan_entries: list[tuple[str, str]] = []  # (normalized_alias, official_name)
-        for official, official_key, alias_keys in normalized_records:
+        for official, official_key, alias_keys, scan_disabled in normalized_records:
             # SOURCE_PHYSICAL_NAME is not automatically a SCAN_ALIAS.  Physical
             # names remain available to ordinary fuzzy resolution, except when
             # the name itself is structurally unqualified nationwide.
@@ -733,6 +774,9 @@ class EntityResolver:
                 if not alias or alias in seen or len(alias) < 3:
                     continue
                 seen.add(alias)
+
+                if not is_scan_eligible_alias(alias, scan_disabled):
+                    continue
 
                 target = department_root_buyer_target(alias)
                 canonical_department = DEPARTAMENTOS.get(target or "")

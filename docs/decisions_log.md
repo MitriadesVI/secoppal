@@ -4207,3 +4207,19 @@ parity closeout:  9a5cceea759bf882c19bfeeb968c0a568146f579
 
 Detalle: `docs/decisions/2026-08-31_ADR-071_secop-access-authority.md`.
 Informe: `docs/audits/2026-08-31_CO1_REQ_PUBLIC_LINK_SPIKE.md`.
+
+## ADR-072: Ownership exacto y elegibilidad de scan son autoridades distintas
+
+**Fecha:** 2026-09-01
+**Estado:** Accepted — `SCAN_ALIAS_ELIGIBILITY_R2D3`
+
+R2D.2 acreditó que nueve aliases válidos o tolerados por Tier 1 capturaban 17
+compradores físicos cuando la misma lista alimentaba `_scan_index`. Se separan
+las autoridades con metadata declarativa del gazetteer:
+`scan_disabled_aliases` conserva ownership exacto sin scan y
+`resolution_blocked_aliases` impide que fuzzy resucite un alias retirado. La
+política pura no contiene nombres ni heurística global; los registros sin
+metadata no cambian y D6 permanece intacta.
+
+Detalle:
+`docs/decisions/2026-09-01_ADR-072_exact-alias-vs-scan-eligibility.md`.

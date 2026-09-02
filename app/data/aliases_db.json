@@ -2487,6 +2487,9 @@
       "procesos",
       "contratos"
     ],
+    "resolution_blocked_aliases": [
+      "santa marta magdalena"
+    ],
     "aliases": [
       "gobierno de santa marta",
       "alcaldía santa marta",
@@ -2514,7 +2517,6 @@
       "alcaldía magdalena",
       "distrito de santa marta",
       "alcaldía distrital santa marta",
-      "santa marta magdalena",
       "alcaldía distrital de santa marta"
     ]
   },
@@ -2734,6 +2736,9 @@
     "source_datasets": [
       "procesos"
     ],
+    "resolution_blocked_aliases": [
+      "francisco jose de caldas"
+    ],
     "aliases": [
       "universidad distrital fjc",
       "ud",
@@ -2750,7 +2755,6 @@
       "udistrital",
       "universidad distrital de la bogotá",
       "ud bogotá",
-      "francisco jose de caldas",
       "la ud",
       "universidad distrital francisco jose de caldas"
     ]
@@ -3782,6 +3786,9 @@
     "source_datasets": [
       "procesos",
       "contratos"
+    ],
+    "scan_disabled_aliases": [
+      "candelaria valle"
     ],
     "aliases": [
       "alcaldía candelaria valle",
@@ -4824,6 +4831,9 @@
     "source_datasets": [
       "procesos",
       "contratos"
+    ],
+    "scan_disabled_aliases": [
+      "soledad atlantico"
     ],
     "aliases": [
       "alcaldía de soledad",
@@ -5985,6 +5995,9 @@
       "procesos",
       "contratos"
     ],
+    "resolution_blocked_aliases": [
+      "ciudad bolivar"
+    ],
     "aliases": [
       "alcaldía local ciudad bolivar",
       "alcaldía de la localidad ciudad bolivar",
@@ -6000,9 +6013,7 @@
       "alcaldía de ciudad bolivar",
       "alcaldía local de la ciudad bolívar",
       "gobierno local de ciudad bolívar",
-      "ciudad bolivar",
       "localidad ciudad bolívar bogotá",
-      "ciudad bolívar",
       "la alcaldía de ciudad bolivar",
       "alcaldía local de ciudad bolívar bogotá",
       "alcaldía de ciudad bolívar bogotá",
@@ -6896,6 +6907,9 @@
       "procesos",
       "contratos"
     ],
+    "resolution_blocked_aliases": [
+      "salud narino"
+    ],
     "aliases": [
       "instituto departamental de salud del departamento de nariño",
       "ids",
@@ -6912,7 +6926,6 @@
       "el instituto departamental de salud de nariño",
       "instituto departamental de salud",
       "secretaría de salud de nariño",
-      "salud nariño",
       "la ids",
       "instituto de salud de nariño",
       "instituto departamental de salud de nariño"
@@ -9368,6 +9381,9 @@
       "procesos",
       "contratos"
     ],
+    "resolution_blocked_aliases": [
+      "corporacion quindio"
+    ],
     "aliases": [
       "la car del quindío",
       "entidad ambiental del quindio",
@@ -9380,12 +9396,10 @@
       "crq",
       "corporación autónoma regional del quindío",
       "el crq",
-      "corporacion quindio",
       "corporación autónoma del quindío",
       "corporacion autonoma regional quindio",
       "car del quindio",
       "autoridad ambiental del quindío",
-      "corporación quindío",
       "car del quindío",
       "corporación autónoma regional quindío",
       "corporacion ambiental del quindio",
@@ -11928,6 +11942,9 @@
       "procesos",
       "contratos"
     ],
+    "scan_disabled_aliases": [
+      "puerto boyaca"
+    ],
     "aliases": [
       "alcaldía puerto boyacá",
       "alcaldia de puerto boyaca",
@@ -12515,6 +12532,9 @@
       "procesos",
       "contratos"
     ],
+    "resolution_blocked_aliases": [
+      "salud arauca"
+    ],
     "aliases": [
       "arauca salud",
       "unidad administrativa especial de salud de arauca",
@@ -12536,7 +12556,6 @@
       "secretaría de salud de arauca",
       "la unidad administrativa especial de salud de arauca",
       "uaesa",
-      "salud arauca",
       "la salud de arauca",
       "unidad administrativa especial de salud de arauca"
     ]
