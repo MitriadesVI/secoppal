@@ -1,0 +1,513 @@
+{
+  "label": "POST",
+  "baseline_mode": false,
+  "filler_tokens": [
+    "al",
+    "de",
+    "del",
+    "e",
+    "el",
+    "en",
+    "la",
+    "las",
+    "los",
+    "y"
+  ],
+  "catalog": {
+    "catalogs": {
+      "DEPARTAMENTOS": {
+        "keys": 122,
+        "classes": {
+          "SINGLE_TOKEN": 33,
+          "WRAPPER_FORM": 76,
+          "MULTIWORD": 10,
+          "WRAPPER_MULTIWORD": 3
+        }
+      },
+      "GAZETTEER_CIUDADES": {
+        "keys": 49,
+        "classes": {
+          "SINGLE_TOKEN": 45,
+          "MULTIWORD": 4
+        }
+      }
+    },
+    "multiword_cores": {
+      "bogota d c": {
+        "canonicals": [
+          "Distrito Capital de Bogotá"
+        ],
+        "tokens_invisible_to_r2e1_rule": [
+          "d",
+          "c"
+        ],
+        "fully_invisible": false
+      },
+      "bogota dc": {
+        "canonicals": [
+          "Distrito Capital de Bogotá"
+        ],
+        "tokens_invisible_to_r2e1_rule": [
+          "dc"
+        ],
+        "fully_invisible": false
+      },
+      "distrito capital": {
+        "canonicals": [
+          "Distrito Capital de Bogotá"
+        ],
+        "tokens_invisible_to_r2e1_rule": [
+          "distrito",
+          "capital"
+        ],
+        "fully_invisible": true
+      },
+      "distrito capital bogota": {
+        "canonicals": [
+          "Distrito Capital de Bogotá"
+        ],
+        "tokens_invisible_to_r2e1_rule": [
+          "distrito",
+          "capital"
+        ],
+        "fully_invisible": false
+      },
+      "norte santander": {
+        "canonicals": [
+          "Norte de Santander"
+        ],
+        "tokens_invisible_to_r2e1_rule": [
+          "norte"
+        ],
+        "fully_invisible": false
+      },
+      "puerto carreno": {
+        "canonicals": [
+          "Puerto Carreño"
+        ],
+        "tokens_invisible_to_r2e1_rule": [
+          "puerto",
+          "carreno"
+        ],
+        "fully_invisible": true
+      },
+      "san andres": {
+        "canonicals": [
+          "San Andrés",
+          "San Andrés, Providencia y Santa Catalina"
+        ],
+        "tokens_invisible_to_r2e1_rule": [
+          "san",
+          "andres"
+        ],
+        "fully_invisible": true
+      },
+      "san andres providencia": {
+        "canonicals": [
+          "San Andrés, Providencia y Santa Catalina"
+        ],
+        "tokens_invisible_to_r2e1_rule": [
+          "san",
+          "andres",
+          "providencia"
+        ],
+        "fully_invisible": true
+      },
+      "santa marta": {
+        "canonicals": [
+          "Santa Marta"
+        ],
+        "tokens_invisible_to_r2e1_rule": [
+          "santa",
+          "marta"
+        ],
+        "fully_invisible": true
+      },
+      "valle cauca": {
+        "canonicals": [
+          "Valle del Cauca"
+        ],
+        "tokens_invisible_to_r2e1_rule": [],
+        "fully_invisible": false
+      }
+    },
+    "proxy_keys": [
+      {
+        "key": "cundi",
+        "canonical": "Cundinamarca"
+      },
+      {
+        "key": "cucuta",
+        "canonical": "Norte de Santander"
+      }
+    ]
+  },
+  "multiword_bank": [
+    {
+      "case": "norte de santander vs santander",
+      "query": "contraloria departamental de norte de santander",
+      "alias": "contraloria general de santander",
+      "official": "CONTRALORIA GENERAL DE SANTANDER",
+      "expected": false,
+      "verdict": false,
+      "correct": true
+    },
+    {
+      "case": "san andres",
+      "query": "contraloria de san andres",
+      "alias": "contraloria",
+      "official": "CGR-NIVEL CENTRAL",
+      "expected": false,
+      "verdict": false,
+      "correct": true
+    },
+    {
+      "case": "puerto carreño",
+      "query": "contraloria de puerto carreno",
+      "alias": "contraloria",
+      "official": "CGR-NIVEL CENTRAL",
+      "expected": false,
+      "verdict": false,
+      "correct": true
+    },
+    {
+      "case": "santa marta vs magdalena",
+      "query": "contraloria de santa marta",
+      "alias": "contraloria general del magdalena",
+      "official": "CONTRALORIA GENERAL DEL DEPARTAMENTO DEL MAGDALENA",
+      "expected": false,
+      "verdict": false,
+      "correct": true
+    },
+    {
+      "case": "valle del cauca vs cauca",
+      "query": "contraloria departamental del valle del cauca",
+      "alias": "contraloria del cauca",
+      "official": "CONTRALORIA GENERAL DEL CAUCA",
+      "expected": false,
+      "verdict": false,
+      "correct": true
+    },
+    {
+      "case": "santander vs norte de santander",
+      "query": "contraloria de santander",
+      "alias": "gobernacion norte de santander",
+      "official": "Gobernación Norte de Santander*",
+      "expected": false,
+      "verdict": false,
+      "correct": true
+    },
+    {
+      "case": "distrito capital vs otro dueño",
+      "query": "contraloria del distrito capital de bogota",
+      "alias": "bogota distrito capital",
+      "official": "UNIVERSIDAD PEDAGÓGICA NACIONAL",
+      "expected": false,
+      "verdict": false,
+      "correct": true
+    },
+    {
+      "case": "san andres providencia",
+      "query": "contraloria de san andres y providencia",
+      "alias": "contraloria general",
+      "official": "CGR-NIVEL CENTRAL",
+      "expected": false,
+      "verdict": false,
+      "correct": true
+    },
+    {
+      "case": "head mismatch gobernacion",
+      "query": "contraloria de norte de santander",
+      "alias": "gobernacion norte de santander",
+      "official": "Gobernación Norte de Santander*",
+      "expected": false,
+      "verdict": false,
+      "correct": true
+    },
+    {
+      "case": "head mismatch valle",
+      "query": "contraloria del valle del cauca",
+      "alias": "el valle",
+      "official": "GOBERNACION DEL VALLE DEL CAUCA - SECRETARIA DE EDUCACION",
+      "expected": false,
+      "verdict": false,
+      "correct": true
+    },
+    {
+      "case": "keep norte de santander",
+      "query": "gobernacion de norte de santander",
+      "alias": "gobernacion norte de santander",
+      "official": "Gobernación Norte de Santander*",
+      "expected": true,
+      "verdict": true,
+      "correct": true
+    },
+    {
+      "case": "keep san andres",
+      "query": "gobernacion de san andres",
+      "alias": "san andres",
+      "official": "GOBERNACIÓN DEL DEPARTAMENTO ARCHIPIELAGO DE SAN ANDRES PROVIDENCIA Y SANTA CATALINA",
+      "expected": true,
+      "verdict": true,
+      "correct": true
+    },
+    {
+      "case": "keep valle abreviado",
+      "query": "gobernacion del valle del cauca",
+      "alias": "el valle",
+      "official": "GOBERNACION DEL VALLE DEL CAUCA - SECRETARIA DE EDUCACION",
+      "expected": true,
+      "verdict": true,
+      "correct": true
+    },
+    {
+      "case": "keep bogota por distrito capital",
+      "query": "contraloria del distrito capital de bogota",
+      "alias": "contraloria del distrito capital",
+      "official": "CONTRALORIA DE BOGOTA",
+      "expected": true,
+      "verdict": true,
+      "correct": true
+    },
+    {
+      "case": "keep bogota simple",
+      "query": "contraloria del distrito capital",
+      "alias": "contraloria de bogota",
+      "official": "CONTRALORIA DE BOGOTA",
+      "expected": true,
+      "verdict": true,
+      "correct": true
+    },
+    {
+      "case": "keep santa marta",
+      "query": "contraloria de santa marta",
+      "alias": "contraloria de santa marta",
+      "official": "CONTRALORIA DISTRITAL DE SANTA MARTA",
+      "expected": true,
+      "verdict": true,
+      "correct": true
+    },
+    {
+      "case": "keep sin territorio",
+      "query": "contraloria general de la republica de colombia",
+      "alias": "la contraloria general de la republica",
+      "official": "CGR-NIVEL CENTRAL",
+      "expected": true,
+      "verdict": true,
+      "correct": true
+    }
+  ],
+  "real_surface": {
+    "queries": 10844,
+    "triples_evaluated": 30,
+    "verdict_changes": [],
+    "new_false_rejections": 0,
+    "new_acceptances": 0
+  },
+  "pre": {
+    "rule": "R2E.1 — territorio comparado token a token",
+    "multiword_bank": [
+      {
+        "case": "norte de santander vs santander",
+        "query": "contraloria departamental de norte de santander",
+        "alias": "contraloria general de santander",
+        "official": "CONTRALORIA GENERAL DE SANTANDER",
+        "expected": false,
+        "verdict": true,
+        "correct": false
+      },
+      {
+        "case": "san andres",
+        "query": "contraloria de san andres",
+        "alias": "contraloria",
+        "official": "CGR-NIVEL CENTRAL",
+        "expected": false,
+        "verdict": true,
+        "correct": false
+      },
+      {
+        "case": "puerto carreño",
+        "query": "contraloria de puerto carreno",
+        "alias": "contraloria",
+        "official": "CGR-NIVEL CENTRAL",
+        "expected": false,
+        "verdict": true,
+        "correct": false
+      },
+      {
+        "case": "santa marta vs magdalena",
+        "query": "contraloria de santa marta",
+        "alias": "contraloria general del magdalena",
+        "official": "CONTRALORIA GENERAL DEL DEPARTAMENTO DEL MAGDALENA",
+        "expected": false,
+        "verdict": true,
+        "correct": false
+      },
+      {
+        "case": "valle del cauca vs cauca",
+        "query": "contraloria departamental del valle del cauca",
+        "alias": "contraloria del cauca",
+        "official": "CONTRALORIA GENERAL DEL CAUCA",
+        "expected": false,
+        "verdict": false,
+        "correct": true
+      },
+      {
+        "case": "santander vs norte de santander",
+        "query": "contraloria de santander",
+        "alias": "gobernacion norte de santander",
+        "official": "Gobernación Norte de Santander*",
+        "expected": false,
+        "verdict": false,
+        "correct": true
+      },
+      {
+        "case": "distrito capital vs otro dueño",
+        "query": "contraloria del distrito capital de bogota",
+        "alias": "bogota distrito capital",
+        "official": "UNIVERSIDAD PEDAGÓGICA NACIONAL",
+        "expected": false,
+        "verdict": false,
+        "correct": true
+      },
+      {
+        "case": "san andres providencia",
+        "query": "contraloria de san andres y providencia",
+        "alias": "contraloria general",
+        "official": "CGR-NIVEL CENTRAL",
+        "expected": false,
+        "verdict": true,
+        "correct": false
+      },
+      {
+        "case": "head mismatch gobernacion",
+        "query": "contraloria de norte de santander",
+        "alias": "gobernacion norte de santander",
+        "official": "Gobernación Norte de Santander*",
+        "expected": false,
+        "verdict": false,
+        "correct": true
+      },
+      {
+        "case": "head mismatch valle",
+        "query": "contraloria del valle del cauca",
+        "alias": "el valle",
+        "official": "GOBERNACION DEL VALLE DEL CAUCA - SECRETARIA DE EDUCACION",
+        "expected": false,
+        "verdict": false,
+        "correct": true
+      },
+      {
+        "case": "keep norte de santander",
+        "query": "gobernacion de norte de santander",
+        "alias": "gobernacion norte de santander",
+        "official": "Gobernación Norte de Santander*",
+        "expected": true,
+        "verdict": true,
+        "correct": true
+      },
+      {
+        "case": "keep san andres",
+        "query": "gobernacion de san andres",
+        "alias": "san andres",
+        "official": "GOBERNACIÓN DEL DEPARTAMENTO ARCHIPIELAGO DE SAN ANDRES PROVIDENCIA Y SANTA CATALINA",
+        "expected": true,
+        "verdict": true,
+        "correct": true
+      },
+      {
+        "case": "keep valle abreviado",
+        "query": "gobernacion del valle del cauca",
+        "alias": "el valle",
+        "official": "GOBERNACION DEL VALLE DEL CAUCA - SECRETARIA DE EDUCACION",
+        "expected": true,
+        "verdict": true,
+        "correct": true
+      },
+      {
+        "case": "keep bogota por distrito capital",
+        "query": "contraloria del distrito capital de bogota",
+        "alias": "contraloria del distrito capital",
+        "official": "CONTRALORIA DE BOGOTA",
+        "expected": true,
+        "verdict": true,
+        "correct": true
+      },
+      {
+        "case": "keep bogota simple",
+        "query": "contraloria del distrito capital",
+        "alias": "contraloria de bogota",
+        "official": "CONTRALORIA DE BOGOTA",
+        "expected": true,
+        "verdict": true,
+        "correct": true
+      },
+      {
+        "case": "keep santa marta",
+        "query": "contraloria de santa marta",
+        "alias": "contraloria de santa marta",
+        "official": "CONTRALORIA DISTRITAL DE SANTA MARTA",
+        "expected": true,
+        "verdict": true,
+        "correct": true
+      },
+      {
+        "case": "keep sin territorio",
+        "query": "contraloria general de la republica de colombia",
+        "alias": "la contraloria general de la republica",
+        "official": "CGR-NIVEL CENTRAL",
+        "expected": true,
+        "verdict": true,
+        "correct": true
+      }
+    ],
+    "gates": {
+      "MULTIWORD_TERRITORY_LOSS": 5,
+      "BANK_FALSE_REJECTIONS": 0
+    }
+  },
+  "dapre": {
+    "nit": "899999083",
+    "gazetteer_official_name": "DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPÚBLICA",
+    "registry_names": [
+      {
+        "published_nit": "899999083",
+        "name": "DAPRE",
+        "active": "Si"
+      },
+      {
+        "published_nit": "8999990830",
+        "name": "FONDO DE PROGRAMAS ESPECIALES PARA LA PAZ DEL DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPuBLICA  FONDO PAZ",
+        "active": "Si"
+      },
+      {
+        "published_nit": "8999990839",
+        "name": "PRESIDENCIA DE LA REPuBLICA",
+        "active": "Si"
+      }
+    ],
+    "process_source_names": [
+      {
+        "published_nit": "899999083",
+        "name": "DAPRE",
+        "rows": 17128
+      }
+    ],
+    "contract_source_names": [
+      {
+        "published_nit": "899999083",
+        "name": "DAPRE",
+        "rows": 4351
+      }
+    ],
+    "gazetteer_name_present_in": [],
+    "classification": "SOURCE_NAME_SPLIT",
+    "note": "Tres superficies distintas bajo un mismo NIT base. No se afirma cronología: la evidencia disponible es un corte, no una serie."
+  },
+  "gates": {
+    "MULTIWORD_TERRITORY_LOSS": 0,
+    "BANK_FALSE_REJECTIONS": 0,
+    "NEW_FALSE_REJECTIONS": 0,
+    "REAL_SURFACE_VERDICT_CHANGES": 0
+  }
+}

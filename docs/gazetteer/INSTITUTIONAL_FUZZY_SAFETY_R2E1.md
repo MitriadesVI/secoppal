@@ -214,8 +214,13 @@ La regla implementada es una puerta sobre los tiers **inferenciales**:
 
 `app/core/fuzzy_identity_guard.py` — función pura, sin nombres de instituciones
 y sin catálogo propio: recibe el catálogo territorial de quien la llama
-(`DEPARTAMENTOS` ∪ `GAZETTEER_CIUDADES`, las autoridades que ya existen) y
-opera sobre tokens. El alias que hizo el match y el nombre físico cuentan
+(`DEPARTAMENTOS` ∪ `GAZETTEER_CIUDADES`, las autoridades que ya existen).
+
+> **R2E.1A.** La comparación territorial de este lote era token a token y no
+> veía los topónimos de más de una palabra —`santa marta`, `puerto carreño`—,
+> además de confundir `norte de santander` con `santander`. Hoy se compara la
+> frase completa a través de `territory_phrase_index`; el principio no cambió.
+> Ver [`FUZZY_IDENTITY_MULTIWORD_R2E1A.md`](FUZZY_IDENTITY_MULTIWORD_R2E1A.md). El alias que hizo el match y el nombre físico cuentan
 **juntos** como evidencia: una ficha puede llevar la cabeza en el alias y el
 territorio en el nombre oficial.
 
@@ -295,15 +300,21 @@ La política exacto/scan de ADR-072 queda intacta: R2E.1 no toca
 
 **Nueva**
 
-- `DAPRE_STALE_PHYSICAL_NAME_DEBT` — la ficha
+- `DAPRE_SOURCE_NAME_SPLIT` — la ficha
   `DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPÚBLICA` guarda 16.817
-  procesos, pero hoy el NIT `899999083` publica un solo nombre físico: `DAPRE`.
-  La consulta por el nombre largo devuelve **cero filas** en `p6dx-8zbt` y en
-  `jbjy-vk9h`; SECOP renombró al comprador después de construirse el gazetteer.
-  Es preexistente y afecta a toda consulta por el DAPRE, no sólo a
-  «Presidencia»: R2E.1 corrige a qué identidad apunta la frase, no cómo se
-  proyecta esa ficha. Pertenece a la familia `CANONICAL_ENTITY_SOURCE_NAMES` y
-  se cierra con el modelo de nombres físicos, no con un alias.
+  procesos, pero ese nombre no aparece en ninguna de las tres superficies del
+  NIT `899999083`. Es preexistente y afecta a toda consulta por el DAPRE, no
+  sólo a «Presidencia»: R2E.1 corrige a qué identidad apunta la frase, no cómo
+  se proyecta esa ficha. Pertenece a la familia `CANONICAL_ENTITY_SOURCE_NAMES`
+  y se cierra con el modelo de nombres de origen, no con un alias.
+
+  **Corrección de R2E.1A.** Esta deuda se llamaba
+  `DAPRE_STALE_PHYSICAL_NAME_DEBT` y su redacción afirmaba que «SECOP renombró
+  al comprador después de construirse el gazetteer». La evidencia disponible
+  es un corte, no una serie temporal: no acredita un renombramiento. Lo que sí
+  acredita es que bajo un mismo NIT base conviven tres superficies distintas
+  —registro, procesos y contratos—, y que la ficha no coincide con ninguna.
+  Ver [`FUZZY_IDENTITY_MULTIWORD_R2E1A.md`](FUZZY_IDENTITY_MULTIWORD_R2E1A.md) §5.
 - `PRESIDENCIA_SCAN_NOT_CAPTURED` — `scan_entity` ya no secuestra la frase
   «Presidencia de la República» dentro de texto libre, pero tampoco la captura:
   el DAPRE sólo tiene la forma `presidencia de la república departamento
