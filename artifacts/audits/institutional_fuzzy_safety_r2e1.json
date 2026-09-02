@@ -1,0 +1,1050 @@
+{
+  "label": "POST",
+  "baseline_mode": false,
+  "republic_adversarial": [
+    {
+      "query": "Presidencia de la República",
+      "resolve_owner": "DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPÚBLICA",
+      "resolve_method": "fuzzy(90)",
+      "scan_owner": null,
+      "scan_alias": null,
+      "reaches_banrep": false
+    },
+    {
+      "query": "Vicepresidencia de la República",
+      "resolve_owner": null,
+      "resolve_method": "like",
+      "scan_owner": null,
+      "scan_alias": null,
+      "reaches_banrep": false
+    },
+    {
+      "query": "Auditoría General de la República",
+      "resolve_owner": "AUDITORIA GENERAL DE LA REPUBLICA",
+      "resolve_method": "exact",
+      "scan_owner": "AUDITORIA GENERAL DE LA REPUBLICA",
+      "scan_alias": "auditoria general de la republica",
+      "reaches_banrep": false
+    },
+    {
+      "query": "Contraloría General de la República",
+      "resolve_owner": "CGR-NIVEL CENTRAL",
+      "resolve_method": "exact",
+      "scan_owner": "CGR-NIVEL CENTRAL",
+      "scan_alias": "contraloria general de la republica",
+      "reaches_banrep": false
+    },
+    {
+      "query": "Senado de la República",
+      "resolve_owner": "CONGRESO DE LA REPÚBLICA - HONORABLE SENADO DE LA REPÚBLICA",
+      "resolve_method": "exact",
+      "scan_owner": "CONGRESO DE LA REPÚBLICA - HONORABLE SENADO DE LA REPÚBLICA",
+      "scan_alias": "senado de la republica",
+      "reaches_banrep": false
+    },
+    {
+      "query": "Congreso de la República",
+      "resolve_owner": "CONGRESO DE LA REPÚBLICA - HONORABLE SENADO DE LA REPÚBLICA",
+      "resolve_method": "exact",
+      "scan_owner": "CONGRESO DE LA REPÚBLICA - HONORABLE SENADO DE LA REPÚBLICA",
+      "scan_alias": "congreso de la republica",
+      "reaches_banrep": false
+    },
+    {
+      "query": "Cámara de Representantes",
+      "resolve_owner": "CAMARA DE REPRESENTANTES",
+      "resolve_method": "exact",
+      "scan_owner": "CAMARA DE REPRESENTANTES",
+      "scan_alias": "camara de representantes",
+      "reaches_banrep": false
+    },
+    {
+      "query": "Departamento Administrativo de la Presidencia de la República",
+      "resolve_owner": "DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPÚBLICA",
+      "resolve_method": "exact",
+      "scan_owner": "DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPÚBLICA",
+      "scan_alias": "departamento administrativo de la presidencia de la republica",
+      "reaches_banrep": false
+    },
+    {
+      "query": "Fondo de Bienestar Social de la Contraloría General de la República",
+      "resolve_owner": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+      "resolve_method": "exact",
+      "scan_owner": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+      "scan_alias": "fondo de bienestar social de la contraloria general de la republica",
+      "reaches_banrep": false
+    }
+  ],
+  "banrep_positive_canaries": [
+    {
+      "query": "Banco de la República",
+      "resolve_owner": "BANCO DE LA REPUBLICA",
+      "resolve_method": "exact",
+      "scan_owner": "BANCO DE LA REPUBLICA"
+    },
+    {
+      "query": "Banrep",
+      "resolve_owner": "BANCO DE LA REPUBLICA",
+      "resolve_method": "exact",
+      "scan_owner": "BANCO DE LA REPUBLICA"
+    },
+    {
+      "query": "Banco Central de Colombia",
+      "resolve_owner": "BANCO DE LA REPUBLICA",
+      "resolve_method": "exact",
+      "scan_owner": "BANCO DE LA REPUBLICA"
+    },
+    {
+      "query": "Banco emisor",
+      "resolve_owner": "BANCO DE LA REPUBLICA",
+      "resolve_method": "exact",
+      "scan_owner": "BANCO DE LA REPUBLICA"
+    },
+    {
+      "query": "BR",
+      "resolve_owner": "BANCO DE LA REPUBLICA",
+      "resolve_method": "exact",
+      "scan_owner": null
+    },
+    {
+      "query": "banrepública",
+      "resolve_owner": "BANCO DE LA REPUBLICA",
+      "resolve_method": "exact",
+      "scan_owner": "BANCO DE LA REPUBLICA"
+    },
+    {
+      "query": "el emisor",
+      "resolve_owner": "BANCO DE LA REPUBLICA",
+      "resolve_method": "exact",
+      "scan_owner": "BANCO DE LA REPUBLICA"
+    },
+    {
+      "query": "Banco de la República de Colombia",
+      "resolve_owner": "BANCO DE LA REPUBLICA",
+      "resolve_method": "exact",
+      "scan_owner": "BANCO DE LA REPUBLICA"
+    }
+  ],
+  "territorial_control": [
+    {
+      "natural_query": "Contraloría Departamental de Bolívar",
+      "nit": "890480306",
+      "current_result": null,
+      "current_method": "like",
+      "like_value": "CONTRALORIA DEPARTAMENTAL DE BOLIVAR",
+      "scan_owner": null,
+      "verdict": "FAIL_CLOSED_LITERAL"
+    },
+    {
+      "natural_query": "Contraloría General de Caldas",
+      "nit": "800077897",
+      "current_result": null,
+      "current_method": "like",
+      "like_value": "CONTRALORIA GENERAL DE CALDAS",
+      "scan_owner": null,
+      "verdict": "FAIL_CLOSED_LITERAL"
+    },
+    {
+      "natural_query": "Contraloría General de Santander",
+      "nit": "890201705",
+      "current_result": null,
+      "current_method": "like",
+      "like_value": "CONTRALORIA GENERAL DE SANTANDER",
+      "scan_owner": null,
+      "verdict": "FAIL_CLOSED_LITERAL"
+    },
+    {
+      "natural_query": "Contraloría Municipal de Ibagué",
+      "nit": "890706867",
+      "current_result": null,
+      "current_method": "like",
+      "like_value": "CONTRALORIA MUNICIPAL DE IBAGUE",
+      "scan_owner": null,
+      "verdict": "FAIL_CLOSED_LITERAL"
+    },
+    {
+      "natural_query": "Contraloría General de Medellín",
+      "nit": "811026988",
+      "current_result": null,
+      "current_method": "like",
+      "like_value": "CONTRALORIA GENERAL DE MEDELLIN",
+      "scan_owner": null,
+      "verdict": "FAIL_CLOSED_LITERAL"
+    },
+    {
+      "natural_query": "Contraloría Departamental del Huila",
+      "nit": "800169790",
+      "current_result": null,
+      "current_method": "like",
+      "like_value": "CONTRALORIA DEPARTAMENTAL DEL HUILA",
+      "scan_owner": null,
+      "verdict": "FAIL_CLOSED_LITERAL"
+    },
+    {
+      "natural_query": "Contraloría Municipal de Pasto",
+      "nit": "800156682",
+      "current_result": null,
+      "current_method": "like",
+      "like_value": "CONTRALORIA MUNICIPAL DE PASTO",
+      "scan_owner": null,
+      "verdict": "FAIL_CLOSED_LITERAL"
+    },
+    {
+      "natural_query": "Contraloría Departamental del Atlántico",
+      "nit": "890103037",
+      "current_result": null,
+      "current_method": "like",
+      "like_value": "CONTRALORIA DEPARTAMENTAL DEL ATLANTICO",
+      "scan_owner": null,
+      "verdict": "FAIL_CLOSED_LITERAL"
+    },
+    {
+      "natural_query": "Contraloría Distrital de Cartagena",
+      "nit": "800194000",
+      "current_result": null,
+      "current_method": "like",
+      "like_value": "CONTRALORIA DISTRITAL DE CARTAGENA",
+      "scan_owner": "CONTRALORIA DE BOGOTA",
+      "verdict": "FAIL_CLOSED_LITERAL"
+    },
+    {
+      "natural_query": "Contraloría Municipal de Bucaramanga",
+      "nit": "890211142",
+      "current_result": null,
+      "current_method": "like",
+      "like_value": "CONTRALORIA MUNICIPAL DE BUCARAMANGA",
+      "scan_owner": "MUNICIPIO DE BUCARAMANGA",
+      "verdict": "FAIL_CLOSED_LITERAL"
+    },
+    {
+      "natural_query": "Contraloría Departamental del Valle del Cauca",
+      "nit": "800090735",
+      "current_result": null,
+      "current_method": "like",
+      "like_value": "CONTRALORIA DEPARTAMENTAL DEL VALLE DEL CAUCA",
+      "scan_owner": null,
+      "verdict": "FAIL_CLOSED_LITERAL"
+    },
+    {
+      "natural_query": "Contraloría Distrital de Barranquilla",
+      "nit": "800022773",
+      "current_result": null,
+      "current_method": "like",
+      "like_value": "CONTRALORIA DISTRITAL DE BARRANQUILLA",
+      "scan_owner": "CONTRALORIA DE BOGOTA",
+      "verdict": "FAIL_CLOSED_LITERAL"
+    },
+    {
+      "natural_query": "Contraloría Departamental de Nariño",
+      "nit": "800157830",
+      "current_result": null,
+      "current_method": "like",
+      "like_value": "CONTRALORIA DEPARTAMENTAL DE NARINO",
+      "scan_owner": null,
+      "verdict": "FAIL_CLOSED_LITERAL"
+    },
+    {
+      "natural_query": "Contraloría Municipal de Neiva",
+      "nit": "800095147",
+      "current_result": null,
+      "current_method": "like",
+      "like_value": "CONTRALORIA MUNICIPAL DE NEIVA",
+      "scan_owner": "MUNICIPIO DE NEIVA",
+      "verdict": "FAIL_CLOSED_LITERAL"
+    }
+  ],
+  "national_six": {
+    "Contraloría General de la República": {
+      "owner": "CGR-NIVEL CENTRAL",
+      "method": "exact",
+      "expected": "CGR-NIVEL CENTRAL"
+    },
+    "Auditoría General de la República": {
+      "owner": "AUDITORIA GENERAL DE LA REPUBLICA",
+      "method": "exact",
+      "expected": "AUDITORIA GENERAL DE LA REPUBLICA"
+    },
+    "Procuraduría General de la Nación": {
+      "owner": "PROCURADURIA GENERAL DE LA NACION",
+      "method": "exact",
+      "expected": "PROCURADURIA GENERAL DE LA NACION"
+    },
+    "Defensoría del Pueblo": {
+      "owner": "DEFENSORÍA DEL PUEBLO",
+      "method": "exact",
+      "expected": "DEFENSORÍA DEL PUEBLO"
+    },
+    "Fondo de Bienestar Social de la Contraloría General de la República": {
+      "owner": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+      "method": "exact",
+      "expected": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA"
+    },
+    "Instituto de Estudios del Ministerio Público": {
+      "owner": "INSTITUTO DE ESTUDIOS DEL MINISTERIO PUBLICO.",
+      "method": "exact",
+      "expected": "INSTITUTO DE ESTUDIOS DEL MINISTERIO PUBLICO."
+    }
+  },
+  "parent_related": [
+    {
+      "text": "contratos del fondo de bienestar social de la contraloria general de la republica",
+      "owner": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+      "expected": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA"
+    },
+    {
+      "text": "licitaciones de la contraloria general de la republica",
+      "owner": "CGR-NIVEL CENTRAL",
+      "expected": "CGR-NIVEL CENTRAL"
+    },
+    {
+      "text": "contratos del instituto de estudios del ministerio publico",
+      "owner": "INSTITUTO DE ESTUDIOS DEL MINISTERIO PUBLICO.",
+      "expected": "INSTITUTO DE ESTUDIOS DEL MINISTERIO PUBLICO."
+    },
+    {
+      "text": "contratos de la procuraduria general de la nacion",
+      "owner": "PROCURADURIA GENERAL DE LA NACION",
+      "expected": "PROCURADURIA GENERAL DE LA NACION"
+    }
+  ],
+  "territorial_scan": [
+    {
+      "text": "contratos de la contraloria departamental de bolivar",
+      "owner": null
+    },
+    {
+      "text": "contratos de la contraloria general de santander",
+      "owner": null
+    },
+    {
+      "text": "contratos de la contraloria general de caldas",
+      "owner": null
+    },
+    {
+      "text": "contratos de la contraloria general de medellin",
+      "owner": null
+    },
+    {
+      "text": "contratos de la contraloria municipal de ibague",
+      "owner": null
+    },
+    {
+      "text": "contratos de la defensoria civil de nobsa",
+      "owner": null
+    },
+    {
+      "text": "contratos de la personeria municipal de soledad",
+      "owner": null
+    },
+    {
+      "text": "contratos del fondo de bienestar social de la contraloria departamental de bolivar",
+      "owner": null
+    }
+  ],
+  "gates": {
+    "BANREP_CROSS_OWNER": 0,
+    "CONTROL_TERRITORIAL_WRONG_OWNER": 0,
+    "BANREP_POSITIVE_LOST": 0,
+    "NATIONAL_SIX_OK": 6,
+    "PARENT_RELATED_OK": 4,
+    "TERRITORIAL_SCAN_HIJACKS": 0,
+    "LITERAL_PROJECTION_REACHES_OWN_BUYER": 13
+  },
+  "pre": {
+    "republic_adversarial": [
+      {
+        "query": "Presidencia de la República",
+        "resolve_owner": "BANCO DE LA REPUBLICA",
+        "resolve_method": "fuzzy(90)",
+        "scan_owner": "BANCO DE LA REPUBLICA",
+        "scan_alias": "la republica",
+        "reaches_banrep": true
+      },
+      {
+        "query": "Vicepresidencia de la República",
+        "resolve_owner": "BANCO DE LA REPUBLICA",
+        "resolve_method": "fuzzy(90)",
+        "scan_owner": "BANCO DE LA REPUBLICA",
+        "scan_alias": "la republica",
+        "reaches_banrep": true
+      },
+      {
+        "query": "Auditoría General de la República",
+        "resolve_owner": "AUDITORIA GENERAL DE LA REPUBLICA",
+        "resolve_method": "exact",
+        "scan_owner": "AUDITORIA GENERAL DE LA REPUBLICA",
+        "scan_alias": "auditoria general de la republica",
+        "reaches_banrep": false
+      },
+      {
+        "query": "Contraloría General de la República",
+        "resolve_owner": "CGR-NIVEL CENTRAL",
+        "resolve_method": "exact",
+        "scan_owner": "CGR-NIVEL CENTRAL",
+        "scan_alias": "contraloria general de la republica",
+        "reaches_banrep": false
+      },
+      {
+        "query": "Senado de la República",
+        "resolve_owner": "CONGRESO DE LA REPÚBLICA - HONORABLE SENADO DE LA REPÚBLICA",
+        "resolve_method": "exact",
+        "scan_owner": "CONGRESO DE LA REPÚBLICA - HONORABLE SENADO DE LA REPÚBLICA",
+        "scan_alias": "senado de la republica",
+        "reaches_banrep": false
+      },
+      {
+        "query": "Congreso de la República",
+        "resolve_owner": "CONGRESO DE LA REPÚBLICA - HONORABLE SENADO DE LA REPÚBLICA",
+        "resolve_method": "exact",
+        "scan_owner": "CONGRESO DE LA REPÚBLICA - HONORABLE SENADO DE LA REPÚBLICA",
+        "scan_alias": "congreso de la republica",
+        "reaches_banrep": false
+      },
+      {
+        "query": "Cámara de Representantes",
+        "resolve_owner": "CAMARA DE REPRESENTANTES",
+        "resolve_method": "exact",
+        "scan_owner": "CAMARA DE REPRESENTANTES",
+        "scan_alias": "camara de representantes",
+        "reaches_banrep": false
+      },
+      {
+        "query": "Departamento Administrativo de la Presidencia de la República",
+        "resolve_owner": "DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPÚBLICA",
+        "resolve_method": "exact",
+        "scan_owner": "DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPÚBLICA",
+        "scan_alias": "departamento administrativo de la presidencia de la republica",
+        "reaches_banrep": false
+      },
+      {
+        "query": "Fondo de Bienestar Social de la Contraloría General de la República",
+        "resolve_owner": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+        "resolve_method": "exact",
+        "scan_owner": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+        "scan_alias": "fondo de bienestar social de la contraloria general de la republica",
+        "reaches_banrep": false
+      }
+    ],
+    "banrep_positive_canaries": [
+      {
+        "query": "Banco de la República",
+        "resolve_owner": "BANCO DE LA REPUBLICA",
+        "resolve_method": "exact",
+        "scan_owner": "BANCO DE LA REPUBLICA"
+      },
+      {
+        "query": "Banrep",
+        "resolve_owner": "BANCO DE LA REPUBLICA",
+        "resolve_method": "exact",
+        "scan_owner": "BANCO DE LA REPUBLICA"
+      },
+      {
+        "query": "Banco Central de Colombia",
+        "resolve_owner": "BANCO DE LA REPUBLICA",
+        "resolve_method": "exact",
+        "scan_owner": "BANCO DE LA REPUBLICA"
+      },
+      {
+        "query": "Banco emisor",
+        "resolve_owner": "BANCO DE LA REPUBLICA",
+        "resolve_method": "exact",
+        "scan_owner": "BANCO DE LA REPUBLICA"
+      },
+      {
+        "query": "BR",
+        "resolve_owner": "BANCO DE LA REPUBLICA",
+        "resolve_method": "exact",
+        "scan_owner": null
+      },
+      {
+        "query": "banrepública",
+        "resolve_owner": "BANCO DE LA REPUBLICA",
+        "resolve_method": "exact",
+        "scan_owner": "BANCO DE LA REPUBLICA"
+      },
+      {
+        "query": "el emisor",
+        "resolve_owner": "BANCO DE LA REPUBLICA",
+        "resolve_method": "exact",
+        "scan_owner": "BANCO DE LA REPUBLICA"
+      },
+      {
+        "query": "Banco de la República de Colombia",
+        "resolve_owner": "BANCO DE LA REPUBLICA",
+        "resolve_method": "exact",
+        "scan_owner": "BANCO DE LA REPUBLICA"
+      }
+    ],
+    "territorial_control": [
+      {
+        "natural_query": "Contraloría Departamental de Bolívar",
+        "nit": "890480306",
+        "current_result": "CGR-NIVEL CENTRAL",
+        "current_method": "fuzzy(90)",
+        "like_value": null,
+        "scan_owner": null,
+        "verdict": "WRONG_OWNER_FUZZY"
+      },
+      {
+        "natural_query": "Contraloría General de Caldas",
+        "nit": "800077897",
+        "current_result": "CGR-NIVEL CENTRAL",
+        "current_method": "fuzzy(90)",
+        "like_value": null,
+        "scan_owner": null,
+        "verdict": "WRONG_OWNER_FUZZY"
+      },
+      {
+        "natural_query": "Contraloría General de Santander",
+        "nit": "890201705",
+        "current_result": "DEPARTAMENTO DE SANTANDER",
+        "current_method": "fuzzy(90)",
+        "like_value": null,
+        "scan_owner": null,
+        "verdict": "WRONG_OWNER_FUZZY"
+      },
+      {
+        "natural_query": "Contraloría Municipal de Ibagué",
+        "nit": "890706867",
+        "current_result": "CGR-NIVEL CENTRAL",
+        "current_method": "fuzzy(90)",
+        "like_value": null,
+        "scan_owner": null,
+        "verdict": "WRONG_OWNER_FUZZY"
+      },
+      {
+        "natural_query": "Contraloría General de Medellín",
+        "nit": "811026988",
+        "current_result": "CGR-NIVEL CENTRAL",
+        "current_method": "fuzzy(90)",
+        "like_value": null,
+        "scan_owner": null,
+        "verdict": "WRONG_OWNER_FUZZY"
+      },
+      {
+        "natural_query": "Contraloría Departamental del Huila",
+        "nit": "800169790",
+        "current_result": "GOBERNACION DEL HUILA*",
+        "current_method": "fuzzy(90)",
+        "like_value": null,
+        "scan_owner": null,
+        "verdict": "WRONG_OWNER_FUZZY"
+      },
+      {
+        "natural_query": "Contraloría Municipal de Pasto",
+        "nit": "800156682",
+        "current_result": "CGR-NIVEL CENTRAL",
+        "current_method": "fuzzy(90)",
+        "like_value": null,
+        "scan_owner": null,
+        "verdict": "WRONG_OWNER_FUZZY"
+      },
+      {
+        "natural_query": "Contraloría Departamental del Atlántico",
+        "nit": "890103037",
+        "current_result": "DEPARTAMENTO DEL ATLANTICO**",
+        "current_method": "fuzzy(90)",
+        "like_value": null,
+        "scan_owner": null,
+        "verdict": "WRONG_OWNER_FUZZY"
+      },
+      {
+        "natural_query": "Contraloría Distrital de Cartagena",
+        "nit": "800194000",
+        "current_result": "CONTRALORIA DE BOGOTA",
+        "current_method": "fuzzy(90)",
+        "like_value": null,
+        "scan_owner": "CONTRALORIA DE BOGOTA",
+        "verdict": "WRONG_OWNER_FUZZY"
+      },
+      {
+        "natural_query": "Contraloría Municipal de Bucaramanga",
+        "nit": "890211142",
+        "current_result": "MUNICIPIO DE BUCARAMANGA",
+        "current_method": "fuzzy(90)",
+        "like_value": null,
+        "scan_owner": "MUNICIPIO DE BUCARAMANGA",
+        "verdict": "WRONG_OWNER_FUZZY"
+      },
+      {
+        "natural_query": "Contraloría Departamental del Valle del Cauca",
+        "nit": "800090735",
+        "current_result": "GOBERNACION DEL VALLE DEL CAUCA - SECRETARIA DE EDUCACION",
+        "current_method": "fuzzy(90)",
+        "like_value": null,
+        "scan_owner": null,
+        "verdict": "WRONG_OWNER_FUZZY"
+      },
+      {
+        "natural_query": "Contraloría Distrital de Barranquilla",
+        "nit": "800022773",
+        "current_result": "CONTRALORIA DE BOGOTA",
+        "current_method": "fuzzy(90)",
+        "like_value": null,
+        "scan_owner": "CONTRALORIA DE BOGOTA",
+        "verdict": "WRONG_OWNER_FUZZY"
+      },
+      {
+        "natural_query": "Contraloría Departamental de Nariño",
+        "nit": "800157830",
+        "current_result": "GOBERNACION DE NARIÑO",
+        "current_method": "fuzzy(90)",
+        "like_value": null,
+        "scan_owner": null,
+        "verdict": "WRONG_OWNER_FUZZY"
+      },
+      {
+        "natural_query": "Contraloría Municipal de Neiva",
+        "nit": "800095147",
+        "current_result": "MUNICIPIO DE NEIVA",
+        "current_method": "fuzzy(90)",
+        "like_value": null,
+        "scan_owner": "MUNICIPIO DE NEIVA",
+        "verdict": "WRONG_OWNER_FUZZY"
+      }
+    ],
+    "national_six": {
+      "Contraloría General de la República": {
+        "owner": "CGR-NIVEL CENTRAL",
+        "method": "exact",
+        "expected": "CGR-NIVEL CENTRAL"
+      },
+      "Auditoría General de la República": {
+        "owner": "AUDITORIA GENERAL DE LA REPUBLICA",
+        "method": "exact",
+        "expected": "AUDITORIA GENERAL DE LA REPUBLICA"
+      },
+      "Procuraduría General de la Nación": {
+        "owner": "PROCURADURIA GENERAL DE LA NACION",
+        "method": "exact",
+        "expected": "PROCURADURIA GENERAL DE LA NACION"
+      },
+      "Defensoría del Pueblo": {
+        "owner": "DEFENSORÍA DEL PUEBLO",
+        "method": "exact",
+        "expected": "DEFENSORÍA DEL PUEBLO"
+      },
+      "Fondo de Bienestar Social de la Contraloría General de la República": {
+        "owner": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+        "method": "exact",
+        "expected": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA"
+      },
+      "Instituto de Estudios del Ministerio Público": {
+        "owner": "INSTITUTO DE ESTUDIOS DEL MINISTERIO PUBLICO.",
+        "method": "exact",
+        "expected": "INSTITUTO DE ESTUDIOS DEL MINISTERIO PUBLICO."
+      }
+    },
+    "parent_related": [
+      {
+        "text": "contratos del fondo de bienestar social de la contraloria general de la republica",
+        "owner": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+        "expected": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA"
+      },
+      {
+        "text": "licitaciones de la contraloria general de la republica",
+        "owner": "CGR-NIVEL CENTRAL",
+        "expected": "CGR-NIVEL CENTRAL"
+      },
+      {
+        "text": "contratos del instituto de estudios del ministerio publico",
+        "owner": "INSTITUTO DE ESTUDIOS DEL MINISTERIO PUBLICO.",
+        "expected": "INSTITUTO DE ESTUDIOS DEL MINISTERIO PUBLICO."
+      },
+      {
+        "text": "contratos de la procuraduria general de la nacion",
+        "owner": "PROCURADURIA GENERAL DE LA NACION",
+        "expected": "PROCURADURIA GENERAL DE LA NACION"
+      }
+    ],
+    "territorial_scan": [
+      {
+        "text": "contratos de la contraloria departamental de bolivar",
+        "owner": null
+      },
+      {
+        "text": "contratos de la contraloria general de santander",
+        "owner": null
+      },
+      {
+        "text": "contratos de la contraloria general de caldas",
+        "owner": null
+      },
+      {
+        "text": "contratos de la contraloria general de medellin",
+        "owner": null
+      },
+      {
+        "text": "contratos de la contraloria municipal de ibague",
+        "owner": null
+      },
+      {
+        "text": "contratos de la defensoria civil de nobsa",
+        "owner": null
+      },
+      {
+        "text": "contratos de la personeria municipal de soledad",
+        "owner": null
+      },
+      {
+        "text": "contratos del fondo de bienestar social de la contraloria departamental de bolivar",
+        "owner": null
+      }
+    ],
+    "gates": {
+      "BANREP_CROSS_OWNER": 2,
+      "CONTROL_TERRITORIAL_WRONG_OWNER": 14,
+      "BANREP_POSITIVE_LOST": 0,
+      "NATIONAL_SIX_OK": 6,
+      "PARENT_RELATED_OK": 4,
+      "TERRITORIAL_SCAN_HIJACKS": 0
+    }
+  },
+  "buyer_directory_size": 27286,
+  "overgeneric_alias_evidence": {
+    "alias": "la república",
+    "physical_names_containing": 53,
+    "distinct_published_nits": 16,
+    "identities": {
+      "56086020": [
+        "CONTRALORiA GENERAL DE LA REPuBLICA DE COLOMBIA."
+      ],
+      "5912689": [
+        "CONGRESO DE LA REPUBLICA"
+      ],
+      "79433130": [
+        "CONTRALORiA GENERAL DE LA REPuBLICA"
+      ],
+      "800252683": [
+        "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA"
+      ],
+      "8300558271": [
+        "CONGRESO DE LA REPUBLICA"
+      ],
+      "830065741": [
+        "AUDITORIA GENERAL DE LA REPUBLICA"
+      ],
+      "860005216": [
+        "BANCO DE LA REPUBLICA"
+      ],
+      "899999067": [
+        "CONTRALORIA GENERAL DE LA REPUBLICA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - CGR - GERENCIA DEPARTAMENTAL MAGDALENA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - CGR - GERENCIA DEPARTAMENTAL VALLE DEL CAUCA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - CGR - UNIDAD DE SEGUIMIENTO Y AUDITORIA REGALIAS",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - CGR DEPARTAMENTAL PUTUMAYO",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - CGR-GERENCIA DEPARTAMENTAL CESAR",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - GERENCIA DEPARTAMENTAL  CALDAS",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - GERENCIA DEPARTAMENTAL CHOCO",
+        "CONTRALORIA GENERAL DE LA REPUBLICA - GERENCIA DEPARTAMENTAL COLEGIADA DEL CHOCO",
+        "CONTRALORIA GENERAL DE LA REPUBLICA -GERENCIA DEPARTAMENTAL VICHADA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA GERENCIA CAQUETA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA GERENCIA COLEGIADA CAQUETA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA GERENCIA DEPARTAMENTAL ATLANTICO",
+        "CONTRALORIA GENERAL DE LA REPUBLICA GERENCIA DEPARTAMENTAL COLEGIADA DE BOLIVAR",
+        "CONTRALORIA GENERAL DE LA REPUBLICA GERENCIA DEPARTAMENTAL COLEGIADA DEL CHOCO",
+        "CONTRALORIA GENERAL DE LA REPUBLICA- CGR GERENCIA DEPARTAMENTAL ARAUCA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA- CGR- DEPARTAMENTAL GUAJIRA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR - DEPARTAMENTAL  META",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR- GERENCIA DEPARTAMENTAL ANTIOQUIA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR- GERENCIA DEPARTAMENTAL ATLaNTICO",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR- GERENCIA DEPARTAMENTAL BOYACA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR- GERENCIA DEPARTAMENTAL CASANARE",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR- GERENCIA DEPARTAMENTAL NORTE DE SANTANDER",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR-GERENCIA DEPARTAMENTAL AMAZONAS",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR-GERENCIA DEPARTAMENTAL CORDOBA",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR-GERENCIA DEPARTAMENTAL SAN ANDRES",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR-GERENCIA DEPARTAMENTAL SANTANDER",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-CGR-GERENCIA DEPARTAMENTAL SUCRE",
+        "CONTRALORIA GENERAL DE LA REPUBLICA-GERENCIA DEPARTAMENTAL CAQUETA",
+        "CONTRALORIA GENERAL DE LA REPuBLICA - CGR GERENCIA DEPARTAMENTAL COLEGIADA NARIÑO",
+        "CONTRALORIA GENERAL DE LA REPuBLICA - CGR GERENCIA DEPARTAMENTAL META",
+        "CONTRALORIA GENERAL DE LA REPuBLICA CGR- GERENCIA COLEGIADA CHOCO",
+        "CONTRALORIA GNERAL DE LA REPUBLICA",
+        "CONTRALORiA GENERAL DE LA REPuBLICA- CGR-GERENCIA DEPARTAMENTAL TOLIMA"
+      ],
+      "8999990672": [
+        "CONTRALORIA GENERAL DE LA REPuBLICA-CGR- GERENCIA DEPARTAMENTAL GUANIA"
+      ],
+      "8999990830": [
+        "FONDO DE PROGRAMAS ESPECIALES PARA LA PAZ DEL DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPuBLICA  FONDO PAZ"
+      ],
+      "8999990839": [
+        "PRESIDENCIA DE LA REPuBLICA"
+      ],
+      "8999990980": [
+        "CONGRESO DE LA REPUBLICA DE COLOMBIA CAMARA DE REPRESENTANTES"
+      ],
+      "899999103": [
+        "CONGRESO DE LA REPuBLICA - HONORABLE SENADO DE LA REPuBLICA",
+        "SENADO DE LA REPUBLICA",
+        "SENADO DE LA REPuBLICA"
+      ],
+      "8999991031": [
+        "SENADO DE LA REPUBLICA"
+      ],
+      "899999734": [
+        "FONDO DE PREVISION SOCIAL DEL CONGRESO DE LA REPUBLICA"
+      ],
+      "900272394": [
+        "INSTITUCION . EDUCATIVA BICENTENARIO DE LA INDEPENCIA DE LA REPUBLICA DE COLOMBIA"
+      ]
+    }
+  },
+  "territorial_identity": {
+    "890480306": [
+      {
+        "published_nit": "890480306",
+        "physical_name": "CONTRALORIA DEPARTAMENTAL DE BOLIVAR",
+        "procesos": 126,
+        "contratos": 100
+      }
+    ],
+    "800077897": [
+      {
+        "published_nit": "800077897",
+        "physical_name": "CONTRALORIA GENERAL DE CALDAS",
+        "procesos": 182,
+        "contratos": 148
+      }
+    ],
+    "890201705": [
+      {
+        "published_nit": "890201705",
+        "physical_name": "CONTRALORIA GENERAL DE SANTANDER",
+        "procesos": 108,
+        "contratos": 92
+      }
+    ],
+    "890706867": [
+      {
+        "published_nit": "890706867",
+        "physical_name": "CONTRALORIA MUNICIPAL DE IBAGUE",
+        "procesos": 622,
+        "contratos": 619
+      }
+    ],
+    "811026988": [
+      {
+        "published_nit": "811026988",
+        "physical_name": "CONTRALORÍA DISTRITAL DE MEDELLÍN",
+        "procesos": 375,
+        "contratos": 321
+      }
+    ],
+    "800169790": [
+      {
+        "published_nit": "800169790",
+        "physical_name": "CONTRALORIA DEPARTAMENTAL DEL HUILA",
+        "procesos": 340,
+        "contratos": 253
+      }
+    ],
+    "800156682": [
+      {
+        "published_nit": "800156682",
+        "physical_name": "CONTRALORÍA MUNICIPAL DE PASTO",
+        "procesos": 125,
+        "contratos": 118
+      }
+    ],
+    "890103037": [
+      {
+        "published_nit": "8901030374",
+        "physical_name": "CONTRALORIA DEPARTAMENTAL DEL ATLANTICO",
+        "procesos": 161,
+        "contratos": 130
+      }
+    ],
+    "800194000": [
+      {
+        "published_nit": "800194000",
+        "physical_name": "CONTRALORIA DISTRITAL DE CARTAGENA DE INDIAS",
+        "procesos": 651,
+        "contratos": 639
+      }
+    ],
+    "890211142": [
+      {
+        "published_nit": "890211142",
+        "physical_name": "CONTRALORIA MUNICIPAL DE BUCARAMANGA",
+        "procesos": 65,
+        "contratos": 63
+      }
+    ],
+    "800090735": [
+      {
+        "published_nit": "800090735",
+        "physical_name": "CONTRALORIA DEPARTAMENTAL DEL VALLE DEL CAUCA",
+        "procesos": 269,
+        "contratos": 233
+      }
+    ],
+    "800022773": [
+      {
+        "published_nit": "800022773",
+        "physical_name": "CONTRALORIA DISTRITAL DE BARRANQUILLA",
+        "procesos": 89,
+        "contratos": 63
+      }
+    ],
+    "800157830": [
+      {
+        "published_nit": "800157830",
+        "physical_name": "CONTRALORIA DEPARTAMENTAL DE NARIÑO",
+        "procesos": 161,
+        "contratos": 213
+      }
+    ],
+    "800095147": [
+      {
+        "published_nit": "800095147",
+        "physical_name": "CONTRALORIA MUNICIPAL DE NEIVA.",
+        "procesos": 132,
+        "contratos": 125
+      }
+    ]
+  },
+  "literal_projection": [
+    {
+      "natural_query": "Contraloría Departamental de Bolívar",
+      "like_value": "CONTRALORIA DEPARTAMENTAL DE BOLIVAR",
+      "physical_names": [
+        "CONTRALORIA DEPARTAMENTAL DE BOLIVAR"
+      ],
+      "reaches_own_buyer": true,
+      "procesos": 126,
+      "contratos": 100
+    },
+    {
+      "natural_query": "Contraloría General de Caldas",
+      "like_value": "CONTRALORIA GENERAL DE CALDAS",
+      "physical_names": [
+        "CONTRALORIA GENERAL DE CALDAS"
+      ],
+      "reaches_own_buyer": true,
+      "procesos": 182,
+      "contratos": 148
+    },
+    {
+      "natural_query": "Contraloría General de Santander",
+      "like_value": "CONTRALORIA GENERAL DE SANTANDER",
+      "physical_names": [
+        "CONTRALORIA GENERAL DE SANTANDER"
+      ],
+      "reaches_own_buyer": true,
+      "procesos": 108,
+      "contratos": 92
+    },
+    {
+      "natural_query": "Contraloría Municipal de Ibagué",
+      "like_value": "CONTRALORIA MUNICIPAL DE IBAGUE",
+      "physical_names": [
+        "CONTRALORIA MUNICIPAL DE IBAGUE"
+      ],
+      "reaches_own_buyer": true,
+      "procesos": 622,
+      "contratos": 619
+    },
+    {
+      "natural_query": "Contraloría General de Medellín",
+      "like_value": "CONTRALORIA GENERAL DE MEDELLIN",
+      "physical_names": [
+        "CONTRALORÍA DISTRITAL DE MEDELLÍN"
+      ],
+      "reaches_own_buyer": false,
+      "procesos": 0,
+      "contratos": 0
+    },
+    {
+      "natural_query": "Contraloría Departamental del Huila",
+      "like_value": "CONTRALORIA DEPARTAMENTAL DEL HUILA",
+      "physical_names": [
+        "CONTRALORIA DEPARTAMENTAL DEL HUILA"
+      ],
+      "reaches_own_buyer": true,
+      "procesos": 340,
+      "contratos": 253
+    },
+    {
+      "natural_query": "Contraloría Municipal de Pasto",
+      "like_value": "CONTRALORIA MUNICIPAL DE PASTO",
+      "physical_names": [
+        "CONTRALORÍA MUNICIPAL DE PASTO"
+      ],
+      "reaches_own_buyer": true,
+      "procesos": 125,
+      "contratos": 118
+    },
+    {
+      "natural_query": "Contraloría Departamental del Atlántico",
+      "like_value": "CONTRALORIA DEPARTAMENTAL DEL ATLANTICO",
+      "physical_names": [
+        "CONTRALORIA DEPARTAMENTAL DEL ATLANTICO"
+      ],
+      "reaches_own_buyer": true,
+      "procesos": 161,
+      "contratos": 130
+    },
+    {
+      "natural_query": "Contraloría Distrital de Cartagena",
+      "like_value": "CONTRALORIA DISTRITAL DE CARTAGENA",
+      "physical_names": [
+        "CONTRALORIA DISTRITAL DE CARTAGENA DE INDIAS"
+      ],
+      "reaches_own_buyer": true,
+      "procesos": 651,
+      "contratos": 639
+    },
+    {
+      "natural_query": "Contraloría Municipal de Bucaramanga",
+      "like_value": "CONTRALORIA MUNICIPAL DE BUCARAMANGA",
+      "physical_names": [
+        "CONTRALORIA MUNICIPAL DE BUCARAMANGA"
+      ],
+      "reaches_own_buyer": true,
+      "procesos": 65,
+      "contratos": 63
+    },
+    {
+      "natural_query": "Contraloría Departamental del Valle del Cauca",
+      "like_value": "CONTRALORIA DEPARTAMENTAL DEL VALLE DEL CAUCA",
+      "physical_names": [
+        "CONTRALORIA DEPARTAMENTAL DEL VALLE DEL CAUCA"
+      ],
+      "reaches_own_buyer": true,
+      "procesos": 269,
+      "contratos": 233
+    },
+    {
+      "natural_query": "Contraloría Distrital de Barranquilla",
+      "like_value": "CONTRALORIA DISTRITAL DE BARRANQUILLA",
+      "physical_names": [
+        "CONTRALORIA DISTRITAL DE BARRANQUILLA"
+      ],
+      "reaches_own_buyer": true,
+      "procesos": 89,
+      "contratos": 63
+    },
+    {
+      "natural_query": "Contraloría Departamental de Nariño",
+      "like_value": "CONTRALORIA DEPARTAMENTAL DE NARINO",
+      "physical_names": [
+        "CONTRALORIA DEPARTAMENTAL DE NARIÑO"
+      ],
+      "reaches_own_buyer": true,
+      "procesos": 161,
+      "contratos": 213
+    },
+    {
+      "natural_query": "Contraloría Municipal de Neiva",
+      "like_value": "CONTRALORIA MUNICIPAL DE NEIVA",
+      "physical_names": [
+        "CONTRALORIA MUNICIPAL DE NEIVA."
+      ],
+      "reaches_own_buyer": true,
+      "procesos": 132,
+      "contratos": 125
+    }
+  ]
+}

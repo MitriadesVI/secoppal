@@ -375,14 +375,18 @@ evidencia.
   físicos. El registro cubre `CGR-NIVEL CENTRAL` (5.654 procesos de 8.339); las
   30 gerencias departamentales y la unidad de regalías quedan fuera del `LIKE`.
   Resolverlo exige un buyer group, explícitamente prohibido en R2E.
-- `BANREP_LA_REPUBLICA_OVERGENERIC_ALIAS_DEBT` — `la republica` es alias de
+- `BANREP_LA_REPUBLICA_OVERGENERIC_ALIAS_DEBT` — **CLOSED** por R2E.1 —
+  [`INSTITUTIONAL_FUZZY_SAFETY_R2E1.md`](INSTITUTIONAL_FUZZY_SAFETY_R2E1.md).
+  `la republica` es alias de
   `BANCO DE LA REPUBLICA` y aparece en 13 identidades distintas: Presidencia,
   Congreso, CGR, AGR y el Fondo entre ellas. Antes de R2E capturaba por scan la
   frase «contratos de la auditoría general de la república»; hoy pierde por
   longest-match frente a los aliases específicos, pero sigue viva:
   `resolve_entidad("Presidencia de la República")` → BANCO DE LA REPUBLICA.
   Fuera del universo R2E; no se tocó.
-- `TERRITORIAL_CONTROL_FUZZY_FAIL_OPEN_DEBT` — `resolve_entidad` de una
+- `TERRITORIAL_CONTROL_FUZZY_FAIL_OPEN_DEBT` — **CLOSED** por R2E.1 —
+  [`INSTITUTIONAL_FUZZY_SAFETY_R2E1.md`](INSTITUTIONAL_FUZZY_SAFETY_R2E1.md).
+  `resolve_entidad` de una
   contraloría territorial sigue cayendo abierto en la CGR. Medido idéntico antes
   y después; cerrarlo requiere cobertura territorial, fuera de alcance.
 - `REGISTRY_IDENTITY_NOISE` — 36 registros con documento de persona natural y el
@@ -391,9 +395,13 @@ evidencia.
 
 **Intacta**
 
-`SECOP_SYNTHETIC_URL_PROVENANCE_DEBT`, `CANONICAL_ENTITY_SOURCE_NAMES`,
-`BUYER_CAPTURE_TRUNCATION` y el fuzzy sin puerta en hospital/ESE/universidad
-heredado de R2D.
+`SECOP_SYNTHETIC_URL_PROVENANCE_DEBT`, `CANONICAL_ENTITY_SOURCE_NAMES` y el
+fuzzy sin puerta en hospital/ESE/universidad heredado de R2D.
+
+`BUYER_CAPTURE_TRUNCATION_DEBT` **no** pertenece a esta lista: R2A.1 la cerró
+—[`GOVERNORATE_CORE_R2A_1.md`](GOVERNORATE_CORE_R2A_1.md) §7— y R2A lo registra
+así en su propia tabla de estado. La mención como deuda intacta era un arrastre
+de la redacción de R2E, no un hallazgo.
 
 ## 10. Límites
 
