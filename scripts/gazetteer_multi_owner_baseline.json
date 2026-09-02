@@ -1,7 +1,7 @@
 {
   "source": "aliases_db.json",
   "note": "Conjunto congelado de aliases normalizados con dueño múltiple aceptado tras R1C/R1D. Puede encogerse (deuda saldada); no puede recibir claves nuevas.",
-  "count": 173,
+  "count": 172,
   "keys": [
     "administracion municipal de soacha",
     "administrativo intercentros sena",
@@ -95,7 +95,6 @@
     "invias",
     "itm",
     "la cenac",
-    "la defensoria",
     "la disan",
     "la ese de villavicencio",
     "la ese hospital san juan de dios",

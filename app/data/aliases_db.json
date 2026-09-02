@@ -1295,6 +1295,11 @@
       "la defensoria",
       "oficina del defensor del pueblo",
       "defensoría del pueblo"
+    ],
+    "nit": "800186061",
+    "scan_disabled_aliases": [
+      "defensoría",
+      "la defensoría"
     ]
   },
   {
@@ -8851,6 +8856,13 @@
       "la cgr",
       "contraloría general",
       "cgr-nivel central"
+    ],
+    "nit": "899999067",
+    "scan_disabled_aliases": [
+      "contraloría",
+      "la contraloría",
+      "contraloría general",
+      "la contraloría general"
     ]
   },
   {
@@ -10630,7 +10642,6 @@
       "el departamento administrativo de la defensoría del espacio publico",
       "defensoria del espacio público",
       "departamento administrativo defensoría espacio público",
-      "la defensoría",
       "el departamento administrativo de la defensoría del espacio público",
       "defensoria del espacio publico bogota",
       "defensoria del espacio publico distrito capital",
@@ -10662,7 +10673,6 @@
       "la defensoría del espacio publico",
       "la defensoria del espacio publico",
       "departamento administrativo de la defensoria del espacio publico",
-      "la defensoria",
       "defensoría del espacio publico distrito capital",
       "defensoria espacio publico",
       "defensoria del espacio público distrito capital",
@@ -17757,6 +17767,88 @@
       "terminal de transporte de santa marta",
       "terminal de santa marta",
       "la terminal de transportes de santa marta"
+    ]
+  },
+  {
+    "official_name": "AUDITORIA GENERAL DE LA REPUBLICA",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 1274,
+    "total_contratos": 1092,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "nit": "830065741",
+    "entity_type": "organismo_control",
+    "aliases": [
+      "auditoría general de la república",
+      "la auditoría general de la república",
+      "auditoría general",
+      "la auditoría general",
+      "agr"
+    ]
+  },
+  {
+    "official_name": "PROCURADURIA GENERAL DE LA NACION",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 2224,
+    "total_contratos": 1549,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "nit": "899999119",
+    "entity_type": "organismo_control",
+    "aliases": [
+      "procuraduría general de la nación",
+      "la procuraduría general de la nación",
+      "procuraduría general",
+      "la procuraduría general",
+      "procuraduría",
+      "la procuraduría",
+      "pgn"
+    ],
+    "resolution_blocked_aliases": [
+      "ministerio público"
+    ]
+  },
+  {
+    "official_name": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 1104,
+    "total_contratos": 782,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "nit": "800252683",
+    "entity_type": "fondo",
+    "aliases": [
+      "fondo de bienestar social de la contraloría general de la república",
+      "el fondo de bienestar social de la contraloría general de la república",
+      "fondo de bienestar social de la cgr",
+      "fondo de bienestar social cgr"
+    ],
+    "resolution_blocked_aliases": [
+      "fondo de bienestar social",
+      "fondo de bienestar social de la contraloría"
+    ]
+  },
+  {
+    "official_name": "INSTITUTO DE ESTUDIOS DEL MINISTERIO PUBLICO.",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 205,
+    "total_contratos": 213,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "nit": "830015728",
+    "entity_type": "instituto",
+    "aliases": [
+      "instituto de estudios del ministerio público",
+      "el instituto de estudios del ministerio público",
+      "iemp"
     ]
   }
 ]
