@@ -4223,3 +4223,29 @@ metadata no cambian y D6 permanece intacta.
 
 Detalle:
 `docs/decisions/2026-09-01_ADR-072_exact-alias-vs-scan-eligibility.md`.
+
+## ADR-073: La proyección de comprador por fuente es una autoridad independiente
+
+**Fecha:** 2026-09-02
+**Estado:** Accepted for implementation — `SOURCE_NAME_PROJECTION_V1`
+
+`EntityResolver` devuelve un `official_name` que hace de identidad, de display
+y de string proyectado contra `entidad`/`nombre_entidad`. DAPRE prueba que esos
+papeles no son el mismo: el canónico
+`DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPÚBLICA` (`NIT:899999083`)
+devuelve 0/0 filas, mientras el nombre físico `DAPRE` devuelve 17.128 procesos y
+4.351 contratos, coincidiendo con el conteo por NIT. Soacha, Yopal, el Fondo
+Financiero Distrital de Salud y UAESP confirman el patrón entre datasets.
+
+La proyección de nombres físicos será un registro tipado e independiente del
+gazetteer, persistido en un sidecar propio, con API plural
+`project_buyer_names(canonical_identity, dataset) -> tuple[str, ...] | None`.
+V1 liga sólo DAPRE; sin binding, el comportamiento actual se conserva intacto.
+
+`SOURCE_NAME_SPLIT` no es `BUYER_GROUP`: CGR (32 unidades físicas bajo un NIT),
+Cundinamarca y Valle quedan fuera como candidatos a Buyer Group, el Fondo de
+Bienestar de la CGR es un comprador distinto por NIT propio, y las formas cortas
+de MinJusticia quedan en `REVIEW` por no aparecer vivas.
+
+Detalle: `docs/decisions/2026-09-02_ADR-073_source-name-projection.md`.
+Informe: `docs/gazetteer/SOURCE_NAME_PROJECTION_V1.md`.

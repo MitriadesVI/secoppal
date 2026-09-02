@@ -1,0 +1,528 @@
+{
+  "audit": "SOURCE_NAME_PROJECTION_V1",
+  "audit_type": "DISCOVERY_DESIGN_READ_ONLY_SPIKE",
+  "status": "PASS",
+  "decision": "GO_IMPLEMENTATION",
+  "observed_at": "2026-09-02",
+  "branch": "main",
+  "head_before": "c447702ff3389d913f25a4816ca574160c2279b1",
+  "head_after": "c447702ff3389d913f25a4816ca574160c2279b1",
+  "preflight": {
+    "expected_head_match": true,
+    "tracked_tree_clean": true,
+    "untracked_files_present": true,
+    "untracked_files_touched": false
+  },
+  "invariants": [
+    "CANONICAL_IDENTITY != SOURCE_PHYSICAL_NAME",
+    "SOURCE_PHYSICAL_NAME != ALIAS",
+    "SOURCE_NAME_SPLIT != BUYER_GROUP"
+  ],
+  "sources": {
+    "buyer_directory": {
+      "dataset_id": "4ex9-j3n8",
+      "url": "https://www.datos.gov.co/resource/4ex9-j3n8.json"
+    },
+    "processes": {
+      "dataset_id": "p6dx-8zbt",
+      "url": "https://www.datos.gov.co/resource/p6dx-8zbt.json",
+      "entity_field": "entidad",
+      "nit_field": "nit_entidad",
+      "catalog_data_updated_at": "2026-09-01T21:43:02.000Z"
+    },
+    "contracts": {
+      "dataset_id": "jbjy-vk9h",
+      "url": "https://www.datos.gov.co/resource/jbjy-vk9h.json",
+      "entity_field": "nombre_entidad",
+      "nit_field": "nit_entidad",
+      "catalog_data_updated_at": "2026-08-25T12:34:18.000Z"
+    },
+    "secop_ui_registry": {
+      "url": "https://community.secop.gov.co/Public/Tendering/ContractNoticeManagement/index?Country=CO&Page=login&SkinName=CCE&currentLanguage=es-CO",
+      "method": "public entity selector searched by 899999083"
+    }
+  },
+  "dapre": {
+    "canonical_identity": "DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPÚBLICA",
+    "identity_key": "NIT:899999083",
+    "secop_ui_registry_display": [
+      {
+        "published_nit": "899999083",
+        "name": "DAPRE"
+      },
+      {
+        "published_nit": "8999990839",
+        "name": "PRESIDENCIA DE LA REPÚBLICA"
+      },
+      {
+        "published_nit": "8999990830",
+        "name": "FONDO DE PROGRAMAS ESPECIALES PARA LA PAZ DEL DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPÚBLICA – FONDO PAZ"
+      }
+    ],
+    "directory_api_names": [
+      {
+        "published_nit": "899999083",
+        "name": "DAPRE",
+        "active": true
+      },
+      {
+        "published_nit": "8999990839",
+        "name": "PRESIDENCIA DE LA REPuBLICA",
+        "active": true
+      },
+      {
+        "published_nit": "8999990830",
+        "name": "FONDO DE PROGRAMAS ESPECIALES PARA LA PAZ DEL DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPuBLICA \u0096 FONDO PAZ",
+        "active": true
+      }
+    ],
+    "ui_directory_discrepancy": true,
+    "official_surface_classification": "OFFICIAL_SURFACE_NAME_SPLIT",
+    "official_surface_note": "The main 899999083/DAPRE row is identical. The other two UI rows render REPÚBLICA and a typographic dash, while 4ex9-j3n8 publishes REPuBLICA and U+0096. Neither surface is declared stale.",
+    "process_source_names": [
+      {
+        "published_nit": "899999083",
+        "name": "DAPRE",
+        "rows": 17128
+      }
+    ],
+    "contract_source_names": [
+      {
+        "published_nit": "899999083",
+        "name": "DAPRE",
+        "rows": 4351
+      }
+    ],
+    "current_projection": {
+      "value": "DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPÚBLICA",
+      "process_rows": 0,
+      "contract_rows": 0
+    },
+    "source_aware_projection": {
+      "process_names": [
+        "DAPRE"
+      ],
+      "contract_names": [
+        "DAPRE"
+      ],
+      "process_rows": 17128,
+      "contract_rows": 4351,
+      "matches_nit_counts": true
+    },
+    "identity_resolution": {
+      "direct_resolver_input": "Presidencia de la República",
+      "value": "DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPÚBLICA",
+      "method": "fuzzy(90)",
+      "confidence": "medium",
+      "query_router_full_phrase_gap": "QueryRouter currently leaves 'Presidencia de la República' in objeto; 'DAPRE' itself resolves by scan_exact. This is a separate admission/routing gap and was not changed in discovery."
+    },
+    "classification": "SOURCE_NAME_SPLIT"
+  },
+  "confirmed_source_splits": [
+    {
+      "case": "SOACHA",
+      "canonical_name": "MUNICIPIO DE SOACHA",
+      "identity_key": "NIT:800094755",
+      "registry_names": [
+        "MUNICIPIO DE SOACHA..",
+        "ALCALDIA DE SOACHA//",
+        "ALCALDIA  MUNICIPAL DE SOACHA*+"
+      ],
+      "process_names": [
+        "MUNICIPIO DE SOACHA.."
+      ],
+      "contract_names": [
+        "MUNICIPIO DE SOACHA."
+      ],
+      "process_rows": 22108,
+      "contract_rows": 21752,
+      "current_projection": "Resolver exact currently selects the one-dot contract form; substring LIKE happens to reach the two-dot process form.",
+      "source_aware_projection": "Exact process/contract physical name selected by dataset.",
+      "same_identity": true,
+      "buyer_group": false,
+      "classification": "SOURCE_NAME_SPLIT",
+      "v1_eligible": true
+    },
+    {
+      "case": "YOPAL",
+      "canonical_name": "MUNICIPIO DE YOPAL",
+      "identity_key": "NIT:891855017",
+      "registry_names": [
+        "MUNICIPIO DE YOPAL...",
+        "MUNICIPIO DE YOPAL**"
+      ],
+      "process_names": [
+        "MUNICIPIO DE YOPAL..."
+      ],
+      "contract_names": [
+        "MUNICIPIO DE YOPAL.."
+      ],
+      "process_rows": 17548,
+      "contract_rows": 19039,
+      "current_projection": "Resolver exact selects the three-dot process form; that literal cannot reach the two-dot contract form.",
+      "source_aware_projection": "Exact process/contract physical name selected by dataset.",
+      "same_identity": true,
+      "buyer_group": false,
+      "classification": "SOURCE_NAME_SPLIT",
+      "v1_eligible": true
+    },
+    {
+      "case": "FONDO_FINANCIERO_DISTRITAL_DE_SALUD",
+      "canonical_name": "FONDO FINANCIERO DISTRITAL DE SALUD",
+      "identity_key": "NIT:800246953",
+      "registry_names": [
+        "FONDO FINANCIERO DISTRITAL DE SALUD..",
+        "SECRETARIA DE SALUD DE BOGOTA"
+      ],
+      "process_names": [
+        "FONDO FINANCIERO DISTRITAL DE SALUD.."
+      ],
+      "contract_names": [
+        "FONDO FINANCIERO DISTRITAL DE SALUD."
+      ],
+      "process_rows": 23735,
+      "contract_rows": 21256,
+      "current_projection": "Resolver exact currently selects the one-dot contract form; substring LIKE happens to reach the two-dot process form.",
+      "source_aware_projection": "Exact process/contract physical name selected by dataset.",
+      "same_identity": true,
+      "buyer_group": false,
+      "classification": "SOURCE_NAME_SPLIT",
+      "v1_eligible": true
+    },
+    {
+      "case": "UAESP_BOGOTA",
+      "canonical_name": "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS",
+      "identity_key": "NIT:900126860",
+      "registry_names": [
+        "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS..",
+        "UAESP"
+      ],
+      "process_names": [
+        "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS.."
+      ],
+      "contract_names": [
+        "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS."
+      ],
+      "process_rows": 6186,
+      "contract_rows": 5851,
+      "current_projection": "Resolver exact currently selects the one-dot contract form; substring LIKE happens to reach the two-dot process form.",
+      "source_aware_projection": "Exact process/contract physical name selected by dataset.",
+      "same_identity": true,
+      "buyer_group": false,
+      "classification": "SOURCE_NAME_SPLIT",
+      "v1_eligible": true
+    }
+  ],
+  "reclassified_historical_cases": [
+    {
+      "case": "MINJUSTICIA_SHORT_FORMS",
+      "historical_names": [
+        "MINJUSTICIA..",
+        "MINJUSTICIA."
+      ],
+      "live_process_names_for_nit_900457461": [
+        "MINISTERIO DE JUSTICIA Y DEL DERECHO.."
+      ],
+      "live_contract_names_for_nit_900457461": [
+        "MINISTERIO DE JUSTICIA Y DEL DERECHO."
+      ],
+      "classification": "REVIEW",
+      "v1_eligible": false,
+      "reason": "The historical short physical names were not returned by the live datasets on 2026-09-02. They remain gazetteer/debt evidence, not a confirmed live binding."
+    }
+  ],
+  "negative_cases": [
+    {
+      "case": "CGR",
+      "canonical_name": "CONTRALORÍA GENERAL DE LA REPÚBLICA",
+      "identity_key": "NIT:899999067",
+      "process_name_count": 32,
+      "contract_name_count": 32,
+      "process_rows": 8280,
+      "contract_rows": 7561,
+      "same_name_set_across_transactional_datasets": true,
+      "buyer_group": true,
+      "classification": "PHYSICAL_UNITS_UNDER_COMMON_IDENTITY",
+      "v1_eligible": false,
+      "debt": "CGR_PHYSICAL_NAME_FRAGMENTATION_DEBT",
+      "note": "The current transactional cut has CGR-NIVEL CENTRAL, a royalties unit and 30 departmental units. These are organizational units, not 32 spelling variants of one physical buyer."
+    },
+    {
+      "case": "CUNDINAMARCA_ROOT",
+      "canonical_name": "GOBERNACIÓN DE CUNDINAMARCA",
+      "identity_key": "NIT:899999114",
+      "process_name_count": 28,
+      "contract_name_count": 28,
+      "process_rows": 45675,
+      "contract_rows": 42642,
+      "exact_root_name_present": false,
+      "buyer_group": true,
+      "classification": "BUYER_GROUP_CANDIDATE",
+      "v1_eligible": false
+    },
+    {
+      "case": "VALLE_ROOT",
+      "canonical_name": "GOBERNACIÓN DEL VALLE DEL CAUCA",
+      "identity_key": "NIT:890399029",
+      "published_nit_forms": [
+        "890399029",
+        "8903990291",
+        "8903990295"
+      ],
+      "process_name_count": 29,
+      "contract_name_count": 29,
+      "process_rows": 79749,
+      "contract_rows": 86877,
+      "exact_root_name_present": false,
+      "buyer_group": true,
+      "classification": "BUYER_GROUP_CANDIDATE",
+      "v1_eligible": false
+    },
+    {
+      "case": "FONDO_CGR_VS_CGR",
+      "canonical_name": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORÍA GENERAL DE LA REPÚBLICA",
+      "identity_key": "NIT:800252683",
+      "compared_with": "NIT:899999067",
+      "buyer_group": false,
+      "classification": "SINGLE_SOURCE_NAME",
+      "v1_eligible": false,
+      "note": "Different NITs: separate buyers. Parent wording inside the name is not identity equivalence."
+    }
+  ],
+  "nit_projection": {
+    "fields": {
+      "processes": "nit_entidad",
+      "contracts": "nit_entidad"
+    },
+    "sample": {
+      "method": "first 50000 rows returned by each public resource; descriptive sample, not a population estimate",
+      "processes": {
+        "rows": 50000,
+        "present": 50000,
+        "missing_or_sentinel": 0,
+        "punctuated": 16,
+        "length_distribution": {
+          "7": 1,
+          "8": 15,
+          "9": 45892,
+          "10": 4076,
+          "11": 16
+        },
+        "observed_punctuated_examples": [
+          "814005267-5",
+          "900.479.658"
+        ]
+      },
+      "contracts": {
+        "rows": 50000,
+        "present": 50000,
+        "missing_or_sentinel": 0,
+        "punctuated": 0,
+        "length_distribution": {
+          "8": 13,
+          "9": 45688,
+          "10": 4299
+        }
+      }
+    },
+    "case_evidence": [
+      "DAPRE publishes base form 899999083 in both transactional datasets.",
+      "IEMP publishes attached check digit 8300157281; base-only filtering returns zero.",
+      "Fondo Financiero Distrital de Salud publishes attached check digit 8002469532.",
+      "Valle publishes 890399029, 8903990291 and 8903990295 for related units.",
+      "The DAPRE directory itself publishes 899999083, 8999990839 and 8999990830 under different registered names; suffix stripping alone is not identity authority."
+    ],
+    "filter_by_nit": {
+      "strengths": [
+        "Stable against spelling and punctuation changes.",
+        "Can retrieve all verified source names for a strict one-to-one identity."
+      ],
+      "risks": [
+        "Base, attached check digit and punctuated forms differ by source and buyer.",
+        "A common NIT can denote multiple physical units and accidentally create a buyer group.",
+        "Blind suffix stripping can collapse unrelated or invalid publications.",
+        "Global population coverage was not proven; the full aggregate timed out and only a 50000-row descriptive sample was frozen."
+      ],
+      "verdict": "NOT_THE_V1_DEFAULT"
+    },
+    "filter_by_source_name": {
+      "strengths": [
+        "Preserves the exact physical buyer boundary represented by each verified binding.",
+        "Supports one or several names without aggregating every unit under a NIT."
+      ],
+      "risks": [
+        "Bindings can drift and require dated evidence and re-audit.",
+        "Exact punctuation and accents are source data."
+      ],
+      "verdict": "V1_DEFAULT_WITH_EXACT_OR"
+    }
+  },
+  "university_preview": [
+    {
+      "case": "UNIVERSIDAD_NACIONAL",
+      "identity_key": "NIT:899999063",
+      "process_names": [
+        "UNIVERSIDAD NACIONAL DE COLOMBIA"
+      ],
+      "contract_names": [
+        "UNIVERSIDAD NACIONAL DE COLOMBIA"
+      ],
+      "process_rows_observed": ">=50000",
+      "contract_rows": 14,
+      "classification": "SINGLE_SOURCE_NAME",
+      "projection_v1_helpful": false,
+      "note": "Process fetch reached the 50000-row audit cap; no name split was observed."
+    },
+    {
+      "case": "UNIVERSIDAD_DE_ANTIOQUIA",
+      "identity_key": "NIT:890980040",
+      "process_names": [
+        "UNIVERSIDAD DE ANTIOQUIA"
+      ],
+      "contract_names": [
+        "UNIVERSIDAD DE ANTIOQUIA"
+      ],
+      "process_rows": 44152,
+      "contract_rows": 34,
+      "classification": "SINGLE_SOURCE_NAME",
+      "projection_v1_helpful": false
+    },
+    {
+      "case": "UNIVERSIDAD_DEL_VALLE",
+      "identity_key": "NIT:890399010",
+      "process_names": [
+        "UNIVERSIDAD DEL VALLE"
+      ],
+      "contract_names": [
+        "UNIVERSIDAD DEL VALLE"
+      ],
+      "process_rows": 14177,
+      "contract_rows": 34,
+      "classification": "SINGLE_SOURCE_NAME",
+      "projection_v1_helpful": false
+    },
+    {
+      "case": "UPTC",
+      "identity_key": "NIT:891800330",
+      "registry_names": [
+        "UPTC",
+        "UNIVERSIDAD PEDAGÓGICA Y TECNOLÓGICA DE COLOMBIA"
+      ],
+      "process_names": [
+        "UPTC"
+      ],
+      "contract_names": [
+        "UPTC"
+      ],
+      "process_rows": 22366,
+      "contract_rows": 4,
+      "classification": "SOURCE_NAME_SPLIT",
+      "projection_v1_helpful": true,
+      "note": "The transactional name is stable across datasets but differs from the human/registry long form. This is DAPRE-shaped validation for R2F, not an implemented binding."
+    },
+    {
+      "case": "UNIVERSIDAD_DISTRITAL",
+      "identity_key": "NIT:899999230",
+      "process_names": [
+        "UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS"
+      ],
+      "contract_names": [
+        "UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS"
+      ],
+      "process_rows": 29500,
+      "contract_rows": 557,
+      "classification": "SINGLE_SOURCE_NAME",
+      "projection_v1_helpful": false
+    }
+  ],
+  "model_options": {
+    "A_aliases_db_fields": {
+      "simplicity": "medium",
+      "traceability": "low",
+      "compatibility": "medium",
+      "load_cost": "low",
+      "drift_risk": "high",
+      "testability": "medium",
+      "migration": "high",
+      "verdict": "REJECT",
+      "reason": "It remixes alias ownership, canonical display and source projection in the same record family."
+    },
+    "B_untyped_sidecar_json": {
+      "simplicity": "high",
+      "traceability": "high",
+      "compatibility": "high",
+      "load_cost": "low",
+      "drift_risk": "medium",
+      "testability": "medium",
+      "migration": "low",
+      "verdict": "ACCEPTABLE_NOT_PREFERRED",
+      "reason": "Separation is correct, but an untyped sidecar cannot enforce 1..N, dataset names, unique keys or provenance."
+    },
+    "C_typed_source_registry": {
+      "simplicity": "medium",
+      "traceability": "high",
+      "compatibility": "high",
+      "load_cost": "low",
+      "drift_risk": "low",
+      "testability": "high",
+      "migration": "low",
+      "verdict": "RECOMMEND",
+      "reason": "A small typed registry can load a dedicated JSON sidecar while keeping resolver and gazetteer contracts backward compatible."
+    },
+    "D_dynamic_nit_derivation": {
+      "simplicity": "low",
+      "traceability": "low",
+      "compatibility": "medium",
+      "load_cost": "high",
+      "drift_risk": "high",
+      "testability": "low",
+      "migration": "medium",
+      "verdict": "REJECT_AS_RUNTIME_AUTHORITY",
+      "reason": "It imports network availability, format normalization and buyer-group decisions into every query. Keep it as audit/reconciliation evidence."
+    }
+  },
+  "recommended_model": {
+    "kind": "TYPED_INDEPENDENT_SOURCE_NAME_REGISTRY",
+    "persistence": "dedicated JSON sidecar loaded and validated by a typed module",
+    "minimum_record": {
+      "identity_key": "NIT:899999083",
+      "canonical_name": "DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPÚBLICA",
+      "process_source_names": [
+        "DAPRE"
+      ],
+      "contract_source_names": [
+        "DAPRE"
+      ],
+      "verified_at": "2026-09-02",
+      "evidence": [
+        "p6dx-8zbt",
+        "jbjy-vk9h",
+        "4ex9-j3n8",
+        "SECOP_UI_REGISTRY_DISPLAY"
+      ]
+    },
+    "minimal_api": "project_buyer_names(canonical_identity, dataset) -> tuple[str, ...] | None",
+    "projection_semantics": "An existing binding emits exact equality predicates joined by OR. No binding returns None and preserves the current canonical-name path. No fuzzy matching is sent to Socrata.",
+    "authority": "The registry is projection authority only. It cannot add aliases, change canonical display, merge identities or create buyer groups."
+  },
+  "implementation_v1_scope": [
+    "Typed source-name registry with schema validation and a dedicated sidecar.",
+    "DAPRE as the only initial runtime binding.",
+    "Dataset-aware exact projection for p6dx-8zbt and jbjy-vk9h.",
+    "Backward-compatible fallback to current entidad_resolved behavior for every unbound identity.",
+    "Focused tests for identity/display stability, both datasets, zero-row current projection, source-aware counts via fixtures, multi-name OR semantics and fail-closed schema validation.",
+    "A separate regression test must expose the current full-phrase QueryRouter gap for 'Presidencia de la República'; discovery does not authorize alias expansion."
+  ],
+  "explicitly_out_of_scope": [
+    "Buyer Groups runtime",
+    "CGR 32-unit projection",
+    "Cundinamarca or Valle root aggregation",
+    "University bindings beyond the preview",
+    "Alias expansion",
+    "Fuzzy projection",
+    "Geography",
+    "Radar",
+    "Actor",
+    "SODA3 transport changes"
+  ]
+}
