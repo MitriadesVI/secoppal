@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "authority": "ADR-073 — SOURCE_NAME_PROJECTION_V1",
+  "evidence": "artifacts/audits/source_name_projection_v1.json",
+  "note": "Los nombres físicos se guardan tal como la fuente los publica, byte-for-byte. Puntuación, acentos y mayúsculas son parte del binding: se comparan con igualdad exacta, no con LIKE.",
+  "bindings": [
+    {
+      "canonical_name": "DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPÚBLICA",
+      "identity_key": {
+        "type": "NIT",
+        "value": "899999083"
+      },
+      "observed_at": "2026-09-02",
+      "sources": {
+        "p6dx-8zbt": ["DAPRE"],
+        "jbjy-vk9h": ["DAPRE"]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 17128,
+        "jbjy-vk9h": 4351
+      }
+    }
+  ]
+}
