@@ -18,6 +18,7 @@ from app.core.generic_buyer import (
     incomplete_buyer_hint,
     is_unqualified_buyer_name,
 )
+from app.core.fuzzy_identity_guard import candidate_keeps_requested_identity
 from app.core.geography_alias import is_geography_alias
 from app.core.scan_alias_policy import is_scan_eligible_alias, record_alias_policy
 from app.data.colombia_geography import REGION_ALIASES
@@ -90,6 +91,12 @@ class GeoMention:
     kind: str  # "city", "department", "entity", "unknown"
     canonical: str | None = None
     confidence: str = "low"  # "high", "medium", "low"
+
+
+# Tokens que nombran territorio, no institución.  Los usa la puerta del fuzzy
+# para saber qué palabra de la petición es discriminante; la autoridad sigue
+# siendo el catálogo territorial, no una lista propia.
+TERRITORY_TOKENS: frozenset[str] = frozenset(DEPARTAMENTOS) | frozenset(GAZETTEER_CIUDADES)
 
 
 def geo_mention_resolution(token: str) -> GeoMention:
@@ -509,6 +516,8 @@ class EntityResolver:
                 official = dept_choices[match[0]]
                 if strict_rewrite and not self._official_matches_strict_rewrite(official, strict_rewrite):
                     return self._unresolved_rewrite(user_input, strict_rewrite)
+                if not self._keeps_requested_identity(normalized, match[0], official):
+                    return self._unresolved_identity(user_input, normalized)
                 return ResolutionResult(
                     value=official, method=f"fuzzy_dept({int(match[1])})", confidence="medium",
                     metadata={"departamento_filter": departamento},
@@ -525,6 +534,8 @@ class EntityResolver:
             official = self.choice_to_official[match]
             if strict_rewrite and not self._official_matches_strict_rewrite(official, strict_rewrite):
                 continue
+            if not self._keeps_requested_identity(normalized, match, official):
+                continue
             return ResolutionResult(
                 value=official, method=f"fuzzy({int(score)})", confidence="medium",
             )
@@ -534,6 +545,24 @@ class EntityResolver:
             return self._unresolved_rewrite(user_input, strict_rewrite)
         logger.info("Entity '%s' fell through to LIKE fallback", user_input)
         return ResolutionResult(value=None, like_value=normalized.upper(), method="like", confidence="low")
+
+    def _keeps_requested_identity(
+        self, normalized: str, matched_alias: str, official: str
+    ) -> bool:
+        """Puerta de los tiers inferenciales; el ownership exacto no la cruza."""
+        return candidate_keeps_requested_identity(
+            normalized, matched_alias, official, TERRITORY_TOKENS
+        )
+
+    def _unresolved_identity(self, user_input: str, normalized: str) -> ResolutionResult:
+        """Sin candidato que conserve la identidad pedida: filtro literal."""
+        logger.info(
+            "Entity '%s' has no fuzzy candidate that keeps its requested identity",
+            user_input,
+        )
+        return ResolutionResult(
+            value=None, like_value=normalized.upper(), method="like", confidence="low"
+        )
 
     def _resolve_department_root(
         self,
