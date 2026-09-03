@@ -1,0 +1,3270 @@
+{
+  "audit": "INSTITUTIONAL_BUYER_MODEL_P01",
+  "type": "DISCOVERY_AND_ADJUDICATION_READ_ONLY",
+  "as_of": "2026-09-02",
+  "expected_head": "7fa44a30fd92af6176ff9a85f73cd4f7696527e7",
+  "observed_head": "7fa44a30fd92af6176ff9a85f73cd4f7696527e7",
+  "head_matches": true,
+  "authorities": {
+    "buyer_directory": "4ex9-j3n8",
+    "processes": "p6dx-8zbt",
+    "contracts": "jbjy-vk9h",
+    "identity": "NIT declarado/publicado; nunca similitud",
+    "alias_policy": "ADR-072",
+    "source_projection": "ADR-073",
+    "input_universe": "artifacts/audits/buyer_punctuation_surface_p0.json"
+  },
+  "institutional_model": {
+    "TERRITORY": "campos geograficos; jamas implica comprador",
+    "LEGAL_IDENTITY": "NIT; puede cubrir N unidades compradoras y ruido de registro",
+    "BUYER_UNIT": "nombre de comprador publicado; identidad primaria de runtime",
+    "BUYER_GROUP": "agrupacion declarada de BuyerUnits; nunca inferida de NIT ni geografia"
+  },
+  "canaries": [
+    {
+      "canary": "A",
+      "utterance": "muestrame que ha publicado integracion social de bogota en adulto mayor en 2026",
+      "expected_kind": "BUYER_UNIT",
+      "expected_target": "(Secretaría Distrital de Integración Social)",
+      "observed_kind": "TERRITORY",
+      "entidad_captured": null,
+      "entidad_resolved": null,
+      "departamento_resolved": "Distrito Capital de Bogotá",
+      "objeto": [
+        "integracion",
+        "social",
+        "adulto_mayor"
+      ],
+      "verdict": "FAIL"
+    },
+    {
+      "canary": "B",
+      "utterance": "muestrame contratos recientes de la alcaldia de bogota por mas de 1000 millones",
+      "expected_kind": "BUYER_GROUP",
+      "expected_target": "Administración Distrital de Bogotá",
+      "observed_kind": "FAIL_CLOSED",
+      "entidad_captured": "Municipio de bogota",
+      "entidad_resolved": null,
+      "departamento_resolved": null,
+      "objeto": null,
+      "verdict": "FAIL_CLOSED"
+    },
+    {
+      "canary": "C",
+      "utterance": "contratos en bogota por mas de 1000 millones",
+      "expected_kind": "TERRITORY",
+      "expected_target": "Distrito Capital de Bogotá",
+      "observed_kind": "TERRITORY",
+      "entidad_captured": null,
+      "entidad_resolved": null,
+      "departamento_resolved": "Distrito Capital de Bogotá",
+      "objeto": null,
+      "verdict": "PASS"
+    },
+    {
+      "canary": "D",
+      "utterance": "contratos de la alcaldia local de chapinero",
+      "expected_kind": "BUYER_UNIT",
+      "expected_target": "ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL",
+      "observed_kind": "BUYER_UNIT",
+      "entidad_captured": "alcaldia local de chapinero",
+      "entidad_resolved": "ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL",
+      "departamento_resolved": null,
+      "objeto": null,
+      "verdict": "PASS"
+    },
+    {
+      "canary": "E",
+      "utterance": "contratos de las alcaldias locales de bogota",
+      "expected_kind": "BUYER_GROUP",
+      "expected_target": "Alcaldías Locales / Fondos de Desarrollo Local de Bogotá",
+      "observed_kind": "TERRITORY",
+      "entidad_captured": null,
+      "entidad_resolved": null,
+      "departamento_resolved": "Distrito Capital de Bogotá",
+      "objeto": [
+        "alcaldia",
+        "locales"
+      ],
+      "verdict": "FAIL"
+    }
+  ],
+  "generic_buyer_guard_probe": [
+    {
+      "input": "alcaldia",
+      "normalized": "alcaldia",
+      "blocked_as_unqualified": true
+    },
+    {
+      "input": "ALCALDIA*",
+      "normalized": "alcaldia*",
+      "blocked_as_unqualified": false
+    },
+    {
+      "input": "ALCALDIA.",
+      "normalized": "alcaldia.",
+      "blocked_as_unqualified": false
+    },
+    {
+      "input": "gobernacion",
+      "normalized": "gobernacion",
+      "blocked_as_unqualified": true
+    },
+    {
+      "input": "GOBERNACION+",
+      "normalized": "gobernacion+",
+      "blocked_as_unqualified": false
+    }
+  ],
+  "triage_20": [
+    {
+      "surface_id": "ALCALDIA  MUNICIPIO DE IBAGUE*|800133897|ALCALDIA DE IBAGUE -",
+      "physical_name": "ALCALDIA DE IBAGUE -",
+      "attributed_canonical": "ALCALDIA  MUNICIPIO DE IBAGUE*",
+      "nit": "800133897",
+      "p0_recommendation": "NEEDS_REVIEW",
+      "p0_classification": "FUZZY_SAME_OWNER",
+      "published_processes": {},
+      "published_contracts": {},
+      "surface_rows_live": null,
+      "resolver_owner": "ALCALDIA  MUNICIPIO DE IBAGUE*",
+      "resolver_method": "fuzzy(95)",
+      "cause": "REGISTRY_NOISE",
+      "remediation": "NO_CHANGE",
+      "rationale": "El NIT atribuido 800133897 no tiene una sola fila en procesos ni en contratos. Ibague publica bajo 800113389: los digitos estan transpuestos. La superficie no es un problema de puntuacion sino una atribucion de identidad sobre un NIT fantasma.",
+      "predicate": "PHANTOM_NIT",
+      "predicate_holds": true
+    },
+    {
+      "surface_id": "ALCALDIA  MUNICIPIO DE IBAGUE*|800133897|ALCALDIA DE IBAGUe+",
+      "physical_name": "ALCALDIA DE IBAGUe+",
+      "attributed_canonical": "ALCALDIA  MUNICIPIO DE IBAGUE*",
+      "nit": "800133897",
+      "p0_recommendation": "NEEDS_REVIEW",
+      "p0_classification": "FUZZY_SAME_OWNER",
+      "published_processes": {},
+      "published_contracts": {},
+      "surface_rows_live": null,
+      "resolver_owner": "ALCALDIA  MUNICIPIO DE IBAGUE*",
+      "resolver_method": "fuzzy(97)",
+      "cause": "REGISTRY_NOISE",
+      "remediation": "NO_CHANGE",
+      "rationale": "Misma fila fantasma que la anterior, otra grafia del directorio.",
+      "predicate": "PHANTOM_NIT",
+      "predicate_holds": true
+    },
+    {
+      "surface_id": "ALCALDIA DE PASTO|891280000|ALCALDIA*",
+      "physical_name": "ALCALDIA*",
+      "attributed_canonical": "ALCALDIA DE PASTO",
+      "nit": "891280000",
+      "p0_recommendation": "DO_NOT_ADD",
+      "p0_classification": "WRONG_OWNER",
+      "published_processes": {
+        "ALCALDIA DE PASTO": 24608
+      },
+      "published_contracts": {
+        "ALCALDIA DE PASTO": 24357
+      },
+      "surface_rows_live": null,
+      "resolver_owner": "(Secretaría Distrital de Integración Social)",
+      "resolver_method": "fuzzy(84)",
+      "cause": "OVERGENERIC_ALIAS",
+      "remediation": "RESOLUTION_BLOCK",
+      "rationale": "'ALCALDIA*' no identifica comprador alguno: hay 1.100+ alcaldias. El NIT 891280000 publica 'ALCALDIA DE PASTO' en ambos datasets. La guarda de comprador generico bloquea 'alcaldia' pero NO 'alcaldia*': un signo terminal la deja pasar al fuzzy global.",
+      "predicate": "NOT_PUBLISHED_AS_BUYER",
+      "predicate_holds": true
+    },
+    {
+      "surface_id": "CENTRAL ADMINISTRATIVA Y CONTABLE  PUENTE ARANDA+|830039548|CENAC PUENTE ARANDA+",
+      "physical_name": "CENAC PUENTE ARANDA+",
+      "attributed_canonical": "CENTRAL ADMINISTRATIVA Y CONTABLE  PUENTE ARANDA+",
+      "nit": "830039548",
+      "p0_recommendation": "DO_NOT_ADD",
+      "p0_classification": "WRONG_OWNER",
+      "published_processes": {
+        "CENAC PUENTE ARANDA+": 2967
+      },
+      "published_contracts": {
+        "CENAC PUENTE ARANDA+": 1454
+      },
+      "surface_rows_live": {
+        "nits": [
+          "830039548"
+        ],
+        "processes": 2967,
+        "contracts": 1454
+      },
+      "resolver_owner": "CENTRAL ADMINISTRATIVA Y CONTABLE CENAC PERSONAL",
+      "resolver_method": "fuzzy(90)",
+      "cause": "WRONG_ALIAS_OWNER",
+      "remediation": "ADD_EXACT_ONLY",
+      "rationale": "Comprador real y activo: 2.967 procesos y 1.454 contratos bajo 830039548. El resolver lo manda a CENAC PERSONAL, que es NIT 900385079 — otra identidad legal. El canonical correcto ya existe con el mismo NIT. Unico caso del lote con dano transaccional por owner equivocado.",
+      "predicate": "PUBLISHED_SAME_NIT",
+      "predicate_holds": true
+    },
+    {
+      "surface_id": "EMPRESA SOCIAL DEL ESTADO BELLOSALUD|800174995|E.S.E BELLO SALUD",
+      "physical_name": "E.S.E BELLO SALUD",
+      "attributed_canonical": "EMPRESA SOCIAL DEL ESTADO BELLOSALUD",
+      "nit": "800174995",
+      "p0_recommendation": "DO_NOT_ADD",
+      "p0_classification": "WRONG_OWNER",
+      "published_processes": {
+        "EMPRESA SOCIAL DEL ESTADO BELLOSALUD": 6646
+      },
+      "published_contracts": {
+        "EMPRESA SOCIAL DEL ESTADO BELLOSALUD": 1415
+      },
+      "surface_rows_live": null,
+      "resolver_owner": "SUBRED INTEGRADA DE SERVICIOS DE SALUD NORTE E.S.E. (OFICIAL)",
+      "resolver_method": "fuzzy(85)",
+      "cause": "REGISTRY_NOISE",
+      "remediation": "NO_CHANGE",
+      "rationale": "Fila solo de directorio. El NIT publica 'EMPRESA SOCIAL DEL ESTADO BELLOSALUD'. El destino equivocado (Subred Norte) lo produce el fuzzy global sobre 'E.S.E', no la superficie.",
+      "predicate": "NOT_PUBLISHED_AS_BUYER",
+      "predicate_holds": true
+    },
+    {
+      "surface_id": "EMPRESA SOCIAL DEL ESTADO HOSPITAL BENJAMIN BARNEY GASCA|891380055|HOSPITAL BENJAMIN BARNEY GASCA E.S.E",
+      "physical_name": "HOSPITAL BENJAMIN BARNEY GASCA E.S.E",
+      "attributed_canonical": "EMPRESA SOCIAL DEL ESTADO HOSPITAL BENJAMIN BARNEY GASCA",
+      "nit": "891380055",
+      "p0_recommendation": "DO_NOT_ADD",
+      "p0_classification": "WRONG_OWNER",
+      "published_processes": {
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL BENJAMIN BARNEY GASCA": 3259
+      },
+      "published_contracts": {
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL BENJAMIN BARNEY GASCA": 3261
+      },
+      "surface_rows_live": null,
+      "resolver_owner": "HOSPITAL MILITAR CENTRAL",
+      "resolver_method": "fuzzy(85)",
+      "cause": "SOURCE_NAME_VARIANT_SAME_BUYER_UNIT",
+      "remediation": "ADD_EXACT_ONLY",
+      "rationale": "Mismo NIT, mismo nombre institucional reordenado ('E.S.E' al final). Ningun otro owner reclama la cadena exacta. Hoy cae en HOSPITAL MILITAR CENTRAL por fuzzy(85). Alias exacto, sin scan.",
+      "predicate": "NOT_PUBLISHED_AS_BUYER",
+      "predicate_holds": true
+    },
+    {
+      "surface_id": "EMPRESA SOCIAL DEL ESTADO HOSPITAL LOCAL|846000253|E.S.E. HOSPITAL LOCAL PUERTO ASIS *",
+      "physical_name": "E.S.E. HOSPITAL LOCAL PUERTO ASIS *",
+      "attributed_canonical": "EMPRESA SOCIAL DEL ESTADO HOSPITAL LOCAL",
+      "nit": "846000253",
+      "p0_recommendation": "DO_NOT_ADD",
+      "p0_classification": "WRONG_OWNER",
+      "published_processes": {
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL LOCAL": 5069
+      },
+      "published_contracts": {
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL LOCAL": 1
+      },
+      "surface_rows_live": null,
+      "resolver_owner": "SUBRED INTEGRADA DE SERVICIOS DE SALUD NORTE E.S.E. (OFICIAL)",
+      "resolver_method": "fuzzy(85)",
+      "cause": "SOURCE_NAME_VARIANT_SAME_BUYER_UNIT",
+      "remediation": "ADD_EXACT_ONLY",
+      "rationale": "El nombre publicado del canonical ('EMPRESA SOCIAL DEL ESTADO HOSPITAL LOCAL') es mas generico que esta grafia, que anade el municipio. Mismo NIT. Alias exacto, sin scan: 'hospital local' desnudo no puede quedar habilitado.",
+      "predicate": "NOT_PUBLISHED_AS_BUYER",
+      "predicate_holds": true
+    },
+    {
+      "surface_id": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAGRADO CORAZÓN DE JESÚS|846000471|E.S.E  HOSPITAL SAGRADO CORAZoN DE JESuS",
+      "physical_name": "E.S.E  HOSPITAL SAGRADO CORAZoN DE JESuS",
+      "attributed_canonical": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAGRADO CORAZÓN DE JESÚS",
+      "nit": "846000471",
+      "p0_recommendation": "NEEDS_REVIEW",
+      "p0_classification": "FAIL_CLOSED",
+      "published_processes": {
+        "E.S.E  HOSPITAL SAGRADO CORAZÓN DE JESÚS": 5184
+      },
+      "published_contracts": {
+        "E.S.E  HOSPITAL SAGRADO CORAZÓN DE JESÚS": 2
+      },
+      "surface_rows_live": null,
+      "resolver_owner": null,
+      "resolver_method": "like",
+      "cause": "SOURCE_NAME_VARIANT_SAME_BUYER_UNIT",
+      "remediation": "ADD_EXACT_ONLY",
+      "rationale": "Variante mojibake de la grafia publicada. normalize_text pliega acentos, asi que colapsa a la misma clave que la forma acentuada: un solo alias exacto cubre ambas.",
+      "predicate": "NOT_PUBLISHED_AS_BUYER",
+      "predicate_holds": true
+    },
+    {
+      "surface_id": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAGRADO CORAZÓN DE JESÚS|846000471|E.S.E  HOSPITAL SAGRADO CORAZÓN DE JESÚS",
+      "physical_name": "E.S.E  HOSPITAL SAGRADO CORAZÓN DE JESÚS",
+      "attributed_canonical": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAGRADO CORAZÓN DE JESÚS",
+      "nit": "846000471",
+      "p0_recommendation": "NEEDS_REVIEW",
+      "p0_classification": "FAIL_CLOSED",
+      "published_processes": {
+        "E.S.E  HOSPITAL SAGRADO CORAZÓN DE JESÚS": 5184
+      },
+      "published_contracts": {
+        "E.S.E  HOSPITAL SAGRADO CORAZÓN DE JESÚS": 2
+      },
+      "surface_rows_live": {
+        "nits": [
+          "846000471"
+        ],
+        "processes": 5184,
+        "contracts": 2
+      },
+      "resolver_owner": null,
+      "resolver_method": "like",
+      "cause": "SOURCE_NAME_VARIANT_SAME_BUYER_UNIT",
+      "remediation": "SOURCE_NAME_BINDING",
+      "rationale": "Esta ES la grafia publicada en procesos (5.184 filas) para el NIT 846000471, y NO coincide con el canonical. Caso de proyeccion ADR-073 ademas de alias exacto: hoy el canonical no alcanza sus propias filas por igualdad.",
+      "predicate": "PUBLISHED_SAME_NIT",
+      "predicate_holds": true
+    },
+    {
+      "surface_id": "ESE HOSPITAL PIO XII DE COLON|891201845|E.S.E",
+      "physical_name": "E.S.E",
+      "attributed_canonical": "ESE HOSPITAL PIO XII DE COLON",
+      "nit": "891201845",
+      "p0_recommendation": "DO_NOT_ADD",
+      "p0_classification": "WRONG_OWNER",
+      "published_processes": {
+        "ESE HOSPITAL PIO XII DE COLON": 9687
+      },
+      "published_contracts": {
+        "ESE HOSPITAL PIO XII DE COLON": 10
+      },
+      "surface_rows_live": null,
+      "resolver_owner": "SUBRED INTEGRADA DE SERVICIOS DE SALUD NORTE E.S.E. (OFICIAL)",
+      "resolver_method": "fuzzy(90)",
+      "cause": "OVERGENERIC_ALIAS",
+      "remediation": "RESOLUTION_BLOCK",
+      "rationale": "'E.S.E' es una forma societaria, no un comprador. El NIT publica 'ESE HOSPITAL PIO XII DE COLON'. Debe fallar cerrado.",
+      "predicate": "NOT_PUBLISHED_AS_BUYER",
+      "predicate_holds": true
+    },
+    {
+      "surface_id": "FONDO FINANCIERO DISTRITAL DE SALUD..|8002469532|FONDO FINANCIERO DISTRITAL DE SALUD.",
+      "physical_name": "FONDO FINANCIERO DISTRITAL DE SALUD.",
+      "attributed_canonical": "FONDO FINANCIERO DISTRITAL DE SALUD..",
+      "nit": "8002469532",
+      "p0_recommendation": "DO_NOT_ADD",
+      "p0_classification": "WRONG_OWNER",
+      "published_processes": {
+        "FONDO FINANCIERO DISTRITAL DE SALUD..": 23735
+      },
+      "published_contracts": {
+        "FONDO FINANCIERO DISTRITAL DE SALUD.": 21256
+      },
+      "surface_rows_live": {
+        "nits": [
+          "8002469532"
+        ],
+        "processes": 0,
+        "contracts": 21256
+      },
+      "resolver_owner": "FONDO FINANCIERO DISTRITAL DE SALUD.",
+      "resolver_method": "exact",
+      "cause": "DUPLICATE_CANONICAL_SAME_BUYER_UNIT",
+      "remediation": "MERGE_DUPLICATE_BUYER_UNIT",
+      "rationale": "Mismo NIT; procesos publica '..' y contratos publica '.'. Los dos canonicals tienen procedencia de dataset disjunta. Es una unidad compradora, no dos.",
+      "predicate": "DUPLICATE_PAIR",
+      "predicate_holds": true
+    },
+    {
+      "surface_id": "GOBERNACIÓN DE LA GUAJIRA|892115015|SECRETARIA DE SALUD DEPARTAMENTAL+",
+      "physical_name": "SECRETARIA DE SALUD DEPARTAMENTAL+",
+      "attributed_canonical": "GOBERNACIÓN DE LA GUAJIRA",
+      "nit": "892115015",
+      "p0_recommendation": "DO_NOT_ADD",
+      "p0_classification": "WRONG_OWNER",
+      "published_processes": {
+        "ADMINISTRACIÓN TEMPORAL PARA EL SECTOR AGUA POTABLE Y SANEAMIENTO BÁSICO": 75
+      },
+      "published_contracts": {
+        "ADMINISTRACIÓN TEMPORAL PARA EL SECTOR AGUA POTABLE Y SANEAMIENTO BÁSICO": 32
+      },
+      "surface_rows_live": null,
+      "resolver_owner": "(Secretaría Distrital de Integración Social)",
+      "resolver_method": "fuzzy(85)",
+      "cause": "SHARED_NIT_DISTINCT_BUYER_UNIT",
+      "remediation": "KEEP_SEPARATE",
+      "rationale": "Secretaria sectorial bajo la identidad fiscal del departamento. La Gobernacion publica bajo 8921150151 y el NIT base publica 'ADMINISTRACION TEMPORAL PARA EL SECTOR AGUA POTABLE...': tres unidades, una identidad fiscal. El nombre no lleva territorio, asi que no puede resolverse solo.",
+      "predicate": "NOT_PUBLISHED_AS_BUYER",
+      "predicate_holds": true
+    },
+    {
+      "surface_id": "MINISTERIO DE JUSTICIA Y DEL DERECHO..|900457461|MINISTERIO DE JUSTICIA Y DEL DERECHO.",
+      "physical_name": "MINISTERIO DE JUSTICIA Y DEL DERECHO.",
+      "attributed_canonical": "MINISTERIO DE JUSTICIA Y DEL DERECHO..",
+      "nit": "900457461",
+      "p0_recommendation": "DO_NOT_ADD",
+      "p0_classification": "WRONG_OWNER",
+      "published_processes": {
+        "MINISTERIO DE JUSTICIA Y DEL DERECHO..": 7595
+      },
+      "published_contracts": {
+        "MINISTERIO DE JUSTICIA Y DEL DERECHO.": 6922
+      },
+      "surface_rows_live": {
+        "nits": [
+          "900457461"
+        ],
+        "processes": 0,
+        "contracts": 6922
+      },
+      "resolver_owner": "MINISTERIO DE JUSTICIA Y DEL DERECHO.",
+      "resolver_method": "exact",
+      "cause": "DUPLICATE_CANONICAL_SAME_BUYER_UNIT",
+      "remediation": "MERGE_DUPLICATE_BUYER_UNIT",
+      "rationale": "Mismo NIT 900457461, procedencia disjunta. Ademas existen dos canonicals sinteticos ('MINJUSTICIA.', 'MINJUSTICIA..') que SECOP no publica y que se quedaron con todos los alias humanos: cuatro canonicals para una unidad compradora.",
+      "predicate": "DUPLICATE_PAIR",
+      "predicate_holds": true
+    },
+    {
+      "surface_id": "MUNICIPIO DE SOACHA..|800094755|ALCALDIA DE SOACHA*/*",
+      "physical_name": "ALCALDIA DE SOACHA*/*",
+      "attributed_canonical": "MUNICIPIO DE SOACHA..",
+      "nit": "800094755",
+      "p0_recommendation": "DO_NOT_ADD",
+      "p0_classification": "WRONG_OWNER",
+      "published_processes": {
+        "MUNICIPIO DE SOACHA..": 22108
+      },
+      "published_contracts": {
+        "MUNICIPIO DE SOACHA.": 21752
+      },
+      "surface_rows_live": null,
+      "resolver_owner": "MUNICIPIO DE SOACHA.",
+      "resolver_method": "fuzzy(92)",
+      "cause": "REGISTRY_NOISE",
+      "remediation": "NO_CHANGE",
+      "rationale": "Fila de directorio; el NIT publica 'MUNICIPIO DE SOACHA..' / '.'.",
+      "predicate": "NOT_PUBLISHED_AS_BUYER",
+      "predicate_holds": true
+    },
+    {
+      "surface_id": "MUNICIPIO DE SOACHA..|800094755|MUNICIPIO DE SOACHA.",
+      "physical_name": "MUNICIPIO DE SOACHA.",
+      "attributed_canonical": "MUNICIPIO DE SOACHA..",
+      "nit": "800094755",
+      "p0_recommendation": "DO_NOT_ADD",
+      "p0_classification": "WRONG_OWNER",
+      "published_processes": {
+        "MUNICIPIO DE SOACHA..": 22108
+      },
+      "published_contracts": {
+        "MUNICIPIO DE SOACHA.": 21752
+      },
+      "surface_rows_live": {
+        "nits": [
+          "800094755"
+        ],
+        "processes": 0,
+        "contracts": 21752
+      },
+      "resolver_owner": "MUNICIPIO DE SOACHA.",
+      "resolver_method": "exact",
+      "cause": "DUPLICATE_CANONICAL_SAME_BUYER_UNIT",
+      "remediation": "MERGE_DUPLICATE_BUYER_UNIT",
+      "rationale": "Mismo NIT, procedencia disjunta. Hoy no rompe consultas solo porque el alias resuelve a la grafia CORTA, que es substring de la larga.",
+      "predicate": "DUPLICATE_PAIR",
+      "predicate_holds": true
+    },
+    {
+      "surface_id": "MUNICIPIO DE SOACHA..|8000947557|ALCALDIA DE SOACHA//",
+      "physical_name": "ALCALDIA DE SOACHA//",
+      "attributed_canonical": "MUNICIPIO DE SOACHA..",
+      "nit": "8000947557",
+      "p0_recommendation": "DO_NOT_ADD",
+      "p0_classification": "WRONG_OWNER",
+      "published_processes": {
+        "MUNICIPIO DE SOACHA..": 22108
+      },
+      "published_contracts": {
+        "MUNICIPIO DE SOACHA.": 21752
+      },
+      "surface_rows_live": null,
+      "resolver_owner": "MUNICIPIO DE SOACHA.",
+      "resolver_method": "fuzzy(94)",
+      "cause": "REGISTRY_NOISE",
+      "remediation": "NO_CHANGE",
+      "rationale": "Fila de directorio sobre el NIT con DV; sin filas transaccionales.",
+      "predicate": "NOT_PUBLISHED_AS_BUYER",
+      "predicate_holds": true
+    },
+    {
+      "surface_id": "MUNICIPIO DE SOACHA..|8000947557|SECRETARiA DE AMBIENTE, MINAS Y DESARROLLO RURAL",
+      "physical_name": "SECRETARiA DE AMBIENTE, MINAS Y DESARROLLO RURAL",
+      "attributed_canonical": "MUNICIPIO DE SOACHA..",
+      "nit": "8000947557",
+      "p0_recommendation": "DO_NOT_ADD",
+      "p0_classification": "WRONG_OWNER",
+      "published_processes": {
+        "MUNICIPIO DE SOACHA..": 22108
+      },
+      "published_contracts": {
+        "MUNICIPIO DE SOACHA.": 21752
+      },
+      "surface_rows_live": null,
+      "resolver_owner": "SECRETARIA DISTRITAL DE AMBIENTE",
+      "resolver_method": "fuzzy(88)",
+      "cause": "SHARED_NIT_DISTINCT_BUYER_UNIT",
+      "remediation": "KEEP_SEPARATE",
+      "rationale": "Secretaria sectorial de Soacha bajo la identidad fiscal del municipio. Unidad distinta del Municipio; el nombre no lleva territorio y no puede resolverse solo.",
+      "predicate": "NOT_PUBLISHED_AS_BUYER",
+      "predicate_holds": true
+    },
+    {
+      "surface_id": "MUNICIPIO DE VILLA DEL ROSARIO**|8905033730|AGENCIA NACIONAL DE CONTRATACION PUBLICA- COLOMBIA COMPRA EFICIENTE",
+      "physical_name": "AGENCIA NACIONAL DE CONTRATACION PUBLICA- COLOMBIA COMPRA EFICIENTE",
+      "attributed_canonical": "MUNICIPIO DE VILLA DEL ROSARIO**",
+      "nit": "8905033730",
+      "p0_recommendation": "NEEDS_REVIEW",
+      "p0_classification": "FAIL_CLOSED",
+      "published_processes": {
+        "CONCEJO MUNICIPAL DE VILLA DEL ROSARIO.": 44,
+        "MUNICIPIO DE VILLA DEL ROSARIO**": 5693,
+        "PERSONERIA MUNICIPIO DE VILLA DEL ROSARIO": 22
+      },
+      "published_contracts": {
+        "CONCEJO MUNICIPAL DE VILLA DEL ROSARIO.": 45,
+        "MUNICIPIO DE VILLA DEL ROSARIO**": 5501,
+        "PERSONERIA MUNICIPIO DE VILLA DEL ROSARIO": 23
+      },
+      "surface_rows_live": null,
+      "resolver_owner": null,
+      "resolver_method": "like",
+      "cause": "REGISTRY_NOISE",
+      "remediation": "NO_CHANGE",
+      "rationale": "Fila de directorio de CCE colgada del NIT de Villa del Rosario. CCE publica bajo 900514813. De paso acredita que 890503373 sostiene tres unidades compradoras: Municipio, Concejo y Personeria.",
+      "predicate": "NOT_PUBLISHED_AS_BUYER",
+      "predicate_holds": true
+    },
+    {
+      "surface_id": "MUNICIPIO DE YOPAL...|891855017|MUNICIPIO DE YOPAL..",
+      "physical_name": "MUNICIPIO DE YOPAL..",
+      "attributed_canonical": "MUNICIPIO DE YOPAL...",
+      "nit": "891855017",
+      "p0_recommendation": "DO_NOT_ADD",
+      "p0_classification": "WRONG_OWNER",
+      "published_processes": {
+        "MUNICIPIO DE YOPAL...": 17548
+      },
+      "published_contracts": {
+        "MUNICIPIO DE YOPAL..": 19039
+      },
+      "surface_rows_live": {
+        "nits": [
+          "891855017"
+        ],
+        "processes": 0,
+        "contracts": 19039
+      },
+      "resolver_owner": "MUNICIPIO DE YOPAL..",
+      "resolver_method": "exact",
+      "cause": "DUPLICATE_CANONICAL_SAME_BUYER_UNIT",
+      "remediation": "MERGE_DUPLICATE_BUYER_UNIT",
+      "rationale": "Mismo NIT, procedencia disjunta. Aqui SI rompe: el alias resuelve a la grafia LARGA de procesos, que no es substring de la de contratos. 'alcaldia de yopal' sobre contratos alcanza 0 de 19.039 filas.",
+      "predicate": "DUPLICATE_PAIR",
+      "predicate_holds": true
+    },
+    {
+      "surface_id": "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS..|900126860|UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS.",
+      "physical_name": "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS.",
+      "attributed_canonical": "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS..",
+      "nit": "900126860",
+      "p0_recommendation": "DO_NOT_ADD",
+      "p0_classification": "WRONG_OWNER",
+      "published_processes": {
+        "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS..": 6186
+      },
+      "published_contracts": {
+        "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS.": 5851
+      },
+      "surface_rows_live": {
+        "nits": [
+          "900126860"
+        ],
+        "processes": 0,
+        "contracts": 5851
+      },
+      "resolver_owner": "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS.",
+      "resolver_method": "exact",
+      "cause": "DUPLICATE_CANONICAL_SAME_BUYER_UNIT",
+      "remediation": "MERGE_DUPLICATE_BUYER_UNIT",
+      "rationale": "Mismo NIT, procedencia disjunta. UAESP del Distrito Capital.",
+      "predicate": "DUPLICATE_PAIR",
+      "predicate_holds": true
+    }
+  ],
+  "shared_nit_bogota": {
+    "nit_spellings_observed": [
+      "0899999061",
+      "899999061",
+      "8999990615",
+      "8999990619"
+    ],
+    "directory_rows": 132,
+    "directory_distinct_names": 107,
+    "transacting_buyer_units": 41,
+    "processes": 382300,
+    "contracts": 351570
+  },
+  "bogota_inventory": {
+    "LOCAL_MAYORALTY_FDL_CANDIDATE": [
+      {
+        "buyer_unit": "ALCALDIA LOCAL DE CIUDAD BOLIVAR //",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 8152,
+        "contracts": 7393
+      },
+      {
+        "buyer_unit": "ALCALDIA LOCAL DE KENNEDY",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 6424,
+        "contracts": 6434
+      },
+      {
+        "buyer_unit": "ALCALDÍA LOCAL DE SUBA",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 6180,
+        "contracts": 6039
+      },
+      {
+        "buyer_unit": "ALCALDIA LOCAL DE SAN CRISTOBAL",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 5005,
+        "contracts": 6587
+      },
+      {
+        "buyer_unit": "FONDO DE DESARROLLO LOCAL DE BOSA",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 6013,
+        "contracts": 5510
+      },
+      {
+        "buyer_unit": "ALCALDIA LOCAL DE USME",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 5728,
+        "contracts": 5392
+      },
+      {
+        "buyer_unit": "ALCALDIA LOCAL DE ENGATIVÁ",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 5401,
+        "contracts": 5023
+      },
+      {
+        "buyer_unit": "ALCALDIA LOCAL DE USAQUEN",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 4941,
+        "contracts": 4433
+      },
+      {
+        "buyer_unit": "ALCALDIA LOCAL RAFAEL URIBE URIBE",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 4152,
+        "contracts": 4266
+      },
+      {
+        "buyer_unit": "ALCALDIA LOCAL DE FONTIBON",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 4225,
+        "contracts": 3917
+      },
+      {
+        "buyer_unit": "FONDO DE DESARROLLO LOCAL DE SANTA FE",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 3792,
+        "contracts": 3535
+      },
+      {
+        "buyer_unit": "ALCALDIA LOCAL DE SUMAPAZ",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 3578,
+        "contracts": 3600
+      },
+      {
+        "buyer_unit": "ALCALDIA LOCAL DE TUNJUELITO",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 3206,
+        "contracts": 3504
+      },
+      {
+        "buyer_unit": "ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 2965,
+        "contracts": 3682
+      },
+      {
+        "buyer_unit": "ALCALDIA LOCAL DE ANTONIO NARIÑO",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 3235,
+        "contracts": 2866
+      },
+      {
+        "buyer_unit": "ALCALDIA LOCAL DE TEUSAQUILLO(oficial)",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 2831,
+        "contracts": 3139
+      },
+      {
+        "buyer_unit": "ALCALDÍA LOCAL DE BARRIOS UNIDOS",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 3053,
+        "contracts": 2870
+      },
+      {
+        "buyer_unit": "ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 3006,
+        "contracts": 2618
+      },
+      {
+        "buyer_unit": "FONDO DE DESARROLLO LOCAL DE LA CANDELARIA",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 2647,
+        "contracts": 2388
+      },
+      {
+        "buyer_unit": "ALCALDIA LOCAL DE MARTIRES",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 2277,
+        "contracts": 2350
+      }
+    ],
+    "ADMINISTRACION_CENTRAL_CANDIDATE": [
+      {
+        "buyer_unit": "(Secretaría Distrital de Integración Social)",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 112072,
+        "contracts": 96080
+      },
+      {
+        "buyer_unit": "SECRETARIA DE EDUCACION DEL DISTRITO",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 32320,
+        "contracts": 27676
+      },
+      {
+        "buyer_unit": "SECRETARÍA DISTRITAL DE MOVILIDAD",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 24102,
+        "contracts": 21984
+      },
+      {
+        "buyer_unit": "SECRETARIA DISTRITAL DE AMBIENTE",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 17590,
+        "contracts": 17175
+      },
+      {
+        "buyer_unit": "SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 16931,
+        "contracts": 15577
+      },
+      {
+        "buyer_unit": "SECRETARIA DISTRITAL DE GOBIERNO 1",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 11769,
+        "contracts": 11451
+      },
+      {
+        "buyer_unit": "SECRETARIA DISTRITAL DEL HABITAT-",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 11433,
+        "contracts": 10487
+      },
+      {
+        "buyer_unit": "SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 9888,
+        "contracts": 8855
+      },
+      {
+        "buyer_unit": "SECRETARIA DISTRITAL DE LA MUJER",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 9447,
+        "contracts": 8796
+      },
+      {
+        "buyer_unit": "SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 8811,
+        "contracts": 7985
+      },
+      {
+        "buyer_unit": "UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 6850,
+        "contracts": 6090
+      },
+      {
+        "buyer_unit": "SECRETARIA DISTRITAL DE PLANEACION",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 6298,
+        "contracts": 6133
+      },
+      {
+        "buyer_unit": "SECRETARIA DISTRITAL DE HACIENDA",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 5379,
+        "contracts": 6109
+      },
+      {
+        "buyer_unit": "SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 5633,
+        "contracts": 5111
+      },
+      {
+        "buyer_unit": "DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 4930,
+        "contracts": 4447
+      },
+      {
+        "buyer_unit": "SECRETARIA JURIDICA DISTRITAL.",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 1798,
+        "contracts": 1674
+      },
+      {
+        "buyer_unit": "DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 1631,
+        "contracts": 1149
+      },
+      {
+        "buyer_unit": ".SECRETARÍA DISTRITAL DE SALUD..",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 609,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": ".SECRETARÍA DISTRITAL DE SALUD.",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 0,
+        "contracts": 525
+      }
+    ],
+    "DISTRICT_CONTROL_OR_CORPORATE_BODY": [
+      {
+        "buyer_unit": "CONTRALORIA DE BOGOTA",
+        "nits": [
+          "800245133"
+        ],
+        "expected_nit": "800245133",
+        "nit_accredited_live": true,
+        "membership_evidence": "ACCREDITED_DISTRICT_ENTITY",
+        "processes": 7020,
+        "contracts": 6591
+      },
+      {
+        "buyer_unit": "PERSONERÍA DE BOGOTA",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 5494,
+        "contracts": 6338
+      },
+      {
+        "buyer_unit": "VEEDURIA DISTRITAL",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "SHARED_DISTRICT_FISCAL_IDENTITY + naturaleza de la unidad",
+        "processes": 2504,
+        "contracts": 2382
+      }
+    ],
+    "NOT_BOGOTA_ADMINISTRATION": [
+      {
+        "buyer_unit": "UNIVERSIDAD NACIONAL DE COLOMBIA",
+        "nits": [
+          "899999063"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 110849,
+        "contracts": 14
+      },
+      {
+        "buyer_unit": "AGENCIA NACIONAL DE TIERRAS - ANT",
+        "nits": [
+          "900948953"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 53402,
+        "contracts": 48715
+      },
+      {
+        "buyer_unit": "INVIAS",
+        "nits": [
+          "800215807"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 44047,
+        "contracts": 25605
+      },
+      {
+        "buyer_unit": "IGAC Sede Central *",
+        "nits": [
+          "899999004"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 28245,
+        "contracts": 34363
+      },
+      {
+        "buyer_unit": "UNIDAD ADMINISTRATIVA ESPECIAL DE GESTION DE RESTITUCION DE TIERRAS DESPOJADAS**",
+        "nits": [
+          "900498879"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 29656,
+        "contracts": 28868
+      },
+      {
+        "buyer_unit": "INSTITUTO COLOMBIANO AGROPECUARIO - ICA",
+        "nits": [
+          "899999069"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 30379,
+        "contracts": 28047
+      },
+      {
+        "buyer_unit": "DEFENSORÍA DEL PUEBLO",
+        "nits": [
+          "800186061"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 14241,
+        "contracts": 34915
+      },
+      {
+        "buyer_unit": "CORPORACION AUTONOMA REGIONAL DE CUNDINAMARCA - CAR.",
+        "nits": [
+          "899999062"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 23668,
+        "contracts": 22330
+      },
+      {
+        "buyer_unit": "MINISTERIO DEL INTERIOR",
+        "nits": [
+          "830114475"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 20865,
+        "contracts": 20721
+      },
+      {
+        "buyer_unit": "CAMARA DE REPRESENTANTES",
+        "nits": [
+          "899999098"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 20186,
+        "contracts": 20161
+      },
+      {
+        "buyer_unit": "Ministerio de las Culturas, las Artes y los Saberes",
+        "nits": [
+          "830034348"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 28284,
+        "contracts": 11860
+      },
+      {
+        "buyer_unit": "DANE - DIRECCION TERRITORIAL CENTRO",
+        "nits": [
+          "899999027"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 19234,
+        "contracts": 20331
+      },
+      {
+        "buyer_unit": "EMPRESA COLOMBIANA DE PETROLEOS",
+        "nits": [
+          "899999068"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 37929,
+        "contracts": 74
+      },
+      {
+        "buyer_unit": "ENTerritorio S.A",
+        "nits": [
+          "899999316"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 22871,
+        "contracts": 14500
+      },
+      {
+        "buyer_unit": "HOSPITAL CENTRAL DE LA POLICIA",
+        "nits": [
+          "830067597"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 24545,
+        "contracts": 12536
+      },
+      {
+        "buyer_unit": "UARIV-UNIDAD PARA LA ATENCION Y REPARACION INTEGRAL A LAS VICTIMAS",
+        "nits": [
+          "900490473"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 18809,
+        "contracts": 17945
+      },
+      {
+        "buyer_unit": "UNP",
+        "nits": [
+          "900475780"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 17682,
+        "contracts": 16695
+      },
+      {
+        "buyer_unit": "SIC SUPERINTENDENCIA DE INDUSTRIA Y COMERCIO",
+        "nits": [
+          "800176089"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 17398,
+        "contracts": 16562
+      },
+      {
+        "buyer_unit": "AEROCIVIL",
+        "nits": [
+          "899999059"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 22570,
+        "contracts": 11131
+      },
+      {
+        "buyer_unit": "ICBF SEDE NACIONAL",
+        "nits": [
+          "899999239"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 17551,
+        "contracts": 15723
+      },
+      {
+        "buyer_unit": "INSTITUTO NACIONAL DE SALUD",
+        "nits": [
+          "899999403"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 26523,
+        "contracts": 6107
+      },
+      {
+        "buyer_unit": "BANCO DE LA REPUBLICA",
+        "nits": [
+          "860005216"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 30659,
+        "contracts": 71
+      },
+      {
+        "buyer_unit": "SUPERINTENDENCIA DE NOTARIADO Y REGISTRO",
+        "nits": [
+          "899999007"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 12418,
+        "contracts": 18149
+      },
+      {
+        "buyer_unit": "MINSALUD",
+        "nits": [
+          "900474727"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 14975,
+        "contracts": 13989
+      },
+      {
+        "buyer_unit": "FONDO UNICO DE TECNOLOGÍAS DE LA INFORMACIÓN Y LAS COMUNICACIONES",
+        "nits": [
+          "8001316486"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 15108,
+        "contracts": 13534
+      },
+      {
+        "buyer_unit": "AGENCIA DE DESARROLLO RURAL",
+        "nits": [
+          "900948958"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 15257,
+        "contracts": 12519
+      },
+      {
+        "buyer_unit": "DEPARTAMENTO NACIONAL DE PLANEACIÓN",
+        "nits": [
+          "899999011"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 13795,
+        "contracts": 13227
+      },
+      {
+        "buyer_unit": "AGENCIA LOGISTICA DE LAS FUERZAS MILITARES",
+        "nits": [
+          "899999162"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 18957,
+        "contracts": 8026
+      },
+      {
+        "buyer_unit": "ICBF REGIONAL BOGOTA",
+        "nits": [
+          "899999239"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 13246,
+        "contracts": 13545
+      },
+      {
+        "buyer_unit": "MINCIENCIAS",
+        "nits": [
+          "899999296"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 18884,
+        "contracts": 6943
+      },
+      {
+        "buyer_unit": "DEPARTAMENTO ADMINISTRATIVO NACIONAL DE ESTADISTICA (DANE)",
+        "nits": [
+          "899999027"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 12822,
+        "contracts": 12632
+      },
+      {
+        "buyer_unit": "SERVICIO GEOLOGICO COLOMBIANO**",
+        "nits": [
+          "899999294"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 12577,
+        "contracts": 11008
+      },
+      {
+        "buyer_unit": "ESAP SEDE CENTRAL (Cuenta Oficial)",
+        "nits": [
+          "899999054"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 11706,
+        "contracts": 11182
+      },
+      {
+        "buyer_unit": "AGENCIA PARA LA REINCORPORACIÓN Y LA NORMALIZACIÓN",
+        "nits": [
+          "900477169"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 9425,
+        "contracts": 13260
+      },
+      {
+        "buyer_unit": "MINISTERIO DE MINAS Y ENERGIA",
+        "nits": [
+          "899999022"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 11901,
+        "contracts": 10434
+      },
+      {
+        "buyer_unit": "SENA SECRETARIA GENERAL",
+        "nits": [
+          "899999034"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 11005,
+        "contracts": 10746
+      },
+      {
+        "buyer_unit": "CONGRESO DE LA REPÚBLICA - HONORABLE SENADO DE LA REPÚBLICA",
+        "nits": [
+          "899999103"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 10730,
+        "contracts": 10645
+      },
+      {
+        "buyer_unit": "ANM",
+        "nits": [
+          "900500018"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 10650,
+        "contracts": 10148
+      },
+      {
+        "buyer_unit": "MINISTERIO DE AMBIENTE Y DESARROLLO SOSTENIBLE",
+        "nits": [
+          "830115395"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 10506,
+        "contracts": 10159
+      },
+      {
+        "buyer_unit": "MINISTERIO DE EDUCACION NACIONAL (MEN)",
+        "nits": [
+          "899999001"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 10822,
+        "contracts": 9400
+      },
+      {
+        "buyer_unit": "COLOMBIA COMPRA EFICIENTE",
+        "nits": [
+          "900514813"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 14821,
+        "contracts": 5223
+      },
+      {
+        "buyer_unit": "PROSPERIDAD SOCIAL",
+        "nits": [
+          "900039533"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 8894,
+        "contracts": 10876
+      },
+      {
+        "buyer_unit": "DEPARTAMENTO DE CUNDINAMARCA- SECRETARIA DE SALUD",
+        "nits": [
+          "899999114"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 9664,
+        "contracts": 8990
+      },
+      {
+        "buyer_unit": "INSTITUTO NACIONAL DE MEDICINA LEGAL Y CIENCIAS FORENSES",
+        "nits": [
+          "800150861"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 13766,
+        "contracts": 3775
+      },
+      {
+        "buyer_unit": "CENAC AVIACION",
+        "nits": [
+          "830039207"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 14717,
+        "contracts": 2515
+      },
+      {
+        "buyer_unit": "MINISTERIO DEL DEPORTE",
+        "nits": [
+          "899999306"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 8820,
+        "contracts": 8306
+      },
+      {
+        "buyer_unit": "FONDO NACIONAL AMBIENTAL - ANLA",
+        "nits": [
+          "830025267"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 8180,
+        "contracts": 8354
+      },
+      {
+        "buyer_unit": "JEP",
+        "nits": [
+          "901140004"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 8317,
+        "contracts": 8214
+      },
+      {
+        "buyer_unit": "MINISTERIO DE AGRICULTURA Y DESARROLLO RURAL",
+        "nits": [
+          "899999028"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 8638,
+        "contracts": 7528
+      },
+      {
+        "buyer_unit": "SECRETARIA GENERAL Y DE CERCANIA AL CIUDADANO",
+        "nits": [
+          "899999114"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 7598,
+        "contracts": 7560
+      },
+      {
+        "buyer_unit": "MINISTERIO DE TRANSPORTE*",
+        "nits": [
+          "899999055"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 8004,
+        "contracts": 7100
+      },
+      {
+        "buyer_unit": "INSTITUTO COLOMBIANO DE CREDITO EDUCATIVO Y ESTUDIO TÉCNICOS EN EL EXTERIOR MARIANO OSPINA PEREZ.",
+        "nits": [
+          "899999035"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 8026,
+        "contracts": 6956
+      },
+      {
+        "buyer_unit": "INSTITUTO NACIONAL DE VIGILANCIA DE MEDICAMENTOS Y ALIMENTOS //",
+        "nits": [
+          "830000167"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 7719,
+        "contracts": 6767
+      },
+      {
+        "buyer_unit": "SENA REGIONAL DISTRITO CAPITAL Grupo de Apoyo Administrativo Mixto CSF",
+        "nits": [
+          "899999034"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 5254,
+        "contracts": 8761
+      },
+      {
+        "buyer_unit": "CIAC S.A.",
+        "nits": [
+          "899999278"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 11973,
+        "contracts": 1962
+      },
+      {
+        "buyer_unit": "INSTITUTO DE CAMINOS Y CONSTRUCCIONES DE CUNDINAMARCA - ICCU",
+        "nits": [
+          "900258711"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 7285,
+        "contracts": 6448
+      },
+      {
+        "buyer_unit": "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CEET",
+        "nits": [
+          "899999034"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 5030,
+        "contracts": 8665
+      },
+      {
+        "buyer_unit": "FUERZA AEROESPACIAL COLOMBIANA",
+        "nits": [
+          "899999102"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 8849,
+        "contracts": 4828
+      },
+      {
+        "buyer_unit": "ANI",
+        "nits": [
+          "8301259969"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 7547,
+        "contracts": 6024
+      },
+      {
+        "buyer_unit": "SUPERINTENDENCIA DE SERVICIOS PÚBLICOS DOMICILIARIOS",
+        "nits": [
+          "800250984"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 6929,
+        "contracts": 6574
+      },
+      {
+        "buyer_unit": "FONDANE - DIRECCION TERRITORIAL CENTRO",
+        "nits": [
+          "800072977"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 6474,
+        "contracts": 6485
+      },
+      {
+        "buyer_unit": "FIDUCIARIA LA PREVISORA S.A.- FIDUPREVISORA S.A.",
+        "nits": [
+          "860525148"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 8296,
+        "contracts": 4392
+      },
+      {
+        "buyer_unit": "DISAN-DMSOC",
+        "nits": [
+          "901540992"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 6764,
+        "contracts": 5781
+      },
+      {
+        "buyer_unit": "DIRECCION DE IMPUESTOS Y ADUANAS NACIONALES*",
+        "nits": [
+          "800197268"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 6878,
+        "contracts": 5077
+      },
+      {
+        "buyer_unit": "INSTITUTO COLOMBIANO PARA LA EVALUACIÓN DE LA EDUCACIÓN - ICFES",
+        "nits": [
+          "860024301"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 6017,
+        "contracts": 5812
+      },
+      {
+        "buyer_unit": "SENA DISTRITO CAPITAL GRUPO DE APOYO ADMINISTRATIVO - CGI",
+        "nits": [
+          "899999034"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 5110,
+        "contracts": 5976
+      },
+      {
+        "buyer_unit": "CGR-NIVEL CENTRAL",
+        "nits": [
+          "899999067"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 5654,
+        "contracts": 5424
+      },
+      {
+        "buyer_unit": "RNEC",
+        "nits": [
+          "899999040"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 5512,
+        "contracts": 5498
+      },
+      {
+        "buyer_unit": "UNIVERSIDAD MILITAR NUEVA GRANADA**",
+        "nits": [
+          "800225340"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 10770,
+        "contracts": 157
+      },
+      {
+        "buyer_unit": "SUPERVIGILANCIA - MD",
+        "nits": [
+          "800217123"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 5361,
+        "contracts": 5278
+      },
+      {
+        "buyer_unit": "MINISTERIO DE HACIENDA Y CREDITO PUBLICO",
+        "nits": [
+          "899999090"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 5465,
+        "contracts": 4695
+      },
+      {
+        "buyer_unit": "Superintendencia de Transporte**",
+        "nits": [
+          "800170433"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 5198,
+        "contracts": 4918
+      },
+      {
+        "buyer_unit": "FONDO ROTATORIO DEL DANE (FONDANE)",
+        "nits": [
+          "800072977"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 4995,
+        "contracts": 5117
+      },
+      {
+        "buyer_unit": "DIRECCION DE SANIDAD DE LA POLICIA NACIONAL - DISAN PONAL",
+        "nits": [
+          "830041314"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 7925,
+        "contracts": 2125
+      },
+      {
+        "buyer_unit": "AGENCIA NACIONAL DE HIDROCARBUROS**",
+        "nits": [
+          "830127607"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 4823,
+        "contracts": 5198
+      },
+      {
+        "buyer_unit": "ENTIDAD DE GESTION ADMINISTRATIVA Y TECNICA",
+        "nits": [
+          "901036590"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 8939,
+        "contracts": 848
+      },
+      {
+        "buyer_unit": "ICBF REGIONAL CUNDINAMARCA",
+        "nits": [
+          "899999239"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 4865,
+        "contracts": 4917
+      },
+      {
+        "buyer_unit": "INDEPORTES CUNDINAMARCA",
+        "nits": [
+          "900294884"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 3785,
+        "contracts": 5960
+      },
+      {
+        "buyer_unit": "ADRES",
+        "nits": [
+          "901037916"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 4105,
+        "contracts": 5430
+      },
+      {
+        "buyer_unit": "DILOF",
+        "nits": [
+          "800141397"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 6779,
+        "contracts": 2718
+      },
+      {
+        "buyer_unit": "SENA REGIONAL CUNDINAMARCA Grupo de Apoyo Administrativo Mixto+",
+        "nits": [
+          "899999034"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 4251,
+        "contracts": 5174
+      },
+      {
+        "buyer_unit": "INSTITUTO DE HIDROLOGIA, METEOROLOGÍA Y ESTUDIOS AMBIENTALES",
+        "nits": [
+          "830000602"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 4883,
+        "contracts": 4348
+      },
+      {
+        "buyer_unit": "CENTRAL ADMINISTRATIVA Y CONTABLE CENAC PERSONAL",
+        "nits": [
+          "900385079"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 2746,
+        "contracts": 6333
+      },
+      {
+        "buyer_unit": "ARCHIVO GENERAL DE LA NACION",
+        "nits": [
+          "800128835"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 4821,
+        "contracts": 4238
+      },
+      {
+        "buyer_unit": "CENTRO NACIONAL DE MEMORIA  HISTORICA",
+        "nits": [
+          "900492141"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 4451,
+        "contracts": 4386
+      },
+      {
+        "buyer_unit": "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CGMLTI",
+        "nits": [
+          "899999034"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 2969,
+        "contracts": 5786
+      },
+      {
+        "buyer_unit": "FONDO ROTATORIO**",
+        "nits": [
+          "8605110716"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 4375,
+        "contracts": 4289
+      },
+      {
+        "buyer_unit": "CLUB MILITAR",
+        "nits": [
+          "860016951"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 4858,
+        "contracts": 3578
+      },
+      {
+        "buyer_unit": "REGIONAL DE ASEGURAMIENTO EN SALUD No. 1",
+        "nits": [
+          "900336524"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 5583,
+        "contracts": 2685
+      },
+      {
+        "buyer_unit": "CENTRAL ADMINISTRATIVA ESPECIALIZADA INGENIEROS CENAC INGENIEROS",
+        "nits": [
+          "830087443"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 5006,
+        "contracts": 3110
+      },
+      {
+        "buyer_unit": "COMANDO GENERAL DE LAS FUERZAS MILITARES",
+        "nits": [
+          "800230729"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 5304,
+        "contracts": 2736
+      },
+      {
+        "buyer_unit": "MINISTERIO DE COMERCIO INDUSTRIA Y TURISMO - MINCIT",
+        "nits": [
+          "830115297"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 4319,
+        "contracts": 3641
+      },
+      {
+        "buyer_unit": "COMISIÓN NACIONAL DEL SERVICIO CIVIL",
+        "nits": [
+          "900003409"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 4096,
+        "contracts": 3802
+      },
+      {
+        "buyer_unit": "CAJA DE RETIRO DE LAS FUERZAS MILITARES",
+        "nits": [
+          "899999118"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 4196,
+        "contracts": 3696
+      },
+      {
+        "buyer_unit": "Unidad de Busqueda de Personas Desaparecidas",
+        "nits": [
+          "901158482"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 4389,
+        "contracts": 3355
+      },
+      {
+        "buyer_unit": "ICANH",
+        "nits": [
+          "830067892"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 4153,
+        "contracts": 3590
+      },
+      {
+        "buyer_unit": "SUPERINTENDENCIA DE LA ECONOMIA SOLIDARIA",
+        "nits": [
+          "830053043"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 3972,
+        "contracts": 3738
+      },
+      {
+        "buyer_unit": "MINISTERIO DE JUSTICIA Y DEL DERECHO..",
+        "nits": [
+          "900457461"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 7595,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SERVICIO AEREO A TERRITORIOS NACIONALES S.A.",
+        "nits": [
+          "8999991434"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 7417,
+        "contracts": 1
+      },
+      {
+        "buyer_unit": "CORPORACION AGENCIA NACIONAL DE GOBIERNO DIGITAL",
+        "nits": [
+          "901144049"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 3804,
+        "contracts": 3561
+      },
+      {
+        "buyer_unit": "DIRECCION GENERAL MARITIMA - SUBDIRECCION ADMINISTRATIVA Y FINANCIERA - SUBAFIN",
+        "nits": [
+          "830027904"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 4043,
+        "contracts": 3322
+      },
+      {
+        "buyer_unit": "JEFATURA SALUD FUERZA AEREA",
+        "nits": [
+          "901440176"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 4796,
+        "contracts": 2516
+      },
+      {
+        "buyer_unit": "DIRECCION DE ANTINARCOTICOS",
+        "nits": [
+          "800141379"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 5996,
+        "contracts": 992
+      },
+      {
+        "buyer_unit": "ARMADA NACIONAL BASE NAVAL No. 6 ARC BOGOTA",
+        "nits": [
+          "800141644"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 4416,
+        "contracts": 2515
+      },
+      {
+        "buyer_unit": "MINISTERIO DE JUSTICIA Y DEL DERECHO.",
+        "nits": [
+          "900457461"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 0,
+        "contracts": 6922
+      },
+      {
+        "buyer_unit": "FONDO DE DESARROLLO DE PROYECTOS DE CUNDINAMARCA",
+        "nits": [
+          "900258772"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 4627,
+        "contracts": 1937
+      },
+      {
+        "buyer_unit": "SUPERINTENDENCIA DEL SUBSIDIO FAMILIAR",
+        "nits": [
+          "860503600"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 3466,
+        "contracts": 3040
+      },
+      {
+        "buyer_unit": "UNAD",
+        "nits": [
+          "860512780"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 6451,
+        "contracts": 22
+      },
+      {
+        "buyer_unit": "DEPARTAMENTO DE CUNDINAMARCA -SECRETARIA DE GOBIERNO",
+        "nits": [
+          "899999114"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 3345,
+        "contracts": 3103
+      },
+      {
+        "buyer_unit": "FONDO ROTATORIO DE LA POLICIA NACIONAL",
+        "nits": [
+          "860020227"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 4619,
+        "contracts": 1800
+      },
+      {
+        "buyer_unit": "UNIDAD DE SERVICIOS PENITENCIARIOS Y CARCELARIOS - USPEC1",
+        "nits": [
+          "900523392"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 3229,
+        "contracts": 2977
+      },
+      {
+        "buyer_unit": "MINISTERIO DE DEFENSA NACIONAL",
+        "nits": [
+          "899999003"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 3592,
+        "contracts": 2586
+      },
+      {
+        "buyer_unit": "CORPORACION COLOMBIA INTERNACIONAL CCI",
+        "nits": [
+          "8001865857"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 5856,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SENA DIRECCIÓN GENERAL Dirección de Promoción y Relaciones Corporativas",
+        "nits": [
+          "899999034"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 5559,
+        "contracts": 249
+      },
+      {
+        "buyer_unit": "HOSPITAL UNIVERSITARIO LA SAMARITANA",
+        "nits": [
+          "899999032"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 5522,
+        "contracts": 5
+      },
+      {
+        "buyer_unit": "SOCIEDAD  TEQUENDAMA S.A.",
+        "nits": [
+          "860006543"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 5219,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "BANCO AGRARIO DE COLOMBIA S.A.",
+        "nits": [
+          "800037800"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 5192,
+        "contracts": 11
+      },
+      {
+        "buyer_unit": "DEPARTAMENTO ADMINISTRATIVO DE LA FUNCIÓN PÚBLICA ENTIDAD",
+        "nits": [
+          "899999020"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 2764,
+        "contracts": 2391
+      },
+      {
+        "buyer_unit": "FINANCIERA DE DESARROLLO TERRITORIAL S.A.",
+        "nits": [
+          "800096329"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 5102,
+        "contracts": 13
+      },
+      {
+        "buyer_unit": "UNIVERSIDAD PEDAGÓGICA NACIONAL",
+        "nits": [
+          "899999124"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 4587,
+        "contracts": 476
+      },
+      {
+        "buyer_unit": "Fondo Mixto de Promoción Cinematográfica 'Proimágenes Colombia'",
+        "nits": [
+          "8300465824"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 4759,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "PROCURADURIA GENERAL DE LA NACION",
+        "nits": [
+          "899999119"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 2224,
+        "contracts": 1549
+      },
+      {
+        "buyer_unit": "AUDITORIA GENERAL DE LA REPUBLICA",
+        "nits": [
+          "830065741"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 1274,
+        "contracts": 1092
+      },
+      {
+        "buyer_unit": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+        "nits": [
+          "800252683"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 1104,
+        "contracts": 782
+      },
+      {
+        "buyer_unit": "MINISTERIO DE TECNOLOGÍAS DE LA INFORMACIÓN Y LAS COMUNICACIONES DE COLOMBIA.",
+        "nits": [
+          "899999053"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 359,
+        "contracts": 314
+      },
+      {
+        "buyer_unit": "INSTITUTO DE ESTUDIOS DEL MINISTERIO PUBLICO.",
+        "nits": [
+          "8300157281"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 205,
+        "contracts": 213
+      },
+      {
+        "buyer_unit": "MINISTERIO DE RELACIONES EXTERIORES",
+        "nits": [
+          "899999042"
+        ],
+        "membership_evidence": "residuo geografico: comprador con domicilio en Bogota sin acreditacion de pertenencia distrital; NO es miembro",
+        "processes": 84,
+        "contracts": 71
+      }
+    ],
+    "DECENTRALIZED_DISTRICT_ENTITY": [
+      {
+        "buyer_unit": "IDRD - ENTIDAD OFICIAL.",
+        "nits": [
+          "860061099"
+        ],
+        "expected_nit": "860061099",
+        "nit_accredited_live": true,
+        "membership_evidence": "ACCREDITED_DISTRICT_ENTITY",
+        "processes": 25904,
+        "contracts": 29080
+      },
+      {
+        "buyer_unit": "IDARTES",
+        "nits": [
+          "900413030"
+        ],
+        "expected_nit": "900413030",
+        "nit_accredited_live": true,
+        "membership_evidence": "ACCREDITED_DISTRICT_ENTITY",
+        "processes": 27357,
+        "contracts": 25202
+      },
+      {
+        "buyer_unit": "INSTITUTO DISTRITAL PARA LA PROTECCIÓN DE LA NIÑEZ Y LA JUVENTUD - IDIPRON*",
+        "nits": [
+          "899999333"
+        ],
+        "expected_nit": "899999333",
+        "nit_accredited_live": true,
+        "membership_evidence": "ACCREDITED_DISTRICT_ENTITY",
+        "processes": 21172,
+        "contracts": 20482
+      },
+      {
+        "buyer_unit": "INSTITUTO DE DESARROLLO URBANO",
+        "nits": [
+          "899999081"
+        ],
+        "expected_nit": "899999081",
+        "nit_accredited_live": true,
+        "membership_evidence": "ACCREDITED_DISTRICT_ENTITY",
+        "processes": 16354,
+        "contracts": 14669
+      },
+      {
+        "buyer_unit": "UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS",
+        "nits": [
+          "899999230"
+        ],
+        "expected_nit": "899999230",
+        "nit_accredited_live": true,
+        "membership_evidence": "ACCREDITED_DISTRICT_ENTITY",
+        "processes": 29500,
+        "contracts": 557
+      },
+      {
+        "buyer_unit": "FONDO FINANCIERO DISTRITAL DE SALUD..",
+        "nits": [
+          "8002469532"
+        ],
+        "expected_nit": "8002469532",
+        "nit_accredited_live": true,
+        "membership_evidence": "ACCREDITED_DISTRICT_ENTITY",
+        "processes": 23735,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "FONDO FINANCIERO DISTRITAL DE SALUD.",
+        "nits": [
+          "8002469532"
+        ],
+        "expected_nit": "8002469532",
+        "nit_accredited_live": true,
+        "membership_evidence": "ACCREDITED_DISTRICT_ENTITY",
+        "processes": 0,
+        "contracts": 21256
+      },
+      {
+        "buyer_unit": "Jardín Botánico José Celestino Mutis",
+        "nits": [
+          "860030197"
+        ],
+        "expected_nit": "860030197",
+        "nit_accredited_live": true,
+        "membership_evidence": "ACCREDITED_DISTRICT_ENTITY",
+        "processes": 10577,
+        "contracts": 10451
+      },
+      {
+        "buyer_unit": "INSTITUTO PARA LA ECONOMIA SOCIAL- IPES",
+        "nits": [
+          "899999446"
+        ],
+        "expected_nit": "899999446",
+        "nit_accredited_live": true,
+        "membership_evidence": "ACCREDITED_DISTRICT_ENTITY",
+        "processes": 9391,
+        "contracts": 7115
+      },
+      {
+        "buyer_unit": "CAJA DE LA VIVIENDA POPULAR//",
+        "nits": [
+          "899999074"
+        ],
+        "expected_nit": "899999074",
+        "nit_accredited_live": true,
+        "membership_evidence": "ACCREDITED_DISTRICT_ENTITY",
+        "processes": 7810,
+        "contracts": 7565
+      },
+      {
+        "buyer_unit": "INSTITUTO DISTRITAL DE LA PARTICIPACIÓN Y ACCIÓN COMUNAL",
+        "nits": [
+          "900127054"
+        ],
+        "expected_nit": "900127054",
+        "nit_accredited_live": true,
+        "membership_evidence": "ACCREDITED_DISTRICT_ENTITY",
+        "processes": 7572,
+        "contracts": 7384
+      },
+      {
+        "buyer_unit": "UNIDAD ADMINISTRATIVA ESPECIAL DE REHABILITACIÓN Y MANTENIMIENTO VIAL",
+        "nits": [
+          "900127032"
+        ],
+        "expected_nit": "900127032",
+        "nit_accredited_live": true,
+        "membership_evidence": "ACCREDITED_DISTRICT_ENTITY",
+        "processes": 7114,
+        "contracts": 5749
+      },
+      {
+        "buyer_unit": "UAECD",
+        "nits": [
+          "900127768"
+        ],
+        "expected_nit": "900127768",
+        "nit_accredited_live": true,
+        "membership_evidence": "ACCREDITED_DISTRICT_ENTITY",
+        "processes": 6440,
+        "contracts": 5997
+      },
+      {
+        "buyer_unit": "INSTITUTO  DISTRITAL DE CIENCIA, BIOTECNOLOGIA E INNOVACIÓN EN SALUD - IDCBIS",
+        "nits": [
+          "9010347905"
+        ],
+        "expected_nit": "9010347905",
+        "nit_accredited_live": true,
+        "membership_evidence": "ACCREDITED_DISTRICT_ENTITY",
+        "processes": 8707,
+        "contracts": 1714
+      },
+      {
+        "buyer_unit": "INSTITUTO DISTRITAL DE PATRIMONIO CULTURAL",
+        "nits": [
+          "860506170"
+        ],
+        "expected_nit": "860506170",
+        "nit_accredited_live": true,
+        "membership_evidence": "ACCREDITED_DISTRICT_ENTITY",
+        "processes": 5056,
+        "contracts": 4553
+      },
+      {
+        "buyer_unit": "INSTITUTO DISTRITAL DE GESTIÓN DE RIESGOS Y CAMBIO CLIMÁTICO - IDIGER",
+        "nits": [
+          "800154275"
+        ],
+        "expected_nit": "800154275",
+        "nit_accredited_live": true,
+        "membership_evidence": "ACCREDITED_DISTRICT_ENTITY",
+        "processes": 4949,
+        "contracts": 4329
+      },
+      {
+        "buyer_unit": "INSTITUTO DISTRITAL DE PROTECCION Y BIENESTAR ANIMAL",
+        "nits": [
+          "901097324"
+        ],
+        "expected_nit": "901097324",
+        "nit_accredited_live": true,
+        "membership_evidence": "ACCREDITED_DISTRICT_ENTITY",
+        "processes": 4632,
+        "contracts": 4463
+      },
+      {
+        "buyer_unit": "AGENCIA DISTRITAL PARA LA EDUCACIÓN SUPERIOR, LA CIENCIA Y LA TECNOLOGÍA, ATENEA",
+        "nits": [
+          "901508361"
+        ],
+        "expected_nit": "901508361",
+        "nit_accredited_live": true,
+        "membership_evidence": "ACCREDITED_DISTRICT_ENTITY",
+        "processes": 6293,
+        "contracts": 2430
+      },
+      {
+        "buyer_unit": "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS..",
+        "nits": [
+          "900126860"
+        ],
+        "expected_nit": "900126860",
+        "nit_accredited_live": true,
+        "membership_evidence": "ACCREDITED_DISTRICT_ENTITY",
+        "processes": 6186,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS.",
+        "nits": [
+          "900126860"
+        ],
+        "expected_nit": "900126860",
+        "nit_accredited_live": true,
+        "membership_evidence": "ACCREDITED_DISTRICT_ENTITY",
+        "processes": 0,
+        "contracts": 5851
+      }
+    ],
+    "DISTRICT_COMPANY": [
+      {
+        "buyer_unit": "TRANSMILENIO S.A.",
+        "nits": [
+          "830063506"
+        ],
+        "expected_nit": "830063506",
+        "nit_accredited_live": true,
+        "membership_evidence": "ACCREDITED_DISTRICT_ENTITY",
+        "processes": 13680,
+        "contracts": 13171
+      },
+      {
+        "buyer_unit": "EMPRESA DE ACUEDUCTO Y ALCANTARILLADO DE BOGOTÁ - E.S.P.",
+        "nits": [
+          "899999094"
+        ],
+        "expected_nit": "899999094",
+        "nit_accredited_live": true,
+        "membership_evidence": "ACCREDITED_DISTRICT_ENTITY",
+        "processes": 11516,
+        "contracts": 4535
+      },
+      {
+        "buyer_unit": "CANAL CAPITAL",
+        "nits": [
+          "830012587"
+        ],
+        "expected_nit": "830012587",
+        "nit_accredited_live": true,
+        "membership_evidence": "ACCREDITED_DISTRICT_ENTITY",
+        "processes": 4527,
+        "contracts": 4241
+      },
+      {
+        "buyer_unit": "EMPRESA DE RENOVACION Y DESARROLLO URBANO DE BOGOTA D.C",
+        "nits": [
+          "830144890"
+        ],
+        "expected_nit": "830144890",
+        "nit_accredited_live": true,
+        "membership_evidence": "ACCREDITED_DISTRICT_ENTITY",
+        "processes": 3785,
+        "contracts": 3465
+      },
+      {
+        "buyer_unit": "METRO DE BOGOTA SA",
+        "nits": [
+          "901038962"
+        ],
+        "expected_nit": "901038962",
+        "nit_accredited_live": true,
+        "membership_evidence": "ACCREDITED_DISTRICT_ENTITY",
+        "processes": 2155,
+        "contracts": 1752
+      },
+      {
+        "buyer_unit": "TERMINAL DE TRANSPORTE S.A",
+        "nits": [
+          "860052155"
+        ],
+        "expected_nit": "860052155",
+        "nit_accredited_live": true,
+        "membership_evidence": "ACCREDITED_DISTRICT_ENTITY",
+        "processes": 2071,
+        "contracts": 1184
+      },
+      {
+        "buyer_unit": "LOTERIA DE BOGOTA",
+        "nits": [
+          "899999270"
+        ],
+        "expected_nit": "899999270",
+        "nit_accredited_live": true,
+        "membership_evidence": "ACCREDITED_DISTRICT_ENTITY",
+        "processes": 726,
+        "contracts": 755
+      },
+      {
+        "buyer_unit": "AGUAS DE BOGOTA S.A. E.S.P.",
+        "nits": [
+          "830128286"
+        ],
+        "expected_nit": "830128286",
+        "nit_accredited_live": true,
+        "membership_evidence": "ACCREDITED_DISTRICT_ENTITY",
+        "processes": 983,
+        "contracts": 30
+      },
+      {
+        "buyer_unit": "CAPITAL SALUD EPS-S S.A.S.",
+        "nits": [
+          "900298372"
+        ],
+        "expected_nit": "900298372",
+        "nit_accredited_live": true,
+        "membership_evidence": "ACCREDITED_DISTRICT_ENTITY",
+        "processes": 140,
+        "contracts": 4
+      }
+    ],
+    "DISTRICT_HEALTH_ENTITY": [
+      {
+        "buyer_unit": "SUBRED INTEGRADA DE SERVICIOS DE SALUD NORTE E.S.E. (OFICIAL)",
+        "nits": [
+          "900971006"
+        ],
+        "expected_nit": "900971006",
+        "nit_accredited_live": true,
+        "membership_evidence": "ACCREDITED_DISTRICT_ENTITY",
+        "processes": 72364,
+        "contracts": 64553
+      },
+      {
+        "buyer_unit": "SUBRED INTEGRADA DE SERVICIOS DE SALUD SUR E.S.E.**",
+        "nits": [
+          "900958564"
+        ],
+        "expected_nit": "900958564",
+        "nit_accredited_live": true,
+        "membership_evidence": "ACCREDITED_DISTRICT_ENTITY",
+        "processes": 40430,
+        "contracts": 63019
+      },
+      {
+        "buyer_unit": "SUBRED INTEGRADA DE SERVICIOS DE SALUD SUR OCCIDENTE ESE.",
+        "nits": [
+          "900959048"
+        ],
+        "expected_nit": "900959048",
+        "nit_accredited_live": true,
+        "membership_evidence": "ACCREDITED_DISTRICT_ENTITY",
+        "processes": 16134,
+        "contracts": 70918
+      },
+      {
+        "buyer_unit": "SUBRED INTEGRADA DE SERVICIO DE SALUD CENTRO ORIENTE E.S.E 1",
+        "nits": [
+          "900959051"
+        ],
+        "expected_nit": "900959051",
+        "nit_accredited_live": true,
+        "membership_evidence": "ACCREDITED_DISTRICT_ENTITY",
+        "processes": 27956,
+        "contracts": 54820
+      }
+    ],
+    "REVIEW_DIRECTORY_ONLY_SHARED_NIT": [
+      {
+        "buyer_unit": "(SECRETARIA DISTRITAL DE INTEGRACIoN SOCIAL)",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "(SECRETARiA DISTRITAL DE INTEGRACIoN SOCIAL)",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": ".SECRETARiA DISTRITAL DE SALUD..",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "ALCALDIA",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "ALCALDIA DE BOGOTA",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "ALCALDIA LOCAL BARRIOS UNIDOS",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "ALCALDIA LOCAL DE BOSA **",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "ALCALDIA LOCAL DE ENGATIVA",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "ALCALDIA LOCAL DE ENGATIVa",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "ALCALDIA LOCAL DE LA CANDELARIA",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "ALCALDIA LOCAL DE PUENTE ARANDA",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "ALCALDIA LOCAL DE TEUSAQUILLO(OFICIAL)",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "ALCALDIA LOCAL SUMAPAZ",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "ALCALDIA LOCAL TUNJUELITO",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "ALCALDIA MAYOR BOGOTA",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "ALCALDiA LOCAL DE BARRIOS UNIDOS",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "ALCALDiA LOCAL DE BOSA",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "ALCALDiA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "ALCALDiA LOCAL DE KENNEDY",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "ALCALDiA LOCAL DE SAN CRISToBAL",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "ALCALDiA LOCAL DE SUBA",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "ALTA CONSEJERIA PARA LOS DERECHOS DE LAS VICTIMAS, LA PAZ Y LA RECONCILIACION",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "CONCEJO DE BOGOTA",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORiA DEL ESPACIO PuBLICO",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "DERLY YURANY AREVALO CARDENAS",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "FONDO DE DESARROLLO LOCAL DE CIUDAD BOLIVAR",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "FONDO DE DESARROLLO LOCAL DE KENNEDY",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "FONDO DE DESARROLLO LOCAL DE PUENTE ARANDA",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "FONDO DE DESARROLLO LOCAL DE SAN CRISTOBAL",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "FONDO DE DESARROLLO LOCAL DE TUNJUELITO",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "FONDO DE DESARROLLO LOCAL DE USAQUeN",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "FONDO DE DESARROLLO LOCAL SAN CRISTOBAL",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "FONDO DE DESARROLLO LOCAL USAQUEN BOGOTA",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "PERSONERIA",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "PERSONERIA DE BOGOTA",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "PERSONERiA DE BOGOTA",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "POLICiA NACIONAL DE COLOMBIA",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "ROBERT NICOLAS NEIRA DIAZ",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SALMA VALENTINA PALACIOS MERCHAN",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECERTARIA DE AMBIENTE",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARIA  DISTRITAL DE INTEGACION SOCIAL",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARIA DE DESARROLLO ECONOMICO",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARIA DE EDUCACION",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARIA DE EDUCACION DEL DISTRITO0=)",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARIA DE EDUCACION DISTRITAL",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARIA DE EDUCACIoN DEL DISTRITO",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARIA DE GOBIERNO",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARIA DE GOBIERNO DE BOGOTA",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARIA DE HABITAD",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARIA DE HACIENDA",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARIA DE INTEGRACION SOCIAL",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARIA DE INTEGRACIoN SOCIAL",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARIA DE MOVILIDAD",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARIA DE SALUD",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARIA DISTRITAL DE DESAROLLO ECONOMICO",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTa",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARIA DISTRITAL DE GOBIERNO",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARIA DISTRITAL DE HABITAT DE BOGOTA",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARIA DISTRITAL DE INTEGRACION SOCIAL",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARIA DISTRITAL DE INTEGRACIoN SOCIAL",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARIA DISTRITAL DE MOVILIDAD",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARIA DISTRITAL DE SALUD DE BOGOTA D.C",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARIA DISTRITAL DE SEGURIDAD CONVIVENCIA  Y JUSTICIA",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARIA DISTRITAL INTEGRACION SOCIAL",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARIA GENERAL ALCALDIA MAYOR DE BOGOTa",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARIA INTEGRACIoN SOCIAL",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARIA JURIDICA DISTRITAL",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARiA DE EDUCACIoN",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARiA DE EDUCACIoN DEL DISTRITO",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARiA DE EDUCACIoN DISTRITAL DE BOGOTa",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARiA DE SEGURIDAD, CONVIVENCIA Y JUSTICIA",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARiA DISTRITAL DE AMBIENTE",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARiA DISTRITAL DE CULTURA, RECREACIoN Y DEPORTE",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARiA DISTRITAL DE LA MUJER",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARiA DISTRITAL DE MOVILIDAD",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARiA GENERAL DE LA ALCALDiA MAYOR DE BOGOTa",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SECRETARÌA DISTRITAL DE DESARROLLO ECONoMICO",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "SUBRED INTEGRADA DE SERVICIOS DE SALUD NORTE",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      },
+      {
+        "buyer_unit": "VEEDURiA DISTRITAL",
+        "nits": [
+          "899999061 (identidad fiscal distrital compartida)"
+        ],
+        "membership_evidence": "solo directorio; 0 filas transaccionales",
+        "processes": 0,
+        "contracts": 0
+      }
+    ]
+  },
+  "bogota_group_policies": {
+    "A_CENTRAL_ONLY": {
+      "buyer_units": 19,
+      "processes": 287491,
+      "contracts": 257304
+    },
+    "B_CENTRAL_PLUS_LOCAL": {
+      "buyer_units": 39,
+      "processes": 374302,
+      "contracts": 342850
+    },
+    "C_BROAD_DISTRICT_ECOSYSTEM": {
+      "buyer_units": 72,
+      "processes": 799518,
+      "contracts": 804144
+    },
+    "TERRITORY_BOGOTA_PROCESSES": 2584635,
+    "recommended_default": "B_CENTRAL_PLUS_LOCAL"
+  },
+  "runtime_changed": false,
+  "aliases_changed": false,
+  "source_bindings_changed": false,
+  "status": "PASS",
+  "summary": {
+    "input_cases": 20,
+    "predicates_reproduced": 20,
+    "by_cause": {
+      "DUPLICATE_CANONICAL_SAME_BUYER_UNIT": 5,
+      "OVERGENERIC_ALIAS": 2,
+      "REGISTRY_NOISE": 6,
+      "SHARED_NIT_DISTINCT_BUYER_UNIT": 2,
+      "SOURCE_NAME_VARIANT_SAME_BUYER_UNIT": 4,
+      "WRONG_ALIAS_OWNER": 1
+    },
+    "by_remediation": {
+      "ADD_EXACT_ONLY": 4,
+      "KEEP_SEPARATE": 2,
+      "MERGE_DUPLICATE_BUYER_UNIT": 5,
+      "NO_CHANGE": 6,
+      "RESOLUTION_BLOCK": 2,
+      "SOURCE_NAME_BINDING": 1
+    }
+  }
+}
