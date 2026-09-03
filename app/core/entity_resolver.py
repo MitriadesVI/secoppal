@@ -843,7 +843,9 @@ class EntityResolver:
                 self.aliases_by_official.setdefault(official, set()).add(alias_key)
                 alias_keys.append(alias_key)
 
-            unknown_scan_policy = scan_disabled - set(alias_keys)
+            # ADR-072 also applies to the automatically indexed canonical
+            # surface. Disabling it must not manufacture a human alias.
+            unknown_scan_policy = scan_disabled - {*alias_keys, official_key}
             if unknown_scan_policy:
                 aliases = ", ".join(sorted(unknown_scan_policy)[:5])
                 raise ValueError(
