@@ -268,10 +268,23 @@ class EntityResolver:
         2. _is_unqualified_generic — rejects bare generic tokens (e.g., "alcaldía")
         Both must pass for the match to be accepted.
         """
-        def _combined_reject(alias: str, full_text: str) -> bool:
+        def _combined_reject(alias: str, full_text: str, official: str) -> bool:
+            strict_rewrite = self._strict_rewrite_target(alias)
             return (
                 self._is_unqualified_dept(alias, full_text)
                 or self._is_unqualified_generic(alias, full_text)
+                or bool(
+                    strict_rewrite
+                    # Department roots have a stronger, non-lexical authority:
+                    # ``_root_evidence_by_department`` can accredit an opaque
+                    # physical name such as Tolima's GOBIERNO DEPARTAMENTAL.
+                    # Their scan entries were already admitted/rejected from
+                    # unique alias ownership while building the index.
+                    and strict_rewrite[0] != "department"
+                    and not self._official_matches_institutional_family(
+                        official, strict_rewrite[0]
+                    )
+                )
             )
 
         result = self._scan_against_index(
@@ -385,7 +398,8 @@ class EntityResolver:
         Generic scan: find longest known alias as substring in text.
         Uses first-word index for speed (~20 comparisons instead of 10K).
 
-        If reject_fn is provided, it's called with (alias, full_text) and
+        If reject_fn is provided, it's called with
+        (alias, full_text, official) and
         if it returns True, that match is skipped and scanning continues
         to find the next-best match.
         """
@@ -405,7 +419,7 @@ class EntityResolver:
 
         # Pick the first non-rejected match
         for alias, official in all_matches:
-            if reject_fn and reject_fn(alias, text):
+            if reject_fn and reject_fn(alias, text, official):
                 continue
 
             remaining = re.sub(rf'\b{re.escape(alias)}\b', ' ', text, count=1)
@@ -505,7 +519,15 @@ class EntityResolver:
         # Tier 1: Exact alias match
         if normalized in self.alias_index:
             official = self.alias_index[normalized]
-            if strict_rewrite and not self._official_matches_strict_rewrite(official, strict_rewrite):
+            # ADR-072: exact alias ownership already accredits the written
+            # territory, including qualified forms such as ``Pereira,
+            # Risaralda`` whose complete tail need not occur in the physical
+            # SECOP name.  It does not, however, make a Personeria an
+            # Alcaldia: exact ownership must still preserve the requested
+            # institutional family.
+            if strict_rewrite and not self._official_matches_institutional_family(
+                official, strict_rewrite[0]
+            ):
                 # Skip exact match that fails strict rewrite, continue to fuzzy
                 pass
             else:
@@ -671,6 +693,19 @@ class EntityResolver:
 
     @staticmethod
     def _strict_rewrite_target(normalized: str) -> tuple[str, str] | None:
+        # A locality token is not institutional identity.  Puente Aranda has
+        # both a district local mayoralty/FDL and a military CENAC; accepting
+        # either because both contain the locality would reproduce the
+        # cross-owner defect closed under ADR-074.  Keep this before the
+        # municipality grammar so ``alcaldia local`` is its own family.
+        local_executive_match = re.match(
+            r"^(?:alcaldia\s+local|fondo\s+de\s+desarrollo\s+local)"
+            r"(?:\s+de)?\s+(.+)$",
+            normalized,
+        )
+        if local_executive_match:
+            return ("local_executive", local_executive_match.group(1).strip())
+
         municipality_match = re.match(
             r"^(?:municipio|alcaldia(?:\s+municipal)?)\s+de\s+(.+)$",
             normalized,
@@ -703,10 +738,57 @@ class EntityResolver:
         # "ATLANTICO**") se descarta al tokenizar, no al comparar.
         if not _contains_token_sequence(official_norm, target):
             return False
+        return EntityResolver._official_matches_institutional_family(
+            official, kind
+        )
+
+    @staticmethod
+    def _official_matches_institutional_family(official: str, kind: str) -> bool:
+        """Whether an official name belongs to the requested buyer family.
+
+        This is deliberately separate from territory preservation.  Exact
+        aliases own their complete wording under ADR-072; fuzzy candidates
+        additionally pass ``_official_matches_strict_rewrite`` so the target
+        territory must occur in the inferred owner too.
+        """
+        official_norm = normalize_text(official)
+        tokens = name_tokens(official_norm)
+        # SECOP antepone a veces el departamento (CUNDINAMARCA-ALCALDIA
+        # MUNICIPIO MOSQUERA). Sólo la autoridad territorial puede acreditar
+        # ese prefijo; un nombre de otra institución no es un wrapper.
+        for prefix in sorted(
+            (name_tokens(name) for name in DEPARTAMENTOS), key=len, reverse=True
+        ):
+            if tokens[:len(prefix)] == prefix:
+                tokens = tokens[len(prefix):]
+                break
+        is_local_executive = (
+            tokens[:2] == ["alcaldia", "local"]
+            or tokens[:5] == ["fondo", "de", "desarrollo", "local", "de"]
+            or tokens[:4] == ["fondo", "de", "desarrollo", "local"]
+        )
         if kind == "municipality":
-            return any(marker in official_norm for marker in ("municipio", "alcaldia", "distrito"))
+            # Family compatibility is affirmative: the requested municipal
+            # executive must be the official name's institutional head.  A
+            # child/control buyer such as ``PERSONERIA MUNICIPIO DE ...`` is
+            # not made an alcaldia merely because its tail contains
+            # ``municipio`` (Villa del Rosario: same NIT, distinct BuyerUnit).
+            # The less-specific human form ``alcaldia de <localidad>`` is an
+            # established alias of Bogota's alcaldias locales/FDL, so local
+            # executive is a compatible specialization (Teusaquillo et al.).
+            if is_local_executive:
+                return True
+            return bool(tokens and tokens[0] in {"municipio", "alcaldia", "distrito"})
+        if kind == "local_executive":
+            return is_local_executive
         if kind == "department":
-            return any(marker in official_norm for marker in ("departamento", "gobernacion"))
+            return bool(
+                tokens
+                and (
+                    tokens[0] in {"departamento", "gobernacion"}
+                    or tokens[:2] == ["gobierno", "departamental"]
+                )
+            )
         return False
 
     # =====================================================================

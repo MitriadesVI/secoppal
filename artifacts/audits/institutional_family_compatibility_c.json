@@ -1,0 +1,19 @@
+{
+  "stage": "INSTITUTIONAL_FAMILY_COMPATIBILITY",
+  "status": "PASS",
+  "date": "2026-09-03",
+  "base_commit": "adf9703261462d07d61d556d4c36819eb6ad1803",
+  "working_tree_preserved": true,
+  "runtime_files": ["app/core/entity_resolver.py"],
+  "gates": {
+    "focal": {"passed": 99, "xfailed": 2},
+    "related": {"passed": 131},
+    "query_corpus": {"passed": 89, "failed": 0},
+    "ruff": "PASS: .venv/bin/ruff check app/ tests/ scripts/",
+    "lint_core": "PASS: make lint-core",
+    "full_suite": {"command": ".venv/bin/python3 -m pytest -q", "passed": 10797, "skipped": 2, "xfailed": 16, "failed": 0, "seconds": 568.24}
+  },
+  "closed_debts": ["MUNICIPAL_REWRITE_HEAD_COMPATIBILITY", "LOCAL_EXECUTIVE_CENAC_FAMILY_HIJACK"],
+  "open_debts": ["GENERIC_BUYER_PUNCTUATION", "ECOSYSTEM_SOQL_DISPLAY_DIVERGENCE", "SDIS_BUYER_INTENT", "BUYER_GROUP_EXECUTION_STRATEGY", "BOGOTA_PILOT", "MUNICIPAL_M0"],
+  "push": false
+}
