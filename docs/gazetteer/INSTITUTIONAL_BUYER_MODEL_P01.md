@@ -629,6 +629,11 @@ Orden por daño medido, no por volumen de superficies.
 
 ## 16. ADR-074 — `DRAFT`, no aceptado
 
+> **Estado posterior (2026-09-02):** ADR-074 fue **aceptado modificado**.
+> Esta sección se conserva como el draft que se llevó a revisión; la
+> decisión vigente y las cinco diferencias respecto de este texto están en
+> [`2026-09-02_ADR-074_institutional-buyer-unit-and-group.md`](../decisions/2026-09-02_ADR-074_institutional-buyer-unit-and-group.md).
+
 **Título:** El comprador es la unidad publicada; el NIT no es su clave y el grupo
 se declara.
 

@@ -4249,3 +4249,45 @@ de MinJusticia quedan en `REVIEW` por no aparecer vivas.
 
 Detalle: `docs/decisions/2026-09-02_ADR-073_source-name-projection.md`.
 Informe: `docs/gazetteer/SOURCE_NAME_PROJECTION_V1.md`.
+
+---
+
+## ADR-074: El comprador es una unidad lógica acreditada; el NIT no es su clave y el grupo se declara
+
+**Fecha:** 2026-09-02
+**Estado:** Accepted — principios. `RUNTIME_CHANGED: NO` en la aceptación.
+
+La readjudicación P0.1 falsifica `SAME_NIT ⇒ SAME_BUYER`: el NIT distrital de
+Bogotá sostiene 41 unidades compradoras transaccionales y 107 nombres de
+directorio, incluidos la Personería, la Veeduría, la Policía Nacional y tres
+personas naturales; Villa del Rosario publica tres unidades bajo un NIT. El
+territorio de Bogotá tiene 2.584.635 procesos y la administración distrital
+aporta el 14,5 %.
+
+Una **BuyerUnit** es una unidad compradora lógica acreditada, representada por
+1..n nombres físicos publicados — no el string que SECOP publica. Ese modelo
+implícito es el que dejó a MinJusticia (14.517 filas) y a Yopal (19.039
+contratos) inalcanzables, con una unidad repartida en varios canonicals.
+
+El **NIT es evidencia fiscal, no clave**: `same NIT ⇒ auto merge` queda
+prohibido sin excepciones; fusionar exige el predicado de cinco condiciones de
+§9 del informe (5/5 aciertos, 0 falsos positivos sobre los 50 NIT más
+afectados). Territorio y comprador siguen siendo dimensiones independientes.
+
+Un **BuyerGroup** es una agrupación declarada de BuyerUnits, disparada por
+nombre y nunca por NIT ni geografía, con procedencia por miembro y versionada;
+una BuyerUnit explícita siempre gana. Dos invariantes nuevas:
+`INV-BUYER-GROUP-MEMBERSHIP-IS-DECLARED` y
+`INV-BUYER-GROUP-MEMBERSHIP-DOES-NOT-DEFINE-RESULT-IDENTITY` — un grupo decide
+qué unidades se consultan y nada más; no deduplica por NIT ni entre unidades, y
+la autoridad de deduplicación sigue siendo `result_identity`.
+
+El ADR **no congela** el mecanismo de ejecución (`entidad_in_candidates` queda
+como `CURRENT_EXECUTION_CANDIDATE`) ni la política de Bogotá
+(`B_CENTRAL_PLUS_LOCAL` pertenece al registro de Bogotá, que admite subgrupos).
+Sí prohíbe, con o sin BuyerGroup, el fallback silencioso de
+`soql_builder.py:401-411`, que al pasar de 15 candidatos emite un único `LIKE`
+sobre `entidad_in_candidates[0]` en vez de los 15 que anuncia su comentario.
+
+Detalle: `docs/decisions/2026-09-02_ADR-074_institutional-buyer-unit-and-group.md`.
+Informe: `docs/gazetteer/INSTITUTIONAL_BUYER_MODEL_P01.md`.

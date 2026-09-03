@@ -144,6 +144,38 @@ Solo accepted_auto_verified entra automáticamente.
 Todo lo demás se documenta.
 ```
 
+### 4.1 Identidad institucional (ADR-074)
+
+Antes de decidir si dos grafías son la misma entidad, la taxonomía anterior no
+basta: dice si un candidato entra, no **qué es**. ADR-074 fija el modelo.
+
+- Una **BuyerUnit** es una unidad compradora lógica acreditada, representada por
+  1..n nombres físicos publicados. Que procesos y contratos publiquen strings
+  distintos **no** crea dos unidades: crea un binding de proyección (ADR-073).
+- El **NIT es evidencia fiscal, no clave**. `same NIT ⇒ auto merge` está
+  prohibido: el NIT distrital de Bogotá cubre 41 unidades compradoras, y
+  Villa del Rosario tres.
+- Un **BuyerGroup** es una agrupación **declarada** de BuyerUnits, disparada por
+  nombre. Nunca se infiere de un NIT ni de la geografía, y nunca deduplica
+  procesos o contratos: la autoridad sigue siendo `result_identity`.
+
+| Condición | Veredicto |
+|---|---|
+| mismo NIT + misma unidad (predicado de 5 condiciones completo) | `MERGE` |
+| mismo NIT + variación de grafía por dataset | `SOURCE_NAME_VARIANT` → binding ADR-073, sin canonical nuevo |
+| mismo NIT + unidad institucional distinta | `KEEP_SEPARATE` |
+| mismo nombre + NIT distinto | `REVIEW` — nunca auto-merge (CENAC ×3) |
+| sin NIT, sólo similitud | `NO_AUTO_ACCEPT` — falla cerrado |
+| NIT con cero filas transaccionales | `PHANTOM_NIT` → `REVIEW` |
+
+Las cinco condiciones para `MERGE`, todas obligatorias: NIT acreditado con
+equivalencia base/DV acotada; procedencia de dataset **disjunta**; grafías
+iguales tras quitar exactamente un signo terminal de la más larga; ningún tercer
+canonical reclama ninguna de las dos cadenas; nombre institucional idéntico en
+tokens y sin puntuación terminal.
+
+Detalle: `docs/decisions/2026-09-02_ADR-074_institutional-buyer-unit-and-group.md`.
+
 ---
 
 ## 5. Gates obligatorios
@@ -315,6 +347,16 @@ Regla:
 SENA/ICBF territorial → entity_ecosystem_router.py
 No intentar resolverlo solo con más aliases.
 ```
+
+Esos routers son **BuyerGroups en embrión** (ADR-074): agrupan unidades y se
+disparan por nombre, que es el disparo correcto. Dos cautelas antes de añadir
+uno nuevo:
+
+- el disparo por **geografía** (`entity_ecosystem.json`, inyección post-query)
+  es el antipatrón, no el modelo a copiar;
+- el camino de ejecución corta en 15 candidatos y al pasarse emite un único
+  `LIKE` sobre el primer miembro (`soql_builder.py:401`). Un ecosistema de más
+  de 15 unidades **responde hoy por una sola** sin declararlo.
 
 Ejemplo:
 
