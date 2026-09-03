@@ -18,6 +18,7 @@ import pytest
 
 from app.core.buyer_source_names import project_buyer_names
 from app.core.entity_resolver import EntityResolver
+from app.core.scan_alias_policy import record_alias_policy
 from app.core.soql_builder import SoQLBuilder
 from app.utils.money import normalize_text
 
@@ -232,6 +233,79 @@ def test_target_scan_attributes_to_its_own_owner(
     hit = resolver.scan_entity(normalize_text(f"contratos de la {query}"))
     assert hit is not None
     assert hit.official_name == canonical
+
+
+# Grafias que SECOP publica y que un usuario copiaria y pegaria. Sin ellas el
+# comprador llega por fuzzy: el owner sale bien, pero el nombre fisico propio de
+# la identidad no entra por la via exacta, que es justo lo que este lote curo.
+COPY_PASTE_ALIASES = {
+    "UNIVERSIDAD DEL PACIFICO//": PACIFICO,
+    "UNIVERSIDAD POPULAR DEL CESAR.": POPULAR_CESAR,
+    "UNIVERSIDA DE LA GUAJIRA": GUAJIRA,
+}
+
+# El typo del directorio acredita ownership exacto y nada mas. Un error de
+# digitacion no puede reclamar compradores dentro de texto libre: lo que lo
+# acredita es una fila registral, no una forma que alguien use para nombrarlos.
+TYPO_ALIAS = "universida de la guajira"
+
+# Aportada externamente, NO reproducida en p6dx-8zbt, jbjy-vk9h ni el
+# directorio: el punto no aparece en ninguna fuente que el runtime consulte.
+# Queda sin alias a proposito. Sigue llegando al owner correcto por fuzzy, y
+# ese es el comportamiento congelado mientras la variante no se acredite.
+UNREPRODUCED_SURFACE_VARIANT = "UNIVERSIDAD TECNOLOGICA DEL CHOCO."
+
+
+@pytest.mark.parametrize("surface,owner", sorted(COPY_PASTE_ALIASES.items()))
+def test_published_surface_form_resolves_exact(
+    resolver: EntityResolver, surface: str, owner: str,
+) -> None:
+    result = resolver.resolve_entidad(surface)
+    assert (result.value, result.method) == (owner, "exact")
+
+
+def test_registry_typo_keeps_exact_but_loses_scan(
+    records: dict[str, dict], resolver: EntityResolver,
+) -> None:
+    record = records[GUAJIRA]
+    disabled, _blocked = record_alias_policy(record)
+    assert TYPO_ALIAS in {normalize_text(alias) for alias in record["aliases"]}
+    assert TYPO_ALIAS in disabled
+    assert resolver.resolve_entidad(TYPO_ALIAS).value == GUAJIRA
+
+    scanned = resolver.scan_entity(normalize_text(f"contratos de la {TYPO_ALIAS}"))
+    assert scanned is None or scanned.matched_alias != TYPO_ALIAS
+
+
+@pytest.mark.parametrize(
+    "surface", ["UNIVERSIDAD DEL PACIFICO//", "UNIVERSIDAD POPULAR DEL CESAR."],
+)
+def test_physical_surface_forms_keep_scan(
+    resolver: EntityResolver, surface: str,
+) -> None:
+    hit = resolver.scan_entity(normalize_text(f"contratos de la {surface}"))
+    assert hit is not None
+    assert hit.official_name == COPY_PASTE_ALIASES[surface]
+
+
+def test_unreproduced_variant_is_not_promoted_to_an_alias(
+    records: dict[str, dict], resolver: EntityResolver,
+) -> None:
+    """Evidencia externa no reproducida no compra ownership exacto.
+
+    La forma con punto la aporto una vista de SECOP que no es fuente de
+    proyeccion. Acreditarla igual seria tratar un dato no verificado como si lo
+    estuviera; fallar cerrado tampoco corresponde, porque la identidad SI esta
+    acreditada. El fuzzy es la respuesta correcta para una grafia que nadie
+    pudo observar en las fuentes del runtime.
+    """
+    variant = normalize_text(UNREPRODUCED_SURFACE_VARIANT)
+    assert variant not in {
+        normalize_text(alias) for alias in records[CHOCO]["aliases"]
+    }
+    result = resolver.resolve_entidad(UNREPRODUCED_SURFACE_VARIANT)
+    assert result.value == CHOCO
+    assert result.method.startswith("fuzzy")
 
 
 def test_no_new_exact_multi_owner_keys(gazetteer: list[dict]) -> None:

@@ -60,19 +60,34 @@
     ],
     "aliases_added_normalized": [
       "colegio mayor de cundinamarca",
+      "universida de la guajira",
       "universidad colegio mayor de cundinamarca",
       "universidad de cundinamarca",
       "universidad de la guajira",
       "universidad de sucre",
       "universidad del pacifico",
+      "universidad del pacifico//",
       "universidad del tolima",
       "universidad popular del cesar",
+      "universidad popular del cesar.",
       "universidad tecnologica del choco",
       "universidad tecnologica del choco diego luis cordoba"
     ],
     "aliases_removed": [],
-    "scan_disabled": [],
-    "resolution_blocked": []
+    "scan_disabled": [
+      "universida de la guajira"
+    ],
+    "resolution_blocked": [],
+    "unreproduced_surface_variants": {
+      "UNIVERSIDAD TECNOLOGICA DEL CHOCO.": {
+        "owner": "UNIVERSIDAD TECNOLÓGICA DEL CHOCÓ DIEGO LUIS CÓRDOBA",
+        "reported_by": "external SECOP user directory view",
+        "found_in_processes": false,
+        "found_in_contracts": false,
+        "found_in_buyer_directory": false,
+        "decision": "NOT_ACCREDITED_KEEPS_FUZZY"
+      }
+    }
   },
   "source_projection": {
     "bindings_added": [
@@ -310,12 +325,12 @@
   "verification": {
     "focused_regressions": {
       "command": ".venv/bin/python -m pytest -q tests/test_public_university_completion_r2fb.py tests/test_public_university_pilot_r2fa.py tests/test_source_name_projection_v1.py tests/test_fuzzy_identity_multiword_r2e1a.py tests/test_institutional_fuzzy_safety_r2e1.py tests/test_control_national_r2e.py tests/test_scan_alias_eligibility_r2d3.py tests/test_car_core_r2d.py tests/test_national_core_r2b.py tests/test_root_buyer_evidence_r1d.py tests/test_gazetteer_alias_ownership_r1c.py tests/test_sena_resolver.py tests/test_icbf_regionals.py",
-      "result": "886 passed"
+      "result": "902 passed"
     },
     "query_corpus": "89/89 PASS, 0 FAIL",
     "ruff": "PASS (27 hallazgos preexistentes en .hermes/ y docs/audits/evidence/)",
     "lint_core": "PASS",
-    "full_suite": "10713 passed, 2 skipped, 15 xfailed",
+    "full_suite": "10720 passed, 2 skipped, 15 xfailed",
     "new_xfails": 0,
     "live_projection_parity": {
       "result": "PASS",
@@ -596,7 +611,8 @@
       "aliases_added": [
         "colegio mayor de cundinamarca",
         "universidad colegio mayor de cundinamarca"
-      ]
+      ],
+      "scan_disabled_aliases": []
     },
     {
       "logical_name": "Universidad de Córdoba",
@@ -676,7 +692,8 @@
       "source_projection": false,
       "aliases_added": [
         "universidad de cundinamarca"
-      ]
+      ],
+      "scan_disabled_aliases": []
     },
     {
       "logical_name": "Universidad Distrital Francisco José de Caldas",
@@ -855,7 +872,11 @@
       "canonical_name": "UNIVERSIDAD DE LA GUAJIRA",
       "source_projection": false,
       "aliases_added": [
+        "universida de la guajira",
         "universidad de la guajira"
+      ],
+      "scan_disabled_aliases": [
+        "universida de la guajira"
       ]
     },
     {
@@ -1116,8 +1137,10 @@
       "canonical_name": "UNIVERSIDAD DEL PACÍFICO",
       "source_projection": true,
       "aliases_added": [
-        "universidad del pacifico"
-      ]
+        "universidad del pacifico",
+        "universidad del pacifico//"
+      ],
+      "scan_disabled_aliases": []
     },
     {
       "logical_name": "Universidad de Pamplona",
@@ -1257,8 +1280,10 @@
       "canonical_name": "UNIVERSIDAD POPULAR DEL CESAR",
       "source_projection": true,
       "aliases_added": [
-        "universidad popular del cesar"
-      ]
+        "universidad popular del cesar",
+        "universidad popular del cesar."
+      ],
+      "scan_disabled_aliases": []
     },
     {
       "logical_name": "Universidad del Quindío",
@@ -1334,7 +1359,8 @@
       "source_projection": false,
       "aliases_added": [
         "universidad de sucre"
-      ]
+      ],
+      "scan_disabled_aliases": []
     },
     {
       "logical_name": "Universidad Surcolombiana",
@@ -1414,7 +1440,8 @@
       "aliases_added": [
         "universidad tecnologica del choco",
         "universidad tecnologica del choco diego luis cordoba"
-      ]
+      ],
+      "scan_disabled_aliases": []
     },
     {
       "logical_name": "Universidad Tecnológica de Pereira",
@@ -1488,7 +1515,8 @@
       "source_projection": false,
       "aliases_added": [
         "universidad del tolima"
-      ]
+      ],
+      "scan_disabled_aliases": []
     },
     {
       "logical_name": "Universidad del Valle",

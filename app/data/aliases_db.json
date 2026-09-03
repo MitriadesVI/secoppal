@@ -17970,7 +17970,11 @@
     "nit": "892115029",
     "entity_type": "universidad_publica",
     "aliases": [
-      "universidad de la guajira"
+      "universidad de la guajira",
+      "universida de la guajira"
+    ],
+    "scan_disabled_aliases": [
+      "universida de la guajira"
     ]
   },
   {
@@ -17985,7 +17989,8 @@
     "nit": "835000300",
     "entity_type": "universidad_publica",
     "aliases": [
-      "universidad del pacífico"
+      "universidad del pacífico",
+      "universidad del pacifico//"
     ]
   },
   {
@@ -17999,7 +18004,8 @@
     "nit": "8923002856",
     "entity_type": "universidad_publica",
     "aliases": [
-      "universidad popular del cesar"
+      "universidad popular del cesar",
+      "universidad popular del cesar."
     ]
   },
   {

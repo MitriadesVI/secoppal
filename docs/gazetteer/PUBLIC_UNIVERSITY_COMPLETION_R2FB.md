@@ -129,6 +129,50 @@ EXACT_MULTI_OWNER_AFTER            172
 NEW_MULTI_OWNER_KEYS                 0
 ```
 
+## Grafias publicadas y copy-paste
+
+Una revision posterior al cierre pregunto por dos grafias concretas y destapo un
+hueco sistematico: `normalize_text` conserva la puntuacion final, asi que
+ninguna forma con puntuacion de fuente entra por la via exacta. Dos de las ocho
+dependian de fuzzy para reconocer **su propio nombre fisico**, el que SECOP
+publica y el que un usuario copiaria y pegaria.
+
+| Grafia | Antes | Ahora | Evidencia |
+|---|---|---|---|
+| `UNIVERSIDAD DEL PACIFICO//` | fuzzy(96) | exact | 987 procesos + 5 contratos |
+| `UNIVERSIDAD POPULAR DEL CESAR.` | fuzzy(98) | exact | 57 procesos |
+| `UNIVERSIDA DE LA GUAJIRA` | FAIL_CLOSED | exact, sin scan | fila del directorio bajo NIT 892115029 |
+
+Ninguna daba owner equivocado, asi que los gates del cierre seguian validos: el
+hueco era de cobertura exacta, no de correccion.
+
+El typo registral es `EXACT_ONLY`. Acredita a quien lo publica y nada mas: un
+error de digitacion no es una forma con la que alguien nombre al comprador
+dentro de texto libre, y darle scan seria inventarle un uso que la evidencia no
+sostiene. Las dos grafias fisicas si conservan scan; sus tokens son identicos a
+los de la forma limpia que ya pertenece al mismo owner, de modo que no abren
+superficie nueva.
+
+```text
+NEW_SCAN_CROSS_OWNER   0
+NEW_MULTI_OWNER_KEYS   0
+```
+
+### Una variante que NO se acredito
+
+La misma revision aporto `UNIVERSIDAD TECNOLOGICA DEL CHOCO.`, con punto final,
+desde una vista de usuarios de SECOP. No se promovio a alias: la forma con punto
+devuelve **cero filas** por igualdad exacta en `p6dx-8zbt` y en `jbjy-vk9h`, y
+tampoco aparece en el directorio. Un barrido `LIKE` sobre ambos datasets
+confirma que existe **una sola grafia** para ese NIT, sin punto, con 2.257 y 1
+filas: el binding no pierde ni una.
+
+Queda registrada como `OFFICIAL_SURFACE_VARIANT` aportada externamente y no
+reproducida en las fuentes que el runtime consulta. Sigue resolviendo al owner
+correcto por fuzzy, y ese comportamiento esta congelado como oraculo. La
+identidad esta acreditada; la grafia no, y evidencia externa sin reproducir no
+compra ownership exacto.
+
 ## Replay de las 34
 
 ```text
@@ -171,11 +215,11 @@ borrar un binding y proyectar Soacha fallan los cuatro.
 
 | Gate | Resultado |
 |---|---|
-| R2F-B + R2F-A + ADR-073 + R2E.1A/R2E.1/R2E/R2D.3/R1C/R1D + CAR + nacional + SENA/ICBF | 886 passed |
+| R2F-B + R2F-A + ADR-073 + R2E.1A/R2E.1/R2E/R2D.3/R1C/R1D/R2A + CAR + nacional + SENA/ICBF | 902 passed |
 | Query corpus | 89/89 PASS, 0 FAIL |
 | Ruff | PASS (27 hallazgos preexistentes en `.hermes/` y `docs/audits/evidence/`) |
 | `make lint-core` | PASS |
-| Suite completa | 10.713 passed, 2 skipped, 15 xfailed |
+| Suite completa | 10.720 passed, 2 skipped, 15 xfailed |
 | Nuevos xfails | 0 |
 
 **Modo de ejecucion LLM.** `DEGRADED_REGEX_ONLY`. El proveedor devuelve
@@ -190,7 +234,7 @@ conversacional viva.
 exacto. El universo de universidades publicas SECOP queda en 33/34, con el
 unico cierre restante respaldado por ausencia de evidencia.
 
-**Nueva:** ninguna de colision, scan, runtime ni xfail. Los tres homonimos
+**Nueva:** la variante con punto del Choco queda sin acreditar hasta que aparezca en una fuente de proyeccion. Ninguna deuda de colision, scan, runtime ni xfail. Los tres homonimos
 registrales sin actividad quedan documentados: si alguno empezara a publicar,
 dejaria de ser ruido y el scan de esos dos aliases tendria que revisarse.
 

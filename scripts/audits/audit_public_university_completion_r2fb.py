@@ -140,6 +140,28 @@ AUDITED_SCAN_ALIASES = {
     "universidad tecnologica del choco": CHOCO,
     "universidad tecnologica del choco diego luis cordoba": CHOCO,
     "universidad del tolima": TOLIMA,
+    # Grafias que la fuente publica: sin ellas el propio nombre fisico de la
+    # identidad entra por fuzzy en vez de exacto.
+    "universidad del pacifico//": PACIFICO,
+    "universidad popular del cesar.": POPULAR_CESAR,
+}
+
+# Ownership exacto sin scan (ADR-072). El typo del directorio acredita a quien
+# lo publica y nada mas: nadie nombra al comprador asi dentro de texto libre.
+EXACT_ONLY_ALIASES = {"universida de la guajira": GUAJIRA}
+
+# Aportada externamente y NO reproducida en p6dx-8zbt, jbjy-vk9h ni el
+# directorio. No se promueve a alias: la identidad esta acreditada, la grafia
+# no. Sigue resolviendo al owner correcto por fuzzy.
+UNREPRODUCED_SURFACE_VARIANTS = {
+    "UNIVERSIDAD TECNOLOGICA DEL CHOCO.": {
+        "owner": CHOCO,
+        "reported_by": "external SECOP user directory view",
+        "found_in_processes": False,
+        "found_in_contracts": False,
+        "found_in_buyer_directory": False,
+        "decision": "NOT_ACCREDITED_KEEPS_FUZZY",
+    }
 }
 
 PROJECTED = (COLEGIO_MAYOR, PACIFICO, POPULAR_CESAR, CHOCO)
@@ -508,7 +530,15 @@ def main() -> int:
             case["source_projection"] = TARGETS[logical] in PROJECTED
             case["aliases_added"] = sorted(
                 alias
-                for alias, owner in AUDITED_SCAN_ALIASES.items()
+                for alias, owner in {
+                    **AUDITED_SCAN_ALIASES,
+                    **EXACT_ONLY_ALIASES,
+                }.items()
+                if owner == TARGETS[logical]
+            )
+            case["scan_disabled_aliases"] = sorted(
+                alias
+                for alias, owner in EXACT_ONLY_ALIASES.items()
                 if owner == TARGETS[logical]
             )
         cases.append(case)
@@ -586,10 +616,13 @@ def main() -> int:
         },
         "identity_changes": {
             "identities_added": sorted(TARGETS.values()),
-            "aliases_added_normalized": sorted(AUDITED_SCAN_ALIASES),
+            "aliases_added_normalized": sorted(
+                set(AUDITED_SCAN_ALIASES) | set(EXACT_ONLY_ALIASES)
+            ),
             "aliases_removed": [],
-            "scan_disabled": [],
+            "scan_disabled": sorted(EXACT_ONLY_ALIASES),
             "resolution_blocked": [],
+            "unreproduced_surface_variants": UNREPRODUCED_SURFACE_VARIANTS,
         },
         "source_projection": {
             "bindings_added": sorted(PROJECTED),
@@ -630,12 +663,12 @@ def main() -> int:
                     "tests/test_gazetteer_alias_ownership_r1c.py "
                     "tests/test_sena_resolver.py tests/test_icbf_regionals.py"
                 ),
-                "result": "886 passed",
+                "result": "902 passed",
             },
             "query_corpus": "89/89 PASS, 0 FAIL",
             "ruff": "PASS (27 hallazgos preexistentes en .hermes/ y docs/audits/evidence/)",
             "lint_core": "PASS",
-            "full_suite": "10713 passed, 2 skipped, 15 xfailed",
+            "full_suite": "10720 passed, 2 skipped, 15 xfailed",
             "new_xfails": 0,
             # Cada binding se contrasto contra el dataset con su propio filtro
             # proyectado: las filas devueltas igualan las observadas por NIT.
