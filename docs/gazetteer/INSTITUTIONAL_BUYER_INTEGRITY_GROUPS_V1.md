@@ -163,3 +163,17 @@ en `artifacts/audits/bogota_group_membership_v1.json`.
 Deudas cerradas: capacidad operativa acreditada, piloto Bogotá, precedencia de
 unidad, versión y declaración de miembros. G2 retira etiquetas heredadas de
 analítica que llaman contratos a `count(*)` y declara el alcance del ranking.
+
+## G2 — ANALYTICAL_PHYSICAL_COUNTS_AND_EXECUTED_SOQL
+
+Estado: **PASS**. Tres contraejemplos se reprodujeron antes del
+cambio: ranking y ejecución presupuestal etiquetaban `count(*)` como contratos;
+la traza mostraba el SELECT tabular construido antes de ejecutar el agregado.
+Ahora los grupos etiquetan filas físicas, el ranking declara que sólo cuenta
+las filas agregadas mostradas y su metadata lo distingue del universo filtrado.
+Los analyzers transportan el SoQL realmente enviado a SECOP hasta la respuesta.
+
+Focales: 24 y 55 passed. Corpus: 89/89. Ruff y `make lint-core`: PASS.
+Suite completa: **10858 passed, 2 skipped, 14 xfailed**, 431,12 segundos.
+No se modifica identidad ni deduplicación. Cierre de G completo, incluyendo
+veracidad de agregados y alcance explícito de sus conteos.

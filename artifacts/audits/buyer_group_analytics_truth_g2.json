@@ -1,0 +1,13 @@
+{
+  "stage": "G2_ANALYTICAL_PHYSICAL_COUNTS_AND_EXECUTED_SOQL",
+  "status": "PASS",
+  "before_failed": 3,
+  "focal_passed": [24, 55],
+  "query_corpus": "89/89",
+  "ruff": "PASS",
+  "lint_core": "PASS",
+  "full_suite": {"passed": 10858, "skipped": 2, "xfailed": 14, "seconds": 431.12},
+  "closed": ["GROUP_ANALYTICAL_COUNT_PHYSICAL_LABEL", "RANKING_SUBSET_COUNT_SCOPE", "ANALYTICAL_EXECUTED_SOQL_TRACE"],
+  "result_identity_modified": false,
+  "push": false
+}

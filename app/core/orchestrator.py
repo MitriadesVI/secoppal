@@ -261,6 +261,12 @@ class SecopalWorkflow:
         if group:
             result["buyer_group"] = {**group.reference(), "members": list(group.members)}
             result["total_count_metric"] = "physical_rows"
+            result["total_count_scope"] = (
+                "returned_ranking" if result.get("analytical_intent") == "ranking"
+                else "filtered_universe"
+            )
+            if result.get("analytical_intent") == "value_stats":
+                result["total_count_metric"] = "not_available"
             result["response"] = group_declaration(group_params) + "\n\n" + result.get("response", "")
         return result
 

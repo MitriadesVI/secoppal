@@ -52,7 +52,7 @@ from app.core.workflow.helpers import (
 ACTOR_PROFILE_INTENT = "actor_profile"
 
 
-@action(reads=["resolved_params", "dataset_id", "soql_query", "user_query", "timings_ms"], writes=["results", "query_error", "total_count", "timeout_suggestions", "risk_flag_timeout", "needs_clarification", "clarification_reason", "analytical_response", "analytical_intent", "route_reason", "timings_ms"])
+@action(reads=["resolved_params", "dataset_id", "soql_query", "user_query", "timings_ms"], writes=["soql_query", "results", "query_error", "total_count", "timeout_suggestions", "risk_flag_timeout", "needs_clarification", "clarification_reason", "analytical_response", "analytical_intent", "route_reason", "timings_ms"])
 def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBuilder) -> State:
     """Execute SECOP count + query with graceful error handling.
     On timeout for heavy ordering queries, retry without ordering_signal.
@@ -86,6 +86,7 @@ def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
             clarification_reason=analytics.get("clarification_reason", ""),
             analytical_response=analytics.get("response", ""),
             analytical_intent=analytics.get("analytical_intent", ""),
+            soql_query=analytics.get("soql_query", ""),
             route_reason=analytics.get("route_reason", state.get("route_reason", "")),
         )
 

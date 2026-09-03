@@ -146,5 +146,5 @@ def group_declaration(params: dict) -> str:
     return (
         f"Alcance declarado: {group.label} ({len(group.members)} unidades compradoras; "
         f"versión {group.version}). Miembros: " + "; ".join(group.members) + ".\n"
-        "El total SECOP cuenta filas físicas; los resultados únicos conservan su identificador de proceso o contrato."
+        "Los conteos de registros se expresan en filas físicas; los resultados únicos conservan su identificador de proceso o contrato."
     )

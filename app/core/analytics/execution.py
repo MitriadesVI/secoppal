@@ -74,11 +74,12 @@ class ExecutionAnalyzer(BaseAnalyzer):
         pendiente = max(contratado - pagado, 0)
         pct = (pagado / contratado * 100) if contratado else 0
         scope = params.get("ciudad") or params.get("departamento_resolved") or "el universo consultado"
+        count_label = "filas físicas" if params.get("buyer_group") else "contratos"
         return (
             f"De ${format_currency(contratado)} contratados, se han pagado "
             f"${format_currency(pagado)} ({pct:.0f}% ejecutado). "
             f"Pendiente por ejecutar: ${format_currency(pendiente)}.\n\n"
-            f"Universo analizado: {scope} ({count:,} contratos)."
+            f"Universo analizado: {scope} ({count:,} {count_label})."
         )
 
     def total_count(self, rows: list[dict]) -> int:

@@ -51,13 +51,17 @@ class RankingAnalyzer(BaseAnalyzer):
         if not rows:
             return "No encontré entidades para ese universo."
         lines = []
+        count_label = "filas físicas" if params.get("buyer_group") else "contratos"
         for i, row in enumerate(rows, 1):
             key = _dim_key(row)
             nombre = str(row.get(key, "—"))[:50] if key else "—"
             cnt = int(row.get("cnt", 0) or 0)
-            lines.append(f"{i}. {nombre} ({cnt:,} contratos)")
+            lines.append(f"{i}. {nombre} ({cnt:,} {count_label})")
         scope = params.get("ciudad") or params.get("departamento_resolved") or "el universo consultado"
-        return "Entidades que más contratan en {}:\n{}".format(scope, "\n".join(lines))
+        response = "Entidades que más contratan en {}:\n{}".format(scope, "\n".join(lines))
+        if params.get("buyer_group"):
+            response += "\nLos conteos corresponden al ranking mostrado; no son el total del grupo."
+        return response
 
     def total_count(self, rows: list[dict]) -> int:
         return sum(int(r.get("cnt", 0) or 0) for r in rows)

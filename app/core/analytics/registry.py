@@ -59,12 +59,14 @@ def _run(
             "route_reason": f"analytics_{intent}_no_scope",
         }
 
+    soql = ""
     try:
         soql = analyzer.build(soql_builder, dataset_id, params)
         rows = secop_client.with_timeout(10).aggregate(dataset_id, soql)
         response = analyzer.format(rows, params, dataset_id)
         return {
             "response": response,
+            "soql_query": soql,
             "analytical_intent": intent,
             "route_reason": f"analytics_{intent}",
             "dataset_id": dataset_id,
@@ -76,6 +78,7 @@ def _run(
         return {
             "needs_clarification": True,
             "clarification_reason": analyzer.error_hint,
+            "soql_query": soql,
             "analytical_intent": intent,
             "route_reason": f"analytics_{intent}_error",
         }
