@@ -87,3 +87,45 @@ canario fallaron antes del cambio; ahora preservan comprador, adulto mayor y
 Focales: 64 passed. Corpus: 89/89. Ruff y `make lint-core`: PASS.
 Suite completa: **10818 passed, 2 skipped, 14 xfailed**, 656,23 segundos.
 Deuda cerrada: `SDIS_INSTITUTIONAL_INTENT_LOSS`.
+
+## F — BUYER_GROUP_EXECUTION_STRATEGY
+
+Estado: **PASS / GO acotado**. Una consulta OR de nombres físicos exactos,
+proyectados por dataset, conserva un orden global con fecha, valor, identificador
+lógico y `:id` físico como último desempate. El grupo selecciona unidades;
+`result_identity` continúa siendo la única autoridad de identidad de resultados.
+
+Se midieron ICBF 33, central 19 nombres, locales 20 y ejecutivo 39 nombres,
+en ambos datasets: ocho casos PASS. Cada caso contiene 12 llamadas adicionales
+(conteo y página OFFSET 500; histórico completo y 2026; tres repeticiones).
+Todas terminaron dentro del presupuesto de 15 segundos. No se afirma caché fría.
+Se usaron las columnas y el orden de producción, además del desempate físico.
+
+La completitud se materializó para `[2026-08-01, 2026-08-08)`, comparando conteos
+antes/después, suma de lotes exactos de diez nombres, páginas de 500, replay de
+la frontera de 1.000 filas, identidad física e identidad lógica. No se confunde
+esa comprobación semanal con una materialización de todo el histórico.
+
+| Caso | Procesos: filas / únicos | Contratos: filas / únicos |
+|---|---:|---:|
+| ICBF 33 | 652 / 650 | 739 / 739 |
+| Central 19 nombres | 910 / 903 | 948 / 948 |
+| Locales 20 | 91 / 90 | 98 / 98 |
+| Ejecutivo 39 nombres | 1.001 / 993 | 1.046 / 1.046 |
+
+La política de capacidad aprobada es hasta **40 nombres físicos acreditados**;
+superarla requiere otra medición. Los candidatos legacy mantienen su límite 15.
+Los timeouts no autorizan quitar miembros, filtros ni el orden global del grupo.
+
+**Corrección de cardinalidad:** Salud publica una grafía por dataset, acreditada
+como una sola unidad. La [estructura oficial distrital](https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control)
+declara 18 entidades centrales y 20 fondos locales. El registro del piloto debe
+representar 18/20/38 BuyerUnits; 19/39 siguen identificando los nombres físicos
+del inventario histórico. ADR-074 ya representa esta distinción; no aparece una
+categoría arquitectónica nueva.
+
+Evidencia: `artifacts/audits/buyer_group_execution_v1/`; reproducción:
+`scripts/audits/audit_buyer_group_execution_v1.py`. Focales: 9 passed.
+Corpus: 89/89. Ruff y `make lint-core`: PASS. Sin mutación de runtime/datos de
+producción en F; la suite completa de E permanece como base. Deuda de capacidad
+medida cerrada; activación y membresía pertenecen a G.

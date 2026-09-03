@@ -1,0 +1,221 @@
+{
+  "group": "central_19_source_names",
+  "dataset": "jbjy-vk9h",
+  "candidate_source_names": [
+    "(Secretaría Distrital de Integración Social)",
+    "SECRETARIA DE EDUCACION DEL DISTRITO",
+    "SECRETARÍA DISTRITAL DE MOVILIDAD",
+    "SECRETARIA DISTRITAL DE AMBIENTE",
+    "SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA",
+    "SECRETARIA DISTRITAL DE GOBIERNO 1",
+    "SECRETARIA DISTRITAL DEL HABITAT-",
+    "SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ",
+    "SECRETARIA DISTRITAL DE LA MUJER",
+    "SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ",
+    "UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA",
+    "SECRETARIA DISTRITAL DE PLANEACION",
+    "SECRETARIA DISTRITAL DE HACIENDA",
+    "SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE",
+    "DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO",
+    "SECRETARIA JURIDICA DISTRITAL.",
+    "DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL",
+    ".SECRETARÍA DISTRITAL DE SALUD..",
+    ".SECRETARÍA DISTRITAL DE SALUD."
+  ],
+  "membership_status": "DISCOVERY_ONLY_NOT_RUNTIME_MEMBERSHIP",
+  "as_of": "2026-09-03T19:02:56.313462+00:00",
+  "timeout_seconds": 15,
+  "window": [
+    "2026-08-01",
+    "2026-08-08"
+  ],
+  "calls": [
+    {
+      "tag": "or_count",
+      "soql": "SELECT count(*) AS physical_rows,count(distinct id_contrato) AS unique_ids WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD..' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.') AND fecha_de_firma >= '2026-08-01T00:00:00' AND fecha_de_firma < '2026-08-08T00:00:00'",
+      "ordering": "no_preserve",
+      "status": "PASS",
+      "rows": 1,
+      "sha256": "368aa4e773632214cd752eb941c6e2d6e56456bf3657cd5dc1bb7e8672a87c43",
+      "latency_seconds": 0.351
+    },
+    {
+      "tag": "all_time_count_0",
+      "soql": "SELECT count(*) AS physical_rows,count(distinct id_contrato) AS unique_ids WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD..' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.')",
+      "ordering": "no_preserve",
+      "status": "PASS",
+      "rows": 1,
+      "sha256": "597f88170751e741f09858c60e8031f76041740fa9aef7b79c3d69653b62e027",
+      "latency_seconds": 0.176
+    },
+    {
+      "tag": "all_time_page_0",
+      "soql": "SELECT :id AS physical_id,id_contrato,referencia_del_contrato,nombre_entidad,departamento,ciudad,objeto_del_contrato,descripcion_del_proceso,tipo_de_contrato,modalidad_de_contratacion,valor_del_contrato,estado_contrato,fecha_de_firma,proveedor_adjudicado,documento_proveedor,urlproceso WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD..' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.') ORDER BY fecha_de_firma DESC,valor_del_contrato DESC,id_contrato DESC,:id DESC LIMIT 500 OFFSET 500",
+      "ordering": "total",
+      "status": "PASS",
+      "rows": 500,
+      "sha256": "aa003c531a0523bf5183367e290d82c25a1a8452a0c7fbc562b0dce50a71f582",
+      "latency_seconds": 1.218
+    },
+    {
+      "tag": "all_time_count_1",
+      "soql": "SELECT count(*) AS physical_rows,count(distinct id_contrato) AS unique_ids WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD..' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.')",
+      "ordering": "no_preserve",
+      "status": "PASS",
+      "rows": 1,
+      "sha256": "597f88170751e741f09858c60e8031f76041740fa9aef7b79c3d69653b62e027",
+      "latency_seconds": 0.153
+    },
+    {
+      "tag": "all_time_page_1",
+      "soql": "SELECT :id AS physical_id,id_contrato,referencia_del_contrato,nombre_entidad,departamento,ciudad,objeto_del_contrato,descripcion_del_proceso,tipo_de_contrato,modalidad_de_contratacion,valor_del_contrato,estado_contrato,fecha_de_firma,proveedor_adjudicado,documento_proveedor,urlproceso WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD..' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.') ORDER BY fecha_de_firma DESC,valor_del_contrato DESC,id_contrato DESC,:id DESC LIMIT 500 OFFSET 500",
+      "ordering": "total",
+      "status": "PASS",
+      "rows": 500,
+      "sha256": "aa003c531a0523bf5183367e290d82c25a1a8452a0c7fbc562b0dce50a71f582",
+      "latency_seconds": 0.49
+    },
+    {
+      "tag": "all_time_count_2",
+      "soql": "SELECT count(*) AS physical_rows,count(distinct id_contrato) AS unique_ids WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD..' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.')",
+      "ordering": "no_preserve",
+      "status": "PASS",
+      "rows": 1,
+      "sha256": "597f88170751e741f09858c60e8031f76041740fa9aef7b79c3d69653b62e027",
+      "latency_seconds": 0.151
+    },
+    {
+      "tag": "all_time_page_2",
+      "soql": "SELECT :id AS physical_id,id_contrato,referencia_del_contrato,nombre_entidad,departamento,ciudad,objeto_del_contrato,descripcion_del_proceso,tipo_de_contrato,modalidad_de_contratacion,valor_del_contrato,estado_contrato,fecha_de_firma,proveedor_adjudicado,documento_proveedor,urlproceso WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD..' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.') ORDER BY fecha_de_firma DESC,valor_del_contrato DESC,id_contrato DESC,:id DESC LIMIT 500 OFFSET 500",
+      "ordering": "total",
+      "status": "PASS",
+      "rows": 500,
+      "sha256": "aa003c531a0523bf5183367e290d82c25a1a8452a0c7fbc562b0dce50a71f582",
+      "latency_seconds": 0.347
+    },
+    {
+      "tag": "2026_count_0",
+      "soql": "SELECT count(*) AS physical_rows,count(distinct id_contrato) AS unique_ids WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD..' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.') AND fecha_de_firma >= '2026-01-01T00:00:00' AND fecha_de_firma < '2027-01-01T00:00:00'",
+      "ordering": "no_preserve",
+      "status": "PASS",
+      "rows": 1,
+      "sha256": "a6482ef1a43b1b310f532c7561f669f6bfefe57f20e079c1057081ff7cc6dec2",
+      "latency_seconds": 0.158
+    },
+    {
+      "tag": "2026_page_0",
+      "soql": "SELECT :id AS physical_id,id_contrato,referencia_del_contrato,nombre_entidad,departamento,ciudad,objeto_del_contrato,descripcion_del_proceso,tipo_de_contrato,modalidad_de_contratacion,valor_del_contrato,estado_contrato,fecha_de_firma,proveedor_adjudicado,documento_proveedor,urlproceso WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD..' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.') AND fecha_de_firma >= '2026-01-01T00:00:00' AND fecha_de_firma < '2027-01-01T00:00:00' ORDER BY fecha_de_firma DESC,valor_del_contrato DESC,id_contrato DESC,:id DESC LIMIT 500 OFFSET 500",
+      "ordering": "total",
+      "status": "PASS",
+      "rows": 500,
+      "sha256": "366a8882d830173a2b08ed9fdeb1304071d0d790d7dd7fbc8fdab04f696be298",
+      "latency_seconds": 0.45
+    },
+    {
+      "tag": "2026_count_1",
+      "soql": "SELECT count(*) AS physical_rows,count(distinct id_contrato) AS unique_ids WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD..' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.') AND fecha_de_firma >= '2026-01-01T00:00:00' AND fecha_de_firma < '2027-01-01T00:00:00'",
+      "ordering": "no_preserve",
+      "status": "PASS",
+      "rows": 1,
+      "sha256": "a6482ef1a43b1b310f532c7561f669f6bfefe57f20e079c1057081ff7cc6dec2",
+      "latency_seconds": 0.201
+    },
+    {
+      "tag": "2026_page_1",
+      "soql": "SELECT :id AS physical_id,id_contrato,referencia_del_contrato,nombre_entidad,departamento,ciudad,objeto_del_contrato,descripcion_del_proceso,tipo_de_contrato,modalidad_de_contratacion,valor_del_contrato,estado_contrato,fecha_de_firma,proveedor_adjudicado,documento_proveedor,urlproceso WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD..' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.') AND fecha_de_firma >= '2026-01-01T00:00:00' AND fecha_de_firma < '2027-01-01T00:00:00' ORDER BY fecha_de_firma DESC,valor_del_contrato DESC,id_contrato DESC,:id DESC LIMIT 500 OFFSET 500",
+      "ordering": "total",
+      "status": "PASS",
+      "rows": 500,
+      "sha256": "366a8882d830173a2b08ed9fdeb1304071d0d790d7dd7fbc8fdab04f696be298",
+      "latency_seconds": 0.293
+    },
+    {
+      "tag": "2026_count_2",
+      "soql": "SELECT count(*) AS physical_rows,count(distinct id_contrato) AS unique_ids WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD..' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.') AND fecha_de_firma >= '2026-01-01T00:00:00' AND fecha_de_firma < '2027-01-01T00:00:00'",
+      "ordering": "no_preserve",
+      "status": "PASS",
+      "rows": 1,
+      "sha256": "a6482ef1a43b1b310f532c7561f669f6bfefe57f20e079c1057081ff7cc6dec2",
+      "latency_seconds": 0.133
+    },
+    {
+      "tag": "2026_page_2",
+      "soql": "SELECT :id AS physical_id,id_contrato,referencia_del_contrato,nombre_entidad,departamento,ciudad,objeto_del_contrato,descripcion_del_proceso,tipo_de_contrato,modalidad_de_contratacion,valor_del_contrato,estado_contrato,fecha_de_firma,proveedor_adjudicado,documento_proveedor,urlproceso WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD..' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.') AND fecha_de_firma >= '2026-01-01T00:00:00' AND fecha_de_firma < '2027-01-01T00:00:00' ORDER BY fecha_de_firma DESC,valor_del_contrato DESC,id_contrato DESC,:id DESC LIMIT 500 OFFSET 500",
+      "ordering": "total",
+      "status": "PASS",
+      "rows": 500,
+      "sha256": "366a8882d830173a2b08ed9fdeb1304071d0d790d7dd7fbc8fdab04f696be298",
+      "latency_seconds": 0.296
+    },
+    {
+      "tag": "batch_count",
+      "soql": "SELECT count(*) AS physical_rows WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ') AND fecha_de_firma >= '2026-08-01T00:00:00' AND fecha_de_firma < '2026-08-08T00:00:00'",
+      "ordering": "no_preserve",
+      "status": "PASS",
+      "rows": 1,
+      "sha256": "0a3e5a1ba430fff66bdb0394964cc0765bd0ceeaca07996434866e22a3563f2e",
+      "latency_seconds": 0.152
+    },
+    {
+      "tag": "batch_count",
+      "soql": "SELECT count(*) AS physical_rows WHERE (nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD..' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.') AND fecha_de_firma >= '2026-08-01T00:00:00' AND fecha_de_firma < '2026-08-08T00:00:00'",
+      "ordering": "no_preserve",
+      "status": "PASS",
+      "rows": 1,
+      "sha256": "d0fa8abd6f9986578372d5c69ed8c02d5272580d39231c564f7bf169de76f4b0",
+      "latency_seconds": 0.178
+    },
+    {
+      "tag": "or_page",
+      "soql": "SELECT :id AS physical_id,id_contrato,referencia_del_contrato,nombre_entidad,departamento,ciudad,objeto_del_contrato,descripcion_del_proceso,tipo_de_contrato,modalidad_de_contratacion,valor_del_contrato,estado_contrato,fecha_de_firma,proveedor_adjudicado,documento_proveedor,urlproceso WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD..' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.') AND fecha_de_firma >= '2026-08-01T00:00:00' AND fecha_de_firma < '2026-08-08T00:00:00' ORDER BY fecha_de_firma DESC,valor_del_contrato DESC,id_contrato DESC,:id DESC LIMIT 500 OFFSET 0",
+      "ordering": "total",
+      "status": "PASS",
+      "rows": 500,
+      "sha256": "865dc0c0c3733ac2b5117b598bc4012f8a19ae1ad27dd3fb9d29568836d4be5e",
+      "latency_seconds": 0.495
+    },
+    {
+      "tag": "or_page",
+      "soql": "SELECT :id AS physical_id,id_contrato,referencia_del_contrato,nombre_entidad,departamento,ciudad,objeto_del_contrato,descripcion_del_proceso,tipo_de_contrato,modalidad_de_contratacion,valor_del_contrato,estado_contrato,fecha_de_firma,proveedor_adjudicado,documento_proveedor,urlproceso WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD..' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.') AND fecha_de_firma >= '2026-08-01T00:00:00' AND fecha_de_firma < '2026-08-08T00:00:00' ORDER BY fecha_de_firma DESC,valor_del_contrato DESC,id_contrato DESC,:id DESC LIMIT 500 OFFSET 500",
+      "ordering": "total",
+      "status": "PASS",
+      "rows": 448,
+      "sha256": "3232ff03ab7755f5c5b6ecb1e5dac01450ec2fa7da9fb0f6cc2d8ca106048b8c",
+      "latency_seconds": 0.416
+    },
+    {
+      "tag": "page_boundary_replay",
+      "soql": "SELECT :id AS physical_id,id_contrato,referencia_del_contrato,nombre_entidad,departamento,ciudad,objeto_del_contrato,descripcion_del_proceso,tipo_de_contrato,modalidad_de_contratacion,valor_del_contrato,estado_contrato,fecha_de_firma,proveedor_adjudicado,documento_proveedor,urlproceso WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD..' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.') AND fecha_de_firma >= '2026-08-01T00:00:00' AND fecha_de_firma < '2026-08-08T00:00:00' ORDER BY fecha_de_firma DESC,valor_del_contrato DESC,id_contrato DESC,:id DESC LIMIT 1000",
+      "ordering": "total",
+      "status": "PASS",
+      "rows": 948,
+      "sha256": "7ddaf33f9ac44b367b9b1766df9da49f0a69899cfdf2b0606e3ba18b82328f77",
+      "latency_seconds": 0.719
+    },
+    {
+      "tag": "or_count_after",
+      "soql": "SELECT count(*) AS physical_rows,count(distinct id_contrato) AS unique_ids WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD..' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.') AND fecha_de_firma >= '2026-08-01T00:00:00' AND fecha_de_firma < '2026-08-08T00:00:00'",
+      "ordering": "no_preserve",
+      "status": "PASS",
+      "rows": 1,
+      "sha256": "368aa4e773632214cd752eb941c6e2d6e56456bf3657cd5dc1bb7e8672a87c43",
+      "latency_seconds": 0.154
+    }
+  ],
+  "status": "PASS",
+  "counts_before": {
+    "physical_rows": "948",
+    "unique_ids": "948"
+  },
+  "batch_physical_rows": 948,
+  "materialized_physical_rows": 948,
+  "materialized_unique_ids": 948,
+  "unstable_rows": 0,
+  "unique_physical_ids": 948,
+  "wrong_names": [],
+  "page_boundary_equal": true,
+  "counts_after": {
+    "physical_rows": "948",
+    "unique_ids": "948"
+  }
+}

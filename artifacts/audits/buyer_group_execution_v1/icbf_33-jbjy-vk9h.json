@@ -1,0 +1,253 @@
+{
+  "group": "icbf_33",
+  "dataset": "jbjy-vk9h",
+  "candidate_source_names": [
+    "ICBF SEDE NACIONAL",
+    "ICBF REGIONAL AMAZONAS",
+    "ICBF REGIONAL ANTIOQUIA",
+    "ICBF REGIONAL ARAUCA *",
+    "ICBF REGIONAL ATLANTICO",
+    "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR",
+    "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA",
+    "ICBF REGIONAL CALDAS",
+    "ICBF REGIONAL CAQUETA",
+    "ICBF REGIONAL CASANARE",
+    "ICBF REGIONAL CAUCA",
+    "ICBF REGIONAL CESAR",
+    "ICBF REGIONAL CHOCO",
+    "ICBF REGIONAL CORDOBA",
+    "ICBF REGIONAL CUNDINAMARCA",
+    "ICBF REGIONAL GUAINIA",
+    "ICBF REGIONAL GUAVIARE",
+    "ICBF REGIONAL HUILA",
+    "ICBF REGIONAL GUAJIRA",
+    "ICBF REGIONAL MAGDALENA",
+    "ICBF REGIONAL META",
+    "ICBF REGIONAL NARIÑO",
+    "ICBF REGIONAL NORTE DE SANTANDER",
+    "ICBF REGIONAL PUTUMAYO",
+    "ICBF REGIONAL QUINDIO",
+    "ICBF RISARALDA//",
+    "ICBF REGIONAL SAN ANDRES",
+    "ICBF REGIONAL SANTANDER",
+    "ICBF REGIONAL SUCRE",
+    "ICBF REGIONAL TOLIMA",
+    "ICBF REGIONAL VAUPES",
+    "ICBF REGIONAL VALLE DEL CAUCA",
+    "ICBF REGIONAL VICHADA"
+  ],
+  "membership_status": "DISCOVERY_ONLY_NOT_RUNTIME_MEMBERSHIP",
+  "as_of": "2026-09-03T19:02:47.301072+00:00",
+  "timeout_seconds": 15,
+  "window": [
+    "2026-08-01",
+    "2026-08-08"
+  ],
+  "calls": [
+    {
+      "tag": "or_count",
+      "soql": "SELECT count(*) AS physical_rows,count(distinct id_contrato) AS unique_ids WHERE (nombre_entidad = 'ICBF SEDE NACIONAL' OR nombre_entidad = 'ICBF REGIONAL AMAZONAS' OR nombre_entidad = 'ICBF REGIONAL ANTIOQUIA' OR nombre_entidad = 'ICBF REGIONAL ARAUCA *' OR nombre_entidad = 'ICBF REGIONAL ATLANTICO' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA' OR nombre_entidad = 'ICBF REGIONAL CALDAS' OR nombre_entidad = 'ICBF REGIONAL CAQUETA' OR nombre_entidad = 'ICBF REGIONAL CASANARE' OR nombre_entidad = 'ICBF REGIONAL CAUCA' OR nombre_entidad = 'ICBF REGIONAL CESAR' OR nombre_entidad = 'ICBF REGIONAL CHOCO' OR nombre_entidad = 'ICBF REGIONAL CORDOBA' OR nombre_entidad = 'ICBF REGIONAL CUNDINAMARCA' OR nombre_entidad = 'ICBF REGIONAL GUAINIA' OR nombre_entidad = 'ICBF REGIONAL GUAVIARE' OR nombre_entidad = 'ICBF REGIONAL HUILA' OR nombre_entidad = 'ICBF REGIONAL GUAJIRA' OR nombre_entidad = 'ICBF REGIONAL MAGDALENA' OR nombre_entidad = 'ICBF REGIONAL META' OR nombre_entidad = 'ICBF REGIONAL NARIÑO' OR nombre_entidad = 'ICBF REGIONAL NORTE DE SANTANDER' OR nombre_entidad = 'ICBF REGIONAL PUTUMAYO' OR nombre_entidad = 'ICBF REGIONAL QUINDIO' OR nombre_entidad = 'ICBF RISARALDA//' OR nombre_entidad = 'ICBF REGIONAL SAN ANDRES' OR nombre_entidad = 'ICBF REGIONAL SANTANDER' OR nombre_entidad = 'ICBF REGIONAL SUCRE' OR nombre_entidad = 'ICBF REGIONAL TOLIMA' OR nombre_entidad = 'ICBF REGIONAL VAUPES' OR nombre_entidad = 'ICBF REGIONAL VALLE DEL CAUCA' OR nombre_entidad = 'ICBF REGIONAL VICHADA') AND fecha_de_firma >= '2026-08-01T00:00:00' AND fecha_de_firma < '2026-08-08T00:00:00'",
+      "ordering": "no_preserve",
+      "status": "PASS",
+      "rows": 1,
+      "sha256": "afaf95f9369fc3b399fc20c65e49995cd016ab0296cb05fa2e2ad99979d48cae",
+      "latency_seconds": 0.688
+    },
+    {
+      "tag": "all_time_count_0",
+      "soql": "SELECT count(*) AS physical_rows,count(distinct id_contrato) AS unique_ids WHERE (nombre_entidad = 'ICBF SEDE NACIONAL' OR nombre_entidad = 'ICBF REGIONAL AMAZONAS' OR nombre_entidad = 'ICBF REGIONAL ANTIOQUIA' OR nombre_entidad = 'ICBF REGIONAL ARAUCA *' OR nombre_entidad = 'ICBF REGIONAL ATLANTICO' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA' OR nombre_entidad = 'ICBF REGIONAL CALDAS' OR nombre_entidad = 'ICBF REGIONAL CAQUETA' OR nombre_entidad = 'ICBF REGIONAL CASANARE' OR nombre_entidad = 'ICBF REGIONAL CAUCA' OR nombre_entidad = 'ICBF REGIONAL CESAR' OR nombre_entidad = 'ICBF REGIONAL CHOCO' OR nombre_entidad = 'ICBF REGIONAL CORDOBA' OR nombre_entidad = 'ICBF REGIONAL CUNDINAMARCA' OR nombre_entidad = 'ICBF REGIONAL GUAINIA' OR nombre_entidad = 'ICBF REGIONAL GUAVIARE' OR nombre_entidad = 'ICBF REGIONAL HUILA' OR nombre_entidad = 'ICBF REGIONAL GUAJIRA' OR nombre_entidad = 'ICBF REGIONAL MAGDALENA' OR nombre_entidad = 'ICBF REGIONAL META' OR nombre_entidad = 'ICBF REGIONAL NARIÑO' OR nombre_entidad = 'ICBF REGIONAL NORTE DE SANTANDER' OR nombre_entidad = 'ICBF REGIONAL PUTUMAYO' OR nombre_entidad = 'ICBF REGIONAL QUINDIO' OR nombre_entidad = 'ICBF RISARALDA//' OR nombre_entidad = 'ICBF REGIONAL SAN ANDRES' OR nombre_entidad = 'ICBF REGIONAL SANTANDER' OR nombre_entidad = 'ICBF REGIONAL SUCRE' OR nombre_entidad = 'ICBF REGIONAL TOLIMA' OR nombre_entidad = 'ICBF REGIONAL VAUPES' OR nombre_entidad = 'ICBF REGIONAL VALLE DEL CAUCA' OR nombre_entidad = 'ICBF REGIONAL VICHADA')",
+      "ordering": "no_preserve",
+      "status": "PASS",
+      "rows": 1,
+      "sha256": "8aabc5c3541bfae8cd9aca546e17260a70176e46db0b1d56bc42c948bc690ab2",
+      "latency_seconds": 0.163
+    },
+    {
+      "tag": "all_time_page_0",
+      "soql": "SELECT :id AS physical_id,id_contrato,referencia_del_contrato,nombre_entidad,departamento,ciudad,objeto_del_contrato,descripcion_del_proceso,tipo_de_contrato,modalidad_de_contratacion,valor_del_contrato,estado_contrato,fecha_de_firma,proveedor_adjudicado,documento_proveedor,urlproceso WHERE (nombre_entidad = 'ICBF SEDE NACIONAL' OR nombre_entidad = 'ICBF REGIONAL AMAZONAS' OR nombre_entidad = 'ICBF REGIONAL ANTIOQUIA' OR nombre_entidad = 'ICBF REGIONAL ARAUCA *' OR nombre_entidad = 'ICBF REGIONAL ATLANTICO' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA' OR nombre_entidad = 'ICBF REGIONAL CALDAS' OR nombre_entidad = 'ICBF REGIONAL CAQUETA' OR nombre_entidad = 'ICBF REGIONAL CASANARE' OR nombre_entidad = 'ICBF REGIONAL CAUCA' OR nombre_entidad = 'ICBF REGIONAL CESAR' OR nombre_entidad = 'ICBF REGIONAL CHOCO' OR nombre_entidad = 'ICBF REGIONAL CORDOBA' OR nombre_entidad = 'ICBF REGIONAL CUNDINAMARCA' OR nombre_entidad = 'ICBF REGIONAL GUAINIA' OR nombre_entidad = 'ICBF REGIONAL GUAVIARE' OR nombre_entidad = 'ICBF REGIONAL HUILA' OR nombre_entidad = 'ICBF REGIONAL GUAJIRA' OR nombre_entidad = 'ICBF REGIONAL MAGDALENA' OR nombre_entidad = 'ICBF REGIONAL META' OR nombre_entidad = 'ICBF REGIONAL NARIÑO' OR nombre_entidad = 'ICBF REGIONAL NORTE DE SANTANDER' OR nombre_entidad = 'ICBF REGIONAL PUTUMAYO' OR nombre_entidad = 'ICBF REGIONAL QUINDIO' OR nombre_entidad = 'ICBF RISARALDA//' OR nombre_entidad = 'ICBF REGIONAL SAN ANDRES' OR nombre_entidad = 'ICBF REGIONAL SANTANDER' OR nombre_entidad = 'ICBF REGIONAL SUCRE' OR nombre_entidad = 'ICBF REGIONAL TOLIMA' OR nombre_entidad = 'ICBF REGIONAL VAUPES' OR nombre_entidad = 'ICBF REGIONAL VALLE DEL CAUCA' OR nombre_entidad = 'ICBF REGIONAL VICHADA') ORDER BY fecha_de_firma DESC,valor_del_contrato DESC,id_contrato DESC,:id DESC LIMIT 500 OFFSET 500",
+      "ordering": "total",
+      "status": "PASS",
+      "rows": 500,
+      "sha256": "01fc1705ca4d5bdec09ffcdf078870b28aca4918d01c462c681442c7a55347af",
+      "latency_seconds": 1.673
+    },
+    {
+      "tag": "all_time_count_1",
+      "soql": "SELECT count(*) AS physical_rows,count(distinct id_contrato) AS unique_ids WHERE (nombre_entidad = 'ICBF SEDE NACIONAL' OR nombre_entidad = 'ICBF REGIONAL AMAZONAS' OR nombre_entidad = 'ICBF REGIONAL ANTIOQUIA' OR nombre_entidad = 'ICBF REGIONAL ARAUCA *' OR nombre_entidad = 'ICBF REGIONAL ATLANTICO' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA' OR nombre_entidad = 'ICBF REGIONAL CALDAS' OR nombre_entidad = 'ICBF REGIONAL CAQUETA' OR nombre_entidad = 'ICBF REGIONAL CASANARE' OR nombre_entidad = 'ICBF REGIONAL CAUCA' OR nombre_entidad = 'ICBF REGIONAL CESAR' OR nombre_entidad = 'ICBF REGIONAL CHOCO' OR nombre_entidad = 'ICBF REGIONAL CORDOBA' OR nombre_entidad = 'ICBF REGIONAL CUNDINAMARCA' OR nombre_entidad = 'ICBF REGIONAL GUAINIA' OR nombre_entidad = 'ICBF REGIONAL GUAVIARE' OR nombre_entidad = 'ICBF REGIONAL HUILA' OR nombre_entidad = 'ICBF REGIONAL GUAJIRA' OR nombre_entidad = 'ICBF REGIONAL MAGDALENA' OR nombre_entidad = 'ICBF REGIONAL META' OR nombre_entidad = 'ICBF REGIONAL NARIÑO' OR nombre_entidad = 'ICBF REGIONAL NORTE DE SANTANDER' OR nombre_entidad = 'ICBF REGIONAL PUTUMAYO' OR nombre_entidad = 'ICBF REGIONAL QUINDIO' OR nombre_entidad = 'ICBF RISARALDA//' OR nombre_entidad = 'ICBF REGIONAL SAN ANDRES' OR nombre_entidad = 'ICBF REGIONAL SANTANDER' OR nombre_entidad = 'ICBF REGIONAL SUCRE' OR nombre_entidad = 'ICBF REGIONAL TOLIMA' OR nombre_entidad = 'ICBF REGIONAL VAUPES' OR nombre_entidad = 'ICBF REGIONAL VALLE DEL CAUCA' OR nombre_entidad = 'ICBF REGIONAL VICHADA')",
+      "ordering": "no_preserve",
+      "status": "PASS",
+      "rows": 1,
+      "sha256": "8aabc5c3541bfae8cd9aca546e17260a70176e46db0b1d56bc42c948bc690ab2",
+      "latency_seconds": 0.165
+    },
+    {
+      "tag": "all_time_page_1",
+      "soql": "SELECT :id AS physical_id,id_contrato,referencia_del_contrato,nombre_entidad,departamento,ciudad,objeto_del_contrato,descripcion_del_proceso,tipo_de_contrato,modalidad_de_contratacion,valor_del_contrato,estado_contrato,fecha_de_firma,proveedor_adjudicado,documento_proveedor,urlproceso WHERE (nombre_entidad = 'ICBF SEDE NACIONAL' OR nombre_entidad = 'ICBF REGIONAL AMAZONAS' OR nombre_entidad = 'ICBF REGIONAL ANTIOQUIA' OR nombre_entidad = 'ICBF REGIONAL ARAUCA *' OR nombre_entidad = 'ICBF REGIONAL ATLANTICO' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA' OR nombre_entidad = 'ICBF REGIONAL CALDAS' OR nombre_entidad = 'ICBF REGIONAL CAQUETA' OR nombre_entidad = 'ICBF REGIONAL CASANARE' OR nombre_entidad = 'ICBF REGIONAL CAUCA' OR nombre_entidad = 'ICBF REGIONAL CESAR' OR nombre_entidad = 'ICBF REGIONAL CHOCO' OR nombre_entidad = 'ICBF REGIONAL CORDOBA' OR nombre_entidad = 'ICBF REGIONAL CUNDINAMARCA' OR nombre_entidad = 'ICBF REGIONAL GUAINIA' OR nombre_entidad = 'ICBF REGIONAL GUAVIARE' OR nombre_entidad = 'ICBF REGIONAL HUILA' OR nombre_entidad = 'ICBF REGIONAL GUAJIRA' OR nombre_entidad = 'ICBF REGIONAL MAGDALENA' OR nombre_entidad = 'ICBF REGIONAL META' OR nombre_entidad = 'ICBF REGIONAL NARIÑO' OR nombre_entidad = 'ICBF REGIONAL NORTE DE SANTANDER' OR nombre_entidad = 'ICBF REGIONAL PUTUMAYO' OR nombre_entidad = 'ICBF REGIONAL QUINDIO' OR nombre_entidad = 'ICBF RISARALDA//' OR nombre_entidad = 'ICBF REGIONAL SAN ANDRES' OR nombre_entidad = 'ICBF REGIONAL SANTANDER' OR nombre_entidad = 'ICBF REGIONAL SUCRE' OR nombre_entidad = 'ICBF REGIONAL TOLIMA' OR nombre_entidad = 'ICBF REGIONAL VAUPES' OR nombre_entidad = 'ICBF REGIONAL VALLE DEL CAUCA' OR nombre_entidad = 'ICBF REGIONAL VICHADA') ORDER BY fecha_de_firma DESC,valor_del_contrato DESC,id_contrato DESC,:id DESC LIMIT 500 OFFSET 500",
+      "ordering": "total",
+      "status": "PASS",
+      "rows": 500,
+      "sha256": "01fc1705ca4d5bdec09ffcdf078870b28aca4918d01c462c681442c7a55347af",
+      "latency_seconds": 0.541
+    },
+    {
+      "tag": "all_time_count_2",
+      "soql": "SELECT count(*) AS physical_rows,count(distinct id_contrato) AS unique_ids WHERE (nombre_entidad = 'ICBF SEDE NACIONAL' OR nombre_entidad = 'ICBF REGIONAL AMAZONAS' OR nombre_entidad = 'ICBF REGIONAL ANTIOQUIA' OR nombre_entidad = 'ICBF REGIONAL ARAUCA *' OR nombre_entidad = 'ICBF REGIONAL ATLANTICO' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA' OR nombre_entidad = 'ICBF REGIONAL CALDAS' OR nombre_entidad = 'ICBF REGIONAL CAQUETA' OR nombre_entidad = 'ICBF REGIONAL CASANARE' OR nombre_entidad = 'ICBF REGIONAL CAUCA' OR nombre_entidad = 'ICBF REGIONAL CESAR' OR nombre_entidad = 'ICBF REGIONAL CHOCO' OR nombre_entidad = 'ICBF REGIONAL CORDOBA' OR nombre_entidad = 'ICBF REGIONAL CUNDINAMARCA' OR nombre_entidad = 'ICBF REGIONAL GUAINIA' OR nombre_entidad = 'ICBF REGIONAL GUAVIARE' OR nombre_entidad = 'ICBF REGIONAL HUILA' OR nombre_entidad = 'ICBF REGIONAL GUAJIRA' OR nombre_entidad = 'ICBF REGIONAL MAGDALENA' OR nombre_entidad = 'ICBF REGIONAL META' OR nombre_entidad = 'ICBF REGIONAL NARIÑO' OR nombre_entidad = 'ICBF REGIONAL NORTE DE SANTANDER' OR nombre_entidad = 'ICBF REGIONAL PUTUMAYO' OR nombre_entidad = 'ICBF REGIONAL QUINDIO' OR nombre_entidad = 'ICBF RISARALDA//' OR nombre_entidad = 'ICBF REGIONAL SAN ANDRES' OR nombre_entidad = 'ICBF REGIONAL SANTANDER' OR nombre_entidad = 'ICBF REGIONAL SUCRE' OR nombre_entidad = 'ICBF REGIONAL TOLIMA' OR nombre_entidad = 'ICBF REGIONAL VAUPES' OR nombre_entidad = 'ICBF REGIONAL VALLE DEL CAUCA' OR nombre_entidad = 'ICBF REGIONAL VICHADA')",
+      "ordering": "no_preserve",
+      "status": "PASS",
+      "rows": 1,
+      "sha256": "8aabc5c3541bfae8cd9aca546e17260a70176e46db0b1d56bc42c948bc690ab2",
+      "latency_seconds": 0.178
+    },
+    {
+      "tag": "all_time_page_2",
+      "soql": "SELECT :id AS physical_id,id_contrato,referencia_del_contrato,nombre_entidad,departamento,ciudad,objeto_del_contrato,descripcion_del_proceso,tipo_de_contrato,modalidad_de_contratacion,valor_del_contrato,estado_contrato,fecha_de_firma,proveedor_adjudicado,documento_proveedor,urlproceso WHERE (nombre_entidad = 'ICBF SEDE NACIONAL' OR nombre_entidad = 'ICBF REGIONAL AMAZONAS' OR nombre_entidad = 'ICBF REGIONAL ANTIOQUIA' OR nombre_entidad = 'ICBF REGIONAL ARAUCA *' OR nombre_entidad = 'ICBF REGIONAL ATLANTICO' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA' OR nombre_entidad = 'ICBF REGIONAL CALDAS' OR nombre_entidad = 'ICBF REGIONAL CAQUETA' OR nombre_entidad = 'ICBF REGIONAL CASANARE' OR nombre_entidad = 'ICBF REGIONAL CAUCA' OR nombre_entidad = 'ICBF REGIONAL CESAR' OR nombre_entidad = 'ICBF REGIONAL CHOCO' OR nombre_entidad = 'ICBF REGIONAL CORDOBA' OR nombre_entidad = 'ICBF REGIONAL CUNDINAMARCA' OR nombre_entidad = 'ICBF REGIONAL GUAINIA' OR nombre_entidad = 'ICBF REGIONAL GUAVIARE' OR nombre_entidad = 'ICBF REGIONAL HUILA' OR nombre_entidad = 'ICBF REGIONAL GUAJIRA' OR nombre_entidad = 'ICBF REGIONAL MAGDALENA' OR nombre_entidad = 'ICBF REGIONAL META' OR nombre_entidad = 'ICBF REGIONAL NARIÑO' OR nombre_entidad = 'ICBF REGIONAL NORTE DE SANTANDER' OR nombre_entidad = 'ICBF REGIONAL PUTUMAYO' OR nombre_entidad = 'ICBF REGIONAL QUINDIO' OR nombre_entidad = 'ICBF RISARALDA//' OR nombre_entidad = 'ICBF REGIONAL SAN ANDRES' OR nombre_entidad = 'ICBF REGIONAL SANTANDER' OR nombre_entidad = 'ICBF REGIONAL SUCRE' OR nombre_entidad = 'ICBF REGIONAL TOLIMA' OR nombre_entidad = 'ICBF REGIONAL VAUPES' OR nombre_entidad = 'ICBF REGIONAL VALLE DEL CAUCA' OR nombre_entidad = 'ICBF REGIONAL VICHADA') ORDER BY fecha_de_firma DESC,valor_del_contrato DESC,id_contrato DESC,:id DESC LIMIT 500 OFFSET 500",
+      "ordering": "total",
+      "status": "PASS",
+      "rows": 500,
+      "sha256": "01fc1705ca4d5bdec09ffcdf078870b28aca4918d01c462c681442c7a55347af",
+      "latency_seconds": 0.525
+    },
+    {
+      "tag": "2026_count_0",
+      "soql": "SELECT count(*) AS physical_rows,count(distinct id_contrato) AS unique_ids WHERE (nombre_entidad = 'ICBF SEDE NACIONAL' OR nombre_entidad = 'ICBF REGIONAL AMAZONAS' OR nombre_entidad = 'ICBF REGIONAL ANTIOQUIA' OR nombre_entidad = 'ICBF REGIONAL ARAUCA *' OR nombre_entidad = 'ICBF REGIONAL ATLANTICO' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA' OR nombre_entidad = 'ICBF REGIONAL CALDAS' OR nombre_entidad = 'ICBF REGIONAL CAQUETA' OR nombre_entidad = 'ICBF REGIONAL CASANARE' OR nombre_entidad = 'ICBF REGIONAL CAUCA' OR nombre_entidad = 'ICBF REGIONAL CESAR' OR nombre_entidad = 'ICBF REGIONAL CHOCO' OR nombre_entidad = 'ICBF REGIONAL CORDOBA' OR nombre_entidad = 'ICBF REGIONAL CUNDINAMARCA' OR nombre_entidad = 'ICBF REGIONAL GUAINIA' OR nombre_entidad = 'ICBF REGIONAL GUAVIARE' OR nombre_entidad = 'ICBF REGIONAL HUILA' OR nombre_entidad = 'ICBF REGIONAL GUAJIRA' OR nombre_entidad = 'ICBF REGIONAL MAGDALENA' OR nombre_entidad = 'ICBF REGIONAL META' OR nombre_entidad = 'ICBF REGIONAL NARIÑO' OR nombre_entidad = 'ICBF REGIONAL NORTE DE SANTANDER' OR nombre_entidad = 'ICBF REGIONAL PUTUMAYO' OR nombre_entidad = 'ICBF REGIONAL QUINDIO' OR nombre_entidad = 'ICBF RISARALDA//' OR nombre_entidad = 'ICBF REGIONAL SAN ANDRES' OR nombre_entidad = 'ICBF REGIONAL SANTANDER' OR nombre_entidad = 'ICBF REGIONAL SUCRE' OR nombre_entidad = 'ICBF REGIONAL TOLIMA' OR nombre_entidad = 'ICBF REGIONAL VAUPES' OR nombre_entidad = 'ICBF REGIONAL VALLE DEL CAUCA' OR nombre_entidad = 'ICBF REGIONAL VICHADA') AND fecha_de_firma >= '2026-01-01T00:00:00' AND fecha_de_firma < '2027-01-01T00:00:00'",
+      "ordering": "no_preserve",
+      "status": "PASS",
+      "rows": 1,
+      "sha256": "fa5b4000c50870ddbf58e670ae65c7f747b4cac30f7dc1633b18d9c897426c94",
+      "latency_seconds": 0.166
+    },
+    {
+      "tag": "2026_page_0",
+      "soql": "SELECT :id AS physical_id,id_contrato,referencia_del_contrato,nombre_entidad,departamento,ciudad,objeto_del_contrato,descripcion_del_proceso,tipo_de_contrato,modalidad_de_contratacion,valor_del_contrato,estado_contrato,fecha_de_firma,proveedor_adjudicado,documento_proveedor,urlproceso WHERE (nombre_entidad = 'ICBF SEDE NACIONAL' OR nombre_entidad = 'ICBF REGIONAL AMAZONAS' OR nombre_entidad = 'ICBF REGIONAL ANTIOQUIA' OR nombre_entidad = 'ICBF REGIONAL ARAUCA *' OR nombre_entidad = 'ICBF REGIONAL ATLANTICO' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA' OR nombre_entidad = 'ICBF REGIONAL CALDAS' OR nombre_entidad = 'ICBF REGIONAL CAQUETA' OR nombre_entidad = 'ICBF REGIONAL CASANARE' OR nombre_entidad = 'ICBF REGIONAL CAUCA' OR nombre_entidad = 'ICBF REGIONAL CESAR' OR nombre_entidad = 'ICBF REGIONAL CHOCO' OR nombre_entidad = 'ICBF REGIONAL CORDOBA' OR nombre_entidad = 'ICBF REGIONAL CUNDINAMARCA' OR nombre_entidad = 'ICBF REGIONAL GUAINIA' OR nombre_entidad = 'ICBF REGIONAL GUAVIARE' OR nombre_entidad = 'ICBF REGIONAL HUILA' OR nombre_entidad = 'ICBF REGIONAL GUAJIRA' OR nombre_entidad = 'ICBF REGIONAL MAGDALENA' OR nombre_entidad = 'ICBF REGIONAL META' OR nombre_entidad = 'ICBF REGIONAL NARIÑO' OR nombre_entidad = 'ICBF REGIONAL NORTE DE SANTANDER' OR nombre_entidad = 'ICBF REGIONAL PUTUMAYO' OR nombre_entidad = 'ICBF REGIONAL QUINDIO' OR nombre_entidad = 'ICBF RISARALDA//' OR nombre_entidad = 'ICBF REGIONAL SAN ANDRES' OR nombre_entidad = 'ICBF REGIONAL SANTANDER' OR nombre_entidad = 'ICBF REGIONAL SUCRE' OR nombre_entidad = 'ICBF REGIONAL TOLIMA' OR nombre_entidad = 'ICBF REGIONAL VAUPES' OR nombre_entidad = 'ICBF REGIONAL VALLE DEL CAUCA' OR nombre_entidad = 'ICBF REGIONAL VICHADA') AND fecha_de_firma >= '2026-01-01T00:00:00' AND fecha_de_firma < '2027-01-01T00:00:00' ORDER BY fecha_de_firma DESC,valor_del_contrato DESC,id_contrato DESC,:id DESC LIMIT 500 OFFSET 500",
+      "ordering": "total",
+      "status": "PASS",
+      "rows": 500,
+      "sha256": "39b457c677c39dbd2c440f2f7c114ec696910ef28ec708325d7ea7960e47c45e",
+      "latency_seconds": 1.001
+    },
+    {
+      "tag": "2026_count_1",
+      "soql": "SELECT count(*) AS physical_rows,count(distinct id_contrato) AS unique_ids WHERE (nombre_entidad = 'ICBF SEDE NACIONAL' OR nombre_entidad = 'ICBF REGIONAL AMAZONAS' OR nombre_entidad = 'ICBF REGIONAL ANTIOQUIA' OR nombre_entidad = 'ICBF REGIONAL ARAUCA *' OR nombre_entidad = 'ICBF REGIONAL ATLANTICO' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA' OR nombre_entidad = 'ICBF REGIONAL CALDAS' OR nombre_entidad = 'ICBF REGIONAL CAQUETA' OR nombre_entidad = 'ICBF REGIONAL CASANARE' OR nombre_entidad = 'ICBF REGIONAL CAUCA' OR nombre_entidad = 'ICBF REGIONAL CESAR' OR nombre_entidad = 'ICBF REGIONAL CHOCO' OR nombre_entidad = 'ICBF REGIONAL CORDOBA' OR nombre_entidad = 'ICBF REGIONAL CUNDINAMARCA' OR nombre_entidad = 'ICBF REGIONAL GUAINIA' OR nombre_entidad = 'ICBF REGIONAL GUAVIARE' OR nombre_entidad = 'ICBF REGIONAL HUILA' OR nombre_entidad = 'ICBF REGIONAL GUAJIRA' OR nombre_entidad = 'ICBF REGIONAL MAGDALENA' OR nombre_entidad = 'ICBF REGIONAL META' OR nombre_entidad = 'ICBF REGIONAL NARIÑO' OR nombre_entidad = 'ICBF REGIONAL NORTE DE SANTANDER' OR nombre_entidad = 'ICBF REGIONAL PUTUMAYO' OR nombre_entidad = 'ICBF REGIONAL QUINDIO' OR nombre_entidad = 'ICBF RISARALDA//' OR nombre_entidad = 'ICBF REGIONAL SAN ANDRES' OR nombre_entidad = 'ICBF REGIONAL SANTANDER' OR nombre_entidad = 'ICBF REGIONAL SUCRE' OR nombre_entidad = 'ICBF REGIONAL TOLIMA' OR nombre_entidad = 'ICBF REGIONAL VAUPES' OR nombre_entidad = 'ICBF REGIONAL VALLE DEL CAUCA' OR nombre_entidad = 'ICBF REGIONAL VICHADA') AND fecha_de_firma >= '2026-01-01T00:00:00' AND fecha_de_firma < '2027-01-01T00:00:00'",
+      "ordering": "no_preserve",
+      "status": "PASS",
+      "rows": 1,
+      "sha256": "fa5b4000c50870ddbf58e670ae65c7f747b4cac30f7dc1633b18d9c897426c94",
+      "latency_seconds": 0.179
+    },
+    {
+      "tag": "2026_page_1",
+      "soql": "SELECT :id AS physical_id,id_contrato,referencia_del_contrato,nombre_entidad,departamento,ciudad,objeto_del_contrato,descripcion_del_proceso,tipo_de_contrato,modalidad_de_contratacion,valor_del_contrato,estado_contrato,fecha_de_firma,proveedor_adjudicado,documento_proveedor,urlproceso WHERE (nombre_entidad = 'ICBF SEDE NACIONAL' OR nombre_entidad = 'ICBF REGIONAL AMAZONAS' OR nombre_entidad = 'ICBF REGIONAL ANTIOQUIA' OR nombre_entidad = 'ICBF REGIONAL ARAUCA *' OR nombre_entidad = 'ICBF REGIONAL ATLANTICO' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA' OR nombre_entidad = 'ICBF REGIONAL CALDAS' OR nombre_entidad = 'ICBF REGIONAL CAQUETA' OR nombre_entidad = 'ICBF REGIONAL CASANARE' OR nombre_entidad = 'ICBF REGIONAL CAUCA' OR nombre_entidad = 'ICBF REGIONAL CESAR' OR nombre_entidad = 'ICBF REGIONAL CHOCO' OR nombre_entidad = 'ICBF REGIONAL CORDOBA' OR nombre_entidad = 'ICBF REGIONAL CUNDINAMARCA' OR nombre_entidad = 'ICBF REGIONAL GUAINIA' OR nombre_entidad = 'ICBF REGIONAL GUAVIARE' OR nombre_entidad = 'ICBF REGIONAL HUILA' OR nombre_entidad = 'ICBF REGIONAL GUAJIRA' OR nombre_entidad = 'ICBF REGIONAL MAGDALENA' OR nombre_entidad = 'ICBF REGIONAL META' OR nombre_entidad = 'ICBF REGIONAL NARIÑO' OR nombre_entidad = 'ICBF REGIONAL NORTE DE SANTANDER' OR nombre_entidad = 'ICBF REGIONAL PUTUMAYO' OR nombre_entidad = 'ICBF REGIONAL QUINDIO' OR nombre_entidad = 'ICBF RISARALDA//' OR nombre_entidad = 'ICBF REGIONAL SAN ANDRES' OR nombre_entidad = 'ICBF REGIONAL SANTANDER' OR nombre_entidad = 'ICBF REGIONAL SUCRE' OR nombre_entidad = 'ICBF REGIONAL TOLIMA' OR nombre_entidad = 'ICBF REGIONAL VAUPES' OR nombre_entidad = 'ICBF REGIONAL VALLE DEL CAUCA' OR nombre_entidad = 'ICBF REGIONAL VICHADA') AND fecha_de_firma >= '2026-01-01T00:00:00' AND fecha_de_firma < '2027-01-01T00:00:00' ORDER BY fecha_de_firma DESC,valor_del_contrato DESC,id_contrato DESC,:id DESC LIMIT 500 OFFSET 500",
+      "ordering": "total",
+      "status": "PASS",
+      "rows": 500,
+      "sha256": "39b457c677c39dbd2c440f2f7c114ec696910ef28ec708325d7ea7960e47c45e",
+      "latency_seconds": 0.453
+    },
+    {
+      "tag": "2026_count_2",
+      "soql": "SELECT count(*) AS physical_rows,count(distinct id_contrato) AS unique_ids WHERE (nombre_entidad = 'ICBF SEDE NACIONAL' OR nombre_entidad = 'ICBF REGIONAL AMAZONAS' OR nombre_entidad = 'ICBF REGIONAL ANTIOQUIA' OR nombre_entidad = 'ICBF REGIONAL ARAUCA *' OR nombre_entidad = 'ICBF REGIONAL ATLANTICO' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA' OR nombre_entidad = 'ICBF REGIONAL CALDAS' OR nombre_entidad = 'ICBF REGIONAL CAQUETA' OR nombre_entidad = 'ICBF REGIONAL CASANARE' OR nombre_entidad = 'ICBF REGIONAL CAUCA' OR nombre_entidad = 'ICBF REGIONAL CESAR' OR nombre_entidad = 'ICBF REGIONAL CHOCO' OR nombre_entidad = 'ICBF REGIONAL CORDOBA' OR nombre_entidad = 'ICBF REGIONAL CUNDINAMARCA' OR nombre_entidad = 'ICBF REGIONAL GUAINIA' OR nombre_entidad = 'ICBF REGIONAL GUAVIARE' OR nombre_entidad = 'ICBF REGIONAL HUILA' OR nombre_entidad = 'ICBF REGIONAL GUAJIRA' OR nombre_entidad = 'ICBF REGIONAL MAGDALENA' OR nombre_entidad = 'ICBF REGIONAL META' OR nombre_entidad = 'ICBF REGIONAL NARIÑO' OR nombre_entidad = 'ICBF REGIONAL NORTE DE SANTANDER' OR nombre_entidad = 'ICBF REGIONAL PUTUMAYO' OR nombre_entidad = 'ICBF REGIONAL QUINDIO' OR nombre_entidad = 'ICBF RISARALDA//' OR nombre_entidad = 'ICBF REGIONAL SAN ANDRES' OR nombre_entidad = 'ICBF REGIONAL SANTANDER' OR nombre_entidad = 'ICBF REGIONAL SUCRE' OR nombre_entidad = 'ICBF REGIONAL TOLIMA' OR nombre_entidad = 'ICBF REGIONAL VAUPES' OR nombre_entidad = 'ICBF REGIONAL VALLE DEL CAUCA' OR nombre_entidad = 'ICBF REGIONAL VICHADA') AND fecha_de_firma >= '2026-01-01T00:00:00' AND fecha_de_firma < '2027-01-01T00:00:00'",
+      "ordering": "no_preserve",
+      "status": "PASS",
+      "rows": 1,
+      "sha256": "fa5b4000c50870ddbf58e670ae65c7f747b4cac30f7dc1633b18d9c897426c94",
+      "latency_seconds": 0.198
+    },
+    {
+      "tag": "2026_page_2",
+      "soql": "SELECT :id AS physical_id,id_contrato,referencia_del_contrato,nombre_entidad,departamento,ciudad,objeto_del_contrato,descripcion_del_proceso,tipo_de_contrato,modalidad_de_contratacion,valor_del_contrato,estado_contrato,fecha_de_firma,proveedor_adjudicado,documento_proveedor,urlproceso WHERE (nombre_entidad = 'ICBF SEDE NACIONAL' OR nombre_entidad = 'ICBF REGIONAL AMAZONAS' OR nombre_entidad = 'ICBF REGIONAL ANTIOQUIA' OR nombre_entidad = 'ICBF REGIONAL ARAUCA *' OR nombre_entidad = 'ICBF REGIONAL ATLANTICO' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA' OR nombre_entidad = 'ICBF REGIONAL CALDAS' OR nombre_entidad = 'ICBF REGIONAL CAQUETA' OR nombre_entidad = 'ICBF REGIONAL CASANARE' OR nombre_entidad = 'ICBF REGIONAL CAUCA' OR nombre_entidad = 'ICBF REGIONAL CESAR' OR nombre_entidad = 'ICBF REGIONAL CHOCO' OR nombre_entidad = 'ICBF REGIONAL CORDOBA' OR nombre_entidad = 'ICBF REGIONAL CUNDINAMARCA' OR nombre_entidad = 'ICBF REGIONAL GUAINIA' OR nombre_entidad = 'ICBF REGIONAL GUAVIARE' OR nombre_entidad = 'ICBF REGIONAL HUILA' OR nombre_entidad = 'ICBF REGIONAL GUAJIRA' OR nombre_entidad = 'ICBF REGIONAL MAGDALENA' OR nombre_entidad = 'ICBF REGIONAL META' OR nombre_entidad = 'ICBF REGIONAL NARIÑO' OR nombre_entidad = 'ICBF REGIONAL NORTE DE SANTANDER' OR nombre_entidad = 'ICBF REGIONAL PUTUMAYO' OR nombre_entidad = 'ICBF REGIONAL QUINDIO' OR nombre_entidad = 'ICBF RISARALDA//' OR nombre_entidad = 'ICBF REGIONAL SAN ANDRES' OR nombre_entidad = 'ICBF REGIONAL SANTANDER' OR nombre_entidad = 'ICBF REGIONAL SUCRE' OR nombre_entidad = 'ICBF REGIONAL TOLIMA' OR nombre_entidad = 'ICBF REGIONAL VAUPES' OR nombre_entidad = 'ICBF REGIONAL VALLE DEL CAUCA' OR nombre_entidad = 'ICBF REGIONAL VICHADA') AND fecha_de_firma >= '2026-01-01T00:00:00' AND fecha_de_firma < '2027-01-01T00:00:00' ORDER BY fecha_de_firma DESC,valor_del_contrato DESC,id_contrato DESC,:id DESC LIMIT 500 OFFSET 500",
+      "ordering": "total",
+      "status": "PASS",
+      "rows": 500,
+      "sha256": "39b457c677c39dbd2c440f2f7c114ec696910ef28ec708325d7ea7960e47c45e",
+      "latency_seconds": 0.343
+    },
+    {
+      "tag": "batch_count",
+      "soql": "SELECT count(*) AS physical_rows WHERE (nombre_entidad = 'ICBF SEDE NACIONAL' OR nombre_entidad = 'ICBF REGIONAL AMAZONAS' OR nombre_entidad = 'ICBF REGIONAL ANTIOQUIA' OR nombre_entidad = 'ICBF REGIONAL ARAUCA *' OR nombre_entidad = 'ICBF REGIONAL ATLANTICO' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA' OR nombre_entidad = 'ICBF REGIONAL CALDAS' OR nombre_entidad = 'ICBF REGIONAL CAQUETA' OR nombre_entidad = 'ICBF REGIONAL CASANARE') AND fecha_de_firma >= '2026-08-01T00:00:00' AND fecha_de_firma < '2026-08-08T00:00:00'",
+      "ordering": "no_preserve",
+      "status": "PASS",
+      "rows": 1,
+      "sha256": "be9fb8688362a88b4d96a3b78ed2344bd84b66c9027e1e300b053eb1b4575580",
+      "latency_seconds": 0.204
+    },
+    {
+      "tag": "batch_count",
+      "soql": "SELECT count(*) AS physical_rows WHERE (nombre_entidad = 'ICBF REGIONAL CAUCA' OR nombre_entidad = 'ICBF REGIONAL CESAR' OR nombre_entidad = 'ICBF REGIONAL CHOCO' OR nombre_entidad = 'ICBF REGIONAL CORDOBA' OR nombre_entidad = 'ICBF REGIONAL CUNDINAMARCA' OR nombre_entidad = 'ICBF REGIONAL GUAINIA' OR nombre_entidad = 'ICBF REGIONAL GUAVIARE' OR nombre_entidad = 'ICBF REGIONAL HUILA' OR nombre_entidad = 'ICBF REGIONAL GUAJIRA' OR nombre_entidad = 'ICBF REGIONAL MAGDALENA') AND fecha_de_firma >= '2026-08-01T00:00:00' AND fecha_de_firma < '2026-08-08T00:00:00'",
+      "ordering": "no_preserve",
+      "status": "PASS",
+      "rows": 1,
+      "sha256": "743ab3bc364182a703fb4889f89fcb45f0d961d0a27b490e9d3d27f61edeabaf",
+      "latency_seconds": 0.187
+    },
+    {
+      "tag": "batch_count",
+      "soql": "SELECT count(*) AS physical_rows WHERE (nombre_entidad = 'ICBF REGIONAL META' OR nombre_entidad = 'ICBF REGIONAL NARIÑO' OR nombre_entidad = 'ICBF REGIONAL NORTE DE SANTANDER' OR nombre_entidad = 'ICBF REGIONAL PUTUMAYO' OR nombre_entidad = 'ICBF REGIONAL QUINDIO' OR nombre_entidad = 'ICBF RISARALDA//' OR nombre_entidad = 'ICBF REGIONAL SAN ANDRES' OR nombre_entidad = 'ICBF REGIONAL SANTANDER' OR nombre_entidad = 'ICBF REGIONAL SUCRE' OR nombre_entidad = 'ICBF REGIONAL TOLIMA') AND fecha_de_firma >= '2026-08-01T00:00:00' AND fecha_de_firma < '2026-08-08T00:00:00'",
+      "ordering": "no_preserve",
+      "status": "PASS",
+      "rows": 1,
+      "sha256": "524b45d810215dc3f1a09d0f39036a196483abe8e7c27b5307feec21c1f236ab",
+      "latency_seconds": 0.175
+    },
+    {
+      "tag": "batch_count",
+      "soql": "SELECT count(*) AS physical_rows WHERE (nombre_entidad = 'ICBF REGIONAL VAUPES' OR nombre_entidad = 'ICBF REGIONAL VALLE DEL CAUCA' OR nombre_entidad = 'ICBF REGIONAL VICHADA') AND fecha_de_firma >= '2026-08-01T00:00:00' AND fecha_de_firma < '2026-08-08T00:00:00'",
+      "ordering": "no_preserve",
+      "status": "PASS",
+      "rows": 1,
+      "sha256": "ac50016a456dda4a30189bc0c4e23df20a189053d62d9a8c8d89ab031a461b09",
+      "latency_seconds": 0.186
+    },
+    {
+      "tag": "or_page",
+      "soql": "SELECT :id AS physical_id,id_contrato,referencia_del_contrato,nombre_entidad,departamento,ciudad,objeto_del_contrato,descripcion_del_proceso,tipo_de_contrato,modalidad_de_contratacion,valor_del_contrato,estado_contrato,fecha_de_firma,proveedor_adjudicado,documento_proveedor,urlproceso WHERE (nombre_entidad = 'ICBF SEDE NACIONAL' OR nombre_entidad = 'ICBF REGIONAL AMAZONAS' OR nombre_entidad = 'ICBF REGIONAL ANTIOQUIA' OR nombre_entidad = 'ICBF REGIONAL ARAUCA *' OR nombre_entidad = 'ICBF REGIONAL ATLANTICO' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA' OR nombre_entidad = 'ICBF REGIONAL CALDAS' OR nombre_entidad = 'ICBF REGIONAL CAQUETA' OR nombre_entidad = 'ICBF REGIONAL CASANARE' OR nombre_entidad = 'ICBF REGIONAL CAUCA' OR nombre_entidad = 'ICBF REGIONAL CESAR' OR nombre_entidad = 'ICBF REGIONAL CHOCO' OR nombre_entidad = 'ICBF REGIONAL CORDOBA' OR nombre_entidad = 'ICBF REGIONAL CUNDINAMARCA' OR nombre_entidad = 'ICBF REGIONAL GUAINIA' OR nombre_entidad = 'ICBF REGIONAL GUAVIARE' OR nombre_entidad = 'ICBF REGIONAL HUILA' OR nombre_entidad = 'ICBF REGIONAL GUAJIRA' OR nombre_entidad = 'ICBF REGIONAL MAGDALENA' OR nombre_entidad = 'ICBF REGIONAL META' OR nombre_entidad = 'ICBF REGIONAL NARIÑO' OR nombre_entidad = 'ICBF REGIONAL NORTE DE SANTANDER' OR nombre_entidad = 'ICBF REGIONAL PUTUMAYO' OR nombre_entidad = 'ICBF REGIONAL QUINDIO' OR nombre_entidad = 'ICBF RISARALDA//' OR nombre_entidad = 'ICBF REGIONAL SAN ANDRES' OR nombre_entidad = 'ICBF REGIONAL SANTANDER' OR nombre_entidad = 'ICBF REGIONAL SUCRE' OR nombre_entidad = 'ICBF REGIONAL TOLIMA' OR nombre_entidad = 'ICBF REGIONAL VAUPES' OR nombre_entidad = 'ICBF REGIONAL VALLE DEL CAUCA' OR nombre_entidad = 'ICBF REGIONAL VICHADA') AND fecha_de_firma >= '2026-08-01T00:00:00' AND fecha_de_firma < '2026-08-08T00:00:00' ORDER BY fecha_de_firma DESC,valor_del_contrato DESC,id_contrato DESC,:id DESC LIMIT 500 OFFSET 0",
+      "ordering": "total",
+      "status": "PASS",
+      "rows": 500,
+      "sha256": "2c7e2b5f48e4f4b1a9ff082159477ca95ea85aa72c9b6d6cbd9014ca9326ee6d",
+      "latency_seconds": 0.453
+    },
+    {
+      "tag": "or_page",
+      "soql": "SELECT :id AS physical_id,id_contrato,referencia_del_contrato,nombre_entidad,departamento,ciudad,objeto_del_contrato,descripcion_del_proceso,tipo_de_contrato,modalidad_de_contratacion,valor_del_contrato,estado_contrato,fecha_de_firma,proveedor_adjudicado,documento_proveedor,urlproceso WHERE (nombre_entidad = 'ICBF SEDE NACIONAL' OR nombre_entidad = 'ICBF REGIONAL AMAZONAS' OR nombre_entidad = 'ICBF REGIONAL ANTIOQUIA' OR nombre_entidad = 'ICBF REGIONAL ARAUCA *' OR nombre_entidad = 'ICBF REGIONAL ATLANTICO' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA' OR nombre_entidad = 'ICBF REGIONAL CALDAS' OR nombre_entidad = 'ICBF REGIONAL CAQUETA' OR nombre_entidad = 'ICBF REGIONAL CASANARE' OR nombre_entidad = 'ICBF REGIONAL CAUCA' OR nombre_entidad = 'ICBF REGIONAL CESAR' OR nombre_entidad = 'ICBF REGIONAL CHOCO' OR nombre_entidad = 'ICBF REGIONAL CORDOBA' OR nombre_entidad = 'ICBF REGIONAL CUNDINAMARCA' OR nombre_entidad = 'ICBF REGIONAL GUAINIA' OR nombre_entidad = 'ICBF REGIONAL GUAVIARE' OR nombre_entidad = 'ICBF REGIONAL HUILA' OR nombre_entidad = 'ICBF REGIONAL GUAJIRA' OR nombre_entidad = 'ICBF REGIONAL MAGDALENA' OR nombre_entidad = 'ICBF REGIONAL META' OR nombre_entidad = 'ICBF REGIONAL NARIÑO' OR nombre_entidad = 'ICBF REGIONAL NORTE DE SANTANDER' OR nombre_entidad = 'ICBF REGIONAL PUTUMAYO' OR nombre_entidad = 'ICBF REGIONAL QUINDIO' OR nombre_entidad = 'ICBF RISARALDA//' OR nombre_entidad = 'ICBF REGIONAL SAN ANDRES' OR nombre_entidad = 'ICBF REGIONAL SANTANDER' OR nombre_entidad = 'ICBF REGIONAL SUCRE' OR nombre_entidad = 'ICBF REGIONAL TOLIMA' OR nombre_entidad = 'ICBF REGIONAL VAUPES' OR nombre_entidad = 'ICBF REGIONAL VALLE DEL CAUCA' OR nombre_entidad = 'ICBF REGIONAL VICHADA') AND fecha_de_firma >= '2026-08-01T00:00:00' AND fecha_de_firma < '2026-08-08T00:00:00' ORDER BY fecha_de_firma DESC,valor_del_contrato DESC,id_contrato DESC,:id DESC LIMIT 500 OFFSET 500",
+      "ordering": "total",
+      "status": "PASS",
+      "rows": 239,
+      "sha256": "84e233ed873d672e4ab68a4d536dba2a1e43ac66235fa633f9578cf2e4dc7bc7",
+      "latency_seconds": 0.36
+    },
+    {
+      "tag": "page_boundary_replay",
+      "soql": "SELECT :id AS physical_id,id_contrato,referencia_del_contrato,nombre_entidad,departamento,ciudad,objeto_del_contrato,descripcion_del_proceso,tipo_de_contrato,modalidad_de_contratacion,valor_del_contrato,estado_contrato,fecha_de_firma,proveedor_adjudicado,documento_proveedor,urlproceso WHERE (nombre_entidad = 'ICBF SEDE NACIONAL' OR nombre_entidad = 'ICBF REGIONAL AMAZONAS' OR nombre_entidad = 'ICBF REGIONAL ANTIOQUIA' OR nombre_entidad = 'ICBF REGIONAL ARAUCA *' OR nombre_entidad = 'ICBF REGIONAL ATLANTICO' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA' OR nombre_entidad = 'ICBF REGIONAL CALDAS' OR nombre_entidad = 'ICBF REGIONAL CAQUETA' OR nombre_entidad = 'ICBF REGIONAL CASANARE' OR nombre_entidad = 'ICBF REGIONAL CAUCA' OR nombre_entidad = 'ICBF REGIONAL CESAR' OR nombre_entidad = 'ICBF REGIONAL CHOCO' OR nombre_entidad = 'ICBF REGIONAL CORDOBA' OR nombre_entidad = 'ICBF REGIONAL CUNDINAMARCA' OR nombre_entidad = 'ICBF REGIONAL GUAINIA' OR nombre_entidad = 'ICBF REGIONAL GUAVIARE' OR nombre_entidad = 'ICBF REGIONAL HUILA' OR nombre_entidad = 'ICBF REGIONAL GUAJIRA' OR nombre_entidad = 'ICBF REGIONAL MAGDALENA' OR nombre_entidad = 'ICBF REGIONAL META' OR nombre_entidad = 'ICBF REGIONAL NARIÑO' OR nombre_entidad = 'ICBF REGIONAL NORTE DE SANTANDER' OR nombre_entidad = 'ICBF REGIONAL PUTUMAYO' OR nombre_entidad = 'ICBF REGIONAL QUINDIO' OR nombre_entidad = 'ICBF RISARALDA//' OR nombre_entidad = 'ICBF REGIONAL SAN ANDRES' OR nombre_entidad = 'ICBF REGIONAL SANTANDER' OR nombre_entidad = 'ICBF REGIONAL SUCRE' OR nombre_entidad = 'ICBF REGIONAL TOLIMA' OR nombre_entidad = 'ICBF REGIONAL VAUPES' OR nombre_entidad = 'ICBF REGIONAL VALLE DEL CAUCA' OR nombre_entidad = 'ICBF REGIONAL VICHADA') AND fecha_de_firma >= '2026-08-01T00:00:00' AND fecha_de_firma < '2026-08-08T00:00:00' ORDER BY fecha_de_firma DESC,valor_del_contrato DESC,id_contrato DESC,:id DESC LIMIT 1000",
+      "ordering": "total",
+      "status": "PASS",
+      "rows": 739,
+      "sha256": "b1d16f970be958c8f0a00ad915ba57d0a0d7c778031b2c38ee93d171754864e4",
+      "latency_seconds": 0.957
+    },
+    {
+      "tag": "or_count_after",
+      "soql": "SELECT count(*) AS physical_rows,count(distinct id_contrato) AS unique_ids WHERE (nombre_entidad = 'ICBF SEDE NACIONAL' OR nombre_entidad = 'ICBF REGIONAL AMAZONAS' OR nombre_entidad = 'ICBF REGIONAL ANTIOQUIA' OR nombre_entidad = 'ICBF REGIONAL ARAUCA *' OR nombre_entidad = 'ICBF REGIONAL ATLANTICO' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA' OR nombre_entidad = 'ICBF REGIONAL CALDAS' OR nombre_entidad = 'ICBF REGIONAL CAQUETA' OR nombre_entidad = 'ICBF REGIONAL CASANARE' OR nombre_entidad = 'ICBF REGIONAL CAUCA' OR nombre_entidad = 'ICBF REGIONAL CESAR' OR nombre_entidad = 'ICBF REGIONAL CHOCO' OR nombre_entidad = 'ICBF REGIONAL CORDOBA' OR nombre_entidad = 'ICBF REGIONAL CUNDINAMARCA' OR nombre_entidad = 'ICBF REGIONAL GUAINIA' OR nombre_entidad = 'ICBF REGIONAL GUAVIARE' OR nombre_entidad = 'ICBF REGIONAL HUILA' OR nombre_entidad = 'ICBF REGIONAL GUAJIRA' OR nombre_entidad = 'ICBF REGIONAL MAGDALENA' OR nombre_entidad = 'ICBF REGIONAL META' OR nombre_entidad = 'ICBF REGIONAL NARIÑO' OR nombre_entidad = 'ICBF REGIONAL NORTE DE SANTANDER' OR nombre_entidad = 'ICBF REGIONAL PUTUMAYO' OR nombre_entidad = 'ICBF REGIONAL QUINDIO' OR nombre_entidad = 'ICBF RISARALDA//' OR nombre_entidad = 'ICBF REGIONAL SAN ANDRES' OR nombre_entidad = 'ICBF REGIONAL SANTANDER' OR nombre_entidad = 'ICBF REGIONAL SUCRE' OR nombre_entidad = 'ICBF REGIONAL TOLIMA' OR nombre_entidad = 'ICBF REGIONAL VAUPES' OR nombre_entidad = 'ICBF REGIONAL VALLE DEL CAUCA' OR nombre_entidad = 'ICBF REGIONAL VICHADA') AND fecha_de_firma >= '2026-08-01T00:00:00' AND fecha_de_firma < '2026-08-08T00:00:00'",
+      "ordering": "no_preserve",
+      "status": "PASS",
+      "rows": 1,
+      "sha256": "afaf95f9369fc3b399fc20c65e49995cd016ab0296cb05fa2e2ad99979d48cae",
+      "latency_seconds": 0.179
+    }
+  ],
+  "status": "PASS",
+  "counts_before": {
+    "physical_rows": "739",
+    "unique_ids": "739"
+  },
+  "batch_physical_rows": 739,
+  "materialized_physical_rows": 739,
+  "materialized_unique_ids": 739,
+  "unstable_rows": 0,
+  "unique_physical_ids": 739,
+  "wrong_names": [],
+  "page_boundary_equal": true,
+  "counts_after": {
+    "physical_rows": "739",
+    "unique_ids": "739"
+  }
+}

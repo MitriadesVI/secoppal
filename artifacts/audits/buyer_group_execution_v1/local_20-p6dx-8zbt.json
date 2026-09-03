@@ -1,0 +1,213 @@
+{
+  "group": "local_20",
+  "dataset": "p6dx-8zbt",
+  "candidate_source_names": [
+    "ALCALDIA LOCAL DE CIUDAD BOLIVAR //",
+    "ALCALDIA LOCAL DE KENNEDY",
+    "ALCALDÍA LOCAL DE SUBA",
+    "ALCALDIA LOCAL DE SAN CRISTOBAL",
+    "FONDO DE DESARROLLO LOCAL DE BOSA",
+    "ALCALDIA LOCAL DE USME",
+    "ALCALDIA LOCAL DE ENGATIVÁ",
+    "ALCALDIA LOCAL DE USAQUEN",
+    "ALCALDIA LOCAL RAFAEL URIBE URIBE",
+    "ALCALDIA LOCAL DE FONTIBON",
+    "FONDO DE DESARROLLO LOCAL DE SANTA FE",
+    "ALCALDIA LOCAL DE SUMAPAZ",
+    "ALCALDIA LOCAL DE TUNJUELITO",
+    "ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL",
+    "ALCALDIA LOCAL DE ANTONIO NARIÑO",
+    "ALCALDIA LOCAL DE TEUSAQUILLO(oficial)",
+    "ALCALDÍA LOCAL DE BARRIOS UNIDOS",
+    "ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL",
+    "FONDO DE DESARROLLO LOCAL DE LA CANDELARIA",
+    "ALCALDIA LOCAL DE MARTIRES"
+  ],
+  "membership_status": "DISCOVERY_ONLY_NOT_RUNTIME_MEMBERSHIP",
+  "as_of": "2026-09-03T19:03:02.865624+00:00",
+  "timeout_seconds": 15,
+  "window": [
+    "2026-08-01",
+    "2026-08-08"
+  ],
+  "calls": [
+    {
+      "tag": "or_count",
+      "soql": "SELECT count(*) AS physical_rows,count(distinct id_del_proceso) AS unique_ids WHERE (entidad = 'ALCALDIA LOCAL DE CIUDAD BOLIVAR //' OR entidad = 'ALCALDIA LOCAL DE KENNEDY' OR entidad = 'ALCALDÍA LOCAL DE SUBA' OR entidad = 'ALCALDIA LOCAL DE SAN CRISTOBAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE BOSA' OR entidad = 'ALCALDIA LOCAL DE USME' OR entidad = 'ALCALDIA LOCAL DE ENGATIVÁ' OR entidad = 'ALCALDIA LOCAL DE USAQUEN' OR entidad = 'ALCALDIA LOCAL RAFAEL URIBE URIBE' OR entidad = 'ALCALDIA LOCAL DE FONTIBON' OR entidad = 'FONDO DE DESARROLLO LOCAL DE SANTA FE' OR entidad = 'ALCALDIA LOCAL DE SUMAPAZ' OR entidad = 'ALCALDIA LOCAL DE TUNJUELITO' OR entidad = 'ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL' OR entidad = 'ALCALDIA LOCAL DE ANTONIO NARIÑO' OR entidad = 'ALCALDIA LOCAL DE TEUSAQUILLO(oficial)' OR entidad = 'ALCALDÍA LOCAL DE BARRIOS UNIDOS' OR entidad = 'ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE LA CANDELARIA' OR entidad = 'ALCALDIA LOCAL DE MARTIRES') AND fecha_de_publicacion_del >= '2026-08-01T00:00:00' AND fecha_de_publicacion_del < '2026-08-08T00:00:00'",
+      "ordering": "no_preserve",
+      "status": "PASS",
+      "rows": 1,
+      "sha256": "e7b5144aaf4c797af2e2452f6e1a4bbeba6204f0ce68644c639b690b4a62d0e5",
+      "latency_seconds": 0.652
+    },
+    {
+      "tag": "all_time_count_0",
+      "soql": "SELECT count(*) AS physical_rows,count(distinct id_del_proceso) AS unique_ids WHERE (entidad = 'ALCALDIA LOCAL DE CIUDAD BOLIVAR //' OR entidad = 'ALCALDIA LOCAL DE KENNEDY' OR entidad = 'ALCALDÍA LOCAL DE SUBA' OR entidad = 'ALCALDIA LOCAL DE SAN CRISTOBAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE BOSA' OR entidad = 'ALCALDIA LOCAL DE USME' OR entidad = 'ALCALDIA LOCAL DE ENGATIVÁ' OR entidad = 'ALCALDIA LOCAL DE USAQUEN' OR entidad = 'ALCALDIA LOCAL RAFAEL URIBE URIBE' OR entidad = 'ALCALDIA LOCAL DE FONTIBON' OR entidad = 'FONDO DE DESARROLLO LOCAL DE SANTA FE' OR entidad = 'ALCALDIA LOCAL DE SUMAPAZ' OR entidad = 'ALCALDIA LOCAL DE TUNJUELITO' OR entidad = 'ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL' OR entidad = 'ALCALDIA LOCAL DE ANTONIO NARIÑO' OR entidad = 'ALCALDIA LOCAL DE TEUSAQUILLO(oficial)' OR entidad = 'ALCALDÍA LOCAL DE BARRIOS UNIDOS' OR entidad = 'ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE LA CANDELARIA' OR entidad = 'ALCALDIA LOCAL DE MARTIRES')",
+      "ordering": "no_preserve",
+      "status": "PASS",
+      "rows": 1,
+      "sha256": "f96135a1df2d7b84b9764f436d863c4d8ac0fc9478e50913d21022b77e3ea122",
+      "latency_seconds": 0.183
+    },
+    {
+      "tag": "all_time_page_0",
+      "soql": "SELECT :id AS physical_id,id_del_proceso,referencia_del_proceso,entidad,departamento_entidad,ciudad_entidad,nombre_del_procedimiento,descripci_n_del_procedimiento,tipo_de_contrato,modalidad_de_contratacion,precio_base,estado_de_apertura_del_proceso,estado_del_procedimiento,fase,estado_resumen,fecha_de_publicacion_del,fecha_de_recepcion_de,urlproceso WHERE (entidad = 'ALCALDIA LOCAL DE CIUDAD BOLIVAR //' OR entidad = 'ALCALDIA LOCAL DE KENNEDY' OR entidad = 'ALCALDÍA LOCAL DE SUBA' OR entidad = 'ALCALDIA LOCAL DE SAN CRISTOBAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE BOSA' OR entidad = 'ALCALDIA LOCAL DE USME' OR entidad = 'ALCALDIA LOCAL DE ENGATIVÁ' OR entidad = 'ALCALDIA LOCAL DE USAQUEN' OR entidad = 'ALCALDIA LOCAL RAFAEL URIBE URIBE' OR entidad = 'ALCALDIA LOCAL DE FONTIBON' OR entidad = 'FONDO DE DESARROLLO LOCAL DE SANTA FE' OR entidad = 'ALCALDIA LOCAL DE SUMAPAZ' OR entidad = 'ALCALDIA LOCAL DE TUNJUELITO' OR entidad = 'ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL' OR entidad = 'ALCALDIA LOCAL DE ANTONIO NARIÑO' OR entidad = 'ALCALDIA LOCAL DE TEUSAQUILLO(oficial)' OR entidad = 'ALCALDÍA LOCAL DE BARRIOS UNIDOS' OR entidad = 'ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE LA CANDELARIA' OR entidad = 'ALCALDIA LOCAL DE MARTIRES') ORDER BY fecha_de_publicacion_del DESC,precio_base DESC,id_del_proceso DESC,:id DESC LIMIT 500 OFFSET 500",
+      "ordering": "total",
+      "status": "PASS",
+      "rows": 500,
+      "sha256": "99484a93240a8c00a53cce542bd7bccf1cf1e183d0c1e1cba1f3475988f7e41d",
+      "latency_seconds": 0.758
+    },
+    {
+      "tag": "all_time_count_1",
+      "soql": "SELECT count(*) AS physical_rows,count(distinct id_del_proceso) AS unique_ids WHERE (entidad = 'ALCALDIA LOCAL DE CIUDAD BOLIVAR //' OR entidad = 'ALCALDIA LOCAL DE KENNEDY' OR entidad = 'ALCALDÍA LOCAL DE SUBA' OR entidad = 'ALCALDIA LOCAL DE SAN CRISTOBAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE BOSA' OR entidad = 'ALCALDIA LOCAL DE USME' OR entidad = 'ALCALDIA LOCAL DE ENGATIVÁ' OR entidad = 'ALCALDIA LOCAL DE USAQUEN' OR entidad = 'ALCALDIA LOCAL RAFAEL URIBE URIBE' OR entidad = 'ALCALDIA LOCAL DE FONTIBON' OR entidad = 'FONDO DE DESARROLLO LOCAL DE SANTA FE' OR entidad = 'ALCALDIA LOCAL DE SUMAPAZ' OR entidad = 'ALCALDIA LOCAL DE TUNJUELITO' OR entidad = 'ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL' OR entidad = 'ALCALDIA LOCAL DE ANTONIO NARIÑO' OR entidad = 'ALCALDIA LOCAL DE TEUSAQUILLO(oficial)' OR entidad = 'ALCALDÍA LOCAL DE BARRIOS UNIDOS' OR entidad = 'ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE LA CANDELARIA' OR entidad = 'ALCALDIA LOCAL DE MARTIRES')",
+      "ordering": "no_preserve",
+      "status": "PASS",
+      "rows": 1,
+      "sha256": "f96135a1df2d7b84b9764f436d863c4d8ac0fc9478e50913d21022b77e3ea122",
+      "latency_seconds": 0.17
+    },
+    {
+      "tag": "all_time_page_1",
+      "soql": "SELECT :id AS physical_id,id_del_proceso,referencia_del_proceso,entidad,departamento_entidad,ciudad_entidad,nombre_del_procedimiento,descripci_n_del_procedimiento,tipo_de_contrato,modalidad_de_contratacion,precio_base,estado_de_apertura_del_proceso,estado_del_procedimiento,fase,estado_resumen,fecha_de_publicacion_del,fecha_de_recepcion_de,urlproceso WHERE (entidad = 'ALCALDIA LOCAL DE CIUDAD BOLIVAR //' OR entidad = 'ALCALDIA LOCAL DE KENNEDY' OR entidad = 'ALCALDÍA LOCAL DE SUBA' OR entidad = 'ALCALDIA LOCAL DE SAN CRISTOBAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE BOSA' OR entidad = 'ALCALDIA LOCAL DE USME' OR entidad = 'ALCALDIA LOCAL DE ENGATIVÁ' OR entidad = 'ALCALDIA LOCAL DE USAQUEN' OR entidad = 'ALCALDIA LOCAL RAFAEL URIBE URIBE' OR entidad = 'ALCALDIA LOCAL DE FONTIBON' OR entidad = 'FONDO DE DESARROLLO LOCAL DE SANTA FE' OR entidad = 'ALCALDIA LOCAL DE SUMAPAZ' OR entidad = 'ALCALDIA LOCAL DE TUNJUELITO' OR entidad = 'ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL' OR entidad = 'ALCALDIA LOCAL DE ANTONIO NARIÑO' OR entidad = 'ALCALDIA LOCAL DE TEUSAQUILLO(oficial)' OR entidad = 'ALCALDÍA LOCAL DE BARRIOS UNIDOS' OR entidad = 'ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE LA CANDELARIA' OR entidad = 'ALCALDIA LOCAL DE MARTIRES') ORDER BY fecha_de_publicacion_del DESC,precio_base DESC,id_del_proceso DESC,:id DESC LIMIT 500 OFFSET 500",
+      "ordering": "total",
+      "status": "PASS",
+      "rows": 500,
+      "sha256": "99484a93240a8c00a53cce542bd7bccf1cf1e183d0c1e1cba1f3475988f7e41d",
+      "latency_seconds": 0.402
+    },
+    {
+      "tag": "all_time_count_2",
+      "soql": "SELECT count(*) AS physical_rows,count(distinct id_del_proceso) AS unique_ids WHERE (entidad = 'ALCALDIA LOCAL DE CIUDAD BOLIVAR //' OR entidad = 'ALCALDIA LOCAL DE KENNEDY' OR entidad = 'ALCALDÍA LOCAL DE SUBA' OR entidad = 'ALCALDIA LOCAL DE SAN CRISTOBAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE BOSA' OR entidad = 'ALCALDIA LOCAL DE USME' OR entidad = 'ALCALDIA LOCAL DE ENGATIVÁ' OR entidad = 'ALCALDIA LOCAL DE USAQUEN' OR entidad = 'ALCALDIA LOCAL RAFAEL URIBE URIBE' OR entidad = 'ALCALDIA LOCAL DE FONTIBON' OR entidad = 'FONDO DE DESARROLLO LOCAL DE SANTA FE' OR entidad = 'ALCALDIA LOCAL DE SUMAPAZ' OR entidad = 'ALCALDIA LOCAL DE TUNJUELITO' OR entidad = 'ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL' OR entidad = 'ALCALDIA LOCAL DE ANTONIO NARIÑO' OR entidad = 'ALCALDIA LOCAL DE TEUSAQUILLO(oficial)' OR entidad = 'ALCALDÍA LOCAL DE BARRIOS UNIDOS' OR entidad = 'ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE LA CANDELARIA' OR entidad = 'ALCALDIA LOCAL DE MARTIRES')",
+      "ordering": "no_preserve",
+      "status": "PASS",
+      "rows": 1,
+      "sha256": "f96135a1df2d7b84b9764f436d863c4d8ac0fc9478e50913d21022b77e3ea122",
+      "latency_seconds": 0.2
+    },
+    {
+      "tag": "all_time_page_2",
+      "soql": "SELECT :id AS physical_id,id_del_proceso,referencia_del_proceso,entidad,departamento_entidad,ciudad_entidad,nombre_del_procedimiento,descripci_n_del_procedimiento,tipo_de_contrato,modalidad_de_contratacion,precio_base,estado_de_apertura_del_proceso,estado_del_procedimiento,fase,estado_resumen,fecha_de_publicacion_del,fecha_de_recepcion_de,urlproceso WHERE (entidad = 'ALCALDIA LOCAL DE CIUDAD BOLIVAR //' OR entidad = 'ALCALDIA LOCAL DE KENNEDY' OR entidad = 'ALCALDÍA LOCAL DE SUBA' OR entidad = 'ALCALDIA LOCAL DE SAN CRISTOBAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE BOSA' OR entidad = 'ALCALDIA LOCAL DE USME' OR entidad = 'ALCALDIA LOCAL DE ENGATIVÁ' OR entidad = 'ALCALDIA LOCAL DE USAQUEN' OR entidad = 'ALCALDIA LOCAL RAFAEL URIBE URIBE' OR entidad = 'ALCALDIA LOCAL DE FONTIBON' OR entidad = 'FONDO DE DESARROLLO LOCAL DE SANTA FE' OR entidad = 'ALCALDIA LOCAL DE SUMAPAZ' OR entidad = 'ALCALDIA LOCAL DE TUNJUELITO' OR entidad = 'ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL' OR entidad = 'ALCALDIA LOCAL DE ANTONIO NARIÑO' OR entidad = 'ALCALDIA LOCAL DE TEUSAQUILLO(oficial)' OR entidad = 'ALCALDÍA LOCAL DE BARRIOS UNIDOS' OR entidad = 'ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE LA CANDELARIA' OR entidad = 'ALCALDIA LOCAL DE MARTIRES') ORDER BY fecha_de_publicacion_del DESC,precio_base DESC,id_del_proceso DESC,:id DESC LIMIT 500 OFFSET 500",
+      "ordering": "total",
+      "status": "PASS",
+      "rows": 500,
+      "sha256": "99484a93240a8c00a53cce542bd7bccf1cf1e183d0c1e1cba1f3475988f7e41d",
+      "latency_seconds": 0.377
+    },
+    {
+      "tag": "2026_count_0",
+      "soql": "SELECT count(*) AS physical_rows,count(distinct id_del_proceso) AS unique_ids WHERE (entidad = 'ALCALDIA LOCAL DE CIUDAD BOLIVAR //' OR entidad = 'ALCALDIA LOCAL DE KENNEDY' OR entidad = 'ALCALDÍA LOCAL DE SUBA' OR entidad = 'ALCALDIA LOCAL DE SAN CRISTOBAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE BOSA' OR entidad = 'ALCALDIA LOCAL DE USME' OR entidad = 'ALCALDIA LOCAL DE ENGATIVÁ' OR entidad = 'ALCALDIA LOCAL DE USAQUEN' OR entidad = 'ALCALDIA LOCAL RAFAEL URIBE URIBE' OR entidad = 'ALCALDIA LOCAL DE FONTIBON' OR entidad = 'FONDO DE DESARROLLO LOCAL DE SANTA FE' OR entidad = 'ALCALDIA LOCAL DE SUMAPAZ' OR entidad = 'ALCALDIA LOCAL DE TUNJUELITO' OR entidad = 'ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL' OR entidad = 'ALCALDIA LOCAL DE ANTONIO NARIÑO' OR entidad = 'ALCALDIA LOCAL DE TEUSAQUILLO(oficial)' OR entidad = 'ALCALDÍA LOCAL DE BARRIOS UNIDOS' OR entidad = 'ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE LA CANDELARIA' OR entidad = 'ALCALDIA LOCAL DE MARTIRES') AND fecha_de_publicacion_del >= '2026-01-01T00:00:00' AND fecha_de_publicacion_del < '2027-01-01T00:00:00'",
+      "ordering": "no_preserve",
+      "status": "PASS",
+      "rows": 1,
+      "sha256": "b550a55e3a17f60d3dfef391d0d0e60eb6e7f5e19b1a312904016066578acc18",
+      "latency_seconds": 0.167
+    },
+    {
+      "tag": "2026_page_0",
+      "soql": "SELECT :id AS physical_id,id_del_proceso,referencia_del_proceso,entidad,departamento_entidad,ciudad_entidad,nombre_del_procedimiento,descripci_n_del_procedimiento,tipo_de_contrato,modalidad_de_contratacion,precio_base,estado_de_apertura_del_proceso,estado_del_procedimiento,fase,estado_resumen,fecha_de_publicacion_del,fecha_de_recepcion_de,urlproceso WHERE (entidad = 'ALCALDIA LOCAL DE CIUDAD BOLIVAR //' OR entidad = 'ALCALDIA LOCAL DE KENNEDY' OR entidad = 'ALCALDÍA LOCAL DE SUBA' OR entidad = 'ALCALDIA LOCAL DE SAN CRISTOBAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE BOSA' OR entidad = 'ALCALDIA LOCAL DE USME' OR entidad = 'ALCALDIA LOCAL DE ENGATIVÁ' OR entidad = 'ALCALDIA LOCAL DE USAQUEN' OR entidad = 'ALCALDIA LOCAL RAFAEL URIBE URIBE' OR entidad = 'ALCALDIA LOCAL DE FONTIBON' OR entidad = 'FONDO DE DESARROLLO LOCAL DE SANTA FE' OR entidad = 'ALCALDIA LOCAL DE SUMAPAZ' OR entidad = 'ALCALDIA LOCAL DE TUNJUELITO' OR entidad = 'ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL' OR entidad = 'ALCALDIA LOCAL DE ANTONIO NARIÑO' OR entidad = 'ALCALDIA LOCAL DE TEUSAQUILLO(oficial)' OR entidad = 'ALCALDÍA LOCAL DE BARRIOS UNIDOS' OR entidad = 'ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE LA CANDELARIA' OR entidad = 'ALCALDIA LOCAL DE MARTIRES') AND fecha_de_publicacion_del >= '2026-01-01T00:00:00' AND fecha_de_publicacion_del < '2027-01-01T00:00:00' ORDER BY fecha_de_publicacion_del DESC,precio_base DESC,id_del_proceso DESC,:id DESC LIMIT 500 OFFSET 500",
+      "ordering": "total",
+      "status": "PASS",
+      "rows": 500,
+      "sha256": "cf4d9ba5b8bf7ce8a0474dfe5f40dac4f346dd3ac76ed62aabfd572f862d3184",
+      "latency_seconds": 1.013
+    },
+    {
+      "tag": "2026_count_1",
+      "soql": "SELECT count(*) AS physical_rows,count(distinct id_del_proceso) AS unique_ids WHERE (entidad = 'ALCALDIA LOCAL DE CIUDAD BOLIVAR //' OR entidad = 'ALCALDIA LOCAL DE KENNEDY' OR entidad = 'ALCALDÍA LOCAL DE SUBA' OR entidad = 'ALCALDIA LOCAL DE SAN CRISTOBAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE BOSA' OR entidad = 'ALCALDIA LOCAL DE USME' OR entidad = 'ALCALDIA LOCAL DE ENGATIVÁ' OR entidad = 'ALCALDIA LOCAL DE USAQUEN' OR entidad = 'ALCALDIA LOCAL RAFAEL URIBE URIBE' OR entidad = 'ALCALDIA LOCAL DE FONTIBON' OR entidad = 'FONDO DE DESARROLLO LOCAL DE SANTA FE' OR entidad = 'ALCALDIA LOCAL DE SUMAPAZ' OR entidad = 'ALCALDIA LOCAL DE TUNJUELITO' OR entidad = 'ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL' OR entidad = 'ALCALDIA LOCAL DE ANTONIO NARIÑO' OR entidad = 'ALCALDIA LOCAL DE TEUSAQUILLO(oficial)' OR entidad = 'ALCALDÍA LOCAL DE BARRIOS UNIDOS' OR entidad = 'ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE LA CANDELARIA' OR entidad = 'ALCALDIA LOCAL DE MARTIRES') AND fecha_de_publicacion_del >= '2026-01-01T00:00:00' AND fecha_de_publicacion_del < '2027-01-01T00:00:00'",
+      "ordering": "no_preserve",
+      "status": "PASS",
+      "rows": 1,
+      "sha256": "b550a55e3a17f60d3dfef391d0d0e60eb6e7f5e19b1a312904016066578acc18",
+      "latency_seconds": 0.156
+    },
+    {
+      "tag": "2026_page_1",
+      "soql": "SELECT :id AS physical_id,id_del_proceso,referencia_del_proceso,entidad,departamento_entidad,ciudad_entidad,nombre_del_procedimiento,descripci_n_del_procedimiento,tipo_de_contrato,modalidad_de_contratacion,precio_base,estado_de_apertura_del_proceso,estado_del_procedimiento,fase,estado_resumen,fecha_de_publicacion_del,fecha_de_recepcion_de,urlproceso WHERE (entidad = 'ALCALDIA LOCAL DE CIUDAD BOLIVAR //' OR entidad = 'ALCALDIA LOCAL DE KENNEDY' OR entidad = 'ALCALDÍA LOCAL DE SUBA' OR entidad = 'ALCALDIA LOCAL DE SAN CRISTOBAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE BOSA' OR entidad = 'ALCALDIA LOCAL DE USME' OR entidad = 'ALCALDIA LOCAL DE ENGATIVÁ' OR entidad = 'ALCALDIA LOCAL DE USAQUEN' OR entidad = 'ALCALDIA LOCAL RAFAEL URIBE URIBE' OR entidad = 'ALCALDIA LOCAL DE FONTIBON' OR entidad = 'FONDO DE DESARROLLO LOCAL DE SANTA FE' OR entidad = 'ALCALDIA LOCAL DE SUMAPAZ' OR entidad = 'ALCALDIA LOCAL DE TUNJUELITO' OR entidad = 'ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL' OR entidad = 'ALCALDIA LOCAL DE ANTONIO NARIÑO' OR entidad = 'ALCALDIA LOCAL DE TEUSAQUILLO(oficial)' OR entidad = 'ALCALDÍA LOCAL DE BARRIOS UNIDOS' OR entidad = 'ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE LA CANDELARIA' OR entidad = 'ALCALDIA LOCAL DE MARTIRES') AND fecha_de_publicacion_del >= '2026-01-01T00:00:00' AND fecha_de_publicacion_del < '2027-01-01T00:00:00' ORDER BY fecha_de_publicacion_del DESC,precio_base DESC,id_del_proceso DESC,:id DESC LIMIT 500 OFFSET 500",
+      "ordering": "total",
+      "status": "PASS",
+      "rows": 500,
+      "sha256": "cf4d9ba5b8bf7ce8a0474dfe5f40dac4f346dd3ac76ed62aabfd572f862d3184",
+      "latency_seconds": 0.357
+    },
+    {
+      "tag": "2026_count_2",
+      "soql": "SELECT count(*) AS physical_rows,count(distinct id_del_proceso) AS unique_ids WHERE (entidad = 'ALCALDIA LOCAL DE CIUDAD BOLIVAR //' OR entidad = 'ALCALDIA LOCAL DE KENNEDY' OR entidad = 'ALCALDÍA LOCAL DE SUBA' OR entidad = 'ALCALDIA LOCAL DE SAN CRISTOBAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE BOSA' OR entidad = 'ALCALDIA LOCAL DE USME' OR entidad = 'ALCALDIA LOCAL DE ENGATIVÁ' OR entidad = 'ALCALDIA LOCAL DE USAQUEN' OR entidad = 'ALCALDIA LOCAL RAFAEL URIBE URIBE' OR entidad = 'ALCALDIA LOCAL DE FONTIBON' OR entidad = 'FONDO DE DESARROLLO LOCAL DE SANTA FE' OR entidad = 'ALCALDIA LOCAL DE SUMAPAZ' OR entidad = 'ALCALDIA LOCAL DE TUNJUELITO' OR entidad = 'ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL' OR entidad = 'ALCALDIA LOCAL DE ANTONIO NARIÑO' OR entidad = 'ALCALDIA LOCAL DE TEUSAQUILLO(oficial)' OR entidad = 'ALCALDÍA LOCAL DE BARRIOS UNIDOS' OR entidad = 'ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE LA CANDELARIA' OR entidad = 'ALCALDIA LOCAL DE MARTIRES') AND fecha_de_publicacion_del >= '2026-01-01T00:00:00' AND fecha_de_publicacion_del < '2027-01-01T00:00:00'",
+      "ordering": "no_preserve",
+      "status": "PASS",
+      "rows": 1,
+      "sha256": "b550a55e3a17f60d3dfef391d0d0e60eb6e7f5e19b1a312904016066578acc18",
+      "latency_seconds": 0.164
+    },
+    {
+      "tag": "2026_page_2",
+      "soql": "SELECT :id AS physical_id,id_del_proceso,referencia_del_proceso,entidad,departamento_entidad,ciudad_entidad,nombre_del_procedimiento,descripci_n_del_procedimiento,tipo_de_contrato,modalidad_de_contratacion,precio_base,estado_de_apertura_del_proceso,estado_del_procedimiento,fase,estado_resumen,fecha_de_publicacion_del,fecha_de_recepcion_de,urlproceso WHERE (entidad = 'ALCALDIA LOCAL DE CIUDAD BOLIVAR //' OR entidad = 'ALCALDIA LOCAL DE KENNEDY' OR entidad = 'ALCALDÍA LOCAL DE SUBA' OR entidad = 'ALCALDIA LOCAL DE SAN CRISTOBAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE BOSA' OR entidad = 'ALCALDIA LOCAL DE USME' OR entidad = 'ALCALDIA LOCAL DE ENGATIVÁ' OR entidad = 'ALCALDIA LOCAL DE USAQUEN' OR entidad = 'ALCALDIA LOCAL RAFAEL URIBE URIBE' OR entidad = 'ALCALDIA LOCAL DE FONTIBON' OR entidad = 'FONDO DE DESARROLLO LOCAL DE SANTA FE' OR entidad = 'ALCALDIA LOCAL DE SUMAPAZ' OR entidad = 'ALCALDIA LOCAL DE TUNJUELITO' OR entidad = 'ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL' OR entidad = 'ALCALDIA LOCAL DE ANTONIO NARIÑO' OR entidad = 'ALCALDIA LOCAL DE TEUSAQUILLO(oficial)' OR entidad = 'ALCALDÍA LOCAL DE BARRIOS UNIDOS' OR entidad = 'ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE LA CANDELARIA' OR entidad = 'ALCALDIA LOCAL DE MARTIRES') AND fecha_de_publicacion_del >= '2026-01-01T00:00:00' AND fecha_de_publicacion_del < '2027-01-01T00:00:00' ORDER BY fecha_de_publicacion_del DESC,precio_base DESC,id_del_proceso DESC,:id DESC LIMIT 500 OFFSET 500",
+      "ordering": "total",
+      "status": "PASS",
+      "rows": 500,
+      "sha256": "cf4d9ba5b8bf7ce8a0474dfe5f40dac4f346dd3ac76ed62aabfd572f862d3184",
+      "latency_seconds": 0.291
+    },
+    {
+      "tag": "batch_count",
+      "soql": "SELECT count(*) AS physical_rows WHERE (entidad = 'ALCALDIA LOCAL DE CIUDAD BOLIVAR //' OR entidad = 'ALCALDIA LOCAL DE KENNEDY' OR entidad = 'ALCALDÍA LOCAL DE SUBA' OR entidad = 'ALCALDIA LOCAL DE SAN CRISTOBAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE BOSA' OR entidad = 'ALCALDIA LOCAL DE USME' OR entidad = 'ALCALDIA LOCAL DE ENGATIVÁ' OR entidad = 'ALCALDIA LOCAL DE USAQUEN' OR entidad = 'ALCALDIA LOCAL RAFAEL URIBE URIBE' OR entidad = 'ALCALDIA LOCAL DE FONTIBON') AND fecha_de_publicacion_del >= '2026-08-01T00:00:00' AND fecha_de_publicacion_del < '2026-08-08T00:00:00'",
+      "ordering": "no_preserve",
+      "status": "PASS",
+      "rows": 1,
+      "sha256": "e4314e11f3c337192bf21fd96aa82b90d023f102ec925493fa500613810d46f5",
+      "latency_seconds": 0.214
+    },
+    {
+      "tag": "batch_count",
+      "soql": "SELECT count(*) AS physical_rows WHERE (entidad = 'FONDO DE DESARROLLO LOCAL DE SANTA FE' OR entidad = 'ALCALDIA LOCAL DE SUMAPAZ' OR entidad = 'ALCALDIA LOCAL DE TUNJUELITO' OR entidad = 'ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL' OR entidad = 'ALCALDIA LOCAL DE ANTONIO NARIÑO' OR entidad = 'ALCALDIA LOCAL DE TEUSAQUILLO(oficial)' OR entidad = 'ALCALDÍA LOCAL DE BARRIOS UNIDOS' OR entidad = 'ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE LA CANDELARIA' OR entidad = 'ALCALDIA LOCAL DE MARTIRES') AND fecha_de_publicacion_del >= '2026-08-01T00:00:00' AND fecha_de_publicacion_del < '2026-08-08T00:00:00'",
+      "ordering": "no_preserve",
+      "status": "PASS",
+      "rows": 1,
+      "sha256": "a556244cf2d1326b420ed24c4f11a7cbda24b0d7298d89ac10a5265acf55c0fd",
+      "latency_seconds": 0.181
+    },
+    {
+      "tag": "or_page",
+      "soql": "SELECT :id AS physical_id,id_del_proceso,referencia_del_proceso,entidad,departamento_entidad,ciudad_entidad,nombre_del_procedimiento,descripci_n_del_procedimiento,tipo_de_contrato,modalidad_de_contratacion,precio_base,estado_de_apertura_del_proceso,estado_del_procedimiento,fase,estado_resumen,fecha_de_publicacion_del,fecha_de_recepcion_de,urlproceso WHERE (entidad = 'ALCALDIA LOCAL DE CIUDAD BOLIVAR //' OR entidad = 'ALCALDIA LOCAL DE KENNEDY' OR entidad = 'ALCALDÍA LOCAL DE SUBA' OR entidad = 'ALCALDIA LOCAL DE SAN CRISTOBAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE BOSA' OR entidad = 'ALCALDIA LOCAL DE USME' OR entidad = 'ALCALDIA LOCAL DE ENGATIVÁ' OR entidad = 'ALCALDIA LOCAL DE USAQUEN' OR entidad = 'ALCALDIA LOCAL RAFAEL URIBE URIBE' OR entidad = 'ALCALDIA LOCAL DE FONTIBON' OR entidad = 'FONDO DE DESARROLLO LOCAL DE SANTA FE' OR entidad = 'ALCALDIA LOCAL DE SUMAPAZ' OR entidad = 'ALCALDIA LOCAL DE TUNJUELITO' OR entidad = 'ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL' OR entidad = 'ALCALDIA LOCAL DE ANTONIO NARIÑO' OR entidad = 'ALCALDIA LOCAL DE TEUSAQUILLO(oficial)' OR entidad = 'ALCALDÍA LOCAL DE BARRIOS UNIDOS' OR entidad = 'ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE LA CANDELARIA' OR entidad = 'ALCALDIA LOCAL DE MARTIRES') AND fecha_de_publicacion_del >= '2026-08-01T00:00:00' AND fecha_de_publicacion_del < '2026-08-08T00:00:00' ORDER BY fecha_de_publicacion_del DESC,precio_base DESC,id_del_proceso DESC,:id DESC LIMIT 500 OFFSET 0",
+      "ordering": "total",
+      "status": "PASS",
+      "rows": 91,
+      "sha256": "7542f564801f807fdb888f77ba22fb9c0fd3c5179b46fa6ff993db13655ef96f",
+      "latency_seconds": 0.201
+    },
+    {
+      "tag": "page_boundary_replay",
+      "soql": "SELECT :id AS physical_id,id_del_proceso,referencia_del_proceso,entidad,departamento_entidad,ciudad_entidad,nombre_del_procedimiento,descripci_n_del_procedimiento,tipo_de_contrato,modalidad_de_contratacion,precio_base,estado_de_apertura_del_proceso,estado_del_procedimiento,fase,estado_resumen,fecha_de_publicacion_del,fecha_de_recepcion_de,urlproceso WHERE (entidad = 'ALCALDIA LOCAL DE CIUDAD BOLIVAR //' OR entidad = 'ALCALDIA LOCAL DE KENNEDY' OR entidad = 'ALCALDÍA LOCAL DE SUBA' OR entidad = 'ALCALDIA LOCAL DE SAN CRISTOBAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE BOSA' OR entidad = 'ALCALDIA LOCAL DE USME' OR entidad = 'ALCALDIA LOCAL DE ENGATIVÁ' OR entidad = 'ALCALDIA LOCAL DE USAQUEN' OR entidad = 'ALCALDIA LOCAL RAFAEL URIBE URIBE' OR entidad = 'ALCALDIA LOCAL DE FONTIBON' OR entidad = 'FONDO DE DESARROLLO LOCAL DE SANTA FE' OR entidad = 'ALCALDIA LOCAL DE SUMAPAZ' OR entidad = 'ALCALDIA LOCAL DE TUNJUELITO' OR entidad = 'ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL' OR entidad = 'ALCALDIA LOCAL DE ANTONIO NARIÑO' OR entidad = 'ALCALDIA LOCAL DE TEUSAQUILLO(oficial)' OR entidad = 'ALCALDÍA LOCAL DE BARRIOS UNIDOS' OR entidad = 'ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE LA CANDELARIA' OR entidad = 'ALCALDIA LOCAL DE MARTIRES') AND fecha_de_publicacion_del >= '2026-08-01T00:00:00' AND fecha_de_publicacion_del < '2026-08-08T00:00:00' ORDER BY fecha_de_publicacion_del DESC,precio_base DESC,id_del_proceso DESC,:id DESC LIMIT 1000",
+      "ordering": "total",
+      "status": "PASS",
+      "rows": 91,
+      "sha256": "7542f564801f807fdb888f77ba22fb9c0fd3c5179b46fa6ff993db13655ef96f",
+      "latency_seconds": 0.195
+    },
+    {
+      "tag": "or_count_after",
+      "soql": "SELECT count(*) AS physical_rows,count(distinct id_del_proceso) AS unique_ids WHERE (entidad = 'ALCALDIA LOCAL DE CIUDAD BOLIVAR //' OR entidad = 'ALCALDIA LOCAL DE KENNEDY' OR entidad = 'ALCALDÍA LOCAL DE SUBA' OR entidad = 'ALCALDIA LOCAL DE SAN CRISTOBAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE BOSA' OR entidad = 'ALCALDIA LOCAL DE USME' OR entidad = 'ALCALDIA LOCAL DE ENGATIVÁ' OR entidad = 'ALCALDIA LOCAL DE USAQUEN' OR entidad = 'ALCALDIA LOCAL RAFAEL URIBE URIBE' OR entidad = 'ALCALDIA LOCAL DE FONTIBON' OR entidad = 'FONDO DE DESARROLLO LOCAL DE SANTA FE' OR entidad = 'ALCALDIA LOCAL DE SUMAPAZ' OR entidad = 'ALCALDIA LOCAL DE TUNJUELITO' OR entidad = 'ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL' OR entidad = 'ALCALDIA LOCAL DE ANTONIO NARIÑO' OR entidad = 'ALCALDIA LOCAL DE TEUSAQUILLO(oficial)' OR entidad = 'ALCALDÍA LOCAL DE BARRIOS UNIDOS' OR entidad = 'ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE LA CANDELARIA' OR entidad = 'ALCALDIA LOCAL DE MARTIRES') AND fecha_de_publicacion_del >= '2026-08-01T00:00:00' AND fecha_de_publicacion_del < '2026-08-08T00:00:00'",
+      "ordering": "no_preserve",
+      "status": "PASS",
+      "rows": 1,
+      "sha256": "e7b5144aaf4c797af2e2452f6e1a4bbeba6204f0ce68644c639b690b4a62d0e5",
+      "latency_seconds": 0.19
+    }
+  ],
+  "status": "PASS",
+  "counts_before": {
+    "physical_rows": "91",
+    "unique_ids": "90"
+  },
+  "batch_physical_rows": 91,
+  "materialized_physical_rows": 91,
+  "materialized_unique_ids": 90,
+  "unstable_rows": 0,
+  "unique_physical_ids": 91,
+  "wrong_names": [],
+  "page_boundary_equal": true,
+  "counts_after": {
+    "physical_rows": "91",
+    "unique_ids": "90"
+  }
+}

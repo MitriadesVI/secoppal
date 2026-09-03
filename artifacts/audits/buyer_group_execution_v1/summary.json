@@ -1,0 +1,82 @@
+{
+  "audit": "BUYER_GROUP_EXECUTION_STRATEGY_V1",
+  "status": "PASS",
+  "strategy": "EXACT_OR_SINGLE_GLOBAL_ORDER",
+  "full_materialization_scope": [
+    "2026-08-01",
+    "2026-08-08"
+  ],
+  "wide_windows": [
+    "all_time",
+    "2026"
+  ],
+  "source": "artifacts/audits/institutional_buyer_model_p01.json",
+  "membership_caveat": "19/39 count physical source names; Salud is a two-dataset source pair, not two accredited BuyerUnits.",
+  "cases": [
+    {
+      "group": "icbf_33",
+      "dataset": "p6dx-8zbt",
+      "status": "PASS",
+      "materialized_physical_rows": 652,
+      "materialized_unique_ids": 650,
+      "page_boundary_equal": true
+    },
+    {
+      "group": "icbf_33",
+      "dataset": "jbjy-vk9h",
+      "status": "PASS",
+      "materialized_physical_rows": 739,
+      "materialized_unique_ids": 739,
+      "page_boundary_equal": true
+    },
+    {
+      "group": "central_19_source_names",
+      "dataset": "p6dx-8zbt",
+      "status": "PASS",
+      "materialized_physical_rows": 910,
+      "materialized_unique_ids": 903,
+      "page_boundary_equal": true
+    },
+    {
+      "group": "central_19_source_names",
+      "dataset": "jbjy-vk9h",
+      "status": "PASS",
+      "materialized_physical_rows": 948,
+      "materialized_unique_ids": 948,
+      "page_boundary_equal": true
+    },
+    {
+      "group": "local_20",
+      "dataset": "p6dx-8zbt",
+      "status": "PASS",
+      "materialized_physical_rows": 91,
+      "materialized_unique_ids": 90,
+      "page_boundary_equal": true
+    },
+    {
+      "group": "local_20",
+      "dataset": "jbjy-vk9h",
+      "status": "PASS",
+      "materialized_physical_rows": 98,
+      "materialized_unique_ids": 98,
+      "page_boundary_equal": true
+    },
+    {
+      "group": "executive_39_source_names",
+      "dataset": "p6dx-8zbt",
+      "status": "PASS",
+      "materialized_physical_rows": 1001,
+      "materialized_unique_ids": 993,
+      "page_boundary_equal": true
+    },
+    {
+      "group": "executive_39_source_names",
+      "dataset": "jbjy-vk9h",
+      "status": "PASS",
+      "materialized_physical_rows": 1046,
+      "materialized_unique_ids": 1046,
+      "page_boundary_equal": true
+    }
+  ],
+  "runtime_changed": false
+}
