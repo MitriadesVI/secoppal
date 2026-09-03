@@ -258,12 +258,31 @@ def test_dapre_projection_reaches_analytics_builders(builder):
         assert "entidad = 'DAPRE'" in soql, method
 
 
+# Los cuatro splits que V1 confirmó y dejó en REVIEW. Siguen sin binding: la
+# evidencia alcanzó para nombrarlos, no para proyectarlos.
+V1_REVIEW_CANONICALS = (
+    "MUNICIPIO DE SOACHA",
+    "MUNICIPIO DE YOPAL",
+    "FONDO FINANCIERO DISTRITAL DE SALUD",
+    "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS",
+)
+
+
 def test_sidecar_keeps_v1_dapre_and_accumulates_reviewed_bindings():
-    """El sidecar es acumulativo; Soacha/Yopal/FFDS/UAESP siguen abiertos."""
+    """El sidecar es acumulativo; Soacha/Yopal/FFDS/UAESP siguen abiertos.
+
+    El oráculo es de pertenencia, no de censo: afirmar un total obliga a cada
+    lote posterior a editar este archivo, y ese conteo nunca fue lo que V1
+    quiso proteger. Lo que V1 protege es que DAPRE siga proyectando y que los
+    cuatro splits confirmados sigan sin binding.
+    """
     registry = load_registry()
-    assert len(registry) == 5
     assert registry.project(DAPRE_CANONICAL, PROCESOS) == ("DAPRE",)
     assert registry.project("MUNICIPIO DE SOACHA.", PROCESOS) is None
+    for canonical in V1_REVIEW_CANONICALS:
+        assert registry.binding_for(canonical) is None, canonical
+        assert registry.project(canonical, PROCESOS) is None
+        assert registry.project(canonical, CONTRATOS) is None
 
 
 def test_project_buyer_names_is_accent_and_case_insensitive_on_the_lookup():
@@ -459,8 +478,10 @@ def test_dapre_provenance_is_not_the_university_pilot():
 
 def test_no_binding_lacks_provenance():
     registry = load_registry()
-    assert len(registry.bindings()) == 5
-    for binding in registry.bindings():
+    bindings = registry.bindings()
+    # Sin este piso, un sidecar vacío pasaría el bucle sin probar nada.
+    assert {binding.canonical_name for binding in bindings} >= set(EXPECTED_EVIDENCE)
+    for binding in bindings:
         assert binding.evidence.strip(), binding.canonical_name
 
 

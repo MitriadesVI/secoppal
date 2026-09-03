@@ -222,9 +222,11 @@ def test_sidecar_binds_each_identity_to_its_own_artifact() -> None:
     assert payload["schema_version"] == 2
     assert payload["authority"] == "ADR-073"
     assert "evidence" not in payload
-    assert len(payload["bindings"]) == 5
 
     by_canonical = {row["canonical_name"]: row for row in payload["bindings"]}
+    # Pertenencia, no censo: un lote posterior puede sumar bindings sin que eso
+    # sea una regresión de este piloto. Lo que no puede es tocar estos cuatro.
+    assert set(by_canonical) >= set(SOURCE_BINDINGS) | {DAPRE}
     for canonical in SOURCE_BINDINGS:
         assert by_canonical[canonical]["evidence"] == R2FA_ARTIFACT
 
@@ -237,9 +239,13 @@ def test_pilot_artifact_does_not_accredit_bindings_from_other_batches() -> None:
         for row in payload["bindings"]
         if row["canonical_name"] not in SOURCE_BINDINGS
     ]
-    assert [row["canonical_name"] for row in foreign] == [DAPRE]
+    assert DAPRE in {row["canonical_name"] for row in foreign}
 
     artifact = ARTIFACT.read_text(encoding="utf-8")
     assert "DAPRE" not in artifact
     assert "899999083" not in artifact
-    assert foreign[0]["evidence"] != R2FA_ARTIFACT
+    # La afirmación invertida es la fuerte y la que no caduca: NINGÚN binding
+    # ajeno al piloto —ni DAPRE ni los que lleguen después— puede adjudicarse
+    # este artefacto, porque este artefacto no los acredita.
+    for row in foreign:
+        assert row["evidence"] != R2FA_ARTIFACT, row["canonical_name"]
