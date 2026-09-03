@@ -177,3 +177,61 @@ Focales: 24 y 55 passed. Corpus: 89/89. Ruff y `make lint-core`: PASS.
 Suite completa: **10858 passed, 2 skipped, 14 xfailed**, 431,12 segundos.
 No se modifica identidad ni deduplicación. Cierre de G completo, incluyendo
 veracidad de agregados y alcance explícito de sus conteos.
+
+## H — MUNICIPAL_M0
+
+Estado: **PARTIAL**. Extracción bulk, conciliación, reproducción offline y
+derivación de propuestas: PASS. La afiliación municipal de todo el residuo
+territorial sigue sin adjudicar; no existe un porcentaje global exacto defendible
+ni se convierten cuentas, nombres o NIT en un denominador ficticio de BuyerUnits.
+
+Fuentes: DIVIPOLA 2025 (1.103 municipios/distritos), directorio SECOP II,
+6.300 registros SIGEP exportados completamente, registro Bogotá acreditado y
+actividad `[2025-09-03, 2026-09-03)`. Los agregados concilian 1.885.602 filas /
+1.819.018 procesos únicos y 1.095.013 filas / contratos únicos. El reintento
+del agregado de contratos y las 58 consultas históricas por lotes conservan su
+SoQL, resultados y limitaciones en las capturas.
+
+Se acreditó actividad municipal en **607 territorios**; **70** tienen alcance
+comprobado mediante **119 BuyerUnits** existentes. Cobertura comprobada de la
+cohorte acreditada: **58,09% de procesos únicos** y **60,38% de contratos únicos**.
+No son porcentajes del universo municipal completo. El residuo pendiente es
+**961.133 procesos únicos** y **429.291 contratos únicos**, mezclando afiliaciones
+posibles; sus cotas y perfiles quedan publicados para la siguiente adjudicación.
+
+**503 ejecutivos municipales** son derivables con la regla conservadora:
+498 unidades nuevas y cinco ampliaciones de alias; equivalen a **501 territorios
+adicionales**. Los 1.888 alias se validaron conjuntamente en un catálogo temporal,
+con propietario único y cero fallos. Se comprobaron nombre/cuenta/evidencia fiscal
+en ambos datasets y en el histórico, sin merge por NIT. No se aplicó ninguna
+propuesta en producción. Baranoa entra por esa misma regla: 381 filas / 380
+procesos únicos y 374 contratos únicos, sin excepción en el algoritmo.
+
+Artefactos: `artifacts/audits/municipal_m0_v1/`. Informe:
+`docs/gazetteer/MUNICIPAL_M0_V1.md`. Focales: **6 passed**. Reproducción completa
+offline: **idéntica**, incluyendo todas las propuestas. Corpus: **89/89**.
+Ruff y `make lint-core`: PASS. La suite completa vigente es la de G2,
+**10858 passed, 2 skipped, 14 xfailed**, e incluye los canarios M0.
+H no modifica runtime ni catálogos de producción.
+
+Deudas abiertas: afiliación del residuo; cardinalidad municipal completa de
+BuyerUnits; 25 canonicals sin observación byte-for-byte reciente (no prueba de
+fantasmas); verificación fiscal histórica de los registros con NIT declarado.
+El NIT transpuesto de Ibagué de P0.1 no aparece en el catálogo de runtime actual.
+La medición no corrige ni fusiona datos para mejorar artificialmente cobertura.
+
+## Estado de cierre
+
+| Checkpoint | Estado | Commit |
+|---|---|---|
+| C — compatibilidad institucional | PASS | `ad23c5e` |
+| D — fail-closed y veracidad | PASS | `839c2c2` |
+| E — intención SDIS | PASS | `96f93ca` |
+| F — capacidad medida | PASS / GO acotado | `c5de379` |
+| G1 — grupos declarados | PASS | `efdd432` |
+| G2 — conteos analíticos y traza | PASS | `3c72a66` |
+| H — Municipal M0 | PARTIAL, medición y propuestas reproducibles | Commit propio de este informe |
+
+No se encontró una categoría nueva fuera de ADR-074. Working tree preexistente
+preservado; **PUSH NO**. Las propuestas municipales y las deudas explícitas
+quedan disponibles para continuar con adjudicación e incorporación por lotes.

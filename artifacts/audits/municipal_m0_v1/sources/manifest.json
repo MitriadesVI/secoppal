@@ -1,0 +1,54 @@
+{
+  "as_of": "2026-09-03",
+  "recent_window": [
+    "2025-09-03",
+    "2026-09-03"
+  ],
+  "divipola_source": "https://portalgis.dane.gov.co/mparcgis/rest/services/Divipola/Serv_DIVIPOLA_MGN_2025/MapServer/317/query",
+  "snapshots": [
+    {
+      "file": "divipola.json.gz",
+      "uncompressed_sha256": "7701163487aa25c3749ffa6652fffa611479b9125378a72c83c454e10d627311",
+      "source_capture_sha256": "e932585d5e15cee79dd53d79a152c2a39820a185b29da60bfa383b5c4d6d7a11"
+    },
+    {
+      "file": "directory.json.gz",
+      "uncompressed_sha256": "dcd3d7e30a256889b73919395d5c939c5ae212c8abaddc5f938963f1951d149b",
+      "source_capture_sha256": "cddfd6a6ee618351659986357074163d9d29683f3686fcc3bed849094ea72ca4"
+    },
+    {
+      "file": "processes.json.gz",
+      "uncompressed_sha256": "e1c11bb4346462a42777c9cf3773b81cea205d0fcaf1d54b3e08983d973f8e32",
+      "source_capture_sha256": "a06ae1ea15863043b93a0ae4c5313ab259778ee09beb8beb82db7b60bf98ec5d"
+    },
+    {
+      "file": "contracts.json.gz",
+      "uncompressed_sha256": "0426aefd35768f9bb9fd9adefd21af3b029da24b3cee616ababc11a8a1d10c97",
+      "source_capture_sha256": "f6ed0fc68bf6160b8b1fa5cb62149290eded9344319db2dc449a2d178667bc83"
+    },
+    {
+      "file": "contracts_failed_first_attempt.json.gz",
+      "uncompressed_sha256": "5a413a790a1c33facbe5edd8c6e4d120a514dd2a0f8fa2f314859d638eb06f18",
+      "source_capture_sha256": "2764f0778167d02c4fac2df5e9cbe9f2bef4837dbaf93401fc841f6a4b3b06ba"
+    },
+    {
+      "file": "process_distinct.json.gz",
+      "uncompressed_sha256": "89ddd4c56d129ba3bd004ed56da0520d39306d2c2a661ecf2275c5549fa22a93",
+      "source_capture_sha256": "e5cdf138bc8cbf2320def0958094692470590e74a45ff739dbe03cac907f091a"
+    },
+    {
+      "file": "sigep.json.gz",
+      "rows": 6300,
+      "uncompressed_sha256": "46e2cce96c72e380065f86ff67999991574b3bcb52014e7dd35175580c7c19dc",
+      "original_xls_sha256": "190a7bdbac1bb50854efad9c2c50e410aba6417f0207581bf2cd5d99cf78c287",
+      "source_url": "https://www.funcionpublica.gov.co/VisualSIE/faces/reporte/publico.xhtml?externo=true&idConsulta=Pr&idReporte=61",
+      "export": "Official XLS, 6300 rows reconciled; extracted with LibreOffice; contact columns excluded"
+    },
+    {
+      "file": "ownership.json.gz",
+      "calls": 58,
+      "uncompressed_sha256": "852f7ddc03861e4f79871c6ca449137d4751c0a7e60e1a43eb13eb90ecfafbb0",
+      "supplement_note": "Supplemental PARTIAL labels mean some requested names returned zero rows in that dataset; all 58 responses completed below the row cap. Empty owner sets never accredit candidates."
+    }
+  ]
+}

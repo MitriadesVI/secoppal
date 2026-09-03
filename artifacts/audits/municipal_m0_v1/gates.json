@@ -1,0 +1,15 @@
+{
+  "stage": "H_MUNICIPAL_M0",
+  "status": "PARTIAL",
+  "partial_reason": "Unresolved institutional affiliation prevents a defensible exact denominator for all municipal BuyerUnits; bounded certified coverage and pending volume are explicit.",
+  "bulk_extraction": "PASS",
+  "offline_analysis_and_proposals_reproduction": "IDENTICAL",
+  "focal_passed": 6,
+  "query_corpus": "89/89",
+  "ruff": "PASS",
+  "lint_core": "PASS",
+  "full_suite": {"passed": 10858, "skipped": 2, "xfailed": 14, "seconds": 431.12, "runtime_commit": "3c72a66"},
+  "runtime_mutated_in_this_stage": false,
+  "production_import": false,
+  "push": false
+}

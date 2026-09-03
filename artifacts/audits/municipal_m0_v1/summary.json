@@ -1,0 +1,1118 @@
+{
+  "stage": "H_MUNICIPAL_M0",
+  "status": "PARTIAL",
+  "reason": "Bulk extraction and bounded automatic derivation PASS; complete municipal BuyerUnit denominator remains unadjudicated. Territory/account/name/NIT are not interchangeable identities.",
+  "window": [
+    "2025-09-03",
+    "2026-09-03"
+  ],
+  "nominal": {
+    "divipola_territories": 1103,
+    "accredited_active": 607,
+    "recognized": 70,
+    "recognized_over_divipola": 0.06346328195829556,
+    "recognized_over_accredited_active": 0.11532125205930807,
+    "additional_territories": 501
+  },
+  "activity": {
+    "p6dx-8zbt": {
+      "physical_rows": {
+        "accredited_municipal_denominator": 357631,
+        "certified_recognized": 205409,
+        "coverage_in_accredited_cohort": 0.5743601645271244,
+        "unresolved_affiliation": 978390,
+        "municipal_denominator_bounds": [
+          357631,
+          1336021
+        ],
+        "certified_coverage_bounds": [
+          0.1537468348177162,
+          0.5743601645271244
+        ],
+        "additional_if_proposals_imported": 136152,
+        "cohort_coverage_after_proposals": 0.9550654165886067
+      },
+      "unique_ids": {
+        "accredited_municipal_denominator": 339745,
+        "certified_recognized": 197352,
+        "coverage_in_accredited_cohort": 0.5808827208641776,
+        "unresolved_affiliation": 961133,
+        "municipal_denominator_bounds": [
+          339745,
+          1300878
+        ],
+        "certified_coverage_bounds": [
+          0.15170677035048635,
+          0.5808827208641776
+        ],
+        "additional_if_proposals_imported": 126608,
+        "cohort_coverage_after_proposals": 0.9535386834243329
+      }
+    },
+    "jbjy-vk9h": {
+      "physical_rows": {
+        "accredited_municipal_denominator": 331185,
+        "certified_recognized": 199963,
+        "coverage_in_accredited_cohort": 0.603780364448873,
+        "unresolved_affiliation": 429291,
+        "municipal_denominator_bounds": [
+          331185,
+          760476
+        ],
+        "certified_coverage_bounds": [
+          0.26294452421904174,
+          0.603780364448873
+        ],
+        "additional_if_proposals_imported": 118941,
+        "cohort_coverage_after_proposals": 0.9629180065522291
+      },
+      "unique_ids": {
+        "accredited_municipal_denominator": 331185,
+        "certified_recognized": 199963,
+        "coverage_in_accredited_cohort": 0.603780364448873,
+        "unresolved_affiliation": 429291,
+        "municipal_denominator_bounds": [
+          331185,
+          760476
+        ],
+        "certified_coverage_bounds": [
+          0.26294452421904174,
+          0.603780364448873
+        ],
+        "additional_if_proposals_imported": 118941,
+        "cohort_coverage_after_proposals": 0.9629180065522291
+      }
+    }
+  },
+  "recognized_buyer_units": 119,
+  "automatic_derivation": {
+    "status": "PASS",
+    "eligible_executive_municipalities": 503,
+    "additional_nominal_municipal_territories": 501,
+    "dispositions": {
+      "ADD_NEW_ACCREDITED_UNIT": 498,
+      "NO_SIGEP_ACCREDITED_EXECUTIVE_ACTIVITY": 510,
+      "ALREADY_RECOGNIZED_EXECUTIVE": 68,
+      "ADD_ALIASES_TO_EXISTING_UNIT": 5,
+      "MISSING_DATASET_EVIDENCE": 18,
+      "SOURCE_HAS_OTHER_ACCOUNT_OR_FISCAL_EVIDENCE": 3,
+      "SOURCE_PAIR_REQUIRES_ADR074_ADJUDICATION": 1
+    },
+    "alias_checks": 1888,
+    "failures": [],
+    "additional_volume": {
+      "p6dx-8zbt": {
+        "physical_rows": 136152,
+        "unique_ids": 126608
+      },
+      "jbjy-vk9h": {
+        "physical_rows": 118941,
+        "unique_ids": 118941
+      }
+    },
+    "production_applied": false,
+    "zero_wrong_owners_scope": "Exact aliases and complete observed all-time account/name strata; not a guarantee against future source changes."
+  },
+  "baranoa_canary": {
+    "code": "08078",
+    "town": "BARANOA",
+    "department": "ATLÁNTICO",
+    "canonical": "ALCALDIA MUNICIPAL DE BARANOA",
+    "aliases": [
+      "alcaldia de BARANOA, ATLÁNTICO",
+      "municipio de BARANOA, ATLÁNTICO",
+      "alcaldia de BARANOA",
+      "municipio de BARANOA"
+    ],
+    "account": "701706467",
+    "nit_evidence": "890112371",
+    "source_names": {
+      "p6dx-8zbt": [
+        "ALCALDIA MUNICIPAL DE BARANOA"
+      ],
+      "jbjy-vk9h": [
+        "ALCALDIA MUNICIPAL DE BARANOA"
+      ]
+    },
+    "kind": "ADD_NEW_ACCREDITED_UNIT",
+    "volumes": {
+      "p6dx-8zbt": {
+        "physical_rows": 381,
+        "unique_ids": 380
+      },
+      "jbjy-vk9h": {
+        "physical_rows": 374,
+        "unique_ids": 374
+      }
+    }
+  },
+  "top_municipal_gaps": [
+    {
+      "code": "68001",
+      "town": "BUCARAMANGA",
+      "department": "SANTANDER",
+      "physical_rows": {
+        "p6dx-8zbt": 6629,
+        "jbjy-vk9h": 6300
+      },
+      "unique_ids": {
+        "p6dx-8zbt": 6425,
+        "jbjy-vk9h": 6300
+      },
+      "profiles": [
+        {
+          "account": "700712011",
+          "source_name": "DIRECCION DE TRANSITO DE BUCARAMANGA"
+        },
+        {
+          "account": "704323161",
+          "source_name": "BOMBEROS DE BUCARAMANGA"
+        },
+        {
+          "account": "704330919",
+          "source_name": "CONTRALORIA MUNICIPAL DE BUCARAMANGA"
+        },
+        {
+          "account": "704366129",
+          "source_name": "CAJA DE PREVISION SOCIAL MUNICIPAL DE BUCARAMANGA"
+        },
+        {
+          "account": "704654201",
+          "source_name": "MUNICIPIO DE BUCARAMANGA"
+        }
+      ]
+    },
+    {
+      "code": "05631",
+      "town": "SABANETA",
+      "department": "ANTIOQUIA",
+      "physical_rows": {
+        "p6dx-8zbt": 2741,
+        "jbjy-vk9h": 2531
+      },
+      "unique_ids": {
+        "p6dx-8zbt": 2598,
+        "jbjy-vk9h": 2531
+      },
+      "profiles": [
+        {
+          "account": "702585365",
+          "source_name": "MUNICIPIO DE SABANETA"
+        },
+        {
+          "account": "703168930",
+          "source_name": "EMPRESA DE DESARROLLO URBANO Y HABITAT"
+        }
+      ]
+    },
+    {
+      "code": "17001",
+      "town": "MANIZALES",
+      "department": "CALDAS",
+      "physical_rows": {
+        "p6dx-8zbt": 2145,
+        "jbjy-vk9h": 1811
+      },
+      "unique_ids": {
+        "p6dx-8zbt": 2045,
+        "jbjy-vk9h": 1811
+      },
+      "profiles": [
+        {
+          "account": "700090046",
+          "source_name": "CONTRALORIA GENERAL DEL MUNICIPIO DE MANIZALES"
+        },
+        {
+          "account": "704271121",
+          "source_name": "ASOCIACION CABLE AEREO MANIZALES"
+        },
+        {
+          "account": "704659911",
+          "source_name": "INSTITUTO DE CULTURA Y TURISMO DE MANIZALES"
+        },
+        {
+          "account": "705412617",
+          "source_name": "MUNICIPIO DE MANIZALES"
+        }
+      ]
+    },
+    {
+      "code": "50568",
+      "town": "PUERTO GAITÁN",
+      "department": "META",
+      "physical_rows": {
+        "p6dx-8zbt": 1801,
+        "jbjy-vk9h": 1720
+      },
+      "unique_ids": {
+        "p6dx-8zbt": 1760,
+        "jbjy-vk9h": 1720
+      },
+      "profiles": [
+        {
+          "account": "706294725",
+          "source_name": "MUNICIPIO DE PUERTO GAITAN"
+        }
+      ]
+    },
+    {
+      "code": "13430",
+      "town": "MAGANGUÉ",
+      "department": "BOLÍVAR",
+      "physical_rows": {
+        "p6dx-8zbt": 1206,
+        "jbjy-vk9h": 1851
+      },
+      "unique_ids": {
+        "p6dx-8zbt": 1206,
+        "jbjy-vk9h": 1851
+      },
+      "profiles": [
+        {
+          "account": "704842160",
+          "source_name": "ALCALDÍA MUNICIPAL DE MAGANGUE"
+        }
+      ]
+    },
+    {
+      "code": "54405",
+      "town": "LOS PATIOS",
+      "department": "NORTE DE SANTANDER",
+      "physical_rows": {
+        "p6dx-8zbt": 1249,
+        "jbjy-vk9h": 1155
+      },
+      "unique_ids": {
+        "p6dx-8zbt": 1248,
+        "jbjy-vk9h": 1155
+      },
+      "profiles": [
+        {
+          "account": "702522244",
+          "source_name": "MUNICIPIO DE LOS PATIOS"
+        },
+        {
+          "account": "720708221",
+          "source_name": "PERSONERIA DE LOS PATIOS"
+        }
+      ]
+    },
+    {
+      "code": "25817",
+      "town": "TOCANCIPÁ",
+      "department": "CUNDINAMARCA",
+      "physical_rows": {
+        "p6dx-8zbt": 1154,
+        "jbjy-vk9h": 991
+      },
+      "unique_ids": {
+        "p6dx-8zbt": 1028,
+        "jbjy-vk9h": 991
+      },
+      "profiles": [
+        {
+          "account": "705044196",
+          "source_name": "MUNICIPIO DE TOCANCIPA"
+        },
+        {
+          "account": "709649057",
+          "source_name": "INSTITUTO MUNICIPAL DE RECREACION Y DEPORTES DE TOCANCIPA"
+        }
+      ]
+    },
+    {
+      "code": "11001",
+      "town": "BOGOTÁ, D.C.",
+      "department": "BOGOTÁ, D.C.",
+      "physical_rows": {
+        "p6dx-8zbt": 1117,
+        "jbjy-vk9h": 932
+      },
+      "unique_ids": {
+        "p6dx-8zbt": 1027,
+        "jbjy-vk9h": 932
+      },
+      "profiles": [
+        {
+          "account": "701129264",
+          "source_name": "LOTERIA DE BOGOTA"
+        },
+        {
+          "account": "702196130",
+          "source_name": "ORQUESTA FILARMONICA DE BOGOTA"
+        },
+        {
+          "account": "702263278",
+          "source_name": "TERMINAL DE TRANSPORTE S.A"
+        }
+      ]
+    },
+    {
+      "code": "85010",
+      "town": "AGUAZUL",
+      "department": "CASANARE",
+      "physical_rows": {
+        "p6dx-8zbt": 1071,
+        "jbjy-vk9h": 911
+      },
+      "unique_ids": {
+        "p6dx-8zbt": 1022,
+        "jbjy-vk9h": 911
+      },
+      "profiles": [
+        {
+          "account": "701635120",
+          "source_name": "ALCALDIA DEL MUNICIPIO DE AGUAZUL"
+        }
+      ]
+    },
+    {
+      "code": "13001",
+      "town": "CARTAGENA DE INDIAS",
+      "department": "BOLÍVAR",
+      "physical_rows": {
+        "p6dx-8zbt": 911,
+        "jbjy-vk9h": 968
+      },
+      "unique_ids": {
+        "p6dx-8zbt": 902,
+        "jbjy-vk9h": 968
+      },
+      "profiles": [
+        {
+          "account": "700608052",
+          "source_name": "INSTITUCION UNIVERSITARIA BELLAS ARTES Y CIENCIAS DE BOLIVAR"
+        },
+        {
+          "account": "702638354",
+          "source_name": "DISTRISEGURIDAD"
+        },
+        {
+          "account": "703161174",
+          "source_name": "CONTRALORIA DISTRITAL DE CARTAGENA DE INDIAS"
+        },
+        {
+          "account": "719235251",
+          "source_name": "TRANSCARIBE S.A."
+        }
+      ]
+    },
+    {
+      "code": "52356",
+      "town": "IPIALES",
+      "department": "NARIÑO",
+      "physical_rows": {
+        "p6dx-8zbt": 994,
+        "jbjy-vk9h": 896
+      },
+      "unique_ids": {
+        "p6dx-8zbt": 973,
+        "jbjy-vk9h": 896
+      },
+      "profiles": [
+        {
+          "account": "700084122",
+          "source_name": "ALCALDIA MUNICIPAL DE IPIALES"
+        },
+        {
+          "account": "702412263",
+          "source_name": "INSTITUTO DE DESARROLLO ECONÓMICO DEL SUR"
+        }
+      ]
+    },
+    {
+      "code": "76248",
+      "town": "EL CERRITO",
+      "department": "VALLE DEL CAUCA",
+      "physical_rows": {
+        "p6dx-8zbt": 925,
+        "jbjy-vk9h": 879
+      },
+      "unique_ids": {
+        "p6dx-8zbt": 922,
+        "jbjy-vk9h": 879
+      },
+      "profiles": [
+        {
+          "account": "703714378",
+          "source_name": "MUNICIPIO DE EL CERRITO."
+        }
+      ]
+    },
+    {
+      "code": "19698",
+      "town": "SANTANDER DE QUILICHAO",
+      "department": "CAUCA",
+      "physical_rows": {
+        "p6dx-8zbt": 1016,
+        "jbjy-vk9h": 817
+      },
+      "unique_ids": {
+        "p6dx-8zbt": 925,
+        "jbjy-vk9h": 817
+      },
+      "profiles": [
+        {
+          "account": "702580374",
+          "source_name": "ALCALDIA MUNICIPIO DE SANTANDER DE QUILICHAO"
+        }
+      ]
+    },
+    {
+      "code": "76275",
+      "town": "FLORIDA",
+      "department": "VALLE DEL CAUCA",
+      "physical_rows": {
+        "p6dx-8zbt": 911,
+        "jbjy-vk9h": 860
+      },
+      "unique_ids": {
+        "p6dx-8zbt": 865,
+        "jbjy-vk9h": 860
+      },
+      "profiles": [
+        {
+          "account": "704259555",
+          "source_name": "MUNICIPIO DE FLORIDA"
+        },
+        {
+          "account": "719236325",
+          "source_name": "INSTITUCION EDUCATIVA CIUDAD FLORIDA"
+        }
+      ]
+    },
+    {
+      "code": "25799",
+      "town": "TENJO",
+      "department": "CUNDINAMARCA",
+      "physical_rows": {
+        "p6dx-8zbt": 970,
+        "jbjy-vk9h": 809
+      },
+      "unique_ids": {
+        "p6dx-8zbt": 816,
+        "jbjy-vk9h": 809
+      },
+      "profiles": [
+        {
+          "account": "704060474",
+          "source_name": "MUNICIPIO DE TENJO"
+        },
+        {
+          "account": "719541476",
+          "source_name": "INSTITUTO MUNICIPAL DE CULTURA Y TURISMO DE TENJO"
+        }
+      ]
+    },
+    {
+      "code": "50001",
+      "town": "VILLAVICENCIO",
+      "department": "META",
+      "physical_rows": {
+        "p6dx-8zbt": 832,
+        "jbjy-vk9h": 785
+      },
+      "unique_ids": {
+        "p6dx-8zbt": 820,
+        "jbjy-vk9h": 785
+      },
+      "profiles": [
+        {
+          "account": "700794225",
+          "source_name": "CONTRALORIA MUNICIPAL DE VILLAVICENCIO"
+        },
+        {
+          "account": "705077204",
+          "source_name": "INSTITUTO DEPARTAMENTAL DE CULTURA DEL META"
+        },
+        {
+          "account": "705828283",
+          "source_name": "INSTITUTO DE TURISMO DE VILLAVICENCIO"
+        }
+      ]
+    },
+    {
+      "code": "05376",
+      "town": "LA CEJA",
+      "department": "ANTIOQUIA",
+      "physical_rows": {
+        "p6dx-8zbt": 864,
+        "jbjy-vk9h": 776
+      },
+      "unique_ids": {
+        "p6dx-8zbt": 797,
+        "jbjy-vk9h": 776
+      },
+      "profiles": [
+        {
+          "account": "702529231",
+          "source_name": "MUNICIPIO DE LA CEJA"
+        }
+      ]
+    },
+    {
+      "code": "85410",
+      "town": "TAURAMENA",
+      "department": "CASANARE",
+      "physical_rows": {
+        "p6dx-8zbt": 837,
+        "jbjy-vk9h": 729
+      },
+      "unique_ids": {
+        "p6dx-8zbt": 825,
+        "jbjy-vk9h": 729
+      },
+      "profiles": [
+        {
+          "account": "702028135",
+          "source_name": "MUNICIPIO DE TAURAMENA"
+        }
+      ]
+    },
+    {
+      "code": "05440",
+      "town": "MARINILLA",
+      "department": "ANTIOQUIA",
+      "physical_rows": {
+        "p6dx-8zbt": 813,
+        "jbjy-vk9h": 735
+      },
+      "unique_ids": {
+        "p6dx-8zbt": 755,
+        "jbjy-vk9h": 735
+      },
+      "profiles": [
+        {
+          "account": "702944067",
+          "source_name": "MUNICIPIO DE MARINILLA"
+        }
+      ]
+    },
+    {
+      "code": "44430",
+      "town": "MAICAO",
+      "department": "LA GUAJIRA",
+      "physical_rows": {
+        "p6dx-8zbt": 697,
+        "jbjy-vk9h": 745
+      },
+      "unique_ids": {
+        "p6dx-8zbt": 682,
+        "jbjy-vk9h": 745
+      },
+      "profiles": [
+        {
+          "account": "700098031",
+          "source_name": "MUNICIPIO DE MAICAO"
+        }
+      ]
+    },
+    {
+      "code": "05266",
+      "town": "ENVIGADO",
+      "department": "ANTIOQUIA",
+      "physical_rows": {
+        "p6dx-8zbt": 752,
+        "jbjy-vk9h": 663
+      },
+      "unique_ids": {
+        "p6dx-8zbt": 747,
+        "jbjy-vk9h": 663
+      },
+      "profiles": [
+        {
+          "account": "702208604",
+          "source_name": "INSTITUCION UNIVERSITARIA DE ENVIGADO"
+        },
+        {
+          "account": "702441692",
+          "source_name": "CONTRALORIA MUNICIPAL DE ENVIGADO"
+        }
+      ]
+    },
+    {
+      "code": "25245",
+      "town": "EL COLEGIO",
+      "department": "CUNDINAMARCA",
+      "physical_rows": {
+        "p6dx-8zbt": 707,
+        "jbjy-vk9h": 675
+      },
+      "unique_ids": {
+        "p6dx-8zbt": 698,
+        "jbjy-vk9h": 675
+      },
+      "profiles": [
+        {
+          "account": "704067230",
+          "source_name": "ALCALDIA MUNICIPAL DE EL COLEGIO"
+        }
+      ]
+    },
+    {
+      "code": "47288",
+      "town": "FUNDACIÓN",
+      "department": "MAGDALENA",
+      "physical_rows": {
+        "p6dx-8zbt": 686,
+        "jbjy-vk9h": 672
+      },
+      "unique_ids": {
+        "p6dx-8zbt": 686,
+        "jbjy-vk9h": 672
+      },
+      "profiles": [
+        {
+          "account": "704357342",
+          "source_name": "ALCALDIA MUNICIPAL DE FUNDACION"
+        }
+      ]
+    },
+    {
+      "code": "63190",
+      "town": "CIRCASIA",
+      "department": "QUINDÍO",
+      "physical_rows": {
+        "p6dx-8zbt": 767,
+        "jbjy-vk9h": 646
+      },
+      "unique_ids": {
+        "p6dx-8zbt": 699,
+        "jbjy-vk9h": 646
+      },
+      "profiles": [
+        {
+          "account": "704996578",
+          "source_name": "ALCALDIA MUNICIPIO DE CIRCASIA QUINDIO"
+        }
+      ]
+    },
+    {
+      "code": "76890",
+      "town": "YOTOCO",
+      "department": "VALLE DEL CAUCA",
+      "physical_rows": {
+        "p6dx-8zbt": 698,
+        "jbjy-vk9h": 689
+      },
+      "unique_ids": {
+        "p6dx-8zbt": 653,
+        "jbjy-vk9h": 689
+      },
+      "profiles": [
+        {
+          "account": "704252147",
+          "source_name": "ALCALDIA MUNICIPAL DE YOTOCO"
+        }
+      ]
+    }
+  ],
+  "catalog_debts": {
+    "declared_nit_records": [
+      {
+        "canonical": "DEFENSORÍA DEL PUEBLO",
+        "declared_nit": "800186061"
+      },
+      {
+        "canonical": "FONDO FINANCIERO DISTRITAL DE SALUD",
+        "declared_nit": "8002469532"
+      },
+      {
+        "canonical": "MUNICIPIO DE SOACHA",
+        "declared_nit": "800094755"
+      },
+      {
+        "canonical": "MUNICIPIO DE YOPAL",
+        "declared_nit": "891855017"
+      },
+      {
+        "canonical": "CGR-NIVEL CENTRAL",
+        "declared_nit": "899999067"
+      },
+      {
+        "canonical": "UNIATLANTICO",
+        "declared_nit": "890102257"
+      },
+      {
+        "canonical": "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER",
+        "declared_nit": "890500622"
+      },
+      {
+        "canonical": "MINISTERIO DE JUSTICIA Y DEL DERECHO",
+        "declared_nit": "900457461"
+      },
+      {
+        "canonical": "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS",
+        "declared_nit": "900126860"
+      },
+      {
+        "canonical": "ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL",
+        "declared_nit": "899999061"
+      },
+      {
+        "canonical": "ALCALDIA LOCAL DE TUNJUELITO",
+        "declared_nit": "899999061"
+      },
+      {
+        "canonical": "ALCALDÍA LOCAL DE BARRIOS UNIDOS",
+        "declared_nit": "899999061"
+      },
+      {
+        "canonical": "ALCALDIA LOCAL DE TEUSAQUILLO(oficial)",
+        "declared_nit": "899999061"
+      },
+      {
+        "canonical": "ALCALDIA LOCAL DE MARTIRES",
+        "declared_nit": "899999061"
+      },
+      {
+        "canonical": "ALCALDIA LOCAL DE ANTONIO NARIÑO",
+        "declared_nit": "899999061"
+      },
+      {
+        "canonical": "CENAC PUENTE ARANDA+",
+        "declared_nit": "830039548"
+      },
+      {
+        "canonical": "FONDO DE DESARROLLO LOCAL DE LA CANDELARIA",
+        "declared_nit": "899999061"
+      },
+      {
+        "canonical": "ALCALDIA LOCAL DE SUMAPAZ",
+        "declared_nit": "899999061"
+      },
+      {
+        "canonical": "ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL",
+        "declared_nit": "899999061"
+      },
+      {
+        "canonical": "CORPORACION AUTONOMA REGIONAL DEL ALTO MAGDALENA",
+        "declared_nit": "800255580"
+      },
+      {
+        "canonical": "CORPORACIÓN AUTÓNOMA REGIONAL DEL CANAL DEL DIQUE",
+        "declared_nit": "800254453"
+      },
+      {
+        "canonical": "CORPORACION AUTONOMA REGIONAL DE SUCRE",
+        "declared_nit": "823000050"
+      },
+      {
+        "canonical": "CORPORACION PARA EL DESARROLLO SOSTENIBLE DEL NORTE Y DEL ORIENTE AMAZONICO",
+        "declared_nit": "838000009"
+      },
+      {
+        "canonical": "CORPORACIÓN AUTÓNOMA REGIONAL PARA EL DESARROLLO SOSTENIBLE DEL CHOCO",
+        "declared_nit": "899999238"
+      },
+      {
+        "canonical": "CORPORACION PARA EL DESARROLLO SOSTENIBLE DEL ARCHIPIELAGO DE SAN ANDRES PROVIDENCIA Y SANTA CATALINA - CORALINA",
+        "declared_nit": "827000031"
+      },
+      {
+        "canonical": "CORPORACIÓN AUTÓNOMA REGIONAL DEL CENTRO DE ANTIOQUIA",
+        "declared_nit": "811000231"
+      },
+      {
+        "canonical": "CORPORACION AUTONOMA REGIONAL DEL MAGDALENA",
+        "declared_nit": "800099287"
+      },
+      {
+        "canonical": "CORPOCALDAS.",
+        "declared_nit": "890803005"
+      },
+      {
+        "canonical": "CORPOCESAR",
+        "declared_nit": "892301483"
+      },
+      {
+        "canonical": "CORPORACIÓN AUTONOMA REGIONAL DE CHIVOR CORPOCHIVOR",
+        "declared_nit": "800252037"
+      },
+      {
+        "canonical": "CORPORACION AUTONOMA REGIONAL DE LA GUAJIRA",
+        "declared_nit": "892115314"
+      },
+      {
+        "canonical": "CORPORACION AUTONOMA REGIONAL DEL GUAVIO - CORPOGUAVIO (OFICIAL)",
+        "declared_nit": "832000171"
+      },
+      {
+        "canonical": "CORPORACION PARA EL DESARROLLO SOSTENIBLE DE LA MOJANA Y EL SAN JORGE CORPOMOJANA",
+        "declared_nit": "823000077"
+      },
+      {
+        "canonical": "CORPORACION PARA EL DESARROLLO SOSTENIBLE DEL URABA",
+        "declared_nit": "890907748"
+      },
+      {
+        "canonical": "CORPORACIÓN AUTÓNOMA REGIONAL DEL ATLÁNTICO",
+        "declared_nit": "802000339"
+      },
+      {
+        "canonical": "CSB",
+        "declared_nit": "806000327"
+      },
+      {
+        "canonical": "CORPORACIÓN AUTÓNOMA REGIONAL DE LOS VALLES DEL SINÚ Y DEL SAN JORGE - CVS",
+        "declared_nit": "891000627"
+      },
+      {
+        "canonical": "CORPORACIÓN AUTÓNOMA DEL RÍO GRANDE DE LA MAGDALENA**",
+        "declared_nit": "829000127"
+      },
+      {
+        "canonical": "CENTRAL DE TRANSPORTE DE SANTA MARTA LTDA.",
+        "declared_nit": "891701694"
+      },
+      {
+        "canonical": "AUDITORIA GENERAL DE LA REPUBLICA",
+        "declared_nit": "830065741"
+      },
+      {
+        "canonical": "PROCURADURIA GENERAL DE LA NACION",
+        "declared_nit": "899999119"
+      },
+      {
+        "canonical": "FONDO DE BIENESTAR SOCIAL DE LA CONTRALORIA GENERAL DE LA REPUBLICA",
+        "declared_nit": "800252683"
+      },
+      {
+        "canonical": "INSTITUTO DE ESTUDIOS DEL MINISTERIO PUBLICO.",
+        "declared_nit": "830015728"
+      },
+      {
+        "canonical": "UNIVERSIDAD DE LA AMAZONIA",
+        "declared_nit": "891190346"
+      },
+      {
+        "canonical": "UNIVERSIDAD DE CÓRDOBA",
+        "declared_nit": "891080031"
+      },
+      {
+        "canonical": "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA",
+        "declared_nit": "8001631300"
+      },
+      {
+        "canonical": "UNIVERSIDAD INTERNACIONAL DEL TRÓPICO AMERICANO UNITRÓPICO",
+        "declared_nit": "8440020714"
+      },
+      {
+        "canonical": "UNIVERSIDAD COLEGIO MAYOR DE CUNDINAMARCA",
+        "declared_nit": "800144829"
+      },
+      {
+        "canonical": "UNIVERSIDAD DE CUNDINAMARCA",
+        "declared_nit": "890680062"
+      },
+      {
+        "canonical": "UNIVERSIDAD DE LA GUAJIRA",
+        "declared_nit": "892115029"
+      },
+      {
+        "canonical": "UNIVERSIDAD DEL PACÍFICO",
+        "declared_nit": "835000300"
+      },
+      {
+        "canonical": "UNIVERSIDAD POPULAR DEL CESAR",
+        "declared_nit": "8923002856"
+      },
+      {
+        "canonical": "UNIVERSIDAD DE SUCRE",
+        "declared_nit": "892200323"
+      },
+      {
+        "canonical": "UNIVERSIDAD TECNOLÓGICA DEL CHOCÓ DIEGO LUIS CÓRDOBA",
+        "declared_nit": "891680089"
+      },
+      {
+        "canonical": "UNIVERSIDAD DEL TOLIMA",
+        "declared_nit": "890700640"
+      }
+    ],
+    "canonicals_not_observed_byte_for_byte_recent": [
+      {
+        "canonical": "MUNICIPIO DE SAN JOSE DE CUCUTA",
+        "observed_in_recent_dataset": {
+          "p6dx-8zbt": false,
+          "jbjy-vk9h": false
+        }
+      },
+      {
+        "canonical": "HOSPITAL MILITAR CENTRAL",
+        "observed_in_recent_dataset": {
+          "p6dx-8zbt": false,
+          "jbjy-vk9h": false
+        }
+      },
+      {
+        "canonical": "RADIO TELEVISION NACIONAL DE COLOMBIA.",
+        "observed_in_recent_dataset": {
+          "p6dx-8zbt": false,
+          "jbjy-vk9h": false
+        }
+      },
+      {
+        "canonical": "EMPRESA SOCIAL DEL ESTADO METROSALUD",
+        "observed_in_recent_dataset": {
+          "p6dx-8zbt": false,
+          "jbjy-vk9h": false
+        }
+      },
+      {
+        "canonical": "FONDO FINANCIERO DISTRITAL DE SALUD",
+        "observed_in_recent_dataset": {
+          "p6dx-8zbt": false,
+          "jbjy-vk9h": false
+        }
+      },
+      {
+        "canonical": "DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPÚBLICA",
+        "observed_in_recent_dataset": {
+          "p6dx-8zbt": false,
+          "jbjy-vk9h": false
+        }
+      },
+      {
+        "canonical": "MUNICIPIO DE SOACHA",
+        "observed_in_recent_dataset": {
+          "p6dx-8zbt": false,
+          "jbjy-vk9h": false
+        }
+      },
+      {
+        "canonical": "MUNICIPIO DE YOPAL",
+        "observed_in_recent_dataset": {
+          "p6dx-8zbt": false,
+          "jbjy-vk9h": false
+        }
+      },
+      {
+        "canonical": "DANE CENTRO OCCIDENTE",
+        "observed_in_recent_dataset": {
+          "p6dx-8zbt": false,
+          "jbjy-vk9h": false
+        }
+      },
+      {
+        "canonical": "MINISTERIO DEL TRABAJO NIVEL CENTRAL*/",
+        "observed_in_recent_dataset": {
+          "p6dx-8zbt": false,
+          "jbjy-vk9h": false
+        }
+      },
+      {
+        "canonical": "ALCALDIA DE TURBACO BOLIVAR",
+        "observed_in_recent_dataset": {
+          "p6dx-8zbt": false,
+          "jbjy-vk9h": false
+        }
+      },
+      {
+        "canonical": "UNIATLANTICO",
+        "observed_in_recent_dataset": {
+          "p6dx-8zbt": false,
+          "jbjy-vk9h": false
+        }
+      },
+      {
+        "canonical": "ALCALDIA MUNICIPAL DE PUERTO BOYACA",
+        "observed_in_recent_dataset": {
+          "p6dx-8zbt": false,
+          "jbjy-vk9h": false
+        }
+      },
+      {
+        "canonical": "MINISTERIO DE JUSTICIA Y DEL DERECHO",
+        "observed_in_recent_dataset": {
+          "p6dx-8zbt": false,
+          "jbjy-vk9h": false
+        }
+      },
+      {
+        "canonical": "CORPORACION COLOMBIA INTERNACIONAL CCI",
+        "observed_in_recent_dataset": {
+          "p6dx-8zbt": false,
+          "jbjy-vk9h": false
+        }
+      },
+      {
+        "canonical": "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS",
+        "observed_in_recent_dataset": {
+          "p6dx-8zbt": false,
+          "jbjy-vk9h": false
+        }
+      },
+      {
+        "canonical": "CORPORACION PARA EL DESARROLLO SOSTENIBLE DE LA MOJANA Y EL SAN JORGE CORPOMOJANA",
+        "observed_in_recent_dataset": {
+          "p6dx-8zbt": false,
+          "jbjy-vk9h": false
+        }
+      },
+      {
+        "canonical": "CENTRAL DE TRANSPORTE DE SANTA MARTA LTDA.",
+        "observed_in_recent_dataset": {
+          "p6dx-8zbt": false,
+          "jbjy-vk9h": false
+        }
+      },
+      {
+        "canonical": "UNIVERSIDAD DE LA AMAZONIA",
+        "observed_in_recent_dataset": {
+          "p6dx-8zbt": false,
+          "jbjy-vk9h": false
+        }
+      },
+      {
+        "canonical": "UNIVERSIDAD DE CÓRDOBA",
+        "observed_in_recent_dataset": {
+          "p6dx-8zbt": false,
+          "jbjy-vk9h": false
+        }
+      },
+      {
+        "canonical": "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA",
+        "observed_in_recent_dataset": {
+          "p6dx-8zbt": false,
+          "jbjy-vk9h": false
+        }
+      },
+      {
+        "canonical": "UNIVERSIDAD COLEGIO MAYOR DE CUNDINAMARCA",
+        "observed_in_recent_dataset": {
+          "p6dx-8zbt": false,
+          "jbjy-vk9h": false
+        }
+      },
+      {
+        "canonical": "UNIVERSIDAD DEL PACÍFICO",
+        "observed_in_recent_dataset": {
+          "p6dx-8zbt": false,
+          "jbjy-vk9h": false
+        }
+      },
+      {
+        "canonical": "UNIVERSIDAD POPULAR DEL CESAR",
+        "observed_in_recent_dataset": {
+          "p6dx-8zbt": false,
+          "jbjy-vk9h": false
+        }
+      },
+      {
+        "canonical": "UNIVERSIDAD TECNOLÓGICA DEL CHOCÓ DIEGO LUIS CÓRDOBA",
+        "observed_in_recent_dataset": {
+          "p6dx-8zbt": false,
+          "jbjy-vk9h": false
+        }
+      }
+    ],
+    "interpretation": "Absence in this annual snapshot is not proof of a phantom canonical: source projections and inactivity must be adjudicated. No source/NIT corrections or merges were applied."
+  },
+  "runtime_fingerprint": {
+    "app/data/aliases_db.json": "1bf21c5c4224d5097f6ad03dab67bea1341e2e665e9ebacb42e9a9fe0733eacc",
+    "app/data/buyer_source_names.json": "ec49aac1959c49565ae4374d1f18408c81e1bb179c1cf95498b7a2a75363b7d2",
+    "app/data/buyer_groups.json": "627ad644e96e1967261bae926c4f6180af39c5ca0ebcc2e8114167be8cedeade"
+  },
+  "production_import": false
+}
