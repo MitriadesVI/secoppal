@@ -170,7 +170,16 @@ Deliberadamente, para que la implementación pueda contradecirlo sin reabrirlo:
 - **El universo municipal.** M0 es descubrimiento posterior. Lo único que este
   ADR le impone es que la cadena `DIVIPOLA → municipio → NIT → comprador único`
   está falsificada: por municipio hay 1 territorio, 1..n grafías de identidad
-  legal, 1..n BuyerUnits y 0..1 grupos.
+  legal, 1..n BuyerUnits y **0..n** BuyerGroups y subgrupos declarados.
+
+  La cardinalidad de grupos es `0..n`, no `0..1`. Bogotá ya exige tres
+  (`bogota_central`, `bogota_local_mayoralties`, `bogota_executive`), y un
+  municipio con sector salud descentralizado o con varias familias
+  institucionales puede exigir más. Un modelo de un solo grupo por territorio
+  obligaría a elegir entre agrupaciones legítimas y reintroduciría por la puerta
+  de atrás la política por defecto que §4 deja explícitamente al registro. Esta
+  cardinalidad **corrige** la tabla de §13 del informe P0.1, que declaraba
+  `0..1`; el resto de esa tabla sigue vigente.
 - **Qué hacer con las 190 superficies de puntuación del censo P0.** Este ADR no
   autoriza aplicarlas en lote.
 
@@ -226,3 +235,11 @@ Deliberadamente, para que la implementación pueda contradecirlo sin reabrirlo:
 | BuyerGroup "sobre el mecanismo existente `entidad_in_candidates`" | `entidad_in_candidates` es `CURRENT_EXECUTION_CANDIDATE`, no arquitectura; la implementación puede sustituirlo |
 | — | añade `INV-BUYER-GROUP-MEMBERSHIP-DOES-NOT-DEFINE-RESULT-IDENTITY` y su canario de NIT compartido |
 | el tope de 15 como restricción a resolver | el colapso a `candidates[0]` como **fallback silencioso prohibido**, con o sin BuyerGroup |
+
+## Erratas
+
+**E1 (2026-09-03).** La cardinalidad de BuyerGroups por municipio decía `0..1`.
+Es `0..n`, grupos y subgrupos declarados. La errata era material: `0..1` es
+incompatible con el propio piloto de Bogotá, que declara tres grupos, y con la
+decisión de §4 de dejar la política de agrupación al registro y no al ADR.
+Corregido en el cuerpo de *Qué este ADR NO decide*.
