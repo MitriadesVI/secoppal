@@ -98,7 +98,9 @@ M2_MODIFIED_FILE_SHA256 = {
     # el caso antes truncado: test_entity_candidates_no_silent_collapse lo
     # exige; el oráculo ordinario de WHERE/ORDER/LIMIT permanece intacto.
     # G: registered exact BuyerGroup projection and physical row tie-break.
-    "app/core/soql_builder.py": "38b7ad8879783253e488666e2cebdd60b48ec996fc925bbac5b9d054bcfa2112",
+    # M1A.1: exact municipal city+department and fail-closed ambiguity are
+    # gated by municipal_territory; the ordinary public oracle stays unchanged.
+    "app/core/soql_builder.py": "305fa3b686172ba4783ef9415d4f574602022390c7a3d1c134ac5aa539521109",
 }
 
 # M2.1 corrigió dos consumidores visibles. AP3-G autoriza además controles de

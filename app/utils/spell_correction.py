@@ -289,7 +289,7 @@ def _correct_word(word: str) -> str:
     return matches[0] if len(matches) == 1 else word
 
 
-def correct_query(text: str) -> str:
+def correct_query(text: str, *, protected_spans: tuple[tuple[int, int], ...] = ()) -> str:
     """Correct typos in a query string against the procurement vocabulary.
 
     Steps:
@@ -304,6 +304,13 @@ def correct_query(text: str) -> str:
     Returns:
         Query string with typos corrected.
     """
+    if protected_spans:
+        from app.core.query_text_consumption import shield_spans
+        masked, replacements = shield_spans(text, protected_spans)
+        corrected_text = correct_query(masked)
+        for marker, original in replacements.items():
+            corrected_text = corrected_text.replace(marker, original)
+        return corrected_text
     tokens = text.split()
     corrected: list[str] = []
 

@@ -68,7 +68,7 @@ def test_p9_preserves_entity_with_explicit_marker_e2e():
 def test_clean_query_still_works():
     wf = _wf()
     result = wf.run_query(
-        "contratos de mantenimiento en bolívar", chat_id="test_b41_reg"
+        "contratos de mantenimiento en el departamento de bolívar", chat_id="test_b41_reg"
     )
     assert not result.get("needs_clarification"), "clean query should execute"
     assert result["query_plan"]["should_execute"] is True

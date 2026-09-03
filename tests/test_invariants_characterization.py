@@ -101,7 +101,7 @@ def test_firmados_en_ejecucion_preserves_active_states(simulate_llm):
 @pytest.mark.parametrize("simulate_llm", [False, True])
 def test_bidder_query_routes_to_opportunity_search(simulate_llm):
     snap = run_offline_invariant_pipeline(
-        "quiero presentarme a obras en Boyacá",
+        "quiero presentarme a obras en el departamento de Boyacá",
         simulate_llm=simulate_llm,
     )
 

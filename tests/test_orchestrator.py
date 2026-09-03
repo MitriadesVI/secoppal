@@ -68,7 +68,7 @@ def test_workflow_exposes_total_count_when_universe_is_larger() -> None:
     workflow.secop_client.count = lambda dataset_id, soql_query: 347  # type: ignore[method-assign]
     workflow.narrator.narrate_with_grounding = lambda **kw: None  # type: ignore[method-assign] # disable narrator
 
-    result = workflow.run_query("pavimentacion en Cordoba", channel="telegram")
+    result = workflow.run_query("pavimentacion en el departamento de Cordoba", channel="telegram")
 
     assert result["total_count"] == 347
     assert "347" in result["response"]

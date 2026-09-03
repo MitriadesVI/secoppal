@@ -135,21 +135,17 @@ def test_exhaustive_pipeline_gate_has_no_failure_or_wrong_owner(prediction):
         'ipiales',
     ],
 )
-def test_geography_debt_is_not_silently_claimed_closed(prediction, town, tmp_path):
+def test_geography_is_independent_of_buyer_promotion(prediction, town, tmp_path):
     query = f'contratos en {town}'
     path = tmp_path / 'baseline.json'
     path.write_bytes(encode(prediction['before']))
     baseline = QueryRouter(EntityResolver(path)).parse(query).params
     candidate = QueryRouter(entity_resolver=prediction['resolver']).parse(query).params
     assert compute_query_plan(candidate, query).params == compute_query_plan(baseline, query).params
-    if town == 'baranoa':
-        # Mandatory canary currently fails the requested geography semantics
-        # even before M1A; record the blocker rather than add an xfail.
-        assert candidate == {
-            'dataset': 'contratos',
-            'dataset_explicit': True,
-            'objeto': ['baranoa'],
-        }
+    assert candidate['municipal_territory']['status'] == 'resolved'
+    assert normalize_text(candidate['ciudad']) == town
+    assert not candidate.get('entidad_resolved')
+    assert not candidate.get('objeto')
 
 
 def test_baranoa_source_parity_is_380_processes_and_374_contracts(prediction, monkeypatch):

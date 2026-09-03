@@ -32,7 +32,7 @@ CANONICAL = [
         "valor_max": 25_000_000,
         "objeto_not": ["supere"],
     }),
-    ("algún proceso para mantenimiento en bolívar", {
+    ("algún proceso para mantenimiento en el departamento de bolívar", {
         "intent_type": "opportunity_search",
     }),
 ]

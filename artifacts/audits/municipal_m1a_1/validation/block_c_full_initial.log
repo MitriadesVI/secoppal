@@ -1,0 +1,1176 @@
+........................................................................ [  0%]
+........................................................................ [  1%]
+........................................................................ [  1%]
+........................................................................ [  2%]
+........................................................................ [  3%]
+........................................................................ [  3%]
+........................................................................ [  4%]
+........................................................................ [  5%]
+........................................................................ [  5%]
+........................................................................ [  6%]
+........................................................................ [  7%]
+........................................................................ [  7%]
+........................................................................ [  8%]
+........................................................................ [  9%]
+........................................................................ [  9%]
+....................F................................................... [ 10%]
+........................................................................ [ 11%]
+........................................................................ [ 11%]
+............................x........................................... [ 12%]
+........................................................................ [ 13%]
+........................................................................ [ 13%]
+..........................................xx....xx.....xx..FFF.FFF..F..F [ 14%]
+.FF.F................................................................... [ 15%]
+........................................................................ [ 15%]
+...................ss................................................... [ 16%]
+........................................................................ [ 17%]
+........................................................................ [ 17%]
+........................................................................ [ 18%]
+........................................................................ [ 18%]
+........................................................................ [ 19%]
+................x..x....x............................................... [ 20%]
+........................................................................ [ 20%]
+.........................................x.............................. [ 21%]
+........................................................................ [ 22%]
+........................................................................ [ 22%]
+........FF.............................................................. [ 23%]
+........................................................................ [ 24%]
+........................................................................ [ 24%]
+........................................................................ [ 25%]
+........................................................................ [ 26%]
+........................................................................ [ 26%]
+........................................................................ [ 27%]
+........................................................................ [ 28%]
+........................................................................ [ 28%]
+........................................................................ [ 29%]
+........................................................................ [ 30%]
+........................................................................ [ 30%]
+........................................................................ [ 31%]
+......................F...FF.F.......................................... [ 32%]
+........................................................................ [ 32%]
+........................................................................ [ 33%]
+........................................................................ [ 34%]
+........................................................................ [ 34%]
+........................................................................ [ 35%]
+........................................................................ [ 36%]
+........................................................................ [ 36%]
+........................................................................ [ 37%]
+........................................................................ [ 37%]
+........................................................................ [ 38%]
+........................................................................ [ 39%]
+........................................................................ [ 39%]
+........................................................................ [ 40%]
+........................................................................ [ 41%]
+........................................................................ [ 41%]
+........................................................................ [ 42%]
+........................................................................ [ 43%]
+........................................................................ [ 43%]
+........................................................................ [ 44%]
+........................................................................ [ 45%]
+........................................................................ [ 45%]
+........................................................................ [ 46%]
+........................................................................ [ 47%]
+........................................................................ [ 47%]
+........................................................................ [ 48%]
+........................................................................ [ 49%]
+........................................................................ [ 49%]
+........................................................................ [ 50%]
+........................................................................ [ 51%]
+........................................................................ [ 51%]
+........................................................................ [ 52%]
+........................................................................ [ 53%]
+........................................................................ [ 53%]
+........................................................................ [ 54%]
+........................................F............................... [ 55%]
+........................................................................ [ 55%]
+........................................................................ [ 56%]
+........................................................................ [ 56%]
+........................................................................ [ 57%]
+........................................................................ [ 58%]
+........................................................................ [ 58%]
+........................................................................ [ 59%]
+........................................................................ [ 60%]
+........................................................................ [ 60%]
+........................................................................ [ 61%]
+........................................................................ [ 62%]
+........................................................................ [ 62%]
+........................................................................ [ 63%]
+........................................................................ [ 64%]
+........................................................................ [ 64%]
+........................................................................ [ 65%]
+........................................................................ [ 66%]
+........................................................................ [ 66%]
+........................................................................ [ 67%]
+...........................................................x.x......x... [ 68%]
+.............................................................F.......... [ 68%]
+........................................................................ [ 69%]
+........................................................................ [ 70%]
+..............................F...F......F.............................. [ 70%]
+........................................................................ [ 71%]
+...................................................................F.... [ 72%]
+......................................................................F. [ 72%]
+........................................................................ [ 73%]
+........................................................................ [ 74%]
+........................................................................ [ 74%]
+........................................................................ [ 75%]
+........................................................................ [ 75%]
+........................................................................ [ 76%]
+........................................................................ [ 77%]
+........................................................................ [ 77%]
+........................................................................ [ 78%]
+........................................................................ [ 79%]
+........................................................................ [ 79%]
+........................................................................ [ 80%]
+........................................................................ [ 81%]
+........................................................................ [ 81%]
+........................................................................ [ 82%]
+........................................................................ [ 83%]
+........................................................................ [ 83%]
+........................................................................ [ 84%]
+........................................................................ [ 85%]
+........................................................................ [ 85%]
+........................................................................ [ 86%]
+........................................................................ [ 87%]
+........................................................................ [ 87%]
+........................................................................ [ 88%]
+...................................................FF................... [ 89%]
+........................................................................ [ 89%]
+........................................................................ [ 90%]
+........................................................................ [ 91%]
+........................................................................ [ 91%]
+........................................................................ [ 92%]
+........................................................................ [ 93%]
+........................................................................ [ 93%]
+........................................................................ [ 94%]
+........................................................................ [ 94%]
+........................................................................ [ 95%]
+........................................................................ [ 96%]
+..........................F............................................. [ 96%]
+........................................................................ [ 97%]
+........................................................................ [ 98%]
+........................................................................ [ 98%]
+........................................................................ [ 99%]
+................................................                         [100%]
+=================================== FAILURES ===================================
+__________ TestCityDetection.test_city_sets_entidad_for_barranquilla ___________
+
+self = <test_city_detection.TestCityDetection object at 0x11c1b7ce0>
+
+    def test_city_sets_entidad_for_barranquilla(self):
+        qr = QueryRouter()
+        result = qr.parse("contratos en barranquilla")
+        er = result.params.get("entidad_resolved", "")
+>       assert "DISTRITO" in er.upper() and "BARRANQUILLA" in er.upper(), (
+            f"entidad_resolved should contain DISTRITO + BARRANQUILLA: {er}"
+        )
+E       AssertionError: entidad_resolved should contain DISTRITO + BARRANQUILLA: 
+E       assert ('DISTRITO' in '')
+E        +  where '' = <built-in method upper of str object at 0x104ca7630>()
+E        +    where <built-in method upper of str object at 0x104ca7630> = ''.upper
+
+tests/test_city_detection.py:40: AssertionError
+_______________ test_dialogue_invariants[DLG-CONTENTLESS-CHAIN-] _______________
+
+seq_id = 'DLG-CONTENTLESS-CHAIN'
+seq = {'id': 'DLG-CONTENTLESS-CHAIN', 'note': 'varios turnos vacíos no deben borrar el contexto', 'turns': [{'expect': 'bloc...block', 'text': 'muéstrame'}, {'expect': 'block', 'text': 'a ver'}, {'expect': 'execute', 'text': 'dotación escolar'}]}
+tmp_path = PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-344/test_dialogue_invariants_DLG_C0')
+
+    @pytest.mark.parametrize("seq_id,seq", _load_sequences(), ids=lambda v: v if isinstance(v, str) else "")
+    def test_dialogue_invariants(seq_id, seq, tmp_path):
+        wf = SecopalWorkflow(Settings())
+        calls = {"n": 0}
+    
+        def _query(dataset_id, soql_query):
+            calls["n"] += 1
+            return _mk_results(5)
+    
+        def _count(dataset_id, soql_query):
+            calls["n"] += 1
+            return 5
+    
+        wf.secop_client.query = _query  # type: ignore[method-assign]
+        wf.secop_client.count = _count  # type: ignore[method-assign]
+        wf.narrator.narrate_with_grounding = lambda **kw: None  # type: ignore[method-assign]
+        wf.conv_store = ConversationStore(base_path=tmp_path / "conv")
+    
+        chat_id = seq_id
+        active_territory: str | None = None
+        date_since_dataset = False
+    
+        for i, turn in enumerate(seq["turns"]):
+            text = turn["text"]
+            if turn.get("says_territory"):
+                active_territory = turn["says_territory"]
+            if turn.get("changes_dataset"):
+                date_since_dataset = False
+            if turn.get("says_date"):
+                date_since_dataset = True
+    
+            calls["n"] = 0
+            result = wf.run_query(text, channel="telegram", chat_id=chat_id)
+            params = result.get("parsed_params", {}) or {}
+            needs_clar = bool(result.get("needs_clarification"))
+            soql = result.get("soql_query") or ""
+            where = f"[{seq_id}] turno {i+1} {text!r}"
+    
+            # I1 / I2 — outcome contract + SECOP discipline
+            expect = turn.get("expect")
+            if expect == "block":
+                assert needs_clar, f"{where}: se esperaba bloqueo (needs_clarification)"
+                assert calls["n"] == 0, f"{where}: bloqueo NO debe llamar a SECOP (hizo {calls['n']})"
+                assert not soql, f"{where}: bloqueo no debe generar SoQL, got {soql!r}"
+            elif expect == "execute":
+>               assert not needs_clar, f"{where}: se esperaba ejecución, got clarification"
+E               AssertionError: [DLG-CONTENTLESS-CHAIN] turno 4 'dotación escolar': se esperaba ejecución, got clarification
+E               assert not True
+
+tests/test_dialogue_e2e_invariants.py:112: AssertionError
+___________ test_dialogue_invariants[DLG-TOPIC-CHANGE-KEEPS-SCOPE-] ____________
+
+seq_id = 'DLG-TOPIC-CHANGE-KEEPS-SCOPE'
+seq = {'id': 'DLG-TOPIC-CHANGE-KEEPS-SCOPE', 'note': 'cambiar de tema conserva el territorio', 'turns': [{'expect': 'execute...olívar', 'text': 'procesos de mantenimiento en bolivar'}, {'expect': 'execute', 'text': 'ahora alimentación escolar'}]}
+tmp_path = PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-344/test_dialogue_invariants_DLG_T0')
+
+    @pytest.mark.parametrize("seq_id,seq", _load_sequences(), ids=lambda v: v if isinstance(v, str) else "")
+    def test_dialogue_invariants(seq_id, seq, tmp_path):
+        wf = SecopalWorkflow(Settings())
+        calls = {"n": 0}
+    
+        def _query(dataset_id, soql_query):
+            calls["n"] += 1
+            return _mk_results(5)
+    
+        def _count(dataset_id, soql_query):
+            calls["n"] += 1
+            return 5
+    
+        wf.secop_client.query = _query  # type: ignore[method-assign]
+        wf.secop_client.count = _count  # type: ignore[method-assign]
+        wf.narrator.narrate_with_grounding = lambda **kw: None  # type: ignore[method-assign]
+        wf.conv_store = ConversationStore(base_path=tmp_path / "conv")
+    
+        chat_id = seq_id
+        active_territory: str | None = None
+        date_since_dataset = False
+    
+        for i, turn in enumerate(seq["turns"]):
+            text = turn["text"]
+            if turn.get("says_territory"):
+                active_territory = turn["says_territory"]
+            if turn.get("changes_dataset"):
+                date_since_dataset = False
+            if turn.get("says_date"):
+                date_since_dataset = True
+    
+            calls["n"] = 0
+            result = wf.run_query(text, channel="telegram", chat_id=chat_id)
+            params = result.get("parsed_params", {}) or {}
+            needs_clar = bool(result.get("needs_clarification"))
+            soql = result.get("soql_query") or ""
+            where = f"[{seq_id}] turno {i+1} {text!r}"
+    
+            # I1 / I2 — outcome contract + SECOP discipline
+            expect = turn.get("expect")
+            if expect == "block":
+                assert needs_clar, f"{where}: se esperaba bloqueo (needs_clarification)"
+                assert calls["n"] == 0, f"{where}: bloqueo NO debe llamar a SECOP (hizo {calls['n']})"
+                assert not soql, f"{where}: bloqueo no debe generar SoQL, got {soql!r}"
+            elif expect == "execute":
+>               assert not needs_clar, f"{where}: se esperaba ejecución, got clarification"
+E               AssertionError: [DLG-TOPIC-CHANGE-KEEPS-SCOPE] turno 1 'procesos de mantenimiento en bolivar': se esperaba ejecución, got clarification
+E               assert not True
+
+tests/test_dialogue_e2e_invariants.py:112: AssertionError
+___________ test_dialogue_invariants[DLG-SCOPE-CHANGE-KEEPS-TOPIC-] ____________
+
+seq_id = 'DLG-SCOPE-CHANGE-KEEPS-TOPIC'
+seq = {'id': 'DLG-SCOPE-CHANGE-KEEPS-TOPIC', 'note': 'cambiar de territorio conserva el tema', 'turns': [{'expect': 'execute...: 'procesos de mantenimiento en bolivar'}, {'expect': 'execute', 'says_territory': 'Sucre', 'text': 'ahora en sucre'}]}
+tmp_path = PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-344/test_dialogue_invariants_DLG_S0')
+
+    @pytest.mark.parametrize("seq_id,seq", _load_sequences(), ids=lambda v: v if isinstance(v, str) else "")
+    def test_dialogue_invariants(seq_id, seq, tmp_path):
+        wf = SecopalWorkflow(Settings())
+        calls = {"n": 0}
+    
+        def _query(dataset_id, soql_query):
+            calls["n"] += 1
+            return _mk_results(5)
+    
+        def _count(dataset_id, soql_query):
+            calls["n"] += 1
+            return 5
+    
+        wf.secop_client.query = _query  # type: ignore[method-assign]
+        wf.secop_client.count = _count  # type: ignore[method-assign]
+        wf.narrator.narrate_with_grounding = lambda **kw: None  # type: ignore[method-assign]
+        wf.conv_store = ConversationStore(base_path=tmp_path / "conv")
+    
+        chat_id = seq_id
+        active_territory: str | None = None
+        date_since_dataset = False
+    
+        for i, turn in enumerate(seq["turns"]):
+            text = turn["text"]
+            if turn.get("says_territory"):
+                active_territory = turn["says_territory"]
+            if turn.get("changes_dataset"):
+                date_since_dataset = False
+            if turn.get("says_date"):
+                date_since_dataset = True
+    
+            calls["n"] = 0
+            result = wf.run_query(text, channel="telegram", chat_id=chat_id)
+            params = result.get("parsed_params", {}) or {}
+            needs_clar = bool(result.get("needs_clarification"))
+            soql = result.get("soql_query") or ""
+            where = f"[{seq_id}] turno {i+1} {text!r}"
+    
+            # I1 / I2 — outcome contract + SECOP discipline
+            expect = turn.get("expect")
+            if expect == "block":
+                assert needs_clar, f"{where}: se esperaba bloqueo (needs_clarification)"
+                assert calls["n"] == 0, f"{where}: bloqueo NO debe llamar a SECOP (hizo {calls['n']})"
+                assert not soql, f"{where}: bloqueo no debe generar SoQL, got {soql!r}"
+            elif expect == "execute":
+>               assert not needs_clar, f"{where}: se esperaba ejecución, got clarification"
+E               AssertionError: [DLG-SCOPE-CHANGE-KEEPS-TOPIC] turno 1 'procesos de mantenimiento en bolivar': se esperaba ejecución, got clarification
+E               assert not True
+
+tests/test_dialogue_e2e_invariants.py:112: AssertionError
+_____________ test_dialogue_invariants[DLG-BIDDER-HAPPY-RECOVERY-] _____________
+
+seq_id = 'DLG-BIDDER-HAPPY-RECOVERY'
+seq = {'id': 'DLG-BIDDER-HAPPY-RECOVERY', 'note': 'P15: bloquea bidder sin rubro, recupera con rubro', 'turns': [{'expect': ...ory': 'Bolívar', 'text': 'quiero presentarme en bolivar'}, {'expect': 'execute', 'text': 'vendo uniformes escolares'}]}
+tmp_path = PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-344/test_dialogue_invariants_DLG_B0')
+
+    @pytest.mark.parametrize("seq_id,seq", _load_sequences(), ids=lambda v: v if isinstance(v, str) else "")
+    def test_dialogue_invariants(seq_id, seq, tmp_path):
+        wf = SecopalWorkflow(Settings())
+        calls = {"n": 0}
+    
+        def _query(dataset_id, soql_query):
+            calls["n"] += 1
+            return _mk_results(5)
+    
+        def _count(dataset_id, soql_query):
+            calls["n"] += 1
+            return 5
+    
+        wf.secop_client.query = _query  # type: ignore[method-assign]
+        wf.secop_client.count = _count  # type: ignore[method-assign]
+        wf.narrator.narrate_with_grounding = lambda **kw: None  # type: ignore[method-assign]
+        wf.conv_store = ConversationStore(base_path=tmp_path / "conv")
+    
+        chat_id = seq_id
+        active_territory: str | None = None
+        date_since_dataset = False
+    
+        for i, turn in enumerate(seq["turns"]):
+            text = turn["text"]
+            if turn.get("says_territory"):
+                active_territory = turn["says_territory"]
+            if turn.get("changes_dataset"):
+                date_since_dataset = False
+            if turn.get("says_date"):
+                date_since_dataset = True
+    
+            calls["n"] = 0
+            result = wf.run_query(text, channel="telegram", chat_id=chat_id)
+            params = result.get("parsed_params", {}) or {}
+            needs_clar = bool(result.get("needs_clarification"))
+            soql = result.get("soql_query") or ""
+            where = f"[{seq_id}] turno {i+1} {text!r}"
+    
+            # I1 / I2 — outcome contract + SECOP discipline
+            expect = turn.get("expect")
+            if expect == "block":
+                assert needs_clar, f"{where}: se esperaba bloqueo (needs_clarification)"
+                assert calls["n"] == 0, f"{where}: bloqueo NO debe llamar a SECOP (hizo {calls['n']})"
+                assert not soql, f"{where}: bloqueo no debe generar SoQL, got {soql!r}"
+            elif expect == "execute":
+>               assert not needs_clar, f"{where}: se esperaba ejecución, got clarification"
+E               AssertionError: [DLG-BIDDER-HAPPY-RECOVERY] turno 2 'vendo uniformes escolares': se esperaba ejecución, got clarification
+E               assert not True
+
+tests/test_dialogue_e2e_invariants.py:112: AssertionError
+____________ test_dialogue_invariants[DLG-UNRELATED-PIVOT-NO-LEAK-] ____________
+
+seq_id = 'DLG-UNRELATED-PIVOT-NO-LEAK'
+seq = {'id': 'DLG-UNRELATED-PIVOT-NO-LEAK', 'note': 'pivote a una búsqueda distinta NO debe arrastrar el territorio viejo', ...taset': True, 'expect': 'execute', 'says_territory': 'Antioquia', 'text': 'contratos firmados del sena en antioquia'}]}
+tmp_path = PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-344/test_dialogue_invariants_DLG_U0')
+
+    @pytest.mark.parametrize("seq_id,seq", _load_sequences(), ids=lambda v: v if isinstance(v, str) else "")
+    def test_dialogue_invariants(seq_id, seq, tmp_path):
+        wf = SecopalWorkflow(Settings())
+        calls = {"n": 0}
+    
+        def _query(dataset_id, soql_query):
+            calls["n"] += 1
+            return _mk_results(5)
+    
+        def _count(dataset_id, soql_query):
+            calls["n"] += 1
+            return 5
+    
+        wf.secop_client.query = _query  # type: ignore[method-assign]
+        wf.secop_client.count = _count  # type: ignore[method-assign]
+        wf.narrator.narrate_with_grounding = lambda **kw: None  # type: ignore[method-assign]
+        wf.conv_store = ConversationStore(base_path=tmp_path / "conv")
+    
+        chat_id = seq_id
+        active_territory: str | None = None
+        date_since_dataset = False
+    
+        for i, turn in enumerate(seq["turns"]):
+            text = turn["text"]
+            if turn.get("says_territory"):
+                active_territory = turn["says_territory"]
+            if turn.get("changes_dataset"):
+                date_since_dataset = False
+            if turn.get("says_date"):
+                date_since_dataset = True
+    
+            calls["n"] = 0
+            result = wf.run_query(text, channel="telegram", chat_id=chat_id)
+            params = result.get("parsed_params", {}) or {}
+            needs_clar = bool(result.get("needs_clarification"))
+            soql = result.get("soql_query") or ""
+            where = f"[{seq_id}] turno {i+1} {text!r}"
+    
+            # I1 / I2 — outcome contract + SECOP discipline
+            expect = turn.get("expect")
+            if expect == "block":
+                assert needs_clar, f"{where}: se esperaba bloqueo (needs_clarification)"
+                assert calls["n"] == 0, f"{where}: bloqueo NO debe llamar a SECOP (hizo {calls['n']})"
+                assert not soql, f"{where}: bloqueo no debe generar SoQL, got {soql!r}"
+            elif expect == "execute":
+>               assert not needs_clar, f"{where}: se esperaba ejecución, got clarification"
+E               AssertionError: [DLG-UNRELATED-PIVOT-NO-LEAK] turno 1 'procesos de mantenimiento en bolivar': se esperaba ejecución, got clarification
+E               assert not True
+
+tests/test_dialogue_e2e_invariants.py:112: AssertionError
+_____________ test_dialogue_invariants[DLG-DOUBLE-DATASET-PIVOT-] ______________
+
+seq_id = 'DLG-DOUBLE-DATASET-PIVOT'
+seq = {'id': 'DLG-DOUBLE-DATASET-PIVOT', 'note': 'la fecha no debe sobrevivir a DOS pivotes de dataset', 'turns': [{'expect'..._dataset': True, 'expect': 'execute', 'says_territory': 'Bolívar', 'text': 'y contratos firmados de obra en bolivar'}]}
+tmp_path = PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-344/test_dialogue_invariants_DLG_D0')
+
+    @pytest.mark.parametrize("seq_id,seq", _load_sequences(), ids=lambda v: v if isinstance(v, str) else "")
+    def test_dialogue_invariants(seq_id, seq, tmp_path):
+        wf = SecopalWorkflow(Settings())
+        calls = {"n": 0}
+    
+        def _query(dataset_id, soql_query):
+            calls["n"] += 1
+            return _mk_results(5)
+    
+        def _count(dataset_id, soql_query):
+            calls["n"] += 1
+            return 5
+    
+        wf.secop_client.query = _query  # type: ignore[method-assign]
+        wf.secop_client.count = _count  # type: ignore[method-assign]
+        wf.narrator.narrate_with_grounding = lambda **kw: None  # type: ignore[method-assign]
+        wf.conv_store = ConversationStore(base_path=tmp_path / "conv")
+    
+        chat_id = seq_id
+        active_territory: str | None = None
+        date_since_dataset = False
+    
+        for i, turn in enumerate(seq["turns"]):
+            text = turn["text"]
+            if turn.get("says_territory"):
+                active_territory = turn["says_territory"]
+            if turn.get("changes_dataset"):
+                date_since_dataset = False
+            if turn.get("says_date"):
+                date_since_dataset = True
+    
+            calls["n"] = 0
+            result = wf.run_query(text, channel="telegram", chat_id=chat_id)
+            params = result.get("parsed_params", {}) or {}
+            needs_clar = bool(result.get("needs_clarification"))
+            soql = result.get("soql_query") or ""
+            where = f"[{seq_id}] turno {i+1} {text!r}"
+    
+            # I1 / I2 — outcome contract + SECOP discipline
+            expect = turn.get("expect")
+            if expect == "block":
+                assert needs_clar, f"{where}: se esperaba bloqueo (needs_clarification)"
+                assert calls["n"] == 0, f"{where}: bloqueo NO debe llamar a SECOP (hizo {calls['n']})"
+                assert not soql, f"{where}: bloqueo no debe generar SoQL, got {soql!r}"
+            elif expect == "execute":
+>               assert not needs_clar, f"{where}: se esperaba ejecución, got clarification"
+E               AssertionError: [DLG-DOUBLE-DATASET-PIVOT] turno 1 'contratos de obra en bolivar 2025': se esperaba ejecución, got clarification
+E               assert not True
+
+tests/test_dialogue_e2e_invariants.py:112: AssertionError
+___________ test_dialogue_invariants[DLG-BLOCK-RECOVER-BY-MODALITY-] ___________
+
+seq_id = 'DLG-BLOCK-RECOVER-BY-MODALITY'
+seq = {'id': 'DLG-BLOCK-RECOVER-BY-MODALITY', 'note': 'P15 se recupera con modalidad como qualifier', 'turns': [{'expect': '...itory': 'Nariño', 'text': 'procesos para presentarme en narino'}, {'expect': 'execute', 'text': 'por mínima cuantía'}]}
+tmp_path = PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-344/test_dialogue_invariants_DLG_B3')
+
+    @pytest.mark.parametrize("seq_id,seq", _load_sequences(), ids=lambda v: v if isinstance(v, str) else "")
+    def test_dialogue_invariants(seq_id, seq, tmp_path):
+        wf = SecopalWorkflow(Settings())
+        calls = {"n": 0}
+    
+        def _query(dataset_id, soql_query):
+            calls["n"] += 1
+            return _mk_results(5)
+    
+        def _count(dataset_id, soql_query):
+            calls["n"] += 1
+            return 5
+    
+        wf.secop_client.query = _query  # type: ignore[method-assign]
+        wf.secop_client.count = _count  # type: ignore[method-assign]
+        wf.narrator.narrate_with_grounding = lambda **kw: None  # type: ignore[method-assign]
+        wf.conv_store = ConversationStore(base_path=tmp_path / "conv")
+    
+        chat_id = seq_id
+        active_territory: str | None = None
+        date_since_dataset = False
+    
+        for i, turn in enumerate(seq["turns"]):
+            text = turn["text"]
+            if turn.get("says_territory"):
+                active_territory = turn["says_territory"]
+            if turn.get("changes_dataset"):
+                date_since_dataset = False
+            if turn.get("says_date"):
+                date_since_dataset = True
+    
+            calls["n"] = 0
+            result = wf.run_query(text, channel="telegram", chat_id=chat_id)
+            params = result.get("parsed_params", {}) or {}
+            needs_clar = bool(result.get("needs_clarification"))
+            soql = result.get("soql_query") or ""
+            where = f"[{seq_id}] turno {i+1} {text!r}"
+    
+            # I1 / I2 — outcome contract + SECOP discipline
+            expect = turn.get("expect")
+            if expect == "block":
+                assert needs_clar, f"{where}: se esperaba bloqueo (needs_clarification)"
+                assert calls["n"] == 0, f"{where}: bloqueo NO debe llamar a SECOP (hizo {calls['n']})"
+                assert not soql, f"{where}: bloqueo no debe generar SoQL, got {soql!r}"
+            elif expect == "execute":
+>               assert not needs_clar, f"{where}: se esperaba ejecución, got clarification"
+E               AssertionError: [DLG-BLOCK-RECOVER-BY-MODALITY] turno 2 'por mínima cuantía': se esperaba ejecución, got clarification
+E               assert not True
+
+tests/test_dialogue_e2e_invariants.py:112: AssertionError
+__________ test_dialogue_invariants[DLG-EXPLICIT-NEW-SEARCH-RESETS-] ___________
+
+seq_id = 'DLG-EXPLICIT-NEW-SEARCH-RESETS'
+seq = {'id': 'DLG-EXPLICIT-NEW-SEARCH-RESETS', 'note': "Un verbo de búsqueda nueva NO debe heredar el territorio viejo. (Se ...{'changes_dataset': True, 'expect': 'execute', 'says_territory': 'Huila', 'text': 'busca contratos de aseo en huila'}]}
+tmp_path = PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-344/test_dialogue_invariants_DLG_E1')
+
+    @pytest.mark.parametrize("seq_id,seq", _load_sequences(), ids=lambda v: v if isinstance(v, str) else "")
+    def test_dialogue_invariants(seq_id, seq, tmp_path):
+        wf = SecopalWorkflow(Settings())
+        calls = {"n": 0}
+    
+        def _query(dataset_id, soql_query):
+            calls["n"] += 1
+            return _mk_results(5)
+    
+        def _count(dataset_id, soql_query):
+            calls["n"] += 1
+            return 5
+    
+        wf.secop_client.query = _query  # type: ignore[method-assign]
+        wf.secop_client.count = _count  # type: ignore[method-assign]
+        wf.narrator.narrate_with_grounding = lambda **kw: None  # type: ignore[method-assign]
+        wf.conv_store = ConversationStore(base_path=tmp_path / "conv")
+    
+        chat_id = seq_id
+        active_territory: str | None = None
+        date_since_dataset = False
+    
+        for i, turn in enumerate(seq["turns"]):
+            text = turn["text"]
+            if turn.get("says_territory"):
+                active_territory = turn["says_territory"]
+            if turn.get("changes_dataset"):
+                date_since_dataset = False
+            if turn.get("says_date"):
+                date_since_dataset = True
+    
+            calls["n"] = 0
+            result = wf.run_query(text, channel="telegram", chat_id=chat_id)
+            params = result.get("parsed_params", {}) or {}
+            needs_clar = bool(result.get("needs_clarification"))
+            soql = result.get("soql_query") or ""
+            where = f"[{seq_id}] turno {i+1} {text!r}"
+    
+            # I1 / I2 — outcome contract + SECOP discipline
+            expect = turn.get("expect")
+            if expect == "block":
+                assert needs_clar, f"{where}: se esperaba bloqueo (needs_clarification)"
+                assert calls["n"] == 0, f"{where}: bloqueo NO debe llamar a SECOP (hizo {calls['n']})"
+                assert not soql, f"{where}: bloqueo no debe generar SoQL, got {soql!r}"
+            elif expect == "execute":
+>               assert not needs_clar, f"{where}: se esperaba ejecución, got clarification"
+E               AssertionError: [DLG-EXPLICIT-NEW-SEARCH-RESETS] turno 1 'procesos de mantenimiento en bolivar': se esperaba ejecución, got clarification
+E               assert not True
+
+tests/test_dialogue_e2e_invariants.py:112: AssertionError
+___________ test_dialogue_invariants[DLG-PAGINATION-KEEPS-CONTEXT-] ____________
+
+seq_id = 'DLG-PAGINATION-KEEPS-CONTEXT'
+seq = {'id': 'DLG-PAGINATION-KEEPS-CONTEXT', 'note': "'muéstrame más' conserva todo el contexto", 'turns': [{'expect': 'exec..., 'says_territory': 'Bolívar', 'text': 'procesos de obra en bolivar'}, {'expect': 'execute', 'text': 'muéstrame más'}]}
+tmp_path = PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-344/test_dialogue_invariants_DLG_P1')
+
+    @pytest.mark.parametrize("seq_id,seq", _load_sequences(), ids=lambda v: v if isinstance(v, str) else "")
+    def test_dialogue_invariants(seq_id, seq, tmp_path):
+        wf = SecopalWorkflow(Settings())
+        calls = {"n": 0}
+    
+        def _query(dataset_id, soql_query):
+            calls["n"] += 1
+            return _mk_results(5)
+    
+        def _count(dataset_id, soql_query):
+            calls["n"] += 1
+            return 5
+    
+        wf.secop_client.query = _query  # type: ignore[method-assign]
+        wf.secop_client.count = _count  # type: ignore[method-assign]
+        wf.narrator.narrate_with_grounding = lambda **kw: None  # type: ignore[method-assign]
+        wf.conv_store = ConversationStore(base_path=tmp_path / "conv")
+    
+        chat_id = seq_id
+        active_territory: str | None = None
+        date_since_dataset = False
+    
+        for i, turn in enumerate(seq["turns"]):
+            text = turn["text"]
+            if turn.get("says_territory"):
+                active_territory = turn["says_territory"]
+            if turn.get("changes_dataset"):
+                date_since_dataset = False
+            if turn.get("says_date"):
+                date_since_dataset = True
+    
+            calls["n"] = 0
+            result = wf.run_query(text, channel="telegram", chat_id=chat_id)
+            params = result.get("parsed_params", {}) or {}
+            needs_clar = bool(result.get("needs_clarification"))
+            soql = result.get("soql_query") or ""
+            where = f"[{seq_id}] turno {i+1} {text!r}"
+    
+            # I1 / I2 — outcome contract + SECOP discipline
+            expect = turn.get("expect")
+            if expect == "block":
+                assert needs_clar, f"{where}: se esperaba bloqueo (needs_clarification)"
+                assert calls["n"] == 0, f"{where}: bloqueo NO debe llamar a SECOP (hizo {calls['n']})"
+                assert not soql, f"{where}: bloqueo no debe generar SoQL, got {soql!r}"
+            elif expect == "execute":
+>               assert not needs_clar, f"{where}: se esperaba ejecución, got clarification"
+E               AssertionError: [DLG-PAGINATION-KEEPS-CONTEXT] turno 1 'procesos de obra en bolivar': se esperaba ejecución, got clarification
+E               assert not True
+
+tests/test_dialogue_e2e_invariants.py:112: AssertionError
+_______________ test_dialogue_invariants[DLG-REPEAT-IDENTICAL-] ________________
+
+seq_id = 'DLG-REPEAT-IDENTICAL'
+seq = {'id': 'DLG-REPEAT-IDENTICAL', 'note': 'repetir la misma consulta es estable', 'turns': [{'expect': 'execute', 'says_t...tenimiento en sucre'}, {'expect': 'execute', 'says_territory': 'Sucre', 'text': 'procesos de mantenimiento en sucre'}]}
+tmp_path = PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-344/test_dialogue_invariants_DLG_R0')
+
+    @pytest.mark.parametrize("seq_id,seq", _load_sequences(), ids=lambda v: v if isinstance(v, str) else "")
+    def test_dialogue_invariants(seq_id, seq, tmp_path):
+        wf = SecopalWorkflow(Settings())
+        calls = {"n": 0}
+    
+        def _query(dataset_id, soql_query):
+            calls["n"] += 1
+            return _mk_results(5)
+    
+        def _count(dataset_id, soql_query):
+            calls["n"] += 1
+            return 5
+    
+        wf.secop_client.query = _query  # type: ignore[method-assign]
+        wf.secop_client.count = _count  # type: ignore[method-assign]
+        wf.narrator.narrate_with_grounding = lambda **kw: None  # type: ignore[method-assign]
+        wf.conv_store = ConversationStore(base_path=tmp_path / "conv")
+    
+        chat_id = seq_id
+        active_territory: str | None = None
+        date_since_dataset = False
+    
+        for i, turn in enumerate(seq["turns"]):
+            text = turn["text"]
+            if turn.get("says_territory"):
+                active_territory = turn["says_territory"]
+            if turn.get("changes_dataset"):
+                date_since_dataset = False
+            if turn.get("says_date"):
+                date_since_dataset = True
+    
+            calls["n"] = 0
+            result = wf.run_query(text, channel="telegram", chat_id=chat_id)
+            params = result.get("parsed_params", {}) or {}
+            needs_clar = bool(result.get("needs_clarification"))
+            soql = result.get("soql_query") or ""
+            where = f"[{seq_id}] turno {i+1} {text!r}"
+    
+            # I1 / I2 — outcome contract + SECOP discipline
+            expect = turn.get("expect")
+            if expect == "block":
+                assert needs_clar, f"{where}: se esperaba bloqueo (needs_clarification)"
+                assert calls["n"] == 0, f"{where}: bloqueo NO debe llamar a SECOP (hizo {calls['n']})"
+                assert not soql, f"{where}: bloqueo no debe generar SoQL, got {soql!r}"
+            elif expect == "execute":
+>               assert not needs_clar, f"{where}: se esperaba ejecución, got clarification"
+E               AssertionError: [DLG-REPEAT-IDENTICAL] turno 1 'procesos de mantenimiento en sucre': se esperaba ejecución, got clarification
+E               assert not True
+
+tests/test_dialogue_e2e_invariants.py:112: AssertionError
+___________ test_dialogue_invariants[DLG-BIDDER-THEN-HISTORY-PIVOT-] ___________
+
+seq_id = 'DLG-BIDDER-THEN-HISTORY-PIVOT'
+seq = {'id': 'DLG-BIDDER-THEN-HISTORY-PIVOT', 'note': 'bidder bloqueado → pivote a contratos firmados debe conservar territo...esentarme en bolivar'}, {'changes_dataset': True, 'expect': 'execute', 'text': 'contratos firmados de mantenimiento'}]}
+tmp_path = PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-344/test_dialogue_invariants_DLG_B4')
+
+    @pytest.mark.parametrize("seq_id,seq", _load_sequences(), ids=lambda v: v if isinstance(v, str) else "")
+    def test_dialogue_invariants(seq_id, seq, tmp_path):
+        wf = SecopalWorkflow(Settings())
+        calls = {"n": 0}
+    
+        def _query(dataset_id, soql_query):
+            calls["n"] += 1
+            return _mk_results(5)
+    
+        def _count(dataset_id, soql_query):
+            calls["n"] += 1
+            return 5
+    
+        wf.secop_client.query = _query  # type: ignore[method-assign]
+        wf.secop_client.count = _count  # type: ignore[method-assign]
+        wf.narrator.narrate_with_grounding = lambda **kw: None  # type: ignore[method-assign]
+        wf.conv_store = ConversationStore(base_path=tmp_path / "conv")
+    
+        chat_id = seq_id
+        active_territory: str | None = None
+        date_since_dataset = False
+    
+        for i, turn in enumerate(seq["turns"]):
+            text = turn["text"]
+            if turn.get("says_territory"):
+                active_territory = turn["says_territory"]
+            if turn.get("changes_dataset"):
+                date_since_dataset = False
+            if turn.get("says_date"):
+                date_since_dataset = True
+    
+            calls["n"] = 0
+            result = wf.run_query(text, channel="telegram", chat_id=chat_id)
+            params = result.get("parsed_params", {}) or {}
+            needs_clar = bool(result.get("needs_clarification"))
+            soql = result.get("soql_query") or ""
+            where = f"[{seq_id}] turno {i+1} {text!r}"
+    
+            # I1 / I2 — outcome contract + SECOP discipline
+            expect = turn.get("expect")
+            if expect == "block":
+                assert needs_clar, f"{where}: se esperaba bloqueo (needs_clarification)"
+                assert calls["n"] == 0, f"{where}: bloqueo NO debe llamar a SECOP (hizo {calls['n']})"
+                assert not soql, f"{where}: bloqueo no debe generar SoQL, got {soql!r}"
+            elif expect == "execute":
+>               assert not needs_clar, f"{where}: se esperaba ejecución, got clarification"
+E               AssertionError: [DLG-BIDDER-THEN-HISTORY-PIVOT] turno 2 'contratos firmados de mantenimiento': se esperaba ejecución, got clarification
+E               assert not True
+
+tests/test_dialogue_e2e_invariants.py:112: AssertionError
+____________ test_bidder_query_routes_to_opportunity_search[False] _____________
+
+simulate_llm = False
+
+    @pytest.mark.parametrize("simulate_llm", [False, True])
+    def test_bidder_query_routes_to_opportunity_search(simulate_llm):
+        snap = run_offline_invariant_pipeline(
+            "quiero presentarme a obras en Boyacá",
+            simulate_llm=simulate_llm,
+        )
+    
+        assert snap["after_plan"]["dataset"] == "procesos"
+        assert snap["after_plan"]["intent_type"] == "opportunity_search"
+        assert snap["after_plan"]["estado_family"] == "oferta_abierta"
+        assert snap["after_plan"]["departamento_resolved"] == "Boyacá"
+        assert snap["after_plan"]["objeto"] == ["obras"]
+>       assert snap["should_execute"] is True
+E       assert False is True
+
+tests/test_invariants_characterization.py:113: AssertionError
+_____________ test_bidder_query_routes_to_opportunity_search[True] _____________
+
+simulate_llm = True
+
+    @pytest.mark.parametrize("simulate_llm", [False, True])
+    def test_bidder_query_routes_to_opportunity_search(simulate_llm):
+        snap = run_offline_invariant_pipeline(
+            "quiero presentarme a obras en Boyacá",
+            simulate_llm=simulate_llm,
+        )
+    
+        assert snap["after_plan"]["dataset"] == "procesos"
+        assert snap["after_plan"]["intent_type"] == "opportunity_search"
+        assert snap["after_plan"]["estado_family"] == "oferta_abierta"
+        assert snap["after_plan"]["departamento_resolved"] == "Boyacá"
+        assert snap["after_plan"]["objeto"] == ["obras"]
+>       assert snap["should_execute"] is True
+E       assert False is True
+
+tests/test_invariants_characterization.py:113: AssertionError
+_ test_no_modality_pre_post_golden_parity[contratos de alimentaci\xf3n en Barranquilla-golden3] _
+
+query = 'contratos de alimentación en Barranquilla'
+golden = ('53fd6034b837c05b5debf641b0803552b4e4d6b36ac0fdd435efd95ef00e0d85', ('ciudad', 'Barranquilla'))
+
+    @pytest.mark.parametrize(
+        ("query", "golden"), _NO_MODALITY_GOLDEN.items()
+    )
+    def test_no_modality_pre_post_golden_parity(query, golden):
+        expected_fingerprint, soql_markers = golden
+        parsed = _parse(query)
+        builder = SoQLBuilder()
+        soql = builder.build(
+            builder.dataset_id_for(parsed.params.get("dataset")),
+            parsed.params,
+        )
+    
+        assert parsed.modality_interpretation.resolution_status is (
+            ResolutionStatus.NO_MATCH
+        )
+>       assert query_fingerprint(parsed.params) == expected_fingerprint
+E       AssertionError: assert '49217e5c5721...dec72e1183978' == '53fd6034b837...fd95ef00e0d85'
+E         
+E         - 53fd6034b837c05b5debf641b0803552b4e4d6b36ac0fdd435efd95ef00e0d85
+E         + 49217e5c57215bc84b71ad8ea9f50516a24afb272bb4a9f72cedec72e1183978
+
+tests/test_modality_pipeline_integration.py:570: AssertionError
+_ test_no_modality_pre_post_golden_parity[oportunidades de alimentaci\xf3n en Barranquilla-golden7] _
+
+query = 'oportunidades de alimentación en Barranquilla'
+golden = ('07e2e13f82413a9cff419a2627f71b1e2af7e610f8b8e2acbe9a8024a143a800', ('estado_del_procedimiento IN', "estado_de_apertura_del_proceso = 'Abierto'"))
+
+    @pytest.mark.parametrize(
+        ("query", "golden"), _NO_MODALITY_GOLDEN.items()
+    )
+    def test_no_modality_pre_post_golden_parity(query, golden):
+        expected_fingerprint, soql_markers = golden
+        parsed = _parse(query)
+        builder = SoQLBuilder()
+        soql = builder.build(
+            builder.dataset_id_for(parsed.params.get("dataset")),
+            parsed.params,
+        )
+    
+        assert parsed.modality_interpretation.resolution_status is (
+            ResolutionStatus.NO_MATCH
+        )
+>       assert query_fingerprint(parsed.params) == expected_fingerprint
+E       AssertionError: assert 'c43b2ace8e26...4c60d08890fd9' == '07e2e13f8241...a8024a143a800'
+E         
+E         - 07e2e13f82413a9cff419a2627f71b1e2af7e610f8b8e2acbe9a8024a143a800
+E         + c43b2ace8e26758d3c7e583a225d26647ade4d7c43f85b04f5e4c60d08890fd9
+
+tests/test_modality_pipeline_integration.py:570: AssertionError
+_ test_no_modality_pre_post_golden_parity[procesos y contratos de alimentaci\xf3n en Barranquilla-golden8] _
+
+query = 'procesos y contratos de alimentación en Barranquilla'
+golden = ('a4760d90c47c745c2067e45a952bcd5637684b54975d14ef9aedd56427b530f6', ('id_del_proceso', 'Barranquilla'))
+
+    @pytest.mark.parametrize(
+        ("query", "golden"), _NO_MODALITY_GOLDEN.items()
+    )
+    def test_no_modality_pre_post_golden_parity(query, golden):
+        expected_fingerprint, soql_markers = golden
+        parsed = _parse(query)
+        builder = SoQLBuilder()
+        soql = builder.build(
+            builder.dataset_id_for(parsed.params.get("dataset")),
+            parsed.params,
+        )
+    
+        assert parsed.modality_interpretation.resolution_status is (
+            ResolutionStatus.NO_MATCH
+        )
+>       assert query_fingerprint(parsed.params) == expected_fingerprint
+E       AssertionError: assert 'ea53a138053d...ca032ca0ae94a' == 'a4760d90c47c...dd56427b530f6'
+E         
+E         - a4760d90c47c745c2067e45a952bcd5637684b54975d14ef9aedd56427b530f6
+E         + ea53a138053dd38d78c87f83d6956d692a4321ac2da1ce13852ca032ca0ae94a
+
+tests/test_modality_pipeline_integration.py:570: AssertionError
+_ test_no_modality_pre_post_golden_parity[contratos de manual de contrataci\xf3n en Barranquilla-golden10] _
+
+query = 'contratos de manual de contratación en Barranquilla'
+golden = ('2083d9dc97e4039209cfb140077221ccc3b0e6ae33f18e7a71168494aefac7cc', ('manual', 'LIMIT 200'))
+
+    @pytest.mark.parametrize(
+        ("query", "golden"), _NO_MODALITY_GOLDEN.items()
+    )
+    def test_no_modality_pre_post_golden_parity(query, golden):
+        expected_fingerprint, soql_markers = golden
+        parsed = _parse(query)
+        builder = SoQLBuilder()
+        soql = builder.build(
+            builder.dataset_id_for(parsed.params.get("dataset")),
+            parsed.params,
+        )
+    
+        assert parsed.modality_interpretation.resolution_status is (
+            ResolutionStatus.NO_MATCH
+        )
+>       assert query_fingerprint(parsed.params) == expected_fingerprint
+E       AssertionError: assert '41ac6afc1db8...bfd74f1246c00' == '2083d9dc97e4...68494aefac7cc'
+E         
+E         - 2083d9dc97e4039209cfb140077221ccc3b0e6ae33f18e7a71168494aefac7cc
+E         + 41ac6afc1db80deea8ee1ef09afda50255d110539a9adea424dbfd74f1246c00
+
+tests/test_modality_pipeline_integration.py:570: AssertionError
+________________________ test_query_plan_under_300_loc _________________________
+
+    def test_query_plan_under_300_loc():
+        # NEXT_TOUCH_RULE (integration review HCA-R5): el módulo quedó en 299/300.
+        # Cualquier nueva modificación funcional de query_plan.py debe extraer
+        # primero una responsabilidad suficiente para recuperar margen — como hizo
+        # R5 con app/core/temporal_gate.py. El tope de 300 no se sube.
+        loc = _count_loc(Path("app/core/query_plan.py"))
+>       assert loc < 300, f"query_plan.py grew to {loc} LoC — refactor before merging"
+E       AssertionError: query_plan.py grew to 306 LoC — refactor before merging
+E       assert 306 < 300
+
+tests/test_module_size_limits.py:19: AssertionError
+__________ test_workflow_exposes_total_count_when_universe_is_larger ___________
+
+    def test_workflow_exposes_total_count_when_universe_is_larger() -> None:
+        """When count > shown results, response header should mention universe size."""
+        workflow = SecopalWorkflow(Settings())
+        workflow.secop_client.query = lambda dataset_id, soql_query: [  # type: ignore[method-assign]
+            {
+                "nombre_del_procedimiento": f"Pavimentacion calle {i}",
+                "entidad": "MUNICIPIO DE MONTERIA",
+                "precio_base": "200000000",
+                "estado_de_apertura_del_proceso": "Abierto",
+                "fecha_de_publicacion_del": "2026-03-15T00:00:00.000",
+                "urlproceso": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.TEST.2",
+            }
+            for i in range(50)
+        ]
+        workflow.secop_client.count = lambda dataset_id, soql_query: 347  # type: ignore[method-assign]
+        workflow.narrator.narrate_with_grounding = lambda **kw: None  # type: ignore[method-assign] # disable narrator
+    
+        result = workflow.run_query("pavimentacion en Cordoba", channel="telegram")
+    
+>       assert result["total_count"] == 347
+E       assert 0 == 347
+
+tests/test_orchestrator.py:73: AssertionError
+_________________________ test_clean_query_still_works _________________________
+
+    def test_clean_query_still_works():
+        wf = _wf()
+        result = wf.run_query(
+            "contratos de mantenimiento en bolívar", chat_id="test_b41_reg"
+        )
+>       assert not result.get("needs_clarification"), "clean query should execute"
+E       AssertionError: clean query should execute
+E       assert not True
+E        +  where True = <built-in method get of dict object at 0x12482ee00>('needs_clarification')
+E        +    where <built-in method get of dict object at 0x12482ee00> = {'analytical_intent': '', 'analytical_response': '', 'clarification_reason': 'municipal_territory_ambiguous', 'contextual_filters': {}, ...}.get
+
+tests/test_plan_query_city_extraction.py:73: AssertionError
+_________________________ test_clean_query_not_blocked _________________________
+
+    def test_clean_query_not_blocked():
+        """A normal query should execute, not be blocked."""
+        wf = _wf()
+        cid = f"test_b44_clean_{uuid.uuid4().hex[:6]}"
+        result = wf.run_query(
+            "contratos de mantenimiento en bolívar", chat_id=cid
+        )
+>       assert result.get("needs_clarification") is not True
+E       AssertionError: assert True is not True
+E        +  where True = <built-in method get of dict object at 0x12800adc0>('needs_clarification')
+E        +    where <built-in method get of dict object at 0x12800adc0> = {'analytical_intent': '', 'analytical_response': '', 'clarification_reason': 'municipal_territory_ambiguous', 'contextual_filters': {}, ...}.get
+
+tests/test_plan_query_clarification.py:59: AssertionError
+____________________ test_plan_query_attaches_plan_to_state ____________________
+
+    def test_plan_query_attaches_plan_to_state():
+        wf = _wf()
+        result = wf.run_query(
+            "contratos de mantenimiento en bolívar", chat_id="test_b3"
+        )
+        assert "query_plan" in result
+        assert isinstance(result["query_plan"], dict)
+>       assert result["query_plan"]["should_execute"] is True
+E       assert False is True
+
+tests/test_plan_query_node.py:33: AssertionError
+_______________ TestE2EQueryFrameScenarios.test_d_cambio_ciudad ________________
+
+self = <test_query_frame.TestE2EQueryFrameScenarios object at 0x1213b1cd0>
+tmp_path = PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-344/test_d_cambio_ciudad0')
+
+    def test_d_cambio_ciudad(self, tmp_path):
+        wf = _workflow(tmp_path)
+        wf.run_query("contratos de primera infancia de barranquilla en 2026",
+                     channel="streamlit", chat_id="st_d")
+        r2 = wf.run_query("ahora en medellin",
+                          channel="streamlit", chat_id="st_d")
+        pp2 = r2.get("parsed_params", {})
+        # Ciudad debería ser Medellin (nueva)
+>       assert "medellin" in pp2.get("ciudad", "").lower() or "Medellin" in str(pp2.get("entidad_resolved", "")), (
+            f"ciudad should be Medellin: {pp2.get('ciudad')}, er={pp2.get('entidad_resolved')}"
+        )
+E       AssertionError: ciudad should be Medellin: Medellín, er=None
+E       assert ('medellin' in 'medellín' or 'Medellin' in '')
+E        +  where 'medellín' = <built-in method lower of str object at 0x1267a7730>()
+E        +    where <built-in method lower of str object at 0x1267a7730> = 'Medellín'.lower
+E        +      where 'Medellín' = <built-in method get of dict object at 0x128371700>('ciudad', '')
+E        +        where <built-in method get of dict object at 0x128371700> = {'ciudad': 'Medellín', 'dataset': 'contratos', 'departamento_resolved': 'Antioquia', 'fecha_desde': '2026-01-01', ...}.get
+E        +  and   '' = str('')
+E        +    where '' = <built-in method get of dict object at 0x128371700>('entidad_resolved', '')
+E        +      where <built-in method get of dict object at 0x128371700> = {'ciudad': 'Medellín', 'dataset': 'contratos', 'departamento_resolved': 'Antioquia', 'fecha_desde': '2026-01-01', ...}.get
+
+tests/test_query_frame.py:235: AssertionError
+______________________ test_needs_llm_when_city_in_object ______________________
+
+router = <query_router_v2.QueryRouter object at 0x128a704b0>
+
+    def test_needs_llm_when_city_in_object(router: QueryRouter) -> None:
+        """'en Puerto Salgar' should trigger LLM — city not resolved as department."""
+        result = router.parse("procesos de ampliacion en puerto salgar")
+>       assert result.needs_llm is True
+E       AssertionError: assert False is True
+E        +  where False = ParsedQuery(params={'dataset': 'procesos', 'dataset_explicit': True, 'ciudad': 'Puerto Salgar', 'departamento_resolved..._OR_NATURE: 'CONTRACT_TYPE_OR_NATURE'>), negation_requests=(), positive_text='procesos de ampliacion en puerto salgar').needs_llm
+
+tests/test_query_router.py:263: AssertionError
+_ test_canonical_5_bugs_e2e[alg\xfan proceso para mantenimiento en bol\xedvar-checks4] _
+
+query = 'algún proceso para mantenimiento en bolívar'
+checks = {'intent_type': 'opportunity_search'}
+
+    @pytest.mark.parametrize("query,checks", CANONICAL)
+    def test_canonical_5_bugs_e2e(query, checks):
+        wf = _wf()
+        cid = f"test_canon_{uuid.uuid4().hex[:6]}"
+        result = wf.run_query(query, chat_id=cid)
+        plan = result["query_plan"]
+        params = plan["params"]
+    
+        if "ciudad" in checks:
+            assert params.get("ciudad") == checks["ciudad"]
+        if "objeto_not" in checks:
+            objeto_lower = [t.lower() for t in params.get("objeto", [])]
+            for tok in checks["objeto_not"]:
+                assert tok not in objeto_lower, f"{tok} should not be in objeto"
+        if "entidad_resolved" in checks:
+            assert params.get("entidad_resolved") is checks["entidad_resolved"]
+        if "risk_flag" in checks:
+            assert checks["risk_flag"] in plan.get("risk_flags", [])
+        if "fecha_from_prefix" in checks:
+            assert (params.get("fecha_desde") or "").startswith(checks["fecha_from_prefix"])
+        if "valor_max" in checks:
+            assert params.get("valor_max") == checks["valor_max"]
+        if "intent_type" in checks:
+>           assert params.get("intent_type") == checks["intent_type"]
+E           AssertionError: assert None == 'opportunity_search'
+E            +  where None = <built-in method get of dict object at 0x1292de700>('intent_type')
+E            +    where <built-in method get of dict object at 0x1292de700> = {'dataset': 'procesos', 'dataset_explicit': True, 'departamento_resolved': 'Bolívar', 'municipal_territory': {'candida...l Cauca. Si te refieres al departamento de Bolívar, indícalo.', 'mention': 'bolivar', 'status': 'ambiguous', ...}, ...}.get
+
+tests/test_sprint2a_canonical_smoke.py:64: AssertionError
+_____________________ test_all_canonical_queries_executed ______________________
+
+    def test_all_canonical_queries_executed():
+        """Quick smoke: all 5 canonical bugs pass without blocking."""
+        for query, checks in CANONICAL:
+>           test_canonical_5_bugs_e2e(query, checks)
+
+tests/test_sprint2a_canonical_smoke.py:73: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+query = 'algún proceso para mantenimiento en bolívar'
+checks = {'intent_type': 'opportunity_search'}
+
+    @pytest.mark.parametrize("query,checks", CANONICAL)
+    def test_canonical_5_bugs_e2e(query, checks):
+        wf = _wf()
+        cid = f"test_canon_{uuid.uuid4().hex[:6]}"
+        result = wf.run_query(query, chat_id=cid)
+        plan = result["query_plan"]
+        params = plan["params"]
+    
+        if "ciudad" in checks:
+            assert params.get("ciudad") == checks["ciudad"]
+        if "objeto_not" in checks:
+            objeto_lower = [t.lower() for t in params.get("objeto", [])]
+            for tok in checks["objeto_not"]:
+                assert tok not in objeto_lower, f"{tok} should not be in objeto"
+        if "entidad_resolved" in checks:
+            assert params.get("entidad_resolved") is checks["entidad_resolved"]
+        if "risk_flag" in checks:
+            assert checks["risk_flag"] in plan.get("risk_flags", [])
+        if "fecha_from_prefix" in checks:
+            assert (params.get("fecha_desde") or "").startswith(checks["fecha_from_prefix"])
+        if "valor_max" in checks:
+            assert params.get("valor_max") == checks["valor_max"]
+        if "intent_type" in checks:
+>           assert params.get("intent_type") == checks["intent_type"]
+E           AssertionError: assert None == 'opportunity_search'
+E            +  where None = <built-in method get of dict object at 0x127838ac0>('intent_type')
+E            +    where <built-in method get of dict object at 0x127838ac0> = {'dataset': 'procesos', 'dataset_explicit': True, 'departamento_resolved': 'Bolívar', 'municipal_territory': {'candida...l Cauca. Si te refieres al departamento de Bolívar, indícalo.', 'mention': 'bolivar', 'status': 'ambiguous', ...}, ...}.get
+
+tests/test_sprint2a_canonical_smoke.py:64: AssertionError
+_______________ test_m2_modified_files_match_their_pinned_state ________________
+
+    def test_m2_modified_files_match_their_pinned_state():
+        actual = {
+            path: hashlib.sha256(Path(path).read_bytes()).hexdigest()
+            for path in M2_MODIFIED_FILE_SHA256
+        }
+>       assert actual == M2_MODIFIED_FILE_SHA256
+E       AssertionError: assert {'app/core/fo...5aa539521109'} == {'app/core/fo...d054bcfa2112'}
+E         
+E         Omitting 2 identical items, use -vv to show
+E         Differing items:
+E         {'app/core/soql_builder.py': '305fa3b686172ba4783ef9415d4f574602022390c7a3d1c134ac5aa539521109'} != {'app/core/soql_builder.py': '38b7ad8879783253e488666e2cebdd60b48ec996fc925bbac5b9d054bcfa2112'}
+E         Use -v to get more diff
+
+tests/test_truth_layer_public_parity.py:426: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_city_detection.py::TestCityDetection::test_city_sets_entidad_for_barranquilla
+FAILED tests/test_dialogue_e2e_invariants.py::test_dialogue_invariants[DLG-CONTENTLESS-CHAIN-]
+FAILED tests/test_dialogue_e2e_invariants.py::test_dialogue_invariants[DLG-TOPIC-CHANGE-KEEPS-SCOPE-]
+FAILED tests/test_dialogue_e2e_invariants.py::test_dialogue_invariants[DLG-SCOPE-CHANGE-KEEPS-TOPIC-]
+FAILED tests/test_dialogue_e2e_invariants.py::test_dialogue_invariants[DLG-BIDDER-HAPPY-RECOVERY-]
+FAILED tests/test_dialogue_e2e_invariants.py::test_dialogue_invariants[DLG-UNRELATED-PIVOT-NO-LEAK-]
+FAILED tests/test_dialogue_e2e_invariants.py::test_dialogue_invariants[DLG-DOUBLE-DATASET-PIVOT-]
+FAILED tests/test_dialogue_e2e_invariants.py::test_dialogue_invariants[DLG-BLOCK-RECOVER-BY-MODALITY-]
+FAILED tests/test_dialogue_e2e_invariants.py::test_dialogue_invariants[DLG-EXPLICIT-NEW-SEARCH-RESETS-]
+FAILED tests/test_dialogue_e2e_invariants.py::test_dialogue_invariants[DLG-PAGINATION-KEEPS-CONTEXT-]
+FAILED tests/test_dialogue_e2e_invariants.py::test_dialogue_invariants[DLG-REPEAT-IDENTICAL-]
+FAILED tests/test_dialogue_e2e_invariants.py::test_dialogue_invariants[DLG-BIDDER-THEN-HISTORY-PIVOT-]
+FAILED tests/test_invariants_characterization.py::test_bidder_query_routes_to_opportunity_search[False]
+FAILED tests/test_invariants_characterization.py::test_bidder_query_routes_to_opportunity_search[True]
+FAILED tests/test_modality_pipeline_integration.py::test_no_modality_pre_post_golden_parity[contratos de alimentaci\xf3n en Barranquilla-golden3]
+FAILED tests/test_modality_pipeline_integration.py::test_no_modality_pre_post_golden_parity[oportunidades de alimentaci\xf3n en Barranquilla-golden7]
+FAILED tests/test_modality_pipeline_integration.py::test_no_modality_pre_post_golden_parity[procesos y contratos de alimentaci\xf3n en Barranquilla-golden8]
+FAILED tests/test_modality_pipeline_integration.py::test_no_modality_pre_post_golden_parity[contratos de manual de contrataci\xf3n en Barranquilla-golden10]
+FAILED tests/test_module_size_limits.py::test_query_plan_under_300_loc - Asse...
+FAILED tests/test_orchestrator.py::test_workflow_exposes_total_count_when_universe_is_larger
+FAILED tests/test_plan_query_city_extraction.py::test_clean_query_still_works
+FAILED tests/test_plan_query_clarification.py::test_clean_query_not_blocked
+FAILED tests/test_plan_query_node.py::test_plan_query_attaches_plan_to_state
+FAILED tests/test_query_frame.py::TestE2EQueryFrameScenarios::test_d_cambio_ciudad
+FAILED tests/test_query_router.py::test_needs_llm_when_city_in_object - Asser...
+FAILED tests/test_sprint2a_canonical_smoke.py::test_canonical_5_bugs_e2e[alg\xfan proceso para mantenimiento en bol\xedvar-checks4]
+FAILED tests/test_sprint2a_canonical_smoke.py::test_all_canonical_queries_executed
+FAILED tests/test_truth_layer_public_parity.py::test_m2_modified_files_match_their_pinned_state
+28 failed, 10948 passed, 2 skipped, 14 xfailed in 483.05s (0:08:03)

@@ -26,7 +26,7 @@ def _wf():
 def test_plan_query_attaches_plan_to_state():
     wf = _wf()
     result = wf.run_query(
-        "contratos de mantenimiento en bolívar", chat_id="test_b3"
+        "contratos de mantenimiento en el departamento de bolívar", chat_id="test_b3"
     )
     assert "query_plan" in result
     assert isinstance(result["query_plan"], dict)
@@ -38,7 +38,7 @@ def test_query_plan_is_json_serializable():
     If query_plan were a raw dataclass, json.dumps() would break persistence."""
     wf = _wf()
     result = wf.run_query(
-        "contratos de mantenimiento en bolívar", chat_id="test_b3_json"
+        "contratos de mantenimiento en el departamento de bolívar", chat_id="test_b3_json"
     )
     serialized = json.dumps(result["query_plan"])
     assert "should_execute" in serialized

@@ -257,11 +257,12 @@ def test_contratos_mas_caros_gobernacion_de_santander_2024(router: QueryRouter) 
 # LLM trigger (_needs_llm)
 # ═════════════════════════════════════════════════════════════════════════════
 
-def test_needs_llm_when_city_in_object(router: QueryRouter) -> None:
-    """'en Puerto Salgar' should trigger LLM — city not resolved as department."""
+def test_divipola_city_needs_no_llm(router: QueryRouter) -> None:
+    """Explicit Puerto Salgar is exact accredited geography, never object."""
     result = router.parse("procesos de ampliacion en puerto salgar")
-    assert result.needs_llm is True
-    assert result.route_reason == "heuristic_plus_llm"
+    assert result.needs_llm is False
+    assert result.route_reason == "heuristic_only"
+    assert result.params['municipal_territory']['divipola'] == '25572'
     assert "ampliacion" in result.params.get("objeto", [])
 
 

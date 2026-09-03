@@ -1,7 +1,10 @@
 metadata:
-  version: "1.0"
+  version: "1.1"
   created: "2026-06-13"
   purpose: >
+    M1A.1 hace explícito "departamento" en los escenarios cuyo scope declarado
+    es departamental y comparte nombre con municipios DIVIPOLA. Las consultas
+    desnudas ambiguas se validan aparte en test_municipal_territory.py.
     Corpus de diálogo E2E multi-turno. Maneja el workflow REAL
     (SecopalWorkflow.run_query) con el parser REAL y round-trip de
     persistencia; SECOP mockeado. Las aserciones son INVARIANTES
@@ -54,7 +57,7 @@ sequences:
   - id: DLG-CONTENTLESS-CHAIN
     note: "varios turnos vacíos no deben borrar el contexto"
     turns:
-      - text: "procesos para presentarme en bolivar"
+      - text: "procesos para presentarme en el departamento de bolivar"
         says_territory: Bolívar
         expect: block
       - text: "muéstrame"
@@ -68,7 +71,7 @@ sequences:
   - id: DLG-TOPIC-CHANGE-KEEPS-SCOPE
     note: "cambiar de tema conserva el territorio"
     turns:
-      - text: "procesos de mantenimiento en bolivar"
+      - text: "procesos de mantenimiento en el departamento de bolivar"
         says_territory: Bolívar
         expect: execute
       - text: "ahora alimentación escolar"
@@ -77,10 +80,10 @@ sequences:
   - id: DLG-SCOPE-CHANGE-KEEPS-TOPIC
     note: "cambiar de territorio conserva el tema"
     turns:
-      - text: "procesos de mantenimiento en bolivar"
+      - text: "procesos de mantenimiento en el departamento de bolivar"
         says_territory: Bolívar
         expect: execute
-      - text: "ahora en sucre"
+      - text: "ahora en el departamento de sucre"
         says_territory: Sucre
         expect: execute
 
@@ -96,7 +99,7 @@ sequences:
   - id: DLG-BIDDER-HAPPY-RECOVERY
     note: "P15: bloquea bidder sin rubro, recupera con rubro"
     turns:
-      - text: "quiero presentarme en bolivar"
+      - text: "quiero presentarme en el departamento de bolivar"
         says_territory: Bolívar
         expect: block
       - text: "vendo uniformes escolares"
@@ -105,7 +108,7 @@ sequences:
   - id: DLG-UNRELATED-PIVOT-NO-LEAK
     note: "pivote a una búsqueda distinta NO debe arrastrar el territorio viejo"
     turns:
-      - text: "procesos de mantenimiento en bolivar"
+      - text: "procesos de mantenimiento en el departamento de bolivar"
         says_territory: Bolívar
         expect: execute
       - text: "contratos firmados del sena en antioquia"
@@ -117,15 +120,15 @@ sequences:
   - id: DLG-DOUBLE-DATASET-PIVOT
     note: "la fecha no debe sobrevivir a DOS pivotes de dataset"
     turns:
-      - text: "contratos de obra en bolivar 2025"
+      - text: "contratos de obra en el departamento de bolivar 2025"
         says_territory: Bolívar
         says_date: true
         expect: execute
-      - text: "procesos abiertos de obra en bolivar"
+      - text: "procesos abiertos de obra en el departamento de bolivar"
         says_territory: Bolívar
         changes_dataset: true
         expect: execute
-      - text: "y contratos firmados de obra en bolivar"
+      - text: "y contratos firmados de obra en el departamento de bolivar"
         says_territory: Bolívar
         changes_dataset: true
         expect: execute
@@ -152,7 +155,7 @@ sequences:
   - id: DLG-BLOCK-RECOVER-BY-MODALITY
     note: "P15 se recupera con modalidad como qualifier"
     turns:
-      - text: "procesos para presentarme en narino"
+      - text: "procesos para presentarme en el departamento de narino"
         says_territory: Nariño
         expect: block
       - text: "por mínima cuantía"
@@ -182,7 +185,7 @@ sequences:
       (Se usa 'aseo' y no 'salud' a propósito: 'salud en' dispara un bug
       pre-existente del detector direct_lookup — ver test_known_bug_*.)
     turns:
-      - text: "procesos de mantenimiento en bolivar"
+      - text: "procesos de mantenimiento en el departamento de bolivar"
         says_territory: Bolívar
         expect: execute
       - text: "busca contratos de aseo en huila"
@@ -203,7 +206,7 @@ sequences:
   - id: DLG-PAGINATION-KEEPS-CONTEXT
     note: "'muéstrame más' conserva todo el contexto"
     turns:
-      - text: "procesos de obra en bolivar"
+      - text: "procesos de obra en el departamento de bolivar"
         says_territory: Bolívar
         expect: execute
       - text: "muéstrame más"
@@ -212,10 +215,10 @@ sequences:
   - id: DLG-REPEAT-IDENTICAL
     note: "repetir la misma consulta es estable"
     turns:
-      - text: "procesos de mantenimiento en sucre"
+      - text: "procesos de mantenimiento en el departamento de sucre"
         says_territory: Sucre
         expect: execute
-      - text: "procesos de mantenimiento en sucre"
+      - text: "procesos de mantenimiento en el departamento de sucre"
         says_territory: Sucre
         expect: execute
 
@@ -237,7 +240,7 @@ sequences:
   - id: DLG-BIDDER-THEN-HISTORY-PIVOT
     note: "bidder bloqueado → pivote a contratos firmados debe conservar territorio"
     turns:
-      - text: "quiero presentarme en bolivar"
+      - text: "quiero presentarme en el departamento de bolivar"
         says_territory: Bolívar
         expect: block
       - text: "contratos firmados de mantenimiento"

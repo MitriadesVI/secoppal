@@ -507,7 +507,7 @@ class FollowupClassifier:
         if current_keys != previous_keys:
             return True
         # Mismos keys: verificar valores
-        for key in ("ciudad", "departamento_resolved", "entidad_resolved", "buyer_group"):
+        for key in ("ciudad", "departamento_resolved", "entidad_resolved", "buyer_group", "municipal_territory"):
             cv = current_scope.get(key)
             pv = previous_scope.get(key)
             if cv and pv and cv != pv:

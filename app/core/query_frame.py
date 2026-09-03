@@ -48,7 +48,7 @@ class QueryFrame:
 _SCOPE_KEYS = frozenset({
     "entidad", "entidad_resolved", "entidad_resolution", "buyer_group",
     "departamento", "departamento_resolved", "departamento_resolution",
-    "departamentos_in", "ciudad", "ciudad_resolved", "region",
+    "departamentos_in", "ciudad", "ciudad_resolved", "region", "municipal_territory",
 })
 
 _MODIFIER_KEYS = frozenset({

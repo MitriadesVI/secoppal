@@ -486,6 +486,8 @@ def test_formatter_uses_canonical_filter_and_suppresses_tautological_dominance()
     )
 
 
+# M1A.1: four Barranquilla fingerprints now carry accredited municipal
+# city+department scope and never an inferred BuyerUnit; modality stays NO_MATCH.
 _NO_MODALITY_GOLDEN = {
     "contratos de alimentación": (
         "1084437227dc22cc853225828a8a7996bb8f46ba7a1ce2eba5b3febc6ba87f4f",
@@ -500,7 +502,7 @@ _NO_MODALITY_GOLDEN = {
         ("departamento_entidad = 'Atlántico'",),
     ),
     "contratos de alimentación en Barranquilla": (
-        "53fd6034b837c05b5debf641b0803552b4e4d6b36ac0fdd435efd95ef00e0d85",
+        "49217e5c57215bc84b71ad8ea9f50516a24afb272bb4a9f72cedec72e1183978",
         ("ciudad", "Barranquilla"),
     ),
     "contratos de alimentación por más de 500 millones": (
@@ -521,11 +523,11 @@ _NO_MODALITY_GOLDEN = {
         ("estado_contrato IN ('En ejecución', 'Modificado', 'Prorrogado')",),
     ),
     "oportunidades de alimentación en Barranquilla": (
-        "07e2e13f82413a9cff419a2627f71b1e2af7e610f8b8e2acbe9a8024a143a800",
+        "c43b2ace8e26758d3c7e583a225d26647ade4d7c43f85b04f5e4c60d08890fd9",
         ("estado_del_procedimiento IN", "estado_de_apertura_del_proceso = 'Abierto'"),
     ),
     "procesos y contratos de alimentación en Barranquilla": (
-        "a4760d90c47c745c2067e45a952bcd5637684b54975d14ef9aedd56427b530f6",
+        "ea53a138053dd38d78c87f83d6956d692a4321ac2da1ce13852ca032ca0ae94a",
         ("id_del_proceso", "Barranquilla"),
     ),
     # R2D.1: "sena bolivar" dejó de descartarse como topónimo desnudo. Antes la
@@ -537,7 +539,7 @@ _NO_MODALITY_GOLDEN = {
         ("SENA REGIONAL BOLIVAR",),
     ),
     "contratos de manual de contratación en Barranquilla": (
-        "2083d9dc97e4039209cfb140077221ccc3b0e6ae33f18e7a71168494aefac7cc",
+        "41ac6afc1db80deea8ee1ef09afda50255d110539a9adea424dbfd74f1246c00",
         ("manual", "LIMIT 200"),
     ),
     # AP2-B: el filtro ganó una tercera variante, "800091140-4". La fuente

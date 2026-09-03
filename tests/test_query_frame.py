@@ -231,10 +231,9 @@ class TestE2EQueryFrameScenarios:
         r2 = wf.run_query("ahora en medellin",
                           channel="streamlit", chat_id="st_d")
         pp2 = r2.get("parsed_params", {})
-        # Ciudad debería ser Medellin (nueva)
-        assert "medellin" in pp2.get("ciudad", "").lower() or "Medellin" in str(pp2.get("entidad_resolved", "")), (
-            f"ciudad should be Medellin: {pp2.get('ciudad')}, er={pp2.get('entidad_resolved')}"
-        )
+        # La ciudad conserva la grafía DANE y nunca infiere la alcaldía.
+        assert pp2.get("ciudad") == "Medellín"
+        assert not pp2.get("entidad_resolved")
         # Objeto debe heredar primera/infancia
         obj = pp2.get("objeto", [])
         assert "primera" in obj or "infancia" in obj, f"objeto should inherit: {obj}"

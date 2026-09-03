@@ -15,6 +15,7 @@ from app.core.modality_dataset_projection import (
     project_modality_filter,
 )
 from app.core.modality_filter import ModalityFilter
+from app.core.municipal_territory import municipal_clarification
 from app.core.opportunity_retrieval_policy import (
     REFERENCE_INSTANT_PARAM,
     evaluate_current_opportunity_policy,
@@ -331,6 +332,8 @@ class SoQLBuilder:
         a tautology (``1=1``) and the caller has not opted in via
         ``allow_global=True``. Date/value/order alone create no WHERE predicate.
         """
+        if question := municipal_clarification(params):
+            raise ValueError(question)
         legacy_key = "modalidad"
         if (
             legacy_key in params
@@ -388,9 +391,14 @@ class SoQLBuilder:
             self._add_estado_clause(where_clauses, spec.department, params["departamentos_in"])
 
         if params.get("ciudad") and spec.city:
-            where_clauses.append(
-                self._accent_fold_like(spec.city, self._escape(str(params['ciudad'])))
-            )
+            if (params.get("municipal_territory") or {}).get("status") == "resolved":
+                field_expr = self._accent_fold_expr(f"UPPER({spec.city})")
+                city_expr = self._accent_fold_expr(f"UPPER('{self._escape(str(params['ciudad']))}')")
+                where_clauses.append(f"{field_expr} = {city_expr}")
+            else:
+                where_clauses.append(
+                    self._accent_fold_like(spec.city, self._escape(str(params['ciudad'])))
+                )
         entidad_like = params.get("entidad_like")
         # `entidad_value` conserva EXACTAMENTE la precedencia previa porque
         # gobierna los guards `not entidad_value` de entidad_ecosystem e

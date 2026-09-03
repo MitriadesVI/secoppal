@@ -54,7 +54,7 @@ def test_clean_query_not_blocked():
     wf = _wf()
     cid = f"test_b44_clean_{uuid.uuid4().hex[:6]}"
     result = wf.run_query(
-        "contratos de mantenimiento en bolívar", chat_id=cid
+        "contratos de mantenimiento en el departamento de bolívar", chat_id=cid
     )
     assert result.get("needs_clarification") is not True
     plan = result["query_plan"]

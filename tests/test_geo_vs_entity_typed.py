@@ -102,10 +102,12 @@ def test_explicit_department_context_uses_territorial_authority(query, canonical
     assert not p.get("ciudad")
 
 
-def test_untyped_arauca_query_preserves_current_routing():
+def test_untyped_arauca_preserves_department_candidate_but_requires_type():
     p = _parse("contratos en Arauca en 2025")
     assert p.get("departamento_resolved") == "Arauca"
-    assert p["departamento_resolution"]["method"] == "scan_exact"
+    from app.core.query_plan import compute_query_plan
+    assert p["municipal_territory"]["status"] == "ambiguous"
+    assert not compute_query_plan(p, "contratos en Arauca en 2025").should_execute
     assert not p.get("entidad_resolved")
     assert not p.get("ciudad")
 

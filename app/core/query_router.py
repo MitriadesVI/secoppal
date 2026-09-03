@@ -261,7 +261,11 @@ class QueryRouter:
     def parse(self, user_query: str, *, today: Date | None = None) -> ParsedQuery:
         clock = civil_today(today)
         normalized = normalize_text(user_query)
-        normalized = correct_query(normalized)
+        from app.core.municipal_territory import get_municipal_territories
+        municipal_geography = get_municipal_territories()
+        normalized = correct_query(
+            normalized, protected_spans=tuple(municipal_geography.name_spans(normalized)),
+        )
         params: dict[str, object] = {}
         actor_conversation = ActorConversationInstruction()
         actor_relation_spans: tuple[str, ...] = ()
@@ -508,7 +512,9 @@ class QueryRouter:
             self.entity_resolver.proper_names.spans_in(scrubbed)
             if self.entity_resolver else []
         )
-        control = interpret_control_language(scrubbed, protected_spans=tuple(protected_names))
+        control = interpret_control_language(
+            scrubbed, protected_spans=tuple(protected_names + municipal_geography.name_spans(scrubbed)),
+        )
         if control.ordering_signal:
             params["ordering_signal"] = control.ordering_signal
         if control.consumed_spans:
@@ -536,6 +542,19 @@ class QueryRouter:
         #    "Gobernación de X" NO trae el keyword "departamento" → cae al scan de entidades
         #    y resuelve al comprador real (kind=buyer_entity). Así INV-7: ambos generan
         #    WHERE distintos (departamento vs entidad).
+        # Explicit municipal geography precedes legacy buyer aliases and the
+        # department scan, so `en Los Patios` cannot accredit a mayoralty.
+        protected_names = (
+            self.entity_resolver.proper_names.spans_in(scrubbed)
+            if self.entity_resolver else []
+        )
+        geo_params, scrubbed, geo_spans = municipal_geography.consume(
+            scrubbed, protected_spans=protected_names,
+        )
+        params.update(geo_params)
+        consumed_spans.extend(geo_spans)
+        actor_modifier_spans.extend(geo_spans)
+
         if "departamento_resolved" not in params:
             from app.core.entity_resolver import department_mention_resolution
             _km = re.search(

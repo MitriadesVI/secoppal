@@ -11,7 +11,6 @@ from __future__ import annotations
 
 import calendar
 from copy import deepcopy
-from dataclasses import dataclass, field
 
 from app.core.contract_invariants import (
     apply_opportunity_invariant,
@@ -21,7 +20,8 @@ from app.core.contract_invariants import (
 )
 from app.config import actor_profile_enabled
 from app.core.actor_scope_policy import evaluate_actor_scope
-from app.core.dialogue_policy import classify, DialogueSignal
+from app.core.dialogue_policy import classify
+from app.core.query_plan_types import QueryPlan
 from app.core.opportunity_scope_policy import evaluate_opportunity_scope
 from app.core.object_negation_policy import (
     OBJECT_NEGATION_CONTRADICTION_QUESTION,
@@ -29,6 +29,7 @@ from app.core.object_negation_policy import (
 )
 from app.core.semantic_sanity import compute_sanity_flags
 from app.core.temporal_gate import temporal_plan_block
+from app.core.municipal_territory import municipal_clarification
 
 # ── All known rules — used as default when enabled_rules is None ──────────────
 ALL_RULES = {
@@ -46,18 +47,6 @@ _ENTITY_MARKERS = (
     "entidad ",
 )
 
-
-@dataclass
-class QueryPlan:
-    """Result of compute_query_plan. Dict-serializable via dataclasses.asdict."""
-
-    should_execute: bool
-    params: dict  # modified params (deep copy, never mutates input)
-    missing_slots: list[str] = field(default_factory=list)
-    risk_flags: list[str] = field(default_factory=list)
-    clarification_question: str | None = None
-    reason: str = ""  # "command_incomplete", "valid_query", ...
-    signals: list[DialogueSignal] = field(default_factory=list)
 
 
 def compute_query_plan(
@@ -90,6 +79,13 @@ def compute_query_plan(
     all_signals = classify(raw_query, params, context)
     reason_parts: list[str] = []
     risk_flags: list[str] = []
+
+    if question := municipal_clarification(working_params):
+        return QueryPlan(
+            should_execute=False, params=working_params, signals=all_signals,
+            clarification_question=question, missing_slots=["departamento"],
+            reason="municipal_territory_ambiguous",
+        )
 
     if (temporal := temporal_plan_block(working_params, all_signals)) is not None:
         return QueryPlan(params=working_params, signals=all_signals, **temporal)

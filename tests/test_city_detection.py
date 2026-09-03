@@ -33,13 +33,11 @@ class TestCityDetection:
         result = qr.parse("obras de barranquilla")
         assert "barranquilla" not in [t.lower() for t in result.params.get("objeto", [])]
 
-    def test_city_sets_entidad_for_barranquilla(self):
+    def test_city_does_not_infer_barranquilla_buyer(self):
         qr = QueryRouter()
         result = qr.parse("contratos en barranquilla")
-        er = result.params.get("entidad_resolved", "")
-        assert "DISTRITO" in er.upper() and "BARRANQUILLA" in er.upper(), (
-            f"entidad_resolved should contain DISTRITO + BARRANQUILLA: {er}"
-        )
+        assert not result.params.get("entidad_resolved")
+        assert result.params['municipal_territory']['divipola'] == '08001'
 
     def test_other_cities_not_in_objeto(self):
         qr = QueryRouter()
