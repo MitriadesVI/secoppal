@@ -1,0 +1,254 @@
+"""Canarios congelados de BUYER_UNIT_INTEGRITY (Etapa 1, ADR-074).
+
+Cuatro defectos reproducidos antes de tocar runtime. Los cuatro son la misma
+familia: una BuyerUnit lógica que el gazetteer no representa como tal — o
+porque sus alias humanos cuelgan de otra unidad, o porque quedó repartida en
+varios canonicals, uno por dataset.
+
+Qué NO se congela aquí, para no duplicar oráculos existentes:
+
+* que ``ministerio de justicia`` resuelva a un canonical con ese nombre ya está
+  congelado en ``tests/test_gazetteer_lote_01.py`` (xfail strict). Ese oráculo
+  mira el *nombre*; el de aquí mira la *alcanzabilidad de filas*, que es el daño
+  medido — 0 de 14.517 — y que un rename podría no arreglar.
+
+Los nombres físicos publicados son constantes tomadas de la auditoría P0.1
+(``docs/gazetteer/INSTITUTIONAL_BUYER_MODEL_P01.md`` §4). Se revalidan en vivo
+antes de aplicar cualquier merge; estos tests corren offline a propósito.
+"""
+from __future__ import annotations
+
+import json
+import re
+import unicodedata
+from pathlib import Path
+
+import pytest
+
+from app.core.buyer_source_names import project_buyer_names
+from app.core.entity_resolver import EntityResolver
+
+_PROJECT_ROOT = Path(__file__).resolve().parent.parent
+ALIASES_DB = _PROJECT_ROOT / "app" / "data" / "aliases_db.json"
+
+PROCESOS = "p6dx-8zbt"
+CONTRATOS = "jbjy-vk9h"
+
+DISTRITO_NIT = "899999061"
+CENAC_PUENTE_ARANDA_NIT = "830039548"
+
+# Grafías que SECOP publica, por dataset (P0.1 §4).
+PUBLICADO_MINJUSTICIA = {
+    PROCESOS: "MINISTERIO DE JUSTICIA Y DEL DERECHO..",
+    CONTRATOS: "MINISTERIO DE JUSTICIA Y DEL DERECHO.",
+}
+PUBLICADO_YOPAL = {
+    PROCESOS: "MUNICIPIO DE YOPAL...",
+    CONTRATOS: "MUNICIPIO DE YOPAL..",
+}
+
+LOCALIDADES_BOGOTA = (
+    "usaquen", "chapinero", "santa fe", "san cristobal", "usme", "tunjuelito",
+    "bosa", "kennedy", "fontibon", "engativa", "suba", "barrios unidos",
+    "teusaquillo", "los martires", "martires", "antonio narino", "puente aranda",
+    "la candelaria", "candelaria", "rafael uribe uribe", "ciudad bolivar",
+    "sumapaz",
+)
+_LOCALITY_ALIAS = re.compile(
+    r"^(?:alcaldia\s+local\s+(?:de\s+)?|alcaldia\s+(?:de\s+)?|localidad\s+(?:de\s+)?)"
+    r"(?P<loc>.+?)$"
+)
+
+
+def _fold(text: str) -> str:
+    decomposed = unicodedata.normalize("NFD", text)
+    return "".join(c for c in decomposed if unicodedata.category(c) != "Mn").lower()
+
+
+@pytest.fixture(scope="module")
+def records() -> list[dict]:
+    return json.loads(ALIASES_DB.read_text(encoding="utf-8"))
+
+
+@pytest.fixture(scope="module")
+def resolver() -> EntityResolver:
+    return EntityResolver(ALIASES_DB)
+
+
+def _record(records: list[dict], official_name: str) -> dict | None:
+    return next((r for r in records if r["official_name"] == official_name), None)
+
+
+def _reaches(canonical: str, dataset_id: str, published: str) -> bool:
+    """¿El filtro que el runtime construiría alcanza la grafía publicada?
+
+    Replica las dos ramas de ``SoQLBuilder._entity_clause``: con binding de
+    proyección la comparación es igualdad exacta; sin binding es un ``LIKE``
+    con el canonical entre comodines. Ignora el plegado de acentos porque
+    ninguna de las grafías en juego lleva tildes.
+    """
+    projected = project_buyer_names(canonical, dataset_id)
+    if projected:
+        return published in projected
+    return canonical.upper() in published.upper()
+
+
+# ── C1 — el hijack de Puente Aranda ────────────────────────────────────────
+
+
+@pytest.mark.xfail(
+    strict=True,
+    reason="BUYER-PUENTE-ARANDA-HIJACK: los seis alias de la localidad cuelgan "
+           "de la central contable del Ejército (NIT 830039548)",
+)
+def test_locality_aliases_never_owned_by_a_foreign_nit(records: list[dict]) -> None:
+    """Ningún NIT ajeno al Distrito puede poseer alias de una localidad de Bogotá.
+
+    Ley en negativo a propósito: acredita sobre el NIT *conocido*, así que un
+    canonical sin NIT declarado no la incumple y la alcaldía local real puede
+    recibir los alias sin que el gazetteer tenga que inventarle identidad
+    fiscal.
+    """
+    offenders: list[tuple[str, str, str]] = []
+    for record in records:
+        nit = record.get("nit")
+        if not nit or str(nit) == DISTRITO_NIT:
+            continue
+        for alias in record.get("aliases", []):
+            match = _LOCALITY_ALIAS.match(_fold(alias).strip())
+            if match and match.group("loc").strip() in LOCALIDADES_BOGOTA:
+                offenders.append((record["official_name"], str(nit), alias))
+    assert offenders == [], (
+        "alias de localidad de Bogotá en manos de un NIT ajeno al Distrito: "
+        f"{offenders}"
+    )
+
+
+@pytest.mark.xfail(
+    strict=True,
+    reason="BUYER-PUENTE-ARANDA-HIJACK: 'alcaldia local de puente aranda' "
+           "resuelve a CENTRAL ADMINISTRATIVA Y CONTABLE  PUENTE ARANDA+",
+)
+@pytest.mark.parametrize(
+    "phrase",
+    [
+        "alcaldia local de puente aranda",
+        "alcaldia local puente aranda",
+        "localidad de puente aranda",
+    ],
+)
+def test_puente_aranda_locality_resolves_to_the_local_mayoralty(
+    resolver: EntityResolver, phrase: str,
+) -> None:
+    """La frase de la localidad debe llegar a la alcaldía local / FDL.
+
+    Se asserta la *familia institucional* del canonical, no su string exacto:
+    el fix puede adjudicar los alias a ``ALCALDIA LOCAL DE PUENTE ARANDA-FONDO
+    DE DESARROLLO LOCAL`` o a cualquier otra grafía acreditada de esa unidad.
+    """
+    resolved = resolver.resolve_entidad(phrase).value
+    assert resolved is not None, f"'{phrase}' no resolvió a ningún comprador"
+    folded = _fold(resolved)
+    assert "puente aranda" in folded, f"'{phrase}' resolvió fuera de la localidad: {resolved!r}"
+    assert "alcaldia local" in folded or "fondo de desarrollo local" in folded, (
+        f"'{phrase}' resolvió a '{resolved}', que no es la alcaldía local ni su FDL"
+    )
+
+
+# ── C2 — la grafía militar conserva su dueño militar ───────────────────────
+
+
+@pytest.mark.xfail(
+    strict=True,
+    reason="BUYER-CENAC-WRONG-OWNER: 'CENAC PUENTE ARANDA+' resuelve a "
+           "CENTRAL ADMINISTRATIVA Y CONTABLE CENAC PERSONAL (NIT 900385079)",
+)
+@pytest.mark.parametrize("phrase", ["CENAC PUENTE ARANDA+", "cenac puente aranda"])
+def test_cenac_puente_aranda_keeps_its_military_owner(
+    resolver: EntityResolver, records: list[dict], phrase: str,
+) -> None:
+    """La central contable del Ejército es una BuyerUnit propia, no un duplicado.
+
+    C1 y C2 se acreditan por separado y **no** se fusionan: comparten el token
+    ``PUENTE ARANDA`` y nada más. Son NIT distintos y naturalezas distintas.
+    """
+    resolved = resolver.resolve_entidad(phrase).value
+    assert resolved is not None, f"'{phrase}' no resolvió a ningún comprador"
+    record = _record(records, resolved)
+    assert record is not None, f"'{resolved}' no existe en el gazetteer"
+    assert str(record.get("nit")) == CENAC_PUENTE_ARANDA_NIT, (
+        f"'{phrase}' resolvió a '{resolved}' con NIT {record.get('nit')}; "
+        f"la unidad acreditada es la del NIT {CENAC_PUENTE_ARANDA_NIT}"
+    )
+
+
+# ── C3 y C4 — unidades repartidas en varios canonicals ─────────────────────
+
+
+@pytest.mark.xfail(
+    strict=True,
+    reason="BUYER-MINJUSTICIA-UNREACHABLE: los alias humanos resuelven a "
+           "MINJUSTICIA., etiqueta que SECOP no publica — 0 de 14.517 filas",
+)
+@pytest.mark.parametrize(
+    "phrase",
+    ["minjusticia", "ministerio de justicia", "ministerio de justicia y del derecho"],
+)
+@pytest.mark.parametrize("dataset_id", [PROCESOS, CONTRATOS])
+def test_minjusticia_reaches_its_published_rows(
+    resolver: EntityResolver, phrase: str, dataset_id: str,
+) -> None:
+    """El filtro construido debe alcanzar la grafía publicada en cada dataset.
+
+    Complementa al xfail de ``test_gazetteer_lote_01``: aquel exige que el
+    canonical *se llame* Ministerio de Justicia; este exige que el filtro
+    *devuelva filas*. Un rename del canonical satisface el primero y puede
+    seguir incumpliendo el segundo.
+    """
+    resolved = resolver.resolve_entidad(phrase).value
+    assert resolved is not None, f"'{phrase}' no resolvió a ningún comprador"
+    published = PUBLICADO_MINJUSTICIA[dataset_id]
+    assert _reaches(resolved, dataset_id, published), (
+        f"'{phrase}' resolvió a '{resolved}', que no alcanza la grafía publicada "
+        f"{published!r} en {dataset_id}"
+    )
+
+
+@pytest.mark.parametrize("phrase", ["alcaldia de yopal", "municipio de yopal"])
+@pytest.mark.parametrize(
+    "dataset_id",
+    [
+        # Procesos ya funciona y aquí queda como guarda viva: el canonical ES la
+        # grafía de procesos. Congelarlo como xfail habría sido falso — y el
+        # runner lo dijo con un XPASS(strict).
+        PROCESOS,
+        pytest.param(
+            CONTRATOS,
+            marks=pytest.mark.xfail(
+                strict=True,
+                reason="BUYER-YOPAL-SPLIT: 'alcaldia de yopal' resuelve a la "
+                       "grafía de procesos y no alcanza los 19.039 contratos",
+            ),
+        ),
+    ],
+)
+def test_yopal_reaches_both_published_spellings(
+    resolver: EntityResolver, phrase: str, dataset_id: str,
+) -> None:
+    """Una BuyerUnit con dos grafías publicadas debe alcanzar las dos.
+
+    Hoy el canonical es la grafía de procesos —tres puntos— y el ``LIKE`` con
+    tres puntos no alcanza la de contratos, que tiene dos. La dirección importa:
+    la grafía corta sí alcanza a la larga por substring, y por eso Soacha, FFDS
+    y UAESP funcionan por accidente mientras Yopal no.
+
+    El fix no puede arreglar contratos rompiendo procesos: por eso el lado que
+    hoy pasa se asserta sin marca.
+    """
+    resolved = resolver.resolve_entidad(phrase).value
+    assert resolved is not None, f"'{phrase}' no resolvió a ningún comprador"
+    published = PUBLICADO_YOPAL[dataset_id]
+    assert _reaches(resolved, dataset_id, published), (
+        f"'{phrase}' resolvió a '{resolved}', que no alcanza la grafía publicada "
+        f"{published!r} en {dataset_id}"
+    )
