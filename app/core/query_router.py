@@ -598,6 +598,10 @@ class QueryRouter:
         from app.core.entity_resolver import is_department_root_name
         from app.core.entity_types import rewrite_entity
         entity_candidates = rewrite_entity(scrubbed)
+        accredited_name_spans = (
+            self.entity_resolver.proper_names.spans_in(scrubbed)
+            if self.entity_resolver else []
+        )
         rewritten_entity = None
         unresolved_rewrite = None
         if entity_candidates and self.entity_resolver and not params.get("entidad_resolved"):
@@ -614,6 +618,12 @@ class QueryRouter:
                 canonical = candidate.canonical
                 consumed = candidate.consumed_span
                 rtype = candidate.rewrite_type
+                # A trailing-token fallback cannot split an accredited name
+                # starting here. Otherwise a newly added shorter buyer steals
+                # a longer existing institution before its own rewrite runs.
+                start = scrubbed.find(consumed)
+                if any(a == start and b > start + len(consumed) for a, b in accredited_name_spans):
+                    continue
                 if pending_fuzzy and pending_fuzzy[1] != consumed:
                     rewritten_entity = pending_fuzzy
                     break

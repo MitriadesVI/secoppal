@@ -1,0 +1,105 @@
+.FFFF                                                                    [100%]
+=================================== FAILURES ===================================
+____ test_existing_cienaga_hospital_keeps_owner_after_joint_promotion[True] ____
+
+tmp_path = PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-347/test_existing_cienaga_hospital1')
+with_mayoralty = True
+
+    @pytest.mark.parametrize('with_mayoralty', [False, True])
+    def test_existing_cienaga_hospital_keeps_owner_after_joint_promotion(tmp_path, with_mayoralty):
+        records = json.loads(Path('app/data/aliases_db.json').read_text())
+        hospital = next(r for r in records if r['official_name'] ==
+                        'HOSPITAL SAN CRISTOBAL DE CIENAGA EMPRESA SOCIAL DEL ESTADO')
+        records = [hospital]
+        if with_mayoralty:
+            records.append(dict(official_name='MUNICIPIO DE CIENAGA', aliases=[
+                'alcaldia de cienaga', 'municipio de cienaga']))
+        path = tmp_path / 'aliases.json'
+        path.write_text(json.dumps(records))
+        query = 'contratos de alcaldía de cienaga hospital san cristobal'
+        params = QueryRouter(EntityResolver(path)).parse(query).params
+>       assert params['entidad_resolved'] == hospital['official_name']
+E       AssertionError: assert 'MUNICIPIO DE CIENAGA' == 'HOSPITAL SAN...AL DEL ESTADO'
+E         
+E         - HOSPITAL SAN CRISTOBAL DE CIENAGA EMPRESA SOCIAL DEL ESTADO
+E         + MUNICIPIO DE CIENAGA
+
+tests/test_accredited_name_rewrite_spans.py:24: AssertionError
+____ test_longer_accredited_span_blocks_only_its_prefix_rewrites[hospital] _____
+
+tmp_path = PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-347/test_longer_accredited_span_bl0')
+sector = 'hospital'
+
+    @pytest.mark.parametrize('sector', ['hospital', 'universidad', 'ese'])
+    def test_longer_accredited_span_blocks_only_its_prefix_rewrites(tmp_path, sector):
+        name = sector + ' nacional de prueba'
+        path = tmp_path / 'aliases.json'
+        path.write_text(json.dumps([
+            dict(official_name='MUNICIPIO DE VILLA CLARA', aliases=[
+                'alcaldia de villa clara', 'municipio de villa clara']),
+            dict(official_name=name.upper(), aliases=[
+                name, 'alcaldia de villa clara ' + name]),
+        ]))
+        router = QueryRouter(EntityResolver(path))
+        params = router.parse('contratos de alcaldia de villa clara ' + name).params
+>       assert params['entidad_resolved'] == name.upper()
+E       AssertionError: assert 'MUNICIPIO DE VILLA CLARA' == 'HOSPITAL NACIONAL DE PRUEBA'
+E         
+E         - HOSPITAL NACIONAL DE PRUEBA
+E         + MUNICIPIO DE VILLA CLARA
+
+tests/test_accredited_name_rewrite_spans.py:39: AssertionError
+___ test_longer_accredited_span_blocks_only_its_prefix_rewrites[universidad] ___
+
+tmp_path = PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-347/test_longer_accredited_span_bl1')
+sector = 'universidad'
+
+    @pytest.mark.parametrize('sector', ['hospital', 'universidad', 'ese'])
+    def test_longer_accredited_span_blocks_only_its_prefix_rewrites(tmp_path, sector):
+        name = sector + ' nacional de prueba'
+        path = tmp_path / 'aliases.json'
+        path.write_text(json.dumps([
+            dict(official_name='MUNICIPIO DE VILLA CLARA', aliases=[
+                'alcaldia de villa clara', 'municipio de villa clara']),
+            dict(official_name=name.upper(), aliases=[
+                name, 'alcaldia de villa clara ' + name]),
+        ]))
+        router = QueryRouter(EntityResolver(path))
+        params = router.parse('contratos de alcaldia de villa clara ' + name).params
+>       assert params['entidad_resolved'] == name.upper()
+E       AssertionError: assert 'MUNICIPIO DE VILLA CLARA' == 'UNIVERSIDAD ...NAL DE PRUEBA'
+E         
+E         - UNIVERSIDAD NACIONAL DE PRUEBA
+E         + MUNICIPIO DE VILLA CLARA
+
+tests/test_accredited_name_rewrite_spans.py:39: AssertionError
+_______ test_longer_accredited_span_blocks_only_its_prefix_rewrites[ese] _______
+
+tmp_path = PosixPath('/private/var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/pytest-of-rodrigoortiz/pytest-347/test_longer_accredited_span_bl2')
+sector = 'ese'
+
+    @pytest.mark.parametrize('sector', ['hospital', 'universidad', 'ese'])
+    def test_longer_accredited_span_blocks_only_its_prefix_rewrites(tmp_path, sector):
+        name = sector + ' nacional de prueba'
+        path = tmp_path / 'aliases.json'
+        path.write_text(json.dumps([
+            dict(official_name='MUNICIPIO DE VILLA CLARA', aliases=[
+                'alcaldia de villa clara', 'municipio de villa clara']),
+            dict(official_name=name.upper(), aliases=[
+                name, 'alcaldia de villa clara ' + name]),
+        ]))
+        router = QueryRouter(EntityResolver(path))
+        params = router.parse('contratos de alcaldia de villa clara ' + name).params
+>       assert params['entidad_resolved'] == name.upper()
+E       AssertionError: assert 'MUNICIPIO DE VILLA CLARA' == 'ESE NACIONAL DE PRUEBA'
+E         
+E         - ESE NACIONAL DE PRUEBA
+E         + MUNICIPIO DE VILLA CLARA
+
+tests/test_accredited_name_rewrite_spans.py:39: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_accredited_name_rewrite_spans.py::test_existing_cienaga_hospital_keeps_owner_after_joint_promotion[True]
+FAILED tests/test_accredited_name_rewrite_spans.py::test_longer_accredited_span_blocks_only_its_prefix_rewrites[hospital]
+FAILED tests/test_accredited_name_rewrite_spans.py::test_longer_accredited_span_blocks_only_its_prefix_rewrites[universidad]
+FAILED tests/test_accredited_name_rewrite_spans.py::test_longer_accredited_span_blocks_only_its_prefix_rewrites[ese]
+4 failed, 1 passed in 0.36s
