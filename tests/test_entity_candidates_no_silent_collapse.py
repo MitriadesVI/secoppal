@@ -25,7 +25,10 @@ from __future__ import annotations
 
 import pytest
 
-from app.core.soql_builder import SoQLBuilder
+from app.core.soql_builder import (
+    BuyerCandidateSetExceedsSafeLimitError,
+    SoQLBuilder,
+)
 
 DATASETS = [SoQLBuilder.PROCESOS_DATASET, SoQLBuilder.CONTRATOS_DATASET]
 
@@ -65,17 +68,14 @@ def test_group_within_current_cap_is_fully_covered(dataset_id: str, count: int) 
     assert _covered(query, members) == count
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="BUYER-GROUP-SILENT-COLLAPSE: al pasar de 15, soql_builder.py:401 "
-           "emite un único LIKE sobre entidad_in_candidates[0]",
-)
 @pytest.mark.parametrize("dataset_id", DATASETS)
 @pytest.mark.parametrize("count", [16, BOGOTA_EXECUTIVE_SIZE])
 def test_group_over_cap_never_collapses_silently(dataset_id: str, count: int) -> None:
     members = _members(count)
-    query = SoQLBuilder().build(dataset_id, {"entidad_in_candidates": members})
-    _assert_no_silent_partial(query, members)
+    with pytest.raises(BuyerCandidateSetExceedsSafeLimitError) as exc_info:
+        SoQLBuilder().build(dataset_id, {"entidad_in_candidates": members})
+    assert exc_info.value.candidate_count == count
+    assert exc_info.value.safe_limit == 15
 
 
 @pytest.mark.xfail(

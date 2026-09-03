@@ -4,6 +4,10 @@ import logging
 from dataclasses import dataclass
 
 from app.core.actor_document_types import incompatible_source_types
+from app.core.buyer_candidate_execution import (
+    BUYER_CANDIDATE_LIMIT_REASON,
+    BUYER_CANDIDATE_SAFE_LIMIT,
+)
 from app.core.buyer_source_names import project_buyer_names
 from app.core.contract_type_projection import project_contract_types
 from app.core.modality_dataset_projection import (
@@ -32,6 +36,23 @@ class UnsafeGlobalQueryError(RuntimeError):
     Callers that genuinely need a global query (admin/diagnostic tools)
     must opt in explicitly with ``allow_global=True``.
     """
+
+
+class BuyerCandidateSetExceedsSafeLimitError(RuntimeError):
+    """Raised instead of emitting a semantically partial buyer predicate."""
+
+    def __init__(
+        self,
+        candidate_count: int,
+        safe_limit: int = BUYER_CANDIDATE_SAFE_LIMIT,
+    ) -> None:
+        self.candidate_count = candidate_count
+        self.safe_limit = safe_limit
+        self.reason = BUYER_CANDIDATE_LIMIT_REASON
+        super().__init__(
+            f"{self.reason}: candidate_count={candidate_count}, "
+            f"safe_limit={safe_limit}"
+        )
 
 
 # Filtros que hacen que el WHERE no sea tautologico. Esto NO responde
@@ -397,18 +418,17 @@ class SoQLBuilder:
 
         # G7C: entity ecosystem in_candidates — OR of official name LIKEs
         entidad_in_candidates = params.get("entidad_in_candidates")
-        if entidad_in_candidates and isinstance(entidad_in_candidates, list) and not entidad_value:
-            if len(entidad_in_candidates) <= 15:
+        if entidad_in_candidates and isinstance(entidad_in_candidates, list):
+            if len(entidad_in_candidates) > BUYER_CANDIDATE_SAFE_LIMIT:
+                raise BuyerCandidateSetExceedsSafeLimitError(
+                    len(entidad_in_candidates)
+                )
+            if not entidad_value:
                 entity_likes = " OR ".join(
                     self._accent_fold_like(spec.entity, self._escape(str(e)))
                     for e in entidad_in_candidates
                 )
                 where_clauses.append(f"({entity_likes})")
-            else:
-                # Too many — fallback to contains_all tokens if available, else first 15
-                where_clauses.append(
-                    self._accent_fold_like(spec.entity, self._escape(str(entidad_in_candidates[0])))
-                )
 
         objeto_terms = params.get("objeto", []) or []
         if self._should_demote_objeto(objeto_terms):

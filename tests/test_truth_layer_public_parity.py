@@ -89,7 +89,12 @@ M2_MODIFIED_FILE_SHA256 = {
     # que ocho identidades SIN binding emiten el mismo SoQL byte por byte,
     # que entidad_like nunca se proyecta y que los guards de
     # entidad_ecosystem e entidad_in_candidates no se movieron.
-    "app/core/soql_builder.py": "9f98620eb22ab82adde421b3ecdc5f5cbbf7233556f566b9b6e05878629b285b",
+    # BUYER-CANDIDATE-FAIL-CLOSED repinea el builder para una divergencia
+    # estrictamente acotada a entidad_in_candidates con más de 15 nombres: en
+    # vez de sustituir el grupo por candidates[0], lanza un bloqueo tipado.
+    # Los OR de 1..15 y las consultas ordinarias conservan bytes y semántica;
+    # tests/test_buyer_candidate_execution_limit.py fija ambos bordes.
+    "app/core/soql_builder.py": "b54a1ed1f22d12a8400abc9ecd02ba090bacfb12a0b0a6369fddd4ff7a49a854",
 }
 
 # M2.1 corrigió dos consumidores visibles. AP3-G autoriza además controles de

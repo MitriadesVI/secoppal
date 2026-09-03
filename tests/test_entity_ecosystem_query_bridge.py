@@ -19,7 +19,11 @@ from app.core.entity_ecosystem_router import (
     resolve_entity_ecosystem,
     build_entity_ecosystem_filter,
 )
-from app.core.soql_builder import SoQLBuilder, UnsafeGlobalQueryError
+from app.core.soql_builder import (
+    BuyerCandidateSetExceedsSafeLimitError,
+    SoQLBuilder,
+    UnsafeGlobalQueryError,
+)
 
 
 class TestEcosystemDetectionInPipeline:
@@ -226,13 +230,13 @@ class TestSoQLBuilderEcosystemSupport:
         assert "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%SENA%'))" in soql
         assert "unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MAGDALENA%'))" in soql
 
-    def test_in_candidates_truncates_over_15(self, builder):
-        """If >15 candidates, only use first one."""
+    def test_in_candidates_over_15_fails_closed(self, builder):
+        """A large group is never replaced by its first member."""
         params = {
             "entidad_in_candidates": [f"ENTITY_{i}" for i in range(20)],
         }
-        soql = builder.build("p6dx-8zbt", params)
-        assert "ENTITY_0" in soql
+        with pytest.raises(BuyerCandidateSetExceedsSafeLimitError):
+            builder.build("p6dx-8zbt", params)
 
     def test_ecosystem_with_dept_and_date(self, builder):
         """Full ecosystem query with department and date range."""

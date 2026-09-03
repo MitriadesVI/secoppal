@@ -27,6 +27,11 @@ from datetime import datetime, timezone
 
 from burr.core import State, action
 
+from app.core.buyer_candidate_execution import (
+    BUYER_CANDIDATE_LIMIT_REASON,
+    buyer_candidate_limit_message,
+    evaluate_buyer_candidate_execution,
+)
 from app.core.entity_resolver import EntityResolver
 from app.core.modality_execution_policy import evaluate_modality_execution
 from app.core.negation_binding import (
@@ -134,7 +139,7 @@ def plan_query(state: State) -> State:
 
 @action(
     reads=["parsed_params", "timings_ms"],
-    writes=["resolved_params", "dataset_id", "needs_clarification", "clarification_reason", "formatted_response", "formatted_rows", "timings_ms"],
+    writes=["resolved_params", "dataset_id", "query_plan", "needs_clarification", "clarification_reason", "formatted_response", "formatted_rows", "timings_ms"],
 )
 def resolve_entities(state: State, entity_resolver: EntityResolver) -> State:
     """
@@ -175,6 +180,32 @@ def resolve_entities(state: State, entity_resolver: EntityResolver) -> State:
     ecosystem_match = resolve_entity_ecosystem(raw_query)
     if ecosystem_match:
         ecosystem_filter = build_entity_ecosystem_filter(ecosystem_match)
+
+        # El scan del gazetteer resuelve la frase familiar desnuda ("ICBF") a
+        # una unidad concreta (sede nacional).  En una resolución de ecosistema
+        # eso no es precedencia de BuyerUnit explícita: es precisamente el
+        # colapso que ADR-074 prohíbe.  Retiramos sólo filtros originados por la
+        # misma familia. Una entidad distinta y explícita conserva precedencia
+        # y el ecosistema queda como metadata, sin filtros ejecutables.
+        raw_entity = str(params.get("entidad") or "").lower()
+        family_tokens = {
+            "ICBF": ("icbf", "bienestar familiar"),
+        }.get(ecosystem_match.family, ())
+        family_owns_entity_filter = bool(
+            raw_entity and any(token in raw_entity for token in family_tokens)
+        )
+        has_explicit_entity_filter = bool(
+            resolved.get("entidad_resolved") or resolved.get("entidad_like")
+        )
+        if family_owns_entity_filter:
+            resolved.pop("entidad", None)
+            resolved.pop("entidad_resolved", None)
+            resolved.pop("entidad_like", None)
+            resolved.pop("entidad_resolution", None)
+        elif has_explicit_entity_filter:
+            ecosystem_filter.pop("entidad_in_candidates", None)
+            ecosystem_filter.pop("entidad_contains_all", None)
+
         resolved.update(ecosystem_filter)
         # If ecosystem provides department, don't override if already resolved
         dept_from_ecosystem = ecosystem_match.department
@@ -188,6 +219,51 @@ def resolve_entities(state: State, entity_resolver: EntityResolver) -> State:
             resolved["objeto"] = scrub_institutional_tokens_from_objeto(
                 resolved["objeto"], ecosystem_match.family
             )
+
+        candidates = resolved.get("entidad_in_candidates")
+        if isinstance(candidates, list):
+            decision = evaluate_buyer_candidate_execution(
+                candidates,
+                family=ecosystem_match.family,
+            )
+            if decision.blocked:
+                execution_metadata = decision.to_metadata()
+                resolved.update({
+                    "buyer_group_execution": execution_metadata,
+                    "buyer_group_execution_blocked": True,
+                    "buyer_group_execution_reason": BUYER_CANDIDATE_LIMIT_REASON,
+                    "buyer_group_candidate_count": decision.candidate_count,
+                    "buyer_group_safe_limit": decision.safe_limit,
+                    "buyer_group_family": decision.family,
+                })
+                clarification = buyer_candidate_limit_message(
+                    decision,
+                    label=ecosystem_match.label,
+                )
+                blocked_plan = dict(qp)
+                blocked_plan.update({
+                    "should_execute": False,
+                    "params": dict(resolved),
+                    "reason": BUYER_CANDIDATE_LIMIT_REASON,
+                    "clarification_question": clarification,
+                    "buyer_group_execution": execution_metadata,
+                })
+                risk_flags = list(blocked_plan.get("risk_flags") or [])
+                if "BUYER_GROUP_EXECUTION_BLOCKED" not in risk_flags:
+                    risk_flags.append("BUYER_GROUP_EXECUTION_BLOCKED")
+                blocked_plan["risk_flags"] = risk_flags
+                return _with_timing(
+                    state,
+                    "resolve_ms",
+                    start,
+                    resolved_params=resolved,
+                    dataset_id=SoQLBuilder.dataset_id_for(
+                        str(params.get("dataset"))
+                    ),
+                    query_plan=blocked_plan,
+                    needs_clarification=True,
+                    clarification_reason=BUYER_CANDIDATE_LIMIT_REASON,
+                )
 
     # Department: only resolve if not already resolved by scan or ecosystem
     if params.get("departamento") and not params.get("departamento_resolved"):

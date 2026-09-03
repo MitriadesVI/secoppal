@@ -29,8 +29,9 @@ cuarta, la persistencia conversacional, que es justamente por donde se propaga.
 Este módulo es esa lista, una sola vez.
 
 Un ecosistema que el usuario SÍ declaró ("contratos del ICBF en Antioquia") no
-viaja por esta clave: llega como ``entidad_resolved``/``entidad_like`` y no lo
-toca nadie.
+viaja por esta clave: el router por nombre lo representa mediante
+``entidad_in_candidates``/``entidad_contains_all``. Esos filtros sí pertenecen
+al universo solicitado y deben sobrevivir a un follow-up.
 
 Puro, determinista, sin estado y sin I/O.
 """
