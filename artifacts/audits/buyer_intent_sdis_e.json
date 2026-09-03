@@ -1,0 +1,1 @@
+{"stage":"E_INSTITUTIONAL_INTENT_SDIS","status":"PASS","before":{"failed":3,"passed":1},"focal_passed":64,"corpus":"89/89","ruff":"PASS","lint_core":"PASS","full_suite":{"passed":10818,"skipped":2,"xfailed":14,"seconds":656.23},"runtime_change":"One explicit qualified alias for the existing SDIS BuyerUnit; no fuzzy changes","push":false}

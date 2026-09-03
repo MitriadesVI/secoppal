@@ -76,3 +76,14 @@ repitió toda la suite. Focales de esos oráculos: 28 passed.
 Evidencia: `artifacts/audits/buyer_execution_truth_d.json`.
 Deudas cerradas: genéricos puntuados,
 `ECOSYSTEM_SOQL_DISPLAY_DIVERGENCE`, truncamiento geográfico silencioso.
+
+## E — INSTITUTIONAL_INTENT_SDIS
+
+Estado: **PASS**. Se acredita el alias territorial explícito «integración
+social de Bogotá» sobre la BuyerUnit SDIS existente. Los tres prefijos del
+canario fallaron antes del cambio; ahora preservan comprador, adulto mayor y
+2026. «Contratos en Bogotá» sigue siendo únicamente geografía. No cambia fuzzy.
+
+Focales: 64 passed. Corpus: 89/89. Ruff y `make lint-core`: PASS.
+Suite completa: **10818 passed, 2 skipped, 14 xfailed**, 656,23 segundos.
+Deuda cerrada: `SDIS_INSTITUTIONAL_INTENT_LOSS`.
