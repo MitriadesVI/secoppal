@@ -1,0 +1,71 @@
+{
+  "unit": "milliseconds",
+  "method": "Paired same process, same M1A lists and rounds; warmup; no network/LLM.",
+  "municipal_registry_load": {
+    "p50_ms": 5.732290999731049,
+    "p95_ms": 5.802958010463044,
+    "samples": 15
+  },
+  "municipal_exact_lookup": {
+    "p50_ms": 0.002416985807940364,
+    "p95_ms": 0.0036669953260570765,
+    "samples": 1103
+  },
+  "baseline": {
+    "load": {
+      "p50_ms": 84.81691699125804,
+      "p95_ms": 85.08879199507646,
+      "samples": 7
+    },
+    "exact": {
+      "p50_ms": 0.005479523679241538,
+      "p95_ms": 0.11225001071579754,
+      "samples": 180
+    },
+    "scan": {
+      "p50_ms": 5.00031300180126,
+      "p95_ms": 22.659749985905364,
+      "samples": 36
+    },
+    "fuzzy": {
+      "p50_ms": 11.19118751375936,
+      "p95_ms": 12.901082984171808,
+      "samples": 12
+    },
+    "pipeline": {
+      "p50_ms": 11.236603997531347,
+      "p95_ms": 91.48633401491679,
+      "samples": 56
+    }
+  },
+  "candidate": {
+    "load": {
+      "p50_ms": 106.24579200521111,
+      "p95_ms": 109.32141600642353,
+      "samples": 7
+    },
+    "exact": {
+      "p50_ms": 0.00549999822396785,
+      "p95_ms": 0.11166700278408825,
+      "samples": 180
+    },
+    "scan": {
+      "p50_ms": 5.412124999566004,
+      "p95_ms": 36.89620798104443,
+      "samples": 36
+    },
+    "fuzzy": {
+      "p50_ms": 13.409625011263415,
+      "p95_ms": 15.587416011840105,
+      "samples": 12
+    },
+    "pipeline": {
+      "p50_ms": 0.6210419960552827,
+      "p95_ms": 0.6631670112255961,
+      "samples": 56
+    }
+  },
+  "product_turn_budget_ms": 15000.0,
+  "pipeline_p95_budget_share_pct": 0.0044211134081706405,
+  "verdict": "REQUIRES_REVIEW"
+}

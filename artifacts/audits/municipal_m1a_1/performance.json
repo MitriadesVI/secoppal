@@ -1,0 +1,1714 @@
+{
+  "unit": "milliseconds",
+  "method": "Paired same process, same M1A lists and rounds; warmup; no network/LLM.",
+  "municipal_registry_load": {
+    "p50_ms": 5.732290999731049,
+    "p95_ms": 5.802958010463044,
+    "samples": 15
+  },
+  "municipal_exact_lookup": {
+    "p50_ms": 0.002416985807940364,
+    "p95_ms": 0.0036669953260570765,
+    "samples": 1103
+  },
+  "queries": {
+    "exact": [
+      "sdis",
+      "sena",
+      "icbf",
+      "alcaldia de barranquilla",
+      "gobernacion de antioquia",
+      "universidad nacional de colombia"
+    ],
+    "scan": [
+      "contratos de sdis",
+      "contratos de sena",
+      "contratos de icbf",
+      "contratos de alcaldia de barranquilla",
+      "contratos de gobernacion de antioquia",
+      "contratos de universidad nacional de colombia",
+      "contratos de la alcaldia de baranoa",
+      "procesos del municipio de puerto gaitan",
+      "contratos en baranoa",
+      "contratos en bogota",
+      "contratos de la alcaldia de magangue",
+      "procesos de la alcaldia de aguazul"
+    ],
+    "fuzzy": [
+      "ministerio de justica y del derecho",
+      "universidad nacionl de colombia",
+      "instituto nacional de vis",
+      "hospital departamental san vicente"
+    ],
+    "pipeline": [
+      "contratos de la alcaldia de susacon",
+      "procesos del municipio de nemocon",
+      "contratos de la alcaldia de nuevo colon",
+      "contratos en baranoa",
+      "contratos en la union",
+      "contratos en la union, departamento valle del cauca",
+      "contratos nuevos de la alcaldia de baranoa",
+      "contratos de la universidad nacional de colombia"
+    ]
+  },
+  "profiles": {
+    "baseline": {
+      "load_and_alias_scan_construction": [
+        {
+          "file": "./scripts/audits/benchmark_municipal_m1a1.py",
+          "line": 83,
+          "function": "<lambda>",
+          "primitive_calls": 1,
+          "calls": 1,
+          "self_ms": 0.0021240000000000005,
+          "cumulative_ms": 331.49820800000003
+        },
+        {
+          "file": "./app/core/entity_resolver.py",
+          "line": 208,
+          "function": "__init__",
+          "primitive_calls": 1,
+          "calls": 1,
+          "self_ms": 0.41296000000000005,
+          "cumulative_ms": 331.496084
+        },
+        {
+          "file": "./app/core/entity_resolver.py",
+          "line": 812,
+          "function": "_load_aliases",
+          "primitive_calls": 1,
+          "calls": 1,
+          "self_ms": 17.960007,
+          "cumulative_ms": 274.785292
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'join' of 'str' objects>",
+          "primitive_calls": 51007,
+          "calls": 51007,
+          "self_ms": 85.386767,
+          "cumulative_ms": 245.98405300000002
+        },
+        {
+          "file": "./app/utils/money.py",
+          "line": 57,
+          "function": "normalize_text",
+          "primitive_calls": 29811,
+          "calls": 29811,
+          "self_ms": 13.018460000000001,
+          "cumulative_ms": 166.54411700000003
+        },
+        {
+          "file": "./app/core/generic_buyer.py",
+          "line": 138,
+          "function": "department_root_buyer_target",
+          "primitive_calls": 17601,
+          "calls": 17601,
+          "self_ms": 5.3176060000000005,
+          "cumulative_ms": 101.75794400000001
+        },
+        {
+          "file": "./app/utils/money.py",
+          "line": 60,
+          "function": "<genexpr>",
+          "primitive_calls": 930634,
+          "calls": 930634,
+          "self_ms": 69.04690000000001,
+          "cumulative_ms": 95.31933500000001
+        },
+        {
+          "file": "./app/core/generic_buyer.py",
+          "line": 118,
+          "function": "_normalize",
+          "primitive_calls": 17601,
+          "calls": 17601,
+          "self_ms": 6.257093,
+          "cumulative_ms": 92.636758
+        },
+        {
+          "file": "./app/core/proper_name_spans.py",
+          "line": 14,
+          "function": "__init__",
+          "primitive_calls": 1,
+          "calls": 1,
+          "self_ms": 3.629222,
+          "cumulative_ms": 56.13654100000001
+        },
+        {
+          "file": "./app/core/generic_buyer.py",
+          "line": 120,
+          "function": "<genexpr>",
+          "primitive_calls": 544583,
+          "calls": 544583,
+          "self_ms": 39.998189,
+          "cumulative_ms": 55.061904
+        },
+        {
+          "file": "./app/core/scan_alias_policy.py",
+          "line": 45,
+          "function": "is_scan_eligible_alias",
+          "primitive_calls": 8920,
+          "calls": 8920,
+          "self_ms": 1.3185950000000002,
+          "cumulative_ms": 53.101670000000006
+        },
+        {
+          "file": "./app/core/proper_name_spans.py",
+          "line": 15,
+          "function": "<genexpr>",
+          "primitive_calls": 9466,
+          "calls": 9466,
+          "self_ms": 1.0336940000000001,
+          "cumulative_ms": 50.149154
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method unicodedata.combining>",
+          "primitive_calls": 1525580,
+          "calls": 1525580,
+          "self_ms": 44.165000000000006,
+          "cumulative_ms": 44.165000000000006
+        },
+        {
+          "file": "./app/core/generic_buyer.py",
+          "line": 129,
+          "function": "is_unqualified_buyer_name",
+          "primitive_calls": 1198,
+          "calls": 1198,
+          "self_ms": 0.7149260000000001,
+          "cumulative_ms": 20.657282000000002
+        },
+        {
+          "file": "./app/core/entity_types.py",
+          "line": 184,
+          "function": "name_tokens",
+          "primitive_calls": 2396,
+          "calls": 2396,
+          "self_ms": 0.58918,
+          "cumulative_ms": 18.897142000000002
+        },
+        {
+          "file": "./app/core/entity_types.py",
+          "line": 173,
+          "function": "_fold",
+          "primitive_calls": 2396,
+          "calls": 2396,
+          "self_ms": 0.949536,
+          "cumulative_ms": 16.87408
+        },
+        {
+          "file": "./app/core/entity_types.py",
+          "line": 175,
+          "function": "<genexpr>",
+          "primitive_calls": 94874,
+          "calls": 94874,
+          "self_ms": 7.3871970000000005,
+          "cumulative_ms": 10.216047000000001
+        },
+        {
+          "file": "./app/core/generic_buyer.py",
+          "line": 123,
+          "function": "is_generic_buyer_token",
+          "primitive_calls": 1198,
+          "calls": 1198,
+          "self_ms": 0.6313320000000001,
+          "cumulative_ms": 9.589449
+        },
+        {
+          "file": "./app/core/entity_resolver.py",
+          "line": 951,
+          "function": "_build_scan_index",
+          "primitive_calls": 3,
+          "calls": 3,
+          "self_ms": 2.4276150000000003,
+          "cumulative_ms": 6.197208
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method unicodedata.normalize>",
+          "primitive_calls": 49808,
+          "calls": 49808,
+          "self_ms": 4.357276000000001,
+          "cumulative_ms": 4.357276000000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'lower' of 'str' objects>",
+          "primitive_calls": 49808,
+          "calls": 49808,
+          "self_ms": 3.9759670000000003,
+          "cumulative_ms": 3.9759670000000003
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'fullmatch' of 're.Pattern' objects>",
+          "primitive_calls": 18799,
+          "calls": 18799,
+          "self_ms": 2.868641,
+          "cumulative_ms": 2.868641
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'strip' of 'str' objects>",
+          "primitive_calls": 47968,
+          "calls": 47968,
+          "self_ms": 2.727928,
+          "cumulative_ms": 2.727928
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'setdefault' of 'dict' objects>",
+          "primitive_calls": 32163,
+          "calls": 32163,
+          "self_ms": 2.628287,
+          "cumulative_ms": 2.628287
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'add' of 'set' objects>",
+          "primitive_calls": 31276,
+          "calls": 31276,
+          "self_ms": 2.231376,
+          "cumulative_ms": 2.231376
+        }
+      ],
+      "scan_index_construction": [
+        {
+          "file": "./scripts/audits/benchmark_municipal_m1a1.py",
+          "line": 84,
+          "function": "<lambda>",
+          "primitive_calls": 1,
+          "calls": 1,
+          "self_ms": 0.142291,
+          "cumulative_ms": 6.053
+        },
+        {
+          "file": "./app/core/entity_resolver.py",
+          "line": 951,
+          "function": "_build_scan_index",
+          "primitive_calls": 1,
+          "calls": 1,
+          "self_ms": 2.4851270000000003,
+          "cumulative_ms": 5.910459
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'sort' of 'list' objects>",
+          "primitive_calls": 637,
+          "calls": 637,
+          "self_ms": 0.545941,
+          "cumulative_ms": 1.470855
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'split' of 'str' objects>",
+          "primitive_calls": 8906,
+          "calls": 8906,
+          "self_ms": 0.973071,
+          "cumulative_ms": 0.973071
+        },
+        {
+          "file": "./app/core/entity_resolver.py",
+          "line": 966,
+          "function": "<lambda>",
+          "primitive_calls": 8906,
+          "calls": 8906,
+          "self_ms": 0.642829,
+          "cumulative_ms": 0.9249140000000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'setdefault' of 'dict' objects>",
+          "primitive_calls": 8906,
+          "calls": 8906,
+          "self_ms": 0.553609,
+          "cumulative_ms": 0.553609
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'append' of 'list' objects>",
+          "primitive_calls": 8906,
+          "calls": 8906,
+          "self_ms": 0.42779700000000004,
+          "cumulative_ms": 0.42779700000000004
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.len>",
+          "primitive_calls": 8906,
+          "calls": 8906,
+          "self_ms": 0.28208500000000003,
+          "cumulative_ms": 0.28208500000000003
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'disable' of '_lsprof.Profiler' objects>",
+          "primitive_calls": 1,
+          "calls": 1,
+          "self_ms": 0.008167,
+          "cumulative_ms": 0.008167
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'values' of 'dict' objects>",
+          "primitive_calls": 1,
+          "calls": 1,
+          "self_ms": 0.00025000000000000006,
+          "cumulative_ms": 0.00025000000000000006
+        }
+      ],
+      "scan_entity": [
+        {
+          "file": "./scripts/audits/benchmark_municipal_m1a1.py",
+          "line": 87,
+          "function": "<lambda>",
+          "primitive_calls": 1,
+          "calls": 1,
+          "self_ms": 0.008458,
+          "cumulative_ms": 353.872292
+        },
+        {
+          "file": "./app/core/entity_resolver.py",
+          "line": 267,
+          "function": "scan_entity",
+          "primitive_calls": 12,
+          "calls": 12,
+          "self_ms": 0.014125,
+          "cumulative_ms": 353.86383400000005
+        },
+        {
+          "file": "./app/core/entity_resolver.py",
+          "line": 405,
+          "function": "_scan_against_index",
+          "primitive_calls": 12,
+          "calls": 12,
+          "self_ms": 2.61422,
+          "cumulative_ms": 353.849709
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/__init__.py",
+          "line": 174,
+          "function": "search",
+          "primitive_calls": 6994,
+          "calls": 6994,
+          "self_ms": 2.008103,
+          "cumulative_ms": 345.378252
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/__init__.py",
+          "line": 330,
+          "function": "_compile",
+          "primitive_calls": 7018,
+          "calls": 7018,
+          "self_ms": 14.105799000000001,
+          "cumulative_ms": 342.35726300000005
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_compiler.py",
+          "line": 757,
+          "function": "compile",
+          "primitive_calls": 6676,
+          "calls": 6676,
+          "self_ms": 7.080929,
+          "cumulative_ms": 308.954201
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_parser.py",
+          "line": 963,
+          "function": "parse",
+          "primitive_calls": 6676,
+          "calls": 6676,
+          "self_ms": 5.101688,
+          "cumulative_ms": 222.79488200000003
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_parser.py",
+          "line": 452,
+          "function": "_parse_sub",
+          "primitive_calls": 6676,
+          "calls": 6682,
+          "self_ms": 4.828327000000001,
+          "cumulative_ms": 212.82124600000003
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_parser.py",
+          "line": 512,
+          "function": "_parse",
+          "primitive_calls": 6676,
+          "calls": 6684,
+          "self_ms": 78.409038,
+          "cumulative_ms": 205.317527
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_compiler.py",
+          "line": 590,
+          "function": "_code",
+          "primitive_calls": 6676,
+          "calls": 6676,
+          "self_ms": 3.150897,
+          "cumulative_ms": 73.975976
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_compiler.py",
+          "line": 39,
+          "function": "_compile",
+          "primitive_calls": 6676,
+          "calls": 6696,
+          "self_ms": 26.804348,
+          "cumulative_ms": 43.861576
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_parser.py",
+          "line": 261,
+          "function": "get",
+          "primitive_calls": 201841,
+          "calls": 201841,
+          "self_ms": 23.067318,
+          "cumulative_ms": 38.844571
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_parser.py",
+          "line": 176,
+          "function": "append",
+          "primitive_calls": 201825,
+          "calls": 201825,
+          "self_ms": 20.595264,
+          "cumulative_ms": 30.534972
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'append' of 'list' objects>",
+          "primitive_calls": 652368,
+          "calls": 652368,
+          "self_ms": 28.493779,
+          "cumulative_ms": 28.493779
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_parser.py",
+          "line": 168,
+          "function": "__getitem__",
+          "primitive_calls": 202005,
+          "calls": 202005,
+          "self_ms": 18.745126,
+          "cumulative_ms": 27.508300000000002
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_compiler.py",
+          "line": 525,
+          "function": "_compile_info",
+          "primitive_calls": 6676,
+          "calls": 6676,
+          "self_ms": 7.714756,
+          "cumulative_ms": 26.644105
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_parser.py",
+          "line": 372,
+          "function": "_escape",
+          "primitive_calls": 36101,
+          "calls": 36101,
+          "self_ms": 12.81487,
+          "cumulative_ms": 19.642571
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_parser.py",
+          "line": 240,
+          "function": "__next",
+          "primitive_calls": 208529,
+          "calls": 208529,
+          "self_ms": 16.691287000000003,
+          "cumulative_ms": 16.691287000000003
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.isinstance>",
+          "primitive_calls": 282778,
+          "calls": 282778,
+          "self_ms": 13.03632,
+          "cumulative_ms": 13.03632
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_parser.py",
+          "line": 178,
+          "function": "getwidth",
+          "primitive_calls": 6678,
+          "calls": 6698,
+          "self_ms": 11.727099,
+          "cumulative_ms": 12.622121
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/enum.py",
+          "line": 1594,
+          "function": "__and__",
+          "primitive_calls": 6675,
+          "calls": 6675,
+          "self_ms": 4.470097,
+          "cumulative_ms": 12.302053
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.ord>",
+          "primitive_calls": 188455,
+          "calls": 188455,
+          "self_ms": 8.558896,
+          "cumulative_ms": 8.558896
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.len>",
+          "primitive_calls": 83231,
+          "calls": 89931,
+          "self_ms": 5.773875,
+          "cumulative_ms": 6.646927000000001
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/enum.py",
+          "line": 1576,
+          "function": "_get_value",
+          "primitive_calls": 20025,
+          "calls": 20025,
+          "self_ms": 3.9425320000000004,
+          "cumulative_ms": 5.782201000000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'get' of 'dict' objects>",
+          "primitive_calls": 72245,
+          "calls": 72245,
+          "self_ms": 5.510149000000001,
+          "cumulative_ms": 5.510149000000001
+        }
+      ],
+      "fuzzy_candidate_selection": [
+        {
+          "file": "./scripts/audits/benchmark_municipal_m1a1.py",
+          "line": 88,
+          "function": "<lambda>",
+          "primitive_calls": 1,
+          "calls": 1,
+          "self_ms": 0.005542,
+          "cumulative_ms": 46.54675
+        },
+        {
+          "file": "./app/core/entity_resolver.py",
+          "line": 482,
+          "function": "resolve_entidad",
+          "primitive_calls": 4,
+          "calls": 4,
+          "self_ms": 45.896832,
+          "cumulative_ms": 46.541208
+        },
+        {
+          "file": "./app/core/entity_resolver.py",
+          "line": 708,
+          "function": "_strict_rewrite_target",
+          "primitive_calls": 4,
+          "calls": 4,
+          "self_ms": 0.003332,
+          "cumulative_ms": 0.397542
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/__init__.py",
+          "line": 164,
+          "function": "match",
+          "primitive_calls": 8,
+          "calls": 8,
+          "self_ms": 0.003208,
+          "cumulative_ms": 0.36275
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/__init__.py",
+          "line": 330,
+          "function": "_compile",
+          "primitive_calls": 8,
+          "calls": 8,
+          "self_ms": 0.012543,
+          "cumulative_ms": 0.357959
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_compiler.py",
+          "line": 757,
+          "function": "compile",
+          "primitive_calls": 2,
+          "calls": 2,
+          "self_ms": 0.004667,
+          "cumulative_ms": 0.336374
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_parser.py",
+          "line": 963,
+          "function": "parse",
+          "primitive_calls": 2,
+          "calls": 2,
+          "self_ms": 0.0026680000000000002,
+          "cumulative_ms": 0.19358300000000003
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_parser.py",
+          "line": 452,
+          "function": "_parse_sub",
+          "primitive_calls": 2,
+          "calls": 8,
+          "self_ms": 0.011368,
+          "cumulative_ms": 0.18862500000000001
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_parser.py",
+          "line": 512,
+          "function": "_parse",
+          "primitive_calls": 2,
+          "calls": 10,
+          "self_ms": 0.075828,
+          "cumulative_ms": 0.185542
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'join' of 'str' objects>",
+          "primitive_calls": 32,
+          "calls": 32,
+          "self_ms": 0.05756700000000001,
+          "cumulative_ms": 0.170123
+        },
+        {
+          "file": "./app/core/entity_types.py",
+          "line": 184,
+          "function": "name_tokens",
+          "primitive_calls": 20,
+          "calls": 20,
+          "self_ms": 0.0069630000000000004,
+          "cumulative_ms": 0.15341900000000003
+        },
+        {
+          "file": "./app/core/entity_resolver.py",
+          "line": 592,
+          "function": "_keeps_requested_identity",
+          "primitive_calls": 4,
+          "calls": 4,
+          "self_ms": 0.0038330000000000005,
+          "cumulative_ms": 0.14
+        },
+        {
+          "file": "./app/core/fuzzy_identity_guard.py",
+          "line": 49,
+          "function": "candidate_keeps_requested_identity",
+          "primitive_calls": 4,
+          "calls": 4,
+          "self_ms": 0.013709,
+          "cumulative_ms": 0.136167
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_compiler.py",
+          "line": 590,
+          "function": "_code",
+          "primitive_calls": 2,
+          "calls": 2,
+          "self_ms": 0.0016260000000000003,
+          "cumulative_ms": 0.13575
+        },
+        {
+          "file": "./app/core/entity_types.py",
+          "line": 173,
+          "function": "_fold",
+          "primitive_calls": 20,
+          "calls": 20,
+          "self_ms": 0.010254000000000001,
+          "cumulative_ms": 0.133332
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_compiler.py",
+          "line": 39,
+          "function": "_compile",
+          "primitive_calls": 2,
+          "calls": 21,
+          "self_ms": 0.053749000000000005,
+          "cumulative_ms": 0.108999
+        },
+        {
+          "file": "./app/core/entity_types.py",
+          "line": 175,
+          "function": "<genexpr>",
+          "primitive_calls": 661,
+          "calls": 661,
+          "self_ms": 0.05445200000000001,
+          "cumulative_ms": 0.07880200000000001
+        },
+        {
+          "file": "./app/core/generic_buyer.py",
+          "line": 129,
+          "function": "is_unqualified_buyer_name",
+          "primitive_calls": 4,
+          "calls": 4,
+          "self_ms": 0.004749000000000001,
+          "cumulative_ms": 0.069916
+        },
+        {
+          "file": "./app/core/fuzzy_identity_guard.py",
+          "line": 87,
+          "function": "_content_tokens",
+          "primitive_calls": 8,
+          "calls": 8,
+          "self_ms": 0.0070810000000000005,
+          "cumulative_ms": 0.069417
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_parser.py",
+          "line": 168,
+          "function": "__getitem__",
+          "primitive_calls": 261,
+          "calls": 261,
+          "self_ms": 0.029829,
+          "cumulative_ms": 0.04321
+        },
+        {
+          "file": "./app/core/fuzzy_identity_guard.py",
+          "line": 44,
+          "function": "requested_identity_tokens",
+          "primitive_calls": 4,
+          "calls": 4,
+          "self_ms": 0.003082,
+          "cumulative_ms": 0.038791
+        },
+        {
+          "file": "./app/utils/money.py",
+          "line": 57,
+          "function": "normalize_text",
+          "primitive_calls": 4,
+          "calls": 4,
+          "self_ms": 0.005710000000000001,
+          "cumulative_ms": 0.034334
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method unicodedata.combining>",
+          "primitive_calls": 891,
+          "calls": 891,
+          "self_ms": 0.03372100000000001,
+          "cumulative_ms": 0.03372100000000001
+        },
+        {
+          "file": "./app/core/generic_buyer.py",
+          "line": 138,
+          "function": "department_root_buyer_target",
+          "primitive_calls": 4,
+          "calls": 4,
+          "self_ms": 0.002252,
+          "cumulative_ms": 0.03146
+        },
+        {
+          "file": "./app/core/generic_buyer.py",
+          "line": 123,
+          "function": "is_generic_buyer_token",
+          "primitive_calls": 4,
+          "calls": 4,
+          "self_ms": 0.0036240000000000005,
+          "cumulative_ms": 0.031125000000000003
+        }
+      ],
+      "fuzzy_choice_list": [
+        {
+          "file": "./scripts/audits/benchmark_municipal_m1a1.py",
+          "line": 89,
+          "function": "<lambda>",
+          "primitive_calls": 1,
+          "calls": 1,
+          "self_ms": 0.016625,
+          "cumulative_ms": 0.016625
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'disable' of '_lsprof.Profiler' objects>",
+          "primitive_calls": 1,
+          "calls": 1,
+          "self_ms": 0.007666000000000001,
+          "cumulative_ms": 0.007666000000000001
+        }
+      ]
+    },
+    "candidate": {
+      "load_and_alias_scan_construction": [
+        {
+          "file": "./scripts/audits/benchmark_municipal_m1a1.py",
+          "line": 83,
+          "function": "<lambda>",
+          "primitive_calls": 1,
+          "calls": 1,
+          "self_ms": 0.001624,
+          "cumulative_ms": 413.546291
+        },
+        {
+          "file": "./app/core/entity_resolver.py",
+          "line": 208,
+          "function": "__init__",
+          "primitive_calls": 1,
+          "calls": 1,
+          "self_ms": 0.620793,
+          "cumulative_ms": 413.544667
+        },
+        {
+          "file": "./app/core/entity_resolver.py",
+          "line": 812,
+          "function": "_load_aliases",
+          "primitive_calls": 1,
+          "calls": 1,
+          "self_ms": 21.606672,
+          "cumulative_ms": 341.62425
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'join' of 'str' objects>",
+          "primitive_calls": 64981,
+          "calls": 64981,
+          "self_ms": 104.107372,
+          "cumulative_ms": 303.166657
+        },
+        {
+          "file": "./app/utils/money.py",
+          "line": 57,
+          "function": "normalize_text",
+          "primitive_calls": 37113,
+          "calls": 37113,
+          "self_ms": 16.379637000000002,
+          "cumulative_ms": 203.00979500000003
+        },
+        {
+          "file": "./app/core/generic_buyer.py",
+          "line": 138,
+          "function": "department_root_buyer_target",
+          "primitive_calls": 21285,
+          "calls": 21285,
+          "self_ms": 6.492243,
+          "cumulative_ms": 122.02093900000001
+        },
+        {
+          "file": "./app/utils/money.py",
+          "line": 60,
+          "function": "<genexpr>",
+          "primitive_calls": 1130667,
+          "calls": 1130667,
+          "self_ms": 84.589761,
+          "cumulative_ms": 117.16779600000001
+        },
+        {
+          "file": "./app/core/generic_buyer.py",
+          "line": 118,
+          "function": "_normalize",
+          "primitive_calls": 21285,
+          "calls": 21285,
+          "self_ms": 7.694658,
+          "cumulative_ms": 110.953044
+        },
+        {
+          "file": "./app/core/proper_name_spans.py",
+          "line": 14,
+          "function": "__init__",
+          "primitive_calls": 1,
+          "calls": 1,
+          "self_ms": 4.831316,
+          "cumulative_ms": 71.132833
+        },
+        {
+          "file": "./app/core/generic_buyer.py",
+          "line": 120,
+          "function": "<genexpr>",
+          "primitive_calls": 648148,
+          "calls": 648148,
+          "self_ms": 47.792548000000004,
+          "cumulative_ms": 65.741438
+        },
+        {
+          "file": "./app/core/scan_alias_policy.py",
+          "line": 45,
+          "function": "is_scan_eligible_alias",
+          "primitive_calls": 11060,
+          "calls": 11060,
+          "self_ms": 1.666196,
+          "cumulative_ms": 63.891508
+        },
+        {
+          "file": "./app/core/proper_name_spans.py",
+          "line": 15,
+          "function": "<genexpr>",
+          "primitive_calls": 11838,
+          "calls": 11838,
+          "self_ms": 1.4118400000000002,
+          "cumulative_ms": 63.350668999999996
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method unicodedata.combining>",
+          "primitive_calls": 1870286,
+          "calls": 1870286,
+          "self_ms": 54.984384000000006,
+          "cumulative_ms": 54.984384000000006
+        },
+        {
+          "file": "./app/core/generic_buyer.py",
+          "line": 129,
+          "function": "is_unqualified_buyer_name",
+          "primitive_calls": 2194,
+          "calls": 2194,
+          "self_ms": 1.269624,
+          "cumulative_ms": 33.534371
+        },
+        {
+          "file": "./app/core/entity_types.py",
+          "line": 184,
+          "function": "name_tokens",
+          "primitive_calls": 4388,
+          "calls": 4388,
+          "self_ms": 1.068722,
+          "cumulative_ms": 30.544887000000003
+        },
+        {
+          "file": "./app/core/entity_types.py",
+          "line": 173,
+          "function": "_fold",
+          "primitive_calls": 4388,
+          "calls": 4388,
+          "self_ms": 1.747651,
+          "cumulative_ms": 27.237619000000002
+        },
+        {
+          "file": "./app/core/entity_types.py",
+          "line": 175,
+          "function": "<genexpr>",
+          "primitive_calls": 147734,
+          "calls": 147734,
+          "self_ms": 11.692592,
+          "cumulative_ms": 16.150051
+        },
+        {
+          "file": "./app/core/generic_buyer.py",
+          "line": 123,
+          "function": "is_generic_buyer_token",
+          "primitive_calls": 2194,
+          "calls": 2194,
+          "self_ms": 1.0243710000000001,
+          "cumulative_ms": 15.517473
+        },
+        {
+          "file": "./app/core/entity_resolver.py",
+          "line": 951,
+          "function": "_build_scan_index",
+          "primitive_calls": 3,
+          "calls": 3,
+          "self_ms": 4.51668,
+          "cumulative_ms": 9.025792000000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method unicodedata.normalize>",
+          "primitive_calls": 62786,
+          "calls": 62786,
+          "self_ms": 5.335896000000001,
+          "cumulative_ms": 5.335896000000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'lower' of 'str' objects>",
+          "primitive_calls": 62786,
+          "calls": 62786,
+          "self_ms": 5.017069000000001,
+          "cumulative_ms": 5.017069000000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'fullmatch' of 're.Pattern' objects>",
+          "primitive_calls": 23479,
+          "calls": 23479,
+          "self_ms": 3.542931,
+          "cumulative_ms": 3.542931
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'strip' of 'str' objects>",
+          "primitive_calls": 58954,
+          "calls": 58954,
+          "self_ms": 3.397918,
+          "cumulative_ms": 3.397918
+        },
+        {
+          "file": "./app/core/scan_alias_policy.py",
+          "line": 37,
+          "function": "record_alias_policy",
+          "primitive_calls": 1097,
+          "calls": 1097,
+          "self_ms": 0.511019,
+          "cumulative_ms": 3.199313
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'setdefault' of 'dict' objects>",
+          "primitive_calls": 38735,
+          "calls": 38735,
+          "self_ms": 3.021419,
+          "cumulative_ms": 3.021419
+        }
+      ],
+      "scan_index_construction": [
+        {
+          "file": "./scripts/audits/benchmark_municipal_m1a1.py",
+          "line": 84,
+          "function": "<lambda>",
+          "primitive_calls": 1,
+          "calls": 1,
+          "self_ms": 0.153,
+          "cumulative_ms": 7.1392500000000005
+        },
+        {
+          "file": "./app/core/entity_resolver.py",
+          "line": 951,
+          "function": "_build_scan_index",
+          "primitive_calls": 1,
+          "calls": 1,
+          "self_ms": 2.9021860000000004,
+          "cumulative_ms": 6.986083000000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'sort' of 'list' objects>",
+          "primitive_calls": 637,
+          "calls": 637,
+          "self_ms": 0.643171,
+          "cumulative_ms": 1.7546110000000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'split' of 'str' objects>",
+          "primitive_calls": 10716,
+          "calls": 10716,
+          "self_ms": 1.1684830000000002,
+          "cumulative_ms": 1.1684830000000002
+        },
+        {
+          "file": "./app/core/entity_resolver.py",
+          "line": 966,
+          "function": "<lambda>",
+          "primitive_calls": 10716,
+          "calls": 10716,
+          "self_ms": 0.7739100000000001,
+          "cumulative_ms": 1.11144
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'setdefault' of 'dict' objects>",
+          "primitive_calls": 10716,
+          "calls": 10716,
+          "self_ms": 0.6590760000000001,
+          "cumulative_ms": 0.6590760000000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'append' of 'list' objects>",
+          "primitive_calls": 10716,
+          "calls": 10716,
+          "self_ms": 0.501727,
+          "cumulative_ms": 0.501727
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.len>",
+          "primitive_calls": 10716,
+          "calls": 10716,
+          "self_ms": 0.33753,
+          "cumulative_ms": 0.33753
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'disable' of '_lsprof.Profiler' objects>",
+          "primitive_calls": 1,
+          "calls": 1,
+          "self_ms": 0.00775,
+          "cumulative_ms": 0.00775
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'values' of 'dict' objects>",
+          "primitive_calls": 1,
+          "calls": 1,
+          "self_ms": 0.000167,
+          "cumulative_ms": 0.000167
+        }
+      ],
+      "scan_entity": [
+        {
+          "file": "./scripts/audits/benchmark_municipal_m1a1.py",
+          "line": 87,
+          "function": "<lambda>",
+          "primitive_calls": 1,
+          "calls": 1,
+          "self_ms": 0.009584,
+          "cumulative_ms": 602.864583
+        },
+        {
+          "file": "./app/core/entity_resolver.py",
+          "line": 267,
+          "function": "scan_entity",
+          "primitive_calls": 12,
+          "calls": 12,
+          "self_ms": 0.014706,
+          "cumulative_ms": 602.854999
+        },
+        {
+          "file": "./app/core/entity_resolver.py",
+          "line": 405,
+          "function": "_scan_against_index",
+          "primitive_calls": 12,
+          "calls": 12,
+          "self_ms": 4.908985,
+          "cumulative_ms": 602.8402930000001
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/__init__.py",
+          "line": 174,
+          "function": "search",
+          "primitive_calls": 11729,
+          "calls": 11729,
+          "self_ms": 3.353279,
+          "cumulative_ms": 585.1515780000001
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/__init__.py",
+          "line": 330,
+          "function": "_compile",
+          "primitive_calls": 11769,
+          "calls": 11769,
+          "self_ms": 24.326614,
+          "cumulative_ms": 581.74514
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_compiler.py",
+          "line": 757,
+          "function": "compile",
+          "primitive_calls": 11421,
+          "calls": 11421,
+          "self_ms": 12.397001000000001,
+          "cumulative_ms": 524.22965
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_parser.py",
+          "line": 963,
+          "function": "parse",
+          "primitive_calls": 11421,
+          "calls": 11421,
+          "self_ms": 8.881692,
+          "cumulative_ms": 376.227479
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_parser.py",
+          "line": 452,
+          "function": "_parse_sub",
+          "primitive_calls": 11421,
+          "calls": 11457,
+          "self_ms": 8.401887,
+          "cumulative_ms": 358.967552
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_parser.py",
+          "line": 512,
+          "function": "_parse",
+          "primitive_calls": 11421,
+          "calls": 11469,
+          "self_ms": 131.48510600000003,
+          "cumulative_ms": 346.01885400000003
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_compiler.py",
+          "line": 590,
+          "function": "_code",
+          "primitive_calls": 11421,
+          "calls": 11421,
+          "self_ms": 5.492832000000001,
+          "cumulative_ms": 126.86239900000001
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_compiler.py",
+          "line": 39,
+          "function": "_compile",
+          "primitive_calls": 11421,
+          "calls": 11541,
+          "self_ms": 45.627216000000004,
+          "cumulative_ms": 74.948292
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_parser.py",
+          "line": 261,
+          "function": "get",
+          "primitive_calls": 340897,
+          "calls": 340897,
+          "self_ms": 39.061326,
+          "cumulative_ms": 65.87747200000001
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_parser.py",
+          "line": 176,
+          "function": "append",
+          "primitive_calls": 340801,
+          "calls": 340801,
+          "self_ms": 34.990662,
+          "cumulative_ms": 51.935011
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'append' of 'list' objects>",
+          "primitive_calls": 1103165,
+          "calls": 1103165,
+          "self_ms": 48.605786,
+          "cumulative_ms": 48.605786
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_parser.py",
+          "line": 168,
+          "function": "__getitem__",
+          "primitive_calls": 341881,
+          "calls": 341881,
+          "self_ms": 31.416921000000002,
+          "cumulative_ms": 46.082587000000004
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_compiler.py",
+          "line": 525,
+          "function": "_compile_info",
+          "primitive_calls": 11421,
+          "calls": 11421,
+          "self_ms": 13.344882,
+          "cumulative_ms": 45.875537
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_parser.py",
+          "line": 372,
+          "function": "_escape",
+          "primitive_calls": 60266,
+          "calls": 60266,
+          "self_ms": 21.429642,
+          "cumulative_ms": 32.83544
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_parser.py",
+          "line": 240,
+          "function": "__next",
+          "primitive_calls": 352390,
+          "calls": 352390,
+          "self_ms": 28.399021000000005,
+          "cumulative_ms": 28.399021000000005
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.isinstance>",
+          "primitive_calls": 479549,
+          "calls": 479549,
+          "self_ms": 21.931959,
+          "cumulative_ms": 21.931959
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/_parser.py",
+          "line": 178,
+          "function": "getwidth",
+          "primitive_calls": 11433,
+          "calls": 11553,
+          "self_ms": 20.272715,
+          "cumulative_ms": 21.798457
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/enum.py",
+          "line": 1594,
+          "function": "__and__",
+          "primitive_calls": 11411,
+          "calls": 11411,
+          "self_ms": 7.791552,
+          "cumulative_ms": 21.181812
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.ord>",
+          "primitive_calls": 317851,
+          "calls": 317851,
+          "self_ms": 14.563709000000001,
+          "cumulative_ms": 14.563709000000001
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method builtins.len>",
+          "primitive_calls": 141968,
+          "calls": 153533,
+          "self_ms": 9.808419,
+          "cumulative_ms": 11.328979
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/enum.py",
+          "line": 1576,
+          "function": "_get_value",
+          "primitive_calls": 34233,
+          "calls": 34233,
+          "self_ms": 6.687019,
+          "cumulative_ms": 9.841222
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'get' of 'dict' objects>",
+          "primitive_calls": 120545,
+          "calls": 120545,
+          "self_ms": 9.306960000000002,
+          "cumulative_ms": 9.306960000000002
+        }
+      ],
+      "fuzzy_candidate_selection": [
+        {
+          "file": "./scripts/audits/benchmark_municipal_m1a1.py",
+          "line": 88,
+          "function": "<lambda>",
+          "primitive_calls": 1,
+          "calls": 1,
+          "self_ms": 0.004751,
+          "cumulative_ms": 54.337375
+        },
+        {
+          "file": "./app/core/entity_resolver.py",
+          "line": 482,
+          "function": "resolve_entidad",
+          "primitive_calls": 4,
+          "calls": 4,
+          "self_ms": 54.052123,
+          "cumulative_ms": 54.332624
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'join' of 'str' objects>",
+          "primitive_calls": 32,
+          "calls": 32,
+          "self_ms": 0.056588,
+          "cumulative_ms": 0.166168
+        },
+        {
+          "file": "./app/core/entity_types.py",
+          "line": 184,
+          "function": "name_tokens",
+          "primitive_calls": 20,
+          "calls": 20,
+          "self_ms": 0.005915,
+          "cumulative_ms": 0.150709
+        },
+        {
+          "file": "./app/core/entity_resolver.py",
+          "line": 592,
+          "function": "_keeps_requested_identity",
+          "primitive_calls": 4,
+          "calls": 4,
+          "self_ms": 0.0037090000000000005,
+          "cumulative_ms": 0.138292
+        },
+        {
+          "file": "./app/core/fuzzy_identity_guard.py",
+          "line": 49,
+          "function": "candidate_keeps_requested_identity",
+          "primitive_calls": 4,
+          "calls": 4,
+          "self_ms": 0.013125000000000001,
+          "cumulative_ms": 0.134583
+        },
+        {
+          "file": "./app/core/entity_types.py",
+          "line": 173,
+          "function": "_fold",
+          "primitive_calls": 20,
+          "calls": 20,
+          "self_ms": 0.010584000000000001,
+          "cumulative_ms": 0.13212600000000002
+        },
+        {
+          "file": "./app/core/entity_types.py",
+          "line": 175,
+          "function": "<genexpr>",
+          "primitive_calls": 661,
+          "calls": 661,
+          "self_ms": 0.054633,
+          "cumulative_ms": 0.07703800000000001
+        },
+        {
+          "file": "./app/core/fuzzy_identity_guard.py",
+          "line": 87,
+          "function": "_content_tokens",
+          "primitive_calls": 8,
+          "calls": 8,
+          "self_ms": 0.006583,
+          "cumulative_ms": 0.067626
+        },
+        {
+          "file": "./app/core/generic_buyer.py",
+          "line": 129,
+          "function": "is_unqualified_buyer_name",
+          "primitive_calls": 4,
+          "calls": 4,
+          "self_ms": 0.004418,
+          "cumulative_ms": 0.066501
+        },
+        {
+          "file": "./app/core/entity_resolver.py",
+          "line": 708,
+          "function": "_strict_rewrite_target",
+          "primitive_calls": 4,
+          "calls": 4,
+          "self_ms": 0.002916,
+          "cumulative_ms": 0.041042
+        },
+        {
+          "file": "./app/core/fuzzy_identity_guard.py",
+          "line": 44,
+          "function": "requested_identity_tokens",
+          "primitive_calls": 4,
+          "calls": 4,
+          "self_ms": 0.002875,
+          "cumulative_ms": 0.03950000000000001
+        },
+        {
+          "file": "./app/utils/money.py",
+          "line": 57,
+          "function": "normalize_text",
+          "primitive_calls": 4,
+          "calls": 4,
+          "self_ms": 0.0052910000000000006,
+          "cumulative_ms": 0.032458
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<built-in method unicodedata.combining>",
+          "primitive_calls": 891,
+          "calls": 891,
+          "self_ms": 0.031397,
+          "cumulative_ms": 0.031397
+        },
+        {
+          "file": "./app/core/generic_buyer.py",
+          "line": 123,
+          "function": "is_generic_buyer_token",
+          "primitive_calls": 4,
+          "calls": 4,
+          "self_ms": 0.0033760000000000005,
+          "cumulative_ms": 0.030708000000000006
+        },
+        {
+          "file": "./app/core/generic_buyer.py",
+          "line": 138,
+          "function": "department_root_buyer_target",
+          "primitive_calls": 4,
+          "calls": 4,
+          "self_ms": 0.0020000000000000005,
+          "cumulative_ms": 0.028875
+        },
+        {
+          "file": "./app/core/generic_buyer.py",
+          "line": 118,
+          "function": "_normalize",
+          "primitive_calls": 4,
+          "calls": 4,
+          "self_ms": 0.001751,
+          "cumulative_ms": 0.025376000000000003
+        },
+        {
+          "file": "./app/utils/money.py",
+          "line": 60,
+          "function": "<genexpr>",
+          "primitive_calls": 129,
+          "calls": 129,
+          "self_ms": 0.012848000000000002,
+          "cumulative_ms": 0.017507
+        },
+        {
+          "file": "./app/core/generic_buyer.py",
+          "line": 120,
+          "function": "<genexpr>",
+          "primitive_calls": 129,
+          "calls": 129,
+          "self_ms": 0.010702,
+          "cumulative_ms": 0.015035000000000001
+        },
+        {
+          "file": "./app/core/territory_phrase_index.py",
+          "line": 96,
+          "function": "spans_in",
+          "primitive_calls": 4,
+          "calls": 4,
+          "self_ms": 0.011041000000000002,
+          "cumulative_ms": 0.014000000000000002
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'findall' of 're.Pattern' objects>",
+          "primitive_calls": 20,
+          "calls": 20,
+          "self_ms": 0.012668000000000002,
+          "cumulative_ms": 0.012668000000000002
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'disable' of '_lsprof.Profiler' objects>",
+          "primitive_calls": 1,
+          "calls": 1,
+          "self_ms": 0.009875000000000002,
+          "cumulative_ms": 0.009875000000000002
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/__init__.py",
+          "line": 164,
+          "function": "match",
+          "primitive_calls": 8,
+          "calls": 8,
+          "self_ms": 0.0029170000000000003,
+          "cumulative_ms": 0.009251
+        },
+        {
+          "file": "/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/re/__init__.py",
+          "line": 330,
+          "function": "_compile",
+          "primitive_calls": 8,
+          "calls": 8,
+          "self_ms": 0.0032510000000000004,
+          "cumulative_ms": 0.004959
+        },
+        {
+          "file": "./app/core/fuzzy_identity_guard.py",
+          "line": 89,
+          "function": "<genexpr>",
+          "primitive_calls": 36,
+          "calls": 36,
+          "self_ms": 0.003501,
+          "cumulative_ms": 0.003501
+        }
+      ],
+      "fuzzy_choice_list": [
+        {
+          "file": "./scripts/audits/benchmark_municipal_m1a1.py",
+          "line": 89,
+          "function": "<lambda>",
+          "primitive_calls": 1,
+          "calls": 1,
+          "self_ms": 0.0205,
+          "cumulative_ms": 0.0205
+        },
+        {
+          "file": "~",
+          "line": 0,
+          "function": "<method 'disable' of '_lsprof.Profiler' objects>",
+          "primitive_calls": 1,
+          "calls": 1,
+          "self_ms": 0.0061660000000000005,
+          "cumulative_ms": 0.0061660000000000005
+        }
+      ]
+    }
+  },
+  "baseline": {
+    "load": {
+      "p50_ms": 84.81691699125804,
+      "p95_ms": 85.08879199507646,
+      "samples": 7
+    },
+    "exact": {
+      "p50_ms": 0.005479523679241538,
+      "p95_ms": 0.11225001071579754,
+      "samples": 180
+    },
+    "scan": {
+      "p50_ms": 5.00031300180126,
+      "p95_ms": 22.659749985905364,
+      "samples": 36
+    },
+    "fuzzy": {
+      "p50_ms": 11.19118751375936,
+      "p95_ms": 12.901082984171808,
+      "samples": 12
+    },
+    "pipeline": {
+      "p50_ms": 11.236603997531347,
+      "p95_ms": 91.48633401491679,
+      "samples": 56
+    }
+  },
+  "candidate": {
+    "load": {
+      "p50_ms": 106.24579200521111,
+      "p95_ms": 109.32141600642353,
+      "samples": 7
+    },
+    "exact": {
+      "p50_ms": 0.00549999822396785,
+      "p95_ms": 0.11166700278408825,
+      "samples": 180
+    },
+    "scan": {
+      "p50_ms": 5.412124999566004,
+      "p95_ms": 36.89620798104443,
+      "samples": 36
+    },
+    "fuzzy": {
+      "p50_ms": 13.409625011263415,
+      "p95_ms": 15.587416011840105,
+      "samples": 12
+    },
+    "pipeline": {
+      "p50_ms": 0.6210419960552827,
+      "p95_ms": 0.6631670112255961,
+      "samples": 56
+    }
+  },
+  "product_turn_budget_ms": 15000.0,
+  "pipeline_p95_budget_share_pct": 0.0044211134081706405,
+  "verdict": "ACCEPTABLE",
+  "review": {
+    "basis": "Absolute offline cost, same process and phrase lists after all test processes exited; not a relative-percent veto.",
+    "reason": "Candidate scan p95 36.896 ms (+14.236 ms), fuzzy p95 15.587 ms (+2.686 ms), load p50 106.246 ms (+21.429 ms). Candidate exact canary pipeline p95 0.663 ms against a 15000 ms product turn budget. No resolver-specific SLA found.",
+    "profile_findings": [
+      "Alias scan index construction: 5.910 -> 6.986 ms under cProfile; normalization and alias policy dominate loading.",
+      "12 scan queries compile 6676 -> 11421 regexes; regex compilation dominates instrumented scan time.",
+      "Copying fuzzy choices costs 0.017 -> 0.021 ms; candidate scoring dominates the fuzzy path."
+    ],
+    "optimization": "No optimization needed before promotion on these absolute measurements; regex compilation is a separately scoped future improvement.",
+    "limitations": "Offline canaries, not production traffic or live LLM/Socrata latency."
+  }
+}

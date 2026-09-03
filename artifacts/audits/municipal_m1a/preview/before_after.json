@@ -1,5 +1,5 @@
 {
-  "status": "BLOCKED",
+  "status": "PASS",
   "input": {
     "ADD_NEW_ACCREDITED_UNIT": 498,
     "ADD_ALIASES_TO_EXISTING_UNIT": 5
@@ -20,6 +20,6 @@
     "app/data/buyer_source_names.json": "4548efa781330a8354e33dd01957f8fa155f5986c8f947fc08361736cf0acd87"
   },
   "data_eligibility_status": "PASS",
-  "pipeline_status": "BLOCKED",
+  "pipeline_status": "PASS",
   "production_applied": false
 }

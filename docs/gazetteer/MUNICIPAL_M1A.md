@@ -1,5 +1,12 @@
 # Municipal M1A — promoción detenida por canarios predictivos
 
+> **Actualización M1A.1:** este documento conserva el diagnóstico histórico.
+> [MUNICIPAL_M1A_1.md](MUNICIPAL_M1A_1.md) registra los cambios de lenguaje y
+> geografía posteriores. `preview/` se reejecutó con ese runtime; los 30 fallos
+> originales están congelados en
+> [pipeline_before.json](../../artifacts/audits/municipal_m1a_1/pipeline_before.json).
+> Producción sigue sin promoción.
+
 **Estado: BLOCKED. Producción: 0 promociones. PUSH: NO.**
 
 La entrada M0 coincide con los 503 ejecutivos autorizados: 498 unidades nuevas y cinco ampliaciones de aliases. El catálogo temporal acredita los 1.888 aliases por lookup exacto y conserva la proyección física en ambos datasets. Sin embargo, el pipeline real falla 30 consultas en nueve municipios e introduce cuatro resoluciones nuevas de **Susacón a Susa**. Se activó el **STOP GLOBAL** solicitado para wrong owners sistémicos. No se excluyeron unos municipios para publicar el resto: incorporar Susa también altera consultas por Susacón, por lo que la independencia del lote no está demostrada.
@@ -102,8 +109,9 @@ El lookup permanece estable; el scan p95 aumenta ~67% en esta muestra pequeña y
 - LLM_PROVIDER_LIVE_COVERAGE: `NOT_VERIFIED`.
 
 ```bash
-# Esperado: exit 1, STOP GLOBAL, ningún cambio a los datos de producción.
-.venv/bin/python scripts/audits/promote_municipal_m1a.py --apply
+# Preview seguro con el runtime actual. El exit 1 con --apply sólo describe
+# el HEAD histórico bloqueado; después de M1A.1, --apply puede escribir.
+.venv/bin/python scripts/audits/promote_municipal_m1a.py
 
 # Replay de la producción sin promoción; preserva M0 original.
 .venv/bin/python scripts/audits/audit_municipal_m0.py \

@@ -1,0 +1,57 @@
+[
+  {
+    "query": "alcaldia de susacon",
+    "first_span": "alcaldia de susa",
+    "after_span": "alcaldia de susacon"
+  },
+  {
+    "query": "municipio de susacon",
+    "first_span": "municipio de susa",
+    "after_span": "municipio de susacon"
+  },
+  {
+    "query": "alcaldia de nemocon",
+    "first_span": "alcaldia de nemo",
+    "after_span": "alcaldia de nemocon"
+  },
+  {
+    "query": "municipio de nemocon",
+    "first_span": "municipio de nemo",
+    "after_span": "municipio de nemocon"
+  },
+  {
+    "query": "alcaldia de belen",
+    "first_span": "alcaldia de bel",
+    "after_span": "alcaldia de belen"
+  },
+  {
+    "query": "municipio de belen",
+    "first_span": "municipio de bel",
+    "after_span": "municipio de belen"
+  },
+  {
+    "query": "alcaldia de valparaiso",
+    "first_span": "alcaldia de val",
+    "after_span": "alcaldia de valparaiso"
+  },
+  {
+    "query": "municipio de valparaiso",
+    "first_span": "municipio de val",
+    "after_span": "municipio de valparaiso"
+  },
+  {
+    "query": "alcaldia de el carmen de viboral",
+    "first_span": "alcaldia de el carm",
+    "after_span": "alcaldia de el carmen de viboral"
+  },
+  {
+    "query": "municipio de el carmen de bolivar",
+    "first_span": "municipio de el carm",
+    "after_span": "municipio de el carmen de bolivar"
+  },
+  {
+    "query": "comprador ese carmen emilia ospina perfil",
+    "first_span": "ese carm",
+    "after_span": "ese carmen emilia ospina perfil"
+  }
+]

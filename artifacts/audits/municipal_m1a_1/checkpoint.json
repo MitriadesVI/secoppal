@@ -1,0 +1,115 @@
+{
+  "MUNICIPAL_M1A_1": "PASS",
+  "M1A_RETRY_READY": "YES",
+  "PRODUCTION_PROMOTED": 0,
+  "PUSH": "NO",
+  "head_before": "bc40153",
+  "runtime_commits": [
+    "4912e55 fix(parser): require token boundaries for buyer capture clauses",
+    "5cc7d2f fix(parser): preserve proper-name spans from ordering signals",
+    "dd38f22 feat(geo): add versioned DIVIPOLA municipal territory registry",
+    "d81c0f0 fix(parser): prevent shorter rewrites from splitting accredited names"
+  ],
+  "capture": {
+    "before_failures": 34,
+    "after_failures": 0,
+    "predictive_cases": 47,
+    "susacon_wrong_owner_post": 0
+  },
+  "ordering": {
+    "nuevo_colon": "PASS",
+    "divipola_control_token_names": 6,
+    "other_names": 5
+  },
+  "replay": {
+    "proposals": 503,
+    "new_units": 498,
+    "alias_extensions": 5,
+    "aliases": 1888,
+    "idempotence": "PASS",
+    "production_promoted": 0,
+    "unchanged_sha256": {
+      "app/data/aliases_db.json": "1bf21c5c4224d5097f6ad03dab67bea1341e2e665e9ebacb42e9a9fe0733eacc",
+      "app/data/buyer_source_names.json": "ec49aac1959c49565ae4374d1f18408c81e1bb179c1cf95498b7a2a75363b7d2",
+      "artifacts/audits/municipal_m0_v1/proposals.json": "b88ff18e75f837edaf2ceb3c3abd8fb4fc1b65319a8ea9c7aed5f0ffef678c3b"
+    },
+    "data_status": "PASS",
+    "pipeline_status": "PASS",
+    "pipeline_failures": 0,
+    "wrong_owners": 0,
+    "new_multi_owner_keys": 0,
+    "geography": {
+      "territories": 1103,
+      "distinct_names": 1021,
+      "unique_names": 957,
+      "ambiguous_names": 64,
+      "all_bare": {
+        "PASS_EXACT_TERRITORY": 953,
+        "AMBIGUOUS_REQUIRES_DEPARTMENT": 150
+      },
+      "all_qualified": {
+        "PASS_EXACT_TERRITORY": 1103
+      },
+      "additional_territories": 501,
+      "additional_bare": {
+        "PASS_EXACT_TERRITORY": 436,
+        "AMBIGUOUS_REQUIRES_DEPARTMENT": 65
+      },
+      "additional_qualified": {
+        "PASS_EXACT_TERRITORY": 501
+      }
+    },
+    "geography_failures": 0,
+    "cross_interaction": {
+      "status": "PASS",
+      "jointly_loaded_proposals": 503,
+      "checks": 3071,
+      "categories": {
+        "existing_canonical": 599,
+        "existing_nearby_alias": 584,
+        "proposal": 1888
+      },
+      "new_wrong_owner": 0,
+      "lost_correct_owner": 0,
+      "new_scan_cross_owner": 0
+    },
+    "performance": "ACCEPTABLE",
+    "push": false
+  },
+  "performance": "ACCEPTABLE",
+  "tests": {
+    "a": {
+      "passed": 10915,
+      "skipped": 11,
+      "xfailed": 14,
+      "supplemental_actor_index_passed": 14,
+      "previously_skipped_now_passed": 9,
+      "total_distinct_passed": 10924,
+      "remaining_skipped": 2
+    },
+    "b": {
+      "passed": 10934,
+      "skipped": 11,
+      "xfailed": 14,
+      "supplemental_actor_index_passed": 14,
+      "previously_skipped_now_passed": 9,
+      "total_distinct_passed": 10943,
+      "remaining_skipped": 2
+    },
+    "c": {
+      "passed": 10976,
+      "skipped": 2,
+      "xfailed": 14
+    },
+    "d": {
+      "passed": 10981,
+      "skipped": 2,
+      "xfailed": 14
+    }
+  },
+  "corpus": "89/89",
+  "lint": "PASS",
+  "new_xfails": 0,
+  "candidate_only": true,
+  "next_step": "Separate M1A RETRY task; same promoter --apply. Not executed in M1A.1."
+}
