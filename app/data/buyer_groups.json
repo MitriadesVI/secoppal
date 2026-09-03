@@ -1,0 +1,596 @@
+{
+  "schema_version": 1,
+  "groups": [
+    {
+      "id": "bogota_central",
+      "version": "2026-09-03.v1",
+      "label": "Administración central de Bogotá",
+      "aliases": [
+        "administracion central de bogota",
+        "bogota central"
+      ],
+      "members": [
+        {
+          "canonical_name": "(Secretaría Distrital de Integración Social)",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "SECRETARIA DE EDUCACION DEL DISTRITO",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "SECRETARÍA DISTRITAL DE MOVILIDAD",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "SECRETARIA DISTRITAL DE AMBIENTE",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "SECRETARIA DISTRITAL DE GOBIERNO 1",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "SECRETARIA DISTRITAL DEL HABITAT-",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "SECRETARIA DISTRITAL DE LA MUJER",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "SECRETARIA DISTRITAL DE PLANEACION",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "SECRETARIA DISTRITAL DE HACIENDA",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "SECRETARIA JURIDICA DISTRITAL.",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": ".SECRETARÍA DISTRITAL DE SALUD.",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        }
+      ]
+    },
+    {
+      "id": "bogota_local_mayoralties",
+      "version": "2026-09-03.v1",
+      "label": "20 alcaldías locales y fondos de desarrollo local de Bogotá",
+      "aliases": [
+        "alcaldias locales de bogota",
+        "fondos de desarrollo local de bogota"
+      ],
+      "members": [
+        {
+          "canonical_name": "ALCALDIA LOCAL DE CIUDAD BOLIVAR //",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE KENNEDY",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "ALCALDÍA LOCAL DE SUBA",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE SAN CRISTOBAL",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "FONDO DE DESARROLLO LOCAL DE BOSA",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE USME",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE ENGATIVÁ",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE USAQUEN",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL RAFAEL URIBE URIBE",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE FONTIBON",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "FONDO DE DESARROLLO LOCAL DE SANTA FE",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE SUMAPAZ",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE TUNJUELITO",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE ANTONIO NARIÑO",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE TEUSAQUILLO(oficial)",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "ALCALDÍA LOCAL DE BARRIOS UNIDOS",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "FONDO DE DESARROLLO LOCAL DE LA CANDELARIA",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE MARTIRES",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        }
+      ]
+    },
+    {
+      "id": "icbf_national",
+      "version": "2026-09-03.v1",
+      "label": "ICBF: sede nacional y 32 regionales",
+      "aliases": [
+        "icbf",
+        "icbf nacional",
+        "instituto colombiano de bienestar familiar"
+      ],
+      "members": [
+        {
+          "canonical_name": "ICBF SEDE NACIONAL",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "app/data/icbf_regionals.json"
+        },
+        {
+          "canonical_name": "ICBF REGIONAL AMAZONAS",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "app/data/icbf_regionals.json"
+        },
+        {
+          "canonical_name": "ICBF REGIONAL ANTIOQUIA",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "app/data/icbf_regionals.json"
+        },
+        {
+          "canonical_name": "ICBF REGIONAL ARAUCA *",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "app/data/icbf_regionals.json"
+        },
+        {
+          "canonical_name": "ICBF REGIONAL ATLANTICO",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "app/data/icbf_regionals.json"
+        },
+        {
+          "canonical_name": "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "app/data/icbf_regionals.json"
+        },
+        {
+          "canonical_name": "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "app/data/icbf_regionals.json"
+        },
+        {
+          "canonical_name": "ICBF REGIONAL CALDAS",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "app/data/icbf_regionals.json"
+        },
+        {
+          "canonical_name": "ICBF REGIONAL CAQUETA",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "app/data/icbf_regionals.json"
+        },
+        {
+          "canonical_name": "ICBF REGIONAL CASANARE",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "app/data/icbf_regionals.json"
+        },
+        {
+          "canonical_name": "ICBF REGIONAL CAUCA",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "app/data/icbf_regionals.json"
+        },
+        {
+          "canonical_name": "ICBF REGIONAL CESAR",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "app/data/icbf_regionals.json"
+        },
+        {
+          "canonical_name": "ICBF REGIONAL CHOCO",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "app/data/icbf_regionals.json"
+        },
+        {
+          "canonical_name": "ICBF REGIONAL CORDOBA",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "app/data/icbf_regionals.json"
+        },
+        {
+          "canonical_name": "ICBF REGIONAL CUNDINAMARCA",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "app/data/icbf_regionals.json"
+        },
+        {
+          "canonical_name": "ICBF REGIONAL GUAINIA",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "app/data/icbf_regionals.json"
+        },
+        {
+          "canonical_name": "ICBF REGIONAL GUAVIARE",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "app/data/icbf_regionals.json"
+        },
+        {
+          "canonical_name": "ICBF REGIONAL HUILA",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "app/data/icbf_regionals.json"
+        },
+        {
+          "canonical_name": "ICBF REGIONAL GUAJIRA",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "app/data/icbf_regionals.json"
+        },
+        {
+          "canonical_name": "ICBF REGIONAL MAGDALENA",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "app/data/icbf_regionals.json"
+        },
+        {
+          "canonical_name": "ICBF REGIONAL META",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "app/data/icbf_regionals.json"
+        },
+        {
+          "canonical_name": "ICBF REGIONAL NARIÑO",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "app/data/icbf_regionals.json"
+        },
+        {
+          "canonical_name": "ICBF REGIONAL NORTE DE SANTANDER",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "app/data/icbf_regionals.json"
+        },
+        {
+          "canonical_name": "ICBF REGIONAL PUTUMAYO",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "app/data/icbf_regionals.json"
+        },
+        {
+          "canonical_name": "ICBF REGIONAL QUINDIO",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "app/data/icbf_regionals.json"
+        },
+        {
+          "canonical_name": "ICBF RISARALDA//",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "app/data/icbf_regionals.json"
+        },
+        {
+          "canonical_name": "ICBF REGIONAL SAN ANDRES",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "app/data/icbf_regionals.json"
+        },
+        {
+          "canonical_name": "ICBF REGIONAL SANTANDER",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "app/data/icbf_regionals.json"
+        },
+        {
+          "canonical_name": "ICBF REGIONAL SUCRE",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "app/data/icbf_regionals.json"
+        },
+        {
+          "canonical_name": "ICBF REGIONAL TOLIMA",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "app/data/icbf_regionals.json"
+        },
+        {
+          "canonical_name": "ICBF REGIONAL VAUPES",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "app/data/icbf_regionals.json"
+        },
+        {
+          "canonical_name": "ICBF REGIONAL VALLE DEL CAUCA",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "app/data/icbf_regionals.json"
+        },
+        {
+          "canonical_name": "ICBF REGIONAL VICHADA",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "app/data/icbf_regionals.json"
+        }
+      ]
+    },
+    {
+      "id": "bogota_executive",
+      "version": "2026-09-03.v1",
+      "label": "Ejecutivo de Bogotá: 18 entidades centrales y 20 alcaldías locales",
+      "aliases": [
+        "alcaldia de bogota",
+        "alcaldia mayor de bogota",
+        "ejecutivo de bogota"
+      ],
+      "members": [
+        {
+          "canonical_name": "(Secretaría Distrital de Integración Social)",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "SECRETARIA DE EDUCACION DEL DISTRITO",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "SECRETARÍA DISTRITAL DE MOVILIDAD",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "SECRETARIA DISTRITAL DE AMBIENTE",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "SECRETARIA DISTRITAL DE GOBIERNO 1",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "SECRETARIA DISTRITAL DEL HABITAT-",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "SECRETARIA DISTRITAL DE LA MUJER",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "SECRETARIA DISTRITAL DE PLANEACION",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "SECRETARIA DISTRITAL DE HACIENDA",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "SECRETARIA JURIDICA DISTRITAL.",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": ".SECRETARÍA DISTRITAL DE SALUD.",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE CIUDAD BOLIVAR //",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE KENNEDY",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "ALCALDÍA LOCAL DE SUBA",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE SAN CRISTOBAL",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "FONDO DE DESARROLLO LOCAL DE BOSA",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE USME",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE ENGATIVÁ",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE USAQUEN",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL RAFAEL URIBE URIBE",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE FONTIBON",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "FONDO DE DESARROLLO LOCAL DE SANTA FE",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE SUMAPAZ",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE TUNJUELITO",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE ANTONIO NARIÑO",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE TEUSAQUILLO(oficial)",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "ALCALDÍA LOCAL DE BARRIOS UNIDOS",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "FONDO DE DESARROLLO LOCAL DE LA CANDELARIA",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        },
+        {
+          "canonical_name": "ALCALDIA LOCAL DE MARTIRES",
+          "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+          "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+        }
+      ]
+    }
+  ]
+}

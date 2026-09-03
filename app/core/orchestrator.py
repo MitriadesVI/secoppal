@@ -252,6 +252,16 @@ class SecopalWorkflow:
         dl_tel = end_deadline(dl_tokens)
         attach_telemetry(result, metrics)
         attach_deadline_telemetry(result, dl_tel, ctx.run_started_at)
+        from app.core.buyer_groups import BuyerGroupError, group_declaration, group_for_params
+        group_params = result.get("resolved_params") or {}
+        try:
+            group = group_for_params(group_params)
+        except BuyerGroupError:
+            group = None  # planning already surfaced the invalid reference
+        if group:
+            result["buyer_group"] = {**group.reference(), "members": list(group.members)}
+            result["total_count_metric"] = "physical_rows"
+            result["response"] = group_declaration(group_params) + "\n\n" + result.get("response", "")
         return result
 
     def select_actor_candidate(

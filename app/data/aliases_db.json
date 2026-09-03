@@ -17962,5 +17962,47 @@
     "aliases": [
       "universidad del tolima"
     ]
+  },
+  {
+    "official_name": "SECRETARIA JURIDICA DISTRITAL.",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 1803,
+    "total_contratos": 1687,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "aliases": [
+      "secretaria juridica distrital",
+      "secretaria juridica de bogota"
+    ]
+  },
+  {
+    "official_name": "DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 1631,
+    "total_contratos": 1150,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "aliases": [
+      "departamento administrativo del servicio civil distrital",
+      "servicio civil distrital"
+    ]
+  },
+  {
+    "official_name": ".SECRETARÍA DISTRITAL DE SALUD.",
+    "departamento": "Distrito Capital de Bogotá",
+    "total_procesos": 609,
+    "total_contratos": 525,
+    "source_datasets": [
+      "procesos",
+      "contratos"
+    ],
+    "aliases": [
+      "secretaria distrital de salud de bogota",
+      "salud distrital de bogota"
+    ]
   }
 ]

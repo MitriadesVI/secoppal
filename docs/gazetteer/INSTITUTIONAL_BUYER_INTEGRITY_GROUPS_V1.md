@@ -129,3 +129,37 @@ Evidencia: `artifacts/audits/buyer_group_execution_v1/`; reproducción:
 Corpus: 89/89. Ruff y `make lint-core`: PASS. Sin mutación de runtime/datos de
 producción en F; la suite completa de E permanece como base. Deuda de capacidad
 medida cerrada; activación y membresía pertenecen a G.
+
+## G1 — DECLARED_BUYER_GROUPS
+
+Estado: **PASS para búsqueda y paginación**; cierre de etiquetas analíticas en
+G2. Se activan `bogota_central` (18), `bogota_local_mayoralties` (20),
+`bogota_executive` (38) e `icbf_national` (33). Los grupos referencian unidades
+existentes del gazetteer o catálogo ICBF; se acreditan tres unidades centrales
+ausentes. Cada miembro declara evidencia de membresía y versión, y cada unidad
+tiene proyección exacta por dataset. Salud es una unidad con dos grafías,
+procedencia disjunta, mismo nombre institucional y cuenta, evidencia fiscal
+coincidente, un signo terminal de diferencia y ningún tercer propietario.
+
+La frase «alcaldía de Bogotá» selecciona ejecutivo. La BuyerUnit explícita
+conserva precedencia, incluso cuando su alias completo incluye al padre
+(Secretaría General; «alcaldía de Bogotá integración social»). Esta última
+excepción requiere alias admitido por el scan existente y pertenencia declarada;
+no permite CENAC/Personería ni otro comprador que comparta NIT o geografía.
+
+Una referencia de grupo desconocida, vencida, mezclada con candidatos legacy,
+sin proyección o sobre capacidad falla cerrado. El grupo viaja como alcance en
+follow-ups y paginación; un cambio de territorio lo retira. Se declara la lista
+de miembros al usuario. Ante timeout o cero resultados no se relajan miembros,
+fechas, filtros ni orden. `result_identity` permanece intacto.
+
+Focales finales: 110 passed; otros focales: 121 y 188 passed. Corpus: 89/89.
+Ruff y `make lint-core`: PASS. Suite final: **10849 passed, 2 skipped,
+14 xfailed**, 467,36 segundos. La primera corrida detectó dos fallos de
+precedencia y la expectativa antigua de `SCOPE_TOPIC_KEYS`; se corrigieron y
+se repitió toda la suite. La evidencia individual de nombres/cuentas/NIT está
+en `artifacts/audits/bogota_group_membership_v1.json`.
+
+Deudas cerradas: capacidad operativa acreditada, piloto Bogotá, precedencia de
+unidad, versión y declaración de miembros. G2 retira etiquetas heredadas de
+analítica que llaman contratos a `count(*)` y declara el alcance del ranking.

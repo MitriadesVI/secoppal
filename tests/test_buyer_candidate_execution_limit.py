@@ -52,27 +52,21 @@ def _workflow(tmp_path) -> tuple[SecopalWorkflow, MagicMock]:
 
 
 @pytest.mark.parametrize("text", ["procesos del icbf", "icbf nacional"])
-def test_icbf_national_blocks_before_secop_with_structured_reason(
+def test_icbf_national_executes_the_complete_accredited_registry(
     tmp_path, text: str,
 ) -> None:
     workflow, query = _workflow(tmp_path)
 
     result = workflow.run_query(text, channel="streamlit")
 
-    query.assert_not_called()
-    assert result["needs_clarification"] is True
-    assert result["soql_query"] == ""
-    assert result["query_plan"]["should_execute"] is False
-    assert result["query_plan"]["reason"] == EXPECTED_REASON
-
-    execution = result["resolved_params"]["buyer_group_execution"]
-    assert execution == {
-        "blocked": True,
-        "reason": EXPECTED_REASON,
-        "candidate_count": 33,
-        "safe_limit": SAFE_LIMIT,
-        "family": "ICBF",
-    }
+    query.assert_called_once()
+    assert result["needs_clarification"] is False
+    assert result["query_plan"]["should_execute"] is True
+    from app.core.buyer_groups import get_groups
+    group = get_groups()["icbf_national"]
+    assert len(group.members) == 33
+    assert all(name in result["soql_query"] for name in group.names_for('p6dx-8zbt'))
+    assert not result["resolved_params"].get("entidad_in_candidates")
     assert "sede" in result["response"].lower()
     assert "32 regionales" in result["response"].lower()
     assert "regional" in result["response"].lower()

@@ -86,7 +86,11 @@ def plan_query(state: State) -> State:
         state.get("modality_interpretation")
     )
     negation_requests = state.get("negation_requests") or []
-    if requests_require_policy(negation_requests):
+    if params.get("buyer_group_error"):
+        plan = QueryPlan(should_execute=False, params=dict(params),
+                         reason="buyer_group_invalid",
+                         clarification_question=str(params["buyer_group_error"]))
+    elif requests_require_policy(negation_requests):
         reason, risk_flag = blocking_negation_reason(negation_requests)
         plan = QueryPlan(
             should_execute=False,
@@ -172,13 +176,25 @@ def resolve_entities(state: State, entity_resolver: EntityResolver) -> State:
     needs_clarification = False
     clarification_reason = ""
 
+    from app.core.buyer_groups import BuyerGroupError, group_for_params
+    try:
+        declared_group = group_for_params(resolved)
+        if declared_group:
+            declared_group.names_for(SoQLBuilder.dataset_id_for(str(params.get("dataset"))))
+        elif resolved.get("buyer_group"):
+            resolved.pop("buyer_group", None)
+    except BuyerGroupError as exc:
+        return _with_timing(state, "resolve_ms", start, resolved_params=resolved,
+                            needs_clarification=True, clarification_reason=str(exc),
+                            formatted_response=str(exc), formatted_rows=[])
+
     # ── G7C: Entity Ecosystem detection (after parse, before entity resolution) ──
     from app.core.entity_ecosystem_router import (
         resolve_entity_ecosystem, build_entity_ecosystem_filter
     )
     raw_query = state.get("user_query", "")
     ecosystem_match = resolve_entity_ecosystem(raw_query)
-    if ecosystem_match:
+    if ecosystem_match and not declared_group:
         ecosystem_filter = build_entity_ecosystem_filter(ecosystem_match)
 
         # El scan del gazetteer resuelve la frase familiar desnuda ("ICBF") a
@@ -191,9 +207,7 @@ def resolve_entities(state: State, entity_resolver: EntityResolver) -> State:
         family_tokens = {
             "ICBF": ("icbf", "bienestar familiar"),
         }.get(ecosystem_match.family, ())
-        family_owns_entity_filter = bool(
-            raw_entity and any(token in raw_entity for token in family_tokens)
-        )
+        family_owns_entity_filter = raw_entity in (*family_tokens, "instituto colombiano de bienestar familiar")
         has_explicit_entity_filter = bool(
             resolved.get("entidad_resolved") or resolved.get("entidad_like")
         )

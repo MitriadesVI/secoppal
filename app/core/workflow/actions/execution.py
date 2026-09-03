@@ -181,7 +181,7 @@ def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
         # fallback PRESERVA todos los filtros sustantivos (entidad/territorio/fechas/estado/
         # valor/exclusiones/dataset): solo retira el ORDER BY y recorta LIMIT a ≤50, luego
         # ordena la página localmente (muestra sin garantía de orden global). Máximo UNO.
-        if is_timeout and order_is_presentational(params):
+        if is_timeout and order_is_presentational(params) and not params.get("buyer_group"):
             fallback_attempted = True
             fb_start = time.perf_counter()
             try:
@@ -316,7 +316,7 @@ def degrade_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
         )
 
     # En contexto conversacional (follow-up), no relajar filtrar scope/fecha automáticamente
-    if state.get("followup"):
+    if state.get("followup") or params.get("buyer_group"):
         return _with_timing(
             state,
             "degrade_ms",

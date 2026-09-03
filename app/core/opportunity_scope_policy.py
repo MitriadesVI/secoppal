@@ -38,6 +38,7 @@ _TOPIC_KEYS = ("objeto", "objeto_or")
 # Concrete-entity carriers. Any one of these means the user consciously
 # scoped the universe to specific entities.
 _ENTITY_KEYS = (
+    "buyer_group",
     "entidad",
     "entidad_resolved",
     "entidad_like",

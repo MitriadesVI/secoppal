@@ -259,7 +259,7 @@ class EntityResolver:
     # SCAN: Find entities/departments as substrings in text
     # =====================================================================
 
-    def scan_entity(self, normalized_text: str) -> ScanResult | None:
+    def scan_entity(self, normalized_text: str, *, declared_group=None) -> ScanResult | None:
         """
         Scan text for known entity aliases. Returns the LONGEST match.
 
@@ -270,6 +270,14 @@ class EntityResolver:
         """
         def _combined_reject(alias: str, full_text: str, official: str) -> bool:
             strict_rewrite = self._strict_rewrite_target(alias)
+            # An accredited alias can name a child through its declared parent:
+            # "alcaldía de Bogotá integración social". The full scan-eligible
+            # alias and membership jointly authorize the child, never the parent
+            # phrase alone or another institution sharing its NIT/territory.
+            declared_child_alias = bool(
+                declared_group and official in declared_group.members
+                and any(alias.startswith(term + " ") for term in declared_group.aliases)
+            )
             return (
                 self._is_unqualified_dept(alias, full_text)
                 or self._is_unqualified_generic(alias, full_text)
@@ -281,6 +289,7 @@ class EntityResolver:
                     # Their scan entries were already admitted/rejected from
                     # unique alias ownership while building the index.
                     and strict_rewrite[0] != "department"
+                    and not declared_child_alias
                     and not self._official_matches_institutional_family(
                         official, strict_rewrite[0]
                     )

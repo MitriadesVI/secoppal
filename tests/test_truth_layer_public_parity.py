@@ -97,7 +97,8 @@ M2_MODIFIED_FILE_SHA256 = {
     # ADR-074 / D extiende el bloqueo >15 a entidad_ecosystem. Sólo cambia
     # el caso antes truncado: test_entity_candidates_no_silent_collapse lo
     # exige; el oráculo ordinario de WHERE/ORDER/LIMIT permanece intacto.
-    "app/core/soql_builder.py": "3b823211ccc38960eddaf3eec11dd04300eac46c1555c89bbfb98ebc865d3858",
+    # G: registered exact BuyerGroup projection and physical row tie-break.
+    "app/core/soql_builder.py": "38b7ad8879783253e488666e2cebdd60b48ec996fc925bbac5b9d054bcfa2112",
 }
 
 # M2.1 corrigió dos consumidores visibles. AP3-G autoriza además controles de

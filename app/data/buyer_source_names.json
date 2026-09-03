@@ -12,8 +12,12 @@
       "observed_at": "2026-09-02",
       "evidence": "artifacts/audits/source_name_projection_v1.json",
       "sources": {
-        "p6dx-8zbt": ["DAPRE"],
-        "jbjy-vk9h": ["DAPRE"]
+        "p6dx-8zbt": [
+          "DAPRE"
+        ],
+        "jbjy-vk9h": [
+          "DAPRE"
+        ]
       },
       "observed_rows": {
         "p6dx-8zbt": 17128,
@@ -29,8 +33,12 @@
       "observed_at": "2026-09-02",
       "evidence": "artifacts/audits/public_university_pilot_r2fa.json",
       "sources": {
-        "p6dx-8zbt": ["Universidad del Atlántico"],
-        "jbjy-vk9h": ["Universidad del Atlántico"]
+        "p6dx-8zbt": [
+          "Universidad del Atlántico"
+        ],
+        "jbjy-vk9h": [
+          "Universidad del Atlántico"
+        ]
       },
       "observed_rows": {
         "p6dx-8zbt": 4592,
@@ -46,8 +54,12 @@
       "observed_at": "2026-09-02",
       "evidence": "artifacts/audits/public_university_pilot_r2fa.json",
       "sources": {
-        "p6dx-8zbt": ["UNIVERSIDAD DE LA AMAZONIA (Entidad)"],
-        "jbjy-vk9h": ["UNIVERSIDAD DE LA AMAZONIA (Entidad)"]
+        "p6dx-8zbt": [
+          "UNIVERSIDAD DE LA AMAZONIA (Entidad)"
+        ],
+        "jbjy-vk9h": [
+          "UNIVERSIDAD DE LA AMAZONIA (Entidad)"
+        ]
       },
       "observed_rows": {
         "p6dx-8zbt": 2549,
@@ -63,8 +75,12 @@
       "observed_at": "2026-09-02",
       "evidence": "artifacts/audits/public_university_pilot_r2fa.json",
       "sources": {
-        "p6dx-8zbt": ["UNIVERSIDAD DE CORDOBA"],
-        "jbjy-vk9h": ["UNIVERSIDAD DE CORDOBA"]
+        "p6dx-8zbt": [
+          "UNIVERSIDAD DE CORDOBA"
+        ],
+        "jbjy-vk9h": [
+          "UNIVERSIDAD DE CORDOBA"
+        ]
       },
       "observed_rows": {
         "p6dx-8zbt": 3708,
@@ -80,8 +96,12 @@
       "observed_at": "2026-09-02",
       "evidence": "artifacts/audits/public_university_pilot_r2fa.json",
       "sources": {
-        "p6dx-8zbt": ["UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)"],
-        "jbjy-vk9h": ["UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)"]
+        "p6dx-8zbt": [
+          "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)"
+        ],
+        "jbjy-vk9h": [
+          "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)"
+        ]
       },
       "observed_rows": {
         "p6dx-8zbt": 1509,
@@ -97,7 +117,9 @@
       "observed_at": "2026-09-02",
       "evidence": "artifacts/audits/public_university_completion_r2fb.json",
       "sources": {
-        "p6dx-8zbt": ["Universidad Colegio Mayor de Cundinamarca"]
+        "p6dx-8zbt": [
+          "Universidad Colegio Mayor de Cundinamarca"
+        ]
       },
       "observed_rows": {
         "p6dx-8zbt": 16
@@ -112,8 +134,12 @@
       "observed_at": "2026-09-02",
       "evidence": "artifacts/audits/public_university_completion_r2fb.json",
       "sources": {
-        "p6dx-8zbt": ["UNIVERSIDAD DEL PACIFICO//"],
-        "jbjy-vk9h": ["UNIVERSIDAD DEL PACIFICO//"]
+        "p6dx-8zbt": [
+          "UNIVERSIDAD DEL PACIFICO//"
+        ],
+        "jbjy-vk9h": [
+          "UNIVERSIDAD DEL PACIFICO//"
+        ]
       },
       "observed_rows": {
         "p6dx-8zbt": 987,
@@ -129,7 +155,9 @@
       "observed_at": "2026-09-02",
       "evidence": "artifacts/audits/public_university_completion_r2fb.json",
       "sources": {
-        "p6dx-8zbt": ["UNIVERSIDAD POPULAR DEL CESAR."]
+        "p6dx-8zbt": [
+          "UNIVERSIDAD POPULAR DEL CESAR."
+        ]
       },
       "observed_rows": {
         "p6dx-8zbt": 57
@@ -144,8 +172,12 @@
       "observed_at": "2026-09-02",
       "evidence": "artifacts/audits/public_university_completion_r2fb.json",
       "sources": {
-        "p6dx-8zbt": ["UNIVERSIDAD TECNOLOGICA DEL CHOCO"],
-        "jbjy-vk9h": ["UNIVERSIDAD TECNOLOGICA DEL CHOCO"]
+        "p6dx-8zbt": [
+          "UNIVERSIDAD TECNOLOGICA DEL CHOCO"
+        ],
+        "jbjy-vk9h": [
+          "UNIVERSIDAD TECNOLOGICA DEL CHOCO"
+        ]
       },
       "observed_rows": {
         "p6dx-8zbt": 2257,
@@ -161,8 +193,12 @@
       "observed_at": "2026-09-03",
       "evidence": "artifacts/audits/buyer_unit_integrity_p02_revalidation.json",
       "sources": {
-        "p6dx-8zbt": ["MUNICIPIO DE YOPAL..."],
-        "jbjy-vk9h": ["MUNICIPIO DE YOPAL.."]
+        "p6dx-8zbt": [
+          "MUNICIPIO DE YOPAL..."
+        ],
+        "jbjy-vk9h": [
+          "MUNICIPIO DE YOPAL.."
+        ]
       },
       "observed_rows": {
         "p6dx-8zbt": 17558,
@@ -178,8 +214,12 @@
       "observed_at": "2026-09-03",
       "evidence": "artifacts/audits/buyer_unit_integrity_p02_revalidation.json",
       "sources": {
-        "p6dx-8zbt": ["MUNICIPIO DE SOACHA.."],
-        "jbjy-vk9h": ["MUNICIPIO DE SOACHA."]
+        "p6dx-8zbt": [
+          "MUNICIPIO DE SOACHA.."
+        ],
+        "jbjy-vk9h": [
+          "MUNICIPIO DE SOACHA."
+        ]
       },
       "observed_rows": {
         "p6dx-8zbt": 22115,
@@ -195,8 +235,12 @@
       "observed_at": "2026-09-03",
       "evidence": "artifacts/audits/buyer_unit_integrity_p02_revalidation.json",
       "sources": {
-        "p6dx-8zbt": ["FONDO FINANCIERO DISTRITAL DE SALUD.."],
-        "jbjy-vk9h": ["FONDO FINANCIERO DISTRITAL DE SALUD."]
+        "p6dx-8zbt": [
+          "FONDO FINANCIERO DISTRITAL DE SALUD.."
+        ],
+        "jbjy-vk9h": [
+          "FONDO FINANCIERO DISTRITAL DE SALUD."
+        ]
       },
       "observed_rows": {
         "p6dx-8zbt": 23742,
@@ -212,8 +256,12 @@
       "observed_at": "2026-09-03",
       "evidence": "artifacts/audits/buyer_unit_integrity_p02_revalidation.json",
       "sources": {
-        "p6dx-8zbt": ["MINISTERIO DE JUSTICIA Y DEL DERECHO.."],
-        "jbjy-vk9h": ["MINISTERIO DE JUSTICIA Y DEL DERECHO."]
+        "p6dx-8zbt": [
+          "MINISTERIO DE JUSTICIA Y DEL DERECHO.."
+        ],
+        "jbjy-vk9h": [
+          "MINISTERIO DE JUSTICIA Y DEL DERECHO."
+        ]
       },
       "observed_rows": {
         "p6dx-8zbt": 7595,
@@ -229,12 +277,1507 @@
       "observed_at": "2026-09-03",
       "evidence": "artifacts/audits/buyer_unit_integrity_p02_revalidation.json",
       "sources": {
-        "p6dx-8zbt": ["UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS.."],
-        "jbjy-vk9h": ["UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS."]
+        "p6dx-8zbt": [
+          "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS.."
+        ],
+        "jbjy-vk9h": [
+          "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS."
+        ]
       },
       "observed_rows": {
         "p6dx-8zbt": 6192,
         "jbjy-vk9h": 5870
+      }
+    },
+    {
+      "canonical_name": "(Secretaría Distrital de Integración Social)",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "(Secretaría Distrital de Integración Social)"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "(Secretaría Distrital de Integración Social)"
+        ],
+        "jbjy-vk9h": [
+          "(Secretaría Distrital de Integración Social)"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 112093,
+        "jbjy-vk9h": 96226
+      }
+    },
+    {
+      "canonical_name": "SECRETARIA DE EDUCACION DEL DISTRITO",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "SECRETARIA DE EDUCACION DEL DISTRITO"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "SECRETARIA DE EDUCACION DEL DISTRITO"
+        ],
+        "jbjy-vk9h": [
+          "SECRETARIA DE EDUCACION DEL DISTRITO"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 32325,
+        "jbjy-vk9h": 27795
+      }
+    },
+    {
+      "canonical_name": "SECRETARÍA DISTRITAL DE MOVILIDAD",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "SECRETARÍA DISTRITAL DE MOVILIDAD"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "SECRETARÍA DISTRITAL DE MOVILIDAD"
+        ],
+        "jbjy-vk9h": [
+          "SECRETARÍA DISTRITAL DE MOVILIDAD"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 24132,
+        "jbjy-vk9h": 22269
+      }
+    },
+    {
+      "canonical_name": "SECRETARIA DISTRITAL DE AMBIENTE",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "SECRETARIA DISTRITAL DE AMBIENTE"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "SECRETARIA DISTRITAL DE AMBIENTE"
+        ],
+        "jbjy-vk9h": [
+          "SECRETARIA DISTRITAL DE AMBIENTE"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 17592,
+        "jbjy-vk9h": 17181
+      }
+    },
+    {
+      "canonical_name": "SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA"
+        ],
+        "jbjy-vk9h": [
+          "SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 16939,
+        "jbjy-vk9h": 15657
+      }
+    },
+    {
+      "canonical_name": "SECRETARIA DISTRITAL DE GOBIERNO 1",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "SECRETARIA DISTRITAL DE GOBIERNO 1"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "SECRETARIA DISTRITAL DE GOBIERNO 1"
+        ],
+        "jbjy-vk9h": [
+          "SECRETARIA DISTRITAL DE GOBIERNO 1"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 11769,
+        "jbjy-vk9h": 11455
+      }
+    },
+    {
+      "canonical_name": "SECRETARIA DISTRITAL DEL HABITAT-",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "SECRETARIA DISTRITAL DEL HABITAT-"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "SECRETARIA DISTRITAL DEL HABITAT-"
+        ],
+        "jbjy-vk9h": [
+          "SECRETARIA DISTRITAL DEL HABITAT-"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 11439,
+        "jbjy-vk9h": 10559
+      }
+    },
+    {
+      "canonical_name": "SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ"
+        ],
+        "jbjy-vk9h": [
+          "SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 9893,
+        "jbjy-vk9h": 8872
+      }
+    },
+    {
+      "canonical_name": "SECRETARIA DISTRITAL DE LA MUJER",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "SECRETARIA DISTRITAL DE LA MUJER"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "SECRETARIA DISTRITAL DE LA MUJER"
+        ],
+        "jbjy-vk9h": [
+          "SECRETARIA DISTRITAL DE LA MUJER"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 9447,
+        "jbjy-vk9h": 8806
+      }
+    },
+    {
+      "canonical_name": "SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ"
+        ],
+        "jbjy-vk9h": [
+          "SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 8816,
+        "jbjy-vk9h": 8027
+      }
+    },
+    {
+      "canonical_name": "UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA"
+        ],
+        "jbjy-vk9h": [
+          "UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 6852,
+        "jbjy-vk9h": 6110
+      }
+    },
+    {
+      "canonical_name": "SECRETARIA DISTRITAL DE PLANEACION",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "SECRETARIA DISTRITAL DE PLANEACION"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "SECRETARIA DISTRITAL DE PLANEACION"
+        ],
+        "jbjy-vk9h": [
+          "SECRETARIA DISTRITAL DE PLANEACION"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 6301,
+        "jbjy-vk9h": 6142
+      }
+    },
+    {
+      "canonical_name": "SECRETARIA DISTRITAL DE HACIENDA",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "SECRETARIA DISTRITAL DE HACIENDA"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "SECRETARIA DISTRITAL DE HACIENDA"
+        ],
+        "jbjy-vk9h": [
+          "SECRETARIA DISTRITAL DE HACIENDA"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 5384,
+        "jbjy-vk9h": 6130
+      }
+    },
+    {
+      "canonical_name": "SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE"
+        ],
+        "jbjy-vk9h": [
+          "SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 5635,
+        "jbjy-vk9h": 5127
+      }
+    },
+    {
+      "canonical_name": "DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO"
+        ],
+        "jbjy-vk9h": [
+          "DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 4931,
+        "jbjy-vk9h": 4448
+      }
+    },
+    {
+      "canonical_name": "SECRETARIA JURIDICA DISTRITAL.",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "SECRETARIA JURIDICA DISTRITAL."
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "SECRETARIA JURIDICA DISTRITAL."
+        ],
+        "jbjy-vk9h": [
+          "SECRETARIA JURIDICA DISTRITAL."
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 1803,
+        "jbjy-vk9h": 1687
+      }
+    },
+    {
+      "canonical_name": "DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL"
+        ],
+        "jbjy-vk9h": [
+          "DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 1631,
+        "jbjy-vk9h": 1150
+      }
+    },
+    {
+      "canonical_name": ".SECRETARÍA DISTRITAL DE SALUD.",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": ".SECRETARÍA DISTRITAL DE SALUD."
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          ".SECRETARÍA DISTRITAL DE SALUD.."
+        ],
+        "jbjy-vk9h": [
+          ".SECRETARÍA DISTRITAL DE SALUD."
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 609,
+        "jbjy-vk9h": 525
+      }
+    },
+    {
+      "canonical_name": "ALCALDIA LOCAL DE CIUDAD BOLIVAR //",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ALCALDIA LOCAL DE CIUDAD BOLIVAR //"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ALCALDIA LOCAL DE CIUDAD BOLIVAR //"
+        ],
+        "jbjy-vk9h": [
+          "ALCALDIA LOCAL DE CIUDAD BOLIVAR //"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 8154,
+        "jbjy-vk9h": 7412
+      }
+    },
+    {
+      "canonical_name": "ALCALDIA LOCAL DE KENNEDY",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ALCALDIA LOCAL DE KENNEDY"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ALCALDIA LOCAL DE KENNEDY"
+        ],
+        "jbjy-vk9h": [
+          "ALCALDIA LOCAL DE KENNEDY"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 6428,
+        "jbjy-vk9h": 6464
+      }
+    },
+    {
+      "canonical_name": "ALCALDÍA LOCAL DE SUBA",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ALCALDÍA LOCAL DE SUBA"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ALCALDÍA LOCAL DE SUBA"
+        ],
+        "jbjy-vk9h": [
+          "ALCALDÍA LOCAL DE SUBA"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 6181,
+        "jbjy-vk9h": 6047
+      }
+    },
+    {
+      "canonical_name": "ALCALDIA LOCAL DE SAN CRISTOBAL",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ALCALDIA LOCAL DE SAN CRISTOBAL"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ALCALDIA LOCAL DE SAN CRISTOBAL"
+        ],
+        "jbjy-vk9h": [
+          "ALCALDIA LOCAL DE SAN CRISTOBAL"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 5006,
+        "jbjy-vk9h": 6593
+      }
+    },
+    {
+      "canonical_name": "FONDO DE DESARROLLO LOCAL DE BOSA",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "FONDO DE DESARROLLO LOCAL DE BOSA"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "FONDO DE DESARROLLO LOCAL DE BOSA"
+        ],
+        "jbjy-vk9h": [
+          "FONDO DE DESARROLLO LOCAL DE BOSA"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 6017,
+        "jbjy-vk9h": 5513
+      }
+    },
+    {
+      "canonical_name": "ALCALDIA LOCAL DE USME",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ALCALDIA LOCAL DE USME"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ALCALDIA LOCAL DE USME"
+        ],
+        "jbjy-vk9h": [
+          "ALCALDIA LOCAL DE USME"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 5728,
+        "jbjy-vk9h": 5392
+      }
+    },
+    {
+      "canonical_name": "ALCALDIA LOCAL DE ENGATIVÁ",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ALCALDIA LOCAL DE ENGATIVÁ"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ALCALDIA LOCAL DE ENGATIVÁ"
+        ],
+        "jbjy-vk9h": [
+          "ALCALDIA LOCAL DE ENGATIVÁ"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 5407,
+        "jbjy-vk9h": 5086
+      }
+    },
+    {
+      "canonical_name": "ALCALDIA LOCAL DE USAQUEN",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ALCALDIA LOCAL DE USAQUEN"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ALCALDIA LOCAL DE USAQUEN"
+        ],
+        "jbjy-vk9h": [
+          "ALCALDIA LOCAL DE USAQUEN"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 4945,
+        "jbjy-vk9h": 4445
+      }
+    },
+    {
+      "canonical_name": "ALCALDIA LOCAL RAFAEL URIBE URIBE",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ALCALDIA LOCAL RAFAEL URIBE URIBE"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ALCALDIA LOCAL RAFAEL URIBE URIBE"
+        ],
+        "jbjy-vk9h": [
+          "ALCALDIA LOCAL RAFAEL URIBE URIBE"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 4152,
+        "jbjy-vk9h": 4267
+      }
+    },
+    {
+      "canonical_name": "ALCALDIA LOCAL DE FONTIBON",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ALCALDIA LOCAL DE FONTIBON"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ALCALDIA LOCAL DE FONTIBON"
+        ],
+        "jbjy-vk9h": [
+          "ALCALDIA LOCAL DE FONTIBON"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 4228,
+        "jbjy-vk9h": 3944
+      }
+    },
+    {
+      "canonical_name": "FONDO DE DESARROLLO LOCAL DE SANTA FE",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "FONDO DE DESARROLLO LOCAL DE SANTA FE"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "FONDO DE DESARROLLO LOCAL DE SANTA FE"
+        ],
+        "jbjy-vk9h": [
+          "FONDO DE DESARROLLO LOCAL DE SANTA FE"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 3793,
+        "jbjy-vk9h": 3536
+      }
+    },
+    {
+      "canonical_name": "ALCALDIA LOCAL DE SUMAPAZ",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ALCALDIA LOCAL DE SUMAPAZ"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ALCALDIA LOCAL DE SUMAPAZ"
+        ],
+        "jbjy-vk9h": [
+          "ALCALDIA LOCAL DE SUMAPAZ"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 3579,
+        "jbjy-vk9h": 3601
+      }
+    },
+    {
+      "canonical_name": "ALCALDIA LOCAL DE TUNJUELITO",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ALCALDIA LOCAL DE TUNJUELITO"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ALCALDIA LOCAL DE TUNJUELITO"
+        ],
+        "jbjy-vk9h": [
+          "ALCALDIA LOCAL DE TUNJUELITO"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 3206,
+        "jbjy-vk9h": 3506
+      }
+    },
+    {
+      "canonical_name": "ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL"
+        ],
+        "jbjy-vk9h": [
+          "ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 2967,
+        "jbjy-vk9h": 3685
+      }
+    },
+    {
+      "canonical_name": "ALCALDIA LOCAL DE ANTONIO NARIÑO",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ALCALDIA LOCAL DE ANTONIO NARIÑO"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ALCALDIA LOCAL DE ANTONIO NARIÑO"
+        ],
+        "jbjy-vk9h": [
+          "ALCALDIA LOCAL DE ANTONIO NARIÑO"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 3236,
+        "jbjy-vk9h": 2866
+      }
+    },
+    {
+      "canonical_name": "ALCALDIA LOCAL DE TEUSAQUILLO(oficial)",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ALCALDIA LOCAL DE TEUSAQUILLO(oficial)"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ALCALDIA LOCAL DE TEUSAQUILLO(oficial)"
+        ],
+        "jbjy-vk9h": [
+          "ALCALDIA LOCAL DE TEUSAQUILLO(oficial)"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 2834,
+        "jbjy-vk9h": 3152
+      }
+    },
+    {
+      "canonical_name": "ALCALDÍA LOCAL DE BARRIOS UNIDOS",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ALCALDÍA LOCAL DE BARRIOS UNIDOS"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ALCALDÍA LOCAL DE BARRIOS UNIDOS"
+        ],
+        "jbjy-vk9h": [
+          "ALCALDÍA LOCAL DE BARRIOS UNIDOS"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 3053,
+        "jbjy-vk9h": 2870
+      }
+    },
+    {
+      "canonical_name": "ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL"
+        ],
+        "jbjy-vk9h": [
+          "ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 3008,
+        "jbjy-vk9h": 2628
+      }
+    },
+    {
+      "canonical_name": "FONDO DE DESARROLLO LOCAL DE LA CANDELARIA",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "FONDO DE DESARROLLO LOCAL DE LA CANDELARIA"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "FONDO DE DESARROLLO LOCAL DE LA CANDELARIA"
+        ],
+        "jbjy-vk9h": [
+          "FONDO DE DESARROLLO LOCAL DE LA CANDELARIA"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 2647,
+        "jbjy-vk9h": 2389
+      }
+    },
+    {
+      "canonical_name": "ALCALDIA LOCAL DE MARTIRES",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ALCALDIA LOCAL DE MARTIRES"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ALCALDIA LOCAL DE MARTIRES"
+        ],
+        "jbjy-vk9h": [
+          "ALCALDIA LOCAL DE MARTIRES"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 2279,
+        "jbjy-vk9h": 2381
+      }
+    },
+    {
+      "canonical_name": "ICBF SEDE NACIONAL",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ICBF SEDE NACIONAL"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ICBF SEDE NACIONAL"
+        ],
+        "jbjy-vk9h": [
+          "ICBF SEDE NACIONAL"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 17553,
+        "jbjy-vk9h": 15729
+      }
+    },
+    {
+      "canonical_name": "ICBF REGIONAL AMAZONAS",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ICBF REGIONAL AMAZONAS"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ICBF REGIONAL AMAZONAS"
+        ],
+        "jbjy-vk9h": [
+          "ICBF REGIONAL AMAZONAS"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 1264,
+        "jbjy-vk9h": 1156
+      }
+    },
+    {
+      "canonical_name": "ICBF REGIONAL ANTIOQUIA",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ICBF REGIONAL ANTIOQUIA"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ICBF REGIONAL ANTIOQUIA"
+        ],
+        "jbjy-vk9h": [
+          "ICBF REGIONAL ANTIOQUIA"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 8954,
+        "jbjy-vk9h": 8969
+      }
+    },
+    {
+      "canonical_name": "ICBF REGIONAL ARAUCA *",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ICBF REGIONAL ARAUCA *"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ICBF REGIONAL ARAUCA *"
+        ],
+        "jbjy-vk9h": [
+          "ICBF REGIONAL ARAUCA *"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 1651,
+        "jbjy-vk9h": 1556
+      }
+    },
+    {
+      "canonical_name": "ICBF REGIONAL ATLANTICO",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ICBF REGIONAL ATLANTICO"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ICBF REGIONAL ATLANTICO"
+        ],
+        "jbjy-vk9h": [
+          "ICBF REGIONAL ATLANTICO"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 4390,
+        "jbjy-vk9h": 4266
+      }
+    },
+    {
+      "canonical_name": "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR"
+        ],
+        "jbjy-vk9h": [
+          "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 5299,
+        "jbjy-vk9h": 5243
+      }
+    },
+    {
+      "canonical_name": "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA"
+        ],
+        "jbjy-vk9h": [
+          "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 3608,
+        "jbjy-vk9h": 3589
+      }
+    },
+    {
+      "canonical_name": "ICBF REGIONAL CALDAS",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ICBF REGIONAL CALDAS"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ICBF REGIONAL CALDAS"
+        ],
+        "jbjy-vk9h": [
+          "ICBF REGIONAL CALDAS"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 2967,
+        "jbjy-vk9h": 2840
+      }
+    },
+    {
+      "canonical_name": "ICBF REGIONAL CAQUETA",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ICBF REGIONAL CAQUETA"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ICBF REGIONAL CAQUETA"
+        ],
+        "jbjy-vk9h": [
+          "ICBF REGIONAL CAQUETA"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 2289,
+        "jbjy-vk9h": 2125
+      }
+    },
+    {
+      "canonical_name": "ICBF REGIONAL CASANARE",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ICBF REGIONAL CASANARE"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ICBF REGIONAL CASANARE"
+        ],
+        "jbjy-vk9h": [
+          "ICBF REGIONAL CASANARE"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 1715,
+        "jbjy-vk9h": 1687
+      }
+    },
+    {
+      "canonical_name": "ICBF REGIONAL CAUCA",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ICBF REGIONAL CAUCA"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ICBF REGIONAL CAUCA"
+        ],
+        "jbjy-vk9h": [
+          "ICBF REGIONAL CAUCA"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 4353,
+        "jbjy-vk9h": 4603
+      }
+    },
+    {
+      "canonical_name": "ICBF REGIONAL CESAR",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ICBF REGIONAL CESAR"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ICBF REGIONAL CESAR"
+        ],
+        "jbjy-vk9h": [
+          "ICBF REGIONAL CESAR"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 2579,
+        "jbjy-vk9h": 3332
+      }
+    },
+    {
+      "canonical_name": "ICBF REGIONAL CHOCO",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ICBF REGIONAL CHOCO"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ICBF REGIONAL CHOCO"
+        ],
+        "jbjy-vk9h": [
+          "ICBF REGIONAL CHOCO"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 3326,
+        "jbjy-vk9h": 3506
+      }
+    },
+    {
+      "canonical_name": "ICBF REGIONAL CORDOBA",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ICBF REGIONAL CORDOBA"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ICBF REGIONAL CORDOBA"
+        ],
+        "jbjy-vk9h": [
+          "ICBF REGIONAL CORDOBA"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 3779,
+        "jbjy-vk9h": 3675
+      }
+    },
+    {
+      "canonical_name": "ICBF REGIONAL CUNDINAMARCA",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ICBF REGIONAL CUNDINAMARCA"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ICBF REGIONAL CUNDINAMARCA"
+        ],
+        "jbjy-vk9h": [
+          "ICBF REGIONAL CUNDINAMARCA"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 4865,
+        "jbjy-vk9h": 4930
+      }
+    },
+    {
+      "canonical_name": "ICBF REGIONAL GUAINIA",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ICBF REGIONAL GUAINIA"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ICBF REGIONAL GUAINIA"
+        ],
+        "jbjy-vk9h": [
+          "ICBF REGIONAL GUAINIA"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 840,
+        "jbjy-vk9h": 742
+      }
+    },
+    {
+      "canonical_name": "ICBF REGIONAL GUAVIARE",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ICBF REGIONAL GUAVIARE"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ICBF REGIONAL GUAVIARE"
+        ],
+        "jbjy-vk9h": [
+          "ICBF REGIONAL GUAVIARE"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 1051,
+        "jbjy-vk9h": 964
+      }
+    },
+    {
+      "canonical_name": "ICBF REGIONAL HUILA",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ICBF REGIONAL HUILA"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ICBF REGIONAL HUILA"
+        ],
+        "jbjy-vk9h": [
+          "ICBF REGIONAL HUILA"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 3199,
+        "jbjy-vk9h": 3146
+      }
+    },
+    {
+      "canonical_name": "ICBF REGIONAL GUAJIRA",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ICBF REGIONAL GUAJIRA"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ICBF REGIONAL GUAJIRA"
+        ],
+        "jbjy-vk9h": [
+          "ICBF REGIONAL GUAJIRA"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 4941,
+        "jbjy-vk9h": 4691
+      }
+    },
+    {
+      "canonical_name": "ICBF REGIONAL MAGDALENA",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ICBF REGIONAL MAGDALENA"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ICBF REGIONAL MAGDALENA"
+        ],
+        "jbjy-vk9h": [
+          "ICBF REGIONAL MAGDALENA"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 3525,
+        "jbjy-vk9h": 3465
+      }
+    },
+    {
+      "canonical_name": "ICBF REGIONAL META",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ICBF REGIONAL META"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ICBF REGIONAL META"
+        ],
+        "jbjy-vk9h": [
+          "ICBF REGIONAL META"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 2448,
+        "jbjy-vk9h": 2913
+      }
+    },
+    {
+      "canonical_name": "ICBF REGIONAL NARIÑO",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ICBF REGIONAL NARIÑO"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ICBF REGIONAL NARIÑO"
+        ],
+        "jbjy-vk9h": [
+          "ICBF REGIONAL NARIÑO"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 4808,
+        "jbjy-vk9h": 4849
+      }
+    },
+    {
+      "canonical_name": "ICBF REGIONAL NORTE DE SANTANDER",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ICBF REGIONAL NORTE DE SANTANDER"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ICBF REGIONAL NORTE DE SANTANDER"
+        ],
+        "jbjy-vk9h": [
+          "ICBF REGIONAL NORTE DE SANTANDER"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 3509,
+        "jbjy-vk9h": 3915
+      }
+    },
+    {
+      "canonical_name": "ICBF REGIONAL PUTUMAYO",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ICBF REGIONAL PUTUMAYO"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ICBF REGIONAL PUTUMAYO"
+        ],
+        "jbjy-vk9h": [
+          "ICBF REGIONAL PUTUMAYO"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 1880,
+        "jbjy-vk9h": 1768
+      }
+    },
+    {
+      "canonical_name": "ICBF REGIONAL QUINDIO",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ICBF REGIONAL QUINDIO"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ICBF REGIONAL QUINDIO"
+        ],
+        "jbjy-vk9h": [
+          "ICBF REGIONAL QUINDIO"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 2079,
+        "jbjy-vk9h": 1976
+      }
+    },
+    {
+      "canonical_name": "ICBF RISARALDA//",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ICBF RISARALDA//"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ICBF RISARALDA//"
+        ],
+        "jbjy-vk9h": [
+          "ICBF RISARALDA//"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 2185,
+        "jbjy-vk9h": 2359
+      }
+    },
+    {
+      "canonical_name": "ICBF REGIONAL SAN ANDRES",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ICBF REGIONAL SAN ANDRES"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ICBF REGIONAL SAN ANDRES"
+        ],
+        "jbjy-vk9h": [
+          "ICBF REGIONAL SAN ANDRES"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 873,
+        "jbjy-vk9h": 787
+      }
+    },
+    {
+      "canonical_name": "ICBF REGIONAL SANTANDER",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ICBF REGIONAL SANTANDER"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ICBF REGIONAL SANTANDER"
+        ],
+        "jbjy-vk9h": [
+          "ICBF REGIONAL SANTANDER"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 4778,
+        "jbjy-vk9h": 4776
+      }
+    },
+    {
+      "canonical_name": "ICBF REGIONAL SUCRE",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ICBF REGIONAL SUCRE"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ICBF REGIONAL SUCRE"
+        ],
+        "jbjy-vk9h": [
+          "ICBF REGIONAL SUCRE"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 2577,
+        "jbjy-vk9h": 2809
+      }
+    },
+    {
+      "canonical_name": "ICBF REGIONAL TOLIMA",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ICBF REGIONAL TOLIMA"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ICBF REGIONAL TOLIMA"
+        ],
+        "jbjy-vk9h": [
+          "ICBF REGIONAL TOLIMA"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 4026,
+        "jbjy-vk9h": 4164
+      }
+    },
+    {
+      "canonical_name": "ICBF REGIONAL VAUPES",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ICBF REGIONAL VAUPES"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ICBF REGIONAL VAUPES"
+        ],
+        "jbjy-vk9h": [
+          "ICBF REGIONAL VAUPES"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 907,
+        "jbjy-vk9h": 798
+      }
+    },
+    {
+      "canonical_name": "ICBF REGIONAL VALLE DEL CAUCA",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ICBF REGIONAL VALLE DEL CAUCA"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ICBF REGIONAL VALLE DEL CAUCA"
+        ],
+        "jbjy-vk9h": [
+          "ICBF REGIONAL VALLE DEL CAUCA"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 7732,
+        "jbjy-vk9h": 7627
+      }
+    },
+    {
+      "canonical_name": "ICBF REGIONAL VICHADA",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ICBF REGIONAL VICHADA"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/bogota_group_membership_v1.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ICBF REGIONAL VICHADA"
+        ],
+        "jbjy-vk9h": [
+          "ICBF REGIONAL VICHADA"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 1040,
+        "jbjy-vk9h": 950
       }
     }
   ]

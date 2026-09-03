@@ -20,6 +20,7 @@ _SCOPE_PRESENT = [
     ({"ciudad": "Medellin"}, "ciudad"),
     ({"contratista": "CONSTRUCTORA ABC"}, "contratista"),
     ({"contract_type_include": ["convenio"]}, "contract_type_include"),
+    ({"buyer_group": {"id": "bogota_executive", "version": "2026-09-03.v1"}}, "buyer_group"),
 ]
 
 _MODIFIERS_ONLY = [
@@ -84,7 +85,7 @@ class TestGuardEquivalence:
         """Sanity: las keys son exactamente las esperadas."""
         expected = frozenset({
             "objeto", "objeto_phrases", "objeto_exclude",
-            "entidad_resolved", "entidad_like",
+            "entidad_resolved", "entidad_like", "buyer_group",
             "departamento_resolved", "departamentos_in", "ciudad", "contratista",
             "contract_type_include",
         })

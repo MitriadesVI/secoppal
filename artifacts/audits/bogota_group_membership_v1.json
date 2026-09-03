@@ -1,0 +1,1744 @@
+{
+  "observed_at": "2026-09-03",
+  "sources": {
+    "p6dx-8zbt": {
+      "soql": "SELECT entidad,codigo_entidad,nit_entidad,count(*) AS physical_rows WHERE (entidad = '(Secretaría Distrital de Integración Social)' OR entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR entidad = '.SECRETARÍA DISTRITAL DE SALUD..' OR entidad = '.SECRETARÍA DISTRITAL DE SALUD.' OR entidad = 'ALCALDIA LOCAL DE CIUDAD BOLIVAR //' OR entidad = 'ALCALDIA LOCAL DE KENNEDY' OR entidad = 'ALCALDÍA LOCAL DE SUBA' OR entidad = 'ALCALDIA LOCAL DE SAN CRISTOBAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE BOSA' OR entidad = 'ALCALDIA LOCAL DE USME' OR entidad = 'ALCALDIA LOCAL DE ENGATIVÁ' OR entidad = 'ALCALDIA LOCAL DE USAQUEN' OR entidad = 'ALCALDIA LOCAL RAFAEL URIBE URIBE' OR entidad = 'ALCALDIA LOCAL DE FONTIBON' OR entidad = 'FONDO DE DESARROLLO LOCAL DE SANTA FE' OR entidad = 'ALCALDIA LOCAL DE SUMAPAZ' OR entidad = 'ALCALDIA LOCAL DE TUNJUELITO' OR entidad = 'ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL' OR entidad = 'ALCALDIA LOCAL DE ANTONIO NARIÑO' OR entidad = 'ALCALDIA LOCAL DE TEUSAQUILLO(oficial)' OR entidad = 'ALCALDÍA LOCAL DE BARRIOS UNIDOS' OR entidad = 'ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL' OR entidad = 'FONDO DE DESARROLLO LOCAL DE LA CANDELARIA' OR entidad = 'ALCALDIA LOCAL DE MARTIRES' OR entidad = 'ICBF SEDE NACIONAL' OR entidad = 'ICBF REGIONAL AMAZONAS' OR entidad = 'ICBF REGIONAL ANTIOQUIA' OR entidad = 'ICBF REGIONAL ARAUCA *' OR entidad = 'ICBF REGIONAL ATLANTICO' OR entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR' OR entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA' OR entidad = 'ICBF REGIONAL CALDAS' OR entidad = 'ICBF REGIONAL CAQUETA' OR entidad = 'ICBF REGIONAL CASANARE' OR entidad = 'ICBF REGIONAL CAUCA' OR entidad = 'ICBF REGIONAL CESAR' OR entidad = 'ICBF REGIONAL CHOCO' OR entidad = 'ICBF REGIONAL CORDOBA' OR entidad = 'ICBF REGIONAL CUNDINAMARCA' OR entidad = 'ICBF REGIONAL GUAINIA' OR entidad = 'ICBF REGIONAL GUAVIARE' OR entidad = 'ICBF REGIONAL HUILA' OR entidad = 'ICBF REGIONAL GUAJIRA' OR entidad = 'ICBF REGIONAL MAGDALENA' OR entidad = 'ICBF REGIONAL META' OR entidad = 'ICBF REGIONAL NARIÑO' OR entidad = 'ICBF REGIONAL NORTE DE SANTANDER' OR entidad = 'ICBF REGIONAL PUTUMAYO' OR entidad = 'ICBF REGIONAL QUINDIO' OR entidad = 'ICBF RISARALDA//' OR entidad = 'ICBF REGIONAL SAN ANDRES' OR entidad = 'ICBF REGIONAL SANTANDER' OR entidad = 'ICBF REGIONAL SUCRE' OR entidad = 'ICBF REGIONAL TOLIMA' OR entidad = 'ICBF REGIONAL VAUPES' OR entidad = 'ICBF REGIONAL VALLE DEL CAUCA' OR entidad = 'ICBF REGIONAL VICHADA') GROUP BY entidad,codigo_entidad,nit_entidad LIMIT 10000",
+      "rows": [
+        {
+          "entidad": "ALCALDIA LOCAL DE ANTONIO NARIÑO",
+          "codigo_entidad": "702259441",
+          "nit_entidad": "899999061",
+          "physical_rows": "3236"
+        },
+        {
+          "entidad": "ALCALDÍA LOCAL DE BARRIOS UNIDOS",
+          "codigo_entidad": "702285412",
+          "nit_entidad": "899999061",
+          "physical_rows": "3053"
+        },
+        {
+          "entidad": "ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL",
+          "codigo_entidad": "700599038",
+          "nit_entidad": "899999061",
+          "physical_rows": "3008"
+        },
+        {
+          "entidad": "ALCALDIA LOCAL DE CIUDAD BOLIVAR //",
+          "codigo_entidad": "702095092",
+          "nit_entidad": "899999061",
+          "physical_rows": "8154"
+        },
+        {
+          "entidad": "ALCALDIA LOCAL DE ENGATIVÁ",
+          "codigo_entidad": "702028184",
+          "nit_entidad": "899999061",
+          "physical_rows": "5407"
+        },
+        {
+          "entidad": "ALCALDIA LOCAL DE FONTIBON",
+          "codigo_entidad": "702292145",
+          "nit_entidad": "899999061",
+          "physical_rows": "4228"
+        },
+        {
+          "entidad": "ALCALDIA LOCAL DE KENNEDY",
+          "codigo_entidad": "702292459",
+          "nit_entidad": "899999061",
+          "physical_rows": "6428"
+        },
+        {
+          "entidad": "ALCALDIA LOCAL DE MARTIRES",
+          "codigo_entidad": "702169178",
+          "nit_entidad": "899999061",
+          "physical_rows": "2279"
+        },
+        {
+          "entidad": "ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL",
+          "codigo_entidad": "700553027",
+          "nit_entidad": "899999061",
+          "physical_rows": "2967"
+        },
+        {
+          "entidad": "ALCALDIA LOCAL DE SAN CRISTOBAL",
+          "codigo_entidad": "702179383",
+          "nit_entidad": "899999061",
+          "physical_rows": "5006"
+        },
+        {
+          "entidad": "ALCALDÍA LOCAL DE SUBA",
+          "codigo_entidad": "702230251",
+          "nit_entidad": "899999061",
+          "physical_rows": "6181"
+        },
+        {
+          "entidad": "ALCALDIA LOCAL DE SUMAPAZ",
+          "codigo_entidad": "702096124",
+          "nit_entidad": "899999061",
+          "physical_rows": "3579"
+        },
+        {
+          "entidad": "ALCALDIA LOCAL DE TEUSAQUILLO(oficial)",
+          "codigo_entidad": "702196049",
+          "nit_entidad": "899999061",
+          "physical_rows": "2834"
+        },
+        {
+          "entidad": "ALCALDIA LOCAL DE TUNJUELITO",
+          "codigo_entidad": "702235227",
+          "nit_entidad": "899999061",
+          "physical_rows": "3206"
+        },
+        {
+          "entidad": "ALCALDIA LOCAL DE USAQUEN",
+          "codigo_entidad": "702413634",
+          "nit_entidad": "899999061",
+          "physical_rows": "4945"
+        },
+        {
+          "entidad": "ALCALDIA LOCAL DE USME",
+          "codigo_entidad": "702234303",
+          "nit_entidad": "899999061",
+          "physical_rows": "5728"
+        },
+        {
+          "entidad": "ALCALDIA LOCAL RAFAEL URIBE URIBE",
+          "codigo_entidad": "702118076",
+          "nit_entidad": "899999061",
+          "physical_rows": "4152"
+        },
+        {
+          "entidad": "DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO",
+          "codigo_entidad": "701433674",
+          "nit_entidad": "899999061",
+          "physical_rows": "4931"
+        },
+        {
+          "entidad": "DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL",
+          "codigo_entidad": "702422486",
+          "nit_entidad": "8999990619",
+          "physical_rows": "1631"
+        },
+        {
+          "entidad": "FONDO DE DESARROLLO LOCAL DE BOSA",
+          "codigo_entidad": "702187444",
+          "nit_entidad": "8999990615",
+          "physical_rows": "6017"
+        },
+        {
+          "entidad": "FONDO DE DESARROLLO LOCAL DE LA CANDELARIA",
+          "codigo_entidad": "702292376",
+          "nit_entidad": "899999061",
+          "physical_rows": "2647"
+        },
+        {
+          "entidad": "FONDO DE DESARROLLO LOCAL DE SANTA FE",
+          "codigo_entidad": "701679615",
+          "nit_entidad": "899999061",
+          "physical_rows": "3793"
+        },
+        {
+          "entidad": "ICBF REGIONAL AMAZONAS",
+          "codigo_entidad": "704147271",
+          "nit_entidad": "899999239",
+          "physical_rows": "1264"
+        },
+        {
+          "entidad": "ICBF REGIONAL ANTIOQUIA",
+          "codigo_entidad": "704148691",
+          "nit_entidad": "899999239",
+          "physical_rows": "8954"
+        },
+        {
+          "entidad": "ICBF REGIONAL ARAUCA *",
+          "codigo_entidad": "704194505",
+          "nit_entidad": "899999239",
+          "physical_rows": "1651"
+        },
+        {
+          "entidad": "ICBF REGIONAL ATLANTICO",
+          "codigo_entidad": "704193093",
+          "nit_entidad": "8999992392",
+          "physical_rows": "4390"
+        },
+        {
+          "entidad": "ICBF REGIONAL CALDAS",
+          "codigo_entidad": "704141977",
+          "nit_entidad": "899999239",
+          "physical_rows": "2967"
+        },
+        {
+          "entidad": "ICBF REGIONAL CAQUETA",
+          "codigo_entidad": "704143114",
+          "nit_entidad": "899999239",
+          "physical_rows": "2289"
+        },
+        {
+          "entidad": "ICBF REGIONAL CASANARE",
+          "codigo_entidad": "704153378",
+          "nit_entidad": "899999239",
+          "physical_rows": "1715"
+        },
+        {
+          "entidad": "ICBF REGIONAL CAUCA",
+          "codigo_entidad": "704198639",
+          "nit_entidad": "899999239",
+          "physical_rows": "4353"
+        },
+        {
+          "entidad": "ICBF REGIONAL CESAR",
+          "codigo_entidad": "704150358",
+          "nit_entidad": "899999239",
+          "physical_rows": "2579"
+        },
+        {
+          "entidad": "ICBF REGIONAL CHOCO",
+          "codigo_entidad": "704142603",
+          "nit_entidad": "899999239",
+          "physical_rows": "3326"
+        },
+        {
+          "entidad": "ICBF REGIONAL CORDOBA",
+          "codigo_entidad": "704187525",
+          "nit_entidad": "899999239",
+          "physical_rows": "3779"
+        },
+        {
+          "entidad": "ICBF REGIONAL CUNDINAMARCA",
+          "codigo_entidad": "703216739",
+          "nit_entidad": "899999239",
+          "physical_rows": "4865"
+        },
+        {
+          "entidad": "ICBF REGIONAL GUAINIA",
+          "codigo_entidad": "704180900",
+          "nit_entidad": "899999239",
+          "physical_rows": "840"
+        },
+        {
+          "entidad": "ICBF REGIONAL GUAJIRA",
+          "codigo_entidad": "703458380",
+          "nit_entidad": "899999239",
+          "physical_rows": "4941"
+        },
+        {
+          "entidad": "ICBF REGIONAL GUAVIARE",
+          "codigo_entidad": "704192269",
+          "nit_entidad": "899999239",
+          "physical_rows": "1051"
+        },
+        {
+          "entidad": "ICBF REGIONAL HUILA",
+          "codigo_entidad": "704150309",
+          "nit_entidad": "899999239",
+          "physical_rows": "3199"
+        },
+        {
+          "entidad": "ICBF REGIONAL MAGDALENA",
+          "codigo_entidad": "704147370",
+          "nit_entidad": "899999239",
+          "physical_rows": "3525"
+        },
+        {
+          "entidad": "ICBF REGIONAL META",
+          "codigo_entidad": "704156264",
+          "nit_entidad": "899999239",
+          "physical_rows": "2448"
+        },
+        {
+          "entidad": "ICBF REGIONAL NARIÑO",
+          "codigo_entidad": "704150028",
+          "nit_entidad": "899999239",
+          "physical_rows": "4808"
+        },
+        {
+          "entidad": "ICBF REGIONAL NORTE DE SANTANDER",
+          "codigo_entidad": "704143338",
+          "nit_entidad": "899999239",
+          "physical_rows": "3509"
+        },
+        {
+          "entidad": "ICBF REGIONAL PUTUMAYO",
+          "codigo_entidad": "704141639",
+          "nit_entidad": "899999239",
+          "physical_rows": "1880"
+        },
+        {
+          "entidad": "ICBF REGIONAL QUINDIO",
+          "codigo_entidad": "704193143",
+          "nit_entidad": "899999239",
+          "physical_rows": "2079"
+        },
+        {
+          "entidad": "ICBF REGIONAL SAN ANDRES",
+          "codigo_entidad": "704156116",
+          "nit_entidad": "899999239",
+          "physical_rows": "873"
+        },
+        {
+          "entidad": "ICBF REGIONAL SANTANDER",
+          "codigo_entidad": "704192574",
+          "nit_entidad": "8999992391",
+          "physical_rows": "4778"
+        },
+        {
+          "entidad": "ICBF REGIONAL SUCRE",
+          "codigo_entidad": "704162205",
+          "nit_entidad": "899999239",
+          "physical_rows": "2577"
+        },
+        {
+          "entidad": "ICBF REGIONAL TOLIMA",
+          "codigo_entidad": "704150457",
+          "nit_entidad": "899999239",
+          "physical_rows": "4026"
+        },
+        {
+          "entidad": "ICBF REGIONAL VALLE DEL CAUCA",
+          "codigo_entidad": "704142835",
+          "nit_entidad": "899999239",
+          "physical_rows": "7732"
+        },
+        {
+          "entidad": "ICBF REGIONAL VAUPES",
+          "codigo_entidad": "704252469",
+          "nit_entidad": "899999239",
+          "physical_rows": "907"
+        },
+        {
+          "entidad": "ICBF REGIONAL VICHADA",
+          "codigo_entidad": "704392430",
+          "nit_entidad": "899999239",
+          "physical_rows": "1040"
+        },
+        {
+          "entidad": "ICBF RISARALDA//",
+          "codigo_entidad": "704148642",
+          "nit_entidad": "899999239",
+          "physical_rows": "2185"
+        },
+        {
+          "entidad": "ICBF SEDE NACIONAL",
+          "codigo_entidad": "700087026",
+          "nit_entidad": "899999239",
+          "physical_rows": "17553"
+        },
+        {
+          "entidad": "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR",
+          "codigo_entidad": "704148527",
+          "nit_entidad": "899999239",
+          "physical_rows": "5299"
+        },
+        {
+          "entidad": "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA",
+          "codigo_entidad": "704155118",
+          "nit_entidad": "899999239",
+          "physical_rows": "3608"
+        },
+        {
+          "entidad": "SECRETARIA DE EDUCACION DEL DISTRITO",
+          "codigo_entidad": "701321135",
+          "nit_entidad": "8999990619",
+          "physical_rows": "32325"
+        },
+        {
+          "entidad": "SECRETARIA DISTRITAL DE AMBIENTE",
+          "codigo_entidad": "702016304",
+          "nit_entidad": "899999061",
+          "physical_rows": "17592"
+        },
+        {
+          "entidad": "SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE",
+          "codigo_entidad": "702169566",
+          "nit_entidad": "0899999061",
+          "physical_rows": "5635"
+        },
+        {
+          "entidad": "SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ",
+          "codigo_entidad": "702158197",
+          "nit_entidad": "8999990619",
+          "physical_rows": "8816"
+        },
+        {
+          "entidad": "SECRETARIA DISTRITAL DE GOBIERNO 1",
+          "codigo_entidad": "701427445",
+          "nit_entidad": "899999061",
+          "physical_rows": "11769"
+        },
+        {
+          "entidad": "SECRETARIA DISTRITAL DE HACIENDA",
+          "codigo_entidad": "702069113",
+          "nit_entidad": "899999061",
+          "physical_rows": "5384"
+        },
+        {
+          "entidad": "(Secretaría Distrital de Integración Social)",
+          "codigo_entidad": "702271321",
+          "nit_entidad": "8999990619",
+          "physical_rows": "112093"
+        },
+        {
+          "entidad": "SECRETARIA DISTRITAL DE LA MUJER",
+          "codigo_entidad": "702091182",
+          "nit_entidad": "899999061",
+          "physical_rows": "9447"
+        },
+        {
+          "entidad": "SECRETARIA DISTRITAL DEL HABITAT-",
+          "codigo_entidad": "701149171",
+          "nit_entidad": "899999061",
+          "physical_rows": "11439"
+        },
+        {
+          "entidad": "SECRETARÍA DISTRITAL DE MOVILIDAD",
+          "codigo_entidad": "701699407",
+          "nit_entidad": "8999990619",
+          "physical_rows": "24132"
+        },
+        {
+          "entidad": "SECRETARIA DISTRITAL DE PLANEACION",
+          "codigo_entidad": "701869646",
+          "nit_entidad": "899999061",
+          "physical_rows": "6301"
+        },
+        {
+          "entidad": ".SECRETARÍA DISTRITAL DE SALUD..",
+          "codigo_entidad": "702004052",
+          "nit_entidad": "899999061",
+          "physical_rows": "609"
+        },
+        {
+          "entidad": "SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA",
+          "codigo_entidad": "701347270",
+          "nit_entidad": "899999061",
+          "physical_rows": "16939"
+        },
+        {
+          "entidad": "SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ",
+          "codigo_entidad": "700218068",
+          "nit_entidad": "899999061",
+          "physical_rows": "9893"
+        },
+        {
+          "entidad": "SECRETARIA JURIDICA DISTRITAL.",
+          "codigo_entidad": "701902298",
+          "nit_entidad": "899999061",
+          "physical_rows": "1803"
+        },
+        {
+          "entidad": "UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA",
+          "codigo_entidad": "702312703",
+          "nit_entidad": "899999061",
+          "physical_rows": "6852"
+        }
+      ]
+    },
+    "jbjy-vk9h": {
+      "soql": "SELECT nombre_entidad,codigo_entidad,nit_entidad,count(*) AS physical_rows WHERE (nombre_entidad = '(Secretaría Distrital de Integración Social)' OR nombre_entidad = 'SECRETARIA DE EDUCACION DEL DISTRITO' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE MOVILIDAD' OR nombre_entidad = 'SECRETARIA DISTRITAL DE AMBIENTE' OR nombre_entidad = 'SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE GOBIERNO 1' OR nombre_entidad = 'SECRETARIA DISTRITAL DEL HABITAT-' OR nombre_entidad = 'SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ' OR nombre_entidad = 'SECRETARIA DISTRITAL DE LA MUJER' OR nombre_entidad = 'SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ' OR nombre_entidad = 'UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA' OR nombre_entidad = 'SECRETARIA DISTRITAL DE PLANEACION' OR nombre_entidad = 'SECRETARIA DISTRITAL DE HACIENDA' OR nombre_entidad = 'SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO' OR nombre_entidad = 'SECRETARIA JURIDICA DISTRITAL.' OR nombre_entidad = 'DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD..' OR nombre_entidad = '.SECRETARÍA DISTRITAL DE SALUD.' OR nombre_entidad = 'ALCALDIA LOCAL DE CIUDAD BOLIVAR //' OR nombre_entidad = 'ALCALDIA LOCAL DE KENNEDY' OR nombre_entidad = 'ALCALDÍA LOCAL DE SUBA' OR nombre_entidad = 'ALCALDIA LOCAL DE SAN CRISTOBAL' OR nombre_entidad = 'FONDO DE DESARROLLO LOCAL DE BOSA' OR nombre_entidad = 'ALCALDIA LOCAL DE USME' OR nombre_entidad = 'ALCALDIA LOCAL DE ENGATIVÁ' OR nombre_entidad = 'ALCALDIA LOCAL DE USAQUEN' OR nombre_entidad = 'ALCALDIA LOCAL RAFAEL URIBE URIBE' OR nombre_entidad = 'ALCALDIA LOCAL DE FONTIBON' OR nombre_entidad = 'FONDO DE DESARROLLO LOCAL DE SANTA FE' OR nombre_entidad = 'ALCALDIA LOCAL DE SUMAPAZ' OR nombre_entidad = 'ALCALDIA LOCAL DE TUNJUELITO' OR nombre_entidad = 'ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL' OR nombre_entidad = 'ALCALDIA LOCAL DE ANTONIO NARIÑO' OR nombre_entidad = 'ALCALDIA LOCAL DE TEUSAQUILLO(oficial)' OR nombre_entidad = 'ALCALDÍA LOCAL DE BARRIOS UNIDOS' OR nombre_entidad = 'ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL' OR nombre_entidad = 'FONDO DE DESARROLLO LOCAL DE LA CANDELARIA' OR nombre_entidad = 'ALCALDIA LOCAL DE MARTIRES' OR nombre_entidad = 'ICBF SEDE NACIONAL' OR nombre_entidad = 'ICBF REGIONAL AMAZONAS' OR nombre_entidad = 'ICBF REGIONAL ANTIOQUIA' OR nombre_entidad = 'ICBF REGIONAL ARAUCA *' OR nombre_entidad = 'ICBF REGIONAL ATLANTICO' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR' OR nombre_entidad = 'INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA' OR nombre_entidad = 'ICBF REGIONAL CALDAS' OR nombre_entidad = 'ICBF REGIONAL CAQUETA' OR nombre_entidad = 'ICBF REGIONAL CASANARE' OR nombre_entidad = 'ICBF REGIONAL CAUCA' OR nombre_entidad = 'ICBF REGIONAL CESAR' OR nombre_entidad = 'ICBF REGIONAL CHOCO' OR nombre_entidad = 'ICBF REGIONAL CORDOBA' OR nombre_entidad = 'ICBF REGIONAL CUNDINAMARCA' OR nombre_entidad = 'ICBF REGIONAL GUAINIA' OR nombre_entidad = 'ICBF REGIONAL GUAVIARE' OR nombre_entidad = 'ICBF REGIONAL HUILA' OR nombre_entidad = 'ICBF REGIONAL GUAJIRA' OR nombre_entidad = 'ICBF REGIONAL MAGDALENA' OR nombre_entidad = 'ICBF REGIONAL META' OR nombre_entidad = 'ICBF REGIONAL NARIÑO' OR nombre_entidad = 'ICBF REGIONAL NORTE DE SANTANDER' OR nombre_entidad = 'ICBF REGIONAL PUTUMAYO' OR nombre_entidad = 'ICBF REGIONAL QUINDIO' OR nombre_entidad = 'ICBF RISARALDA//' OR nombre_entidad = 'ICBF REGIONAL SAN ANDRES' OR nombre_entidad = 'ICBF REGIONAL SANTANDER' OR nombre_entidad = 'ICBF REGIONAL SUCRE' OR nombre_entidad = 'ICBF REGIONAL TOLIMA' OR nombre_entidad = 'ICBF REGIONAL VAUPES' OR nombre_entidad = 'ICBF REGIONAL VALLE DEL CAUCA' OR nombre_entidad = 'ICBF REGIONAL VICHADA') GROUP BY nombre_entidad,codigo_entidad,nit_entidad LIMIT 10000",
+      "rows": [
+        {
+          "nombre_entidad": "ALCALDIA LOCAL DE ANTONIO NARIÑO",
+          "codigo_entidad": "702259441",
+          "nit_entidad": "899999061",
+          "physical_rows": "2866"
+        },
+        {
+          "nombre_entidad": "ALCALDÍA LOCAL DE BARRIOS UNIDOS",
+          "codigo_entidad": "702285412",
+          "nit_entidad": "899999061",
+          "physical_rows": "2870"
+        },
+        {
+          "nombre_entidad": "ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL",
+          "codigo_entidad": "700599038",
+          "nit_entidad": "899999061",
+          "physical_rows": "2628"
+        },
+        {
+          "nombre_entidad": "ALCALDIA LOCAL DE CIUDAD BOLIVAR //",
+          "codigo_entidad": "702095092",
+          "nit_entidad": "899999061",
+          "physical_rows": "7412"
+        },
+        {
+          "nombre_entidad": "ALCALDIA LOCAL DE ENGATIVÁ",
+          "codigo_entidad": "702028184",
+          "nit_entidad": "899999061",
+          "physical_rows": "5086"
+        },
+        {
+          "nombre_entidad": "ALCALDIA LOCAL DE FONTIBON",
+          "codigo_entidad": "702292145",
+          "nit_entidad": "899999061",
+          "physical_rows": "3944"
+        },
+        {
+          "nombre_entidad": "ALCALDIA LOCAL DE KENNEDY",
+          "codigo_entidad": "702292459",
+          "nit_entidad": "899999061",
+          "physical_rows": "6464"
+        },
+        {
+          "nombre_entidad": "ALCALDIA LOCAL DE MARTIRES",
+          "codigo_entidad": "702169178",
+          "nit_entidad": "899999061",
+          "physical_rows": "2381"
+        },
+        {
+          "nombre_entidad": "ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL",
+          "codigo_entidad": "700553027",
+          "nit_entidad": "899999061",
+          "physical_rows": "3685"
+        },
+        {
+          "nombre_entidad": "ALCALDIA LOCAL DE SAN CRISTOBAL",
+          "codigo_entidad": "702179383",
+          "nit_entidad": "899999061",
+          "physical_rows": "6593"
+        },
+        {
+          "nombre_entidad": "ALCALDÍA LOCAL DE SUBA",
+          "codigo_entidad": "702230251",
+          "nit_entidad": "899999061",
+          "physical_rows": "6047"
+        },
+        {
+          "nombre_entidad": "ALCALDIA LOCAL DE SUMAPAZ",
+          "codigo_entidad": "702096124",
+          "nit_entidad": "899999061",
+          "physical_rows": "3601"
+        },
+        {
+          "nombre_entidad": "ALCALDIA LOCAL DE TEUSAQUILLO(oficial)",
+          "codigo_entidad": "702196049",
+          "nit_entidad": "899999061",
+          "physical_rows": "3152"
+        },
+        {
+          "nombre_entidad": "ALCALDIA LOCAL DE TUNJUELITO",
+          "codigo_entidad": "702235227",
+          "nit_entidad": "899999061",
+          "physical_rows": "3506"
+        },
+        {
+          "nombre_entidad": "ALCALDIA LOCAL DE USAQUEN",
+          "codigo_entidad": "702413634",
+          "nit_entidad": "899999061",
+          "physical_rows": "4445"
+        },
+        {
+          "nombre_entidad": "ALCALDIA LOCAL DE USME",
+          "codigo_entidad": "702234303",
+          "nit_entidad": "899999061",
+          "physical_rows": "5392"
+        },
+        {
+          "nombre_entidad": "ALCALDIA LOCAL RAFAEL URIBE URIBE",
+          "codigo_entidad": "702118076",
+          "nit_entidad": "899999061",
+          "physical_rows": "4267"
+        },
+        {
+          "nombre_entidad": "DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO",
+          "codigo_entidad": "701433674",
+          "nit_entidad": "899999061",
+          "physical_rows": "4448"
+        },
+        {
+          "nombre_entidad": "DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL",
+          "codigo_entidad": "702422486",
+          "nit_entidad": "8999990619",
+          "physical_rows": "1150"
+        },
+        {
+          "nombre_entidad": "FONDO DE DESARROLLO LOCAL DE BOSA",
+          "codigo_entidad": "702187444",
+          "nit_entidad": "8999990615",
+          "physical_rows": "5513"
+        },
+        {
+          "nombre_entidad": "FONDO DE DESARROLLO LOCAL DE LA CANDELARIA",
+          "codigo_entidad": "702292376",
+          "nit_entidad": "899999061",
+          "physical_rows": "2389"
+        },
+        {
+          "nombre_entidad": "FONDO DE DESARROLLO LOCAL DE SANTA FE",
+          "codigo_entidad": "701679615",
+          "nit_entidad": "899999061",
+          "physical_rows": "3536"
+        },
+        {
+          "nombre_entidad": "ICBF REGIONAL AMAZONAS",
+          "codigo_entidad": "704147271",
+          "nit_entidad": "899999239",
+          "physical_rows": "1156"
+        },
+        {
+          "nombre_entidad": "ICBF REGIONAL ANTIOQUIA",
+          "codigo_entidad": "704148691",
+          "nit_entidad": "899999239",
+          "physical_rows": "8969"
+        },
+        {
+          "nombre_entidad": "ICBF REGIONAL ARAUCA *",
+          "codigo_entidad": "704194505",
+          "nit_entidad": "899999239",
+          "physical_rows": "1556"
+        },
+        {
+          "nombre_entidad": "ICBF REGIONAL ATLANTICO",
+          "codigo_entidad": "704193093",
+          "nit_entidad": "8999992392",
+          "physical_rows": "4266"
+        },
+        {
+          "nombre_entidad": "ICBF REGIONAL CALDAS",
+          "codigo_entidad": "704141977",
+          "nit_entidad": "899999239",
+          "physical_rows": "2840"
+        },
+        {
+          "nombre_entidad": "ICBF REGIONAL CAQUETA",
+          "codigo_entidad": "704143114",
+          "nit_entidad": "899999239",
+          "physical_rows": "2125"
+        },
+        {
+          "nombre_entidad": "ICBF REGIONAL CASANARE",
+          "codigo_entidad": "704153378",
+          "nit_entidad": "899999239",
+          "physical_rows": "1687"
+        },
+        {
+          "nombre_entidad": "ICBF REGIONAL CAUCA",
+          "codigo_entidad": "704198639",
+          "nit_entidad": "899999239",
+          "physical_rows": "4603"
+        },
+        {
+          "nombre_entidad": "ICBF REGIONAL CESAR",
+          "codigo_entidad": "704150358",
+          "nit_entidad": "899999239",
+          "physical_rows": "3332"
+        },
+        {
+          "nombre_entidad": "ICBF REGIONAL CHOCO",
+          "codigo_entidad": "704142603",
+          "nit_entidad": "899999239",
+          "physical_rows": "3506"
+        },
+        {
+          "nombre_entidad": "ICBF REGIONAL CORDOBA",
+          "codigo_entidad": "704187525",
+          "nit_entidad": "899999239",
+          "physical_rows": "3675"
+        },
+        {
+          "nombre_entidad": "ICBF REGIONAL CUNDINAMARCA",
+          "codigo_entidad": "703216739",
+          "nit_entidad": "899999239",
+          "physical_rows": "4930"
+        },
+        {
+          "nombre_entidad": "ICBF REGIONAL GUAINIA",
+          "codigo_entidad": "704180900",
+          "nit_entidad": "899999239",
+          "physical_rows": "742"
+        },
+        {
+          "nombre_entidad": "ICBF REGIONAL GUAJIRA",
+          "codigo_entidad": "703458380",
+          "nit_entidad": "899999239",
+          "physical_rows": "4691"
+        },
+        {
+          "nombre_entidad": "ICBF REGIONAL GUAVIARE",
+          "codigo_entidad": "704192269",
+          "nit_entidad": "899999239",
+          "physical_rows": "964"
+        },
+        {
+          "nombre_entidad": "ICBF REGIONAL HUILA",
+          "codigo_entidad": "704150309",
+          "nit_entidad": "899999239",
+          "physical_rows": "3146"
+        },
+        {
+          "nombre_entidad": "ICBF REGIONAL MAGDALENA",
+          "codigo_entidad": "704147370",
+          "nit_entidad": "899999239",
+          "physical_rows": "3465"
+        },
+        {
+          "nombre_entidad": "ICBF REGIONAL META",
+          "codigo_entidad": "704156264",
+          "nit_entidad": "899999239",
+          "physical_rows": "2913"
+        },
+        {
+          "nombre_entidad": "ICBF REGIONAL NARIÑO",
+          "codigo_entidad": "704150028",
+          "nit_entidad": "899999239",
+          "physical_rows": "4849"
+        },
+        {
+          "nombre_entidad": "ICBF REGIONAL NORTE DE SANTANDER",
+          "codigo_entidad": "704143338",
+          "nit_entidad": "899999239",
+          "physical_rows": "3915"
+        },
+        {
+          "nombre_entidad": "ICBF REGIONAL PUTUMAYO",
+          "codigo_entidad": "704141639",
+          "nit_entidad": "899999239",
+          "physical_rows": "1768"
+        },
+        {
+          "nombre_entidad": "ICBF REGIONAL QUINDIO",
+          "codigo_entidad": "704193143",
+          "nit_entidad": "899999239",
+          "physical_rows": "1976"
+        },
+        {
+          "nombre_entidad": "ICBF REGIONAL SAN ANDRES",
+          "codigo_entidad": "704156116",
+          "nit_entidad": "899999239",
+          "physical_rows": "787"
+        },
+        {
+          "nombre_entidad": "ICBF REGIONAL SANTANDER",
+          "codigo_entidad": "704192574",
+          "nit_entidad": "8999992391",
+          "physical_rows": "4776"
+        },
+        {
+          "nombre_entidad": "ICBF REGIONAL SUCRE",
+          "codigo_entidad": "704162205",
+          "nit_entidad": "899999239",
+          "physical_rows": "2809"
+        },
+        {
+          "nombre_entidad": "ICBF REGIONAL TOLIMA",
+          "codigo_entidad": "704150457",
+          "nit_entidad": "899999239",
+          "physical_rows": "4164"
+        },
+        {
+          "nombre_entidad": "ICBF REGIONAL VALLE DEL CAUCA",
+          "codigo_entidad": "704142835",
+          "nit_entidad": "899999239",
+          "physical_rows": "7627"
+        },
+        {
+          "nombre_entidad": "ICBF REGIONAL VAUPES",
+          "codigo_entidad": "704252469",
+          "nit_entidad": "899999239",
+          "physical_rows": "798"
+        },
+        {
+          "nombre_entidad": "ICBF REGIONAL VICHADA",
+          "codigo_entidad": "704392430",
+          "nit_entidad": "899999239",
+          "physical_rows": "950"
+        },
+        {
+          "nombre_entidad": "ICBF RISARALDA//",
+          "codigo_entidad": "704148642",
+          "nit_entidad": "899999239",
+          "physical_rows": "2359"
+        },
+        {
+          "nombre_entidad": "ICBF SEDE NACIONAL",
+          "codigo_entidad": "700087026",
+          "nit_entidad": "899999239",
+          "physical_rows": "15729"
+        },
+        {
+          "nombre_entidad": "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR",
+          "codigo_entidad": "704148527",
+          "nit_entidad": "899999239",
+          "physical_rows": "5243"
+        },
+        {
+          "nombre_entidad": "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA",
+          "codigo_entidad": "704155118",
+          "nit_entidad": "899999239",
+          "physical_rows": "3589"
+        },
+        {
+          "nombre_entidad": "SECRETARIA DE EDUCACION DEL DISTRITO",
+          "codigo_entidad": "701321135",
+          "nit_entidad": "8999990619",
+          "physical_rows": "27795"
+        },
+        {
+          "nombre_entidad": "SECRETARIA DISTRITAL DE AMBIENTE",
+          "codigo_entidad": "702016304",
+          "nit_entidad": "899999061",
+          "physical_rows": "17181"
+        },
+        {
+          "nombre_entidad": "SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE",
+          "codigo_entidad": "702169566",
+          "nit_entidad": "899999061",
+          "physical_rows": "5127"
+        },
+        {
+          "nombre_entidad": "SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ",
+          "codigo_entidad": "702158197",
+          "nit_entidad": "8999990619",
+          "physical_rows": "8027"
+        },
+        {
+          "nombre_entidad": "SECRETARIA DISTRITAL DE GOBIERNO 1",
+          "codigo_entidad": "701427445",
+          "nit_entidad": "899999061",
+          "physical_rows": "11455"
+        },
+        {
+          "nombre_entidad": "SECRETARIA DISTRITAL DE HACIENDA",
+          "codigo_entidad": "702069113",
+          "nit_entidad": "899999061",
+          "physical_rows": "6130"
+        },
+        {
+          "nombre_entidad": "(Secretaría Distrital de Integración Social)",
+          "codigo_entidad": "702271321",
+          "nit_entidad": "8999990619",
+          "physical_rows": "96226"
+        },
+        {
+          "nombre_entidad": "SECRETARIA DISTRITAL DE LA MUJER",
+          "codigo_entidad": "702091182",
+          "nit_entidad": "899999061",
+          "physical_rows": "8806"
+        },
+        {
+          "nombre_entidad": "SECRETARIA DISTRITAL DEL HABITAT-",
+          "codigo_entidad": "701149171",
+          "nit_entidad": "899999061",
+          "physical_rows": "10559"
+        },
+        {
+          "nombre_entidad": "SECRETARÍA DISTRITAL DE MOVILIDAD",
+          "codigo_entidad": "701699407",
+          "nit_entidad": "8999990619",
+          "physical_rows": "22269"
+        },
+        {
+          "nombre_entidad": "SECRETARIA DISTRITAL DE PLANEACION",
+          "codigo_entidad": "701869646",
+          "nit_entidad": "899999061",
+          "physical_rows": "6142"
+        },
+        {
+          "nombre_entidad": ".SECRETARÍA DISTRITAL DE SALUD.",
+          "codigo_entidad": "702004052",
+          "nit_entidad": "899999061",
+          "physical_rows": "525"
+        },
+        {
+          "nombre_entidad": "SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA",
+          "codigo_entidad": "701347270",
+          "nit_entidad": "899999061",
+          "physical_rows": "15657"
+        },
+        {
+          "nombre_entidad": "SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ",
+          "codigo_entidad": "700218068",
+          "nit_entidad": "899999061",
+          "physical_rows": "8872"
+        },
+        {
+          "nombre_entidad": "SECRETARIA JURIDICA DISTRITAL.",
+          "codigo_entidad": "701902298",
+          "nit_entidad": "899999061",
+          "physical_rows": "1687"
+        },
+        {
+          "nombre_entidad": "UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA",
+          "codigo_entidad": "702312703",
+          "nit_entidad": "899999061",
+          "physical_rows": "6110"
+        }
+      ]
+    }
+  },
+  "runtime_changed": false,
+  "logical_counts": {
+    "bogota_central": 18,
+    "bogota_local_mayoralties": 20,
+    "icbf_national": 33,
+    "bogota_executive": 38
+  },
+  "fiscal_evidence": {
+    "ALCALDIA LOCAL DE ANTONIO NARIÑO": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "702259441",
+        "nit": "899999061"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "702259441",
+        "nit": "899999061"
+      }
+    ],
+    "ALCALDÍA LOCAL DE BARRIOS UNIDOS": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "702285412",
+        "nit": "899999061"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "702285412",
+        "nit": "899999061"
+      }
+    ],
+    "ALCALDÍA LOCAL DE CHAPINERO - FONDO DE DESARROLLO LOCAL": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "700599038",
+        "nit": "899999061"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "700599038",
+        "nit": "899999061"
+      }
+    ],
+    "ALCALDIA LOCAL DE CIUDAD BOLIVAR //": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "702095092",
+        "nit": "899999061"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "702095092",
+        "nit": "899999061"
+      }
+    ],
+    "ALCALDIA LOCAL DE ENGATIVÁ": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "702028184",
+        "nit": "899999061"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "702028184",
+        "nit": "899999061"
+      }
+    ],
+    "ALCALDIA LOCAL DE FONTIBON": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "702292145",
+        "nit": "899999061"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "702292145",
+        "nit": "899999061"
+      }
+    ],
+    "ALCALDIA LOCAL DE KENNEDY": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "702292459",
+        "nit": "899999061"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "702292459",
+        "nit": "899999061"
+      }
+    ],
+    "ALCALDIA LOCAL DE MARTIRES": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "702169178",
+        "nit": "899999061"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "702169178",
+        "nit": "899999061"
+      }
+    ],
+    "ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "700553027",
+        "nit": "899999061"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "700553027",
+        "nit": "899999061"
+      }
+    ],
+    "ALCALDIA LOCAL DE SAN CRISTOBAL": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "702179383",
+        "nit": "899999061"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "702179383",
+        "nit": "899999061"
+      }
+    ],
+    "ALCALDÍA LOCAL DE SUBA": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "702230251",
+        "nit": "899999061"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "702230251",
+        "nit": "899999061"
+      }
+    ],
+    "ALCALDIA LOCAL DE SUMAPAZ": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "702096124",
+        "nit": "899999061"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "702096124",
+        "nit": "899999061"
+      }
+    ],
+    "ALCALDIA LOCAL DE TEUSAQUILLO(oficial)": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "702196049",
+        "nit": "899999061"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "702196049",
+        "nit": "899999061"
+      }
+    ],
+    "ALCALDIA LOCAL DE TUNJUELITO": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "702235227",
+        "nit": "899999061"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "702235227",
+        "nit": "899999061"
+      }
+    ],
+    "ALCALDIA LOCAL DE USAQUEN": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "702413634",
+        "nit": "899999061"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "702413634",
+        "nit": "899999061"
+      }
+    ],
+    "ALCALDIA LOCAL DE USME": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "702234303",
+        "nit": "899999061"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "702234303",
+        "nit": "899999061"
+      }
+    ],
+    "ALCALDIA LOCAL RAFAEL URIBE URIBE": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "702118076",
+        "nit": "899999061"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "702118076",
+        "nit": "899999061"
+      }
+    ],
+    "DEPARTAMENTO ADMINISTRATIVO DE LA DEFENSORIA DEL ESPACIO PUBLICO": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "701433674",
+        "nit": "899999061"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "701433674",
+        "nit": "899999061"
+      }
+    ],
+    "DEPARTAMENTO ADMINISTRATIVO DEL SERVICIO CIVIL DISTRITAL": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "702422486",
+        "nit": "8999990619"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "702422486",
+        "nit": "8999990619"
+      }
+    ],
+    "FONDO DE DESARROLLO LOCAL DE BOSA": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "702187444",
+        "nit": "8999990615"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "702187444",
+        "nit": "8999990615"
+      }
+    ],
+    "FONDO DE DESARROLLO LOCAL DE LA CANDELARIA": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "702292376",
+        "nit": "899999061"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "702292376",
+        "nit": "899999061"
+      }
+    ],
+    "FONDO DE DESARROLLO LOCAL DE SANTA FE": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "701679615",
+        "nit": "899999061"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "701679615",
+        "nit": "899999061"
+      }
+    ],
+    "ICBF REGIONAL AMAZONAS": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "704147271",
+        "nit": "899999239"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "704147271",
+        "nit": "899999239"
+      }
+    ],
+    "ICBF REGIONAL ANTIOQUIA": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "704148691",
+        "nit": "899999239"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "704148691",
+        "nit": "899999239"
+      }
+    ],
+    "ICBF REGIONAL ARAUCA *": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "704194505",
+        "nit": "899999239"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "704194505",
+        "nit": "899999239"
+      }
+    ],
+    "ICBF REGIONAL ATLANTICO": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "704193093",
+        "nit": "8999992392"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "704193093",
+        "nit": "8999992392"
+      }
+    ],
+    "ICBF REGIONAL CALDAS": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "704141977",
+        "nit": "899999239"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "704141977",
+        "nit": "899999239"
+      }
+    ],
+    "ICBF REGIONAL CAQUETA": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "704143114",
+        "nit": "899999239"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "704143114",
+        "nit": "899999239"
+      }
+    ],
+    "ICBF REGIONAL CASANARE": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "704153378",
+        "nit": "899999239"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "704153378",
+        "nit": "899999239"
+      }
+    ],
+    "ICBF REGIONAL CAUCA": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "704198639",
+        "nit": "899999239"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "704198639",
+        "nit": "899999239"
+      }
+    ],
+    "ICBF REGIONAL CESAR": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "704150358",
+        "nit": "899999239"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "704150358",
+        "nit": "899999239"
+      }
+    ],
+    "ICBF REGIONAL CHOCO": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "704142603",
+        "nit": "899999239"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "704142603",
+        "nit": "899999239"
+      }
+    ],
+    "ICBF REGIONAL CORDOBA": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "704187525",
+        "nit": "899999239"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "704187525",
+        "nit": "899999239"
+      }
+    ],
+    "ICBF REGIONAL CUNDINAMARCA": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "703216739",
+        "nit": "899999239"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "703216739",
+        "nit": "899999239"
+      }
+    ],
+    "ICBF REGIONAL GUAINIA": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "704180900",
+        "nit": "899999239"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "704180900",
+        "nit": "899999239"
+      }
+    ],
+    "ICBF REGIONAL GUAJIRA": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "703458380",
+        "nit": "899999239"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "703458380",
+        "nit": "899999239"
+      }
+    ],
+    "ICBF REGIONAL GUAVIARE": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "704192269",
+        "nit": "899999239"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "704192269",
+        "nit": "899999239"
+      }
+    ],
+    "ICBF REGIONAL HUILA": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "704150309",
+        "nit": "899999239"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "704150309",
+        "nit": "899999239"
+      }
+    ],
+    "ICBF REGIONAL MAGDALENA": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "704147370",
+        "nit": "899999239"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "704147370",
+        "nit": "899999239"
+      }
+    ],
+    "ICBF REGIONAL META": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "704156264",
+        "nit": "899999239"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "704156264",
+        "nit": "899999239"
+      }
+    ],
+    "ICBF REGIONAL NARIÑO": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "704150028",
+        "nit": "899999239"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "704150028",
+        "nit": "899999239"
+      }
+    ],
+    "ICBF REGIONAL NORTE DE SANTANDER": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "704143338",
+        "nit": "899999239"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "704143338",
+        "nit": "899999239"
+      }
+    ],
+    "ICBF REGIONAL PUTUMAYO": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "704141639",
+        "nit": "899999239"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "704141639",
+        "nit": "899999239"
+      }
+    ],
+    "ICBF REGIONAL QUINDIO": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "704193143",
+        "nit": "899999239"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "704193143",
+        "nit": "899999239"
+      }
+    ],
+    "ICBF REGIONAL SAN ANDRES": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "704156116",
+        "nit": "899999239"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "704156116",
+        "nit": "899999239"
+      }
+    ],
+    "ICBF REGIONAL SANTANDER": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "704192574",
+        "nit": "8999992391"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "704192574",
+        "nit": "8999992391"
+      }
+    ],
+    "ICBF REGIONAL SUCRE": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "704162205",
+        "nit": "899999239"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "704162205",
+        "nit": "899999239"
+      }
+    ],
+    "ICBF REGIONAL TOLIMA": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "704150457",
+        "nit": "899999239"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "704150457",
+        "nit": "899999239"
+      }
+    ],
+    "ICBF REGIONAL VALLE DEL CAUCA": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "704142835",
+        "nit": "899999239"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "704142835",
+        "nit": "899999239"
+      }
+    ],
+    "ICBF REGIONAL VAUPES": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "704252469",
+        "nit": "899999239"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "704252469",
+        "nit": "899999239"
+      }
+    ],
+    "ICBF REGIONAL VICHADA": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "704392430",
+        "nit": "899999239"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "704392430",
+        "nit": "899999239"
+      }
+    ],
+    "ICBF RISARALDA//": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "704148642",
+        "nit": "899999239"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "704148642",
+        "nit": "899999239"
+      }
+    ],
+    "ICBF SEDE NACIONAL": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "700087026",
+        "nit": "899999239"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "700087026",
+        "nit": "899999239"
+      }
+    ],
+    "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "704148527",
+        "nit": "899999239"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "704148527",
+        "nit": "899999239"
+      }
+    ],
+    "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOYACA": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "704155118",
+        "nit": "899999239"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "704155118",
+        "nit": "899999239"
+      }
+    ],
+    "SECRETARIA DE EDUCACION DEL DISTRITO": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "701321135",
+        "nit": "8999990619"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "701321135",
+        "nit": "8999990619"
+      }
+    ],
+    "SECRETARIA DISTRITAL DE AMBIENTE": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "702016304",
+        "nit": "899999061"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "702016304",
+        "nit": "899999061"
+      }
+    ],
+    "SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "702169566",
+        "nit": "0899999061"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "702169566",
+        "nit": "899999061"
+      }
+    ],
+    "SECRETARIA DISTRITAL DE DESARROLLO ECONOMICO - ALCALDIA BOGOTÁ": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "702158197",
+        "nit": "8999990619"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "702158197",
+        "nit": "8999990619"
+      }
+    ],
+    "SECRETARIA DISTRITAL DE GOBIERNO 1": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "701427445",
+        "nit": "899999061"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "701427445",
+        "nit": "899999061"
+      }
+    ],
+    "SECRETARIA DISTRITAL DE HACIENDA": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "702069113",
+        "nit": "899999061"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "702069113",
+        "nit": "899999061"
+      }
+    ],
+    "(Secretaría Distrital de Integración Social)": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "702271321",
+        "nit": "8999990619"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "702271321",
+        "nit": "8999990619"
+      }
+    ],
+    "SECRETARIA DISTRITAL DE LA MUJER": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "702091182",
+        "nit": "899999061"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "702091182",
+        "nit": "899999061"
+      }
+    ],
+    "SECRETARIA DISTRITAL DEL HABITAT-": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "701149171",
+        "nit": "899999061"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "701149171",
+        "nit": "899999061"
+      }
+    ],
+    "SECRETARÍA DISTRITAL DE MOVILIDAD": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "701699407",
+        "nit": "8999990619"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "701699407",
+        "nit": "8999990619"
+      }
+    ],
+    "SECRETARIA DISTRITAL DE PLANEACION": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "701869646",
+        "nit": "899999061"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "701869646",
+        "nit": "899999061"
+      }
+    ],
+    ".SECRETARÍA DISTRITAL DE SALUD.": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "702004052",
+        "nit": "899999061"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "702004052",
+        "nit": "899999061"
+      }
+    ],
+    "SECRETARIA DISTRITAL DE SEGURIDAD, CONVIVENCIA Y JUSTICIA": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "701347270",
+        "nit": "899999061"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "701347270",
+        "nit": "899999061"
+      }
+    ],
+    "SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "700218068",
+        "nit": "899999061"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "700218068",
+        "nit": "899999061"
+      }
+    ],
+    "SECRETARIA JURIDICA DISTRITAL.": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "701902298",
+        "nit": "899999061"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "701902298",
+        "nit": "899999061"
+      }
+    ],
+    "UNIDAD ADMINISTRATIVA ESPECIAL CUERPO OFICIAL DE BOMBEROS DE BOGOTA": [
+      {
+        "dataset": "p6dx-8zbt",
+        "account": "702312703",
+        "nit": "899999061"
+      },
+      {
+        "dataset": "jbjy-vk9h",
+        "account": "702312703",
+        "nit": "899999061"
+      }
+    ]
+  },
+  "salud_adjudication": {
+    "same_buyer_unit": true,
+    "canonical": ".SECRETARÍA DISTRITAL DE SALUD.",
+    "sources": {
+      "p6dx-8zbt": [
+        ".SECRETARÍA DISTRITAL DE SALUD.."
+      ],
+      "jbjy-vk9h": [
+        ".SECRETARÍA DISTRITAL DE SALUD."
+      ]
+    },
+    "identical_institutional_tokens": true,
+    "terminal_difference": ".",
+    "third_canonical_owners": []
+  },
+  "membership_source": "https://serviciocivil.gov.co/tablero-de-control/info-importante-tablero-de-control/faqs-tablero-de-control"
+}

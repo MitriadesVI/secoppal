@@ -560,6 +560,15 @@ class QueryRouter:
                         scrubbed = re.sub(r"\s+", " ", scrubbed).strip()
                         break
 
+        # Declared groups consume their own phrase before institutional rewrite.
+        # A remaining explicit BuyerUnit is resolved normally and wins below.
+        from app.core.buyer_groups import BuyerGroupError, consume_group_mention
+        try:
+            group_scope, scrubbed = consume_group_mention(scrubbed, self.entity_resolver)
+            params.update(group_scope)
+        except BuyerGroupError as exc:
+            params["buyer_group_error"] = str(exc)
+
         # ── 4.6. ENTITY REWRITE: try canonical variants for entity patterns ──
         #    "alcaldía de X" → "Municipio de X" / "Alcaldía de X"
         #    Runs BEFORE gazetteer scan so variants feed into alias matching.
@@ -568,7 +577,7 @@ class QueryRouter:
         entity_candidates = rewrite_entity(scrubbed)
         rewritten_entity = None
         unresolved_rewrite = None
-        if entity_candidates and self.entity_resolver:
+        if entity_candidates and self.entity_resolver and not params.get("entidad_resolved"):
             # Los candidatos llegan agrupados por span, del más largo al más
             # corto. Dentro de UN span compiten formas canónicas rivales
             # ("Empresa Social del Estado X" vs "ESE X"): ahí un exacto le gana
@@ -921,7 +930,7 @@ class QueryRouter:
         # precisión y el turno se bloquea sin tocar la fuente.
         if not any(
             params.get(key)
-            for key in ("entidad", "entidad_resolved", "entidad_like")
+            for key in ("entidad", "entidad_resolved", "entidad_like", "buyer_group")
         ):
             incomplete_buyer = detect_incomplete_buyer(normalized)
             if incomplete_buyer:
@@ -978,6 +987,9 @@ class QueryRouter:
         object_terms = self._extract_object_terms(objeto_text)
         if object_terms:
             params["objeto"] = object_terms
+
+        if params.get("entidad_resolved") or params.get("entidad_like"):
+            params.pop("buyer_group", None)
 
         # ── 12. LLM decision ───────────────────────────────────────────
         extracted_keys = {k for k, v in params.items() if v not in (None, [], "", {})}

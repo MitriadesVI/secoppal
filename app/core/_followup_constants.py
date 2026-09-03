@@ -53,7 +53,7 @@ RESET_COMMANDS: frozenset[str] = frozenset({
 # el guard anti-WHERE 1=1.
 SCOPE_TOPIC_KEYS: frozenset[str] = frozenset({
     "objeto", "objeto_phrases", "objeto_exclude",
-    "entidad_resolved", "entidad_like",
+    "entidad_resolved", "entidad_like", "buyer_group",
     "departamento_resolved", "departamentos_in", "ciudad", "contratista",
     "contract_type_include",
 })

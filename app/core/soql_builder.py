@@ -62,7 +62,7 @@ class BuyerCandidateSetExceedsSafeLimitError(RuntimeError):
 NONEMPTY_WHERE_KEYS: frozenset[str] = frozenset({
     # scope
     "departamento_resolved", "departamentos_in", "ciudad",
-    "entidad_resolved", "entidad_like",
+    "entidad_resolved", "entidad_like", "buyer_group",
     "contratista",
     "contract_type_include",
     # topic
@@ -297,6 +297,9 @@ class SoQLBuilder:
         # while paging forward, so consecutive pages can overlap on ties.
         tie_direction = "ASC" if ordering in ("valor_asc", "fecha_asc") else "DESC"
         order_expr = f"{order_expr}, {id_field} {tie_direction}"
+        from app.core.buyer_groups import group_for_params
+        if group_for_params(params):
+            order_expr += f", :id {tie_direction}"
         # Commit 5: con frase recall-first ampliamos el POOL de candidatos (no el
         # display, que recorta aguas abajo). Permite que el validador (Commit 6) vea
         # los positivos hoy perdidos sin que LIMIT los trunque.
@@ -395,6 +398,11 @@ class SoQLBuilder:
         # disparan esas ramas, y la regresión no se vería en DAPRE sino en
         # consultas que no tienen nada que ver con la proyección.
         entidad_value = entidad_like or params.get("entidad_resolved")
+        from app.core.buyer_groups import group_for_params
+        buyer_group = group_for_params(params)
+        if buyer_group:
+            physical_names = buyer_group.names_for(spec.dataset_id)
+            where_clauses.append(self._exact_entity_clause(spec.entity, physical_names))
         entidad_ecosystem = params.get("entidad_ecosystem")
         if entidad_ecosystem and isinstance(entidad_ecosystem, list) and not entidad_value:
             if len(entidad_ecosystem) > BUYER_CANDIDATE_SAFE_LIMIT:
