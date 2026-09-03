@@ -504,7 +504,11 @@ class QueryRouter:
         # the criterion ("mayor valor") and leaving the command around it
         # ("ordenados por") shipped LIKE '%ordenados%' to SECOP and returned
         # zero rows. The control authority owns the whole span.
-        control = interpret_control_language(scrubbed)
+        protected_names = (
+            self.entity_resolver.proper_names.spans_in(scrubbed)
+            if self.entity_resolver else []
+        )
+        control = interpret_control_language(scrubbed, protected_spans=tuple(protected_names))
         if control.ordering_signal:
             params["ordering_signal"] = control.ordering_signal
         if control.consumed_spans:

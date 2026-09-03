@@ -25,6 +25,7 @@ from app.core.fuzzy_identity_guard import (
 from app.core.geography_alias import is_geography_alias
 from app.core.scan_alias_policy import is_scan_eligible_alias, record_alias_policy
 from app.core.territory_phrase_index import TerritoryPhraseIndex
+from app.core.proper_name_spans import ExactNameIndex
 from app.data.colombia_geography import REGION_ALIASES
 from app.data.departamentos import DEPARTAMENTOS, DEPARTAMENTOS_OFICIALES
 from app.utils.money import normalize_text
@@ -232,6 +233,10 @@ class EntityResolver:
         self._region_scan_index: dict[str, list[tuple[str, str]]] = {}
 
         self._load_aliases()
+        self.proper_names = ExactNameIndex([
+            *self.owners_by_alias, *self.source_names_to_official,
+            *GAZETTEER_CIUDADES, *DEPARTAMENTOS,
+        ])
         self._build_dept_scan_index()
         self._build_region_scan_index()
 

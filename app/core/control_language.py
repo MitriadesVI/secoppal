@@ -38,7 +38,9 @@ ascending directions the system could not express before.
 from __future__ import annotations
 
 import re
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
+
+from app.core.query_text_consumption import shield_spans
 
 VALOR_DESC = "valor_desc"
 VALOR_ASC = "valor_asc"
@@ -315,13 +317,23 @@ def detect_ordering(text: str) -> str:
     return interpret_control_language(text).ordering_signal
 
 
-def interpret_control_language(text: str) -> ControlRequest:
+def interpret_control_language(
+    text: str, *, protected_spans: tuple[tuple[int, int], ...] = (),
+) -> ControlRequest:
     """Split control language off a positive residual.
 
     The input is already the residual the parser is about to turn into topic
     terms; the output residual is what remains once every control span is
     removed.  The caller keeps the raw query untouched.
     """
+    if protected_spans:
+        masked, replacements = shield_spans(text, protected_spans)
+        request = interpret_control_language(masked)
+        restored = request.residual_text
+        for marker, original in replacements.items():
+            restored = restored.replace(marker, original)
+        return replace(request, residual_text=restored)
+
     residual = text or ""
     consumed: list[str] = []
 

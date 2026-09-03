@@ -1,0 +1,1775 @@
+{
+  "status": "BLOCKED",
+  "checks": 1888,
+  "failed_queries": 30,
+  "affected_municipalities": 9,
+  "new_wrong_owner_queries": 4,
+  "failures": [
+    {
+      "code": "05148",
+      "query": "contratos de la alcaldia de EL CARMEN DE VIBORAL, ANTIOQUIA",
+      "expected": "MUNICIPIO EL CARMEN DE VIBORAL",
+      "before": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Alcaldía Municipal de el",
+        "entidad_resolved": "ALCALDÍA MUNICIPAL DE EL ESPINAL",
+        "entidad_resolution": {
+          "value": "ALCALDÍA MUNICIPAL DE EL ESPINAL",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de el",
+            "resolution_method": "fuzzy(95)"
+          }
+        },
+        "departamento": "antioquia",
+        "departamento_resolved": "Antioquia",
+        "departamento_resolution": {
+          "value": "Antioquia",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        },
+        "objeto": [
+          "carmen",
+          "viboral"
+        ]
+      },
+      "after": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Alcaldía Municipal de el",
+        "entidad_resolved": "ALCALDÍA MUNICIPAL DE EL ESPINAL",
+        "entidad_resolution": {
+          "value": "ALCALDÍA MUNICIPAL DE EL ESPINAL",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de el",
+            "resolution_method": "fuzzy(95)"
+          }
+        },
+        "departamento": "antioquia",
+        "departamento_resolved": "Antioquia",
+        "departamento_resolution": {
+          "value": "Antioquia",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        },
+        "objeto": [
+          "carmen",
+          "viboral"
+        ]
+      },
+      "should_execute": true,
+      "candidate_soql": "SELECT count(*) WHERE departamento = 'Antioquia' AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA MUNICIPAL DE EL ESPINAL%')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%carmen%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%carmen%'))) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%viboral%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%viboral%')))",
+      "new_wrong_owner": false
+    },
+    {
+      "code": "05148",
+      "query": "procesos del municipio de EL CARMEN DE VIBORAL, ANTIOQUIA",
+      "expected": "MUNICIPIO EL CARMEN DE VIBORAL",
+      "before": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de el carm",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_municipio_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "el carm",
+            "rewritten_from": "municipio de el carm",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de el carm' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        },
+        "departamento": "antioquia",
+        "departamento_resolved": "Antioquia",
+        "departamento_resolution": {
+          "value": "Antioquia",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        },
+        "objeto": [
+          "viboral"
+        ]
+      },
+      "after": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de el carm",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_municipio_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "el carm",
+            "rewritten_from": "municipio de el carm",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de el carm' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        },
+        "departamento": "antioquia",
+        "departamento_resolved": "Antioquia",
+        "departamento_resolution": {
+          "value": "Antioquia",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        },
+        "objeto": [
+          "viboral"
+        ]
+      },
+      "should_execute": true,
+      "candidate_soql": "SELECT count(*) WHERE departamento_entidad = 'Antioquia' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%viboral%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%viboral%')))",
+      "new_wrong_owner": false
+    },
+    {
+      "code": "05148",
+      "query": "contratos de la alcaldia de EL CARMEN DE VIBORAL",
+      "expected": "MUNICIPIO EL CARMEN DE VIBORAL",
+      "before": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Alcaldía Municipal de el",
+        "entidad_resolved": "ALCALDÍA MUNICIPAL DE EL ESPINAL",
+        "entidad_resolution": {
+          "value": "ALCALDÍA MUNICIPAL DE EL ESPINAL",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de el",
+            "resolution_method": "fuzzy(95)"
+          }
+        },
+        "objeto": [
+          "carmen",
+          "viboral"
+        ]
+      },
+      "after": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Alcaldía Municipal de el",
+        "entidad_resolved": "ALCALDÍA MUNICIPAL DE EL ESPINAL",
+        "entidad_resolution": {
+          "value": "ALCALDÍA MUNICIPAL DE EL ESPINAL",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de el",
+            "resolution_method": "fuzzy(95)"
+          }
+        },
+        "objeto": [
+          "carmen",
+          "viboral"
+        ]
+      },
+      "should_execute": true,
+      "candidate_soql": "SELECT count(*) WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA MUNICIPAL DE EL ESPINAL%')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%carmen%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%carmen%'))) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%viboral%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%viboral%')))",
+      "new_wrong_owner": false
+    },
+    {
+      "code": "05148",
+      "query": "procesos del municipio de EL CARMEN DE VIBORAL",
+      "expected": "MUNICIPIO EL CARMEN DE VIBORAL",
+      "before": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de el carm",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_municipio_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "el carm",
+            "rewritten_from": "municipio de el carm",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de el carm' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        },
+        "objeto": [
+          "viboral"
+        ]
+      },
+      "after": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de el carm",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_municipio_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "el carm",
+            "rewritten_from": "municipio de el carm",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de el carm' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        },
+        "objeto": [
+          "viboral"
+        ]
+      },
+      "should_execute": true,
+      "candidate_soql": "SELECT count(*) WHERE (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%viboral%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%viboral%')))",
+      "new_wrong_owner": false
+    },
+    {
+      "code": "05856",
+      "query": "contratos de la alcaldia de VALPARAÍSO, ANTIOQUIA",
+      "expected": "MUNICIPIO DE VALPARAISO**",
+      "before": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de val",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_alcald[ií]a_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "val",
+            "rewritten_from": "alcaldia de val",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de val' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        },
+        "departamento": "antioquia",
+        "departamento_resolved": "Antioquia",
+        "departamento_resolution": {
+          "value": "Antioquia",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        },
+        "objeto": [
+          "paraiso"
+        ]
+      },
+      "after": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de val",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_alcald[ií]a_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "val",
+            "rewritten_from": "alcaldia de val",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de val' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        },
+        "departamento": "antioquia",
+        "departamento_resolved": "Antioquia",
+        "departamento_resolution": {
+          "value": "Antioquia",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        },
+        "objeto": [
+          "paraiso"
+        ]
+      },
+      "should_execute": true,
+      "candidate_soql": "SELECT count(*) WHERE departamento = 'Antioquia' AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%paraiso%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%paraiso%')))",
+      "new_wrong_owner": false
+    },
+    {
+      "code": "05856",
+      "query": "procesos del municipio de VALPARAÍSO, ANTIOQUIA",
+      "expected": "MUNICIPIO DE VALPARAISO**",
+      "before": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de val",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_municipio_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "val",
+            "rewritten_from": "municipio de val",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de val' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        },
+        "departamento": "antioquia",
+        "departamento_resolved": "Antioquia",
+        "departamento_resolution": {
+          "value": "Antioquia",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        },
+        "objeto": [
+          "paraiso"
+        ]
+      },
+      "after": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de val",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_municipio_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "val",
+            "rewritten_from": "municipio de val",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de val' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        },
+        "departamento": "antioquia",
+        "departamento_resolved": "Antioquia",
+        "departamento_resolution": {
+          "value": "Antioquia",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        },
+        "objeto": [
+          "paraiso"
+        ]
+      },
+      "should_execute": true,
+      "candidate_soql": "SELECT count(*) WHERE departamento_entidad = 'Antioquia' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%paraiso%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%paraiso%')))",
+      "new_wrong_owner": false
+    },
+    {
+      "code": "13244",
+      "query": "contratos de la alcaldia de EL CARMEN DE BOLÍVAR, BOLÍVAR",
+      "expected": "ALCALDIA DE EL CARMEN DE BOLIVAR",
+      "before": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Alcaldía Municipal de el",
+        "entidad_resolved": "ALCALDÍA MUNICIPAL DE EL ESPINAL",
+        "entidad_resolution": {
+          "value": "ALCALDÍA MUNICIPAL DE EL ESPINAL",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de el",
+            "resolution_method": "fuzzy(95)"
+          }
+        },
+        "departamento": "de bolivar",
+        "departamento_resolved": "Bolívar",
+        "departamento_resolution": {
+          "value": "Bolívar",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        },
+        "objeto": [
+          "carmen"
+        ]
+      },
+      "after": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Alcaldía Municipal de el",
+        "entidad_resolved": "ALCALDÍA MUNICIPAL DE EL ESPINAL",
+        "entidad_resolution": {
+          "value": "ALCALDÍA MUNICIPAL DE EL ESPINAL",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de el",
+            "resolution_method": "fuzzy(95)"
+          }
+        },
+        "departamento": "de bolivar",
+        "departamento_resolved": "Bolívar",
+        "departamento_resolution": {
+          "value": "Bolívar",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        },
+        "objeto": [
+          "carmen"
+        ]
+      },
+      "should_execute": true,
+      "candidate_soql": "SELECT count(*) WHERE departamento = 'Bolívar' AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA MUNICIPAL DE EL ESPINAL%')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%carmen%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%carmen%')))",
+      "new_wrong_owner": false
+    },
+    {
+      "code": "13244",
+      "query": "procesos del municipio de EL CARMEN DE BOLÍVAR, BOLÍVAR",
+      "expected": "ALCALDIA DE EL CARMEN DE BOLIVAR",
+      "before": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de el carm",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_municipio_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "el carm",
+            "rewritten_from": "municipio de el carm",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de el carm' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        },
+        "departamento": "de bolivar",
+        "departamento_resolved": "Bolívar",
+        "departamento_resolution": {
+          "value": "Bolívar",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        }
+      },
+      "after": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de el carm",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_municipio_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "el carm",
+            "rewritten_from": "municipio de el carm",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de el carm' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        },
+        "departamento": "de bolivar",
+        "departamento_resolved": "Bolívar",
+        "departamento_resolution": {
+          "value": "Bolívar",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        }
+      },
+      "should_execute": true,
+      "candidate_soql": "SELECT count(*) WHERE departamento_entidad = 'Bolívar'",
+      "new_wrong_owner": false
+    },
+    {
+      "code": "13244",
+      "query": "contratos de la alcaldia de EL CARMEN DE BOLÍVAR",
+      "expected": "ALCALDIA DE EL CARMEN DE BOLIVAR",
+      "before": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Alcaldía Municipal de el",
+        "entidad_resolved": "ALCALDÍA MUNICIPAL DE EL ESPINAL",
+        "entidad_resolution": {
+          "value": "ALCALDÍA MUNICIPAL DE EL ESPINAL",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de el",
+            "resolution_method": "fuzzy(95)"
+          }
+        },
+        "departamento": "de bolivar",
+        "departamento_resolved": "Bolívar",
+        "departamento_resolution": {
+          "value": "Bolívar",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        },
+        "objeto": [
+          "carmen"
+        ]
+      },
+      "after": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Alcaldía Municipal de el",
+        "entidad_resolved": "ALCALDÍA MUNICIPAL DE EL ESPINAL",
+        "entidad_resolution": {
+          "value": "ALCALDÍA MUNICIPAL DE EL ESPINAL",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de el",
+            "resolution_method": "fuzzy(95)"
+          }
+        },
+        "departamento": "de bolivar",
+        "departamento_resolved": "Bolívar",
+        "departamento_resolution": {
+          "value": "Bolívar",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        },
+        "objeto": [
+          "carmen"
+        ]
+      },
+      "should_execute": true,
+      "candidate_soql": "SELECT count(*) WHERE departamento = 'Bolívar' AND unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDÍA MUNICIPAL DE EL ESPINAL%')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%carmen%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%carmen%')))",
+      "new_wrong_owner": false
+    },
+    {
+      "code": "13244",
+      "query": "procesos del municipio de EL CARMEN DE BOLÍVAR",
+      "expected": "ALCALDIA DE EL CARMEN DE BOLIVAR",
+      "before": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de el carm",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_municipio_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "el carm",
+            "rewritten_from": "municipio de el carm",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de el carm' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        },
+        "departamento": "de bolivar",
+        "departamento_resolved": "Bolívar",
+        "departamento_resolution": {
+          "value": "Bolívar",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        }
+      },
+      "after": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de el carm",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_municipio_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "el carm",
+            "rewritten_from": "municipio de el carm",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de el carm' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        },
+        "departamento": "de bolivar",
+        "departamento_resolved": "Bolívar",
+        "departamento_resolution": {
+          "value": "Bolívar",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        }
+      },
+      "should_execute": true,
+      "candidate_soql": "SELECT count(*) WHERE departamento_entidad = 'Bolívar'",
+      "new_wrong_owner": false
+    },
+    {
+      "code": "15087",
+      "query": "contratos de la alcaldia de BELÉN, BOYACÁ",
+      "expected": "MUNICIPIO DE BELEN.",
+      "before": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de bel",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_alcald[ií]a_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "bel",
+            "rewritten_from": "alcaldia de bel",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de bel' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        },
+        "departamento": "boyaca",
+        "departamento_resolved": "Boyacá",
+        "departamento_resolution": {
+          "value": "Boyacá",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        }
+      },
+      "after": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de bel",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_alcald[ií]a_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "bel",
+            "rewritten_from": "alcaldia de bel",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de bel' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        },
+        "departamento": "boyaca",
+        "departamento_resolved": "Boyacá",
+        "departamento_resolution": {
+          "value": "Boyacá",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        }
+      },
+      "should_execute": true,
+      "candidate_soql": "SELECT count(*) WHERE departamento = 'Boyacá'",
+      "new_wrong_owner": false
+    },
+    {
+      "code": "15087",
+      "query": "procesos del municipio de BELÉN, BOYACÁ",
+      "expected": "MUNICIPIO DE BELEN.",
+      "before": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de bel",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_municipio_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "bel",
+            "rewritten_from": "municipio de bel",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de bel' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        },
+        "departamento": "boyaca",
+        "departamento_resolved": "Boyacá",
+        "departamento_resolution": {
+          "value": "Boyacá",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        }
+      },
+      "after": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de bel",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_municipio_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "bel",
+            "rewritten_from": "municipio de bel",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de bel' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        },
+        "departamento": "boyaca",
+        "departamento_resolved": "Boyacá",
+        "departamento_resolution": {
+          "value": "Boyacá",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        }
+      },
+      "should_execute": true,
+      "candidate_soql": "SELECT count(*) WHERE departamento_entidad = 'Boyacá'",
+      "new_wrong_owner": false
+    },
+    {
+      "code": "15494",
+      "query": "contratos de la alcaldia de NUEVO COLÓN, BOYACÁ",
+      "expected": "ALCALDÍA MUNICIPAL DE NUEVO COLON",
+      "before": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "ordering_signal": "fecha_desc",
+        "departamento": "boyaca",
+        "departamento_resolved": "Boyacá",
+        "departamento_resolution": {
+          "value": "Boyacá",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        },
+        "objeto": [
+          "alcaldia",
+          "colon"
+        ]
+      },
+      "after": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "ordering_signal": "fecha_desc",
+        "departamento": "boyaca",
+        "departamento_resolved": "Boyacá",
+        "departamento_resolution": {
+          "value": "Boyacá",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        },
+        "objeto": [
+          "alcaldia",
+          "colon"
+        ]
+      },
+      "should_execute": true,
+      "candidate_soql": "SELECT count(*) WHERE departamento = 'Boyacá' AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alcaldia%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alcaldia%'))) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%colon%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%colon%')))",
+      "new_wrong_owner": false
+    },
+    {
+      "code": "15494",
+      "query": "procesos del municipio de NUEVO COLÓN, BOYACÁ",
+      "expected": "ALCALDÍA MUNICIPAL DE NUEVO COLON",
+      "before": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "ordering_signal": "fecha_desc",
+        "departamento": "boyaca",
+        "departamento_resolved": "Boyacá",
+        "departamento_resolution": {
+          "value": "Boyacá",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        },
+        "objeto": [
+          "municipio",
+          "colon"
+        ]
+      },
+      "after": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "ordering_signal": "fecha_desc",
+        "departamento": "boyaca",
+        "departamento_resolved": "Boyacá",
+        "departamento_resolution": {
+          "value": "Boyacá",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        },
+        "objeto": [
+          "municipio",
+          "colon"
+        ]
+      },
+      "should_execute": true,
+      "candidate_soql": "SELECT count(*) WHERE departamento_entidad = 'Boyacá' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%municipio%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%municipio%'))) AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%colon%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%colon%')))",
+      "new_wrong_owner": false
+    },
+    {
+      "code": "15494",
+      "query": "contratos de la alcaldia de NUEVO COLÓN",
+      "expected": "ALCALDÍA MUNICIPAL DE NUEVO COLON",
+      "before": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "ordering_signal": "fecha_desc",
+        "objeto": [
+          "alcaldia",
+          "colon"
+        ]
+      },
+      "after": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "ordering_signal": "fecha_desc",
+        "objeto": [
+          "alcaldia",
+          "colon"
+        ]
+      },
+      "should_execute": true,
+      "candidate_soql": "SELECT count(*) WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%alcaldia%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%alcaldia%'))) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%colon%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%colon%')))",
+      "new_wrong_owner": false
+    },
+    {
+      "code": "15494",
+      "query": "procesos del municipio de NUEVO COLÓN",
+      "expected": "ALCALDÍA MUNICIPAL DE NUEVO COLON",
+      "before": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "ordering_signal": "fecha_desc",
+        "objeto": [
+          "municipio",
+          "colon"
+        ]
+      },
+      "after": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "ordering_signal": "fecha_desc",
+        "objeto": [
+          "municipio",
+          "colon"
+        ]
+      },
+      "should_execute": true,
+      "candidate_soql": "SELECT count(*) WHERE (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%municipio%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%municipio%'))) AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%colon%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%colon%')))",
+      "new_wrong_owner": false
+    },
+    {
+      "code": "15774",
+      "query": "contratos de la alcaldia de SUSACÓN, BOYACÁ",
+      "expected": "ALCALDIA MUNICIPAL SUSACON BOYACA",
+      "before": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de susa",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_alcald[ií]a_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "susa",
+            "rewritten_from": "alcaldia de susa",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de susa' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        },
+        "departamento": "boyaca",
+        "departamento_resolved": "Boyacá",
+        "departamento_resolution": {
+          "value": "Boyacá",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        }
+      },
+      "after": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de susa",
+        "entidad_resolved": "ALCALDIA DE SUSA",
+        "entidad_resolution": {
+          "value": "ALCALDIA DE SUSA",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de susa",
+            "resolution_method": "exact"
+          }
+        },
+        "departamento": "boyaca",
+        "departamento_resolved": "Boyacá",
+        "departamento_resolution": {
+          "value": "Boyacá",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        }
+      },
+      "should_execute": true,
+      "candidate_soql": "SELECT count(*) WHERE departamento = 'Boyacá' AND nombre_entidad = 'ALCALDIA DE SUSA'",
+      "new_wrong_owner": true
+    },
+    {
+      "code": "15774",
+      "query": "procesos del municipio de SUSACÓN, BOYACÁ",
+      "expected": "ALCALDIA MUNICIPAL SUSACON BOYACA",
+      "before": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de susa",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_municipio_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "susa",
+            "rewritten_from": "municipio de susa",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de susa' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        },
+        "departamento": "boyaca",
+        "departamento_resolved": "Boyacá",
+        "departamento_resolution": {
+          "value": "Boyacá",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        }
+      },
+      "after": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de susa",
+        "entidad_resolved": "ALCALDIA DE SUSA",
+        "entidad_resolution": {
+          "value": "ALCALDIA DE SUSA",
+          "method": "rewrite_municipio",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "municipio de susa",
+            "resolution_method": "exact"
+          }
+        },
+        "departamento": "boyaca",
+        "departamento_resolved": "Boyacá",
+        "departamento_resolution": {
+          "value": "Boyacá",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        }
+      },
+      "should_execute": true,
+      "candidate_soql": "SELECT count(*) WHERE departamento_entidad = 'Boyacá' AND entidad = 'ALCALDIA DE SUSA'",
+      "new_wrong_owner": true
+    },
+    {
+      "code": "15774",
+      "query": "contratos de la alcaldia de SUSACÓN",
+      "expected": "ALCALDIA MUNICIPAL SUSACON BOYACA",
+      "before": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de susa",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_alcald[ií]a_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "susa",
+            "rewritten_from": "alcaldia de susa",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de susa' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        }
+      },
+      "after": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de susa",
+        "entidad_resolved": "ALCALDIA DE SUSA",
+        "entidad_resolution": {
+          "value": "ALCALDIA DE SUSA",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de susa",
+            "resolution_method": "exact"
+          }
+        }
+      },
+      "should_execute": true,
+      "candidate_soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA DE SUSA'",
+      "new_wrong_owner": true
+    },
+    {
+      "code": "15774",
+      "query": "procesos del municipio de SUSACÓN",
+      "expected": "ALCALDIA MUNICIPAL SUSACON BOYACA",
+      "before": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de susa",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_municipio_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "susa",
+            "rewritten_from": "municipio de susa",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de susa' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        }
+      },
+      "after": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de susa",
+        "entidad_resolved": "ALCALDIA DE SUSA",
+        "entidad_resolution": {
+          "value": "ALCALDIA DE SUSA",
+          "method": "rewrite_municipio",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "municipio de susa",
+            "resolution_method": "exact"
+          }
+        }
+      },
+      "should_execute": true,
+      "candidate_soql": "SELECT count(*) WHERE entidad = 'ALCALDIA DE SUSA'",
+      "new_wrong_owner": true
+    },
+    {
+      "code": "18860",
+      "query": "contratos de la alcaldia de VALPARAÍSO, CAQUETÁ",
+      "expected": "MUNICIPIO DE VALPARAISO CAQUETA",
+      "before": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de val",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_alcald[ií]a_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "val",
+            "rewritten_from": "alcaldia de val",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de val' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        },
+        "departamento": "caqueta",
+        "departamento_resolved": "Caquetá",
+        "departamento_resolution": {
+          "value": "Caquetá",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        },
+        "objeto": [
+          "paraiso"
+        ]
+      },
+      "after": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de val",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_alcald[ií]a_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "val",
+            "rewritten_from": "alcaldia de val",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de val' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        },
+        "departamento": "caqueta",
+        "departamento_resolved": "Caquetá",
+        "departamento_resolution": {
+          "value": "Caquetá",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        },
+        "objeto": [
+          "paraiso"
+        ]
+      },
+      "should_execute": true,
+      "candidate_soql": "SELECT count(*) WHERE departamento = 'Caquetá' AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%paraiso%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%paraiso%')))",
+      "new_wrong_owner": false
+    },
+    {
+      "code": "18860",
+      "query": "procesos del municipio de VALPARAÍSO, CAQUETÁ",
+      "expected": "MUNICIPIO DE VALPARAISO CAQUETA",
+      "before": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de val",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_municipio_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "val",
+            "rewritten_from": "municipio de val",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de val' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        },
+        "departamento": "caqueta",
+        "departamento_resolved": "Caquetá",
+        "departamento_resolution": {
+          "value": "Caquetá",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        },
+        "objeto": [
+          "paraiso"
+        ]
+      },
+      "after": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de val",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_municipio_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "val",
+            "rewritten_from": "municipio de val",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de val' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        },
+        "departamento": "caqueta",
+        "departamento_resolved": "Caquetá",
+        "departamento_resolution": {
+          "value": "Caquetá",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        },
+        "objeto": [
+          "paraiso"
+        ]
+      },
+      "should_execute": true,
+      "candidate_soql": "SELECT count(*) WHERE departamento_entidad = 'Caquetá' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%paraiso%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%paraiso%')))",
+      "new_wrong_owner": false
+    },
+    {
+      "code": "25486",
+      "query": "contratos de la alcaldia de NEMOCÓN, CUNDINAMARCA",
+      "expected": "ALCALDÍA NEMOCON",
+      "before": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de nemo",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_alcald[ií]a_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "nemo",
+            "rewritten_from": "alcaldia de nemo",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de nemo' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        },
+        "departamento": "cundinamarca",
+        "departamento_resolved": "Cundinamarca",
+        "departamento_resolution": {
+          "value": "Cundinamarca",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        }
+      },
+      "after": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de nemo",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_alcald[ií]a_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "nemo",
+            "rewritten_from": "alcaldia de nemo",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de nemo' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        },
+        "departamento": "cundinamarca",
+        "departamento_resolved": "Cundinamarca",
+        "departamento_resolution": {
+          "value": "Cundinamarca",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        }
+      },
+      "should_execute": true,
+      "candidate_soql": "SELECT count(*) WHERE departamento = 'Cundinamarca'",
+      "new_wrong_owner": false
+    },
+    {
+      "code": "25486",
+      "query": "procesos del municipio de NEMOCÓN, CUNDINAMARCA",
+      "expected": "ALCALDÍA NEMOCON",
+      "before": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de nemo",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_municipio_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "nemo",
+            "rewritten_from": "municipio de nemo",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de nemo' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        },
+        "departamento": "cundinamarca",
+        "departamento_resolved": "Cundinamarca",
+        "departamento_resolution": {
+          "value": "Cundinamarca",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        }
+      },
+      "after": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de nemo",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_municipio_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "nemo",
+            "rewritten_from": "municipio de nemo",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de nemo' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        },
+        "departamento": "cundinamarca",
+        "departamento_resolved": "Cundinamarca",
+        "departamento_resolution": {
+          "value": "Cundinamarca",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        }
+      },
+      "should_execute": true,
+      "candidate_soql": "SELECT count(*) WHERE departamento_entidad = 'Cundinamarca'",
+      "new_wrong_owner": false
+    },
+    {
+      "code": "25486",
+      "query": "contratos de la alcaldia de NEMOCÓN",
+      "expected": "ALCALDÍA NEMOCON",
+      "before": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de nemo",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_alcald[ií]a_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "nemo",
+            "rewritten_from": "alcaldia de nemo",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de nemo' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        }
+      },
+      "after": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de nemo",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_alcald[ií]a_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "nemo",
+            "rewritten_from": "alcaldia de nemo",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de nemo' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        }
+      },
+      "should_execute": true,
+      "candidate_soql": "BLOCKED: UnsafeGlobalQueryError (no WHERE predicate)",
+      "new_wrong_owner": false
+    },
+    {
+      "code": "25486",
+      "query": "procesos del municipio de NEMOCÓN",
+      "expected": "ALCALDÍA NEMOCON",
+      "before": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de nemo",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_municipio_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "nemo",
+            "rewritten_from": "municipio de nemo",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de nemo' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        }
+      },
+      "after": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de nemo",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_municipio_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "nemo",
+            "rewritten_from": "municipio de nemo",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de nemo' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        }
+      },
+      "should_execute": true,
+      "candidate_soql": "BLOCKED: UnsafeGlobalQueryError (no WHERE predicate)",
+      "new_wrong_owner": false
+    },
+    {
+      "code": "66088",
+      "query": "contratos de la alcaldia de BELÉN DE UMBRÍA, RISARALDA",
+      "expected": "MUNICIPIO DE BELEN DE UMBRIA",
+      "before": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de bel",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_alcald[ií]a_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "bel",
+            "rewritten_from": "alcaldia de bel",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de bel' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        },
+        "departamento": "risaralda",
+        "departamento_resolved": "Risaralda",
+        "departamento_resolution": {
+          "value": "Risaralda",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        },
+        "objeto": [
+          "umbria"
+        ]
+      },
+      "after": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de bel",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_alcald[ií]a_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "bel",
+            "rewritten_from": "alcaldia de bel",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de bel' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        },
+        "departamento": "risaralda",
+        "departamento_resolved": "Risaralda",
+        "departamento_resolution": {
+          "value": "Risaralda",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        },
+        "objeto": [
+          "umbria"
+        ]
+      },
+      "should_execute": true,
+      "candidate_soql": "SELECT count(*) WHERE departamento = 'Risaralda' AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%umbria%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%umbria%')))",
+      "new_wrong_owner": false
+    },
+    {
+      "code": "66088",
+      "query": "procesos del municipio de BELÉN DE UMBRÍA, RISARALDA",
+      "expected": "MUNICIPIO DE BELEN DE UMBRIA",
+      "before": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de bel",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_municipio_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "bel",
+            "rewritten_from": "municipio de bel",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de bel' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        },
+        "departamento": "risaralda",
+        "departamento_resolved": "Risaralda",
+        "departamento_resolution": {
+          "value": "Risaralda",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        },
+        "objeto": [
+          "umbria"
+        ]
+      },
+      "after": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de bel",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_municipio_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "bel",
+            "rewritten_from": "municipio de bel",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de bel' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        },
+        "departamento": "risaralda",
+        "departamento_resolved": "Risaralda",
+        "departamento_resolution": {
+          "value": "Risaralda",
+          "method": "scan_exact",
+          "kind": "territorial_department",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        },
+        "objeto": [
+          "umbria"
+        ]
+      },
+      "should_execute": true,
+      "candidate_soql": "SELECT count(*) WHERE departamento_entidad = 'Risaralda' AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%umbria%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%umbria%')))",
+      "new_wrong_owner": false
+    },
+    {
+      "code": "66088",
+      "query": "contratos de la alcaldia de BELÉN DE UMBRÍA",
+      "expected": "MUNICIPIO DE BELEN DE UMBRIA",
+      "before": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de bel",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_alcald[ií]a_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "bel",
+            "rewritten_from": "alcaldia de bel",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de bel' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        },
+        "objeto": [
+          "umbria"
+        ]
+      },
+      "after": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de bel",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_alcald[ií]a_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "bel",
+            "rewritten_from": "alcaldia de bel",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de bel' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        },
+        "objeto": [
+          "umbria"
+        ]
+      },
+      "should_execute": true,
+      "candidate_soql": "SELECT count(*) WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%umbria%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%umbria%')))",
+      "new_wrong_owner": false
+    },
+    {
+      "code": "66088",
+      "query": "procesos del municipio de BELÉN DE UMBRÍA",
+      "expected": "MUNICIPIO DE BELEN DE UMBRIA",
+      "before": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de bel",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_municipio_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "bel",
+            "rewritten_from": "municipio de bel",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de bel' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        },
+        "objeto": [
+          "umbria"
+        ]
+      },
+      "after": {
+        "dataset": "procesos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de bel",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_municipio_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "bel",
+            "rewritten_from": "municipio de bel",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de bel' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        },
+        "objeto": [
+          "umbria"
+        ]
+      },
+      "should_execute": true,
+      "candidate_soql": "SELECT count(*) WHERE (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%umbria%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%umbria%')))",
+      "new_wrong_owner": false
+    }
+  ],
+  "llm_execution_mode": "DETERMINISTIC_OFFLINE_NO_LLM",
+  "llm_provider_live_coverage": "NOT_VERIFIED"
+}

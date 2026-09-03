@@ -83,15 +83,13 @@ def test_idempotence_no_new_debt_and_no_alias_invention(prediction):
 
 
 def test_real_query_pipeline_stratified_canaries(prediction, monkeypatch):
-    """Independent candidates work; the global blocker is tested separately."""
+    """Every stratum uses the jointly loaded candidate, including M1A blockers."""
     monkeypatch.setattr('app.core.soql_builder.project_buyer_names', prediction['registry'].project)
     router = QueryRouter(entity_resolver=prediction['resolver'])
     builder = SoQLBuilder()
     from scripts.audits.verify_municipal_m1a import select_canaries
 
     for p in select_canaries(prediction['proposals'])['proposals']:
-        if p['code'] == '15494':
-            continue  # Ordering-span blocker remains until M1A.1 block B.
         for alias in p['aliases']:
             for kind, ds, column in [
                 ('contratos', 'jbjy-vk9h', 'nombre_entidad'),
@@ -113,15 +111,15 @@ def test_real_query_pipeline_stratified_canaries(prediction, monkeypatch):
                 assert f'{column} like' not in soql.lower()
 
 
-def test_exhaustive_pipeline_gate_has_no_capture_wrong_owner(prediction):
+def test_exhaustive_pipeline_gate_has_no_failure_or_wrong_owner(prediction):
     p = prediction
     gate = pipeline_gate(p['before'], p['result'][0], p['result'][1], p['proposals'])
-    assert gate['status'] == 'BLOCKED'
+    assert gate['status'] == 'PASS'
     assert gate['checks'] == 1888
-    assert gate['failed_queries'] == 4
-    assert gate['affected_municipalities'] == 1
+    assert gate['failed_queries'] == 0
+    assert gate['affected_municipalities'] == 0
     assert gate['new_wrong_owner_queries'] == 0
-    assert {f['code'] for f in gate['failures']} == {'15494'}
+    assert gate['failures'] == []
 
 
 @pytest.mark.parametrize(

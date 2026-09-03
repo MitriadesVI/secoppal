@@ -66,3 +66,21 @@ def mask_consumed_spans(text: str, spans: Iterable[object]) -> str:
         for index in range(start, end):
             chars[index] = " "
     return "".join(chars)
+
+
+def shield_spans(text: str, spans: Iterable[object]) -> tuple[str, dict[str, str]]:
+    """Replace spans with opaque markers for a consumer that changes offsets.
+
+    Unlike whitespace masking, a marker prevents a command from bridging two
+    sides of a protected name. The caller restores each marker after parsing.
+    """
+    validated = [_validate_span(span, len(text)) for span in spans]
+    replacements = {}
+    masked = text
+    for index, (start, end) in enumerate(reversed(_merge_spans(validated))):
+        marker = chr(0xE000 + index)
+        while marker in text or marker in replacements:
+            marker += chr(0xE000)
+        replacements[marker] = text[start:end]
+        masked = masked[:start] + marker + masked[end:]
+    return masked, replacements
