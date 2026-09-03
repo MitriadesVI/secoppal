@@ -1,0 +1,1588 @@
+{
+  "audit": "PUBLIC-UNIVERSITY-COMPLETION-R2FB",
+  "type": "supervised-curation/replay",
+  "as_of": "2026-09-02",
+  "observed_at": "2026-09-02",
+  "recent_since": "2025-09-02",
+  "head_before": "e33a97a",
+  "authorities": {
+    "identity": "NIT + physical source name + SECOP activity",
+    "alias_policy": "ADR-072",
+    "source_projection": "ADR-073",
+    "processes": "p6dx-8zbt",
+    "contracts": "jbjy-vk9h",
+    "buyer_directory": "4ex9-j3n8",
+    "directory_rows_scanned": 27290
+  },
+  "methodology": {
+    "similarity_is_identity_authority": false,
+    "source_name_split_rule": "Different physical names for one NIT across datasets; absence in one dataset is not a split.",
+    "binding_rule": "A binding is declared only when the canonical identity differs byte-for-byte from the physical name.",
+    "scan_audit_scope": "full buyer directory, token-sequence match"
+  },
+  "target_universe": [
+    "Universidad Colegio Mayor de Cundinamarca",
+    "Universidad Popular del Cesar",
+    "Universidad Tecnológica del Chocó Diego Luis Córdoba",
+    "Universidad de Cundinamarca",
+    "Universidad de La Guajira",
+    "Universidad de Sucre",
+    "Universidad del Pacífico",
+    "Universidad del Tolima"
+  ],
+  "target_matrix_pre": {
+    "FAIL_CLOSED": 8
+  },
+  "target_matrix_post": {
+    "PASS_EXACT": 8
+  },
+  "full_universe_post": {
+    "total": 34,
+    "pass_exact": 33,
+    "fail_closed": 1,
+    "wrong_owner": 0,
+    "fuzzy_only": 0,
+    "like": 0,
+    "ambiguous": 0,
+    "regressions_outside_target": [],
+    "new_regression_outside_target": 0
+  },
+  "identity_changes": {
+    "identities_added": [
+      "UNIVERSIDAD COLEGIO MAYOR DE CUNDINAMARCA",
+      "UNIVERSIDAD DE CUNDINAMARCA",
+      "UNIVERSIDAD DE LA GUAJIRA",
+      "UNIVERSIDAD DE SUCRE",
+      "UNIVERSIDAD DEL PACÍFICO",
+      "UNIVERSIDAD DEL TOLIMA",
+      "UNIVERSIDAD POPULAR DEL CESAR",
+      "UNIVERSIDAD TECNOLÓGICA DEL CHOCÓ DIEGO LUIS CÓRDOBA"
+    ],
+    "aliases_added_normalized": [
+      "colegio mayor de cundinamarca",
+      "universidad colegio mayor de cundinamarca",
+      "universidad de cundinamarca",
+      "universidad de la guajira",
+      "universidad de sucre",
+      "universidad del pacifico",
+      "universidad del tolima",
+      "universidad popular del cesar",
+      "universidad tecnologica del choco",
+      "universidad tecnologica del choco diego luis cordoba"
+    ],
+    "aliases_removed": [],
+    "scan_disabled": [],
+    "resolution_blocked": []
+  },
+  "source_projection": {
+    "bindings_added": [
+      "UNIVERSIDAD COLEGIO MAYOR DE CUNDINAMARCA",
+      "UNIVERSIDAD DEL PACÍFICO",
+      "UNIVERSIDAD POPULAR DEL CESAR",
+      "UNIVERSIDAD TECNOLÓGICA DEL CHOCÓ DIEGO LUIS CÓRDOBA"
+    ],
+    "bindings_not_required": [
+      "UNIVERSIDAD DE CUNDINAMARCA",
+      "UNIVERSIDAD DE LA GUAJIRA",
+      "UNIVERSIDAD DE SUCRE",
+      "UNIVERSIDAD DEL TOLIMA"
+    ],
+    "sidecar_total_bindings": 9,
+    "sidecar_schema_version": 2,
+    "sidecar_evidence_by_binding": {
+      "DEPARTAMENTO ADMINISTRATIVO DE LA PRESIDENCIA DE LA REPÚBLICA": "artifacts/audits/source_name_projection_v1.json",
+      "UNIATLANTICO": "artifacts/audits/public_university_pilot_r2fa.json",
+      "UNIVERSIDAD COLEGIO MAYOR DE CUNDINAMARCA": "artifacts/audits/public_university_completion_r2fb.json",
+      "UNIVERSIDAD DE CÓRDOBA": "artifacts/audits/public_university_pilot_r2fa.json",
+      "UNIVERSIDAD DE LA AMAZONIA": "artifacts/audits/public_university_pilot_r2fa.json",
+      "UNIVERSIDAD DEL PACÍFICO": "artifacts/audits/public_university_completion_r2fb.json",
+      "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA": "artifacts/audits/public_university_pilot_r2fa.json",
+      "UNIVERSIDAD POPULAR DEL CESAR": "artifacts/audits/public_university_completion_r2fb.json",
+      "UNIVERSIDAD TECNOLÓGICA DEL CHOCÓ DIEGO LUIS CÓRDOBA": "artifacts/audits/public_university_completion_r2fb.json"
+    },
+    "canaries": [
+      {
+        "canonical_name": "UNIVERSIDAD COLEGIO MAYOR DE CUNDINAMARCA",
+        "identity_key": "NIT:800144829",
+        "observed_at": "2026-09-02",
+        "evidence": "artifacts/audits/public_university_completion_r2fb.json",
+        "observed_rows": {
+          "p6dx-8zbt": 16
+        },
+        "datasets": {
+          "p6dx-8zbt": {
+            "names": [
+              "Universidad Colegio Mayor de Cundinamarca"
+            ],
+            "soql": "SELECT count(*) WHERE entidad = 'Universidad Colegio Mayor de Cundinamarca'",
+            "declared": true,
+            "exact_only": true,
+            "params_immutable": true
+          },
+          "jbjy-vk9h": {
+            "names": [],
+            "soql": "SELECT count(*) WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%UNIVERSIDAD COLEGIO MAYOR DE CUNDINAMARCA%'))",
+            "declared": false,
+            "exact_only": false,
+            "params_immutable": true
+          }
+        }
+      },
+      {
+        "canonical_name": "UNIVERSIDAD DEL PACÍFICO",
+        "identity_key": "NIT:835000300",
+        "observed_at": "2026-09-02",
+        "evidence": "artifacts/audits/public_university_completion_r2fb.json",
+        "observed_rows": {
+          "p6dx-8zbt": 987,
+          "jbjy-vk9h": 5
+        },
+        "datasets": {
+          "p6dx-8zbt": {
+            "names": [
+              "UNIVERSIDAD DEL PACIFICO//"
+            ],
+            "soql": "SELECT count(*) WHERE entidad = 'UNIVERSIDAD DEL PACIFICO//'",
+            "declared": true,
+            "exact_only": true,
+            "params_immutable": true
+          },
+          "jbjy-vk9h": {
+            "names": [
+              "UNIVERSIDAD DEL PACIFICO//"
+            ],
+            "soql": "SELECT count(*) WHERE nombre_entidad = 'UNIVERSIDAD DEL PACIFICO//'",
+            "declared": true,
+            "exact_only": true,
+            "params_immutable": true
+          }
+        }
+      },
+      {
+        "canonical_name": "UNIVERSIDAD POPULAR DEL CESAR",
+        "identity_key": "NIT:8923002856",
+        "observed_at": "2026-09-02",
+        "evidence": "artifacts/audits/public_university_completion_r2fb.json",
+        "observed_rows": {
+          "p6dx-8zbt": 57
+        },
+        "datasets": {
+          "p6dx-8zbt": {
+            "names": [
+              "UNIVERSIDAD POPULAR DEL CESAR."
+            ],
+            "soql": "SELECT count(*) WHERE entidad = 'UNIVERSIDAD POPULAR DEL CESAR.'",
+            "declared": true,
+            "exact_only": true,
+            "params_immutable": true
+          },
+          "jbjy-vk9h": {
+            "names": [],
+            "soql": "SELECT count(*) WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%UNIVERSIDAD POPULAR DEL CESAR%'))",
+            "declared": false,
+            "exact_only": false,
+            "params_immutable": true
+          }
+        }
+      },
+      {
+        "canonical_name": "UNIVERSIDAD TECNOLÓGICA DEL CHOCÓ DIEGO LUIS CÓRDOBA",
+        "identity_key": "NIT:891680089",
+        "observed_at": "2026-09-02",
+        "evidence": "artifacts/audits/public_university_completion_r2fb.json",
+        "observed_rows": {
+          "p6dx-8zbt": 2257,
+          "jbjy-vk9h": 1
+        },
+        "datasets": {
+          "p6dx-8zbt": {
+            "names": [
+              "UNIVERSIDAD TECNOLOGICA DEL CHOCO"
+            ],
+            "soql": "SELECT count(*) WHERE entidad = 'UNIVERSIDAD TECNOLOGICA DEL CHOCO'",
+            "declared": true,
+            "exact_only": true,
+            "params_immutable": true
+          },
+          "jbjy-vk9h": {
+            "names": [
+              "UNIVERSIDAD TECNOLOGICA DEL CHOCO"
+            ],
+            "soql": "SELECT count(*) WHERE nombre_entidad = 'UNIVERSIDAD TECNOLOGICA DEL CHOCO'",
+            "declared": true,
+            "exact_only": true,
+            "params_immutable": true
+          }
+        }
+      },
+      {
+        "canonical_name": "UNIVERSIDAD DE CUNDINAMARCA",
+        "identity_key": null,
+        "no_binding_reason": "CANONICAL_IS_THE_PHYSICAL_NAME_BYTE_FOR_BYTE",
+        "datasets": {
+          "p6dx-8zbt": {
+            "declared": false
+          },
+          "jbjy-vk9h": {
+            "declared": false
+          }
+        }
+      },
+      {
+        "canonical_name": "UNIVERSIDAD DE LA GUAJIRA",
+        "identity_key": null,
+        "no_binding_reason": "CANONICAL_IS_THE_PHYSICAL_NAME_BYTE_FOR_BYTE",
+        "datasets": {
+          "p6dx-8zbt": {
+            "declared": false
+          },
+          "jbjy-vk9h": {
+            "declared": false
+          }
+        }
+      },
+      {
+        "canonical_name": "UNIVERSIDAD DE SUCRE",
+        "identity_key": null,
+        "no_binding_reason": "CANONICAL_IS_THE_PHYSICAL_NAME_BYTE_FOR_BYTE",
+        "datasets": {
+          "p6dx-8zbt": {
+            "declared": false
+          },
+          "jbjy-vk9h": {
+            "declared": false
+          }
+        }
+      },
+      {
+        "canonical_name": "UNIVERSIDAD DEL TOLIMA",
+        "identity_key": null,
+        "no_binding_reason": "CANONICAL_IS_THE_PHYSICAL_NAME_BYTE_FOR_BYTE",
+        "datasets": {
+          "p6dx-8zbt": {
+            "declared": false
+          },
+          "jbjy-vk9h": {
+            "declared": false
+          }
+        }
+      }
+    ]
+  },
+  "gates": {
+    "new_scan_cross_owner": 0,
+    "scan_cross_owner_hits": [],
+    "registry_homonyms_without_activity": [
+      {
+        "alias": "universidad de la guajira",
+        "owner": "UNIVERSIDAD DE LA GUAJIRA",
+        "foreign_name": "UNIVERSIDAD DE LA GUAJIRA",
+        "foreign_nit": "1010069431",
+        "foreign_processes": 0,
+        "foreign_contracts": 0,
+        "is_physical_buyer": false
+      },
+      {
+        "alias": "universidad de la guajira",
+        "owner": "UNIVERSIDAD DE LA GUAJIRA",
+        "foreign_name": "UNIVERSIDAD DE LA GUAJIRA",
+        "foreign_nit": "8929150294",
+        "foreign_processes": 0,
+        "foreign_contracts": 0,
+        "is_physical_buyer": false
+      },
+      {
+        "alias": "universidad tecnologica del choco",
+        "owner": "UNIVERSIDAD TECNOLÓGICA DEL CHOCÓ DIEGO LUIS CÓRDOBA",
+        "foreign_name": "UNIVERSIDAD TECNOLOGICA DEL CHOCO",
+        "foreign_nit": "35601815",
+        "foreign_processes": 0,
+        "foreign_contracts": 0,
+        "is_physical_buyer": false
+      }
+    ],
+    "exact_multi_owner_before": 172,
+    "exact_multi_owner_after": 172,
+    "new_multi_owner_keys": [],
+    "wrong_owner_target_post": 0,
+    "fuzzy_only_target_post": 0
+  },
+  "verification": {
+    "focused_regressions": {
+      "command": ".venv/bin/python -m pytest -q tests/test_public_university_completion_r2fb.py tests/test_public_university_pilot_r2fa.py tests/test_source_name_projection_v1.py tests/test_fuzzy_identity_multiword_r2e1a.py tests/test_institutional_fuzzy_safety_r2e1.py tests/test_control_national_r2e.py tests/test_scan_alias_eligibility_r2d3.py tests/test_car_core_r2d.py tests/test_national_core_r2b.py tests/test_root_buyer_evidence_r1d.py tests/test_gazetteer_alias_ownership_r1c.py tests/test_sena_resolver.py tests/test_icbf_regionals.py",
+      "result": "886 passed"
+    },
+    "query_corpus": "89/89 PASS, 0 FAIL",
+    "ruff": "PASS (27 hallazgos preexistentes en .hermes/ y docs/audits/evidence/)",
+    "lint_core": "PASS",
+    "full_suite": "10713 passed, 2 skipped, 15 xfailed",
+    "new_xfails": 0,
+    "live_projection_parity": {
+      "result": "PASS",
+      "checked": {
+        "UNIVERSIDAD COLEGIO MAYOR DE CUNDINAMARCA": {
+          "p6dx-8zbt": 16
+        },
+        "UNIVERSIDAD DEL PACÍFICO": {
+          "p6dx-8zbt": 987,
+          "jbjy-vk9h": 5
+        },
+        "UNIVERSIDAD POPULAR DEL CESAR": {
+          "p6dx-8zbt": 57
+        },
+        "UNIVERSIDAD TECNOLÓGICA DEL CHOCÓ DIEGO LUIS CÓRDOBA": {
+          "p6dx-8zbt": 2257,
+          "jbjy-vk9h": 1
+        }
+      }
+    },
+    "llm_execution_mode": "DEGRADED_REGEX_ONLY",
+    "llm_provider_live_coverage": "NOT_VERIFIED",
+    "llm_provider_probe": "deepseek chat/completions -> HTTP 402 Insufficient Balance"
+  },
+  "cases": [
+    {
+      "logical_name": "Universidad de la Amazonia",
+      "nit": "891190346",
+      "in_target": false,
+      "registry_names": [
+        "UNIVERSIDAD DE LA AMAZONIA (ENTIDAD)"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD DE LA AMAZONIA (Entidad)"
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD DE LA AMAZONIA (Entidad)"
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD DE LA AMAZONIA (Entidad)": 2549
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD DE LA AMAZONIA (Entidad)": 2
+      },
+      "all_time_processes": 2549,
+      "all_time_contracts": 2,
+      "recent_12m_processes": 515,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD DE LA AMAZONIA"
+      ],
+      "current_resolution": "UNIVERSIDAD DE LA AMAZONIA",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD DE LA AMAZONIA",
+      "current_scan_alias": "universidad de la amazonia",
+      "r2fa_post": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "post_classification": "PASS_EXACT"
+    },
+    {
+      "logical_name": "Universidad de Antioquia",
+      "nit": "890980040",
+      "in_target": false,
+      "registry_names": [
+        "UNIVERSIDAD DE ANTIOQUIA"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD DE ANTIOQUIA"
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD DE ANTIOQUIA"
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD DE ANTIOQUIA": 44152
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD DE ANTIOQUIA": 34
+      },
+      "all_time_processes": 44152,
+      "all_time_contracts": 34,
+      "recent_12m_processes": 8060,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD DE ANTIOQUIA"
+      ],
+      "current_resolution": "UNIVERSIDAD DE ANTIOQUIA",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD DE ANTIOQUIA",
+      "current_scan_alias": "universidad de antioquia",
+      "r2fa_post": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "post_classification": "PASS_EXACT"
+    },
+    {
+      "logical_name": "Universidad del Atlántico",
+      "nit": "890102257",
+      "in_target": false,
+      "registry_names": [
+        "UNIVERSIDAD DEL ATLaNTICO"
+      ],
+      "process_source_names": [
+        "Universidad del Atlántico"
+      ],
+      "contract_source_names": [
+        "Universidad del Atlántico"
+      ],
+      "process_observed_rows": {
+        "Universidad del Atlántico": 4592
+      },
+      "contract_observed_rows": {
+        "Universidad del Atlántico": 4546
+      },
+      "all_time_processes": 4592,
+      "all_time_contracts": 4546,
+      "recent_12m_processes": 853,
+      "recent_12m_contracts": 797,
+      "existing_gazetteer_records": [
+        "UNIATLANTICO"
+      ],
+      "current_resolution": "UNIATLANTICO",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIATLANTICO",
+      "current_scan_alias": "universidad del atlantico",
+      "r2fa_post": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "post_classification": "PASS_EXACT"
+    },
+    {
+      "logical_name": "Universidad de Caldas",
+      "nit": "890801063",
+      "in_target": false,
+      "registry_names": [
+        "UNIVERSIDAD DE CALDAS."
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD DE CALDAS."
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD DE CALDAS."
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD DE CALDAS.": 9069
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD DE CALDAS.": 10
+      },
+      "all_time_processes": 9069,
+      "all_time_contracts": 10,
+      "recent_12m_processes": 1719,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD DE CALDAS."
+      ],
+      "current_resolution": "UNIVERSIDAD DE CALDAS.",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD DE CALDAS.",
+      "current_scan_alias": "universidad de caldas",
+      "r2fa_post": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "post_classification": "PASS_EXACT"
+    },
+    {
+      "logical_name": "Universidad de Cartagena",
+      "nit": "890480123",
+      "in_target": false,
+      "registry_names": [
+        "GGGGGGG",
+        "UNIVERSIDAD DE CARTAGENA"
+      ],
+      "process_source_names": [
+        "Universidad de Cartagena"
+      ],
+      "contract_source_names": [
+        "Universidad de Cartagena"
+      ],
+      "process_observed_rows": {
+        "Universidad de Cartagena": 6319
+      },
+      "contract_observed_rows": {
+        "Universidad de Cartagena": 2
+      },
+      "all_time_processes": 6319,
+      "all_time_contracts": 2,
+      "recent_12m_processes": 1426,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "Universidad de Cartagena"
+      ],
+      "current_resolution": "Universidad de Cartagena",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "Universidad de Cartagena",
+      "current_scan_alias": "universidad de cartagena",
+      "r2fa_post": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "post_classification": "PASS_EXACT"
+    },
+    {
+      "logical_name": "Universidad del Cauca",
+      "nit": "891500319",
+      "in_target": false,
+      "registry_names": [
+        "UNIVERSIDAD DEL CAUCA"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD DEL CAUCA"
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD DEL CAUCA"
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD DEL CAUCA": 8659
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD DEL CAUCA": 1
+      },
+      "all_time_processes": 8659,
+      "all_time_contracts": 1,
+      "recent_12m_processes": 2479,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD DEL CAUCA"
+      ],
+      "current_resolution": "UNIVERSIDAD DEL CAUCA",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD DEL CAUCA",
+      "current_scan_alias": "universidad del cauca",
+      "r2fa_post": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "post_classification": "PASS_EXACT"
+    },
+    {
+      "logical_name": "Universidad Colegio Mayor de Cundinamarca",
+      "nit": "800144829",
+      "in_target": true,
+      "registry_names": [
+        "UNIVERSIDAD COLEGIO MAYOR DE CUNDINAMARCA"
+      ],
+      "process_source_names": [
+        "Universidad Colegio Mayor de Cundinamarca"
+      ],
+      "contract_source_names": [],
+      "process_observed_rows": {
+        "Universidad Colegio Mayor de Cundinamarca": 16
+      },
+      "contract_observed_rows": {},
+      "all_time_processes": 16,
+      "all_time_contracts": 0,
+      "recent_12m_processes": 1,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD COLEGIO MAYOR DE CUNDINAMARCA"
+      ],
+      "current_resolution": "UNIVERSIDAD COLEGIO MAYOR DE CUNDINAMARCA",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD COLEGIO MAYOR DE CUNDINAMARCA",
+      "current_scan_alias": "universidad colegio mayor de cundinamarca",
+      "r2fa_post": "FAIL_CLOSED",
+      "pre_classification": "FAIL_CLOSED",
+      "post_classification": "PASS_EXACT",
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "decision": "ADD_EXACT_AND_SCAN + SOURCE_PROJECTION(processes only)",
+      "canonical_name": "UNIVERSIDAD COLEGIO MAYOR DE CUNDINAMARCA",
+      "source_projection": true,
+      "aliases_added": [
+        "colegio mayor de cundinamarca",
+        "universidad colegio mayor de cundinamarca"
+      ]
+    },
+    {
+      "logical_name": "Universidad de Córdoba",
+      "nit": "891080031",
+      "in_target": false,
+      "registry_names": [
+        "UNIVERSIDAD DE CORDOBA"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD DE CORDOBA"
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD DE CORDOBA"
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD DE CORDOBA": 3708
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD DE CORDOBA": 2
+      },
+      "all_time_processes": 3708,
+      "all_time_contracts": 2,
+      "recent_12m_processes": 1102,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD DE CÓRDOBA"
+      ],
+      "current_resolution": "UNIVERSIDAD DE CÓRDOBA",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD DE CÓRDOBA",
+      "current_scan_alias": "universidad de cordoba",
+      "r2fa_post": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "post_classification": "PASS_EXACT"
+    },
+    {
+      "logical_name": "Universidad de Cundinamarca",
+      "nit": "890680062",
+      "in_target": true,
+      "registry_names": [
+        "CENTROACADEMICODEPORTIVO",
+        "UNIVERSIDAD DE CUNDINAMARCA"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD DE CUNDINAMARCA"
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD DE CUNDINAMARCA"
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD DE CUNDINAMARCA": 3551
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD DE CUNDINAMARCA": 10
+      },
+      "all_time_processes": 3551,
+      "all_time_contracts": 10,
+      "recent_12m_processes": 469,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD DE CUNDINAMARCA"
+      ],
+      "current_resolution": "UNIVERSIDAD DE CUNDINAMARCA",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD DE CUNDINAMARCA",
+      "current_scan_alias": "universidad de cundinamarca",
+      "r2fa_post": "FAIL_CLOSED",
+      "pre_classification": "FAIL_CLOSED",
+      "post_classification": "PASS_EXACT",
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "decision": "ADD_EXACT_AND_SCAN",
+      "canonical_name": "UNIVERSIDAD DE CUNDINAMARCA",
+      "source_projection": false,
+      "aliases_added": [
+        "universidad de cundinamarca"
+      ]
+    },
+    {
+      "logical_name": "Universidad Distrital Francisco José de Caldas",
+      "nit": "899999230",
+      "in_target": false,
+      "registry_names": [
+        "UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS"
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS"
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS": 29500
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS": 557
+      },
+      "all_time_processes": 29500,
+      "all_time_contracts": 557,
+      "recent_12m_processes": 4927,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS"
+      ],
+      "current_resolution": "UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD DISTRITAL FRANCISCO JOSE DE CALDAS",
+      "current_scan_alias": "universidad distrital francisco jose de caldas",
+      "r2fa_post": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "post_classification": "PASS_EXACT"
+    },
+    {
+      "logical_name": "Universidad Francisco de Paula Santander - Cúcuta",
+      "nit": "890500622",
+      "in_target": false,
+      "registry_names": [
+        "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER"
+      ],
+      "contract_source_names": [],
+      "process_observed_rows": {
+        "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER": 7866
+      },
+      "contract_observed_rows": {},
+      "all_time_processes": 7866,
+      "all_time_contracts": 0,
+      "recent_12m_processes": 1273,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER"
+      ],
+      "current_resolution": "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER",
+      "current_scan_alias": "universidad francisco de paula santander - cucuta",
+      "r2fa_post": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "post_classification": "PASS_EXACT"
+    },
+    {
+      "logical_name": "Universidad Francisco de Paula Santander - Ocaña",
+      "nit": "8001631300",
+      "in_target": false,
+      "registry_names": [
+        "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)"
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)"
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)": 1509
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA (ENTIDAD)": 1
+      },
+      "all_time_processes": 1509,
+      "all_time_contracts": 1,
+      "recent_12m_processes": 229,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA"
+      ],
+      "current_resolution": "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD FRANCISCO DE PAULA SANTANDER SECCIONAL OCAÑA",
+      "current_scan_alias": "universidad francisco de paula santander - ocana",
+      "r2fa_post": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "post_classification": "PASS_EXACT"
+    },
+    {
+      "logical_name": "Universidad Industrial de Santander",
+      "nit": "890201213",
+      "in_target": false,
+      "registry_names": [
+        "UNIVERSIDAD INDUSTRIAL DE SANTANDER"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD INDUSTRIAL DE SANTANDER"
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD INDUSTRIAL DE SANTANDER"
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD INDUSTRIAL DE SANTANDER": 27430
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD INDUSTRIAL DE SANTANDER": 2
+      },
+      "all_time_processes": 27430,
+      "all_time_contracts": 2,
+      "recent_12m_processes": 6458,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD INDUSTRIAL DE SANTANDER"
+      ],
+      "current_resolution": "UNIVERSIDAD INDUSTRIAL DE SANTANDER",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD INDUSTRIAL DE SANTANDER",
+      "current_scan_alias": "universidad industrial de santander",
+      "r2fa_post": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "post_classification": "PASS_EXACT"
+    },
+    {
+      "logical_name": "Universidad de La Guajira",
+      "nit": "892115029",
+      "in_target": true,
+      "registry_names": [
+        "UNIVERSIDA DE LA GUAJIRA",
+        "UNIVERSIDAD DE LA GUAJIRA"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD DE LA GUAJIRA"
+      ],
+      "contract_source_names": [],
+      "process_observed_rows": {
+        "UNIVERSIDAD DE LA GUAJIRA": 3828
+      },
+      "contract_observed_rows": {},
+      "all_time_processes": 3828,
+      "all_time_contracts": 0,
+      "recent_12m_processes": 1001,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD DE LA GUAJIRA"
+      ],
+      "current_resolution": "UNIVERSIDAD DE LA GUAJIRA",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD DE LA GUAJIRA",
+      "current_scan_alias": "universidad de la guajira",
+      "r2fa_post": "FAIL_CLOSED",
+      "pre_classification": "FAIL_CLOSED",
+      "post_classification": "PASS_EXACT",
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "decision": "ADD_EXACT_AND_SCAN",
+      "canonical_name": "UNIVERSIDAD DE LA GUAJIRA",
+      "source_projection": false,
+      "aliases_added": [
+        "universidad de la guajira"
+      ]
+    },
+    {
+      "logical_name": "Universidad de los Llanos",
+      "nit": "892000757",
+      "in_target": false,
+      "registry_names": [
+        "UNIVERSIDAD DE LOS LLANOS"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD DE LOS LLANOS"
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD DE LOS LLANOS"
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD DE LOS LLANOS": 5872
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD DE LOS LLANOS": 12
+      },
+      "all_time_processes": 5872,
+      "all_time_contracts": 12,
+      "recent_12m_processes": 1297,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD DE LOS LLANOS"
+      ],
+      "current_resolution": "UNIVERSIDAD DE LOS LLANOS",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD DE LOS LLANOS",
+      "current_scan_alias": "universidad de los llanos",
+      "r2fa_post": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "post_classification": "PASS_EXACT"
+    },
+    {
+      "logical_name": "Universidad del Magdalena",
+      "nit": "891780111",
+      "in_target": false,
+      "registry_names": [
+        "UNIMAGDALENA"
+      ],
+      "process_source_names": [
+        "UNIMAGDALENA"
+      ],
+      "contract_source_names": [
+        "UNIMAGDALENA"
+      ],
+      "process_observed_rows": {
+        "UNIMAGDALENA": 20118
+      },
+      "contract_observed_rows": {
+        "UNIMAGDALENA": 2
+      },
+      "all_time_processes": 20118,
+      "all_time_contracts": 2,
+      "recent_12m_processes": 5308,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIMAGDALENA"
+      ],
+      "current_resolution": "UNIMAGDALENA",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIMAGDALENA",
+      "current_scan_alias": "universidad del magdalena",
+      "r2fa_post": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "post_classification": "PASS_EXACT"
+    },
+    {
+      "logical_name": "Universidad Militar Nueva Granada",
+      "nit": "800225340",
+      "in_target": false,
+      "registry_names": [
+        "UNIVERSIDAD MILITAR NUEVA GRANADA**"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD MILITAR NUEVA GRANADA**"
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD MILITAR NUEVA GRANADA**"
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD MILITAR NUEVA GRANADA**": 10770
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD MILITAR NUEVA GRANADA**": 157
+      },
+      "all_time_processes": 10770,
+      "all_time_contracts": 157,
+      "recent_12m_processes": 2415,
+      "recent_12m_contracts": 136,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD MILITAR NUEVA GRANADA**"
+      ],
+      "current_resolution": "UNIVERSIDAD MILITAR NUEVA GRANADA**",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD MILITAR NUEVA GRANADA**",
+      "current_scan_alias": "universidad militar nueva granada",
+      "r2fa_post": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "post_classification": "PASS_EXACT"
+    },
+    {
+      "logical_name": "Universidad Nacional Abierta y a Distancia",
+      "nit": "860512780",
+      "in_target": false,
+      "registry_names": [
+        "UNAD",
+        "UNIVERSIDAD NACIONAL ABIERTA Y A DISTANCIA."
+      ],
+      "process_source_names": [
+        "UNAD"
+      ],
+      "contract_source_names": [
+        "UNAD"
+      ],
+      "process_observed_rows": {
+        "UNAD": 6451
+      },
+      "contract_observed_rows": {
+        "UNAD": 22
+      },
+      "all_time_processes": 6451,
+      "all_time_contracts": 22,
+      "recent_12m_processes": 1500,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNAD"
+      ],
+      "current_resolution": "UNAD",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNAD",
+      "current_scan_alias": "universidad nacional abierta y a distancia",
+      "r2fa_post": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "post_classification": "PASS_EXACT"
+    },
+    {
+      "logical_name": "Universidad Nacional de Colombia",
+      "nit": "899999063",
+      "in_target": false,
+      "registry_names": [
+        "DOCTORADO SALUD PUBLICA - FACULTAD MEDICINA BOGOTA - UNIVERSIDAD NACIONAL DE COLOMBIA",
+        "UNIVERSIDAD NACIONAL DE COLOMBIA"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD NACIONAL DE COLOMBIA"
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD NACIONAL DE COLOMBIA"
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD NACIONAL DE COLOMBIA": 110849
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD NACIONAL DE COLOMBIA": 14
+      },
+      "all_time_processes": 110849,
+      "all_time_contracts": 14,
+      "recent_12m_processes": 28548,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD NACIONAL DE COLOMBIA"
+      ],
+      "current_resolution": "UNIVERSIDAD NACIONAL DE COLOMBIA",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD NACIONAL DE COLOMBIA",
+      "current_scan_alias": "universidad nacional de colombia",
+      "r2fa_post": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "post_classification": "PASS_EXACT"
+    },
+    {
+      "logical_name": "Universidad de Nariño",
+      "nit": "800118954",
+      "in_target": false,
+      "registry_names": [
+        "UNIVERSIDAD DE NARIÑO"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD DE NARIÑO"
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD DE NARIÑO"
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD DE NARIÑO": 21469
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD DE NARIÑO": 3
+      },
+      "all_time_processes": 21469,
+      "all_time_contracts": 3,
+      "recent_12m_processes": 5441,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD DE NARIÑO"
+      ],
+      "current_resolution": "UNIVERSIDAD DE NARIÑO",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD DE NARIÑO",
+      "current_scan_alias": "universidad de narino",
+      "r2fa_post": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "post_classification": "PASS_EXACT"
+    },
+    {
+      "logical_name": "Universidad del Pacífico",
+      "nit": "835000300",
+      "in_target": true,
+      "registry_names": [
+        "UNIVERSIDAD DEL PACIFICO//"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD DEL PACIFICO//"
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD DEL PACIFICO//"
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD DEL PACIFICO//": 987
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD DEL PACIFICO//": 5
+      },
+      "all_time_processes": 987,
+      "all_time_contracts": 5,
+      "recent_12m_processes": 224,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD DEL PACÍFICO"
+      ],
+      "current_resolution": "UNIVERSIDAD DEL PACÍFICO",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD DEL PACÍFICO",
+      "current_scan_alias": "universidad del pacifico",
+      "r2fa_post": "FAIL_CLOSED",
+      "pre_classification": "FAIL_CLOSED",
+      "post_classification": "PASS_EXACT",
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "decision": "ADD_EXACT_AND_SCAN + SOURCE_PROJECTION",
+      "canonical_name": "UNIVERSIDAD DEL PACÍFICO",
+      "source_projection": true,
+      "aliases_added": [
+        "universidad del pacifico"
+      ]
+    },
+    {
+      "logical_name": "Universidad de Pamplona",
+      "nit": "890501510",
+      "in_target": false,
+      "registry_names": [],
+      "process_source_names": [
+        "UNIVERSIDAD DE PAMPLONA"
+      ],
+      "contract_source_names": [],
+      "process_observed_rows": {
+        "UNIVERSIDAD DE PAMPLONA": 10101
+      },
+      "contract_observed_rows": {},
+      "all_time_processes": 10101,
+      "all_time_contracts": 0,
+      "recent_12m_processes": 2581,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD DE PAMPLONA"
+      ],
+      "current_resolution": "UNIVERSIDAD DE PAMPLONA",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD DE PAMPLONA",
+      "current_scan_alias": "universidad de pamplona",
+      "r2fa_post": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "post_classification": "PASS_EXACT"
+    },
+    {
+      "logical_name": "Universidad Pedagógica Nacional",
+      "nit": "899999124",
+      "in_target": false,
+      "registry_names": [
+        "UNIVERSIDAD PEDAGoGICA NACIONAL"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD PEDAGÓGICA NACIONAL"
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD PEDAGÓGICA NACIONAL"
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD PEDAGÓGICA NACIONAL": 4587
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD PEDAGÓGICA NACIONAL": 476
+      },
+      "all_time_processes": 4587,
+      "all_time_contracts": 476,
+      "recent_12m_processes": 777,
+      "recent_12m_contracts": 23,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD PEDAGÓGICA NACIONAL"
+      ],
+      "current_resolution": "UNIVERSIDAD PEDAGÓGICA NACIONAL",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD PEDAGÓGICA NACIONAL",
+      "current_scan_alias": "universidad pedagogica nacional",
+      "r2fa_post": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "post_classification": "PASS_EXACT"
+    },
+    {
+      "logical_name": "Universidad Pedagógica y Tecnológica de Colombia",
+      "nit": "891800330",
+      "in_target": false,
+      "registry_names": [
+        "UPTC"
+      ],
+      "process_source_names": [
+        "UPTC"
+      ],
+      "contract_source_names": [
+        "UPTC"
+      ],
+      "process_observed_rows": {
+        "UPTC": 22366
+      },
+      "contract_observed_rows": {
+        "UPTC": 4
+      },
+      "all_time_processes": 22366,
+      "all_time_contracts": 4,
+      "recent_12m_processes": 5339,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UPTC"
+      ],
+      "current_resolution": "UPTC",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UPTC",
+      "current_scan_alias": "universidad pedagogica y tecnologica de colombia",
+      "r2fa_post": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "post_classification": "PASS_EXACT"
+    },
+    {
+      "logical_name": "Universidad Popular del Cesar",
+      "nit": "8923002856",
+      "in_target": true,
+      "registry_names": [
+        "UNIVERSIDAD POPULAR DEL CESAR."
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD POPULAR DEL CESAR."
+      ],
+      "contract_source_names": [],
+      "process_observed_rows": {
+        "UNIVERSIDAD POPULAR DEL CESAR.": 57
+      },
+      "contract_observed_rows": {},
+      "all_time_processes": 57,
+      "all_time_contracts": 0,
+      "recent_12m_processes": 32,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD POPULAR DEL CESAR"
+      ],
+      "current_resolution": "UNIVERSIDAD POPULAR DEL CESAR",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD POPULAR DEL CESAR",
+      "current_scan_alias": "universidad popular del cesar",
+      "r2fa_post": "FAIL_CLOSED",
+      "pre_classification": "FAIL_CLOSED",
+      "post_classification": "PASS_EXACT",
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "decision": "ADD_EXACT_AND_SCAN + SOURCE_PROJECTION(processes only)",
+      "canonical_name": "UNIVERSIDAD POPULAR DEL CESAR",
+      "source_projection": true,
+      "aliases_added": [
+        "universidad popular del cesar"
+      ]
+    },
+    {
+      "logical_name": "Universidad del Quindío",
+      "nit": "890000432",
+      "in_target": false,
+      "registry_names": [
+        "UNIQUINDIO",
+        "UNIVERSIDAD DEL QUINDIO"
+      ],
+      "process_source_names": [
+        "UNIQUINDIO"
+      ],
+      "contract_source_names": [],
+      "process_observed_rows": {
+        "UNIQUINDIO": 5978
+      },
+      "contract_observed_rows": {},
+      "all_time_processes": 5978,
+      "all_time_contracts": 0,
+      "recent_12m_processes": 1019,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIQUINDIO"
+      ],
+      "current_resolution": "UNIQUINDIO",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIQUINDIO",
+      "current_scan_alias": "universidad del quindio",
+      "r2fa_post": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "post_classification": "PASS_EXACT"
+    },
+    {
+      "logical_name": "Universidad de Sucre",
+      "nit": "892200323",
+      "in_target": true,
+      "registry_names": [
+        "UNIVERSIDAD DE SUCRE"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD DE SUCRE"
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD DE SUCRE"
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD DE SUCRE": 1719
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD DE SUCRE": 1
+      },
+      "all_time_processes": 1719,
+      "all_time_contracts": 1,
+      "recent_12m_processes": 395,
+      "recent_12m_contracts": 1,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD DE SUCRE"
+      ],
+      "current_resolution": "UNIVERSIDAD DE SUCRE",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD DE SUCRE",
+      "current_scan_alias": "universidad de sucre",
+      "r2fa_post": "FAIL_CLOSED",
+      "pre_classification": "FAIL_CLOSED",
+      "post_classification": "PASS_EXACT",
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "decision": "ADD_EXACT_AND_SCAN",
+      "canonical_name": "UNIVERSIDAD DE SUCRE",
+      "source_projection": false,
+      "aliases_added": [
+        "universidad de sucre"
+      ]
+    },
+    {
+      "logical_name": "Universidad Surcolombiana",
+      "nit": "891180084",
+      "in_target": false,
+      "registry_names": [
+        "UNIVERSIDAD SURCOLOMBIANA"
+      ],
+      "process_source_names": [
+        "Universidad Surcolombiana"
+      ],
+      "contract_source_names": [
+        "Universidad Surcolombiana"
+      ],
+      "process_observed_rows": {
+        "Universidad Surcolombiana": 12664
+      },
+      "contract_observed_rows": {
+        "Universidad Surcolombiana": 8
+      },
+      "all_time_processes": 12664,
+      "all_time_contracts": 8,
+      "recent_12m_processes": 2462,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "Universidad Surcolombiana"
+      ],
+      "current_resolution": "Universidad Surcolombiana",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "Universidad Surcolombiana",
+      "current_scan_alias": "universidad surcolombiana",
+      "r2fa_post": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "post_classification": "PASS_EXACT"
+    },
+    {
+      "logical_name": "Universidad Tecnológica del Chocó Diego Luis Córdoba",
+      "nit": "891680089",
+      "in_target": true,
+      "registry_names": [
+        "UNIVERSIDAD TECNOLOGICA DEL CHOCO"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD TECNOLOGICA DEL CHOCO"
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD TECNOLOGICA DEL CHOCO"
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD TECNOLOGICA DEL CHOCO": 2257
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD TECNOLOGICA DEL CHOCO": 1
+      },
+      "all_time_processes": 2257,
+      "all_time_contracts": 1,
+      "recent_12m_processes": 188,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD TECNOLÓGICA DEL CHOCÓ DIEGO LUIS CÓRDOBA"
+      ],
+      "current_resolution": "UNIVERSIDAD TECNOLÓGICA DEL CHOCÓ DIEGO LUIS CÓRDOBA",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD TECNOLÓGICA DEL CHOCÓ DIEGO LUIS CÓRDOBA",
+      "current_scan_alias": "universidad tecnologica del choco diego luis cordoba",
+      "r2fa_post": "FAIL_CLOSED",
+      "pre_classification": "FAIL_CLOSED",
+      "post_classification": "PASS_EXACT",
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "decision": "ADD_EXACT_AND_SCAN + SOURCE_PROJECTION",
+      "canonical_name": "UNIVERSIDAD TECNOLÓGICA DEL CHOCÓ DIEGO LUIS CÓRDOBA",
+      "source_projection": true,
+      "aliases_added": [
+        "universidad tecnologica del choco",
+        "universidad tecnologica del choco diego luis cordoba"
+      ]
+    },
+    {
+      "logical_name": "Universidad Tecnológica de Pereira",
+      "nit": "891480035",
+      "in_target": false,
+      "registry_names": [
+        "CCE ENTIDAD DE PRUEBAS (ENTIDAD DE SISTEMA)",
+        "UNIVERSIDAD TECNOLoGICA DE PEREIRA"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD TECNOLÓGICA DE PEREIRA",
+        "CCE ENTIDAD DE PRUEBAS (Entidad de Sistema)"
+      ],
+      "contract_source_names": [],
+      "process_observed_rows": {
+        "UNIVERSIDAD TECNOLÓGICA DE PEREIRA": 22384,
+        "CCE ENTIDAD DE PRUEBAS (Entidad de Sistema)": 199
+      },
+      "contract_observed_rows": {},
+      "all_time_processes": 22583,
+      "all_time_contracts": 0,
+      "recent_12m_processes": 3857,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD TECNOLÓGICA DE PEREIRA"
+      ],
+      "current_resolution": "UNIVERSIDAD TECNOLÓGICA DE PEREIRA",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD TECNOLÓGICA DE PEREIRA",
+      "current_scan_alias": "universidad tecnologica de pereira",
+      "r2fa_post": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "post_classification": "PASS_EXACT"
+    },
+    {
+      "logical_name": "Universidad del Tolima",
+      "nit": "890700640",
+      "in_target": true,
+      "registry_names": [
+        "UNIVERSIDAD DEL TOLIMA"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD DEL TOLIMA"
+      ],
+      "contract_source_names": [],
+      "process_observed_rows": {
+        "UNIVERSIDAD DEL TOLIMA": 4085
+      },
+      "contract_observed_rows": {},
+      "all_time_processes": 4085,
+      "all_time_contracts": 0,
+      "recent_12m_processes": 1229,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD DEL TOLIMA"
+      ],
+      "current_resolution": "UNIVERSIDAD DEL TOLIMA",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD DEL TOLIMA",
+      "current_scan_alias": "universidad del tolima",
+      "r2fa_post": "FAIL_CLOSED",
+      "pre_classification": "FAIL_CLOSED",
+      "post_classification": "PASS_EXACT",
+      "identity_classification": "SINGLE_SOURCE_NAME",
+      "decision": "ADD_EXACT_AND_SCAN",
+      "canonical_name": "UNIVERSIDAD DEL TOLIMA",
+      "source_projection": false,
+      "aliases_added": [
+        "universidad del tolima"
+      ]
+    },
+    {
+      "logical_name": "Universidad del Valle",
+      "nit": "890399010",
+      "in_target": false,
+      "registry_names": [
+        "UNIVERSIDAD DEL VALLE"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD DEL VALLE"
+      ],
+      "contract_source_names": [
+        "UNIVERSIDAD DEL VALLE"
+      ],
+      "process_observed_rows": {
+        "UNIVERSIDAD DEL VALLE": 14177
+      },
+      "contract_observed_rows": {
+        "UNIVERSIDAD DEL VALLE": 34
+      },
+      "all_time_processes": 14177,
+      "all_time_contracts": 34,
+      "recent_12m_processes": 3014,
+      "recent_12m_contracts": 1,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD DEL VALLE"
+      ],
+      "current_resolution": "UNIVERSIDAD DEL VALLE",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD DEL VALLE",
+      "current_scan_alias": "universidad del valle",
+      "r2fa_post": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "post_classification": "PASS_EXACT"
+    },
+    {
+      "logical_name": "Universidad Internacional del Trópico Americano",
+      "nit": "8440020714",
+      "in_target": false,
+      "registry_names": [
+        "UNIVERSIDAD INTERNACIONAL DEL TRoPICO AMERICANO UNITRoPICO"
+      ],
+      "process_source_names": [
+        "UNIVERSIDAD INTERNACIONAL DEL TRÓPICO AMERICANO UNITRÓPICO"
+      ],
+      "contract_source_names": [],
+      "process_observed_rows": {
+        "UNIVERSIDAD INTERNACIONAL DEL TRÓPICO AMERICANO UNITRÓPICO": 1725
+      },
+      "contract_observed_rows": {},
+      "all_time_processes": 1725,
+      "all_time_contracts": 0,
+      "recent_12m_processes": 362,
+      "recent_12m_contracts": 0,
+      "existing_gazetteer_records": [
+        "UNIVERSIDAD INTERNACIONAL DEL TRÓPICO AMERICANO UNITRÓPICO"
+      ],
+      "current_resolution": "UNIVERSIDAD INTERNACIONAL DEL TRÓPICO AMERICANO UNITRÓPICO",
+      "current_method": "exact",
+      "current_like_value": null,
+      "current_clarification_needed": false,
+      "current_scan_owner": "UNIVERSIDAD INTERNACIONAL DEL TRÓPICO AMERICANO UNITRÓPICO",
+      "current_scan_alias": "universidad internacional del tropico americano",
+      "r2fa_post": "PASS_EXACT",
+      "pre_classification": "PASS_EXACT",
+      "post_classification": "PASS_EXACT"
+    },
+    {
+      "logical_name": "Universidad Autónoma Indígena Intercultural",
+      "nit": null,
+      "in_target": false,
+      "registry_names": [],
+      "process_source_names": [],
+      "contract_source_names": [],
+      "process_observed_rows": {},
+      "contract_observed_rows": {},
+      "all_time_processes": null,
+      "all_time_contracts": null,
+      "recent_12m_processes": null,
+      "recent_12m_contracts": null,
+      "existing_gazetteer_records": [],
+      "current_resolution": null,
+      "current_method": "alias_resolution_blocked",
+      "current_like_value": null,
+      "current_clarification_needed": true,
+      "current_scan_owner": null,
+      "current_scan_alias": null,
+      "r2fa_post": "FAIL_CLOSED",
+      "pre_classification": "FAIL_CLOSED",
+      "post_classification": "FAIL_CLOSED"
+    }
+  ],
+  "generated_at": "2026-09-02",
+  "recommended_replay": ".venv/bin/python scripts/audits/audit_public_university_completion_r2fb.py"
+}

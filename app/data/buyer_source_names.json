@@ -87,6 +87,70 @@
         "p6dx-8zbt": 1509,
         "jbjy-vk9h": 1
       }
+    },
+    {
+      "canonical_name": "UNIVERSIDAD COLEGIO MAYOR DE CUNDINAMARCA",
+      "identity_key": {
+        "type": "NIT",
+        "value": "800144829"
+      },
+      "observed_at": "2026-09-02",
+      "evidence": "artifacts/audits/public_university_completion_r2fb.json",
+      "sources": {
+        "p6dx-8zbt": ["Universidad Colegio Mayor de Cundinamarca"]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 16
+      }
+    },
+    {
+      "canonical_name": "UNIVERSIDAD DEL PACÍFICO",
+      "identity_key": {
+        "type": "NIT",
+        "value": "835000300"
+      },
+      "observed_at": "2026-09-02",
+      "evidence": "artifacts/audits/public_university_completion_r2fb.json",
+      "sources": {
+        "p6dx-8zbt": ["UNIVERSIDAD DEL PACIFICO//"],
+        "jbjy-vk9h": ["UNIVERSIDAD DEL PACIFICO//"]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 987,
+        "jbjy-vk9h": 5
+      }
+    },
+    {
+      "canonical_name": "UNIVERSIDAD POPULAR DEL CESAR",
+      "identity_key": {
+        "type": "NIT",
+        "value": "8923002856"
+      },
+      "observed_at": "2026-09-02",
+      "evidence": "artifacts/audits/public_university_completion_r2fb.json",
+      "sources": {
+        "p6dx-8zbt": ["UNIVERSIDAD POPULAR DEL CESAR."]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 57
+      }
+    },
+    {
+      "canonical_name": "UNIVERSIDAD TECNOLÓGICA DEL CHOCÓ DIEGO LUIS CÓRDOBA",
+      "identity_key": {
+        "type": "NIT",
+        "value": "891680089"
+      },
+      "observed_at": "2026-09-02",
+      "evidence": "artifacts/audits/public_university_completion_r2fb.json",
+      "sources": {
+        "p6dx-8zbt": ["UNIVERSIDAD TECNOLOGICA DEL CHOCO"],
+        "jbjy-vk9h": ["UNIVERSIDAD TECNOLOGICA DEL CHOCO"]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 2257,
+        "jbjy-vk9h": 1
+      }
     }
   ]
 }
