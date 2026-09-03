@@ -16353,17 +16353,19 @@
     "nit": "899999061"
   },
   {
-    "official_name": "CENTRAL ADMINISTRATIVA Y CONTABLE  PUENTE ARANDA+",
+    "official_name": "CENAC PUENTE ARANDA+",
     "departamento": "BOGOTA D.C.",
     "aliases": [
-      "alcaldia local de puente aranda",
-      "alcaldia local puente aranda",
-      "alcaldia puente aranda",
-      "puente aranda localidad",
-      "localidad de puente aranda",
-      "localidad puente aranda"
+      "cenac puente aranda+",
+      "cenac puente aranda",
+      "central administrativa y contable puente aranda"
     ],
-    "nit": "830039548"
+    "nit": "830039548",
+    "scan_disabled_aliases": [
+      "cenac puente aranda+",
+      "cenac puente aranda",
+      "central administrativa y contable puente aranda"
+    ]
   },
   {
     "official_name": "FONDO DE DESARROLLO LOCAL DE LA CANDELARIA",
@@ -16800,8 +16802,15 @@
     ],
     "entity_type": "fondo",
     "aliases": [
-      "alcaldia local de puente aranda-fondo de desarrollo local"
-    ]
+      "alcaldia local de puente aranda",
+      "alcaldia local de puente aranda-fondo de desarrollo local",
+      "alcaldia local puente aranda",
+      "alcaldia puente aranda",
+      "localidad de puente aranda",
+      "localidad puente aranda",
+      "puente aranda localidad"
+    ],
+    "nit": "899999061"
   },
   {
     "official_name": "HOSPITAL DEPARTAMENTAL UNIVERSITARIO SANTA SOFIA DE CALDAS",

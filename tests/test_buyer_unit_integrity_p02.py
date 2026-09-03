@@ -5,6 +5,9 @@ familia: una BuyerUnit lógica que el gazetteer no representa como tal — o
 porque sus alias humanos cuelgan de otra unidad, o porque quedó repartida en
 varios canonicals, uno por dataset.
 
+Estado: C1 y C2 (Puente Aranda) están **cerrados** y sus aserciones quedan como
+guarda viva; C3 (MinJusticia) y C4 (Yopal/contratos) siguen congelados.
+
 Qué NO se congela aquí, para no duplicar oráculos existentes:
 
 * que ``ministerio de justicia`` resuelva a un canonical con ese nombre ya está
@@ -96,11 +99,6 @@ def _reaches(canonical: str, dataset_id: str, published: str) -> bool:
 # ── C1 — el hijack de Puente Aranda ────────────────────────────────────────
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="BUYER-PUENTE-ARANDA-HIJACK: los seis alias de la localidad cuelgan "
-           "de la central contable del Ejército (NIT 830039548)",
-)
 def test_locality_aliases_never_owned_by_a_foreign_nit(records: list[dict]) -> None:
     """Ningún NIT ajeno al Distrito puede poseer alias de una localidad de Bogotá.
 
@@ -124,11 +122,6 @@ def test_locality_aliases_never_owned_by_a_foreign_nit(records: list[dict]) -> N
     )
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="BUYER-PUENTE-ARANDA-HIJACK: 'alcaldia local de puente aranda' "
-           "resuelve a CENTRAL ADMINISTRATIVA Y CONTABLE  PUENTE ARANDA+",
-)
 @pytest.mark.parametrize(
     "phrase",
     [
@@ -158,11 +151,6 @@ def test_puente_aranda_locality_resolves_to_the_local_mayoralty(
 # ── C2 — la grafía militar conserva su dueño militar ───────────────────────
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="BUYER-CENAC-WRONG-OWNER: 'CENAC PUENTE ARANDA+' resuelve a "
-           "CENTRAL ADMINISTRATIVA Y CONTABLE CENAC PERSONAL (NIT 900385079)",
-)
 @pytest.mark.parametrize("phrase", ["CENAC PUENTE ARANDA+", "cenac puente aranda"])
 def test_cenac_puente_aranda_keeps_its_military_owner(
     resolver: EntityResolver, records: list[dict], phrase: str,

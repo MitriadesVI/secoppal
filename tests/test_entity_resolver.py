@@ -291,14 +291,28 @@ BOGOTA_LOCAL_QUERIES = [
 
 
 def test_v3_scan_entity_bogota_locals_all_resolve(er_v3) -> None:
-    """Las 20 alcaldías locales de Bogotá deben resolver con scan_exact high."""
+    """Las 20 alcaldías locales de Bogotá deben resolver con scan_exact high.
+
+    El oráculo comprueba la LOCALIDAD y la FAMILIA institucional. Comprobar sólo
+    la localidad no verifica lo que este test dice verificar: durante todo el
+    tiempo en que "alcaldia puente aranda" resolvió a
+    ``CENTRAL ADMINISTRATIVA Y CONTABLE  PUENTE ARANDA+`` —la central contable
+    del Ejército, NIT 830039548— esta aserción pasó en verde, porque el nombre
+    militar también contiene el token de la localidad
+    (BUYER-PUENTE-ARANDA-HIJACK, Etapa 1 / ADR-074).
+    """
     from app.utils.money import normalize_text
     for query, expected in BOGOTA_LOCAL_QUERIES:
         normalized = normalize_text(query)  # query_router normaliza antes de scan
         result = er_v3.scan_entity(normalized)
         assert result is not None, f"'{query}' no resolvió — debe encontrar '{expected}'"
-        assert expected.upper() in result.official_name.upper(), (
+        official = result.official_name.upper()
+        assert expected.upper() in official, (
             f"'{query}' resolvió a '{result.official_name}' — no contiene '{expected}'"
+        )
+        assert "ALCALD" in official or "FONDO DE DESARROLLO LOCAL" in official, (
+            f"'{query}' resolvió a '{result.official_name}', que no es la alcaldía "
+            f"local de {expected} ni su fondo de desarrollo local"
         )
         assert result.method == "scan_exact", (
             f"'{query}' método={result.method}, debe ser scan_exact"

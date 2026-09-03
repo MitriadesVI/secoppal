@@ -1,0 +1,99 @@
+{
+ "generated_at": "2026-09-03T07:05:28",
+ "blocks": {
+  "puente_aranda": {
+   "899999061": {
+    "procesos": {
+     "ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL": 2967
+    },
+    "contratos": {
+     "ALCALDIA LOCAL DE PUENTE ARANDA-FONDO DE DESARROLLO LOCAL": 3685
+    }
+   },
+   "830039548": {
+    "procesos": {
+     "CENAC PUENTE ARANDA+": 2968
+    },
+    "contratos": {
+     "CENAC PUENTE ARANDA+": 1457
+    }
+   }
+  },
+  "merge_pairs": {
+   "yopal": {
+    "nit": "891855017",
+    "procesos": {
+     "MUNICIPIO DE YOPAL...": 17558
+    },
+    "contratos": {
+     "MUNICIPIO DE YOPAL..": 19150
+    },
+    "c1_nit_activo": true,
+    "c2_procedencia_disjunta": true,
+    "c3_un_signo_terminal": true,
+    "c5_tokens_iguales": true,
+    "verdict": "PASS"
+   },
+   "soacha": {
+    "nit": "800094755",
+    "procesos": {
+     "MUNICIPIO DE SOACHA..": 22115
+    },
+    "contratos": {
+     "MUNICIPIO DE SOACHA.": 21868
+    },
+    "c1_nit_activo": true,
+    "c2_procedencia_disjunta": true,
+    "c3_un_signo_terminal": true,
+    "c5_tokens_iguales": true,
+    "verdict": "PASS"
+   },
+   "ffds": {
+    "nit": "8002469532",
+    "procesos": {
+     "FONDO FINANCIERO DISTRITAL DE SALUD..": 23742
+    },
+    "contratos": {
+     "FONDO FINANCIERO DISTRITAL DE SALUD.": 21274
+    },
+    "c1_nit_activo": true,
+    "c2_procedencia_disjunta": true,
+    "c3_un_signo_terminal": true,
+    "c5_tokens_iguales": true,
+    "verdict": "PASS"
+   },
+   "minjusticia": {
+    "nit": "900457461",
+    "procesos": {
+     "MINISTERIO DE JUSTICIA Y DEL DERECHO..": 7595
+    },
+    "contratos": {
+     "MINISTERIO DE JUSTICIA Y DEL DERECHO.": 6924
+    },
+    "c1_nit_activo": true,
+    "c2_procedencia_disjunta": true,
+    "c3_un_signo_terminal": true,
+    "c5_tokens_iguales": true,
+    "verdict": "PASS"
+   },
+   "uaesp": {
+    "nit": "900126860",
+    "procesos": {
+     "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS..": 6192
+    },
+    "contratos": {
+     "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS.": 5870
+    },
+    "c1_nit_activo": true,
+    "c2_procedencia_disjunta": true,
+    "c3_un_signo_terminal": true,
+    "c5_tokens_iguales": true,
+    "verdict": "PASS"
+   }
+  },
+  "minjusticia_synthetic_rows": {
+   "procesos": 0,
+   "contratos": 0
+  }
+ }
+}
