@@ -1,0 +1,13 @@
+{
+  "stage": "D_FAIL_CLOSED_AND_EXECUTION_TRUTH",
+  "status": "PASS",
+  "date": "2026-09-03",
+  "focal": {"passed": 63, "updated_oracles_passed": 28},
+  "query_corpus": {"passed": 89, "total": 89},
+  "ruff": "PASS",
+  "lint_core": "PASS",
+  "full_suite": {"passed": 10814, "skipped": 2, "xfailed": 14, "seconds": 567.85},
+  "closed": ["PUNCTUATED_GENERIC_BUYER_ESCAPE", "ECOSYSTEM_SOQL_DISPLAY_DIVERGENCE", "LEGACY_ECOSYSTEM_SILENT_TRUNCATION"],
+  "capacity": "Legacy candidate and ecosystem sets above 15 fail closed; measured groups remain a separate pending stage.",
+  "push": false
+}

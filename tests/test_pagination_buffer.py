@@ -346,8 +346,8 @@ def test_combined_phrase_levels_dedupe_ties_and_three_page_prefix(tmp_path, monk
     assert source == source_before and params == params_before
 
 
-def test_pagination_drops_post_query_ecosystem_to_refetch_same_source(tmp_path, monkeypatch):
-    """Una expansion asesora tardia no puede alterar la fuente de pagina 2."""
+def test_pagination_keeps_source_without_post_query_ecosystem(tmp_path, monkeypatch):
+    """ADR-074: ninguna expansión geográfica ocurre tras consultar la fuente."""
     monkeypatch.setattr(
         "app.core.workflow.actions.execution.observe_universe_fn",
         lambda *a, **k: None,
@@ -383,9 +383,9 @@ def test_pagination_drops_post_query_ecosystem_to_refetch_same_source(tmp_path, 
         "procesos de mantenimiento en bogota de 2026",
         channel="streamlit", chat_id=chat,
     )
-    # La expansión asesora SÍ ocurre en este turno. Sin comprobarlo, el resto
-    # del test pasaría vacuamente: no habría nada que la paginación ignorase.
-    assert expansions, "la expansión post-query no llegó a ejecutarse"
+    # D elimina esa expansión: ni el primer turno ni la página siguiente
+    # pueden inventar compradores a partir de la geografía consultada.
+    assert not expansions, "se inyectaron compradores después del fetch"
     # INV-PURE-ORDERING-PRESERVES-SOURCE-UNIVERSE: y no entra al historial.
     # Antes sí entraba, y el siguiente follow-up la heredaba como si fuera un
     # filtro que el usuario hubiera pedido.
@@ -398,6 +398,7 @@ def test_pagination_drops_post_query_ecosystem_to_refetch_same_source(tmp_path, 
     assert len(seen_soql) == 1  # pagina 2 sale del buffer, sin repesca
     assert page_2["pagination_buffer_hit"] is True
     assert "ENTIDAD INYECTADA" not in seen_soql[0]
+    assert not expansions
 
 
 def test_refill_deduplicates_boundary_row_between_source_batches(tmp_path, monkeypatch):

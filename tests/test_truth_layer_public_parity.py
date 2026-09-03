@@ -94,7 +94,10 @@ M2_MODIFIED_FILE_SHA256 = {
     # vez de sustituir el grupo por candidates[0], lanza un bloqueo tipado.
     # Los OR de 1..15 y las consultas ordinarias conservan bytes y semántica;
     # tests/test_buyer_candidate_execution_limit.py fija ambos bordes.
-    "app/core/soql_builder.py": "b54a1ed1f22d12a8400abc9ecd02ba090bacfb12a0b0a6369fddd4ff7a49a854",
+    # ADR-074 / D extiende el bloqueo >15 a entidad_ecosystem. Sólo cambia
+    # el caso antes truncado: test_entity_candidates_no_silent_collapse lo
+    # exige; el oráculo ordinario de WHERE/ORDER/LIMIT permanece intacto.
+    "app/core/soql_builder.py": "3b823211ccc38960eddaf3eec11dd04300eac46c1555c89bbfb98ebc865d3858",
 }
 
 # M2.1 corrigió dos consumidores visibles. AP3-G autoriza además controles de
@@ -208,8 +211,12 @@ BASELINE_FILE_SHA256 = {
 # byte-identical and tests/test_linguistic_family_coverage.py pins the reset
 # behaviour this argument protects.
 SEARCH_SH1_MODIFIED_FILE_SHA256 = {
+    # ADR-074 / D retira la inyección geográfica posterior al fetch. El nuevo
+    # oráculo instrumentado test_buyer_execution_truth compara ejecución y
+    # contexto asesor; pagination_buffer exige ausencia de la inyección en
+    # ambos turnos. No cambian los oráculos de ranking/conteo/paginación.
     "app/core/workflow/handlers/normal_flow.py": (
-        "28328fb9dd5f7b69c2336f8c84d29777de9e8dd0700a3937c3d70e4e9e5b88b9"
+        "4147a2f3f057a70162e4e1582be3452b51e2047740ccd235da9ff99f0b7e8d83"
     ),
 }
 

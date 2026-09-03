@@ -36,6 +36,8 @@ from __future__ import annotations
 import re
 import unicodedata
 
+from app.core.entity_types import name_tokens
+
 __all__ = [
     "GENERIC_BUYER_TOKENS",
     "build_incomplete_buyer_resolution",
@@ -101,7 +103,15 @@ _DEPARTMENT_ROOT_BUYER_RE = re.compile(
 # que lo convierte en la Gobernación del Tolima; como scan alias desnudo puede
 # secuestrar cualquier otro departamento.
 _UNQUALIFIED_STRUCTURAL_BUYER_RE = re.compile(
-    r"^(?:gobierno|gobernacion)\s+departamental$",
+    r"^(?:(?:gobierno|gobernacion)\s+departamental|ese|e s e|empresa social del estado)$",
+)
+
+# ESE también es un demostrativo temporal ("de ese año"). Sólo se captura
+# la forma societaria desnuda ante fin o una nueva cláusula, nunca su nombre.
+_INCOMPLETE_ESE_RE = re.compile(
+    r"\b(?:de|del|para|en|por)\s+(?:la\s+)?"
+    r"(e\.?s\.?e|empresa\s+social\s+del\s+estado)\b[.*+]*"
+    r"(?=\s*(?:$|en\b|por\b|para\b|sobre\b))",
 )
 
 
@@ -112,13 +122,13 @@ def _normalize(text: str) -> str:
 
 def is_generic_buyer_token(text: str) -> bool:
     """True si ``text`` es un genérico desnudo, con o sin artículo."""
-    words = [w for w in _normalize(text).strip().split() if w not in _ARTICLES]
+    words = [w for w in name_tokens(text) if w not in _ARTICLES]
     return len(words) == 1 and words[0] in GENERIC_BUYER_TOKENS
 
 
 def is_unqualified_buyer_name(text: str) -> bool:
     """True si el nombre sólo expresa una clase institucional sin identidad."""
-    normalized = _normalize(text).strip()
+    normalized = " ".join(name_tokens(text))
     return (
         is_generic_buyer_token(normalized)
         or bool(_UNQUALIFIED_STRUCTURAL_BUYER_RE.fullmatch(normalized))
@@ -172,7 +182,8 @@ def is_territory_fragment_of_buyer(scanned: str, buyer_department: str) -> bool:
 
 def detect_incomplete_buyer(text: str) -> str | None:
     """Devuelve el genérico sin calificar mencionado en ``text``, si lo hay."""
-    match = _INCOMPLETE_BUYER_RE.search(_normalize(text))
+    normalized = _normalize(text)
+    match = _INCOMPLETE_ESE_RE.search(normalized) or _INCOMPLETE_BUYER_RE.search(normalized)
     return match.group(1) if match else None
 
 

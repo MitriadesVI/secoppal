@@ -181,30 +181,8 @@ def handle_normal_flow(deps: "WorkflowDeps", ctx: "HandlerContext") -> dict:
     # ── Política de respuesta asesora (Bloque 3) ───────────────────────
     advisor_start = time.perf_counter()
 
-    # ── Entity ecosystem expansion (Sprint 6 Fase 3) ─────────────────
-    # Si no hay entidad explícita pero sí ciudad/departamento, expandir
-    resolved_post = state.get("resolved_params", {})
-    if (
-        resolved_post
-        and not state.get("needs_clarification")
-        and not resolved_post.get("entidad_resolved")
-        and not resolved_post.get("entidad_like")
-    ):
-        from app.core.entity_ecosystem import get_ecosystem_entities, should_expand_ecosystem
-        if should_expand_ecosystem(resolved_post):
-            ecosys = get_ecosystem_entities(
-                ciudad=str(resolved_post.get("ciudad", "")),
-                departamento=str(resolved_post.get("departamento_resolved", "")),
-            )
-            if ecosys:
-                resolved_post = dict(resolved_post)
-                resolved_post["entidad_ecosystem"] = ecosys
-                # Rebuild SoQL with ecosystem entities
-                try:
-                    new_soql = deps.soql_builder.build(state["dataset_id"], resolved_post)
-                    state = state.update(soql_query=new_soql, resolved_params=resolved_post)
-                except Exception:
-                    pass  # ecosystem is best-effort
+    # ADR-074: response context and trace retain the executed buyer scope.
+    # Geography cannot inject an institutional set after fetch/count/ranking.
 
     # NOTA (Commit 6D): el BM25 post-ranking vivía AQUÍ pero corría DESPUÉS de que
     # format_response ya había congelado formatted_rows (bug RELEVANCE-RANKING-AFTER-

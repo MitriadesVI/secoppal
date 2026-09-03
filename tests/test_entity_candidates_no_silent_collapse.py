@@ -78,13 +78,11 @@ def test_group_over_cap_never_collapses_silently(dataset_id: str, count: int) ->
     assert exc_info.value.safe_limit == 15
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="ECOSYSTEM_SOQL_DISPLAY_DIVERGENCE: entidad_ecosystem trunca a los "
-           "primeros 15 sin declararlo — fuera del alcance del fix de Etapa 1",
-)
 @pytest.mark.parametrize("dataset_id", DATASETS)
 def test_geographic_ecosystem_never_truncates_silently(dataset_id: str) -> None:
     members = _members(BOGOTA_EXECUTIVE_SIZE)
-    query = SoQLBuilder().build(dataset_id, {"entidad_ecosystem": members})
-    _assert_no_silent_partial(query, members)
+    with pytest.raises(BuyerCandidateSetExceedsSafeLimitError):
+        SoQLBuilder().build(dataset_id, {
+            "entidad_ecosystem": members,
+            "departamento_resolved": "Distrito Capital de Bogotá",
+        })

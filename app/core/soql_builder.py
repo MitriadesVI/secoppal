@@ -397,10 +397,12 @@ class SoQLBuilder:
         entidad_value = entidad_like or params.get("entidad_resolved")
         entidad_ecosystem = params.get("entidad_ecosystem")
         if entidad_ecosystem and isinstance(entidad_ecosystem, list) and not entidad_value:
-            # ENTITY-ECOSYSTEM-001: expand to OR across all ecosystem entities
+            if len(entidad_ecosystem) > BUYER_CANDIDATE_SAFE_LIMIT:
+                raise BuyerCandidateSetExceedsSafeLimitError(len(entidad_ecosystem))
+            # Legacy callers must cover their complete explicitly supplied set.
             entity_likes = " OR ".join(
                 self._accent_fold_like(spec.entity, self._escape(str(e)))
-                for e in entidad_ecosystem[:15]  # max 15 to avoid query bloat
+                for e in entidad_ecosystem
             )
             where_clauses.append(f"({entity_likes})")
         elif entidad_value:
