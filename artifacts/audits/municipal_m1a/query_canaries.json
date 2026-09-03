@@ -1,0 +1,1197 @@
+{
+  "status": "BLOCKED",
+  "production_applied": false,
+  "checks": [
+    {
+      "code": "25817",
+      "query": "contratos de la alcaldia de TOCANCIPÁ",
+      "expected_kind": "BUYER_UNIT",
+      "expected_canonical": "MUNICIPIO DE TOCANCIPA",
+      "production": {
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "entidad": "Municipio de tocancipa",
+          "entidad_resolved": "MUNICIPIO DE TOCANCIPA",
+          "entidad_resolution": {
+            "value": "MUNICIPIO DE TOCANCIPA",
+            "method": "rewrite_alcald[ií]a",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "rewritten_from": "alcaldia de tocancipa",
+              "resolution_method": "exact"
+            }
+          }
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE TOCANCIPA%'))",
+        "passes_required_behavior": true
+      },
+      "candidate": {
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "entidad": "Municipio de tocancipa",
+          "entidad_resolved": "MUNICIPIO DE TOCANCIPA",
+          "entidad_resolution": {
+            "value": "MUNICIPIO DE TOCANCIPA",
+            "method": "rewrite_alcald[ií]a",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "rewritten_from": "alcaldia de tocancipa",
+              "resolution_method": "exact"
+            }
+          }
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE TOCANCIPA'",
+        "passes_required_behavior": true
+      }
+    },
+    {
+      "code": "25817",
+      "query": "procesos del municipio de TOCANCIPÁ",
+      "expected_kind": "BUYER_UNIT",
+      "expected_canonical": "MUNICIPIO DE TOCANCIPA",
+      "production": {
+        "params": {
+          "dataset": "procesos",
+          "dataset_explicit": true,
+          "entidad": "Municipio de tocancipa",
+          "entidad_resolved": "MUNICIPIO DE TOCANCIPA",
+          "entidad_resolution": {
+            "value": "MUNICIPIO DE TOCANCIPA",
+            "method": "rewrite_municipio",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "rewritten_from": "municipio de tocancipa",
+              "resolution_method": "exact"
+            }
+          }
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE TOCANCIPA%'))",
+        "passes_required_behavior": true
+      },
+      "candidate": {
+        "params": {
+          "dataset": "procesos",
+          "dataset_explicit": true,
+          "entidad": "Municipio de tocancipa",
+          "entidad_resolved": "MUNICIPIO DE TOCANCIPA",
+          "entidad_resolution": {
+            "value": "MUNICIPIO DE TOCANCIPA",
+            "method": "rewrite_municipio",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "rewritten_from": "municipio de tocancipa",
+              "resolution_method": "exact"
+            }
+          }
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE TOCANCIPA'",
+        "passes_required_behavior": true
+      }
+    },
+    {
+      "code": "25817",
+      "query": "contratos en TOCANCIPÁ",
+      "expected_kind": "GEOGRAPHY",
+      "expected_canonical": null,
+      "production": {
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "entidad": "tocancipa",
+          "entidad_resolved": "MUNICIPIO DE TOCANCIPA",
+          "entidad_resolution": {
+            "value": "MUNICIPIO DE TOCANCIPA",
+            "method": "scan_exact",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {}
+          }
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE TOCANCIPA%'))",
+        "passes_required_behavior": false
+      },
+      "candidate": {
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "entidad": "tocancipa",
+          "entidad_resolved": "MUNICIPIO DE TOCANCIPA",
+          "entidad_resolution": {
+            "value": "MUNICIPIO DE TOCANCIPA",
+            "method": "scan_exact",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {}
+          }
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE TOCANCIPA'",
+        "passes_required_behavior": false
+      }
+    },
+    {
+      "code": "05631",
+      "query": "contratos de la alcaldia de SABANETA",
+      "expected_kind": "BUYER_UNIT",
+      "expected_canonical": "MUNICIPIO DE SABANETA",
+      "production": {
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "entidad": "Municipio de sabaneta",
+          "entidad_resolved": "MUNICIPIO DE SABANETA",
+          "entidad_resolution": {
+            "value": "MUNICIPIO DE SABANETA",
+            "method": "rewrite_alcald[ií]a",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "rewritten_from": "alcaldia de sabaneta",
+              "resolution_method": "exact"
+            }
+          }
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE SABANETA%'))",
+        "passes_required_behavior": true
+      },
+      "candidate": {
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "entidad": "Municipio de sabaneta",
+          "entidad_resolved": "MUNICIPIO DE SABANETA",
+          "entidad_resolution": {
+            "value": "MUNICIPIO DE SABANETA",
+            "method": "rewrite_alcald[ií]a",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "rewritten_from": "alcaldia de sabaneta",
+              "resolution_method": "exact"
+            }
+          }
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE SABANETA'",
+        "passes_required_behavior": true
+      }
+    },
+    {
+      "code": "05631",
+      "query": "procesos del municipio de SABANETA",
+      "expected_kind": "BUYER_UNIT",
+      "expected_canonical": "MUNICIPIO DE SABANETA",
+      "production": {
+        "params": {
+          "dataset": "procesos",
+          "dataset_explicit": true,
+          "entidad": "Municipio de sabaneta",
+          "entidad_resolved": "MUNICIPIO DE SABANETA",
+          "entidad_resolution": {
+            "value": "MUNICIPIO DE SABANETA",
+            "method": "rewrite_municipio",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "rewritten_from": "municipio de sabaneta",
+              "resolution_method": "exact"
+            }
+          }
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE SABANETA%'))",
+        "passes_required_behavior": true
+      },
+      "candidate": {
+        "params": {
+          "dataset": "procesos",
+          "dataset_explicit": true,
+          "entidad": "Municipio de sabaneta",
+          "entidad_resolved": "MUNICIPIO DE SABANETA",
+          "entidad_resolution": {
+            "value": "MUNICIPIO DE SABANETA",
+            "method": "rewrite_municipio",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "rewritten_from": "municipio de sabaneta",
+              "resolution_method": "exact"
+            }
+          }
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE SABANETA'",
+        "passes_required_behavior": true
+      }
+    },
+    {
+      "code": "05631",
+      "query": "contratos en SABANETA",
+      "expected_kind": "GEOGRAPHY",
+      "expected_canonical": null,
+      "production": {
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "entidad": "sabaneta",
+          "entidad_resolved": "MUNICIPIO DE SABANETA",
+          "entidad_resolution": {
+            "value": "MUNICIPIO DE SABANETA",
+            "method": "scan_exact",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {}
+          }
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE SABANETA%'))",
+        "passes_required_behavior": false
+      },
+      "candidate": {
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "entidad": "sabaneta",
+          "entidad_resolved": "MUNICIPIO DE SABANETA",
+          "entidad_resolution": {
+            "value": "MUNICIPIO DE SABANETA",
+            "method": "scan_exact",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {}
+          }
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE SABANETA'",
+        "passes_required_behavior": false
+      }
+    },
+    {
+      "code": "08078",
+      "query": "contratos de la alcaldia de BARANOA",
+      "expected_kind": "BUYER_UNIT",
+      "expected_canonical": "ALCALDIA MUNICIPAL DE BARANOA",
+      "production": {
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "entidad": "Municipio de baranoa",
+          "entidad_resolution": {
+            "value": null,
+            "method": "rewrite_alcald[ií]a_unresolved",
+            "confidence": "low",
+            "like_value": null,
+            "metadata": {
+              "target": "baranoa",
+              "rewritten_from": "alcaldia de baranoa",
+              "resolution_method": "rewrite_unresolved"
+            },
+            "ecosystem_entities": [],
+            "clarification_needed": true,
+            "clarification_hint": "No encontré 'Municipio de baranoa' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+          }
+        },
+        "should_execute": true,
+        "soql": "BLOCKED: UnsafeGlobalQueryError",
+        "passes_required_behavior": false
+      },
+      "candidate": {
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "entidad": "Municipio de baranoa",
+          "entidad_resolved": "ALCALDIA MUNICIPAL DE BARANOA",
+          "entidad_resolution": {
+            "value": "ALCALDIA MUNICIPAL DE BARANOA",
+            "method": "rewrite_alcald[ií]a",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "rewritten_from": "alcaldia de baranoa",
+              "resolution_method": "exact"
+            }
+          }
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE BARANOA'",
+        "passes_required_behavior": true
+      }
+    },
+    {
+      "code": "08078",
+      "query": "procesos del municipio de BARANOA",
+      "expected_kind": "BUYER_UNIT",
+      "expected_canonical": "ALCALDIA MUNICIPAL DE BARANOA",
+      "production": {
+        "params": {
+          "dataset": "procesos",
+          "dataset_explicit": true,
+          "entidad": "Municipio de baranoa",
+          "entidad_resolution": {
+            "value": null,
+            "method": "rewrite_municipio_unresolved",
+            "confidence": "low",
+            "like_value": null,
+            "metadata": {
+              "target": "baranoa",
+              "rewritten_from": "municipio de baranoa",
+              "resolution_method": "rewrite_unresolved"
+            },
+            "ecosystem_entities": [],
+            "clarification_needed": true,
+            "clarification_hint": "No encontré 'Municipio de baranoa' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+          }
+        },
+        "should_execute": true,
+        "soql": "BLOCKED: UnsafeGlobalQueryError",
+        "passes_required_behavior": false
+      },
+      "candidate": {
+        "params": {
+          "dataset": "procesos",
+          "dataset_explicit": true,
+          "entidad": "Municipio de baranoa",
+          "entidad_resolved": "ALCALDIA MUNICIPAL DE BARANOA",
+          "entidad_resolution": {
+            "value": "ALCALDIA MUNICIPAL DE BARANOA",
+            "method": "rewrite_municipio",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "rewritten_from": "municipio de baranoa",
+              "resolution_method": "exact"
+            }
+          }
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPAL DE BARANOA'",
+        "passes_required_behavior": true
+      }
+    },
+    {
+      "code": "08078",
+      "query": "contratos en BARANOA",
+      "expected_kind": "GEOGRAPHY",
+      "expected_canonical": null,
+      "production": {
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "objeto": [
+            "baranoa"
+          ]
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%baranoa%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%baranoa%')))",
+        "passes_required_behavior": false
+      },
+      "candidate": {
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "objeto": [
+            "baranoa"
+          ]
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%baranoa%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%baranoa%')))",
+        "passes_required_behavior": false
+      }
+    },
+    {
+      "code": "13430",
+      "query": "contratos de la alcaldia de MAGANGUÉ",
+      "expected_kind": "BUYER_UNIT",
+      "expected_canonical": "ALCALDÍA MUNICIPAL DE MAGANGUE",
+      "production": {
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "entidad": "Municipio de magangue",
+          "entidad_resolution": {
+            "value": null,
+            "method": "rewrite_alcald[ií]a_unresolved",
+            "confidence": "low",
+            "like_value": null,
+            "metadata": {
+              "target": "magangue",
+              "rewritten_from": "alcaldia de magangue",
+              "resolution_method": "rewrite_unresolved"
+            },
+            "ecosystem_entities": [],
+            "clarification_needed": true,
+            "clarification_hint": "No encontré 'Municipio de magangue' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+          }
+        },
+        "should_execute": true,
+        "soql": "BLOCKED: UnsafeGlobalQueryError",
+        "passes_required_behavior": false
+      },
+      "candidate": {
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "entidad": "Municipio de magangue",
+          "entidad_resolved": "ALCALDÍA MUNICIPAL DE MAGANGUE",
+          "entidad_resolution": {
+            "value": "ALCALDÍA MUNICIPAL DE MAGANGUE",
+            "method": "rewrite_alcald[ií]a",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "rewritten_from": "alcaldia de magangue",
+              "resolution_method": "exact"
+            }
+          }
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDÍA MUNICIPAL DE MAGANGUE'",
+        "passes_required_behavior": true
+      }
+    },
+    {
+      "code": "13430",
+      "query": "procesos del municipio de MAGANGUÉ",
+      "expected_kind": "BUYER_UNIT",
+      "expected_canonical": "ALCALDÍA MUNICIPAL DE MAGANGUE",
+      "production": {
+        "params": {
+          "dataset": "procesos",
+          "dataset_explicit": true,
+          "entidad": "Municipio de magangue",
+          "entidad_resolution": {
+            "value": null,
+            "method": "rewrite_municipio_unresolved",
+            "confidence": "low",
+            "like_value": null,
+            "metadata": {
+              "target": "magangue",
+              "rewritten_from": "municipio de magangue",
+              "resolution_method": "rewrite_unresolved"
+            },
+            "ecosystem_entities": [],
+            "clarification_needed": true,
+            "clarification_hint": "No encontré 'Municipio de magangue' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+          }
+        },
+        "should_execute": true,
+        "soql": "BLOCKED: UnsafeGlobalQueryError",
+        "passes_required_behavior": false
+      },
+      "candidate": {
+        "params": {
+          "dataset": "procesos",
+          "dataset_explicit": true,
+          "entidad": "Municipio de magangue",
+          "entidad_resolved": "ALCALDÍA MUNICIPAL DE MAGANGUE",
+          "entidad_resolution": {
+            "value": "ALCALDÍA MUNICIPAL DE MAGANGUE",
+            "method": "rewrite_municipio",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "rewritten_from": "municipio de magangue",
+              "resolution_method": "exact"
+            }
+          }
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE entidad = 'ALCALDÍA MUNICIPAL DE MAGANGUE'",
+        "passes_required_behavior": true
+      }
+    },
+    {
+      "code": "13430",
+      "query": "contratos en MAGANGUÉ",
+      "expected_kind": "GEOGRAPHY",
+      "expected_canonical": null,
+      "production": {
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "objeto": [
+            "magangue"
+          ]
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%magangue%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%magangue%')))",
+        "passes_required_behavior": false
+      },
+      "candidate": {
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "objeto": [
+            "magangue"
+          ]
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%magangue%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%magangue%')))",
+        "passes_required_behavior": false
+      }
+    },
+    {
+      "code": "50568",
+      "query": "contratos de la alcaldia de PUERTO GAITÁN",
+      "expected_kind": "BUYER_UNIT",
+      "expected_canonical": "MUNICIPIO DE PUERTO GAITAN",
+      "production": {
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "entidad": "Municipio de puerto",
+          "entidad_resolved": "ALCALDIA MUNICIPAL DE PUERTO BOYACA",
+          "entidad_resolution": {
+            "value": "ALCALDIA MUNICIPAL DE PUERTO BOYACA",
+            "method": "rewrite_alcald[ií]a",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "rewritten_from": "alcaldia de puerto",
+              "resolution_method": "fuzzy(95)"
+            }
+          },
+          "objeto": [
+            "gaitan"
+          ]
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%ALCALDIA MUNICIPAL DE PUERTO BOYACA%')) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%gaitan%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%gaitan%')))",
+        "passes_required_behavior": false
+      },
+      "candidate": {
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "entidad": "Municipio de puerto gaitan",
+          "entidad_resolved": "MUNICIPIO DE PUERTO GAITAN",
+          "entidad_resolution": {
+            "value": "MUNICIPIO DE PUERTO GAITAN",
+            "method": "rewrite_alcald[ií]a",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "rewritten_from": "alcaldia de puerto gaitan",
+              "resolution_method": "exact"
+            }
+          }
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE PUERTO GAITAN'",
+        "passes_required_behavior": true
+      }
+    },
+    {
+      "code": "50568",
+      "query": "procesos del municipio de PUERTO GAITÁN",
+      "expected_kind": "BUYER_UNIT",
+      "expected_canonical": "MUNICIPIO DE PUERTO GAITAN",
+      "production": {
+        "params": {
+          "dataset": "procesos",
+          "dataset_explicit": true,
+          "entidad": "Municipio de puerto",
+          "entidad_resolved": "ALCALDIA MUNICIPAL DE PUERTO BOYACA",
+          "entidad_resolution": {
+            "value": "ALCALDIA MUNICIPAL DE PUERTO BOYACA",
+            "method": "rewrite_municipio",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "rewritten_from": "municipio de puerto",
+              "resolution_method": "fuzzy(95)"
+            }
+          },
+          "objeto": [
+            "gaitan"
+          ]
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%ALCALDIA MUNICIPAL DE PUERTO BOYACA%')) AND (unaccent(UPPER(nombre_del_procedimiento)) LIKE unaccent(UPPER('%gaitan%')) OR unaccent(UPPER(descripci_n_del_procedimiento)) LIKE unaccent(UPPER('%gaitan%')))",
+        "passes_required_behavior": false
+      },
+      "candidate": {
+        "params": {
+          "dataset": "procesos",
+          "dataset_explicit": true,
+          "entidad": "Municipio de puerto gaitan",
+          "entidad_resolved": "MUNICIPIO DE PUERTO GAITAN",
+          "entidad_resolution": {
+            "value": "MUNICIPIO DE PUERTO GAITAN",
+            "method": "rewrite_municipio",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "rewritten_from": "municipio de puerto gaitan",
+              "resolution_method": "exact"
+            }
+          }
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE PUERTO GAITAN'",
+        "passes_required_behavior": true
+      }
+    },
+    {
+      "code": "50568",
+      "query": "contratos en PUERTO GAITÁN",
+      "expected_kind": "GEOGRAPHY",
+      "expected_canonical": null,
+      "production": {
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "objeto": [
+            "puerto",
+            "gaitan"
+          ]
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%puerto%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%puerto%'))) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%gaitan%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%gaitan%')))",
+        "passes_required_behavior": false
+      },
+      "candidate": {
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "objeto": [
+            "puerto",
+            "gaitan"
+          ]
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%puerto%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%puerto%'))) AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%gaitan%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%gaitan%')))",
+        "passes_required_behavior": false
+      }
+    },
+    {
+      "code": "52356",
+      "query": "contratos de la alcaldia de IPIALES",
+      "expected_kind": "BUYER_UNIT",
+      "expected_canonical": "ALCALDIA MUNICIPAL DE IPIALES",
+      "production": {
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "entidad": "Municipio de ipiales",
+          "entidad_resolution": {
+            "value": null,
+            "method": "rewrite_alcald[ií]a_unresolved",
+            "confidence": "low",
+            "like_value": null,
+            "metadata": {
+              "target": "ipiales",
+              "rewritten_from": "alcaldia de ipiales",
+              "resolution_method": "rewrite_unresolved"
+            },
+            "ecosystem_entities": [],
+            "clarification_needed": true,
+            "clarification_hint": "No encontré 'Municipio de ipiales' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+          }
+        },
+        "should_execute": true,
+        "soql": "BLOCKED: UnsafeGlobalQueryError",
+        "passes_required_behavior": false
+      },
+      "candidate": {
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "entidad": "Municipio de ipiales",
+          "entidad_resolved": "ALCALDIA MUNICIPAL DE IPIALES",
+          "entidad_resolution": {
+            "value": "ALCALDIA MUNICIPAL DE IPIALES",
+            "method": "rewrite_alcald[ií]a",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "rewritten_from": "alcaldia de ipiales",
+              "resolution_method": "exact"
+            }
+          }
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE IPIALES'",
+        "passes_required_behavior": true
+      }
+    },
+    {
+      "code": "52356",
+      "query": "procesos del municipio de IPIALES",
+      "expected_kind": "BUYER_UNIT",
+      "expected_canonical": "ALCALDIA MUNICIPAL DE IPIALES",
+      "production": {
+        "params": {
+          "dataset": "procesos",
+          "dataset_explicit": true,
+          "entidad": "Municipio de ipiales",
+          "entidad_resolution": {
+            "value": null,
+            "method": "rewrite_municipio_unresolved",
+            "confidence": "low",
+            "like_value": null,
+            "metadata": {
+              "target": "ipiales",
+              "rewritten_from": "municipio de ipiales",
+              "resolution_method": "rewrite_unresolved"
+            },
+            "ecosystem_entities": [],
+            "clarification_needed": true,
+            "clarification_hint": "No encontré 'Municipio de ipiales' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+          }
+        },
+        "should_execute": true,
+        "soql": "BLOCKED: UnsafeGlobalQueryError",
+        "passes_required_behavior": false
+      },
+      "candidate": {
+        "params": {
+          "dataset": "procesos",
+          "dataset_explicit": true,
+          "entidad": "Municipio de ipiales",
+          "entidad_resolved": "ALCALDIA MUNICIPAL DE IPIALES",
+          "entidad_resolution": {
+            "value": "ALCALDIA MUNICIPAL DE IPIALES",
+            "method": "rewrite_municipio",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "rewritten_from": "municipio de ipiales",
+              "resolution_method": "exact"
+            }
+          }
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPAL DE IPIALES'",
+        "passes_required_behavior": true
+      }
+    },
+    {
+      "code": "52356",
+      "query": "contratos en IPIALES",
+      "expected_kind": "GEOGRAPHY",
+      "expected_canonical": null,
+      "production": {
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "objeto": [],
+          "ciudad": "Ipiales"
+        },
+        "should_execute": false,
+        "soql": "SELECT count(*) WHERE unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Ipiales%'))",
+        "passes_required_behavior": true
+      },
+      "candidate": {
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "objeto": [],
+          "ciudad": "Ipiales"
+        },
+        "should_execute": false,
+        "soql": "SELECT count(*) WHERE unaccent(UPPER(ciudad)) LIKE unaccent(UPPER('%Ipiales%'))",
+        "passes_required_behavior": true
+      }
+    },
+    {
+      "code": "54405",
+      "query": "contratos de la alcaldia de LOS PATIOS",
+      "expected_kind": "BUYER_UNIT",
+      "expected_canonical": "MUNICIPIO DE LOS PATIOS",
+      "production": {
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "entidad": "Municipio de los patios",
+          "entidad_resolved": "MUNICIPIO DE LOS PATIOS",
+          "entidad_resolution": {
+            "value": "MUNICIPIO DE LOS PATIOS",
+            "method": "rewrite_alcald[ií]a",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "rewritten_from": "alcaldia de los patios",
+              "resolution_method": "exact"
+            }
+          }
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE LOS PATIOS%'))",
+        "passes_required_behavior": true
+      },
+      "candidate": {
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "entidad": "Municipio de los patios",
+          "entidad_resolved": "MUNICIPIO DE LOS PATIOS",
+          "entidad_resolution": {
+            "value": "MUNICIPIO DE LOS PATIOS",
+            "method": "rewrite_alcald[ií]a",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "rewritten_from": "alcaldia de los patios",
+              "resolution_method": "exact"
+            }
+          }
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE LOS PATIOS'",
+        "passes_required_behavior": true
+      }
+    },
+    {
+      "code": "54405",
+      "query": "procesos del municipio de LOS PATIOS",
+      "expected_kind": "BUYER_UNIT",
+      "expected_canonical": "MUNICIPIO DE LOS PATIOS",
+      "production": {
+        "params": {
+          "dataset": "procesos",
+          "dataset_explicit": true,
+          "entidad": "Municipio de los patios",
+          "entidad_resolved": "MUNICIPIO DE LOS PATIOS",
+          "entidad_resolution": {
+            "value": "MUNICIPIO DE LOS PATIOS",
+            "method": "rewrite_municipio",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "rewritten_from": "municipio de los patios",
+              "resolution_method": "exact"
+            }
+          }
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE LOS PATIOS%'))",
+        "passes_required_behavior": true
+      },
+      "candidate": {
+        "params": {
+          "dataset": "procesos",
+          "dataset_explicit": true,
+          "entidad": "Municipio de los patios",
+          "entidad_resolved": "MUNICIPIO DE LOS PATIOS",
+          "entidad_resolution": {
+            "value": "MUNICIPIO DE LOS PATIOS",
+            "method": "rewrite_municipio",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "rewritten_from": "municipio de los patios",
+              "resolution_method": "exact"
+            }
+          }
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE LOS PATIOS'",
+        "passes_required_behavior": true
+      }
+    },
+    {
+      "code": "54405",
+      "query": "contratos en LOS PATIOS",
+      "expected_kind": "GEOGRAPHY",
+      "expected_canonical": null,
+      "production": {
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "entidad": "los patios",
+          "entidad_resolved": "MUNICIPIO DE LOS PATIOS",
+          "entidad_resolution": {
+            "value": "MUNICIPIO DE LOS PATIOS",
+            "method": "scan_exact",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {}
+          }
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE LOS PATIOS%'))",
+        "passes_required_behavior": false
+      },
+      "candidate": {
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "entidad": "los patios",
+          "entidad_resolved": "MUNICIPIO DE LOS PATIOS",
+          "entidad_resolution": {
+            "value": "MUNICIPIO DE LOS PATIOS",
+            "method": "scan_exact",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {}
+          }
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE LOS PATIOS'",
+        "passes_required_behavior": false
+      }
+    },
+    {
+      "code": "85010",
+      "query": "contratos de la alcaldia de AGUAZUL",
+      "expected_kind": "BUYER_UNIT",
+      "expected_canonical": "ALCALDIA DEL MUNICIPIO DE AGUAZUL",
+      "production": {
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "entidad": "Municipio de aguazul",
+          "entidad_resolution": {
+            "value": null,
+            "method": "rewrite_alcald[ií]a_unresolved",
+            "confidence": "low",
+            "like_value": null,
+            "metadata": {
+              "target": "aguazul",
+              "rewritten_from": "alcaldia de aguazul",
+              "resolution_method": "rewrite_unresolved"
+            },
+            "ecosystem_entities": [],
+            "clarification_needed": true,
+            "clarification_hint": "No encontré 'Municipio de aguazul' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+          }
+        },
+        "should_execute": true,
+        "soql": "BLOCKED: UnsafeGlobalQueryError",
+        "passes_required_behavior": false
+      },
+      "candidate": {
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "entidad": "Municipio de aguazul",
+          "entidad_resolved": "ALCALDIA DEL MUNICIPIO DE AGUAZUL",
+          "entidad_resolution": {
+            "value": "ALCALDIA DEL MUNICIPIO DE AGUAZUL",
+            "method": "rewrite_alcald[ií]a",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "rewritten_from": "alcaldia de aguazul",
+              "resolution_method": "exact"
+            }
+          }
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA DEL MUNICIPIO DE AGUAZUL'",
+        "passes_required_behavior": true
+      }
+    },
+    {
+      "code": "85010",
+      "query": "procesos del municipio de AGUAZUL",
+      "expected_kind": "BUYER_UNIT",
+      "expected_canonical": "ALCALDIA DEL MUNICIPIO DE AGUAZUL",
+      "production": {
+        "params": {
+          "dataset": "procesos",
+          "dataset_explicit": true,
+          "entidad": "Municipio de aguazul",
+          "entidad_resolution": {
+            "value": null,
+            "method": "rewrite_municipio_unresolved",
+            "confidence": "low",
+            "like_value": null,
+            "metadata": {
+              "target": "aguazul",
+              "rewritten_from": "municipio de aguazul",
+              "resolution_method": "rewrite_unresolved"
+            },
+            "ecosystem_entities": [],
+            "clarification_needed": true,
+            "clarification_hint": "No encontré 'Municipio de aguazul' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+          }
+        },
+        "should_execute": true,
+        "soql": "BLOCKED: UnsafeGlobalQueryError",
+        "passes_required_behavior": false
+      },
+      "candidate": {
+        "params": {
+          "dataset": "procesos",
+          "dataset_explicit": true,
+          "entidad": "Municipio de aguazul",
+          "entidad_resolved": "ALCALDIA DEL MUNICIPIO DE AGUAZUL",
+          "entidad_resolution": {
+            "value": "ALCALDIA DEL MUNICIPIO DE AGUAZUL",
+            "method": "rewrite_municipio",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "rewritten_from": "municipio de aguazul",
+              "resolution_method": "exact"
+            }
+          }
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA DEL MUNICIPIO DE AGUAZUL'",
+        "passes_required_behavior": true
+      }
+    },
+    {
+      "code": "85010",
+      "query": "contratos en AGUAZUL",
+      "expected_kind": "GEOGRAPHY",
+      "expected_canonical": null,
+      "production": {
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "objeto": [
+            "aguazul"
+          ]
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aguazul%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aguazul%')))",
+        "passes_required_behavior": false
+      },
+      "candidate": {
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "objeto": [
+            "aguazul"
+          ]
+        },
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%aguazul%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%aguazul%')))",
+        "passes_required_behavior": false
+      }
+    }
+  ],
+  "stratified_sample": {
+    "strata_basis": "Rank by sum of unique process and contract activity in M0; not population.",
+    "strata": {
+      "small_activity": [
+        "05134",
+        "15248",
+        "23182",
+        "25339",
+        "25394",
+        "25530",
+        "25867",
+        "41770",
+        "52354",
+        "54810"
+      ],
+      "medium_activity": [
+        "15244",
+        "25436",
+        "23162",
+        "85315",
+        "15215",
+        "15542",
+        "25407",
+        "05086",
+        "63548",
+        "15442"
+      ],
+      "large_activity": [
+        "19698",
+        "76248",
+        "52356",
+        "85010",
+        "54405",
+        "13430",
+        "17001",
+        "50568",
+        "05631",
+        "68001"
+      ]
+    },
+    "categories": {
+      "SAN": [
+        "05647",
+        "05649"
+      ],
+      "SANTA": [
+        "05679",
+        "05686"
+      ],
+      "EL": [
+        "05148",
+        "05250"
+      ],
+      "LA": [
+        "05376",
+        "05390"
+      ],
+      "multiword": [
+        "05148",
+        "05250",
+        "05310",
+        "05376"
+      ],
+      "accents": [
+        "05021",
+        "05030",
+        "05044",
+        "05045"
+      ],
+      "homonyms_qualified_only": [
+        "05079",
+        "05093",
+        "05107",
+        "05313"
+      ],
+      "department_city_names": [
+        "19100",
+        "19785",
+        "63212",
+        "68773"
+      ]
+    }
+  },
+  "stratified_municipalities": 53,
+  "exhaustive_institutional_gate": "preview/pipeline_gate.json",
+  "llm_execution_mode": "DETERMINISTIC_OFFLINE_NO_LLM",
+  "llm_provider_live_coverage": "NOT_VERIFIED"
+}

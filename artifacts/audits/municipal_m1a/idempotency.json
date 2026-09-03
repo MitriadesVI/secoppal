@@ -1,0 +1,19 @@
+{
+  "status": "PASS",
+  "apply_exit_code": 1,
+  "second_run_byte_identical": true,
+  "production_written": false,
+  "sha256": {
+    "artifacts/audits/municipal_m1a/preview/safety_gates.json": "303070369fd506221354bc14ed33cd4031abcce574aeae47d9513976f2579255",
+    "artifacts/audits/municipal_m1a/preview/before_after.json": "32e214d094ab455e1a1e731473bd7ce967dd13bb2fea02a97b99f08c699558a7",
+    "artifacts/audits/municipal_m1a/preview/promotion_manifest.json": "830f90da712e2a842845496acc80ad4c2f4e952d8948382ce3b0b91512b4c669",
+    "artifacts/audits/municipal_m1a/preview/pipeline_gate.json": "b0c85e2f8e65c744f2853e92b5d9b1fc04035a068ffe390a874b6d67561b167e",
+    "artifacts/audits/municipal_m1a/preview/rejected.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "artifacts/audits/municipal_m1a/promotion_manifest.json": "5799e0bce601d61bffaea054487dee4683a0ebcdceb10f6d73239c594ff8cf21",
+    "artifacts/audits/municipal_m1a/before_after.json": "088f6ca35868f54b00441328846d2b437eb83dc6876cda616e3264de8c0e715c",
+    "artifacts/audits/municipal_m1a/rejected.json": "064a9eb37edd5caf67b7a3db8af70af3ea1ca063e5f04c90b5eea67480636136",
+    "app/data/aliases_db.json": "1bf21c5c4224d5097f6ad03dab67bea1341e2e665e9ebacb42e9a9fe0733eacc",
+    "app/data/buyer_source_names.json": "ec49aac1959c49565ae4374d1f18408c81e1bb179c1cf95498b7a2a75363b7d2"
+  },
+  "note": "Both --apply attempts blocked before production writes; pure candidate transform idempotence also verified by tests."
+}

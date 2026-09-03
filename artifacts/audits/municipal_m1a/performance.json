@@ -1,0 +1,84 @@
+{
+  "unit": "milliseconds",
+  "method": "Same process, 7 loads; identical query lists before/after; warmup; wall time; no network or LLM.",
+  "queries": {
+    "exact": [
+      "sdis",
+      "sena",
+      "icbf",
+      "alcaldia de barranquilla",
+      "gobernacion de antioquia",
+      "universidad nacional de colombia"
+    ],
+    "scan": [
+      "contratos de sdis",
+      "contratos de sena",
+      "contratos de icbf",
+      "contratos de alcaldia de barranquilla",
+      "contratos de gobernacion de antioquia",
+      "contratos de universidad nacional de colombia",
+      "contratos de la alcaldia de baranoa",
+      "procesos del municipio de puerto gaitan",
+      "contratos en baranoa",
+      "contratos en bogota",
+      "contratos de la alcaldia de magangue",
+      "procesos de la alcaldia de aguazul"
+    ],
+    "fuzzy": [
+      "ministerio de justica y del derecho",
+      "universidad nacionl de colombia",
+      "instituto nacional de vis",
+      "hospital departamental san vicente"
+    ]
+  },
+  "before": {
+    "load": {
+      "p50_ms": 92.32679198612459,
+      "p95_ms": 97.51537500414997,
+      "samples": 7
+    },
+    "exact": {
+      "p50_ms": 0.00877099228091538,
+      "p95_ms": 0.14541699783876538,
+      "samples": 180
+    },
+    "scan": {
+      "p50_ms": 6.800103496061638,
+      "p95_ms": 31.642917019780725,
+      "samples": 36
+    },
+    "fuzzy": {
+      "p50_ms": 15.95266698859632,
+      "p95_ms": 18.199625017587095,
+      "samples": 12
+    }
+  },
+  "after": {
+    "load": {
+      "p50_ms": 115.36575001082383,
+      "p95_ms": 125.26916697970591,
+      "samples": 7
+    },
+    "exact": {
+      "p50_ms": 0.00868749339133501,
+      "p95_ms": 0.13804101035930216,
+      "samples": 180
+    },
+    "scan": {
+      "p50_ms": 7.733479505986907,
+      "p95_ms": 52.974916994571686,
+      "samples": 36
+    },
+    "fuzzy": {
+      "p50_ms": 21.08610399591271,
+      "p95_ms": 28.937208000570536,
+      "samples": 12
+    }
+  },
+  "p50_ratio": {
+    "load": 1.2495370794228577,
+    "exact": 0.9904801091021306,
+    "scan": 1.1372590888456102,
+    "fuzzy": 1.3217917738134946
+  }
+}

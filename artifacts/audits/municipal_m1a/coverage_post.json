@@ -1,0 +1,48 @@
+{
+  "status": "UNCHANGED_NO_PROMOTION",
+  "offline_replay_identical_to_m0": true,
+  "accredited_active_territories": 607,
+  "recognized_territories": 70,
+  "coverage_in_accredited_active_cohort_pct": 11.532125205930807,
+  "divipola_nominal_denominator": 1103,
+  "coverage_over_divipola_1103_pct": 6.346328195829556,
+  "process_unique_volume_coverage_pct": 58.08827208641775,
+  "contract_unique_volume_coverage_pct": 60.3780364448873,
+  "volumes": {
+    "p6dx-8zbt": {
+      "physical_rows": 357631,
+      "unique_ids": 339745,
+      "covered_physical_rows": 205409,
+      "covered_unique_ids": 197352
+    },
+    "jbjy-vk9h": {
+      "physical_rows": 331185,
+      "unique_ids": 331185,
+      "covered_physical_rows": 199963,
+      "covered_unique_ids": 199963
+    }
+  },
+  "recognized_buyer_units": 119,
+  "disputed_source_claims": [],
+  "baranoa_parity": {
+    "p6dx-8zbt": {
+      "candidate_physical_rows": 381,
+      "candidate_unique_ids": 380,
+      "production_covered_unique_ids": 0,
+      "expected": {
+        "physical_rows": 381,
+        "unique_ids": 380
+      }
+    },
+    "jbjy-vk9h": {
+      "candidate_physical_rows": 374,
+      "candidate_unique_ids": 374,
+      "production_covered_unique_ids": 0,
+      "expected": {
+        "physical_rows": 374,
+        "unique_ids": 374
+      }
+    }
+  },
+  "global_municipal_buyer_unit_denominator": "UNADJUDICATED"
+}

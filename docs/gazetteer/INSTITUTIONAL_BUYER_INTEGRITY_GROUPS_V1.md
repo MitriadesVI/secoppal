@@ -220,6 +220,25 @@ fantasmas); verificación fiscal histórica de los registros con NIT declarado.
 El NIT transpuesto de Ibagué de P0.1 no aparece en el catálogo de runtime actual.
 La medición no corrige ni fusiona datos para mejorar artificialmente cobertura.
 
+## M1A — promoción bloqueada por pipeline predictivo
+
+**BLOCKED**, sin importación de producción. El promotor determinista parte de
+las 503 propuestas M0, acredita sus 1.888 aliases exactos y audita scan contra
+42.790 superficies congeladas. El pipeline completo falla 30 consultas en nueve
+municipios: al incorporar Susa, cuatro consultas por Susacón pasan a resolver
+al comprador equivocado. Se activa el STOP global antes de escribir los datos.
+
+La frontera de captura corta nombres como Susacón, Nemocón, Belén, Valparaíso
+y El Carmen. Nuevo Colón presenta interferencia de ordenación. El canario
+`contratos en baranoa` tampoco acredita territorio en el baseline. Estos
+bloqueos no se convierten en aliases especulativos ni excepciones municipales.
+
+Los dos JSON de producción permanecen byte-idénticos y el replay completo de
+M0 permanece idéntico: 70/607 territorios acreditados, 58,09% de procesos únicos
+y 60,38% de contratos únicos de esa cohorte. Las 503 propuestas quedan diferidas.
+Implementación y guardas: `5a222b1`. Informe y evidencia:
+`docs/gazetteer/MUNICIPAL_M1A.md`, `artifacts/audits/municipal_m1a/`.
+
 ## Estado de cierre
 
 | Checkpoint | Estado | Commit |
@@ -231,6 +250,7 @@ La medición no corrige ni fusiona datos para mejorar artificialmente cobertura.
 | G1 — grupos declarados | PASS | `efdd432` |
 | G2 — conteos analíticos y traza | PASS | `3c72a66` |
 | H — Municipal M0 | PARTIAL, medición y propuestas reproducibles | Commit propio de este informe |
+| M1A — promoción municipal | BLOCKED, STOP global previo a escritura | `5a222b1` y cierre documental M1A |
 
 No se encontró una categoría nueva fuera de ADR-074. Working tree preexistente
 preservado; **PUSH NO**. Las propuestas municipales y las deudas explícitas

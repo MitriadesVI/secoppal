@@ -1,0 +1,72 @@
+{
+  "stage": "MUNICIPAL_M1A",
+  "status": "BLOCKED",
+  "reason": "STOP_GLOBAL_SYSTEMIC_QUERY_CAPTURE_AND_NEW_WRONG_OWNER",
+  "head_before": "9fb6375a3d23158b44ca9ad14bf1624c2495d1fc",
+  "functional_commit": "5a222b17aebe7815e1b951beb9c0ea10ae4246a3",
+  "production_applied": false,
+  "production_proof": {
+    "app/data/aliases_db.json": {
+      "byte_identical": true,
+      "sha256": "1bf21c5c4224d5097f6ad03dab67bea1341e2e665e9ebacb42e9a9fe0733eacc"
+    },
+    "app/data/buyer_source_names.json": {
+      "byte_identical": true,
+      "sha256": "ec49aac1959c49565ae4374d1f18408c81e1bb179c1cf95498b7a2a75363b7d2"
+    }
+  },
+  "input_m0_eligible": 503,
+  "add_new_input": 498,
+  "alias_extensions_input": 5,
+  "proposals_promoted": 0,
+  "proposals_globally_deferred": 503,
+  "per_proposal_data_rejections": 0,
+  "candidate_data_gates": "preview/safety_gates.json",
+  "candidate_pipeline": {
+    "status": "BLOCKED",
+    "queries": 1888,
+    "failures": 30,
+    "municipalities": 9,
+    "new_wrong_owner_queries": 4,
+    "evidence": "preview/pipeline_gate.json"
+  },
+  "production_safety": {
+    "NEW_DUPLICATE_CANONICAL_IDENTITY_KEYS": 0,
+    "NEW_ACCIDENTAL_DUPLICATE_NIT_MERGES": 0,
+    "NEW_MULTI_OWNER_ALIAS_KEYS": 0,
+    "NEW_SCAN_CROSS_OWNER": 0,
+    "NEW_WRONG_OWNER": 0,
+    "NEW_SOURCE_NAME_IDENTITY_SPLITS": 0,
+    "NO_NIT_MERGE": true
+  },
+  "idempotency": "PASS: candidate transform and repeated denied --apply byte-identical",
+  "offline_m0_replay": "IDENTICAL; production unchanged, not expanded post coverage",
+  "tests": {
+    "baseline_focal_passed": 29,
+    "m1a_focal_passed": 19,
+    "m1a_and_adr072_focal_passed": 76,
+    "full_suite": {
+      "passed": 10877,
+      "skipped": 2,
+      "xfailed": 14,
+      "failed": 0,
+      "errors": 0
+    },
+    "full_suite_summary": "10877 passed, 2 skipped, 14 xfailed in 487.22s (0:08:07)",
+    "new_xfails": 0,
+    "query_corpus": "89/89",
+    "ruff": "PASS",
+    "lint_core": "PASS",
+    "gazetteer_validate": {
+      "errors": 0,
+      "legacy_warnings": 67,
+      "multi_owner_keys": 141,
+      "existing_ceiling": 173
+    },
+    "scope": "Full tests/ includes ADR-072/073, R1C/R1D, institutional family, Puente Aranda, P0.2, governorates, universities, ICBF/SENA, BuyerGroups, SDIS, result identity/grouping and pagination."
+  },
+  "LLM_EXECUTION_MODE": "DETERMINISTIC_OFFLINE_NO_LLM (municipal canaries)",
+  "LLM_PROVIDER_LIVE_COVERAGE": "NOT_VERIFIED",
+  "performance": "Candidate benchmark only; exact stable, scan p95 regression remains open; no optimization after STOP. See performance.json.",
+  "push": false
+}
