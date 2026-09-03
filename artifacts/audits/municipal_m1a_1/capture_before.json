@@ -1,0 +1,46 @@
+[
+  {
+    "query": "alcaldia de susacon",
+    "first_span": "alcaldia de susa"
+  },
+  {
+    "query": "municipio de susacon",
+    "first_span": "municipio de susa"
+  },
+  {
+    "query": "alcaldia de nemocon",
+    "first_span": "alcaldia de nemo"
+  },
+  {
+    "query": "municipio de nemocon",
+    "first_span": "municipio de nemo"
+  },
+  {
+    "query": "alcaldia de belen",
+    "first_span": "alcaldia de bel"
+  },
+  {
+    "query": "municipio de belen",
+    "first_span": "municipio de bel"
+  },
+  {
+    "query": "alcaldia de valparaiso",
+    "first_span": "alcaldia de val"
+  },
+  {
+    "query": "municipio de valparaiso",
+    "first_span": "municipio de val"
+  },
+  {
+    "query": "alcaldia de el carmen de viboral",
+    "first_span": "alcaldia de el carm"
+  },
+  {
+    "query": "municipio de el carmen de bolivar",
+    "first_span": "municipio de el carm"
+  },
+  {
+    "query": "comprador ese carmen emilia ospina perfil",
+    "first_span": "ese carm"
+  }
+]

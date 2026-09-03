@@ -90,18 +90,8 @@ def test_real_query_pipeline_stratified_canaries(prediction, monkeypatch):
     from scripts.audits.verify_municipal_m1a import select_canaries
 
     for p in select_canaries(prediction['proposals'])['proposals']:
-        if p['code'] in {
-            '05148',
-            '05856',
-            '13244',
-            '15087',
-            '15494',
-            '15774',
-            '18860',
-            '25486',
-            '66088',
-        }:
-            continue  # Explicitly blocked by the exhaustive gate below.
+        if p['code'] == '15494':
+            continue  # Ordering-span blocker remains until M1A.1 block B.
         for alias in p['aliases']:
             for kind, ds, column in [
                 ('contratos', 'jbjy-vk9h', 'nombre_entidad'),
@@ -123,20 +113,15 @@ def test_real_query_pipeline_stratified_canaries(prediction, monkeypatch):
                 assert f'{column} like' not in soql.lower()
 
 
-def test_exhaustive_pipeline_gate_blocks_systemic_wrong_owner(prediction):
+def test_exhaustive_pipeline_gate_has_no_capture_wrong_owner(prediction):
     p = prediction
     gate = pipeline_gate(p['before'], p['result'][0], p['result'][1], p['proposals'])
     assert gate['status'] == 'BLOCKED'
     assert gate['checks'] == 1888
-    assert gate['failed_queries'] == 30
-    assert gate['affected_municipalities'] == 9
-    assert gate['new_wrong_owner_queries'] == 4
-    assert {f['expected'] for f in gate['failures'] if f['new_wrong_owner']} == {
-        'ALCALDIA MUNICIPAL SUSACON BOYACA'
-    }
-    assert {f['after']['entidad_resolved'] for f in gate['failures'] if f['new_wrong_owner']} == {
-        'ALCALDIA DE SUSA'
-    }
+    assert gate['failed_queries'] == 4
+    assert gate['affected_municipalities'] == 1
+    assert gate['new_wrong_owner_queries'] == 0
+    assert {f['code'] for f in gate['failures']} == {'15494'}
 
 
 @pytest.mark.parametrize(

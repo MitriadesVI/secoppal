@@ -81,13 +81,10 @@ class TestSharedCaptureBoundary:
         assert len(ENTITY_REWRITES) == 7
 
     def test_the_boundary_alternation_has_no_connector(self) -> None:
-        """Se inspecciona la alternación, no la cadena: "de" ⊂ "donde"."""
-        alternatives = {
-            alt.replace(r"\b", "")
-            for alt in CAPTURE_BOUNDARY.split("(?:")[1].rstrip(r"))").split("|")
-        }
-        assert alternatives == {"para", "donde", "por", "con", "en", "sobre", "$"}
-        assert not alternatives & {"de", "del"}
+        """Los conectores siguen dentro del nombre, sin acoplarse al regex."""
+        for connector in ("de", "del"):
+            query = f"municipio de villa {connector} campo"
+            assert _spans(query)[0] == query
 
     @pytest.mark.parametrize("connector", ["de", "del", "De", "DEL", "dél"])
     def test_connectors_are_recognized_as_name_articulation(self, connector: str) -> None:

@@ -25,8 +25,9 @@ from typing import Callable, NamedTuple
 # que sí abre otra cláusula, y quien decide dónde termina el nombre es el
 # resolver contra el gazetteer, no el regex.
 #
-# ``por|con|en`` llevan ``\b`` para que "concordia" no active "con".
-CAPTURE_BOUNDARY = r"(?=\s*(?:para|donde|por\b|con\b|en\b|sobre\b|$))"
+# Una cláusula empieza con un TOKEN independiente: tanto el espacio anterior
+# como el límite posterior importan (Susacón, Belén, Valparaíso, Carmen).
+CAPTURE_BOUNDARY = r"(?=\s+(?:para\b|donde\b|por\b|con\b|en\b|sobre\b)|\s*$)"
 
 # Conectores internos de nombre propio. No terminan un nombre: lo articulan.
 _NAME_CONNECTORS = frozenset({"de", "del"})

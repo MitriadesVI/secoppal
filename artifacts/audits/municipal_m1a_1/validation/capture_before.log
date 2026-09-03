@@ -1,0 +1,674 @@
+FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF.......F......                          [100%]
+=================================== FAILURES ===================================
+______ test_municipal_name_is_not_cut_inside_a_word[susacon-alcaldia de] _______
+
+head = 'alcaldia de', name = 'susacon'
+
+    @pytest.mark.parametrize('head', ['alcaldia de', 'municipio de'])
+    @pytest.mark.parametrize('name', [
+        'susacon', 'nemocon', 'belen', 'valparaiso',
+        'el carmen de viboral', 'el carmen de bolivar',
+    ])
+    def test_municipal_name_is_not_cut_inside_a_word(head, name):
+        query = f'{head} {name}'
+>       assert rewrite_entity(query)[0].consumed_span == query
+E       AssertionError: assert 'alcaldia de susa' == 'alcaldia de susacon'
+E         
+E         - alcaldia de susacon
+E         ?                 ---
+E         + alcaldia de susa
+
+tests/test_municipal_language_capture.py:15: AssertionError
+______ test_municipal_name_is_not_cut_inside_a_word[susacon-municipio de] ______
+
+head = 'municipio de', name = 'susacon'
+
+    @pytest.mark.parametrize('head', ['alcaldia de', 'municipio de'])
+    @pytest.mark.parametrize('name', [
+        'susacon', 'nemocon', 'belen', 'valparaiso',
+        'el carmen de viboral', 'el carmen de bolivar',
+    ])
+    def test_municipal_name_is_not_cut_inside_a_word(head, name):
+        query = f'{head} {name}'
+>       assert rewrite_entity(query)[0].consumed_span == query
+E       AssertionError: assert 'municipio de susa' == 'municipio de susacon'
+E         
+E         - municipio de susacon
+E         ?                  ---
+E         + municipio de susa
+
+tests/test_municipal_language_capture.py:15: AssertionError
+______ test_municipal_name_is_not_cut_inside_a_word[nemocon-alcaldia de] _______
+
+head = 'alcaldia de', name = 'nemocon'
+
+    @pytest.mark.parametrize('head', ['alcaldia de', 'municipio de'])
+    @pytest.mark.parametrize('name', [
+        'susacon', 'nemocon', 'belen', 'valparaiso',
+        'el carmen de viboral', 'el carmen de bolivar',
+    ])
+    def test_municipal_name_is_not_cut_inside_a_word(head, name):
+        query = f'{head} {name}'
+>       assert rewrite_entity(query)[0].consumed_span == query
+E       AssertionError: assert 'alcaldia de nemo' == 'alcaldia de nemocon'
+E         
+E         - alcaldia de nemocon
+E         ?                 ---
+E         + alcaldia de nemo
+
+tests/test_municipal_language_capture.py:15: AssertionError
+______ test_municipal_name_is_not_cut_inside_a_word[nemocon-municipio de] ______
+
+head = 'municipio de', name = 'nemocon'
+
+    @pytest.mark.parametrize('head', ['alcaldia de', 'municipio de'])
+    @pytest.mark.parametrize('name', [
+        'susacon', 'nemocon', 'belen', 'valparaiso',
+        'el carmen de viboral', 'el carmen de bolivar',
+    ])
+    def test_municipal_name_is_not_cut_inside_a_word(head, name):
+        query = f'{head} {name}'
+>       assert rewrite_entity(query)[0].consumed_span == query
+E       AssertionError: assert 'municipio de nemo' == 'municipio de nemocon'
+E         
+E         - municipio de nemocon
+E         ?                  ---
+E         + municipio de nemo
+
+tests/test_municipal_language_capture.py:15: AssertionError
+_______ test_municipal_name_is_not_cut_inside_a_word[belen-alcaldia de] ________
+
+head = 'alcaldia de', name = 'belen'
+
+    @pytest.mark.parametrize('head', ['alcaldia de', 'municipio de'])
+    @pytest.mark.parametrize('name', [
+        'susacon', 'nemocon', 'belen', 'valparaiso',
+        'el carmen de viboral', 'el carmen de bolivar',
+    ])
+    def test_municipal_name_is_not_cut_inside_a_word(head, name):
+        query = f'{head} {name}'
+>       assert rewrite_entity(query)[0].consumed_span == query
+E       AssertionError: assert 'alcaldia de bel' == 'alcaldia de belen'
+E         
+E         - alcaldia de belen
+E         ?                --
+E         + alcaldia de bel
+
+tests/test_municipal_language_capture.py:15: AssertionError
+_______ test_municipal_name_is_not_cut_inside_a_word[belen-municipio de] _______
+
+head = 'municipio de', name = 'belen'
+
+    @pytest.mark.parametrize('head', ['alcaldia de', 'municipio de'])
+    @pytest.mark.parametrize('name', [
+        'susacon', 'nemocon', 'belen', 'valparaiso',
+        'el carmen de viboral', 'el carmen de bolivar',
+    ])
+    def test_municipal_name_is_not_cut_inside_a_word(head, name):
+        query = f'{head} {name}'
+>       assert rewrite_entity(query)[0].consumed_span == query
+E       AssertionError: assert 'municipio de bel' == 'municipio de belen'
+E         
+E         - municipio de belen
+E         ?                 --
+E         + municipio de bel
+
+tests/test_municipal_language_capture.py:15: AssertionError
+_____ test_municipal_name_is_not_cut_inside_a_word[valparaiso-alcaldia de] _____
+
+head = 'alcaldia de', name = 'valparaiso'
+
+    @pytest.mark.parametrize('head', ['alcaldia de', 'municipio de'])
+    @pytest.mark.parametrize('name', [
+        'susacon', 'nemocon', 'belen', 'valparaiso',
+        'el carmen de viboral', 'el carmen de bolivar',
+    ])
+    def test_municipal_name_is_not_cut_inside_a_word(head, name):
+        query = f'{head} {name}'
+>       assert rewrite_entity(query)[0].consumed_span == query
+E       AssertionError: assert 'alcaldia de val' == 'alcaldia de valparaiso'
+E         
+E         - alcaldia de valparaiso
+E         ?                -------
+E         + alcaldia de val
+
+tests/test_municipal_language_capture.py:15: AssertionError
+____ test_municipal_name_is_not_cut_inside_a_word[valparaiso-municipio de] _____
+
+head = 'municipio de', name = 'valparaiso'
+
+    @pytest.mark.parametrize('head', ['alcaldia de', 'municipio de'])
+    @pytest.mark.parametrize('name', [
+        'susacon', 'nemocon', 'belen', 'valparaiso',
+        'el carmen de viboral', 'el carmen de bolivar',
+    ])
+    def test_municipal_name_is_not_cut_inside_a_word(head, name):
+        query = f'{head} {name}'
+>       assert rewrite_entity(query)[0].consumed_span == query
+E       AssertionError: assert 'municipio de val' == 'municipio de valparaiso'
+E         
+E         - municipio de valparaiso
+E         ?                 -------
+E         + municipio de val
+
+tests/test_municipal_language_capture.py:15: AssertionError
+_ test_municipal_name_is_not_cut_inside_a_word[el carmen de viboral-alcaldia de] _
+
+head = 'alcaldia de', name = 'el carmen de viboral'
+
+    @pytest.mark.parametrize('head', ['alcaldia de', 'municipio de'])
+    @pytest.mark.parametrize('name', [
+        'susacon', 'nemocon', 'belen', 'valparaiso',
+        'el carmen de viboral', 'el carmen de bolivar',
+    ])
+    def test_municipal_name_is_not_cut_inside_a_word(head, name):
+        query = f'{head} {name}'
+>       assert rewrite_entity(query)[0].consumed_span == query
+E       AssertionError: assert 'alcaldia de el carm' == 'alcaldia de ...en de viboral'
+E         
+E         - alcaldia de el carmen de viboral
+E         + alcaldia de el carm
+
+tests/test_municipal_language_capture.py:15: AssertionError
+_ test_municipal_name_is_not_cut_inside_a_word[el carmen de viboral-municipio de] _
+
+head = 'municipio de', name = 'el carmen de viboral'
+
+    @pytest.mark.parametrize('head', ['alcaldia de', 'municipio de'])
+    @pytest.mark.parametrize('name', [
+        'susacon', 'nemocon', 'belen', 'valparaiso',
+        'el carmen de viboral', 'el carmen de bolivar',
+    ])
+    def test_municipal_name_is_not_cut_inside_a_word(head, name):
+        query = f'{head} {name}'
+>       assert rewrite_entity(query)[0].consumed_span == query
+E       AssertionError: assert 'municipio de el carm' == 'municipio de...en de viboral'
+E         
+E         - municipio de el carmen de viboral
+E         ?                     -------------
+E         + municipio de el carm
+
+tests/test_municipal_language_capture.py:15: AssertionError
+_ test_municipal_name_is_not_cut_inside_a_word[el carmen de bolivar-alcaldia de] _
+
+head = 'alcaldia de', name = 'el carmen de bolivar'
+
+    @pytest.mark.parametrize('head', ['alcaldia de', 'municipio de'])
+    @pytest.mark.parametrize('name', [
+        'susacon', 'nemocon', 'belen', 'valparaiso',
+        'el carmen de viboral', 'el carmen de bolivar',
+    ])
+    def test_municipal_name_is_not_cut_inside_a_word(head, name):
+        query = f'{head} {name}'
+>       assert rewrite_entity(query)[0].consumed_span == query
+E       AssertionError: assert 'alcaldia de el carm' == 'alcaldia de ...en de bolivar'
+E         
+E         - alcaldia de el carmen de bolivar
+E         + alcaldia de el carm
+
+tests/test_municipal_language_capture.py:15: AssertionError
+_ test_municipal_name_is_not_cut_inside_a_word[el carmen de bolivar-municipio de] _
+
+head = 'municipio de', name = 'el carmen de bolivar'
+
+    @pytest.mark.parametrize('head', ['alcaldia de', 'municipio de'])
+    @pytest.mark.parametrize('name', [
+        'susacon', 'nemocon', 'belen', 'valparaiso',
+        'el carmen de viboral', 'el carmen de bolivar',
+    ])
+    def test_municipal_name_is_not_cut_inside_a_word(head, name):
+        query = f'{head} {name}'
+>       assert rewrite_entity(query)[0].consumed_span == query
+E       AssertionError: assert 'municipio de el carm' == 'municipio de...en de bolivar'
+E         
+E         - municipio de el carmen de bolivar
+E         ?                     -------------
+E         + municipio de el carm
+
+tests/test_municipal_language_capture.py:15: AssertionError
+_ test_shared_boundary_preserves_whole_tokens_in_every_family[carmen-alcaldia de] _
+
+head = 'alcaldia de', name = 'carmen'
+
+    @pytest.mark.parametrize('head', [
+        'alcaldia de', 'municipio de', 'gobernacion del',
+        'gobierno departamental del', 'ese', 'hospital', 'universidad',
+    ])
+    @pytest.mark.parametrize('name', ['carmen', 'susacon', 'valparaiso', 'paraiso'])
+    def test_shared_boundary_preserves_whole_tokens_in_every_family(head, name):
+        query = f'{head} {name}'
+>       assert rewrite_entity(query)[0].consumed_span == query
+E       AssertionError: assert 'alcaldia de carm' == 'alcaldia de carmen'
+E         
+E         - alcaldia de carmen
+E         ?                 --
+E         + alcaldia de carm
+
+tests/test_municipal_language_capture.py:25: AssertionError
+_ test_shared_boundary_preserves_whole_tokens_in_every_family[carmen-municipio de] _
+
+head = 'municipio de', name = 'carmen'
+
+    @pytest.mark.parametrize('head', [
+        'alcaldia de', 'municipio de', 'gobernacion del',
+        'gobierno departamental del', 'ese', 'hospital', 'universidad',
+    ])
+    @pytest.mark.parametrize('name', ['carmen', 'susacon', 'valparaiso', 'paraiso'])
+    def test_shared_boundary_preserves_whole_tokens_in_every_family(head, name):
+        query = f'{head} {name}'
+>       assert rewrite_entity(query)[0].consumed_span == query
+E       AssertionError: assert 'municipio de carm' == 'municipio de carmen'
+E         
+E         - municipio de carmen
+E         ?                  --
+E         + municipio de carm
+
+tests/test_municipal_language_capture.py:25: AssertionError
+_ test_shared_boundary_preserves_whole_tokens_in_every_family[carmen-gobernacion del] _
+
+head = 'gobernacion del', name = 'carmen'
+
+    @pytest.mark.parametrize('head', [
+        'alcaldia de', 'municipio de', 'gobernacion del',
+        'gobierno departamental del', 'ese', 'hospital', 'universidad',
+    ])
+    @pytest.mark.parametrize('name', ['carmen', 'susacon', 'valparaiso', 'paraiso'])
+    def test_shared_boundary_preserves_whole_tokens_in_every_family(head, name):
+        query = f'{head} {name}'
+>       assert rewrite_entity(query)[0].consumed_span == query
+E       AssertionError: assert 'gobernacion del carm' == 'gobernacion del carmen'
+E         
+E         - gobernacion del carmen
+E         ?                     --
+E         + gobernacion del carm
+
+tests/test_municipal_language_capture.py:25: AssertionError
+_ test_shared_boundary_preserves_whole_tokens_in_every_family[carmen-gobierno departamental del] _
+
+head = 'gobierno departamental del', name = 'carmen'
+
+    @pytest.mark.parametrize('head', [
+        'alcaldia de', 'municipio de', 'gobernacion del',
+        'gobierno departamental del', 'ese', 'hospital', 'universidad',
+    ])
+    @pytest.mark.parametrize('name', ['carmen', 'susacon', 'valparaiso', 'paraiso'])
+    def test_shared_boundary_preserves_whole_tokens_in_every_family(head, name):
+        query = f'{head} {name}'
+>       assert rewrite_entity(query)[0].consumed_span == query
+E       AssertionError: assert 'gobierno dep...ntal del carm' == 'gobierno dep...al del carmen'
+E         
+E         - gobierno departamental del carmen
+E         ?                                --
+E         + gobierno departamental del carm
+
+tests/test_municipal_language_capture.py:25: AssertionError
+___ test_shared_boundary_preserves_whole_tokens_in_every_family[carmen-ese] ____
+
+head = 'ese', name = 'carmen'
+
+    @pytest.mark.parametrize('head', [
+        'alcaldia de', 'municipio de', 'gobernacion del',
+        'gobierno departamental del', 'ese', 'hospital', 'universidad',
+    ])
+    @pytest.mark.parametrize('name', ['carmen', 'susacon', 'valparaiso', 'paraiso'])
+    def test_shared_boundary_preserves_whole_tokens_in_every_family(head, name):
+        query = f'{head} {name}'
+>       assert rewrite_entity(query)[0].consumed_span == query
+E       AssertionError: assert 'ese carm' == 'ese carmen'
+E         
+E         - ese carmen
+E         ?         --
+E         + ese carm
+
+tests/test_municipal_language_capture.py:25: AssertionError
+_ test_shared_boundary_preserves_whole_tokens_in_every_family[carmen-hospital] _
+
+head = 'hospital', name = 'carmen'
+
+    @pytest.mark.parametrize('head', [
+        'alcaldia de', 'municipio de', 'gobernacion del',
+        'gobierno departamental del', 'ese', 'hospital', 'universidad',
+    ])
+    @pytest.mark.parametrize('name', ['carmen', 'susacon', 'valparaiso', 'paraiso'])
+    def test_shared_boundary_preserves_whole_tokens_in_every_family(head, name):
+        query = f'{head} {name}'
+>       assert rewrite_entity(query)[0].consumed_span == query
+E       AssertionError: assert 'hospital carm' == 'hospital carmen'
+E         
+E         - hospital carmen
+E         ?              --
+E         + hospital carm
+
+tests/test_municipal_language_capture.py:25: AssertionError
+_ test_shared_boundary_preserves_whole_tokens_in_every_family[carmen-universidad] _
+
+head = 'universidad', name = 'carmen'
+
+    @pytest.mark.parametrize('head', [
+        'alcaldia de', 'municipio de', 'gobernacion del',
+        'gobierno departamental del', 'ese', 'hospital', 'universidad',
+    ])
+    @pytest.mark.parametrize('name', ['carmen', 'susacon', 'valparaiso', 'paraiso'])
+    def test_shared_boundary_preserves_whole_tokens_in_every_family(head, name):
+        query = f'{head} {name}'
+>       assert rewrite_entity(query)[0].consumed_span == query
+E       AssertionError: assert 'universidad carm' == 'universidad carmen'
+E         
+E         - universidad carmen
+E         ?                 --
+E         + universidad carm
+
+tests/test_municipal_language_capture.py:25: AssertionError
+_ test_shared_boundary_preserves_whole_tokens_in_every_family[susacon-alcaldia de] _
+
+head = 'alcaldia de', name = 'susacon'
+
+    @pytest.mark.parametrize('head', [
+        'alcaldia de', 'municipio de', 'gobernacion del',
+        'gobierno departamental del', 'ese', 'hospital', 'universidad',
+    ])
+    @pytest.mark.parametrize('name', ['carmen', 'susacon', 'valparaiso', 'paraiso'])
+    def test_shared_boundary_preserves_whole_tokens_in_every_family(head, name):
+        query = f'{head} {name}'
+>       assert rewrite_entity(query)[0].consumed_span == query
+E       AssertionError: assert 'alcaldia de susa' == 'alcaldia de susacon'
+E         
+E         - alcaldia de susacon
+E         ?                 ---
+E         + alcaldia de susa
+
+tests/test_municipal_language_capture.py:25: AssertionError
+_ test_shared_boundary_preserves_whole_tokens_in_every_family[susacon-municipio de] _
+
+head = 'municipio de', name = 'susacon'
+
+    @pytest.mark.parametrize('head', [
+        'alcaldia de', 'municipio de', 'gobernacion del',
+        'gobierno departamental del', 'ese', 'hospital', 'universidad',
+    ])
+    @pytest.mark.parametrize('name', ['carmen', 'susacon', 'valparaiso', 'paraiso'])
+    def test_shared_boundary_preserves_whole_tokens_in_every_family(head, name):
+        query = f'{head} {name}'
+>       assert rewrite_entity(query)[0].consumed_span == query
+E       AssertionError: assert 'municipio de susa' == 'municipio de susacon'
+E         
+E         - municipio de susacon
+E         ?                  ---
+E         + municipio de susa
+
+tests/test_municipal_language_capture.py:25: AssertionError
+_ test_shared_boundary_preserves_whole_tokens_in_every_family[susacon-gobernacion del] _
+
+head = 'gobernacion del', name = 'susacon'
+
+    @pytest.mark.parametrize('head', [
+        'alcaldia de', 'municipio de', 'gobernacion del',
+        'gobierno departamental del', 'ese', 'hospital', 'universidad',
+    ])
+    @pytest.mark.parametrize('name', ['carmen', 'susacon', 'valparaiso', 'paraiso'])
+    def test_shared_boundary_preserves_whole_tokens_in_every_family(head, name):
+        query = f'{head} {name}'
+>       assert rewrite_entity(query)[0].consumed_span == query
+E       AssertionError: assert 'gobernacion del susa' == 'gobernacion del susacon'
+E         
+E         - gobernacion del susacon
+E         ?                     ---
+E         + gobernacion del susa
+
+tests/test_municipal_language_capture.py:25: AssertionError
+_ test_shared_boundary_preserves_whole_tokens_in_every_family[susacon-gobierno departamental del] _
+
+head = 'gobierno departamental del', name = 'susacon'
+
+    @pytest.mark.parametrize('head', [
+        'alcaldia de', 'municipio de', 'gobernacion del',
+        'gobierno departamental del', 'ese', 'hospital', 'universidad',
+    ])
+    @pytest.mark.parametrize('name', ['carmen', 'susacon', 'valparaiso', 'paraiso'])
+    def test_shared_boundary_preserves_whole_tokens_in_every_family(head, name):
+        query = f'{head} {name}'
+>       assert rewrite_entity(query)[0].consumed_span == query
+E       AssertionError: assert 'gobierno dep...ntal del susa' == 'gobierno dep...l del susacon'
+E         
+E         - gobierno departamental del susacon
+E         ?                                ---
+E         + gobierno departamental del susa
+
+tests/test_municipal_language_capture.py:25: AssertionError
+___ test_shared_boundary_preserves_whole_tokens_in_every_family[susacon-ese] ___
+
+head = 'ese', name = 'susacon'
+
+    @pytest.mark.parametrize('head', [
+        'alcaldia de', 'municipio de', 'gobernacion del',
+        'gobierno departamental del', 'ese', 'hospital', 'universidad',
+    ])
+    @pytest.mark.parametrize('name', ['carmen', 'susacon', 'valparaiso', 'paraiso'])
+    def test_shared_boundary_preserves_whole_tokens_in_every_family(head, name):
+        query = f'{head} {name}'
+>       assert rewrite_entity(query)[0].consumed_span == query
+E       AssertionError: assert 'ese susa' == 'ese susacon'
+E         
+E         - ese susacon
+E         ?         ---
+E         + ese susa
+
+tests/test_municipal_language_capture.py:25: AssertionError
+_ test_shared_boundary_preserves_whole_tokens_in_every_family[susacon-hospital] _
+
+head = 'hospital', name = 'susacon'
+
+    @pytest.mark.parametrize('head', [
+        'alcaldia de', 'municipio de', 'gobernacion del',
+        'gobierno departamental del', 'ese', 'hospital', 'universidad',
+    ])
+    @pytest.mark.parametrize('name', ['carmen', 'susacon', 'valparaiso', 'paraiso'])
+    def test_shared_boundary_preserves_whole_tokens_in_every_family(head, name):
+        query = f'{head} {name}'
+>       assert rewrite_entity(query)[0].consumed_span == query
+E       AssertionError: assert 'hospital susa' == 'hospital susacon'
+E         
+E         - hospital susacon
+E         ?              ---
+E         + hospital susa
+
+tests/test_municipal_language_capture.py:25: AssertionError
+_ test_shared_boundary_preserves_whole_tokens_in_every_family[susacon-universidad] _
+
+head = 'universidad', name = 'susacon'
+
+    @pytest.mark.parametrize('head', [
+        'alcaldia de', 'municipio de', 'gobernacion del',
+        'gobierno departamental del', 'ese', 'hospital', 'universidad',
+    ])
+    @pytest.mark.parametrize('name', ['carmen', 'susacon', 'valparaiso', 'paraiso'])
+    def test_shared_boundary_preserves_whole_tokens_in_every_family(head, name):
+        query = f'{head} {name}'
+>       assert rewrite_entity(query)[0].consumed_span == query
+E       AssertionError: assert 'universidad susa' == 'universidad susacon'
+E         
+E         - universidad susacon
+E         ?                 ---
+E         + universidad susa
+
+tests/test_municipal_language_capture.py:25: AssertionError
+_ test_shared_boundary_preserves_whole_tokens_in_every_family[valparaiso-alcaldia de] _
+
+head = 'alcaldia de', name = 'valparaiso'
+
+    @pytest.mark.parametrize('head', [
+        'alcaldia de', 'municipio de', 'gobernacion del',
+        'gobierno departamental del', 'ese', 'hospital', 'universidad',
+    ])
+    @pytest.mark.parametrize('name', ['carmen', 'susacon', 'valparaiso', 'paraiso'])
+    def test_shared_boundary_preserves_whole_tokens_in_every_family(head, name):
+        query = f'{head} {name}'
+>       assert rewrite_entity(query)[0].consumed_span == query
+E       AssertionError: assert 'alcaldia de val' == 'alcaldia de valparaiso'
+E         
+E         - alcaldia de valparaiso
+E         ?                -------
+E         + alcaldia de val
+
+tests/test_municipal_language_capture.py:25: AssertionError
+_ test_shared_boundary_preserves_whole_tokens_in_every_family[valparaiso-municipio de] _
+
+head = 'municipio de', name = 'valparaiso'
+
+    @pytest.mark.parametrize('head', [
+        'alcaldia de', 'municipio de', 'gobernacion del',
+        'gobierno departamental del', 'ese', 'hospital', 'universidad',
+    ])
+    @pytest.mark.parametrize('name', ['carmen', 'susacon', 'valparaiso', 'paraiso'])
+    def test_shared_boundary_preserves_whole_tokens_in_every_family(head, name):
+        query = f'{head} {name}'
+>       assert rewrite_entity(query)[0].consumed_span == query
+E       AssertionError: assert 'municipio de val' == 'municipio de valparaiso'
+E         
+E         - municipio de valparaiso
+E         ?                 -------
+E         + municipio de val
+
+tests/test_municipal_language_capture.py:25: AssertionError
+_ test_shared_boundary_preserves_whole_tokens_in_every_family[valparaiso-gobernacion del] _
+
+head = 'gobernacion del', name = 'valparaiso'
+
+    @pytest.mark.parametrize('head', [
+        'alcaldia de', 'municipio de', 'gobernacion del',
+        'gobierno departamental del', 'ese', 'hospital', 'universidad',
+    ])
+    @pytest.mark.parametrize('name', ['carmen', 'susacon', 'valparaiso', 'paraiso'])
+    def test_shared_boundary_preserves_whole_tokens_in_every_family(head, name):
+        query = f'{head} {name}'
+>       assert rewrite_entity(query)[0].consumed_span == query
+E       AssertionError: assert 'gobernacion del val' == 'gobernacion del valparaiso'
+E         
+E         - gobernacion del valparaiso
+E         ?                    -------
+E         + gobernacion del val
+
+tests/test_municipal_language_capture.py:25: AssertionError
+_ test_shared_boundary_preserves_whole_tokens_in_every_family[valparaiso-gobierno departamental del] _
+
+head = 'gobierno departamental del', name = 'valparaiso'
+
+    @pytest.mark.parametrize('head', [
+        'alcaldia de', 'municipio de', 'gobernacion del',
+        'gobierno departamental del', 'ese', 'hospital', 'universidad',
+    ])
+    @pytest.mark.parametrize('name', ['carmen', 'susacon', 'valparaiso', 'paraiso'])
+    def test_shared_boundary_preserves_whole_tokens_in_every_family(head, name):
+        query = f'{head} {name}'
+>       assert rewrite_entity(query)[0].consumed_span == query
+E       AssertionError: assert 'gobierno dep...ental del val' == 'gobierno dep...el valparaiso'
+E         
+E         - gobierno departamental del valparaiso
+E         ?                               -------
+E         + gobierno departamental del val
+
+tests/test_municipal_language_capture.py:25: AssertionError
+_ test_shared_boundary_preserves_whole_tokens_in_every_family[valparaiso-ese] __
+
+head = 'ese', name = 'valparaiso'
+
+    @pytest.mark.parametrize('head', [
+        'alcaldia de', 'municipio de', 'gobernacion del',
+        'gobierno departamental del', 'ese', 'hospital', 'universidad',
+    ])
+    @pytest.mark.parametrize('name', ['carmen', 'susacon', 'valparaiso', 'paraiso'])
+    def test_shared_boundary_preserves_whole_tokens_in_every_family(head, name):
+        query = f'{head} {name}'
+>       assert rewrite_entity(query)[0].consumed_span == query
+E       AssertionError: assert 'ese val' == 'ese valparaiso'
+E         
+E         - ese valparaiso
+E         + ese val
+
+tests/test_municipal_language_capture.py:25: AssertionError
+_ test_shared_boundary_preserves_whole_tokens_in_every_family[valparaiso-hospital] _
+
+head = 'hospital', name = 'valparaiso'
+
+    @pytest.mark.parametrize('head', [
+        'alcaldia de', 'municipio de', 'gobernacion del',
+        'gobierno departamental del', 'ese', 'hospital', 'universidad',
+    ])
+    @pytest.mark.parametrize('name', ['carmen', 'susacon', 'valparaiso', 'paraiso'])
+    def test_shared_boundary_preserves_whole_tokens_in_every_family(head, name):
+        query = f'{head} {name}'
+>       assert rewrite_entity(query)[0].consumed_span == query
+E       AssertionError: assert 'hospital val' == 'hospital valparaiso'
+E         
+E         - hospital valparaiso
+E         ?             -------
+E         + hospital val
+
+tests/test_municipal_language_capture.py:25: AssertionError
+_ test_shared_boundary_preserves_whole_tokens_in_every_family[valparaiso-universidad] _
+
+head = 'universidad', name = 'valparaiso'
+
+    @pytest.mark.parametrize('head', [
+        'alcaldia de', 'municipio de', 'gobernacion del',
+        'gobierno departamental del', 'ese', 'hospital', 'universidad',
+    ])
+    @pytest.mark.parametrize('name', ['carmen', 'susacon', 'valparaiso', 'paraiso'])
+    def test_shared_boundary_preserves_whole_tokens_in_every_family(head, name):
+        query = f'{head} {name}'
+>       assert rewrite_entity(query)[0].consumed_span == query
+E       AssertionError: assert 'universidad val' == 'universidad valparaiso'
+E         
+E         - universidad valparaiso
+E         ?                -------
+E         + universidad val
+
+tests/test_municipal_language_capture.py:25: AssertionError
+___________ test_existing_nonmunicipal_fixture_carmen_emilia_ospina ____________
+
+    def test_existing_nonmunicipal_fixture_carmen_emilia_ospina():
+>       assert rewrite_entity('comprador ese carmen emilia ospina perfil')[0].consumed_span == (
+            'ese carmen emilia ospina perfil'
+        )
+E       AssertionError: assert 'ese carm' == 'ese carmen e...ospina perfil'
+E         
+E         - ese carmen emilia ospina perfil
+E         + ese carm
+
+tests/test_municipal_language_capture.py:29: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_municipal_language_capture.py::test_municipal_name_is_not_cut_inside_a_word[susacon-alcaldia de]
+FAILED tests/test_municipal_language_capture.py::test_municipal_name_is_not_cut_inside_a_word[susacon-municipio de]
+FAILED tests/test_municipal_language_capture.py::test_municipal_name_is_not_cut_inside_a_word[nemocon-alcaldia de]
+FAILED tests/test_municipal_language_capture.py::test_municipal_name_is_not_cut_inside_a_word[nemocon-municipio de]
+FAILED tests/test_municipal_language_capture.py::test_municipal_name_is_not_cut_inside_a_word[belen-alcaldia de]
+FAILED tests/test_municipal_language_capture.py::test_municipal_name_is_not_cut_inside_a_word[belen-municipio de]
+FAILED tests/test_municipal_language_capture.py::test_municipal_name_is_not_cut_inside_a_word[valparaiso-alcaldia de]
+FAILED tests/test_municipal_language_capture.py::test_municipal_name_is_not_cut_inside_a_word[valparaiso-municipio de]
+FAILED tests/test_municipal_language_capture.py::test_municipal_name_is_not_cut_inside_a_word[el carmen de viboral-alcaldia de]
+FAILED tests/test_municipal_language_capture.py::test_municipal_name_is_not_cut_inside_a_word[el carmen de viboral-municipio de]
+FAILED tests/test_municipal_language_capture.py::test_municipal_name_is_not_cut_inside_a_word[el carmen de bolivar-alcaldia de]
+FAILED tests/test_municipal_language_capture.py::test_municipal_name_is_not_cut_inside_a_word[el carmen de bolivar-municipio de]
+FAILED tests/test_municipal_language_capture.py::test_shared_boundary_preserves_whole_tokens_in_every_family[carmen-alcaldia de]
+FAILED tests/test_municipal_language_capture.py::test_shared_boundary_preserves_whole_tokens_in_every_family[carmen-municipio de]
+FAILED tests/test_municipal_language_capture.py::test_shared_boundary_preserves_whole_tokens_in_every_family[carmen-gobernacion del]
+FAILED tests/test_municipal_language_capture.py::test_shared_boundary_preserves_whole_tokens_in_every_family[carmen-gobierno departamental del]
+FAILED tests/test_municipal_language_capture.py::test_shared_boundary_preserves_whole_tokens_in_every_family[carmen-ese]
+FAILED tests/test_municipal_language_capture.py::test_shared_boundary_preserves_whole_tokens_in_every_family[carmen-hospital]
+FAILED tests/test_municipal_language_capture.py::test_shared_boundary_preserves_whole_tokens_in_every_family[carmen-universidad]
+FAILED tests/test_municipal_language_capture.py::test_shared_boundary_preserves_whole_tokens_in_every_family[susacon-alcaldia de]
+FAILED tests/test_municipal_language_capture.py::test_shared_boundary_preserves_whole_tokens_in_every_family[susacon-municipio de]
+FAILED tests/test_municipal_language_capture.py::test_shared_boundary_preserves_whole_tokens_in_every_family[susacon-gobernacion del]
+FAILED tests/test_municipal_language_capture.py::test_shared_boundary_preserves_whole_tokens_in_every_family[susacon-gobierno departamental del]
+FAILED tests/test_municipal_language_capture.py::test_shared_boundary_preserves_whole_tokens_in_every_family[susacon-ese]
+FAILED tests/test_municipal_language_capture.py::test_shared_boundary_preserves_whole_tokens_in_every_family[susacon-hospital]
+FAILED tests/test_municipal_language_capture.py::test_shared_boundary_preserves_whole_tokens_in_every_family[susacon-universidad]
+FAILED tests/test_municipal_language_capture.py::test_shared_boundary_preserves_whole_tokens_in_every_family[valparaiso-alcaldia de]
+FAILED tests/test_municipal_language_capture.py::test_shared_boundary_preserves_whole_tokens_in_every_family[valparaiso-municipio de]
+FAILED tests/test_municipal_language_capture.py::test_shared_boundary_preserves_whole_tokens_in_every_family[valparaiso-gobernacion del]
+FAILED tests/test_municipal_language_capture.py::test_shared_boundary_preserves_whole_tokens_in_every_family[valparaiso-gobierno departamental del]
+FAILED tests/test_municipal_language_capture.py::test_shared_boundary_preserves_whole_tokens_in_every_family[valparaiso-ese]
+FAILED tests/test_municipal_language_capture.py::test_shared_boundary_preserves_whole_tokens_in_every_family[valparaiso-hospital]
+FAILED tests/test_municipal_language_capture.py::test_shared_boundary_preserves_whole_tokens_in_every_family[valparaiso-universidad]
+FAILED tests/test_municipal_language_capture.py::test_existing_nonmunicipal_fixture_carmen_emilia_ospina
+34 failed, 13 passed in 0.60s
