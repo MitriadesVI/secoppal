@@ -151,6 +151,91 @@
         "p6dx-8zbt": 2257,
         "jbjy-vk9h": 1
       }
+    },
+    {
+      "canonical_name": "MUNICIPIO DE YOPAL",
+      "identity_key": {
+        "type": "NIT",
+        "value": "891855017"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/buyer_unit_integrity_p02_revalidation.json",
+      "sources": {
+        "p6dx-8zbt": ["MUNICIPIO DE YOPAL..."],
+        "jbjy-vk9h": ["MUNICIPIO DE YOPAL.."]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 17558,
+        "jbjy-vk9h": 19150
+      }
+    },
+    {
+      "canonical_name": "MUNICIPIO DE SOACHA",
+      "identity_key": {
+        "type": "NIT",
+        "value": "800094755"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/buyer_unit_integrity_p02_revalidation.json",
+      "sources": {
+        "p6dx-8zbt": ["MUNICIPIO DE SOACHA.."],
+        "jbjy-vk9h": ["MUNICIPIO DE SOACHA."]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 22115,
+        "jbjy-vk9h": 21868
+      }
+    },
+    {
+      "canonical_name": "FONDO FINANCIERO DISTRITAL DE SALUD",
+      "identity_key": {
+        "type": "NIT",
+        "value": "8002469532"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/buyer_unit_integrity_p02_revalidation.json",
+      "sources": {
+        "p6dx-8zbt": ["FONDO FINANCIERO DISTRITAL DE SALUD.."],
+        "jbjy-vk9h": ["FONDO FINANCIERO DISTRITAL DE SALUD."]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 23742,
+        "jbjy-vk9h": 21274
+      }
+    },
+    {
+      "canonical_name": "MINISTERIO DE JUSTICIA Y DEL DERECHO",
+      "identity_key": {
+        "type": "NIT",
+        "value": "900457461"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/buyer_unit_integrity_p02_revalidation.json",
+      "sources": {
+        "p6dx-8zbt": ["MINISTERIO DE JUSTICIA Y DEL DERECHO.."],
+        "jbjy-vk9h": ["MINISTERIO DE JUSTICIA Y DEL DERECHO."]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 7595,
+        "jbjy-vk9h": 6924
+      }
+    },
+    {
+      "canonical_name": "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS",
+      "identity_key": {
+        "type": "NIT",
+        "value": "900126860"
+      },
+      "observed_at": "2026-09-03",
+      "evidence": "artifacts/audits/buyer_unit_integrity_p02_revalidation.json",
+      "sources": {
+        "p6dx-8zbt": ["UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS.."],
+        "jbjy-vk9h": ["UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS."]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 6192,
+        "jbjy-vk9h": 5870
+      }
     }
   ]
 }

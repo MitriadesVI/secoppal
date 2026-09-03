@@ -28,6 +28,17 @@ from gazetteer_manager import generate_heuristic_aliases, ALL_FORBIDDEN
 ALIASES_DB_PATH = _PROJECT_ROOT / "app" / "data" / "aliases_db.json"
 LOTE_PATH = _PROJECT_ROOT / "scripts" / "lote_01_top_gap_mixed.json"
 
+# El lote es evidencia histórica y conserva el canonical físico que insertó.
+# ADR-074 fusionó después ese registro en una BuyerUnit lógica limpia.
+BUYER_UNIT_SUCCESSORS = {
+    "MINISTERIO DE JUSTICIA Y DEL DERECHO..": (
+        "MINISTERIO DE JUSTICIA Y DEL DERECHO"
+    ),
+    "MINISTERIO DE JUSTICIA Y DEL DERECHO.": (
+        "MINISTERIO DE JUSTICIA Y DEL DERECHO"
+    ),
+}
+
 
 @pytest.fixture(scope="module")
 def lote_entities() -> list[dict]:
@@ -56,7 +67,7 @@ class TestLote01Aliases:
         low_aliases = []
         for entity in lote_entities:
             name = entity["official_name"]
-            record = gazetteer_map.get(name)
+            record = gazetteer_map.get(BUYER_UNIT_SUCCESSORS.get(name, name))
             assert record is not None, f"{name} not in gazetteer"
             alias_count = len(record.get("aliases", []))
             if alias_count < 3:
@@ -167,9 +178,7 @@ class TestLote01Resolution:
         ("icbf caldas", "ICBF REGIONAL CALDAS"),
         ("icbf cesar", "ICBF REGIONAL CESAR"),
         ("sena caqueta", "SENA REGIONAL CAQUETA"),
-        # MINJUSTICIA.. exists in gazetteer with aliases that collide with new
-        pytest.param("ministerio de justicia", "MINISTERIO DE JUSTICIA",
-                     marks=pytest.mark.xfail(strict=True, reason="'ministerio de justicia' resolves to MINJUSTICIA.. first")),
+        ("ministerio de justicia", "MINISTERIO DE JUSTICIA"),
     ]
 
     @pytest.mark.parametrize("query,expected_substring", ENTITY_QUERIES)

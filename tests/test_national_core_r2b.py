@@ -50,7 +50,10 @@ MINISTRIES_18 = [
     ("Ministerio del Interior", "MINISTERIO DEL INTERIOR"),
     ("Ministerio de Relaciones Exteriores", RELACIONES),
     ("Ministerio de Hacienda y Crédito Público", "MINISTERIO DE HACIENDA Y CREDITO PUBLICO"),
-    ("Ministerio de Justicia y del Derecho", "MINJUSTICIA.."),
+    (
+        "Ministerio de Justicia y del Derecho",
+        "MINISTERIO DE JUSTICIA Y DEL DERECHO",
+    ),
     ("Ministerio de Defensa Nacional", DEFENSA),
     (
         "Ministerio de Agricultura y Desarrollo Rural",

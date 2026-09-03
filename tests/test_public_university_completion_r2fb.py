@@ -328,7 +328,9 @@ def test_sidecar_grows_without_touching_previous_provenance() -> None:
     assert "evidence" not in payload
 
     by_canonical = {row["canonical_name"]: row for row in payload["bindings"]}
-    assert len(payload["bindings"]) == len(R2FA_CANONICALS) + len(SOURCE_BINDINGS)
+    historical = set(R2FA_CANONICALS) | set(SOURCE_BINDINGS)
+    assert historical <= set(by_canonical)
+    assert len(by_canonical) == len(payload["bindings"])
 
     for canonical, evidence in R2FA_CANONICALS.items():
         assert by_canonical[canonical]["evidence"] == evidence

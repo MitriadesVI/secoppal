@@ -3358,18 +3358,6 @@
     ]
   },
   {
-    "official_name": "FONDO FINANCIERO DISTRITAL DE SALUD..",
-    "departamento": "Distrito Capital de Bogotá",
-    "total_procesos": 23264,
-    "total_contratos": 0,
-    "source_datasets": [
-      "procesos"
-    ],
-    "aliases": [
-      "fondo financiero distrital de salud.."
-    ]
-  },
-  {
     "official_name": "GOBERNACION DEL MAGDALENA",
     "departamento": "Magdalena",
     "total_procesos": 11703,
@@ -4211,11 +4199,12 @@
     ]
   },
   {
-    "official_name": "FONDO FINANCIERO DISTRITAL DE SALUD.",
+    "official_name": "FONDO FINANCIERO DISTRITAL DE SALUD",
     "departamento": "Distrito Capital de Bogotá",
-    "total_procesos": 0,
-    "total_contratos": 21057,
+    "total_procesos": 23742,
+    "total_contratos": 21274,
     "source_datasets": [
+      "procesos",
       "contratos"
     ],
     "aliases": [
@@ -4270,8 +4259,10 @@
       "el fondo de la salud distrital",
       "el fondo de salud de bogotá",
       "el fondo financiero de salud de bogotá",
-      "fondo financiero distrital de salud."
-    ]
+      "fondo financiero distrital de salud.",
+      "fondo financiero distrital de salud.."
+    ],
+    "nit": "8002469532"
   },
   {
     "official_name": "MINVIVIENDA",
@@ -4417,32 +4408,6 @@
     ]
   },
   {
-    "official_name": "MUNICIPIO DE SOACHA..",
-    "departamento": "Cundinamarca",
-    "total_procesos": 20463,
-    "total_contratos": 0,
-    "source_datasets": [
-      "procesos"
-    ],
-    "aliases": [
-      "alcaldía de soacha",
-      "entidad soacha",
-      "alcaldía municipal de soacha",
-      "gobierno municipal de soacha",
-      "municipio de soacha",
-      "alcaldía soacha",
-      "contratación soacha",
-      "alcaldía de soacha cundinamarca",
-      "municipio de soacha cundinamarca",
-      "licitaciones soacha",
-      "secop soacha",
-      "soacha",
-      "municipio soacha",
-      "administración municipal de soacha",
-      "municipio de soacha.."
-    ]
-  },
-  {
     "official_name": "DEPARTAMENTO DE CORDOBA",
     "departamento": "Córdoba",
     "total_procesos": 10639,
@@ -4508,11 +4473,12 @@
     ]
   },
   {
-    "official_name": "MUNICIPIO DE SOACHA.",
+    "official_name": "MUNICIPIO DE SOACHA",
     "departamento": "Cundinamarca",
-    "total_procesos": 0,
-    "total_contratos": 20145,
+    "total_procesos": 22115,
+    "total_contratos": 21868,
     "source_datasets": [
+      "procesos",
       "contratos"
     ],
     "aliases": [
@@ -4532,8 +4498,13 @@
       "soacha",
       "municipio soacha",
       "administración municipal de soacha",
-      "municipio de soacha."
-    ]
+      "gobierno municipal de soacha",
+      "licitaciones soacha",
+      "secop soacha",
+      "municipio de soacha.",
+      "municipio de soacha.."
+    ],
+    "nit": "800094755"
   },
   {
     "official_name": "HOSPITAL GENERAL DE MEDELLIN LUZ CASTRO DE GUTIERREZ ESE",
@@ -5020,11 +4991,12 @@
     ]
   },
   {
-    "official_name": "MUNICIPIO DE YOPAL..",
+    "official_name": "MUNICIPIO DE YOPAL",
     "departamento": "Casanare",
-    "total_procesos": 0,
-    "total_contratos": 18386,
+    "total_procesos": 17558,
+    "total_contratos": 19150,
     "source_datasets": [
+      "procesos",
       "contratos"
     ],
     "aliases": [
@@ -5042,8 +5014,12 @@
       "municipio de yopal",
       "yopal casanare contratación",
       "yopal casanare",
-      "municipio de yopal.."
-    ]
+      "entidad municipal de yopal",
+      "contratación yopal",
+      "municipio de yopal..",
+      "municipio de yopal..."
+    ],
+    "nit": "891855017"
   },
   {
     "official_name": "SANTIAGO DE CALI DISTRITO ESPECIAL - SECRETARIA DE INFRAESTRUCTURA",
@@ -5484,30 +5460,6 @@
       "ministerio del deporte",
       "mindeporte bogotá",
       "ministerio del deporte"
-    ]
-  },
-  {
-    "official_name": "MUNICIPIO DE YOPAL...",
-    "departamento": "Casanare",
-    "total_procesos": 16779,
-    "total_contratos": 0,
-    "source_datasets": [
-      "procesos"
-    ],
-    "aliases": [
-      "entidad municipal de yopal",
-      "alcaldía de yopal",
-      "licitaciones yopal",
-      "alcaldía yopal",
-      "municipio de yopal casanare",
-      "gobierno municipal de yopal",
-      "alcaldía de yopal casanare",
-      "alcaldía municipal de yopal",
-      "municipio yopal",
-      "municipio de yopal",
-      "yopal casanare",
-      "contratación yopal",
-      "municipio de yopal..."
     ]
   },
   {
@@ -13391,31 +13343,6 @@
     ]
   },
   {
-    "official_name": "MINJUSTICIA..",
-    "departamento": "Distrito Capital de Bogotá",
-    "total_procesos": 7449,
-    "total_contratos": 0,
-    "source_datasets": [
-      "procesos"
-    ],
-    "aliases": [
-      "ministerio de justicia de bogotá",
-      "ministerio de justicia y del derecho",
-      "ministerio de justicia",
-      "minjusticia bogotá",
-      "ministerio de justicia y derecho",
-      "minjusticia",
-      "ministerio de justicia del distrito capital",
-      "el ministerio de justicia y del derecho",
-      "la minjusticia",
-      "el minjusticia",
-      "ministerio de justicia y del derecho de colombia",
-      "ministerio de justicia de colombia",
-      "el ministerio de justicia",
-      "minjusticia.."
-    ]
-  },
-  {
     "official_name": "Unidad de Busqueda de Personas Desaparecidas",
     "departamento": "Distrito Capital de Bogotá",
     "total_procesos": 4209,
@@ -13996,13 +13923,15 @@
     ]
   },
   {
-    "official_name": "MINJUSTICIA.",
+    "official_name": "MINISTERIO DE JUSTICIA Y DEL DERECHO",
     "departamento": "Distrito Capital de Bogotá",
-    "total_procesos": 0,
-    "total_contratos": 6763,
+    "total_procesos": 7595,
+    "total_contratos": 6924,
     "source_datasets": [
+      "procesos",
       "contratos"
     ],
+    "entity_type": "ministerio",
     "aliases": [
       "minjusticia distrito capital",
       "ministerio de justicia de bogotá",
@@ -14023,8 +13952,22 @@
       "ministerio de justicia en bogotá",
       "ministerio de justicia en el distrito capital",
       "ministerio de justicia",
-      "minjusticia."
-    ]
+      "el ministerio de justicia y del derecho",
+      "ministerio de justicia de colombia",
+      "min de justicia y del derecho..",
+      "min justicia y del derecho..",
+      "ministerio de de justicia y del derecho..",
+      "ministerio de justicia y del derecho..",
+      "ministerio justicia y del derecho..",
+      "min de justicia y del derecho.",
+      "min justicia y del derecho.",
+      "ministerio de de justicia y del derecho.",
+      "ministerio de justicia y del derecho.",
+      "ministerio justicia y del derecho.",
+      "minjusticia.",
+      "minjusticia.."
+    ],
+    "nit": "900457461"
   },
   {
     "official_name": "HOSPITAL SAN JUAN DE DIOS ESE  RIONEGRO",
@@ -14434,18 +14377,6 @@
     ]
   },
   {
-    "official_name": "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS..",
-    "departamento": "Distrito Capital de Bogotá",
-    "total_procesos": 6029,
-    "total_contratos": 0,
-    "source_datasets": [
-      "procesos"
-    ],
-    "aliases": [
-      "unidad administrativa especial de servicios públicos.."
-    ]
-  },
-  {
     "official_name": "HOSPITAL REGIONAL ALFONSO JARAMILLO SALAZAR E.S.E.",
     "departamento": "Tolima",
     "total_procesos": 5997,
@@ -14622,11 +14553,12 @@
     ]
   },
   {
-    "official_name": "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS.",
+    "official_name": "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS",
     "departamento": "Distrito Capital de Bogotá",
-    "total_procesos": 0,
-    "total_contratos": 5715,
+    "total_procesos": 6192,
+    "total_contratos": 5870,
     "source_datasets": [
+      "procesos",
       "contratos"
     ],
     "aliases": [
@@ -14653,8 +14585,10 @@
       "bogotá servicios publicos",
       "la uaesp",
       "la unidad de servicios públicos",
-      "unidad administrativa especial de servicios públicos."
-    ]
+      "unidad administrativa especial de servicios públicos.",
+      "unidad administrativa especial de servicios públicos.."
+    ],
+    "nit": "900126860"
   },
   {
     "official_name": "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CGMLTI",
@@ -16435,23 +16369,6 @@
     ]
   },
   {
-    "official_name": "MINISTERIO DE JUSTICIA Y DEL DERECHO..",
-    "departamento": "Distrito Capital de Bogotá",
-    "total_procesos": 7548,
-    "total_contratos": 0,
-    "source_datasets": [
-      "procesos"
-    ],
-    "entity_type": "ministerio",
-    "aliases": [
-      "min de justicia y del derecho..",
-      "min justicia y del derecho..",
-      "ministerio de de justicia y del derecho..",
-      "ministerio de justicia y del derecho..",
-      "ministerio justicia y del derecho.."
-    ]
-  },
-  {
     "official_name": "GOBERNACIÓN DEL VALLE DEL CAUCA - SECRETARÍA DE DESARROLLO RURAL, AGRICULTURA Y PESCA",
     "departamento": "Valle del Cauca",
     "total_procesos": 3705,
@@ -16732,23 +16649,6 @@
       "sena regional regional antioquia",
       "servicio nacional de aprendizaje antioquia",
       "servicio nacional de aprendizaje regional antioquia"
-    ]
-  },
-  {
-    "official_name": "MINISTERIO DE JUSTICIA Y DEL DERECHO.",
-    "departamento": "Distrito Capital de Bogotá",
-    "total_procesos": 0,
-    "total_contratos": 6769,
-    "source_datasets": [
-      "contratos"
-    ],
-    "entity_type": "ministerio",
-    "aliases": [
-      "min de justicia y del derecho.",
-      "min justicia y del derecho.",
-      "ministerio de de justicia y del derecho.",
-      "ministerio de justicia y del derecho.",
-      "ministerio justicia y del derecho."
     ]
   },
   {

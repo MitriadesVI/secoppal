@@ -50,6 +50,62 @@ PUBLICADO_YOPAL = {
     CONTRATOS: "MUNICIPIO DE YOPAL..",
 }
 
+MERGED_BUYER_UNITS = {
+    "MUNICIPIO DE YOPAL": {
+        "nit": "891855017",
+        "aliases": ("alcaldia de yopal", "municipio de yopal"),
+        "sources": PUBLICADO_YOPAL,
+    },
+    "MUNICIPIO DE SOACHA": {
+        "nit": "800094755",
+        "aliases": ("alcaldia de soacha", "municipio de soacha"),
+        "sources": {
+            PROCESOS: "MUNICIPIO DE SOACHA..",
+            CONTRATOS: "MUNICIPIO DE SOACHA.",
+        },
+    },
+    "FONDO FINANCIERO DISTRITAL DE SALUD": {
+        "nit": "8002469532",
+        "aliases": ("ffds", "fondo financiero distrital de salud"),
+        "sources": {
+            PROCESOS: "FONDO FINANCIERO DISTRITAL DE SALUD..",
+            CONTRATOS: "FONDO FINANCIERO DISTRITAL DE SALUD.",
+        },
+    },
+    "MINISTERIO DE JUSTICIA Y DEL DERECHO": {
+        "nit": "900457461",
+        "aliases": (
+            "minjusticia",
+            "ministerio de justicia",
+            "ministerio de justicia y del derecho",
+        ),
+        "sources": PUBLICADO_MINJUSTICIA,
+    },
+    "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS": {
+        "nit": "900126860",
+        "aliases": ("uaesp", "unidad administrativa especial de servicios públicos"),
+        "sources": {
+            PROCESOS: "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS..",
+            CONTRATOS: "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS.",
+        },
+    },
+}
+
+TARGET_DUPLICATE_CANONICALS = {
+    "MUNICIPIO DE YOPAL...",
+    "MUNICIPIO DE YOPAL..",
+    "MUNICIPIO DE SOACHA..",
+    "MUNICIPIO DE SOACHA.",
+    "FONDO FINANCIERO DISTRITAL DE SALUD..",
+    "FONDO FINANCIERO DISTRITAL DE SALUD.",
+    "MINJUSTICIA..",
+    "MINJUSTICIA.",
+    "MINISTERIO DE JUSTICIA Y DEL DERECHO..",
+    "MINISTERIO DE JUSTICIA Y DEL DERECHO.",
+    "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS..",
+    "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS.",
+}
+
 LOCALIDADES_BOGOTA = (
     "usaquen", "chapinero", "santa fe", "san cristobal", "usme", "tunjuelito",
     "bosa", "kennedy", "fontibon", "engativa", "suba", "barrios unidos",
@@ -173,11 +229,6 @@ def test_cenac_puente_aranda_keeps_its_military_owner(
 # ── C3 y C4 — unidades repartidas en varios canonicals ─────────────────────
 
 
-@pytest.mark.xfail(
-    strict=True,
-    reason="BUYER-MINJUSTICIA-UNREACHABLE: los alias humanos resuelven a "
-           "MINJUSTICIA., etiqueta que SECOP no publica — 0 de 14.517 filas",
-)
 @pytest.mark.parametrize(
     "phrase",
     ["minjusticia", "ministerio de justicia", "ministerio de justicia y del derecho"],
@@ -203,23 +254,7 @@ def test_minjusticia_reaches_its_published_rows(
 
 
 @pytest.mark.parametrize("phrase", ["alcaldia de yopal", "municipio de yopal"])
-@pytest.mark.parametrize(
-    "dataset_id",
-    [
-        # Procesos ya funciona y aquí queda como guarda viva: el canonical ES la
-        # grafía de procesos. Congelarlo como xfail habría sido falso — y el
-        # runner lo dijo con un XPASS(strict).
-        PROCESOS,
-        pytest.param(
-            CONTRATOS,
-            marks=pytest.mark.xfail(
-                strict=True,
-                reason="BUYER-YOPAL-SPLIT: 'alcaldia de yopal' resuelve a la "
-                       "grafía de procesos y no alcanza los 19.039 contratos",
-            ),
-        ),
-    ],
-)
+@pytest.mark.parametrize("dataset_id", [PROCESOS, CONTRATOS])
 def test_yopal_reaches_both_published_spellings(
     resolver: EntityResolver, phrase: str, dataset_id: str,
 ) -> None:
@@ -240,3 +275,42 @@ def test_yopal_reaches_both_published_spellings(
         f"'{phrase}' resolvió a '{resolved}', que no alcanza la grafía publicada "
         f"{published!r} en {dataset_id}"
     )
+
+
+# ── C5 — los cinco merges y sus bindings son un cambio atómico ──────────────
+
+
+def test_verified_pairs_become_one_logical_buyer_unit_each(
+    records: list[dict], resolver: EntityResolver,
+) -> None:
+    by_name = {record["official_name"]: record for record in records}
+    assert not (TARGET_DUPLICATE_CANONICALS & set(by_name))
+
+    for canonical, expected in MERGED_BUYER_UNITS.items():
+        record = by_name[canonical]
+        assert str(record.get("nit")) == expected["nit"]
+        assert set(record.get("source_datasets") or []) == {"procesos", "contratos"}
+        for alias in expected["aliases"]:
+            assert resolver.resolve_entidad(alias).value == canonical
+
+
+@pytest.mark.parametrize("canonical", sorted(MERGED_BUYER_UNITS))
+@pytest.mark.parametrize("dataset_id", [PROCESOS, CONTRATOS])
+def test_verified_buyer_unit_projects_exact_source_name(
+    canonical: str, dataset_id: str,
+) -> None:
+    expected = MERGED_BUYER_UNITS[canonical]["sources"][dataset_id]
+    assert project_buyer_names(canonical, dataset_id) == (expected,)
+
+
+@pytest.mark.parametrize("canonical", sorted(MERGED_BUYER_UNITS))
+@pytest.mark.parametrize("dataset_id", [PROCESOS, CONTRATOS])
+def test_verified_buyer_unit_soql_uses_exact_source_name(
+    canonical: str, dataset_id: str,
+) -> None:
+    from app.core.soql_builder import SoQLBuilder
+
+    expected = MERGED_BUYER_UNITS[canonical]["sources"][dataset_id]
+    query = SoQLBuilder().build_count(dataset_id, {"entidad_resolved": canonical})
+    field = "entidad" if dataset_id == PROCESOS else "nombre_entidad"
+    assert query == f"SELECT count(*) WHERE {field} = '{expected}'"
