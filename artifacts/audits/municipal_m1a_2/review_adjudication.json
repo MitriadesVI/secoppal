@@ -1,0 +1,422 @@
+{
+  "status": "PARTIAL",
+  "buyers": 5,
+  "queries_per_catalog": 20,
+  "reviews": [
+    {
+      "owner": "ALCALDIA DE TURBACO BOLIVAR",
+      "queries": [
+        {
+          "catalog": "baseline",
+          "code": "13836",
+          "query": "municipio de TURBACO"
+        },
+        {
+          "catalog": "baseline",
+          "code": "13836",
+          "query": "alcaldía de TURBACO"
+        },
+        {
+          "catalog": "baseline",
+          "code": "13836",
+          "query": "contratos del municipio de TURBACO"
+        },
+        {
+          "catalog": "baseline",
+          "code": "13836",
+          "query": "contratos de la alcaldía de TURBACO"
+        },
+        {
+          "catalog": "candidate",
+          "code": "13836",
+          "query": "municipio de TURBACO"
+        },
+        {
+          "catalog": "candidate",
+          "code": "13836",
+          "query": "alcaldía de TURBACO"
+        },
+        {
+          "catalog": "candidate",
+          "code": "13836",
+          "query": "contratos del municipio de TURBACO"
+        },
+        {
+          "catalog": "candidate",
+          "code": "13836",
+          "query": "contratos de la alcaldía de TURBACO"
+        }
+      ],
+      "m0_strata": [],
+      "m0_directory": [],
+      "decision": "REVIEW",
+      "reason": "NO_EXACT_M0_SOURCE_OR_DIRECTORY",
+      "no_inference_from_nit_or_name": true
+    },
+    {
+      "owner": "ALCALDIA MUNICIPAL DE OCAÑA",
+      "queries": [
+        {
+          "catalog": "baseline",
+          "code": "54498",
+          "query": "municipio de OCAÑA"
+        },
+        {
+          "catalog": "baseline",
+          "code": "54498",
+          "query": "alcaldía de OCAÑA"
+        },
+        {
+          "catalog": "baseline",
+          "code": "54498",
+          "query": "contratos del municipio de OCAÑA"
+        },
+        {
+          "catalog": "baseline",
+          "code": "54498",
+          "query": "contratos de la alcaldía de OCAÑA"
+        },
+        {
+          "catalog": "candidate",
+          "code": "54498",
+          "query": "municipio de OCAÑA"
+        },
+        {
+          "catalog": "candidate",
+          "code": "54498",
+          "query": "alcaldía de OCAÑA"
+        },
+        {
+          "catalog": "candidate",
+          "code": "54498",
+          "query": "contratos del municipio de OCAÑA"
+        },
+        {
+          "catalog": "candidate",
+          "code": "54498",
+          "query": "contratos de la alcaldía de OCAÑA"
+        }
+      ],
+      "m0_strata": [
+        {
+          "dataset": "p6dx-8zbt",
+          "account": "703478552",
+          "name": "ALCALDIA MUNICIPAL DE OCAÑA",
+          "nit_evidence": "890501102",
+          "physical_rows": 914,
+          "unique_ids": 906,
+          "status": "UNRESOLVED_AFFILIATION",
+          "municipality": null,
+          "affiliation_basis": "SIGEP_DIRECTORY_NAME_FISCAL_AND_TERRITORY",
+          "sigep_codes": [],
+          "source_order": "Territorial",
+          "covered": false
+        },
+        {
+          "dataset": "jbjy-vk9h",
+          "account": "703478552",
+          "name": "ALCALDIA MUNICIPAL DE OCAÑA",
+          "nit_evidence": "890501102",
+          "physical_rows": 881,
+          "unique_ids": 881,
+          "status": "UNRESOLVED_AFFILIATION",
+          "municipality": null,
+          "affiliation_basis": "SIGEP_DIRECTORY_NAME_FISCAL_AND_TERRITORY",
+          "sigep_codes": [],
+          "source_order": "Territorial",
+          "covered": false
+        }
+      ],
+      "m0_directory": [
+        {
+          "codigo_entidad": "703478552",
+          "nombre_entidad": "ALCALDIA MUNICIPAL DE OCAÑA",
+          "nit_entidad": "890501102",
+          "departamento": "NORTE DE SANTANDER",
+          "ciudad": "OCAÑA",
+          "tipo_entidad": "OTRAS ENTIDADES PuBLICAS",
+          "c_digo_ubicaci_n": "CO-NSA-54498",
+          "esta_activa": "Si",
+          "physical_rows": "1"
+        }
+      ],
+      "decision": "REVIEW",
+      "reason": "M0_UNRESOLVED_AFFILIATION",
+      "no_inference_from_nit_or_name": true
+    },
+    {
+      "owner": "ALCALDIA MUNICIPIO DE CALARCA",
+      "queries": [
+        {
+          "catalog": "baseline",
+          "code": "63130",
+          "query": "municipio de CALARCÁ"
+        },
+        {
+          "catalog": "baseline",
+          "code": "63130",
+          "query": "alcaldía de CALARCÁ"
+        },
+        {
+          "catalog": "baseline",
+          "code": "63130",
+          "query": "contratos del municipio de CALARCÁ"
+        },
+        {
+          "catalog": "baseline",
+          "code": "63130",
+          "query": "contratos de la alcaldía de CALARCÁ"
+        },
+        {
+          "catalog": "candidate",
+          "code": "63130",
+          "query": "municipio de CALARCÁ"
+        },
+        {
+          "catalog": "candidate",
+          "code": "63130",
+          "query": "alcaldía de CALARCÁ"
+        },
+        {
+          "catalog": "candidate",
+          "code": "63130",
+          "query": "contratos del municipio de CALARCÁ"
+        },
+        {
+          "catalog": "candidate",
+          "code": "63130",
+          "query": "contratos de la alcaldía de CALARCÁ"
+        }
+      ],
+      "m0_strata": [
+        {
+          "dataset": "p6dx-8zbt",
+          "account": "704291491",
+          "name": "ALCALDIA MUNICIPIO DE CALARCA",
+          "nit_evidence": "890000441",
+          "physical_rows": 1364,
+          "unique_ids": 1209,
+          "status": "UNRESOLVED_AFFILIATION",
+          "municipality": null,
+          "affiliation_basis": "SIGEP_DIRECTORY_NAME_FISCAL_AND_TERRITORY",
+          "sigep_codes": [],
+          "source_order": "Territorial",
+          "covered": false
+        },
+        {
+          "dataset": "jbjy-vk9h",
+          "account": "704291491",
+          "name": "ALCALDIA MUNICIPIO DE CALARCA",
+          "nit_evidence": "890000441",
+          "physical_rows": 1302,
+          "unique_ids": 1302,
+          "status": "UNRESOLVED_AFFILIATION",
+          "municipality": null,
+          "affiliation_basis": "SIGEP_DIRECTORY_NAME_FISCAL_AND_TERRITORY",
+          "sigep_codes": [],
+          "source_order": "Territorial",
+          "covered": false
+        }
+      ],
+      "m0_directory": [
+        {
+          "codigo_entidad": "704291491",
+          "nombre_entidad": "ALCALDIA MUNICIPIO DE CALARCA",
+          "nit_entidad": "890000441",
+          "departamento": "QUINDiO",
+          "ciudad": "CALARCA",
+          "tipo_entidad": "ENTIDAD ESTATAL DE ACUERDO CON LA DEFINICIoN DEL DECRETO 1082 DE 2015",
+          "c_digo_ubicaci_n": "CO-QUI-63130",
+          "esta_activa": "Si",
+          "physical_rows": "1"
+        }
+      ],
+      "decision": "REVIEW",
+      "reason": "M0_UNRESOLVED_AFFILIATION",
+      "no_inference_from_nit_or_name": true
+    },
+    {
+      "owner": "ALCALDIA DISTRITAL BARRANCABERMEJA",
+      "queries": [
+        {
+          "catalog": "baseline",
+          "code": "68081",
+          "query": "municipio de BARRANCABERMEJA"
+        },
+        {
+          "catalog": "baseline",
+          "code": "68081",
+          "query": "alcaldía de BARRANCABERMEJA"
+        },
+        {
+          "catalog": "baseline",
+          "code": "68081",
+          "query": "contratos del municipio de BARRANCABERMEJA"
+        },
+        {
+          "catalog": "baseline",
+          "code": "68081",
+          "query": "contratos de la alcaldía de BARRANCABERMEJA"
+        },
+        {
+          "catalog": "candidate",
+          "code": "68081",
+          "query": "municipio de BARRANCABERMEJA"
+        },
+        {
+          "catalog": "candidate",
+          "code": "68081",
+          "query": "alcaldía de BARRANCABERMEJA"
+        },
+        {
+          "catalog": "candidate",
+          "code": "68081",
+          "query": "contratos del municipio de BARRANCABERMEJA"
+        },
+        {
+          "catalog": "candidate",
+          "code": "68081",
+          "query": "contratos de la alcaldía de BARRANCABERMEJA"
+        }
+      ],
+      "m0_strata": [
+        {
+          "dataset": "p6dx-8zbt",
+          "account": "702270372",
+          "name": "ALCALDIA DISTRITAL BARRANCABERMEJA",
+          "nit_evidence": "890201900",
+          "physical_rows": 6426,
+          "unique_ids": 6361,
+          "status": "UNRESOLVED_AFFILIATION",
+          "municipality": null,
+          "affiliation_basis": "SIGEP_DIRECTORY_NAME_FISCAL_AND_TERRITORY",
+          "sigep_codes": [],
+          "source_order": "Territorial",
+          "covered": false
+        },
+        {
+          "dataset": "jbjy-vk9h",
+          "account": "702270372",
+          "name": "ALCALDIA DISTRITAL BARRANCABERMEJA",
+          "nit_evidence": "890201900",
+          "physical_rows": 6415,
+          "unique_ids": 6415,
+          "status": "UNRESOLVED_AFFILIATION",
+          "municipality": null,
+          "affiliation_basis": "SIGEP_DIRECTORY_NAME_FISCAL_AND_TERRITORY",
+          "sigep_codes": [],
+          "source_order": "Territorial",
+          "covered": false
+        }
+      ],
+      "m0_directory": [
+        {
+          "codigo_entidad": "702270372",
+          "nombre_entidad": "ALCALDIA DISTRITAL BARRANCABERMEJA",
+          "nit_entidad": "890201900",
+          "departamento": "SANTANDER",
+          "ciudad": "No Provisto",
+          "tipo_entidad": "ENTIDAD ESTATAL DE ACUERDO CON LA DEFINICIoN DEL DECRETO 1082 DE 2015",
+          "c_digo_ubicaci_n": "CO-SAN",
+          "esta_activa": "Si",
+          "physical_rows": "1"
+        }
+      ],
+      "decision": "REVIEW",
+      "reason": "M0_UNRESOLVED_AFFILIATION",
+      "no_inference_from_nit_or_name": true
+    },
+    {
+      "owner": "MUNICIPIO DE YUMBO VALLE",
+      "queries": [
+        {
+          "catalog": "baseline",
+          "code": "76892",
+          "query": "municipio de YUMBO"
+        },
+        {
+          "catalog": "baseline",
+          "code": "76892",
+          "query": "alcaldía de YUMBO"
+        },
+        {
+          "catalog": "baseline",
+          "code": "76892",
+          "query": "contratos del municipio de YUMBO"
+        },
+        {
+          "catalog": "baseline",
+          "code": "76892",
+          "query": "contratos de la alcaldía de YUMBO"
+        },
+        {
+          "catalog": "candidate",
+          "code": "76892",
+          "query": "municipio de YUMBO"
+        },
+        {
+          "catalog": "candidate",
+          "code": "76892",
+          "query": "alcaldía de YUMBO"
+        },
+        {
+          "catalog": "candidate",
+          "code": "76892",
+          "query": "contratos del municipio de YUMBO"
+        },
+        {
+          "catalog": "candidate",
+          "code": "76892",
+          "query": "contratos de la alcaldía de YUMBO"
+        }
+      ],
+      "m0_strata": [
+        {
+          "dataset": "p6dx-8zbt",
+          "account": "702384066",
+          "name": "MUNICIPIO DE YUMBO VALLE",
+          "nit_evidence": "890399025",
+          "physical_rows": 4839,
+          "unique_ids": 4806,
+          "status": "UNRESOLVED_AFFILIATION",
+          "municipality": null,
+          "affiliation_basis": "SIGEP_DIRECTORY_NAME_FISCAL_AND_TERRITORY",
+          "sigep_codes": [],
+          "source_order": "Territorial",
+          "covered": false
+        },
+        {
+          "dataset": "jbjy-vk9h",
+          "account": "702384066",
+          "name": "MUNICIPIO DE YUMBO VALLE",
+          "nit_evidence": "890399025",
+          "physical_rows": 4802,
+          "unique_ids": 4802,
+          "status": "UNRESOLVED_AFFILIATION",
+          "municipality": null,
+          "affiliation_basis": "SIGEP_DIRECTORY_NAME_FISCAL_AND_TERRITORY",
+          "sigep_codes": [],
+          "source_order": "Territorial",
+          "covered": false
+        }
+      ],
+      "m0_directory": [
+        {
+          "codigo_entidad": "702384066",
+          "nombre_entidad": "MUNICIPIO DE YUMBO VALLE",
+          "nit_entidad": "890399025",
+          "departamento": "VALLE DEL CAUCA",
+          "ciudad": "No Provisto",
+          "tipo_entidad": "ENTIDAD ESTATAL DE ACUERDO CON LA DEFINICIoN DEL DECRETO 1082 DE 2015",
+          "c_digo_ubicaci_n": "CO-VAC",
+          "esta_activa": "Si",
+          "physical_rows": "1"
+        }
+      ],
+      "decision": "REVIEW",
+      "reason": "M0_UNRESOLVED_AFFILIATION",
+      "no_inference_from_nit_or_name": true
+    }
+  ],
+  "decision": "Do not count REVIEW as PASS or wrong-owner; no alias removal to hide missing evidence."
+}

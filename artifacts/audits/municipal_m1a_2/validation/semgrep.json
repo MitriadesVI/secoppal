@@ -1,0 +1,7 @@
+{
+  "configured": true,
+  "config": ".semgrep/secoppal-laws.yml",
+  "executable_available": false,
+  "venv_package_available": false,
+  "status": "NOT_RUN_UNAVAILABLE"
+}

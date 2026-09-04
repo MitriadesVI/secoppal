@@ -1,0 +1,146 @@
+{
+  "MUNICIPAL_M1A_2": "PARTIAL",
+  "HEAD_BEFORE": "32c27cbcf1235fb045bb7e8c76054197a357f232",
+  "runtime_commit": "940a495bf9fbfc86267c86dda050e9a23d70bd44",
+  "predictive_commit": "23bdd4040d280f514ae91149c0e3f02fb66b8d3f",
+  "DISCOVERY": {
+    "divipola": 1103,
+    "compound_names": 279,
+    "articulated_names": 93,
+    "prefix_collisions": 46,
+    "homonym_groups": 64
+  },
+  "BUG": {
+    "SAN_ANDRES_SOTAVENTO_PRE": "ALCALDIA SAN ANDRES / 68669 (candidate)",
+    "SAN_ANDRES_SOTAVENTO_POST": "CLARIFICATION / protected 23670 / execution blocked",
+    "WRONG_OWNER_POST": 0
+  },
+  "DIVIPOLA_BUYER_MATRIX": {
+    "catalogs": {
+      "baseline": {
+        "total_queries": 4704,
+        "municipalities": 1103,
+        "counts": {
+          "CORRECT_BUYER": 244,
+          "CLARIFICATION": 4440,
+          "FAIL_CLOSED": 0,
+          "REVIEW": 20,
+          "WRONG_BUYER": 0,
+          "WRONG_DIVIPOLA": 0
+        },
+        "status": "PARTIAL"
+      },
+      "candidate": {
+        "total_queries": 4704,
+        "municipalities": 1103,
+        "counts": {
+          "CORRECT_BUYER": 2112,
+          "CLARIFICATION": 2572,
+          "FAIL_CLOSED": 0,
+          "REVIEW": 20,
+          "WRONG_BUYER": 0,
+          "WRONG_DIVIPOLA": 0
+        },
+        "status": "PARTIAL"
+      }
+    },
+    "total_queries": 9408,
+    "combined_counts": {
+      "CORRECT_BUYER": 2356,
+      "CLARIFICATION": 7012,
+      "FAIL_CLOSED": 0,
+      "REVIEW": 40,
+      "WRONG_BUYER": 0,
+      "WRONG_DIVIPOLA": 0
+    }
+  },
+  "M1A_CANDIDATE": {
+    "proposals": 503,
+    "candidate_equals_retry_snapshot": true,
+    "idempotence": "PASS",
+    "production_promoted": 0,
+    "protected_unchanged": true,
+    "data_status": "PASS",
+    "alias_checks": 1888,
+    "alias_failures": 0,
+    "new_wrong_owner": 0,
+    "cross_interaction": {
+      "status": "PASS",
+      "checks": 3071,
+      "new_wrong_owner": 0,
+      "lost_correct_owner": 0
+    },
+    "new_multi_owner": 0,
+    "new_scan_cross_owner": 0,
+    "no_nit_merge": true,
+    "source_projection_checks": 1006,
+    "source_projection_failures": 0,
+    "geography_failures": 0
+  },
+  "R2A1": {
+    "TRAILING_FALLBACK": "PASS",
+    "entity_types_byte_identical": true
+  },
+  "TESTS": {
+    "focal": "493 passed, 1 historical xfailed",
+    "candidate_compatibility": "299 passed, 1 historical xfailed",
+    "compatibility_repins": "46 passed, 2 deselected",
+    "full_suite": {
+      "passed": 11013,
+      "skipped": 2,
+      "xfailed": 14,
+      "seconds": 501.67
+    },
+    "new_xfails": 0
+  },
+  "CORPUS": "89/89 PASS",
+  "LINT": {
+    "ruff": "PASS",
+    "lint_core": "PASS",
+    "module_size": "PASS",
+    "diff_check": "PASS",
+    "semgrep": "NOT_RUN_UNAVAILABLE; configuration exists"
+  },
+  "PERFORMANCE": {
+    "queries": [
+      "contratos del municipio de San Andrés de Sotavento",
+      "municipio de Villa de Leyva",
+      "alcaldía de San Pedro",
+      "municipio de San Pedro, Valle del Cauca",
+      "gobernación de Antioquia de 2025",
+      "alcaldía de Medellín de obras de infraestructura",
+      "contratos en Baranoa",
+      "contratos de la universidad nacional de colombia"
+    ],
+    "rounds": 9,
+    "warmup": true,
+    "unit": "milliseconds",
+    "baseline": {
+      "p50_ms": 23.924458495457657,
+      "p95_ms": 124.51391699141823,
+      "samples": 72
+    },
+    "candidate": {
+      "p50_ms": 0.7496035104850307,
+      "p95_ms": 145.0094580068253,
+      "samples": 72
+    },
+    "delta_ms": {
+      "baseline": {
+        "p50_ms": -30.65489551227074,
+        "p95_ms": -6.863582995720208
+      },
+      "candidate": {
+        "p50_ms": 0.024270513677038252,
+        "p95_ms": -10.072625998873264
+      }
+    },
+    "verdict": "ACCEPTABLE",
+    "basis": "Same catalogs, phrases, warmup and 9 rounds; no concurrent tests/gates. Candidate p50 +0.0243ms and p95 -10.0726ms. Scan implementation unchanged."
+  },
+  "M1A_RETRY_2_READY": "NO",
+  "PRODUCTION_PROMOTED": 0,
+  "PUSH": "NO",
+  "unresolved": "Five existing BuyerUnits have no M0-accredited municipal affiliation; 20 REVIEW per catalog, never counted as PASS.",
+  "protected_files_unchanged": 138
+}

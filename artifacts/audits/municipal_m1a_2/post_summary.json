@@ -1,0 +1,28 @@
+{
+  "baseline": {
+    "total_queries": 4704,
+    "municipalities": 1103,
+    "counts": {
+      "CORRECT_BUYER": 244,
+      "CLARIFICATION": 4440,
+      "FAIL_CLOSED": 0,
+      "REVIEW": 20,
+      "WRONG_BUYER": 0,
+      "WRONG_DIVIPOLA": 0
+    },
+    "status": "PARTIAL"
+  },
+  "candidate": {
+    "total_queries": 4704,
+    "municipalities": 1103,
+    "counts": {
+      "CORRECT_BUYER": 2112,
+      "CLARIFICATION": 2572,
+      "FAIL_CLOSED": 0,
+      "REVIEW": 20,
+      "WRONG_BUYER": 0,
+      "WRONG_DIVIPOLA": 0
+    },
+    "status": "PARTIAL"
+  }
+}

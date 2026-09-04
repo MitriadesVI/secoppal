@@ -1,0 +1,38 @@
+........F..........F....                                                 [100%]
+=================================== FAILURES ===================================
+_____________ test_every_discovered_compound_and_homonym[baseline] _____________
+
+catalog = (<app.core.query_router.QueryRouter object at 0x108f42660>, {'authority': 'ADR-073', 'bindings': [{'canonical_name': '...IL': {'authority': 'REVIEW', 'codes': [], 'sources': {'jbjy-vk9h': ('AEROCIVIL',), 'p6dx-8zbt': ('AEROCIVIL',)}}, ...})
+
+    def test_every_discovered_compound_and_homonym(catalog):
+        router, sidecar, oracle = catalog
+        report = evaluate(router, sidecar, oracle, relevant=True)
+>       assert report['status'] == 'PASS', [r for r in report['results'] if r['classification'] not in {
+            'CORRECT_BUYER', 'CLARIFICATION', 'FAIL_CLOSED'}][:10]
+E       AssertionError: [{'clarification': None, 'classification': 'REVIEW', 'code': '11001', 'owner': None, ...}, {'clarification': None, 'classification': 'REVIEW', 'code': '11001', 'owner': None, ...}]
+E       assert 'PARTIAL' == 'PASS'
+E         
+E         - PASS
+E         + PARTIAL
+
+tests/test_compound_identity_guard.py:51: AssertionError
+____________ test_every_discovered_compound_and_homonym[candidate] _____________
+
+catalog = (<app.core.query_router.QueryRouter object at 0x1094dc2d0>, {'authority': 'ADR-073', 'bindings': [{'canonical_name': '...IL': {'authority': 'REVIEW', 'codes': [], 'sources': {'jbjy-vk9h': ('AEROCIVIL',), 'p6dx-8zbt': ('AEROCIVIL',)}}, ...})
+
+    def test_every_discovered_compound_and_homonym(catalog):
+        router, sidecar, oracle = catalog
+        report = evaluate(router, sidecar, oracle, relevant=True)
+>       assert report['status'] == 'PASS', [r for r in report['results'] if r['classification'] not in {
+            'CORRECT_BUYER', 'CLARIFICATION', 'FAIL_CLOSED'}][:10]
+E       AssertionError: [{'clarification': None, 'classification': 'REVIEW', 'code': '11001', 'owner': None, ...}, {'clarification': None, 'classification': 'REVIEW', 'code': '11001', 'owner': None, ...}]
+E       assert 'PARTIAL' == 'PASS'
+E         
+E         - PASS
+E         + PARTIAL
+
+tests/test_compound_identity_guard.py:51: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_compound_identity_guard.py::test_every_discovered_compound_and_homonym[baseline]
+FAILED tests/test_compound_identity_guard.py::test_every_discovered_compound_and_homonym[candidate]
+2 failed, 22 passed in 162.94s (0:02:42)

@@ -286,3 +286,21 @@ conservan resultados propios; el PASS M1A.1 no se reescribe como una promoción.
 No se encontró una categoría nueva fuera de ADR-074. Working tree preexistente
 preservado; **PUSH NO**. Las propuestas municipales y las deudas explícitas
 quedan disponibles para continuar con adjudicación e incorporación por lotes.
+
+## Municipal M1A.2 — guard completo y gate DIVIPOLA (2026-09-03)
+
+**PARTIAL; M1A_RETRY_2_READY: NO; PRODUCTION_PROMOTED: 0; PUSH: NO.**
+El guard de identidad municipal completa cierra el wrong owner de Sotavento y
+exige departamento para homónimos, conservando la escalera R2A.1. La autoridad
+DIVIPOLA restringe rewrites, sin acreditar compradores ni usar NIT.
+
+El barrido de 1.103 municipios ejecutó 4.704 consultas por catálogo, con cero
+WRONG_BUYER/WRONG_DIVIPOLA adjudicados. Permanecen 20 REVIEW por catálogo en
+cinco compradores existentes sin afiliación acreditada por M0; no cuentan como
+PASS ni como wrong owner. Los gates del candidato completo de 503 propuestas
+pasan 1.888 aliases, 3.071 interacciones, idempotencia y proyección, con cero
+nuevas colisiones/cruces. La readiness global queda retenida por los REVIEW.
+
+Detalle y evidencia: [MUNICIPAL_M1A_2.md](MUNICIPAL_M1A_2.md) y
+`artifacts/audits/municipal_m1a_2/`. Las declaraciones históricas M1A/M1A.1 y
+Retry #1 no se reescriben. La cobertura productiva continúa sin promociones.

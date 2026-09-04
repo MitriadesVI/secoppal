@@ -1,0 +1,33 @@
+...........................................................F............ [ 30%]
+........................................................................ [ 60%]
+........................................................................ [ 90%]
+.......................                                                  [100%]
+=================================== FAILURES ===================================
+_ TestNoOverCapture.test_clause_openers_still_end_the_name[la alcaldia de barranquilla pavimentacion-pavimentacion] _
+
+self = <test_compound_buyer_capture_r2a1.TestNoOverCapture object at 0x10a43d5b0>
+router = <app.core.query_router.QueryRouter object at 0x10a4934d0>
+query = 'la alcaldia de barranquilla pavimentacion'
+expected_token = 'pavimentacion'
+
+    @pytest.mark.parametrize(
+        ("query", "expected_token"),
+        [
+            ("contratos de la alcaldía de Medellín para mantenimiento", "mantenimiento"),
+            ("la alcaldia de barranquilla pavimentacion", "pavimentacion"),
+        ],
+    )
+    def test_clause_openers_still_end_the_name(
+        self, router: QueryRouter, query: str, expected_token: str
+    ) -> None:
+        params = router.parse(query).params
+        assert params.get("entidad_resolved")
+>       assert expected_token in (params.get("objeto") or [])
+E       AssertionError: assert 'pavimentacion' in ((None or []))
+E        +  where None = <built-in method get of dict object at 0x10ab28b80>('objeto')
+E        +    where <built-in method get of dict object at 0x10ab28b80> = {'dataset': 'procesos', 'dataset_explicit': False, 'entidad': 'Distrito especial de barranquilla pavimentacion', 'enti... 'metadata': {'resolution_method': 'fuzzy(95)', 'rewritten_from': 'alcaldia de barranquilla pavimentacion'}, ...}, ...}.get
+
+tests/test_compound_buyer_capture_r2a1.py:354: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_compound_buyer_capture_r2a1.py::TestNoOverCapture::test_clause_openers_still_end_the_name[la alcaldia de barranquilla pavimentacion-pavimentacion]
+1 failed, 238 passed in 22.56s

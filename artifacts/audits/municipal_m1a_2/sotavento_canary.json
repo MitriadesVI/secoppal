@@ -1,0 +1,146 @@
+{
+  "expected_divipola": "23670",
+  "results": {
+    "pre_baseline": [
+      {
+        "code": "23670",
+        "query": "contratos del municipio de SAN ANDRÉS DE SOTAVENTO",
+        "qualified": false,
+        "classification": "REVIEW",
+        "owner": null,
+        "owner_codes": [],
+        "should_execute": true,
+        "soql": "BLOCKED: UnsafeGlobalQueryError: SoQL build refused: no WHERE predicate (scope/topic/estado/modalidad/contract_type). Pass allow_global=True only if a global query is intentional.",
+        "clarification": null,
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "entidad": "Municipio de san andres de sotavento",
+          "entidad_resolution": {
+            "value": null,
+            "method": "rewrite_municipio_unresolved",
+            "confidence": "low",
+            "like_value": null,
+            "metadata": {
+              "target": "san andres de sotavento",
+              "rewritten_from": "municipio de san andres de sotavento",
+              "resolution_method": "rewrite_unresolved"
+            },
+            "ecosystem_entities": [],
+            "clarification_needed": true,
+            "clarification_hint": "No encontré 'Municipio de san andres de sotavento' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+          }
+        }
+      }
+    ],
+    "pre_candidate": [
+      {
+        "code": "23670",
+        "query": "contratos del municipio de SAN ANDRÉS DE SOTAVENTO",
+        "qualified": false,
+        "classification": "WRONG_DIVIPOLA",
+        "owner": "ALCALDIA SAN ANDRES",
+        "owner_codes": [
+          "68669"
+        ],
+        "should_execute": true,
+        "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA SAN ANDRES' AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%sotavento%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%sotavento%')))",
+        "clarification": null,
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "entidad": "Municipio de san andres",
+          "entidad_resolved": "ALCALDIA SAN ANDRES",
+          "entidad_resolution": {
+            "value": "ALCALDIA SAN ANDRES",
+            "method": "rewrite_municipio",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "rewritten_from": "municipio de san andres",
+              "resolution_method": "exact"
+            }
+          },
+          "objeto": [
+            "sotavento"
+          ]
+        }
+      }
+    ],
+    "post_baseline": [
+      {
+        "code": "23670",
+        "query": "contratos del municipio de SAN ANDRÉS DE SOTAVENTO",
+        "qualified": false,
+        "classification": "CLARIFICATION",
+        "owner": null,
+        "owner_codes": [],
+        "buyer_group": null,
+        "buyer_units": [],
+        "should_execute": false,
+        "soql": "BLOCKED: ValueError: No acredité un comprador para 'municipio de san andres de sotavento'. ¿Cuál es su nombre institucional completo?",
+        "clarification": "No acredité un comprador para 'municipio de san andres de sotavento'. ¿Cuál es su nombre institucional completo?",
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "entidad": "municipio de san andres de sotavento",
+          "entidad_resolution": {
+            "value": null,
+            "method": "rewrite_municipio_unresolved",
+            "confidence": "none",
+            "like_value": null,
+            "metadata": {
+              "municipal_identity_status": "UNIQUE_MUNICIPAL_IDENTITY",
+              "protected_span": "municipio de san andres de sotavento",
+              "protected_divipola": "23670",
+              "department_mismatch": "False",
+              "rewritten_from": "municipio de san andres de sotavento",
+              "resolution_method": "municipal_identity_guard"
+            },
+            "ecosystem_entities": [],
+            "clarification_needed": true,
+            "clarification_hint": "No acredité un comprador para 'municipio de san andres de sotavento'. ¿Cuál es su nombre institucional completo?"
+          }
+        }
+      }
+    ],
+    "post_candidate": [
+      {
+        "code": "23670",
+        "query": "contratos del municipio de SAN ANDRÉS DE SOTAVENTO",
+        "qualified": false,
+        "classification": "CLARIFICATION",
+        "owner": null,
+        "owner_codes": [],
+        "buyer_group": null,
+        "buyer_units": [],
+        "should_execute": false,
+        "soql": "BLOCKED: ValueError: No acredité un comprador para 'municipio de san andres de sotavento'. ¿Cuál es su nombre institucional completo?",
+        "clarification": "No acredité un comprador para 'municipio de san andres de sotavento'. ¿Cuál es su nombre institucional completo?",
+        "params": {
+          "dataset": "contratos",
+          "dataset_explicit": true,
+          "entidad": "municipio de san andres de sotavento",
+          "entidad_resolution": {
+            "value": null,
+            "method": "rewrite_municipio_unresolved",
+            "confidence": "none",
+            "like_value": null,
+            "metadata": {
+              "municipal_identity_status": "UNIQUE_MUNICIPAL_IDENTITY",
+              "protected_span": "municipio de san andres de sotavento",
+              "protected_divipola": "23670",
+              "department_mismatch": "False",
+              "rewritten_from": "municipio de san andres de sotavento",
+              "resolution_method": "municipal_identity_guard"
+            },
+            "ecosystem_entities": [],
+            "clarification_needed": true,
+            "clarification_hint": "No acredité un comprador para 'municipio de san andres de sotavento'. ¿Cuál es su nombre institucional completo?"
+          }
+        }
+      }
+    ]
+  }
+}
