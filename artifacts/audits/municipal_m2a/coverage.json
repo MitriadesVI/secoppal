@@ -1,0 +1,2040 @@
+{
+  "CONTRACT_COVERAGE": 0.7122517160996465,
+  "PROCESS_COVERAGE": 0.4783493571509842,
+  "affiliation_counts": {
+    "AMBIGUOUS": 10,
+    "NON_MUNICIPAL": 132,
+    "PROBABLE": 627,
+    "UNRESOLVED": 8600,
+    "VERIFIED": 1929
+  },
+  "baseline_residual_reconciliation": {
+    "all": {
+      "profiles": 138,
+      "territories": 96,
+      "volumes": {
+        "contract_physical_rows": 12281,
+        "contract_physical_rows_provenance": "MEASURED",
+        "process_physical_rows": 16070,
+        "process_physical_rows_provenance": "MEASURED",
+        "unique_contracts": 12281,
+        "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+        "unique_processes": 15785,
+        "unique_processes_provenance": "MEASURED"
+      }
+    },
+    "inside_recognized": {
+      "profiles": 99,
+      "territories": 60,
+      "volumes": {
+        "contract_physical_rows": 10570,
+        "contract_physical_rows_provenance": "MEASURED",
+        "process_physical_rows": 13499,
+        "process_physical_rows_provenance": "MEASURED",
+        "unique_contracts": 10570,
+        "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+        "unique_processes": 13272,
+        "unique_processes_provenance": "MEASURED"
+      }
+    },
+    "residual_36": {
+      "profiles": 39,
+      "territories": 36,
+      "volumes": {
+        "contract_physical_rows": 1711,
+        "contract_physical_rows_provenance": "MEASURED",
+        "process_physical_rows": 2571,
+        "process_physical_rows_provenance": "MEASURED",
+        "unique_contracts": 1711,
+        "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+        "unique_processes": 2513,
+        "unique_processes_provenance": "MEASURED"
+      }
+    }
+  },
+  "by_family": {
+    "CONCEJO": {
+      "physical_profiles": 384,
+      "unresolved_profiles": 260,
+      "verified_affiliation_profiles": 190,
+      "verified_logical_units": 124
+    },
+    "CONTRALORIA": {
+      "physical_profiles": 95,
+      "unresolved_profiles": 58,
+      "verified_affiliation_profiles": 23,
+      "verified_logical_units": 21
+    },
+    "EDUCATION": {
+      "physical_profiles": 5462,
+      "unresolved_profiles": 5439,
+      "verified_affiliation_profiles": 5,
+      "verified_logical_units": 3
+    },
+    "ESE_HEALTH": {
+      "physical_profiles": 832,
+      "unresolved_profiles": 817,
+      "verified_affiliation_profiles": 423,
+      "verified_logical_units": 8
+    },
+    "FIRE_DEPARTMENT": {
+      "physical_profiles": 2,
+      "unresolved_profiles": 1,
+      "verified_affiliation_profiles": 1,
+      "verified_logical_units": 1
+    },
+    "FUND": {
+      "physical_profiles": 79,
+      "unresolved_profiles": 72,
+      "verified_affiliation_profiles": 14,
+      "verified_logical_units": 6
+    },
+    "INSTITUTE": {
+      "physical_profiles": 330,
+      "unresolved_profiles": 290,
+      "verified_affiliation_profiles": 66,
+      "verified_logical_units": 28
+    },
+    "MUNICIPAL_EXECUTIVE": {
+      "physical_profiles": 838,
+      "unresolved_profiles": 224,
+      "verified_affiliation_profiles": 633,
+      "verified_logical_units": 611
+    },
+    "OTHER_DECENTRALIZED": {
+      "physical_profiles": 39,
+      "unresolved_profiles": 14,
+      "verified_affiliation_profiles": 20,
+      "verified_logical_units": 20
+    },
+    "PERSONERIA": {
+      "physical_profiles": 381,
+      "unresolved_profiles": 260,
+      "verified_affiliation_profiles": 169,
+      "verified_logical_units": 121
+    },
+    "PUBLIC_COMPANY": {
+      "physical_profiles": 293,
+      "unresolved_profiles": 246,
+      "verified_affiliation_profiles": 103,
+      "verified_logical_units": 27
+    },
+    "PUBLIC_SERVICES": {
+      "physical_profiles": 174,
+      "unresolved_profiles": 173,
+      "verified_affiliation_profiles": 67,
+      "verified_logical_units": 1
+    },
+    "UNKNOWN": {
+      "physical_profiles": 2389,
+      "unresolved_profiles": 2314,
+      "verified_affiliation_profiles": 215,
+      "verified_logical_units": 23
+    }
+  },
+  "cohorts": {
+    "affiliated_verified": {
+      "physical_profiles": 1929,
+      "volumes": {
+        "contract_physical_rows": 465445,
+        "process_physical_rows": 724289,
+        "unique_contracts": 465445,
+        "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+        "unique_processes": 703120
+      }
+    },
+    "all_observed": {
+      "physical_profiles": 11298,
+      "volumes": {
+        "contract_physical_rows": 1095013,
+        "process_physical_rows": 1885602,
+        "unique_contracts": 1095013,
+        "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+        "unique_processes": 1819018
+      }
+    },
+    "non_municipal_verified": {
+      "physical_profiles": 132,
+      "volumes": {
+        "contract_physical_rows": 61895,
+        "process_physical_rows": 146114,
+        "unique_contracts": 61895,
+        "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+        "unique_processes": 142198
+      }
+    },
+    "recognized": {
+      "physical_profiles": 628,
+      "volumes": {
+        "contract_physical_rows": 331514,
+        "process_physical_rows": 354187,
+        "unique_contracts": 331514,
+        "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+        "unique_processes": 336337
+      }
+    },
+    "unrecognized_verified_logical": {
+      "physical_profiles": 370,
+      "volumes": {
+        "contract_physical_rows": 16654,
+        "process_physical_rows": 19861,
+        "unique_contracts": 16654,
+        "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+        "unique_processes": 19620
+      }
+    },
+    "unresolved_affiliation_pool": {
+      "physical_profiles": 9237,
+      "volumes": {
+        "contract_physical_rows": 567673,
+        "process_physical_rows": 1015199,
+        "unique_contracts": 567673,
+        "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+        "unique_processes": 973700
+      }
+    },
+    "verified_affiliation_identity_unresolved": {
+      "physical_profiles": 931,
+      "volumes": {
+        "contract_physical_rows": 117277,
+        "process_physical_rows": 350241,
+        "unique_contracts": 117277,
+        "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+        "unique_processes": 347163
+      }
+    }
+  },
+  "contract_measurement": {
+    "physical_rows": "MEASURED",
+    "reason": "Frozen global count(*) == count(distinct id_contrato); per-profile contract DISTINCT was not captured. Never extrapolate outside this window.",
+    "unique_contracts": "DERIVED_FROM_GLOBAL_IDENTITY",
+    "window_only": true
+  },
+  "denominator_contract": "Recognized logical + unrecognized logical = verified logical units. Recognized profiles + unrecognized profiles + identity-unresolved profiles = verified territorial cohort. Verified territorial + affiliation-unresolved + nonmunicipal = all physical profiles. Never add unlike grains.",
+  "grains": {
+    "LOGICAL_BUYER_UNIT": 994,
+    "PHYSICAL_PROFILE": 11298,
+    "PHYSICAL_STRATUM": 15494
+  },
+  "inside_recognized_residue_by_family": {
+    "CONCEJO": {
+      "profiles": [
+        {
+          "account": "717475560",
+          "name": "CONCEJO DE ZIPAQUIRA**",
+          "profile_id": "physical:3972ef5951b02f6ac01d",
+          "territory": "25899",
+          "volumes": {
+            "contract_physical_rows": 33,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 33,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 33,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 33,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "721435378",
+          "name": "CONCEJO DE PACHO",
+          "profile_id": "physical:5f6613ad25a79dea6a5b",
+          "territory": "25513",
+          "volumes": {
+            "contract_physical_rows": 11,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 13,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 11,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 13,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "724816145",
+          "name": "CONCEJO DE PITALITO",
+          "profile_id": "physical:341dadf28dd6506cbc98",
+          "territory": "41551",
+          "volumes": {
+            "contract_physical_rows": 11,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 13,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 11,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 13,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "734496755",
+          "name": "CONCEJO DE TERUEL",
+          "profile_id": "physical:6e81554e4049216ca542",
+          "territory": "41801",
+          "volumes": {
+            "contract_physical_rows": 3,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 3,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 3,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 3,
+            "unique_processes_provenance": "MEASURED"
+          }
+        }
+      ],
+      "volumes": {
+        "contract_physical_rows": 58,
+        "process_physical_rows": 62,
+        "unique_contracts": 58,
+        "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+        "unique_processes": 62
+      }
+    },
+    "CONTRALORIA": {
+      "profiles": [
+        {
+          "account": "700090046",
+          "name": "CONTRALORIA GENERAL DEL MUNICIPIO DE MANIZALES",
+          "profile_id": "physical:ae8eb97110975a8c9d59",
+          "territory": "17001",
+          "volumes": {
+            "contract_physical_rows": 31,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 29,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 31,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 29,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "700600042",
+          "name": "CONTRALORIA MUNICIPAL DE IBAGUE",
+          "profile_id": "physical:88924f22c91d44e85220",
+          "territory": "73001",
+          "volumes": {
+            "contract_physical_rows": 95,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 100,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 95,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 100,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "700612013",
+          "name": "CONTRALORIA MUNICIPAL DE PALMIRA",
+          "profile_id": "physical:e98c16e0ec344167bcdf",
+          "territory": "76520",
+          "volumes": {
+            "contract_physical_rows": 10,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 13,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 10,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 10,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "700794225",
+          "name": "CONTRALORIA MUNICIPAL DE VILLAVICENCIO",
+          "profile_id": "physical:fd17e674e04c7c4814a6",
+          "territory": "50001",
+          "volumes": {
+            "contract_physical_rows": 17,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 21,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 17,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 18,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "701571291",
+          "name": "CONTRALORIA MUNICIPAL DE NEIVA.",
+          "profile_id": "physical:70986c1dff6fcce60b4f",
+          "territory": "41001",
+          "volumes": {
+            "contract_physical_rows": 28,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 30,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 28,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 30,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "702441692",
+          "name": "CONTRALORIA MUNICIPAL DE ENVIGADO",
+          "profile_id": "physical:ad242885bf3e6a811a1a",
+          "territory": "05266",
+          "volumes": {
+            "contract_physical_rows": 14,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 14,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 14,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 14,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "703161174",
+          "name": "CONTRALORIA DISTRITAL DE CARTAGENA DE INDIAS",
+          "profile_id": "physical:3495c898bd8c3651994e",
+          "territory": "13001",
+          "volumes": {
+            "contract_physical_rows": 115,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 120,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 115,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 120,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "704330919",
+          "name": "CONTRALORIA MUNICIPAL DE BUCARAMANGA",
+          "profile_id": "physical:ff716848ef3a922dc6f7",
+          "territory": "68001",
+          "volumes": {
+            "contract_physical_rows": 24,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 23,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 24,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 23,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "704363647",
+          "name": "CONTRALORIA DISTRITAL DE SANTA MARTA",
+          "profile_id": "physical:be7937a63ee25d36df12",
+          "territory": "47001",
+          "volumes": {
+            "contract_physical_rows": 57,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 59,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 57,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 59,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "704505742",
+          "name": "CONTRALORIA MUNICIPAL DE DOSQUEBRADAS",
+          "profile_id": "physical:50c8869204d8aae0a729",
+          "territory": "66170",
+          "volumes": {
+            "contract_physical_rows": 11,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 11,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 11,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 11,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "705397149",
+          "name": "CONTRALORIA MUNICIPAL DE BELLO",
+          "profile_id": "physical:805fa60f3ebe47615b60",
+          "territory": "05088",
+          "volumes": {
+            "contract_physical_rows": 14,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 14,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 14,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 14,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "706504677",
+          "name": "CONTRALORIA MUNICIPAL DE POPAYAN",
+          "profile_id": "physical:3b0a7f0cb6624360a85a",
+          "territory": "19001",
+          "volumes": {
+            "contract_physical_rows": 16,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 16,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 16,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 16,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "712310358",
+          "name": "CONTRALORIA MUNICIPAL DE CUCUTA",
+          "profile_id": "physical:cc31dedf472fd033c0f6",
+          "territory": "54001",
+          "volumes": {
+            "contract_physical_rows": 7,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 7,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 7,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 7,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "712370519",
+          "name": "CONTRALORIA DISTRITAL DE BARRANQUILLA",
+          "profile_id": "physical:828b46dab966b6d621a0",
+          "territory": "08001",
+          "volumes": {
+            "contract_physical_rows": 2,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 2,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 2,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 2,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "712468198",
+          "name": "CONTRALORIA MUNICIPAL DE VALLEDUPAR",
+          "profile_id": "physical:3a2f65962e4e71a7ac4b",
+          "territory": "20001",
+          "volumes": {
+            "contract_physical_rows": 39,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 44,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 39,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 44,
+            "unique_processes_provenance": "MEASURED"
+          }
+        }
+      ],
+      "volumes": {
+        "contract_physical_rows": 480,
+        "process_physical_rows": 503,
+        "unique_contracts": 480,
+        "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+        "unique_processes": 497
+      }
+    },
+    "EDUCATION": {
+      "profiles": [
+        {
+          "account": "719236325",
+          "name": "INSTITUCION EDUCATIVA CIUDAD FLORIDA",
+          "profile_id": "physical:6fe0dbcf76a2a297712f",
+          "territory": "76275",
+          "volumes": {
+            "contract_physical_rows": 0,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 8,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 0,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 8,
+            "unique_processes_provenance": "MEASURED"
+          }
+        }
+      ],
+      "volumes": {
+        "contract_physical_rows": 0,
+        "process_physical_rows": 8,
+        "unique_contracts": 0,
+        "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+        "unique_processes": 8
+      }
+    },
+    "ESE_HEALTH": {
+      "profiles": [
+        {
+          "account": "700946056",
+          "name": "EMPRESA SOCIAL DEL ESTADO POPAYAN ESE",
+          "profile_id": "physical:27203385ed38c0037475",
+          "territory": "19001",
+          "volumes": {
+            "contract_physical_rows": 1,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 360,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 1,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 360,
+            "unique_processes_provenance": "MEASURED"
+          }
+        }
+      ],
+      "volumes": {
+        "contract_physical_rows": 1,
+        "process_physical_rows": 360,
+        "unique_contracts": 1,
+        "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+        "unique_processes": 360
+      }
+    },
+    "FUND": {
+      "profiles": [
+        {
+          "account": "712170091",
+          "name": "FONDO DE VALORIZACION DEL MUNICIPIO DE MEDELLIN",
+          "profile_id": "physical:1c54b23eb64d7cdc0bcf",
+          "territory": "05001",
+          "volumes": {
+            "contract_physical_rows": 114,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 126,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 114,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 125,
+            "unique_processes_provenance": "MEASURED"
+          }
+        }
+      ],
+      "volumes": {
+        "contract_physical_rows": 114,
+        "process_physical_rows": 126,
+        "unique_contracts": 114,
+        "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+        "unique_processes": 125
+      }
+    },
+    "INSTITUTE": {
+      "profiles": [
+        {
+          "account": "700568124",
+          "name": "INSTITUTO MUNICIPAL DE DEPORTE Y RECREACION DE CAJICA",
+          "profile_id": "physical:04c4b4e525eaaaebeb6e",
+          "territory": "25126",
+          "volumes": {
+            "contract_physical_rows": 235,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 231,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 235,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 231,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "700579030",
+          "name": "INSTITUTO DE DEPORTE CULTURA Y TURISMO DE SUBACHOQUE",
+          "profile_id": "physical:3bdaa5393de0da75f998",
+          "territory": "25769",
+          "volumes": {
+            "contract_physical_rows": 82,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 92,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 82,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 84,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "700585052",
+          "name": "INSTITUTO MUNICIPAL PARA EL DESARROLLO SOCIAL Y ECONÓMICO DE PALMIRA",
+          "profile_id": "physical:8b53ecbc0fd685ef5080",
+          "territory": "76520",
+          "volumes": {
+            "contract_physical_rows": 35,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 34,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 35,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 34,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "702412263",
+          "name": "INSTITUTO DE DESARROLLO ECONÓMICO DEL SUR",
+          "profile_id": "physical:e792b41ed8aebdf9522f",
+          "territory": "52356",
+          "volumes": {
+            "contract_physical_rows": 34,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 45,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 34,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 33,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "703891879",
+          "name": "INSTITUTO MUNICIPAL DEL DEPORTE Y RECREACION DE LA ESTRELLA",
+          "profile_id": "physical:931b20cafad480af3086",
+          "territory": "05380",
+          "volumes": {
+            "contract_physical_rows": 648,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 535,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 648,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 535,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "703905919",
+          "name": "INSTITUTO DISTRITAL DE SANTA MARTA PARA LA RECREACIÓN Y EL DEPORTE",
+          "profile_id": "physical:7e7d8f207eddef962b26",
+          "territory": "47001",
+          "volumes": {
+            "contract_physical_rows": 163,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 164,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 163,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 164,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "704060516",
+          "name": "INSTITUTO MUNICIPAL DE CULTURA, RECREACION Y DEPORTE DE ZIPAQUIRA",
+          "profile_id": "physical:15f1bb6218afea256268",
+          "territory": "25899",
+          "volumes": {
+            "contract_physical_rows": 337,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 365,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 337,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 360,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "704079144",
+          "name": "INSTITUTO MUNICIPAL DE CULTURA JOAQUIN PIÑEROS CORPAS",
+          "profile_id": "physical:38da35ce77b4b48a892a",
+          "territory": "25785",
+          "volumes": {
+            "contract_physical_rows": 84,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 83,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 84,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 83,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "704322783",
+          "name": "INSTITUTO DE TRANSITO Y TRANSPORTE DE CHARALA.",
+          "profile_id": "physical:fb13dd15c977ffcf8913",
+          "territory": "68167",
+          "volumes": {
+            "contract_physical_rows": 12,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 24,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 12,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 24,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "704655133",
+          "name": "INSTITUTO DEPARTAMENTAL DE DEPORTES DE CÓRDOBA INDEPORTES CÓRDOBA",
+          "profile_id": "physical:7dc2bba6c07547b692ee",
+          "territory": "23001",
+          "volumes": {
+            "contract_physical_rows": 332,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 350,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 332,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 350,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "704659911",
+          "name": "INSTITUTO DE CULTURA Y TURISMO DE MANIZALES",
+          "profile_id": "physical:1e15916e4353ffe0fccf",
+          "territory": "17001",
+          "volumes": {
+            "contract_physical_rows": 247,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 277,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 247,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 277,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "704779636",
+          "name": "INSTITUTO MUNICIPAL DE CULTURA Y TURISMO DE CAJICA",
+          "profile_id": "physical:ade2348f51457ac9952d",
+          "territory": "25126",
+          "volumes": {
+            "contract_physical_rows": 321,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 355,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 321,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 351,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "705077204",
+          "name": "INSTITUTO DEPARTAMENTAL DE CULTURA DEL META",
+          "profile_id": "physical:d29fe46422f0423e2af7",
+          "territory": "50001",
+          "volumes": {
+            "contract_physical_rows": 548,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 574,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 548,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 574,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "705083319",
+          "name": "INSTITUTO MUNICIPAL PARA EL DEPORTE Y LA RECREACION DE SINCELEJO",
+          "profile_id": "physical:b6bb857780682c1cc1d6",
+          "territory": "70001",
+          "volumes": {
+            "contract_physical_rows": 110,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 108,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 110,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 108,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "705805356",
+          "name": "INSTITUTO DE TRANSITO Y TRANSPORTE DE SOGAMOSO",
+          "profile_id": "physical:0d50774c782d99732d29",
+          "territory": "15759",
+          "volumes": {
+            "contract_physical_rows": 119,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 132,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 119,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 132,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "705828283",
+          "name": "INSTITUTO DE TURISMO DE VILLAVICENCIO",
+          "profile_id": "physical:9b6f20dda09e4148eca7",
+          "territory": "50001",
+          "volumes": {
+            "contract_physical_rows": 220,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 237,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 220,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 228,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "706158078",
+          "name": "INSTITUTO DE MOVILIDAD DE PEREIRA",
+          "profile_id": "physical:a43dc6d4583599b5ab07",
+          "territory": "66001",
+          "volumes": {
+            "contract_physical_rows": 297,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 312,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 297,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 312,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "709649057",
+          "name": "INSTITUTO MUNICIPAL DE RECREACION Y DEPORTES DE TOCANCIPA",
+          "profile_id": "physical:00839a9679f362f497d9",
+          "territory": "25817",
+          "volumes": {
+            "contract_physical_rows": 183,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 196,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 183,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 194,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "713824894",
+          "name": "INSTITUTO MUNICIPAL PARA LA RECREACION Y EL DEPORTE DE SOACHA",
+          "profile_id": "physical:65a259eeedb37830e4f8",
+          "territory": "25754",
+          "volumes": {
+            "contract_physical_rows": 398,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 412,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 398,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 412,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "715220133",
+          "name": "INSTITUTO MUNICIPAL PARA EL DEPORTE Y LA RECREACION DE MADRID",
+          "profile_id": "physical:d0d48264c06128241949",
+          "territory": "25430",
+          "volumes": {
+            "contract_physical_rows": 193,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 197,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 193,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 197,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "719541476",
+          "name": "INSTITUTO MUNICIPAL DE CULTURA Y TURISMO DE TENJO",
+          "profile_id": "physical:53494cbfb12bd0ca5550",
+          "territory": "25799",
+          "volumes": {
+            "contract_physical_rows": 262,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 302,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 262,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 276,
+            "unique_processes_provenance": "MEASURED"
+          }
+        }
+      ],
+      "volumes": {
+        "contract_physical_rows": 4860,
+        "process_physical_rows": 5025,
+        "unique_contracts": 4860,
+        "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+        "unique_processes": 4959
+      }
+    },
+    "OTHER_DECENTRALIZED": {
+      "profiles": [
+        {
+          "account": "700608052",
+          "name": "INSTITUCION UNIVERSITARIA BELLAS ARTES Y CIENCIAS DE BOLIVAR",
+          "profile_id": "physical:77104e3ac202b7d84762",
+          "territory": "13001",
+          "volumes": {
+            "contract_physical_rows": 213,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 263,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 213,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 262,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "700712011",
+          "name": "DIRECCION DE TRANSITO DE BUCARAMANGA",
+          "profile_id": "physical:f7bb29e338573e06596c",
+          "territory": "68001",
+          "volumes": {
+            "contract_physical_rows": 590,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 613,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 590,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 604,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "700882046",
+          "name": "AEROPUERTO OLAYA HERRERA",
+          "profile_id": "physical:fc7d9080be2d96767147",
+          "territory": "05001",
+          "volumes": {
+            "contract_physical_rows": 55,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 60,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 55,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 60,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "701855249",
+          "name": "CORPORACION DE CULTURA Y TURISMO DE ARMENIA",
+          "profile_id": "physical:b94de81a1e7b8745a76c",
+          "territory": "63001",
+          "volumes": {
+            "contract_physical_rows": 265,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 305,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 265,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 302,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "702208604",
+          "name": "INSTITUCION UNIVERSITARIA DE ENVIGADO",
+          "profile_id": "physical:5e1f84831a209035cb2f",
+          "territory": "05266",
+          "volumes": {
+            "contract_physical_rows": 649,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 738,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 649,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 733,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "702638354",
+          "name": "DISTRISEGURIDAD",
+          "profile_id": "physical:b675d71d6211b1fc5619",
+          "territory": "13001",
+          "volumes": {
+            "contract_physical_rows": 513,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 395,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 513,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 387,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "703168930",
+          "name": "EMPRESA DE DESARROLLO URBANO Y HABITAT",
+          "profile_id": "physical:5f7162a1a5d8ff260151",
+          "territory": "05631",
+          "volumes": {
+            "contract_physical_rows": 43,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 56,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 43,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 56,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "704271121",
+          "name": "ASOCIACION CABLE AEREO MANIZALES",
+          "profile_id": "physical:680db498fb3ca70e7cc9",
+          "territory": "17001",
+          "volumes": {
+            "contract_physical_rows": 91,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 119,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 91,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 119,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "704323161",
+          "name": "BOMBEROS DE BUCARAMANGA",
+          "profile_id": "physical:5bbe3eabcdbfa70f3d0a",
+          "territory": "68001",
+          "volumes": {
+            "contract_physical_rows": 172,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 185,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 172,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 185,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "704366129",
+          "name": "CAJA DE PREVISION SOCIAL MUNICIPAL DE BUCARAMANGA",
+          "profile_id": "physical:aa50eb1a8316ddbf191a",
+          "territory": "68001",
+          "volumes": {
+            "contract_physical_rows": 10,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 13,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 10,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 13,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "704564061",
+          "name": "CONSERVATORIO DEL TOLIMA",
+          "profile_id": "physical:fff786cf22e5aa971f7a",
+          "territory": "73001",
+          "volumes": {
+            "contract_physical_rows": 111,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 114,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 111,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 114,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "705986180",
+          "name": "CUERPO OFICIAL DE BOMBEROS DEL MUNICIPIO DE DOSQUEBRADAS",
+          "profile_id": "physical:f9d380f64286e151a7ef",
+          "territory": "66170",
+          "volumes": {
+            "contract_physical_rows": 30,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 35,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 30,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 35,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "706645314",
+          "name": "CENTRO DE DIAGNOSTICO AUTOMOTOR DE POPAYAN LTDA",
+          "profile_id": "physical:3e461f3d6e0b048bcc2c",
+          "territory": "19001",
+          "volumes": {
+            "contract_physical_rows": 50,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 52,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 50,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 52,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "712426030",
+          "name": "ASOCIACIÓN DE MUNICIPIOS PUEBLOS DE OCCIDENTE",
+          "profile_id": "physical:652cd7a231ecfd80635b",
+          "territory": "54001",
+          "volumes": {
+            "contract_physical_rows": 13,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 10,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 13,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 10,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "715195145",
+          "name": "CUERPO DE BOMBEROS OFICIAL DE MONTERIA",
+          "profile_id": "physical:4f91a4ad372dae824be3",
+          "territory": "23001",
+          "volumes": {
+            "contract_physical_rows": 33,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 44,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 33,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 44,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "715450870",
+          "name": "CORPORACION PRODESARROLLO Y SEGURIDAD DEL MUNICIPIO DE GIRARDOT",
+          "profile_id": "physical:5653565ed18a73a74910",
+          "territory": "25307",
+          "volumes": {
+            "contract_physical_rows": 90,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 96,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 90,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 94,
+            "unique_processes_provenance": "MEASURED"
+          }
+        }
+      ],
+      "volumes": {
+        "contract_physical_rows": 2928,
+        "process_physical_rows": 3098,
+        "unique_contracts": 2928,
+        "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+        "unique_processes": 3070
+      }
+    },
+    "PERSONERIA": {
+      "profiles": [
+        {
+          "account": "709432462",
+          "name": "PERSONERIA DE CAJICA",
+          "profile_id": "physical:55695b660f79052390c1",
+          "territory": "25126",
+          "volumes": {
+            "contract_physical_rows": 36,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 38,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 36,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 38,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "716156328",
+          "name": "PERSONERÍA DE SONSÓN",
+          "profile_id": "physical:2e10b64f2347eaf95f8e",
+          "territory": "05756",
+          "volumes": {
+            "contract_physical_rows": 4,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 4,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 4,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 4,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "718780000",
+          "name": "PERSONERIA DE ANOLAIMA",
+          "profile_id": "physical:04c7ad3fcf2db7f7f495",
+          "territory": "25040",
+          "volumes": {
+            "contract_physical_rows": 6,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 6,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 6,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 6,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "720708221",
+          "name": "PERSONERIA DE LOS PATIOS",
+          "profile_id": "physical:69ce50540e78f42972d1",
+          "territory": "54405",
+          "volumes": {
+            "contract_physical_rows": 4,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 4,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 4,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 4,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "729897249",
+          "name": "PERSONERIA DE SAN VICENTE DE CHUCURI",
+          "profile_id": "physical:695cb35e118238ccc6ca",
+          "territory": "68689",
+          "volumes": {
+            "contract_physical_rows": 9,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 9,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 9,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 9,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "733965297",
+          "name": "Personeria Distrital de Buenaventura",
+          "profile_id": "physical:da48e0709b50c5a8ffbd",
+          "territory": "76109",
+          "volumes": {
+            "contract_physical_rows": 11,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 12,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 11,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 12,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "734535198",
+          "name": "PERSONERIA DE TASCO",
+          "profile_id": "physical:a7ae04cefedd1b5a0faa",
+          "territory": "15790",
+          "volumes": {
+            "contract_physical_rows": 2,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 1,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 2,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 1,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "735519332",
+          "name": "PERSONERIA DE SORA",
+          "profile_id": "physical:15e452ee57688bbcb523",
+          "territory": "15762",
+          "volumes": {
+            "contract_physical_rows": 1,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 2,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 1,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 2,
+            "unique_processes_provenance": "MEASURED"
+          }
+        }
+      ],
+      "volumes": {
+        "contract_physical_rows": 73,
+        "process_physical_rows": 76,
+        "unique_contracts": 73,
+        "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+        "unique_processes": 76
+      }
+    },
+    "PUBLIC_COMPANY": {
+      "profiles": [
+        {
+          "account": "700774102",
+          "name": "EMPRESA MUNICIPAL DE MERCADEO DE APARTADO",
+          "profile_id": "physical:a9df1cb3e91eea2ee280",
+          "territory": "05045",
+          "volumes": {
+            "contract_physical_rows": 6,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 7,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 6,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 7,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "702138074",
+          "name": "EMPRESA DE VIVIENDA DE ANTIOQUIA-VIVA",
+          "profile_id": "physical:ea7b6f03aca192ae99cc",
+          "territory": "05001",
+          "volumes": {
+            "contract_physical_rows": 7,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 675,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 7,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 647,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "702263278",
+          "name": "TERMINAL DE TRANSPORTE S.A",
+          "profile_id": "physical:8578cb72c764632ca3f4",
+          "territory": "11001",
+          "volumes": {
+            "contract_physical_rows": 158,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 240,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 158,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 229,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "704325141",
+          "name": "EMPRESA DE SERVICIOS PUBLICOS DE ACUEDUCTO, ALCANTARILLADO Y ASEO DE SUAITA S.A E.S.P",
+          "profile_id": "physical:bb5e2579ff33c5d4342e",
+          "territory": "68770",
+          "volumes": {
+            "contract_physical_rows": 50,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 51,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 50,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 51,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "704561703",
+          "name": "FABRICA DE LICORES DEL TOLIMA",
+          "profile_id": "physical:c22aa0fb815606c00825",
+          "territory": "73001",
+          "volumes": {
+            "contract_physical_rows": 130,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 137,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 130,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 137,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "705396935",
+          "name": "EMPRESAS PUBLICAS DE BETULIA S.A. E.S.P",
+          "profile_id": "physical:dbd4a8e7f154209c07ee",
+          "territory": "05093",
+          "volumes": {
+            "contract_physical_rows": 0,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 40,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 0,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 40,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "705404267",
+          "name": "AQUATERRA EMPRESA DE SERVICIOS PUBLICOS",
+          "profile_id": "physical:5f4527ae83a96ef7ca7d",
+          "territory": "05318",
+          "volumes": {
+            "contract_physical_rows": 0,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 72,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 0,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 72,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "706023314",
+          "name": "CONSTRUCCIONES, INFRAESTRUCTURA E INVERSIONES CII ESTATAL",
+          "profile_id": "physical:5a0a37cfd2baea083f51",
+          "territory": "66088",
+          "volumes": {
+            "contract_physical_rows": 0,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 29,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 0,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 26,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "706030442",
+          "name": "EMPRESA INDUSTRIAL Y COMERCIAL DEL ESTADO TERMINAL DE TRANSPORTE DE APARTADO",
+          "profile_id": "physical:c47694d8007f8eeef2b3",
+          "territory": "05045",
+          "volumes": {
+            "contract_physical_rows": 21,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 25,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 21,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 25,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "706258654",
+          "name": "EMPRESA COMERCIAL DE JUEGOS DE SUERTE Y AZAR DE SUCRE",
+          "profile_id": "physical:f9074301453b6d8debdb",
+          "territory": "70001",
+          "volumes": {
+            "contract_physical_rows": 40,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 39,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 40,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 39,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "706418357",
+          "name": "EMPRESA DE FOMENTO Y DESARROLLO SOSTENIBLE DE OCCIDENTE",
+          "profile_id": "physical:8b16d7d561a09fee039e",
+          "territory": "25269",
+          "volumes": {
+            "contract_physical_rows": 0,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 110,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 0,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 110,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "708060165",
+          "name": "DINAMICA SERVICIOS PUBLICOS E INGENIERIA  E.S.P S.A.S",
+          "profile_id": "physical:f27b89bfa5d64df0b21f",
+          "territory": "66088",
+          "volumes": {
+            "contract_physical_rows": 0,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 53,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 0,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 53,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "710023094",
+          "name": "TERMINAL DE TRANSPORTES DE FUSAGASUGA",
+          "profile_id": "physical:6034f67e6a70c9345c21",
+          "territory": "25290",
+          "volumes": {
+            "contract_physical_rows": 0,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 86,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 0,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 86,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "710509811",
+          "name": "NUEVA LICORERA DE BOYACA",
+          "profile_id": "physical:c69f329c6a9e0c5bbb4d",
+          "territory": "15001",
+          "volumes": {
+            "contract_physical_rows": 65,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 144,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 65,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 140,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "712019603",
+          "name": "INDUSTRIA LICORERA DEL CAUCA",
+          "profile_id": "physical:b36ecf7a519f62b5c520",
+          "territory": "19001",
+          "volumes": {
+            "contract_physical_rows": 157,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 162,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 157,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 161,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "712076496",
+          "name": "MONTERIA CIUDAD AMABLE S.A.S.",
+          "profile_id": "physical:409ec01e04e5f441bf3b",
+          "territory": "23001",
+          "volumes": {
+            "contract_physical_rows": 48,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 50,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 48,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 50,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "714791506",
+          "name": "LOTERÍA DE MEDELLÍN",
+          "profile_id": "physical:b1ae074458953241feec",
+          "territory": "05001",
+          "volumes": {
+            "contract_physical_rows": 0,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 112,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 0,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 112,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "715372397",
+          "name": "EMPRESA DE SERVICIOS PUBLICOS DE ACACIAS",
+          "profile_id": "physical:5dcea52f700f2db1aa94",
+          "territory": "50006",
+          "volumes": {
+            "contract_physical_rows": 0,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 120,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 0,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 120,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "718246234",
+          "name": "EMPRESA FRIGORIFICO Y PLAZA DE FERIAS DE ZIPAQUIRA",
+          "profile_id": "physical:c10c6d65c4f59514c9d8",
+          "territory": "25899",
+          "volumes": {
+            "contract_physical_rows": 0,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 54,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 0,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 54,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "718453236",
+          "name": "EMPRESAS PUBLICAS DE CARAMANTA S.A.S. E.S.P.",
+          "profile_id": "physical:97d31172e4ef87d3b73a",
+          "territory": "05145",
+          "volumes": {
+            "contract_physical_rows": 5,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 17,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 5,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 17,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "718666134",
+          "name": "EMPRESA DE SERVICIOS PUBLICOS DE TABIO S A",
+          "profile_id": "physical:58ec44e6fc407ea672fc",
+          "territory": "25785",
+          "volumes": {
+            "contract_physical_rows": 1,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 80,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 1,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 80,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "718846108",
+          "name": "EMPRESA DE SERVICIOS PUBLICOS DE TAME",
+          "profile_id": "physical:7b7504caeaa9508b0f69",
+          "territory": "81794",
+          "volumes": {
+            "contract_physical_rows": 0,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 53,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 0,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 53,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "719235251",
+          "name": "TRANSCARIBE S.A.",
+          "profile_id": "physical:0c1a437d79c426637b52",
+          "territory": "13001",
+          "volumes": {
+            "contract_physical_rows": 127,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 133,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 127,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 133,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "719687899",
+          "name": "EMPRESA PUBLICA DE MADRID",
+          "profile_id": "physical:0d344786dafbc1086cac",
+          "territory": "25430",
+          "volumes": {
+            "contract_physical_rows": 0,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 47,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 0,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 47,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "723535670",
+          "name": "TERMINAL DE TRANSPORTES DE PASTO S.A.",
+          "profile_id": "physical:d813fc4d4fff92391e0b",
+          "territory": "52001",
+          "volumes": {
+            "contract_physical_rows": 0,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 33,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 0,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 33,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "731691804",
+          "name": "TERMINAL DE TRANSPORTES DE PEREIRA S.A.",
+          "profile_id": "physical:f80907d990955bbf3e0c",
+          "territory": "66001",
+          "volumes": {
+            "contract_physical_rows": 0,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 101,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 0,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 101,
+            "unique_processes_provenance": "MEASURED"
+          }
+        }
+      ],
+      "volumes": {
+        "contract_physical_rows": 815,
+        "process_physical_rows": 2670,
+        "unique_contracts": 815,
+        "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+        "unique_processes": 2623
+      }
+    },
+    "PUBLIC_SERVICES": {
+      "profiles": [
+        {
+          "account": "718410095",
+          "name": "EMPRESA DE SERVICIOS PUBLICOS DE PAMPLONA S.A E.S.P",
+          "profile_id": "physical:b2d75ff9405e6d3e2f99",
+          "territory": "54518",
+          "volumes": {
+            "contract_physical_rows": 0,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 111,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 0,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 111,
+            "unique_processes_provenance": "MEASURED"
+          }
+        }
+      ],
+      "volumes": {
+        "contract_physical_rows": 0,
+        "process_physical_rows": 111,
+        "unique_contracts": 0,
+        "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+        "unique_processes": 111
+      }
+    },
+    "UNKNOWN": {
+      "profiles": [
+        {
+          "account": "701129264",
+          "name": "LOTERIA DE BOGOTA",
+          "profile_id": "physical:4522fa63ce5a8594cb95",
+          "territory": "11001",
+          "volumes": {
+            "contract_physical_rows": 89,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 90,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 89,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 90,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "702196130",
+          "name": "ORQUESTA FILARMONICA DE BOGOTA",
+          "profile_id": "physical:b8e2ac9e9a97f34df16b",
+          "territory": "11001",
+          "volumes": {
+            "contract_physical_rows": 685,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 787,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 685,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 708,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "702457383",
+          "name": "DEPARTAMENTO ADMINISTRATIVO DE TRANSITO Y TRANSPORTE DE VILLA DEL ROSARIO**",
+          "profile_id": "physical:c79673c2fbcdb8312019",
+          "territory": "54874",
+          "volumes": {
+            "contract_physical_rows": 10,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 12,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 10,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 12,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "707893285",
+          "name": "MEGABÚS S.A.",
+          "profile_id": "physical:a70a2a024b1fab74786a",
+          "territory": "66001",
+          "volumes": {
+            "contract_physical_rows": 1,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 94,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 1,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 94,
+            "unique_processes_provenance": "MEASURED"
+          }
+        },
+        {
+          "account": "710609769",
+          "name": "CENTRO TECNOLÓGICO DE CÚCUTA",
+          "profile_id": "physical:5aaa8b969c22a2562f09",
+          "territory": "54001",
+          "volumes": {
+            "contract_physical_rows": 456,
+            "contract_physical_rows_provenance": "MEASURED",
+            "process_physical_rows": 477,
+            "process_physical_rows_provenance": "MEASURED",
+            "unique_contracts": 456,
+            "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+            "unique_processes": 477,
+            "unique_processes_provenance": "MEASURED"
+          }
+        }
+      ],
+      "volumes": {
+        "contract_physical_rows": 1241,
+        "process_physical_rows": 1460,
+        "unique_contracts": 1241,
+        "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+        "unique_processes": 1381
+      }
+    }
+  },
+  "municipal_volume_bounds": {
+    "unique_contracts": {
+      "lower": 465445,
+      "upper": 1033118
+    },
+    "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+    "unique_processes": {
+      "lower": 703120,
+      "upper": 1676820
+    }
+  },
+  "universe": {
+    "NON_MUNICIPAL_PROFILES": 132,
+    "TOTAL_AFFILIATED_TO_MUNICIPAL_TERRITORY": 1929,
+    "TOTAL_LOGICAL_BUYER_UNITS_VERIFIED": 994,
+    "TOTAL_PHYSICAL_PROFILES": 11298,
+    "TOTAL_RECOGNIZED_BY_SECOPPAL": 625,
+    "TOTAL_UNRECOGNIZED": 369,
+    "TOTAL_UNRESOLVED": 10168,
+    "VERIFIED_AFFILIATION_IDENTITY_UNRESOLVED": 931
+  },
+  "unresolved_by_family": {
+    "CONCEJO": {
+      "contract_physical_rows": 6758,
+      "process_physical_rows": 6550,
+      "unique_contracts": 6758,
+      "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+      "unique_processes": 6492
+    },
+    "CONTRALORIA": {
+      "contract_physical_rows": 2025,
+      "process_physical_rows": 2202,
+      "unique_contracts": 2025,
+      "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+      "unique_processes": 2177
+    },
+    "EDUCATION": {
+      "contract_physical_rows": 7533,
+      "process_physical_rows": 115636,
+      "unique_contracts": 7533,
+      "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+      "unique_processes": 115151
+    },
+    "ESE_HEALTH": {
+      "contract_physical_rows": 99869,
+      "process_physical_rows": 455053,
+      "unique_contracts": 99869,
+      "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+      "unique_processes": 451337
+    },
+    "FIRE_DEPARTMENT": {
+      "contract_physical_rows": 141,
+      "process_physical_rows": 150,
+      "unique_contracts": 141,
+      "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+      "unique_processes": 150
+    },
+    "FUND": {
+      "contract_physical_rows": 11652,
+      "process_physical_rows": 23489,
+      "unique_contracts": 11652,
+      "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+      "unique_processes": 22926
+    },
+    "INSTITUTE": {
+      "contract_physical_rows": 47718,
+      "process_physical_rows": 57418,
+      "unique_contracts": 47718,
+      "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+      "unique_processes": 52277
+    },
+    "MUNICIPAL_EXECUTIVE": {
+      "contract_physical_rows": 35382,
+      "process_physical_rows": 39753,
+      "unique_contracts": 35382,
+      "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+      "unique_processes": 36943
+    },
+    "OTHER_DECENTRALIZED": {
+      "contract_physical_rows": 3433,
+      "process_physical_rows": 4961,
+      "unique_contracts": 3433,
+      "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+      "unique_processes": 4533
+    },
+    "PERSONERIA": {
+      "contract_physical_rows": 6751,
+      "process_physical_rows": 6290,
+      "unique_contracts": 6751,
+      "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+      "unique_processes": 6260
+    },
+    "PUBLIC_COMPANY": {
+      "contract_physical_rows": 8645,
+      "process_physical_rows": 47396,
+      "unique_contracts": 8645,
+      "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+      "unique_processes": 47205
+    },
+    "PUBLIC_SERVICES": {
+      "contract_physical_rows": 4278,
+      "process_physical_rows": 13196,
+      "unique_contracts": 4278,
+      "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+      "unique_processes": 13154
+    },
+    "UNKNOWN": {
+      "contract_physical_rows": 450765,
+      "process_physical_rows": 593346,
+      "unique_contracts": 450765,
+      "unique_contracts_provenance": "DERIVED_FROM_GLOBAL_IDENTITY",
+      "unique_processes": 562258
+    }
+  }
+}

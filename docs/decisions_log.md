@@ -4291,3 +4291,23 @@ sobre `entidad_in_candidates[0]` en vez de los 15 que anuncia su comentario.
 
 Detalle: `docs/decisions/2026-09-02_ADR-074_institutional-buyer-unit-and-group.md`.
 Informe: `docs/gazetteer/INSTITUTIONAL_BUYER_MODEL_P01.md`.
+
+## ADR-075: La afiliación territorial municipal exige cadenas de evidencia independientes
+
+**Fecha:** 2026-09-04. **Estado:** Accepted para auditoría y conocimiento offline;
+runtime sin cambios.
+
+M2A acepta un puente fiscal hacia territorio previamente acreditado único sólo
+como PROBABLE. VERIFIED requiere evidencia del propio perfil: fila SIGEP
+independientemente emparejada o directorio de cuenta/nombre exacto y código
+municipal concordante. El cruce SIGEP fiscal/directorio puede acreditar
+territorio sin acreditar identidad lógica. Sólo una fila SIGEP propia aporta
+naturaleza jurídica; el NIT nunca fusiona BuyerUnits ni declara membresía.
+
+Bogotá conserva exclusivamente la autoridad de su registro ejecutivo declarado.
+Se publican tres granos, denominador lógico verificado y pool no resuelto, con
+contratos únicos derivados explícitamente de la igualdad global congelada.
+
+Evidencia: `docs/gazetteer/MUNICIPAL_M2A.md` y `artifacts/audits/municipal_m2a/`.
+Número verificado contra los 29 worktrees, cuyo máximo global era ADR-074.
+Detalle: `docs/decisions/2026-09-04_ADR-075_municipal-territorial-affiliation-evidence-chains.md`.

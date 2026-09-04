@@ -1,0 +1,4545 @@
+{
+  "consumed_classifications": 288,
+  "consumed_profiles": 288,
+  "delta": [
+    {
+      "affiliation_after": "68679",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "SOURCE_BINDING_ONLY",
+      "m1b_debt_preserved": "EXISTING_BUYER_UNIT_MISSING_AFFILIATION",
+      "m1b_profile_id": "m1b:9e88fe4089d1b533",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/0",
+      "profile_id": "physical:9e88fe4089d1b5333e88",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "70670",
+      "affiliation_before": "70670",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "MISSING_DATASET_EVIDENCE",
+      "m1b_profile_id": "m1b:9127e4bb733e6892",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/1",
+      "profile_id": "physical:9127e4bb733e68924b97",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:f15a60ada70f2582",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/2",
+      "profile_id": "physical:e077ce3aba1f4e5f633a",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "05101",
+      "affiliation_before": null,
+      "affiliation_status_after": "PROBABLE",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:b18118d84653e682",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/3",
+      "profile_id": "physical:9bea1e3e7b45fb8e62cd",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "68081",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:fb2a130478c3cf06",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/4",
+      "profile_id": "physical:fb2a130478c3cf061d6b",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "15516",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:28e27f4d6bbc049a",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/5",
+      "profile_id": "physical:28e27f4d6bbc049ad115",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:ddbb7114fda912e6",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/6",
+      "profile_id": "physical:237a2cd5c43d44428edd",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "05036",
+      "affiliation_before": "05036",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "SOURCE_NAME_VARIANT",
+      "m1b_profile_id": "m1b:3a361f96102a818a",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/7",
+      "profile_id": "physical:3a361f96102a818a0a43",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": "05036",
+      "affiliation_before": "05036",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "SOURCE_NAME_VARIANT",
+      "m1b_profile_id": "m1b:7f201c725486cac5",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/8",
+      "profile_id": "physical:7f201c725486cac5fc3a",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": "66045",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:e9b2d7028b48af7b",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/9",
+      "profile_id": "physical:e9b2d7028b48af7b0535",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "15377",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:fc158b5c137998d1",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/10",
+      "profile_id": "physical:fc158b5c137998d10884",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:b1fd76eee5b11055",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/11",
+      "profile_id": "physical:b1fd76eee5b110553be2",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:086bd8afde5e7659",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/12",
+      "profile_id": "physical:086bd8afde5e7659bc83",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:64b2ee46322f3e98",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/13",
+      "profile_id": "physical:64b2ee46322f3e9828ef",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "76892",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:4168773bd15238f1",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/14",
+      "profile_id": "physical:4168773bd15238f1ec9c",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "25658",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:1d051b4a2eb04bae",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/15",
+      "profile_id": "physical:1d051b4a2eb04baeacb8",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "68081",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "EXISTING_BUYER_UNIT_MISSING_AFFILIATION",
+      "m1b_profile_id": "m1b:575cb49f57025fde",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/16",
+      "profile_id": "physical:575cb49f57025fde751f",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "68081",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:7182e0f68dcd01b3",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/17",
+      "profile_id": "physical:7182e0f68dcd01b3e447",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "76892",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "SOURCE_BINDING_ONLY",
+      "m1b_debt_preserved": "EXISTING_BUYER_UNIT_MISSING_AFFILIATION",
+      "m1b_profile_id": "m1b:80000fc072bca03b",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/18",
+      "profile_id": "physical:80000fc072bca03b4a4c",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "05660",
+      "affiliation_before": "05660",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:0a547ff849ea37d7",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/19",
+      "profile_id": "physical:0a547ff849ea37d78272",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:09e94987179759a9",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/20",
+      "profile_id": "physical:09e94987179759a9b966",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "13894",
+      "affiliation_before": "13894",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "MISSING_DATASET_EVIDENCE",
+      "m1b_profile_id": "m1b:72e5b7e662a2d2b2",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/21",
+      "profile_id": "physical:72e5b7e662a2d2b2d9f8",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": "85225",
+      "affiliation_before": "85225",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "MISSING_DATASET_EVIDENCE",
+      "m1b_profile_id": "m1b:0f9f0f650a592b08",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/22",
+      "profile_id": "physical:0f9f0f650a592b08325f",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": "52786",
+      "affiliation_before": "52786",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "MISSING_DATASET_EVIDENCE",
+      "m1b_profile_id": "m1b:3d2299f4990e38d1",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/23",
+      "profile_id": "physical:a8eca3a70e360a9dae09",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": "05411",
+      "affiliation_before": "05411",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "MISSING_DATASET_EVIDENCE",
+      "m1b_profile_id": "m1b:63a7110ba2345b15",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/24",
+      "profile_id": "physical:63a7110ba2345b156e8e",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": "68081",
+      "affiliation_before": "68081",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "NON_EXECUTIVE_MUNICIPAL_UNIT",
+      "m1b_profile_id": "m1b:f00c5c56c65c746b",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/25",
+      "profile_id": "physical:f00c5c56c65c746bf5f0",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": "23168",
+      "affiliation_before": "23168",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "NON_EXECUTIVE_MUNICIPAL_UNIT",
+      "m1b_profile_id": "m1b:3fbc09839c3e1448",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/26",
+      "profile_id": "physical:3fbc09839c3e14483dba",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:9625aadb387dfc6f",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/27",
+      "profile_id": "physical:9625aadb387dfc6f26f1",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:36eaf8d19daa52ae",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/28",
+      "profile_id": "physical:36eaf8d19daa52aef592",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:717abd5aeef6d022",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/29",
+      "profile_id": "physical:717abd5aeef6d022924d",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "68081",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:e5cf8f555202560c",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/30",
+      "profile_id": "physical:e5cf8f555202560c7b2e",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "85279",
+      "affiliation_before": "85279",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "MISSING_DATASET_EVIDENCE",
+      "m1b_profile_id": "m1b:35673f9c1fd06446",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/31",
+      "profile_id": "physical:d8a6d927a9b23d4b9685",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:f02a621566b3232f",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/32",
+      "profile_id": "physical:f02a621566b3232f7819",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "73861",
+      "affiliation_before": "73861",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "MISSING_DATASET_EVIDENCE",
+      "m1b_profile_id": "m1b:c6fd1a16cb48fa57",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/33",
+      "profile_id": "physical:c6fd1a16cb48fa57f9d6",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": "25805",
+      "affiliation_before": "25805",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "MISSING_DATASET_EVIDENCE",
+      "m1b_profile_id": "m1b:1a0d928af716f1cc",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/34",
+      "profile_id": "physical:1a0d928af716f1ccc67f",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:9df7bf174091a2cc",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/35",
+      "profile_id": "physical:9df7bf174091a2ccb501",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "25658",
+      "affiliation_before": "25658",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:eee8c2f016df8be2",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/36",
+      "profile_id": "physical:eee8c2f016df8be283ca",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": "05890",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:3e10641b5bf589e9",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/37",
+      "profile_id": "physical:3e10641b5bf589e9e03c",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:cfa66f4e1f19f515",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/38",
+      "profile_id": "physical:cfa66f4e1f19f515fcc3",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:5e6257ec7816e45b",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/39",
+      "profile_id": "physical:5e6257ec7816e45b3c5e",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "76892",
+      "affiliation_before": "76892",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "NON_EXECUTIVE_MUNICIPAL_UNIT",
+      "m1b_profile_id": "m1b:9412e9aa29252bf0",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/40",
+      "profile_id": "physical:9412e9aa29252bf07493",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": "76892",
+      "affiliation_before": "76892",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "NON_EXECUTIVE_MUNICIPAL_UNIT",
+      "m1b_profile_id": "m1b:9b247d46a1c64682",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/41",
+      "profile_id": "physical:9b247d46a1c646820e32",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": "76834",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:c75653e3ef3e84b5",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/42",
+      "profile_id": "physical:c75653e3ef3e84b5f3a1",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "76834",
+      "affiliation_before": null,
+      "affiliation_status_after": "PROBABLE",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:74b5ffc4b1723349",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/43",
+      "profile_id": "physical:74b5ffc4b1723349d6f2",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:8c2b09451fd58d21",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/44",
+      "profile_id": "physical:8c2b09451fd58d21aee7",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "76892",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:8d6ff9a7aecdb29e",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/45",
+      "profile_id": "physical:8d6ff9a7aecdb29e1b9c",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:2ff0b9cc3a93a4fb",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/46",
+      "profile_id": "physical:a5d24cdd808c7d1e822c",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "76892",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:32c3ae23da0117da",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/47",
+      "profile_id": "physical:32c3ae23da0117da776e",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "76834",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:3769a3f4751c84ef",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/48",
+      "profile_id": "physical:3769a3f4751c84efb252",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "68266",
+      "affiliation_before": "68266",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "MISSING_DATASET_EVIDENCE",
+      "m1b_profile_id": "m1b:f48776060f0a9d83",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/49",
+      "profile_id": "physical:f48776060f0a9d837148",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:b86eb7393309d583",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/50",
+      "profile_id": "physical:b86eb7393309d583b8e6",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "68679",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:afc9ab0bac1f313f",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/51",
+      "profile_id": "physical:afc9ab0bac1f313f82ef",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "68081",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:69a77bffea1fed02",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/52",
+      "profile_id": "physical:69a77bffea1fed028ae1",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "68679",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:ef1623509928079f",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/53",
+      "profile_id": "physical:ef1623509928079f1c1d",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "73671",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:f37c9280214a7a46",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/54",
+      "profile_id": "physical:c4bf30a978ce39b6e655",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "52254",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:9a0c825b14793180",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/55",
+      "profile_id": "physical:9a0c825b147931804b77",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "52573",
+      "affiliation_before": "52573",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "NON_EXECUTIVE_MUNICIPAL_UNIT",
+      "m1b_profile_id": "m1b:7af1f2a344829c9f",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/56",
+      "profile_id": "physical:2e69aa90d6e92d64170c",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": "13212",
+      "affiliation_before": "13212",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "MISSING_DATASET_EVIDENCE",
+      "m1b_profile_id": "m1b:4d288277af056b18",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/57",
+      "profile_id": "physical:4d288277af056b18b8b9",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": "05142",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:a7130da20c4ecc30",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/58",
+      "profile_id": "physical:2f8d3db4dcf560e46f32",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "73671",
+      "affiliation_before": "73671",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "MISSING_DATASET_EVIDENCE",
+      "m1b_profile_id": "m1b:77c83a30dfc0cc43",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/59",
+      "profile_id": "physical:ef9736dcb9a8d6caa4ce",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:e489b7f11778af9b",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/60",
+      "profile_id": "physical:b250bf8ec1ccf17c301d",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "54125",
+      "affiliation_before": "54125",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "MISSING_DATASET_EVIDENCE",
+      "m1b_profile_id": "m1b:74031df767f13ba7",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/61",
+      "profile_id": "physical:74031df767f13ba706cc",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": "25483",
+      "affiliation_before": "25483",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:49814795d395e9cb",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/62",
+      "profile_id": "physical:4d6e084fc5a655714217",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": "23068",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:bad3421a312e5576",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/63",
+      "profile_id": "physical:bad3421a312e55767d0d",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:a278960ac87c338d",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/64",
+      "profile_id": "physical:a278960ac87c338dc5b6",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "05142",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "SHARED_NIT_DISTINCT_UNIT",
+      "m1b_profile_id": "m1b:71c1ce15b13b9c38",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/65",
+      "profile_id": "physical:71c1ce15b13b9c38a26a",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "05411",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {
+        "family": {
+          "after": "PUBLIC_SERVICES",
+          "before": "PUBLIC_COMPANY",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:f4829a0877017692",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/66",
+      "profile_id": "physical:f4829a08770176920573",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "05142",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {
+        "family": {
+          "after": "PUBLIC_SERVICES",
+          "before": "PUBLIC_COMPANY",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:b0b3d70d6cc893b9",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/67",
+      "profile_id": "physical:b0b3d70d6cc893b9e836",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:06db12b4fa23a6c3",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/68",
+      "profile_id": "physical:06db12b4fa23a6c3e16b",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:aa31a8f06bd14856",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/69",
+      "profile_id": "physical:aa31a8f06bd14856c42c",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "66045",
+      "affiliation_before": "66045",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "NON_EXECUTIVE_MUNICIPAL_UNIT",
+      "m1b_profile_id": "m1b:b270b31344581daa",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/70",
+      "profile_id": "physical:b270b31344581daac3fd",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": "70670",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:8f354921114893aa",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/71",
+      "profile_id": "physical:8f354921114893aaf18b",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:8c5b321420bd176d",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/72",
+      "profile_id": "physical:8c5b321420bd176d919f",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "70771",
+      "affiliation_before": "70771",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "MISSING_DATASET_EVIDENCE",
+      "m1b_profile_id": "m1b:6ee3434e08670663",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/73",
+      "profile_id": "physical:6ee3434e086706639894",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": "15516",
+      "affiliation_before": "15516",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "NON_EXECUTIVE_MUNICIPAL_UNIT",
+      "m1b_profile_id": "m1b:322fdb9c4ebad27d",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/74",
+      "profile_id": "physical:322fdb9c4ebad27d82a5",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": "76834",
+      "affiliation_before": null,
+      "affiliation_status_after": "PROBABLE",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:e4fcdda8a84d08a2",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/75",
+      "profile_id": "physical:431a85dd6878ddd21c3c",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:4dc0a084b481d788",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/76",
+      "profile_id": "physical:4dc0a084b481d78823fa",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "76892",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:bc053b8dd957d9b0",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/77",
+      "profile_id": "physical:bc053b8dd957d9b0a1a3",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:0a648df073aef9d1",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/78",
+      "profile_id": "physical:0a648df073aef9d107cc",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:ac62865a1708053e",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/79",
+      "profile_id": "physical:ac62865a1708053e1791",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "68081",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:bd1566b325358a25",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/80",
+      "profile_id": "physical:bd1566b325358a2551e6",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:9c1fe199df146ec8",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/81",
+      "profile_id": "physical:9c1fe199df146ec8aa10",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:d14806626795bd21",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/82",
+      "profile_id": "physical:d14806626795bd2189b3",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:bceb985a2646b34f",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/83",
+      "profile_id": "physical:285989036f4e1e932235",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "23068",
+      "affiliation_before": "23068",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "MISSING_DATASET_EVIDENCE",
+      "m1b_profile_id": "m1b:f5ff565b7344cb22",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/84",
+      "profile_id": "physical:f5ff565b7344cb22c20a",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": "68679",
+      "affiliation_before": null,
+      "affiliation_status_after": "PROBABLE",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:71a2bfac42118839",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/85",
+      "profile_id": "physical:0f62d4e78330de6c39be",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "52250",
+      "affiliation_before": "52250",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "MISSING_DATASET_EVIDENCE",
+      "m1b_profile_id": "m1b:09a267719f4957bc",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/86",
+      "profile_id": "physical:cd7a58411ae05a63b025",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": "68679",
+      "affiliation_before": null,
+      "affiliation_status_after": "PROBABLE",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:98d7d1d61bbaea80",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/87",
+      "profile_id": "physical:6a67420d5887b30571fc",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:f8a06e38cd2f7245",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/88",
+      "profile_id": "physical:0f631c620f2cbad065ee",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "NON_MUNICIPAL",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:b72aee5205bd8fe4",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/89",
+      "profile_id": "physical:b72aee5205bd8fe46766",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "76834",
+      "affiliation_before": "76834",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "NON_EXECUTIVE_MUNICIPAL_UNIT",
+      "m1b_profile_id": "m1b:99fb8742dee375c9",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/90",
+      "profile_id": "physical:99fb8742dee375c924f0",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": "86755",
+      "affiliation_before": "86755",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:8593b0835ad74469",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/91",
+      "profile_id": "physical:8593b0835ad744699543",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": "76834",
+      "affiliation_before": null,
+      "affiliation_status_after": "PROBABLE",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:8190788fd96e1e2c",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/92",
+      "profile_id": "physical:05802154bd431c14a8e4",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "76834",
+      "affiliation_before": null,
+      "affiliation_status_after": "PROBABLE",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:f3849fdd1bb5f016",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/93",
+      "profile_id": "physical:08c798112444957b09cd",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "76834",
+      "affiliation_before": null,
+      "affiliation_status_after": "PROBABLE",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:502fe9befcfc7380",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/94",
+      "profile_id": "physical:13465629a0fd783d995e",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "76834",
+      "affiliation_before": null,
+      "affiliation_status_after": "PROBABLE",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:a83f2ff7f9282282",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/95",
+      "profile_id": "physical:55e595123f5c985d7101",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:face89d1dead7d9b",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/96",
+      "profile_id": "physical:2de1c786bdba9e981b3c",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "76834",
+      "affiliation_before": null,
+      "affiliation_status_after": "PROBABLE",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:4df4dc6bd216e54a",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/97",
+      "profile_id": "physical:07ac999cf8bca15fb655",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "76834",
+      "affiliation_before": null,
+      "affiliation_status_after": "PROBABLE",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:73e5e5e1697db60d",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/98",
+      "profile_id": "physical:4febb1280661359d546f",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "76834",
+      "affiliation_before": null,
+      "affiliation_status_after": "PROBABLE",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:81357438982b5937",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/99",
+      "profile_id": "physical:d53ebc116e4fa8dc3693",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "76834",
+      "affiliation_before": null,
+      "affiliation_status_after": "PROBABLE",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:ffd24f58e3499696",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/100",
+      "profile_id": "physical:b01fe8ceb2cfaf3eba92",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "76834",
+      "affiliation_before": null,
+      "affiliation_status_after": "PROBABLE",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:810fa26a2d0ffff6",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/101",
+      "profile_id": "physical:7cb15a9592848a25fecf",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "76834",
+      "affiliation_before": null,
+      "affiliation_status_after": "PROBABLE",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:91596c4e0a8acd73",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/102",
+      "profile_id": "physical:6b643d5abe32651eec75",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "76834",
+      "affiliation_before": null,
+      "affiliation_status_after": "PROBABLE",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:3c170912af38d471",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/103",
+      "profile_id": "physical:1ed8faec3ce8f88c49d5",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "76834",
+      "affiliation_before": null,
+      "affiliation_status_after": "PROBABLE",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:40242d758bbea231",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/104",
+      "profile_id": "physical:d54d9b38b44db4206d92",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "76834",
+      "affiliation_before": null,
+      "affiliation_status_after": "PROBABLE",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:df90c1977755e9a0",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/105",
+      "profile_id": "physical:63981c66b65e55ade045",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "99624",
+      "affiliation_before": "99624",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "MISSING_DATASET_EVIDENCE",
+      "m1b_profile_id": "m1b:56b66168169c3900",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/106",
+      "profile_id": "physical:56b66168169c39007eb3",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": "76834",
+      "affiliation_before": null,
+      "affiliation_status_after": "PROBABLE",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:e1d2b7ca212d157e",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/107",
+      "profile_id": "physical:f11fef74853fbee5a3f9",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "76834",
+      "affiliation_before": null,
+      "affiliation_status_after": "PROBABLE",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:9a5c616e2fb30c23",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/108",
+      "profile_id": "physical:bbee55b224b18938726b",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "15516",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:7c37d2bd9ea5fc47",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/109",
+      "profile_id": "physical:7c37d2bd9ea5fc47e18d",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "52520",
+      "affiliation_before": "52520",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "NON_EXECUTIVE_MUNICIPAL_UNIT",
+      "m1b_profile_id": "m1b:cb2c623f122e4184",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/110",
+      "profile_id": "physical:7b2e7209be5cdf1d388b",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": "15516",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:daeb0e55b9ecb6ea",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/111",
+      "profile_id": "physical:daeb0e55b9ecb6eaddf0",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:7890036d8f6ad679",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/112",
+      "profile_id": "physical:7890036d8f6ad6794dc0",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "76834",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:d7e2bad6d89cea37",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/113",
+      "profile_id": "physical:d7e2bad6d89cea3720ac",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:de0fa4f9352edfae",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/114",
+      "profile_id": "physical:de0fa4f9352edfae24ce",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:a5a152a2971fb77f",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/115",
+      "profile_id": "physical:8067be6165bf411ba87a",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:692bfec6f61bd81c",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/116",
+      "profile_id": "physical:692bfec6f61bd81c2511",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "05036",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "SHARED_NIT_DISTINCT_UNIT",
+      "m1b_profile_id": "m1b:1ce486485fa02561",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/117",
+      "profile_id": "physical:7f827ecabe528ddbb964",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:9b51d17556b57840",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/118",
+      "profile_id": "physical:9b51d17556b57840e9ae",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:e161c4992ec28352",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/119",
+      "profile_id": "physical:e161c4992ec2835245f1",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:0ee45b2c4219bf0f",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/120",
+      "profile_id": "physical:ae3559b877a3eb9156e0",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:b5f3f3be93adc2d2",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/121",
+      "profile_id": "physical:b5f3f3be93adc2d2601f",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:b01980fa24eb1be3",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/122",
+      "profile_id": "physical:b01980fa24eb1be3d586",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:b1d7c48a476148bc",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/123",
+      "profile_id": "physical:b1d7c48a476148bcb5bb",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:714cdff01cd04f54",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/124",
+      "profile_id": "physical:ce2da9f4e2ee823a602f",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:6bc43b7ac7460f2e",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/125",
+      "profile_id": "physical:6bc43b7ac7460f2ee351",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:70f5402a8734a571",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/126",
+      "profile_id": "physical:70f5402a8734a57129c7",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:a9337a57bc2181f2",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/127",
+      "profile_id": "physical:a9337a57bc2181f2b2ea",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:55500ccace46f242",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/128",
+      "profile_id": "physical:2ce1e195b59a47704412",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:a4861fa80a267f5a",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/129",
+      "profile_id": "physical:a4861fa80a267f5a9d27",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:12b0708ea34b7c01",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/130",
+      "profile_id": "physical:f560f771cb5a974562fb",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:02e935f7c6e30281",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/131",
+      "profile_id": "physical:02e935f7c6e302813ea3",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:eae14f3426eef8f9",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/132",
+      "profile_id": "physical:eae14f3426eef8f9aab9",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:890ff841c688d9ec",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/133",
+      "profile_id": "physical:890ff841c688d9ec8315",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:4433ad3db9d80e5d",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/134",
+      "profile_id": "physical:4433ad3db9d80e5d558a",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:40cfe98d1bbf694a",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/135",
+      "profile_id": "physical:40cfe98d1bbf694a93f0",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:5da34cd8c722429b",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/136",
+      "profile_id": "physical:1c528c3b1561c386259e",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:a8813a9615ee44db",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/137",
+      "profile_id": "physical:a8813a9615ee44db1b6a",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:683db5ddd24b5f01",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/138",
+      "profile_id": "physical:683db5ddd24b5f01b416",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:b7f8cd21d3fcbe29",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/139",
+      "profile_id": "physical:b7f8cd21d3fcbe29d4b7",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:4a261b7a5a479745",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/140",
+      "profile_id": "physical:4a261b7a5a47974584da",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:6ea080e534ebb8a8",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/141",
+      "profile_id": "physical:6ea080e534ebb8a8666a",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:3bdf3a6855240dfe",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/142",
+      "profile_id": "physical:3bdf3a6855240dfeebdf",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:a297b6b687e2043c",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/143",
+      "profile_id": "physical:a297b6b687e2043c6753",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:b368c199c2368591",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/144",
+      "profile_id": "physical:b368c199c2368591f73f",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:8c9deff3f538ee50",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/145",
+      "profile_id": "physical:333cacfb43c4a9446560",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:c2e5c1914b2e86ec",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/146",
+      "profile_id": "physical:c2e5c1914b2e86ec20d3",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:bf8bbf8ba5a36ea7",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/147",
+      "profile_id": "physical:bf8bbf8ba5a36ea72eeb",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "05660",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:a69678b56c9118e9",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/148",
+      "profile_id": "physical:a69678b56c9118e9564f",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:fd121622572f7504",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/149",
+      "profile_id": "physical:fd121622572f7504f337",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:2b87b57f7314cd43",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/150",
+      "profile_id": "physical:b9ec6b9339a52b5bcdb9",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:31bf3c6c8eed2dcc",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/151",
+      "profile_id": "physical:31bf3c6c8eed2dcc4670",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:f7ccf181c3a5a44d",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/152",
+      "profile_id": "physical:f7ccf181c3a5a44dfb6c",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:60a25c7e9bd454f6",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/153",
+      "profile_id": "physical:e24505806442c2aae8f2",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:1f9bc0bf96e6e3a2",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/154",
+      "profile_id": "physical:1f9bc0bf96e6e3a22b32",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:5c815f1eac050ae8",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/155",
+      "profile_id": "physical:5c815f1eac050ae86afb",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:7ac262e937e7c384",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/156",
+      "profile_id": "physical:f10e1cde99a406085f1f",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:b14ee1eebd27fbf9",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/157",
+      "profile_id": "physical:b14ee1eebd27fbf959c3",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:03915acc5ea06a46",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/158",
+      "profile_id": "physical:03915acc5ea06a468336",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:8f6c5e3189879b61",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/159",
+      "profile_id": "physical:99d275994bad56cc68f2",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:8923ca8a04dbc24b",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/160",
+      "profile_id": "physical:8923ca8a04dbc24bcb87",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:e296eff169eb4ad3",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/161",
+      "profile_id": "physical:e296eff169eb4ad3ef18",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:6e6857513238b743",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/162",
+      "profile_id": "physical:6e6857513238b743c86c",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:293da582145f20e3",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/163",
+      "profile_id": "physical:293da582145f20e366b2",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:0c52c2cdd98928ab",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/164",
+      "profile_id": "physical:0c52c2cdd98928ab3dcb",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:b7953b8339b17bc6",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/165",
+      "profile_id": "physical:b7953b8339b17bc6b73a",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:160100bd8c2c7996",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/166",
+      "profile_id": "physical:160100bd8c2c79968bd2",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:8e1ff536a1daf51f",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/167",
+      "profile_id": "physical:79f80057a5042e74cd0b",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:828c4679e42c9a53",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/168",
+      "profile_id": "physical:828c4679e42c9a535a46",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:94ff839864339f3a",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/169",
+      "profile_id": "physical:94ff839864339f3a490f",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:42b841a38c25152a",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/170",
+      "profile_id": "physical:42b841a38c25152a890f",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:3fae5b3bcd72bb17",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/171",
+      "profile_id": "physical:3fae5b3bcd72bb17f7df",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:d6e211116e9e5c02",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/172",
+      "profile_id": "physical:d6e211116e9e5c0243b5",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:8bd8d72c6ecd21d9",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/173",
+      "profile_id": "physical:8bd8d72c6ecd21d990ed",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "05890",
+      "affiliation_before": null,
+      "affiliation_status_after": "PROBABLE",
+      "changes": {
+        "family": {
+          "after": "PUBLIC_SERVICES",
+          "before": "PUBLIC_COMPANY",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:4e1c610bbab7261c",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/174",
+      "profile_id": "physical:87bb3239e9d909ede8c0",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:1e93d3feb566bc8d",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/175",
+      "profile_id": "physical:9b6ed950d9aad3db8f70",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:ad259e6238311f7b",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/176",
+      "profile_id": "physical:ad259e6238311f7be15d",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:631e4c2a86ac552f",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/177",
+      "profile_id": "physical:631e4c2a86ac552f3edc",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:5c2f9825483ebda9",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/178",
+      "profile_id": "physical:5c2f9825483ebda989e9",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:5041b130b1041ac1",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/179",
+      "profile_id": "physical:cab1aac7919fb50a614b",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:db20f12e370a66b3",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/180",
+      "profile_id": "physical:db20f12e370a66b3f030",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:1275c2bb3382cb3e",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/181",
+      "profile_id": "physical:1275c2bb3382cb3e36cd",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:57381076f646af50",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/182",
+      "profile_id": "physical:fed2be9e0225ec7facf7",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:d67fdd6fba997232",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/183",
+      "profile_id": "physical:d67fdd6fba99723227e1",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:d9a9f62645bc60bc",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/184",
+      "profile_id": "physical:d9a9f62645bc60bcbd37",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:1d429df4e9629f6c",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/185",
+      "profile_id": "physical:1d429df4e9629f6c7cdb",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:968d95f634645370",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/186",
+      "profile_id": "physical:968d95f634645370573d",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:b38ee28627a5014c",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/187",
+      "profile_id": "physical:b38ee28627a5014ce464",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:9c314244f1795f29",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/188",
+      "profile_id": "physical:9c314244f1795f2927be",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:5b357cec1d1e802e",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/189",
+      "profile_id": "physical:5b357cec1d1e802e923b",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "68081",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:28d4312cd158e983",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/190",
+      "profile_id": "physical:28d4312cd158e98305f9",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:a6eb44eebc464d47",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/191",
+      "profile_id": "physical:bc874968115cf0b74ca4",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "52573",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {
+        "family": {
+          "after": "PUBLIC_SERVICES",
+          "before": "PUBLIC_COMPANY",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:f22a7b89274d4fac",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/192",
+      "profile_id": "physical:f22a7b89274d4fac8a0b",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:95aa9ac40e64b15f",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/193",
+      "profile_id": "physical:95aa9ac40e64b15fec2c",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:41247333943cde77",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/194",
+      "profile_id": "physical:41247333943cde77faf0",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:53757eec745f6898",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/195",
+      "profile_id": "physical:53757eec745f6898bd40",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:bf8f7ec81e853485",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/196",
+      "profile_id": "physical:bf8f7ec81e8534852b77",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:2f2b0225f163fd2a",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/197",
+      "profile_id": "physical:2f2b0225f163fd2aacf9",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:1d52ce8de919afbf",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/198",
+      "profile_id": "physical:1d52ce8de919afbf7852",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "05660",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "SHARED_NIT_DISTINCT_UNIT",
+      "m1b_profile_id": "m1b:0ace103cea3526b8",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/199",
+      "profile_id": "physical:0ace103cea3526b87713",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "FUND",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:91200c50ee338d7c",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/200",
+      "profile_id": "physical:91200c50ee338d7c55cf",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:401aee59121c6d15",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/201",
+      "profile_id": "physical:401aee59121c6d15baa3",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:bce989c40262911e",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/202",
+      "profile_id": "physical:bce989c40262911e0d56",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:514d37d6bebd59a1",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/203",
+      "profile_id": "physical:514d37d6bebd59a1d116",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:a227df41c9ade5a8",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/204",
+      "profile_id": "physical:a227df41c9ade5a8349b",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:ed6da654bb64f56a",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/205",
+      "profile_id": "physical:ed6da654bb64f56a5d7d",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:1edc97643bed66ad",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/206",
+      "profile_id": "physical:1edc97643bed66ad22c4",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:384a15d484a838f8",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/207",
+      "profile_id": "physical:384a15d484a838f8df36",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:fb88737e925b57c3",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/208",
+      "profile_id": "physical:09ab3d864b3772cfedac",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:3a7da28b69664a5f",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/209",
+      "profile_id": "physical:3a7da28b69664a5f6b99",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:a7e6ef54b228c27b",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/210",
+      "profile_id": "physical:a7e6ef54b228c27bcffe",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:75e5e03c36062c33",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/211",
+      "profile_id": "physical:75e5e03c36062c336e8b",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:c16b724254f8e870",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/212",
+      "profile_id": "physical:c16b724254f8e870521d",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:57eca727daabeb54",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/213",
+      "profile_id": "physical:57eca727daabeb54f10d",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:29d7657c66fb5a5d",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/214",
+      "profile_id": "physical:29d7657c66fb5a5d14a0",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "15516",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "SHARED_NIT_DISTINCT_UNIT",
+      "m1b_profile_id": "m1b:829ac6760cbde9fc",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/215",
+      "profile_id": "physical:829ac6760cbde9fc9b07",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:fc0338bb3e06301e",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/216",
+      "profile_id": "physical:5be9415fb554cb771f43",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:8c1fcc47714dd63d",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/217",
+      "profile_id": "physical:a5a3f128205bf4188050",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:a7a2c1ac24fd3cf4",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/218",
+      "profile_id": "physical:abf3678cce5cc17213e9",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:c8fe7d778b60e138",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/219",
+      "profile_id": "physical:c8fe7d778b60e138df8f",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:b1281cf590bafb39",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/220",
+      "profile_id": "physical:b1281cf590bafb39ce6c",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:32928ac0440a92de",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/221",
+      "profile_id": "physical:32928ac0440a92de7063",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:5d1fd65d00c25f30",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/222",
+      "profile_id": "physical:5d1fd65d00c25f30847f",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:d2768b3fb7e5fc02",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/223",
+      "profile_id": "physical:d2768b3fb7e5fc02d37f",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:1a9a4a697392ef76",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/224",
+      "profile_id": "physical:1a9a4a697392ef76a0da",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:d45ea15636f2c776",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/225",
+      "profile_id": "physical:d45ea15636f2c77683fa",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:4899e32adb7283e7",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/226",
+      "profile_id": "physical:4899e32adb7283e7bca2",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "73671",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:e6cde90e298d8137",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/227",
+      "profile_id": "physical:ddbb718fc441df036171",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:332b74c11bad59b3",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/228",
+      "profile_id": "physical:332b74c11bad59b35624",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:6fe3e6def08cd9e1",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/229",
+      "profile_id": "physical:80a3f77b55b1f8b26310",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:6d53abc28b3a4a1a",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/230",
+      "profile_id": "physical:6d53abc28b3a4a1a9b11",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "15516",
+      "affiliation_before": null,
+      "affiliation_status_after": "PROBABLE",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "SHARED_NIT_DISTINCT_UNIT",
+      "m1b_profile_id": "m1b:3943954ec10bf114",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/231",
+      "profile_id": "physical:a7d1a35bd3fd3fba1aad",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:7c2cdf165f5541a8",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/232",
+      "profile_id": "physical:7c2cdf165f5541a86ec0",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:a71a51ef63e641c4",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/233",
+      "profile_id": "physical:a71a51ef63e641c4a2a1",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:50eb6eb54ebd6e51",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/234",
+      "profile_id": "physical:50eb6eb54ebd6e51c30e",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:66cd591c005bc977",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/235",
+      "profile_id": "physical:66cd591c005bc977ac6a",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:5be242308cab3f2c",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/236",
+      "profile_id": "physical:5be242308cab3f2c0d28",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:42ef443fcd6b0450",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/237",
+      "profile_id": "physical:42ef443fcd6b0450452a",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:bfe5f3525c058e5f",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/238",
+      "profile_id": "physical:bfe5f3525c058e5f5f6e",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:94f54a41e704a40f",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/239",
+      "profile_id": "physical:94f54a41e704a40ffa24",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:72890fe47e158fde",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/240",
+      "profile_id": "physical:e38552eec693e16aabbf",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:27e6333623ac0a67",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/241",
+      "profile_id": "physical:27e6333623ac0a67b5d1",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:2084995fa3924e4e",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/242",
+      "profile_id": "physical:2084995fa3924e4e3b7d",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:ee8048a343fb82c2",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/243",
+      "profile_id": "physical:73e6bddeccb3579d97ad",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:72b50e68612cda52",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/244",
+      "profile_id": "physical:72b50e68612cda525d90",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:f5ee36079d4d5837",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/245",
+      "profile_id": "physical:f5ee36079d4d5837628a",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "05890",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "SHARED_NIT_DISTINCT_UNIT",
+      "m1b_profile_id": "m1b:c5d6f4372a056399",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/246",
+      "profile_id": "physical:c5d6f4372a056399c2ad",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "05142",
+      "affiliation_before": "05142",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "SHARED_NIT_DISTINCT_UNIT",
+      "m1b_profile_id": "m1b:45a76b6f5b042fd5",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/247",
+      "profile_id": "physical:45a76b6f5b042fd571fc",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": "25658",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "SHARED_NIT_DISTINCT_UNIT",
+      "m1b_profile_id": "m1b:d98647dde2e6b2d8",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/248",
+      "profile_id": "physical:d98647dde2e6b2d88935",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:4f3b158d09b71afa",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/249",
+      "profile_id": "physical:4f3b158d09b71afaf462",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:7e7ac10ea8e97357",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/250",
+      "profile_id": "physical:7e7ac10ea8e97357575c",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "76892",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:602a2bc093166d67",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/251",
+      "profile_id": "physical:602a2bc093166d6787d7",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:b240e7506ed962b8",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/252",
+      "profile_id": "physical:b240e7506ed962b88a7c",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:6e0289be2ecb3799",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/253",
+      "profile_id": "physical:6e0289be2ecb37990dd4",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "68679",
+      "affiliation_before": "68679",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "NON_EXECUTIVE_MUNICIPAL_UNIT",
+      "m1b_profile_id": "m1b:e765be7b801afb7d",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/254",
+      "profile_id": "physical:e765be7b801afb7dff7b",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:700091d90939a190",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/255",
+      "profile_id": "physical:700091d90939a190bc0e",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:6ec2accda4f3a244",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/256",
+      "profile_id": "physical:6ec2accda4f3a24411a8",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:8f99369031789455",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/257",
+      "profile_id": "physical:8f993690317894554e3e",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "50689",
+      "affiliation_before": "50689",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "OTHER_DECENTRALIZED",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "NON_EXECUTIVE_MUNICIPAL_UNIT",
+      "m1b_profile_id": "m1b:d15b3cfa2fd667d9",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/258",
+      "profile_id": "physical:d15b3cfa2fd667d98a06",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": "52573",
+      "affiliation_before": "52573",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "MISSING_DATASET_EVIDENCE",
+      "m1b_profile_id": "m1b:674761c654946d16",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/259",
+      "profile_id": "physical:674761c654946d16ad34",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:c5eaf5bd90d320ff",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/260",
+      "profile_id": "physical:c5eaf5bd90d320ffd5ce",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:0e0c8903034b4d65",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/261",
+      "profile_id": "physical:0e0c8903034b4d652220",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:e006fe1ab34d8001",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/262",
+      "profile_id": "physical:e006fe1ab34d80012fd9",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:273dc8c5c90bff48",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/263",
+      "profile_id": "physical:273dc8c5c90bff4827c2",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "05890",
+      "affiliation_before": "05890",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "SHARED_NIT_DISTINCT_UNIT",
+      "m1b_profile_id": "m1b:0aebbd34ac33af31",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/264",
+      "profile_id": "physical:0bdac3d56a0a7e6da40f",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": "05101",
+      "affiliation_before": "05101",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "NON_EXECUTIVE_MUNICIPAL_UNIT",
+      "m1b_profile_id": "m1b:2ae0a47a9a2f17ad",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/265",
+      "profile_id": "physical:2ae0a47a9a2f17ad5e41",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": "05660",
+      "affiliation_before": null,
+      "affiliation_status_after": "PROBABLE",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "SHARED_NIT_DISTINCT_UNIT",
+      "m1b_profile_id": "m1b:5ba2d32947d5cd6f",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/266",
+      "profile_id": "physical:5ba2d32947d5cd6f5857",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:d0a9b163803bb8ea",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/267",
+      "profile_id": "physical:d0a9b163803bb8ea761a",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:12833a7b6cc845d1",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/268",
+      "profile_id": "physical:bce7b08429115700dfab",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:9bc05144a1c7848f",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/269",
+      "profile_id": "physical:9bc05144a1c7848fe5e7",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:cb3bc1b46d241027",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/270",
+      "profile_id": "physical:cb3bc1b46d2410277acd",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:f2e966e00b9af46a",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/271",
+      "profile_id": "physical:f2e966e00b9af46a5203",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "PUBLIC_SERVICES",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:4aee2d669acf3d7c",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/272",
+      "profile_id": "physical:d89736b0af7001610f57",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "15377",
+      "affiliation_before": "15377",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "NON_EXECUTIVE_MUNICIPAL_UNIT",
+      "m1b_profile_id": "m1b:e14fd287ff441a49",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/273",
+      "profile_id": "physical:e14fd287ff441a49481d",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "EDUCATION",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "EDUCATION_TAXONOMY_SPLIT"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:a1ad4d9217d4ec44",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/274",
+      "profile_id": "physical:bb7d31a5416e1b74d4bd",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "76834",
+      "affiliation_before": null,
+      "affiliation_status_after": "PROBABLE",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:c8eb443de8f0fc5b",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/275",
+      "profile_id": "physical:eda9b881cc7103b2bdf5",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "13212",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:61885b3d6cba1b68",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/276",
+      "profile_id": "physical:61885b3d6cba1b68cc46",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:9bb45eb83056cf2a",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/277",
+      "profile_id": "physical:9bb45eb83056cf2aac41",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "PUBLIC_SERVICES",
+          "before": "PUBLIC_COMPANY",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:20e439cbebc318f0",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/278",
+      "profile_id": "physical:20e439cbebc318f04216",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "76834",
+      "affiliation_before": null,
+      "affiliation_status_after": "PROBABLE",
+      "changes": {},
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:18c710c43c378882",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/279",
+      "profile_id": "physical:1dd0def4ecbfff787cb9",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:6938e83172658bb9",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/280",
+      "profile_id": "physical:6938e83172658bb9534b",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "52254",
+      "affiliation_before": "52254",
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "NON_EXECUTIVE_MUNICIPAL_UNIT",
+      "m1b_profile_id": "m1b:7f903b1be4d2ed1d",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/281",
+      "profile_id": "physical:52e9f24d7fb603aebda5",
+      "scope": "RESIDUAL_COHORT"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:4d9d597a3e9e1ece",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/282",
+      "profile_id": "physical:4d9d597a3e9e1ecef0a0",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "52254",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:87f5ba59b80ddc39",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/283",
+      "profile_id": "physical:99d4ffd6ea2617e21908",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": "13894",
+      "affiliation_before": null,
+      "affiliation_status_after": "VERIFIED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:b847218f7b772256",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/284",
+      "profile_id": "physical:b847218f7b7722569be0",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {},
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:816837ee4d906cdf",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/285",
+      "profile_id": "physical:816837ee4d906cdf6820",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "UNKNOWN",
+          "before": "UNKNOWN_REVIEW",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "MANUAL_REVIEW",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:c326326991cf4c8e",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/286",
+      "profile_id": "physical:c326326991cf4c8e30f1",
+      "scope": "CONTEXT_ONLY"
+    },
+    {
+      "affiliation_after": null,
+      "affiliation_before": null,
+      "affiliation_status_after": "UNRESOLVED",
+      "changes": {
+        "family": {
+          "after": "PUBLIC_SERVICES",
+          "before": "PUBLIC_COMPANY",
+          "reason": "INDEPENDENT_ENTITY_MATCH_OR_PROVISIONAL_NAME_RULE"
+        }
+      },
+      "disposition_preserved": "KEEP_SEPARATE",
+      "m1b_debt_preserved": "REVIEW",
+      "m1b_profile_id": "m1b:8bbc4bdbebc48fad",
+      "m1b_reference": "artifacts/audits/municipal_m1b/buyer_profiles.json#/profiles/287",
+      "profile_id": "physical:8bbc4bdbebc48fad0d23",
+      "scope": "CONTEXT_ONLY"
+    }
+  ],
+  "mapping": [
+    {
+      "m1b": "CONCEJO",
+      "m2a": [
+        "CONCEJO"
+      ]
+    },
+    {
+      "m1b": "CONTRALORIA",
+      "m2a": [
+        "CONTRALORIA"
+      ]
+    },
+    {
+      "m1b": "ESE_HEALTH",
+      "m2a": [
+        "ESE_HEALTH"
+      ]
+    },
+    {
+      "m1b": "FUND",
+      "m2a": [
+        "FUND"
+      ]
+    },
+    {
+      "m1b": "INSTITUTE",
+      "m2a": [
+        "INSTITUTE"
+      ]
+    },
+    {
+      "m1b": "MUNICIPAL_EXECUTIVE",
+      "m2a": [
+        "MUNICIPAL_EXECUTIVE"
+      ]
+    },
+    {
+      "m1b": "OTHER_DECENTRALIZED",
+      "m2a": [
+        "OTHER_DECENTRALIZED",
+        "EDUCATION"
+      ]
+    },
+    {
+      "m1b": "PERSONERIA",
+      "m2a": [
+        "PERSONERIA"
+      ]
+    },
+    {
+      "m1b": "PUBLIC_COMPANY",
+      "m2a": [
+        "PUBLIC_COMPANY"
+      ]
+    },
+    {
+      "m1b": "UNKNOWN_REVIEW",
+      "m2a": [
+        "UNKNOWN"
+      ]
+    }
+  ],
+  "references": {
+    "candidates": "artifacts/audits/municipal_m1b/promotion_candidates.json",
+    "classification": "artifacts/audits/municipal_m1b/classification.json",
+    "profiles": "artifacts/audits/municipal_m1b/buyer_profiles.json"
+  },
+  "registry_only_signals_referenced": 262
+}

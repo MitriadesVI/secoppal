@@ -1,0 +1,138 @@
+{
+  "code_sha256": {
+    "scripts/audits/audit_municipal_m2a.py": "72767ca1200796d1e044e4121d4d3d77422623490e53381cc0ab737e75c33d86",
+    "scripts/audits/m2a/__init__.py": "2c7e31487032ddf37c1559efdf009b7bbd28fba3ab9f73168d2aae45e32a2288",
+    "scripts/audits/m2a/affiliation.py": "04b9bba58fd965bde7a06b9a1c441ccca1b043e7080a92fdc6f7da33b1badbad",
+    "scripts/audits/m2a/gates.py": "b1a50196e996c603ececce9e0ffd83e9286a051b04024a9afb0440db9eb522c6",
+    "scripts/audits/m2a/identity.py": "310059b658470d3352ce74423d6334b46cb915e13be4f04c61682e9b8741acca",
+    "scripts/audits/m2a/io.py": "efae2098e2ed30faf4aaf71fa5d7d6c21d0c562683d386abb77baf88fa2e73e8",
+    "scripts/audits/m2a/matching.py": "94690be56b5e70978c3da8623ada6a441412bb218c5bc3a8dd3afa2f5fc48696",
+    "scripts/audits/m2a/metrics.py": "6ff04bae44eab0a915a5c0c1dc33f457456e1a08138a89f0a6c6ab05390b9829",
+    "scripts/audits/m2a/report.py": "e33fdcd90fad0cd93771d393a904da56e4796989bc25650cedab83570d1926fd",
+    "scripts/audits/m2a/validation.py": "e58d544783f3603b59b71c63c57ab4328ac9f8df2f62e33cd273220115863b25",
+    "tests/test_municipal_m2a.py": "375decef3fabd0c8b1e9aa8fb01ef6f53b2197378cbb62cabdbaa8a541575441"
+  },
+  "corpus_89": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python3",
+      "scripts/run_query_corpus.py",
+      "--mode",
+      "all"
+    ],
+    "exit_code": 0,
+    "log": "validation/corpus_89.log",
+    "log_sha256": "545088cfb99c01a21446d1788771a50135e652ce845cc9f386b326045f5de883",
+    "status": "PASS"
+  },
+  "deterministic_replay": {
+    "exit_code": 0,
+    "files": {
+      "MUNICIPAL_M2A.md": {
+        "original": "d1c3029674bcfce6abd23a2ab14fb08f903054f1f93d0328e690713548e11d08",
+        "replay": "d1c3029674bcfce6abd23a2ab14fb08f903054f1f93d0328e690713548e11d08"
+      },
+      "affiliation_vias.json": {
+        "original": "d31fb6e6eab8cad8e189cee3c8856917974fc00126568814bb0a6c0520e54447",
+        "replay": "d31fb6e6eab8cad8e189cee3c8856917974fc00126568814bb0a6c0520e54447"
+      },
+      "byte_identity.json": {
+        "original": "367eba49525737768089fdd52f77dd9709d45f113a7ee53d9bed883b584d656d",
+        "replay": "367eba49525737768089fdd52f77dd9709d45f113a7ee53d9bed883b584d656d"
+      },
+      "coverage.json": {
+        "original": "f3f4dc754b52641ded4886d90caa778deb8e212259a37e018d7e292e85ef62e1",
+        "replay": "f3f4dc754b52641ded4886d90caa778deb8e212259a37e018d7e292e85ef62e1"
+      },
+      "family_mapping_m1b.json": {
+        "original": "e9c93d96b97b073f89f204a52ec56ae030ce028789a0115e885cd5a33f414abe",
+        "replay": "e9c93d96b97b073f89f204a52ec56ae030ce028789a0115e885cd5a33f414abe"
+      },
+      "gates.json": {
+        "original": "2a97803973067400b92951dddd342b54f198c2ce6a59cf65e0d527f6af70fa55",
+        "replay": "2a97803973067400b92951dddd342b54f198c2ce6a59cf65e0d527f6af70fa55"
+      },
+      "institutional_families.json": {
+        "original": "76e30f0036f89b89e20fe64a6c0d3899342419696ec500df4439f2db7c557f75",
+        "replay": "76e30f0036f89b89e20fe64a6c0d3899342419696ec500df4439f2db7c557f75"
+      },
+      "logical_units.json": {
+        "original": "435b56aad98e5dc3926ad11c1f9fe0d55fd58ecbe48319bd66bebc5e681e6751",
+        "replay": "435b56aad98e5dc3926ad11c1f9fe0d55fd58ecbe48319bd66bebc5e681e6751"
+      },
+      "physical_profiles.json": {
+        "original": "432abaa79af16ebb925b1ad4eeb264ba7af19bff5dda9a024d31840bb0986eec",
+        "replay": "432abaa79af16ebb925b1ad4eeb264ba7af19bff5dda9a024d31840bb0986eec"
+      },
+      "rankings.json": {
+        "original": "ca9f4b19a2a43507ae45570837b659148552446253c295c5fe6f85eb4c896d0d",
+        "replay": "ca9f4b19a2a43507ae45570837b659148552446253c295c5fe6f85eb4c896d0d"
+      },
+      "territorial_affiliation.json": {
+        "original": "f3dded60516a2b4e7223c09761fca001dbcec638ee046182ad469f52a6d86097",
+        "replay": "f3dded60516a2b4e7223c09761fca001dbcec638ee046182ad469f52a6d86097"
+      },
+      "territory_profiles.json": {
+        "original": "8ea1660a6f698d43fd80c087e27e379925f042bfa96b2d1940a424c9ce0c28d9",
+        "replay": "8ea1660a6f698d43fd80c087e27e379925f042bfa96b2d1940a424c9ce0c28d9"
+      },
+      "unresolved.json": {
+        "original": "55b8329ca566228a93e8151e52d89538565df553d78162711b76b412aae7c56b",
+        "replay": "55b8329ca566228a93e8151e52d89538565df553d78162711b76b412aae7c56b"
+      }
+    },
+    "status": "PASS"
+  },
+  "diff_check": {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit_code": 0,
+    "log": "validation/diff_check.log",
+    "log_sha256": "3d4d50cd32af92c6d4df37c1df74a96622fca8cfb5643a155c91f034a42f2068",
+    "status": "PASS"
+  },
+  "focal_tests": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python3",
+      "-m",
+      "pytest",
+      "tests/test_municipal_m2a.py",
+      "-q"
+    ],
+    "exit_code": 0,
+    "log": "validation/focal_tests.log",
+    "log_sha256": "b3abf6e50d26e845bcca0137a600c518c17ea81096945149e9b8aaf5cd8caa89",
+    "status": "PASS"
+  },
+  "full_suite": {
+    "executed": false,
+    "reason": "All protected production and frozen evidence bytes unchanged.",
+    "required": false
+  },
+  "lint_core": {
+    "command": [
+      "make",
+      "lint-core"
+    ],
+    "exit_code": 0,
+    "log": "validation/lint_core.log",
+    "log_sha256": "9d980b9f0dbbe14b5383ab38e6d49ffc96fb1dd9ac5cf8478e0378e95647247e",
+    "status": "PASS"
+  },
+  "ruff": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/ruff",
+      "check",
+      "app/",
+      "tests/",
+      "scripts/"
+    ],
+    "exit_code": 0,
+    "log": "validation/ruff.log",
+    "log_sha256": "964ab11059e2f86ee0fa943378064ee70123332a1275bcf695bd31c36bcda7c0",
+    "status": "PASS"
+  },
+  "status": "PASS"
+}

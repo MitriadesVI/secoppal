@@ -1,0 +1,311 @@
+{
+  "worktrees_scanned": 29,
+  "global_maximum": 74,
+  "worktrees": [
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal",
+      "maximum": 74,
+      "evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal/docs/decisions/2026-09-02_ADR-074_institutional-buyer-unit-and-group.md:1:ADR-074",
+        "/Users/rodrigoortiz/Documents/secoppal/docs/decisions_log.md:4255:ADR-074",
+        "/Users/rodrigoortiz/Documents/secoppal/docs/decisions_log.md:4292:ADR-074",
+        "/Users/rodrigoortiz/Documents/secoppal/docs/gazetteer/MUNICIPAL_M1A_2.md:65:ADR-074"
+      ],
+      "search": "rg --hidden --no-ignore ADR[-_ ]+[0-9]{3,} docs/"
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-assisted-offline",
+      "maximum": 55,
+      "evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-assisted-offline/docs/decisions/2026-07-30_ADR-055_truth-layer-single-pass-derivation-capability.md:1:ADR-055"
+      ],
+      "search": "rg --hidden --no-ignore ADR[-_ ]+[0-9]{3,} docs/"
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-assisted-retrieval",
+      "maximum": 55,
+      "evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-assisted-retrieval/docs/decisions/2026-07-30_ADR-055_truth-layer-single-pass-derivation-capability.md:1:ADR-055"
+      ],
+      "search": "rg --hidden --no-ignore ADR[-_ ]+[0-9]{3,} docs/"
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b2-microprobe",
+      "maximum": 48,
+      "evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-b2-microprobe/docs/decisions_log.md:2021:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b2-microprobe/docs/decisions_log.md:2060:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b2-microprobe/docs/decisions_log.md:2060:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b2-microprobe/docs/warehouse/W2.0C2A_semantic_parity_decision.md:187:ADR-048"
+      ],
+      "search": "rg --hidden --no-ignore ADR[-_ ]+[0-9]{3,} docs/"
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b2c2a-lock-split",
+      "maximum": 48,
+      "evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2a-lock-split/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:1:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2a-lock-split/docs/warehouse/W2.0C2A_semantic_parity_decision.md:187:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2a-lock-split/docs/warehouse/W2.0C2A_semantic_parity_decision.md:406:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2a-lock-split/docs/warehouse/W2.0C3C_B3C_manifest_promotion_design.md:18:ADR-048"
+      ],
+      "search": "rg --hidden --no-ignore ADR[-_ ]+[0-9]{3,} docs/"
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b2c2c-quarantine",
+      "maximum": 48,
+      "evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2c-quarantine/docs/warehouse/W2.0C2A_semantic_parity_decision.md:187:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2c-quarantine/docs/warehouse/W2.0C2A_semantic_parity_decision.md:406:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2c-quarantine/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:1:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2c-quarantine/docs/warehouse/W2.0C3A_runtime_shadow_decision.md:78:ADR-048"
+      ],
+      "search": "rg --hidden --no-ignore ADR[-_ ]+[0-9]{3,} docs/"
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b2c2d-orchestrator",
+      "maximum": 48,
+      "evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2d-orchestrator/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:1:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2d-orchestrator/docs/warehouse/W2.0C2A_semantic_parity_decision.md:187:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2d-orchestrator/docs/warehouse/W2.0C2A_semantic_parity_decision.md:406:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2d-orchestrator/docs/warehouse/W2.0C3C_B3C_manifest_promotion_design.md:18:ADR-048"
+      ],
+      "search": "rg --hidden --no-ignore ADR[-_ ]+[0-9]{3,} docs/"
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b3-frontier",
+      "maximum": 48,
+      "evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-b3-frontier/docs/warehouse/W2.0C2A_semantic_parity_decision.md:187:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b3-frontier/docs/warehouse/W2.0C2A_semantic_parity_decision.md:406:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b3-frontier/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:1:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b3-frontier/docs/decisions_log.md:2021:ADR-048"
+      ],
+      "search": "rg --hidden --no-ignore ADR[-_ ]+[0-9]{3,} docs/"
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b3b-shadow",
+      "maximum": 48,
+      "evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-b3b-shadow/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:1:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b3b-shadow/docs/warehouse/W2.0C2A_semantic_parity_decision.md:187:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b3b-shadow/docs/warehouse/W2.0C2A_semantic_parity_decision.md:406:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b3b-shadow/docs/decisions_log.md:2021:ADR-048"
+      ],
+      "search": "rg --hidden --no-ignore ADR[-_ ]+[0-9]{3,} docs/"
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b3c-a-evidence",
+      "maximum": 48,
+      "evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-a-evidence/docs/warehouse/W2.0C2A_semantic_parity_decision.md:187:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-a-evidence/docs/warehouse/W2.0C2A_semantic_parity_decision.md:406:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-a-evidence/docs/warehouse/W2.0C3A_runtime_shadow_decision.md:78:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-a-evidence/docs/warehouse/W2.0C3A_runtime_shadow_decision.md:82:ADR-048"
+      ],
+      "search": "rg --hidden --no-ignore ADR[-_ ]+[0-9]{3,} docs/"
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b3c-b1-policy",
+      "maximum": 48,
+      "evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b1-policy/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:1:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b1-policy/docs/warehouse/W2.0C2A_semantic_parity_decision.md:187:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b1-policy/docs/warehouse/W2.0C2A_semantic_parity_decision.md:406:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b1-policy/docs/warehouse/W2.0C3C_B3C_manifest_promotion_design.md:18:ADR-048"
+      ],
+      "search": "rg --hidden --no-ignore ADR[-_ ]+[0-9]{3,} docs/"
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b3c-b2-pointer",
+      "maximum": 48,
+      "evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2-pointer/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:1:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2-pointer/docs/warehouse/W2.0C2A_semantic_parity_decision.md:187:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2-pointer/docs/warehouse/W2.0C2A_semantic_parity_decision.md:406:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2-pointer/docs/warehouse/W2.0C3C_B3C_manifest_promotion_design.md:18:ADR-048"
+      ],
+      "search": "rg --hidden --no-ignore ADR[-_ ]+[0-9]{3,} docs/"
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b3c-b2b",
+      "maximum": 48,
+      "evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2b/docs/warehouse/W2.0C2A_semantic_parity_decision.md:187:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2b/docs/warehouse/W2.0C2A_semantic_parity_decision.md:406:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2b/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:1:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2b/docs/decisions_log.md:2021:ADR-048"
+      ],
+      "search": "rg --hidden --no-ignore ADR[-_ ]+[0-9]{3,} docs/"
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c1",
+      "maximum": 48,
+      "evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c1/docs/warehouse/W2.0C2A_semantic_parity_decision.md:187:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c1/docs/warehouse/W2.0C2A_semantic_parity_decision.md:406:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c1/docs/decisions_log.md:2021:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c1/docs/decisions_log.md:2060:ADR-048"
+      ],
+      "search": "rg --hidden --no-ignore ADR[-_ ]+[0-9]{3,} docs/"
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c2b",
+      "maximum": 48,
+      "evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c2b/docs/warehouse/W2.0C2A_semantic_parity_decision.md:187:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c2b/docs/warehouse/W2.0C2A_semantic_parity_decision.md:406:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c2b/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:1:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c2b/docs/warehouse/W2.0C3C_B3C_manifest_promotion_design.md:18:ADR-048"
+      ],
+      "search": "rg --hidden --no-ignore ADR[-_ ]+[0-9]{3,} docs/"
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b3c-design",
+      "maximum": 48,
+      "evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-design/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:1:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-design/docs/warehouse/W2.0C2A_semantic_parity_decision.md:187:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-design/docs/warehouse/W2.0C2A_semantic_parity_decision.md:406:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-design/docs/warehouse/W2.0C3C_B3C_manifest_promotion_design.md:18:ADR-048"
+      ],
+      "search": "rg --hidden --no-ignore ADR[-_ ]+[0-9]{3,} docs/"
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-chatgpt",
+      "maximum": 66,
+      "evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-chatgpt/docs/decisions_log.md:3608:ADR-066",
+        "/Users/rodrigoortiz/Documents/secoppal-chatgpt/docs/documento_tecnico_secoppal_arquitectura_bitacora.md:121:ADR-066"
+      ],
+      "search": "rg --hidden --no-ignore ADR[-_ ]+[0-9]{3,} docs/"
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-conversation-audit",
+      "maximum": 61,
+      "evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-conversation-audit/docs/CORPUS_BACKLOG.md:5:ADR-061",
+        "/Users/rodrigoortiz/Documents/secoppal-conversation-audit/docs/CORPUS_BACKLOG.md:120:ADR-061",
+        "/Users/rodrigoortiz/Documents/secoppal-conversation-audit/docs/CORPUS_BACKLOG.md:121:ADR-061",
+        "/Users/rodrigoortiz/Documents/secoppal-conversation-audit/docs/documento_tecnico_secoppal_arquitectura_bitacora.md:11:ADR-061"
+      ],
+      "search": "rg --hidden --no-ignore ADR[-_ ]+[0-9]{3,} docs/"
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-f50-parser-remediation",
+      "maximum": 48,
+      "evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-f50-parser-remediation/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:1:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-f50-parser-remediation/docs/warehouse/W2.0C2A_semantic_parity_decision.md:187:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-f50-parser-remediation/docs/warehouse/W2.0C2A_semantic_parity_decision.md:406:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-f50-parser-remediation/docs/warehouse/W2.0C3C_B3C_manifest_promotion_design.md:18:ADR-048"
+      ],
+      "search": "rg --hidden --no-ignore ADR[-_ ]+[0-9]{3,} docs/"
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-hca-oracle-review",
+      "maximum": 66,
+      "evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-hca-oracle-review/docs/documento_tecnico_secoppal_arquitectura_bitacora.md:121:ADR-066",
+        "/Users/rodrigoortiz/Documents/secoppal-hca-oracle-review/docs/decisions_log.md:3608:ADR-066",
+        "/Users/rodrigoortiz/Documents/secoppal-hca-oracle-review/docs/audits/2026-08-26_HCA_ORACLE_REVIEW.md:785:ADR-066",
+        "/Users/rodrigoortiz/Documents/secoppal-hca-oracle-review/docs/audits/2026-08-26_HCA_ORACLE_REVIEW.md:985:ADR-066"
+      ],
+      "search": "rg --hidden --no-ignore ADR[-_ ]+[0-9]{3,} docs/"
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-node-value-benchmark",
+      "maximum": 48,
+      "evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-node-value-benchmark/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:1:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-node-value-benchmark/docs/decisions_log.md:2021:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-node-value-benchmark/docs/decisions_log.md:2060:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-node-value-benchmark/docs/decisions_log.md:2060:ADR-048"
+      ],
+      "search": "rg --hidden --no-ignore ADR[-_ ]+[0-9]{3,} docs/"
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-r4a3-cross-batch",
+      "maximum": 70,
+      "evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-r4a3-cross-batch/docs/decisions/2026-08-28_ADR-070_soda3-default-transport.md:1:ADR-070",
+        "/Users/rodrigoortiz/Documents/secoppal-r4a3-cross-batch/docs/decisions/2026-08-28_ADR-070_soda3-default-transport.md:122:ADR-070",
+        "/Users/rodrigoortiz/Documents/secoppal-r4a3-cross-batch/docs/audits/2026-08-28_RADAR_R4A_COVERAGE_FRONTIER_ARCHITECTURE.md:103:ADR-070",
+        "/Users/rodrigoortiz/Documents/secoppal-r4a3-cross-batch/docs/audits/2026-08-28_RADAR_R4A_COVERAGE_FRONTIER_ARCHITECTURE.md:204:ADR-070"
+      ],
+      "search": "rg --hidden --no-ignore ADR[-_ ]+[0-9]{3,} docs/"
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-review-r7",
+      "maximum": 66,
+      "evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-review-r7/docs/decisions_log.md:3608:ADR-066",
+        "/Users/rodrigoortiz/Documents/secoppal-review-r7/docs/documento_tecnico_secoppal_arquitectura_bitacora.md:12:ADR-066",
+        "/Users/rodrigoortiz/Documents/secoppal-review-r7/docs/documento_tecnico_secoppal_arquitectura_bitacora.md:113:ADR-066"
+      ],
+      "search": "rg --hidden --no-ignore ADR[-_ ]+[0-9]{3,} docs/"
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-soda3-discovery-v1",
+      "maximum": 69,
+      "evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-soda3-discovery-v1/docs/decisions/2026-08-26_ADR-069_no-silent-semantic-fallback.md:1:ADR-069",
+        "/Users/rodrigoortiz/Documents/secoppal-soda3-discovery-v1/docs/audits/2026-08-27_HCA_FINAL_CLOSEOUT_V2.md:202:ADR-069",
+        "/Users/rodrigoortiz/Documents/secoppal-soda3-discovery-v1/docs/decisions_log.md:3860:ADR-069",
+        "/Users/rodrigoortiz/Documents/secoppal-soda3-discovery-v1/docs/decisions_log.md:3922:ADR-069"
+      ],
+      "search": "rg --hidden --no-ignore ADR[-_ ]+[0-9]{3,} docs/"
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-tooling",
+      "maximum": 66,
+      "evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-tooling/docs/documento_tecnico_secoppal_arquitectura_bitacora.md:121:ADR-066",
+        "/Users/rodrigoortiz/Documents/secoppal-tooling/docs/decisions_log.md:3608:ADR-066"
+      ],
+      "search": "rg --hidden --no-ignore ADR[-_ ]+[0-9]{3,} docs/"
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-truth-layer",
+      "maximum": 55,
+      "evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-truth-layer/docs/decisions/2026-07-30_ADR-055_truth-layer-single-pass-derivation-capability.md:1:ADR-055"
+      ],
+      "search": "rg --hidden --no-ignore ADR[-_ ]+[0-9]{3,} docs/"
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-w2-0d-adr048",
+      "maximum": 48,
+      "evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-w2-0d-adr048/docs/decisions_log.md:2021:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-w2-0d-adr048/docs/decisions_log.md:2060:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-w2-0d-adr048/docs/decisions_log.md:2060:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-w2-0d-adr048/docs/warehouse/W2.0C2A_semantic_parity_decision.md:187:ADR-048"
+      ],
+      "search": "rg --hidden --no-ignore ADR[-_ ]+[0-9]{3,} docs/"
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-w2-0e-local-primary",
+      "maximum": 49,
+      "evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-w2-0e-local-primary/docs/warehouse/F50_v2_decisional_closeout.md:3:ADR-049",
+        "/Users/rodrigoortiz/Documents/secoppal-w2-0e-local-primary/docs/warehouse/F50_v2_decisional_closeout.md:15:ADR-049",
+        "/Users/rodrigoortiz/Documents/secoppal-w2-0e-local-primary/docs/warehouse/F50_v2_decisional_closeout.md:248:ADR-049",
+        "/Users/rodrigoortiz/Documents/secoppal-w2-0e-local-primary/docs/warehouse/F50_v2_decisional_closeout.md:252:ADR-049"
+      ],
+      "search": "rg --hidden --no-ignore ADR[-_ ]+[0-9]{3,} docs/"
+    },
+    {
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-warehouse",
+      "maximum": 48,
+      "evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-warehouse/docs/warehouse/W2.0C2A_semantic_parity_decision.md:187:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-warehouse/docs/warehouse/W2.0C2A_semantic_parity_decision.md:406:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-warehouse/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:1:ADR-048",
+        "/Users/rodrigoortiz/Documents/secoppal-warehouse/docs/warehouse/W2.0C3C_B3C_manifest_promotion_design.md:18:ADR-048"
+      ],
+      "search": "rg --hidden --no-ignore ADR[-_ ]+[0-9]{3,} docs/"
+    }
+  ]
+}
