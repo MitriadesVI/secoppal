@@ -4311,3 +4311,29 @@ contratos únicos derivados explícitamente de la igualdad global congelada.
 Evidencia: `docs/gazetteer/MUNICIPAL_M2A.md` y `artifacts/audits/municipal_m2a/`.
 Número verificado contra los 29 worktrees, cuyo máximo global era ADR-074.
 Detalle: `docs/decisions/2026-09-04_ADR-075_municipal-territorial-affiliation-evidence-chains.md`.
+
+## ADR-080: Territorial Knowledge V0 es la autoridad shadow estable M1A→M2B.1
+
+**Fecha:** 2026-09-04. **Estado:** Accepted — `SHADOW_NO_RUNTIME`; runtime y
+producción sin cambios.
+
+Se compila el conocimiento acreditado M1A→M2B.1 en un registro byte-reproducible
+de 1.103 territorios y 1.099 instituciones: 632 reconocidas por producto, 369
+lógicas verificadas no reconocidas y 98 candidatas offline. Los 826 perfiles con
+identidad pendiente quedan sólo como referencias de deuda. NIT, territorio,
+BuyerUnit y BuyerGroup conservan autoridades separadas.
+
+Los siete enlaces M2B.1 enriquecen canonicals productivos existentes sin crear
+instituciones duplicadas. Bogotá referencia sus tres grupos declarados sin
+redefinir membresía; Baranoa conserva separadas la entidad territorial `08078`
+y `ALCALDIA MUNICIPAL DE BARANOA`.
+
+El loader sólo carga, valida y crea índices exactos read-only; ningún módulo
+runtime lo importa. Validación: focales y gates territoriales, corpus 89/89,
+Ruff, `lint-core`, module-size, replay byte-exacto y suite completa 11.145 PASS,
+2 skipped, 14 xfailed esperados.
+
+El barrido previo cubrió 29 worktrees y encontró ADR-079 como máximo global.
+Detalle:
+`docs/decisions/2026-09-04_ADR-080_territorial-knowledge-shadow-registry.md`.
+Informe: `docs/architecture/TERRITORIAL_KNOWLEDGE_V0.md`.
