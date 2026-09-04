@@ -10225,42 +10225,6 @@
     ]
   },
   {
-    "official_name": "ALCALDIA DE TURBACO BOLIVAR",
-    "departamento": "Bolívar",
-    "total_procesos": 4893,
-    "total_contratos": 4582,
-    "source_datasets": [
-      "procesos",
-      "contratos"
-    ],
-    "aliases": [
-      "alcaldía de turbaco bolívar",
-      "alcaldia turbaco",
-      "alcaldia de turbaco",
-      "alcaldia de turbaco bolivar",
-      "entidad territorial de turbaco",
-      "la alcaldia de turbaco",
-      "alcaldia municipal de turbaco",
-      "turbaco bolívar",
-      "municipio de turbaco",
-      "alcaldia municipal de turbaco bolivar",
-      "gobierno de turbaco",
-      "turbaco bolivar",
-      "alcaldía municipal de turbaco",
-      "alcaldía turbaco bolívar",
-      "municipio de turbaco bolivar",
-      "alcaldía turbaco",
-      "alcaldía del municipio de turbaco",
-      "municipio de turbaco bolívar",
-      "alcaldia del municipio de turbaco",
-      "la alcaldía de turbaco",
-      "alcaldía de turbaco",
-      "alcaldia turbaco bolivar",
-      "alcaldía municipal de turbaco bolívar",
-      "alcaldia de turbaco bolivar"
-    ]
-  },
-  {
     "official_name": "INSTITUTO DISTRITAL DE PATRIMONIO CULTURAL",
     "departamento": "Distrito Capital de Bogotá",
     "total_procesos": 4933,
@@ -16345,7 +16309,33 @@
       "municipio de turbaco bolivar",
       "municipio turbaco bolivar",
       "turbaco bolivar alcaldia",
-      "turbaco bolivar municipio"
+      "turbaco bolivar municipio",
+      "alcaldía de turbaco bolívar",
+      "alcaldia turbaco",
+      "alcaldia de turbaco",
+      "entidad territorial de turbaco",
+      "la alcaldia de turbaco",
+      "alcaldia municipal de turbaco",
+      "turbaco bolívar",
+      "municipio de turbaco",
+      "gobierno de turbaco",
+      "turbaco bolivar",
+      "alcaldía municipal de turbaco",
+      "alcaldía turbaco bolívar",
+      "alcaldía turbaco",
+      "alcaldía del municipio de turbaco",
+      "municipio de turbaco bolívar",
+      "alcaldia del municipio de turbaco",
+      "la alcaldía de turbaco",
+      "alcaldía de turbaco",
+      "alcaldía municipal de turbaco bolívar",
+      "ALCALDIA DE TURBACO BOLIVAR"
+    ],
+    "scan_disabled_aliases": [
+      "alcaldia de turbaco",
+      "alcaldia municipal de turbaco",
+      "alcaldía de turbaco",
+      "alcaldía municipal de turbaco"
     ]
   },
   {

@@ -1779,6 +1779,27 @@
         "p6dx-8zbt": 1040,
         "jbjy-vk9h": 950
       }
+    },
+    {
+      "canonical_name": "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR",
+      "identity_key": {
+        "type": "BUYER_UNIT",
+        "value": "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR"
+      },
+      "observed_at": "2026-09-04",
+      "evidence": "artifacts/audits/municipal_m1a_2a/evidence/turbaco_manual_identity.json",
+      "sources": {
+        "p6dx-8zbt": [
+          "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR"
+        ],
+        "jbjy-vk9h": [
+          "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR"
+        ]
+      },
+      "observed_rows": {
+        "p6dx-8zbt": 5247,
+        "jbjy-vk9h": 4912
+      }
     }
   ]
 }
