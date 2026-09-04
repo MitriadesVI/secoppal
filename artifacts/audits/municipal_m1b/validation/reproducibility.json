@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "comparisons": {
+    "residual_territories.json": true,
+    "buyer_profiles.json": true,
+    "impact_ranking.json": true,
+    "classification.json": true,
+    "promotion_candidates.json": true,
+    "gates.json": true,
+    "MUNICIPAL_M1B.md": true
+  }
+}

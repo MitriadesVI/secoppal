@@ -1,0 +1,2210 @@
+{
+  "profile_definition": "Exact (account, physical source name), across datasets; never NIT-deduplicated. Not a logical BuyerUnit denominator.",
+  "TOTAL_RESIDUAL_BUYER_PROFILES": 39,
+  "residual_cohort": {
+    "total_profiles": 39,
+    "by_family": {
+      "MUNICIPAL_EXECUTIVE": 23,
+      "CONCEJO": 2,
+      "PERSONERIA": 2,
+      "CONTRALORIA": 1,
+      "ESE_HEALTH": 3,
+      "INSTITUTE": 3,
+      "PUBLIC_COMPANY": 2,
+      "FUND": 0,
+      "OTHER_DECENTRALIZED": 3,
+      "REGISTRY_NOISE": 0,
+      "UNKNOWN_REVIEW": 0
+    },
+    "executive_pct": 58.97435897435897,
+    "nonexecutive_pct": 41.02564102564103,
+    "review_pct": 0.0,
+    "volume_by_family": {
+      "MUNICIPAL_EXECUTIVE": {
+        "process_physical_rows": 832,
+        "unique_processes": 781,
+        "contract_physical_rows": 666,
+        "unique_contracts": 666
+      },
+      "CONCEJO": {
+        "process_physical_rows": 6,
+        "unique_processes": 5,
+        "contract_physical_rows": 5,
+        "unique_contracts": 5
+      },
+      "PERSONERIA": {
+        "process_physical_rows": 4,
+        "unique_processes": 4,
+        "contract_physical_rows": 4,
+        "unique_contracts": 4
+      },
+      "CONTRALORIA": {
+        "process_physical_rows": 41,
+        "unique_processes": 41,
+        "contract_physical_rows": 38,
+        "unique_contracts": 38
+      },
+      "ESE_HEALTH": {
+        "process_physical_rows": 642,
+        "unique_processes": 642,
+        "contract_physical_rows": 62,
+        "unique_contracts": 62
+      },
+      "INSTITUTE": {
+        "process_physical_rows": 635,
+        "unique_processes": 631,
+        "contract_physical_rows": 589,
+        "unique_contracts": 589
+      },
+      "PUBLIC_COMPANY": {
+        "process_physical_rows": 28,
+        "unique_processes": 28,
+        "contract_physical_rows": 12,
+        "unique_contracts": 12
+      },
+      "FUND": {
+        "process_physical_rows": 0,
+        "unique_processes": 0,
+        "contract_physical_rows": 0,
+        "unique_contracts": 0
+      },
+      "OTHER_DECENTRALIZED": {
+        "process_physical_rows": 383,
+        "unique_processes": 381,
+        "contract_physical_rows": 335,
+        "unique_contracts": 335
+      },
+      "REGISTRY_NOISE": {
+        "process_physical_rows": 0,
+        "unique_processes": 0,
+        "contract_physical_rows": 0,
+        "unique_contracts": 0
+      },
+      "UNKNOWN_REVIEW": {
+        "process_physical_rows": 0,
+        "unique_processes": 0,
+        "contract_physical_rows": 0,
+        "unique_contracts": 0
+      }
+    }
+  },
+  "context_only": {
+    "total_profiles": 249,
+    "by_family": {
+      "MUNICIPAL_EXECUTIVE": 24,
+      "CONCEJO": 10,
+      "PERSONERIA": 13,
+      "CONTRALORIA": 2,
+      "ESE_HEALTH": 20,
+      "INSTITUTE": 8,
+      "PUBLIC_COMPANY": 10,
+      "FUND": 1,
+      "OTHER_DECENTRALIZED": 0,
+      "REGISTRY_NOISE": 0,
+      "UNKNOWN_REVIEW": 161
+    },
+    "executive_pct": 9.63855421686747,
+    "nonexecutive_pct": 25.70281124497992,
+    "review_pct": 64.65863453815261,
+    "volume_by_family": {
+      "MUNICIPAL_EXECUTIVE": {
+        "process_physical_rows": 0,
+        "unique_processes": 0,
+        "contract_physical_rows": 0,
+        "unique_contracts": 0
+      },
+      "CONCEJO": {
+        "process_physical_rows": 0,
+        "unique_processes": 0,
+        "contract_physical_rows": 0,
+        "unique_contracts": 0
+      },
+      "PERSONERIA": {
+        "process_physical_rows": 0,
+        "unique_processes": 0,
+        "contract_physical_rows": 0,
+        "unique_contracts": 0
+      },
+      "CONTRALORIA": {
+        "process_physical_rows": 0,
+        "unique_processes": 0,
+        "contract_physical_rows": 0,
+        "unique_contracts": 0
+      },
+      "ESE_HEALTH": {
+        "process_physical_rows": 0,
+        "unique_processes": 0,
+        "contract_physical_rows": 0,
+        "unique_contracts": 0
+      },
+      "INSTITUTE": {
+        "process_physical_rows": 0,
+        "unique_processes": 0,
+        "contract_physical_rows": 0,
+        "unique_contracts": 0
+      },
+      "PUBLIC_COMPANY": {
+        "process_physical_rows": 0,
+        "unique_processes": 0,
+        "contract_physical_rows": 0,
+        "unique_contracts": 0
+      },
+      "FUND": {
+        "process_physical_rows": 0,
+        "unique_processes": 0,
+        "contract_physical_rows": 0,
+        "unique_contracts": 0
+      },
+      "OTHER_DECENTRALIZED": {
+        "process_physical_rows": 0,
+        "unique_processes": 0,
+        "contract_physical_rows": 0,
+        "unique_contracts": 0
+      },
+      "REGISTRY_NOISE": {
+        "process_physical_rows": 0,
+        "unique_processes": 0,
+        "contract_physical_rows": 0,
+        "unique_contracts": 0
+      },
+      "UNKNOWN_REVIEW": {
+        "process_physical_rows": 0,
+        "unique_processes": 0,
+        "contract_physical_rows": 0,
+        "unique_contracts": 0
+      }
+    }
+  },
+  "debt_counts": {
+    "MISSING_EXECUTIVE_BUYER_UNIT": 0,
+    "EXISTING_BUYER_UNIT_MISSING_AFFILIATION": 0,
+    "SOURCE_NAME_VARIANT": 2,
+    "DUPLICATE_BUYER_UNIT": 0,
+    "NON_EXECUTIVE_MUNICIPAL_UNIT": 14,
+    "SHARED_NIT_DISTINCT_UNIT": 2,
+    "REGISTRY_NOISE": 0,
+    "MISSING_DATASET_EVIDENCE": 17,
+    "SECOP1_ONLY_OR_LEGACY_SIGNAL": 0,
+    "REVIEW": 4
+  },
+  "executive_gap_profiles": 23,
+  "executive_gap_accounts": 22,
+  "rows": [
+    {
+      "profile_id": "m1b:9e88fe4089d1b533",
+      "scope": "CONTEXT_ONLY",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SOURCE_INSTITUTIONAL_FAMILY_ONLY_UNACCREDITED",
+      "debt": "EXISTING_BUYER_UNIT_MISSING_AFFILIATION"
+    },
+    {
+      "profile_id": "m1b:9127e4bb733e6892",
+      "scope": "RESIDUAL_COHORT",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SIGEP_LEGAL_NATURE",
+      "debt": "MISSING_DATASET_EVIDENCE"
+    },
+    {
+      "profile_id": "m1b:f15a60ada70f2582",
+      "scope": "CONTEXT_ONLY",
+      "family": "INSTITUTE",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:b18118d84653e682",
+      "scope": "CONTEXT_ONLY",
+      "family": "PUBLIC_COMPANY",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:fb2a130478c3cf06",
+      "scope": "CONTEXT_ONLY",
+      "family": "PERSONERIA",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:28e27f4d6bbc049a",
+      "scope": "CONTEXT_ONLY",
+      "family": "ESE_HEALTH",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:ddbb7114fda912e6",
+      "scope": "CONTEXT_ONLY",
+      "family": "CONTRALORIA",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:3a361f96102a818a",
+      "scope": "RESIDUAL_COHORT",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SIGEP_LEGAL_NATURE",
+      "debt": "SOURCE_NAME_VARIANT"
+    },
+    {
+      "profile_id": "m1b:7f201c725486cac5",
+      "scope": "RESIDUAL_COHORT",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SIGEP_LEGAL_NATURE",
+      "debt": "SOURCE_NAME_VARIANT"
+    },
+    {
+      "profile_id": "m1b:e9b2d7028b48af7b",
+      "scope": "CONTEXT_ONLY",
+      "family": "ESE_HEALTH",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:fc158b5c137998d1",
+      "scope": "CONTEXT_ONLY",
+      "family": "ESE_HEALTH",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:b1fd76eee5b11055",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:086bd8afde5e7659",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:64b2ee46322f3e98",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:4168773bd15238f1",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:1d051b4a2eb04bae",
+      "scope": "CONTEXT_ONLY",
+      "family": "ESE_HEALTH",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:575cb49f57025fde",
+      "scope": "CONTEXT_ONLY",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SOURCE_INSTITUTIONAL_FAMILY_ONLY_UNACCREDITED",
+      "debt": "EXISTING_BUYER_UNIT_MISSING_AFFILIATION"
+    },
+    {
+      "profile_id": "m1b:7182e0f68dcd01b3",
+      "scope": "CONTEXT_ONLY",
+      "family": "INSTITUTE",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:80000fc072bca03b",
+      "scope": "CONTEXT_ONLY",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SOURCE_INSTITUTIONAL_FAMILY_ONLY_UNACCREDITED",
+      "debt": "EXISTING_BUYER_UNIT_MISSING_AFFILIATION"
+    },
+    {
+      "profile_id": "m1b:0a547ff849ea37d7",
+      "scope": "RESIDUAL_COHORT",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SIGEP_LEGAL_NATURE",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:09e94987179759a9",
+      "scope": "CONTEXT_ONLY",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SOURCE_INSTITUTIONAL_FAMILY_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:72e5b7e662a2d2b2",
+      "scope": "RESIDUAL_COHORT",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SIGEP_LEGAL_NATURE",
+      "debt": "MISSING_DATASET_EVIDENCE"
+    },
+    {
+      "profile_id": "m1b:0f9f0f650a592b08",
+      "scope": "RESIDUAL_COHORT",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SIGEP_LEGAL_NATURE",
+      "debt": "MISSING_DATASET_EVIDENCE"
+    },
+    {
+      "profile_id": "m1b:3d2299f4990e38d1",
+      "scope": "RESIDUAL_COHORT",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SIGEP_LEGAL_NATURE",
+      "debt": "MISSING_DATASET_EVIDENCE"
+    },
+    {
+      "profile_id": "m1b:63a7110ba2345b15",
+      "scope": "RESIDUAL_COHORT",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SIGEP_LEGAL_NATURE",
+      "debt": "MISSING_DATASET_EVIDENCE"
+    },
+    {
+      "profile_id": "m1b:f00c5c56c65c746b",
+      "scope": "RESIDUAL_COHORT",
+      "family": "OTHER_DECENTRALIZED",
+      "basis": "SIGEP_PUBLIC_ESTABLISHMENT",
+      "debt": "NON_EXECUTIVE_MUNICIPAL_UNIT"
+    },
+    {
+      "profile_id": "m1b:3fbc09839c3e1448",
+      "scope": "RESIDUAL_COHORT",
+      "family": "ESE_HEALTH",
+      "basis": "SIGEP_LEGAL_NATURE",
+      "debt": "NON_EXECUTIVE_MUNICIPAL_UNIT"
+    },
+    {
+      "profile_id": "m1b:9625aadb387dfc6f",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:36eaf8d19daa52ae",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:717abd5aeef6d022",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:e5cf8f555202560c",
+      "scope": "CONTEXT_ONLY",
+      "family": "PUBLIC_COMPANY",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:35673f9c1fd06446",
+      "scope": "RESIDUAL_COHORT",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SIGEP_LEGAL_NATURE",
+      "debt": "MISSING_DATASET_EVIDENCE"
+    },
+    {
+      "profile_id": "m1b:f02a621566b3232f",
+      "scope": "CONTEXT_ONLY",
+      "family": "CONTRALORIA",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:c6fd1a16cb48fa57",
+      "scope": "RESIDUAL_COHORT",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SIGEP_LEGAL_NATURE",
+      "debt": "MISSING_DATASET_EVIDENCE"
+    },
+    {
+      "profile_id": "m1b:1a0d928af716f1cc",
+      "scope": "RESIDUAL_COHORT",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SIGEP_LEGAL_NATURE",
+      "debt": "MISSING_DATASET_EVIDENCE"
+    },
+    {
+      "profile_id": "m1b:9df7bf174091a2cc",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:eee8c2f016df8be2",
+      "scope": "RESIDUAL_COHORT",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SIGEP_LEGAL_NATURE",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:3e10641b5bf589e9",
+      "scope": "CONTEXT_ONLY",
+      "family": "ESE_HEALTH",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:cfa66f4e1f19f515",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:5e6257ec7816e45b",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:9412e9aa29252bf0",
+      "scope": "RESIDUAL_COHORT",
+      "family": "INSTITUTE",
+      "basis": "SIGEP_PUBLIC_ESTABLISHMENT_AND_OFFICIAL_NAME",
+      "debt": "NON_EXECUTIVE_MUNICIPAL_UNIT"
+    },
+    {
+      "profile_id": "m1b:9b247d46a1c64682",
+      "scope": "RESIDUAL_COHORT",
+      "family": "CONTRALORIA",
+      "basis": "SIGEP_LEGAL_NATURE",
+      "debt": "NON_EXECUTIVE_MUNICIPAL_UNIT"
+    },
+    {
+      "profile_id": "m1b:c75653e3ef3e84b5",
+      "scope": "CONTEXT_ONLY",
+      "family": "PUBLIC_COMPANY",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:74b5ffc4b1723349",
+      "scope": "CONTEXT_ONLY",
+      "family": "ESE_HEALTH",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:8c2b09451fd58d21",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:8d6ff9a7aecdb29e",
+      "scope": "CONTEXT_ONLY",
+      "family": "INSTITUTE",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:2ff0b9cc3a93a4fb",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:32c3ae23da0117da",
+      "scope": "CONTEXT_ONLY",
+      "family": "ESE_HEALTH",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:3769a3f4751c84ef",
+      "scope": "CONTEXT_ONLY",
+      "family": "CONCEJO",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:f48776060f0a9d83",
+      "scope": "RESIDUAL_COHORT",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SIGEP_LEGAL_NATURE",
+      "debt": "MISSING_DATASET_EVIDENCE"
+    },
+    {
+      "profile_id": "m1b:b86eb7393309d583",
+      "scope": "CONTEXT_ONLY",
+      "family": "ESE_HEALTH",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:afc9ab0bac1f313f",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:69a77bffea1fed02",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:ef1623509928079f",
+      "scope": "CONTEXT_ONLY",
+      "family": "INSTITUTE",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:f37c9280214a7a46",
+      "scope": "CONTEXT_ONLY",
+      "family": "ESE_HEALTH",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:9a0c825b14793180",
+      "scope": "CONTEXT_ONLY",
+      "family": "ESE_HEALTH",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:7af1f2a344829c9f",
+      "scope": "RESIDUAL_COHORT",
+      "family": "ESE_HEALTH",
+      "basis": "SIGEP_LEGAL_NATURE",
+      "debt": "NON_EXECUTIVE_MUNICIPAL_UNIT"
+    },
+    {
+      "profile_id": "m1b:4d288277af056b18",
+      "scope": "RESIDUAL_COHORT",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SIGEP_LEGAL_NATURE",
+      "debt": "MISSING_DATASET_EVIDENCE"
+    },
+    {
+      "profile_id": "m1b:a7130da20c4ecc30",
+      "scope": "CONTEXT_ONLY",
+      "family": "ESE_HEALTH",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:77c83a30dfc0cc43",
+      "scope": "RESIDUAL_COHORT",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SIGEP_LEGAL_NATURE",
+      "debt": "MISSING_DATASET_EVIDENCE"
+    },
+    {
+      "profile_id": "m1b:e489b7f11778af9b",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:74031df767f13ba7",
+      "scope": "RESIDUAL_COHORT",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SIGEP_LEGAL_NATURE",
+      "debt": "MISSING_DATASET_EVIDENCE"
+    },
+    {
+      "profile_id": "m1b:49814795d395e9cb",
+      "scope": "RESIDUAL_COHORT",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SIGEP_LEGAL_NATURE",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:bad3421a312e5576",
+      "scope": "CONTEXT_ONLY",
+      "family": "ESE_HEALTH",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:a278960ac87c338d",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:71c1ce15b13b9c38",
+      "scope": "CONTEXT_ONLY",
+      "family": "PERSONERIA",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "SHARED_NIT_DISTINCT_UNIT"
+    },
+    {
+      "profile_id": "m1b:f4829a0877017692",
+      "scope": "CONTEXT_ONLY",
+      "family": "PUBLIC_COMPANY",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:b0b3d70d6cc893b9",
+      "scope": "CONTEXT_ONLY",
+      "family": "PUBLIC_COMPANY",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:06db12b4fa23a6c3",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:aa31a8f06bd14856",
+      "scope": "CONTEXT_ONLY",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SOURCE_INSTITUTIONAL_FAMILY_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:b270b31344581daa",
+      "scope": "RESIDUAL_COHORT",
+      "family": "PUBLIC_COMPANY",
+      "basis": "SIGEP_LEGAL_NATURE",
+      "debt": "NON_EXECUTIVE_MUNICIPAL_UNIT"
+    },
+    {
+      "profile_id": "m1b:8f354921114893aa",
+      "scope": "CONTEXT_ONLY",
+      "family": "ESE_HEALTH",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:8c5b321420bd176d",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:6ee3434e08670663",
+      "scope": "RESIDUAL_COHORT",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SIGEP_LEGAL_NATURE",
+      "debt": "MISSING_DATASET_EVIDENCE"
+    },
+    {
+      "profile_id": "m1b:322fdb9c4ebad27d",
+      "scope": "RESIDUAL_COHORT",
+      "family": "INSTITUTE",
+      "basis": "SIGEP_PUBLIC_ESTABLISHMENT_AND_OFFICIAL_NAME",
+      "debt": "NON_EXECUTIVE_MUNICIPAL_UNIT"
+    },
+    {
+      "profile_id": "m1b:e4fcdda8a84d08a2",
+      "scope": "CONTEXT_ONLY",
+      "family": "ESE_HEALTH",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:4dc0a084b481d788",
+      "scope": "CONTEXT_ONLY",
+      "family": "ESE_HEALTH",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:bc053b8dd957d9b0",
+      "scope": "CONTEXT_ONLY",
+      "family": "INSTITUTE",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:0a648df073aef9d1",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:ac62865a1708053e",
+      "scope": "CONTEXT_ONLY",
+      "family": "ESE_HEALTH",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:bd1566b325358a25",
+      "scope": "CONTEXT_ONLY",
+      "family": "CONCEJO",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:9c1fe199df146ec8",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:d14806626795bd21",
+      "scope": "CONTEXT_ONLY",
+      "family": "ESE_HEALTH",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:bceb985a2646b34f",
+      "scope": "CONTEXT_ONLY",
+      "family": "PUBLIC_COMPANY",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:f5ff565b7344cb22",
+      "scope": "RESIDUAL_COHORT",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SIGEP_LEGAL_NATURE",
+      "debt": "MISSING_DATASET_EVIDENCE"
+    },
+    {
+      "profile_id": "m1b:71a2bfac42118839",
+      "scope": "CONTEXT_ONLY",
+      "family": "PERSONERIA",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:09a267719f4957bc",
+      "scope": "RESIDUAL_COHORT",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SIGEP_LEGAL_NATURE",
+      "debt": "MISSING_DATASET_EVIDENCE"
+    },
+    {
+      "profile_id": "m1b:98d7d1d61bbaea80",
+      "scope": "CONTEXT_ONLY",
+      "family": "INSTITUTE",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:f8a06e38cd2f7245",
+      "scope": "CONTEXT_ONLY",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SOURCE_INSTITUTIONAL_FAMILY_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:b72aee5205bd8fe4",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "SIGEP_LEGAL_NATURE_OUTSIDE_MUNICIPAL_TAXONOMY",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:99fb8742dee375c9",
+      "scope": "RESIDUAL_COHORT",
+      "family": "INSTITUTE",
+      "basis": "SIGEP_PUBLIC_ESTABLISHMENT_AND_OFFICIAL_NAME",
+      "debt": "NON_EXECUTIVE_MUNICIPAL_UNIT"
+    },
+    {
+      "profile_id": "m1b:8593b0835ad74469",
+      "scope": "RESIDUAL_COHORT",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SIGEP_LEGAL_NATURE",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:8190788fd96e1e2c",
+      "scope": "CONTEXT_ONLY",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SOURCE_EXPLICIT_EXECUTIVE_OFFICE_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:f3849fdd1bb5f016",
+      "scope": "CONTEXT_ONLY",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SOURCE_EXPLICIT_EXECUTIVE_OFFICE_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:502fe9befcfc7380",
+      "scope": "CONTEXT_ONLY",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SOURCE_EXPLICIT_EXECUTIVE_OFFICE_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:a83f2ff7f9282282",
+      "scope": "CONTEXT_ONLY",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SOURCE_EXPLICIT_EXECUTIVE_OFFICE_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:face89d1dead7d9b",
+      "scope": "CONTEXT_ONLY",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SOURCE_EXPLICIT_EXECUTIVE_OFFICE_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:4df4dc6bd216e54a",
+      "scope": "CONTEXT_ONLY",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SOURCE_EXPLICIT_EXECUTIVE_OFFICE_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:73e5e5e1697db60d",
+      "scope": "CONTEXT_ONLY",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SOURCE_EXPLICIT_EXECUTIVE_OFFICE_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:81357438982b5937",
+      "scope": "CONTEXT_ONLY",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SOURCE_EXPLICIT_EXECUTIVE_OFFICE_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:ffd24f58e3499696",
+      "scope": "CONTEXT_ONLY",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SOURCE_EXPLICIT_EXECUTIVE_OFFICE_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:810fa26a2d0ffff6",
+      "scope": "CONTEXT_ONLY",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SOURCE_EXPLICIT_EXECUTIVE_OFFICE_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:91596c4e0a8acd73",
+      "scope": "CONTEXT_ONLY",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SOURCE_EXPLICIT_EXECUTIVE_OFFICE_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:3c170912af38d471",
+      "scope": "CONTEXT_ONLY",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SOURCE_EXPLICIT_EXECUTIVE_OFFICE_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:40242d758bbea231",
+      "scope": "CONTEXT_ONLY",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SOURCE_EXPLICIT_EXECUTIVE_OFFICE_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:df90c1977755e9a0",
+      "scope": "CONTEXT_ONLY",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SOURCE_EXPLICIT_EXECUTIVE_OFFICE_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:56b66168169c3900",
+      "scope": "RESIDUAL_COHORT",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SIGEP_LEGAL_NATURE",
+      "debt": "MISSING_DATASET_EVIDENCE"
+    },
+    {
+      "profile_id": "m1b:e1d2b7ca212d157e",
+      "scope": "CONTEXT_ONLY",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SOURCE_EXPLICIT_EXECUTIVE_OFFICE_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:9a5c616e2fb30c23",
+      "scope": "CONTEXT_ONLY",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SOURCE_EXPLICIT_EXECUTIVE_OFFICE_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:7c37d2bd9ea5fc47",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:cb2c623f122e4184",
+      "scope": "RESIDUAL_COHORT",
+      "family": "ESE_HEALTH",
+      "basis": "SIGEP_LEGAL_NATURE",
+      "debt": "NON_EXECUTIVE_MUNICIPAL_UNIT"
+    },
+    {
+      "profile_id": "m1b:daeb0e55b9ecb6ea",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:7890036d8f6ad679",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:d7e2bad6d89cea37",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:de0fa4f9352edfae",
+      "scope": "CONTEXT_ONLY",
+      "family": "PERSONERIA",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:a5a152a2971fb77f",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:692bfec6f61bd81c",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:1ce486485fa02561",
+      "scope": "CONTEXT_ONLY",
+      "family": "PERSONERIA",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "SHARED_NIT_DISTINCT_UNIT"
+    },
+    {
+      "profile_id": "m1b:9b51d17556b57840",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:e161c4992ec28352",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:0ee45b2c4219bf0f",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:b5f3f3be93adc2d2",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:b01980fa24eb1be3",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:b1d7c48a476148bc",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:714cdff01cd04f54",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:6bc43b7ac7460f2e",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:70f5402a8734a571",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:a9337a57bc2181f2",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:55500ccace46f242",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:a4861fa80a267f5a",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:12b0708ea34b7c01",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:02e935f7c6e30281",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:eae14f3426eef8f9",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:890ff841c688d9ec",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:4433ad3db9d80e5d",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:40cfe98d1bbf694a",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:5da34cd8c722429b",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:a8813a9615ee44db",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:683db5ddd24b5f01",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:b7f8cd21d3fcbe29",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:4a261b7a5a479745",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:6ea080e534ebb8a8",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:3bdf3a6855240dfe",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:a297b6b687e2043c",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:b368c199c2368591",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:8c9deff3f538ee50",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:c2e5c1914b2e86ec",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:bf8bbf8ba5a36ea7",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:a69678b56c9118e9",
+      "scope": "CONTEXT_ONLY",
+      "family": "ESE_HEALTH",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:fd121622572f7504",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:2b87b57f7314cd43",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:31bf3c6c8eed2dcc",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:f7ccf181c3a5a44d",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:60a25c7e9bd454f6",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:1f9bc0bf96e6e3a2",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:5c815f1eac050ae8",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:7ac262e937e7c384",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:b14ee1eebd27fbf9",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:03915acc5ea06a46",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:8f6c5e3189879b61",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:8923ca8a04dbc24b",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:e296eff169eb4ad3",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:6e6857513238b743",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:293da582145f20e3",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:0c52c2cdd98928ab",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:b7953b8339b17bc6",
+      "scope": "CONTEXT_ONLY",
+      "family": "INSTITUTE",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:160100bd8c2c7996",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:8e1ff536a1daf51f",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:828c4679e42c9a53",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:94ff839864339f3a",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:42b841a38c25152a",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:3fae5b3bcd72bb17",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:d6e211116e9e5c02",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:8bd8d72c6ecd21d9",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:4e1c610bbab7261c",
+      "scope": "CONTEXT_ONLY",
+      "family": "PUBLIC_COMPANY",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:1e93d3feb566bc8d",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:ad259e6238311f7b",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:631e4c2a86ac552f",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:5c2f9825483ebda9",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:5041b130b1041ac1",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:db20f12e370a66b3",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:1275c2bb3382cb3e",
+      "scope": "CONTEXT_ONLY",
+      "family": "INSTITUTE",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:57381076f646af50",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:d67fdd6fba997232",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:d9a9f62645bc60bc",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:1d429df4e9629f6c",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:968d95f634645370",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:b38ee28627a5014c",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:9c314244f1795f29",
+      "scope": "CONTEXT_ONLY",
+      "family": "ESE_HEALTH",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:5b357cec1d1e802e",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:28d4312cd158e983",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:a6eb44eebc464d47",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:f22a7b89274d4fac",
+      "scope": "CONTEXT_ONLY",
+      "family": "PUBLIC_COMPANY",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:95aa9ac40e64b15f",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:41247333943cde77",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:53757eec745f6898",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:bf8f7ec81e853485",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:2f2b0225f163fd2a",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:1d52ce8de919afbf",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:0ace103cea3526b8",
+      "scope": "CONTEXT_ONLY",
+      "family": "CONCEJO",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "SHARED_NIT_DISTINCT_UNIT"
+    },
+    {
+      "profile_id": "m1b:91200c50ee338d7c",
+      "scope": "CONTEXT_ONLY",
+      "family": "FUND",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:401aee59121c6d15",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:bce989c40262911e",
+      "scope": "CONTEXT_ONLY",
+      "family": "PERSONERIA",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:514d37d6bebd59a1",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:a227df41c9ade5a8",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:ed6da654bb64f56a",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:1edc97643bed66ad",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:384a15d484a838f8",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:fb88737e925b57c3",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:3a7da28b69664a5f",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:a7e6ef54b228c27b",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:75e5e03c36062c33",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:c16b724254f8e870",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:57eca727daabeb54",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:29d7657c66fb5a5d",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:829ac6760cbde9fc",
+      "scope": "CONTEXT_ONLY",
+      "family": "CONCEJO",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "SHARED_NIT_DISTINCT_UNIT"
+    },
+    {
+      "profile_id": "m1b:fc0338bb3e06301e",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:8c1fcc47714dd63d",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:a7a2c1ac24fd3cf4",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:c8fe7d778b60e138",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:b1281cf590bafb39",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:32928ac0440a92de",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:5d1fd65d00c25f30",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:d2768b3fb7e5fc02",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:1a9a4a697392ef76",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:d45ea15636f2c776",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:4899e32adb7283e7",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:e6cde90e298d8137",
+      "scope": "CONTEXT_ONLY",
+      "family": "CONCEJO",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:332b74c11bad59b3",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:6fe3e6def08cd9e1",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:6d53abc28b3a4a1a",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:3943954ec10bf114",
+      "scope": "CONTEXT_ONLY",
+      "family": "PERSONERIA",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "SHARED_NIT_DISTINCT_UNIT"
+    },
+    {
+      "profile_id": "m1b:7c2cdf165f5541a8",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:a71a51ef63e641c4",
+      "scope": "CONTEXT_ONLY",
+      "family": "ESE_HEALTH",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:50eb6eb54ebd6e51",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:66cd591c005bc977",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:5be242308cab3f2c",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:42ef443fcd6b0450",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:bfe5f3525c058e5f",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:94f54a41e704a40f",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:72890fe47e158fde",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:27e6333623ac0a67",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:2084995fa3924e4e",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:ee8048a343fb82c2",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:72b50e68612cda52",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:f5ee36079d4d5837",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:c5d6f4372a056399",
+      "scope": "CONTEXT_ONLY",
+      "family": "CONCEJO",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "SHARED_NIT_DISTINCT_UNIT"
+    },
+    {
+      "profile_id": "m1b:45a76b6f5b042fd5",
+      "scope": "RESIDUAL_COHORT",
+      "family": "CONCEJO",
+      "basis": "SIGEP_LEGAL_NATURE",
+      "debt": "SHARED_NIT_DISTINCT_UNIT"
+    },
+    {
+      "profile_id": "m1b:d98647dde2e6b2d8",
+      "scope": "CONTEXT_ONLY",
+      "family": "CONCEJO",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "SHARED_NIT_DISTINCT_UNIT"
+    },
+    {
+      "profile_id": "m1b:4f3b158d09b71afa",
+      "scope": "CONTEXT_ONLY",
+      "family": "CONCEJO",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:7e7ac10ea8e97357",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:602a2bc093166d67",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:b240e7506ed962b8",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:6e0289be2ecb3799",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:e765be7b801afb7d",
+      "scope": "RESIDUAL_COHORT",
+      "family": "PUBLIC_COMPANY",
+      "basis": "SIGEP_LEGAL_NATURE",
+      "debt": "NON_EXECUTIVE_MUNICIPAL_UNIT"
+    },
+    {
+      "profile_id": "m1b:700091d90939a190",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:6ec2accda4f3a244",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:8f99369031789455",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:d15b3cfa2fd667d9",
+      "scope": "RESIDUAL_COHORT",
+      "family": "OTHER_DECENTRALIZED",
+      "basis": "SIGEP_PUBLIC_ESTABLISHMENT",
+      "debt": "NON_EXECUTIVE_MUNICIPAL_UNIT"
+    },
+    {
+      "profile_id": "m1b:674761c654946d16",
+      "scope": "RESIDUAL_COHORT",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SIGEP_LEGAL_NATURE",
+      "debt": "MISSING_DATASET_EVIDENCE"
+    },
+    {
+      "profile_id": "m1b:c5eaf5bd90d320ff",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:0e0c8903034b4d65",
+      "scope": "CONTEXT_ONLY",
+      "family": "CONCEJO",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:e006fe1ab34d8001",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:273dc8c5c90bff48",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:0aebbd34ac33af31",
+      "scope": "RESIDUAL_COHORT",
+      "family": "PERSONERIA",
+      "basis": "SIGEP_LEGAL_NATURE",
+      "debt": "SHARED_NIT_DISTINCT_UNIT"
+    },
+    {
+      "profile_id": "m1b:2ae0a47a9a2f17ad",
+      "scope": "RESIDUAL_COHORT",
+      "family": "PERSONERIA",
+      "basis": "SIGEP_LEGAL_NATURE",
+      "debt": "NON_EXECUTIVE_MUNICIPAL_UNIT"
+    },
+    {
+      "profile_id": "m1b:5ba2d32947d5cd6f",
+      "scope": "CONTEXT_ONLY",
+      "family": "PERSONERIA",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "SHARED_NIT_DISTINCT_UNIT"
+    },
+    {
+      "profile_id": "m1b:d0a9b163803bb8ea",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:12833a7b6cc845d1",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:9bc05144a1c7848f",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:cb3bc1b46d241027",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:f2e966e00b9af46a",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:4aee2d669acf3d7c",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:e14fd287ff441a49",
+      "scope": "RESIDUAL_COHORT",
+      "family": "OTHER_DECENTRALIZED",
+      "basis": "SIGEP_PUBLIC_ESTABLISHMENT",
+      "debt": "NON_EXECUTIVE_MUNICIPAL_UNIT"
+    },
+    {
+      "profile_id": "m1b:a1ad4d9217d4ec44",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:c8eb443de8f0fc5b",
+      "scope": "CONTEXT_ONLY",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SOURCE_EXPLICIT_EXECUTIVE_OFFICE_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:61885b3d6cba1b68",
+      "scope": "CONTEXT_ONLY",
+      "family": "PERSONERIA",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:9bb45eb83056cf2a",
+      "scope": "CONTEXT_ONLY",
+      "family": "PERSONERIA",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:20e439cbebc318f0",
+      "scope": "CONTEXT_ONLY",
+      "family": "PUBLIC_COMPANY",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:18c710c43c378882",
+      "scope": "CONTEXT_ONLY",
+      "family": "MUNICIPAL_EXECUTIVE",
+      "basis": "SOURCE_EXPLICIT_EXECUTIVE_OFFICE_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:6938e83172658bb9",
+      "scope": "CONTEXT_ONLY",
+      "family": "CONCEJO",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:7f903b1be4d2ed1d",
+      "scope": "RESIDUAL_COHORT",
+      "family": "CONCEJO",
+      "basis": "SIGEP_LEGAL_NATURE",
+      "debt": "NON_EXECUTIVE_MUNICIPAL_UNIT"
+    },
+    {
+      "profile_id": "m1b:4d9d597a3e9e1ece",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:87f5ba59b80ddc39",
+      "scope": "CONTEXT_ONLY",
+      "family": "PERSONERIA",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:b847218f7b772256",
+      "scope": "CONTEXT_ONLY",
+      "family": "PERSONERIA",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:816837ee4d906cdf",
+      "scope": "CONTEXT_ONLY",
+      "family": "PERSONERIA",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:c326326991cf4c8e",
+      "scope": "CONTEXT_ONLY",
+      "family": "UNKNOWN_REVIEW",
+      "basis": "INSUFFICIENT_OFFICIAL_CLASSIFICATION",
+      "debt": "REVIEW"
+    },
+    {
+      "profile_id": "m1b:8bbc4bdbebc48fad",
+      "scope": "CONTEXT_ONLY",
+      "family": "PUBLIC_COMPANY",
+      "basis": "SOURCE_NAME_ONLY_UNACCREDITED",
+      "debt": "REVIEW"
+    }
+  ]
+}

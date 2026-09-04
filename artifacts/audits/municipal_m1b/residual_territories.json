@@ -1,0 +1,3673 @@
+{
+  "counts": {
+    "ACCREDITED_ACTIVE": 607,
+    "RECOGNIZED_POST_M1A": 571,
+    "RESIDUAL": 36
+  },
+  "accredited_active_divipola": [
+    "05001",
+    "05002",
+    "05021",
+    "05030",
+    "05031",
+    "05034",
+    "05036",
+    "05044",
+    "05045",
+    "05051",
+    "05079",
+    "05086",
+    "05088",
+    "05091",
+    "05093",
+    "05101",
+    "05107",
+    "05113",
+    "05120",
+    "05129",
+    "05134",
+    "05142",
+    "05145",
+    "05147",
+    "05148",
+    "05150",
+    "05172",
+    "05190",
+    "05234",
+    "05240",
+    "05250",
+    "05264",
+    "05266",
+    "05282",
+    "05284",
+    "05306",
+    "05308",
+    "05310",
+    "05313",
+    "05318",
+    "05321",
+    "05347",
+    "05353",
+    "05360",
+    "05364",
+    "05376",
+    "05380",
+    "05390",
+    "05411",
+    "05440",
+    "05467",
+    "05475",
+    "05490",
+    "05501",
+    "05541",
+    "05543",
+    "05576",
+    "05591",
+    "05607",
+    "05615",
+    "05631",
+    "05642",
+    "05647",
+    "05649",
+    "05652",
+    "05656",
+    "05660",
+    "05665",
+    "05667",
+    "05679",
+    "05686",
+    "05697",
+    "05756",
+    "05789",
+    "05790",
+    "05792",
+    "05809",
+    "05837",
+    "05847",
+    "05854",
+    "05856",
+    "05858",
+    "05861",
+    "05887",
+    "05890",
+    "05893",
+    "05895",
+    "08001",
+    "08078",
+    "08137",
+    "08296",
+    "08421",
+    "08634",
+    "08675",
+    "08685",
+    "08758",
+    "08770",
+    "11001",
+    "13001",
+    "13160",
+    "13212",
+    "13222",
+    "13244",
+    "13430",
+    "13654",
+    "13657",
+    "13670",
+    "13683",
+    "13836",
+    "13838",
+    "13894",
+    "15001",
+    "15047",
+    "15087",
+    "15090",
+    "15092",
+    "15097",
+    "15104",
+    "15106",
+    "15109",
+    "15131",
+    "15135",
+    "15162",
+    "15172",
+    "15176",
+    "15180",
+    "15183",
+    "15185",
+    "15187",
+    "15189",
+    "15204",
+    "15212",
+    "15215",
+    "15224",
+    "15236",
+    "15238",
+    "15244",
+    "15248",
+    "15272",
+    "15276",
+    "15293",
+    "15296",
+    "15299",
+    "15322",
+    "15362",
+    "15367",
+    "15377",
+    "15403",
+    "15407",
+    "15425",
+    "15442",
+    "15455",
+    "15466",
+    "15469",
+    "15476",
+    "15480",
+    "15491",
+    "15494",
+    "15516",
+    "15522",
+    "15531",
+    "15533",
+    "15537",
+    "15542",
+    "15550",
+    "15572",
+    "15580",
+    "15599",
+    "15600",
+    "15621",
+    "15632",
+    "15638",
+    "15646",
+    "15660",
+    "15664",
+    "15667",
+    "15673",
+    "15681",
+    "15686",
+    "15693",
+    "15696",
+    "15720",
+    "15740",
+    "15753",
+    "15755",
+    "15757",
+    "15759",
+    "15761",
+    "15762",
+    "15763",
+    "15764",
+    "15774",
+    "15778",
+    "15790",
+    "15798",
+    "15806",
+    "15808",
+    "15810",
+    "15816",
+    "15820",
+    "15822",
+    "15835",
+    "15837",
+    "15839",
+    "15842",
+    "17001",
+    "17042",
+    "17088",
+    "17174",
+    "17272",
+    "17380",
+    "17388",
+    "17433",
+    "17444",
+    "17446",
+    "17486",
+    "17495",
+    "17513",
+    "17524",
+    "17541",
+    "17614",
+    "17616",
+    "17653",
+    "17665",
+    "17777",
+    "17867",
+    "17873",
+    "18001",
+    "18029",
+    "18205",
+    "18256",
+    "18410",
+    "18460",
+    "18479",
+    "18753",
+    "18756",
+    "18860",
+    "19001",
+    "19022",
+    "19050",
+    "19100",
+    "19110",
+    "19142",
+    "19212",
+    "19256",
+    "19290",
+    "19397",
+    "19450",
+    "19473",
+    "19532",
+    "19585",
+    "19698",
+    "19780",
+    "19785",
+    "19807",
+    "20001",
+    "20011",
+    "20013",
+    "20032",
+    "20045",
+    "20175",
+    "20178",
+    "20238",
+    "20250",
+    "20295",
+    "20383",
+    "20400",
+    "20443",
+    "20614",
+    "20621",
+    "20710",
+    "20750",
+    "20770",
+    "23001",
+    "23068",
+    "23162",
+    "23168",
+    "23182",
+    "23350",
+    "23500",
+    "23807",
+    "25001",
+    "25019",
+    "25040",
+    "25086",
+    "25099",
+    "25126",
+    "25148",
+    "25151",
+    "25175",
+    "25183",
+    "25200",
+    "25214",
+    "25224",
+    "25245",
+    "25258",
+    "25260",
+    "25269",
+    "25286",
+    "25288",
+    "25290",
+    "25293",
+    "25295",
+    "25297",
+    "25299",
+    "25307",
+    "25317",
+    "25322",
+    "25326",
+    "25328",
+    "25339",
+    "25377",
+    "25386",
+    "25394",
+    "25398",
+    "25407",
+    "25426",
+    "25430",
+    "25436",
+    "25473",
+    "25483",
+    "25486",
+    "25488",
+    "25491",
+    "25513",
+    "25530",
+    "25572",
+    "25580",
+    "25592",
+    "25599",
+    "25612",
+    "25645",
+    "25658",
+    "25718",
+    "25736",
+    "25740",
+    "25743",
+    "25754",
+    "25758",
+    "25769",
+    "25772",
+    "25777",
+    "25779",
+    "25781",
+    "25785",
+    "25797",
+    "25799",
+    "25805",
+    "25807",
+    "25815",
+    "25817",
+    "25839",
+    "25867",
+    "25873",
+    "25875",
+    "25878",
+    "25885",
+    "25899",
+    "27001",
+    "27075",
+    "27361",
+    "27600",
+    "41001",
+    "41378",
+    "41483",
+    "41503",
+    "41518",
+    "41524",
+    "41530",
+    "41551",
+    "41615",
+    "41660",
+    "41668",
+    "41770",
+    "41791",
+    "41801",
+    "41807",
+    "41872",
+    "41885",
+    "44001",
+    "44090",
+    "44098",
+    "44110",
+    "44279",
+    "44430",
+    "44847",
+    "47001",
+    "47030",
+    "47058",
+    "47189",
+    "47288",
+    "47318",
+    "47555",
+    "47707",
+    "47745",
+    "50001",
+    "50006",
+    "50110",
+    "50150",
+    "50318",
+    "50330",
+    "50568",
+    "50573",
+    "50689",
+    "52001",
+    "52233",
+    "52250",
+    "52254",
+    "52256",
+    "52352",
+    "52354",
+    "52356",
+    "52520",
+    "52573",
+    "52612",
+    "52786",
+    "54001",
+    "54109",
+    "54125",
+    "54172",
+    "54206",
+    "54239",
+    "54250",
+    "54313",
+    "54344",
+    "54377",
+    "54398",
+    "54405",
+    "54518",
+    "54520",
+    "54553",
+    "54673",
+    "54743",
+    "54800",
+    "54810",
+    "54871",
+    "54874",
+    "63001",
+    "63111",
+    "63190",
+    "63212",
+    "63272",
+    "63302",
+    "63401",
+    "63470",
+    "63548",
+    "63690",
+    "66001",
+    "66045",
+    "66075",
+    "66088",
+    "66170",
+    "66383",
+    "66400",
+    "66440",
+    "66682",
+    "68001",
+    "68013",
+    "68020",
+    "68051",
+    "68079",
+    "68081",
+    "68092",
+    "68121",
+    "68160",
+    "68162",
+    "68167",
+    "68176",
+    "68179",
+    "68190",
+    "68209",
+    "68211",
+    "68229",
+    "68245",
+    "68250",
+    "68264",
+    "68266",
+    "68271",
+    "68276",
+    "68296",
+    "68298",
+    "68307",
+    "68318",
+    "68320",
+    "68322",
+    "68324",
+    "68327",
+    "68368",
+    "68370",
+    "68377",
+    "68406",
+    "68425",
+    "68432",
+    "68444",
+    "68468",
+    "68498",
+    "68500",
+    "68502",
+    "68522",
+    "68524",
+    "68533",
+    "68547",
+    "68549",
+    "68572",
+    "68573",
+    "68615",
+    "68669",
+    "68673",
+    "68679",
+    "68682",
+    "68686",
+    "68689",
+    "68705",
+    "68755",
+    "68770",
+    "68773",
+    "68780",
+    "68820",
+    "68855",
+    "68861",
+    "68867",
+    "68872",
+    "70001",
+    "70215",
+    "70670",
+    "70771",
+    "73001",
+    "73024",
+    "73055",
+    "73168",
+    "73268",
+    "73319",
+    "73349",
+    "73352",
+    "73411",
+    "73449",
+    "73461",
+    "73616",
+    "73624",
+    "73671",
+    "73686",
+    "73854",
+    "73861",
+    "73870",
+    "76020",
+    "76036",
+    "76041",
+    "76109",
+    "76113",
+    "76122",
+    "76126",
+    "76130",
+    "76147",
+    "76233",
+    "76248",
+    "76250",
+    "76275",
+    "76306",
+    "76364",
+    "76377",
+    "76400",
+    "76497",
+    "76520",
+    "76563",
+    "76606",
+    "76622",
+    "76670",
+    "76736",
+    "76823",
+    "76834",
+    "76863",
+    "76869",
+    "76890",
+    "76892",
+    "81001",
+    "81220",
+    "81300",
+    "81591",
+    "81736",
+    "81794",
+    "85001",
+    "85010",
+    "85125",
+    "85136",
+    "85139",
+    "85162",
+    "85225",
+    "85250",
+    "85279",
+    "85300",
+    "85315",
+    "85325",
+    "85410",
+    "85440",
+    "86219",
+    "86320",
+    "86568",
+    "86571",
+    "86755",
+    "86757",
+    "86865",
+    "86885",
+    "88564",
+    "91001",
+    "95001",
+    "97161",
+    "99624"
+  ],
+  "recognized_post_m1a_divipola": [
+    "05001",
+    "05002",
+    "05021",
+    "05030",
+    "05031",
+    "05034",
+    "05044",
+    "05045",
+    "05051",
+    "05079",
+    "05086",
+    "05088",
+    "05091",
+    "05093",
+    "05107",
+    "05113",
+    "05120",
+    "05129",
+    "05134",
+    "05145",
+    "05147",
+    "05148",
+    "05150",
+    "05172",
+    "05190",
+    "05234",
+    "05240",
+    "05250",
+    "05264",
+    "05266",
+    "05282",
+    "05284",
+    "05306",
+    "05308",
+    "05310",
+    "05313",
+    "05318",
+    "05321",
+    "05347",
+    "05353",
+    "05360",
+    "05364",
+    "05376",
+    "05380",
+    "05390",
+    "05440",
+    "05467",
+    "05475",
+    "05490",
+    "05501",
+    "05541",
+    "05543",
+    "05576",
+    "05591",
+    "05607",
+    "05615",
+    "05631",
+    "05642",
+    "05647",
+    "05649",
+    "05652",
+    "05656",
+    "05665",
+    "05667",
+    "05679",
+    "05686",
+    "05697",
+    "05756",
+    "05789",
+    "05790",
+    "05792",
+    "05809",
+    "05837",
+    "05847",
+    "05854",
+    "05856",
+    "05858",
+    "05861",
+    "05887",
+    "05893",
+    "05895",
+    "08001",
+    "08078",
+    "08137",
+    "08296",
+    "08421",
+    "08634",
+    "08675",
+    "08685",
+    "08758",
+    "08770",
+    "11001",
+    "13001",
+    "13160",
+    "13222",
+    "13244",
+    "13430",
+    "13654",
+    "13657",
+    "13670",
+    "13683",
+    "13836",
+    "13838",
+    "15001",
+    "15047",
+    "15087",
+    "15090",
+    "15092",
+    "15097",
+    "15104",
+    "15106",
+    "15109",
+    "15131",
+    "15135",
+    "15162",
+    "15172",
+    "15176",
+    "15180",
+    "15183",
+    "15185",
+    "15187",
+    "15189",
+    "15204",
+    "15212",
+    "15215",
+    "15224",
+    "15236",
+    "15238",
+    "15244",
+    "15248",
+    "15272",
+    "15276",
+    "15293",
+    "15296",
+    "15299",
+    "15322",
+    "15362",
+    "15367",
+    "15403",
+    "15407",
+    "15425",
+    "15442",
+    "15455",
+    "15466",
+    "15469",
+    "15476",
+    "15480",
+    "15491",
+    "15494",
+    "15522",
+    "15531",
+    "15533",
+    "15537",
+    "15542",
+    "15550",
+    "15572",
+    "15580",
+    "15599",
+    "15600",
+    "15621",
+    "15632",
+    "15638",
+    "15646",
+    "15660",
+    "15664",
+    "15667",
+    "15673",
+    "15681",
+    "15686",
+    "15693",
+    "15696",
+    "15720",
+    "15740",
+    "15753",
+    "15755",
+    "15757",
+    "15759",
+    "15761",
+    "15762",
+    "15763",
+    "15764",
+    "15774",
+    "15778",
+    "15790",
+    "15798",
+    "15806",
+    "15808",
+    "15810",
+    "15816",
+    "15820",
+    "15822",
+    "15835",
+    "15837",
+    "15839",
+    "15842",
+    "17001",
+    "17042",
+    "17088",
+    "17174",
+    "17272",
+    "17380",
+    "17388",
+    "17433",
+    "17444",
+    "17446",
+    "17486",
+    "17495",
+    "17513",
+    "17524",
+    "17541",
+    "17614",
+    "17616",
+    "17653",
+    "17665",
+    "17777",
+    "17867",
+    "17873",
+    "18001",
+    "18029",
+    "18205",
+    "18256",
+    "18410",
+    "18460",
+    "18479",
+    "18753",
+    "18756",
+    "18860",
+    "19001",
+    "19022",
+    "19050",
+    "19100",
+    "19110",
+    "19142",
+    "19212",
+    "19256",
+    "19290",
+    "19397",
+    "19450",
+    "19473",
+    "19532",
+    "19585",
+    "19698",
+    "19780",
+    "19785",
+    "19807",
+    "20001",
+    "20011",
+    "20013",
+    "20032",
+    "20045",
+    "20175",
+    "20178",
+    "20238",
+    "20250",
+    "20295",
+    "20383",
+    "20400",
+    "20443",
+    "20614",
+    "20621",
+    "20710",
+    "20750",
+    "20770",
+    "23001",
+    "23162",
+    "23182",
+    "23350",
+    "23500",
+    "23807",
+    "25001",
+    "25019",
+    "25040",
+    "25086",
+    "25099",
+    "25126",
+    "25148",
+    "25151",
+    "25175",
+    "25183",
+    "25200",
+    "25214",
+    "25224",
+    "25245",
+    "25258",
+    "25260",
+    "25269",
+    "25286",
+    "25288",
+    "25290",
+    "25293",
+    "25295",
+    "25297",
+    "25299",
+    "25307",
+    "25317",
+    "25322",
+    "25326",
+    "25328",
+    "25339",
+    "25377",
+    "25386",
+    "25394",
+    "25398",
+    "25407",
+    "25426",
+    "25430",
+    "25436",
+    "25473",
+    "25486",
+    "25488",
+    "25491",
+    "25513",
+    "25530",
+    "25572",
+    "25580",
+    "25592",
+    "25599",
+    "25612",
+    "25645",
+    "25718",
+    "25736",
+    "25740",
+    "25743",
+    "25754",
+    "25758",
+    "25769",
+    "25772",
+    "25777",
+    "25779",
+    "25781",
+    "25785",
+    "25797",
+    "25799",
+    "25807",
+    "25815",
+    "25817",
+    "25839",
+    "25867",
+    "25873",
+    "25875",
+    "25878",
+    "25885",
+    "25899",
+    "27001",
+    "27075",
+    "27361",
+    "27600",
+    "41001",
+    "41378",
+    "41483",
+    "41503",
+    "41518",
+    "41524",
+    "41530",
+    "41551",
+    "41615",
+    "41660",
+    "41668",
+    "41770",
+    "41791",
+    "41801",
+    "41807",
+    "41872",
+    "41885",
+    "44001",
+    "44090",
+    "44098",
+    "44110",
+    "44279",
+    "44430",
+    "44847",
+    "47001",
+    "47030",
+    "47058",
+    "47189",
+    "47288",
+    "47318",
+    "47555",
+    "47707",
+    "47745",
+    "50001",
+    "50006",
+    "50110",
+    "50150",
+    "50318",
+    "50330",
+    "50568",
+    "50573",
+    "52001",
+    "52233",
+    "52256",
+    "52352",
+    "52354",
+    "52356",
+    "52612",
+    "54001",
+    "54109",
+    "54172",
+    "54206",
+    "54239",
+    "54250",
+    "54313",
+    "54344",
+    "54377",
+    "54398",
+    "54405",
+    "54518",
+    "54520",
+    "54553",
+    "54673",
+    "54743",
+    "54800",
+    "54810",
+    "54871",
+    "54874",
+    "63001",
+    "63111",
+    "63190",
+    "63212",
+    "63272",
+    "63302",
+    "63401",
+    "63470",
+    "63548",
+    "63690",
+    "66001",
+    "66075",
+    "66088",
+    "66170",
+    "66383",
+    "66400",
+    "66440",
+    "66682",
+    "68001",
+    "68013",
+    "68020",
+    "68051",
+    "68079",
+    "68092",
+    "68121",
+    "68160",
+    "68162",
+    "68167",
+    "68176",
+    "68179",
+    "68190",
+    "68209",
+    "68211",
+    "68229",
+    "68245",
+    "68250",
+    "68264",
+    "68271",
+    "68276",
+    "68296",
+    "68298",
+    "68307",
+    "68318",
+    "68320",
+    "68322",
+    "68324",
+    "68327",
+    "68368",
+    "68370",
+    "68377",
+    "68406",
+    "68425",
+    "68432",
+    "68444",
+    "68468",
+    "68498",
+    "68500",
+    "68502",
+    "68522",
+    "68524",
+    "68533",
+    "68547",
+    "68549",
+    "68572",
+    "68573",
+    "68615",
+    "68669",
+    "68673",
+    "68682",
+    "68686",
+    "68689",
+    "68705",
+    "68755",
+    "68770",
+    "68773",
+    "68780",
+    "68820",
+    "68855",
+    "68861",
+    "68867",
+    "68872",
+    "70001",
+    "70215",
+    "73001",
+    "73024",
+    "73055",
+    "73168",
+    "73268",
+    "73319",
+    "73349",
+    "73352",
+    "73411",
+    "73449",
+    "73461",
+    "73616",
+    "73624",
+    "73686",
+    "73854",
+    "73870",
+    "76020",
+    "76036",
+    "76041",
+    "76109",
+    "76113",
+    "76122",
+    "76126",
+    "76130",
+    "76147",
+    "76233",
+    "76248",
+    "76250",
+    "76275",
+    "76306",
+    "76364",
+    "76377",
+    "76400",
+    "76497",
+    "76520",
+    "76563",
+    "76606",
+    "76622",
+    "76670",
+    "76736",
+    "76823",
+    "76863",
+    "76869",
+    "76890",
+    "81001",
+    "81220",
+    "81300",
+    "81591",
+    "81736",
+    "81794",
+    "85001",
+    "85010",
+    "85125",
+    "85136",
+    "85139",
+    "85162",
+    "85250",
+    "85300",
+    "85315",
+    "85325",
+    "85410",
+    "85440",
+    "86219",
+    "86320",
+    "86568",
+    "86571",
+    "86757",
+    "86865",
+    "86885",
+    "88564",
+    "91001",
+    "95001",
+    "97161"
+  ],
+  "residual_divipola": [
+    "05036",
+    "05101",
+    "05142",
+    "05411",
+    "05660",
+    "05890",
+    "13212",
+    "13894",
+    "15377",
+    "15516",
+    "23068",
+    "23168",
+    "25483",
+    "25658",
+    "25805",
+    "50689",
+    "52250",
+    "52254",
+    "52520",
+    "52573",
+    "52786",
+    "54125",
+    "66045",
+    "68081",
+    "68266",
+    "68679",
+    "70670",
+    "70771",
+    "73671",
+    "73861",
+    "76834",
+    "76892",
+    "85225",
+    "85279",
+    "86755",
+    "99624"
+  ],
+  "territories": [
+    {
+      "divipola": "05036",
+      "municipality": "ANGELÓPOLIS",
+      "department": "ANTIOQUIA",
+      "aliases": [
+        "angelopolis"
+      ],
+      "residual_profile_ids": [
+        "m1b:3a361f96102a818a",
+        "m1b:7f201c725486cac5"
+      ],
+      "context_profile_ids": [
+        "m1b:1ce486485fa02561",
+        "m1b:b368c199c2368591"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "0085",
+          "NOMBRE": "ALCALDÍA DE ANGELÓPOLIS",
+          "NIT": "890981493",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "036",
+          "MUNICIPIO": "ANGELÓPOLIS",
+          "DIVIPOLA DEPARTAMENTO": "05",
+          "DEPARTAMENTO": "Antioquia",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "NO",
+      "recognized_executive_owners": [],
+      "accredited_executive_profile_ids": [
+        "m1b:3a361f96102a818a",
+        "m1b:7f201c725486cac5"
+      ],
+      "observed_executive_profile_ids": [
+        "m1b:3a361f96102a818a",
+        "m1b:7f201c725486cac5"
+      ],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 0,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 205,
+        "unique_processes": 194,
+        "contract_physical_rows": 163,
+        "unique_contracts": 163
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "05036",
+        "town": "ANGELÓPOLIS",
+        "reason": "SOURCE_PAIR_REQUIRES_ADR074_ADJUDICATION",
+        "accounts": [
+          "700774284"
+        ],
+        "source_names": [
+          "ALCALDIA MUNICIPIO DE ANGELOPOLIS.",
+          "ALCALDIA MUNICIPIO DE ANGELOPOLIS.."
+        ]
+      },
+      "debt_counts": {
+        "SOURCE_NAME_VARIANT": 2
+      }
+    },
+    {
+      "divipola": "05101",
+      "municipality": "CIUDAD BOLÍVAR",
+      "department": "ANTIOQUIA",
+      "aliases": [
+        "ciudad bolivar"
+      ],
+      "residual_profile_ids": [
+        "m1b:2ae0a47a9a2f17ad"
+      ],
+      "context_profile_ids": [
+        "m1b:b18118d84653e682",
+        "m1b:c2e5c1914b2e86ec",
+        "m1b:7ac262e937e7c384",
+        "m1b:8f6c5e3189879b61",
+        "m1b:0e0c8903034b4d65"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "0246",
+          "NOMBRE": "ALCALDÍA DE CIUDAD BOLÍVAR",
+          "NIT": "890980330",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "101",
+          "MUNICIPIO": "CIUDAD BOLÍVAR",
+          "DIVIPOLA DEPARTAMENTO": "05",
+          "DEPARTAMENTO": "Antioquia",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "NO",
+      "recognized_executive_owners": [],
+      "accredited_executive_profile_ids": [],
+      "observed_executive_profile_ids": [],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 1,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [
+        "m1b:2ae0a47a9a2f17ad"
+      ],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 1,
+        "unique_processes": 1,
+        "contract_physical_rows": 1,
+        "unique_contracts": 1
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "05101",
+        "town": "CIUDAD BOLÍVAR",
+        "reason": "NO_SIGEP_ACCREDITED_EXECUTIVE_ACTIVITY",
+        "accounts": [],
+        "source_names": []
+      },
+      "debt_counts": {
+        "NON_EXECUTIVE_MUNICIPAL_UNIT": 1
+      }
+    },
+    {
+      "divipola": "05142",
+      "municipality": "CARACOLÍ",
+      "department": "ANTIOQUIA",
+      "aliases": [
+        "caracoli"
+      ],
+      "residual_profile_ids": [
+        "m1b:45a76b6f5b042fd5"
+      ],
+      "context_profile_ids": [
+        "m1b:09e94987179759a9",
+        "m1b:a7130da20c4ecc30",
+        "m1b:71c1ce15b13b9c38",
+        "m1b:b0b3d70d6cc893b9",
+        "m1b:5c815f1eac050ae8"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "0195",
+          "NOMBRE": "ALCALDÍA DE CARACOLÍ",
+          "NIT": "890981107",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "142",
+          "MUNICIPIO": "CARACOLÍ",
+          "DIVIPOLA DEPARTAMENTO": "05",
+          "DEPARTAMENTO": "Antioquia",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "NO",
+      "recognized_executive_owners": [],
+      "accredited_executive_profile_ids": [],
+      "observed_executive_profile_ids": [
+        "m1b:09e94987179759a9"
+      ],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 1,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [
+        "m1b:45a76b6f5b042fd5"
+      ],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 3,
+        "unique_processes": 2,
+        "contract_physical_rows": 2,
+        "unique_contracts": 2
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "05142",
+        "town": "CARACOLÍ",
+        "reason": "NO_SIGEP_ACCREDITED_EXECUTIVE_ACTIVITY",
+        "accounts": [],
+        "source_names": []
+      },
+      "debt_counts": {
+        "SHARED_NIT_DISTINCT_UNIT": 1
+      }
+    },
+    {
+      "divipola": "05411",
+      "municipality": "LIBORINA",
+      "department": "ANTIOQUIA",
+      "aliases": [
+        "liborina"
+      ],
+      "residual_profile_ids": [
+        "m1b:63a7110ba2345b15"
+      ],
+      "context_profile_ids": [
+        "m1b:f4829a0877017692"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "0724",
+          "NOMBRE": "ALCALDÍA DE LIBORINA",
+          "NIT": "890983672",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "411",
+          "MUNICIPIO": "LIBORINA",
+          "DIVIPOLA DEPARTAMENTO": "05",
+          "DEPARTAMENTO": "Antioquia",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "NO",
+      "recognized_executive_owners": [],
+      "accredited_executive_profile_ids": [
+        "m1b:63a7110ba2345b15"
+      ],
+      "observed_executive_profile_ids": [
+        "m1b:63a7110ba2345b15"
+      ],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 0,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 1,
+        "unique_processes": 1,
+        "contract_physical_rows": 0,
+        "unique_contracts": 0
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "05411",
+        "town": "LIBORINA",
+        "reason": "MISSING_DATASET_EVIDENCE",
+        "accounts": [
+          "702916602"
+        ],
+        "source_names": [
+          "ALCALDIA MUNICIPIO DE LIBORINA"
+        ]
+      },
+      "debt_counts": {
+        "MISSING_DATASET_EVIDENCE": 1
+      }
+    },
+    {
+      "divipola": "05660",
+      "municipality": "SAN LUIS",
+      "department": "ANTIOQUIA",
+      "aliases": [
+        "san luis"
+      ],
+      "residual_profile_ids": [
+        "m1b:0a547ff849ea37d7"
+      ],
+      "context_profile_ids": [
+        "m1b:a69678b56c9118e9",
+        "m1b:160100bd8c2c7996",
+        "m1b:0ace103cea3526b8",
+        "m1b:91200c50ee338d7c",
+        "m1b:5ba2d32947d5cd6f"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "1051",
+          "NOMBRE": "ALCALDÍA DE SAN LUIS - ANTIOQUIA",
+          "NIT": "890984376",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "660",
+          "MUNICIPIO": "SAN LUIS",
+          "DIVIPOLA DEPARTAMENTO": "05",
+          "DEPARTAMENTO": "Antioquia",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "NO",
+      "recognized_executive_owners": [],
+      "accredited_executive_profile_ids": [
+        "m1b:0a547ff849ea37d7"
+      ],
+      "observed_executive_profile_ids": [
+        "m1b:0a547ff849ea37d7"
+      ],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 0,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 359,
+        "unique_processes": 337,
+        "contract_physical_rows": 323,
+        "unique_contracts": 323
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "05660",
+        "town": "SAN LUIS",
+        "reason": "SOURCE_HAS_OTHER_ACCOUNT_OR_FISCAL_EVIDENCE",
+        "accounts": [
+          "702596610"
+        ],
+        "source_names": [
+          "MUNICIPIO DE SAN LUIS"
+        ]
+      },
+      "debt_counts": {
+        "REVIEW": 1
+      }
+    },
+    {
+      "divipola": "05890",
+      "municipality": "YOLOMBÓ",
+      "department": "ANTIOQUIA",
+      "aliases": [
+        "yolombo"
+      ],
+      "residual_profile_ids": [
+        "m1b:0aebbd34ac33af31"
+      ],
+      "context_profile_ids": [
+        "m1b:3e10641b5bf589e9",
+        "m1b:b1d7c48a476148bc",
+        "m1b:a297b6b687e2043c",
+        "m1b:8e1ff536a1daf51f",
+        "m1b:42b841a38c25152a",
+        "m1b:4e1c610bbab7261c",
+        "m1b:514d37d6bebd59a1",
+        "m1b:c5d6f4372a056399"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "1277",
+          "NOMBRE": "ALCALDÍA DE YOLOMBÓ",
+          "NIT": "890984030",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "890",
+          "MUNICIPIO": "YOLOMBÓ",
+          "DIVIPOLA DEPARTAMENTO": "05",
+          "DEPARTAMENTO": "Antioquia",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "NO",
+      "recognized_executive_owners": [],
+      "accredited_executive_profile_ids": [],
+      "observed_executive_profile_ids": [],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 1,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [
+        "m1b:0aebbd34ac33af31"
+      ],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 3,
+        "unique_processes": 3,
+        "contract_physical_rows": 3,
+        "unique_contracts": 3
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "05890",
+        "town": "YOLOMBÓ",
+        "reason": "NO_SIGEP_ACCREDITED_EXECUTIVE_ACTIVITY",
+        "accounts": [],
+        "source_names": []
+      },
+      "debt_counts": {
+        "SHARED_NIT_DISTINCT_UNIT": 1
+      }
+    },
+    {
+      "divipola": "13212",
+      "municipality": "CÓRDOBA",
+      "department": "BOLÍVAR",
+      "aliases": [
+        "cordoba"
+      ],
+      "residual_profile_ids": [
+        "m1b:4d288277af056b18"
+      ],
+      "context_profile_ids": [
+        "m1b:a6eb44eebc464d47",
+        "m1b:c16b724254f8e870",
+        "m1b:5d1fd65d00c25f30",
+        "m1b:8f99369031789455",
+        "m1b:61885b3d6cba1b68"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "0283",
+          "NOMBRE": "ALCALDÍA DE CÓRDOBA BOLÍVAR",
+          "NIT": "800038613",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "212",
+          "MUNICIPIO": "CÓRDOBA",
+          "DIVIPOLA DEPARTAMENTO": "13",
+          "DEPARTAMENTO": "Bolívar",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "NO",
+      "recognized_executive_owners": [],
+      "accredited_executive_profile_ids": [
+        "m1b:4d288277af056b18"
+      ],
+      "observed_executive_profile_ids": [
+        "m1b:4d288277af056b18"
+      ],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 0,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 1,
+        "unique_processes": 1,
+        "contract_physical_rows": 0,
+        "unique_contracts": 0
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "13212",
+        "town": "CÓRDOBA",
+        "reason": "MISSING_DATASET_EVIDENCE",
+        "accounts": [
+          "704439827"
+        ],
+        "source_names": [
+          "ALCALDIA MUNICIPAL DE CORDOBA"
+        ]
+      },
+      "debt_counts": {
+        "MISSING_DATASET_EVIDENCE": 1
+      }
+    },
+    {
+      "divipola": "13894",
+      "municipality": "ZAMBRANO",
+      "department": "BOLÍVAR",
+      "aliases": [
+        "zambrano"
+      ],
+      "residual_profile_ids": [
+        "m1b:72e5b7e662a2d2b2"
+      ],
+      "context_profile_ids": [
+        "m1b:a71a51ef63e641c4",
+        "m1b:72b50e68612cda52",
+        "m1b:b240e7506ed962b8",
+        "m1b:6e0289be2ecb3799",
+        "m1b:b847218f7b772256"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "1280",
+          "NOMBRE": "ALCALDÍA DE ZAMBRANO",
+          "NIT": "890481177",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "894",
+          "MUNICIPIO": "ZAMBRANO",
+          "DIVIPOLA DEPARTAMENTO": "13",
+          "DEPARTAMENTO": "Bolívar",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "NO",
+      "recognized_executive_owners": [],
+      "accredited_executive_profile_ids": [
+        "m1b:72e5b7e662a2d2b2"
+      ],
+      "observed_executive_profile_ids": [
+        "m1b:72e5b7e662a2d2b2"
+      ],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 0,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 3,
+        "unique_processes": 3,
+        "contract_physical_rows": 0,
+        "unique_contracts": 0
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "13894",
+        "town": "ZAMBRANO",
+        "reason": "MISSING_DATASET_EVIDENCE",
+        "accounts": [
+          "702668120"
+        ],
+        "source_names": [
+          "ALCALDIA MUNICIPAL DE ZAMBRANO"
+        ]
+      },
+      "debt_counts": {
+        "MISSING_DATASET_EVIDENCE": 1
+      }
+    },
+    {
+      "divipola": "15377",
+      "municipality": "LABRANZAGRANDE",
+      "department": "BOYACÁ",
+      "aliases": [
+        "labranzagrande"
+      ],
+      "residual_profile_ids": [
+        "m1b:e14fd287ff441a49"
+      ],
+      "context_profile_ids": [
+        "m1b:fc158b5c137998d1",
+        "m1b:d45ea15636f2c776"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "0417",
+          "NOMBRE": "ALCALDÍA DE LABRANZAGRANDE",
+          "NIT": "800099206",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "377",
+          "MUNICIPIO": "LABRANZAGRANDE",
+          "DIVIPOLA DEPARTAMENTO": "15",
+          "DEPARTAMENTO": "Boyacá",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "NO",
+      "recognized_executive_owners": [],
+      "accredited_executive_profile_ids": [],
+      "observed_executive_profile_ids": [],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 1,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [
+        "m1b:e14fd287ff441a49"
+      ],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 1,
+        "unique_processes": 1,
+        "contract_physical_rows": 1,
+        "unique_contracts": 1
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "15377",
+        "town": "LABRANZAGRANDE",
+        "reason": "NO_SIGEP_ACCREDITED_EXECUTIVE_ACTIVITY",
+        "accounts": [],
+        "source_names": []
+      },
+      "debt_counts": {
+        "NON_EXECUTIVE_MUNICIPAL_UNIT": 1
+      }
+    },
+    {
+      "divipola": "15516",
+      "municipality": "PAIPA",
+      "department": "BOYACÁ",
+      "aliases": [
+        "paipa"
+      ],
+      "residual_profile_ids": [
+        "m1b:322fdb9c4ebad27d"
+      ],
+      "context_profile_ids": [
+        "m1b:28e27f4d6bbc049a",
+        "m1b:9c1fe199df146ec8",
+        "m1b:7c37d2bd9ea5fc47",
+        "m1b:daeb0e55b9ecb6ea",
+        "m1b:ad259e6238311f7b",
+        "m1b:829ac6760cbde9fc",
+        "m1b:3943954ec10bf114",
+        "m1b:ee8048a343fb82c2",
+        "m1b:7e7ac10ea8e97357"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "0839",
+          "NOMBRE": "ALCALDÍA DE PAIPA",
+          "NIT": "891801240",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "516",
+          "MUNICIPIO": "PAIPA",
+          "DIVIPOLA DEPARTAMENTO": "15",
+          "DEPARTAMENTO": "Boyacá",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "NO",
+      "recognized_executive_owners": [],
+      "accredited_executive_profile_ids": [],
+      "observed_executive_profile_ids": [],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 1,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [
+        "m1b:322fdb9c4ebad27d"
+      ],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 55,
+        "unique_processes": 55,
+        "contract_physical_rows": 54,
+        "unique_contracts": 54
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "15516",
+        "town": "PAIPA",
+        "reason": "NO_SIGEP_ACCREDITED_EXECUTIVE_ACTIVITY",
+        "accounts": [],
+        "source_names": []
+      },
+      "debt_counts": {
+        "NON_EXECUTIVE_MUNICIPAL_UNIT": 1
+      }
+    },
+    {
+      "divipola": "23068",
+      "municipality": "AYAPEL",
+      "department": "CÓRDOBA",
+      "aliases": [
+        "ayapel"
+      ],
+      "residual_profile_ids": [
+        "m1b:f5ff565b7344cb22"
+      ],
+      "context_profile_ids": [
+        "m1b:bad3421a312e5576",
+        "m1b:968d95f634645370",
+        "m1b:b1281cf590bafb39",
+        "m1b:332b74c11bad59b3",
+        "m1b:50eb6eb54ebd6e51",
+        "m1b:5be242308cab3f2c",
+        "m1b:42ef443fcd6b0450",
+        "m1b:27e6333623ac0a67",
+        "m1b:2084995fa3924e4e",
+        "m1b:700091d90939a190",
+        "m1b:a1ad4d9217d4ec44",
+        "m1b:9bb45eb83056cf2a"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "0118",
+          "NOMBRE": "ALCALDÍA DE AYAPEL",
+          "NIT": "800096737",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "068",
+          "MUNICIPIO": "AYAPEL",
+          "DIVIPOLA DEPARTAMENTO": "23",
+          "DEPARTAMENTO": "Córdoba",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "NO",
+      "recognized_executive_owners": [],
+      "accredited_executive_profile_ids": [
+        "m1b:f5ff565b7344cb22"
+      ],
+      "observed_executive_profile_ids": [
+        "m1b:f5ff565b7344cb22"
+      ],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 0,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 1,
+        "unique_processes": 1,
+        "contract_physical_rows": 0,
+        "unique_contracts": 0
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "23068",
+        "town": "AYAPEL",
+        "reason": "MISSING_DATASET_EVIDENCE",
+        "accounts": [
+          "709519680"
+        ],
+        "source_names": [
+          "MUNICIPIO DE AYAPEL"
+        ]
+      },
+      "debt_counts": {
+        "MISSING_DATASET_EVIDENCE": 1
+      }
+    },
+    {
+      "divipola": "23168",
+      "municipality": "CHIMÁ",
+      "department": "CÓRDOBA",
+      "aliases": [
+        "chima"
+      ],
+      "residual_profile_ids": [
+        "m1b:3fbc09839c3e1448"
+      ],
+      "context_profile_ids": [
+        "m1b:66cd591c005bc977",
+        "m1b:f5ee36079d4d5837",
+        "m1b:273dc8c5c90bff48",
+        "m1b:cb3bc1b46d241027",
+        "m1b:4d9d597a3e9e1ece"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "0218",
+          "NOMBRE": "ALCALDÍA DE CHIMÁ",
+          "NIT": "800096750",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "168",
+          "MUNICIPIO": "CHIMÁ",
+          "DIVIPOLA DEPARTAMENTO": "23",
+          "DEPARTAMENTO": "Córdoba",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "NO",
+      "recognized_executive_owners": [],
+      "accredited_executive_profile_ids": [],
+      "observed_executive_profile_ids": [],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 1,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [
+        "m1b:3fbc09839c3e1448"
+      ],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 221,
+        "unique_processes": 221,
+        "contract_physical_rows": 0,
+        "unique_contracts": 0
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "23168",
+        "town": "CHIMÁ",
+        "reason": "NO_SIGEP_ACCREDITED_EXECUTIVE_ACTIVITY",
+        "accounts": [],
+        "source_names": []
+      },
+      "debt_counts": {
+        "NON_EXECUTIVE_MUNICIPAL_UNIT": 1
+      }
+    },
+    {
+      "divipola": "25483",
+      "municipality": "NARIÑO",
+      "department": "CUNDINAMARCA",
+      "aliases": [
+        "narino"
+      ],
+      "residual_profile_ids": [
+        "m1b:49814795d395e9cb"
+      ],
+      "context_profile_ids": [
+        "m1b:bceb985a2646b34f",
+        "m1b:8c9deff3f538ee50"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "0798",
+          "NOMBRE": "ALCALDÍA DE NARIÑO - CUNDINAMARCA",
+          "NIT": "890680390",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "483",
+          "MUNICIPIO": "NARIÑO",
+          "DIVIPOLA DEPARTAMENTO": "25",
+          "DEPARTAMENTO": "Cundinamarca",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "NO",
+      "recognized_executive_owners": [],
+      "accredited_executive_profile_ids": [
+        "m1b:49814795d395e9cb"
+      ],
+      "observed_executive_profile_ids": [
+        "m1b:49814795d395e9cb"
+      ],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 0,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 2,
+        "unique_processes": 1,
+        "contract_physical_rows": 1,
+        "unique_contracts": 1
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "25483",
+        "town": "NARIÑO",
+        "reason": "SOURCE_HAS_OTHER_ACCOUNT_OR_FISCAL_EVIDENCE",
+        "accounts": [
+          "704985506"
+        ],
+        "source_names": [
+          "MUNICIPIO DE NARIÑO"
+        ]
+      },
+      "debt_counts": {
+        "REVIEW": 1
+      }
+    },
+    {
+      "divipola": "25658",
+      "municipality": "SAN FRANCISCO",
+      "department": "CUNDINAMARCA",
+      "aliases": [
+        "san francisco"
+      ],
+      "residual_profile_ids": [
+        "m1b:eee8c2f016df8be2"
+      ],
+      "context_profile_ids": [
+        "m1b:b1fd76eee5b11055",
+        "m1b:1d051b4a2eb04bae",
+        "m1b:9df7bf174091a2cc",
+        "m1b:d98647dde2e6b2d8"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "1025",
+          "NOMBRE": "ALCALDÍA DE SAN FRANCISCO - CUNDINAMARCA",
+          "NIT": "899999173",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "658",
+          "MUNICIPIO": "SAN FRANCISCO",
+          "DIVIPOLA DEPARTAMENTO": "25",
+          "DEPARTAMENTO": "Cundinamarca",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "NO",
+      "recognized_executive_owners": [],
+      "accredited_executive_profile_ids": [
+        "m1b:eee8c2f016df8be2"
+      ],
+      "observed_executive_profile_ids": [
+        "m1b:eee8c2f016df8be2"
+      ],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 0,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 212,
+        "unique_processes": 204,
+        "contract_physical_rows": 177,
+        "unique_contracts": 177
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "25658",
+        "town": "SAN FRANCISCO",
+        "reason": "SOURCE_HAS_OTHER_ACCOUNT_OR_FISCAL_EVIDENCE",
+        "accounts": [
+          "704081157"
+        ],
+        "source_names": [
+          "MUNICIPIO DE SAN FRANCISCO"
+        ]
+      },
+      "debt_counts": {
+        "REVIEW": 1
+      }
+    },
+    {
+      "divipola": "25805",
+      "municipality": "TIBACUY",
+      "department": "CUNDINAMARCA",
+      "aliases": [
+        "tibacuy"
+      ],
+      "residual_profile_ids": [
+        "m1b:1a0d928af716f1cc"
+      ],
+      "context_profile_ids": [
+        "m1b:a227df41c9ade5a8",
+        "m1b:e006fe1ab34d8001"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "1183",
+          "NOMBRE": "ALCALDÍA DE TIBACUY",
+          "NIT": "800018689-5",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "805",
+          "MUNICIPIO": "TIBACUY",
+          "DIVIPOLA DEPARTAMENTO": "25",
+          "DEPARTAMENTO": "Cundinamarca",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "NO",
+      "recognized_executive_owners": [],
+      "accredited_executive_profile_ids": [
+        "m1b:1a0d928af716f1cc"
+      ],
+      "observed_executive_profile_ids": [
+        "m1b:1a0d928af716f1cc"
+      ],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 0,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 0,
+        "unique_processes": 0,
+        "contract_physical_rows": 1,
+        "unique_contracts": 1
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "25805",
+        "town": "TIBACUY",
+        "reason": "MISSING_DATASET_EVIDENCE",
+        "accounts": [
+          "704079102"
+        ],
+        "source_names": [
+          "ALCALDIA MUNICIPAL DE TIBACUY"
+        ]
+      },
+      "debt_counts": {
+        "MISSING_DATASET_EVIDENCE": 1
+      }
+    },
+    {
+      "divipola": "50689",
+      "municipality": "SAN MARTÍN",
+      "department": "META",
+      "aliases": [
+        "san martin"
+      ],
+      "residual_profile_ids": [
+        "m1b:d15b3cfa2fd667d9"
+      ],
+      "context_profile_ids": [
+        "m1b:4dc0a084b481d788",
+        "m1b:f8a06e38cd2f7245",
+        "m1b:e161c4992ec28352",
+        "m1b:d0a9b163803bb8ea",
+        "m1b:20e439cbebc318f0",
+        "m1b:6938e83172658bb9",
+        "m1b:816837ee4d906cdf"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "1056",
+          "NOMBRE": "ALCALDÍA DE SAN MARTIN DE LOS LLANOS META",
+          "NIT": "892099246-7",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "689",
+          "MUNICIPIO": "SAN MARTÍN",
+          "DIVIPOLA DEPARTAMENTO": "50",
+          "DEPARTAMENTO": "Meta",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "NO",
+      "recognized_executive_owners": [],
+      "accredited_executive_profile_ids": [],
+      "observed_executive_profile_ids": [
+        "m1b:f8a06e38cd2f7245"
+      ],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 1,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [
+        "m1b:d15b3cfa2fd667d9"
+      ],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 8,
+        "unique_processes": 8,
+        "contract_physical_rows": 0,
+        "unique_contracts": 0
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "50689",
+        "town": "SAN MARTÍN",
+        "reason": "NO_SIGEP_ACCREDITED_EXECUTIVE_ACTIVITY",
+        "accounts": [],
+        "source_names": []
+      },
+      "debt_counts": {
+        "NON_EXECUTIVE_MUNICIPAL_UNIT": 1
+      }
+    },
+    {
+      "divipola": "52250",
+      "municipality": "EL CHARCO",
+      "department": "NARIÑO",
+      "aliases": [
+        "el charco"
+      ],
+      "residual_profile_ids": [
+        "m1b:09a267719f4957bc"
+      ],
+      "context_profile_ids": [
+        "m1b:9c314244f1795f29",
+        "m1b:3a7da28b69664a5f",
+        "m1b:a7e6ef54b228c27b",
+        "m1b:75e5e03c36062c33",
+        "m1b:d2768b3fb7e5fc02",
+        "m1b:12833a7b6cc845d1"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "0536",
+          "NOMBRE": "ALCALDÍA DE EL CHARCO",
+          "NIT": "800099076",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "250",
+          "MUNICIPIO": "EL CHARCO",
+          "DIVIPOLA DEPARTAMENTO": "52",
+          "DEPARTAMENTO": "Nariño",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "NO",
+      "recognized_executive_owners": [],
+      "accredited_executive_profile_ids": [
+        "m1b:09a267719f4957bc"
+      ],
+      "observed_executive_profile_ids": [
+        "m1b:09a267719f4957bc"
+      ],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 0,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 6,
+        "unique_processes": 4,
+        "contract_physical_rows": 0,
+        "unique_contracts": 0
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "52250",
+        "town": "EL CHARCO",
+        "reason": "MISSING_DATASET_EVIDENCE",
+        "accounts": [
+          "710575226"
+        ],
+        "source_names": [
+          "ALCALDÍA MUNICIPIO DE EL CHARCO"
+        ]
+      },
+      "debt_counts": {
+        "MISSING_DATASET_EVIDENCE": 1
+      }
+    },
+    {
+      "divipola": "52254",
+      "municipality": "EL PEÑOL",
+      "department": "NARIÑO",
+      "aliases": [
+        "el penol"
+      ],
+      "residual_profile_ids": [
+        "m1b:7f903b1be4d2ed1d"
+      ],
+      "context_profile_ids": [
+        "m1b:9a0c825b14793180",
+        "m1b:87f5ba59b80ddc39"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "0551",
+          "NOMBRE": "ALCALDÍA DE EL PEÑOL - NARIÑO",
+          "NIT": "814002243",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "254",
+          "MUNICIPIO": "EL PEÑOL",
+          "DIVIPOLA DEPARTAMENTO": "52",
+          "DEPARTAMENTO": "Nariño",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "NO",
+      "recognized_executive_owners": [],
+      "accredited_executive_profile_ids": [],
+      "observed_executive_profile_ids": [],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 1,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [
+        "m1b:7f903b1be4d2ed1d"
+      ],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 3,
+        "unique_processes": 3,
+        "contract_physical_rows": 3,
+        "unique_contracts": 3
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "52254",
+        "town": "EL PEÑOL",
+        "reason": "NO_SIGEP_ACCREDITED_EXECUTIVE_ACTIVITY",
+        "accounts": [],
+        "source_names": []
+      },
+      "debt_counts": {
+        "NON_EXECUTIVE_MUNICIPAL_UNIT": 1
+      }
+    },
+    {
+      "divipola": "52520",
+      "municipality": "FRANCISCO PIZARRO",
+      "department": "NARIÑO",
+      "aliases": [
+        "francisco pizarro"
+      ],
+      "residual_profile_ids": [
+        "m1b:cb2c623f122e4184"
+      ],
+      "context_profile_ids": [
+        "m1b:fc0338bb3e06301e",
+        "m1b:c5eaf5bd90d320ff",
+        "m1b:f2e966e00b9af46a"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "0586",
+          "NOMBRE": "ALCALDÍA DE FRANCISCO PIZARRO",
+          "NIT": "800099085",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "520",
+          "MUNICIPIO": "FRANCISCO PIZARRO",
+          "DIVIPOLA DEPARTAMENTO": "52",
+          "DEPARTAMENTO": "Nariño",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "NO",
+      "recognized_executive_owners": [],
+      "accredited_executive_profile_ids": [],
+      "observed_executive_profile_ids": [],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 1,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [
+        "m1b:cb2c623f122e4184"
+      ],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 4,
+        "unique_processes": 4,
+        "contract_physical_rows": 0,
+        "unique_contracts": 0
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "52520",
+        "town": "FRANCISCO PIZARRO",
+        "reason": "NO_SIGEP_ACCREDITED_EXECUTIVE_ACTIVITY",
+        "accounts": [],
+        "source_names": []
+      },
+      "debt_counts": {
+        "NON_EXECUTIVE_MUNICIPAL_UNIT": 1
+      }
+    },
+    {
+      "divipola": "52573",
+      "municipality": "PUERRES",
+      "department": "NARIÑO",
+      "aliases": [
+        "puerres"
+      ],
+      "residual_profile_ids": [
+        "m1b:7af1f2a344829c9f",
+        "m1b:674761c654946d16"
+      ],
+      "context_profile_ids": [
+        "m1b:f22a7b89274d4fac",
+        "m1b:401aee59121c6d15"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "0453",
+          "NOMBRE": "ALCALDÍA DE PUERRES",
+          "NIT": "800099118",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "573",
+          "MUNICIPIO": "PUERRES",
+          "DIVIPOLA DEPARTAMENTO": "52",
+          "DEPARTAMENTO": "Nariño",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "NO",
+      "recognized_executive_owners": [],
+      "accredited_executive_profile_ids": [
+        "m1b:674761c654946d16"
+      ],
+      "observed_executive_profile_ids": [
+        "m1b:674761c654946d16"
+      ],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 1,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [
+        "m1b:7af1f2a344829c9f"
+      ],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 418,
+        "unique_processes": 418,
+        "contract_physical_rows": 62,
+        "unique_contracts": 62
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "52573",
+        "town": "PUERRES",
+        "reason": "MISSING_DATASET_EVIDENCE",
+        "accounts": [
+          "723887113"
+        ],
+        "source_names": [
+          "ALCALDIA MUNICIPIO DE PUERRES"
+        ]
+      },
+      "debt_counts": {
+        "NON_EXECUTIVE_MUNICIPAL_UNIT": 1,
+        "MISSING_DATASET_EVIDENCE": 1
+      }
+    },
+    {
+      "divipola": "52786",
+      "municipality": "TAMINANGO",
+      "department": "NARIÑO",
+      "aliases": [
+        "taminango"
+      ],
+      "residual_profile_ids": [
+        "m1b:3d2299f4990e38d1"
+      ],
+      "context_profile_ids": [
+        "m1b:086bd8afde5e7659",
+        "m1b:64b2ee46322f3e98",
+        "m1b:db20f12e370a66b3",
+        "m1b:d9a9f62645bc60bc"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "0496",
+          "NOMBRE": "ALCALDÍA DE TAMINANGO",
+          "NIT": "800024977",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "786",
+          "MUNICIPIO": "TAMINANGO",
+          "DIVIPOLA DEPARTAMENTO": "52",
+          "DEPARTAMENTO": "Nariño",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "NO",
+      "recognized_executive_owners": [],
+      "accredited_executive_profile_ids": [
+        "m1b:3d2299f4990e38d1"
+      ],
+      "observed_executive_profile_ids": [
+        "m1b:3d2299f4990e38d1"
+      ],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 0,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 1,
+        "unique_processes": 1,
+        "contract_physical_rows": 0,
+        "unique_contracts": 0
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "52786",
+        "town": "TAMINANGO",
+        "reason": "MISSING_DATASET_EVIDENCE",
+        "accounts": [
+          "702896176"
+        ],
+        "source_names": [
+          "ALCALDIA MUNICIPAL DE TAMINANGO - NARIÑO"
+        ]
+      },
+      "debt_counts": {
+        "MISSING_DATASET_EVIDENCE": 1
+      }
+    },
+    {
+      "divipola": "54125",
+      "municipality": "CÁCOTA",
+      "department": "NORTE DE SANTANDER",
+      "aliases": [
+        "cacota"
+      ],
+      "residual_profile_ids": [
+        "m1b:74031df767f13ba7"
+      ],
+      "context_profile_ids": [
+        "m1b:a7a2c1ac24fd3cf4",
+        "m1b:c8fe7d778b60e138"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "0170",
+          "NOMBRE": "ALCALDÍA DE CÁCOTA",
+          "NIT": "800099234",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "125",
+          "MUNICIPIO": "CÁCOTA",
+          "DIVIPOLA DEPARTAMENTO": "54",
+          "DEPARTAMENTO": "Norte de Santander",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "NO",
+      "recognized_executive_owners": [],
+      "accredited_executive_profile_ids": [
+        "m1b:74031df767f13ba7"
+      ],
+      "observed_executive_profile_ids": [
+        "m1b:74031df767f13ba7"
+      ],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 0,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 1,
+        "unique_processes": 1,
+        "contract_physical_rows": 0,
+        "unique_contracts": 0
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "54125",
+        "town": "CÁCOTA",
+        "reason": "MISSING_DATASET_EVIDENCE",
+        "accounts": [
+          "704930403"
+        ],
+        "source_names": [
+          "MUNICIPIO DE CACOTA"
+        ]
+      },
+      "debt_counts": {
+        "MISSING_DATASET_EVIDENCE": 1
+      }
+    },
+    {
+      "divipola": "66045",
+      "municipality": "APÍA",
+      "department": "RISARALDA",
+      "aliases": [
+        "apia"
+      ],
+      "residual_profile_ids": [
+        "m1b:b270b31344581daa"
+      ],
+      "context_profile_ids": [
+        "m1b:e9b2d7028b48af7b",
+        "m1b:aa31a8f06bd14856",
+        "m1b:714cdff01cd04f54",
+        "m1b:6bc43b7ac7460f2e",
+        "m1b:e296eff169eb4ad3",
+        "m1b:6e6857513238b743"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "0094",
+          "NOMBRE": "ALCALDÍA DE APÍA",
+          "NIT": "891480025-5",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "045",
+          "MUNICIPIO": "APÍA",
+          "DIVIPOLA DEPARTAMENTO": "66",
+          "DEPARTAMENTO": "Risaralda",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "NO",
+      "recognized_executive_owners": [],
+      "accredited_executive_profile_ids": [],
+      "observed_executive_profile_ids": [
+        "m1b:aa31a8f06bd14856"
+      ],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 1,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [
+        "m1b:b270b31344581daa"
+      ],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 16,
+        "unique_processes": 16,
+        "contract_physical_rows": 0,
+        "unique_contracts": 0
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "66045",
+        "town": "APÍA",
+        "reason": "NO_SIGEP_ACCREDITED_EXECUTIVE_ACTIVITY",
+        "accounts": [],
+        "source_names": []
+      },
+      "debt_counts": {
+        "NON_EXECUTIVE_MUNICIPAL_UNIT": 1
+      }
+    },
+    {
+      "divipola": "68081",
+      "municipality": "BARRANCABERMEJA",
+      "department": "SANTANDER",
+      "aliases": [
+        "barrancabermeja"
+      ],
+      "residual_profile_ids": [
+        "m1b:f00c5c56c65c746b"
+      ],
+      "context_profile_ids": [
+        "m1b:fb2a130478c3cf06",
+        "m1b:575cb49f57025fde",
+        "m1b:7182e0f68dcd01b3",
+        "m1b:9625aadb387dfc6f",
+        "m1b:e5cf8f555202560c",
+        "m1b:f02a621566b3232f",
+        "m1b:cfa66f4e1f19f515",
+        "m1b:69a77bffea1fed02",
+        "m1b:a278960ac87c338d",
+        "m1b:0a648df073aef9d1",
+        "m1b:bd1566b325358a25",
+        "m1b:d14806626795bd21",
+        "m1b:7890036d8f6ad679",
+        "m1b:a5a152a2971fb77f",
+        "m1b:692bfec6f61bd81c",
+        "m1b:31bf3c6c8eed2dcc",
+        "m1b:f7ccf181c3a5a44d",
+        "m1b:60a25c7e9bd454f6",
+        "m1b:0c52c2cdd98928ab",
+        "m1b:5c2f9825483ebda9",
+        "m1b:1275c2bb3382cb3e",
+        "m1b:57381076f646af50",
+        "m1b:1d429df4e9629f6c",
+        "m1b:28d4312cd158e983",
+        "m1b:bf8f7ec81e853485",
+        "m1b:384a15d484a838f8",
+        "m1b:32928ac0440a92de",
+        "m1b:c326326991cf4c8e"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "0329",
+          "NOMBRE": "ALCALDÍA DE BARRANCABERMEJA",
+          "NIT": "890201900-6",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "081",
+          "MUNICIPIO": "BARRANCABERMEJA",
+          "DIVIPOLA DEPARTAMENTO": "68",
+          "DEPARTAMENTO": "Santander",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "YES",
+      "recognized_executive_owners": [
+        "ALCALDIA DISTRITAL BARRANCABERMEJA"
+      ],
+      "accredited_executive_profile_ids": [],
+      "observed_executive_profile_ids": [
+        "m1b:575cb49f57025fde"
+      ],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 1,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [
+        "m1b:f00c5c56c65c746b"
+      ],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 374,
+        "unique_processes": 372,
+        "contract_physical_rows": 334,
+        "unique_contracts": 334
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "68081",
+        "town": "BARRANCABERMEJA",
+        "reason": "NO_SIGEP_ACCREDITED_EXECUTIVE_ACTIVITY",
+        "accounts": [],
+        "source_names": []
+      },
+      "debt_counts": {
+        "NON_EXECUTIVE_MUNICIPAL_UNIT": 1
+      }
+    },
+    {
+      "divipola": "68266",
+      "municipality": "ENCISO",
+      "department": "SANTANDER",
+      "aliases": [
+        "enciso"
+      ],
+      "residual_profile_ids": [
+        "m1b:f48776060f0a9d83"
+      ],
+      "context_profile_ids": [
+        "m1b:bf8bbf8ba5a36ea7",
+        "m1b:2b87b57f7314cd43"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "0571",
+          "NOMBRE": "ALCALDÍA DE ENCISO",
+          "NIT": "890209666",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "266",
+          "MUNICIPIO": "ENCISO",
+          "DIVIPOLA DEPARTAMENTO": "68",
+          "DEPARTAMENTO": "Santander",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "NO",
+      "recognized_executive_owners": [],
+      "accredited_executive_profile_ids": [
+        "m1b:f48776060f0a9d83"
+      ],
+      "observed_executive_profile_ids": [
+        "m1b:f48776060f0a9d83"
+      ],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 0,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 19,
+        "unique_processes": 19,
+        "contract_physical_rows": 0,
+        "unique_contracts": 0
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "68266",
+        "town": "ENCISO",
+        "reason": "MISSING_DATASET_EVIDENCE",
+        "accounts": [
+          "704322999"
+        ],
+        "source_names": [
+          "ALCALDIA DE ENCISO SANTANDER"
+        ]
+      },
+      "debt_counts": {
+        "MISSING_DATASET_EVIDENCE": 1
+      }
+    },
+    {
+      "divipola": "68679",
+      "municipality": "SAN GIL",
+      "department": "SANTANDER",
+      "aliases": [
+        "san gil"
+      ],
+      "residual_profile_ids": [
+        "m1b:e765be7b801afb7d"
+      ],
+      "context_profile_ids": [
+        "m1b:9e88fe4089d1b533",
+        "m1b:717abd5aeef6d022",
+        "m1b:5e6257ec7816e45b",
+        "m1b:b86eb7393309d583",
+        "m1b:afc9ab0bac1f313f",
+        "m1b:ef1623509928079f",
+        "m1b:71a2bfac42118839",
+        "m1b:98d7d1d61bbaea80",
+        "m1b:b72aee5205bd8fe4",
+        "m1b:9b51d17556b57840",
+        "m1b:0ee45b2c4219bf0f",
+        "m1b:b5f3f3be93adc2d2",
+        "m1b:b01980fa24eb1be3",
+        "m1b:a9337a57bc2181f2",
+        "m1b:b7953b8339b17bc6",
+        "m1b:5041b130b1041ac1",
+        "m1b:6fe3e6def08cd9e1",
+        "m1b:6d53abc28b3a4a1a",
+        "m1b:4f3b158d09b71afa"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "0473",
+          "NOMBRE": "ALCALDÍA DE SAN GIL",
+          "NIT": "804001425",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "679",
+          "MUNICIPIO": "SAN GIL",
+          "DIVIPOLA DEPARTAMENTO": "68",
+          "DEPARTAMENTO": "Santander",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "YES",
+      "recognized_executive_owners": [
+        "ALCALDIA MUNICIPIO DE SAN GIL - SANTANDER"
+      ],
+      "accredited_executive_profile_ids": [],
+      "observed_executive_profile_ids": [
+        "m1b:9e88fe4089d1b533"
+      ],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 1,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [
+        "m1b:e765be7b801afb7d"
+      ],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 12,
+        "unique_processes": 12,
+        "contract_physical_rows": 12,
+        "unique_contracts": 12
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "68679",
+        "town": "SAN GIL",
+        "reason": "NO_SIGEP_ACCREDITED_EXECUTIVE_ACTIVITY",
+        "accounts": [],
+        "source_names": []
+      },
+      "debt_counts": {
+        "NON_EXECUTIVE_MUNICIPAL_UNIT": 1
+      }
+    },
+    {
+      "divipola": "70670",
+      "municipality": "SAMPUÉS",
+      "department": "SUCRE",
+      "aliases": [
+        "sampues"
+      ],
+      "residual_profile_ids": [
+        "m1b:9127e4bb733e6892"
+      ],
+      "context_profile_ids": [
+        "m1b:e489b7f11778af9b",
+        "m1b:8f354921114893aa",
+        "m1b:8c5b321420bd176d",
+        "m1b:8bd8d72c6ecd21d9",
+        "m1b:631e4c2a86ac552f",
+        "m1b:2f2b0225f163fd2a",
+        "m1b:ed6da654bb64f56a",
+        "m1b:fb88737e925b57c3",
+        "m1b:29d7657c66fb5a5d"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "0997",
+          "NOMBRE": "ALCALDÍA DE SAMPUÉS",
+          "NIT": "892280055",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "670",
+          "MUNICIPIO": "SAMPUÉS",
+          "DIVIPOLA DEPARTAMENTO": "70",
+          "DEPARTAMENTO": "Sucre",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "NO",
+      "recognized_executive_owners": [],
+      "accredited_executive_profile_ids": [
+        "m1b:9127e4bb733e6892"
+      ],
+      "observed_executive_profile_ids": [
+        "m1b:9127e4bb733e6892"
+      ],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 0,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 1,
+        "unique_processes": 1,
+        "contract_physical_rows": 0,
+        "unique_contracts": 0
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "70670",
+        "town": "SAMPUÉS",
+        "reason": "MISSING_DATASET_EVIDENCE",
+        "accounts": [
+          "700043086"
+        ],
+        "source_names": [
+          "ALCALDIA MUNICIPAL DE SAMPUES SUCRE"
+        ]
+      },
+      "debt_counts": {
+        "MISSING_DATASET_EVIDENCE": 1
+      }
+    },
+    {
+      "divipola": "70771",
+      "municipality": "SUCRE",
+      "department": "SUCRE",
+      "aliases": [
+        "sucre"
+      ],
+      "residual_profile_ids": [
+        "m1b:6ee3434e08670663"
+      ],
+      "context_profile_ids": [
+        "m1b:1f9bc0bf96e6e3a2",
+        "m1b:1edc97643bed66ad",
+        "m1b:57eca727daabeb54",
+        "m1b:8c1fcc47714dd63d",
+        "m1b:7c2cdf165f5541a8",
+        "m1b:bfe5f3525c058e5f",
+        "m1b:94f54a41e704a40f",
+        "m1b:72890fe47e158fde",
+        "m1b:6ec2accda4f3a244"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "1152",
+          "NOMBRE": "ALCALDÍA DE SUCRE - SUCRE",
+          "NIT": "892280061",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "771",
+          "MUNICIPIO": "SUCRE",
+          "DIVIPOLA DEPARTAMENTO": "70",
+          "DEPARTAMENTO": "Sucre",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "NO",
+      "recognized_executive_owners": [],
+      "accredited_executive_profile_ids": [
+        "m1b:6ee3434e08670663"
+      ],
+      "observed_executive_profile_ids": [
+        "m1b:6ee3434e08670663"
+      ],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 0,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 0,
+        "unique_processes": 0,
+        "contract_physical_rows": 1,
+        "unique_contracts": 1
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "70771",
+        "town": "SUCRE",
+        "reason": "MISSING_DATASET_EVIDENCE",
+        "accounts": [
+          "705855385"
+        ],
+        "source_names": [
+          "SUCRE - ALCALDIA MUNICIPIO DE SUCRE"
+        ]
+      },
+      "debt_counts": {
+        "MISSING_DATASET_EVIDENCE": 1
+      }
+    },
+    {
+      "divipola": "73671",
+      "municipality": "SALDAÑA",
+      "department": "TOLIMA",
+      "aliases": [
+        "saldana"
+      ],
+      "residual_profile_ids": [
+        "m1b:77c83a30dfc0cc43"
+      ],
+      "context_profile_ids": [
+        "m1b:f37c9280214a7a46",
+        "m1b:d67fdd6fba997232",
+        "m1b:4899e32adb7283e7",
+        "m1b:e6cde90e298d8137"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "0992",
+          "NOMBRE": "ALCALDÍA DE SALDAÑA",
+          "NIT": "800100140-4",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "671",
+          "MUNICIPIO": "SALDAÑA",
+          "DIVIPOLA DEPARTAMENTO": "73",
+          "DEPARTAMENTO": "Tolima",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "NO",
+      "recognized_executive_owners": [],
+      "accredited_executive_profile_ids": [
+        "m1b:77c83a30dfc0cc43"
+      ],
+      "observed_executive_profile_ids": [
+        "m1b:77c83a30dfc0cc43"
+      ],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 0,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 1,
+        "unique_processes": 1,
+        "contract_physical_rows": 0,
+        "unique_contracts": 0
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "73671",
+        "town": "SALDAÑA",
+        "reason": "MISSING_DATASET_EVIDENCE",
+        "accounts": [
+          "704584382"
+        ],
+        "source_names": [
+          "MUNICIPIO DE SALDAÑA"
+        ]
+      },
+      "debt_counts": {
+        "MISSING_DATASET_EVIDENCE": 1
+      }
+    },
+    {
+      "divipola": "73861",
+      "municipality": "VENADILLO",
+      "department": "TOLIMA",
+      "aliases": [
+        "venadillo"
+      ],
+      "residual_profile_ids": [
+        "m1b:c6fd1a16cb48fa57"
+      ],
+      "context_profile_ids": [
+        "m1b:ac62865a1708053e",
+        "m1b:b38ee28627a5014c",
+        "m1b:9bc05144a1c7848f"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "1243",
+          "NOMBRE": "ALCALDÍA DE VENADILLO",
+          "NIT": "800100144",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "861",
+          "MUNICIPIO": "VENADILLO",
+          "DIVIPOLA DEPARTAMENTO": "73",
+          "DEPARTAMENTO": "Tolima",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "NO",
+      "recognized_executive_owners": [],
+      "accredited_executive_profile_ids": [
+        "m1b:c6fd1a16cb48fa57"
+      ],
+      "observed_executive_profile_ids": [
+        "m1b:c6fd1a16cb48fa57"
+      ],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 0,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 7,
+        "unique_processes": 7,
+        "contract_physical_rows": 0,
+        "unique_contracts": 0
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "73861",
+        "town": "VENADILLO",
+        "reason": "MISSING_DATASET_EVIDENCE",
+        "accounts": [
+          "703840447"
+        ],
+        "source_names": [
+          "MUNICIPIO DE VENADILLO"
+        ]
+      },
+      "debt_counts": {
+        "MISSING_DATASET_EVIDENCE": 1
+      }
+    },
+    {
+      "divipola": "76834",
+      "municipality": "TULUÁ",
+      "department": "VALLE DEL CAUCA",
+      "aliases": [
+        "tulua"
+      ],
+      "residual_profile_ids": [
+        "m1b:99fb8742dee375c9"
+      ],
+      "context_profile_ids": [
+        "m1b:f15a60ada70f2582",
+        "m1b:ddbb7114fda912e6",
+        "m1b:36eaf8d19daa52ae",
+        "m1b:c75653e3ef3e84b5",
+        "m1b:74b5ffc4b1723349",
+        "m1b:3769a3f4751c84ef",
+        "m1b:e4fcdda8a84d08a2",
+        "m1b:8190788fd96e1e2c",
+        "m1b:f3849fdd1bb5f016",
+        "m1b:502fe9befcfc7380",
+        "m1b:a83f2ff7f9282282",
+        "m1b:face89d1dead7d9b",
+        "m1b:4df4dc6bd216e54a",
+        "m1b:73e5e5e1697db60d",
+        "m1b:81357438982b5937",
+        "m1b:ffd24f58e3499696",
+        "m1b:810fa26a2d0ffff6",
+        "m1b:91596c4e0a8acd73",
+        "m1b:3c170912af38d471",
+        "m1b:40242d758bbea231",
+        "m1b:df90c1977755e9a0",
+        "m1b:e1d2b7ca212d157e",
+        "m1b:9a5c616e2fb30c23",
+        "m1b:d7e2bad6d89cea37",
+        "m1b:55500ccace46f242",
+        "m1b:a4861fa80a267f5a",
+        "m1b:12b0708ea34b7c01",
+        "m1b:02e935f7c6e30281",
+        "m1b:eae14f3426eef8f9",
+        "m1b:890ff841c688d9ec",
+        "m1b:4433ad3db9d80e5d",
+        "m1b:40cfe98d1bbf694a",
+        "m1b:5da34cd8c722429b",
+        "m1b:a8813a9615ee44db",
+        "m1b:683db5ddd24b5f01",
+        "m1b:b7f8cd21d3fcbe29",
+        "m1b:4a261b7a5a479745",
+        "m1b:6ea080e534ebb8a8",
+        "m1b:3bdf3a6855240dfe",
+        "m1b:fd121622572f7504",
+        "m1b:8923ca8a04dbc24b",
+        "m1b:bce989c40262911e",
+        "m1b:c8eb443de8f0fc5b",
+        "m1b:18c710c43c378882"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "0502",
+          "NOMBRE": "ALCALDÍA DE TULUÁ",
+          "NIT": "891900272-1",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "834",
+          "MUNICIPIO": "TULUÁ",
+          "DIVIPOLA DEPARTAMENTO": "76",
+          "DEPARTAMENTO": "Valle del Cauca",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "NO",
+      "recognized_executive_owners": [],
+      "accredited_executive_profile_ids": [],
+      "observed_executive_profile_ids": [
+        "m1b:8190788fd96e1e2c",
+        "m1b:f3849fdd1bb5f016",
+        "m1b:502fe9befcfc7380",
+        "m1b:a83f2ff7f9282282",
+        "m1b:face89d1dead7d9b",
+        "m1b:4df4dc6bd216e54a",
+        "m1b:73e5e5e1697db60d",
+        "m1b:81357438982b5937",
+        "m1b:ffd24f58e3499696",
+        "m1b:810fa26a2d0ffff6",
+        "m1b:91596c4e0a8acd73",
+        "m1b:3c170912af38d471",
+        "m1b:40242d758bbea231",
+        "m1b:df90c1977755e9a0",
+        "m1b:e1d2b7ca212d157e",
+        "m1b:9a5c616e2fb30c23",
+        "m1b:c8eb443de8f0fc5b",
+        "m1b:18c710c43c378882"
+      ],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 1,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [
+        "m1b:99fb8742dee375c9"
+      ],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 164,
+        "unique_processes": 160,
+        "contract_physical_rows": 130,
+        "unique_contracts": 130
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "76834",
+        "town": "TULUÁ",
+        "reason": "NO_SIGEP_ACCREDITED_EXECUTIVE_ACTIVITY",
+        "accounts": [],
+        "source_names": []
+      },
+      "debt_counts": {
+        "NON_EXECUTIVE_MUNICIPAL_UNIT": 1
+      }
+    },
+    {
+      "divipola": "76892",
+      "municipality": "YUMBO",
+      "department": "VALLE DEL CAUCA",
+      "aliases": [
+        "yumbo"
+      ],
+      "residual_profile_ids": [
+        "m1b:9412e9aa29252bf0",
+        "m1b:9b247d46a1c64682"
+      ],
+      "context_profile_ids": [
+        "m1b:4168773bd15238f1",
+        "m1b:80000fc072bca03b",
+        "m1b:8c2b09451fd58d21",
+        "m1b:8d6ff9a7aecdb29e",
+        "m1b:2ff0b9cc3a93a4fb",
+        "m1b:32c3ae23da0117da",
+        "m1b:06db12b4fa23a6c3",
+        "m1b:bc053b8dd957d9b0",
+        "m1b:03915acc5ea06a46",
+        "m1b:828c4679e42c9a53",
+        "m1b:94ff839864339f3a",
+        "m1b:3fae5b3bcd72bb17",
+        "m1b:d6e211116e9e5c02",
+        "m1b:5b357cec1d1e802e",
+        "m1b:95aa9ac40e64b15f",
+        "m1b:1d52ce8de919afbf",
+        "m1b:602a2bc093166d67"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "0511",
+          "NOMBRE": "ALCALDÍA DE YUMBO",
+          "NIT": "890399025-6",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "892",
+          "MUNICIPIO": "YUMBO",
+          "DIVIPOLA DEPARTAMENTO": "76",
+          "DEPARTAMENTO": "Valle del Cauca",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "YES",
+      "recognized_executive_owners": [
+        "MUNICIPIO DE YUMBO VALLE"
+      ],
+      "accredited_executive_profile_ids": [],
+      "observed_executive_profile_ids": [
+        "m1b:80000fc072bca03b"
+      ],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 2,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [
+        "m1b:9412e9aa29252bf0",
+        "m1b:9b247d46a1c64682"
+      ],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 457,
+        "unique_processes": 457,
+        "contract_physical_rows": 443,
+        "unique_contracts": 443
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "76892",
+        "town": "YUMBO",
+        "reason": "NO_SIGEP_ACCREDITED_EXECUTIVE_ACTIVITY",
+        "accounts": [],
+        "source_names": []
+      },
+      "debt_counts": {
+        "NON_EXECUTIVE_MUNICIPAL_UNIT": 2
+      }
+    },
+    {
+      "divipola": "85225",
+      "municipality": "NUNCHÍA",
+      "department": "CASANARE",
+      "aliases": [
+        "nunchia"
+      ],
+      "residual_profile_ids": [
+        "m1b:0f9f0f650a592b08"
+      ],
+      "context_profile_ids": [
+        "m1b:1e93d3feb566bc8d",
+        "m1b:41247333943cde77",
+        "m1b:1a9a4a697392ef76",
+        "m1b:4aee2d669acf3d7c"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "0812",
+          "NOMBRE": "ALCALDÍA DE NUNCHÍA",
+          "NIT": "800099425",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "225",
+          "MUNICIPIO": "NUNCHÍA",
+          "DIVIPOLA DEPARTAMENTO": "85",
+          "DEPARTAMENTO": "Casanare",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "NO",
+      "recognized_executive_owners": [],
+      "accredited_executive_profile_ids": [
+        "m1b:0f9f0f650a592b08"
+      ],
+      "observed_executive_profile_ids": [
+        "m1b:0f9f0f650a592b08"
+      ],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 0,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 3,
+        "unique_processes": 1,
+        "contract_physical_rows": 0,
+        "unique_contracts": 0
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "85225",
+        "town": "NUNCHÍA",
+        "reason": "MISSING_DATASET_EVIDENCE",
+        "accounts": [
+          "702736570"
+        ],
+        "source_names": [
+          "ALCALDIA MUNICIPAL DE NUNCHIA"
+        ]
+      },
+      "debt_counts": {
+        "MISSING_DATASET_EVIDENCE": 1
+      }
+    },
+    {
+      "divipola": "85279",
+      "municipality": "RECETOR",
+      "department": "CASANARE",
+      "aliases": [
+        "recetor"
+      ],
+      "residual_profile_ids": [
+        "m1b:35673f9c1fd06446"
+      ],
+      "context_profile_ids": [
+        "m1b:b14ee1eebd27fbf9"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "0954",
+          "NOMBRE": "ALCALDÍA DE RECETOR",
+          "NIT": "800103661",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "279",
+          "MUNICIPIO": "RECETOR",
+          "DIVIPOLA DEPARTAMENTO": "85",
+          "DEPARTAMENTO": "Casanare",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "NO",
+      "recognized_executive_owners": [],
+      "accredited_executive_profile_ids": [
+        "m1b:35673f9c1fd06446"
+      ],
+      "observed_executive_profile_ids": [
+        "m1b:35673f9c1fd06446"
+      ],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 0,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 1,
+        "unique_processes": 1,
+        "contract_physical_rows": 0,
+        "unique_contracts": 0
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "85279",
+        "town": "RECETOR",
+        "reason": "MISSING_DATASET_EVIDENCE",
+        "accounts": [
+          "703709261"
+        ],
+        "source_names": [
+          "ALCALDÍA MUNICIPAL DE RECETOR"
+        ]
+      },
+      "debt_counts": {
+        "MISSING_DATASET_EVIDENCE": 1
+      }
+    },
+    {
+      "divipola": "86755",
+      "municipality": "SAN FRANCISCO",
+      "department": "PUTUMAYO",
+      "aliases": [
+        "san francisco"
+      ],
+      "residual_profile_ids": [
+        "m1b:8593b0835ad74469"
+      ],
+      "context_profile_ids": [
+        "m1b:70f5402a8734a571",
+        "m1b:293da582145f20e3",
+        "m1b:53757eec745f6898",
+        "m1b:8bbc4bdbebc48fad"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "1026",
+          "NOMBRE": "ALCALDÍA DE SAN FRANCISCO - PUTUMAYO",
+          "NIT": "800102903 -6",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "755",
+          "MUNICIPIO": "SAN FRANCISCO",
+          "DIVIPOLA DEPARTAMENTO": "86",
+          "DEPARTAMENTO": "Putumayo",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "NO",
+      "recognized_executive_owners": [],
+      "accredited_executive_profile_ids": [
+        "m1b:8593b0835ad74469"
+      ],
+      "observed_executive_profile_ids": [
+        "m1b:8593b0835ad74469"
+      ],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 0,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 1,
+        "unique_processes": 1,
+        "contract_physical_rows": 0,
+        "unique_contracts": 0
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "86755",
+        "town": "SAN FRANCISCO",
+        "reason": "MISSING_DATASET_EVIDENCE",
+        "accounts": [
+          "712078021"
+        ],
+        "source_names": [
+          "MUNICIPIO DE SAN FRANCISCO"
+        ]
+      },
+      "debt_counts": {
+        "REVIEW": 1
+      }
+    },
+    {
+      "divipola": "99624",
+      "municipality": "SANTA ROSALÍA",
+      "department": "VICHADA",
+      "aliases": [
+        "santa rosalia"
+      ],
+      "residual_profile_ids": [
+        "m1b:56b66168169c3900"
+      ],
+      "context_profile_ids": [
+        "m1b:de0fa4f9352edfae"
+      ],
+      "HAS_EXECUTIVE": "YES",
+      "has_executive_basis": "Official SIGEP legal existence or scoped adjudication; not proof of recent SECOP executive activity.",
+      "executive_sigep_evidence": [
+        {
+          "CÓDIGO SIGEP": "1098",
+          "NOMBRE": "ALCALDÍA DE SANTA ROSALÍA",
+          "NIT": "800103318",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "624",
+          "MUNICIPIO": "SANTA ROSALÍA",
+          "DIVIPOLA DEPARTAMENTO": "99",
+          "DEPARTAMENTO": "Vichada",
+          "ESTADO": "Activa"
+        }
+      ],
+      "EXECUTIVE_ALREADY_RECOGNIZED": "NO",
+      "recognized_executive_owners": [],
+      "accredited_executive_profile_ids": [
+        "m1b:56b66168169c3900"
+      ],
+      "observed_executive_profile_ids": [
+        "m1b:56b66168169c3900"
+      ],
+      "OTHER_MUNICIPAL_BUYER_UNITS": 0,
+      "other_municipal_count_basis": "Distinct accredited nonexecutive observation accounts; provisional, not a certified logical-unit census.",
+      "other_municipal_profile_ids": [],
+      "uncovered_cohort_volumes": {
+        "process_physical_rows": 6,
+        "unique_processes": 1,
+        "contract_physical_rows": 0,
+        "unique_contracts": 0
+      },
+      "m0_executive_proposal_rejection": {
+        "code": "99624",
+        "town": "SANTA ROSALÍA",
+        "reason": "MISSING_DATASET_EVIDENCE",
+        "accounts": [
+          "713103521"
+        ],
+        "source_names": [
+          "ALCALDIA MUNICIPAL DE SANTA ROSALIA"
+        ]
+      },
+      "debt_counts": {
+        "MISSING_DATASET_EVIDENCE": 1
+      }
+    }
+  ]
+}
