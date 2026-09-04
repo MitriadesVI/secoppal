@@ -19,6 +19,7 @@
     "NOT_TESTED": 30,
     "AMBIGUOUS": 10
   },
+  "acceptance_policy": "At least 100 exact-source accredited rows; 100% primary agreement; zero primary ambiguity; at least 95% corroboration by the independent name/department witness; zero contradictions in either check. Scoped to already accredited executive BuyerUnits.",
   "verdict": "ACCEPT_SCOPED_AUTHORITY",
   "limits": "M0 selected most affiliations using location codes: primary agreement has incorporation bias. The secondary witness ignores those codes; ambiguous witnesses are reported, not counted as matches. Neither check certifies arbitrary directory rows or creates BuyerUnits.",
   "rows": [

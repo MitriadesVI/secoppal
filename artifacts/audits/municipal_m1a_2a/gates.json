@@ -1,0 +1,500 @@
+{
+  "status": "PASS",
+  "head_before": "bd60e399a0b73c66fad60299b992729ae7b850fa",
+  "M1A_RETRY_2_READY": "YES",
+  "production_promoted": 0,
+  "baseline_correction": {
+    "status": "PASS",
+    "exact_alias_checks": 28,
+    "new_wrong_owners": [],
+    "new_multi_owner": {},
+    "new_scan_cross_owner": [],
+    "scan_surfaces": 42790,
+    "excluded_scan_evidence": [
+      {
+        "alias": "alcaldia de turbaco",
+        "foreign_name": "ALCALDiA DE TURBACO 2",
+        "account": "708966437",
+        "nit_evidence": "8904811490",
+        "dataset": "directory"
+      },
+      {
+        "alias": "alcaldia municipal de turbaco",
+        "foreign_name": "ALCALDIA MUNICIPAL DE TURBACO 1",
+        "account": "706283421",
+        "nit_evidence": "890481149",
+        "dataset": "directory"
+      },
+      {
+        "alias": "alcaldía municipal de turbaco",
+        "foreign_name": "ALCALDIA MUNICIPAL DE TURBACO 1",
+        "account": "706283421",
+        "nit_evidence": "890481149",
+        "dataset": "directory"
+      },
+      {
+        "alias": "alcaldía de turbaco",
+        "foreign_name": "ALCALDiA DE TURBACO 2",
+        "account": "708966437",
+        "nit_evidence": "8904811490",
+        "dataset": "directory"
+      }
+    ],
+    "no_nit_merge": true,
+    "unrelated_units_preserved": true,
+    "old_bindings_preserved": true,
+    "production_promoted": 0,
+    "manual_duplicate_units_removed": 1,
+    "idempotent": true,
+    "multi_owner_keys_removed": 4
+  },
+  "post_matrix": {
+    "baseline": {
+      "total_queries": 4704,
+      "municipalities": 1103,
+      "counts": {
+        "CORRECT_BUYER": 264,
+        "CLARIFICATION": 4440,
+        "FAIL_CLOSED": 0,
+        "REVIEW": 0,
+        "WRONG_BUYER": 0,
+        "WRONG_DIVIPOLA": 0
+      },
+      "status": "PASS"
+    },
+    "candidate": {
+      "total_queries": 4704,
+      "municipalities": 1103,
+      "counts": {
+        "CORRECT_BUYER": 2132,
+        "CLARIFICATION": 2572,
+        "FAIL_CLOSED": 0,
+        "REVIEW": 0,
+        "WRONG_BUYER": 0,
+        "WRONG_DIVIPOLA": 0
+      },
+      "status": "PASS"
+    }
+  },
+  "totals": {
+    "TOTAL": 9408,
+    "CORRECT_BUYER": 2396,
+    "CLARIFICATION": 7012,
+    "FAIL_CLOSED": 0,
+    "REVIEW": 0,
+    "WRONG_BUYER": 0,
+    "WRONG_DIVIPOLA": 0
+  },
+  "matrix_changes": [
+    {
+      "catalog": "baseline",
+      "query": "municipio de TURBACO",
+      "code": "13836",
+      "old_owner": "ALCALDIA DE TURBACO BOLIVAR",
+      "new_owner": "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "baseline",
+      "query": "alcaldía de TURBACO",
+      "code": "13836",
+      "old_owner": "ALCALDIA DE TURBACO BOLIVAR",
+      "new_owner": "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "baseline",
+      "query": "contratos del municipio de TURBACO",
+      "code": "13836",
+      "old_owner": "ALCALDIA DE TURBACO BOLIVAR",
+      "new_owner": "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "baseline",
+      "query": "contratos de la alcaldía de TURBACO",
+      "code": "13836",
+      "old_owner": "ALCALDIA DE TURBACO BOLIVAR",
+      "new_owner": "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "baseline",
+      "query": "municipio de OCAÑA",
+      "code": "54498",
+      "old_owner": "ALCALDIA MUNICIPAL DE OCAÑA",
+      "new_owner": "ALCALDIA MUNICIPAL DE OCAÑA",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "baseline",
+      "query": "alcaldía de OCAÑA",
+      "code": "54498",
+      "old_owner": "ALCALDIA MUNICIPAL DE OCAÑA",
+      "new_owner": "ALCALDIA MUNICIPAL DE OCAÑA",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "baseline",
+      "query": "contratos del municipio de OCAÑA",
+      "code": "54498",
+      "old_owner": "ALCALDIA MUNICIPAL DE OCAÑA",
+      "new_owner": "ALCALDIA MUNICIPAL DE OCAÑA",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "baseline",
+      "query": "contratos de la alcaldía de OCAÑA",
+      "code": "54498",
+      "old_owner": "ALCALDIA MUNICIPAL DE OCAÑA",
+      "new_owner": "ALCALDIA MUNICIPAL DE OCAÑA",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "baseline",
+      "query": "municipio de CALARCÁ",
+      "code": "63130",
+      "old_owner": "ALCALDIA MUNICIPIO DE CALARCA",
+      "new_owner": "ALCALDIA MUNICIPIO DE CALARCA",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "baseline",
+      "query": "alcaldía de CALARCÁ",
+      "code": "63130",
+      "old_owner": "ALCALDIA MUNICIPIO DE CALARCA",
+      "new_owner": "ALCALDIA MUNICIPIO DE CALARCA",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "baseline",
+      "query": "contratos del municipio de CALARCÁ",
+      "code": "63130",
+      "old_owner": "ALCALDIA MUNICIPIO DE CALARCA",
+      "new_owner": "ALCALDIA MUNICIPIO DE CALARCA",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "baseline",
+      "query": "contratos de la alcaldía de CALARCÁ",
+      "code": "63130",
+      "old_owner": "ALCALDIA MUNICIPIO DE CALARCA",
+      "new_owner": "ALCALDIA MUNICIPIO DE CALARCA",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "baseline",
+      "query": "municipio de BARRANCABERMEJA",
+      "code": "68081",
+      "old_owner": "ALCALDIA DISTRITAL BARRANCABERMEJA",
+      "new_owner": "ALCALDIA DISTRITAL BARRANCABERMEJA",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "baseline",
+      "query": "alcaldía de BARRANCABERMEJA",
+      "code": "68081",
+      "old_owner": "ALCALDIA DISTRITAL BARRANCABERMEJA",
+      "new_owner": "ALCALDIA DISTRITAL BARRANCABERMEJA",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "baseline",
+      "query": "contratos del municipio de BARRANCABERMEJA",
+      "code": "68081",
+      "old_owner": "ALCALDIA DISTRITAL BARRANCABERMEJA",
+      "new_owner": "ALCALDIA DISTRITAL BARRANCABERMEJA",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "baseline",
+      "query": "contratos de la alcaldía de BARRANCABERMEJA",
+      "code": "68081",
+      "old_owner": "ALCALDIA DISTRITAL BARRANCABERMEJA",
+      "new_owner": "ALCALDIA DISTRITAL BARRANCABERMEJA",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "baseline",
+      "query": "municipio de YUMBO",
+      "code": "76892",
+      "old_owner": "MUNICIPIO DE YUMBO VALLE",
+      "new_owner": "MUNICIPIO DE YUMBO VALLE",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "baseline",
+      "query": "alcaldía de YUMBO",
+      "code": "76892",
+      "old_owner": "MUNICIPIO DE YUMBO VALLE",
+      "new_owner": "MUNICIPIO DE YUMBO VALLE",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "baseline",
+      "query": "contratos del municipio de YUMBO",
+      "code": "76892",
+      "old_owner": "MUNICIPIO DE YUMBO VALLE",
+      "new_owner": "MUNICIPIO DE YUMBO VALLE",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "baseline",
+      "query": "contratos de la alcaldía de YUMBO",
+      "code": "76892",
+      "old_owner": "MUNICIPIO DE YUMBO VALLE",
+      "new_owner": "MUNICIPIO DE YUMBO VALLE",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "candidate",
+      "query": "municipio de TURBACO",
+      "code": "13836",
+      "old_owner": "ALCALDIA DE TURBACO BOLIVAR",
+      "new_owner": "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "candidate",
+      "query": "alcaldía de TURBACO",
+      "code": "13836",
+      "old_owner": "ALCALDIA DE TURBACO BOLIVAR",
+      "new_owner": "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "candidate",
+      "query": "contratos del municipio de TURBACO",
+      "code": "13836",
+      "old_owner": "ALCALDIA DE TURBACO BOLIVAR",
+      "new_owner": "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "candidate",
+      "query": "contratos de la alcaldía de TURBACO",
+      "code": "13836",
+      "old_owner": "ALCALDIA DE TURBACO BOLIVAR",
+      "new_owner": "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "candidate",
+      "query": "municipio de OCAÑA",
+      "code": "54498",
+      "old_owner": "ALCALDIA MUNICIPAL DE OCAÑA",
+      "new_owner": "ALCALDIA MUNICIPAL DE OCAÑA",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "candidate",
+      "query": "alcaldía de OCAÑA",
+      "code": "54498",
+      "old_owner": "ALCALDIA MUNICIPAL DE OCAÑA",
+      "new_owner": "ALCALDIA MUNICIPAL DE OCAÑA",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "candidate",
+      "query": "contratos del municipio de OCAÑA",
+      "code": "54498",
+      "old_owner": "ALCALDIA MUNICIPAL DE OCAÑA",
+      "new_owner": "ALCALDIA MUNICIPAL DE OCAÑA",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "candidate",
+      "query": "contratos de la alcaldía de OCAÑA",
+      "code": "54498",
+      "old_owner": "ALCALDIA MUNICIPAL DE OCAÑA",
+      "new_owner": "ALCALDIA MUNICIPAL DE OCAÑA",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "candidate",
+      "query": "municipio de CALARCÁ",
+      "code": "63130",
+      "old_owner": "ALCALDIA MUNICIPIO DE CALARCA",
+      "new_owner": "ALCALDIA MUNICIPIO DE CALARCA",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "candidate",
+      "query": "alcaldía de CALARCÁ",
+      "code": "63130",
+      "old_owner": "ALCALDIA MUNICIPIO DE CALARCA",
+      "new_owner": "ALCALDIA MUNICIPIO DE CALARCA",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "candidate",
+      "query": "contratos del municipio de CALARCÁ",
+      "code": "63130",
+      "old_owner": "ALCALDIA MUNICIPIO DE CALARCA",
+      "new_owner": "ALCALDIA MUNICIPIO DE CALARCA",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "candidate",
+      "query": "contratos de la alcaldía de CALARCÁ",
+      "code": "63130",
+      "old_owner": "ALCALDIA MUNICIPIO DE CALARCA",
+      "new_owner": "ALCALDIA MUNICIPIO DE CALARCA",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "candidate",
+      "query": "municipio de BARRANCABERMEJA",
+      "code": "68081",
+      "old_owner": "ALCALDIA DISTRITAL BARRANCABERMEJA",
+      "new_owner": "ALCALDIA DISTRITAL BARRANCABERMEJA",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "candidate",
+      "query": "alcaldía de BARRANCABERMEJA",
+      "code": "68081",
+      "old_owner": "ALCALDIA DISTRITAL BARRANCABERMEJA",
+      "new_owner": "ALCALDIA DISTRITAL BARRANCABERMEJA",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "candidate",
+      "query": "contratos del municipio de BARRANCABERMEJA",
+      "code": "68081",
+      "old_owner": "ALCALDIA DISTRITAL BARRANCABERMEJA",
+      "new_owner": "ALCALDIA DISTRITAL BARRANCABERMEJA",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "candidate",
+      "query": "contratos de la alcaldía de BARRANCABERMEJA",
+      "code": "68081",
+      "old_owner": "ALCALDIA DISTRITAL BARRANCABERMEJA",
+      "new_owner": "ALCALDIA DISTRITAL BARRANCABERMEJA",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "candidate",
+      "query": "municipio de YUMBO",
+      "code": "76892",
+      "old_owner": "MUNICIPIO DE YUMBO VALLE",
+      "new_owner": "MUNICIPIO DE YUMBO VALLE",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "candidate",
+      "query": "alcaldía de YUMBO",
+      "code": "76892",
+      "old_owner": "MUNICIPIO DE YUMBO VALLE",
+      "new_owner": "MUNICIPIO DE YUMBO VALLE",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "candidate",
+      "query": "contratos del municipio de YUMBO",
+      "code": "76892",
+      "old_owner": "MUNICIPIO DE YUMBO VALLE",
+      "new_owner": "MUNICIPIO DE YUMBO VALLE",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    },
+    {
+      "catalog": "candidate",
+      "query": "contratos de la alcaldía de YUMBO",
+      "code": "76892",
+      "old_owner": "MUNICIPIO DE YUMBO VALLE",
+      "new_owner": "MUNICIPIO DE YUMBO VALLE",
+      "old_classification": "REVIEW",
+      "new_classification": "CORRECT_BUYER"
+    }
+  ],
+  "protected_unchanged": true,
+  "new_wrong_owners": 0,
+  "new_multi_owner": 0,
+  "new_scan_cross_owner": 0,
+  "no_nit_merge": true,
+  "candidate_proposals": 503,
+  "candidate_pipeline_checks": 1888,
+  "candidate_cross_interaction": {
+    "status": "PASS",
+    "checks": 3068,
+    "new_wrong_owner": 0,
+    "lost_correct_owner": 0
+  },
+  "policy_unchanged_baseline_review_introduced": false,
+  "matrix_gate_status": "PASS",
+  "validation": {
+    "focal_passed": 277,
+    "new_regressions_and_authority_passed": 19,
+    "corpus": "89/89",
+    "ruff": "PASS",
+    "lint_core": "PASS",
+    "full_suite": {
+      "passed": 11032,
+      "skipped": 2,
+      "historical_xfailed": 14,
+      "duration": "518.48s (0:08:38)"
+    },
+    "logs": {
+      "adjudication.log": "a2e1842121ed06c54537d45fc5ba0edd69aa38b6f40144ad9af2607aeee027f9",
+      "adjudication_tests_final.log": "07ad3a8fb337139f8dfaafa8f249e7e0f4e6fc2090260d74549c11a794e10b85",
+      "authority_tests.log": "bf043fb7fb4254afc2734e63badea35f506916098af9a4cc9ae0443fa44dcd4b",
+      "corpus.log": "6dd36628d49a71c6c2881bd23b927fc7321dc5d7050705f89b1912496c6b4ea0",
+      "focal_tests.log": "b25e08fdd0fd9a88dd03932a19715347afd2d2b546b0125bbd07062a224549cc",
+      "full_suite.log": "e5bda59ea58f720a70eca2a80153e32255712f960d7cee37103e035f67645f7e",
+      "full_suite_first_attempt.log": "607d1dd570e0966576180e9565d1817cf1a4b61f2719dd5b4a599001ea2cfe86",
+      "lint_core.log": "34cb879621b3285addcfbc6b6346ecf0503ad971df5701176242109e8eb11de9",
+      "matrix_and_gates.log": "b8bff8cc3301b7706aaf976e4255cb58e8b6ed5759dfaf417c1c66c76e15a9cb",
+      "predictive_tests.log": "07b0375ec98830a867f4f3d2ab499fb8e1b5b169b48acc4a303fce9edb1e82b8",
+      "ruff.log": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+      "scan_expectation_regressions.log": "101cf498ed69ce30a6ac18c4c194568b2eba33613a29302164fd4f8e1cd82116"
+    }
+  },
+  "commits_before_closure": {
+    "discovery": "99a5210",
+    "functional_turbaco": "ee03ab4"
+  },
+  "production_after_sha256": {
+    "app/data/aliases_db.json": "4cba623d53c48e4341cbdf32dedee409cbe0b8bf97e40fbfcaa6758ef0764a10",
+    "app/data/buyer_source_names.json": "960d4445a9e1ecec924fd79b5f91f5306d85944345bef3a80b4c559aa30b59a8"
+  }
+}

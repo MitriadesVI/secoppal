@@ -1,5 +1,7 @@
 """Reproduce the five manual reviews from frozen evidence, without production writes."""
 from pathlib import Path
+import gzip
+import json
 import sys
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -25,6 +27,8 @@ def save(name, value):
 def verify_capture(name):
     meta = read(OUT / 'evidence' / name)
     assert meta['status_code'] == 200
+    raw = gzip.decompress((OUT / 'evidence' / name.replace('.json', '.body.gz')).read_bytes())
+    assert sha(raw) == meta['sha256'] and json.loads(raw) == meta['rows']
     return meta
 
 
@@ -92,6 +96,9 @@ def adjudicate():
     assert len(regs) == 1 and regs[0]['nombre_entidad'] == B and regs[0]['nit_entidad'] == '890481149'
     inactive = [r for r in live if r['codigo_entidad'] == '706283421']
     assert len(inactive) == 1 and inactive[0]['esta_activa'] == 'No'
+    other_accounts = [r for r in live if r['codigo_entidad'] in ('706283421', '708966437')]
+    for ds in DATASETS:
+        assert verify_capture(f'turbaco_other_accounts_{ds}.json')['rows'] == []
     manual = dict(canonical=A, surviving_canonical=B, expected_divipola='13836', account=ACCOUNT,
                   nit_evidence=['890481149'], physical_source_names=recognized['source_names'],
                   historical_physical_rows=historical, m0_recognized_unit=recognized,
@@ -99,10 +106,16 @@ def adjudicate():
                   exact_synthetic_physical_rows=0, third_alias_owners=third, third_source_binding_owners=[],
                   inactive_account=inactive[0], inactive_account_historical_rows=0,
                   inactive_account_disposition='REGISTRY_ONLY_NO_OBSERVED_ACTIVITY; not merged, bound or reclassified as a BuyerUnit',
+                  other_registered_accounts=other_accounts,
+                  other_accounts_history={ds: [] for ds in DATASETS},
+                  third_account_note='708966437 (ALCALDiA DE TURBACO 2, NIT 8904811490) is also registry-only '
+                  'in the queried history. The trailing zero is NOT treated as a fiscal equivalence. '
+                  'Both extra accounts remain excluded from identity and projection.',
                   prior_records=pair, shared_alias_keys=sorted({normalize_text(a) for a in aliases
                                                               if owners[normalize_text(a)] == {A, B}}),
                   evidence_sources=['turbaco_history_p6dx-8zbt.json', 'turbaco_history_contracts_retry.json',
-                                    'directory_live.json', 'M0 recognized_units and SIGEP 1213'],
+                                    'directory_live.json', 'turbaco_other_accounts_p6dx-8zbt.json',
+                                    'turbaco_other_accounts_jbjy-vk9h.json', 'M0 recognized_units and SIGEP 1213'],
                   git_origin=dict(synthetic_canonical='66e6242', physical_duplicate_appended='7781d6d'),
                   decision='DUPLICATE_BUYER_UNIT', confidence='HIGH_WITHIN_PUBLISHED_SECOP_HISTORY',
                   authority_type='MANUAL_EXACT_PHYSICAL_OWNERSHIP_ADJUDICATION', manual_authorization=True,
@@ -116,6 +129,7 @@ def adjudicate():
     save('evidence/turbaco_manual_identity.json', manual)
     cases = [manual]
     supplementary = read(OUT / 'evidence/official_register_corroboration.json')
+    assert sha((OUT / 'evidence' / supplementary['file']).read_bytes()) == supplementary['sha256']
     for owner, code in EXPECTED.items():
         if owner == A:
             continue

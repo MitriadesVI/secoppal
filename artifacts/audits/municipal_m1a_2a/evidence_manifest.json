@@ -1,0 +1,33 @@
+{
+  "algorithm": "SHA-256",
+  "files": {
+    "artifacts/audits/municipal_m1a_2a/evidence/barrancabermeja_institutional.body.gz": "15b065c9fd17d48d810caeac999253d3e1ca535c7c944f9d1919f7fbff166691",
+    "artifacts/audits/municipal_m1a_2a/evidence/barrancabermeja_institutional.json": "d20e167ba26c8079ceebbe22726604d3d0e4fefc34373121d1ae021a330dc448",
+    "artifacts/audits/municipal_m1a_2a/evidence/before_aliases_db.json.gz": "774620be9ee69972c2e1a0f09b4b42a097fa809f89a08de8e6ff7c8b30e74108",
+    "artifacts/audits/municipal_m1a_2a/evidence/before_buyer_source_names.json.gz": "b0ba29210dd01ef20e467b1ad96c2769b1bd44a6b2d81a75d5911796cf3f3f62",
+    "artifacts/audits/municipal_m1a_2a/evidence/directory_live.body.gz": "dcfe19422f207d79a094bb8aced03e55255c1ea4e60b50c3ed3fe1e7eefdf617",
+    "artifacts/audits/municipal_m1a_2a/evidence/directory_live.json": "c61292e17d52eea7e71ea23999a240b1896e4be3f04a3e7ec4f4462388450dc2",
+    "artifacts/audits/municipal_m1a_2a/evidence/function_public_2018.json": "c79ec9642f6793d412c1f9be42f997b06b6690cd5f084e419547dfd93f6742bc",
+    "artifacts/audits/municipal_m1a_2a/evidence/function_public_2018_curl.json": "0d07a6ae43084571de6003e3df67126ce2e01f25b8467a662a8293628bdde57e",
+    "artifacts/audits/municipal_m1a_2a/evidence/function_public_2018_curl.pdf": "16b1a0a8fe2dad144a60c8561fe1ef2a13dc7e2dfa9e3862778f560e616ac9bc",
+    "artifacts/audits/municipal_m1a_2a/evidence/official_register_corroboration.json": "140286e9c2ea86aa2d0130bf850584d26b51bcecc5cf25ad71a4bbef2ab0f78a",
+    "artifacts/audits/municipal_m1a_2a/evidence/official_register_page_35.txt": "96583f9583ac327491d62c4a624e906331fecb8b6be01b21d21b97d97452234d",
+    "artifacts/audits/municipal_m1a_2a/evidence/official_register_page_5.txt": "4293e5ee502b54238377ed60edd23a449ec3c0a570bde9fc66b15aeaec28523f",
+    "artifacts/audits/municipal_m1a_2a/evidence/protected_hashes.json": "f5608b2a2bd70d0a4e559be3be6211bf492ed4a93b81d7b40064302fd40e50df",
+    "artifacts/audits/municipal_m1a_2a/evidence/sigep_live.json": "352238ce8f30e8f3e86fbfb4a73ef8d9feecbf2f90bdb776a86a30e0c91ecf47",
+    "artifacts/audits/municipal_m1a_2a/evidence/sigep_live_curl.html.gz": "91a628a557def781d401fb08051b4ad8c5c5fcc5ed3cab6732e005ada65ec43f",
+    "artifacts/audits/municipal_m1a_2a/evidence/sigep_live_curl.json": "606660c9a46bb9a7741194d96429adc121e13c9e8ca52f135670a88af7e4933e",
+    "artifacts/audits/municipal_m1a_2a/evidence/turbaco_history_contracts_retry.body.gz": "68c80529da7a24ce4bccdf5a7495f14a4860022129839591379753a85c62f710",
+    "artifacts/audits/municipal_m1a_2a/evidence/turbaco_history_contracts_retry.json": "a2e570275e69671280a335ee5905f7e032473920c2b9c1e1c1fb0571cde7b660",
+    "artifacts/audits/municipal_m1a_2a/evidence/turbaco_history_jbjy-vk9h.json": "428533ea95e6d6f0f4f0e7ccd9f9a0c19ec14ca35ae6b2a3101efd22e2de7b05",
+    "artifacts/audits/municipal_m1a_2a/evidence/turbaco_history_p6dx-8zbt.body.gz": "d5d958527d77d738581afd6138fd2cb81bb6f659dbeb852acd75bee60d1ed89d",
+    "artifacts/audits/municipal_m1a_2a/evidence/turbaco_history_p6dx-8zbt.json": "daed84ed5d99506b31042f03257b8c2b98669d292c288cc49fdeb688121bd844",
+    "artifacts/audits/municipal_m1a_2a/evidence/turbaco_manual_identity.json": "c00de99995cab168236e5e6ac8faad01b289761752aeaf61a3ae85121d5ab4ea",
+    "artifacts/audits/municipal_m1a_2a/evidence/turbaco_other_accounts_jbjy-vk9h.body.gz": "abc129be8d26e8d4afe9ce45f9d5a73c8ed9aa62810ca24ee789fe4581dc4a80",
+    "artifacts/audits/municipal_m1a_2a/evidence/turbaco_other_accounts_jbjy-vk9h.json": "d1ea49d99f0bc708a44c18932b3d293ad6b2613fb330348951b41a93ace266f6",
+    "artifacts/audits/municipal_m1a_2a/evidence/turbaco_other_accounts_p6dx-8zbt.body.gz": "abc129be8d26e8d4afe9ce45f9d5a73c8ed9aa62810ca24ee789fe4581dc4a80",
+    "artifacts/audits/municipal_m1a_2a/evidence/turbaco_other_accounts_p6dx-8zbt.json": "1879ce921941df5ac2a7fd178ff33e7fda962b08b3f2b58485fd12832f4735d2",
+    "artifacts/audits/municipal_m1a_2a/evidence/yumbo_institutional.body.gz": "15b065c9fd17d48d810caeac999253d3e1ca535c7c944f9d1919f7fbff166691",
+    "artifacts/audits/municipal_m1a_2a/evidence/yumbo_institutional.json": "df9db36c641ae4bdd34c0dd8937a12b795c9a758df9a53f3ffd18ed336cb392a"
+  }
+}

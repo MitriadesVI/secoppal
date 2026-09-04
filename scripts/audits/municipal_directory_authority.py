@@ -67,13 +67,18 @@ def validate_cohort(analysis, directory, sigep):
               for k in ('MATCH', 'CONTRADICTION', 'AMBIGUOUS', 'NO_MUNICIPAL_CODE')}
     secondary = dict(Counter(r['independent_classification'] for r in rows))
     # A deliberately scoped gate, not a statistical claim of global accuracy.
+    coded_rows = len(rows) - counts['NO_MUNICIPAL_CODE']
     accepted = (counts['MATCH'] >= 100 and not counts['CONTRADICTION'] and not counts['AMBIGUOUS']
-                and secondary.get('MATCH', 0) >= 100 and not secondary.get('CONTRADICTION', 0))
+                and secondary.get('MATCH', 0) >= 0.95 * coded_rows
+                and not secondary.get('CONTRADICTION', 0))
     return dict(authority=AUTHORITY, ROWS_TESTED=len(rows),
                 ROWS_WITH_MUNICIPAL_LOCATION_CODE=len(rows) - counts['NO_MUNICIPAL_CODE'], **counts,
                 recognized_subset=dict(Counter(r['classification'] for r in rows if r['recognized_unit'])),
                 executive_subset=dict(Counter(r['classification'] for r in rows if r['executive'])),
                 independent_name_department_check=secondary,
+                acceptance_policy='At least 100 exact-source accredited rows; 100% primary agreement; '
+                'zero primary ambiguity; at least 95% corroboration by the independent name/department witness; '
+                'zero contradictions in either check. Scoped to already accredited executive BuyerUnits.',
                 verdict='ACCEPT_SCOPED_AUTHORITY' if accepted else 'REJECT_AUTHORITY',
                 limits='M0 selected most affiliations using location codes: primary agreement has incorporation bias. '
                 'The secondary witness ignores those codes; ambiguous witnesses are reported, not counted as matches. '

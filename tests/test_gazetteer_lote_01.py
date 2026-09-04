@@ -157,7 +157,9 @@ class TestLote01Resolution:
         # These should resolve to the exact new entity
         ("ese hospital salazar de villeta", "SALAZAR DE VILLETA"),
         ("superintendencia nacional de salud", "SUPERINTENDENCIA NACIONAL DE SALUD"),
-        ("alcaldia de turbaco", "TURBACO"),
+        # M1A.2A / ADR-072: the bare alias remains exact-only because it
+        # occurs inside a different numbered directory account.
+        ("alcaldia de turbaco bolivar", "TURBACO"),
         ("superintendencia del subsidio familiar", "SUBSIDIO FAMILIAR"),
         ("alcaldia de el penol", "EL PEÑOL"),
         ("hospital san rafael el cerrito", "SAN RAFAEL"),

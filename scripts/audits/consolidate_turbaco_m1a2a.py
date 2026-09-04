@@ -6,6 +6,8 @@ ADR-074 five-condition automatic predicate, which DOES NOT apply here.
 from copy import deepcopy
 from pathlib import Path
 import argparse
+import gzip
+import json
 import sys
 import tempfile
 
@@ -14,7 +16,7 @@ sys.path.insert(0, str(ROOT))
 from app.core.entity_resolver import EntityResolver
 from app.utils.money import normalize_text
 from scripts.audits.promote_municipal_m1a import (
-    DATASETS, debt, encode, ownership, read, scan_conflicts, scan_surfaces,
+    DATASETS, debt, encode, ownership, read, scan_conflicts, scan_surfaces, sha,
 )
 
 OUT = ROOT / 'artifacts/audits/municipal_m1a_2a'
@@ -28,6 +30,8 @@ def verified_history():
     by_dataset = {}
     for ds, file in zip(DATASETS, ('turbaco_history_p6dx-8zbt.json', 'turbaco_history_contracts_retry.json')):
         report = read(OUT / 'evidence' / file)
+        raw = gzip.decompress((OUT / 'evidence' / file.replace('.json', '.body.gz')).read_bytes())
+        assert sha(raw) == report['sha256'] and json.loads(raw) == report['rows']
         if report.get('status_code') != 200 or report.get('error') or len(report['rows']) >= 10000:
             raise ValueError('Incomplete historical ownership evidence')
         rows = report['rows']

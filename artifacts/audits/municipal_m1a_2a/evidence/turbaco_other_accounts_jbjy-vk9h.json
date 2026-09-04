@@ -1,0 +1,12 @@
+{
+  "url": "https://www.datos.gov.co/resource/jbjy-vk9h.json",
+  "params": {
+    "$query": "SELECT codigo_entidad,nombre_entidad,nit_entidad,count(*) AS physical_rows WHERE codigo_entidad in ('706283421','708966437') GROUP BY codigo_entidad,nombre_entidad,nit_entidad LIMIT 10000"
+  },
+  "observed_at": "2026-09-04T04:26:19.244905+00:00",
+  "status_code": 200,
+  "final_url": "https://www.datos.gov.co/resource/jbjy-vk9h.json?%24query=SELECT+codigo_entidad%2Cnombre_entidad%2Cnit_entidad%2Ccount%28%2A%29+AS+physical_rows+WHERE+codigo_entidad+in+%28%27706283421%27%2C%27708966437%27%29+GROUP+BY+codigo_entidad%2Cnombre_entidad%2Cnit_entidad+LIMIT+10000",
+  "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+  "rows": [],
+  "elapsed_seconds": 0.468
+}

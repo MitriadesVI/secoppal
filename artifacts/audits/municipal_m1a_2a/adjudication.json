@@ -85,6 +85,35 @@
       },
       "inactive_account_historical_rows": 0,
       "inactive_account_disposition": "REGISTRY_ONLY_NO_OBSERVED_ACTIVITY; not merged, bound or reclassified as a BuyerUnit",
+      "other_registered_accounts": [
+        {
+          "codigo_entidad": "706283421",
+          "nombre_entidad": "ALCALDIA MUNICIPAL DE TURBACO 1",
+          "nit_entidad": "890481149",
+          "departamento": "No Provisto",
+          "ciudad": "No Provisto",
+          "c_digo_ubicaci_n": "No definido",
+          "esta_activa": "No",
+          "es_entidad": "Si",
+          "physical_rows": "1"
+        },
+        {
+          "codigo_entidad": "708966437",
+          "nombre_entidad": "ALCALDiA DE TURBACO 2",
+          "nit_entidad": "8904811490",
+          "departamento": "No Provisto",
+          "ciudad": "No Provisto",
+          "c_digo_ubicaci_n": "No definido",
+          "esta_activa": "No",
+          "es_entidad": "Si",
+          "physical_rows": "1"
+        }
+      ],
+      "other_accounts_history": {
+        "p6dx-8zbt": [],
+        "jbjy-vk9h": []
+      },
+      "third_account_note": "708966437 (ALCALDiA DE TURBACO 2, NIT 8904811490) is also registry-only in the queried history. The trailing zero is NOT treated as a fiscal equivalence. Both extra accounts remain excluded from identity and projection.",
       "prior_records": [
         {
           "official_name": "ALCALDIA DE TURBACO BOLIVAR",
@@ -153,6 +182,8 @@
         "turbaco_history_p6dx-8zbt.json",
         "turbaco_history_contracts_retry.json",
         "directory_live.json",
+        "turbaco_other_accounts_p6dx-8zbt.json",
+        "turbaco_other_accounts_jbjy-vk9h.json",
         "M0 recognized_units and SIGEP 1213"
       ],
       "git_origin": {

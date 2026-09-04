@@ -1,0 +1,4 @@
+candidate data/pipeline PASS PASS
+baseline {'total_queries': 4704, 'municipalities': 1103, 'counts': {'CORRECT_BUYER': 264, 'CLARIFICATION': 4440, 'FAIL_CLOSED': 0, 'REVIEW': 0, 'WRONG_BUYER': 0, 'WRONG_DIVIPOLA': 0}, 'status': 'PASS'}
+candidate {'total_queries': 4704, 'municipalities': 1103, 'counts': {'CORRECT_BUYER': 2132, 'CLARIFICATION': 2572, 'FAIL_CLOSED': 0, 'REVIEW': 0, 'WRONG_BUYER': 0, 'WRONG_DIVIPOLA': 0}, 'status': 'PASS'}
+M1A_RETRY_2_READY: YES

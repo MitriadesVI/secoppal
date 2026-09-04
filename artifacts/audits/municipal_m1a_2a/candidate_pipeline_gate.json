@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "checks": 1888,
+  "failed_queries": 0,
+  "affected_municipalities": 0,
+  "new_wrong_owner_queries": 0,
+  "failures": [],
+  "llm_execution_mode": "DETERMINISTIC_OFFLINE_NO_LLM",
+  "llm_provider_live_coverage": "NOT_VERIFIED"
+}
