@@ -220,7 +220,7 @@ fantasmas); verificación fiscal histórica de los registros con NIT declarado.
 El NIT transpuesto de Ibagué de P0.1 no aparece en el catálogo de runtime actual.
 La medición no corrige ni fusiona datos para mejorar artificialmente cobertura.
 
-## M1A — promoción bloqueada por pipeline predictivo
+## M1A original — promoción bloqueada por pipeline predictivo (histórico)
 
 **BLOCKED**, sin importación de producción. El promotor determinista parte de
 las 503 propuestas M0, acredita sus 1.888 aliases exactos y audita scan contra
@@ -239,6 +239,35 @@ y 60,38% de contratos únicos de esa cohorte. Las 503 propuestas quedan diferida
 Implementación y guardas: `5a222b1`. Informe y evidencia:
 `docs/gazetteer/MUNICIPAL_M1A.md`, `artifacts/audits/municipal_m1a/`.
 
+## M1A.1 — fundamentos de lenguaje y territorio
+
+**PASS histórico**, checkpoint `7bcad4b`; promoción de producción: 0.
+Corrigió captura intrapalabra, protección de nombres frente a control language,
+geografía DIVIPOLA y la interacción con nombres de compradores ya acreditados.
+El candidato pasó 1.888 aliases y 3.071 interacciones; suite del runtime:
+10.981 passed, 2 skipped, 14 xfailed. Informe: `MUNICIPAL_M1A_1.md`.
+
+## M1A RETRY — BLOCKED, promoción aplicada y revertida
+
+Sobre `7bcad4b`, el mismo promotor pasó dry-run, aplicó 498 unidades nuevas y
+cinco ampliaciones, y demostró segunda aplicación con delta cero. El replay
+real de 1.888 aliases y 3.071 interacciones volvió a pasar. Sin embargo,
+R2A.1 detectó que `contratos del municipio de San Andrés de Sotavento` selecciona
+`ALCALDIA SAN ANDRES` de Santander y convierte `sotavento` en objeto. El nombre
+completo pertenece a Córdoba y no forma parte de las 503 propuestas.
+
+Se activó STOP GLOBAL y se restauraron los bytes iniciales de producción y
+evidencia M1A. **Promociones retenidas: 0; propuestas diferidas: 503.**
+La cobertura aplicada de 571/607 se conserva sólo como medición revertida;
+producción vuelve a 70/607. Focales aplicados: 866 passed, 4 failed, 1 xfailed.
+Suite interrumpida por STOP: 2.719 passed, 4 failed, 2 skipped, 11 xfailed;
+no se declara completa ni PASS. Tras rollback: 173 focales y corpus 89/89.
+No se modificaron tests, parser ni propuestas; sin nuevos xfails.
+
+Evidencia: `d3a14f4`; informe: `MUNICIPAL_M1A_RETRY.md`;
+artefactos: `artifacts/audits/municipal_m1a_retry/`. Los tres checkpoints
+conservan resultados propios; el PASS M1A.1 no se reescribe como una promoción.
+
 ## Estado de cierre
 
 | Checkpoint | Estado | Commit |
@@ -250,7 +279,9 @@ Implementación y guardas: `5a222b1`. Informe y evidencia:
 | G1 — grupos declarados | PASS | `efdd432` |
 | G2 — conteos analíticos y traza | PASS | `3c72a66` |
 | H — Municipal M0 | PARTIAL, medición y propuestas reproducibles | Commit propio de este informe |
-| M1A — promoción municipal | BLOCKED, STOP global previo a escritura | `5a222b1` y cierre documental M1A |
+| M1A original — promoción municipal | BLOCKED histórico, STOP previo a escritura | `5a222b1` y cierre documental M1A |
+| M1A.1 — fundamentos | PASS histórico, candidato validado; producción sin promoción | `7bcad4b` |
+| M1A RETRY — promoción municipal | BLOCKED, nuevo wrong owner fuera del lote; rollback íntegro | `d3a14f4` y cierre documental del retry |
 
 No se encontró una categoría nueva fuera de ADR-074. Working tree preexistente
 preservado; **PUSH NO**. Las propuestas municipales y las deudas explícitas

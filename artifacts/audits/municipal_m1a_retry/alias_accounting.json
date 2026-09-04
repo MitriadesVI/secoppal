@@ -1,0 +1,56 @@
+{
+  "proposed_alias_occurrences": 1888,
+  "incremental_stored_aliases": 1883,
+  "extension_accounting": [
+    {
+      "code": "17001",
+      "canonical": "MUNICIPIO DE MANIZALES",
+      "aliases_before": 22,
+      "aliases_after": 25,
+      "proposed_already_stored": [],
+      "existing_duplicate_occurrences_removed": 1,
+      "new_distinct_strings": 4,
+      "removed_distinct_strings": []
+    },
+    {
+      "code": "25817",
+      "canonical": "MUNICIPIO DE TOCANCIPA",
+      "aliases_before": 15,
+      "aliases_after": 18,
+      "proposed_already_stored": [],
+      "existing_duplicate_occurrences_removed": 1,
+      "new_distinct_strings": 4,
+      "removed_distinct_strings": []
+    },
+    {
+      "code": "05631",
+      "canonical": "MUNICIPIO DE SABANETA",
+      "aliases_before": 17,
+      "aliases_after": 20,
+      "proposed_already_stored": [],
+      "existing_duplicate_occurrences_removed": 1,
+      "new_distinct_strings": 4,
+      "removed_distinct_strings": []
+    },
+    {
+      "code": "54405",
+      "canonical": "MUNICIPIO DE LOS PATIOS",
+      "aliases_before": 13,
+      "aliases_after": 16,
+      "proposed_already_stored": [],
+      "existing_duplicate_occurrences_removed": 1,
+      "new_distinct_strings": 4,
+      "removed_distinct_strings": []
+    },
+    {
+      "code": "68001",
+      "canonical": "MUNICIPIO DE BUCARAMANGA",
+      "aliases_before": 20,
+      "aliases_after": 23,
+      "proposed_already_stored": [],
+      "existing_duplicate_occurrences_removed": 1,
+      "new_distinct_strings": 4,
+      "removed_distinct_strings": []
+    }
+  ]
+}

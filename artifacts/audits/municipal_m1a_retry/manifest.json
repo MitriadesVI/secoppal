@@ -1,0 +1,212 @@
+{
+  "MUNICIPAL_M1A_RETRY": "BLOCKED",
+  "BRANCH": "main",
+  "RETRY_HEAD_BEFORE": "7bcad4bb55b2d09b7071ce4fca4f1b8bb1540573",
+  "BASELINE_HEAD": "9fb6375a3d23158b44ca9ad14bf1624c2495d1fc",
+  "EVIDENCE_COMMIT": "d3a14f429e1afdf1b388401cd6a00aa9e3e71ec2",
+  "HEAD_AFTER_RESOLUTION": "git log -1 --format=%H -- docs/gazetteer/MUNICIPAL_M1A_RETRY.md",
+  "CLOSURE_COMMIT_SUBJECT": "docs(audit): close municipal M1A retry as blocked",
+  "PUSH": "NO",
+  "PROMOTION": {
+    "INPUT": 503,
+    "NEW_BUYER_UNITS": 0,
+    "EXISTING_EXTENDED": 0,
+    "ALIASES_ADDED": 0,
+    "SOURCE_BINDINGS_ADDED": 0,
+    "REJECTED": 0,
+    "DEFERRED": 503,
+    "METRIC_SCOPE": "Retained after global STOP and full rollback.",
+    "FIRST_APPLY": {
+      "status": "PASS",
+      "input": {
+        "ADD_NEW_ACCREDITED_UNIT": 498,
+        "ADD_ALIASES_TO_EXISTING_UNIT": 5
+      },
+      "new_buyer_units": 498,
+      "existing_extended": 5,
+      "rejected_at_promotion": 0,
+      "aliases_added": 1883,
+      "source_bindings_added": 503,
+      "gazetteer_before": 599,
+      "gazetteer_after": 1097,
+      "aliases_before": 10802,
+      "aliases_after": 12685,
+      "exact_only_surface_count": 409,
+      "idempotent": true,
+      "production_sha256": {
+        "app/data/aliases_db.json": "d01bba0a4c492fdf68a9fd480b7b23f6c34907eb414669f41b8976cc423ee914",
+        "app/data/buyer_source_names.json": "4548efa781330a8354e33dd01957f8fa155f5986c8f947fc08361736cf0acd87"
+      },
+      "data_eligibility_status": "PASS",
+      "pipeline_status": "PASS",
+      "production_applied": true
+    },
+    "SECOND_APPLY_PRODUCTION_DELTA": {
+      "buyer_units": 0,
+      "aliases": 0,
+      "source_bindings": 0
+    },
+    "SECOND_APPLY_BYTES_IDENTICAL": true
+  },
+  "PRODUCTION": {
+    "GAZETTEER_RECORDS": 599,
+    "ALIASES": 10802,
+    "SOURCE_BINDINGS": 85,
+    "SHA256": {
+      "app/data/aliases_db.json": "1bf21c5c4224d5097f6ad03dab67bea1341e2e665e9ebacb42e9a9fe0733eacc",
+      "app/data/buyer_source_names.json": "ec49aac1959c49565ae4374d1f18408c81e1bb179c1cf95498b7a2a75363b7d2"
+    },
+    "RESTORED": true
+  },
+  "BARANOA": {
+    "BUYER_QUERY": "After rollback: unaccredited, clarification needed. Passed while applied.",
+    "GEO_QUERY": "PASS: Baranoa, Atlántico; no BuyerUnit.",
+    "PROCESS_PARITY": {
+      "final_covered": 0,
+      "expected": 380,
+      "applied_covered": 380
+    },
+    "CONTRACT_PARITY": {
+      "final_covered": 0,
+      "expected": 374,
+      "applied_covered": 374
+    },
+    "SOURCE_MODE": "FROZEN_M0_OFFLINE"
+  },
+  "SAFETY": {
+    "PIPELINE_1888": "PASS",
+    "PIPELINE_FAILURE": 0,
+    "WRONG_OWNER_IN_1888": 0,
+    "OBSERVED_NEW_WRONG_OWNER_OUTSIDE_BATCH": 1,
+    "OUTSIDE_BATCH_EXHAUSTIVE": false,
+    "MULTI_OWNER_NEW": 0,
+    "SCAN_CROSS_OWNER_NEW": 0,
+    "DUPLICATE_BUYER_UNIT_NEW": 0,
+    "NIT_MERGES": 0,
+    "NO_NIT_MERGE": "PASS",
+    "CROSS_INTERACTION": {
+      "checks": 3071,
+      "status": "PASS",
+      "new_wrong_owner": 0,
+      "lost_correct_owner": 0
+    },
+    "GLOBAL": "BLOCKED",
+    "decisive_evidence": "blocking_canary.json"
+  },
+  "COVERAGE": {
+    "ACCREDITED_ACTIVE": 607,
+    "RECOGNIZED": 70,
+    "TERRITORY_COHORT_PCT": 11.532125205930807,
+    "DIVIPOLA_PCT": 6.346328195829556,
+    "PROCESS_UNIQUE_PCT": 58.08827208641775,
+    "CONTRACT_UNIQUE_PCT": 60.3780364448873,
+    "METRIC_SCOPE": "Final restored production. Applied-but-reverted metrics in coverage_post.json.",
+    "GLOBAL_BUYER_UNIT_DENOMINATOR": "UNADJUDICATED_M2"
+  },
+  "PERFORMANCE": {
+    "verdict": "ACCEPTABLE",
+    "artifact": "performance.json",
+    "stage": "ACTUAL_PROMOTED_THEN_ROLLED_BACK"
+  },
+  "TESTS": {
+    "exit_code": 1,
+    "summary": "4 failed, 866 passed, 1 xfailed in 45.36s"
+  },
+  "CORPUS": "89/89 applied and restored",
+  "LINT": "PASS",
+  "FULL_SUITE": {
+    "exit_code": 2,
+    "status": "FAILED_AND_INTERRUPTED_ON_GLOBAL_STOP",
+    "completed": false,
+    "summary": "4 failed, 2719 passed, 2 skipped, 11 xfailed in 165.05s (0:02:45)"
+  },
+  "ROLLBACK_TESTS": {
+    "exit_code": 0,
+    "summary": "173 passed in 2.54s"
+  },
+  "XFAILS": {
+    "new": 0,
+    "promoted_focal": 1,
+    "interrupted_full_suite": 11,
+    "prior_complete_suite": 14,
+    "note": "No test or xfail definitions changed."
+  },
+  "LLM_EXECUTION_MODE": "DETERMINISTIC_OFFLINE_NO_LLM",
+  "LLM_PROVIDER_LIVE_COVERAGE": "NOT_VERIFIED",
+  "DEBT_CLOSED": [
+    "Real apply/idempotence verified",
+    "Post coverage/performance measured",
+    "Out-of-batch interaction gap evidenced",
+    "Full production rollback verified"
+  ],
+  "DEBT_OPEN": [
+    "Compound absent buyer can be captured by a newly exact shorter alias",
+    "Interaction gate must include municipalities outside M0 proposals",
+    "503 municipal proposals remain unpromoted",
+    "Stale absence/schema test assumptions documented",
+    "M2 affiliation/global BuyerUnit denominator",
+    "Live LLM provider coverage"
+  ],
+  "PROTECTED_FILES_CHANGED": [],
+  "SHA256_ARTIFACTS": {
+    "adjudication.json": "deb3241f49338847a939d345c8f338929423f25dfc1e0fd1822b71ff005845da",
+    "alias_accounting.json": "457d0268b157dd5f215a664fd0e1780513e5499eb730bef507dfda370c6830de",
+    "blocker_replay.json": "d3816e013db5719a2bb22e4782b3e2f2c734c9a2e06521b346c75ac18c3dbcb4",
+    "blocking_canary.json": "dff5e2bfa70d27bed4fa5780bffb55f31373e3e044fdcd302f0ccd476233d3f3",
+    "coverage_final.json": "1e26dee0852b9503b7e1fb3c2aa270b2f7bfc157f36c62598b4f7da1ca28311b",
+    "coverage_post.json": "24e2ee367cb5903ab6421a280c65b64b9f411abb9386d0bea98ee1d24075b2d5",
+    "data_gates.json": "303070369fd506221354bc14ed33cd4031abcce574aeae47d9513976f2579255",
+    "dry_run/before_after.json": "009a38aba7aecdfd7bc49f00e7d9dfaf91473cdcab9909f126a3cec213b1b86e",
+    "dry_run/pipeline_gate.json": "b459cb22fc3f4334d68686dd5ccc8e6049daad36eb793a074cd70f8e60a87d8d",
+    "dry_run/promotion_manifest.json": "830f90da712e2a842845496acc80ad4c2f4e952d8948382ce3b0b91512b4c669",
+    "dry_run/rejected.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "dry_run/safety_gates.json": "303070369fd506221354bc14ed33cd4031abcce574aeae47d9513976f2579255",
+    "first_apply.json": "aa9f5258ed628e3247de67b7ad857d82371b1c463b2415bb9fec06a6e77cf633",
+    "geography_gate.json.gz": "583d71e35d80c209b8181f150ea348ad5b3d56e1dcde94ea108bbd60aa55da59",
+    "historical_m1a/before_after.json": "088f6ca35868f54b00441328846d2b437eb83dc6876cda616e3264de8c0e715c",
+    "historical_m1a/promotion_manifest.json": "5799e0bce601d61bffaea054487dee4683a0ebcdceb10f6d73239c594ff8cf21",
+    "historical_m1a/rejected.json": "064a9eb37edd5caf67b7a3db8af70af3ea1ca063e5f04c90b5eea67480636136",
+    "interaction_gate.json.gz": "36c11d1dc225b332b55fe06e3eaf43946016644d6f2c96a4fa28dc5e988a0633",
+    "m0_post_analysis.json.gz": "084245493751b278eb9ad73eeef88a9e75a0ae149405ebfc3ecc6b2f84c14c5a",
+    "m0_rollback_analysis.json.gz": "cc3472cdf842d32f591c0830f722c2ee97519b59339850bef5ea44ae023b345a",
+    "performance.json": "c4f6069eb92e9587a8c263077f3e0c7971d7e6fc366d6871dafd2c982ec7e50c",
+    "pipeline_1888.json.gz": "4fbeaf09bc57b5256e42535f28790e24ce404627aced17666bf896e798e6eaf8",
+    "preflight.json": "2d191c657bdaf82272d3f79181dc9542146778eb53a080d565387b87cd5d6cf8",
+    "promoted_snapshot/aliases_db.json.gz": "b53df7d3292f88acd543a5da38f2f3b0a07acb64316a98da7848ab340a9ea55e",
+    "promoted_snapshot/before_after.json.gz": "fe2f9291993851f431ca9184e315a19580ed99c33782a7516db764de96fb0be7",
+    "promoted_snapshot/buyer_source_names.json.gz": "82a698bde6686e7d072264667f2947f3925b59eec882c2057a22203132fb0585",
+    "promoted_snapshot/pipeline_gate.json.gz": "d7172aa6211c239578a76bf6778ae0d1537ff557fc639006e6ab396aa857bdd8",
+    "promoted_snapshot/promotion_manifest.json.gz": "52f5c5b5d9cecdab2c1a7dd8aa50b061e9d896f14473b2ce060701becb93c06f",
+    "promoted_snapshot/rejected.json.gz": "abc129be8d26e8d4afe9ce45f9d5a73c8ed9aa62810ca24ee789fe4581dc4a80",
+    "promoted_snapshot/safety_gates.json.gz": "6a4927efc9955ba1a99e64d4aadb90c412f6ea80aef97a8fda7ccd3ec4a809b3",
+    "query_gates.json": "a1c8b2039c92404955398590899626559ad148e437136d33d11e86c25d334ccc",
+    "rollback.json": "6102f7f36e2e2345c7385ce259449a565b3818a8e7737e43cb35883f2431e3e1",
+    "second_apply.json": "feaa4e0b9b27bd4a4a40a740a270191e408fbff3fe654f9774b5b997956b1eda",
+    "source_projection.json.gz": "bb48375672460c9fbfa35e3ee05680bbb143229a610568f9dc81e6a6d30288c1",
+    "validation/benchmark.log": "769533b97bdb60bdf420b97e83fa3679595ff33a365d103326b848af09857836",
+    "validation/blocker_replay.log": "f95dcac4892511fad8594c00deb0680d34d660da14414a3c1a97e26419992434",
+    "validation/blocking_canary.log": "a7d0f88dbbcd3155cea80098b978779a9eec6071a36c6aebe670b960988f1aa9",
+    "validation/corpus.log": "6dd36628d49a71c6c2881bd23b927fc7321dc5d7050705f89b1912496c6b4ea0",
+    "validation/corpus_rollback.log": "6dd36628d49a71c6c2881bd23b927fc7321dc5d7050705f89b1912496c6b4ea0",
+    "validation/coverage.log": "7944bd2f5f48d7753ae62e41ae4686395949ac627b2a02d259811969c0451a40",
+    "validation/divipola_check.log": "d93f46a551be59e2b2c8d9465ffb2001237ab749bea6888ee0306afdcec91dca",
+    "validation/dry_run.log": "009a38aba7aecdfd7bc49f00e7d9dfaf91473cdcab9909f126a3cec213b1b86e",
+    "validation/first_apply.log": "07ab6b0f679d1d5085ab8182b87be739f994d74051ec47d691a81ee7faa546fc",
+    "validation/first_write_check.log": "bb8079a44148dd65e032533210b3eb4f5a1c1a543c817e54dd723f78f125c51b",
+    "validation/focal.log": "b0a7fd2fd99950c4629cbca309624b1f3dab19305973fe19214704512d0bc8e6",
+    "validation/full_suite.log": "799e0a58317799cf8a6ed13417fdc5128750c2b70a25f7cfd525b51898912674",
+    "validation/gazetteer_validate.log": "613136f9f9bcc06dc9ac5b9fff52e160f219c40dc6f0ce1cd084442b16c8875c",
+    "validation/lint_core.log": "34cb879621b3285addcfbc6b6346ecf0503ad971df5701176242109e8eb11de9",
+    "validation/lint_core_final.log": "34cb879621b3285addcfbc6b6346ecf0503ad971df5701176242109e8eb11de9",
+    "validation/m0_post.log": "83dcdc021986428cabc52889fcffd6f4224a723427b18bcadd78f3eb254516d5",
+    "validation/m0_rollback.log": "0559332c1b8a0b3683303f20385b7425dc58ca464ba0f6697a7d113ac8422066",
+    "validation/production_gates.log": "39a17c6cb30f3baa113a91c200bfd5933a680e1b6249dae03fa01945dadf2f49",
+    "validation/rollback_check.log": "24641e3f66ef931398e2e3439bfc6e4c5887009faaffd25f3e7a8310787bc82c",
+    "validation/rollback_focal.log": "8a5a9329f4641ec932dcd330d8a88124889bada5eb3f024d684fb1d3dbbf0434",
+    "validation/ruff.log": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "validation/ruff_final.log": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18",
+    "validation/second_apply.log": "07ab6b0f679d1d5085ab8182b87be739f994d74051ec47d691a81ee7faa546fc",
+    "validation/second_write_check.log": "42f24a267a4fe7e2b711155252c7c2947febf086a6a832373d94300a640224c3",
+    "validation.json": "eff56a7438c4eb7e47fbc42778d33c5dc3563cd1d8c21d8b59638c6cd47f747c"
+  }
+}
