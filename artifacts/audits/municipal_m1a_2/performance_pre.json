@@ -1,0 +1,25 @@
+{
+  "queries": [
+    "contratos del municipio de San Andrés de Sotavento",
+    "municipio de Villa de Leyva",
+    "alcaldía de San Pedro",
+    "municipio de San Pedro, Valle del Cauca",
+    "gobernación de Antioquia de 2025",
+    "alcaldía de Medellín de obras de infraestructura",
+    "contratos en Baranoa",
+    "contratos de la universidad nacional de colombia"
+  ],
+  "rounds": 9,
+  "warmup": true,
+  "unit": "milliseconds",
+  "baseline": {
+    "p50_ms": 54.5793540077284,
+    "p95_ms": 131.37749998713844,
+    "samples": 72
+  },
+  "candidate": {
+    "p50_ms": 0.7253329968079925,
+    "p95_ms": 155.08208400569856,
+    "samples": 72
+  }
+}

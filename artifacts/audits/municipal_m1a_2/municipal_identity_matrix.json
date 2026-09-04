@@ -1,0 +1,1881 @@
+{
+  "source": "app/data/municipal_territories_v1.json",
+  "sha256": "faa6cfcd2e46af56a0fa5e1e77279d8b11be64f40a80e261c92a485a4f4b907a",
+  "definitions": {
+    "compound": "More than one name token",
+    "articulated": "Internal de/del token",
+    "prefix_collision": "Ordered distinct name pair, whole-token prefix"
+  },
+  "counts": {
+    "divipola": 1103,
+    "compound_names": 279,
+    "articulated_names": 93,
+    "prefix_collisions": 46,
+    "homonym_groups": 64
+  },
+  "compound_names": [
+    "santa fe de antioquia",
+    "ciudad bolivar",
+    "el carmen de viboral",
+    "el bagre",
+    "gomez plata",
+    "la ceja",
+    "la estrella",
+    "la pintada",
+    "la union",
+    "puerto berrio",
+    "puerto nare",
+    "puerto triunfo",
+    "san andres de cuerquia",
+    "san carlos",
+    "san francisco",
+    "san jeronimo",
+    "san jose de la montana",
+    "san juan de uraba",
+    "san luis",
+    "san pedro de los milagros",
+    "san pedro de uraba",
+    "san rafael",
+    "san roque",
+    "san vicente ferrer",
+    "santa barbara",
+    "santa rosa de osos",
+    "santo domingo",
+    "el santuario",
+    "vigia del fuerte",
+    "campo de la cruz",
+    "juan de acosta",
+    "palmar de varela",
+    "puerto colombia",
+    "santa lucia",
+    "santo tomas",
+    "bogota d c",
+    "cartagena de indias",
+    "altos del rosario",
+    "barranco de loba",
+    "el carmen de bolivar",
+    "el guamo",
+    "el penon",
+    "hatillo de loba",
+    "maria la baja",
+    "santa cruz de mompox",
+    "rio viejo",
+    "san cristobal",
+    "san estanislao",
+    "san fernando",
+    "san jacinto",
+    "san jacinto del cauca",
+    "san juan nepomuceno",
+    "san martin de loba",
+    "san pablo",
+    "santa catalina",
+    "santa rosa",
+    "santa rosa del sur",
+    "talaigua nuevo",
+    "el cocuy",
+    "el espino",
+    "guican de la sierra",
+    "la capilla",
+    "la victoria",
+    "la uvita",
+    "villa de leyva",
+    "nuevo colon",
+    "paz de rio",
+    "puerto boyaca",
+    "san eduardo",
+    "san jose de pare",
+    "san luis de gaceno",
+    "san mateo",
+    "san miguel de sema",
+    "san pablo de borbur",
+    "santa maria",
+    "santa rosa de viterbo",
+    "santa sofia",
+    "la dorada",
+    "la merced",
+    "san jose",
+    "belen de los andaquies",
+    "cartagena del chaira",
+    "el doncello",
+    "el paujil",
+    "la montanita",
+    "puerto rico",
+    "san jose del fragua",
+    "san vicente del caguan",
+    "buenos aires",
+    "el tambo",
+    "la sierra",
+    "la vega",
+    "lopez de micay",
+    "piendamo tunia",
+    "puerto tejada",
+    "san sebastian",
+    "santander de quilichao",
+    "sotara paispamba",
+    "villa rica",
+    "agustin codazzi",
+    "el copey",
+    "el paso",
+    "la gloria",
+    "la jagua de ibirico",
+    "manaure balcon del cesar",
+    "pueblo bello",
+    "rio de oro",
+    "la paz",
+    "san alberto",
+    "san diego",
+    "san martin",
+    "cienaga de oro",
+    "la apartada",
+    "los cordobas",
+    "planeta rica",
+    "pueblo nuevo",
+    "puerto escondido",
+    "puerto libertador",
+    "purisima de la concepcion",
+    "san andres de sotavento",
+    "san antero",
+    "san bernardo del viento",
+    "san jose de ure",
+    "san pelayo",
+    "agua de dios",
+    "carmen de carupa",
+    "el colegio",
+    "el rosal",
+    "guayabal de siquima",
+    "la calera",
+    "la mesa",
+    "la palma",
+    "la pena",
+    "puerto salgar",
+    "san antonio del tequendama",
+    "san bernardo",
+    "san cayetano",
+    "san juan de rioseco",
+    "villa de san diego de ubate",
+    "alto baudo",
+    "bahia solano",
+    "bajo baudo",
+    "el canton del san pablo",
+    "carmen del darien",
+    "el carmen de atrato",
+    "el litoral del san juan",
+    "medio atrato",
+    "medio baudo",
+    "medio san juan",
+    "nuevo belen de bajira",
+    "rio iro",
+    "rio quito",
+    "san jose del palmar",
+    "union panamericana",
+    "la argentina",
+    "la plata",
+    "san agustin",
+    "el molino",
+    "la jagua del pilar",
+    "san juan del cesar",
+    "santa marta",
+    "cerro de san antonio",
+    "el banco",
+    "el pinon",
+    "el reten",
+    "nueva granada",
+    "pijino del carmen",
+    "sabanas de san angel",
+    "san sebastian de buenavista",
+    "san zenon",
+    "santa ana",
+    "santa barbara de pinto",
+    "zona bananera",
+    "barranca de upia",
+    "castilla la nueva",
+    "el calvario",
+    "el castillo",
+    "el dorado",
+    "fuente de oro",
+    "la macarena",
+    "puerto concordia",
+    "puerto gaitan",
+    "puerto lopez",
+    "puerto lleras",
+    "san carlos de guaroa",
+    "san juan de arama",
+    "san juanito",
+    "cuaspud carlosama",
+    "el charco",
+    "el penol",
+    "el rosario",
+    "el tablon de gomez",
+    "la cruz",
+    "la florida",
+    "la llanada",
+    "la tola",
+    "los andes",
+    "olaya herrera",
+    "francisco pizarro",
+    "roberto payan",
+    "san lorenzo",
+    "san pedro de cartago",
+    "san andres de tumaco",
+    "san jose de cucuta",
+    "el carmen",
+    "el tarra",
+    "el zulia",
+    "la esperanza",
+    "la playa",
+    "los patios",
+    "puerto santander",
+    "san calixto",
+    "villa caro",
+    "villa del rosario",
+    "la tebaida",
+    "belen de umbria",
+    "la celia",
+    "la virginia",
+    "pueblo rico",
+    "santa rosa de cabal",
+    "el carmen de chucuri",
+    "el guacamayo",
+    "el playon",
+    "jesus maria",
+    "la belleza",
+    "los santos",
+    "palmas del socorro",
+    "puente nacional",
+    "puerto parra",
+    "puerto wilches",
+    "sabana de torres",
+    "san andres",
+    "san benito",
+    "san gil",
+    "san joaquin",
+    "san jose de miranda",
+    "san miguel",
+    "san vicente de chucuri",
+    "santa helena del opon",
+    "valle de san jose",
+    "el roble",
+    "los palmitos",
+    "san benito abad",
+    "san juan de betulia",
+    "san marcos",
+    "san onofre",
+    "san pedro",
+    "san luis de since",
+    "santiago de tolu",
+    "san jose de toluviejo",
+    "carmen de apicala",
+    "san sebastian de mariquita",
+    "san antonio",
+    "santa isabel",
+    "valle de san juan",
+    "santiago de cali",
+    "guadalajara de buga",
+    "el aguila",
+    "el cairo",
+    "el cerrito",
+    "el dovio",
+    "la cumbre",
+    "cravo norte",
+    "puerto rondon",
+    "hato corozal",
+    "la salina",
+    "paz de ariporo",
+    "san luis de palenque",
+    "puerto asis",
+    "puerto caicedo",
+    "puerto guzman",
+    "puerto leguizamo",
+    "valle del guamuez",
+    "puerto narino",
+    "san jose del guaviare",
+    "el retorno",
+    "puerto carreno",
+    "la primavera",
+    "santa rosalia"
+  ],
+  "articulated_names": [
+    "santa fe de antioquia",
+    "el carmen de viboral",
+    "san andres de cuerquia",
+    "san jose de la montana",
+    "san juan de uraba",
+    "san pedro de los milagros",
+    "san pedro de uraba",
+    "santa rosa de osos",
+    "vigia del fuerte",
+    "campo de la cruz",
+    "juan de acosta",
+    "palmar de varela",
+    "cartagena de indias",
+    "altos del rosario",
+    "barranco de loba",
+    "el carmen de bolivar",
+    "hatillo de loba",
+    "santa cruz de mompox",
+    "san jacinto del cauca",
+    "san martin de loba",
+    "santa rosa del sur",
+    "guican de la sierra",
+    "villa de leyva",
+    "paz de rio",
+    "san jose de pare",
+    "san luis de gaceno",
+    "san miguel de sema",
+    "san pablo de borbur",
+    "santa rosa de viterbo",
+    "belen de los andaquies",
+    "cartagena del chaira",
+    "san jose del fragua",
+    "san vicente del caguan",
+    "lopez de micay",
+    "santander de quilichao",
+    "la jagua de ibirico",
+    "manaure balcon del cesar",
+    "rio de oro",
+    "cienaga de oro",
+    "purisima de la concepcion",
+    "san andres de sotavento",
+    "san bernardo del viento",
+    "san jose de ure",
+    "agua de dios",
+    "carmen de carupa",
+    "guayabal de siquima",
+    "san antonio del tequendama",
+    "san juan de rioseco",
+    "villa de san diego de ubate",
+    "el canton del san pablo",
+    "carmen del darien",
+    "el carmen de atrato",
+    "el litoral del san juan",
+    "nuevo belen de bajira",
+    "san jose del palmar",
+    "la jagua del pilar",
+    "san juan del cesar",
+    "cerro de san antonio",
+    "pijino del carmen",
+    "sabanas de san angel",
+    "san sebastian de buenavista",
+    "santa barbara de pinto",
+    "barranca de upia",
+    "fuente de oro",
+    "san carlos de guaroa",
+    "san juan de arama",
+    "el tablon de gomez",
+    "san pedro de cartago",
+    "san andres de tumaco",
+    "san jose de cucuta",
+    "villa del rosario",
+    "belen de umbria",
+    "santa rosa de cabal",
+    "el carmen de chucuri",
+    "palmas del socorro",
+    "sabana de torres",
+    "san jose de miranda",
+    "san vicente de chucuri",
+    "santa helena del opon",
+    "valle de san jose",
+    "san juan de betulia",
+    "san luis de since",
+    "santiago de tolu",
+    "san jose de toluviejo",
+    "carmen de apicala",
+    "san sebastian de mariquita",
+    "valle de san juan",
+    "santiago de cali",
+    "guadalajara de buga",
+    "paz de ariporo",
+    "san luis de palenque",
+    "valle del guamuez",
+    "san jose del guaviare"
+  ],
+  "prefix_collisions": [
+    {
+      "full": "el carmen de viboral",
+      "prefix": "el carmen",
+      "full_codes": [
+        "05148"
+      ],
+      "prefix_codes": [
+        "54245"
+      ]
+    },
+    {
+      "full": "san andres de cuerquia",
+      "prefix": "san andres",
+      "full_codes": [
+        "05647"
+      ],
+      "prefix_codes": [
+        "68669"
+      ]
+    },
+    {
+      "full": "san jose de la montana",
+      "prefix": "san jose",
+      "full_codes": [
+        "05658"
+      ],
+      "prefix_codes": [
+        "17665"
+      ]
+    },
+    {
+      "full": "san pedro de los milagros",
+      "prefix": "san pedro",
+      "full_codes": [
+        "05664"
+      ],
+      "prefix_codes": [
+        "70717",
+        "76670"
+      ]
+    },
+    {
+      "full": "san pedro de uraba",
+      "prefix": "san pedro",
+      "full_codes": [
+        "05665"
+      ],
+      "prefix_codes": [
+        "70717",
+        "76670"
+      ]
+    },
+    {
+      "full": "santa rosa de osos",
+      "prefix": "santa rosa",
+      "full_codes": [
+        "05686"
+      ],
+      "prefix_codes": [
+        "13683",
+        "19701"
+      ]
+    },
+    {
+      "full": "palmar de varela",
+      "prefix": "palmar",
+      "full_codes": [
+        "08520"
+      ],
+      "prefix_codes": [
+        "68522"
+      ]
+    },
+    {
+      "full": "el carmen de bolivar",
+      "prefix": "el carmen",
+      "full_codes": [
+        "13244"
+      ],
+      "prefix_codes": [
+        "54245"
+      ]
+    },
+    {
+      "full": "san jacinto del cauca",
+      "prefix": "san jacinto",
+      "full_codes": [
+        "13655"
+      ],
+      "prefix_codes": [
+        "13654"
+      ]
+    },
+    {
+      "full": "san martin de loba",
+      "prefix": "san martin",
+      "full_codes": [
+        "13667"
+      ],
+      "prefix_codes": [
+        "20770",
+        "50689"
+      ]
+    },
+    {
+      "full": "santa rosa del sur",
+      "prefix": "santa rosa",
+      "full_codes": [
+        "13688"
+      ],
+      "prefix_codes": [
+        "13683",
+        "19701"
+      ]
+    },
+    {
+      "full": "san jose de pare",
+      "prefix": "san jose",
+      "full_codes": [
+        "15664"
+      ],
+      "prefix_codes": [
+        "17665"
+      ]
+    },
+    {
+      "full": "san luis de gaceno",
+      "prefix": "san luis",
+      "full_codes": [
+        "15667"
+      ],
+      "prefix_codes": [
+        "05660",
+        "73678"
+      ]
+    },
+    {
+      "full": "san miguel de sema",
+      "prefix": "san miguel",
+      "full_codes": [
+        "15676"
+      ],
+      "prefix_codes": [
+        "68686",
+        "86757"
+      ]
+    },
+    {
+      "full": "san pablo de borbur",
+      "prefix": "san pablo",
+      "full_codes": [
+        "15681"
+      ],
+      "prefix_codes": [
+        "13670",
+        "52693"
+      ]
+    },
+    {
+      "full": "santa rosa de viterbo",
+      "prefix": "santa rosa",
+      "full_codes": [
+        "15693"
+      ],
+      "prefix_codes": [
+        "13683",
+        "19701"
+      ]
+    },
+    {
+      "full": "belen de los andaquies",
+      "prefix": "belen",
+      "full_codes": [
+        "18094"
+      ],
+      "prefix_codes": [
+        "15087",
+        "52083"
+      ]
+    },
+    {
+      "full": "san jose del fragua",
+      "prefix": "san jose",
+      "full_codes": [
+        "18610"
+      ],
+      "prefix_codes": [
+        "17665"
+      ]
+    },
+    {
+      "full": "manaure balcon del cesar",
+      "prefix": "manaure",
+      "full_codes": [
+        "20443"
+      ],
+      "prefix_codes": [
+        "44560"
+      ]
+    },
+    {
+      "full": "cienaga de oro",
+      "prefix": "cienaga",
+      "full_codes": [
+        "23189"
+      ],
+      "prefix_codes": [
+        "47189"
+      ]
+    },
+    {
+      "full": "san andres de sotavento",
+      "prefix": "san andres",
+      "full_codes": [
+        "23670"
+      ],
+      "prefix_codes": [
+        "68669"
+      ]
+    },
+    {
+      "full": "san bernardo del viento",
+      "prefix": "san bernardo",
+      "full_codes": [
+        "23675"
+      ],
+      "prefix_codes": [
+        "25649",
+        "52685"
+      ]
+    },
+    {
+      "full": "san jose de ure",
+      "prefix": "san jose",
+      "full_codes": [
+        "23682"
+      ],
+      "prefix_codes": [
+        "17665"
+      ]
+    },
+    {
+      "full": "san antonio del tequendama",
+      "prefix": "san antonio",
+      "full_codes": [
+        "25645"
+      ],
+      "prefix_codes": [
+        "73675"
+      ]
+    },
+    {
+      "full": "el carmen de atrato",
+      "prefix": "el carmen",
+      "full_codes": [
+        "27245"
+      ],
+      "prefix_codes": [
+        "54245"
+      ]
+    },
+    {
+      "full": "san jose del palmar",
+      "prefix": "san jose",
+      "full_codes": [
+        "27660"
+      ],
+      "prefix_codes": [
+        "17665"
+      ]
+    },
+    {
+      "full": "san sebastian de buenavista",
+      "prefix": "san sebastian",
+      "full_codes": [
+        "47692"
+      ],
+      "prefix_codes": [
+        "19693"
+      ]
+    },
+    {
+      "full": "santa barbara de pinto",
+      "prefix": "santa barbara",
+      "full_codes": [
+        "47720"
+      ],
+      "prefix_codes": [
+        "05679",
+        "52696",
+        "68705"
+      ]
+    },
+    {
+      "full": "san carlos de guaroa",
+      "prefix": "san carlos",
+      "full_codes": [
+        "50680"
+      ],
+      "prefix_codes": [
+        "05649",
+        "23678"
+      ]
+    },
+    {
+      "full": "olaya herrera",
+      "prefix": "olaya",
+      "full_codes": [
+        "52490"
+      ],
+      "prefix_codes": [
+        "05501"
+      ]
+    },
+    {
+      "full": "san pedro de cartago",
+      "prefix": "san pedro",
+      "full_codes": [
+        "52694"
+      ],
+      "prefix_codes": [
+        "70717",
+        "76670"
+      ]
+    },
+    {
+      "full": "san andres de tumaco",
+      "prefix": "san andres",
+      "full_codes": [
+        "52835"
+      ],
+      "prefix_codes": [
+        "68669"
+      ]
+    },
+    {
+      "full": "san jose de cucuta",
+      "prefix": "san jose",
+      "full_codes": [
+        "54001"
+      ],
+      "prefix_codes": [
+        "17665"
+      ]
+    },
+    {
+      "full": "belen de umbria",
+      "prefix": "belen",
+      "full_codes": [
+        "66088"
+      ],
+      "prefix_codes": [
+        "15087",
+        "52083"
+      ]
+    },
+    {
+      "full": "santa rosa de cabal",
+      "prefix": "santa rosa",
+      "full_codes": [
+        "66682"
+      ],
+      "prefix_codes": [
+        "13683",
+        "19701"
+      ]
+    },
+    {
+      "full": "el carmen de chucuri",
+      "prefix": "el carmen",
+      "full_codes": [
+        "68235"
+      ],
+      "prefix_codes": [
+        "54245"
+      ]
+    },
+    {
+      "full": "san jose de miranda",
+      "prefix": "san jose",
+      "full_codes": [
+        "68684"
+      ],
+      "prefix_codes": [
+        "17665"
+      ]
+    },
+    {
+      "full": "san benito abad",
+      "prefix": "san benito",
+      "full_codes": [
+        "70678"
+      ],
+      "prefix_codes": [
+        "68673"
+      ]
+    },
+    {
+      "full": "san luis de since",
+      "prefix": "san luis",
+      "full_codes": [
+        "70742"
+      ],
+      "prefix_codes": [
+        "05660",
+        "73678"
+      ]
+    },
+    {
+      "full": "santiago de tolu",
+      "prefix": "santiago",
+      "full_codes": [
+        "70820"
+      ],
+      "prefix_codes": [
+        "54680",
+        "86760"
+      ]
+    },
+    {
+      "full": "san jose de toluviejo",
+      "prefix": "san jose",
+      "full_codes": [
+        "70823"
+      ],
+      "prefix_codes": [
+        "17665"
+      ]
+    },
+    {
+      "full": "san sebastian de mariquita",
+      "prefix": "san sebastian",
+      "full_codes": [
+        "73443"
+      ],
+      "prefix_codes": [
+        "19693"
+      ]
+    },
+    {
+      "full": "santiago de cali",
+      "prefix": "santiago",
+      "full_codes": [
+        "76001"
+      ],
+      "prefix_codes": [
+        "54680",
+        "86760"
+      ]
+    },
+    {
+      "full": "hato corozal",
+      "prefix": "hato",
+      "full_codes": [
+        "85125"
+      ],
+      "prefix_codes": [
+        "68344"
+      ]
+    },
+    {
+      "full": "san luis de palenque",
+      "prefix": "san luis",
+      "full_codes": [
+        "85325"
+      ],
+      "prefix_codes": [
+        "05660",
+        "73678"
+      ]
+    },
+    {
+      "full": "san jose del guaviare",
+      "prefix": "san jose",
+      "full_codes": [
+        "95001"
+      ],
+      "prefix_codes": [
+        "17665"
+      ]
+    }
+  ],
+  "homonym_groups": {
+    "argelia": [
+      {
+        "divipola": "05055",
+        "municipality": "ARGELIA",
+        "department": "ANTIOQUIA",
+        "department_value": "Antioquia"
+      },
+      {
+        "divipola": "19050",
+        "municipality": "ARGELIA",
+        "department": "CAUCA",
+        "department_value": "Cauca"
+      },
+      {
+        "divipola": "76054",
+        "municipality": "ARGELIA",
+        "department": "VALLE DEL CAUCA",
+        "department_value": "Valle del Cauca"
+      }
+    ],
+    "armenia": [
+      {
+        "divipola": "05059",
+        "municipality": "ARMENIA",
+        "department": "ANTIOQUIA",
+        "department_value": "Antioquia"
+      },
+      {
+        "divipola": "63001",
+        "municipality": "ARMENIA",
+        "department": "QUINDÍO",
+        "department_value": "Quindío"
+      }
+    ],
+    "barbosa": [
+      {
+        "divipola": "05079",
+        "municipality": "BARBOSA",
+        "department": "ANTIOQUIA",
+        "department_value": "Antioquia"
+      },
+      {
+        "divipola": "68077",
+        "municipality": "BARBOSA",
+        "department": "SANTANDER",
+        "department_value": "Santander"
+      }
+    ],
+    "betulia": [
+      {
+        "divipola": "05093",
+        "municipality": "BETULIA",
+        "department": "ANTIOQUIA",
+        "department_value": "Antioquia"
+      },
+      {
+        "divipola": "68092",
+        "municipality": "BETULIA",
+        "department": "SANTANDER",
+        "department_value": "Santander"
+      }
+    ],
+    "briceno": [
+      {
+        "divipola": "05107",
+        "municipality": "BRICEÑO",
+        "department": "ANTIOQUIA",
+        "department_value": "Antioquia"
+      },
+      {
+        "divipola": "15106",
+        "municipality": "BRICEÑO",
+        "department": "BOYACÁ",
+        "department_value": "Boyacá"
+      }
+    ],
+    "caldas": [
+      {
+        "divipola": "05129",
+        "municipality": "CALDAS",
+        "department": "ANTIOQUIA",
+        "department_value": "Antioquia"
+      },
+      {
+        "divipola": "15131",
+        "municipality": "CALDAS",
+        "department": "BOYACÁ",
+        "department_value": "Boyacá"
+      }
+    ],
+    "concepcion": [
+      {
+        "divipola": "05206",
+        "municipality": "CONCEPCIÓN",
+        "department": "ANTIOQUIA",
+        "department_value": "Antioquia"
+      },
+      {
+        "divipola": "68207",
+        "municipality": "CONCEPCIÓN",
+        "department": "SANTANDER",
+        "department_value": "Santander"
+      }
+    ],
+    "concordia": [
+      {
+        "divipola": "05209",
+        "municipality": "CONCORDIA",
+        "department": "ANTIOQUIA",
+        "department_value": "Antioquia"
+      },
+      {
+        "divipola": "47205",
+        "municipality": "CONCORDIA",
+        "department": "MAGDALENA",
+        "department_value": "Magdalena"
+      }
+    ],
+    "granada": [
+      {
+        "divipola": "05313",
+        "municipality": "GRANADA",
+        "department": "ANTIOQUIA",
+        "department_value": "Antioquia"
+      },
+      {
+        "divipola": "25312",
+        "municipality": "GRANADA",
+        "department": "CUNDINAMARCA",
+        "department_value": "Cundinamarca"
+      },
+      {
+        "divipola": "50313",
+        "municipality": "GRANADA",
+        "department": "META",
+        "department_value": "Meta"
+      }
+    ],
+    "guadalupe": [
+      {
+        "divipola": "05315",
+        "municipality": "GUADALUPE",
+        "department": "ANTIOQUIA",
+        "department_value": "Antioquia"
+      },
+      {
+        "divipola": "41319",
+        "municipality": "GUADALUPE",
+        "department": "HUILA",
+        "department_value": "Huila"
+      },
+      {
+        "divipola": "68320",
+        "municipality": "GUADALUPE",
+        "department": "SANTANDER",
+        "department_value": "Santander"
+      }
+    ],
+    "jerico": [
+      {
+        "divipola": "05368",
+        "municipality": "JERICÓ",
+        "department": "ANTIOQUIA",
+        "department_value": "Antioquia"
+      },
+      {
+        "divipola": "15368",
+        "municipality": "JERICÓ",
+        "department": "BOYACÁ",
+        "department_value": "Boyacá"
+      }
+    ],
+    "la union": [
+      {
+        "divipola": "05400",
+        "municipality": "LA UNIÓN",
+        "department": "ANTIOQUIA",
+        "department_value": "Antioquia"
+      },
+      {
+        "divipola": "52399",
+        "municipality": "LA UNIÓN",
+        "department": "NARIÑO",
+        "department_value": "Nariño"
+      },
+      {
+        "divipola": "70400",
+        "municipality": "LA UNIÓN",
+        "department": "SUCRE",
+        "department_value": "Sucre"
+      },
+      {
+        "divipola": "76400",
+        "municipality": "LA UNIÓN",
+        "department": "VALLE DEL CAUCA",
+        "department_value": "Valle del Cauca"
+      }
+    ],
+    "narino": [
+      {
+        "divipola": "05483",
+        "municipality": "NARIÑO",
+        "department": "ANTIOQUIA",
+        "department_value": "Antioquia"
+      },
+      {
+        "divipola": "25483",
+        "municipality": "NARIÑO",
+        "department": "CUNDINAMARCA",
+        "department_value": "Cundinamarca"
+      },
+      {
+        "divipola": "52480",
+        "municipality": "NARIÑO",
+        "department": "NARIÑO",
+        "department_value": "Nariño"
+      }
+    ],
+    "rionegro": [
+      {
+        "divipola": "05615",
+        "municipality": "RIONEGRO",
+        "department": "ANTIOQUIA",
+        "department_value": "Antioquia"
+      },
+      {
+        "divipola": "68615",
+        "municipality": "RIONEGRO",
+        "department": "SANTANDER",
+        "department_value": "Santander"
+      }
+    ],
+    "sabanalarga": [
+      {
+        "divipola": "05628",
+        "municipality": "SABANALARGA",
+        "department": "ANTIOQUIA",
+        "department_value": "Antioquia"
+      },
+      {
+        "divipola": "08638",
+        "municipality": "SABANALARGA",
+        "department": "ATLÁNTICO",
+        "department_value": "Atlántico"
+      },
+      {
+        "divipola": "85300",
+        "municipality": "SABANALARGA",
+        "department": "CASANARE",
+        "department_value": "Casanare"
+      }
+    ],
+    "san carlos": [
+      {
+        "divipola": "05649",
+        "municipality": "SAN CARLOS",
+        "department": "ANTIOQUIA",
+        "department_value": "Antioquia"
+      },
+      {
+        "divipola": "23678",
+        "municipality": "SAN CARLOS",
+        "department": "CÓRDOBA",
+        "department_value": "Córdoba"
+      }
+    ],
+    "san francisco": [
+      {
+        "divipola": "05652",
+        "municipality": "SAN FRANCISCO",
+        "department": "ANTIOQUIA",
+        "department_value": "Antioquia"
+      },
+      {
+        "divipola": "25658",
+        "municipality": "SAN FRANCISCO",
+        "department": "CUNDINAMARCA",
+        "department_value": "Cundinamarca"
+      },
+      {
+        "divipola": "86755",
+        "municipality": "SAN FRANCISCO",
+        "department": "PUTUMAYO",
+        "department_value": "Putumayo"
+      }
+    ],
+    "san luis": [
+      {
+        "divipola": "05660",
+        "municipality": "SAN LUIS",
+        "department": "ANTIOQUIA",
+        "department_value": "Antioquia"
+      },
+      {
+        "divipola": "73678",
+        "municipality": "SAN LUIS",
+        "department": "TOLIMA",
+        "department_value": "Tolima"
+      }
+    ],
+    "santa barbara": [
+      {
+        "divipola": "05679",
+        "municipality": "SANTA BÁRBARA",
+        "department": "ANTIOQUIA",
+        "department_value": "Antioquia"
+      },
+      {
+        "divipola": "52696",
+        "municipality": "SANTA BÁRBARA",
+        "department": "NARIÑO",
+        "department_value": "Nariño"
+      },
+      {
+        "divipola": "68705",
+        "municipality": "SANTA BÁRBARA",
+        "department": "SANTANDER",
+        "department_value": "Santander"
+      }
+    ],
+    "toledo": [
+      {
+        "divipola": "05819",
+        "municipality": "TOLEDO",
+        "department": "ANTIOQUIA",
+        "department_value": "Antioquia"
+      },
+      {
+        "divipola": "54820",
+        "municipality": "TOLEDO",
+        "department": "NORTE DE SANTANDER",
+        "department_value": "Norte de Santander"
+      }
+    ],
+    "valparaiso": [
+      {
+        "divipola": "05856",
+        "municipality": "VALPARAÍSO",
+        "department": "ANTIOQUIA",
+        "department_value": "Antioquia"
+      },
+      {
+        "divipola": "18860",
+        "municipality": "VALPARAÍSO",
+        "department": "CAQUETÁ",
+        "department_value": "Caquetá"
+      }
+    ],
+    "venecia": [
+      {
+        "divipola": "05861",
+        "municipality": "VENECIA",
+        "department": "ANTIOQUIA",
+        "department_value": "Antioquia"
+      },
+      {
+        "divipola": "25506",
+        "municipality": "VENECIA",
+        "department": "CUNDINAMARCA",
+        "department_value": "Cundinamarca"
+      }
+    ],
+    "candelaria": [
+      {
+        "divipola": "08141",
+        "municipality": "CANDELARIA",
+        "department": "ATLÁNTICO",
+        "department_value": "Atlántico"
+      },
+      {
+        "divipola": "76130",
+        "municipality": "CANDELARIA",
+        "department": "VALLE DEL CAUCA",
+        "department_value": "Valle del Cauca"
+      }
+    ],
+    "calamar": [
+      {
+        "divipola": "13140",
+        "municipality": "CALAMAR",
+        "department": "BOLÍVAR",
+        "department_value": "Bolívar"
+      },
+      {
+        "divipola": "95015",
+        "municipality": "CALAMAR",
+        "department": "GUAVIARE",
+        "department_value": "Guaviare"
+      }
+    ],
+    "cordoba": [
+      {
+        "divipola": "13212",
+        "municipality": "CÓRDOBA",
+        "department": "BOLÍVAR",
+        "department_value": "Bolívar"
+      },
+      {
+        "divipola": "52215",
+        "municipality": "CÓRDOBA",
+        "department": "NARIÑO",
+        "department_value": "Nariño"
+      },
+      {
+        "divipola": "63212",
+        "municipality": "CÓRDOBA",
+        "department": "QUINDÍO",
+        "department_value": "Quindío"
+      }
+    ],
+    "el penon": [
+      {
+        "divipola": "13268",
+        "municipality": "EL PEÑÓN",
+        "department": "BOLÍVAR",
+        "department_value": "Bolívar"
+      },
+      {
+        "divipola": "25258",
+        "municipality": "EL PEÑÓN",
+        "department": "CUNDINAMARCA",
+        "department_value": "Cundinamarca"
+      },
+      {
+        "divipola": "68250",
+        "municipality": "EL PEÑÓN",
+        "department": "SANTANDER",
+        "department_value": "Santander"
+      }
+    ],
+    "morales": [
+      {
+        "divipola": "13473",
+        "municipality": "MORALES",
+        "department": "BOLÍVAR",
+        "department_value": "Bolívar"
+      },
+      {
+        "divipola": "19473",
+        "municipality": "MORALES",
+        "department": "CAUCA",
+        "department_value": "Cauca"
+      }
+    ],
+    "san pablo": [
+      {
+        "divipola": "13670",
+        "municipality": "SAN PABLO",
+        "department": "BOLÍVAR",
+        "department_value": "Bolívar"
+      },
+      {
+        "divipola": "52693",
+        "municipality": "SAN PABLO",
+        "department": "NARIÑO",
+        "department_value": "Nariño"
+      }
+    ],
+    "santa rosa": [
+      {
+        "divipola": "13683",
+        "municipality": "SANTA ROSA",
+        "department": "BOLÍVAR",
+        "department_value": "Bolívar"
+      },
+      {
+        "divipola": "19701",
+        "municipality": "SANTA ROSA",
+        "department": "CAUCA",
+        "department_value": "Cauca"
+      }
+    ],
+    "villanueva": [
+      {
+        "divipola": "13873",
+        "municipality": "VILLANUEVA",
+        "department": "BOLÍVAR",
+        "department_value": "Bolívar"
+      },
+      {
+        "divipola": "44874",
+        "municipality": "VILLANUEVA",
+        "department": "LA GUAJIRA",
+        "department_value": "La Guajira"
+      },
+      {
+        "divipola": "68872",
+        "municipality": "VILLANUEVA",
+        "department": "SANTANDER",
+        "department_value": "Santander"
+      },
+      {
+        "divipola": "85440",
+        "municipality": "VILLANUEVA",
+        "department": "CASANARE",
+        "department_value": "Casanare"
+      }
+    ],
+    "belen": [
+      {
+        "divipola": "15087",
+        "municipality": "BELÉN",
+        "department": "BOYACÁ",
+        "department_value": "Boyacá"
+      },
+      {
+        "divipola": "52083",
+        "municipality": "BELÉN",
+        "department": "NARIÑO",
+        "department_value": "Nariño"
+      }
+    ],
+    "buenavista": [
+      {
+        "divipola": "15109",
+        "municipality": "BUENAVISTA",
+        "department": "BOYACÁ",
+        "department_value": "Boyacá"
+      },
+      {
+        "divipola": "23079",
+        "municipality": "BUENAVISTA",
+        "department": "CÓRDOBA",
+        "department_value": "Córdoba"
+      },
+      {
+        "divipola": "63111",
+        "municipality": "BUENAVISTA",
+        "department": "QUINDÍO",
+        "department_value": "Quindío"
+      },
+      {
+        "divipola": "70110",
+        "municipality": "BUENAVISTA",
+        "department": "SUCRE",
+        "department_value": "Sucre"
+      }
+    ],
+    "la victoria": [
+      {
+        "divipola": "15401",
+        "municipality": "LA VICTORIA",
+        "department": "BOYACÁ",
+        "department_value": "Boyacá"
+      },
+      {
+        "divipola": "76403",
+        "municipality": "LA VICTORIA",
+        "department": "VALLE DEL CAUCA",
+        "department_value": "Valle del Cauca"
+      }
+    ],
+    "miraflores": [
+      {
+        "divipola": "15455",
+        "municipality": "MIRAFLORES",
+        "department": "BOYACÁ",
+        "department_value": "Boyacá"
+      },
+      {
+        "divipola": "95200",
+        "municipality": "MIRAFLORES",
+        "department": "GUAVIARE",
+        "department_value": "Guaviare"
+      }
+    ],
+    "paez": [
+      {
+        "divipola": "15514",
+        "municipality": "PÁEZ",
+        "department": "BOYACÁ",
+        "department_value": "Boyacá"
+      },
+      {
+        "divipola": "19517",
+        "municipality": "PÁEZ",
+        "department": "CAUCA",
+        "department_value": "Cauca"
+      }
+    ],
+    "santa maria": [
+      {
+        "divipola": "15690",
+        "municipality": "SANTA MARÍA",
+        "department": "BOYACÁ",
+        "department_value": "Boyacá"
+      },
+      {
+        "divipola": "41676",
+        "municipality": "SANTA MARÍA",
+        "department": "HUILA",
+        "department_value": "Huila"
+      }
+    ],
+    "palestina": [
+      {
+        "divipola": "17524",
+        "municipality": "PALESTINA",
+        "department": "CALDAS",
+        "department_value": "Caldas"
+      },
+      {
+        "divipola": "41530",
+        "municipality": "PALESTINA",
+        "department": "HUILA",
+        "department_value": "Huila"
+      }
+    ],
+    "riosucio": [
+      {
+        "divipola": "17614",
+        "municipality": "RIOSUCIO",
+        "department": "CALDAS",
+        "department_value": "Caldas"
+      },
+      {
+        "divipola": "27615",
+        "municipality": "RIOSUCIO",
+        "department": "CHOCÓ",
+        "department_value": "Chocó"
+      }
+    ],
+    "salamina": [
+      {
+        "divipola": "17653",
+        "municipality": "SALAMINA",
+        "department": "CALDAS",
+        "department_value": "Caldas"
+      },
+      {
+        "divipola": "47675",
+        "municipality": "SALAMINA",
+        "department": "MAGDALENA",
+        "department_value": "Magdalena"
+      }
+    ],
+    "florencia": [
+      {
+        "divipola": "18001",
+        "municipality": "FLORENCIA",
+        "department": "CAQUETÁ",
+        "department_value": "Caquetá"
+      },
+      {
+        "divipola": "19290",
+        "municipality": "FLORENCIA",
+        "department": "CAUCA",
+        "department_value": "Cauca"
+      }
+    ],
+    "albania": [
+      {
+        "divipola": "18029",
+        "municipality": "ALBANIA",
+        "department": "CAQUETÁ",
+        "department_value": "Caquetá"
+      },
+      {
+        "divipola": "44035",
+        "municipality": "ALBANIA",
+        "department": "LA GUAJIRA",
+        "department_value": "La Guajira"
+      },
+      {
+        "divipola": "68020",
+        "municipality": "ALBANIA",
+        "department": "SANTANDER",
+        "department_value": "Santander"
+      }
+    ],
+    "puerto rico": [
+      {
+        "divipola": "18592",
+        "municipality": "PUERTO RICO",
+        "department": "CAQUETÁ",
+        "department_value": "Caquetá"
+      },
+      {
+        "divipola": "50590",
+        "municipality": "PUERTO RICO",
+        "department": "META",
+        "department_value": "Meta"
+      }
+    ],
+    "balboa": [
+      {
+        "divipola": "19075",
+        "municipality": "BALBOA",
+        "department": "CAUCA",
+        "department_value": "Cauca"
+      },
+      {
+        "divipola": "66075",
+        "municipality": "BALBOA",
+        "department": "RISARALDA",
+        "department_value": "Risaralda"
+      }
+    ],
+    "bolivar": [
+      {
+        "divipola": "19100",
+        "municipality": "BOLÍVAR",
+        "department": "CAUCA",
+        "department_value": "Cauca"
+      },
+      {
+        "divipola": "68101",
+        "municipality": "BOLÍVAR",
+        "department": "SANTANDER",
+        "department_value": "Santander"
+      },
+      {
+        "divipola": "76100",
+        "municipality": "BOLÍVAR",
+        "department": "VALLE DEL CAUCA",
+        "department_value": "Valle del Cauca"
+      }
+    ],
+    "el tambo": [
+      {
+        "divipola": "19256",
+        "municipality": "EL TAMBO",
+        "department": "CAUCA",
+        "department_value": "Cauca"
+      },
+      {
+        "divipola": "52260",
+        "municipality": "EL TAMBO",
+        "department": "NARIÑO",
+        "department_value": "Nariño"
+      }
+    ],
+    "la vega": [
+      {
+        "divipola": "19397",
+        "municipality": "LA VEGA",
+        "department": "CAUCA",
+        "department_value": "Cauca"
+      },
+      {
+        "divipola": "25402",
+        "municipality": "LA VEGA",
+        "department": "CUNDINAMARCA",
+        "department_value": "Cundinamarca"
+      }
+    ],
+    "suarez": [
+      {
+        "divipola": "19780",
+        "municipality": "SUÁREZ",
+        "department": "CAUCA",
+        "department_value": "Cauca"
+      },
+      {
+        "divipola": "73770",
+        "municipality": "SUÁREZ",
+        "department": "TOLIMA",
+        "department_value": "Tolima"
+      }
+    ],
+    "sucre": [
+      {
+        "divipola": "19785",
+        "municipality": "SUCRE",
+        "department": "CAUCA",
+        "department_value": "Cauca"
+      },
+      {
+        "divipola": "68773",
+        "municipality": "SUCRE",
+        "department": "SANTANDER",
+        "department_value": "Santander"
+      },
+      {
+        "divipola": "70771",
+        "municipality": "SUCRE",
+        "department": "SUCRE",
+        "department_value": "Sucre"
+      }
+    ],
+    "la paz": [
+      {
+        "divipola": "20621",
+        "municipality": "LA PAZ",
+        "department": "CESAR",
+        "department_value": "Cesar"
+      },
+      {
+        "divipola": "68397",
+        "municipality": "LA PAZ",
+        "department": "SANTANDER",
+        "department_value": "Santander"
+      }
+    ],
+    "san martin": [
+      {
+        "divipola": "20770",
+        "municipality": "SAN MARTÍN",
+        "department": "CESAR",
+        "department_value": "Cesar"
+      },
+      {
+        "divipola": "50689",
+        "municipality": "SAN MARTÍN",
+        "department": "META",
+        "department_value": "Meta"
+      }
+    ],
+    "chima": [
+      {
+        "divipola": "23168",
+        "municipality": "CHIMÁ",
+        "department": "CÓRDOBA",
+        "department_value": "Córdoba"
+      },
+      {
+        "divipola": "68176",
+        "municipality": "CHIMA",
+        "department": "SANTANDER",
+        "department_value": "Santander"
+      }
+    ],
+    "alban": [
+      {
+        "divipola": "25019",
+        "municipality": "ALBÁN",
+        "department": "CUNDINAMARCA",
+        "department_value": "Cundinamarca"
+      },
+      {
+        "divipola": "52019",
+        "municipality": "ALBÁN",
+        "department": "NARIÑO",
+        "department_value": "Nariño"
+      }
+    ],
+    "cabrera": [
+      {
+        "divipola": "25120",
+        "municipality": "CABRERA",
+        "department": "CUNDINAMARCA",
+        "department_value": "Cundinamarca"
+      },
+      {
+        "divipola": "68121",
+        "municipality": "CABRERA",
+        "department": "SANTANDER",
+        "department_value": "Santander"
+      }
+    ],
+    "mosquera": [
+      {
+        "divipola": "25473",
+        "municipality": "MOSQUERA",
+        "department": "CUNDINAMARCA",
+        "department_value": "Cundinamarca"
+      },
+      {
+        "divipola": "52473",
+        "municipality": "MOSQUERA",
+        "department": "NARIÑO",
+        "department_value": "Nariño"
+      }
+    ],
+    "ricaurte": [
+      {
+        "divipola": "25612",
+        "municipality": "RICAURTE",
+        "department": "CUNDINAMARCA",
+        "department_value": "Cundinamarca"
+      },
+      {
+        "divipola": "52612",
+        "municipality": "RICAURTE",
+        "department": "NARIÑO",
+        "department_value": "Nariño"
+      }
+    ],
+    "san bernardo": [
+      {
+        "divipola": "25649",
+        "municipality": "SAN BERNARDO",
+        "department": "CUNDINAMARCA",
+        "department_value": "Cundinamarca"
+      },
+      {
+        "divipola": "52685",
+        "municipality": "SAN BERNARDO",
+        "department": "NARIÑO",
+        "department_value": "Nariño"
+      }
+    ],
+    "san cayetano": [
+      {
+        "divipola": "25653",
+        "municipality": "SAN CAYETANO",
+        "department": "CUNDINAMARCA",
+        "department_value": "Cundinamarca"
+      },
+      {
+        "divipola": "54673",
+        "municipality": "SAN CAYETANO",
+        "department": "NORTE DE SANTANDER",
+        "department_value": "Norte de Santander"
+      }
+    ],
+    "guamal": [
+      {
+        "divipola": "47318",
+        "municipality": "GUAMAL",
+        "department": "MAGDALENA",
+        "department_value": "Magdalena"
+      },
+      {
+        "divipola": "50318",
+        "municipality": "GUAMAL",
+        "department": "META",
+        "department_value": "Meta"
+      }
+    ],
+    "restrepo": [
+      {
+        "divipola": "50606",
+        "municipality": "RESTREPO",
+        "department": "META",
+        "department_value": "Meta"
+      },
+      {
+        "divipola": "76606",
+        "municipality": "RESTREPO",
+        "department": "VALLE DEL CAUCA",
+        "department_value": "Valle del Cauca"
+      }
+    ],
+    "colon": [
+      {
+        "divipola": "52203",
+        "municipality": "COLÓN",
+        "department": "NARIÑO",
+        "department_value": "Nariño"
+      },
+      {
+        "divipola": "86219",
+        "municipality": "COLÓN",
+        "department": "PUTUMAYO",
+        "department_value": "Putumayo"
+      }
+    ],
+    "providencia": [
+      {
+        "divipola": "52565",
+        "municipality": "PROVIDENCIA",
+        "department": "NARIÑO",
+        "department_value": "Nariño"
+      },
+      {
+        "divipola": "88564",
+        "municipality": "PROVIDENCIA",
+        "department": "ARCHIPIÉLAGO DE SAN ANDRÉS, PROVIDENCIA Y SANTA CATALINA",
+        "department_value": "San Andrés, Providencia y Santa Catalina"
+      }
+    ],
+    "santiago": [
+      {
+        "divipola": "54680",
+        "municipality": "SANTIAGO",
+        "department": "NORTE DE SANTANDER",
+        "department_value": "Norte de Santander"
+      },
+      {
+        "divipola": "86760",
+        "municipality": "SANTIAGO",
+        "department": "PUTUMAYO",
+        "department_value": "Putumayo"
+      }
+    ],
+    "san miguel": [
+      {
+        "divipola": "68686",
+        "municipality": "SAN MIGUEL",
+        "department": "SANTANDER",
+        "department_value": "Santander"
+      },
+      {
+        "divipola": "86757",
+        "municipality": "SAN MIGUEL",
+        "department": "PUTUMAYO",
+        "department_value": "Putumayo"
+      }
+    ],
+    "san pedro": [
+      {
+        "divipola": "70717",
+        "municipality": "SAN PEDRO",
+        "department": "SUCRE",
+        "department_value": "Sucre"
+      },
+      {
+        "divipola": "76670",
+        "municipality": "SAN PEDRO",
+        "department": "VALLE DEL CAUCA",
+        "department_value": "Valle del Cauca"
+      }
+    ]
+  }
+}

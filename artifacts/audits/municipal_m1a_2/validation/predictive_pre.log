@@ -1,0 +1,320 @@
+FFFFFFFF.FF..F.....F                                                     [100%]
+=================================== FAILURES ===================================
+_ test_full_identity_never_resolves_a_fragment[baseline-San Andr\xe9s de Sotavento] _
+
+catalog = (<app.core.query_router.QueryRouter object at 0x10c15e510>, {'authority': 'ADR-073', 'bindings': [{'canonical_name': '...IL': {'authority': 'REVIEW', 'codes': [], 'sources': {'jbjy-vk9h': ('AEROCIVIL',), 'p6dx-8zbt': ('AEROCIVIL',)}}, ...})
+town = 'San Andrés de Sotavento'
+
+    @pytest.mark.parametrize('town', [
+        'San Andrés de Sotavento', 'Villa de Leyva', 'San Andrés de Cuerquía',
+        'San Andrés de Tumaco', 'El Carmen de Viboral', 'El Carmen de Bolívar',
+        'Belén de Umbría', 'Santander de Quilichao',
+    ])
+    def test_full_identity_never_resolves_a_fragment(catalog, town):
+        router, _, oracle = catalog
+        query = f'contratos del municipio de {town}'
+        params = router.parse(query).params
+        owner = params.get('entidad_resolved')
+        expected = get_municipal_territories().lookup(town)[0].divipola
+        if owner:
+            assert oracle[owner]['codes'] == [expected], (query, params)
+            assert not params.get('objeto')
+        else:
+            assert params['entidad_resolution']['clarification_needed']
+>           assert not compute_query_plan(params, query).should_execute
+E           assert not True
+E            +  where True = QueryPlan(should_execute=True, params={'dataset': 'contratos', 'dataset_explicit': True, 'entidad': 'Municipio de san ...issing_slots=[], risk_flags=['unsafe_global_candidate'], clarification_question=None, reason='valid_query', signals=[]).should_execute
+E            +    where QueryPlan(should_execute=True, params={'dataset': 'contratos', 'dataset_explicit': True, 'entidad': 'Municipio de san ...issing_slots=[], risk_flags=['unsafe_global_candidate'], clarification_question=None, reason='valid_query', signals=[]) = compute_query_plan({'dataset': 'contratos', 'dataset_explicit': True, 'entidad': 'Municipio de san andres de sotavento', 'entidad_resolut...s el nombre oficial de la entidad?", 'clarification_needed': True, 'confidence': 'low', 'ecosystem_entities': [], ...}}, 'contratos del municipio de San Andrés de Sotavento')
+
+tests/test_compound_identity_guard.py:43: AssertionError
+____ test_full_identity_never_resolves_a_fragment[baseline-Villa de Leyva] _____
+
+catalog = (<app.core.query_router.QueryRouter object at 0x10c15e510>, {'authority': 'ADR-073', 'bindings': [{'canonical_name': '...IL': {'authority': 'REVIEW', 'codes': [], 'sources': {'jbjy-vk9h': ('AEROCIVIL',), 'p6dx-8zbt': ('AEROCIVIL',)}}, ...})
+town = 'Villa de Leyva'
+
+    @pytest.mark.parametrize('town', [
+        'San Andrés de Sotavento', 'Villa de Leyva', 'San Andrés de Cuerquía',
+        'San Andrés de Tumaco', 'El Carmen de Viboral', 'El Carmen de Bolívar',
+        'Belén de Umbría', 'Santander de Quilichao',
+    ])
+    def test_full_identity_never_resolves_a_fragment(catalog, town):
+        router, _, oracle = catalog
+        query = f'contratos del municipio de {town}'
+        params = router.parse(query).params
+        owner = params.get('entidad_resolved')
+        expected = get_municipal_territories().lookup(town)[0].divipola
+        if owner:
+            assert oracle[owner]['codes'] == [expected], (query, params)
+            assert not params.get('objeto')
+        else:
+            assert params['entidad_resolution']['clarification_needed']
+>           assert not compute_query_plan(params, query).should_execute
+E           assert not True
+E            +  where True = QueryPlan(should_execute=True, params={'dataset': 'contratos', 'dataset_explicit': True, 'entidad': 'Municipio de vill...issing_slots=[], risk_flags=['unsafe_global_candidate'], clarification_question=None, reason='valid_query', signals=[]).should_execute
+E            +    where QueryPlan(should_execute=True, params={'dataset': 'contratos', 'dataset_explicit': True, 'entidad': 'Municipio de vill...issing_slots=[], risk_flags=['unsafe_global_candidate'], clarification_question=None, reason='valid_query', signals=[]) = compute_query_plan({'dataset': 'contratos', 'dataset_explicit': True, 'entidad': 'Municipio de villa de leyva', 'entidad_resolution': {'c...s el nombre oficial de la entidad?", 'clarification_needed': True, 'confidence': 'low', 'ecosystem_entities': [], ...}}, 'contratos del municipio de Villa de Leyva')
+
+tests/test_compound_identity_guard.py:43: AssertionError
+_ test_full_identity_never_resolves_a_fragment[baseline-San Andr\xe9s de Cuerqu\xeda] _
+
+catalog = (<app.core.query_router.QueryRouter object at 0x10c15e510>, {'authority': 'ADR-073', 'bindings': [{'canonical_name': '...IL': {'authority': 'REVIEW', 'codes': [], 'sources': {'jbjy-vk9h': ('AEROCIVIL',), 'p6dx-8zbt': ('AEROCIVIL',)}}, ...})
+town = 'San Andrés de Cuerquía'
+
+    @pytest.mark.parametrize('town', [
+        'San Andrés de Sotavento', 'Villa de Leyva', 'San Andrés de Cuerquía',
+        'San Andrés de Tumaco', 'El Carmen de Viboral', 'El Carmen de Bolívar',
+        'Belén de Umbría', 'Santander de Quilichao',
+    ])
+    def test_full_identity_never_resolves_a_fragment(catalog, town):
+        router, _, oracle = catalog
+        query = f'contratos del municipio de {town}'
+        params = router.parse(query).params
+        owner = params.get('entidad_resolved')
+        expected = get_municipal_territories().lookup(town)[0].divipola
+        if owner:
+            assert oracle[owner]['codes'] == [expected], (query, params)
+            assert not params.get('objeto')
+        else:
+            assert params['entidad_resolution']['clarification_needed']
+>           assert not compute_query_plan(params, query).should_execute
+E           assert not True
+E            +  where True = QueryPlan(should_execute=True, params={'dataset': 'contratos', 'dataset_explicit': True, 'entidad': 'Municipio de san ...issing_slots=[], risk_flags=['unsafe_global_candidate'], clarification_question=None, reason='valid_query', signals=[]).should_execute
+E            +    where QueryPlan(should_execute=True, params={'dataset': 'contratos', 'dataset_explicit': True, 'entidad': 'Municipio de san ...issing_slots=[], risk_flags=['unsafe_global_candidate'], clarification_question=None, reason='valid_query', signals=[]) = compute_query_plan({'dataset': 'contratos', 'dataset_explicit': True, 'entidad': 'Municipio de san andres de cuerquia', 'entidad_resoluti...s el nombre oficial de la entidad?", 'clarification_needed': True, 'confidence': 'low', 'ecosystem_entities': [], ...}}, 'contratos del municipio de San Andrés de Cuerquía')
+
+tests/test_compound_identity_guard.py:43: AssertionError
+_ test_full_identity_never_resolves_a_fragment[baseline-San Andr\xe9s de Tumaco] _
+
+catalog = (<app.core.query_router.QueryRouter object at 0x10c15e510>, {'authority': 'ADR-073', 'bindings': [{'canonical_name': '...IL': {'authority': 'REVIEW', 'codes': [], 'sources': {'jbjy-vk9h': ('AEROCIVIL',), 'p6dx-8zbt': ('AEROCIVIL',)}}, ...})
+town = 'San Andrés de Tumaco'
+
+    @pytest.mark.parametrize('town', [
+        'San Andrés de Sotavento', 'Villa de Leyva', 'San Andrés de Cuerquía',
+        'San Andrés de Tumaco', 'El Carmen de Viboral', 'El Carmen de Bolívar',
+        'Belén de Umbría', 'Santander de Quilichao',
+    ])
+    def test_full_identity_never_resolves_a_fragment(catalog, town):
+        router, _, oracle = catalog
+        query = f'contratos del municipio de {town}'
+        params = router.parse(query).params
+        owner = params.get('entidad_resolved')
+        expected = get_municipal_territories().lookup(town)[0].divipola
+        if owner:
+            assert oracle[owner]['codes'] == [expected], (query, params)
+            assert not params.get('objeto')
+        else:
+            assert params['entidad_resolution']['clarification_needed']
+>           assert not compute_query_plan(params, query).should_execute
+E           assert not True
+E            +  where True = QueryPlan(should_execute=True, params={'dataset': 'contratos', 'dataset_explicit': True, 'entidad': 'Municipio de san ...issing_slots=[], risk_flags=['unsafe_global_candidate'], clarification_question=None, reason='valid_query', signals=[]).should_execute
+E            +    where QueryPlan(should_execute=True, params={'dataset': 'contratos', 'dataset_explicit': True, 'entidad': 'Municipio de san ...issing_slots=[], risk_flags=['unsafe_global_candidate'], clarification_question=None, reason='valid_query', signals=[]) = compute_query_plan({'dataset': 'contratos', 'dataset_explicit': True, 'entidad': 'Municipio de san andres de tumaco', 'entidad_resolution...s el nombre oficial de la entidad?", 'clarification_needed': True, 'confidence': 'low', 'ecosystem_entities': [], ...}}, 'contratos del municipio de San Andrés de Tumaco')
+
+tests/test_compound_identity_guard.py:43: AssertionError
+_ test_full_identity_never_resolves_a_fragment[baseline-El Carmen de Viboral] __
+
+catalog = (<app.core.query_router.QueryRouter object at 0x10c15e510>, {'authority': 'ADR-073', 'bindings': [{'canonical_name': '...IL': {'authority': 'REVIEW', 'codes': [], 'sources': {'jbjy-vk9h': ('AEROCIVIL',), 'p6dx-8zbt': ('AEROCIVIL',)}}, ...})
+town = 'El Carmen de Viboral'
+
+    @pytest.mark.parametrize('town', [
+        'San Andrés de Sotavento', 'Villa de Leyva', 'San Andrés de Cuerquía',
+        'San Andrés de Tumaco', 'El Carmen de Viboral', 'El Carmen de Bolívar',
+        'Belén de Umbría', 'Santander de Quilichao',
+    ])
+    def test_full_identity_never_resolves_a_fragment(catalog, town):
+        router, _, oracle = catalog
+        query = f'contratos del municipio de {town}'
+        params = router.parse(query).params
+        owner = params.get('entidad_resolved')
+        expected = get_municipal_territories().lookup(town)[0].divipola
+        if owner:
+            assert oracle[owner]['codes'] == [expected], (query, params)
+            assert not params.get('objeto')
+        else:
+            assert params['entidad_resolution']['clarification_needed']
+>           assert not compute_query_plan(params, query).should_execute
+E           assert not True
+E            +  where True = QueryPlan(should_execute=True, params={'dataset': 'contratos', 'dataset_explicit': True, 'entidad': 'Municipio de el c...issing_slots=[], risk_flags=['unsafe_global_candidate'], clarification_question=None, reason='valid_query', signals=[]).should_execute
+E            +    where QueryPlan(should_execute=True, params={'dataset': 'contratos', 'dataset_explicit': True, 'entidad': 'Municipio de el c...issing_slots=[], risk_flags=['unsafe_global_candidate'], clarification_question=None, reason='valid_query', signals=[]) = compute_query_plan({'dataset': 'contratos', 'dataset_explicit': True, 'entidad': 'Municipio de el carmen de viboral', 'entidad_resolution...s el nombre oficial de la entidad?", 'clarification_needed': True, 'confidence': 'low', 'ecosystem_entities': [], ...}}, 'contratos del municipio de El Carmen de Viboral')
+
+tests/test_compound_identity_guard.py:43: AssertionError
+_ test_full_identity_never_resolves_a_fragment[baseline-El Carmen de Bol\xedvar] _
+
+catalog = (<app.core.query_router.QueryRouter object at 0x10c15e510>, {'authority': 'ADR-073', 'bindings': [{'canonical_name': '...IL': {'authority': 'REVIEW', 'codes': [], 'sources': {'jbjy-vk9h': ('AEROCIVIL',), 'p6dx-8zbt': ('AEROCIVIL',)}}, ...})
+town = 'El Carmen de Bolívar'
+
+    @pytest.mark.parametrize('town', [
+        'San Andrés de Sotavento', 'Villa de Leyva', 'San Andrés de Cuerquía',
+        'San Andrés de Tumaco', 'El Carmen de Viboral', 'El Carmen de Bolívar',
+        'Belén de Umbría', 'Santander de Quilichao',
+    ])
+    def test_full_identity_never_resolves_a_fragment(catalog, town):
+        router, _, oracle = catalog
+        query = f'contratos del municipio de {town}'
+        params = router.parse(query).params
+        owner = params.get('entidad_resolved')
+        expected = get_municipal_territories().lookup(town)[0].divipola
+        if owner:
+            assert oracle[owner]['codes'] == [expected], (query, params)
+            assert not params.get('objeto')
+        else:
+            assert params['entidad_resolution']['clarification_needed']
+>           assert not compute_query_plan(params, query).should_execute
+E           assert not True
+E            +  where True = QueryPlan(should_execute=True, params={'dataset': 'contratos', 'dataset_explicit': True, 'entidad': 'Municipio de el c...issing_slots=[], risk_flags=['unsafe_global_candidate'], clarification_question=None, reason='valid_query', signals=[]).should_execute
+E            +    where QueryPlan(should_execute=True, params={'dataset': 'contratos', 'dataset_explicit': True, 'entidad': 'Municipio de el c...issing_slots=[], risk_flags=['unsafe_global_candidate'], clarification_question=None, reason='valid_query', signals=[]) = compute_query_plan({'dataset': 'contratos', 'dataset_explicit': True, 'entidad': 'Municipio de el carmen de bolivar', 'entidad_resolution...s el nombre oficial de la entidad?", 'clarification_needed': True, 'confidence': 'low', 'ecosystem_entities': [], ...}}, 'contratos del municipio de El Carmen de Bolívar')
+
+tests/test_compound_identity_guard.py:43: AssertionError
+_ test_full_identity_never_resolves_a_fragment[baseline-Bel\xe9n de Umbr\xeda] _
+
+catalog = (<app.core.query_router.QueryRouter object at 0x10c15e510>, {'authority': 'ADR-073', 'bindings': [{'canonical_name': '...IL': {'authority': 'REVIEW', 'codes': [], 'sources': {'jbjy-vk9h': ('AEROCIVIL',), 'p6dx-8zbt': ('AEROCIVIL',)}}, ...})
+town = 'Belén de Umbría'
+
+    @pytest.mark.parametrize('town', [
+        'San Andrés de Sotavento', 'Villa de Leyva', 'San Andrés de Cuerquía',
+        'San Andrés de Tumaco', 'El Carmen de Viboral', 'El Carmen de Bolívar',
+        'Belén de Umbría', 'Santander de Quilichao',
+    ])
+    def test_full_identity_never_resolves_a_fragment(catalog, town):
+        router, _, oracle = catalog
+        query = f'contratos del municipio de {town}'
+        params = router.parse(query).params
+        owner = params.get('entidad_resolved')
+        expected = get_municipal_territories().lookup(town)[0].divipola
+        if owner:
+            assert oracle[owner]['codes'] == [expected], (query, params)
+            assert not params.get('objeto')
+        else:
+            assert params['entidad_resolution']['clarification_needed']
+>           assert not compute_query_plan(params, query).should_execute
+E           assert not True
+E            +  where True = QueryPlan(should_execute=True, params={'dataset': 'contratos', 'dataset_explicit': True, 'entidad': 'Municipio de bele...issing_slots=[], risk_flags=['unsafe_global_candidate'], clarification_question=None, reason='valid_query', signals=[]).should_execute
+E            +    where QueryPlan(should_execute=True, params={'dataset': 'contratos', 'dataset_explicit': True, 'entidad': 'Municipio de bele...issing_slots=[], risk_flags=['unsafe_global_candidate'], clarification_question=None, reason='valid_query', signals=[]) = compute_query_plan({'dataset': 'contratos', 'dataset_explicit': True, 'entidad': 'Municipio de belen de umbria', 'entidad_resolution': {'...s el nombre oficial de la entidad?", 'clarification_needed': True, 'confidence': 'low', 'ecosystem_entities': [], ...}}, 'contratos del municipio de Belén de Umbría')
+
+tests/test_compound_identity_guard.py:43: AssertionError
+_ test_full_identity_never_resolves_a_fragment[baseline-Santander de Quilichao] _
+
+catalog = (<app.core.query_router.QueryRouter object at 0x10c15e510>, {'authority': 'ADR-073', 'bindings': [{'canonical_name': '...IL': {'authority': 'REVIEW', 'codes': [], 'sources': {'jbjy-vk9h': ('AEROCIVIL',), 'p6dx-8zbt': ('AEROCIVIL',)}}, ...})
+town = 'Santander de Quilichao'
+
+    @pytest.mark.parametrize('town', [
+        'San Andrés de Sotavento', 'Villa de Leyva', 'San Andrés de Cuerquía',
+        'San Andrés de Tumaco', 'El Carmen de Viboral', 'El Carmen de Bolívar',
+        'Belén de Umbría', 'Santander de Quilichao',
+    ])
+    def test_full_identity_never_resolves_a_fragment(catalog, town):
+        router, _, oracle = catalog
+        query = f'contratos del municipio de {town}'
+        params = router.parse(query).params
+        owner = params.get('entidad_resolved')
+        expected = get_municipal_territories().lookup(town)[0].divipola
+        if owner:
+            assert oracle[owner]['codes'] == [expected], (query, params)
+            assert not params.get('objeto')
+        else:
+            assert params['entidad_resolution']['clarification_needed']
+>           assert not compute_query_plan(params, query).should_execute
+E           assert not True
+E            +  where True = QueryPlan(should_execute=True, params={'dataset': 'contratos', 'dataset_explicit': True, 'entidad': 'Municipio de sant...issing_slots=[], risk_flags=['unsafe_global_candidate'], clarification_question=None, reason='valid_query', signals=[]).should_execute
+E            +    where QueryPlan(should_execute=True, params={'dataset': 'contratos', 'dataset_explicit': True, 'entidad': 'Municipio de sant...issing_slots=[], risk_flags=['unsafe_global_candidate'], clarification_question=None, reason='valid_query', signals=[]) = compute_query_plan({'dataset': 'contratos', 'dataset_explicit': True, 'entidad': 'Municipio de santander de quilichao', 'entidad_resoluti...s el nombre oficial de la entidad?", 'clarification_needed': True, 'confidence': 'low', 'ecosystem_entities': [], ...}}, 'contratos del municipio de Santander de Quilichao')
+
+tests/test_compound_identity_guard.py:43: AssertionError
+_ test_legitimate_trailing_fallback[baseline-alcald\xeda de Medell\xedn de obras de infraestructura] _
+
+catalog = (<app.core.query_router.QueryRouter object at 0x10c15e510>, {'authority': 'ADR-073', 'bindings': [{'canonical_name': '...IL': {'authority': 'REVIEW', 'codes': [], 'sources': {'jbjy-vk9h': ('AEROCIVIL',), 'p6dx-8zbt': ('AEROCIVIL',)}}, ...})
+query = 'alcaldía de Medellín de obras de infraestructura'
+
+    @pytest.mark.parametrize('query', [
+        'gobernación de Antioquia de 2025',
+        'alcaldía de Medellín de obras de infraestructura',
+    ])
+    def test_legitimate_trailing_fallback(catalog, query):
+        router, _, _ = catalog
+        params = router.parse(query).params
+>       assert params.get('entidad_resolved'), params
+E       AssertionError: {'dataset': 'procesos', 'dataset_explicit': False, 'entidad': 'Municipio de medellin de obras de infraestructura', 'en...s el nombre oficial de la entidad?", 'clarification_needed': True, 'confidence': 'low', 'ecosystem_entities': [], ...}}
+E       assert None
+E        +  where None = <built-in method get of dict object at 0x10c390900>('entidad_resolved')
+E        +    where <built-in method get of dict object at 0x10c390900> = {'dataset': 'procesos', 'dataset_explicit': False, 'entidad': 'Municipio de medellin de obras de infraestructura', 'en...s el nombre oficial de la entidad?", 'clarification_needed': True, 'confidence': 'low', 'ecosystem_entities': [], ...}}.get
+
+tests/test_compound_identity_guard.py:62: AssertionError
+_ test_full_identity_never_resolves_a_fragment[candidate-San Andr\xe9s de Sotavento] _
+
+catalog = (<app.core.query_router.QueryRouter object at 0x10c7416d0>, {'authority': 'ADR-073', 'bindings': [{'canonical_name': '...IL': {'authority': 'REVIEW', 'codes': [], 'sources': {'jbjy-vk9h': ('AEROCIVIL',), 'p6dx-8zbt': ('AEROCIVIL',)}}, ...})
+town = 'San Andrés de Sotavento'
+
+    @pytest.mark.parametrize('town', [
+        'San Andrés de Sotavento', 'Villa de Leyva', 'San Andrés de Cuerquía',
+        'San Andrés de Tumaco', 'El Carmen de Viboral', 'El Carmen de Bolívar',
+        'Belén de Umbría', 'Santander de Quilichao',
+    ])
+    def test_full_identity_never_resolves_a_fragment(catalog, town):
+        router, _, oracle = catalog
+        query = f'contratos del municipio de {town}'
+        params = router.parse(query).params
+        owner = params.get('entidad_resolved')
+        expected = get_municipal_territories().lookup(town)[0].divipola
+        if owner:
+>           assert oracle[owner]['codes'] == [expected], (query, params)
+E           AssertionError: ('contratos del municipio de San Andrés de Sotavento', {'dataset': 'contratos', 'dataset_explicit': True, 'entidad': '...like_value': None, 'metadata': {'resolution_method': 'exact', 'rewritten_from': 'municipio de san andres'}, ...}, ...})
+E           assert ['68669'] == ['23670']
+E             
+E             At index 0 diff: '68669' != '23670'
+E             Use -v to get more diff
+
+tests/test_compound_identity_guard.py:39: AssertionError
+_ test_full_identity_never_resolves_a_fragment[candidate-San Andr\xe9s de Tumaco] _
+
+catalog = (<app.core.query_router.QueryRouter object at 0x10c7416d0>, {'authority': 'ADR-073', 'bindings': [{'canonical_name': '...IL': {'authority': 'REVIEW', 'codes': [], 'sources': {'jbjy-vk9h': ('AEROCIVIL',), 'p6dx-8zbt': ('AEROCIVIL',)}}, ...})
+town = 'San Andrés de Tumaco'
+
+    @pytest.mark.parametrize('town', [
+        'San Andrés de Sotavento', 'Villa de Leyva', 'San Andrés de Cuerquía',
+        'San Andrés de Tumaco', 'El Carmen de Viboral', 'El Carmen de Bolívar',
+        'Belén de Umbría', 'Santander de Quilichao',
+    ])
+    def test_full_identity_never_resolves_a_fragment(catalog, town):
+        router, _, oracle = catalog
+        query = f'contratos del municipio de {town}'
+        params = router.parse(query).params
+        owner = params.get('entidad_resolved')
+        expected = get_municipal_territories().lookup(town)[0].divipola
+        if owner:
+>           assert oracle[owner]['codes'] == [expected], (query, params)
+E           AssertionError: ('contratos del municipio de San Andrés de Tumaco', {'dataset': 'contratos', 'dataset_explicit': True, 'entidad': 'Mun...like_value': None, 'metadata': {'resolution_method': 'exact', 'rewritten_from': 'municipio de san andres'}, ...}, ...})
+E           assert ['68669'] == ['52835']
+E             
+E             At index 0 diff: '68669' != '52835'
+E             Use -v to get more diff
+
+tests/test_compound_identity_guard.py:39: AssertionError
+_ test_legitimate_trailing_fallback[candidate-alcald\xeda de Medell\xedn de obras de infraestructura] _
+
+catalog = (<app.core.query_router.QueryRouter object at 0x10c7416d0>, {'authority': 'ADR-073', 'bindings': [{'canonical_name': '...IL': {'authority': 'REVIEW', 'codes': [], 'sources': {'jbjy-vk9h': ('AEROCIVIL',), 'p6dx-8zbt': ('AEROCIVIL',)}}, ...})
+query = 'alcaldía de Medellín de obras de infraestructura'
+
+    @pytest.mark.parametrize('query', [
+        'gobernación de Antioquia de 2025',
+        'alcaldía de Medellín de obras de infraestructura',
+    ])
+    def test_legitimate_trailing_fallback(catalog, query):
+        router, _, _ = catalog
+        params = router.parse(query).params
+>       assert params.get('entidad_resolved'), params
+E       AssertionError: {'dataset': 'procesos', 'dataset_explicit': False, 'entidad': 'Municipio de medellin de obras de infraestructura', 'en...s el nombre oficial de la entidad?", 'clarification_needed': True, 'confidence': 'low', 'ecosystem_entities': [], ...}}
+E       assert None
+E        +  where None = <built-in method get of dict object at 0x10c756080>('entidad_resolved')
+E        +    where <built-in method get of dict object at 0x10c756080> = {'dataset': 'procesos', 'dataset_explicit': False, 'entidad': 'Municipio de medellin de obras de infraestructura', 'en...s el nombre oficial de la entidad?", 'clarification_needed': True, 'confidence': 'low', 'ecosystem_entities': [], ...}}.get
+
+tests/test_compound_identity_guard.py:62: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_compound_identity_guard.py::test_full_identity_never_resolves_a_fragment[baseline-San Andr\xe9s de Sotavento]
+FAILED tests/test_compound_identity_guard.py::test_full_identity_never_resolves_a_fragment[baseline-Villa de Leyva]
+FAILED tests/test_compound_identity_guard.py::test_full_identity_never_resolves_a_fragment[baseline-San Andr\xe9s de Cuerqu\xeda]
+FAILED tests/test_compound_identity_guard.py::test_full_identity_never_resolves_a_fragment[baseline-San Andr\xe9s de Tumaco]
+FAILED tests/test_compound_identity_guard.py::test_full_identity_never_resolves_a_fragment[baseline-El Carmen de Viboral]
+FAILED tests/test_compound_identity_guard.py::test_full_identity_never_resolves_a_fragment[baseline-El Carmen de Bol\xedvar]
+FAILED tests/test_compound_identity_guard.py::test_full_identity_never_resolves_a_fragment[baseline-Bel\xe9n de Umbr\xeda]
+FAILED tests/test_compound_identity_guard.py::test_full_identity_never_resolves_a_fragment[baseline-Santander de Quilichao]
+FAILED tests/test_compound_identity_guard.py::test_legitimate_trailing_fallback[baseline-alcald\xeda de Medell\xedn de obras de infraestructura]
+FAILED tests/test_compound_identity_guard.py::test_full_identity_never_resolves_a_fragment[candidate-San Andr\xe9s de Sotavento]
+FAILED tests/test_compound_identity_guard.py::test_full_identity_never_resolves_a_fragment[candidate-San Andr\xe9s de Tumaco]
+FAILED tests/test_compound_identity_guard.py::test_legitimate_trailing_fallback[candidate-alcald\xeda de Medell\xedn de obras de infraestructura]
+12 failed, 8 passed, 4 deselected in 1.58s

@@ -1,0 +1,2 @@
+baseline {'total_queries': 1916, 'municipalities': 406, 'counts': {'CORRECT_BUYER': 52, 'CLARIFICATION': 0, 'FAIL_CLOSED': 0, 'REVIEW': 1199, 'WRONG_BUYER': 206, 'WRONG_DIVIPOLA': 459}, 'status': 'BLOCKED'}
+candidate {'total_queries': 1916, 'municipalities': 406, 'counts': {'CORRECT_BUYER': 580, 'CLARIFICATION': 0, 'FAIL_CLOSED': 0, 'REVIEW': 463, 'WRONG_BUYER': 484, 'WRONG_DIVIPOLA': 389}, 'status': 'BLOCKED'}
