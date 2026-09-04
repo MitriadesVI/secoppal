@@ -1,0 +1,76 @@
+............FFFF.                                                        [100%]
+=================================== FAILURES ===================================
+_ test_turbaco_queries_reach_only_the_accredited_physical_buyer[municipio de turbaco] _
+
+query = 'municipio de turbaco'
+
+    @pytest.mark.parametrize('query', ['municipio de turbaco', 'alcaldía de turbaco',
+                                       'contratos de la alcaldía de turbaco', 'contratos del municipio de turbaco'])
+    def test_turbaco_queries_reach_only_the_accredited_physical_buyer(query):
+        resolver = EntityResolver(ROOT / 'app/data/aliases_db.json')
+        params = QueryRouter(resolver).parse(query).params
+>       assert params['entidad_resolved'] == B
+E       AssertionError: assert 'ALCALDIA DE TURBACO BOLIVAR' == 'ALCALDIA MUN...RBACO BOLIVAR'
+E         
+E         - ALCALDIA MUNICIPAL DE TURBACO BOLIVAR
+E         ?          ----------
+E         + ALCALDIA DE TURBACO BOLIVAR
+
+tests/test_municipal_m1a2a.py:83: AssertionError
+_ test_turbaco_queries_reach_only_the_accredited_physical_buyer[alcald\xeda de turbaco] _
+
+query = 'alcaldía de turbaco'
+
+    @pytest.mark.parametrize('query', ['municipio de turbaco', 'alcaldía de turbaco',
+                                       'contratos de la alcaldía de turbaco', 'contratos del municipio de turbaco'])
+    def test_turbaco_queries_reach_only_the_accredited_physical_buyer(query):
+        resolver = EntityResolver(ROOT / 'app/data/aliases_db.json')
+        params = QueryRouter(resolver).parse(query).params
+>       assert params['entidad_resolved'] == B
+E       AssertionError: assert 'ALCALDIA DE TURBACO BOLIVAR' == 'ALCALDIA MUN...RBACO BOLIVAR'
+E         
+E         - ALCALDIA MUNICIPAL DE TURBACO BOLIVAR
+E         ?          ----------
+E         + ALCALDIA DE TURBACO BOLIVAR
+
+tests/test_municipal_m1a2a.py:83: AssertionError
+_ test_turbaco_queries_reach_only_the_accredited_physical_buyer[contratos de la alcald\xeda de turbaco] _
+
+query = 'contratos de la alcaldía de turbaco'
+
+    @pytest.mark.parametrize('query', ['municipio de turbaco', 'alcaldía de turbaco',
+                                       'contratos de la alcaldía de turbaco', 'contratos del municipio de turbaco'])
+    def test_turbaco_queries_reach_only_the_accredited_physical_buyer(query):
+        resolver = EntityResolver(ROOT / 'app/data/aliases_db.json')
+        params = QueryRouter(resolver).parse(query).params
+>       assert params['entidad_resolved'] == B
+E       AssertionError: assert 'ALCALDIA DE TURBACO BOLIVAR' == 'ALCALDIA MUN...RBACO BOLIVAR'
+E         
+E         - ALCALDIA MUNICIPAL DE TURBACO BOLIVAR
+E         ?          ----------
+E         + ALCALDIA DE TURBACO BOLIVAR
+
+tests/test_municipal_m1a2a.py:83: AssertionError
+_ test_turbaco_queries_reach_only_the_accredited_physical_buyer[contratos del municipio de turbaco] _
+
+query = 'contratos del municipio de turbaco'
+
+    @pytest.mark.parametrize('query', ['municipio de turbaco', 'alcaldía de turbaco',
+                                       'contratos de la alcaldía de turbaco', 'contratos del municipio de turbaco'])
+    def test_turbaco_queries_reach_only_the_accredited_physical_buyer(query):
+        resolver = EntityResolver(ROOT / 'app/data/aliases_db.json')
+        params = QueryRouter(resolver).parse(query).params
+>       assert params['entidad_resolved'] == B
+E       AssertionError: assert 'ALCALDIA DE TURBACO BOLIVAR' == 'ALCALDIA MUN...RBACO BOLIVAR'
+E         
+E         - ALCALDIA MUNICIPAL DE TURBACO BOLIVAR
+E         ?          ----------
+E         + ALCALDIA DE TURBACO BOLIVAR
+
+tests/test_municipal_m1a2a.py:83: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_municipal_m1a2a.py::test_turbaco_queries_reach_only_the_accredited_physical_buyer[municipio de turbaco]
+FAILED tests/test_municipal_m1a2a.py::test_turbaco_queries_reach_only_the_accredited_physical_buyer[alcald\xeda de turbaco]
+FAILED tests/test_municipal_m1a2a.py::test_turbaco_queries_reach_only_the_accredited_physical_buyer[contratos de la alcald\xeda de turbaco]
+FAILED tests/test_municipal_m1a2a.py::test_turbaco_queries_reach_only_the_accredited_physical_buyer[contratos del municipio de turbaco]
+4 failed, 13 passed in 1.43s

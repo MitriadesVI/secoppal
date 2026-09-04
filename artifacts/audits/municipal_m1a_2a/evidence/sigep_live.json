@@ -1,0 +1,11 @@
+{
+  "url": "https://www.funcionpublica.gov.co/VisualSIE/faces/reporte/publico.xhtml",
+  "params": {
+    "externo": "true",
+    "idConsulta": "Pr",
+    "idReporte": "61"
+  },
+  "observed_at": "2026-09-04T04:13:12.104848+00:00",
+  "error": "HTTPSConnectionPool(host='www.funcionpublica.gov.co', port=443): Max retries exceeded with url: /VisualSIE/faces/reporte/publico.xhtml?externo=true&idConsulta=Pr&idReporte=61 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1081)')))",
+  "elapsed_seconds": 0.184
+}

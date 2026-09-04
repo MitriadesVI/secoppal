@@ -1,0 +1,33 @@
+{
+  "url": "https://www1.funcionpublica.gov.co/documents/28587425/35001556/6.pdf/fa670b2f-68e3-7206-e7d7-0bd3a7f8b96f?t=1544538435512",
+  "observed_at": "2026-09-04T04:18:11.864269+00:00",
+  "publication_date": "2018-11-14",
+  "file": "function_public_2018_curl.pdf",
+  "sha256": "16b1a0a8fe2dad144a60c8561fe1ef2a13dc7e2dfa9e3862778f560e616ac9bc",
+  "entities": {
+    "ALCALDIA DISTRITAL BARRANCABERMEJA": {
+      "physical_canonical": "ALCALDIA DISTRITAL BARRANCABERMEJA",
+      "official_register_name": "ALCALDIA MUNICIPAL DE BARRANCABERMEJA",
+      "nature": "Alcaldía",
+      "municipality": "BARRANCABERMEJA",
+      "department": "Santander",
+      "nit": "890201900-6",
+      "page": 5,
+      "exact_extracted_row": "148ALCALDIA MUNICIPAL DE BARRANCABERMEJA Alcaldía Santander BARRANCABERMEJA 890201900-6",
+      "visual_verified": true,
+      "variant_adjudication": "Central municipal executive attested by SIGEP; municipio/alcaldia or municipal/distrital wording is a reviewed source-register variant. This does not merge any distinct SECOP account."
+    },
+    "MUNICIPIO DE YUMBO VALLE": {
+      "physical_canonical": "MUNICIPIO DE YUMBO VALLE",
+      "official_register_name": "ALCALDIA MUNICIPAL DE YUMBO",
+      "nature": "Alcaldía",
+      "municipality": "YUMBO",
+      "department": "Valle del Cauca",
+      "nit": "890399025-6",
+      "page": 35,
+      "exact_extracted_row": "1131ALCALDIA MUNICIPAL DE YUMBO Alcaldía Valle del Cauca YUMBO 890399025-6",
+      "visual_verified": true,
+      "variant_adjudication": "Central municipal executive attested by SIGEP; municipio/alcaldia or municipal/distrital wording is a reviewed source-register variant. This does not merge any distinct SECOP account."
+    }
+  }
+}

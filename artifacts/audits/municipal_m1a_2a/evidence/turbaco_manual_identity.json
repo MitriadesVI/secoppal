@@ -1,0 +1,166 @@
+{
+  "canonical": "ALCALDIA DE TURBACO BOLIVAR",
+  "surviving_canonical": "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR",
+  "expected_divipola": "13836",
+  "account": "702768342",
+  "nit_evidence": [
+    "890481149"
+  ],
+  "physical_source_names": {
+    "p6dx-8zbt": [
+      "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR"
+    ],
+    "jbjy-vk9h": [
+      "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR"
+    ]
+  },
+  "historical_physical_rows": {
+    "p6dx-8zbt": 5247,
+    "jbjy-vk9h": 4912
+  },
+  "m0_recognized_unit": {
+    "canonical": "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR",
+    "alias": "alcaldia de turbaco bolivar",
+    "municipality": "13836",
+    "account": "702768342",
+    "source_names": {
+      "p6dx-8zbt": [
+        "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR"
+      ],
+      "jbjy-vk9h": [
+        "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR"
+      ]
+    }
+  },
+  "m0_strata": [
+    {
+      "dataset": "p6dx-8zbt",
+      "account": "702768342",
+      "name": "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR",
+      "nit_evidence": "890481149",
+      "physical_rows": 1119,
+      "unique_ids": 1119,
+      "status": "ACCREDITED_MUNICIPAL_AFFILIATION",
+      "municipality": "13836",
+      "affiliation_basis": "SIGEP_DIRECTORY_NAME_FISCAL_AND_TERRITORY",
+      "sigep_codes": [
+        "1213"
+      ],
+      "source_order": "Territorial",
+      "covered": true
+    },
+    {
+      "dataset": "jbjy-vk9h",
+      "account": "702768342",
+      "name": "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR",
+      "nit_evidence": "890481149",
+      "physical_rows": 1060,
+      "unique_ids": 1060,
+      "status": "ACCREDITED_MUNICIPAL_AFFILIATION",
+      "municipality": "13836",
+      "affiliation_basis": "SIGEP_DIRECTORY_NAME_FISCAL_AND_TERRITORY",
+      "sigep_codes": [
+        "1213"
+      ],
+      "source_order": "Territorial",
+      "covered": true
+    }
+  ],
+  "exact_synthetic_physical_rows": 0,
+  "third_alias_owners": {},
+  "third_source_binding_owners": [],
+  "inactive_account": {
+    "codigo_entidad": "706283421",
+    "nombre_entidad": "ALCALDIA MUNICIPAL DE TURBACO 1",
+    "nit_entidad": "890481149",
+    "departamento": "No Provisto",
+    "ciudad": "No Provisto",
+    "c_digo_ubicaci_n": "No definido",
+    "esta_activa": "No",
+    "es_entidad": "Si",
+    "physical_rows": "1"
+  },
+  "inactive_account_historical_rows": 0,
+  "inactive_account_disposition": "REGISTRY_ONLY_NO_OBSERVED_ACTIVITY; not merged, bound or reclassified as a BuyerUnit",
+  "prior_records": [
+    {
+      "official_name": "ALCALDIA DE TURBACO BOLIVAR",
+      "departamento": "Bolívar",
+      "total_procesos": 4893,
+      "total_contratos": 4582,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "aliases": [
+        "alcaldía de turbaco bolívar",
+        "alcaldia turbaco",
+        "alcaldia de turbaco",
+        "alcaldia de turbaco bolivar",
+        "entidad territorial de turbaco",
+        "la alcaldia de turbaco",
+        "alcaldia municipal de turbaco",
+        "turbaco bolívar",
+        "municipio de turbaco",
+        "alcaldia municipal de turbaco bolivar",
+        "gobierno de turbaco",
+        "turbaco bolivar",
+        "alcaldía municipal de turbaco",
+        "alcaldía turbaco bolívar",
+        "municipio de turbaco bolivar",
+        "alcaldía turbaco",
+        "alcaldía del municipio de turbaco",
+        "municipio de turbaco bolívar",
+        "alcaldia del municipio de turbaco",
+        "la alcaldía de turbaco",
+        "alcaldía de turbaco",
+        "alcaldia turbaco bolivar",
+        "alcaldía municipal de turbaco bolívar",
+        "alcaldia de turbaco bolivar"
+      ]
+    },
+    {
+      "official_name": "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR",
+      "departamento": "Bolívar",
+      "total_procesos": 4958,
+      "total_contratos": 4591,
+      "source_datasets": [
+        "procesos",
+        "contratos"
+      ],
+      "entity_type": "alcaldia_municipal",
+      "aliases": [
+        "alcaldia de turbaco bolivar",
+        "alcaldia municipal de turbaco bolivar",
+        "alcaldia turbaco bolivar",
+        "municipio de turbaco bolivar",
+        "municipio turbaco bolivar",
+        "turbaco bolivar alcaldia",
+        "turbaco bolivar municipio"
+      ]
+    }
+  ],
+  "shared_alias_keys": [
+    "alcaldia de turbaco bolivar",
+    "alcaldia municipal de turbaco bolivar",
+    "alcaldia turbaco bolivar",
+    "municipio de turbaco bolivar"
+  ],
+  "evidence_sources": [
+    "turbaco_history_p6dx-8zbt.json",
+    "turbaco_history_contracts_retry.json",
+    "directory_live.json",
+    "M0 recognized_units and SIGEP 1213"
+  ],
+  "git_origin": {
+    "synthetic_canonical": "66e6242",
+    "physical_duplicate_appended": "7781d6d"
+  },
+  "decision": "DUPLICATE_BUYER_UNIT",
+  "confidence": "HIGH_WITHIN_PUBLISHED_SECOP_HISTORY",
+  "authority_type": "MANUAL_EXACT_PHYSICAL_OWNERSHIP_ADJUDICATION",
+  "manual_authorization": true,
+  "automatic_five_condition_predicate_applied": false,
+  "no_nit_merge": true,
+  "reason": "A is a synthetic catalog record with no exact published physical activity or directory row. B is the uniquely observed executive account/name in both entire-history datasets, M0 and current directory. A and B share human aliases; no third canonical claims them. Consolidate only these catalog records into B, retain human input and explicitly bind B to exact source names (ADR-073). The inactive same-NIT account is excluded, not merged. Token MUNICIPAL prevents the automatic five-condition rule; this is the task-authorized manual adjudication, not a similarity rule."
+}

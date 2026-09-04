@@ -1,0 +1,9 @@
+{
+  "url": "https://www1.funcionpublica.gov.co/documents/28587425/35001556/6.pdf/fa670b2f-68e3-7206-e7d7-0bd3a7f8b96f",
+  "params": {
+    "t": "1544538435512"
+  },
+  "observed_at": "2026-09-04T04:14:33.897102+00:00",
+  "error": "HTTPSConnectionPool(host='www1.funcionpublica.gov.co', port=443): Max retries exceeded with url: /documents/28587425/35001556/6.pdf/fa670b2f-68e3-7206-e7d7-0bd3a7f8b96f?t=1544538435512 (Caused by SSLError(SSLCertVerificationError(1, '[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1081)')))",
+  "elapsed_seconds": 0.175
+}

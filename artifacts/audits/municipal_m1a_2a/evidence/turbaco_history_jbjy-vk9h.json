@@ -1,0 +1,9 @@
+{
+  "url": "https://www.datos.gov.co/resource/jbjy-vk9h.json",
+  "params": {
+    "$query": "SELECT codigo_entidad,nombre_entidad,nit_entidad,count(*) AS physical_rows WHERE codigo_entidad in ('702768342','706283421') OR nit_entidad = '890481149' OR upper(nombre_entidad) like '%TURBACO%' GROUP BY codigo_entidad,nombre_entidad,nit_entidad LIMIT 10000"
+  },
+  "observed_at": "2026-09-04T04:13:12.104716+00:00",
+  "error": "HTTPSConnectionPool(host='www.datos.gov.co', port=443): Read timed out. (read timeout=50)",
+  "elapsed_seconds": 50.283
+}

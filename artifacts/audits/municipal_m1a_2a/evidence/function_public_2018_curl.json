@@ -1,0 +1,9 @@
+{
+  "url": "https://www1.funcionpublica.gov.co/documents/28587425/35001556/6.pdf/fa670b2f-68e3-7206-e7d7-0bd3a7f8b96f?t=1544538435512",
+  "observed_at": "2026-09-04T04:18:11.864269+00:00",
+  "status_code": 200,
+  "sha256": "16b1a0a8fe2dad144a60c8561fe1ef2a13dc7e2dfa9e3862778f560e616ac9bc",
+  "file": "function_public_2018_curl.pdf",
+  "transport": "/usr/bin/curl with system TLS verification; no certificate bypass",
+  "scope": "Official 2018 alternative version, historical corroboration only"
+}

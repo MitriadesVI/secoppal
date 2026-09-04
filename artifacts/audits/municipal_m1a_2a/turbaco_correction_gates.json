@@ -1,0 +1,45 @@
+{
+  "status": "PASS",
+  "exact_alias_checks": 28,
+  "new_wrong_owners": [],
+  "new_multi_owner": {},
+  "new_scan_cross_owner": [],
+  "scan_surfaces": 42790,
+  "excluded_scan_evidence": [
+    {
+      "alias": "alcaldia de turbaco",
+      "foreign_name": "ALCALDiA DE TURBACO 2",
+      "account": "708966437",
+      "nit_evidence": "8904811490",
+      "dataset": "directory"
+    },
+    {
+      "alias": "alcaldia municipal de turbaco",
+      "foreign_name": "ALCALDIA MUNICIPAL DE TURBACO 1",
+      "account": "706283421",
+      "nit_evidence": "890481149",
+      "dataset": "directory"
+    },
+    {
+      "alias": "alcaldía municipal de turbaco",
+      "foreign_name": "ALCALDIA MUNICIPAL DE TURBACO 1",
+      "account": "706283421",
+      "nit_evidence": "890481149",
+      "dataset": "directory"
+    },
+    {
+      "alias": "alcaldía de turbaco",
+      "foreign_name": "ALCALDiA DE TURBACO 2",
+      "account": "708966437",
+      "nit_evidence": "8904811490",
+      "dataset": "directory"
+    }
+  ],
+  "no_nit_merge": true,
+  "unrelated_units_preserved": true,
+  "old_bindings_preserved": true,
+  "production_promoted": 0,
+  "manual_duplicate_units_removed": 1,
+  "idempotent": true,
+  "multi_owner_keys_removed": 4
+}

@@ -1,0 +1,49 @@
+{
+  "url": "https://www.datos.gov.co/resource/p6dx-8zbt.json",
+  "params": {
+    "$query": "SELECT codigo_entidad,entidad,nit_entidad,count(*) AS physical_rows WHERE codigo_entidad in ('702768342','706283421') OR nit_entidad = '890481149' OR upper(entidad) like '%TURBACO%' GROUP BY codigo_entidad,entidad,nit_entidad LIMIT 10000"
+  },
+  "observed_at": "2026-09-04T04:13:12.104478+00:00",
+  "status_code": 200,
+  "final_url": "https://www.datos.gov.co/resource/p6dx-8zbt.json?%24query=SELECT+codigo_entidad%2Centidad%2Cnit_entidad%2Ccount%28%2A%29+AS+physical_rows+WHERE+codigo_entidad+in+%28%27702768342%27%2C%27706283421%27%29+OR+nit_entidad+%3D+%27890481149%27+OR+upper%28entidad%29+like+%27%25TURBACO%25%27+GROUP+BY+codigo_entidad%2Centidad%2Cnit_entidad+LIMIT+10000",
+  "sha256": "f7d4d3f5438851ddad3958a6822e29cabde0a442f62542152f83ab618d375c59",
+  "rows": [
+    {
+      "codigo_entidad": "700591209",
+      "entidad": "INSTITUTO MUNICIPAL DEL DEPORTE Y RECREACIÓN DE TURBACO - IMDERT",
+      "nit_entidad": "806002997",
+      "physical_rows": "305"
+    },
+    {
+      "codigo_entidad": "713550028",
+      "entidad": "HOSPITAL LOCAL TURBACO EMPRESA SOCIAL DEL ESTADO",
+      "nit_entidad": "806005602",
+      "physical_rows": "109"
+    },
+    {
+      "codigo_entidad": "720474105",
+      "entidad": "Concejo Municipal de Turbaco",
+      "nit_entidad": "806007376",
+      "physical_rows": "113"
+    },
+    {
+      "codigo_entidad": "718646151",
+      "entidad": "PERSONERIA MUNICIPAL DE TURBACO",
+      "nit_entidad": "806007384",
+      "physical_rows": "53"
+    },
+    {
+      "codigo_entidad": "705321222",
+      "entidad": "INSTITUCION EDUCATIVA DOCENTE DE TURBACO",
+      "nit_entidad": "806013832",
+      "physical_rows": "152"
+    },
+    {
+      "codigo_entidad": "702768342",
+      "entidad": "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR",
+      "nit_entidad": "890481149",
+      "physical_rows": "5247"
+    }
+  ],
+  "elapsed_seconds": 24.758
+}

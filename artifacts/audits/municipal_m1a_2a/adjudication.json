@@ -1,0 +1,600 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "canonical": "ALCALDIA DE TURBACO BOLIVAR",
+      "surviving_canonical": "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR",
+      "expected_divipola": "13836",
+      "account": "702768342",
+      "nit_evidence": [
+        "890481149"
+      ],
+      "physical_source_names": {
+        "p6dx-8zbt": [
+          "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR"
+        ],
+        "jbjy-vk9h": [
+          "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR"
+        ]
+      },
+      "historical_physical_rows": {
+        "p6dx-8zbt": 5247,
+        "jbjy-vk9h": 4912
+      },
+      "m0_recognized_unit": {
+        "canonical": "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR",
+        "alias": "alcaldia de turbaco bolivar",
+        "municipality": "13836",
+        "account": "702768342",
+        "source_names": {
+          "p6dx-8zbt": [
+            "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR"
+          ],
+          "jbjy-vk9h": [
+            "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR"
+          ]
+        }
+      },
+      "m0_strata": [
+        {
+          "dataset": "p6dx-8zbt",
+          "account": "702768342",
+          "name": "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR",
+          "nit_evidence": "890481149",
+          "physical_rows": 1119,
+          "unique_ids": 1119,
+          "status": "ACCREDITED_MUNICIPAL_AFFILIATION",
+          "municipality": "13836",
+          "affiliation_basis": "SIGEP_DIRECTORY_NAME_FISCAL_AND_TERRITORY",
+          "sigep_codes": [
+            "1213"
+          ],
+          "source_order": "Territorial",
+          "covered": true
+        },
+        {
+          "dataset": "jbjy-vk9h",
+          "account": "702768342",
+          "name": "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR",
+          "nit_evidence": "890481149",
+          "physical_rows": 1060,
+          "unique_ids": 1060,
+          "status": "ACCREDITED_MUNICIPAL_AFFILIATION",
+          "municipality": "13836",
+          "affiliation_basis": "SIGEP_DIRECTORY_NAME_FISCAL_AND_TERRITORY",
+          "sigep_codes": [
+            "1213"
+          ],
+          "source_order": "Territorial",
+          "covered": true
+        }
+      ],
+      "exact_synthetic_physical_rows": 0,
+      "third_alias_owners": {},
+      "third_source_binding_owners": [],
+      "inactive_account": {
+        "codigo_entidad": "706283421",
+        "nombre_entidad": "ALCALDIA MUNICIPAL DE TURBACO 1",
+        "nit_entidad": "890481149",
+        "departamento": "No Provisto",
+        "ciudad": "No Provisto",
+        "c_digo_ubicaci_n": "No definido",
+        "esta_activa": "No",
+        "es_entidad": "Si",
+        "physical_rows": "1"
+      },
+      "inactive_account_historical_rows": 0,
+      "inactive_account_disposition": "REGISTRY_ONLY_NO_OBSERVED_ACTIVITY; not merged, bound or reclassified as a BuyerUnit",
+      "prior_records": [
+        {
+          "official_name": "ALCALDIA DE TURBACO BOLIVAR",
+          "departamento": "Bolívar",
+          "total_procesos": 4893,
+          "total_contratos": 4582,
+          "source_datasets": [
+            "procesos",
+            "contratos"
+          ],
+          "aliases": [
+            "alcaldía de turbaco bolívar",
+            "alcaldia turbaco",
+            "alcaldia de turbaco",
+            "alcaldia de turbaco bolivar",
+            "entidad territorial de turbaco",
+            "la alcaldia de turbaco",
+            "alcaldia municipal de turbaco",
+            "turbaco bolívar",
+            "municipio de turbaco",
+            "alcaldia municipal de turbaco bolivar",
+            "gobierno de turbaco",
+            "turbaco bolivar",
+            "alcaldía municipal de turbaco",
+            "alcaldía turbaco bolívar",
+            "municipio de turbaco bolivar",
+            "alcaldía turbaco",
+            "alcaldía del municipio de turbaco",
+            "municipio de turbaco bolívar",
+            "alcaldia del municipio de turbaco",
+            "la alcaldía de turbaco",
+            "alcaldía de turbaco",
+            "alcaldia turbaco bolivar",
+            "alcaldía municipal de turbaco bolívar",
+            "alcaldia de turbaco bolivar"
+          ]
+        },
+        {
+          "official_name": "ALCALDIA MUNICIPAL DE TURBACO BOLIVAR",
+          "departamento": "Bolívar",
+          "total_procesos": 4958,
+          "total_contratos": 4591,
+          "source_datasets": [
+            "procesos",
+            "contratos"
+          ],
+          "entity_type": "alcaldia_municipal",
+          "aliases": [
+            "alcaldia de turbaco bolivar",
+            "alcaldia municipal de turbaco bolivar",
+            "alcaldia turbaco bolivar",
+            "municipio de turbaco bolivar",
+            "municipio turbaco bolivar",
+            "turbaco bolivar alcaldia",
+            "turbaco bolivar municipio"
+          ]
+        }
+      ],
+      "shared_alias_keys": [
+        "alcaldia de turbaco bolivar",
+        "alcaldia municipal de turbaco bolivar",
+        "alcaldia turbaco bolivar",
+        "municipio de turbaco bolivar"
+      ],
+      "evidence_sources": [
+        "turbaco_history_p6dx-8zbt.json",
+        "turbaco_history_contracts_retry.json",
+        "directory_live.json",
+        "M0 recognized_units and SIGEP 1213"
+      ],
+      "git_origin": {
+        "synthetic_canonical": "66e6242",
+        "physical_duplicate_appended": "7781d6d"
+      },
+      "decision": "DUPLICATE_BUYER_UNIT",
+      "confidence": "HIGH_WITHIN_PUBLISHED_SECOP_HISTORY",
+      "authority_type": "MANUAL_EXACT_PHYSICAL_OWNERSHIP_ADJUDICATION",
+      "manual_authorization": true,
+      "automatic_five_condition_predicate_applied": false,
+      "no_nit_merge": true,
+      "reason": "A is a synthetic catalog record with no exact published physical activity or directory row. B is the uniquely observed executive account/name in both entire-history datasets, M0 and current directory. A and B share human aliases; no third canonical claims them. Consolidate only these catalog records into B, retain human input and explicitly bind B to exact source names (ADR-073). The inactive same-NIT account is excluded, not merged. Token MUNICIPAL prevents the automatic five-condition rule; this is the task-authorized manual adjudication, not a similarity rule."
+    },
+    {
+      "canonical": "ALCALDIA MUNICIPAL DE OCAÑA",
+      "expected_divipola": "54498",
+      "account": "703478552",
+      "nit_evidence": [
+        "890501102"
+      ],
+      "physical_source_names": {
+        "p6dx-8zbt": [
+          "ALCALDIA MUNICIPAL DE OCAÑA"
+        ],
+        "jbjy-vk9h": [
+          "ALCALDIA MUNICIPAL DE OCAÑA"
+        ]
+      },
+      "m0_strata": [
+        {
+          "dataset": "p6dx-8zbt",
+          "account": "703478552",
+          "name": "ALCALDIA MUNICIPAL DE OCAÑA",
+          "nit_evidence": "890501102",
+          "physical_rows": 914,
+          "unique_ids": 906,
+          "status": "UNRESOLVED_AFFILIATION",
+          "municipality": null,
+          "affiliation_basis": "SIGEP_DIRECTORY_NAME_FISCAL_AND_TERRITORY",
+          "sigep_codes": [],
+          "source_order": "Territorial",
+          "covered": false
+        },
+        {
+          "dataset": "jbjy-vk9h",
+          "account": "703478552",
+          "name": "ALCALDIA MUNICIPAL DE OCAÑA",
+          "nit_evidence": "890501102",
+          "physical_rows": 881,
+          "unique_ids": 881,
+          "status": "UNRESOLVED_AFFILIATION",
+          "municipality": null,
+          "affiliation_basis": "SIGEP_DIRECTORY_NAME_FISCAL_AND_TERRITORY",
+          "sigep_codes": [],
+          "source_order": "Territorial",
+          "covered": false
+        }
+      ],
+      "m0_sigep_rows": [
+        {
+          "CÓDIGO SIGEP": "0441",
+          "NOMBRE": "ALCALDÍA DE OCAÑA",
+          "NIT": "800099250",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "498",
+          "MUNICIPIO": "OCAÑA",
+          "DIVIPOLA DEPARTAMENTO": "54",
+          "DEPARTAMENTO": "Norte de Santander",
+          "ESTADO": "Activa"
+        }
+      ],
+      "source_conflicts": [
+        {
+          "field": "NIT",
+          "sigep": "800099250",
+          "secop": [
+            "890501102"
+          ],
+          "disposition": "Unresolved fiscal disagreement; no SIGEP-NIT merge or correction"
+        }
+      ],
+      "decision": "VERIFIED_MUNICIPAL_AFFILIATION",
+      "confidence": "HIGH_SCOPED_AFFILIATION",
+      "authority_type": "SECOP_DIRECTORY_EXACT_DIVIPOLA",
+      "affiliation": {
+        "codes": [
+          "54498"
+        ],
+        "authority": "SECOP_DIRECTORY_EXACT_DIVIPOLA",
+        "account": "703478552",
+        "sources": {
+          "p6dx-8zbt": [
+            "ALCALDIA MUNICIPAL DE OCAÑA"
+          ],
+          "jbjy-vk9h": [
+            "ALCALDIA MUNICIPAL DE OCAÑA"
+          ]
+        },
+        "reason": "Existing executive unit; exact physical name in both datasets and same unique directory account; exact municipal code in DIVIPOLA and compatible departments. NIT is not an identity key."
+      },
+      "reason": "Existing executive unit; exact physical name in both datasets and same unique directory account; exact municipal code in DIVIPOLA and compatible departments. NIT is not an identity key.",
+      "evidence_sources": [
+        "M0 analysis/strata",
+        "M0 directory",
+        "directory_live.json",
+        "directory_location_validation.json"
+      ]
+    },
+    {
+      "canonical": "ALCALDIA MUNICIPIO DE CALARCA",
+      "expected_divipola": "63130",
+      "account": "704291491",
+      "nit_evidence": [
+        "890000441"
+      ],
+      "physical_source_names": {
+        "p6dx-8zbt": [
+          "ALCALDIA MUNICIPIO DE CALARCA"
+        ],
+        "jbjy-vk9h": [
+          "ALCALDIA MUNICIPIO DE CALARCA"
+        ]
+      },
+      "m0_strata": [
+        {
+          "dataset": "p6dx-8zbt",
+          "account": "704291491",
+          "name": "ALCALDIA MUNICIPIO DE CALARCA",
+          "nit_evidence": "890000441",
+          "physical_rows": 1364,
+          "unique_ids": 1209,
+          "status": "UNRESOLVED_AFFILIATION",
+          "municipality": null,
+          "affiliation_basis": "SIGEP_DIRECTORY_NAME_FISCAL_AND_TERRITORY",
+          "sigep_codes": [],
+          "source_order": "Territorial",
+          "covered": false
+        },
+        {
+          "dataset": "jbjy-vk9h",
+          "account": "704291491",
+          "name": "ALCALDIA MUNICIPIO DE CALARCA",
+          "nit_evidence": "890000441",
+          "physical_rows": 1302,
+          "unique_ids": 1302,
+          "status": "UNRESOLVED_AFFILIATION",
+          "municipality": null,
+          "affiliation_basis": "SIGEP_DIRECTORY_NAME_FISCAL_AND_TERRITORY",
+          "sigep_codes": [],
+          "source_order": "Territorial",
+          "covered": false
+        }
+      ],
+      "m0_sigep_rows": [
+        {
+          "CÓDIGO SIGEP": "0178",
+          "NOMBRE": "ALCALDÍA DE CALARCÁ",
+          "NIT": "890000441",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "002",
+          "MUNICIPIO": "CALARCÁ",
+          "DIVIPOLA DEPARTAMENTO": "63",
+          "DEPARTAMENTO": "Quindio",
+          "ESTADO": "Activa"
+        }
+      ],
+      "source_conflicts": [
+        {
+          "field": "SIGEP_DIVIPOLA",
+          "sigep": "63002",
+          "secop": "63130",
+          "in_municipal_registry": false,
+          "disposition": "Invalid SIGEP code preserved; affiliation uses independently validated SECOP directory"
+        }
+      ],
+      "decision": "VERIFIED_MUNICIPAL_AFFILIATION",
+      "confidence": "HIGH_SCOPED_AFFILIATION",
+      "authority_type": "SECOP_DIRECTORY_EXACT_DIVIPOLA",
+      "affiliation": {
+        "codes": [
+          "63130"
+        ],
+        "authority": "SECOP_DIRECTORY_EXACT_DIVIPOLA",
+        "account": "704291491",
+        "sources": {
+          "p6dx-8zbt": [
+            "ALCALDIA MUNICIPIO DE CALARCA"
+          ],
+          "jbjy-vk9h": [
+            "ALCALDIA MUNICIPIO DE CALARCA"
+          ]
+        },
+        "reason": "Existing executive unit; exact physical name in both datasets and same unique directory account; exact municipal code in DIVIPOLA and compatible departments. NIT is not an identity key."
+      },
+      "reason": "Existing executive unit; exact physical name in both datasets and same unique directory account; exact municipal code in DIVIPOLA and compatible departments. NIT is not an identity key.",
+      "evidence_sources": [
+        "M0 analysis/strata",
+        "M0 directory",
+        "directory_live.json",
+        "directory_location_validation.json"
+      ]
+    },
+    {
+      "canonical": "ALCALDIA DISTRITAL BARRANCABERMEJA",
+      "expected_divipola": "68081",
+      "account": "702270372",
+      "nit_evidence": [
+        "890201900"
+      ],
+      "physical_source_names": {
+        "p6dx-8zbt": [
+          "ALCALDIA DISTRITAL BARRANCABERMEJA"
+        ],
+        "jbjy-vk9h": [
+          "ALCALDIA DISTRITAL BARRANCABERMEJA"
+        ]
+      },
+      "m0_strata": [
+        {
+          "dataset": "p6dx-8zbt",
+          "account": "702270372",
+          "name": "ALCALDIA DISTRITAL BARRANCABERMEJA",
+          "nit_evidence": "890201900",
+          "physical_rows": 6426,
+          "unique_ids": 6361,
+          "status": "UNRESOLVED_AFFILIATION",
+          "municipality": null,
+          "affiliation_basis": "SIGEP_DIRECTORY_NAME_FISCAL_AND_TERRITORY",
+          "sigep_codes": [],
+          "source_order": "Territorial",
+          "covered": false
+        },
+        {
+          "dataset": "jbjy-vk9h",
+          "account": "702270372",
+          "name": "ALCALDIA DISTRITAL BARRANCABERMEJA",
+          "nit_evidence": "890201900",
+          "physical_rows": 6415,
+          "unique_ids": 6415,
+          "status": "UNRESOLVED_AFFILIATION",
+          "municipality": null,
+          "affiliation_basis": "SIGEP_DIRECTORY_NAME_FISCAL_AND_TERRITORY",
+          "sigep_codes": [],
+          "source_order": "Territorial",
+          "covered": false
+        }
+      ],
+      "m0_sigep_rows": [
+        {
+          "CÓDIGO SIGEP": "0329",
+          "NOMBRE": "ALCALDÍA DE BARRANCABERMEJA",
+          "NIT": "890201900-6",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "081",
+          "MUNICIPIO": "BARRANCABERMEJA",
+          "DIVIPOLA DEPARTAMENTO": "68",
+          "DEPARTAMENTO": "Santander",
+          "ESTADO": "Activa"
+        }
+      ],
+      "source_conflicts": [],
+      "decision": "VERIFIED_MUNICIPAL_AFFILIATION",
+      "confidence": "HIGH_SCOPED_AFFILIATION",
+      "authority_type": "MANUAL_SIGEP_AND_OFFICIAL_ENTITY_REGISTER",
+      "affiliation": {
+        "codes": [
+          "68081"
+        ],
+        "authority": "MANUAL_SIGEP_AND_OFFICIAL_ENTITY_REGISTER",
+        "account": "702270372",
+        "sources": {
+          "p6dx-8zbt": [
+            "ALCALDIA DISTRITAL BARRANCABERMEJA"
+          ],
+          "jbjy-vk9h": [
+            "ALCALDIA DISTRITAL BARRANCABERMEJA"
+          ]
+        },
+        "sigep_row": {
+          "CÓDIGO SIGEP": "0329",
+          "NOMBRE": "ALCALDÍA DE BARRANCABERMEJA",
+          "NIT": "890201900-6",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "081",
+          "MUNICIPIO": "BARRANCABERMEJA",
+          "DIVIPOLA DEPARTAMENTO": "68",
+          "DEPARTAMENTO": "Santander",
+          "ESTADO": "Activa"
+        },
+        "corroboration": {
+          "physical_canonical": "ALCALDIA DISTRITAL BARRANCABERMEJA",
+          "official_register_name": "ALCALDIA MUNICIPAL DE BARRANCABERMEJA",
+          "nature": "Alcaldía",
+          "municipality": "BARRANCABERMEJA",
+          "department": "Santander",
+          "nit": "890201900-6",
+          "page": 5,
+          "exact_extracted_row": "148ALCALDIA MUNICIPAL DE BARRANCABERMEJA Alcaldía Santander BARRANCABERMEJA 890201900-6",
+          "visual_verified": true,
+          "variant_adjudication": "Central municipal executive attested by SIGEP; municipio/alcaldia or municipal/distrital wording is a reviewed source-register variant. This does not merge any distinct SECOP account."
+        },
+        "reason": "Exact physical account/name in both SECOP datasets and current directory; SIGEP central municipal executive explicitly publishes municipality/DIVIPOLA; the additional official entity register corroborates legal nature, municipality and fiscal identity. No fiscal sibling, BuyerUnit or group is added."
+      },
+      "reason": "Exact physical account/name in both SECOP datasets and current directory; SIGEP central municipal executive explicitly publishes municipality/DIVIPOLA; the additional official entity register corroborates legal nature, municipality and fiscal identity. No fiscal sibling, BuyerUnit or group is added.",
+      "evidence_sources": [
+        "M0 analysis/strata",
+        "M0 directory",
+        "directory_live.json",
+        "official_register_corroboration.json; M0 SIGEP"
+      ]
+    },
+    {
+      "canonical": "MUNICIPIO DE YUMBO VALLE",
+      "expected_divipola": "76892",
+      "account": "702384066",
+      "nit_evidence": [
+        "890399025"
+      ],
+      "physical_source_names": {
+        "p6dx-8zbt": [
+          "MUNICIPIO DE YUMBO VALLE"
+        ],
+        "jbjy-vk9h": [
+          "MUNICIPIO DE YUMBO VALLE"
+        ]
+      },
+      "m0_strata": [
+        {
+          "dataset": "p6dx-8zbt",
+          "account": "702384066",
+          "name": "MUNICIPIO DE YUMBO VALLE",
+          "nit_evidence": "890399025",
+          "physical_rows": 4839,
+          "unique_ids": 4806,
+          "status": "UNRESOLVED_AFFILIATION",
+          "municipality": null,
+          "affiliation_basis": "SIGEP_DIRECTORY_NAME_FISCAL_AND_TERRITORY",
+          "sigep_codes": [],
+          "source_order": "Territorial",
+          "covered": false
+        },
+        {
+          "dataset": "jbjy-vk9h",
+          "account": "702384066",
+          "name": "MUNICIPIO DE YUMBO VALLE",
+          "nit_evidence": "890399025",
+          "physical_rows": 4802,
+          "unique_ids": 4802,
+          "status": "UNRESOLVED_AFFILIATION",
+          "municipality": null,
+          "affiliation_basis": "SIGEP_DIRECTORY_NAME_FISCAL_AND_TERRITORY",
+          "sigep_codes": [],
+          "source_order": "Territorial",
+          "covered": false
+        }
+      ],
+      "m0_sigep_rows": [
+        {
+          "CÓDIGO SIGEP": "0511",
+          "NOMBRE": "ALCALDÍA DE YUMBO",
+          "NIT": "890399025-6",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "892",
+          "MUNICIPIO": "YUMBO",
+          "DIVIPOLA DEPARTAMENTO": "76",
+          "DEPARTAMENTO": "Valle del Cauca",
+          "ESTADO": "Activa"
+        }
+      ],
+      "source_conflicts": [],
+      "decision": "VERIFIED_MUNICIPAL_AFFILIATION",
+      "confidence": "HIGH_SCOPED_AFFILIATION",
+      "authority_type": "MANUAL_SIGEP_AND_OFFICIAL_ENTITY_REGISTER",
+      "affiliation": {
+        "codes": [
+          "76892"
+        ],
+        "authority": "MANUAL_SIGEP_AND_OFFICIAL_ENTITY_REGISTER",
+        "account": "702384066",
+        "sources": {
+          "p6dx-8zbt": [
+            "MUNICIPIO DE YUMBO VALLE"
+          ],
+          "jbjy-vk9h": [
+            "MUNICIPIO DE YUMBO VALLE"
+          ]
+        },
+        "sigep_row": {
+          "CÓDIGO SIGEP": "0511",
+          "NOMBRE": "ALCALDÍA DE YUMBO",
+          "NIT": "890399025-6",
+          "ORDEN": "Territorial",
+          "SUBORDEN": "Municipal",
+          "NIVEL": "Central",
+          "NATURALEZA JURÍDICA": "Alcaldía",
+          "DIVIPOLA MUNICIPIO": "892",
+          "MUNICIPIO": "YUMBO",
+          "DIVIPOLA DEPARTAMENTO": "76",
+          "DEPARTAMENTO": "Valle del Cauca",
+          "ESTADO": "Activa"
+        },
+        "corroboration": {
+          "physical_canonical": "MUNICIPIO DE YUMBO VALLE",
+          "official_register_name": "ALCALDIA MUNICIPAL DE YUMBO",
+          "nature": "Alcaldía",
+          "municipality": "YUMBO",
+          "department": "Valle del Cauca",
+          "nit": "890399025-6",
+          "page": 35,
+          "exact_extracted_row": "1131ALCALDIA MUNICIPAL DE YUMBO Alcaldía Valle del Cauca YUMBO 890399025-6",
+          "visual_verified": true,
+          "variant_adjudication": "Central municipal executive attested by SIGEP; municipio/alcaldia or municipal/distrital wording is a reviewed source-register variant. This does not merge any distinct SECOP account."
+        },
+        "reason": "Exact physical account/name in both SECOP datasets and current directory; SIGEP central municipal executive explicitly publishes municipality/DIVIPOLA; the additional official entity register corroborates legal nature, municipality and fiscal identity. No fiscal sibling, BuyerUnit or group is added."
+      },
+      "reason": "Exact physical account/name in both SECOP datasets and current directory; SIGEP central municipal executive explicitly publishes municipality/DIVIPOLA; the additional official entity register corroborates legal nature, municipality and fiscal identity. No fiscal sibling, BuyerUnit or group is added.",
+      "evidence_sources": [
+        "M0 analysis/strata",
+        "M0 directory",
+        "directory_live.json",
+        "official_register_corroboration.json; M0 SIGEP"
+      ]
+    }
+  ],
+  "production_promoted": 0,
+  "no_nit_merge": true,
+  "scope": "Affiliation audit for five existing reviews only; no M0 amendments or 503 proposal promotion",
+  "policy_unchanged_baseline_review_introduced": false
+}

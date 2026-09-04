@@ -1,0 +1,10 @@
+{
+  "url": "https://www.barrancabermeja.gov.co/publicaciones/10/identificacion/",
+  "params": null,
+  "observed_at": "2026-09-04T04:13:12.104911+00:00",
+  "status_code": 403,
+  "final_url": "https://www.barrancabermeja.gov.co/publicaciones/10/identificacion/",
+  "sha256": "c996c0469ef05ff6fdd1f7cefbc3f7e109bb21969de42fcf591498a828a7ad5f",
+  "error": "<!doctype html><meta charset=\"utf-8\"><meta name=viewport content=\"width=device-width, initial-scale=1\"><title>403</title>403 Forbidden",
+  "elapsed_seconds": 1.349
+}
