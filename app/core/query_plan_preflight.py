@@ -1,0 +1,33 @@
+"""Unconditional semantic gates that precede optional query derivation rules."""
+from app.core.compound_identity_guard import compound_identity_clarification
+from app.core.municipal_territory import municipal_clarification
+from app.core.object_negation_policy import (
+    OBJECT_NEGATION_CONTRADICTION_QUESTION, object_negation_overlap,
+)
+from app.core.query_plan_types import QueryPlan
+from app.core.temporal_gate import temporal_plan_block
+
+
+def semantic_preflight(params: dict, signals: list) -> QueryPlan | None:
+    if question := municipal_clarification(params):
+        return QueryPlan(
+            should_execute=False, params=params, signals=signals,
+            clarification_question=question, missing_slots=['departamento'],
+            reason='municipal_territory_ambiguous',
+        )
+    if question := compound_identity_clarification(params):
+        return QueryPlan(
+            should_execute=False, params=params, signals=signals,
+            clarification_question=question, missing_slots=['entidad'],
+            reason='municipal_buyer_identity_unresolved',
+        )
+    if (temporal := temporal_plan_block(params, signals)) is not None:
+        return QueryPlan(params=params, signals=signals, **temporal)
+    if object_negation_overlap(params):
+        return QueryPlan(
+            should_execute=False, params=params, signals=signals,
+            risk_flags=['OBJECT_NEGATION_CONTRADICTION'],
+            clarification_question=OBJECT_NEGATION_CONTRADICTION_QUESTION,
+            reason='object_negation_contradiction',
+        )
+    return None

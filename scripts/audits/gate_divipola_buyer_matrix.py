@@ -12,6 +12,7 @@ from unittest.mock import patch
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT))
 from app.core.buyer_source_names import parse_registry
+from app.core.buyer_groups import group_for_params
 from app.core.entity_resolver import EntityResolver
 from app.core.municipal_territory import PATH, get_municipal_territories
 from app.core.query_plan import compute_query_plan
@@ -117,16 +118,21 @@ def evaluate(router, sidecar, oracle, relevant=False):
             params = router.parse(query).params
             plan = compute_query_plan(params, query)
             owner = params.get('entidad_resolved')
-            codes = oracle.get(owner, {}).get('codes', [])
+            group = group_for_params(params)
+            members = list(group.members) if group else ([owner] if owner else [])
+            codes = sorted({c for member in members for c in oracle.get(member, {}).get('codes', [])})
+            if any(not oracle.get(member, {}).get('codes') for member in members):
+                codes = []
             blocked = False
             try:
                 soql = SoQLBuilder().build_count('jbjy-vk9h', dict(plan.params))
             except (ValueError, UnsafeGlobalQueryError) as exc:
                 soql, blocked = f'BLOCKED: {type(exc).__name__}: {exc}', True
-            classification = classify(owner, codes, t.divipola, homonym and not qualified,
+            classification = classify(owner or (group.group_id if group else None), codes, t.divipola, homonym and not qualified,
                                       plan.should_execute, plan.clarification_question, blocked)
             results.append(dict(code=t.divipola, query=query, qualified=qualified,
                                 classification=classification, owner=owner, owner_codes=codes,
+                                buyer_group=group.reference() if group else None, buyer_units=members,
                                 should_execute=plan.should_execute, soql=soql,
                                 clarification=plan.clarification_question, params=params))
     counts = {k: 0 for k in ('CORRECT_BUYER', 'CLARIFICATION', 'FAIL_CLOSED', 'REVIEW', 'WRONG_BUYER', 'WRONG_DIVIPOLA')}

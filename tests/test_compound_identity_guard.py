@@ -71,3 +71,35 @@ def test_review_is_never_pass_and_homonym_cannot_select_known_owner():
     assert classify('unadjudicated', [], '00001', False, True, None, False) == 'REVIEW'
     assert classify('known', ['00001'], '00001', True, True, None, False) == 'WRONG_BUYER'
     assert classify('foreign', ['00002'], '00001', False, True, None, False) == 'WRONG_DIVIPOLA'
+
+
+@pytest.mark.parametrize('query', [
+    'municipio de San Pedro con contratos de obra',
+    'alcaldía de San Pedro, departamento inexistente',
+    'municipio de San Andrés de Sotavento para obras en 2025',
+])
+def test_unresolved_identity_blocks_scoped_execution_and_optional_rule_bypass(catalog, query):
+    router, _, _ = catalog
+    params = router.parse(query).params
+    assert not params.get('entidad_resolved')
+    assert not compute_query_plan(params, query, enabled_rules=set()).should_execute
+    # Topic, date or a caller opting into global queries cannot bypass identity.
+    with pytest.raises(ValueError):
+        SoQLBuilder().build_count('jbjy-vk9h', {**params, 'objeto': ['obra']}, allow_global=True)
+
+
+def test_retry_absence_and_scan_contracts_have_evidence(monkeypatch):
+    from scripts.audits.adjudicate_municipal_m1a2 import main
+
+    reports = []
+    monkeypatch.setattr('scripts.audits.adjudicate_municipal_m1a2.save', lambda name, data: reports.append(data))
+    main()
+    assert reports[0]['status'] == 'PASS'
+
+
+def test_guard_preserves_syntactic_trailing_ladder():
+    from app.core.compound_identity_guard import IdentityStatus, decide_identity
+
+    registry = get_municipal_territories()
+    for span in ('gobernación de Antioquia de 2025', 'alcaldía de Medellín de obras de infraestructura'):
+        assert decide_identity(span, registry).status == IdentityStatus.NONE

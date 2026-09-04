@@ -65,3 +65,15 @@ def isolate_actor_alias_index(monkeypatch, tmp_path):
     get_settings.cache_clear()
     yield
     get_settings.cache_clear()
+
+
+@pytest.fixture(scope='module')
+def frozen_municipal_baseline_router(tmp_path_factory):
+    """Absence contracts name the pre-promotion catalog, even after Retry #2."""
+    from app.core.entity_resolver import EntityResolver
+    from app.core.query_router import QueryRouter
+    from scripts.audits.promote_municipal_m1a import encode, read
+
+    path = tmp_path_factory.mktemp('municipal-baseline') / 'aliases.json'
+    path.write_bytes(encode(read(ROOT / 'artifacts/audits/municipal_m1a/before_aliases_db.json.gz')))
+    return QueryRouter(EntityResolver(path))

@@ -171,10 +171,10 @@ class TestFragmentsNeedDeterministicEvidence:
         ],
     )
     def test_absent_compound_name_fails_closed(
-        self, router: QueryRouter, query: str, forbidden: str
+        self, frozen_municipal_baseline_router: QueryRouter, query: str, forbidden: str
     ) -> None:
-        """Ausente del gazetteer ⇒ se pide precisión, no se elige un vecino."""
-        params = router.parse(query).params
+        """Ausente del baseline congelado ⇒ precisión; el candidato tiene otro oráculo."""
+        params = frozen_municipal_baseline_router.parse(query).params
         resolution = params.get("entidad_resolution") or {}
         assert params.get("entidad_resolved") is None
         assert params.get("entidad_resolved") != forbidden

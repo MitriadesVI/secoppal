@@ -597,7 +597,9 @@ class QueryRouter:
         #    Runs BEFORE gazetteer scan so variants feed into alias matching.
         from app.core.entity_resolver import is_department_root_name
         from app.core.entity_types import rewrite_entity
+        from app.core.compound_identity_guard import identity_guards
         entity_candidates = rewrite_entity(scrubbed)
+        municipal_guards = identity_guards(entity_candidates, municipal_geography)
         accredited_name_spans = (
             self.entity_resolver.proper_names.spans_in(scrubbed)
             if self.entity_resolver else []
@@ -624,10 +626,21 @@ class QueryRouter:
                 start = scrubbed.find(consumed)
                 if any(a == start and b > start + len(consumed) for a, b in accredited_name_spans):
                     continue
+                identity = municipal_guards.get(rtype)
+                if identity and len(consumed) <= len(identity.protected_span):
+                    # Consume the entire protected identity if no full exact
+                    # buyer wins; neither shrink nor later scan may reopen it.
+                    unresolved_rewrite = (identity.protected_span, identity.protected_span,
+                                          rtype, identity.unresolved())
+                    if consumed != identity.protected_span:
+                        continue
                 if pending_fuzzy and pending_fuzzy[1] != consumed:
                     rewritten_entity = pending_fuzzy
                     break
                 match = self.entity_resolver.resolve_entidad(canonical)
+                if identity and consumed == identity.protected_span:
+                    if not identity.accepts(canonical, match, self.entity_resolver, municipal_geography):
+                        continue
                 if match and match.value and match.method != "fallback_like":
                     # Un hospital no se llama "DEPARTAMENTO DE SANTANDER". Al
                     # capturar el nombre completo, el fuzzy sin puerta de las
@@ -662,6 +675,13 @@ class QueryRouter:
                     break
             if not rewritten_entity and pending_fuzzy and not terminal:
                 rewritten_entity = pending_fuzzy
+            if not rewritten_entity and unresolved_rewrite:
+                _, consumed, rtype, _ = unresolved_rewrite
+                identity = municipal_guards.get(rtype)
+                if identity and consumed == identity.protected_span:
+                    district = identity.district_alias(self.entity_resolver, municipal_geography)
+                    if district:
+                        rewritten_entity = (district[0], consumed, rtype, district[1])
             if rewritten_entity:
                 canonical, consumed, rtype, match = rewritten_entity
                 params["entidad"] = canonical

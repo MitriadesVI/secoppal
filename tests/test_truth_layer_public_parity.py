@@ -100,7 +100,10 @@ M2_MODIFIED_FILE_SHA256 = {
     # G: registered exact BuyerGroup projection and physical row tie-break.
     # M1A.1: exact municipal city+department and fail-closed ambiguity are
     # gated by municipal_territory; the ordinary public oracle stays unchanged.
-    "app/core/soql_builder.py": "305fa3b686172ba4783ef9415d4f574602022390c7a3d1c134ac5aa539521109",
+    # M1A.2 rejects unresolved complete municipal buyer identities, even if
+    # topic/date filters exist. The ordinary-query oracles below remain
+    # byte-identical; test_compound_identity_guard pins the new rejection.
+    "app/core/soql_builder.py": "0cbc0f1944914b34a195b608c1b7dfe17d2465d0b8fe31aa561d897a61da1b39",
 }
 
 # M2.1 corrigió dos consumidores visibles. AP3-G autoriza además controles de

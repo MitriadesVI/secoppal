@@ -16,6 +16,7 @@ from app.core.modality_dataset_projection import (
 )
 from app.core.modality_filter import ModalityFilter
 from app.core.municipal_territory import municipal_clarification
+from app.core.compound_identity_guard import compound_identity_clarification
 from app.core.opportunity_retrieval_policy import (
     REFERENCE_INSTANT_PARAM,
     evaluate_current_opportunity_policy,
@@ -332,6 +333,8 @@ class SoQLBuilder:
         a tautology (``1=1``) and the caller has not opted in via
         ``allow_global=True``. Date/value/order alone create no WHERE predicate.
         """
+        if question := compound_identity_clarification(params):
+            raise ValueError(question)
         if question := municipal_clarification(params):
             raise ValueError(question)
         legacy_key = "modalidad"

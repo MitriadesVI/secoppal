@@ -23,13 +23,8 @@ from app.core.actor_scope_policy import evaluate_actor_scope
 from app.core.dialogue_policy import classify
 from app.core.query_plan_types import QueryPlan
 from app.core.opportunity_scope_policy import evaluate_opportunity_scope
-from app.core.object_negation_policy import (
-    OBJECT_NEGATION_CONTRADICTION_QUESTION,
-    object_negation_overlap,
-)
 from app.core.semantic_sanity import compute_sanity_flags
-from app.core.temporal_gate import temporal_plan_block
-from app.core.municipal_territory import municipal_clarification
+from app.core.query_plan_preflight import semantic_preflight
 
 # ── All known rules — used as default when enabled_rules is None ──────────────
 ALL_RULES = {
@@ -80,27 +75,8 @@ def compute_query_plan(
     reason_parts: list[str] = []
     risk_flags: list[str] = []
 
-    if question := municipal_clarification(working_params):
-        return QueryPlan(
-            should_execute=False, params=working_params, signals=all_signals,
-            clarification_question=question, missing_slots=["departamento"],
-            reason="municipal_territory_ambiguous",
-        )
-
-    if (temporal := temporal_plan_block(working_params, all_signals)) is not None:
-        return QueryPlan(params=working_params, signals=all_signals, **temporal)
-
-    # INV-OBJECT-NEGATION-END-TO-END: never send mutually incompatible
-    # positive/negative OBJECT predicates to SECOP and fabricate a zero result.
-    if object_negation_overlap(working_params):
-        return QueryPlan(
-            should_execute=False,
-            params=working_params,
-            risk_flags=["OBJECT_NEGATION_CONTRADICTION"],
-            clarification_question=OBJECT_NEGATION_CONTRADICTION_QUESTION,
-            reason="object_negation_contradiction",
-            signals=all_signals,
-        )
+    if (blocked := semantic_preflight(working_params, all_signals)) is not None:
+        return blocked
 
     # ── P1: command_incomplete ────────────────────────────────────────────
     if "P1" in rules_to_apply:

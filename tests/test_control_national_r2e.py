@@ -348,5 +348,7 @@ class TestCollisionGates:
             record_aliases = {
                 normalize_text(alias) for alias in record.get("aliases", [])
             }
-            assert scan_disabled <= record_aliases
+            # ADR-072: exclusion governs scan surfaces, including an owned
+            # physical canonical. It does not remove its exact ownership.
+            assert scan_disabled <= record_aliases | {normalize_text(record['official_name'])}
             assert blocked.isdisjoint(owned)

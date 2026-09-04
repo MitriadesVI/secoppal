@@ -43,5 +43,10 @@ def test_rewrite_parser_does_not_accept_null_as_resolved_entity():
 
     assert "entidad_resolved" not in parsed.params
     resolution = parsed.params.get("entidad_resolution", {})
-    assert resolution.get("confidence") == "low"
+    # The municipal guard now states that no buyer was accredited, and the
+    # complete Paipa identity must survive into the execution block.
+    assert resolution.get("confidence") == "none"
     assert resolution.get("clarification_needed") is True
+    assert resolution['metadata']['municipal_identity_status'] == 'UNIQUE_MUNICIPAL_IDENTITY'
+    from app.core.query_plan import compute_query_plan
+    assert not compute_query_plan(parsed.params, 'contratos de la alcaldía de paipa').should_execute

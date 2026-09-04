@@ -97,9 +97,9 @@ def test_incompatible_department_does_not_silently_drop_qualification(router):
     assert params['municipal_territory']['status'] == 'department_mismatch'
 
 
-def test_buyer_intent_is_still_buyer_intent_without_promotion(router):
+def test_buyer_intent_is_still_buyer_intent_without_promotion(frozen_municipal_baseline_router):
     for name in ['baranoa', 'nuevo colon']:
-        params = router.parse('contratos de la alcaldia de ' + name).params
+        params = frozen_municipal_baseline_router.parse('contratos de la alcaldia de ' + name).params
         assert params.get('entidad')
         assert params['entidad_resolution']['clarification_needed']
         assert not params.get('ciudad') and not params.get('municipal_territory')
