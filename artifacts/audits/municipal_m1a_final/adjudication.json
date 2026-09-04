@@ -1,0 +1,262 @@
+{
+  "status": "PASS",
+  "cases": [
+    {
+      "catalog": "baseline",
+      "name": "Baranoa",
+      "expected_code": "08078",
+      "classification": "PRE_PROMOTION_ABSENCE_ORACLE",
+      "query": "contratos de la alcaldía de Baranoa",
+      "params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "alcaldia de baranoa",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_alcald[ií]a_unresolved",
+          "confidence": "none",
+          "like_value": null,
+          "metadata": {
+            "municipal_identity_status": "UNIQUE_MUNICIPAL_IDENTITY",
+            "protected_span": "alcaldia de baranoa",
+            "protected_divipola": "08078",
+            "department_mismatch": "False",
+            "rewritten_from": "alcaldia de baranoa",
+            "resolution_method": "municipal_identity_guard"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No acredité un comprador para 'alcaldia de baranoa'. ¿Cuál es su nombre institucional completo?"
+        }
+      },
+      "should_execute": false,
+      "soql": {
+        "p6dx-8zbt": "BLOCKED: ValueError",
+        "jbjy-vk9h": "BLOCKED: ValueError"
+      },
+      "source_names": {
+        "p6dx-8zbt": [
+          "ALCALDIA MUNICIPAL DE BARANOA"
+        ],
+        "jbjy-vk9h": [
+          "ALCALDIA MUNICIPAL DE BARANOA"
+        ]
+      }
+    },
+    {
+      "catalog": "baseline",
+      "name": "Nuevo Colón",
+      "expected_code": "15494",
+      "classification": "PRE_PROMOTION_ABSENCE_ORACLE",
+      "query": "contratos de la alcaldía de Nuevo Colón",
+      "params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "alcaldia de nuevo colon",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_alcald[ií]a_unresolved",
+          "confidence": "none",
+          "like_value": null,
+          "metadata": {
+            "municipal_identity_status": "UNIQUE_MUNICIPAL_IDENTITY",
+            "protected_span": "alcaldia de nuevo colon",
+            "protected_divipola": "15494",
+            "department_mismatch": "False",
+            "rewritten_from": "alcaldia de nuevo colon",
+            "resolution_method": "municipal_identity_guard"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No acredité un comprador para 'alcaldia de nuevo colon'. ¿Cuál es su nombre institucional completo?"
+        }
+      },
+      "should_execute": false,
+      "soql": {
+        "p6dx-8zbt": "BLOCKED: ValueError",
+        "jbjy-vk9h": "BLOCKED: ValueError"
+      },
+      "source_names": {
+        "p6dx-8zbt": [
+          "ALCALDÍA MUNICIPAL DE NUEVO COLON"
+        ],
+        "jbjy-vk9h": [
+          "ALCALDÍA MUNICIPAL DE NUEVO COLON"
+        ]
+      }
+    },
+    {
+      "catalog": "baseline",
+      "name": "Villa de Leyva",
+      "expected_code": "15407",
+      "classification": "PRE_PROMOTION_ABSENCE_ORACLE",
+      "query": "contratos de la alcaldía de Villa de Leyva",
+      "params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "alcaldia de villa de leyva",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_alcald[ií]a_unresolved",
+          "confidence": "none",
+          "like_value": null,
+          "metadata": {
+            "municipal_identity_status": "UNIQUE_MUNICIPAL_IDENTITY",
+            "protected_span": "alcaldia de villa de leyva",
+            "protected_divipola": "15407",
+            "department_mismatch": "False",
+            "rewritten_from": "alcaldia de villa de leyva",
+            "resolution_method": "municipal_identity_guard"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No acredité un comprador para 'alcaldia de villa de leyva'. ¿Cuál es su nombre institucional completo?"
+        }
+      },
+      "should_execute": false,
+      "soql": {
+        "p6dx-8zbt": "BLOCKED: ValueError",
+        "jbjy-vk9h": "BLOCKED: ValueError"
+      },
+      "source_names": {
+        "p6dx-8zbt": [
+          "MUNICIPIO DE VILLA DE LEYVA//"
+        ],
+        "jbjy-vk9h": [
+          "MUNICIPIO DE VILLA DE LEYVA//"
+        ]
+      }
+    },
+    {
+      "catalog": "production",
+      "name": "Baranoa",
+      "expected_code": "08078",
+      "classification": "POST_PROMOTION_RESOLUTION_ORACLE",
+      "query": "contratos de la alcaldía de Baranoa",
+      "params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de baranoa",
+        "entidad_resolved": "ALCALDIA MUNICIPAL DE BARANOA",
+        "entidad_resolution": {
+          "value": "ALCALDIA MUNICIPAL DE BARANOA",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de baranoa",
+            "resolution_method": "exact"
+          }
+        }
+      },
+      "should_execute": true,
+      "soql": {
+        "p6dx-8zbt": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPAL DE BARANOA'",
+        "jbjy-vk9h": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE BARANOA'"
+      },
+      "source_names": {
+        "p6dx-8zbt": [
+          "ALCALDIA MUNICIPAL DE BARANOA"
+        ],
+        "jbjy-vk9h": [
+          "ALCALDIA MUNICIPAL DE BARANOA"
+        ]
+      }
+    },
+    {
+      "catalog": "production",
+      "name": "Nuevo Colón",
+      "expected_code": "15494",
+      "classification": "POST_PROMOTION_RESOLUTION_ORACLE",
+      "query": "contratos de la alcaldía de Nuevo Colón",
+      "params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de nuevo colon",
+        "entidad_resolved": "ALCALDÍA MUNICIPAL DE NUEVO COLON",
+        "entidad_resolution": {
+          "value": "ALCALDÍA MUNICIPAL DE NUEVO COLON",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de nuevo colon",
+            "resolution_method": "exact"
+          }
+        }
+      },
+      "should_execute": true,
+      "soql": {
+        "p6dx-8zbt": "SELECT count(*) WHERE entidad = 'ALCALDÍA MUNICIPAL DE NUEVO COLON'",
+        "jbjy-vk9h": "SELECT count(*) WHERE nombre_entidad = 'ALCALDÍA MUNICIPAL DE NUEVO COLON'"
+      },
+      "source_names": {
+        "p6dx-8zbt": [
+          "ALCALDÍA MUNICIPAL DE NUEVO COLON"
+        ],
+        "jbjy-vk9h": [
+          "ALCALDÍA MUNICIPAL DE NUEVO COLON"
+        ]
+      }
+    },
+    {
+      "catalog": "production",
+      "name": "Villa de Leyva",
+      "expected_code": "15407",
+      "classification": "POST_PROMOTION_RESOLUTION_ORACLE",
+      "query": "contratos de la alcaldía de Villa de Leyva",
+      "params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de villa de leyva",
+        "entidad_resolved": "MUNICIPIO DE VILLA DE LEYVA//",
+        "entidad_resolution": {
+          "value": "MUNICIPIO DE VILLA DE LEYVA//",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de villa de leyva",
+            "resolution_method": "exact"
+          }
+        }
+      },
+      "should_execute": true,
+      "soql": {
+        "p6dx-8zbt": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE VILLA DE LEYVA//'",
+        "jbjy-vk9h": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE VILLA DE LEYVA//'"
+      },
+      "source_names": {
+        "p6dx-8zbt": [
+          "MUNICIPIO DE VILLA DE LEYVA//"
+        ],
+        "jbjy-vk9h": [
+          "MUNICIPIO DE VILLA DE LEYVA//"
+        ]
+      }
+    },
+    {
+      "name": "Belmira",
+      "classification": "STALE_ALIAS_ONLY_SCHEMA_ASSERTION",
+      "canonical": "ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA",
+      "exact": {
+        "value": "ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA",
+        "method": "exact",
+        "confidence": "high",
+        "like_value": null,
+        "metadata": {},
+        "ecosystem_entities": [],
+        "clarification_needed": false,
+        "clarification_hint": null
+      },
+      "foreign_institution_scan": null,
+      "scan_disabled": [
+        "ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA"
+      ]
+    }
+  ],
+  "tests_policy": "Absence assertions use the frozen pre-promotion baseline; promoted semantics are asserted against real production. Scan exclusion accepts owned aliases and own canonical; exact lookup stays available."
+}

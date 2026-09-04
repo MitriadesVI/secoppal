@@ -1,0 +1,16 @@
+{
+  "counts": {
+    "divipola": 1103,
+    "compound_names": 279,
+    "articulated_names": 93,
+    "prefix_collisions": 46,
+    "homonym_groups": 64
+  },
+  "relevant_codes": 411,
+  "uncovered": [],
+  "compound_names": 279,
+  "articulated_names": 93,
+  "prefix_collisions": 46,
+  "homonym_groups": 64,
+  "status": "PASS"
+}

@@ -1,0 +1,5 @@
+cross: PASS 3068
+geography: 2206 checks; 0 failures
+matrix: PASS 9408 {'CORRECT_BUYER': 2396, 'CLARIFICATION': 7012, 'FAIL_CLOSED': 0, 'REVIEW': 0, 'WRONG_BUYER': 0, 'WRONG_DIVIPOLA': 0}
+data: PASS | alias replay: PASS 1888
+DRY RUN: PASS

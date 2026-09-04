@@ -1,0 +1,19 @@
+{
+  "production": {
+    "sha256": {
+      "app/data/aliases_db.json": "777ea83e132e1c59fb491fa268ae5aa452d9e05ba46b9f4c79fb62077559d378",
+      "app/data/buyer_source_names.json": "98148e1c5676b90a9c1cde4f43f89c165550cef02db55dfca615c16916d275c2"
+    },
+    "buyer_units": 1096,
+    "aliases": 12681,
+    "source_bindings": 589
+  },
+  "production_delta": {
+    "buyer_units": 0,
+    "aliases": 0,
+    "source_bindings": 0
+  },
+  "reapplied": 503,
+  "rejected": 0,
+  "bytes_identical": true
+}

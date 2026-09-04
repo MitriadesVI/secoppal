@@ -1,0 +1,60 @@
+{
+  "status": "PASS",
+  "failures": [],
+  "results": {
+    "sotavento_contracts": {
+      "query": "contratos del municipio de San Andrés de Sotavento",
+      "owner": null,
+      "divipola": null,
+      "territory_status": null,
+      "should_execute": false,
+      "clarification": true,
+      "objeto": null
+    },
+    "sotavento_bare": {
+      "query": "municipio de San Andrés de Sotavento",
+      "owner": null,
+      "divipola": null,
+      "territory_status": null,
+      "should_execute": false,
+      "clarification": true,
+      "objeto": null
+    },
+    "san_andres_santander": {
+      "query": "alcaldía de San Andrés, departamento Santander",
+      "owner": null,
+      "divipola": null,
+      "territory_status": null,
+      "should_execute": false,
+      "clarification": true,
+      "objeto": null
+    },
+    "susacon_bare": {
+      "query": "municipio de Susacón",
+      "owner": "ALCALDIA MUNICIPAL SUSACON BOYACA",
+      "divipola": null,
+      "territory_status": null,
+      "should_execute": true,
+      "clarification": false,
+      "objeto": null
+    },
+    "susacon_contracts": {
+      "query": "contratos del municipio de Susacón",
+      "owner": "ALCALDIA MUNICIPAL SUSACON BOYACA",
+      "divipola": null,
+      "territory_status": null,
+      "should_execute": true,
+      "clarification": false,
+      "objeto": null
+    },
+    "susa_bare": {
+      "query": "municipio de Susa",
+      "owner": "ALCALDIA DE SUSA",
+      "divipola": null,
+      "territory_status": null,
+      "should_execute": true,
+      "clarification": false,
+      "objeto": null
+    }
+  }
+}

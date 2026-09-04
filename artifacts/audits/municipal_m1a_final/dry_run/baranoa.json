@@ -1,0 +1,37 @@
+{
+  "status": "PASS",
+  "canonical": "ALCALDIA MUNICIPAL DE BARANOA",
+  "buyer": [
+    {
+      "query": "contratos de la alcaldia de baranoa",
+      "owner": "ALCALDIA MUNICIPAL DE BARANOA",
+      "divipola": null,
+      "territory_status": null,
+      "should_execute": true,
+      "clarification": false,
+      "objeto": null
+    },
+    {
+      "query": "procesos del municipio de baranoa",
+      "owner": "ALCALDIA MUNICIPAL DE BARANOA",
+      "divipola": null,
+      "territory_status": null,
+      "should_execute": true,
+      "clarification": false,
+      "objeto": null
+    }
+  ],
+  "geography": {
+    "query": "contratos en baranoa",
+    "owner": null,
+    "divipola": "08078",
+    "territory_status": "resolved",
+    "should_execute": true,
+    "clarification": false,
+    "objeto": null
+  },
+  "snapshot_volumes": {
+    "p6dx-8zbt": 380,
+    "jbjy-vk9h": 374
+  }
+}

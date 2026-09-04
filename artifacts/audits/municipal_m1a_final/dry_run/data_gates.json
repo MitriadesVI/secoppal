@@ -1,0 +1,1287 @@
+{
+  "new_debt": {
+    "duplicate_canonical_identity_keys": {},
+    "multi_owner_alias_keys": {},
+    "source_name_identity_splits": {}
+  },
+  "exact_wrong_owners": [],
+  "new_scan_cross_owner": [],
+  "existing_units_preserved": true,
+  "existing_bindings_preserved": true,
+  "scan_surface_count": 42790,
+  "before_debt": {
+    "duplicate_canonical_identity_keys": {},
+    "multi_owner_alias_keys": {
+      "itm": [
+        "INSTITUCIÓN UNIVERSITARIA ITM",
+        "INSTITUTO DE TURISMO DEL META"
+      ],
+      "el itm": [
+        "INSTITUCIÓN UNIVERSITARIA ITM",
+        "INSTITUTO DE TURISMO DEL META"
+      ],
+      "invias": [
+        "ANI",
+        "INVIAS"
+      ],
+      "el invias": [
+        "ANI",
+        "INVIAS"
+      ],
+      "el instituto nacional de vias": [
+        "ANI",
+        "INVIAS"
+      ],
+      "instituto de deportes y recreacion": [
+        "INDER ENVIGADO1",
+        "INSTITUTO DE DEPORTES Y RECREACION DE MEDELLIN"
+      ],
+      "inder": [
+        "INDER ENVIGADO1",
+        "INSTITUTO DE DEPORTES Y RECREACION DE MEDELLIN"
+      ],
+      "idrd bogota": [
+        "IDRD - ENTIDAD OFICIAL.",
+        "SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE"
+      ],
+      "instituto distrital de recreacion y deporte": [
+        "IDRD - ENTIDAD OFICIAL.",
+        "SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE"
+      ],
+      "recreacion y deporte bogota": [
+        "IDRD - ENTIDAD OFICIAL.",
+        "SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE"
+      ],
+      "idrd": [
+        "IDRD - ENTIDAD OFICIAL.",
+        "SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE"
+      ],
+      "el idrd": [
+        "IDRD - ENTIDAD OFICIAL.",
+        "SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE"
+      ],
+      "dane territorial": [
+        "DANE - DIRECCION TERRITORIAL CENTRO",
+        "DANE - TERRITORIAL CENTRO ORIENTE"
+      ],
+      "la territorial del dane": [
+        "DANE - DIRECCION TERRITORIAL CENTRO",
+        "DANE - TERRITORIAL CENTRO ORIENTE"
+      ],
+      "el icbf": [
+        "ICBF REGIONAL BOGOTA",
+        "ICBF SEDE NACIONAL"
+      ],
+      "el instituto colombiano de bienestar familiar": [
+        "ICBF REGIONAL BOGOTA",
+        "ICBF SEDE NACIONAL"
+      ],
+      "instituto colombiano de bienestar familiar bogota": [
+        "ICBF REGIONAL BOGOTA",
+        "ICBF SEDE NACIONAL"
+      ],
+      "bienestar familiar": [
+        "ICBF REGIONAL BOGOTA",
+        "ICBF SEDE NACIONAL"
+      ],
+      "icbf bogota": [
+        "ICBF REGIONAL BOGOTA",
+        "ICBF REGIONAL CUNDINAMARCA",
+        "ICBF SEDE NACIONAL"
+      ],
+      "icbf d.c.": [
+        "ICBF REGIONAL BOGOTA",
+        "ICBF SEDE NACIONAL"
+      ],
+      "instituto colombiano de bienestar familiar": [
+        "ICBF REGIONAL BOGOTA",
+        "ICBF SEDE NACIONAL"
+      ],
+      "icbf distrito capital": [
+        "ICBF REGIONAL BOGOTA",
+        "ICBF REGIONAL CUNDINAMARCA",
+        "ICBF SEDE NACIONAL"
+      ],
+      "icbf": [
+        "ICBF REGIONAL ANTIOQUIA",
+        "ICBF REGIONAL ATLANTICO",
+        "ICBF REGIONAL BOGOTA",
+        "ICBF REGIONAL CAUCA",
+        "ICBF REGIONAL CUNDINAMARCA",
+        "ICBF REGIONAL GUAJIRA",
+        "ICBF REGIONAL NARIÑO",
+        "ICBF REGIONAL SANTANDER",
+        "ICBF REGIONAL TOLIMA",
+        "ICBF REGIONAL VALLE DEL CAUCA",
+        "ICBF SEDE NACIONAL",
+        "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR"
+      ],
+      "el valle del cauca": [
+        "GOBERNACION DEL VALLE DEL CAUCA - DADI",
+        "GOBERNACION DEL VALLE DEL CAUCA - SECRETARIA DE EDUCACION"
+      ],
+      "autoridad ambiental": [
+        "DEPARTAMENTO ADMINISTRATIVO DE GESTION DEL MEDIO AMBIENTE DAGMA",
+        "FONDO NACIONAL AMBIENTAL - ANLA"
+      ],
+      "gobierno de caldas": [
+        "GOBERNACION DE CALDAS",
+        "MUNICIPIO DE CALDAS ANTIOQUIA"
+      ],
+      "bogota distrito capital": [
+        "SECRETARIA DISTRITAL DE GOBIERNO 1",
+        "SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ",
+        "UNIVERSIDAD PEDAGÓGICA NACIONAL"
+      ],
+      "secretaria de educacion": [
+        "GOBERNACION DEL VALLE DEL CAUCA - SECRETARIA DE EDUCACION",
+        "SECRETARIA DE EDUCACION DE CALI"
+      ],
+      "universidad pedagogica": [
+        "UNIVERSIDAD PEDAGÓGICA NACIONAL",
+        "UPTC"
+      ],
+      "sdh": [
+        "SECRETARIA DISTRITAL DE HACIENDA",
+        "SECRETARIA DISTRITAL DEL HABITAT-"
+      ],
+      "la sdh": [
+        "SECRETARIA DISTRITAL DE HACIENDA",
+        "SECRETARIA DISTRITAL DEL HABITAT-"
+      ],
+      "el sena": [
+        "SENA REGIONAL RISARALDA Grupo de Apoyo Administrativo Mixto//",
+        "SENA SECRETARIA GENERAL"
+      ],
+      "sena bogota": [
+        "SENA DISTRITO CAPITAL GRUPO DE APOYO ADMINISTRATIVO - CGI",
+        "SENA REGIONAL CUNDINAMARCA Grupo de Apoyo Administrativo Mixto+",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CEET",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CGMLTI",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo de Apoyo Administrativo Mixto CSF",
+        "SENA SECRETARIA GENERAL"
+      ],
+      "sena": [
+        "SENA REGIONAL ANTIOQUIA Grupo de Apoyo Administrativo Mixto",
+        "SENA REGIONAL ATLANTICO",
+        "SENA REGIONAL ATLANTICO Intercentros",
+        "SENA REGIONAL CUNDINAMARCA Grupo de Apoyo Administrativo Mixto+",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo de Apoyo Administrativo Mixto CSF",
+        "SENA REGIONAL META Grupo de Apoyo Administrativo Mixto",
+        "SENA REGIONAL NORTE DE SANTANDER Grupo de Apoyo Administrativo Mixto",
+        "SENA REGIONAL QUINDIO Grupo de Apoyo Administrativo Mixto",
+        "SENA REGIONAL RISARALDA Grupo de Apoyo Administrativo Mixto//",
+        "SENA REGIONAL SANTANDER Grupo de Apoyo Administrativo Mixto",
+        "SENA Regional Huila Grupo de Apoyo Administrativo Mixto",
+        "SENA SECRETARIA GENERAL"
+      ],
+      "sena distrito capital de bogota": [
+        "SENA REGIONAL CUNDINAMARCA Grupo de Apoyo Administrativo Mixto+",
+        "SENA SECRETARIA GENERAL"
+      ],
+      "sena distrito capital": [
+        "SENA DISTRITO CAPITAL GRUPO DE APOYO ADMINISTRATIVO - CGI",
+        "SENA REGIONAL CUNDINAMARCA Grupo de Apoyo Administrativo Mixto+",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CEET",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CGMLTI",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo de Apoyo Administrativo Mixto CSF",
+        "SENA SECRETARIA GENERAL"
+      ],
+      "sena seccional antioquia": [
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo Intercentros Medellin",
+        "SENA REGIONAL ANTIOQUIA Grupo de Apoyo Administrativo Mixto"
+      ],
+      "sena regional antioquia": [
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo CIAA",
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo Complejo Itagüí",
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo Intercentros Medellin",
+        "SENA REGIONAL ANTIOQUIA Grupo de Apoyo Administrativo Mixto"
+      ],
+      "sena regional de antioquia": [
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo Complejo Itagüí",
+        "SENA REGIONAL ANTIOQUIA Grupo de Apoyo Administrativo Mixto"
+      ],
+      "servicio nacional de aprendizaje regional antioquia": [
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo CIAA",
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo Complejo Itagüí",
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo Intercentros Medellin",
+        "SENA REGIONAL ANTIOQUIA Grupo de Apoyo Administrativo Mixto"
+      ],
+      "el sena de antioquia": [
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo Complejo Itagüí",
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo Intercentros Medellin",
+        "SENA REGIONAL ANTIOQUIA Grupo de Apoyo Administrativo Mixto"
+      ],
+      "sena medellin": [
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo Intercentros Medellin",
+        "SENA REGIONAL ANTIOQUIA Grupo de Apoyo Administrativo Mixto"
+      ],
+      "sena antioquia": [
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo CIAA",
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo Complejo Itagüí",
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo Intercentros Medellin",
+        "SENA REGIONAL ANTIOQUIA Grupo de Apoyo Administrativo Mixto"
+      ],
+      "servicio nacional de aprendizaje antioquia": [
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo CIAA",
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo Complejo Itagüí",
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo Intercentros Medellin",
+        "SENA REGIONAL ANTIOQUIA Grupo de Apoyo Administrativo Mixto"
+      ],
+      "la regional antioquia del sena": [
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo Complejo Itagüí",
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo Intercentros Medellin",
+        "SENA REGIONAL ANTIOQUIA Grupo de Apoyo Administrativo Mixto"
+      ],
+      "grupo administrativo mixto sena": [
+        "SENA REGIONAL ANTIOQUIA Grupo de Apoyo Administrativo Mixto",
+        "SENA REGIONAL SANTANDER Grupo de Apoyo Administrativo Mixto"
+      ],
+      "ese hospital san rafael": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN RAFAEL DE FACATATIVA",
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN RAFAEL.*",
+        "ESE HOSPITAL DEPARTAMENTAL SAN RAFAEL"
+      ],
+      "ese san rafael": [
+        "E.S.E. HOSPITAL SAN RAFAEL DE LETICIA",
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN RAFAEL.*",
+        "ESE HOSPITAL DEPARTAMENTAL SAN RAFAEL"
+      ],
+      "hospital san rafael": [
+        "E.S.E HOSPITAL SAN RAFAEL DE ITAGUI",
+        "E.S.E. HOSPITAL SAN RAFAEL DE LETICIA",
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN RAFAEL DE FACATATIVA",
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN RAFAEL.*",
+        "ESE HOSPITAL DEPARTAMENTAL SAN RAFAEL",
+        "ESE HOSPITAL SAN RAFAEL DE FUSAGASUGÁ"
+      ],
+      "hospital del magdalena": [
+        "ESE HOSPITAL DEPARTAMENTAL SAN RAFAEL",
+        "ESE SAMUEL VILLANUEVA VALEST 12"
+      ],
+      "la ese hospital san rafael": [
+        "E.S.E HOSPITAL SAN RAFAEL DE ITAGUI",
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN RAFAEL.*",
+        "ESE HOSPITAL DEPARTAMENTAL SAN RAFAEL",
+        "ESE HOSPITAL SAN RAFAEL DE FUSAGASUGÁ"
+      ],
+      "el hospital san rafael": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN RAFAEL DE FACATATIVA",
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN RAFAEL.*",
+        "ESE HOSPITAL DEPARTAMENTAL SAN RAFAEL",
+        "ESE HOSPITAL SAN RAFAEL DE FUSAGASUGÁ"
+      ],
+      "la ese san rafael": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN RAFAEL.*",
+        "ESE HOSPITAL DEPARTAMENTAL SAN RAFAEL",
+        "ESE HOSPITAL SAN RAFAEL DE FUSAGASUGÁ"
+      ],
+      "instituto de salud": [
+        "E.S.E. INSTITUTO DE SALUD DE BUCARAMANGA",
+        "INSTITUTO NACIONAL DE SALUD"
+      ],
+      "el instituto de salud": [
+        "E.S.E. INSTITUTO DE SALUD DE BUCARAMANGA",
+        "INSTITUTO NACIONAL DE SALUD"
+      ],
+      "secretaria general de bogota": [
+        "SECRETARIA GENERAL Y DE CERCANIA AL CIUDADANO",
+        "SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ"
+      ],
+      "alcaldia de bogota secretaria general": [
+        "SECRETARIA GENERAL Y DE CERCANIA AL CIUDADANO",
+        "SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ"
+      ],
+      "sena regional santander": [
+        "SENA REGIONAL SANTANDER Grupo Administrativo CIDT",
+        "SENA REGIONAL SANTANDER Grupo de Apoyo Administrativo Mixto"
+      ],
+      "servicio nacional de aprendizaje santander": [
+        "SENA REGIONAL SANTANDER Grupo Administrativo CIDT",
+        "SENA REGIONAL SANTANDER Grupo de Apoyo Administrativo Mixto"
+      ],
+      "sena santander": [
+        "SENA REGIONAL SANTANDER Grupo Administrativo CIDT",
+        "SENA REGIONAL SANTANDER Grupo de Apoyo Administrativo Mixto"
+      ],
+      "servicio nacional de aprendizaje regional santander": [
+        "SENA REGIONAL SANTANDER Grupo Administrativo CIDT",
+        "SENA REGIONAL SANTANDER Grupo de Apoyo Administrativo Mixto"
+      ],
+      "servicio nacional de aprendizaje": [
+        "SENA REGIONAL DISTRITO CAPITAL Grupo de Apoyo Administrativo Mixto CSF",
+        "SENA REGIONAL NORTE DE SANTANDER Grupo de Apoyo Administrativo Mixto",
+        "SENA REGIONAL QUINDIO Grupo de Apoyo Administrativo Mixto",
+        "SENA REGIONAL SANTANDER Grupo de Apoyo Administrativo Mixto"
+      ],
+      "apoyo administrativo mixto sena": [
+        "SENA REGIONAL META Grupo de Apoyo Administrativo Mixto",
+        "SENA REGIONAL SANTANDER Grupo de Apoyo Administrativo Mixto"
+      ],
+      "el valle": [
+        "GOBERNACION DEL VALLE DEL CAUCA - SECRETARIA DE EDUCACION",
+        "UNIVERSIDAD DEL VALLE"
+      ],
+      "corporacion ambiental de santander": [
+        "CORPORACION AUTONOMA REGIONAL DE SANTANDER+",
+        "CORPORACIÓN AUTÓNOMA REGIONAL PARA LA DEFENSA DE LA MESETA DE BUCARAMANGA"
+      ],
+      "ese hospital san juan de dios": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN JUAN DE DIOS /",
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN JUAN DE DIOS DE PAMPLONA",
+        "ESE HOSPITAL DEPARTAMENTAL UNIVERSITARIO DEL QUINDÍO SAN JUAN DE DIOS",
+        "HOSPITAL SAN JUAN DE DIOS ESE  RIONEGRO"
+      ],
+      "ese hospital universitario": [
+        "E.S.E. HOSPITAL UNIVERSITARIO HERNANDO MONCALEANO PERDOMO DE NEIVA",
+        "ESE HOSPITAL DEPARTAMENTAL UNIVERSITARIO DEL QUINDÍO SAN JUAN DE DIOS"
+      ],
+      "indeportes": [
+        "INDEPORTES CUNDINAMARCA",
+        "INDEPORTES TOLIMA"
+      ],
+      "grupo de apoyo administrativo mixto sena": [
+        "SENA REGIONAL CUNDINAMARCA Grupo de Apoyo Administrativo Mixto+",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo de Apoyo Administrativo Mixto CSF",
+        "SENA REGIONAL NORTE DE SANTANDER Grupo de Apoyo Administrativo Mixto"
+      ],
+      "sena del atlantico": [
+        "SENA REGIONAL ATLANTICO",
+        "SENA REGIONAL ATLANTICO Intercentros"
+      ],
+      "sena atlantico": [
+        "SENA REGIONAL ATLANTICO",
+        "SENA REGIONAL ATLANTICO Intercentros"
+      ],
+      "servicio nacional de aprendizaje del atlantico": [
+        "SENA REGIONAL ATLANTICO",
+        "SENA REGIONAL ATLANTICO Intercentros"
+      ],
+      "sena regional atlantico": [
+        "SENA REGIONAL ATLANTICO",
+        "SENA REGIONAL ATLANTICO Intercentros"
+      ],
+      "regional atlantico del sena": [
+        "SENA REGIONAL ATLANTICO",
+        "SENA REGIONAL ATLANTICO Intercentros"
+      ],
+      "la regional atlantico del sena": [
+        "SENA REGIONAL ATLANTICO",
+        "SENA REGIONAL ATLANTICO Intercentros"
+      ],
+      "sena de atlantico": [
+        "SENA REGIONAL ATLANTICO",
+        "SENA REGIONAL ATLANTICO Intercentros"
+      ],
+      "sena intercentros": [
+        "SENA REGIONAL ATLANTICO Intercentros",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CGMLTI"
+      ],
+      "el cenac": [
+        "CENAC AVIACION",
+        "CENTRAL ADMINISTRATIVA ESPECIALIZADA INGENIEROS CENAC INGENIEROS"
+      ],
+      "cenac bogota": [
+        "CENAC AVIACION",
+        "CENTRAL ADMINISTRATIVA ESPECIALIZADA INGENIEROS CENAC INGENIEROS"
+      ],
+      "cenac": [
+        "CENAC AVIACION",
+        "CENTRAL ADMINISTRATIVA ESPECIALIZADA INGENIEROS CENAC INGENIEROS",
+        "CENTRAL ADMINISTRATIVA Y CONTABLE CENAC PERSONAL"
+      ],
+      "cenac distrito capital": [
+        "CENAC AVIACION",
+        "CENTRAL ADMINISTRATIVA ESPECIALIZADA INGENIEROS CENAC INGENIEROS"
+      ],
+      "ids": [
+        "IDS",
+        "INSTITUTO DEPARTAMENTAL DE SALUD DE NARIÑO"
+      ],
+      "el ids": [
+        "IDS",
+        "INSTITUTO DEPARTAMENTAL DE SALUD DE NARIÑO"
+      ],
+      "instituto departamental de salud": [
+        "IDS",
+        "INSTITUTO DEPARTAMENTAL DE SALUD DE NARIÑO"
+      ],
+      "la ids": [
+        "IDS",
+        "INSTITUTO DEPARTAMENTAL DE SALUD DE NARIÑO"
+      ],
+      "el sena distrito capital": [
+        "SENA DISTRITO CAPITAL GRUPO DE APOYO ADMINISTRATIVO - CGI",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CEET",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CGMLTI",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo de Apoyo Administrativo Mixto CSF"
+      ],
+      "el sena de bogota": [
+        "SENA DISTRITO CAPITAL GRUPO DE APOYO ADMINISTRATIVO - CGI",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CEET",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CGMLTI",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo de Apoyo Administrativo Mixto CSF"
+      ],
+      "sena capital": [
+        "SENA DISTRITO CAPITAL GRUPO DE APOYO ADMINISTRATIVO - CGI",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CEET",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CGMLTI",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo de Apoyo Administrativo Mixto CSF"
+      ],
+      "la regional distrito capital del sena": [
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CEET",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo de Apoyo Administrativo Mixto CSF"
+      ],
+      "sena regional distrito capital": [
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CEET",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CGMLTI",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo de Apoyo Administrativo Mixto CSF"
+      ],
+      "sena regional bogota": [
+        "SENA REGIONAL CUNDINAMARCA Grupo de Apoyo Administrativo Mixto+",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CEET",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CGMLTI",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo de Apoyo Administrativo Mixto CSF"
+      ],
+      "sena distrito capital grupo administrativo": [
+        "SENA DISTRITO CAPITAL GRUPO DE APOYO ADMINISTRATIVO - CGI",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CEET",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo de Apoyo Administrativo Mixto CSF"
+      ],
+      "sena distrito capital grupo administrativo intercentros": [
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CEET",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CGMLTI"
+      ],
+      "sena bogota grupo administrativo intercentros": [
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CEET",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CGMLTI"
+      ],
+      "el sena en bogota": [
+        "SENA REGIONAL CUNDINAMARCA Grupo de Apoyo Administrativo Mixto+",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CEET"
+      ],
+      "sena distrito capital bogota": [
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CEET",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CGMLTI"
+      ],
+      "el hospital de soacha": [
+        "ESE MUNICIPAL DE SOACHA JULIO CESAR PEÑALOZA*",
+        "empresa social del estado región de salud soacha."
+      ],
+      "ese soacha": [
+        "ESE MUNICIPAL DE SOACHA JULIO CESAR PEÑALOZA*",
+        "empresa social del estado región de salud soacha."
+      ],
+      "fondane bogota": [
+        "FONDANE - DIRECCION TERRITORIAL CENTRO",
+        "FONDO ROTATORIO DEL DANE (FONDANE)"
+      ],
+      "la fondane": [
+        "FONDANE - DIRECCION TERRITORIAL CENTRO",
+        "FONDO ROTATORIO DEL DANE (FONDANE)"
+      ],
+      "el fondane": [
+        "FONDANE - DIRECCION TERRITORIAL CENTRO",
+        "FONDO ROTATORIO DEL DANE (FONDANE)"
+      ],
+      "fondane": [
+        "FONDANE - DIRECCION TERRITORIAL CENTRO",
+        "FONDO ROTATORIO DEL DANE (FONDANE)"
+      ],
+      "la disan": [
+        "DIRECCION DE SANIDAD DE LA POLICIA NACIONAL - DISAN PONAL",
+        "DISAN-DMSOC"
+      ],
+      "el disan": [
+        "DIRECCION DE SANIDAD DE LA POLICIA NACIONAL - DISAN PONAL",
+        "DISAN-DMSOC"
+      ],
+      "la ese de villavicencio": [
+        "EMPRESA SOCIAL DEL ESTADO DEL MUNICIPIO DE VILLAVICENCIO",
+        "HOSPITAL DEPARTAMENTAL DE VILLAVICENCIO ESE"
+      ],
+      "empresa social del estado hospital san rafael": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN RAFAEL DE FACATATIVA",
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN RAFAEL.*"
+      ],
+      "hacienda": [
+        "DIRECCION DE IMPUESTOS Y ADUANAS NACIONALES*",
+        "MINISTERIO DE HACIENDA Y CREDITO PUBLICO"
+      ],
+      "hospital san juan de dios": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN JUAN DE DIOS /",
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN JUAN DE DIOS DE PAMPLONA",
+        "ESE HOSPITAL SAN JUAN DE DIOS DE YARUMAL",
+        "HOSPITAL DEPARTAMENTAL SAN JUAN DE DIOS DE PUERTO CARREÑO1",
+        "HOSPITAL SAN JUAN DE DIOS ESE  RIONEGRO"
+      ],
+      "el hospital san juan de dios": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN JUAN DE DIOS /",
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN JUAN DE DIOS DE PAMPLONA",
+        "ESE HOSPITAL SAN JUAN DE DIOS DE YARUMAL",
+        "HOSPITAL DEPARTAMENTAL SAN JUAN DE DIOS DE PUERTO CARREÑO1",
+        "HOSPITAL SAN JUAN DE DIOS ESE  RIONEGRO"
+      ],
+      "administrativo intercentros sena": [
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo Intercentros Medellin",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CGMLTI"
+      ],
+      "la ese hospital san juan de dios": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN JUAN DE DIOS /",
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN JUAN DE DIOS DE PAMPLONA",
+        "ESE HOSPITAL SAN JUAN DE DIOS DE YARUMAL",
+        "HOSPITAL SAN JUAN DE DIOS ESE  RIONEGRO"
+      ],
+      "hospital san juan de dios ese": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN JUAN DE DIOS /",
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN JUAN DE DIOS DE PAMPLONA",
+        "HOSPITAL SAN JUAN DE DIOS ESE  RIONEGRO"
+      ],
+      "empresa social del estado hospital san juan de dios": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN JUAN DE DIOS /",
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN JUAN DE DIOS DE PAMPLONA"
+      ],
+      "unidad administrativa especial de servicios publicos": [
+        "SANTIAGO DE CALI DISTRITO ESPECIAL - UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PUBLICOS",
+        "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS"
+      ],
+      "uaesp": [
+        "SANTIAGO DE CALI DISTRITO ESPECIAL - UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PUBLICOS",
+        "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS"
+      ],
+      "la uaesp": [
+        "SANTIAGO DE CALI DISTRITO ESPECIAL - UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PUBLICOS",
+        "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS"
+      ],
+      "sena cundinamarca": [
+        "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CBA",
+        "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CDA",
+        "SENA REGIONAL CUNDINAMARCA Grupo de Apoyo Administrativo Mixto+"
+      ],
+      "servicio nacional de aprendizaje regional cundinamarca": [
+        "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CBA",
+        "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CDA",
+        "SENA REGIONAL CUNDINAMARCA Grupo de Apoyo Administrativo Mixto+"
+      ],
+      "sena regional cundinamarca": [
+        "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CBA",
+        "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CDA",
+        "SENA REGIONAL CUNDINAMARCA Grupo de Apoyo Administrativo Mixto+"
+      ],
+      "el sena del distrito capital": [
+        "SENA REGIONAL CUNDINAMARCA Grupo de Apoyo Administrativo Mixto+",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CGMLTI"
+      ],
+      "servicio nacional de aprendizaje cundinamarca": [
+        "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CBA",
+        "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CDA",
+        "SENA REGIONAL CUNDINAMARCA Grupo de Apoyo Administrativo Mixto+"
+      ],
+      "localidad de fontibon": [
+        "ALCALDIA LOCAL DE FONTIBON",
+        "DILOF"
+      ],
+      "ese san juan de dios": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN JUAN DE DIOS /",
+        "ESE HOSPITAL SAN JUAN DE DIOS DE YARUMAL",
+        "HOSPITAL SAN JUAN DE DIOS ESE  RIONEGRO"
+      ],
+      "udc": [
+        "UNIVERSIDAD DEL CAUCA",
+        "Universidad de Cartagena"
+      ],
+      "regional antioquia sena": [
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo CIAA",
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo Complejo Itagüí"
+      ],
+      "la cenac": [
+        "CENTRAL ADMINISTRATIVA ESPECIALIZADA INGENIEROS CENAC INGENIEROS",
+        "CENTRAL ADMINISTRATIVA Y CONTABLE CENAC PERSONAL"
+      ],
+      "hospital rosario": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL ROSARIO PUMAREJO DE LOPEZ",
+        "ESE HNSR"
+      ],
+      "hospital san juan de dios de antioquia": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN JUAN DE DIOS /",
+        "HOSPITAL SAN JUAN DE DIOS ESE  RIONEGRO"
+      ],
+      "el hospital san vicente": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN VICENTE DE PAUL REMEDIOS",
+        "HOSPITAL SAN VICENTE DE ARAUCA ESE"
+      ],
+      "hospital san vicente": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN VICENTE DE PAUL REMEDIOS",
+        "ESE HOSPITAL SAN VICENTE DE PAUL DE CALDAS",
+        "HOSPITAL SAN VICENTE DE ARAUCA ESE"
+      ],
+      "hospital san vicente de paul": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN VICENTE DE PAUL REMEDIOS",
+        "ESE HOSPITAL SAN VICENTE DE PAUL DE CALDAS"
+      ],
+      "ese hospital san vicente de paul": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN VICENTE DE PAUL REMEDIOS",
+        "ESE HOSPITAL SAN VICENTE DE PAUL DE CALDAS"
+      ],
+      "la ese hospital san vicente de paul": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN VICENTE DE PAUL REMEDIOS",
+        "ESE HOSPITAL SAN VICENTE DE PAUL DE CALDAS"
+      ],
+      "el hospital san vicente de paul": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN VICENTE DE PAUL REMEDIOS",
+        "ESE HOSPITAL SAN VICENTE DE PAUL DE CALDAS"
+      ],
+      "regional cundinamarca sena": [
+        "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CBA",
+        "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CDA"
+      ],
+      "regional regional cundinamarca sena": [
+        "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CBA",
+        "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CDA"
+      ],
+      "sena regional regional cundinamarca": [
+        "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CBA",
+        "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CDA"
+      ]
+    },
+    "source_name_identity_splits": {}
+  },
+  "after_debt": {
+    "duplicate_canonical_identity_keys": {},
+    "multi_owner_alias_keys": {
+      "itm": [
+        "INSTITUCIÓN UNIVERSITARIA ITM",
+        "INSTITUTO DE TURISMO DEL META"
+      ],
+      "el itm": [
+        "INSTITUCIÓN UNIVERSITARIA ITM",
+        "INSTITUTO DE TURISMO DEL META"
+      ],
+      "invias": [
+        "ANI",
+        "INVIAS"
+      ],
+      "el invias": [
+        "ANI",
+        "INVIAS"
+      ],
+      "el instituto nacional de vias": [
+        "ANI",
+        "INVIAS"
+      ],
+      "instituto de deportes y recreacion": [
+        "INDER ENVIGADO1",
+        "INSTITUTO DE DEPORTES Y RECREACION DE MEDELLIN"
+      ],
+      "inder": [
+        "INDER ENVIGADO1",
+        "INSTITUTO DE DEPORTES Y RECREACION DE MEDELLIN"
+      ],
+      "idrd bogota": [
+        "IDRD - ENTIDAD OFICIAL.",
+        "SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE"
+      ],
+      "instituto distrital de recreacion y deporte": [
+        "IDRD - ENTIDAD OFICIAL.",
+        "SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE"
+      ],
+      "recreacion y deporte bogota": [
+        "IDRD - ENTIDAD OFICIAL.",
+        "SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE"
+      ],
+      "idrd": [
+        "IDRD - ENTIDAD OFICIAL.",
+        "SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE"
+      ],
+      "el idrd": [
+        "IDRD - ENTIDAD OFICIAL.",
+        "SECRETARÍA DISTRITAL DE CULTURA, RECREACIÓN Y DEPORTE"
+      ],
+      "dane territorial": [
+        "DANE - DIRECCION TERRITORIAL CENTRO",
+        "DANE - TERRITORIAL CENTRO ORIENTE"
+      ],
+      "la territorial del dane": [
+        "DANE - DIRECCION TERRITORIAL CENTRO",
+        "DANE - TERRITORIAL CENTRO ORIENTE"
+      ],
+      "el icbf": [
+        "ICBF REGIONAL BOGOTA",
+        "ICBF SEDE NACIONAL"
+      ],
+      "el instituto colombiano de bienestar familiar": [
+        "ICBF REGIONAL BOGOTA",
+        "ICBF SEDE NACIONAL"
+      ],
+      "instituto colombiano de bienestar familiar bogota": [
+        "ICBF REGIONAL BOGOTA",
+        "ICBF SEDE NACIONAL"
+      ],
+      "bienestar familiar": [
+        "ICBF REGIONAL BOGOTA",
+        "ICBF SEDE NACIONAL"
+      ],
+      "icbf bogota": [
+        "ICBF REGIONAL BOGOTA",
+        "ICBF REGIONAL CUNDINAMARCA",
+        "ICBF SEDE NACIONAL"
+      ],
+      "icbf d.c.": [
+        "ICBF REGIONAL BOGOTA",
+        "ICBF SEDE NACIONAL"
+      ],
+      "instituto colombiano de bienestar familiar": [
+        "ICBF REGIONAL BOGOTA",
+        "ICBF SEDE NACIONAL"
+      ],
+      "icbf distrito capital": [
+        "ICBF REGIONAL BOGOTA",
+        "ICBF REGIONAL CUNDINAMARCA",
+        "ICBF SEDE NACIONAL"
+      ],
+      "icbf": [
+        "ICBF REGIONAL ANTIOQUIA",
+        "ICBF REGIONAL ATLANTICO",
+        "ICBF REGIONAL BOGOTA",
+        "ICBF REGIONAL CAUCA",
+        "ICBF REGIONAL CUNDINAMARCA",
+        "ICBF REGIONAL GUAJIRA",
+        "ICBF REGIONAL NARIÑO",
+        "ICBF REGIONAL SANTANDER",
+        "ICBF REGIONAL TOLIMA",
+        "ICBF REGIONAL VALLE DEL CAUCA",
+        "ICBF SEDE NACIONAL",
+        "INSTITUTO COLOMBIANO DE BIENESTAR FAMILIAR REGIONAL BOLIVAR"
+      ],
+      "el valle del cauca": [
+        "GOBERNACION DEL VALLE DEL CAUCA - DADI",
+        "GOBERNACION DEL VALLE DEL CAUCA - SECRETARIA DE EDUCACION"
+      ],
+      "autoridad ambiental": [
+        "DEPARTAMENTO ADMINISTRATIVO DE GESTION DEL MEDIO AMBIENTE DAGMA",
+        "FONDO NACIONAL AMBIENTAL - ANLA"
+      ],
+      "gobierno de caldas": [
+        "GOBERNACION DE CALDAS",
+        "MUNICIPIO DE CALDAS ANTIOQUIA"
+      ],
+      "bogota distrito capital": [
+        "SECRETARIA DISTRITAL DE GOBIERNO 1",
+        "SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ",
+        "UNIVERSIDAD PEDAGÓGICA NACIONAL"
+      ],
+      "secretaria de educacion": [
+        "GOBERNACION DEL VALLE DEL CAUCA - SECRETARIA DE EDUCACION",
+        "SECRETARIA DE EDUCACION DE CALI"
+      ],
+      "universidad pedagogica": [
+        "UNIVERSIDAD PEDAGÓGICA NACIONAL",
+        "UPTC"
+      ],
+      "sdh": [
+        "SECRETARIA DISTRITAL DE HACIENDA",
+        "SECRETARIA DISTRITAL DEL HABITAT-"
+      ],
+      "la sdh": [
+        "SECRETARIA DISTRITAL DE HACIENDA",
+        "SECRETARIA DISTRITAL DEL HABITAT-"
+      ],
+      "el sena": [
+        "SENA REGIONAL RISARALDA Grupo de Apoyo Administrativo Mixto//",
+        "SENA SECRETARIA GENERAL"
+      ],
+      "sena bogota": [
+        "SENA DISTRITO CAPITAL GRUPO DE APOYO ADMINISTRATIVO - CGI",
+        "SENA REGIONAL CUNDINAMARCA Grupo de Apoyo Administrativo Mixto+",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CEET",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CGMLTI",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo de Apoyo Administrativo Mixto CSF",
+        "SENA SECRETARIA GENERAL"
+      ],
+      "sena": [
+        "SENA REGIONAL ANTIOQUIA Grupo de Apoyo Administrativo Mixto",
+        "SENA REGIONAL ATLANTICO",
+        "SENA REGIONAL ATLANTICO Intercentros",
+        "SENA REGIONAL CUNDINAMARCA Grupo de Apoyo Administrativo Mixto+",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo de Apoyo Administrativo Mixto CSF",
+        "SENA REGIONAL META Grupo de Apoyo Administrativo Mixto",
+        "SENA REGIONAL NORTE DE SANTANDER Grupo de Apoyo Administrativo Mixto",
+        "SENA REGIONAL QUINDIO Grupo de Apoyo Administrativo Mixto",
+        "SENA REGIONAL RISARALDA Grupo de Apoyo Administrativo Mixto//",
+        "SENA REGIONAL SANTANDER Grupo de Apoyo Administrativo Mixto",
+        "SENA Regional Huila Grupo de Apoyo Administrativo Mixto",
+        "SENA SECRETARIA GENERAL"
+      ],
+      "sena distrito capital de bogota": [
+        "SENA REGIONAL CUNDINAMARCA Grupo de Apoyo Administrativo Mixto+",
+        "SENA SECRETARIA GENERAL"
+      ],
+      "sena distrito capital": [
+        "SENA DISTRITO CAPITAL GRUPO DE APOYO ADMINISTRATIVO - CGI",
+        "SENA REGIONAL CUNDINAMARCA Grupo de Apoyo Administrativo Mixto+",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CEET",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CGMLTI",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo de Apoyo Administrativo Mixto CSF",
+        "SENA SECRETARIA GENERAL"
+      ],
+      "sena seccional antioquia": [
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo Intercentros Medellin",
+        "SENA REGIONAL ANTIOQUIA Grupo de Apoyo Administrativo Mixto"
+      ],
+      "sena regional antioquia": [
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo CIAA",
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo Complejo Itagüí",
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo Intercentros Medellin",
+        "SENA REGIONAL ANTIOQUIA Grupo de Apoyo Administrativo Mixto"
+      ],
+      "sena regional de antioquia": [
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo Complejo Itagüí",
+        "SENA REGIONAL ANTIOQUIA Grupo de Apoyo Administrativo Mixto"
+      ],
+      "servicio nacional de aprendizaje regional antioquia": [
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo CIAA",
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo Complejo Itagüí",
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo Intercentros Medellin",
+        "SENA REGIONAL ANTIOQUIA Grupo de Apoyo Administrativo Mixto"
+      ],
+      "el sena de antioquia": [
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo Complejo Itagüí",
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo Intercentros Medellin",
+        "SENA REGIONAL ANTIOQUIA Grupo de Apoyo Administrativo Mixto"
+      ],
+      "sena medellin": [
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo Intercentros Medellin",
+        "SENA REGIONAL ANTIOQUIA Grupo de Apoyo Administrativo Mixto"
+      ],
+      "sena antioquia": [
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo CIAA",
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo Complejo Itagüí",
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo Intercentros Medellin",
+        "SENA REGIONAL ANTIOQUIA Grupo de Apoyo Administrativo Mixto"
+      ],
+      "servicio nacional de aprendizaje antioquia": [
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo CIAA",
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo Complejo Itagüí",
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo Intercentros Medellin",
+        "SENA REGIONAL ANTIOQUIA Grupo de Apoyo Administrativo Mixto"
+      ],
+      "la regional antioquia del sena": [
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo Complejo Itagüí",
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo Intercentros Medellin",
+        "SENA REGIONAL ANTIOQUIA Grupo de Apoyo Administrativo Mixto"
+      ],
+      "grupo administrativo mixto sena": [
+        "SENA REGIONAL ANTIOQUIA Grupo de Apoyo Administrativo Mixto",
+        "SENA REGIONAL SANTANDER Grupo de Apoyo Administrativo Mixto"
+      ],
+      "ese hospital san rafael": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN RAFAEL DE FACATATIVA",
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN RAFAEL.*",
+        "ESE HOSPITAL DEPARTAMENTAL SAN RAFAEL"
+      ],
+      "ese san rafael": [
+        "E.S.E. HOSPITAL SAN RAFAEL DE LETICIA",
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN RAFAEL.*",
+        "ESE HOSPITAL DEPARTAMENTAL SAN RAFAEL"
+      ],
+      "hospital san rafael": [
+        "E.S.E HOSPITAL SAN RAFAEL DE ITAGUI",
+        "E.S.E. HOSPITAL SAN RAFAEL DE LETICIA",
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN RAFAEL DE FACATATIVA",
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN RAFAEL.*",
+        "ESE HOSPITAL DEPARTAMENTAL SAN RAFAEL",
+        "ESE HOSPITAL SAN RAFAEL DE FUSAGASUGÁ"
+      ],
+      "hospital del magdalena": [
+        "ESE HOSPITAL DEPARTAMENTAL SAN RAFAEL",
+        "ESE SAMUEL VILLANUEVA VALEST 12"
+      ],
+      "la ese hospital san rafael": [
+        "E.S.E HOSPITAL SAN RAFAEL DE ITAGUI",
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN RAFAEL.*",
+        "ESE HOSPITAL DEPARTAMENTAL SAN RAFAEL",
+        "ESE HOSPITAL SAN RAFAEL DE FUSAGASUGÁ"
+      ],
+      "el hospital san rafael": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN RAFAEL DE FACATATIVA",
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN RAFAEL.*",
+        "ESE HOSPITAL DEPARTAMENTAL SAN RAFAEL",
+        "ESE HOSPITAL SAN RAFAEL DE FUSAGASUGÁ"
+      ],
+      "la ese san rafael": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN RAFAEL.*",
+        "ESE HOSPITAL DEPARTAMENTAL SAN RAFAEL",
+        "ESE HOSPITAL SAN RAFAEL DE FUSAGASUGÁ"
+      ],
+      "instituto de salud": [
+        "E.S.E. INSTITUTO DE SALUD DE BUCARAMANGA",
+        "INSTITUTO NACIONAL DE SALUD"
+      ],
+      "el instituto de salud": [
+        "E.S.E. INSTITUTO DE SALUD DE BUCARAMANGA",
+        "INSTITUTO NACIONAL DE SALUD"
+      ],
+      "secretaria general de bogota": [
+        "SECRETARIA GENERAL Y DE CERCANIA AL CIUDADANO",
+        "SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ"
+      ],
+      "alcaldia de bogota secretaria general": [
+        "SECRETARIA GENERAL Y DE CERCANIA AL CIUDADANO",
+        "SECRETARÍA GENERAL DE LA ALCALDÍA MAYOR DE BOGOTÁ"
+      ],
+      "sena regional santander": [
+        "SENA REGIONAL SANTANDER Grupo Administrativo CIDT",
+        "SENA REGIONAL SANTANDER Grupo de Apoyo Administrativo Mixto"
+      ],
+      "servicio nacional de aprendizaje santander": [
+        "SENA REGIONAL SANTANDER Grupo Administrativo CIDT",
+        "SENA REGIONAL SANTANDER Grupo de Apoyo Administrativo Mixto"
+      ],
+      "sena santander": [
+        "SENA REGIONAL SANTANDER Grupo Administrativo CIDT",
+        "SENA REGIONAL SANTANDER Grupo de Apoyo Administrativo Mixto"
+      ],
+      "servicio nacional de aprendizaje regional santander": [
+        "SENA REGIONAL SANTANDER Grupo Administrativo CIDT",
+        "SENA REGIONAL SANTANDER Grupo de Apoyo Administrativo Mixto"
+      ],
+      "servicio nacional de aprendizaje": [
+        "SENA REGIONAL DISTRITO CAPITAL Grupo de Apoyo Administrativo Mixto CSF",
+        "SENA REGIONAL NORTE DE SANTANDER Grupo de Apoyo Administrativo Mixto",
+        "SENA REGIONAL QUINDIO Grupo de Apoyo Administrativo Mixto",
+        "SENA REGIONAL SANTANDER Grupo de Apoyo Administrativo Mixto"
+      ],
+      "apoyo administrativo mixto sena": [
+        "SENA REGIONAL META Grupo de Apoyo Administrativo Mixto",
+        "SENA REGIONAL SANTANDER Grupo de Apoyo Administrativo Mixto"
+      ],
+      "el valle": [
+        "GOBERNACION DEL VALLE DEL CAUCA - SECRETARIA DE EDUCACION",
+        "UNIVERSIDAD DEL VALLE"
+      ],
+      "corporacion ambiental de santander": [
+        "CORPORACION AUTONOMA REGIONAL DE SANTANDER+",
+        "CORPORACIÓN AUTÓNOMA REGIONAL PARA LA DEFENSA DE LA MESETA DE BUCARAMANGA"
+      ],
+      "ese hospital san juan de dios": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN JUAN DE DIOS /",
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN JUAN DE DIOS DE PAMPLONA",
+        "ESE HOSPITAL DEPARTAMENTAL UNIVERSITARIO DEL QUINDÍO SAN JUAN DE DIOS",
+        "HOSPITAL SAN JUAN DE DIOS ESE  RIONEGRO"
+      ],
+      "ese hospital universitario": [
+        "E.S.E. HOSPITAL UNIVERSITARIO HERNANDO MONCALEANO PERDOMO DE NEIVA",
+        "ESE HOSPITAL DEPARTAMENTAL UNIVERSITARIO DEL QUINDÍO SAN JUAN DE DIOS"
+      ],
+      "indeportes": [
+        "INDEPORTES CUNDINAMARCA",
+        "INDEPORTES TOLIMA"
+      ],
+      "grupo de apoyo administrativo mixto sena": [
+        "SENA REGIONAL CUNDINAMARCA Grupo de Apoyo Administrativo Mixto+",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo de Apoyo Administrativo Mixto CSF",
+        "SENA REGIONAL NORTE DE SANTANDER Grupo de Apoyo Administrativo Mixto"
+      ],
+      "sena del atlantico": [
+        "SENA REGIONAL ATLANTICO",
+        "SENA REGIONAL ATLANTICO Intercentros"
+      ],
+      "sena atlantico": [
+        "SENA REGIONAL ATLANTICO",
+        "SENA REGIONAL ATLANTICO Intercentros"
+      ],
+      "servicio nacional de aprendizaje del atlantico": [
+        "SENA REGIONAL ATLANTICO",
+        "SENA REGIONAL ATLANTICO Intercentros"
+      ],
+      "sena regional atlantico": [
+        "SENA REGIONAL ATLANTICO",
+        "SENA REGIONAL ATLANTICO Intercentros"
+      ],
+      "regional atlantico del sena": [
+        "SENA REGIONAL ATLANTICO",
+        "SENA REGIONAL ATLANTICO Intercentros"
+      ],
+      "la regional atlantico del sena": [
+        "SENA REGIONAL ATLANTICO",
+        "SENA REGIONAL ATLANTICO Intercentros"
+      ],
+      "sena de atlantico": [
+        "SENA REGIONAL ATLANTICO",
+        "SENA REGIONAL ATLANTICO Intercentros"
+      ],
+      "sena intercentros": [
+        "SENA REGIONAL ATLANTICO Intercentros",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CGMLTI"
+      ],
+      "el cenac": [
+        "CENAC AVIACION",
+        "CENTRAL ADMINISTRATIVA ESPECIALIZADA INGENIEROS CENAC INGENIEROS"
+      ],
+      "cenac bogota": [
+        "CENAC AVIACION",
+        "CENTRAL ADMINISTRATIVA ESPECIALIZADA INGENIEROS CENAC INGENIEROS"
+      ],
+      "cenac": [
+        "CENAC AVIACION",
+        "CENTRAL ADMINISTRATIVA ESPECIALIZADA INGENIEROS CENAC INGENIEROS",
+        "CENTRAL ADMINISTRATIVA Y CONTABLE CENAC PERSONAL"
+      ],
+      "cenac distrito capital": [
+        "CENAC AVIACION",
+        "CENTRAL ADMINISTRATIVA ESPECIALIZADA INGENIEROS CENAC INGENIEROS"
+      ],
+      "ids": [
+        "IDS",
+        "INSTITUTO DEPARTAMENTAL DE SALUD DE NARIÑO"
+      ],
+      "el ids": [
+        "IDS",
+        "INSTITUTO DEPARTAMENTAL DE SALUD DE NARIÑO"
+      ],
+      "instituto departamental de salud": [
+        "IDS",
+        "INSTITUTO DEPARTAMENTAL DE SALUD DE NARIÑO"
+      ],
+      "la ids": [
+        "IDS",
+        "INSTITUTO DEPARTAMENTAL DE SALUD DE NARIÑO"
+      ],
+      "el sena distrito capital": [
+        "SENA DISTRITO CAPITAL GRUPO DE APOYO ADMINISTRATIVO - CGI",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CEET",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CGMLTI",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo de Apoyo Administrativo Mixto CSF"
+      ],
+      "el sena de bogota": [
+        "SENA DISTRITO CAPITAL GRUPO DE APOYO ADMINISTRATIVO - CGI",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CEET",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CGMLTI",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo de Apoyo Administrativo Mixto CSF"
+      ],
+      "sena capital": [
+        "SENA DISTRITO CAPITAL GRUPO DE APOYO ADMINISTRATIVO - CGI",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CEET",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CGMLTI",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo de Apoyo Administrativo Mixto CSF"
+      ],
+      "la regional distrito capital del sena": [
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CEET",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo de Apoyo Administrativo Mixto CSF"
+      ],
+      "sena regional distrito capital": [
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CEET",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CGMLTI",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo de Apoyo Administrativo Mixto CSF"
+      ],
+      "sena regional bogota": [
+        "SENA REGIONAL CUNDINAMARCA Grupo de Apoyo Administrativo Mixto+",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CEET",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CGMLTI",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo de Apoyo Administrativo Mixto CSF"
+      ],
+      "sena distrito capital grupo administrativo": [
+        "SENA DISTRITO CAPITAL GRUPO DE APOYO ADMINISTRATIVO - CGI",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CEET",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo de Apoyo Administrativo Mixto CSF"
+      ],
+      "sena distrito capital grupo administrativo intercentros": [
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CEET",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CGMLTI"
+      ],
+      "sena bogota grupo administrativo intercentros": [
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CEET",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CGMLTI"
+      ],
+      "el sena en bogota": [
+        "SENA REGIONAL CUNDINAMARCA Grupo de Apoyo Administrativo Mixto+",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CEET"
+      ],
+      "sena distrito capital bogota": [
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CEET",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CGMLTI"
+      ],
+      "el hospital de soacha": [
+        "ESE MUNICIPAL DE SOACHA JULIO CESAR PEÑALOZA*",
+        "empresa social del estado región de salud soacha."
+      ],
+      "ese soacha": [
+        "ESE MUNICIPAL DE SOACHA JULIO CESAR PEÑALOZA*",
+        "empresa social del estado región de salud soacha."
+      ],
+      "fondane bogota": [
+        "FONDANE - DIRECCION TERRITORIAL CENTRO",
+        "FONDO ROTATORIO DEL DANE (FONDANE)"
+      ],
+      "la fondane": [
+        "FONDANE - DIRECCION TERRITORIAL CENTRO",
+        "FONDO ROTATORIO DEL DANE (FONDANE)"
+      ],
+      "el fondane": [
+        "FONDANE - DIRECCION TERRITORIAL CENTRO",
+        "FONDO ROTATORIO DEL DANE (FONDANE)"
+      ],
+      "fondane": [
+        "FONDANE - DIRECCION TERRITORIAL CENTRO",
+        "FONDO ROTATORIO DEL DANE (FONDANE)"
+      ],
+      "la disan": [
+        "DIRECCION DE SANIDAD DE LA POLICIA NACIONAL - DISAN PONAL",
+        "DISAN-DMSOC"
+      ],
+      "el disan": [
+        "DIRECCION DE SANIDAD DE LA POLICIA NACIONAL - DISAN PONAL",
+        "DISAN-DMSOC"
+      ],
+      "la ese de villavicencio": [
+        "EMPRESA SOCIAL DEL ESTADO DEL MUNICIPIO DE VILLAVICENCIO",
+        "HOSPITAL DEPARTAMENTAL DE VILLAVICENCIO ESE"
+      ],
+      "empresa social del estado hospital san rafael": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN RAFAEL DE FACATATIVA",
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN RAFAEL.*"
+      ],
+      "hacienda": [
+        "DIRECCION DE IMPUESTOS Y ADUANAS NACIONALES*",
+        "MINISTERIO DE HACIENDA Y CREDITO PUBLICO"
+      ],
+      "hospital san juan de dios": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN JUAN DE DIOS /",
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN JUAN DE DIOS DE PAMPLONA",
+        "ESE HOSPITAL SAN JUAN DE DIOS DE YARUMAL",
+        "HOSPITAL DEPARTAMENTAL SAN JUAN DE DIOS DE PUERTO CARREÑO1",
+        "HOSPITAL SAN JUAN DE DIOS ESE  RIONEGRO"
+      ],
+      "el hospital san juan de dios": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN JUAN DE DIOS /",
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN JUAN DE DIOS DE PAMPLONA",
+        "ESE HOSPITAL SAN JUAN DE DIOS DE YARUMAL",
+        "HOSPITAL DEPARTAMENTAL SAN JUAN DE DIOS DE PUERTO CARREÑO1",
+        "HOSPITAL SAN JUAN DE DIOS ESE  RIONEGRO"
+      ],
+      "administrativo intercentros sena": [
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo Intercentros Medellin",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CGMLTI"
+      ],
+      "la ese hospital san juan de dios": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN JUAN DE DIOS /",
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN JUAN DE DIOS DE PAMPLONA",
+        "ESE HOSPITAL SAN JUAN DE DIOS DE YARUMAL",
+        "HOSPITAL SAN JUAN DE DIOS ESE  RIONEGRO"
+      ],
+      "hospital san juan de dios ese": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN JUAN DE DIOS /",
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN JUAN DE DIOS DE PAMPLONA",
+        "HOSPITAL SAN JUAN DE DIOS ESE  RIONEGRO"
+      ],
+      "empresa social del estado hospital san juan de dios": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN JUAN DE DIOS /",
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN JUAN DE DIOS DE PAMPLONA"
+      ],
+      "unidad administrativa especial de servicios publicos": [
+        "SANTIAGO DE CALI DISTRITO ESPECIAL - UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PUBLICOS",
+        "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS"
+      ],
+      "uaesp": [
+        "SANTIAGO DE CALI DISTRITO ESPECIAL - UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PUBLICOS",
+        "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS"
+      ],
+      "la uaesp": [
+        "SANTIAGO DE CALI DISTRITO ESPECIAL - UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PUBLICOS",
+        "UNIDAD ADMINISTRATIVA ESPECIAL DE SERVICIOS PÚBLICOS"
+      ],
+      "sena cundinamarca": [
+        "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CBA",
+        "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CDA",
+        "SENA REGIONAL CUNDINAMARCA Grupo de Apoyo Administrativo Mixto+"
+      ],
+      "servicio nacional de aprendizaje regional cundinamarca": [
+        "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CBA",
+        "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CDA",
+        "SENA REGIONAL CUNDINAMARCA Grupo de Apoyo Administrativo Mixto+"
+      ],
+      "sena regional cundinamarca": [
+        "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CBA",
+        "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CDA",
+        "SENA REGIONAL CUNDINAMARCA Grupo de Apoyo Administrativo Mixto+"
+      ],
+      "el sena del distrito capital": [
+        "SENA REGIONAL CUNDINAMARCA Grupo de Apoyo Administrativo Mixto+",
+        "SENA REGIONAL DISTRITO CAPITAL Grupo Administrativo Intercentros CGMLTI"
+      ],
+      "servicio nacional de aprendizaje cundinamarca": [
+        "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CBA",
+        "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CDA",
+        "SENA REGIONAL CUNDINAMARCA Grupo de Apoyo Administrativo Mixto+"
+      ],
+      "localidad de fontibon": [
+        "ALCALDIA LOCAL DE FONTIBON",
+        "DILOF"
+      ],
+      "ese san juan de dios": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN JUAN DE DIOS /",
+        "ESE HOSPITAL SAN JUAN DE DIOS DE YARUMAL",
+        "HOSPITAL SAN JUAN DE DIOS ESE  RIONEGRO"
+      ],
+      "udc": [
+        "UNIVERSIDAD DEL CAUCA",
+        "Universidad de Cartagena"
+      ],
+      "regional antioquia sena": [
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo CIAA",
+        "SENA REGIONAL ANTIOQUIA Grupo Administrativo Complejo Itagüí"
+      ],
+      "la cenac": [
+        "CENTRAL ADMINISTRATIVA ESPECIALIZADA INGENIEROS CENAC INGENIEROS",
+        "CENTRAL ADMINISTRATIVA Y CONTABLE CENAC PERSONAL"
+      ],
+      "hospital rosario": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL ROSARIO PUMAREJO DE LOPEZ",
+        "ESE HNSR"
+      ],
+      "hospital san juan de dios de antioquia": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN JUAN DE DIOS /",
+        "HOSPITAL SAN JUAN DE DIOS ESE  RIONEGRO"
+      ],
+      "el hospital san vicente": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN VICENTE DE PAUL REMEDIOS",
+        "HOSPITAL SAN VICENTE DE ARAUCA ESE"
+      ],
+      "hospital san vicente": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN VICENTE DE PAUL REMEDIOS",
+        "ESE HOSPITAL SAN VICENTE DE PAUL DE CALDAS",
+        "HOSPITAL SAN VICENTE DE ARAUCA ESE"
+      ],
+      "hospital san vicente de paul": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN VICENTE DE PAUL REMEDIOS",
+        "ESE HOSPITAL SAN VICENTE DE PAUL DE CALDAS"
+      ],
+      "ese hospital san vicente de paul": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN VICENTE DE PAUL REMEDIOS",
+        "ESE HOSPITAL SAN VICENTE DE PAUL DE CALDAS"
+      ],
+      "la ese hospital san vicente de paul": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN VICENTE DE PAUL REMEDIOS",
+        "ESE HOSPITAL SAN VICENTE DE PAUL DE CALDAS"
+      ],
+      "el hospital san vicente de paul": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN VICENTE DE PAUL REMEDIOS",
+        "ESE HOSPITAL SAN VICENTE DE PAUL DE CALDAS"
+      ],
+      "regional cundinamarca sena": [
+        "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CBA",
+        "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CDA"
+      ],
+      "regional regional cundinamarca sena": [
+        "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CBA",
+        "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CDA"
+      ],
+      "sena regional regional cundinamarca": [
+        "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CBA",
+        "SENA REGIONAL CUNDINAMARCA Grupo Administrativo CDA"
+      ]
+    },
+    "source_name_identity_splits": {}
+  },
+  "status": "PASS"
+}
