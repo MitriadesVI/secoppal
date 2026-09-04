@@ -1,0 +1,45 @@
+{
+  "production": {
+    "sha256": {
+      "app/data/aliases_db.json": "d01bba0a4c492fdf68a9fd480b7b23f6c34907eb414669f41b8976cc423ee914",
+      "app/data/buyer_source_names.json": "4548efa781330a8354e33dd01957f8fa155f5986c8f947fc08361736cf0acd87"
+    },
+    "buyer_units": 1097,
+    "aliases": 12685,
+    "source_bindings": 588
+  },
+  "incremental_delta": {
+    "buyer_units": 498,
+    "aliases": 1883,
+    "source_bindings": 503
+  },
+  "protected_files_changed": [],
+  "production_bytes_identical": false,
+  "promoter_metrics": {
+    "status": "PASS",
+    "input": {
+      "ADD_NEW_ACCREDITED_UNIT": 498,
+      "ADD_ALIASES_TO_EXISTING_UNIT": 5
+    },
+    "new_buyer_units": 498,
+    "existing_extended": 5,
+    "rejected_at_promotion": 0,
+    "aliases_added": 1883,
+    "source_bindings_added": 503,
+    "gazetteer_before": 599,
+    "gazetteer_after": 1097,
+    "aliases_before": 10802,
+    "aliases_after": 12685,
+    "exact_only_surface_count": 409,
+    "idempotent": true,
+    "production_sha256": {
+      "app/data/aliases_db.json": "d01bba0a4c492fdf68a9fd480b7b23f6c34907eb414669f41b8976cc423ee914",
+      "app/data/buyer_source_names.json": "4548efa781330a8354e33dd01957f8fa155f5986c8f947fc08361736cf0acd87"
+    },
+    "data_eligibility_status": "PASS",
+    "pipeline_status": "PASS",
+    "production_applied": true
+  },
+  "metric_basis": "Promoter counts use frozen baseline, not current input."
+}
+

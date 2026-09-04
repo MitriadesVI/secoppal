@@ -1,0 +1,16 @@
+{
+  "per_proposal_data_rejections": [],
+  "pipeline_affected_proposals": [
+    "05148",
+    "05856",
+    "13244",
+    "15087",
+    "15494",
+    "15774",
+    "18860",
+    "25486",
+    "66088"
+  ],
+  "global_stop": true,
+  "deferred_count": 503
+}

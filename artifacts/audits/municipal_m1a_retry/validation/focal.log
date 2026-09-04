@@ -1,0 +1,118 @@
+........................................................................ [  8%]
+..........................F............................................. [ 16%]
+........................................................................ [ 24%]
+........................................................................ [ 33%]
+..........................................................FFF........... [ 41%]
+........................................................................ [ 49%]
+.............................x.......................................... [ 57%]
+........................................................................ [ 66%]
+........................................................................ [ 74%]
+........................................................................ [ 82%]
+........................................................................ [ 90%]
+........................................................................ [ 99%]
+.......                                                                  [100%]
+=================================== FAILURES ===================================
+__________ test_buyer_intent_is_still_buyer_intent_without_promotion ___________
+
+router = <app.core.query_router.QueryRouter object at 0x10925c290>
+
+    def test_buyer_intent_is_still_buyer_intent_without_promotion(router):
+        for name in ['baranoa', 'nuevo colon']:
+            params = router.parse('contratos de la alcaldia de ' + name).params
+            assert params.get('entidad')
+>           assert params['entidad_resolution']['clarification_needed']
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           KeyError: 'clarification_needed'
+
+tests/test_municipal_territory.py:104: KeyError
+_ TestFragmentsNeedDeterministicEvidence.test_absent_compound_name_fails_closed[contratos del municipio de Villa de Leyva-ALCALDIA MUNICIPIO DE VILLAVICENCIO] _
+
+self = <test_compound_buyer_capture_r2a1.TestFragmentsNeedDeterministicEvidence object at 0x10ae04410>
+router = <app.core.query_router.QueryRouter object at 0x11c4199b0>
+query = 'contratos del municipio de Villa de Leyva'
+forbidden = 'ALCALDIA MUNICIPIO DE VILLAVICENCIO'
+
+    @pytest.mark.parametrize(
+        ("query", "forbidden"),
+        [
+            ("contratos del municipio de Villa de Leyva", VILLAVICENCIO),
+            ("contratos de la alcaldía de Villa de Leyva", VILLAVICENCIO),
+            ("contratos del municipio de San Andrés de Sotavento", CUCUTA),
+            ("contratos de la alcaldía de San Juan de Pasto", CUCUTA),
+        ],
+    )
+    def test_absent_compound_name_fails_closed(
+        self, router: QueryRouter, query: str, forbidden: str
+    ) -> None:
+        """Ausente del gazetteer ⇒ se pide precisión, no se elige un vecino."""
+        params = router.parse(query).params
+        resolution = params.get("entidad_resolution") or {}
+>       assert params.get("entidad_resolved") is None
+E       AssertionError: assert 'MUNICIPIO DE VILLA DE LEYVA//' is None
+E        +  where 'MUNICIPIO DE VILLA DE LEYVA//' = <built-in method get of dict object at 0x11e189240>('entidad_resolved')
+E        +    where <built-in method get of dict object at 0x11e189240> = {'dataset': 'contratos', 'dataset_explicit': True, 'entidad': 'Municipio de villa de leyva', 'entidad_resolution': {'c...e_value': None, 'metadata': {'resolution_method': 'exact', 'rewritten_from': 'municipio de villa de leyva'}, ...}, ...}.get
+
+tests/test_compound_buyer_capture_r2a1.py:179: AssertionError
+_ TestFragmentsNeedDeterministicEvidence.test_absent_compound_name_fails_closed[contratos de la alcald\xeda de Villa de Leyva-ALCALDIA MUNICIPIO DE VILLAVICENCIO] _
+
+self = <test_compound_buyer_capture_r2a1.TestFragmentsNeedDeterministicEvidence object at 0x10ae04550>
+router = <app.core.query_router.QueryRouter object at 0x11c4199b0>
+query = 'contratos de la alcaldía de Villa de Leyva'
+forbidden = 'ALCALDIA MUNICIPIO DE VILLAVICENCIO'
+
+    @pytest.mark.parametrize(
+        ("query", "forbidden"),
+        [
+            ("contratos del municipio de Villa de Leyva", VILLAVICENCIO),
+            ("contratos de la alcaldía de Villa de Leyva", VILLAVICENCIO),
+            ("contratos del municipio de San Andrés de Sotavento", CUCUTA),
+            ("contratos de la alcaldía de San Juan de Pasto", CUCUTA),
+        ],
+    )
+    def test_absent_compound_name_fails_closed(
+        self, router: QueryRouter, query: str, forbidden: str
+    ) -> None:
+        """Ausente del gazetteer ⇒ se pide precisión, no se elige un vecino."""
+        params = router.parse(query).params
+        resolution = params.get("entidad_resolution") or {}
+>       assert params.get("entidad_resolved") is None
+E       AssertionError: assert 'MUNICIPIO DE VILLA DE LEYVA//' is None
+E        +  where 'MUNICIPIO DE VILLA DE LEYVA//' = <built-in method get of dict object at 0x11e16dc40>('entidad_resolved')
+E        +    where <built-in method get of dict object at 0x11e16dc40> = {'dataset': 'contratos', 'dataset_explicit': True, 'entidad': 'Municipio de villa de leyva', 'entidad_resolution': {'c...ke_value': None, 'metadata': {'resolution_method': 'exact', 'rewritten_from': 'alcaldia de villa de leyva'}, ...}, ...}.get
+
+tests/test_compound_buyer_capture_r2a1.py:179: AssertionError
+_ TestFragmentsNeedDeterministicEvidence.test_absent_compound_name_fails_closed[contratos del municipio de San Andr\xe9s de Sotavento-MUNICIPIO DE SAN JOSE DE CUCUTA] _
+
+self = <test_compound_buyer_capture_r2a1.TestFragmentsNeedDeterministicEvidence object at 0x10add49d0>
+router = <app.core.query_router.QueryRouter object at 0x11c4199b0>
+query = 'contratos del municipio de San Andrés de Sotavento'
+forbidden = 'MUNICIPIO DE SAN JOSE DE CUCUTA'
+
+    @pytest.mark.parametrize(
+        ("query", "forbidden"),
+        [
+            ("contratos del municipio de Villa de Leyva", VILLAVICENCIO),
+            ("contratos de la alcaldía de Villa de Leyva", VILLAVICENCIO),
+            ("contratos del municipio de San Andrés de Sotavento", CUCUTA),
+            ("contratos de la alcaldía de San Juan de Pasto", CUCUTA),
+        ],
+    )
+    def test_absent_compound_name_fails_closed(
+        self, router: QueryRouter, query: str, forbidden: str
+    ) -> None:
+        """Ausente del gazetteer ⇒ se pide precisión, no se elige un vecino."""
+        params = router.parse(query).params
+        resolution = params.get("entidad_resolution") or {}
+>       assert params.get("entidad_resolved") is None
+E       AssertionError: assert 'ALCALDIA SAN ANDRES' is None
+E        +  where 'ALCALDIA SAN ANDRES' = <built-in method get of dict object at 0x11e19b5c0>('entidad_resolved')
+E        +    where <built-in method get of dict object at 0x11e19b5c0> = {'dataset': 'contratos', 'dataset_explicit': True, 'entidad': 'Municipio de san andres', 'entidad_resolution': {'confi...'like_value': None, 'metadata': {'resolution_method': 'exact', 'rewritten_from': 'municipio de san andres'}, ...}, ...}.get
+
+tests/test_compound_buyer_capture_r2a1.py:179: AssertionError
+=========================== short test summary info ============================
+XFAIL tests/test_control_language.py::test_scope_change_carrying_a_new_topic_keeps_that_topic - Pre-existing, unrelated to control language: a follow-up classified as change_scope carries a genuinely new topic, but change_scope's mutation policy does not allow topic fields, so the gate drops it and the merger inherits the previous topic. Verified identical on main b661a09. Belongs to follow-up topic hygiene, not R6 — see DEFERRED_FOLLOWUP_SCOPE_TOPIC.
+FAILED tests/test_municipal_territory.py::test_buyer_intent_is_still_buyer_intent_without_promotion
+FAILED tests/test_compound_buyer_capture_r2a1.py::TestFragmentsNeedDeterministicEvidence::test_absent_compound_name_fails_closed[contratos del municipio de Villa de Leyva-ALCALDIA MUNICIPIO DE VILLAVICENCIO]
+FAILED tests/test_compound_buyer_capture_r2a1.py::TestFragmentsNeedDeterministicEvidence::test_absent_compound_name_fails_closed[contratos de la alcald\xeda de Villa de Leyva-ALCALDIA MUNICIPIO DE VILLAVICENCIO]
+FAILED tests/test_compound_buyer_capture_r2a1.py::TestFragmentsNeedDeterministicEvidence::test_absent_compound_name_fails_closed[contratos del municipio de San Andr\xe9s de Sotavento-MUNICIPIO DE SAN JOSE DE CUCUTA]
+4 failed, 866 passed, 1 xfailed in 45.36s

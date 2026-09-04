@@ -1,0 +1,107 @@
+{
+  "status": "BLOCKED",
+  "query": "contratos del municipio de San Andrés de Sotavento",
+  "requested_territory": {
+    "code": "23670",
+    "municipality": "SAN ANDRÉS DE SOTAVENTO",
+    "department": "CÓRDOBA",
+    "in_promoted_batch": false
+  },
+  "incorrectly_selected_proposal": {
+    "code": "68669",
+    "town": "SAN ANDRÉS",
+    "department": "SANTANDER",
+    "canonical": "ALCALDIA SAN ANDRES",
+    "aliases": [
+      "alcaldia de SAN ANDRÉS, SANTANDER",
+      "municipio de SAN ANDRÉS, SANTANDER",
+      "alcaldia de SAN ANDRÉS",
+      "municipio de SAN ANDRÉS"
+    ],
+    "account": "704322734",
+    "nit_evidence": "890207022",
+    "source_names": {
+      "p6dx-8zbt": [
+        "ALCALDIA SAN ANDRES"
+      ],
+      "jbjy-vk9h": [
+        "ALCALDIA SAN ANDRES"
+      ]
+    },
+    "kind": "ADD_NEW_ACCREDITED_UNIT",
+    "volumes": {
+      "p6dx-8zbt": {
+        "physical_rows": 208,
+        "unique_ids": 201
+      },
+      "jbjy-vk9h": {
+        "physical_rows": 164,
+        "unique_ids": 164
+      }
+    }
+  },
+  "states": {
+    "baseline": {
+      "params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de san andres de sotavento",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_municipio_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "san andres de sotavento",
+            "rewritten_from": "municipio de san andres de sotavento",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de san andres de sotavento' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        }
+      },
+      "should_execute": true,
+      "clarification": null,
+      "soql": "BLOCKED: UnsafeGlobalQueryError"
+    },
+    "promoted_production": {
+      "params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de san andres",
+        "entidad_resolved": "ALCALDIA SAN ANDRES",
+        "entidad_resolution": {
+          "value": "ALCALDIA SAN ANDRES",
+          "method": "rewrite_municipio",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "municipio de san andres",
+            "resolution_method": "exact"
+          }
+        },
+        "objeto": [
+          "sotavento"
+        ]
+      },
+      "should_execute": true,
+      "clarification": null,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA SAN ANDRES' AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%sotavento%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%sotavento%')))"
+    }
+  },
+  "production_at_detection": {
+    "sha256": {
+      "app/data/aliases_db.json": "d01bba0a4c492fdf68a9fd480b7b23f6c34907eb414669f41b8976cc423ee914",
+      "app/data/buyer_source_names.json": "4548efa781330a8354e33dd01957f8fa155f5986c8f947fc08361736cf0acd87"
+    },
+    "buyer_units": 1097,
+    "aliases": 12685,
+    "source_bindings": 588
+  },
+  "new_wrong_owner": true,
+  "cause": "Exact accredited short fragment wins after full compound name is unresolved.",
+  "scope_gap": "The 3071-case gate covers baseline owners and M0 proposals, not all unpromoted compound municipalities."
+}
+

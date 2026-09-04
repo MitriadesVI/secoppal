@@ -1,0 +1,4796 @@
+{
+  "status": "PASS",
+  "pipeline": {
+    "status": "PASS",
+    "checks": 1888,
+    "wrong_owner": 0,
+    "pipeline_failure": 0,
+    "failures": [],
+    "catalog_path": "app/data/aliases_db.json",
+    "projector_path": "app/data/buyer_source_names.json",
+    "temporary_candidate_or_projector_patch": false
+  },
+  "matrix_municipalities": 62,
+  "matrix_buyer_checks": 444,
+  "selected_codes": [
+    "05021",
+    "05030",
+    "05044",
+    "05045",
+    "05079",
+    "05086",
+    "05093",
+    "05107",
+    "05134",
+    "05148",
+    "05250",
+    "05310",
+    "05313",
+    "05376",
+    "05390",
+    "05631",
+    "05647",
+    "05649",
+    "05679",
+    "05686",
+    "05856",
+    "08078",
+    "13244",
+    "13430",
+    "15087",
+    "15215",
+    "15244",
+    "15248",
+    "15442",
+    "15494",
+    "15542",
+    "15774",
+    "17001",
+    "18860",
+    "19100",
+    "19698",
+    "19785",
+    "23162",
+    "23182",
+    "25339",
+    "25394",
+    "25407",
+    "25436",
+    "25486",
+    "25530",
+    "25779",
+    "25817",
+    "25867",
+    "41770",
+    "50568",
+    "52354",
+    "52356",
+    "54405",
+    "54810",
+    "63212",
+    "63548",
+    "66088",
+    "68001",
+    "68773",
+    "76248",
+    "85010",
+    "85315"
+  ],
+  "required_names": [
+    "AGUAZUL",
+    "BARANOA",
+    "BELÉN",
+    "EL CARMEN",
+    "IPIALES",
+    "LOS PATIOS",
+    "MAGANGUÉ",
+    "NEMOCÓN",
+    "NUEVO COLÓN",
+    "PUERTO GAITÁN",
+    "SABANETA",
+    "SUSA",
+    "SUSACÓN",
+    "TOCANCIPÁ",
+    "VALPARAÍSO"
+  ],
+  "stratification": {
+    "strata_basis": "Rank by sum of unique process and contract activity in M0; not population.",
+    "strata": {
+      "small_activity": [
+        "05134",
+        "15248",
+        "23182",
+        "25339",
+        "25394",
+        "25530",
+        "25867",
+        "41770",
+        "52354",
+        "54810"
+      ],
+      "medium_activity": [
+        "15244",
+        "25436",
+        "23162",
+        "85315",
+        "15215",
+        "15542",
+        "25407",
+        "05086",
+        "63548",
+        "15442"
+      ],
+      "large_activity": [
+        "19698",
+        "76248",
+        "52356",
+        "85010",
+        "54405",
+        "13430",
+        "17001",
+        "50568",
+        "05631",
+        "68001"
+      ]
+    },
+    "categories": {
+      "SAN": [
+        "05647",
+        "05649"
+      ],
+      "SANTA": [
+        "05679",
+        "05686"
+      ],
+      "EL": [
+        "05148",
+        "05250"
+      ],
+      "LA": [
+        "05376",
+        "05390"
+      ],
+      "multiword": [
+        "05148",
+        "05250",
+        "05310",
+        "05376"
+      ],
+      "accents": [
+        "05021",
+        "05030",
+        "05044",
+        "05045"
+      ],
+      "homonyms_qualified_only": [
+        "05079",
+        "05093",
+        "05107",
+        "05313"
+      ],
+      "department_city_names": [
+        "19100",
+        "19785",
+        "63212",
+        "68773"
+      ]
+    }
+  },
+  "matrix": [
+    {
+      "code": "05021",
+      "query": "procesos de la alcaldia de ALEJANDRÍA, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA ALEJANDRIA",
+      "observed": "ALCALDIA ALEJANDRIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA ALEJANDRIA'",
+      "should_execute": true
+    },
+    {
+      "code": "05021",
+      "query": "contratos de la alcaldia de ALEJANDRÍA, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA ALEJANDRIA",
+      "observed": "ALCALDIA ALEJANDRIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA ALEJANDRIA'",
+      "should_execute": true
+    },
+    {
+      "code": "05021",
+      "query": "procesos del municipio de ALEJANDRÍA, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA ALEJANDRIA",
+      "observed": "ALCALDIA ALEJANDRIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA ALEJANDRIA'",
+      "should_execute": true
+    },
+    {
+      "code": "05021",
+      "query": "contratos del municipio de ALEJANDRÍA, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA ALEJANDRIA",
+      "observed": "ALCALDIA ALEJANDRIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA ALEJANDRIA'",
+      "should_execute": true
+    },
+    {
+      "code": "05021",
+      "query": "procesos de la alcaldia de ALEJANDRÍA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA ALEJANDRIA",
+      "observed": "ALCALDIA ALEJANDRIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA ALEJANDRIA'",
+      "should_execute": true
+    },
+    {
+      "code": "05021",
+      "query": "contratos de la alcaldia de ALEJANDRÍA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA ALEJANDRIA",
+      "observed": "ALCALDIA ALEJANDRIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA ALEJANDRIA'",
+      "should_execute": true
+    },
+    {
+      "code": "05021",
+      "query": "procesos del municipio de ALEJANDRÍA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA ALEJANDRIA",
+      "observed": "ALCALDIA ALEJANDRIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA ALEJANDRIA'",
+      "should_execute": true
+    },
+    {
+      "code": "05021",
+      "query": "contratos del municipio de ALEJANDRÍA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA ALEJANDRIA",
+      "observed": "ALCALDIA ALEJANDRIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA ALEJANDRIA'",
+      "should_execute": true
+    },
+    {
+      "code": "05030",
+      "query": "procesos de la alcaldia de AMAGÁ, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE AMAGA",
+      "observed": "MUNICIPIO DE AMAGA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE AMAGA'",
+      "should_execute": true
+    },
+    {
+      "code": "05030",
+      "query": "contratos de la alcaldia de AMAGÁ, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE AMAGA",
+      "observed": "MUNICIPIO DE AMAGA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE AMAGA'",
+      "should_execute": true
+    },
+    {
+      "code": "05030",
+      "query": "procesos del municipio de AMAGÁ, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE AMAGA",
+      "observed": "MUNICIPIO DE AMAGA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE AMAGA'",
+      "should_execute": true
+    },
+    {
+      "code": "05030",
+      "query": "contratos del municipio de AMAGÁ, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE AMAGA",
+      "observed": "MUNICIPIO DE AMAGA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE AMAGA'",
+      "should_execute": true
+    },
+    {
+      "code": "05030",
+      "query": "procesos de la alcaldia de AMAGÁ",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE AMAGA",
+      "observed": "MUNICIPIO DE AMAGA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE AMAGA'",
+      "should_execute": true
+    },
+    {
+      "code": "05030",
+      "query": "contratos de la alcaldia de AMAGÁ",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE AMAGA",
+      "observed": "MUNICIPIO DE AMAGA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE AMAGA'",
+      "should_execute": true
+    },
+    {
+      "code": "05030",
+      "query": "procesos del municipio de AMAGÁ",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE AMAGA",
+      "observed": "MUNICIPIO DE AMAGA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE AMAGA'",
+      "should_execute": true
+    },
+    {
+      "code": "05030",
+      "query": "contratos del municipio de AMAGÁ",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE AMAGA",
+      "observed": "MUNICIPIO DE AMAGA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE AMAGA'",
+      "should_execute": true
+    },
+    {
+      "code": "05044",
+      "query": "procesos de la alcaldia de ANZÁ, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE ANZA",
+      "observed": "MUNICIPIO DE ANZA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE ANZA'",
+      "should_execute": true
+    },
+    {
+      "code": "05044",
+      "query": "contratos de la alcaldia de ANZÁ, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE ANZA",
+      "observed": "MUNICIPIO DE ANZA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE ANZA'",
+      "should_execute": true
+    },
+    {
+      "code": "05044",
+      "query": "procesos del municipio de ANZÁ, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE ANZA",
+      "observed": "MUNICIPIO DE ANZA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE ANZA'",
+      "should_execute": true
+    },
+    {
+      "code": "05044",
+      "query": "contratos del municipio de ANZÁ, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE ANZA",
+      "observed": "MUNICIPIO DE ANZA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE ANZA'",
+      "should_execute": true
+    },
+    {
+      "code": "05044",
+      "query": "procesos de la alcaldia de ANZÁ",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE ANZA",
+      "observed": "MUNICIPIO DE ANZA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE ANZA'",
+      "should_execute": true
+    },
+    {
+      "code": "05044",
+      "query": "contratos de la alcaldia de ANZÁ",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE ANZA",
+      "observed": "MUNICIPIO DE ANZA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE ANZA'",
+      "should_execute": true
+    },
+    {
+      "code": "05044",
+      "query": "procesos del municipio de ANZÁ",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE ANZA",
+      "observed": "MUNICIPIO DE ANZA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE ANZA'",
+      "should_execute": true
+    },
+    {
+      "code": "05044",
+      "query": "contratos del municipio de ANZÁ",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE ANZA",
+      "observed": "MUNICIPIO DE ANZA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE ANZA'",
+      "should_execute": true
+    },
+    {
+      "code": "05045",
+      "query": "procesos de la alcaldia de APARTADÓ, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPIO DE APARTADO",
+      "observed": "ALCALDIA MUNICIPIO DE APARTADO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPIO DE APARTADO'",
+      "should_execute": true
+    },
+    {
+      "code": "05045",
+      "query": "contratos de la alcaldia de APARTADÓ, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPIO DE APARTADO",
+      "observed": "ALCALDIA MUNICIPIO DE APARTADO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPIO DE APARTADO'",
+      "should_execute": true
+    },
+    {
+      "code": "05045",
+      "query": "procesos del municipio de APARTADÓ, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPIO DE APARTADO",
+      "observed": "ALCALDIA MUNICIPIO DE APARTADO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPIO DE APARTADO'",
+      "should_execute": true
+    },
+    {
+      "code": "05045",
+      "query": "contratos del municipio de APARTADÓ, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPIO DE APARTADO",
+      "observed": "ALCALDIA MUNICIPIO DE APARTADO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPIO DE APARTADO'",
+      "should_execute": true
+    },
+    {
+      "code": "05045",
+      "query": "procesos de la alcaldia de APARTADÓ",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPIO DE APARTADO",
+      "observed": "ALCALDIA MUNICIPIO DE APARTADO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPIO DE APARTADO'",
+      "should_execute": true
+    },
+    {
+      "code": "05045",
+      "query": "contratos de la alcaldia de APARTADÓ",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPIO DE APARTADO",
+      "observed": "ALCALDIA MUNICIPIO DE APARTADO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPIO DE APARTADO'",
+      "should_execute": true
+    },
+    {
+      "code": "05045",
+      "query": "procesos del municipio de APARTADÓ",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPIO DE APARTADO",
+      "observed": "ALCALDIA MUNICIPIO DE APARTADO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPIO DE APARTADO'",
+      "should_execute": true
+    },
+    {
+      "code": "05045",
+      "query": "contratos del municipio de APARTADÓ",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPIO DE APARTADO",
+      "observed": "ALCALDIA MUNICIPIO DE APARTADO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPIO DE APARTADO'",
+      "should_execute": true
+    },
+    {
+      "code": "05079",
+      "query": "procesos de la alcaldia de BARBOSA, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE BARBOSA",
+      "observed": "MUNICIPIO DE BARBOSA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE BARBOSA'",
+      "should_execute": true
+    },
+    {
+      "code": "05079",
+      "query": "contratos de la alcaldia de BARBOSA, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE BARBOSA",
+      "observed": "MUNICIPIO DE BARBOSA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE BARBOSA'",
+      "should_execute": true
+    },
+    {
+      "code": "05079",
+      "query": "procesos del municipio de BARBOSA, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE BARBOSA",
+      "observed": "MUNICIPIO DE BARBOSA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE BARBOSA'",
+      "should_execute": true
+    },
+    {
+      "code": "05079",
+      "query": "contratos del municipio de BARBOSA, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE BARBOSA",
+      "observed": "MUNICIPIO DE BARBOSA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE BARBOSA'",
+      "should_execute": true
+    },
+    {
+      "code": "05086",
+      "query": "procesos de la alcaldia de BELMIRA, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA",
+      "observed": "ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA'",
+      "should_execute": true
+    },
+    {
+      "code": "05086",
+      "query": "contratos de la alcaldia de BELMIRA, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA",
+      "observed": "ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA'",
+      "should_execute": true
+    },
+    {
+      "code": "05086",
+      "query": "procesos del municipio de BELMIRA, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA",
+      "observed": "ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA'",
+      "should_execute": true
+    },
+    {
+      "code": "05086",
+      "query": "contratos del municipio de BELMIRA, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA",
+      "observed": "ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA'",
+      "should_execute": true
+    },
+    {
+      "code": "05086",
+      "query": "procesos de la alcaldia de BELMIRA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA",
+      "observed": "ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA'",
+      "should_execute": true
+    },
+    {
+      "code": "05086",
+      "query": "contratos de la alcaldia de BELMIRA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA",
+      "observed": "ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA'",
+      "should_execute": true
+    },
+    {
+      "code": "05086",
+      "query": "procesos del municipio de BELMIRA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA",
+      "observed": "ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA'",
+      "should_execute": true
+    },
+    {
+      "code": "05086",
+      "query": "contratos del municipio de BELMIRA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA",
+      "observed": "ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDÍA MUNICIPAL DE BELMIRA ANTIOQUIA'",
+      "should_execute": true
+    },
+    {
+      "code": "05093",
+      "query": "procesos de la alcaldia de BETULIA, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE BETULIA",
+      "observed": "MUNICIPIO DE BETULIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE BETULIA'",
+      "should_execute": true
+    },
+    {
+      "code": "05093",
+      "query": "contratos de la alcaldia de BETULIA, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE BETULIA",
+      "observed": "MUNICIPIO DE BETULIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE BETULIA'",
+      "should_execute": true
+    },
+    {
+      "code": "05093",
+      "query": "procesos del municipio de BETULIA, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE BETULIA",
+      "observed": "MUNICIPIO DE BETULIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE BETULIA'",
+      "should_execute": true
+    },
+    {
+      "code": "05093",
+      "query": "contratos del municipio de BETULIA, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE BETULIA",
+      "observed": "MUNICIPIO DE BETULIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE BETULIA'",
+      "should_execute": true
+    },
+    {
+      "code": "05107",
+      "query": "procesos de la alcaldia de BRICEÑO, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE BRICEÑO",
+      "observed": "MUNICIPIO DE BRICEÑO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE BRICEÑO'",
+      "should_execute": true
+    },
+    {
+      "code": "05107",
+      "query": "contratos de la alcaldia de BRICEÑO, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE BRICEÑO",
+      "observed": "MUNICIPIO DE BRICEÑO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE BRICEÑO'",
+      "should_execute": true
+    },
+    {
+      "code": "05107",
+      "query": "procesos del municipio de BRICEÑO, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE BRICEÑO",
+      "observed": "MUNICIPIO DE BRICEÑO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE BRICEÑO'",
+      "should_execute": true
+    },
+    {
+      "code": "05107",
+      "query": "contratos del municipio de BRICEÑO, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE BRICEÑO",
+      "observed": "MUNICIPIO DE BRICEÑO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE BRICEÑO'",
+      "should_execute": true
+    },
+    {
+      "code": "05134",
+      "query": "procesos de la alcaldia de CAMPAMENTO, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE CAMPAMENTO",
+      "observed": "MUNICIPIO DE CAMPAMENTO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE CAMPAMENTO'",
+      "should_execute": true
+    },
+    {
+      "code": "05134",
+      "query": "contratos de la alcaldia de CAMPAMENTO, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE CAMPAMENTO",
+      "observed": "MUNICIPIO DE CAMPAMENTO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE CAMPAMENTO'",
+      "should_execute": true
+    },
+    {
+      "code": "05134",
+      "query": "procesos del municipio de CAMPAMENTO, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE CAMPAMENTO",
+      "observed": "MUNICIPIO DE CAMPAMENTO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE CAMPAMENTO'",
+      "should_execute": true
+    },
+    {
+      "code": "05134",
+      "query": "contratos del municipio de CAMPAMENTO, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE CAMPAMENTO",
+      "observed": "MUNICIPIO DE CAMPAMENTO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE CAMPAMENTO'",
+      "should_execute": true
+    },
+    {
+      "code": "05134",
+      "query": "procesos de la alcaldia de CAMPAMENTO",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE CAMPAMENTO",
+      "observed": "MUNICIPIO DE CAMPAMENTO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE CAMPAMENTO'",
+      "should_execute": true
+    },
+    {
+      "code": "05134",
+      "query": "contratos de la alcaldia de CAMPAMENTO",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE CAMPAMENTO",
+      "observed": "MUNICIPIO DE CAMPAMENTO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE CAMPAMENTO'",
+      "should_execute": true
+    },
+    {
+      "code": "05134",
+      "query": "procesos del municipio de CAMPAMENTO",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE CAMPAMENTO",
+      "observed": "MUNICIPIO DE CAMPAMENTO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE CAMPAMENTO'",
+      "should_execute": true
+    },
+    {
+      "code": "05134",
+      "query": "contratos del municipio de CAMPAMENTO",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE CAMPAMENTO",
+      "observed": "MUNICIPIO DE CAMPAMENTO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE CAMPAMENTO'",
+      "should_execute": true
+    },
+    {
+      "code": "05148",
+      "query": "procesos de la alcaldia de EL CARMEN DE VIBORAL, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO EL CARMEN DE VIBORAL",
+      "observed": "MUNICIPIO EL CARMEN DE VIBORAL",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO EL CARMEN DE VIBORAL'",
+      "should_execute": true
+    },
+    {
+      "code": "05148",
+      "query": "contratos de la alcaldia de EL CARMEN DE VIBORAL, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO EL CARMEN DE VIBORAL",
+      "observed": "MUNICIPIO EL CARMEN DE VIBORAL",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO EL CARMEN DE VIBORAL'",
+      "should_execute": true
+    },
+    {
+      "code": "05148",
+      "query": "procesos del municipio de EL CARMEN DE VIBORAL, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO EL CARMEN DE VIBORAL",
+      "observed": "MUNICIPIO EL CARMEN DE VIBORAL",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO EL CARMEN DE VIBORAL'",
+      "should_execute": true
+    },
+    {
+      "code": "05148",
+      "query": "contratos del municipio de EL CARMEN DE VIBORAL, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO EL CARMEN DE VIBORAL",
+      "observed": "MUNICIPIO EL CARMEN DE VIBORAL",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO EL CARMEN DE VIBORAL'",
+      "should_execute": true
+    },
+    {
+      "code": "05148",
+      "query": "procesos de la alcaldia de EL CARMEN DE VIBORAL",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO EL CARMEN DE VIBORAL",
+      "observed": "MUNICIPIO EL CARMEN DE VIBORAL",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO EL CARMEN DE VIBORAL'",
+      "should_execute": true
+    },
+    {
+      "code": "05148",
+      "query": "contratos de la alcaldia de EL CARMEN DE VIBORAL",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO EL CARMEN DE VIBORAL",
+      "observed": "MUNICIPIO EL CARMEN DE VIBORAL",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO EL CARMEN DE VIBORAL'",
+      "should_execute": true
+    },
+    {
+      "code": "05148",
+      "query": "procesos del municipio de EL CARMEN DE VIBORAL",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO EL CARMEN DE VIBORAL",
+      "observed": "MUNICIPIO EL CARMEN DE VIBORAL",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO EL CARMEN DE VIBORAL'",
+      "should_execute": true
+    },
+    {
+      "code": "05148",
+      "query": "contratos del municipio de EL CARMEN DE VIBORAL",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO EL CARMEN DE VIBORAL",
+      "observed": "MUNICIPIO EL CARMEN DE VIBORAL",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO EL CARMEN DE VIBORAL'",
+      "should_execute": true
+    },
+    {
+      "code": "05250",
+      "query": "procesos de la alcaldia de EL BAGRE, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE EL BAGRE",
+      "observed": "MUNICIPIO DE EL BAGRE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE EL BAGRE'",
+      "should_execute": true
+    },
+    {
+      "code": "05250",
+      "query": "contratos de la alcaldia de EL BAGRE, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE EL BAGRE",
+      "observed": "MUNICIPIO DE EL BAGRE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE EL BAGRE'",
+      "should_execute": true
+    },
+    {
+      "code": "05250",
+      "query": "procesos del municipio de EL BAGRE, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE EL BAGRE",
+      "observed": "MUNICIPIO DE EL BAGRE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE EL BAGRE'",
+      "should_execute": true
+    },
+    {
+      "code": "05250",
+      "query": "contratos del municipio de EL BAGRE, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE EL BAGRE",
+      "observed": "MUNICIPIO DE EL BAGRE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE EL BAGRE'",
+      "should_execute": true
+    },
+    {
+      "code": "05250",
+      "query": "procesos de la alcaldia de EL BAGRE",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE EL BAGRE",
+      "observed": "MUNICIPIO DE EL BAGRE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE EL BAGRE'",
+      "should_execute": true
+    },
+    {
+      "code": "05250",
+      "query": "contratos de la alcaldia de EL BAGRE",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE EL BAGRE",
+      "observed": "MUNICIPIO DE EL BAGRE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE EL BAGRE'",
+      "should_execute": true
+    },
+    {
+      "code": "05250",
+      "query": "procesos del municipio de EL BAGRE",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE EL BAGRE",
+      "observed": "MUNICIPIO DE EL BAGRE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE EL BAGRE'",
+      "should_execute": true
+    },
+    {
+      "code": "05250",
+      "query": "contratos del municipio de EL BAGRE",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE EL BAGRE",
+      "observed": "MUNICIPIO DE EL BAGRE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE EL BAGRE'",
+      "should_execute": true
+    },
+    {
+      "code": "05310",
+      "query": "procesos de la alcaldia de GÓMEZ PLATA, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE GOMEZ PLATA",
+      "observed": "MUNICIPIO DE GOMEZ PLATA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE GOMEZ PLATA'",
+      "should_execute": true
+    },
+    {
+      "code": "05310",
+      "query": "contratos de la alcaldia de GÓMEZ PLATA, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE GOMEZ PLATA",
+      "observed": "MUNICIPIO DE GOMEZ PLATA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE GOMEZ PLATA'",
+      "should_execute": true
+    },
+    {
+      "code": "05310",
+      "query": "procesos del municipio de GÓMEZ PLATA, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE GOMEZ PLATA",
+      "observed": "MUNICIPIO DE GOMEZ PLATA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE GOMEZ PLATA'",
+      "should_execute": true
+    },
+    {
+      "code": "05310",
+      "query": "contratos del municipio de GÓMEZ PLATA, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE GOMEZ PLATA",
+      "observed": "MUNICIPIO DE GOMEZ PLATA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE GOMEZ PLATA'",
+      "should_execute": true
+    },
+    {
+      "code": "05310",
+      "query": "procesos de la alcaldia de GÓMEZ PLATA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE GOMEZ PLATA",
+      "observed": "MUNICIPIO DE GOMEZ PLATA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE GOMEZ PLATA'",
+      "should_execute": true
+    },
+    {
+      "code": "05310",
+      "query": "contratos de la alcaldia de GÓMEZ PLATA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE GOMEZ PLATA",
+      "observed": "MUNICIPIO DE GOMEZ PLATA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE GOMEZ PLATA'",
+      "should_execute": true
+    },
+    {
+      "code": "05310",
+      "query": "procesos del municipio de GÓMEZ PLATA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE GOMEZ PLATA",
+      "observed": "MUNICIPIO DE GOMEZ PLATA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE GOMEZ PLATA'",
+      "should_execute": true
+    },
+    {
+      "code": "05310",
+      "query": "contratos del municipio de GÓMEZ PLATA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE GOMEZ PLATA",
+      "observed": "MUNICIPIO DE GOMEZ PLATA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE GOMEZ PLATA'",
+      "should_execute": true
+    },
+    {
+      "code": "05313",
+      "query": "procesos de la alcaldia de GRANADA, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE GRANADA",
+      "observed": "MUNICIPIO DE GRANADA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE GRANADA'",
+      "should_execute": true
+    },
+    {
+      "code": "05313",
+      "query": "contratos de la alcaldia de GRANADA, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE GRANADA",
+      "observed": "MUNICIPIO DE GRANADA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE GRANADA'",
+      "should_execute": true
+    },
+    {
+      "code": "05313",
+      "query": "procesos del municipio de GRANADA, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE GRANADA",
+      "observed": "MUNICIPIO DE GRANADA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE GRANADA'",
+      "should_execute": true
+    },
+    {
+      "code": "05313",
+      "query": "contratos del municipio de GRANADA, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE GRANADA",
+      "observed": "MUNICIPIO DE GRANADA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE GRANADA'",
+      "should_execute": true
+    },
+    {
+      "code": "05376",
+      "query": "procesos de la alcaldia de LA CEJA, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE LA CEJA",
+      "observed": "MUNICIPIO DE LA CEJA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE LA CEJA'",
+      "should_execute": true
+    },
+    {
+      "code": "05376",
+      "query": "contratos de la alcaldia de LA CEJA, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE LA CEJA",
+      "observed": "MUNICIPIO DE LA CEJA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE LA CEJA'",
+      "should_execute": true
+    },
+    {
+      "code": "05376",
+      "query": "procesos del municipio de LA CEJA, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE LA CEJA",
+      "observed": "MUNICIPIO DE LA CEJA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE LA CEJA'",
+      "should_execute": true
+    },
+    {
+      "code": "05376",
+      "query": "contratos del municipio de LA CEJA, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE LA CEJA",
+      "observed": "MUNICIPIO DE LA CEJA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE LA CEJA'",
+      "should_execute": true
+    },
+    {
+      "code": "05376",
+      "query": "procesos de la alcaldia de LA CEJA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE LA CEJA",
+      "observed": "MUNICIPIO DE LA CEJA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE LA CEJA'",
+      "should_execute": true
+    },
+    {
+      "code": "05376",
+      "query": "contratos de la alcaldia de LA CEJA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE LA CEJA",
+      "observed": "MUNICIPIO DE LA CEJA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE LA CEJA'",
+      "should_execute": true
+    },
+    {
+      "code": "05376",
+      "query": "procesos del municipio de LA CEJA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE LA CEJA",
+      "observed": "MUNICIPIO DE LA CEJA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE LA CEJA'",
+      "should_execute": true
+    },
+    {
+      "code": "05376",
+      "query": "contratos del municipio de LA CEJA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE LA CEJA",
+      "observed": "MUNICIPIO DE LA CEJA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE LA CEJA'",
+      "should_execute": true
+    },
+    {
+      "code": "05390",
+      "query": "procesos de la alcaldia de LA PINTADA, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDÍA MUNICIPAL DE LA PINTADA",
+      "observed": "ALCALDÍA MUNICIPAL DE LA PINTADA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDÍA MUNICIPAL DE LA PINTADA'",
+      "should_execute": true
+    },
+    {
+      "code": "05390",
+      "query": "contratos de la alcaldia de LA PINTADA, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDÍA MUNICIPAL DE LA PINTADA",
+      "observed": "ALCALDÍA MUNICIPAL DE LA PINTADA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDÍA MUNICIPAL DE LA PINTADA'",
+      "should_execute": true
+    },
+    {
+      "code": "05390",
+      "query": "procesos del municipio de LA PINTADA, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDÍA MUNICIPAL DE LA PINTADA",
+      "observed": "ALCALDÍA MUNICIPAL DE LA PINTADA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDÍA MUNICIPAL DE LA PINTADA'",
+      "should_execute": true
+    },
+    {
+      "code": "05390",
+      "query": "contratos del municipio de LA PINTADA, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDÍA MUNICIPAL DE LA PINTADA",
+      "observed": "ALCALDÍA MUNICIPAL DE LA PINTADA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDÍA MUNICIPAL DE LA PINTADA'",
+      "should_execute": true
+    },
+    {
+      "code": "05390",
+      "query": "procesos de la alcaldia de LA PINTADA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDÍA MUNICIPAL DE LA PINTADA",
+      "observed": "ALCALDÍA MUNICIPAL DE LA PINTADA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDÍA MUNICIPAL DE LA PINTADA'",
+      "should_execute": true
+    },
+    {
+      "code": "05390",
+      "query": "contratos de la alcaldia de LA PINTADA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDÍA MUNICIPAL DE LA PINTADA",
+      "observed": "ALCALDÍA MUNICIPAL DE LA PINTADA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDÍA MUNICIPAL DE LA PINTADA'",
+      "should_execute": true
+    },
+    {
+      "code": "05390",
+      "query": "procesos del municipio de LA PINTADA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDÍA MUNICIPAL DE LA PINTADA",
+      "observed": "ALCALDÍA MUNICIPAL DE LA PINTADA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDÍA MUNICIPAL DE LA PINTADA'",
+      "should_execute": true
+    },
+    {
+      "code": "05390",
+      "query": "contratos del municipio de LA PINTADA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDÍA MUNICIPAL DE LA PINTADA",
+      "observed": "ALCALDÍA MUNICIPAL DE LA PINTADA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDÍA MUNICIPAL DE LA PINTADA'",
+      "should_execute": true
+    },
+    {
+      "code": "05631",
+      "query": "procesos de la alcaldia de SABANETA, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE SABANETA",
+      "observed": "MUNICIPIO DE SABANETA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE SABANETA'",
+      "should_execute": true
+    },
+    {
+      "code": "05631",
+      "query": "contratos de la alcaldia de SABANETA, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE SABANETA",
+      "observed": "MUNICIPIO DE SABANETA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE SABANETA'",
+      "should_execute": true
+    },
+    {
+      "code": "05631",
+      "query": "procesos del municipio de SABANETA, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE SABANETA",
+      "observed": "MUNICIPIO DE SABANETA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE SABANETA'",
+      "should_execute": true
+    },
+    {
+      "code": "05631",
+      "query": "contratos del municipio de SABANETA, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE SABANETA",
+      "observed": "MUNICIPIO DE SABANETA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE SABANETA'",
+      "should_execute": true
+    },
+    {
+      "code": "05631",
+      "query": "procesos de la alcaldia de SABANETA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE SABANETA",
+      "observed": "MUNICIPIO DE SABANETA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE SABANETA'",
+      "should_execute": true
+    },
+    {
+      "code": "05631",
+      "query": "contratos de la alcaldia de SABANETA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE SABANETA",
+      "observed": "MUNICIPIO DE SABANETA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE SABANETA'",
+      "should_execute": true
+    },
+    {
+      "code": "05631",
+      "query": "procesos del municipio de SABANETA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE SABANETA",
+      "observed": "MUNICIPIO DE SABANETA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE SABANETA'",
+      "should_execute": true
+    },
+    {
+      "code": "05631",
+      "query": "contratos del municipio de SABANETA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE SABANETA",
+      "observed": "MUNICIPIO DE SABANETA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE SABANETA'",
+      "should_execute": true
+    },
+    {
+      "code": "05647",
+      "query": "procesos de la alcaldia de SAN ANDRÉS DE CUERQUÍA, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE SAN ANDRES DE CUERQUIA",
+      "observed": "MUNICIPIO DE SAN ANDRES DE CUERQUIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE SAN ANDRES DE CUERQUIA'",
+      "should_execute": true
+    },
+    {
+      "code": "05647",
+      "query": "contratos de la alcaldia de SAN ANDRÉS DE CUERQUÍA, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE SAN ANDRES DE CUERQUIA",
+      "observed": "MUNICIPIO DE SAN ANDRES DE CUERQUIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE SAN ANDRES DE CUERQUIA'",
+      "should_execute": true
+    },
+    {
+      "code": "05647",
+      "query": "procesos del municipio de SAN ANDRÉS DE CUERQUÍA, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE SAN ANDRES DE CUERQUIA",
+      "observed": "MUNICIPIO DE SAN ANDRES DE CUERQUIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE SAN ANDRES DE CUERQUIA'",
+      "should_execute": true
+    },
+    {
+      "code": "05647",
+      "query": "contratos del municipio de SAN ANDRÉS DE CUERQUÍA, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE SAN ANDRES DE CUERQUIA",
+      "observed": "MUNICIPIO DE SAN ANDRES DE CUERQUIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE SAN ANDRES DE CUERQUIA'",
+      "should_execute": true
+    },
+    {
+      "code": "05647",
+      "query": "procesos de la alcaldia de SAN ANDRÉS DE CUERQUÍA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE SAN ANDRES DE CUERQUIA",
+      "observed": "MUNICIPIO DE SAN ANDRES DE CUERQUIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE SAN ANDRES DE CUERQUIA'",
+      "should_execute": true
+    },
+    {
+      "code": "05647",
+      "query": "contratos de la alcaldia de SAN ANDRÉS DE CUERQUÍA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE SAN ANDRES DE CUERQUIA",
+      "observed": "MUNICIPIO DE SAN ANDRES DE CUERQUIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE SAN ANDRES DE CUERQUIA'",
+      "should_execute": true
+    },
+    {
+      "code": "05647",
+      "query": "procesos del municipio de SAN ANDRÉS DE CUERQUÍA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE SAN ANDRES DE CUERQUIA",
+      "observed": "MUNICIPIO DE SAN ANDRES DE CUERQUIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE SAN ANDRES DE CUERQUIA'",
+      "should_execute": true
+    },
+    {
+      "code": "05647",
+      "query": "contratos del municipio de SAN ANDRÉS DE CUERQUÍA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE SAN ANDRES DE CUERQUIA",
+      "observed": "MUNICIPIO DE SAN ANDRES DE CUERQUIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE SAN ANDRES DE CUERQUIA'",
+      "should_execute": true
+    },
+    {
+      "code": "05649",
+      "query": "procesos de la alcaldia de SAN CARLOS, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPAL SAN CARLOS",
+      "observed": "ALCALDIA MUNICIPAL SAN CARLOS",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPAL SAN CARLOS'",
+      "should_execute": true
+    },
+    {
+      "code": "05649",
+      "query": "contratos de la alcaldia de SAN CARLOS, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPAL SAN CARLOS",
+      "observed": "ALCALDIA MUNICIPAL SAN CARLOS",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPAL SAN CARLOS'",
+      "should_execute": true
+    },
+    {
+      "code": "05649",
+      "query": "procesos del municipio de SAN CARLOS, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPAL SAN CARLOS",
+      "observed": "ALCALDIA MUNICIPAL SAN CARLOS",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPAL SAN CARLOS'",
+      "should_execute": true
+    },
+    {
+      "code": "05649",
+      "query": "contratos del municipio de SAN CARLOS, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPAL SAN CARLOS",
+      "observed": "ALCALDIA MUNICIPAL SAN CARLOS",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPAL SAN CARLOS'",
+      "should_execute": true
+    },
+    {
+      "code": "05679",
+      "query": "procesos de la alcaldia de SANTA BÁRBARA, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPAL DE SANTA BARBARA",
+      "observed": "ALCALDIA MUNICIPAL DE SANTA BARBARA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPAL DE SANTA BARBARA'",
+      "should_execute": true
+    },
+    {
+      "code": "05679",
+      "query": "contratos de la alcaldia de SANTA BÁRBARA, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPAL DE SANTA BARBARA",
+      "observed": "ALCALDIA MUNICIPAL DE SANTA BARBARA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE SANTA BARBARA'",
+      "should_execute": true
+    },
+    {
+      "code": "05679",
+      "query": "procesos del municipio de SANTA BÁRBARA, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPAL DE SANTA BARBARA",
+      "observed": "ALCALDIA MUNICIPAL DE SANTA BARBARA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPAL DE SANTA BARBARA'",
+      "should_execute": true
+    },
+    {
+      "code": "05679",
+      "query": "contratos del municipio de SANTA BÁRBARA, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPAL DE SANTA BARBARA",
+      "observed": "ALCALDIA MUNICIPAL DE SANTA BARBARA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE SANTA BARBARA'",
+      "should_execute": true
+    },
+    {
+      "code": "05686",
+      "query": "procesos de la alcaldia de SANTA ROSA DE OSOS, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO SANTA ROSA DE OSOS",
+      "observed": "MUNICIPIO SANTA ROSA DE OSOS",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO SANTA ROSA DE OSOS'",
+      "should_execute": true
+    },
+    {
+      "code": "05686",
+      "query": "contratos de la alcaldia de SANTA ROSA DE OSOS, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO SANTA ROSA DE OSOS",
+      "observed": "MUNICIPIO SANTA ROSA DE OSOS",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO SANTA ROSA DE OSOS'",
+      "should_execute": true
+    },
+    {
+      "code": "05686",
+      "query": "procesos del municipio de SANTA ROSA DE OSOS, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO SANTA ROSA DE OSOS",
+      "observed": "MUNICIPIO SANTA ROSA DE OSOS",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO SANTA ROSA DE OSOS'",
+      "should_execute": true
+    },
+    {
+      "code": "05686",
+      "query": "contratos del municipio de SANTA ROSA DE OSOS, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO SANTA ROSA DE OSOS",
+      "observed": "MUNICIPIO SANTA ROSA DE OSOS",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO SANTA ROSA DE OSOS'",
+      "should_execute": true
+    },
+    {
+      "code": "05686",
+      "query": "procesos de la alcaldia de SANTA ROSA DE OSOS",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO SANTA ROSA DE OSOS",
+      "observed": "MUNICIPIO SANTA ROSA DE OSOS",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO SANTA ROSA DE OSOS'",
+      "should_execute": true
+    },
+    {
+      "code": "05686",
+      "query": "contratos de la alcaldia de SANTA ROSA DE OSOS",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO SANTA ROSA DE OSOS",
+      "observed": "MUNICIPIO SANTA ROSA DE OSOS",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO SANTA ROSA DE OSOS'",
+      "should_execute": true
+    },
+    {
+      "code": "05686",
+      "query": "procesos del municipio de SANTA ROSA DE OSOS",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO SANTA ROSA DE OSOS",
+      "observed": "MUNICIPIO SANTA ROSA DE OSOS",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO SANTA ROSA DE OSOS'",
+      "should_execute": true
+    },
+    {
+      "code": "05686",
+      "query": "contratos del municipio de SANTA ROSA DE OSOS",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO SANTA ROSA DE OSOS",
+      "observed": "MUNICIPIO SANTA ROSA DE OSOS",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO SANTA ROSA DE OSOS'",
+      "should_execute": true
+    },
+    {
+      "code": "08078",
+      "query": "procesos de la alcaldia de BARANOA, ATLÁNTICO",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPAL DE BARANOA",
+      "observed": "ALCALDIA MUNICIPAL DE BARANOA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPAL DE BARANOA'",
+      "should_execute": true
+    },
+    {
+      "code": "08078",
+      "query": "contratos de la alcaldia de BARANOA, ATLÁNTICO",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPAL DE BARANOA",
+      "observed": "ALCALDIA MUNICIPAL DE BARANOA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE BARANOA'",
+      "should_execute": true
+    },
+    {
+      "code": "08078",
+      "query": "procesos del municipio de BARANOA, ATLÁNTICO",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPAL DE BARANOA",
+      "observed": "ALCALDIA MUNICIPAL DE BARANOA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPAL DE BARANOA'",
+      "should_execute": true
+    },
+    {
+      "code": "08078",
+      "query": "contratos del municipio de BARANOA, ATLÁNTICO",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPAL DE BARANOA",
+      "observed": "ALCALDIA MUNICIPAL DE BARANOA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE BARANOA'",
+      "should_execute": true
+    },
+    {
+      "code": "08078",
+      "query": "procesos de la alcaldia de BARANOA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPAL DE BARANOA",
+      "observed": "ALCALDIA MUNICIPAL DE BARANOA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPAL DE BARANOA'",
+      "should_execute": true
+    },
+    {
+      "code": "08078",
+      "query": "contratos de la alcaldia de BARANOA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPAL DE BARANOA",
+      "observed": "ALCALDIA MUNICIPAL DE BARANOA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE BARANOA'",
+      "should_execute": true
+    },
+    {
+      "code": "08078",
+      "query": "procesos del municipio de BARANOA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPAL DE BARANOA",
+      "observed": "ALCALDIA MUNICIPAL DE BARANOA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPAL DE BARANOA'",
+      "should_execute": true
+    },
+    {
+      "code": "08078",
+      "query": "contratos del municipio de BARANOA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPAL DE BARANOA",
+      "observed": "ALCALDIA MUNICIPAL DE BARANOA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE BARANOA'",
+      "should_execute": true
+    },
+    {
+      "code": "13430",
+      "query": "procesos de la alcaldia de MAGANGUÉ, BOLÍVAR",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDÍA MUNICIPAL DE MAGANGUE",
+      "observed": "ALCALDÍA MUNICIPAL DE MAGANGUE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDÍA MUNICIPAL DE MAGANGUE'",
+      "should_execute": true
+    },
+    {
+      "code": "13430",
+      "query": "contratos de la alcaldia de MAGANGUÉ, BOLÍVAR",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDÍA MUNICIPAL DE MAGANGUE",
+      "observed": "ALCALDÍA MUNICIPAL DE MAGANGUE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDÍA MUNICIPAL DE MAGANGUE'",
+      "should_execute": true
+    },
+    {
+      "code": "13430",
+      "query": "procesos del municipio de MAGANGUÉ, BOLÍVAR",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDÍA MUNICIPAL DE MAGANGUE",
+      "observed": "ALCALDÍA MUNICIPAL DE MAGANGUE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDÍA MUNICIPAL DE MAGANGUE'",
+      "should_execute": true
+    },
+    {
+      "code": "13430",
+      "query": "contratos del municipio de MAGANGUÉ, BOLÍVAR",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDÍA MUNICIPAL DE MAGANGUE",
+      "observed": "ALCALDÍA MUNICIPAL DE MAGANGUE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDÍA MUNICIPAL DE MAGANGUE'",
+      "should_execute": true
+    },
+    {
+      "code": "13430",
+      "query": "procesos de la alcaldia de MAGANGUÉ",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDÍA MUNICIPAL DE MAGANGUE",
+      "observed": "ALCALDÍA MUNICIPAL DE MAGANGUE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDÍA MUNICIPAL DE MAGANGUE'",
+      "should_execute": true
+    },
+    {
+      "code": "13430",
+      "query": "contratos de la alcaldia de MAGANGUÉ",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDÍA MUNICIPAL DE MAGANGUE",
+      "observed": "ALCALDÍA MUNICIPAL DE MAGANGUE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDÍA MUNICIPAL DE MAGANGUE'",
+      "should_execute": true
+    },
+    {
+      "code": "13430",
+      "query": "procesos del municipio de MAGANGUÉ",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDÍA MUNICIPAL DE MAGANGUE",
+      "observed": "ALCALDÍA MUNICIPAL DE MAGANGUE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDÍA MUNICIPAL DE MAGANGUE'",
+      "should_execute": true
+    },
+    {
+      "code": "13430",
+      "query": "contratos del municipio de MAGANGUÉ",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDÍA MUNICIPAL DE MAGANGUE",
+      "observed": "ALCALDÍA MUNICIPAL DE MAGANGUE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDÍA MUNICIPAL DE MAGANGUE'",
+      "should_execute": true
+    },
+    {
+      "code": "15215",
+      "query": "procesos de la alcaldia de CORRALES, BOYACÁ",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE CORRALES",
+      "observed": "MUNICIPIO DE CORRALES",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE CORRALES'",
+      "should_execute": true
+    },
+    {
+      "code": "15215",
+      "query": "contratos de la alcaldia de CORRALES, BOYACÁ",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE CORRALES",
+      "observed": "MUNICIPIO DE CORRALES",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE CORRALES'",
+      "should_execute": true
+    },
+    {
+      "code": "15215",
+      "query": "procesos del municipio de CORRALES, BOYACÁ",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE CORRALES",
+      "observed": "MUNICIPIO DE CORRALES",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE CORRALES'",
+      "should_execute": true
+    },
+    {
+      "code": "15215",
+      "query": "contratos del municipio de CORRALES, BOYACÁ",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE CORRALES",
+      "observed": "MUNICIPIO DE CORRALES",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE CORRALES'",
+      "should_execute": true
+    },
+    {
+      "code": "15215",
+      "query": "procesos de la alcaldia de CORRALES",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE CORRALES",
+      "observed": "MUNICIPIO DE CORRALES",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE CORRALES'",
+      "should_execute": true
+    },
+    {
+      "code": "15215",
+      "query": "contratos de la alcaldia de CORRALES",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE CORRALES",
+      "observed": "MUNICIPIO DE CORRALES",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE CORRALES'",
+      "should_execute": true
+    },
+    {
+      "code": "15215",
+      "query": "procesos del municipio de CORRALES",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE CORRALES",
+      "observed": "MUNICIPIO DE CORRALES",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE CORRALES'",
+      "should_execute": true
+    },
+    {
+      "code": "15215",
+      "query": "contratos del municipio de CORRALES",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE CORRALES",
+      "observed": "MUNICIPIO DE CORRALES",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE CORRALES'",
+      "should_execute": true
+    },
+    {
+      "code": "15244",
+      "query": "procesos de la alcaldia de EL COCUY, BOYACÁ",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE EL COCUY",
+      "observed": "MUNICIPIO DE EL COCUY",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE EL COCUY'",
+      "should_execute": true
+    },
+    {
+      "code": "15244",
+      "query": "contratos de la alcaldia de EL COCUY, BOYACÁ",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE EL COCUY",
+      "observed": "MUNICIPIO DE EL COCUY",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE EL COCUY'",
+      "should_execute": true
+    },
+    {
+      "code": "15244",
+      "query": "procesos del municipio de EL COCUY, BOYACÁ",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE EL COCUY",
+      "observed": "MUNICIPIO DE EL COCUY",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE EL COCUY'",
+      "should_execute": true
+    },
+    {
+      "code": "15244",
+      "query": "contratos del municipio de EL COCUY, BOYACÁ",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE EL COCUY",
+      "observed": "MUNICIPIO DE EL COCUY",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE EL COCUY'",
+      "should_execute": true
+    },
+    {
+      "code": "15244",
+      "query": "procesos de la alcaldia de EL COCUY",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE EL COCUY",
+      "observed": "MUNICIPIO DE EL COCUY",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE EL COCUY'",
+      "should_execute": true
+    },
+    {
+      "code": "15244",
+      "query": "contratos de la alcaldia de EL COCUY",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE EL COCUY",
+      "observed": "MUNICIPIO DE EL COCUY",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE EL COCUY'",
+      "should_execute": true
+    },
+    {
+      "code": "15244",
+      "query": "procesos del municipio de EL COCUY",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE EL COCUY",
+      "observed": "MUNICIPIO DE EL COCUY",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE EL COCUY'",
+      "should_execute": true
+    },
+    {
+      "code": "15244",
+      "query": "contratos del municipio de EL COCUY",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE EL COCUY",
+      "observed": "MUNICIPIO DE EL COCUY",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE EL COCUY'",
+      "should_execute": true
+    },
+    {
+      "code": "15248",
+      "query": "procesos de la alcaldia de EL ESPINO, BOYACÁ",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE EL ESPINO",
+      "observed": "MUNICIPIO DE EL ESPINO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE EL ESPINO'",
+      "should_execute": true
+    },
+    {
+      "code": "15248",
+      "query": "contratos de la alcaldia de EL ESPINO, BOYACÁ",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE EL ESPINO",
+      "observed": "MUNICIPIO DE EL ESPINO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE EL ESPINO'",
+      "should_execute": true
+    },
+    {
+      "code": "15248",
+      "query": "procesos del municipio de EL ESPINO, BOYACÁ",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE EL ESPINO",
+      "observed": "MUNICIPIO DE EL ESPINO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE EL ESPINO'",
+      "should_execute": true
+    },
+    {
+      "code": "15248",
+      "query": "contratos del municipio de EL ESPINO, BOYACÁ",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE EL ESPINO",
+      "observed": "MUNICIPIO DE EL ESPINO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE EL ESPINO'",
+      "should_execute": true
+    },
+    {
+      "code": "15248",
+      "query": "procesos de la alcaldia de EL ESPINO",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE EL ESPINO",
+      "observed": "MUNICIPIO DE EL ESPINO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE EL ESPINO'",
+      "should_execute": true
+    },
+    {
+      "code": "15248",
+      "query": "contratos de la alcaldia de EL ESPINO",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE EL ESPINO",
+      "observed": "MUNICIPIO DE EL ESPINO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE EL ESPINO'",
+      "should_execute": true
+    },
+    {
+      "code": "15248",
+      "query": "procesos del municipio de EL ESPINO",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE EL ESPINO",
+      "observed": "MUNICIPIO DE EL ESPINO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE EL ESPINO'",
+      "should_execute": true
+    },
+    {
+      "code": "15248",
+      "query": "contratos del municipio de EL ESPINO",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE EL ESPINO",
+      "observed": "MUNICIPIO DE EL ESPINO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE EL ESPINO'",
+      "should_execute": true
+    },
+    {
+      "code": "15442",
+      "query": "procesos de la alcaldia de MARIPÍ, BOYACÁ",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE MARIPI",
+      "observed": "MUNICIPIO DE MARIPI",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE MARIPI'",
+      "should_execute": true
+    },
+    {
+      "code": "15442",
+      "query": "contratos de la alcaldia de MARIPÍ, BOYACÁ",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE MARIPI",
+      "observed": "MUNICIPIO DE MARIPI",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE MARIPI'",
+      "should_execute": true
+    },
+    {
+      "code": "15442",
+      "query": "procesos del municipio de MARIPÍ, BOYACÁ",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE MARIPI",
+      "observed": "MUNICIPIO DE MARIPI",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE MARIPI'",
+      "should_execute": true
+    },
+    {
+      "code": "15442",
+      "query": "contratos del municipio de MARIPÍ, BOYACÁ",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE MARIPI",
+      "observed": "MUNICIPIO DE MARIPI",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE MARIPI'",
+      "should_execute": true
+    },
+    {
+      "code": "15442",
+      "query": "procesos de la alcaldia de MARIPÍ",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE MARIPI",
+      "observed": "MUNICIPIO DE MARIPI",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE MARIPI'",
+      "should_execute": true
+    },
+    {
+      "code": "15442",
+      "query": "contratos de la alcaldia de MARIPÍ",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE MARIPI",
+      "observed": "MUNICIPIO DE MARIPI",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE MARIPI'",
+      "should_execute": true
+    },
+    {
+      "code": "15442",
+      "query": "procesos del municipio de MARIPÍ",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE MARIPI",
+      "observed": "MUNICIPIO DE MARIPI",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE MARIPI'",
+      "should_execute": true
+    },
+    {
+      "code": "15442",
+      "query": "contratos del municipio de MARIPÍ",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE MARIPI",
+      "observed": "MUNICIPIO DE MARIPI",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE MARIPI'",
+      "should_execute": true
+    },
+    {
+      "code": "15542",
+      "query": "procesos de la alcaldia de PESCA, BOYACÁ",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE PESCA",
+      "observed": "MUNICIPIO DE PESCA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE PESCA'",
+      "should_execute": true
+    },
+    {
+      "code": "15542",
+      "query": "contratos de la alcaldia de PESCA, BOYACÁ",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE PESCA",
+      "observed": "MUNICIPIO DE PESCA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE PESCA'",
+      "should_execute": true
+    },
+    {
+      "code": "15542",
+      "query": "procesos del municipio de PESCA, BOYACÁ",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE PESCA",
+      "observed": "MUNICIPIO DE PESCA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE PESCA'",
+      "should_execute": true
+    },
+    {
+      "code": "15542",
+      "query": "contratos del municipio de PESCA, BOYACÁ",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE PESCA",
+      "observed": "MUNICIPIO DE PESCA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE PESCA'",
+      "should_execute": true
+    },
+    {
+      "code": "15542",
+      "query": "procesos de la alcaldia de PESCA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE PESCA",
+      "observed": "MUNICIPIO DE PESCA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE PESCA'",
+      "should_execute": true
+    },
+    {
+      "code": "15542",
+      "query": "contratos de la alcaldia de PESCA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE PESCA",
+      "observed": "MUNICIPIO DE PESCA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE PESCA'",
+      "should_execute": true
+    },
+    {
+      "code": "15542",
+      "query": "procesos del municipio de PESCA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE PESCA",
+      "observed": "MUNICIPIO DE PESCA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE PESCA'",
+      "should_execute": true
+    },
+    {
+      "code": "15542",
+      "query": "contratos del municipio de PESCA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE PESCA",
+      "observed": "MUNICIPIO DE PESCA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE PESCA'",
+      "should_execute": true
+    },
+    {
+      "code": "17001",
+      "query": "procesos de la alcaldia de MANIZALES, CALDAS",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE MANIZALES",
+      "observed": "MUNICIPIO DE MANIZALES",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE MANIZALES'",
+      "should_execute": true
+    },
+    {
+      "code": "17001",
+      "query": "contratos de la alcaldia de MANIZALES, CALDAS",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE MANIZALES",
+      "observed": "MUNICIPIO DE MANIZALES",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE MANIZALES'",
+      "should_execute": true
+    },
+    {
+      "code": "17001",
+      "query": "procesos del municipio de MANIZALES, CALDAS",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE MANIZALES",
+      "observed": "MUNICIPIO DE MANIZALES",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE MANIZALES'",
+      "should_execute": true
+    },
+    {
+      "code": "17001",
+      "query": "contratos del municipio de MANIZALES, CALDAS",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE MANIZALES",
+      "observed": "MUNICIPIO DE MANIZALES",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE MANIZALES'",
+      "should_execute": true
+    },
+    {
+      "code": "17001",
+      "query": "procesos de la alcaldia de MANIZALES",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE MANIZALES",
+      "observed": "MUNICIPIO DE MANIZALES",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE MANIZALES'",
+      "should_execute": true
+    },
+    {
+      "code": "17001",
+      "query": "contratos de la alcaldia de MANIZALES",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE MANIZALES",
+      "observed": "MUNICIPIO DE MANIZALES",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE MANIZALES'",
+      "should_execute": true
+    },
+    {
+      "code": "17001",
+      "query": "procesos del municipio de MANIZALES",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE MANIZALES",
+      "observed": "MUNICIPIO DE MANIZALES",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE MANIZALES'",
+      "should_execute": true
+    },
+    {
+      "code": "17001",
+      "query": "contratos del municipio de MANIZALES",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE MANIZALES",
+      "observed": "MUNICIPIO DE MANIZALES",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE MANIZALES'",
+      "should_execute": true
+    },
+    {
+      "code": "19100",
+      "query": "procesos de la alcaldia de BOLÍVAR, CAUCA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE BOLIVAR",
+      "observed": "MUNICIPIO DE BOLIVAR",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE BOLIVAR'",
+      "should_execute": true
+    },
+    {
+      "code": "19100",
+      "query": "contratos de la alcaldia de BOLÍVAR, CAUCA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE BOLIVAR",
+      "observed": "MUNICIPIO DE BOLIVAR",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE BOLIVAR'",
+      "should_execute": true
+    },
+    {
+      "code": "19100",
+      "query": "procesos del municipio de BOLÍVAR, CAUCA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE BOLIVAR",
+      "observed": "MUNICIPIO DE BOLIVAR",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE BOLIVAR'",
+      "should_execute": true
+    },
+    {
+      "code": "19100",
+      "query": "contratos del municipio de BOLÍVAR, CAUCA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE BOLIVAR",
+      "observed": "MUNICIPIO DE BOLIVAR",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE BOLIVAR'",
+      "should_execute": true
+    },
+    {
+      "code": "19698",
+      "query": "procesos de la alcaldia de SANTANDER DE QUILICHAO, CAUCA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPIO DE SANTANDER DE QUILICHAO",
+      "observed": "ALCALDIA MUNICIPIO DE SANTANDER DE QUILICHAO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPIO DE SANTANDER DE QUILICHAO'",
+      "should_execute": true
+    },
+    {
+      "code": "19698",
+      "query": "contratos de la alcaldia de SANTANDER DE QUILICHAO, CAUCA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPIO DE SANTANDER DE QUILICHAO",
+      "observed": "ALCALDIA MUNICIPIO DE SANTANDER DE QUILICHAO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPIO DE SANTANDER DE QUILICHAO'",
+      "should_execute": true
+    },
+    {
+      "code": "19698",
+      "query": "procesos del municipio de SANTANDER DE QUILICHAO, CAUCA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPIO DE SANTANDER DE QUILICHAO",
+      "observed": "ALCALDIA MUNICIPIO DE SANTANDER DE QUILICHAO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPIO DE SANTANDER DE QUILICHAO'",
+      "should_execute": true
+    },
+    {
+      "code": "19698",
+      "query": "contratos del municipio de SANTANDER DE QUILICHAO, CAUCA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPIO DE SANTANDER DE QUILICHAO",
+      "observed": "ALCALDIA MUNICIPIO DE SANTANDER DE QUILICHAO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPIO DE SANTANDER DE QUILICHAO'",
+      "should_execute": true
+    },
+    {
+      "code": "19698",
+      "query": "procesos de la alcaldia de SANTANDER DE QUILICHAO",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPIO DE SANTANDER DE QUILICHAO",
+      "observed": "ALCALDIA MUNICIPIO DE SANTANDER DE QUILICHAO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPIO DE SANTANDER DE QUILICHAO'",
+      "should_execute": true
+    },
+    {
+      "code": "19698",
+      "query": "contratos de la alcaldia de SANTANDER DE QUILICHAO",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPIO DE SANTANDER DE QUILICHAO",
+      "observed": "ALCALDIA MUNICIPIO DE SANTANDER DE QUILICHAO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPIO DE SANTANDER DE QUILICHAO'",
+      "should_execute": true
+    },
+    {
+      "code": "19698",
+      "query": "procesos del municipio de SANTANDER DE QUILICHAO",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPIO DE SANTANDER DE QUILICHAO",
+      "observed": "ALCALDIA MUNICIPIO DE SANTANDER DE QUILICHAO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPIO DE SANTANDER DE QUILICHAO'",
+      "should_execute": true
+    },
+    {
+      "code": "19698",
+      "query": "contratos del municipio de SANTANDER DE QUILICHAO",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPIO DE SANTANDER DE QUILICHAO",
+      "observed": "ALCALDIA MUNICIPIO DE SANTANDER DE QUILICHAO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPIO DE SANTANDER DE QUILICHAO'",
+      "should_execute": true
+    },
+    {
+      "code": "19785",
+      "query": "procesos de la alcaldia de SUCRE, CAUCA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE SUCRE",
+      "observed": "MUNICIPIO DE SUCRE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE SUCRE'",
+      "should_execute": true
+    },
+    {
+      "code": "19785",
+      "query": "contratos de la alcaldia de SUCRE, CAUCA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE SUCRE",
+      "observed": "MUNICIPIO DE SUCRE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE SUCRE'",
+      "should_execute": true
+    },
+    {
+      "code": "19785",
+      "query": "procesos del municipio de SUCRE, CAUCA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE SUCRE",
+      "observed": "MUNICIPIO DE SUCRE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE SUCRE'",
+      "should_execute": true
+    },
+    {
+      "code": "19785",
+      "query": "contratos del municipio de SUCRE, CAUCA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE SUCRE",
+      "observed": "MUNICIPIO DE SUCRE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE SUCRE'",
+      "should_execute": true
+    },
+    {
+      "code": "23162",
+      "query": "procesos de la alcaldia de CERETÉ, CÓRDOBA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE CERETE",
+      "observed": "MUNICIPIO DE CERETE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE CERETE'",
+      "should_execute": true
+    },
+    {
+      "code": "23162",
+      "query": "contratos de la alcaldia de CERETÉ, CÓRDOBA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE CERETE",
+      "observed": "MUNICIPIO DE CERETE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE CERETE'",
+      "should_execute": true
+    },
+    {
+      "code": "23162",
+      "query": "procesos del municipio de CERETÉ, CÓRDOBA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE CERETE",
+      "observed": "MUNICIPIO DE CERETE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE CERETE'",
+      "should_execute": true
+    },
+    {
+      "code": "23162",
+      "query": "contratos del municipio de CERETÉ, CÓRDOBA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE CERETE",
+      "observed": "MUNICIPIO DE CERETE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE CERETE'",
+      "should_execute": true
+    },
+    {
+      "code": "23162",
+      "query": "procesos de la alcaldia de CERETÉ",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE CERETE",
+      "observed": "MUNICIPIO DE CERETE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE CERETE'",
+      "should_execute": true
+    },
+    {
+      "code": "23162",
+      "query": "contratos de la alcaldia de CERETÉ",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE CERETE",
+      "observed": "MUNICIPIO DE CERETE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE CERETE'",
+      "should_execute": true
+    },
+    {
+      "code": "23162",
+      "query": "procesos del municipio de CERETÉ",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE CERETE",
+      "observed": "MUNICIPIO DE CERETE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE CERETE'",
+      "should_execute": true
+    },
+    {
+      "code": "23162",
+      "query": "contratos del municipio de CERETÉ",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE CERETE",
+      "observed": "MUNICIPIO DE CERETE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE CERETE'",
+      "should_execute": true
+    },
+    {
+      "code": "23182",
+      "query": "procesos de la alcaldia de CHINÚ, CÓRDOBA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPIO DE CHINU",
+      "observed": "ALCALDIA MUNICIPIO DE CHINU",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPIO DE CHINU'",
+      "should_execute": true
+    },
+    {
+      "code": "23182",
+      "query": "contratos de la alcaldia de CHINÚ, CÓRDOBA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPIO DE CHINU",
+      "observed": "ALCALDIA MUNICIPIO DE CHINU",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPIO DE CHINU'",
+      "should_execute": true
+    },
+    {
+      "code": "23182",
+      "query": "procesos del municipio de CHINÚ, CÓRDOBA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPIO DE CHINU",
+      "observed": "ALCALDIA MUNICIPIO DE CHINU",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPIO DE CHINU'",
+      "should_execute": true
+    },
+    {
+      "code": "23182",
+      "query": "contratos del municipio de CHINÚ, CÓRDOBA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPIO DE CHINU",
+      "observed": "ALCALDIA MUNICIPIO DE CHINU",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPIO DE CHINU'",
+      "should_execute": true
+    },
+    {
+      "code": "23182",
+      "query": "procesos de la alcaldia de CHINÚ",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPIO DE CHINU",
+      "observed": "ALCALDIA MUNICIPIO DE CHINU",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPIO DE CHINU'",
+      "should_execute": true
+    },
+    {
+      "code": "23182",
+      "query": "contratos de la alcaldia de CHINÚ",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPIO DE CHINU",
+      "observed": "ALCALDIA MUNICIPIO DE CHINU",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPIO DE CHINU'",
+      "should_execute": true
+    },
+    {
+      "code": "23182",
+      "query": "procesos del municipio de CHINÚ",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPIO DE CHINU",
+      "observed": "ALCALDIA MUNICIPIO DE CHINU",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPIO DE CHINU'",
+      "should_execute": true
+    },
+    {
+      "code": "23182",
+      "query": "contratos del municipio de CHINÚ",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPIO DE CHINU",
+      "observed": "ALCALDIA MUNICIPIO DE CHINU",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPIO DE CHINU'",
+      "should_execute": true
+    },
+    {
+      "code": "25339",
+      "query": "procesos de la alcaldia de GUTIÉRREZ, CUNDINAMARCA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE GUTIERREZ",
+      "observed": "MUNICIPIO DE GUTIERREZ",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE GUTIERREZ'",
+      "should_execute": true
+    },
+    {
+      "code": "25339",
+      "query": "contratos de la alcaldia de GUTIÉRREZ, CUNDINAMARCA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE GUTIERREZ",
+      "observed": "MUNICIPIO DE GUTIERREZ",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE GUTIERREZ'",
+      "should_execute": true
+    },
+    {
+      "code": "25339",
+      "query": "procesos del municipio de GUTIÉRREZ, CUNDINAMARCA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE GUTIERREZ",
+      "observed": "MUNICIPIO DE GUTIERREZ",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE GUTIERREZ'",
+      "should_execute": true
+    },
+    {
+      "code": "25339",
+      "query": "contratos del municipio de GUTIÉRREZ, CUNDINAMARCA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE GUTIERREZ",
+      "observed": "MUNICIPIO DE GUTIERREZ",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE GUTIERREZ'",
+      "should_execute": true
+    },
+    {
+      "code": "25339",
+      "query": "procesos de la alcaldia de GUTIÉRREZ",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE GUTIERREZ",
+      "observed": "MUNICIPIO DE GUTIERREZ",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE GUTIERREZ'",
+      "should_execute": true
+    },
+    {
+      "code": "25339",
+      "query": "contratos de la alcaldia de GUTIÉRREZ",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE GUTIERREZ",
+      "observed": "MUNICIPIO DE GUTIERREZ",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE GUTIERREZ'",
+      "should_execute": true
+    },
+    {
+      "code": "25339",
+      "query": "procesos del municipio de GUTIÉRREZ",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE GUTIERREZ",
+      "observed": "MUNICIPIO DE GUTIERREZ",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE GUTIERREZ'",
+      "should_execute": true
+    },
+    {
+      "code": "25339",
+      "query": "contratos del municipio de GUTIÉRREZ",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE GUTIERREZ",
+      "observed": "MUNICIPIO DE GUTIERREZ",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE GUTIERREZ'",
+      "should_execute": true
+    },
+    {
+      "code": "25394",
+      "query": "procesos de la alcaldia de LA PALMA, CUNDINAMARCA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO LA PALMA",
+      "observed": "MUNICIPIO LA PALMA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO LA PALMA'",
+      "should_execute": true
+    },
+    {
+      "code": "25394",
+      "query": "contratos de la alcaldia de LA PALMA, CUNDINAMARCA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO LA PALMA",
+      "observed": "MUNICIPIO LA PALMA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO LA PALMA'",
+      "should_execute": true
+    },
+    {
+      "code": "25394",
+      "query": "procesos del municipio de LA PALMA, CUNDINAMARCA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO LA PALMA",
+      "observed": "MUNICIPIO LA PALMA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO LA PALMA'",
+      "should_execute": true
+    },
+    {
+      "code": "25394",
+      "query": "contratos del municipio de LA PALMA, CUNDINAMARCA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO LA PALMA",
+      "observed": "MUNICIPIO LA PALMA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO LA PALMA'",
+      "should_execute": true
+    },
+    {
+      "code": "25394",
+      "query": "procesos de la alcaldia de LA PALMA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO LA PALMA",
+      "observed": "MUNICIPIO LA PALMA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO LA PALMA'",
+      "should_execute": true
+    },
+    {
+      "code": "25394",
+      "query": "contratos de la alcaldia de LA PALMA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO LA PALMA",
+      "observed": "MUNICIPIO LA PALMA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO LA PALMA'",
+      "should_execute": true
+    },
+    {
+      "code": "25394",
+      "query": "procesos del municipio de LA PALMA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO LA PALMA",
+      "observed": "MUNICIPIO LA PALMA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO LA PALMA'",
+      "should_execute": true
+    },
+    {
+      "code": "25394",
+      "query": "contratos del municipio de LA PALMA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO LA PALMA",
+      "observed": "MUNICIPIO LA PALMA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO LA PALMA'",
+      "should_execute": true
+    },
+    {
+      "code": "25407",
+      "query": "procesos de la alcaldia de LENGUAZAQUE, CUNDINAMARCA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE LENGUAZAQUE",
+      "observed": "MUNICIPIO DE LENGUAZAQUE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE LENGUAZAQUE'",
+      "should_execute": true
+    },
+    {
+      "code": "25407",
+      "query": "contratos de la alcaldia de LENGUAZAQUE, CUNDINAMARCA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE LENGUAZAQUE",
+      "observed": "MUNICIPIO DE LENGUAZAQUE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE LENGUAZAQUE'",
+      "should_execute": true
+    },
+    {
+      "code": "25407",
+      "query": "procesos del municipio de LENGUAZAQUE, CUNDINAMARCA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE LENGUAZAQUE",
+      "observed": "MUNICIPIO DE LENGUAZAQUE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE LENGUAZAQUE'",
+      "should_execute": true
+    },
+    {
+      "code": "25407",
+      "query": "contratos del municipio de LENGUAZAQUE, CUNDINAMARCA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE LENGUAZAQUE",
+      "observed": "MUNICIPIO DE LENGUAZAQUE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE LENGUAZAQUE'",
+      "should_execute": true
+    },
+    {
+      "code": "25407",
+      "query": "procesos de la alcaldia de LENGUAZAQUE",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE LENGUAZAQUE",
+      "observed": "MUNICIPIO DE LENGUAZAQUE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE LENGUAZAQUE'",
+      "should_execute": true
+    },
+    {
+      "code": "25407",
+      "query": "contratos de la alcaldia de LENGUAZAQUE",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE LENGUAZAQUE",
+      "observed": "MUNICIPIO DE LENGUAZAQUE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE LENGUAZAQUE'",
+      "should_execute": true
+    },
+    {
+      "code": "25407",
+      "query": "procesos del municipio de LENGUAZAQUE",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE LENGUAZAQUE",
+      "observed": "MUNICIPIO DE LENGUAZAQUE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE LENGUAZAQUE'",
+      "should_execute": true
+    },
+    {
+      "code": "25407",
+      "query": "contratos del municipio de LENGUAZAQUE",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE LENGUAZAQUE",
+      "observed": "MUNICIPIO DE LENGUAZAQUE",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE LENGUAZAQUE'",
+      "should_execute": true
+    },
+    {
+      "code": "25436",
+      "query": "procesos de la alcaldia de MANTA, CUNDINAMARCA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO MANTA CUNDINAMARCA",
+      "observed": "MUNICIPIO MANTA CUNDINAMARCA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO MANTA CUNDINAMARCA'",
+      "should_execute": true
+    },
+    {
+      "code": "25436",
+      "query": "contratos de la alcaldia de MANTA, CUNDINAMARCA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO MANTA CUNDINAMARCA",
+      "observed": "MUNICIPIO MANTA CUNDINAMARCA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO MANTA CUNDINAMARCA'",
+      "should_execute": true
+    },
+    {
+      "code": "25436",
+      "query": "procesos del municipio de MANTA, CUNDINAMARCA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO MANTA CUNDINAMARCA",
+      "observed": "MUNICIPIO MANTA CUNDINAMARCA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO MANTA CUNDINAMARCA'",
+      "should_execute": true
+    },
+    {
+      "code": "25436",
+      "query": "contratos del municipio de MANTA, CUNDINAMARCA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO MANTA CUNDINAMARCA",
+      "observed": "MUNICIPIO MANTA CUNDINAMARCA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO MANTA CUNDINAMARCA'",
+      "should_execute": true
+    },
+    {
+      "code": "25436",
+      "query": "procesos de la alcaldia de MANTA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO MANTA CUNDINAMARCA",
+      "observed": "MUNICIPIO MANTA CUNDINAMARCA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO MANTA CUNDINAMARCA'",
+      "should_execute": true
+    },
+    {
+      "code": "25436",
+      "query": "contratos de la alcaldia de MANTA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO MANTA CUNDINAMARCA",
+      "observed": "MUNICIPIO MANTA CUNDINAMARCA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO MANTA CUNDINAMARCA'",
+      "should_execute": true
+    },
+    {
+      "code": "25436",
+      "query": "procesos del municipio de MANTA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO MANTA CUNDINAMARCA",
+      "observed": "MUNICIPIO MANTA CUNDINAMARCA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO MANTA CUNDINAMARCA'",
+      "should_execute": true
+    },
+    {
+      "code": "25436",
+      "query": "contratos del municipio de MANTA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO MANTA CUNDINAMARCA",
+      "observed": "MUNICIPIO MANTA CUNDINAMARCA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO MANTA CUNDINAMARCA'",
+      "should_execute": true
+    },
+    {
+      "code": "25530",
+      "query": "procesos de la alcaldia de PARATEBUENO, CUNDINAMARCA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPAL PARATEBUENO",
+      "observed": "ALCALDIA MUNICIPAL PARATEBUENO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPAL PARATEBUENO'",
+      "should_execute": true
+    },
+    {
+      "code": "25530",
+      "query": "contratos de la alcaldia de PARATEBUENO, CUNDINAMARCA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPAL PARATEBUENO",
+      "observed": "ALCALDIA MUNICIPAL PARATEBUENO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPAL PARATEBUENO'",
+      "should_execute": true
+    },
+    {
+      "code": "25530",
+      "query": "procesos del municipio de PARATEBUENO, CUNDINAMARCA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPAL PARATEBUENO",
+      "observed": "ALCALDIA MUNICIPAL PARATEBUENO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPAL PARATEBUENO'",
+      "should_execute": true
+    },
+    {
+      "code": "25530",
+      "query": "contratos del municipio de PARATEBUENO, CUNDINAMARCA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPAL PARATEBUENO",
+      "observed": "ALCALDIA MUNICIPAL PARATEBUENO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPAL PARATEBUENO'",
+      "should_execute": true
+    },
+    {
+      "code": "25530",
+      "query": "procesos de la alcaldia de PARATEBUENO",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPAL PARATEBUENO",
+      "observed": "ALCALDIA MUNICIPAL PARATEBUENO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPAL PARATEBUENO'",
+      "should_execute": true
+    },
+    {
+      "code": "25530",
+      "query": "contratos de la alcaldia de PARATEBUENO",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPAL PARATEBUENO",
+      "observed": "ALCALDIA MUNICIPAL PARATEBUENO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPAL PARATEBUENO'",
+      "should_execute": true
+    },
+    {
+      "code": "25530",
+      "query": "procesos del municipio de PARATEBUENO",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPAL PARATEBUENO",
+      "observed": "ALCALDIA MUNICIPAL PARATEBUENO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPAL PARATEBUENO'",
+      "should_execute": true
+    },
+    {
+      "code": "25530",
+      "query": "contratos del municipio de PARATEBUENO",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPAL PARATEBUENO",
+      "observed": "ALCALDIA MUNICIPAL PARATEBUENO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPAL PARATEBUENO'",
+      "should_execute": true
+    },
+    {
+      "code": "25817",
+      "query": "procesos de la alcaldia de TOCANCIPÁ, CUNDINAMARCA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE TOCANCIPA",
+      "observed": "MUNICIPIO DE TOCANCIPA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE TOCANCIPA'",
+      "should_execute": true
+    },
+    {
+      "code": "25817",
+      "query": "contratos de la alcaldia de TOCANCIPÁ, CUNDINAMARCA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE TOCANCIPA",
+      "observed": "MUNICIPIO DE TOCANCIPA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE TOCANCIPA'",
+      "should_execute": true
+    },
+    {
+      "code": "25817",
+      "query": "procesos del municipio de TOCANCIPÁ, CUNDINAMARCA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE TOCANCIPA",
+      "observed": "MUNICIPIO DE TOCANCIPA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE TOCANCIPA'",
+      "should_execute": true
+    },
+    {
+      "code": "25817",
+      "query": "contratos del municipio de TOCANCIPÁ, CUNDINAMARCA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE TOCANCIPA",
+      "observed": "MUNICIPIO DE TOCANCIPA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE TOCANCIPA'",
+      "should_execute": true
+    },
+    {
+      "code": "25817",
+      "query": "procesos de la alcaldia de TOCANCIPÁ",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE TOCANCIPA",
+      "observed": "MUNICIPIO DE TOCANCIPA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE TOCANCIPA'",
+      "should_execute": true
+    },
+    {
+      "code": "25817",
+      "query": "contratos de la alcaldia de TOCANCIPÁ",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE TOCANCIPA",
+      "observed": "MUNICIPIO DE TOCANCIPA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE TOCANCIPA'",
+      "should_execute": true
+    },
+    {
+      "code": "25817",
+      "query": "procesos del municipio de TOCANCIPÁ",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE TOCANCIPA",
+      "observed": "MUNICIPIO DE TOCANCIPA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE TOCANCIPA'",
+      "should_execute": true
+    },
+    {
+      "code": "25817",
+      "query": "contratos del municipio de TOCANCIPÁ",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE TOCANCIPA",
+      "observed": "MUNICIPIO DE TOCANCIPA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE TOCANCIPA'",
+      "should_execute": true
+    },
+    {
+      "code": "25867",
+      "query": "procesos de la alcaldia de VIANÍ, CUNDINAMARCA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPAL DE VIANI",
+      "observed": "ALCALDIA MUNICIPAL DE VIANI",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPAL DE VIANI'",
+      "should_execute": true
+    },
+    {
+      "code": "25867",
+      "query": "contratos de la alcaldia de VIANÍ, CUNDINAMARCA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPAL DE VIANI",
+      "observed": "ALCALDIA MUNICIPAL DE VIANI",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE VIANI'",
+      "should_execute": true
+    },
+    {
+      "code": "25867",
+      "query": "procesos del municipio de VIANÍ, CUNDINAMARCA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPAL DE VIANI",
+      "observed": "ALCALDIA MUNICIPAL DE VIANI",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPAL DE VIANI'",
+      "should_execute": true
+    },
+    {
+      "code": "25867",
+      "query": "contratos del municipio de VIANÍ, CUNDINAMARCA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPAL DE VIANI",
+      "observed": "ALCALDIA MUNICIPAL DE VIANI",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE VIANI'",
+      "should_execute": true
+    },
+    {
+      "code": "25867",
+      "query": "procesos de la alcaldia de VIANÍ",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPAL DE VIANI",
+      "observed": "ALCALDIA MUNICIPAL DE VIANI",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPAL DE VIANI'",
+      "should_execute": true
+    },
+    {
+      "code": "25867",
+      "query": "contratos de la alcaldia de VIANÍ",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPAL DE VIANI",
+      "observed": "ALCALDIA MUNICIPAL DE VIANI",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE VIANI'",
+      "should_execute": true
+    },
+    {
+      "code": "25867",
+      "query": "procesos del municipio de VIANÍ",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPAL DE VIANI",
+      "observed": "ALCALDIA MUNICIPAL DE VIANI",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPAL DE VIANI'",
+      "should_execute": true
+    },
+    {
+      "code": "25867",
+      "query": "contratos del municipio de VIANÍ",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPAL DE VIANI",
+      "observed": "ALCALDIA MUNICIPAL DE VIANI",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE VIANI'",
+      "should_execute": true
+    },
+    {
+      "code": "41770",
+      "query": "procesos de la alcaldia de SUAZA, HUILA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE SUAZA",
+      "observed": "MUNICIPIO DE SUAZA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE SUAZA'",
+      "should_execute": true
+    },
+    {
+      "code": "41770",
+      "query": "contratos de la alcaldia de SUAZA, HUILA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE SUAZA",
+      "observed": "MUNICIPIO DE SUAZA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE SUAZA'",
+      "should_execute": true
+    },
+    {
+      "code": "41770",
+      "query": "procesos del municipio de SUAZA, HUILA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE SUAZA",
+      "observed": "MUNICIPIO DE SUAZA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE SUAZA'",
+      "should_execute": true
+    },
+    {
+      "code": "41770",
+      "query": "contratos del municipio de SUAZA, HUILA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE SUAZA",
+      "observed": "MUNICIPIO DE SUAZA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE SUAZA'",
+      "should_execute": true
+    },
+    {
+      "code": "41770",
+      "query": "procesos de la alcaldia de SUAZA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE SUAZA",
+      "observed": "MUNICIPIO DE SUAZA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE SUAZA'",
+      "should_execute": true
+    },
+    {
+      "code": "41770",
+      "query": "contratos de la alcaldia de SUAZA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE SUAZA",
+      "observed": "MUNICIPIO DE SUAZA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE SUAZA'",
+      "should_execute": true
+    },
+    {
+      "code": "41770",
+      "query": "procesos del municipio de SUAZA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE SUAZA",
+      "observed": "MUNICIPIO DE SUAZA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE SUAZA'",
+      "should_execute": true
+    },
+    {
+      "code": "41770",
+      "query": "contratos del municipio de SUAZA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE SUAZA",
+      "observed": "MUNICIPIO DE SUAZA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE SUAZA'",
+      "should_execute": true
+    },
+    {
+      "code": "50568",
+      "query": "procesos de la alcaldia de PUERTO GAITÁN, META",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE PUERTO GAITAN",
+      "observed": "MUNICIPIO DE PUERTO GAITAN",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE PUERTO GAITAN'",
+      "should_execute": true
+    },
+    {
+      "code": "50568",
+      "query": "contratos de la alcaldia de PUERTO GAITÁN, META",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE PUERTO GAITAN",
+      "observed": "MUNICIPIO DE PUERTO GAITAN",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE PUERTO GAITAN'",
+      "should_execute": true
+    },
+    {
+      "code": "50568",
+      "query": "procesos del municipio de PUERTO GAITÁN, META",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE PUERTO GAITAN",
+      "observed": "MUNICIPIO DE PUERTO GAITAN",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE PUERTO GAITAN'",
+      "should_execute": true
+    },
+    {
+      "code": "50568",
+      "query": "contratos del municipio de PUERTO GAITÁN, META",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE PUERTO GAITAN",
+      "observed": "MUNICIPIO DE PUERTO GAITAN",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE PUERTO GAITAN'",
+      "should_execute": true
+    },
+    {
+      "code": "50568",
+      "query": "procesos de la alcaldia de PUERTO GAITÁN",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE PUERTO GAITAN",
+      "observed": "MUNICIPIO DE PUERTO GAITAN",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE PUERTO GAITAN'",
+      "should_execute": true
+    },
+    {
+      "code": "50568",
+      "query": "contratos de la alcaldia de PUERTO GAITÁN",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE PUERTO GAITAN",
+      "observed": "MUNICIPIO DE PUERTO GAITAN",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE PUERTO GAITAN'",
+      "should_execute": true
+    },
+    {
+      "code": "50568",
+      "query": "procesos del municipio de PUERTO GAITÁN",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE PUERTO GAITAN",
+      "observed": "MUNICIPIO DE PUERTO GAITAN",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE PUERTO GAITAN'",
+      "should_execute": true
+    },
+    {
+      "code": "50568",
+      "query": "contratos del municipio de PUERTO GAITÁN",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE PUERTO GAITAN",
+      "observed": "MUNICIPIO DE PUERTO GAITAN",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE PUERTO GAITAN'",
+      "should_execute": true
+    },
+    {
+      "code": "52354",
+      "query": "procesos de la alcaldia de IMUÉS, NARIÑO",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA IMUES",
+      "observed": "ALCALDIA IMUES",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA IMUES'",
+      "should_execute": true
+    },
+    {
+      "code": "52354",
+      "query": "contratos de la alcaldia de IMUÉS, NARIÑO",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA IMUES",
+      "observed": "ALCALDIA IMUES",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA IMUES'",
+      "should_execute": true
+    },
+    {
+      "code": "52354",
+      "query": "procesos del municipio de IMUÉS, NARIÑO",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA IMUES",
+      "observed": "ALCALDIA IMUES",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA IMUES'",
+      "should_execute": true
+    },
+    {
+      "code": "52354",
+      "query": "contratos del municipio de IMUÉS, NARIÑO",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA IMUES",
+      "observed": "ALCALDIA IMUES",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA IMUES'",
+      "should_execute": true
+    },
+    {
+      "code": "52354",
+      "query": "procesos de la alcaldia de IMUÉS",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA IMUES",
+      "observed": "ALCALDIA IMUES",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA IMUES'",
+      "should_execute": true
+    },
+    {
+      "code": "52354",
+      "query": "contratos de la alcaldia de IMUÉS",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA IMUES",
+      "observed": "ALCALDIA IMUES",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA IMUES'",
+      "should_execute": true
+    },
+    {
+      "code": "52354",
+      "query": "procesos del municipio de IMUÉS",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA IMUES",
+      "observed": "ALCALDIA IMUES",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA IMUES'",
+      "should_execute": true
+    },
+    {
+      "code": "52354",
+      "query": "contratos del municipio de IMUÉS",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA IMUES",
+      "observed": "ALCALDIA IMUES",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA IMUES'",
+      "should_execute": true
+    },
+    {
+      "code": "52356",
+      "query": "procesos de la alcaldia de IPIALES, NARIÑO",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPAL DE IPIALES",
+      "observed": "ALCALDIA MUNICIPAL DE IPIALES",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPAL DE IPIALES'",
+      "should_execute": true
+    },
+    {
+      "code": "52356",
+      "query": "contratos de la alcaldia de IPIALES, NARIÑO",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPAL DE IPIALES",
+      "observed": "ALCALDIA MUNICIPAL DE IPIALES",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE IPIALES'",
+      "should_execute": true
+    },
+    {
+      "code": "52356",
+      "query": "procesos del municipio de IPIALES, NARIÑO",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPAL DE IPIALES",
+      "observed": "ALCALDIA MUNICIPAL DE IPIALES",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPAL DE IPIALES'",
+      "should_execute": true
+    },
+    {
+      "code": "52356",
+      "query": "contratos del municipio de IPIALES, NARIÑO",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPAL DE IPIALES",
+      "observed": "ALCALDIA MUNICIPAL DE IPIALES",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE IPIALES'",
+      "should_execute": true
+    },
+    {
+      "code": "52356",
+      "query": "procesos de la alcaldia de IPIALES",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPAL DE IPIALES",
+      "observed": "ALCALDIA MUNICIPAL DE IPIALES",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPAL DE IPIALES'",
+      "should_execute": true
+    },
+    {
+      "code": "52356",
+      "query": "contratos de la alcaldia de IPIALES",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPAL DE IPIALES",
+      "observed": "ALCALDIA MUNICIPAL DE IPIALES",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE IPIALES'",
+      "should_execute": true
+    },
+    {
+      "code": "52356",
+      "query": "procesos del municipio de IPIALES",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPAL DE IPIALES",
+      "observed": "ALCALDIA MUNICIPAL DE IPIALES",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPAL DE IPIALES'",
+      "should_execute": true
+    },
+    {
+      "code": "52356",
+      "query": "contratos del municipio de IPIALES",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPAL DE IPIALES",
+      "observed": "ALCALDIA MUNICIPAL DE IPIALES",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE IPIALES'",
+      "should_execute": true
+    },
+    {
+      "code": "54405",
+      "query": "procesos de la alcaldia de LOS PATIOS, NORTE DE SANTANDER",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE LOS PATIOS",
+      "observed": "MUNICIPIO DE LOS PATIOS",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE LOS PATIOS'",
+      "should_execute": true
+    },
+    {
+      "code": "54405",
+      "query": "contratos de la alcaldia de LOS PATIOS, NORTE DE SANTANDER",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE LOS PATIOS",
+      "observed": "MUNICIPIO DE LOS PATIOS",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE LOS PATIOS'",
+      "should_execute": true
+    },
+    {
+      "code": "54405",
+      "query": "procesos del municipio de LOS PATIOS, NORTE DE SANTANDER",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE LOS PATIOS",
+      "observed": "MUNICIPIO DE LOS PATIOS",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE LOS PATIOS'",
+      "should_execute": true
+    },
+    {
+      "code": "54405",
+      "query": "contratos del municipio de LOS PATIOS, NORTE DE SANTANDER",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE LOS PATIOS",
+      "observed": "MUNICIPIO DE LOS PATIOS",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE LOS PATIOS'",
+      "should_execute": true
+    },
+    {
+      "code": "54405",
+      "query": "procesos de la alcaldia de LOS PATIOS",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE LOS PATIOS",
+      "observed": "MUNICIPIO DE LOS PATIOS",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE LOS PATIOS'",
+      "should_execute": true
+    },
+    {
+      "code": "54405",
+      "query": "contratos de la alcaldia de LOS PATIOS",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE LOS PATIOS",
+      "observed": "MUNICIPIO DE LOS PATIOS",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE LOS PATIOS'",
+      "should_execute": true
+    },
+    {
+      "code": "54405",
+      "query": "procesos del municipio de LOS PATIOS",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE LOS PATIOS",
+      "observed": "MUNICIPIO DE LOS PATIOS",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE LOS PATIOS'",
+      "should_execute": true
+    },
+    {
+      "code": "54405",
+      "query": "contratos del municipio de LOS PATIOS",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE LOS PATIOS",
+      "observed": "MUNICIPIO DE LOS PATIOS",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE LOS PATIOS'",
+      "should_execute": true
+    },
+    {
+      "code": "54810",
+      "query": "procesos de la alcaldia de TIBÚ, NORTE DE SANTANDER",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE TIBÚ",
+      "observed": "MUNICIPIO DE TIBÚ",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE TIBÚ'",
+      "should_execute": true
+    },
+    {
+      "code": "54810",
+      "query": "contratos de la alcaldia de TIBÚ, NORTE DE SANTANDER",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE TIBÚ",
+      "observed": "MUNICIPIO DE TIBÚ",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE TIBÚ'",
+      "should_execute": true
+    },
+    {
+      "code": "54810",
+      "query": "procesos del municipio de TIBÚ, NORTE DE SANTANDER",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE TIBÚ",
+      "observed": "MUNICIPIO DE TIBÚ",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE TIBÚ'",
+      "should_execute": true
+    },
+    {
+      "code": "54810",
+      "query": "contratos del municipio de TIBÚ, NORTE DE SANTANDER",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE TIBÚ",
+      "observed": "MUNICIPIO DE TIBÚ",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE TIBÚ'",
+      "should_execute": true
+    },
+    {
+      "code": "54810",
+      "query": "procesos de la alcaldia de TIBÚ",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE TIBÚ",
+      "observed": "MUNICIPIO DE TIBÚ",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE TIBÚ'",
+      "should_execute": true
+    },
+    {
+      "code": "54810",
+      "query": "contratos de la alcaldia de TIBÚ",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE TIBÚ",
+      "observed": "MUNICIPIO DE TIBÚ",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE TIBÚ'",
+      "should_execute": true
+    },
+    {
+      "code": "54810",
+      "query": "procesos del municipio de TIBÚ",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE TIBÚ",
+      "observed": "MUNICIPIO DE TIBÚ",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE TIBÚ'",
+      "should_execute": true
+    },
+    {
+      "code": "54810",
+      "query": "contratos del municipio de TIBÚ",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE TIBÚ",
+      "observed": "MUNICIPIO DE TIBÚ",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE TIBÚ'",
+      "should_execute": true
+    },
+    {
+      "code": "63212",
+      "query": "procesos de la alcaldia de CÓRDOBA, QUINDÍO",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDÍA MUNICIPIO DE CÓRDOBA - QUINDIO",
+      "observed": "ALCALDÍA MUNICIPIO DE CÓRDOBA - QUINDIO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDÍA MUNICIPIO DE CÓRDOBA - QUINDIO'",
+      "should_execute": true
+    },
+    {
+      "code": "63212",
+      "query": "contratos de la alcaldia de CÓRDOBA, QUINDÍO",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDÍA MUNICIPIO DE CÓRDOBA - QUINDIO",
+      "observed": "ALCALDÍA MUNICIPIO DE CÓRDOBA - QUINDIO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDÍA MUNICIPIO DE CÓRDOBA - QUINDIO'",
+      "should_execute": true
+    },
+    {
+      "code": "63212",
+      "query": "procesos del municipio de CÓRDOBA, QUINDÍO",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDÍA MUNICIPIO DE CÓRDOBA - QUINDIO",
+      "observed": "ALCALDÍA MUNICIPIO DE CÓRDOBA - QUINDIO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDÍA MUNICIPIO DE CÓRDOBA - QUINDIO'",
+      "should_execute": true
+    },
+    {
+      "code": "63212",
+      "query": "contratos del municipio de CÓRDOBA, QUINDÍO",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDÍA MUNICIPIO DE CÓRDOBA - QUINDIO",
+      "observed": "ALCALDÍA MUNICIPIO DE CÓRDOBA - QUINDIO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDÍA MUNICIPIO DE CÓRDOBA - QUINDIO'",
+      "should_execute": true
+    },
+    {
+      "code": "63548",
+      "query": "procesos de la alcaldia de PIJAO, QUINDÍO",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO  DE PIJAO",
+      "observed": "MUNICIPIO  DE PIJAO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO  DE PIJAO'",
+      "should_execute": true
+    },
+    {
+      "code": "63548",
+      "query": "contratos de la alcaldia de PIJAO, QUINDÍO",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO  DE PIJAO",
+      "observed": "MUNICIPIO  DE PIJAO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO  DE PIJAO'",
+      "should_execute": true
+    },
+    {
+      "code": "63548",
+      "query": "procesos del municipio de PIJAO, QUINDÍO",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO  DE PIJAO",
+      "observed": "MUNICIPIO  DE PIJAO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO  DE PIJAO'",
+      "should_execute": true
+    },
+    {
+      "code": "63548",
+      "query": "contratos del municipio de PIJAO, QUINDÍO",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO  DE PIJAO",
+      "observed": "MUNICIPIO  DE PIJAO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO  DE PIJAO'",
+      "should_execute": true
+    },
+    {
+      "code": "63548",
+      "query": "procesos de la alcaldia de PIJAO",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO  DE PIJAO",
+      "observed": "MUNICIPIO  DE PIJAO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO  DE PIJAO'",
+      "should_execute": true
+    },
+    {
+      "code": "63548",
+      "query": "contratos de la alcaldia de PIJAO",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO  DE PIJAO",
+      "observed": "MUNICIPIO  DE PIJAO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO  DE PIJAO'",
+      "should_execute": true
+    },
+    {
+      "code": "63548",
+      "query": "procesos del municipio de PIJAO",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO  DE PIJAO",
+      "observed": "MUNICIPIO  DE PIJAO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO  DE PIJAO'",
+      "should_execute": true
+    },
+    {
+      "code": "63548",
+      "query": "contratos del municipio de PIJAO",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO  DE PIJAO",
+      "observed": "MUNICIPIO  DE PIJAO",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO  DE PIJAO'",
+      "should_execute": true
+    },
+    {
+      "code": "68001",
+      "query": "procesos de la alcaldia de BUCARAMANGA, SANTANDER",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE BUCARAMANGA",
+      "observed": "MUNICIPIO DE BUCARAMANGA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE BUCARAMANGA'",
+      "should_execute": true
+    },
+    {
+      "code": "68001",
+      "query": "contratos de la alcaldia de BUCARAMANGA, SANTANDER",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE BUCARAMANGA",
+      "observed": "MUNICIPIO DE BUCARAMANGA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE BUCARAMANGA'",
+      "should_execute": true
+    },
+    {
+      "code": "68001",
+      "query": "procesos del municipio de BUCARAMANGA, SANTANDER",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE BUCARAMANGA",
+      "observed": "MUNICIPIO DE BUCARAMANGA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE BUCARAMANGA'",
+      "should_execute": true
+    },
+    {
+      "code": "68001",
+      "query": "contratos del municipio de BUCARAMANGA, SANTANDER",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE BUCARAMANGA",
+      "observed": "MUNICIPIO DE BUCARAMANGA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE BUCARAMANGA'",
+      "should_execute": true
+    },
+    {
+      "code": "68001",
+      "query": "procesos de la alcaldia de BUCARAMANGA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE BUCARAMANGA",
+      "observed": "MUNICIPIO DE BUCARAMANGA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE BUCARAMANGA'",
+      "should_execute": true
+    },
+    {
+      "code": "68001",
+      "query": "contratos de la alcaldia de BUCARAMANGA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE BUCARAMANGA",
+      "observed": "MUNICIPIO DE BUCARAMANGA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE BUCARAMANGA'",
+      "should_execute": true
+    },
+    {
+      "code": "68001",
+      "query": "procesos del municipio de BUCARAMANGA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE BUCARAMANGA",
+      "observed": "MUNICIPIO DE BUCARAMANGA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE BUCARAMANGA'",
+      "should_execute": true
+    },
+    {
+      "code": "68001",
+      "query": "contratos del municipio de BUCARAMANGA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE BUCARAMANGA",
+      "observed": "MUNICIPIO DE BUCARAMANGA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE BUCARAMANGA'",
+      "should_execute": true
+    },
+    {
+      "code": "68773",
+      "query": "procesos de la alcaldia de SUCRE, SANTANDER",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE SUCRE SANTANDER",
+      "observed": "MUNICIPIO DE SUCRE SANTANDER",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE SUCRE SANTANDER'",
+      "should_execute": true
+    },
+    {
+      "code": "68773",
+      "query": "contratos de la alcaldia de SUCRE, SANTANDER",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE SUCRE SANTANDER",
+      "observed": "MUNICIPIO DE SUCRE SANTANDER",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE SUCRE SANTANDER'",
+      "should_execute": true
+    },
+    {
+      "code": "68773",
+      "query": "procesos del municipio de SUCRE, SANTANDER",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE SUCRE SANTANDER",
+      "observed": "MUNICIPIO DE SUCRE SANTANDER",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE SUCRE SANTANDER'",
+      "should_execute": true
+    },
+    {
+      "code": "68773",
+      "query": "contratos del municipio de SUCRE, SANTANDER",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE SUCRE SANTANDER",
+      "observed": "MUNICIPIO DE SUCRE SANTANDER",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE SUCRE SANTANDER'",
+      "should_execute": true
+    },
+    {
+      "code": "76248",
+      "query": "procesos de la alcaldia de EL CERRITO, VALLE DEL CAUCA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE EL CERRITO.",
+      "observed": "MUNICIPIO DE EL CERRITO.",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE EL CERRITO.'",
+      "should_execute": true
+    },
+    {
+      "code": "76248",
+      "query": "contratos de la alcaldia de EL CERRITO, VALLE DEL CAUCA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE EL CERRITO.",
+      "observed": "MUNICIPIO DE EL CERRITO.",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE EL CERRITO.'",
+      "should_execute": true
+    },
+    {
+      "code": "76248",
+      "query": "procesos del municipio de EL CERRITO, VALLE DEL CAUCA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE EL CERRITO.",
+      "observed": "MUNICIPIO DE EL CERRITO.",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE EL CERRITO.'",
+      "should_execute": true
+    },
+    {
+      "code": "76248",
+      "query": "contratos del municipio de EL CERRITO, VALLE DEL CAUCA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE EL CERRITO.",
+      "observed": "MUNICIPIO DE EL CERRITO.",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE EL CERRITO.'",
+      "should_execute": true
+    },
+    {
+      "code": "76248",
+      "query": "procesos de la alcaldia de EL CERRITO",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE EL CERRITO.",
+      "observed": "MUNICIPIO DE EL CERRITO.",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE EL CERRITO.'",
+      "should_execute": true
+    },
+    {
+      "code": "76248",
+      "query": "contratos de la alcaldia de EL CERRITO",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE EL CERRITO.",
+      "observed": "MUNICIPIO DE EL CERRITO.",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE EL CERRITO.'",
+      "should_execute": true
+    },
+    {
+      "code": "76248",
+      "query": "procesos del municipio de EL CERRITO",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE EL CERRITO.",
+      "observed": "MUNICIPIO DE EL CERRITO.",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE EL CERRITO.'",
+      "should_execute": true
+    },
+    {
+      "code": "76248",
+      "query": "contratos del municipio de EL CERRITO",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE EL CERRITO.",
+      "observed": "MUNICIPIO DE EL CERRITO.",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE EL CERRITO.'",
+      "should_execute": true
+    },
+    {
+      "code": "85010",
+      "query": "procesos de la alcaldia de AGUAZUL, CASANARE",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA DEL MUNICIPIO DE AGUAZUL",
+      "observed": "ALCALDIA DEL MUNICIPIO DE AGUAZUL",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA DEL MUNICIPIO DE AGUAZUL'",
+      "should_execute": true
+    },
+    {
+      "code": "85010",
+      "query": "contratos de la alcaldia de AGUAZUL, CASANARE",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA DEL MUNICIPIO DE AGUAZUL",
+      "observed": "ALCALDIA DEL MUNICIPIO DE AGUAZUL",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA DEL MUNICIPIO DE AGUAZUL'",
+      "should_execute": true
+    },
+    {
+      "code": "85010",
+      "query": "procesos del municipio de AGUAZUL, CASANARE",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA DEL MUNICIPIO DE AGUAZUL",
+      "observed": "ALCALDIA DEL MUNICIPIO DE AGUAZUL",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA DEL MUNICIPIO DE AGUAZUL'",
+      "should_execute": true
+    },
+    {
+      "code": "85010",
+      "query": "contratos del municipio de AGUAZUL, CASANARE",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA DEL MUNICIPIO DE AGUAZUL",
+      "observed": "ALCALDIA DEL MUNICIPIO DE AGUAZUL",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA DEL MUNICIPIO DE AGUAZUL'",
+      "should_execute": true
+    },
+    {
+      "code": "85010",
+      "query": "procesos de la alcaldia de AGUAZUL",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA DEL MUNICIPIO DE AGUAZUL",
+      "observed": "ALCALDIA DEL MUNICIPIO DE AGUAZUL",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA DEL MUNICIPIO DE AGUAZUL'",
+      "should_execute": true
+    },
+    {
+      "code": "85010",
+      "query": "contratos de la alcaldia de AGUAZUL",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA DEL MUNICIPIO DE AGUAZUL",
+      "observed": "ALCALDIA DEL MUNICIPIO DE AGUAZUL",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA DEL MUNICIPIO DE AGUAZUL'",
+      "should_execute": true
+    },
+    {
+      "code": "85010",
+      "query": "procesos del municipio de AGUAZUL",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA DEL MUNICIPIO DE AGUAZUL",
+      "observed": "ALCALDIA DEL MUNICIPIO DE AGUAZUL",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA DEL MUNICIPIO DE AGUAZUL'",
+      "should_execute": true
+    },
+    {
+      "code": "85010",
+      "query": "contratos del municipio de AGUAZUL",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA DEL MUNICIPIO DE AGUAZUL",
+      "observed": "ALCALDIA DEL MUNICIPIO DE AGUAZUL",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA DEL MUNICIPIO DE AGUAZUL'",
+      "should_execute": true
+    },
+    {
+      "code": "85315",
+      "query": "procesos de la alcaldia de SÁCAMA, CASANARE",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPAL DE SACAMA",
+      "observed": "ALCALDIA MUNICIPAL DE SACAMA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPAL DE SACAMA'",
+      "should_execute": true
+    },
+    {
+      "code": "85315",
+      "query": "contratos de la alcaldia de SÁCAMA, CASANARE",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPAL DE SACAMA",
+      "observed": "ALCALDIA MUNICIPAL DE SACAMA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE SACAMA'",
+      "should_execute": true
+    },
+    {
+      "code": "85315",
+      "query": "procesos del municipio de SÁCAMA, CASANARE",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPAL DE SACAMA",
+      "observed": "ALCALDIA MUNICIPAL DE SACAMA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPAL DE SACAMA'",
+      "should_execute": true
+    },
+    {
+      "code": "85315",
+      "query": "contratos del municipio de SÁCAMA, CASANARE",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPAL DE SACAMA",
+      "observed": "ALCALDIA MUNICIPAL DE SACAMA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE SACAMA'",
+      "should_execute": true
+    },
+    {
+      "code": "85315",
+      "query": "procesos de la alcaldia de SÁCAMA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPAL DE SACAMA",
+      "observed": "ALCALDIA MUNICIPAL DE SACAMA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPAL DE SACAMA'",
+      "should_execute": true
+    },
+    {
+      "code": "85315",
+      "query": "contratos de la alcaldia de SÁCAMA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPAL DE SACAMA",
+      "observed": "ALCALDIA MUNICIPAL DE SACAMA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE SACAMA'",
+      "should_execute": true
+    },
+    {
+      "code": "85315",
+      "query": "procesos del municipio de SÁCAMA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPAL DE SACAMA",
+      "observed": "ALCALDIA MUNICIPAL DE SACAMA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPAL DE SACAMA'",
+      "should_execute": true
+    },
+    {
+      "code": "85315",
+      "query": "contratos del municipio de SÁCAMA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPAL DE SACAMA",
+      "observed": "ALCALDIA MUNICIPAL DE SACAMA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE SACAMA'",
+      "should_execute": true
+    },
+    {
+      "code": "15774",
+      "query": "procesos de la alcaldia de SUSACÓN, BOYACÁ",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPAL SUSACON BOYACA",
+      "observed": "ALCALDIA MUNICIPAL SUSACON BOYACA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPAL SUSACON BOYACA'",
+      "should_execute": true
+    },
+    {
+      "code": "15774",
+      "query": "contratos de la alcaldia de SUSACÓN, BOYACÁ",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPAL SUSACON BOYACA",
+      "observed": "ALCALDIA MUNICIPAL SUSACON BOYACA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPAL SUSACON BOYACA'",
+      "should_execute": true
+    },
+    {
+      "code": "15774",
+      "query": "procesos del municipio de SUSACÓN, BOYACÁ",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPAL SUSACON BOYACA",
+      "observed": "ALCALDIA MUNICIPAL SUSACON BOYACA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPAL SUSACON BOYACA'",
+      "should_execute": true
+    },
+    {
+      "code": "15774",
+      "query": "contratos del municipio de SUSACÓN, BOYACÁ",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPAL SUSACON BOYACA",
+      "observed": "ALCALDIA MUNICIPAL SUSACON BOYACA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPAL SUSACON BOYACA'",
+      "should_execute": true
+    },
+    {
+      "code": "15774",
+      "query": "procesos de la alcaldia de SUSACÓN",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPAL SUSACON BOYACA",
+      "observed": "ALCALDIA MUNICIPAL SUSACON BOYACA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPAL SUSACON BOYACA'",
+      "should_execute": true
+    },
+    {
+      "code": "15774",
+      "query": "contratos de la alcaldia de SUSACÓN",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPAL SUSACON BOYACA",
+      "observed": "ALCALDIA MUNICIPAL SUSACON BOYACA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPAL SUSACON BOYACA'",
+      "should_execute": true
+    },
+    {
+      "code": "15774",
+      "query": "procesos del municipio de SUSACÓN",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPAL SUSACON BOYACA",
+      "observed": "ALCALDIA MUNICIPAL SUSACON BOYACA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPAL SUSACON BOYACA'",
+      "should_execute": true
+    },
+    {
+      "code": "15774",
+      "query": "contratos del municipio de SUSACÓN",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPAL SUSACON BOYACA",
+      "observed": "ALCALDIA MUNICIPAL SUSACON BOYACA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPAL SUSACON BOYACA'",
+      "should_execute": true
+    },
+    {
+      "code": "18860",
+      "query": "procesos de la alcaldia de VALPARAÍSO, CAQUETÁ",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE VALPARAISO CAQUETA",
+      "observed": "MUNICIPIO DE VALPARAISO CAQUETA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE VALPARAISO CAQUETA'",
+      "should_execute": true
+    },
+    {
+      "code": "18860",
+      "query": "contratos de la alcaldia de VALPARAÍSO, CAQUETÁ",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE VALPARAISO CAQUETA",
+      "observed": "MUNICIPIO DE VALPARAISO CAQUETA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE VALPARAISO CAQUETA'",
+      "should_execute": true
+    },
+    {
+      "code": "18860",
+      "query": "procesos del municipio de VALPARAÍSO, CAQUETÁ",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE VALPARAISO CAQUETA",
+      "observed": "MUNICIPIO DE VALPARAISO CAQUETA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE VALPARAISO CAQUETA'",
+      "should_execute": true
+    },
+    {
+      "code": "18860",
+      "query": "contratos del municipio de VALPARAÍSO, CAQUETÁ",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE VALPARAISO CAQUETA",
+      "observed": "MUNICIPIO DE VALPARAISO CAQUETA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE VALPARAISO CAQUETA'",
+      "should_execute": true
+    },
+    {
+      "code": "25486",
+      "query": "procesos de la alcaldia de NEMOCÓN, CUNDINAMARCA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDÍA NEMOCON",
+      "observed": "ALCALDÍA NEMOCON",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDÍA NEMOCON'",
+      "should_execute": true
+    },
+    {
+      "code": "25486",
+      "query": "contratos de la alcaldia de NEMOCÓN, CUNDINAMARCA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDÍA NEMOCON",
+      "observed": "ALCALDÍA NEMOCON",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDÍA NEMOCON'",
+      "should_execute": true
+    },
+    {
+      "code": "25486",
+      "query": "procesos del municipio de NEMOCÓN, CUNDINAMARCA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDÍA NEMOCON",
+      "observed": "ALCALDÍA NEMOCON",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDÍA NEMOCON'",
+      "should_execute": true
+    },
+    {
+      "code": "25486",
+      "query": "contratos del municipio de NEMOCÓN, CUNDINAMARCA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDÍA NEMOCON",
+      "observed": "ALCALDÍA NEMOCON",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDÍA NEMOCON'",
+      "should_execute": true
+    },
+    {
+      "code": "25486",
+      "query": "procesos de la alcaldia de NEMOCÓN",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDÍA NEMOCON",
+      "observed": "ALCALDÍA NEMOCON",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDÍA NEMOCON'",
+      "should_execute": true
+    },
+    {
+      "code": "25486",
+      "query": "contratos de la alcaldia de NEMOCÓN",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDÍA NEMOCON",
+      "observed": "ALCALDÍA NEMOCON",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDÍA NEMOCON'",
+      "should_execute": true
+    },
+    {
+      "code": "25486",
+      "query": "procesos del municipio de NEMOCÓN",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDÍA NEMOCON",
+      "observed": "ALCALDÍA NEMOCON",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDÍA NEMOCON'",
+      "should_execute": true
+    },
+    {
+      "code": "25486",
+      "query": "contratos del municipio de NEMOCÓN",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDÍA NEMOCON",
+      "observed": "ALCALDÍA NEMOCON",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDÍA NEMOCON'",
+      "should_execute": true
+    },
+    {
+      "code": "25779",
+      "query": "procesos de la alcaldia de SUSA, CUNDINAMARCA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA DE SUSA",
+      "observed": "ALCALDIA DE SUSA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA DE SUSA'",
+      "should_execute": true
+    },
+    {
+      "code": "25779",
+      "query": "contratos de la alcaldia de SUSA, CUNDINAMARCA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA DE SUSA",
+      "observed": "ALCALDIA DE SUSA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA DE SUSA'",
+      "should_execute": true
+    },
+    {
+      "code": "25779",
+      "query": "procesos del municipio de SUSA, CUNDINAMARCA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA DE SUSA",
+      "observed": "ALCALDIA DE SUSA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA DE SUSA'",
+      "should_execute": true
+    },
+    {
+      "code": "25779",
+      "query": "contratos del municipio de SUSA, CUNDINAMARCA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA DE SUSA",
+      "observed": "ALCALDIA DE SUSA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA DE SUSA'",
+      "should_execute": true
+    },
+    {
+      "code": "25779",
+      "query": "procesos de la alcaldia de SUSA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA DE SUSA",
+      "observed": "ALCALDIA DE SUSA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA DE SUSA'",
+      "should_execute": true
+    },
+    {
+      "code": "25779",
+      "query": "contratos de la alcaldia de SUSA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA DE SUSA",
+      "observed": "ALCALDIA DE SUSA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA DE SUSA'",
+      "should_execute": true
+    },
+    {
+      "code": "25779",
+      "query": "procesos del municipio de SUSA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA DE SUSA",
+      "observed": "ALCALDIA DE SUSA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA DE SUSA'",
+      "should_execute": true
+    },
+    {
+      "code": "25779",
+      "query": "contratos del municipio de SUSA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA DE SUSA",
+      "observed": "ALCALDIA DE SUSA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA DE SUSA'",
+      "should_execute": true
+    },
+    {
+      "code": "05856",
+      "query": "procesos de la alcaldia de VALPARAÍSO, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE VALPARAISO**",
+      "observed": "MUNICIPIO DE VALPARAISO**",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE VALPARAISO**'",
+      "should_execute": true
+    },
+    {
+      "code": "05856",
+      "query": "contratos de la alcaldia de VALPARAÍSO, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE VALPARAISO**",
+      "observed": "MUNICIPIO DE VALPARAISO**",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE VALPARAISO**'",
+      "should_execute": true
+    },
+    {
+      "code": "05856",
+      "query": "procesos del municipio de VALPARAÍSO, ANTIOQUIA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE VALPARAISO**",
+      "observed": "MUNICIPIO DE VALPARAISO**",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE VALPARAISO**'",
+      "should_execute": true
+    },
+    {
+      "code": "05856",
+      "query": "contratos del municipio de VALPARAÍSO, ANTIOQUIA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE VALPARAISO**",
+      "observed": "MUNICIPIO DE VALPARAISO**",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE VALPARAISO**'",
+      "should_execute": true
+    },
+    {
+      "code": "13244",
+      "query": "procesos de la alcaldia de EL CARMEN DE BOLÍVAR, BOLÍVAR",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA DE EL CARMEN DE BOLIVAR",
+      "observed": "ALCALDIA DE EL CARMEN DE BOLIVAR",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA DE EL CARMEN DE BOLIVAR'",
+      "should_execute": true
+    },
+    {
+      "code": "13244",
+      "query": "contratos de la alcaldia de EL CARMEN DE BOLÍVAR, BOLÍVAR",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA DE EL CARMEN DE BOLIVAR",
+      "observed": "ALCALDIA DE EL CARMEN DE BOLIVAR",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA DE EL CARMEN DE BOLIVAR'",
+      "should_execute": true
+    },
+    {
+      "code": "13244",
+      "query": "procesos del municipio de EL CARMEN DE BOLÍVAR, BOLÍVAR",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA DE EL CARMEN DE BOLIVAR",
+      "observed": "ALCALDIA DE EL CARMEN DE BOLIVAR",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA DE EL CARMEN DE BOLIVAR'",
+      "should_execute": true
+    },
+    {
+      "code": "13244",
+      "query": "contratos del municipio de EL CARMEN DE BOLÍVAR, BOLÍVAR",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA DE EL CARMEN DE BOLIVAR",
+      "observed": "ALCALDIA DE EL CARMEN DE BOLIVAR",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA DE EL CARMEN DE BOLIVAR'",
+      "should_execute": true
+    },
+    {
+      "code": "13244",
+      "query": "procesos de la alcaldia de EL CARMEN DE BOLÍVAR",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA DE EL CARMEN DE BOLIVAR",
+      "observed": "ALCALDIA DE EL CARMEN DE BOLIVAR",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA DE EL CARMEN DE BOLIVAR'",
+      "should_execute": true
+    },
+    {
+      "code": "13244",
+      "query": "contratos de la alcaldia de EL CARMEN DE BOLÍVAR",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA DE EL CARMEN DE BOLIVAR",
+      "observed": "ALCALDIA DE EL CARMEN DE BOLIVAR",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA DE EL CARMEN DE BOLIVAR'",
+      "should_execute": true
+    },
+    {
+      "code": "13244",
+      "query": "procesos del municipio de EL CARMEN DE BOLÍVAR",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA DE EL CARMEN DE BOLIVAR",
+      "observed": "ALCALDIA DE EL CARMEN DE BOLIVAR",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA DE EL CARMEN DE BOLIVAR'",
+      "should_execute": true
+    },
+    {
+      "code": "13244",
+      "query": "contratos del municipio de EL CARMEN DE BOLÍVAR",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA DE EL CARMEN DE BOLIVAR",
+      "observed": "ALCALDIA DE EL CARMEN DE BOLIVAR",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA DE EL CARMEN DE BOLIVAR'",
+      "should_execute": true
+    },
+    {
+      "code": "15087",
+      "query": "procesos de la alcaldia de BELÉN, BOYACÁ",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE BELEN.",
+      "observed": "MUNICIPIO DE BELEN.",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE BELEN.'",
+      "should_execute": true
+    },
+    {
+      "code": "15087",
+      "query": "contratos de la alcaldia de BELÉN, BOYACÁ",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE BELEN.",
+      "observed": "MUNICIPIO DE BELEN.",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE BELEN.'",
+      "should_execute": true
+    },
+    {
+      "code": "15087",
+      "query": "procesos del municipio de BELÉN, BOYACÁ",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE BELEN.",
+      "observed": "MUNICIPIO DE BELEN.",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE BELEN.'",
+      "should_execute": true
+    },
+    {
+      "code": "15087",
+      "query": "contratos del municipio de BELÉN, BOYACÁ",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE BELEN.",
+      "observed": "MUNICIPIO DE BELEN.",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE BELEN.'",
+      "should_execute": true
+    },
+    {
+      "code": "15494",
+      "query": "procesos de la alcaldia de NUEVO COLÓN, BOYACÁ",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDÍA MUNICIPAL DE NUEVO COLON",
+      "observed": "ALCALDÍA MUNICIPAL DE NUEVO COLON",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDÍA MUNICIPAL DE NUEVO COLON'",
+      "should_execute": true
+    },
+    {
+      "code": "15494",
+      "query": "contratos de la alcaldia de NUEVO COLÓN, BOYACÁ",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDÍA MUNICIPAL DE NUEVO COLON",
+      "observed": "ALCALDÍA MUNICIPAL DE NUEVO COLON",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDÍA MUNICIPAL DE NUEVO COLON'",
+      "should_execute": true
+    },
+    {
+      "code": "15494",
+      "query": "procesos del municipio de NUEVO COLÓN, BOYACÁ",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDÍA MUNICIPAL DE NUEVO COLON",
+      "observed": "ALCALDÍA MUNICIPAL DE NUEVO COLON",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDÍA MUNICIPAL DE NUEVO COLON'",
+      "should_execute": true
+    },
+    {
+      "code": "15494",
+      "query": "contratos del municipio de NUEVO COLÓN, BOYACÁ",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDÍA MUNICIPAL DE NUEVO COLON",
+      "observed": "ALCALDÍA MUNICIPAL DE NUEVO COLON",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDÍA MUNICIPAL DE NUEVO COLON'",
+      "should_execute": true
+    },
+    {
+      "code": "15494",
+      "query": "procesos de la alcaldia de NUEVO COLÓN",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDÍA MUNICIPAL DE NUEVO COLON",
+      "observed": "ALCALDÍA MUNICIPAL DE NUEVO COLON",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDÍA MUNICIPAL DE NUEVO COLON'",
+      "should_execute": true
+    },
+    {
+      "code": "15494",
+      "query": "contratos de la alcaldia de NUEVO COLÓN",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDÍA MUNICIPAL DE NUEVO COLON",
+      "observed": "ALCALDÍA MUNICIPAL DE NUEVO COLON",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDÍA MUNICIPAL DE NUEVO COLON'",
+      "should_execute": true
+    },
+    {
+      "code": "15494",
+      "query": "procesos del municipio de NUEVO COLÓN",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDÍA MUNICIPAL DE NUEVO COLON",
+      "observed": "ALCALDÍA MUNICIPAL DE NUEVO COLON",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDÍA MUNICIPAL DE NUEVO COLON'",
+      "should_execute": true
+    },
+    {
+      "code": "15494",
+      "query": "contratos del municipio de NUEVO COLÓN",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDÍA MUNICIPAL DE NUEVO COLON",
+      "observed": "ALCALDÍA MUNICIPAL DE NUEVO COLON",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDÍA MUNICIPAL DE NUEVO COLON'",
+      "should_execute": true
+    },
+    {
+      "code": "66088",
+      "query": "procesos de la alcaldia de BELÉN DE UMBRÍA, RISARALDA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE BELEN DE UMBRIA",
+      "observed": "MUNICIPIO DE BELEN DE UMBRIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE BELEN DE UMBRIA'",
+      "should_execute": true
+    },
+    {
+      "code": "66088",
+      "query": "contratos de la alcaldia de BELÉN DE UMBRÍA, RISARALDA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE BELEN DE UMBRIA",
+      "observed": "MUNICIPIO DE BELEN DE UMBRIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE BELEN DE UMBRIA'",
+      "should_execute": true
+    },
+    {
+      "code": "66088",
+      "query": "procesos del municipio de BELÉN DE UMBRÍA, RISARALDA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE BELEN DE UMBRIA",
+      "observed": "MUNICIPIO DE BELEN DE UMBRIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE BELEN DE UMBRIA'",
+      "should_execute": true
+    },
+    {
+      "code": "66088",
+      "query": "contratos del municipio de BELÉN DE UMBRÍA, RISARALDA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE BELEN DE UMBRIA",
+      "observed": "MUNICIPIO DE BELEN DE UMBRIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE BELEN DE UMBRIA'",
+      "should_execute": true
+    },
+    {
+      "code": "66088",
+      "query": "procesos de la alcaldia de BELÉN DE UMBRÍA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE BELEN DE UMBRIA",
+      "observed": "MUNICIPIO DE BELEN DE UMBRIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE BELEN DE UMBRIA'",
+      "should_execute": true
+    },
+    {
+      "code": "66088",
+      "query": "contratos de la alcaldia de BELÉN DE UMBRÍA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE BELEN DE UMBRIA",
+      "observed": "MUNICIPIO DE BELEN DE UMBRIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE BELEN DE UMBRIA'",
+      "should_execute": true
+    },
+    {
+      "code": "66088",
+      "query": "procesos del municipio de BELÉN DE UMBRÍA",
+      "dataset": "p6dx-8zbt",
+      "expected": "MUNICIPIO DE BELEN DE UMBRIA",
+      "observed": "MUNICIPIO DE BELEN DE UMBRIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'MUNICIPIO DE BELEN DE UMBRIA'",
+      "should_execute": true
+    },
+    {
+      "code": "66088",
+      "query": "contratos del municipio de BELÉN DE UMBRÍA",
+      "dataset": "jbjy-vk9h",
+      "expected": "MUNICIPIO DE BELEN DE UMBRIA",
+      "observed": "MUNICIPIO DE BELEN DE UMBRIA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'MUNICIPIO DE BELEN DE UMBRIA'",
+      "should_execute": true
+    }
+  ],
+  "geography": {
+    "territories": 1103,
+    "distinct_names": 1021,
+    "unique_names": 957,
+    "ambiguous_names": 64,
+    "all_bare": {
+      "PASS_EXACT_TERRITORY": 953,
+      "AMBIGUOUS_REQUIRES_DEPARTMENT": 150
+    },
+    "all_qualified": {
+      "PASS_EXACT_TERRITORY": 1103
+    },
+    "additional_territories": 501,
+    "additional_bare": {
+      "PASS_EXACT_TERRITORY": 436,
+      "AMBIGUOUS_REQUIRES_DEPARTMENT": 65
+    },
+    "additional_qualified": {
+      "PASS_EXACT_TERRITORY": 501
+    },
+    "failures": []
+  },
+  "baranoa": [
+    {
+      "code": "08078",
+      "query": "procesos de la alcaldia de BARANOA, ATLÁNTICO",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPAL DE BARANOA",
+      "observed": "ALCALDIA MUNICIPAL DE BARANOA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPAL DE BARANOA'",
+      "should_execute": true
+    },
+    {
+      "code": "08078",
+      "query": "contratos de la alcaldia de BARANOA, ATLÁNTICO",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPAL DE BARANOA",
+      "observed": "ALCALDIA MUNICIPAL DE BARANOA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE BARANOA'",
+      "should_execute": true
+    },
+    {
+      "code": "08078",
+      "query": "procesos del municipio de BARANOA, ATLÁNTICO",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPAL DE BARANOA",
+      "observed": "ALCALDIA MUNICIPAL DE BARANOA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPAL DE BARANOA'",
+      "should_execute": true
+    },
+    {
+      "code": "08078",
+      "query": "contratos del municipio de BARANOA, ATLÁNTICO",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPAL DE BARANOA",
+      "observed": "ALCALDIA MUNICIPAL DE BARANOA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE BARANOA'",
+      "should_execute": true
+    },
+    {
+      "code": "08078",
+      "query": "procesos de la alcaldia de BARANOA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPAL DE BARANOA",
+      "observed": "ALCALDIA MUNICIPAL DE BARANOA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPAL DE BARANOA'",
+      "should_execute": true
+    },
+    {
+      "code": "08078",
+      "query": "contratos de la alcaldia de BARANOA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPAL DE BARANOA",
+      "observed": "ALCALDIA MUNICIPAL DE BARANOA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE BARANOA'",
+      "should_execute": true
+    },
+    {
+      "code": "08078",
+      "query": "procesos del municipio de BARANOA",
+      "dataset": "p6dx-8zbt",
+      "expected": "ALCALDIA MUNICIPAL DE BARANOA",
+      "observed": "ALCALDIA MUNICIPAL DE BARANOA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE entidad = 'ALCALDIA MUNICIPAL DE BARANOA'",
+      "should_execute": true
+    },
+    {
+      "code": "08078",
+      "query": "contratos del municipio de BARANOA",
+      "dataset": "jbjy-vk9h",
+      "expected": "ALCALDIA MUNICIPAL DE BARANOA",
+      "observed": "ALCALDIA MUNICIPAL DE BARANOA",
+      "passed": true,
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA MUNICIPAL DE BARANOA'",
+      "should_execute": true
+    },
+    {
+      "code": "08078",
+      "query": "contratos en BARANOA",
+      "additional": true,
+      "qualified": false,
+      "classification": "PASS_EXACT_TERRITORY",
+      "production_candidate_identical": true,
+      "params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "ciudad": "Baranoa",
+        "departamento_resolved": "Atlántico",
+        "municipal_territory": {
+          "version": "DANE_DIVIPOLA_MGN_2025_M0_2026-09-03",
+          "mention": "baranoa",
+          "candidates": [
+            {
+              "divipola": "08078",
+              "municipality": "BARANOA",
+              "department": "ATLÁNTICO",
+              "department_value": "Atlántico"
+            }
+          ],
+          "status": "resolved",
+          "divipola": "08078",
+          "municipality": "BARANOA",
+          "department": "ATLÁNTICO",
+          "department_value": "Atlántico"
+        }
+      },
+      "should_execute": true,
+      "clarification_question": null
+    },
+    {
+      "code": "08078",
+      "query": "contratos en BARANOA, departamento ATLÁNTICO",
+      "additional": true,
+      "qualified": true,
+      "classification": "PASS_EXACT_TERRITORY",
+      "production_candidate_identical": true,
+      "params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "ciudad": "Baranoa",
+        "departamento_resolved": "Atlántico",
+        "municipal_territory": {
+          "version": "DANE_DIVIPOLA_MGN_2025_M0_2026-09-03",
+          "mention": "baranoa",
+          "candidates": [
+            {
+              "divipola": "08078",
+              "municipality": "BARANOA",
+              "department": "ATLÁNTICO",
+              "department_value": "Atlántico"
+            }
+          ],
+          "status": "resolved",
+          "divipola": "08078",
+          "municipality": "BARANOA",
+          "department": "ATLÁNTICO",
+          "department_value": "Atlántico"
+        }
+      },
+      "should_execute": true,
+      "clarification_question": null
+    }
+  ],
+  "llm_execution_mode": "DETERMINISTIC_OFFLINE_NO_LLM",
+  "llm_provider_live_coverage": "NOT_VERIFIED",
+  "scope": "Only promoted aliases, stratified M0 buyer matrix and DIVIPOLA geography. Overall retry BLOCKED by out-of-lot compound buyer.",
+  "overall_retry_status": "BLOCKED",
+  "blocking_evidence": "blocking_canary.json"
+}

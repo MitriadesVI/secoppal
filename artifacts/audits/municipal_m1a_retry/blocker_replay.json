@@ -1,0 +1,53 @@
+{
+  "blocker_reproduced": true,
+  "production_unchanged": true,
+  "results": {
+    "baseline": {
+      "owner": null,
+      "params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de san andres de sotavento",
+        "entidad_resolution": {
+          "value": null,
+          "method": "rewrite_municipio_unresolved",
+          "confidence": "low",
+          "like_value": null,
+          "metadata": {
+            "target": "san andres de sotavento",
+            "rewritten_from": "municipio de san andres de sotavento",
+            "resolution_method": "rewrite_unresolved"
+          },
+          "ecosystem_entities": [],
+          "clarification_needed": true,
+          "clarification_hint": "No encontré 'Municipio de san andres de sotavento' en el catálogo de entidades. ¿Cuál es el nombre oficial de la entidad?"
+        }
+      },
+      "soql": "BLOCKED: UnsafeGlobalQueryError"
+    },
+    "promoted_snapshot": {
+      "owner": "ALCALDIA SAN ANDRES",
+      "params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "entidad": "Municipio de san andres",
+        "entidad_resolved": "ALCALDIA SAN ANDRES",
+        "entidad_resolution": {
+          "value": "ALCALDIA SAN ANDRES",
+          "method": "rewrite_municipio",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "municipio de san andres",
+            "resolution_method": "exact"
+          }
+        },
+        "objeto": [
+          "sotavento"
+        ]
+      },
+      "soql": "SELECT count(*) WHERE nombre_entidad = 'ALCALDIA SAN ANDRES' AND (unaccent(UPPER(objeto_del_contrato)) LIKE unaccent(UPPER('%sotavento%')) OR unaccent(UPPER(descripcion_del_proceso)) LIKE unaccent(UPPER('%sotavento%')))"
+    }
+  }
+}

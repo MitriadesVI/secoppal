@@ -1,0 +1,168 @@
+........................................................................ [  0%]
+........................................................................ [  1%]
+........................................................................ [  1%]
+........................................................................ [  2%]
+........................................................................ [  3%]
+........................................................................ [  3%]
+........................................................................ [  4%]
+........................................................................ [  5%]
+........................................................................ [  5%]
+........................................................................ [  6%]
+........................................................................ [  7%]
+........................................................................ [  7%]
+........................................................................ [  8%]
+........................................................................ [  9%]
+........................................................................ [  9%]
+.......................................................FFF.............. [ 10%]
+........................................................................ [ 11%]
+........................................................................ [ 11%]
+.................................x...................................... [ 12%]
+.................................F...................................... [ 13%]
+........................................................................ [ 13%]
+...............................................xx....xx.....xx.......... [ 14%]
+........................................................................ [ 15%]
+........................................................................ [ 15%]
+........................ss.............................................. [ 16%]
+........................................................................ [ 17%]
+........................................................................ [ 17%]
+........................................................................ [ 18%]
+........................................................................ [ 18%]
+........................................................................ [ 19%]
+.....................x..x....x.......................................... [ 20%]
+........................................................................ [ 20%]
+..............................................x......................... [ 21%]
+........................................................................ [ 22%]
+........................................................................ [ 22%]
+........................................................................ [ 23%]
+........................................................................ [ 24%]
+........................................................................ [ 24%]
+
+=================================== FAILURES ===================================
+_ TestFragmentsNeedDeterministicEvidence.test_absent_compound_name_fails_closed[contratos del municipio de Villa de Leyva-ALCALDIA MUNICIPIO DE VILLAVICENCIO] _
+
+self = <test_compound_buyer_capture_r2a1.TestFragmentsNeedDeterministicEvidence object at 0x11cc56fd0>
+router = <app.core.query_router.QueryRouter object at 0x1266b7930>
+query = 'contratos del municipio de Villa de Leyva'
+forbidden = 'ALCALDIA MUNICIPIO DE VILLAVICENCIO'
+
+    @pytest.mark.parametrize(
+        ("query", "forbidden"),
+        [
+            ("contratos del municipio de Villa de Leyva", VILLAVICENCIO),
+            ("contratos de la alcaldía de Villa de Leyva", VILLAVICENCIO),
+            ("contratos del municipio de San Andrés de Sotavento", CUCUTA),
+            ("contratos de la alcaldía de San Juan de Pasto", CUCUTA),
+        ],
+    )
+    def test_absent_compound_name_fails_closed(
+        self, router: QueryRouter, query: str, forbidden: str
+    ) -> None:
+        """Ausente del gazetteer ⇒ se pide precisión, no se elige un vecino."""
+        params = router.parse(query).params
+        resolution = params.get("entidad_resolution") or {}
+>       assert params.get("entidad_resolved") is None
+E       AssertionError: assert 'MUNICIPIO DE VILLA DE LEYVA//' is None
+E        +  where 'MUNICIPIO DE VILLA DE LEYVA//' = <built-in method get of dict object at 0x124b52c80>('entidad_resolved')
+E        +    where <built-in method get of dict object at 0x124b52c80> = {'dataset': 'contratos', 'dataset_explicit': True, 'entidad': 'Municipio de villa de leyva', 'entidad_resolution': {'c...e_value': None, 'metadata': {'resolution_method': 'exact', 'rewritten_from': 'municipio de villa de leyva'}, ...}, ...}.get
+
+tests/test_compound_buyer_capture_r2a1.py:179: AssertionError
+_ TestFragmentsNeedDeterministicEvidence.test_absent_compound_name_fails_closed[contratos de la alcald\xeda de Villa de Leyva-ALCALDIA MUNICIPIO DE VILLAVICENCIO] _
+
+self = <test_compound_buyer_capture_r2a1.TestFragmentsNeedDeterministicEvidence object at 0x11cc57110>
+router = <app.core.query_router.QueryRouter object at 0x1266b7930>
+query = 'contratos de la alcaldía de Villa de Leyva'
+forbidden = 'ALCALDIA MUNICIPIO DE VILLAVICENCIO'
+
+    @pytest.mark.parametrize(
+        ("query", "forbidden"),
+        [
+            ("contratos del municipio de Villa de Leyva", VILLAVICENCIO),
+            ("contratos de la alcaldía de Villa de Leyva", VILLAVICENCIO),
+            ("contratos del municipio de San Andrés de Sotavento", CUCUTA),
+            ("contratos de la alcaldía de San Juan de Pasto", CUCUTA),
+        ],
+    )
+    def test_absent_compound_name_fails_closed(
+        self, router: QueryRouter, query: str, forbidden: str
+    ) -> None:
+        """Ausente del gazetteer ⇒ se pide precisión, no se elige un vecino."""
+        params = router.parse(query).params
+        resolution = params.get("entidad_resolution") or {}
+>       assert params.get("entidad_resolved") is None
+E       AssertionError: assert 'MUNICIPIO DE VILLA DE LEYVA//' is None
+E        +  where 'MUNICIPIO DE VILLA DE LEYVA//' = <built-in method get of dict object at 0x125a3e580>('entidad_resolved')
+E        +    where <built-in method get of dict object at 0x125a3e580> = {'dataset': 'contratos', 'dataset_explicit': True, 'entidad': 'Municipio de villa de leyva', 'entidad_resolution': {'c...ke_value': None, 'metadata': {'resolution_method': 'exact', 'rewritten_from': 'alcaldia de villa de leyva'}, ...}, ...}.get
+
+tests/test_compound_buyer_capture_r2a1.py:179: AssertionError
+_ TestFragmentsNeedDeterministicEvidence.test_absent_compound_name_fails_closed[contratos del municipio de San Andr\xe9s de Sotavento-MUNICIPIO DE SAN JOSE DE CUCUTA] _
+
+self = <test_compound_buyer_capture_r2a1.TestFragmentsNeedDeterministicEvidence object at 0x11d3c0770>
+router = <app.core.query_router.QueryRouter object at 0x1266b7930>
+query = 'contratos del municipio de San Andrés de Sotavento'
+forbidden = 'MUNICIPIO DE SAN JOSE DE CUCUTA'
+
+    @pytest.mark.parametrize(
+        ("query", "forbidden"),
+        [
+            ("contratos del municipio de Villa de Leyva", VILLAVICENCIO),
+            ("contratos de la alcaldía de Villa de Leyva", VILLAVICENCIO),
+            ("contratos del municipio de San Andrés de Sotavento", CUCUTA),
+            ("contratos de la alcaldía de San Juan de Pasto", CUCUTA),
+        ],
+    )
+    def test_absent_compound_name_fails_closed(
+        self, router: QueryRouter, query: str, forbidden: str
+    ) -> None:
+        """Ausente del gazetteer ⇒ se pide precisión, no se elige un vecino."""
+        params = router.parse(query).params
+        resolution = params.get("entidad_resolution") or {}
+>       assert params.get("entidad_resolved") is None
+E       AssertionError: assert 'ALCALDIA SAN ANDRES' is None
+E        +  where 'ALCALDIA SAN ANDRES' = <built-in method get of dict object at 0x125b94e80>('entidad_resolved')
+E        +    where <built-in method get of dict object at 0x125b94e80> = {'dataset': 'contratos', 'dataset_explicit': True, 'entidad': 'Municipio de san andres', 'entidad_resolution': {'confi...'like_value': None, 'metadata': {'resolution_method': 'exact', 'rewritten_from': 'municipio de san andres'}, ...}, ...}.get
+
+tests/test_compound_buyer_capture_r2a1.py:179: AssertionError
+____________ TestCollisionGates.test_declared_policy_is_consistent _____________
+
+self = <test_control_national_r2e.TestCollisionGates object at 0x11d3c3950>
+gazetteer = [{'aliases': ['sdis bogotá', 'secretaría de integración social del distrito', 'integración social bogotá', 'integració...DÍA DEL DISTRITO TURÍSTICO Y CULTURAL DE CARTAGENA DE INDIAS', 'source_datasets': ['procesos', 'contratos'], ...}, ...]
+
+    def test_declared_policy_is_consistent(self, gazetteer: list[dict]):
+        owned = {
+            normalize_text(alias)
+            for record in gazetteer
+            for alias in record.get("aliases", [])
+        }
+        for record in gazetteer:
+            scan_disabled, blocked = record_alias_policy(record)
+            record_aliases = {
+                normalize_text(alias) for alias in record.get("aliases", [])
+            }
+>           assert scan_disabled <= record_aliases
+E           AssertionError: assert frozenset({'a...a antioquia'}) <= {'alcaldia de...a, antioquia'}
+E             
+E             Extra items in the left set:
+E             'alcaldia municipal de belmira antioquia'
+
+tests/test_control_national_r2e.py:351: AssertionError
+=========================== short test summary info ============================
+SKIPPED [2] tests/test_dogfood_regressions.py:111: Recall vivo (Etapa 5): no asertable sin red; los params ya son correctos.
+XFAIL tests/test_control_language.py::test_scope_change_carrying_a_new_topic_keeps_that_topic - Pre-existing, unrelated to control language: a follow-up classified as change_scope carries a genuinely new topic, but change_scope's mutation policy does not allow topic fields, so the gate drops it and the merger inherits the previous topic. Verified identical on main b661a09. Belongs to follow-up topic hygiene, not R6 — see DEFERRED_FOLLOWUP_SCOPE_TOPIC.
+XFAIL tests/test_demo_alcalde.py::test_turno2_contiene_insights_entity_concentration - Observer 2.0 signals requieren mock de aggregate() adicional
+XFAIL tests/test_demo_alcalde.py::test_turno2_contiene_insights_modality_dominance - Observer 2.0 signals requieren mock de aggregate() adicional
+XFAIL tests/test_demo_proponente.py::test_turno1_insights_modality_dominance - Observer 2.0 signals requieren mock de aggregate() adicional
+XFAIL tests/test_demo_proponente.py::test_turno1_insights_entity_concentration - Observer 2.0 signals requieren mock de aggregate() adicional
+XFAIL tests/test_demo_veedor.py::test_turno1_insights_entity_concentration - Observer 2.0 signals requieren mock de aggregate() adicional
+XFAIL tests/test_demo_veedor.py::test_turno1_insights_modality_dominance - Observer 2.0 signals requieren mock de aggregate() adicional
+XFAIL tests/test_gazetteer_lote_01.py::TestLote01Resolution::test_entity_resolves[hospital municipal de acacias-ACACIAS] - 'hospital municipal' alias on existing entity steals resolution
+XFAIL tests/test_gazetteer_lote_01.py::TestLote01Resolution::test_entity_resolves[sena choco-SENA REGIONAL CHOCO] - 'sena' resolves to SENA SECRETARIA GENERAL first
+XFAIL tests/test_gazetteer_lote_01.py::TestLote01Resolution::test_entity_resolves[sena casanare-SENA REGIONAL CASANARE] - 'sena' resolves to SENA SECRETARIA GENERAL first
+XFAIL tests/test_h4_fallback.py::test_new_topic_should_clear_inherited_ordering_signal - Etapa 2 (mutaciones): un cambio de tema/scope no limpia ordering_signal heredado. Fuga SEGURA (pierde recall, no miente). Al arreglarse, este xfail pasa a XPASS.
+FAILED tests/test_compound_buyer_capture_r2a1.py::TestFragmentsNeedDeterministicEvidence::test_absent_compound_name_fails_closed[contratos del municipio de Villa de Leyva-ALCALDIA MUNICIPIO DE VILLAVICENCIO]
+FAILED tests/test_compound_buyer_capture_r2a1.py::TestFragmentsNeedDeterministicEvidence::test_absent_compound_name_fails_closed[contratos de la alcald\xeda de Villa de Leyva-ALCALDIA MUNICIPIO DE VILLAVICENCIO]
+FAILED tests/test_compound_buyer_capture_r2a1.py::TestFragmentsNeedDeterministicEvidence::test_absent_compound_name_fails_closed[contratos del municipio de San Andr\xe9s de Sotavento-MUNICIPIO DE SAN JOSE DE CUCUTA]
+FAILED tests/test_control_national_r2e.py::TestCollisionGates::test_declared_policy_is_consistent
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! KeyboardInterrupt !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+/opt/homebrew/Cellar/python@3.14/3.14.5/Frameworks/Python.framework/Versions/3.14/lib/python3.14/glob.py:556: KeyboardInterrupt
+(to show a full traceback on KeyboardInterrupt use --full-trace)
+4 failed, 2719 passed, 2 skipped, 11 xfailed in 165.05s (0:02:45)

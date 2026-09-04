@@ -1,0 +1,26 @@
+{
+  "status": "RESTORED_BASELINE_REPRODUCED_OFFLINE",
+  "accredited_active_territories": 607,
+  "recognized_territories": 70,
+  "divipola_denominator": 1103,
+  "territory_cohort_pct": 11.532125205930807,
+  "divipola_pct": 6.346328195829556,
+  "volumes": {
+    "p6dx-8zbt": {
+      "physical_rows": 357631,
+      "unique_ids": 339745,
+      "covered_physical_rows": 205409,
+      "covered_unique_ids": 197352
+    },
+    "jbjy-vk9h": {
+      "physical_rows": 331185,
+      "unique_ids": 331185,
+      "covered_physical_rows": 199963,
+      "covered_unique_ids": 199963
+    }
+  },
+  "process_unique_pct": 58.08827208641775,
+  "contract_unique_pct": 60.3780364448873,
+  "global_municipal_buyer_unit_denominator": "UNADJUDICATED_M2",
+  "original_m0_analysis_identical": true
+}

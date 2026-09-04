@@ -1,0 +1,63 @@
+{
+  "status": "REPRODUCED_OFFLINE_PRODUCTION",
+  "accredited_active_territories": 607,
+  "recognized_territories": 571,
+  "coverage_in_accredited_active_cohort_pct": 94.06919275123559,
+  "divipola_denominator": 1103,
+  "coverage_over_divipola_pct": 51.76790571169538,
+  "unique_volume_coverage_pct": {
+    "p6dx-8zbt": 95.3538683424333,
+    "jbjy-vk9h": 96.29180065522291
+  },
+  "volumes": {
+    "p6dx-8zbt": {
+      "physical_rows": 357631,
+      "unique_ids": 339745,
+      "covered_physical_rows": 341561,
+      "covered_unique_ids": 323960
+    },
+    "jbjy-vk9h": {
+      "physical_rows": 331185,
+      "unique_ids": 331185,
+      "covered_physical_rows": 318904,
+      "covered_unique_ids": 318904
+    }
+  },
+  "recognized_buyer_units": 622,
+  "added_territories": 501,
+  "lost_territories": [],
+  "proposal_overlap_with_previously_covered": [
+    "17001",
+    "76248"
+  ],
+  "disputed_source_claims": [],
+  "baranoa_parity": {
+    "p6dx-8zbt": {
+      "physical_rows": 381,
+      "unique_ids": 380,
+      "covered_unique_ids": 380,
+      "expected": {
+        "physical_rows": 381,
+        "unique_ids": 380
+      },
+      "source_names": [
+        "ALCALDIA MUNICIPAL DE BARANOA"
+      ]
+    },
+    "jbjy-vk9h": {
+      "physical_rows": 374,
+      "unique_ids": 374,
+      "covered_unique_ids": 374,
+      "expected": {
+        "physical_rows": 374,
+        "unique_ids": 374
+      },
+      "source_names": [
+        "ALCALDIA MUNICIPAL DE BARANOA"
+      ]
+    }
+  },
+  "global_municipal_buyer_unit_denominator": "UNADJUDICATED_M2",
+  "source_mode": "M0 frozen snapshots, not live Socrata"
+}
+

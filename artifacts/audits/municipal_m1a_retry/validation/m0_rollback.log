@@ -1,0 +1,63 @@
+{
+  "sigep_rows": 6300,
+  "sigep_suborder": {
+    "Municipal": 5543,
+    "No Aplica": 287,
+    "Distrital": 182,
+    "Departamental": 281,
+    "Área Metropolitana": 5,
+    "Organización Territorial": 2
+  },
+  "divipola_municipalities": 1103,
+  "accredited_active_municipal_territories": 607,
+  "recognized_municipal_territories": 70,
+  "accredited_recognized_buyer_units": 119,
+  "strata_disposition": {
+    "UNRESOLVED_AFFILIATION": 10758,
+    "ACCREDITED_OTHER_AFFILIATION": 3256,
+    "ACCREDITED_MUNICIPAL_AFFILIATION": 1480
+  },
+  "volumes": {
+    "p6dx-8zbt": {
+      "ACCREDITED_MUNICIPAL_AFFILIATION": {
+        "physical_rows": 357631,
+        "unique_ids": 339745,
+        "covered_physical_rows": 205409,
+        "covered_unique_ids": 197352
+      },
+      "ACCREDITED_OTHER_AFFILIATION": {
+        "physical_rows": 549581,
+        "unique_ids": 518140,
+        "covered_physical_rows": 0,
+        "covered_unique_ids": 0
+      },
+      "UNRESOLVED_AFFILIATION": {
+        "physical_rows": 978390,
+        "unique_ids": 961133,
+        "covered_physical_rows": 0,
+        "covered_unique_ids": 0
+      }
+    },
+    "jbjy-vk9h": {
+      "ACCREDITED_MUNICIPAL_AFFILIATION": {
+        "physical_rows": 331185,
+        "unique_ids": 331185,
+        "covered_physical_rows": 199963,
+        "covered_unique_ids": 199963
+      },
+      "ACCREDITED_OTHER_AFFILIATION": {
+        "physical_rows": 334537,
+        "unique_ids": 334537,
+        "covered_physical_rows": 0,
+        "covered_unique_ids": 0
+      },
+      "UNRESOLVED_AFFILIATION": {
+        "physical_rows": 429291,
+        "unique_ids": 429291,
+        "covered_physical_rows": 0,
+        "covered_unique_ids": 0
+      }
+    }
+  },
+  "disputed_source_claims": []
+}

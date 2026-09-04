@@ -1,0 +1,90 @@
+{
+  "overall": "BLOCKED",
+  "dry_run": {
+    "exit_code": 0,
+    "status": "PASS",
+    "pipeline_queries": 1888,
+    "failures": 0
+  },
+  "first_apply": {
+    "exit_code": 0,
+    "delta": {
+      "buyer_units": 498,
+      "aliases": 1883,
+      "source_bindings": 503
+    }
+  },
+  "second_apply": {
+    "exit_code": 0,
+    "delta": {
+      "buyer_units": 0,
+      "aliases": 0,
+      "source_bindings": 0
+    },
+    "bytes_identical": true
+  },
+  "production_aliases": {
+    "exit_code": 0,
+    "status": "PASS",
+    "checks": 1888,
+    "failures": 0,
+    "wrong_owner": 0
+  },
+  "production_interaction": {
+    "exit_code": 0,
+    "status": "PASS",
+    "checks": 3071,
+    "new_wrong_owner": 0,
+    "lost_correct_owner": 0
+  },
+  "out_of_lot_compound_buyer": {
+    "status": "BLOCKED",
+    "observed_new_wrong_owner_queries": 1,
+    "total_not_exhaustively_measured": true
+  },
+  "production_focal": {
+    "exit_code": 1,
+    "summary": "4 failed, 866 passed, 1 xfailed in 45.36s"
+  },
+  "production_full_suite": {
+    "exit_code": 2,
+    "status": "FAILED_AND_INTERRUPTED_ON_GLOBAL_STOP",
+    "completed": false,
+    "summary": "4 failed, 2719 passed, 2 skipped, 11 xfailed in 165.05s (0:02:45)"
+  },
+  "rollback_focal": {
+    "exit_code": 0,
+    "summary": "173 passed in 2.54s"
+  },
+  "corpus_promoted": {
+    "exit_code": 0,
+    "summary": "Summary: 89/89 PASS, 0 FAIL (mode=all, severity=any, limit=none)"
+  },
+  "corpus_rollback": {
+    "exit_code": 0,
+    "summary": "Summary: 89/89 PASS, 0 FAIL (mode=all, severity=any, limit=none)"
+  },
+  "gazetteer_promoted": {
+    "exit_code": 0,
+    "errors": 0,
+    "warnings": 129,
+    "multi_owner_keys": 141
+  },
+  "divipola_reproducibility": {
+    "exit_code": 0,
+    "log": "validation/divipola_check.log"
+  },
+  "lint": {
+    "ruff_exit_code": 0,
+    "ruff": "All checks passed!",
+    "lint_core_exit_code": 0,
+    "lint_core": "app/core/ limpio"
+  },
+  "rollback": "PASS",
+  "new_xfails": 0,
+  "tests_changed": false,
+  "previous_full_suite": "M1A.1: 10981 passed, 2 skipped, 14 xfailed; historical, not a promoted-production PASS.",
+  "llm_execution_mode": "DETERMINISTIC_OFFLINE_NO_LLM",
+  "llm_provider_live_coverage": "NOT_VERIFIED",
+  "socrata_source_mode": "FROZEN_M0_OFFLINE; no live source calls"
+}

@@ -1,0 +1,45 @@
+{
+  "decisive_blocker": {
+    "test": "tests/test_compound_buyer_capture_r2a1.py::TestFragmentsNeedDeterministicEvidence::test_absent_compound_name_fails_closed",
+    "classification": "NEW_WRONG_OWNER",
+    "evidence": "blocking_canary.json",
+    "requested": "23670 SAN ANDRÉS DE SOTAVENTO, CÓRDOBA",
+    "observed": "68669 ALCALDIA SAN ANDRES, SANTANDER",
+    "leftover_topic": [
+      "sotavento"
+    ],
+    "resolution_method": "exact short fragment",
+    "decision": "GLOBAL_STOP_ROLL_BACK_ALL_503_NO_RUNTIME_REDESIGN"
+  },
+  "other_failures": [
+    {
+      "test": "test_buyer_intent_is_still_buyer_intent_without_promotion",
+      "classification": "PRE_PROMOTION_ABSENCE_ASSUMPTION",
+      "evidence": "focal.log: Baranoa is now accredited; no clarification_needed key.",
+      "disposition": "No test changed; promotion rolled back."
+    },
+    {
+      "test": "test_absent_compound_name_fails_closed (two Villa de Leyva cases)",
+      "classification": "PRE_PROMOTION_ABSENCE_ASSUMPTION",
+      "evidence": "M0 proposal 15407 explicitly accredits MUNICIPIO DE VILLA DE LEYVA//.",
+      "disposition": "No test changed; promotion rolled back."
+    },
+    {
+      "test": "tests/test_control_national_r2e.py::TestCollisionGates::test_declared_policy_is_consistent",
+      "classification": "STALE_ALIAS_ONLY_SCHEMA_ASSERTION",
+      "evidence": "The assertion excludes a record canonical from scan_disabled. M1A already permits own canonicals; Belmira exposes this pre-existing test mismatch after promotion.",
+      "disposition": "No test changed; promotion rolled back."
+    }
+  ],
+  "validator": {
+    "errors": 0,
+    "warnings_before": 67,
+    "warnings_promoted": 129,
+    "additional_low_alias_units": 62,
+    "reason": "62 qualified-only M0 proposals carry two aliases; no alias invented to suppress warnings."
+  },
+  "full_suite_interruption": "SIGINT after decisive wrong owner; terminate readers before restoring production to avoid mixed-state results.",
+  "tests_changed": [],
+  "new_xfails": 0,
+  "missing_gate": "Replay compound buyer names outside the 503 proposals against the expanded catalog; 3071 existing/proposal cases cannot prove safety for absent buyers."
+}
