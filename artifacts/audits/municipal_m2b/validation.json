@@ -1,0 +1,160 @@
+{
+  "code_sha256": {
+    "scripts/audits/audit_municipal_m2b.py": "ed472178b89f1b036de2ed7649ca545ecfd43d62ee952c6ba5f377616d882389",
+    "scripts/audits/m2b/batches.py": "b0226553250e71a660014760a6306e702134bc5206cd5ef1bf24c2f2cf75643b",
+    "scripts/audits/m2b/gates.py": "a7aa80b3fb786e90f303f013ac3ab185948c8b40ea36f38632e93181c2fc634b",
+    "scripts/audits/m2b/health.py": "a909912cb4cea0554a4869758a7218be5700c0175309b54cf5786ce27df1a6f8",
+    "scripts/audits/m2b/identity_vias.py": "eb5d3661498cb586f29ed5bc0fc252e9338ec42678f8274ce4bd37edac1f7905",
+    "scripts/audits/m2b/io.py": "b8e7804fca62da95e948c65ca850ec08b76bc2f46099d476ff7bfca6687c98f0",
+    "scripts/audits/m2b/metrics.py": "c5705337d125cb14831c413519deea4f1147b7e9c4d9f74add44a3d4d42650cc",
+    "scripts/audits/m2b/report.py": "5c6524d0fc9fcc690a6bde21ed8b40810bf4985efa8215dbe7e3383756d6ed6a",
+    "scripts/audits/m2b/taxonomy.py": "407c0dc6e80d54dcb24a6fba5905c323ed0486d8e6c46e839a48f7e70dd39677",
+    "scripts/audits/m2b/validation.py": "90a70ee22aa7f324f64d7eb8c656c264515e91c04b31f8bf6132991a091ba9e0",
+    "tests/test_municipal_m2b.py": "58f3b5ba23c9cdf0f009a62541b266507923033f23c1f58b79568e15fa44fa82"
+  },
+  "corpus_89": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python3",
+      "scripts/run_query_corpus.py",
+      "--mode",
+      "all"
+    ],
+    "exit_code": 0,
+    "expected_cases": 89,
+    "log": "validation/corpus_89.log",
+    "log_sha256": "545088cfb99c01a21446d1788771a50135e652ce845cc9f386b326045f5de883",
+    "observed_summary": [
+      "Summary: 89/89 PASS, 0 FAIL (mode=all, severity=any, limit=none)"
+    ],
+    "status": "PASS"
+  },
+  "deterministic_replay": {
+    "exit_code": 0,
+    "files": {
+      "MUNICIPAL_M2B.md": {
+        "original": "835a06fc39799b9b30006728509c53d7c8494c5b35f9e4c22fbf8ef117d9dca4",
+        "replay": "835a06fc39799b9b30006728509c53d7c8494c5b35f9e4c22fbf8ef117d9dca4"
+      },
+      "adjudicated_candidates.json": {
+        "original": "0127c2aa7592833830e6f13dffbef4008e7092cf5e7b896a797993981ced4d17",
+        "replay": "0127c2aa7592833830e6f13dffbef4008e7092cf5e7b896a797993981ced4d17"
+      },
+      "batches.json": {
+        "original": "4908572dde904f2056cc7bd928ca7cba0621421583918b7a9f2a733ca9419ea9",
+        "replay": "4908572dde904f2056cc7bd928ca7cba0621421583918b7a9f2a733ca9419ea9"
+      },
+      "byte_identity.json": {
+        "original": "1a59da56ed70a7918d51f254af0e1643fe430aeca98a66e22584e7ae4140afda",
+        "replay": "1a59da56ed70a7918d51f254af0e1643fe430aeca98a66e22584e7ae4140afda"
+      },
+      "gates.json": {
+        "original": "d0f88e9a872f36c56e925f3bf0bce2b44a5fb62ad5bee1c99fd49d4e7cc4af42",
+        "replay": "d0f88e9a872f36c56e925f3bf0bce2b44a5fb62ad5bee1c99fd49d4e7cc4af42"
+      },
+      "health_identity_audit.json": {
+        "original": "792a7ad2d2f701254ab8a791ec287f0c517b57166aceb9059fdc5b82de905b4e",
+        "replay": "792a7ad2d2f701254ab8a791ec287f0c517b57166aceb9059fdc5b82de905b4e"
+      },
+      "identity_failure_taxonomy.json": {
+        "original": "48f023b4f173e44a82b76fb320979323401bf631ac360f209242aa6c2663a3a8",
+        "replay": "48f023b4f173e44a82b76fb320979323401bf631ac360f209242aa6c2663a3a8"
+      },
+      "identity_vias.json": {
+        "original": "8d2329c2db9f092af6f41a30d4559a5f20101812b4c23b1aecf8daba02a8ce45",
+        "replay": "8d2329c2db9f092af6f41a30d4559a5f20101812b4c23b1aecf8daba02a8ce45"
+      },
+      "impact.json": {
+        "original": "9182979591ce2f0fab4ab2298c86626198378479c0382e091bce004f7c9f8a6a",
+        "replay": "9182979591ce2f0fab4ab2298c86626198378479c0382e091bce004f7c9f8a6a"
+      },
+      "pending_identity_profiles.json": {
+        "original": "45fbcec5bef1168906267a0efdec29c6a763152cc0f523603b78e95a8d218c32",
+        "replay": "45fbcec5bef1168906267a0efdec29c6a763152cc0f523603b78e95a8d218c32"
+      },
+      "shared_nit_cases.json": {
+        "original": "b05df70e1142891eedf04cbc44c0947f243860108d6c7e477836b3f8108085ad",
+        "replay": "b05df70e1142891eedf04cbc44c0947f243860108d6c7e477836b3f8108085ad"
+      },
+      "territory_delta.json": {
+        "original": "207b079d41fb50a3feced8b1a600287da01156c5c90c3d3a3be5540da4ee914f",
+        "replay": "207b079d41fb50a3feced8b1a600287da01156c5c90c3d3a3be5540da4ee914f"
+      },
+      "verified_logical_unrecognized.json": {
+        "original": "8932b505503f0ad8f8bca8c5d005a778ba856fb502750c79f80bd6522296540c",
+        "replay": "8932b505503f0ad8f8bca8c5d005a778ba856fb502750c79f80bd6522296540c"
+      }
+    },
+    "status": "PASS"
+  },
+  "diff_check": {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit_code": 0,
+    "log": "validation/diff_check.log",
+    "log_sha256": "3d4d50cd32af92c6d4df37c1df74a96622fca8cfb5643a155c91f034a42f2068",
+    "status": "PASS"
+  },
+  "focal_tests": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python3",
+      "-m",
+      "pytest",
+      "tests/test_municipal_m2b.py",
+      "tests/test_municipal_m2a.py",
+      "-q"
+    ],
+    "exit_code": 0,
+    "log": "validation/focal_tests.log",
+    "log_sha256": "059b4f1b50bd0c0d5ea6e8120c4a96d2163dbb3bbf0a3c3d991d6c69ed7f211f",
+    "status": "PASS"
+  },
+  "full_suite": {
+    "executed": false,
+    "reason": "Explicit user gate: full suite required only if protected bytes change.",
+    "required": false
+  },
+  "lint_core": {
+    "command": [
+      "make",
+      "lint-core"
+    ],
+    "exit_code": 0,
+    "log": "validation/lint_core.log",
+    "log_sha256": "9d980b9f0dbbe14b5383ab38e6d49ffc96fb1dd9ac5cf8478e0378e95647247e",
+    "status": "PASS"
+  },
+  "post_validation_byte_identity": {
+    "changed": [],
+    "files": 576,
+    "status": "PASS"
+  },
+  "ruff": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/ruff",
+      "check",
+      "app/",
+      "tests/",
+      "scripts/"
+    ],
+    "exit_code": 0,
+    "log": "validation/ruff.log",
+    "log_sha256": "964ab11059e2f86ee0fa943378064ee70123332a1275bcf695bd31c36bcda7c0",
+    "status": "PASS"
+  },
+  "staged_diff_check": {
+    "command": [
+      "git",
+      "diff",
+      "--cached",
+      "--check"
+    ],
+    "exit_code": 0,
+    "log": "validation/staged_diff_check.log",
+    "log_sha256": "ca012da3df67200cfa63d8909e057dac276a9aae1d98a508c5638ff3340b1de3",
+    "status": "PASS"
+  },
+  "status": "PASS"
+}

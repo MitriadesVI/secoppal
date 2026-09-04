@@ -1,0 +1,505 @@
+{
+  "global_maximum": 75,
+  "method": "git worktree list --porcelain; rg --hidden --no-ignore over docs in each registered worktree",
+  "next_number": 76,
+  "phase": "AFTER_EMPIRICAL_M2B_BEFORE_ADR_CREATION",
+  "reserved_adr": "docs/decisions/2026-09-04_ADR-076_municipal-own-sigep-ese-identity.md",
+  "scanned_worktrees": 29,
+  "worktrees": [
+    {
+      "maximum": 75,
+      "maximum_evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal/docs/decisions/2026-09-04_ADR-075_municipal-territorial-affiliation-evidence-chains.md:121:NIT como identidad única está falsificado por ADR-074 y el canario M2A.",
+        "/Users/rodrigoortiz/Documents/secoppal/docs/decisions/2026-09-04_ADR-075_municipal-territorial-affiliation-evidence-chains.md:131:ADR-074. Evidencia: `artifacts/audits/municipal_m2a/adr_scan.json`.",
+        "/Users/rodrigoortiz/Documents/secoppal/docs/decisions/2026-09-04_ADR-075_municipal-territorial-affiliation-evidence-chains.md:1:# ADR-075 — Afiliación territorial por cadenas de evidencia independientes",
+        "/Users/rodrigoortiz/Documents/secoppal/docs/decisions_log.md:4295:## ADR-075: La afiliación territorial municipal exige cadenas de evidencia independientes",
+        "/Users/rodrigoortiz/Documents/secoppal/docs/decisions_log.md:4313:Detalle: `docs/decisions/2026-09-04_ADR-075_municipal-territorial-affiliation-evidence-chains.md`.",
+        "/Users/rodrigoortiz/Documents/secoppal/docs/gazetteer/MUNICIPAL_M2A.md:148:**ADR_REQUIRED: YES.** Las cadenas aceptadas constituyen una autoridad reusable para auditoría offline, con límites de identidad y Bogotá explícitos. El ADR se escribe después de contrastar el experimento y verificar el máximo global de los worktrees. Véase [ADR-075](../decisions/2026-09-04_ADR-075_municipal-territorial-affiliation-evidence-chains.md) y el barrido retenido en adr_scan.json. **NEXT: M2B_ADJUDICATION.**"
+      ],
+      "status": "PASS",
+      "stderr": "",
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal"
+    },
+    {
+      "maximum": 55,
+      "maximum_evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-assisted-offline/docs/decisions/2026-07-30_ADR-055_truth-layer-single-pass-derivation-capability.md:1:# ADR-055 — Truth Layer single-pass derivation capability"
+      ],
+      "status": "PASS",
+      "stderr": "",
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-assisted-offline"
+    },
+    {
+      "maximum": 55,
+      "maximum_evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-assisted-retrieval/docs/decisions/2026-07-30_ADR-055_truth-layer-single-pass-derivation-capability.md:1:# ADR-055 — Truth Layer single-pass derivation capability"
+      ],
+      "status": "PASS",
+      "stderr": "",
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-assisted-retrieval"
+    },
+    {
+      "maximum": 48,
+      "maximum_evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-b2-microprobe/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:166:  W2.0B, igual que W1.3 dejó abierta la ventana de staleness en ADR-047).",
+        "/Users/rodrigoortiz/Documents/secoppal-b2-microprobe/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:19:  escalonado que cerró W1.1→W1.2 y que fijó ADR-047 para W1.3.",
+        "/Users/rodrigoortiz/Documents/secoppal-b2-microprobe/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:1:# ADR-048 — Bounded Local Snapshot as Primary Source",
+        "/Users/rodrigoortiz/Documents/secoppal-b2-microprobe/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:210:de ADR-047.",
+        "/Users/rodrigoortiz/Documents/secoppal-b2-microprobe/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:254:  controlada, cada etapa con su propio gate de evidencia) que cerró W1.1→W1.2 y que fijó ADR-047",
+        "/Users/rodrigoortiz/Documents/secoppal-b2-microprobe/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:25:W1 (ADR-045/046) cerró con una regla absoluta: **local nunca es fuente primaria**. Local es",
+        "/Users/rodrigoortiz/Documents/secoppal-b2-microprobe/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:26:candidate pool verificado; Socrata siempre re-verifica antes de responder. ADR-047 mantuvo esa",
+        "/Users/rodrigoortiz/Documents/secoppal-b2-microprobe/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:6:**Continúa:** ADR-046 (candidate pool GO), ADR-047 (diseño de fuente visible W1.3, dirección)",
+        "/Users/rodrigoortiz/Documents/secoppal-b2-microprobe/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:70:**Antes (ADR-045/046/047):**",
+        "/Users/rodrigoortiz/Documents/secoppal-b2-microprobe/docs/decisions_log.md:2021:## ADR-048: Bounded Local Snapshot as Primary Source",
+        "/Users/rodrigoortiz/Documents/secoppal-b2-microprobe/docs/decisions_log.md:2060:Detalle completo en [`docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md`](decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md)",
+        "/Users/rodrigoortiz/Documents/secoppal-b2-microprobe/docs/warehouse/W2.0A_near_live_warehouse_feasibility.md:12:> prepara evidencia para un posible **`ADR-048 — Bounded Local Snapshot as Primary"
+      ],
+      "status": "PASS",
+      "stderr": "",
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b2-microprobe"
+    },
+    {
+      "maximum": 48,
+      "maximum_evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2a-lock-split/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:166:  W2.0B, igual que W1.3 dejó abierta la ventana de staleness en ADR-047).",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2a-lock-split/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:19:  escalonado que cerró W1.1→W1.2 y que fijó ADR-047 para W1.3.",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2a-lock-split/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:1:# ADR-048 — Bounded Local Snapshot as Primary Source",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2a-lock-split/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:210:de ADR-047.",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2a-lock-split/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:254:  controlada, cada etapa con su propio gate de evidencia) que cerró W1.1→W1.2 y que fijó ADR-047",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2a-lock-split/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:25:W1 (ADR-045/046) cerró con una regla absoluta: **local nunca es fuente primaria**. Local es",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2a-lock-split/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:26:candidate pool verificado; Socrata siempre re-verifica antes de responder. ADR-047 mantuvo esa",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2a-lock-split/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:6:**Continúa:** ADR-046 (candidate pool GO), ADR-047 (diseño de fuente visible W1.3, dirección)",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2a-lock-split/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:70:**Antes (ADR-045/046/047):**",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2a-lock-split/docs/decisions_log.md:2021:## ADR-048: Bounded Local Snapshot as Primary Source",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2a-lock-split/docs/decisions_log.md:2060:Detalle completo en [`docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md`](decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md)",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2a-lock-split/docs/warehouse/W2.0A_near_live_warehouse_feasibility.md:12:> prepara evidencia para un posible **`ADR-048 — Bounded Local Snapshot as Primary"
+      ],
+      "status": "PASS",
+      "stderr": "",
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b2c2a-lock-split"
+    },
+    {
+      "maximum": 48,
+      "maximum_evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2c-quarantine/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:166:  W2.0B, igual que W1.3 dejó abierta la ventana de staleness en ADR-047).",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2c-quarantine/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:19:  escalonado que cerró W1.1→W1.2 y que fijó ADR-047 para W1.3.",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2c-quarantine/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:1:# ADR-048 — Bounded Local Snapshot as Primary Source",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2c-quarantine/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:210:de ADR-047.",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2c-quarantine/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:254:  controlada, cada etapa con su propio gate de evidencia) que cerró W1.1→W1.2 y que fijó ADR-047",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2c-quarantine/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:25:W1 (ADR-045/046) cerró con una regla absoluta: **local nunca es fuente primaria**. Local es",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2c-quarantine/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:26:candidate pool verificado; Socrata siempre re-verifica antes de responder. ADR-047 mantuvo esa",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2c-quarantine/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:6:**Continúa:** ADR-046 (candidate pool GO), ADR-047 (diseño de fuente visible W1.3, dirección)",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2c-quarantine/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:70:**Antes (ADR-045/046/047):**",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2c-quarantine/docs/decisions_log.md:2021:## ADR-048: Bounded Local Snapshot as Primary Source",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2c-quarantine/docs/decisions_log.md:2060:Detalle completo en [`docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md`](decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md)",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2c-quarantine/docs/warehouse/W2.0A_near_live_warehouse_feasibility.md:12:> prepara evidencia para un posible **`ADR-048 — Bounded Local Snapshot as Primary"
+      ],
+      "status": "PASS",
+      "stderr": "",
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b2c2c-quarantine"
+    },
+    {
+      "maximum": 48,
+      "maximum_evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2d-orchestrator/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:166:  W2.0B, igual que W1.3 dejó abierta la ventana de staleness en ADR-047).",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2d-orchestrator/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:19:  escalonado que cerró W1.1→W1.2 y que fijó ADR-047 para W1.3.",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2d-orchestrator/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:1:# ADR-048 — Bounded Local Snapshot as Primary Source",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2d-orchestrator/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:210:de ADR-047.",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2d-orchestrator/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:254:  controlada, cada etapa con su propio gate de evidencia) que cerró W1.1→W1.2 y que fijó ADR-047",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2d-orchestrator/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:25:W1 (ADR-045/046) cerró con una regla absoluta: **local nunca es fuente primaria**. Local es",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2d-orchestrator/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:26:candidate pool verificado; Socrata siempre re-verifica antes de responder. ADR-047 mantuvo esa",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2d-orchestrator/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:6:**Continúa:** ADR-046 (candidate pool GO), ADR-047 (diseño de fuente visible W1.3, dirección)",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2d-orchestrator/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:70:**Antes (ADR-045/046/047):**",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2d-orchestrator/docs/decisions_log.md:2021:## ADR-048: Bounded Local Snapshot as Primary Source",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2d-orchestrator/docs/decisions_log.md:2060:Detalle completo en [`docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md`](decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md)",
+        "/Users/rodrigoortiz/Documents/secoppal-b2c2d-orchestrator/docs/warehouse/W2.0A_near_live_warehouse_feasibility.md:12:> prepara evidencia para un posible **`ADR-048 — Bounded Local Snapshot as Primary"
+      ],
+      "status": "PASS",
+      "stderr": "",
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b2c2d-orchestrator"
+    },
+    {
+      "maximum": 48,
+      "maximum_evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-b3-frontier/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:166:  W2.0B, igual que W1.3 dejó abierta la ventana de staleness en ADR-047).",
+        "/Users/rodrigoortiz/Documents/secoppal-b3-frontier/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:19:  escalonado que cerró W1.1→W1.2 y que fijó ADR-047 para W1.3.",
+        "/Users/rodrigoortiz/Documents/secoppal-b3-frontier/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:1:# ADR-048 — Bounded Local Snapshot as Primary Source",
+        "/Users/rodrigoortiz/Documents/secoppal-b3-frontier/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:210:de ADR-047.",
+        "/Users/rodrigoortiz/Documents/secoppal-b3-frontier/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:254:  controlada, cada etapa con su propio gate de evidencia) que cerró W1.1→W1.2 y que fijó ADR-047",
+        "/Users/rodrigoortiz/Documents/secoppal-b3-frontier/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:25:W1 (ADR-045/046) cerró con una regla absoluta: **local nunca es fuente primaria**. Local es",
+        "/Users/rodrigoortiz/Documents/secoppal-b3-frontier/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:26:candidate pool verificado; Socrata siempre re-verifica antes de responder. ADR-047 mantuvo esa",
+        "/Users/rodrigoortiz/Documents/secoppal-b3-frontier/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:6:**Continúa:** ADR-046 (candidate pool GO), ADR-047 (diseño de fuente visible W1.3, dirección)",
+        "/Users/rodrigoortiz/Documents/secoppal-b3-frontier/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:70:**Antes (ADR-045/046/047):**",
+        "/Users/rodrigoortiz/Documents/secoppal-b3-frontier/docs/decisions_log.md:2021:## ADR-048: Bounded Local Snapshot as Primary Source",
+        "/Users/rodrigoortiz/Documents/secoppal-b3-frontier/docs/decisions_log.md:2060:Detalle completo en [`docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md`](decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md)",
+        "/Users/rodrigoortiz/Documents/secoppal-b3-frontier/docs/warehouse/W2.0A_near_live_warehouse_feasibility.md:12:> prepara evidencia para un posible **`ADR-048 — Bounded Local Snapshot as Primary"
+      ],
+      "status": "PASS",
+      "stderr": "",
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b3-frontier"
+    },
+    {
+      "maximum": 48,
+      "maximum_evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-b3b-shadow/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:166:  W2.0B, igual que W1.3 dejó abierta la ventana de staleness en ADR-047).",
+        "/Users/rodrigoortiz/Documents/secoppal-b3b-shadow/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:19:  escalonado que cerró W1.1→W1.2 y que fijó ADR-047 para W1.3.",
+        "/Users/rodrigoortiz/Documents/secoppal-b3b-shadow/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:1:# ADR-048 — Bounded Local Snapshot as Primary Source",
+        "/Users/rodrigoortiz/Documents/secoppal-b3b-shadow/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:210:de ADR-047.",
+        "/Users/rodrigoortiz/Documents/secoppal-b3b-shadow/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:254:  controlada, cada etapa con su propio gate de evidencia) que cerró W1.1→W1.2 y que fijó ADR-047",
+        "/Users/rodrigoortiz/Documents/secoppal-b3b-shadow/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:25:W1 (ADR-045/046) cerró con una regla absoluta: **local nunca es fuente primaria**. Local es",
+        "/Users/rodrigoortiz/Documents/secoppal-b3b-shadow/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:26:candidate pool verificado; Socrata siempre re-verifica antes de responder. ADR-047 mantuvo esa",
+        "/Users/rodrigoortiz/Documents/secoppal-b3b-shadow/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:6:**Continúa:** ADR-046 (candidate pool GO), ADR-047 (diseño de fuente visible W1.3, dirección)",
+        "/Users/rodrigoortiz/Documents/secoppal-b3b-shadow/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:70:**Antes (ADR-045/046/047):**",
+        "/Users/rodrigoortiz/Documents/secoppal-b3b-shadow/docs/decisions_log.md:2021:## ADR-048: Bounded Local Snapshot as Primary Source",
+        "/Users/rodrigoortiz/Documents/secoppal-b3b-shadow/docs/decisions_log.md:2060:Detalle completo en [`docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md`](decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md)",
+        "/Users/rodrigoortiz/Documents/secoppal-b3b-shadow/docs/warehouse/W2.0A_near_live_warehouse_feasibility.md:12:> prepara evidencia para un posible **`ADR-048 — Bounded Local Snapshot as Primary"
+      ],
+      "status": "PASS",
+      "stderr": "",
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b3b-shadow"
+    },
+    {
+      "maximum": 48,
+      "maximum_evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-a-evidence/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:166:  W2.0B, igual que W1.3 dejó abierta la ventana de staleness en ADR-047).",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-a-evidence/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:19:  escalonado que cerró W1.1→W1.2 y que fijó ADR-047 para W1.3.",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-a-evidence/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:1:# ADR-048 — Bounded Local Snapshot as Primary Source",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-a-evidence/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:210:de ADR-047.",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-a-evidence/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:254:  controlada, cada etapa con su propio gate de evidencia) que cerró W1.1→W1.2 y que fijó ADR-047",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-a-evidence/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:25:W1 (ADR-045/046) cerró con una regla absoluta: **local nunca es fuente primaria**. Local es",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-a-evidence/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:26:candidate pool verificado; Socrata siempre re-verifica antes de responder. ADR-047 mantuvo esa",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-a-evidence/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:6:**Continúa:** ADR-046 (candidate pool GO), ADR-047 (diseño de fuente visible W1.3, dirección)",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-a-evidence/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:70:**Antes (ADR-045/046/047):**",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-a-evidence/docs/decisions_log.md:2021:## ADR-048: Bounded Local Snapshot as Primary Source",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-a-evidence/docs/decisions_log.md:2060:Detalle completo en [`docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md`](decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md)",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-a-evidence/docs/warehouse/W2.0A_near_live_warehouse_feasibility.md:12:> prepara evidencia para un posible **`ADR-048 — Bounded Local Snapshot as Primary"
+      ],
+      "status": "PASS",
+      "stderr": "",
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b3c-a-evidence"
+    },
+    {
+      "maximum": 48,
+      "maximum_evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b1-policy/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:166:  W2.0B, igual que W1.3 dejó abierta la ventana de staleness en ADR-047).",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b1-policy/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:19:  escalonado que cerró W1.1→W1.2 y que fijó ADR-047 para W1.3.",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b1-policy/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:1:# ADR-048 — Bounded Local Snapshot as Primary Source",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b1-policy/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:210:de ADR-047.",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b1-policy/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:254:  controlada, cada etapa con su propio gate de evidencia) que cerró W1.1→W1.2 y que fijó ADR-047",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b1-policy/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:25:W1 (ADR-045/046) cerró con una regla absoluta: **local nunca es fuente primaria**. Local es",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b1-policy/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:26:candidate pool verificado; Socrata siempre re-verifica antes de responder. ADR-047 mantuvo esa",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b1-policy/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:6:**Continúa:** ADR-046 (candidate pool GO), ADR-047 (diseño de fuente visible W1.3, dirección)",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b1-policy/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:70:**Antes (ADR-045/046/047):**",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b1-policy/docs/decisions_log.md:2021:## ADR-048: Bounded Local Snapshot as Primary Source",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b1-policy/docs/decisions_log.md:2060:Detalle completo en [`docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md`](decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md)",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b1-policy/docs/warehouse/W2.0A_near_live_warehouse_feasibility.md:12:> prepara evidencia para un posible **`ADR-048 — Bounded Local Snapshot as Primary"
+      ],
+      "status": "PASS",
+      "stderr": "",
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b3c-b1-policy"
+    },
+    {
+      "maximum": 48,
+      "maximum_evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2-pointer/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:166:  W2.0B, igual que W1.3 dejó abierta la ventana de staleness en ADR-047).",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2-pointer/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:19:  escalonado que cerró W1.1→W1.2 y que fijó ADR-047 para W1.3.",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2-pointer/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:1:# ADR-048 — Bounded Local Snapshot as Primary Source",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2-pointer/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:210:de ADR-047.",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2-pointer/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:254:  controlada, cada etapa con su propio gate de evidencia) que cerró W1.1→W1.2 y que fijó ADR-047",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2-pointer/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:25:W1 (ADR-045/046) cerró con una regla absoluta: **local nunca es fuente primaria**. Local es",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2-pointer/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:26:candidate pool verificado; Socrata siempre re-verifica antes de responder. ADR-047 mantuvo esa",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2-pointer/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:6:**Continúa:** ADR-046 (candidate pool GO), ADR-047 (diseño de fuente visible W1.3, dirección)",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2-pointer/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:70:**Antes (ADR-045/046/047):**",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2-pointer/docs/decisions_log.md:2021:## ADR-048: Bounded Local Snapshot as Primary Source",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2-pointer/docs/decisions_log.md:2060:Detalle completo en [`docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md`](decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md)",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2-pointer/docs/warehouse/W2.0A_near_live_warehouse_feasibility.md:12:> prepara evidencia para un posible **`ADR-048 — Bounded Local Snapshot as Primary"
+      ],
+      "status": "PASS",
+      "stderr": "",
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b3c-b2-pointer"
+    },
+    {
+      "maximum": 48,
+      "maximum_evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2b/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:166:  W2.0B, igual que W1.3 dejó abierta la ventana de staleness en ADR-047).",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2b/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:19:  escalonado que cerró W1.1→W1.2 y que fijó ADR-047 para W1.3.",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2b/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:1:# ADR-048 — Bounded Local Snapshot as Primary Source",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2b/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:210:de ADR-047.",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2b/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:254:  controlada, cada etapa con su propio gate de evidencia) que cerró W1.1→W1.2 y que fijó ADR-047",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2b/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:25:W1 (ADR-045/046) cerró con una regla absoluta: **local nunca es fuente primaria**. Local es",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2b/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:26:candidate pool verificado; Socrata siempre re-verifica antes de responder. ADR-047 mantuvo esa",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2b/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:6:**Continúa:** ADR-046 (candidate pool GO), ADR-047 (diseño de fuente visible W1.3, dirección)",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2b/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:70:**Antes (ADR-045/046/047):**",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2b/docs/decisions_log.md:2021:## ADR-048: Bounded Local Snapshot as Primary Source",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2b/docs/decisions_log.md:2060:Detalle completo en [`docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md`](decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md)",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2b/docs/warehouse/W2.0A_near_live_warehouse_feasibility.md:12:> prepara evidencia para un posible **`ADR-048 — Bounded Local Snapshot as Primary"
+      ],
+      "status": "PASS",
+      "stderr": "",
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b3c-b2b"
+    },
+    {
+      "maximum": 48,
+      "maximum_evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c1/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:166:  W2.0B, igual que W1.3 dejó abierta la ventana de staleness en ADR-047).",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c1/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:19:  escalonado que cerró W1.1→W1.2 y que fijó ADR-047 para W1.3.",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c1/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:1:# ADR-048 — Bounded Local Snapshot as Primary Source",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c1/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:210:de ADR-047.",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c1/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:254:  controlada, cada etapa con su propio gate de evidencia) que cerró W1.1→W1.2 y que fijó ADR-047",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c1/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:25:W1 (ADR-045/046) cerró con una regla absoluta: **local nunca es fuente primaria**. Local es",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c1/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:26:candidate pool verificado; Socrata siempre re-verifica antes de responder. ADR-047 mantuvo esa",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c1/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:6:**Continúa:** ADR-046 (candidate pool GO), ADR-047 (diseño de fuente visible W1.3, dirección)",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c1/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:70:**Antes (ADR-045/046/047):**",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c1/docs/decisions_log.md:2021:## ADR-048: Bounded Local Snapshot as Primary Source",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c1/docs/decisions_log.md:2060:Detalle completo en [`docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md`](decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md)",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c1/docs/warehouse/W2.0A_near_live_warehouse_feasibility.md:12:> prepara evidencia para un posible **`ADR-048 — Bounded Local Snapshot as Primary"
+      ],
+      "status": "PASS",
+      "stderr": "",
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c1"
+    },
+    {
+      "maximum": 48,
+      "maximum_evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c2b/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:166:  W2.0B, igual que W1.3 dejó abierta la ventana de staleness en ADR-047).",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c2b/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:19:  escalonado que cerró W1.1→W1.2 y que fijó ADR-047 para W1.3.",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c2b/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:1:# ADR-048 — Bounded Local Snapshot as Primary Source",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c2b/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:210:de ADR-047.",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c2b/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:254:  controlada, cada etapa con su propio gate de evidencia) que cerró W1.1→W1.2 y que fijó ADR-047",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c2b/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:25:W1 (ADR-045/046) cerró con una regla absoluta: **local nunca es fuente primaria**. Local es",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c2b/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:26:candidate pool verificado; Socrata siempre re-verifica antes de responder. ADR-047 mantuvo esa",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c2b/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:6:**Continúa:** ADR-046 (candidate pool GO), ADR-047 (diseño de fuente visible W1.3, dirección)",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c2b/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:70:**Antes (ADR-045/046/047):**",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c2b/docs/decisions_log.md:2021:## ADR-048: Bounded Local Snapshot as Primary Source",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c2b/docs/decisions_log.md:2060:Detalle completo en [`docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md`](decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md)",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c2b/docs/warehouse/W2.0A_near_live_warehouse_feasibility.md:12:> prepara evidencia para un posible **`ADR-048 — Bounded Local Snapshot as Primary"
+      ],
+      "status": "PASS",
+      "stderr": "",
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b3c-b2c2b"
+    },
+    {
+      "maximum": 48,
+      "maximum_evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-design/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:166:  W2.0B, igual que W1.3 dejó abierta la ventana de staleness en ADR-047).",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-design/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:19:  escalonado que cerró W1.1→W1.2 y que fijó ADR-047 para W1.3.",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-design/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:1:# ADR-048 — Bounded Local Snapshot as Primary Source",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-design/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:210:de ADR-047.",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-design/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:254:  controlada, cada etapa con su propio gate de evidencia) que cerró W1.1→W1.2 y que fijó ADR-047",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-design/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:25:W1 (ADR-045/046) cerró con una regla absoluta: **local nunca es fuente primaria**. Local es",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-design/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:26:candidate pool verificado; Socrata siempre re-verifica antes de responder. ADR-047 mantuvo esa",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-design/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:6:**Continúa:** ADR-046 (candidate pool GO), ADR-047 (diseño de fuente visible W1.3, dirección)",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-design/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:70:**Antes (ADR-045/046/047):**",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-design/docs/decisions_log.md:2021:## ADR-048: Bounded Local Snapshot as Primary Source",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-design/docs/decisions_log.md:2060:Detalle completo en [`docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md`](decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md)",
+        "/Users/rodrigoortiz/Documents/secoppal-b3c-design/docs/warehouse/W2.0A_near_live_warehouse_feasibility.md:12:> prepara evidencia para un posible **`ADR-048 — Bounded Local Snapshot as Primary"
+      ],
+      "status": "PASS",
+      "stderr": "",
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-b3c-design"
+    },
+    {
+      "maximum": 66,
+      "maximum_evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-chatgpt/docs/decisions_log.md:3608:## ADR-066: El lenguaje de control no es contenido de búsqueda",
+        "/Users/rodrigoortiz/Documents/secoppal-chatgpt/docs/documento_tecnico_secoppal_arquitectura_bitacora.md:121:- **`CONTROL_LANGUAGE_V1`: CLOSED e integrado en main** (ADR-066,"
+      ],
+      "status": "PASS",
+      "stderr": "",
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-chatgpt"
+    },
+    {
+      "maximum": 61,
+      "maximum_evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-conversation-audit/docs/CORPUS_BACKLOG.md:120:| CONTRACTUAL-DIMENSION-CONVENIO-001 | Lenguaje de naturaleza contractual (`convenios`) no reconocido como dimensión estructurada → caía en el extractor de objeto y se proyectaba como búsqueda literal de texto. **Confirmado en dogfood manual:** `convenios de alcaldia de barranquilla en 2026` buscaba la cadena `convenio` dentro del objeto contractual, trayendo prestación de servicios, obra e interventoría que solo *referencian* un convenio ajeno. | 1 confirmado (dogfood) | **CLOSED SEARCH-SH1 — 2026-08-22** — `semantic_dimensions.py` + `contract_type_resolver.py` + `contract_type_projection.py`. Auditado en fuente: no existe `tipo_de_contrato = 'Convenio'`; la familia interadministrativa (135.932 procesos / 123.823 contratos) vive mayoritariamente como tipo `Otro`. `convenio` se clasifica `COMPOSITE` (estructura + texto controlado) e **INV-STRUCTURED-DIMENSION-NOT-TOPIC** impide la fuga a `objeto`. `ModalityResolver` sin modificar. Verificado en vivo: 2 filas de procesos en Barranquilla 2026, sin fuga. ADR-061. Commit `8acb21a`. |",
+        "/Users/rodrigoortiz/Documents/secoppal-conversation-audit/docs/CORPUS_BACKLOG.md:121:| FOLLOWUP-MONEY-REFINEMENT-001 | Follow-up con año repetido descartaba el delta monetario ortogonal. **Confirmado en dogfood manual:** base `contratos adulto mayor gobernacion de atlantico en 2026` + follow-up `por mas de 100 millones en 2026` → el parser sí emitía `valor_min=100000000`, pero `FollowupClassifier` marcaba `change_year` y `gate_delta` rechazaba el campo como `field_not_allowed_for_intent`. **Subhallazgo acoplado:** al perderse el campo antes de serializar el frame, el fingerprint no representaba un universo nuevo y el sidecar de paginación anterior seguía elegible — `más resultados` paginaba resultados sin filtrar. | 1 confirmado (dogfood) | **CLOSED SEARCH-SH1 — 2026-08-22** — **INV-ORTHOGONAL-DELTA-NOT-LOST-BY-NOOP**: `followup_engine.py` deja de clasificar como `change_year`/`change_order` un turno con filtro ortogonal, y `MONEY_FIELDS` entra en los conjuntos permitidos. **INV-FILTER-MUTATION-INVALIDATES-PAGINATION**: `ConversationStore.invalidate_pagination_buffers()` borra el sidecar completo antes de todo turno semántico. Verificado en vivo: 46 → 4 filas en Gobernación de Atlántico, **0 filas bajo los 100M**, paginación correcta sobre el universo refinado. ADR-061. Commit `8acb21a`. |",
+        "/Users/rodrigoortiz/Documents/secoppal-conversation-audit/docs/CORPUS_BACKLOG.md:5:**Última actualización:** 2026-08-22 (SEARCH-SH1: CONTRACTUAL-DIMENSION-CONVENIO-001 y FOLLOWUP-MONEY-REFINEMENT-001 cerrados — ADR-061)",
+        "/Users/rodrigoortiz/Documents/secoppal-conversation-audit/docs/architecture/SEMANTIC_QUERY_DIMENSIONS.md:381:- Decisión canónica: `docs/decisions_log.md` → **ADR-061**",
+        "/Users/rodrigoortiz/Documents/secoppal-conversation-audit/docs/architecture/SEMANTIC_QUERY_DIMENSIONS.md:4:[`ADR-061`](../decisions_log.md)  ",
+        "/Users/rodrigoortiz/Documents/secoppal-conversation-audit/docs/architecture/SEMANTIC_QUERY_DIMENSIONS.md:9:> (ADR-061). La evidencia de fuente detallada vive en",
+        "/Users/rodrigoortiz/Documents/secoppal-conversation-audit/docs/audits/2026-08-22_CONVERSATIONAL_SYSTEM_HOLISTIC_AUDIT.md:290:  follow-up correcto, y el fix ADR-061 (año repetido no borra valor_min) verificado",
+        "/Users/rodrigoortiz/Documents/secoppal-conversation-audit/docs/decisions_log.md:2818:## ADR-061: Dimensiones semánticas estructuradas y mutaciones conversacionales componibles (SEARCH-SH1)",
+        "/Users/rodrigoortiz/Documents/secoppal-conversation-audit/docs/documento_tecnico_secoppal_arquitectura_bitacora.md:1146:(formato ADR; el máximo vigente es **ADR-061**). La numeración tiene huecos:",
+        "/Users/rodrigoortiz/Documents/secoppal-conversation-audit/docs/documento_tecnico_secoppal_arquitectura_bitacora.md:11:  mergeados ff-only: **Actor Profile V1** (ADR-060) y **SEARCH-SH1** (ADR-061).",
+        "/Users/rodrigoortiz/Documents/secoppal-conversation-audit/docs/documento_tecnico_secoppal_arquitectura_bitacora.md:44:### SEARCH-SH1 (ADR-061 · `8acb21a`)",
+        "/Users/rodrigoortiz/Documents/secoppal-conversation-audit/docs/documento_tecnico_secoppal_arquitectura_bitacora.md:805:- **SEARCH-SH1 (ADR-061, `8acb21a`)** — `SemanticDimension` como vocabulario"
+      ],
+      "status": "PASS",
+      "stderr": "",
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-conversation-audit"
+    },
+    {
+      "maximum": 48,
+      "maximum_evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-f50-parser-remediation/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:166:  W2.0B, igual que W1.3 dejó abierta la ventana de staleness en ADR-047).",
+        "/Users/rodrigoortiz/Documents/secoppal-f50-parser-remediation/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:19:  escalonado que cerró W1.1→W1.2 y que fijó ADR-047 para W1.3.",
+        "/Users/rodrigoortiz/Documents/secoppal-f50-parser-remediation/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:1:# ADR-048 — Bounded Local Snapshot as Primary Source",
+        "/Users/rodrigoortiz/Documents/secoppal-f50-parser-remediation/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:210:de ADR-047.",
+        "/Users/rodrigoortiz/Documents/secoppal-f50-parser-remediation/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:254:  controlada, cada etapa con su propio gate de evidencia) que cerró W1.1→W1.2 y que fijó ADR-047",
+        "/Users/rodrigoortiz/Documents/secoppal-f50-parser-remediation/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:25:W1 (ADR-045/046) cerró con una regla absoluta: **local nunca es fuente primaria**. Local es",
+        "/Users/rodrigoortiz/Documents/secoppal-f50-parser-remediation/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:26:candidate pool verificado; Socrata siempre re-verifica antes de responder. ADR-047 mantuvo esa",
+        "/Users/rodrigoortiz/Documents/secoppal-f50-parser-remediation/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:6:**Continúa:** ADR-046 (candidate pool GO), ADR-047 (diseño de fuente visible W1.3, dirección)",
+        "/Users/rodrigoortiz/Documents/secoppal-f50-parser-remediation/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:70:**Antes (ADR-045/046/047):**",
+        "/Users/rodrigoortiz/Documents/secoppal-f50-parser-remediation/docs/decisions_log.md:2021:## ADR-048: Bounded Local Snapshot as Primary Source",
+        "/Users/rodrigoortiz/Documents/secoppal-f50-parser-remediation/docs/decisions_log.md:2060:Detalle completo en [`docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md`](decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md)",
+        "/Users/rodrigoortiz/Documents/secoppal-f50-parser-remediation/docs/warehouse/W2.0A_near_live_warehouse_feasibility.md:12:> prepara evidencia para un posible **`ADR-048 — Bounded Local Snapshot as Primary"
+      ],
+      "status": "PASS",
+      "stderr": "",
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-f50-parser-remediation"
+    },
+    {
+      "maximum": 66,
+      "maximum_evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-hca-oracle-review/docs/audits/2026-08-26_HCA_ORACLE_REVIEW.md:785:**CANONICAL_AUTHORITIES** — ADR-061; ADR-066 INV-ORDERING-FOLLOWUP-PRESERVES-UNIVERSE.",
+        "/Users/rodrigoortiz/Documents/secoppal-hca-oracle-review/docs/audits/2026-08-26_HCA_ORACLE_REVIEW.md:985:| CONTROL_LIMIT_SEMANTICS | Diferido global, 0 casos entre los 18 | ADR-066 exige separar pool y display; no se usa limit=10 como cierre. |",
+        "/Users/rodrigoortiz/Documents/secoppal-hca-oracle-review/docs/audits/evidence/2026-08-26_HCA_ORACLE_REVIEW/phase_a_blind.json:149:      \"CANONICAL_AUTHORITIES\": \"ADR-061; ADR-066 INV-ORDERING-FOLLOWUP-PRESERVES-UNIVERSE.\",",
+        "/Users/rodrigoortiz/Documents/secoppal-hca-oracle-review/docs/decisions_log.md:3608:## ADR-066: El lenguaje de control no es contenido de búsqueda",
+        "/Users/rodrigoortiz/Documents/secoppal-hca-oracle-review/docs/documento_tecnico_secoppal_arquitectura_bitacora.md:121:- **`CONTROL_LANGUAGE_V1`: CLOSED e integrado en main** (ADR-066,"
+      ],
+      "status": "PASS",
+      "stderr": "",
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-hca-oracle-review"
+    },
+    {
+      "maximum": 48,
+      "maximum_evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-node-value-benchmark/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:166:  W2.0B, igual que W1.3 dejó abierta la ventana de staleness en ADR-047).",
+        "/Users/rodrigoortiz/Documents/secoppal-node-value-benchmark/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:19:  escalonado que cerró W1.1→W1.2 y que fijó ADR-047 para W1.3.",
+        "/Users/rodrigoortiz/Documents/secoppal-node-value-benchmark/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:1:# ADR-048 — Bounded Local Snapshot as Primary Source",
+        "/Users/rodrigoortiz/Documents/secoppal-node-value-benchmark/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:210:de ADR-047.",
+        "/Users/rodrigoortiz/Documents/secoppal-node-value-benchmark/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:254:  controlada, cada etapa con su propio gate de evidencia) que cerró W1.1→W1.2 y que fijó ADR-047",
+        "/Users/rodrigoortiz/Documents/secoppal-node-value-benchmark/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:25:W1 (ADR-045/046) cerró con una regla absoluta: **local nunca es fuente primaria**. Local es",
+        "/Users/rodrigoortiz/Documents/secoppal-node-value-benchmark/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:26:candidate pool verificado; Socrata siempre re-verifica antes de responder. ADR-047 mantuvo esa",
+        "/Users/rodrigoortiz/Documents/secoppal-node-value-benchmark/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:6:**Continúa:** ADR-046 (candidate pool GO), ADR-047 (diseño de fuente visible W1.3, dirección)",
+        "/Users/rodrigoortiz/Documents/secoppal-node-value-benchmark/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:70:**Antes (ADR-045/046/047):**",
+        "/Users/rodrigoortiz/Documents/secoppal-node-value-benchmark/docs/decisions_log.md:2021:## ADR-048: Bounded Local Snapshot as Primary Source",
+        "/Users/rodrigoortiz/Documents/secoppal-node-value-benchmark/docs/decisions_log.md:2060:Detalle completo en [`docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md`](decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md)",
+        "/Users/rodrigoortiz/Documents/secoppal-node-value-benchmark/docs/warehouse/W2.0A_near_live_warehouse_feasibility.md:12:> prepara evidencia para un posible **`ADR-048 — Bounded Local Snapshot as Primary"
+      ],
+      "status": "PASS",
+      "stderr": "",
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-node-value-benchmark"
+    },
+    {
+      "maximum": 70,
+      "maximum_evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-r4a3-cross-batch/docs/audits/2026-08-28_RADAR_R4A_COVERAGE_FRONTIER_ARCHITECTURE.md:103:| ADR-070 y auditorías SODA3 | `page`, `/export`, `:updated_at incremental` y TOP-N determinístico quedaron fuera del runtime adjudicado | **CONFIRMED_BY_REPO** |",
+        "/Users/rodrigoortiz/Documents/secoppal-r4a3-cross-batch/docs/audits/2026-08-28_RADAR_R4A_COVERAGE_FRONTIER_ARCHITECTURE.md:204:**CONFIRMED_BY_REPO.** `Soda3HttpTransport.payload_for` no acepta ni envía `page`. ADR-070 lo dejó explícitamente fuera del runtime.",
+        "/Users/rodrigoortiz/Documents/secoppal-r4a3-cross-batch/docs/decisions/2026-08-28_ADR-070_soda3-default-transport.md:122:ADR-070 **no** decide, autoriza ni evalúa:",
+        "/Users/rodrigoortiz/Documents/secoppal-r4a3-cross-batch/docs/decisions/2026-08-28_ADR-070_soda3-default-transport.md:1:# ADR-070 — SODA3 `/query` como transporte Socrata productivo por defecto",
+        "/Users/rodrigoortiz/Documents/secoppal-r4a3-cross-batch/docs/decisions/2026-08-28_ADR-070_soda3-default-transport.md:96:búsqueda legítimamente vacía —exactamente el fallo que ADR-069 prohibió en el",
+        "/Users/rodrigoortiz/Documents/secoppal-r4a3-cross-batch/docs/decisions_log.md:3925:## ADR-070: SODA3 `/query` como transporte Socrata productivo por defecto",
+        "/Users/rodrigoortiz/Documents/secoppal-r4a3-cross-batch/docs/decisions_log.md:4001:Detalle: `docs/decisions/2026-08-28_ADR-070_soda3-default-transport.md`.",
+        "/Users/rodrigoortiz/Documents/secoppal-r4a3-cross-batch/docs/documento_tecnico_secoppal_arquitectura_bitacora.md:12:- **`SODA3_TRANSPORT_V1 = INTEGRATED`** (ADR-070). Integrado a `main` por",
+        "/Users/rodrigoortiz/Documents/secoppal-r4a3-cross-batch/docs/documento_tecnico_secoppal_arquitectura_bitacora.md:46:Decisión: `docs/decisions/2026-08-28_ADR-070_soda3-default-transport.md`.",
+        "/Users/rodrigoortiz/Documents/secoppal-r4a3-cross-batch/docs/documento_tecnico_secoppal_arquitectura_bitacora.md:52:SODA3 expone capacidades que el discovery de `/query` **no** probó y que ADR-070"
+      ],
+      "status": "PASS",
+      "stderr": "",
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-r4a3-cross-batch"
+    },
+    {
+      "maximum": 66,
+      "maximum_evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-review-r7/docs/decisions_log.md:3608:## ADR-066: El lenguaje de control no es contenido de búsqueda",
+        "/Users/rodrigoortiz/Documents/secoppal-review-r7/docs/documento_tecnico_secoppal_arquitectura_bitacora.md:113:- **`CONTROL_LANGUAGE_V1`: CLOSED e integrado en main** (ADR-066,",
+        "/Users/rodrigoortiz/Documents/secoppal-review-r7/docs/documento_tecnico_secoppal_arquitectura_bitacora.md:12:  Language** (ADR-066): `8bd5467aa7aa203d55605a758eedc0bf18ca33b5`, ff-only sobre"
+      ],
+      "status": "PASS",
+      "stderr": "",
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-review-r7"
+    },
+    {
+      "maximum": 69,
+      "maximum_evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-soda3-discovery-v1/docs/audits/2026-08-27_HCA_FINAL_CLOSEOUT_V2.md:202:gate posterior a ADR-069.",
+        "/Users/rodrigoortiz/Documents/secoppal-soda3-discovery-v1/docs/decisions/2026-08-26_ADR-069_no-silent-semantic-fallback.md:1:# ADR-069 — Una forma lingüística que una autoridad no resuelve no se degrada en silencio",
+        "/Users/rodrigoortiz/Documents/secoppal-soda3-discovery-v1/docs/decisions_log.md:3860:## ADR-069: Una forma lingüística que una autoridad no resuelve no se degrada en silencio",
+        "/Users/rodrigoortiz/Documents/secoppal-soda3-discovery-v1/docs/decisions_log.md:3922:Detalle: `docs/decisions/2026-08-26_ADR-069_no-silent-semantic-fallback.md`."
+      ],
+      "status": "PASS",
+      "stderr": "",
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-soda3-discovery-v1"
+    },
+    {
+      "maximum": 66,
+      "maximum_evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-tooling/docs/decisions_log.md:3608:## ADR-066: El lenguaje de control no es contenido de búsqueda",
+        "/Users/rodrigoortiz/Documents/secoppal-tooling/docs/documento_tecnico_secoppal_arquitectura_bitacora.md:121:- **`CONTROL_LANGUAGE_V1`: CLOSED e integrado en main** (ADR-066,"
+      ],
+      "status": "PASS",
+      "stderr": "",
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-tooling"
+    },
+    {
+      "maximum": 55,
+      "maximum_evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-truth-layer/docs/decisions/2026-07-30_ADR-055_truth-layer-single-pass-derivation-capability.md:1:# ADR-055 — Truth Layer single-pass derivation capability"
+      ],
+      "status": "PASS",
+      "stderr": "",
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-truth-layer"
+    },
+    {
+      "maximum": 48,
+      "maximum_evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-w2-0d-adr048/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:166:  W2.0B, igual que W1.3 dejó abierta la ventana de staleness en ADR-047).",
+        "/Users/rodrigoortiz/Documents/secoppal-w2-0d-adr048/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:19:  escalonado que cerró W1.1→W1.2 y que fijó ADR-047 para W1.3.",
+        "/Users/rodrigoortiz/Documents/secoppal-w2-0d-adr048/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:1:# ADR-048 — Bounded Local Snapshot as Primary Source",
+        "/Users/rodrigoortiz/Documents/secoppal-w2-0d-adr048/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:210:de ADR-047.",
+        "/Users/rodrigoortiz/Documents/secoppal-w2-0d-adr048/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:254:  controlada, cada etapa con su propio gate de evidencia) que cerró W1.1→W1.2 y que fijó ADR-047",
+        "/Users/rodrigoortiz/Documents/secoppal-w2-0d-adr048/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:25:W1 (ADR-045/046) cerró con una regla absoluta: **local nunca es fuente primaria**. Local es",
+        "/Users/rodrigoortiz/Documents/secoppal-w2-0d-adr048/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:26:candidate pool verificado; Socrata siempre re-verifica antes de responder. ADR-047 mantuvo esa",
+        "/Users/rodrigoortiz/Documents/secoppal-w2-0d-adr048/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:6:**Continúa:** ADR-046 (candidate pool GO), ADR-047 (diseño de fuente visible W1.3, dirección)",
+        "/Users/rodrigoortiz/Documents/secoppal-w2-0d-adr048/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:70:**Antes (ADR-045/046/047):**",
+        "/Users/rodrigoortiz/Documents/secoppal-w2-0d-adr048/docs/decisions_log.md:2021:## ADR-048: Bounded Local Snapshot as Primary Source",
+        "/Users/rodrigoortiz/Documents/secoppal-w2-0d-adr048/docs/decisions_log.md:2060:Detalle completo en [`docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md`](decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md)",
+        "/Users/rodrigoortiz/Documents/secoppal-w2-0d-adr048/docs/warehouse/W2.0A_near_live_warehouse_feasibility.md:12:> prepara evidencia para un posible **`ADR-048 — Bounded Local Snapshot as Primary"
+      ],
+      "status": "PASS",
+      "stderr": "",
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-w2-0d-adr048"
+    },
+    {
+      "maximum": 49,
+      "maximum_evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-w2-0e-local-primary/docs/decisions/2026-07-14_ADR-049_bounded-local-primary-processes.md:167:Se mantiene vigente el contrato de ADR-048 §10: toda respuesta servida desde el warehouse local",
+        "/Users/rodrigoortiz/Documents/secoppal-w2-0e-local-primary/docs/decisions/2026-07-14_ADR-049_bounded-local-primary-processes.md:18:## Relación con ADR-048 (por qué existe este ADR y no una enmienda)",
+        "/Users/rodrigoortiz/Documents/secoppal-w2-0e-local-primary/docs/decisions/2026-07-14_ADR-049_bounded-local-primary-processes.md:1:# ADR-049 — Bounded Local-Primary for SECOP II Process Queries",
+        "/Users/rodrigoortiz/Documents/secoppal-w2-0e-local-primary/docs/decisions/2026-07-14_ADR-049_bounded-local-primary-processes.md:20:ADR-048 fijó la **dirección**: local puede ser fuente primaria acotada bajo snapshot válido,",
+        "/Users/rodrigoortiz/Documents/secoppal-w2-0e-local-primary/docs/decisions/2026-07-14_ADR-049_bounded-local-primary-processes.md:25:ADR-049 no cambia esa dirección: la **instrumenta con evidencia medida** y convierte un principio",
+        "/Users/rodrigoortiz/Documents/secoppal-w2-0e-local-primary/docs/decisions/2026-07-14_ADR-049_bounded-local-primary-processes.md:26:(\"acotado\") en un **perímetro enumerable y verificable**. La diferencia operativa es que ADR-048 no",
+        "/Users/rodrigoortiz/Documents/secoppal-w2-0e-local-primary/docs/decisions/2026-07-14_ADR-049_bounded-local-primary-processes.md:6:**Continúa:** ADR-048 (bounded local snapshot as primary source — dirección sin evidencia de paridad)",
+        "/Users/rodrigoortiz/Documents/secoppal-w2-0e-local-primary/docs/decisions_log.md:2065:## ADR-049: Bounded Local-Primary for SECOP II Process Queries",
+        "/Users/rodrigoortiz/Documents/secoppal-w2-0e-local-primary/docs/decisions_log.md:2103:Detalle completo en [`docs/decisions/2026-07-14_ADR-049_bounded-local-primary-processes.md`](decisions/2026-07-14_ADR-049_bounded-local-primary-processes.md)",
+        "/Users/rodrigoortiz/Documents/secoppal-w2-0e-local-primary/docs/warehouse/F50_v2_decisional_closeout.md:15:demostró F50-v2 y qué no**, para que ADR-049 decida sobre un perímetro verificado y no sobre un",
+        "/Users/rodrigoortiz/Documents/secoppal-w2-0e-local-primary/docs/warehouse/F50_v2_decisional_closeout.md:248:No sostiene —y ADR-049 no debe leerse como si lo hiciera— relevancia humana, representatividad del",
+        "/Users/rodrigoortiz/Documents/secoppal-w2-0e-local-primary/docs/warehouse/F50_v2_decisional_closeout.md:252:**Continúa en:** [`docs/decisions/2026-07-14_ADR-049_bounded-local-primary-processes.md`](../decisions/2026-07-14_ADR-049_bounded-local-primary-processes.md)"
+      ],
+      "status": "PASS",
+      "stderr": "",
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-w2-0e-local-primary"
+    },
+    {
+      "maximum": 48,
+      "maximum_evidence": [
+        "/Users/rodrigoortiz/Documents/secoppal-warehouse/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:166:  W2.0B, igual que W1.3 dejó abierta la ventana de staleness en ADR-047).",
+        "/Users/rodrigoortiz/Documents/secoppal-warehouse/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:19:  escalonado que cerró W1.1→W1.2 y que fijó ADR-047 para W1.3.",
+        "/Users/rodrigoortiz/Documents/secoppal-warehouse/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:1:# ADR-048 — Bounded Local Snapshot as Primary Source",
+        "/Users/rodrigoortiz/Documents/secoppal-warehouse/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:210:de ADR-047.",
+        "/Users/rodrigoortiz/Documents/secoppal-warehouse/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:254:  controlada, cada etapa con su propio gate de evidencia) que cerró W1.1→W1.2 y que fijó ADR-047",
+        "/Users/rodrigoortiz/Documents/secoppal-warehouse/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:25:W1 (ADR-045/046) cerró con una regla absoluta: **local nunca es fuente primaria**. Local es",
+        "/Users/rodrigoortiz/Documents/secoppal-warehouse/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:26:candidate pool verificado; Socrata siempre re-verifica antes de responder. ADR-047 mantuvo esa",
+        "/Users/rodrigoortiz/Documents/secoppal-warehouse/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:6:**Continúa:** ADR-046 (candidate pool GO), ADR-047 (diseño de fuente visible W1.3, dirección)",
+        "/Users/rodrigoortiz/Documents/secoppal-warehouse/docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md:70:**Antes (ADR-045/046/047):**",
+        "/Users/rodrigoortiz/Documents/secoppal-warehouse/docs/decisions_log.md:2021:## ADR-048: Bounded Local Snapshot as Primary Source",
+        "/Users/rodrigoortiz/Documents/secoppal-warehouse/docs/decisions_log.md:2060:Detalle completo en [`docs/decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md`](decisions/2026-07-09_ADR-048_bounded-local-snapshot-primary-source.md)",
+        "/Users/rodrigoortiz/Documents/secoppal-warehouse/docs/warehouse/W2.0A_near_live_warehouse_feasibility.md:12:> prepara evidencia para un posible **`ADR-048 — Bounded Local Snapshot as Primary"
+      ],
+      "status": "PASS",
+      "stderr": "",
+      "worktree": "/Users/rodrigoortiz/Documents/secoppal-warehouse"
+    }
+  ]
+}
