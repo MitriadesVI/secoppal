@@ -1,0 +1,166 @@
+{
+  "code_sha256": {
+    "scripts/audits/audit_municipal_m2b1.py": "3df879c4fbd5693e67dc8dd15eb12633808c4a29665ca2cab1192f5a8d0aa4d9",
+    "scripts/audits/m2b1/abbreviations.py": "ba0fb5cb5d28901debf43e1fa59ce3ec2f0beff4d128c36ff99a8262f9121eed",
+    "scripts/audits/m2b1/accounts.py": "887774f2c0459572fd39e7c0b7af97577726a250ca0e608514c4793f3af9a4dc",
+    "scripts/audits/m2b1/acronyms.py": "d43776c8063ce93f0d5c3c43259c84fb8416714c4fd0c9ab55a070e5953afd15",
+    "scripts/audits/m2b1/directory.py": "47eae7209af5ebe25410d17f07065d5a8f4c6d4230775412b051d9fe5c8a84f0",
+    "scripts/audits/m2b1/gates.py": "202f228ab1d63a91254ed6845b9ac7d480359d92cba6a8334cc902fc96d9218a",
+    "scripts/audits/m2b1/health.py": "6230a74adce03e228aa02eacc1a995409bed981a2055b1c6bf34ccad76fd1843",
+    "scripts/audits/m2b1/io.py": "8e5c26e5ba5700dad8e399fe7105214d560887dd326f35dccc8a60e2a220c9ce",
+    "scripts/audits/m2b1/metrics.py": "63b43f12168239e1465c5eebdef6366f3eac8f808bedd019427476f1921635f8",
+    "scripts/audits/m2b1/report.py": "f2bec505c02bf69d61d7066a125c6bd1cdb032f8b17ca1fc7164cdfcaa34cd15",
+    "scripts/audits/m2b1/rules.py": "b15141b3fd215e9d552a83f75898fd09aa4f697e8d955852d155cb07400da9ab",
+    "scripts/audits/m2b1/validation.py": "b7595372c9d47dad787afa26f8a5443c80fd25848921599aeb027ce2d40e40ca",
+    "tests/test_municipal_m2b1.py": "a61614094de0a093a6e83ca2b53b1a1fe33194e40e9e3cef74d9811cf729d010"
+  },
+  "corpus_89": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python3",
+      "scripts/run_query_corpus.py",
+      "--mode",
+      "all"
+    ],
+    "exit_code": 0,
+    "expected_cases": 89,
+    "log": "validation/corpus_89.log",
+    "log_sha256": "545088cfb99c01a21446d1788771a50135e652ce845cc9f386b326045f5de883",
+    "observed_summary": [
+      "Summary: 89/89 PASS, 0 FAIL (mode=all, severity=any, limit=none)"
+    ],
+    "status": "PASS"
+  },
+  "deterministic_replay": {
+    "exit_code": 0,
+    "file_count": 13,
+    "files": {
+      "MUNICIPAL_M2B_1.md": {
+        "original": "12cd9bb1d847e0803b53e045ce40211a793d3c5835370c72689fc001e379c500",
+        "replay": "12cd9bb1d847e0803b53e045ce40211a793d3c5835370c72689fc001e379c500"
+      },
+      "abbreviation_taxonomy.json": {
+        "original": "595182449d46e94ebbe56a053d83708d03c12a370042cd825f129cfa873bc911",
+        "replay": "595182449d46e94ebbe56a053d83708d03c12a370042cd825f129cfa873bc911"
+      },
+      "acronym_registry_audit.json": {
+        "original": "589a8cf374440084d5196028bb9a5ec7cec94f34bfd847bd18082ff391a69abf",
+        "replay": "589a8cf374440084d5196028bb9a5ec7cec94f34bfd847bd18082ff391a69abf"
+      },
+      "adjudicated_delta.json": {
+        "original": "3dea1b6a2669f7ed4c4307902be50892881b25ba9515dbbd9b1d55093293c926",
+        "replay": "3dea1b6a2669f7ed4c4307902be50892881b25ba9515dbbd9b1d55093293c926"
+      },
+      "byte_identity.json": {
+        "original": "ef6b6d5dc187ff7170371879238e9af79f95d0f5121d4c89146533fb20330783",
+        "replay": "ef6b6d5dc187ff7170371879238e9af79f95d0f5121d4c89146533fb20330783"
+      },
+      "directory_exact_audit.json": {
+        "original": "43d031f04c244d8477929ced48c0ecfd5c2e00b04aa2dd6504b89018c96a7f79",
+        "replay": "43d031f04c244d8477929ced48c0ecfd5c2e00b04aa2dd6504b89018c96a7f79"
+      },
+      "gates.json": {
+        "original": "3155b05712be7b57b09cabefeabe4c624618d21585f9fb4a4ae0d6a721101e70",
+        "replay": "3155b05712be7b57b09cabefeabe4c624618d21585f9fb4a4ae0d6a721101e70"
+      },
+      "health_patterns.json": {
+        "original": "3c3cba1672814b269c7f175277c439cf2a42f1b0ea2e1e60daadddae3eaa7933",
+        "replay": "3c3cba1672814b269c7f175277c439cf2a42f1b0ea2e1e60daadddae3eaa7933"
+      },
+      "impact.json": {
+        "original": "2be6b74c0e5ccc7f26137d8b6afd505dbc3bcdd6377709b4483610c48ac005c8",
+        "replay": "2be6b74c0e5ccc7f26137d8b6afd505dbc3bcdd6377709b4483610c48ac005c8"
+      },
+      "multi_account_audit.json": {
+        "original": "67c66cb3ad5cc73b236185819f8f21db047ae1e157c2334c78a5b1fd15638521",
+        "replay": "67c66cb3ad5cc73b236185819f8f21db047ae1e157c2334c78a5b1fd15638521"
+      },
+      "new_identity_rules.json": {
+        "original": "8076ada411780d982bf3aeae49e8a2942fc4f9206343c5b2bd43e4402f2ea7d1",
+        "replay": "8076ada411780d982bf3aeae49e8a2942fc4f9206343c5b2bd43e4402f2ea7d1"
+      },
+      "official_conflicts.json": {
+        "original": "e40ca95a817b24db5f988423cd2e3b9ecab6a52b2429335776903603e45110c6",
+        "replay": "e40ca95a817b24db5f988423cd2e3b9ecab6a52b2429335776903603e45110c6"
+      },
+      "top_volume.json": {
+        "original": "9c76afb3f26bd85ff722e3b7d703d4b2dc5a61d537d5a99700194e7cb90676c5",
+        "replay": "9c76afb3f26bd85ff722e3b7d703d4b2dc5a61d537d5a99700194e7cb90676c5"
+      }
+    },
+    "log": "validation/replay.log",
+    "log_sha256": "ca1f0d8a3280b975c4f3597bc12b8d943ed0022b3cd4b4306fb0eadb3590a9ad",
+    "status": "PASS"
+  },
+  "diff_check": {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit_code": 0,
+    "log": "validation/diff_check.log",
+    "log_sha256": "3d4d50cd32af92c6d4df37c1df74a96622fca8cfb5643a155c91f034a42f2068",
+    "status": "PASS"
+  },
+  "focal_tests": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/python3",
+      "-m",
+      "pytest",
+      "tests/test_municipal_m2b1.py",
+      "tests/test_municipal_m2b.py",
+      "tests/test_municipal_m2a.py",
+      "-q"
+    ],
+    "exit_code": 0,
+    "log": "validation/focal_tests.log",
+    "log_sha256": "850f62e90a7f2cdad8629070dfbb3842e9ea9eb4dc87db2957fd828106d66d8d",
+    "status": "PASS"
+  },
+  "full_suite": {
+    "executed": false,
+    "reason": "Full suite is required only if protected bytes change.",
+    "required": false
+  },
+  "lint_core": {
+    "command": [
+      "make",
+      "lint-core"
+    ],
+    "exit_code": 0,
+    "log": "validation/lint_core.log",
+    "log_sha256": "9d980b9f0dbbe14b5383ab38e6d49ffc96fb1dd9ac5cf8478e0378e95647247e",
+    "status": "PASS"
+  },
+  "post_validation_byte_identity": {
+    "changed": [],
+    "files": 612,
+    "status": "PASS"
+  },
+  "ruff": {
+    "command": [
+      "/Users/rodrigoortiz/Documents/secoppal/.venv/bin/ruff",
+      "check",
+      "app/",
+      "tests/",
+      "scripts/"
+    ],
+    "exit_code": 0,
+    "log": "validation/ruff.log",
+    "log_sha256": "964ab11059e2f86ee0fa943378064ee70123332a1275bcf695bd31c36bcda7c0",
+    "status": "PASS"
+  },
+  "staged_diff_check": {
+    "command": [
+      "git",
+      "diff",
+      "--cached",
+      "--check"
+    ],
+    "exit_code": 0,
+    "log": "validation/staged_diff_check.log",
+    "log_sha256": "ca012da3df67200cfa63d8909e057dac276a9aae1d98a508c5638ff3340b1de3",
+    "status": "PASS"
+  },
+  "status": "PASS"
+}

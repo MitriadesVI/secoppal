@@ -1,0 +1,1352 @@
+{
+  "conflict_counts": {
+    "ACCOUNT_CONFLICT": 5,
+    "FISCAL_CONFLICT": 59,
+    "NAME_CONFLICT": 1
+  },
+  "input": {
+    "contract_rows": 2412,
+    "families": [
+      "CONCEJO",
+      "MUNICIPAL_EXECUTIVE",
+      "PERSONERIA",
+      "PUBLIC_COMPANY"
+    ],
+    "profile_ids": [
+      "physical:02859a102ff9807f364b",
+      "physical:0dfd85999bda6c00720e",
+      "physical:0e20d16e605c4ab1c0af",
+      "physical:0f69a46417d1d0dfb1d7",
+      "physical:191aeeaf58cb1c69f349",
+      "physical:1e5a0932a7318f5abdaa",
+      "physical:249f72bfa4a3ded11dc2",
+      "physical:2540302a4f82f8e12641",
+      "physical:287d8cbe00362ec77de8",
+      "physical:2cfb8b7b611e2e68efdc",
+      "physical:35716e7d04493c9cdf02",
+      "physical:417bf9ded7c7af668b98",
+      "physical:49a8d606fe66f8a4767e",
+      "physical:4be732a74c1410aee3d2",
+      "physical:56c83f57617d9926ac51",
+      "physical:59ef17808ca9d01c7049",
+      "physical:61830b55c9186b8d817d",
+      "physical:687496953cbf43b974ea",
+      "physical:6972db06085902c51772",
+      "physical:6ca0020f3b2cae0f6260",
+      "physical:72a4a29ee68993052eea",
+      "physical:77c3c315f61290192203",
+      "physical:80ecd2de9f4fd3cc22cb",
+      "physical:819dd756cd79ca1b9b2d",
+      "physical:88194d4bad280051cf5c",
+      "physical:8841b8bed59e280256cc",
+      "physical:8b71038086c9c4b1d320",
+      "physical:8f8343be8cab6993f6fa",
+      "physical:911a468e4cfee067a415",
+      "physical:9565a5e8b3994645cf20",
+      "physical:9979d8d36549e9c072ce",
+      "physical:a273ad2fa7c724afae34",
+      "physical:a4809469ba6732d3db32",
+      "physical:a48b49d20dbf02c87e8e",
+      "physical:a53fef763d59ac4775ac",
+      "physical:a77c4cd8bc86a9cc9520",
+      "physical:aa97f5c99360f42648fb",
+      "physical:af20a678d2148cc4c7d3",
+      "physical:af3a9c86f6ef32b1fb9d",
+      "physical:b4476df81fa9ef1f7eab",
+      "physical:b6fdf7cccb0acc4ac3ce",
+      "physical:bfd056d3c8d82837b11f",
+      "physical:c7e2c17ac61642b3524d",
+      "physical:c9289387b2905c1f7f3f",
+      "physical:ca1bec804c288f52b005",
+      "physical:d155fd11f4beae6dc7f9",
+      "physical:d34bb3311e5558d68f99",
+      "physical:d7f07e6e69a62e022e38",
+      "physical:d9d573882924e397a3ab",
+      "physical:dca60858818c586bceb0",
+      "physical:e0de231862a26e0284f9",
+      "physical:e1b03d56fa0dba2d75dd",
+      "physical:e1f0a1bcf95c624a3619",
+      "physical:e2bcbe88cd99d785af70",
+      "physical:e73cbaa52ea4ab77ab70",
+      "physical:eacc24e142e02fe84d85",
+      "physical:ed0cb21d61ba414504a0",
+      "physical:f67802757383fc8624ed",
+      "physical:f76b718617ec40c0eb72"
+    ],
+    "profiles": 59,
+    "territories": [
+      "05001",
+      "05034",
+      "05045",
+      "05129",
+      "05145",
+      "05172",
+      "05266",
+      "05282",
+      "05467",
+      "05480",
+      "05490",
+      "05576",
+      "05579",
+      "05591",
+      "05665",
+      "05736",
+      "15232",
+      "15763",
+      "15764",
+      "17088",
+      "17433",
+      "17513",
+      "17616",
+      "17873",
+      "17877",
+      "25099",
+      "25299",
+      "25506",
+      "25524",
+      "25793",
+      "25807",
+      "25898",
+      "41001",
+      "41016",
+      "41020",
+      "41026",
+      "41132",
+      "41518",
+      "41524",
+      "41551",
+      "41807",
+      "54874",
+      "63190",
+      "63470",
+      "63548",
+      "63690",
+      "66170",
+      "66440",
+      "68077",
+      "68101",
+      "68318",
+      "76036",
+      "76520",
+      "81736"
+    ],
+    "unique_processes": 2646
+  },
+  "keep_review": 59,
+  "policy": "Contradictions are not ignored or voted away; no higher independent authority was present.",
+  "profiles": [
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "0060",
+          "sigep_index": 55,
+          "territory": "41016"
+        }
+      ],
+      "profile_id": "physical:49a8d606fe66f8a4767e",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT",
+        "NAME_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "5313",
+          "sigep_index": 4989,
+          "territory": "05001"
+        }
+      ],
+      "profile_id": "physical:249f72bfa4a3ded11dc2",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION",
+        "UNEXPLAINED_DIRECTORY_FISCAL_PEER_ACCOUNT",
+        "UNEXPLAINED_SAME_FAMILY_FISCAL_PEER_ACCOUNT"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "5208",
+          "sigep_index": 4887,
+          "territory": "05266"
+        }
+      ],
+      "profile_id": "physical:e2bcbe88cd99d785af70",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "0226",
+          "sigep_index": 217,
+          "territory": "15232"
+        }
+      ],
+      "profile_id": "physical:ed0cb21d61ba414504a0",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION",
+        "UNEXPLAINED_DIRECTORY_FISCAL_PEER_ACCOUNT"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "0186",
+          "sigep_index": 177,
+          "territory": "41132"
+        }
+      ],
+      "profile_id": "physical:02859a102ff9807f364b",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT",
+        "ACCOUNT_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "0328",
+          "sigep_index": 314,
+          "territory": "68077"
+        }
+      ],
+      "profile_id": "physical:d155fd11f4beae6dc7f9",
+      "reasons": [
+        "COMPETING_OBSERVED_ACCOUNTS",
+        "OFFICIAL_FISCAL_CONTRADICTION",
+        "UNEXPLAINED_DIRECTORY_FISCAL_PEER_ACCOUNT"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "2296",
+          "sigep_index": 2196,
+          "territory": "63470"
+        }
+      ],
+      "profile_id": "physical:2540302a4f82f8e12641",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION",
+        "UNEXPLAINED_DIRECTORY_FISCAL_PEER_ACCOUNT"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "0069",
+          "sigep_index": 64,
+          "territory": "41020"
+        }
+      ],
+      "profile_id": "physical:a77c4cd8bc86a9cc9520",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "8297",
+          "sigep_index": 6117,
+          "territory": "17088"
+        }
+      ],
+      "profile_id": "physical:72a4a29ee68993052eea",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "1245",
+          "sigep_index": 1200,
+          "territory": "25506"
+        }
+      ],
+      "profile_id": "physical:d7f07e6e69a62e022e38",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "0513",
+          "sigep_index": 480,
+          "territory": "25898"
+        }
+      ],
+      "profile_id": "physical:1e5a0932a7318f5abdaa",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "2163",
+          "sigep_index": 2067,
+          "territory": "25299"
+        }
+      ],
+      "profile_id": "physical:80ecd2de9f4fd3cc22cb",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT",
+        "ACCOUNT_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "1160",
+          "sigep_index": 1116,
+          "territory": "25793"
+        }
+      ],
+      "profile_id": "physical:af20a678d2148cc4c7d3",
+      "reasons": [
+        "COMPETING_DIRECTORY_ACCOUNTS",
+        "OFFICIAL_FISCAL_CONTRADICTION",
+        "UNEXPLAINED_DIRECTORY_FISCAL_PEER_ACCOUNT"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "2611",
+          "sigep_index": 2492,
+          "territory": "17873"
+        }
+      ],
+      "profile_id": "physical:c7e2c17ac61642b3524d",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT",
+        "ACCOUNT_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "5726",
+          "sigep_index": 5384,
+          "territory": "17433"
+        }
+      ],
+      "profile_id": "physical:bfd056d3c8d82837b11f",
+      "reasons": [
+        "COMPETING_DIRECTORY_ACCOUNTS",
+        "OFFICIAL_FISCAL_CONTRADICTION",
+        "UNEXPLAINED_DIRECTORY_FISCAL_PEER_ACCOUNT"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "0073",
+          "sigep_index": 68,
+          "territory": "41026"
+        }
+      ],
+      "profile_id": "physical:56c83f57617d9926ac51",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION",
+        "UNEXPLAINED_DIRECTORY_FISCAL_PEER_ACCOUNT"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "8305",
+          "sigep_index": 6125,
+          "territory": "05129"
+        }
+      ],
+      "profile_id": "physical:0f69a46417d1d0dfb1d7",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION",
+        "UNEXPLAINED_DIRECTORY_FISCAL_PEER_ACCOUNT"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "1526",
+          "sigep_index": 1459,
+          "territory": "05045"
+        }
+      ],
+      "profile_id": "physical:a4809469ba6732d3db32",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "6080",
+          "sigep_index": 5714,
+          "territory": "17877"
+        }
+      ],
+      "profile_id": "physical:8b71038086c9c4b1d320",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "1519",
+          "sigep_index": 1452,
+          "territory": "76036"
+        }
+      ],
+      "profile_id": "physical:f76b718617ec40c0eb72",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "5007",
+          "sigep_index": 4703,
+          "territory": "05145"
+        }
+      ],
+      "profile_id": "physical:417bf9ded7c7af668b98",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "EXACT_INSTITUTIONAL_TOKENS",
+          "sigep_code": "8448",
+          "sigep_index": 6256,
+          "territory": "05266"
+        }
+      ],
+      "profile_id": "physical:4be732a74c1410aee3d2",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "5991",
+          "sigep_index": 5627,
+          "territory": "15763"
+        }
+      ],
+      "profile_id": "physical:191aeeaf58cb1c69f349",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "EXACT_INSTITUTIONAL_TOKENS",
+          "sigep_code": "2103",
+          "sigep_index": 2011,
+          "territory": "66170"
+        }
+      ],
+      "profile_id": "physical:287d8cbe00362ec77de8",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION",
+        "UNEXPLAINED_DIRECTORY_FISCAL_PEER_ACCOUNT"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "5809",
+          "sigep_index": 5460,
+          "territory": "41551"
+        }
+      ],
+      "profile_id": "physical:e1f0a1bcf95c624a3619",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "1924",
+          "sigep_index": 1835,
+          "territory": "76520"
+        }
+      ],
+      "profile_id": "physical:d34bb3311e5558d68f99",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "5974",
+          "sigep_index": 5611,
+          "territory": "05736"
+        }
+      ],
+      "profile_id": "physical:88194d4bad280051cf5c",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT",
+        "ACCOUNT_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "2311",
+          "sigep_index": 2209,
+          "territory": "41001"
+        }
+      ],
+      "profile_id": "physical:dca60858818c586bceb0",
+      "reasons": [
+        "COMPETING_DIRECTORY_ACCOUNTS",
+        "OFFICIAL_FISCAL_CONTRADICTION",
+        "UNEXPLAINED_DIRECTORY_FISCAL_PEER_ACCOUNT"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "6068",
+          "sigep_index": 5704,
+          "territory": "54874"
+        }
+      ],
+      "profile_id": "physical:0e20d16e605c4ab1c0af",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "1765",
+          "sigep_index": 1684,
+          "territory": "63190"
+        }
+      ],
+      "profile_id": "physical:d9d573882924e397a3ab",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "5748",
+          "sigep_index": 5404,
+          "territory": "63470"
+        }
+      ],
+      "profile_id": "physical:af3a9c86f6ef32b1fb9d",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "4925",
+          "sigep_index": 4626,
+          "territory": "41026"
+        }
+      ],
+      "profile_id": "physical:f67802757383fc8624ed",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "1619",
+          "sigep_index": 1545,
+          "territory": "05172"
+        }
+      ],
+      "profile_id": "physical:e1b03d56fa0dba2d75dd",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION",
+        "UNEXPLAINED_DIRECTORY_FISCAL_PEER_ACCOUNT"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "5386",
+          "sigep_index": 5057,
+          "territory": "05576"
+        }
+      ],
+      "profile_id": "physical:2cfb8b7b611e2e68efdc",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "2327",
+          "sigep_index": 2225,
+          "territory": "17513"
+        }
+      ],
+      "profile_id": "physical:6ca0020f3b2cae0f6260",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION",
+        "UNEXPLAINED_DIRECTORY_FISCAL_PEER_ACCOUNT"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "2423",
+          "sigep_index": 2315,
+          "territory": "63690"
+        }
+      ],
+      "profile_id": "physical:9979d8d36549e9c072ce",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "2560",
+          "sigep_index": 2443,
+          "territory": "25807"
+        }
+      ],
+      "profile_id": "physical:6972db06085902c51772",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "1826",
+          "sigep_index": 1743,
+          "territory": "68318"
+        }
+      ],
+      "profile_id": "physical:9565a5e8b3994645cf20",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "2278",
+          "sigep_index": 2178,
+          "territory": "66440"
+        }
+      ],
+      "profile_id": "physical:b6fdf7cccb0acc4ac3ce",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "2350",
+          "sigep_index": 2245,
+          "territory": "63548"
+        }
+      ],
+      "profile_id": "physical:687496953cbf43b974ea",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION",
+        "UNEXPLAINED_DIRECTORY_FISCAL_PEER_ACCOUNT"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "1563",
+          "sigep_index": 1492,
+          "territory": "25099"
+        }
+      ],
+      "profile_id": "physical:e73cbaa52ea4ab77ab70",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION",
+        "UNEXPLAINED_DIRECTORY_FISCAL_PEER_ACCOUNT"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "2531",
+          "sigep_index": 2414,
+          "territory": "15763"
+        }
+      ],
+      "profile_id": "physical:0dfd85999bda6c00720e",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION",
+        "UNEXPLAINED_DIRECTORY_FISCAL_PEER_ACCOUNT"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "2330",
+          "sigep_index": 2228,
+          "territory": "41524"
+        }
+      ],
+      "profile_id": "physical:b4476df81fa9ef1f7eab",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "2293",
+          "sigep_index": 2193,
+          "territory": "05467"
+        }
+      ],
+      "profile_id": "physical:a273ad2fa7c724afae34",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "EXACT_INSTITUTIONAL_TOKENS",
+          "sigep_code": "5821",
+          "sigep_index": 5472,
+          "territory": "05579"
+        }
+      ],
+      "profile_id": "physical:a53fef763d59ac4775ac",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION",
+        "UNEXPLAINED_DIRECTORY_FISCAL_PEER_ACCOUNT"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "2478",
+          "sigep_index": 2364,
+          "territory": "05665"
+        }
+      ],
+      "profile_id": "physical:eacc24e142e02fe84d85",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT",
+        "ACCOUNT_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "1720",
+          "sigep_index": 1640,
+          "territory": "68077"
+        }
+      ],
+      "profile_id": "physical:c9289387b2905c1f7f3f",
+      "reasons": [
+        "COMPETING_DIRECTORY_ACCOUNTS",
+        "COMPETING_OBSERVED_ACCOUNTS",
+        "OFFICIAL_FISCAL_CONTRADICTION",
+        "UNEXPLAINED_DIRECTORY_FISCAL_PEER_ACCOUNT"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "5990",
+          "sigep_index": 5626,
+          "territory": "15764"
+        }
+      ],
+      "profile_id": "physical:a48b49d20dbf02c87e8e",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "5783",
+          "sigep_index": 5436,
+          "territory": "41518"
+        }
+      ],
+      "profile_id": "physical:e0de231862a26e0284f9",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "5607",
+          "sigep_index": 5270,
+          "territory": "05282"
+        }
+      ],
+      "profile_id": "physical:819dd756cd79ca1b9b2d",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "4973",
+          "sigep_index": 4671,
+          "territory": "68101"
+        }
+      ],
+      "profile_id": "physical:911a468e4cfee067a415",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "2019",
+          "sigep_index": 1928,
+          "territory": "81736"
+        }
+      ],
+      "profile_id": "physical:61830b55c9186b8d817d",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION",
+        "UNEXPLAINED_DIRECTORY_FISCAL_PEER_ACCOUNT"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "1925",
+          "sigep_index": 1836,
+          "territory": "25524"
+        }
+      ],
+      "profile_id": "physical:aa97f5c99360f42648fb",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "2384",
+          "sigep_index": 2279,
+          "territory": "05591"
+        }
+      ],
+      "profile_id": "physical:8841b8bed59e280256cc",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "4932",
+          "sigep_index": 4632,
+          "territory": "05034"
+        }
+      ],
+      "profile_id": "physical:35716e7d04493c9cdf02",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "2309",
+          "sigep_index": 2207,
+          "territory": "05490"
+        }
+      ],
+      "profile_id": "physical:77c3c315f61290192203",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "5414",
+          "sigep_index": 5085,
+          "territory": "17616"
+        }
+      ],
+      "profile_id": "physical:ca1bec804c288f52b005",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "2563",
+          "sigep_index": 2446,
+          "territory": "41807"
+        }
+      ],
+      "profile_id": "physical:59ef17808ca9d01c7049",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION"
+      ],
+      "status": "KEEP_REVIEW"
+    },
+    {
+      "conflict_types": [
+        "FISCAL_CONFLICT"
+      ],
+      "frozen_conflicts": [],
+      "higher_independent_authority": "NONE_IN_FROZEN_INPUTS",
+      "official_matches": [
+        {
+          "method": "STRICT_ROLE_AND_COMPLETE_GUARDED_TOWN",
+          "sigep_code": "2303",
+          "sigep_index": 2202,
+          "territory": "05480"
+        }
+      ],
+      "profile_id": "physical:8f8343be8cab6993f6fa",
+      "reasons": [
+        "OFFICIAL_FISCAL_CONTRADICTION",
+        "UNEXPLAINED_DIRECTORY_FISCAL_PEER_ACCOUNT"
+      ],
+      "status": "KEEP_REVIEW"
+    }
+  ],
+  "resolved": 0
+}

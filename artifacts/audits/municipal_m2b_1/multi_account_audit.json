@@ -1,0 +1,500 @@
+{
+  "caveat": "No account is called historical from absence of activity alone; REGISTRY_ONLY_ACCOUNT is contextual.",
+  "classifications": {
+    "DISTINCT_BUYER_UNITS": 0,
+    "REGISTRY_ONLY_ACCOUNT": 20,
+    "SAME_ENTITY_HISTORICAL_ACCOUNT": 0,
+    "UNRESOLVED": 0
+  },
+  "input": {
+    "contract_rows": 1852,
+    "families": [
+      "ESE_HEALTH",
+      "UNKNOWN"
+    ],
+    "profile_ids": [
+      "physical:0a7a66ab1dd67a2c6e9e",
+      "physical:1a734a3531d6d56bd3e9",
+      "physical:1f0dc82093e556340c53",
+      "physical:1fc3cd54f7fba70aab90",
+      "physical:24a4d664d1c4311016f7",
+      "physical:279043fe2d7d224844c7",
+      "physical:286cdb8b58aeff73b7b1",
+      "physical:29e7a7f3b0c4d2b583f2",
+      "physical:2f2fd0e5f23d888f56de",
+      "physical:3b0132416f0aa77a25dd",
+      "physical:406c1bb0b2890d629229",
+      "physical:5d2222c3a4820f387f8c",
+      "physical:699b6c63b1b182d4d918",
+      "physical:782dd48c512ceb5116dd",
+      "physical:8a859ccfcb15694fe812",
+      "physical:93c46fe6bc0a843f555d",
+      "physical:bc54b165e5349f8cefe5",
+      "physical:c789a8455d30147303be",
+      "physical:c7ae35864c38f5faecec",
+      "physical:f90fcfdb68b117c7b14c"
+    ],
+    "profiles": 20,
+    "territories": [
+      "05001",
+      "05376",
+      "05585",
+      "08372",
+      "13836",
+      "15001",
+      "15455",
+      "15494",
+      "15696",
+      "15759",
+      "25320",
+      "25843",
+      "41319",
+      "44035",
+      "52019",
+      "52207",
+      "52506",
+      "76001",
+      "85001",
+      "86571"
+    ],
+    "unique_processes": 16935
+  },
+  "productive_merges": 0,
+  "profiles": [
+    {
+      "category": "REGISTRY_ONLY_ACCOUNT",
+      "competing_accounts": [
+        {
+          "account": "714891470",
+          "contract_rows": 0,
+          "observed_in_window": false,
+          "profile_ids": [],
+          "unique_processes": 0
+        }
+      ],
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "delta_status": "KEEP_REVIEW",
+      "distinct_buyer_units_proven": false,
+      "limitation": "The frozen aggregate has no dated account succession evidence.",
+      "profile_id": "physical:8a859ccfcb15694fe812",
+      "same_entity_historical_account": false
+    },
+    {
+      "category": "REGISTRY_ONLY_ACCOUNT",
+      "competing_accounts": [
+        {
+          "account": "719465700",
+          "contract_rows": 0,
+          "observed_in_window": false,
+          "profile_ids": [],
+          "unique_processes": 0
+        }
+      ],
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "delta_status": "KEEP_REVIEW",
+      "distinct_buyer_units_proven": false,
+      "limitation": "The frozen aggregate has no dated account succession evidence.",
+      "profile_id": "physical:0a7a66ab1dd67a2c6e9e",
+      "same_entity_historical_account": false
+    },
+    {
+      "category": "REGISTRY_ONLY_ACCOUNT",
+      "competing_accounts": [
+        {
+          "account": "719740037",
+          "contract_rows": 0,
+          "observed_in_window": false,
+          "profile_ids": [],
+          "unique_processes": 0
+        }
+      ],
+      "contradictions": [
+        "COMPETING_DIRECTORY_ACCOUNT"
+      ],
+      "delta_status": "KEEP_REVIEW",
+      "distinct_buyer_units_proven": false,
+      "limitation": "The frozen aggregate has no dated account succession evidence.",
+      "profile_id": "physical:93c46fe6bc0a843f555d",
+      "same_entity_historical_account": false
+    },
+    {
+      "category": "REGISTRY_ONLY_ACCOUNT",
+      "competing_accounts": [
+        {
+          "account": "730731122",
+          "contract_rows": 0,
+          "observed_in_window": false,
+          "profile_ids": [],
+          "unique_processes": 0
+        },
+        {
+          "account": "736878299",
+          "contract_rows": 0,
+          "observed_in_window": false,
+          "profile_ids": [],
+          "unique_processes": 0
+        }
+      ],
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "delta_status": "KEEP_REVIEW",
+      "distinct_buyer_units_proven": false,
+      "limitation": "The frozen aggregate has no dated account succession evidence.",
+      "profile_id": "physical:c789a8455d30147303be",
+      "same_entity_historical_account": false
+    },
+    {
+      "category": "REGISTRY_ONLY_ACCOUNT",
+      "competing_accounts": [
+        {
+          "account": "718477540",
+          "contract_rows": 0,
+          "observed_in_window": false,
+          "profile_ids": [],
+          "unique_processes": 0
+        }
+      ],
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "delta_status": "KEEP_REVIEW",
+      "distinct_buyer_units_proven": false,
+      "limitation": "The frozen aggregate has no dated account succession evidence.",
+      "profile_id": "physical:2f2fd0e5f23d888f56de",
+      "same_entity_historical_account": false
+    },
+    {
+      "category": "REGISTRY_ONLY_ACCOUNT",
+      "competing_accounts": [
+        {
+          "account": "718396369",
+          "contract_rows": 0,
+          "observed_in_window": false,
+          "profile_ids": [],
+          "unique_processes": 0
+        }
+      ],
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "delta_status": "KEEP_REVIEW",
+      "distinct_buyer_units_proven": false,
+      "limitation": "The frozen aggregate has no dated account succession evidence.",
+      "profile_id": "physical:699b6c63b1b182d4d918",
+      "same_entity_historical_account": false
+    },
+    {
+      "category": "REGISTRY_ONLY_ACCOUNT",
+      "competing_accounts": [
+        {
+          "account": "729140137",
+          "contract_rows": 0,
+          "observed_in_window": false,
+          "profile_ids": [],
+          "unique_processes": 0
+        }
+      ],
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "delta_status": "KEEP_REVIEW",
+      "distinct_buyer_units_proven": false,
+      "limitation": "The frozen aggregate has no dated account succession evidence.",
+      "profile_id": "physical:f90fcfdb68b117c7b14c",
+      "same_entity_historical_account": false
+    },
+    {
+      "category": "REGISTRY_ONLY_ACCOUNT",
+      "competing_accounts": [
+        {
+          "account": "718391964",
+          "contract_rows": 0,
+          "observed_in_window": false,
+          "profile_ids": [],
+          "unique_processes": 0
+        },
+        {
+          "account": "718594302",
+          "contract_rows": 0,
+          "observed_in_window": false,
+          "profile_ids": [],
+          "unique_processes": 0
+        }
+      ],
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "delta_status": "KEEP_REVIEW",
+      "distinct_buyer_units_proven": false,
+      "limitation": "The frozen aggregate has no dated account succession evidence.",
+      "profile_id": "physical:286cdb8b58aeff73b7b1",
+      "same_entity_historical_account": false
+    },
+    {
+      "category": "REGISTRY_ONLY_ACCOUNT",
+      "competing_accounts": [
+        {
+          "account": "712659630",
+          "contract_rows": 0,
+          "observed_in_window": false,
+          "profile_ids": [],
+          "unique_processes": 0
+        },
+        {
+          "account": "715630497",
+          "contract_rows": 0,
+          "observed_in_window": false,
+          "profile_ids": [],
+          "unique_processes": 0
+        }
+      ],
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "delta_status": "KEEP_REVIEW",
+      "distinct_buyer_units_proven": false,
+      "limitation": "The frozen aggregate has no dated account succession evidence.",
+      "profile_id": "physical:5d2222c3a4820f387f8c",
+      "same_entity_historical_account": false
+    },
+    {
+      "category": "REGISTRY_ONLY_ACCOUNT",
+      "competing_accounts": [
+        {
+          "account": "736818113",
+          "contract_rows": 0,
+          "observed_in_window": false,
+          "profile_ids": [],
+          "unique_processes": 0
+        }
+      ],
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "delta_status": "KEEP_REVIEW",
+      "distinct_buyer_units_proven": false,
+      "limitation": "The frozen aggregate has no dated account succession evidence.",
+      "profile_id": "physical:29e7a7f3b0c4d2b583f2",
+      "same_entity_historical_account": false
+    },
+    {
+      "category": "REGISTRY_ONLY_ACCOUNT",
+      "competing_accounts": [
+        {
+          "account": "718647746",
+          "contract_rows": 0,
+          "observed_in_window": false,
+          "profile_ids": [],
+          "unique_processes": 0
+        }
+      ],
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "delta_status": "KEEP_REVIEW",
+      "distinct_buyer_units_proven": false,
+      "limitation": "The frozen aggregate has no dated account succession evidence.",
+      "profile_id": "physical:279043fe2d7d224844c7",
+      "same_entity_historical_account": false
+    },
+    {
+      "category": "REGISTRY_ONLY_ACCOUNT",
+      "competing_accounts": [
+        {
+          "account": "713662039",
+          "contract_rows": 0,
+          "observed_in_window": false,
+          "profile_ids": [],
+          "unique_processes": 0
+        }
+      ],
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "delta_status": "KEEP_REVIEW",
+      "distinct_buyer_units_proven": false,
+      "limitation": "The frozen aggregate has no dated account succession evidence.",
+      "profile_id": "physical:406c1bb0b2890d629229",
+      "same_entity_historical_account": false
+    },
+    {
+      "category": "REGISTRY_ONLY_ACCOUNT",
+      "competing_accounts": [
+        {
+          "account": "726199722",
+          "contract_rows": 0,
+          "observed_in_window": false,
+          "profile_ids": [],
+          "unique_processes": 0
+        }
+      ],
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "delta_status": "KEEP_REVIEW",
+      "distinct_buyer_units_proven": false,
+      "limitation": "The frozen aggregate has no dated account succession evidence.",
+      "profile_id": "physical:1fc3cd54f7fba70aab90",
+      "same_entity_historical_account": false
+    },
+    {
+      "category": "REGISTRY_ONLY_ACCOUNT",
+      "competing_accounts": [
+        {
+          "account": "717756134",
+          "contract_rows": 0,
+          "observed_in_window": false,
+          "profile_ids": [],
+          "unique_processes": 0
+        },
+        {
+          "account": "717882617",
+          "contract_rows": 0,
+          "observed_in_window": false,
+          "profile_ids": [],
+          "unique_processes": 0
+        }
+      ],
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "delta_status": "KEEP_REVIEW",
+      "distinct_buyer_units_proven": false,
+      "limitation": "The frozen aggregate has no dated account succession evidence.",
+      "profile_id": "physical:24a4d664d1c4311016f7",
+      "same_entity_historical_account": false
+    },
+    {
+      "category": "REGISTRY_ONLY_ACCOUNT",
+      "competing_accounts": [
+        {
+          "account": "730741352",
+          "contract_rows": 0,
+          "observed_in_window": false,
+          "profile_ids": [],
+          "unique_processes": 0
+        }
+      ],
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "delta_status": "KEEP_REVIEW",
+      "distinct_buyer_units_proven": false,
+      "limitation": "The frozen aggregate has no dated account succession evidence.",
+      "profile_id": "physical:c7ae35864c38f5faecec",
+      "same_entity_historical_account": false
+    },
+    {
+      "category": "REGISTRY_ONLY_ACCOUNT",
+      "competing_accounts": [
+        {
+          "account": "705776789",
+          "contract_rows": 0,
+          "observed_in_window": false,
+          "profile_ids": [],
+          "unique_processes": 0
+        }
+      ],
+      "contradictions": [
+        "COMPETING_DIRECTORY_ACCOUNT"
+      ],
+      "delta_status": "KEEP_REVIEW",
+      "distinct_buyer_units_proven": false,
+      "limitation": "The frozen aggregate has no dated account succession evidence.",
+      "profile_id": "physical:1a734a3531d6d56bd3e9",
+      "same_entity_historical_account": false
+    },
+    {
+      "category": "REGISTRY_ONLY_ACCOUNT",
+      "competing_accounts": [
+        {
+          "account": "713498673",
+          "contract_rows": 0,
+          "observed_in_window": false,
+          "profile_ids": [],
+          "unique_processes": 0
+        }
+      ],
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "delta_status": "KEEP_REVIEW",
+      "distinct_buyer_units_proven": false,
+      "limitation": "The frozen aggregate has no dated account succession evidence.",
+      "profile_id": "physical:782dd48c512ceb5116dd",
+      "same_entity_historical_account": false
+    },
+    {
+      "category": "REGISTRY_ONLY_ACCOUNT",
+      "competing_accounts": [
+        {
+          "account": "735410078",
+          "contract_rows": 0,
+          "observed_in_window": false,
+          "profile_ids": [],
+          "unique_processes": 0
+        }
+      ],
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "delta_status": "KEEP_REVIEW",
+      "distinct_buyer_units_proven": false,
+      "limitation": "The frozen aggregate has no dated account succession evidence.",
+      "profile_id": "physical:3b0132416f0aa77a25dd",
+      "same_entity_historical_account": false
+    },
+    {
+      "category": "REGISTRY_ONLY_ACCOUNT",
+      "competing_accounts": [
+        {
+          "account": "702165085",
+          "contract_rows": 0,
+          "observed_in_window": false,
+          "profile_ids": [],
+          "unique_processes": 0
+        },
+        {
+          "account": "719900581",
+          "contract_rows": 0,
+          "observed_in_window": false,
+          "profile_ids": [],
+          "unique_processes": 0
+        }
+      ],
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "delta_status": "KEEP_REVIEW",
+      "distinct_buyer_units_proven": false,
+      "limitation": "The frozen aggregate has no dated account succession evidence.",
+      "profile_id": "physical:1f0dc82093e556340c53",
+      "same_entity_historical_account": false
+    },
+    {
+      "category": "REGISTRY_ONLY_ACCOUNT",
+      "competing_accounts": [
+        {
+          "account": "714148061",
+          "contract_rows": 0,
+          "observed_in_window": false,
+          "profile_ids": [],
+          "unique_processes": 0
+        }
+      ],
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "delta_status": "KEEP_REVIEW",
+      "distinct_buyer_units_proven": false,
+      "limitation": "The frozen aggregate has no dated account succession evidence.",
+      "profile_id": "physical:bc54b165e5349f8cefe5",
+      "same_entity_historical_account": false
+    }
+  ]
+}

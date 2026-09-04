@@ -1,0 +1,1436 @@
+{
+  "acronym_occurrences": 63,
+  "affected_profile_summary": {
+    "contract_rows": 8510,
+    "families": [
+      "ESE_HEALTH",
+      "FUND",
+      "INSTITUTE",
+      "PUBLIC_COMPANY",
+      "UNKNOWN"
+    ],
+    "profile_ids": [
+      "physical:041c0bb8c3f4b5ea9016",
+      "physical:0e4faa5625b69db66772",
+      "physical:0fa1c402f4ce35f6cb97",
+      "physical:10512c6e33fb92920337",
+      "physical:171a39351bcaefc5e2fb",
+      "physical:1b4bcd73bac86e738640",
+      "physical:1d1c5e113b3eb5352abb",
+      "physical:1ffe0289183c4e57ef1d",
+      "physical:227a3120b4829b525c05",
+      "physical:248324058d827781ac9c",
+      "physical:269651a0c0aad33d0ac1",
+      "physical:282a37b707961d74680a",
+      "physical:3f9314fb7d88298644ea",
+      "physical:4168773bd15238f1ec9c",
+      "physical:4bb66177ac055aa56d4e",
+      "physical:51e2d480e7ce859ab9df",
+      "physical:53845df77e898bb06293",
+      "physical:5472b0db3fe65a983e03",
+      "physical:54fc2070df407ad3227c",
+      "physical:5842cd7635e77aebf41f",
+      "physical:5ce6ce6a5fd012724ee2",
+      "physical:600ca511949295c0a26f",
+      "physical:64742438cf0a6cb3b275",
+      "physical:663c624748daf6cf793b",
+      "physical:7646e248656446a9b3d8",
+      "physical:7eb18e0f9282793f87c3",
+      "physical:838a9cbace357dddfc88",
+      "physical:84745fd4b6256bb2f235",
+      "physical:89c5723925c576e7d073",
+      "physical:8aa6b6af899e56489953",
+      "physical:8c100ece5146a3d93a08",
+      "physical:8d6ff9a7aecdb29e1b9c",
+      "physical:98222ddd678bd1c7693a",
+      "physical:9c8b74996ba85f9b9135",
+      "physical:9cdbb575f8432a799398",
+      "physical:9e1c3495768079a0330c",
+      "physical:a0dd4076916afc905ae3",
+      "physical:a6b3fd68b7c755fbc551",
+      "physical:ac9da48d3ef488661180",
+      "physical:afc9ab0bac1f313f82ef",
+      "physical:b313cb4db469eaee49c2",
+      "physical:b6062a715c49e2f38cd5",
+      "physical:b8427025f60e4c52a079",
+      "physical:bc219b02e4c364d7d15a",
+      "physical:bce6ccafcad9b63a436f",
+      "physical:bdb8da5335188c3e0d39",
+      "physical:c1b1a2144585e93c3084",
+      "physical:ca74840f4740d467e8f5",
+      "physical:ccdbef7c3f229c81339f",
+      "physical:cf319b665bf14790f3da",
+      "physical:d10202358542cc2117f1",
+      "physical:d6bb526fae1b393262e2",
+      "physical:d9da45df3536c616a1b0",
+      "physical:daeb0e55b9ecb6eaddf0",
+      "physical:df40b9062ab663e2df3a",
+      "physical:ecee1190469cc5ca885b",
+      "physical:ef74f1ca918fe972efff",
+      "physical:ef999610df3db693bc3d",
+      "physical:f239c4e113e075864165",
+      "physical:f3c65ded4ec4a031cbcc",
+      "physical:f3f947156272ce895c8e",
+      "physical:f56b5026c2cde97f5a2f",
+      "physical:f96907b846c0c9df29af"
+    ],
+    "profiles": 63,
+    "territories": [
+      "05001",
+      "05321",
+      "05376",
+      "05615",
+      "05631",
+      "05697",
+      "08758",
+      "13001",
+      "13244",
+      "13549",
+      "13600",
+      "15176",
+      "15469",
+      "15516",
+      "15759",
+      "15806",
+      "17001",
+      "17541",
+      "17614",
+      "19001",
+      "19455",
+      "19532",
+      "20045",
+      "20621",
+      "25035",
+      "25175",
+      "25290",
+      "41001",
+      "41132",
+      "41396",
+      "41615",
+      "44855",
+      "47001",
+      "50001",
+      "52001",
+      "52480",
+      "52838",
+      "54001",
+      "68001",
+      "68468",
+      "68679",
+      "68861",
+      "70215",
+      "73319",
+      "73411",
+      "76001",
+      "76109",
+      "76126",
+      "76147",
+      "76563",
+      "76892",
+      "85001",
+      "86568"
+    ],
+    "unique_processes": 21254
+  },
+  "classifications": {
+    "CONFLICTING_EXPANSION": 0,
+    "MULTIPLE_EXPANSIONS": 0,
+    "OFFICIALLY_EXPANDED": 0,
+    "UNRESOLVED_ACRONYM": 63
+  },
+  "guard": "Initial-letter derivation is prohibited. Only a literal official acronym can enter the candidate rule.",
+  "official_printed_acronym_index": {
+    "aapsa": [],
+    "acuasan": [],
+    "asmeta": [],
+    "asolengupa": [
+      {
+        "code": "1328",
+        "index": 1278,
+        "name": "ASOCIACION DE MUNICIPIOS DE LENGUPA -ASOLENGUPA-",
+        "nature": "Establecimiento Público",
+        "territory": "15455"
+      }
+    ],
+    "asomsurca": [],
+    "belalcazar": [
+      {
+        "code": "0836",
+        "index": 798,
+        "name": "ALCALDÍA DE PÁEZ (BELALCÁZAR)",
+        "nature": "Alcaldía",
+        "territory": "19517"
+      }
+    ],
+    "bellavista": [
+      {
+        "code": "1564",
+        "index": 1493,
+        "name": "CONCEJO DE BOJAYA (BELLAVISTA)",
+        "nature": "Concejo Municipal",
+        "territory": "27099"
+      },
+      {
+        "code": "4972",
+        "index": 4670,
+        "name": "PERSONERÍA DE BOJAYA (BELLAVISTA)",
+        "nature": "Personeria Municipal",
+        "territory": "27099"
+      }
+    ],
+    "berruecos": [
+      {
+        "code": "1531",
+        "index": 1464,
+        "name": "CONCEJO DE ARBOLEDA (BERRUECOS)",
+        "nature": "Concejo Municipal",
+        "territory": "52051"
+      },
+      {
+        "code": "4943",
+        "index": 4643,
+        "name": "PERSONERÍA DE ARBOLEDA (BERRUECOS)",
+        "nature": "Personeria Municipal",
+        "territory": "52051"
+      }
+    ],
+    "bordo": [],
+    "capruis": [
+      {
+        "code": "1394",
+        "index": 1339,
+        "name": "CAJA DE PREVISION SOCIAL DE LA UNIVERSIDAD INDUSTRIAL DE SANTANDER -CAPRUIS-",
+        "nature": "Establecimiento Público",
+        "territory": "68001"
+      }
+    ],
+    "casabe": [
+      {
+        "code": "2625",
+        "index": 2505,
+        "name": "CONCEJO DE YONDÓ (CASABE)",
+        "nature": "Concejo Municipal",
+        "territory": "05893"
+      },
+      {
+        "code": "6084",
+        "index": 5718,
+        "name": "PERSONERÍA DE YONDÓ (CASABE)",
+        "nature": "Personeria Municipal",
+        "territory": "05893"
+      }
+    ],
+    "cavasa": [
+      {
+        "code": "2711",
+        "index": 2589,
+        "name": "CORPORACION DE ABASTECIMIENTOS DEL VALLE DEL CAUCA S. A. -CAVASA-",
+        "nature": "Establecimiento Público",
+        "territory": "76130"
+      }
+    ],
+    "cdb": [],
+    "cehani": [
+      {
+        "code": "1438",
+        "index": 1379,
+        "name": "CENTRO DE HABILITACIÓN DEL NIÑO -CEHANI-",
+        "nature": "Establecimiento Público",
+        "territory": "52001"
+      }
+    ],
+    "centro": [],
+    "coconuco": [
+      {
+        "code": "0943",
+        "index": 904,
+        "name": "ALCALDÍA DE PURACÉ (COCONUCO)",
+        "nature": "Alcaldía",
+        "territory": "19585"
+      },
+      {
+        "code": "2387",
+        "index": 2282,
+        "name": "CONCEJO DE PURACÉ (COCONUCO)",
+        "nature": "Concejo Municipal",
+        "territory": "19585"
+      },
+      {
+        "code": "5843",
+        "index": 5492,
+        "name": "PERSONERÍA DE PURACÉ (COCONUCO)",
+        "nature": "Personeria Municipal",
+        "territory": "19585"
+      }
+    ],
+    "coodesca": [
+      {
+        "code": "0007",
+        "index": 6,
+        "name": "ADMINISTRACIÓN COOPERATIVA DE ENTIDADES DE SALUD DE CALDAS Y QUINDIO (COODESCA)",
+        "nature": "Establecimiento Público",
+        "territory": "17001"
+      }
+    ],
+    "cordech": [],
+    "corvide": [
+      {
+        "code": "2703",
+        "index": 2581,
+        "name": "CORPORACIÓN  DE VIVIENDA Y DESARROLLO SOCIAL -CORVIDE-EN LIQ.",
+        "nature": "Establecimiento Público",
+        "territory": "05001"
+      }
+    ],
+    "eaaap": [],
+    "eag": [],
+    "eice": [],
+    "emac": [],
+    "emcade": [],
+    "emcalima": [],
+    "emcopey": [
+      {
+        "code": "4043",
+        "index": 3839,
+        "name": "EMPRESA DE SERVICIOS PUBLICOS MUNICIPALES DE EL COPEY -EMCOPEY-",
+        "nature": "Empresas de Servicios Públicos Domiciliarios - Oficiales",
+        "territory": "20238"
+      }
+    ],
+    "empocabal": [
+      {
+        "code": "3981",
+        "index": 3784,
+        "name": "EMPRESA DE OBRAS SANITARIAS DE SANTA ROSA DE CABAL - EMPOCABAL-E.I.C.E.",
+        "nature": "Empresas de Servicios Públicos Domiciliarios - Oficiales",
+        "territory": "66682"
+      }
+    ],
+    "emprevel": [],
+    "empsa": [],
+    "emquilichao": [
+      {
+        "code": "3712",
+        "index": 3536,
+        "name": "EMPRESA DE SERVICIOS PUBLICOS  EMPRESA DE ACUEDUCTO Y ALCANTARILLADO DE SANTADER DE QUILICHAO -EMQUILICHAO-",
+        "nature": "Empresas de Servicios Públicos Domiciliarios - Oficiales",
+        "territory": "19698"
+      }
+    ],
+    "emsa": [
+      {
+        "code": "3799",
+        "index": 3615,
+        "name": "EMPRESA MUNICIPAL DE SERVICIOS DE ASEO -EMSA- RIOSUCIO",
+        "nature": "Empresas de Servicios Públicos Domiciliarios - Oficiales",
+        "territory": "17614"
+      }
+    ],
+    "emser": [],
+    "emserpa": [
+      {
+        "code": "3802",
+        "index": 3618,
+        "name": "EMPRESA MUNICIPAL DE SERVICIOS PÚBLICOS DE ARAUCA -EMSERPA-",
+        "nature": "Empresas de Servicios Públicos Domiciliarios - Oficiales",
+        "territory": "81001"
+      }
+    ],
+    "emserpy": [
+      {
+        "code": "3768",
+        "index": 3586,
+        "name": "EMPRESA DE SERVICIOS PUBLICOS DE PIVIJAY -EMSERPY - EN LIQUIDACION",
+        "nature": "Empresas de Servicios Públicos Domiciliarios - Oficiales",
+        "territory": "47551"
+      }
+    ],
+    "emsuarez": [
+      {
+        "code": "3847",
+        "index": 3660,
+        "name": "EMPRESA DE SERVICIOS PUBLICOS MUNICIPAL DE SUAREZ -EMSUAREZ-",
+        "nature": "Empresas Industriales y Comerciales del Estado",
+        "territory": "19780"
+      }
+    ],
+    "entidad": [],
+    "esehlcr": [],
+    "esehsnt": [],
+    "espag": [],
+    "essmar": [],
+    "fomupvit": [
+      {
+        "code": "4373",
+        "index": 4140,
+        "name": "FONDO MUNICIPAL PARA VIVIENDA DE TRABAJADORES -FOMUPVIT-",
+        "nature": "Establecimiento Público",
+        "territory": "88564"
+      }
+    ],
+    "fomvas": [
+      {
+        "code": "4378",
+        "index": 4144,
+        "name": "FONDO ROTATORIO MUNICIPAL DE VALORIZACIÓN DE SINCELEJO - FOMVAS -",
+        "nature": "Establecimiento Público",
+        "territory": "70001"
+      }
+    ],
+    "fomviti": [],
+    "foncep": [
+      {
+        "code": "4308",
+        "index": 4085,
+        "name": "FONDO DE PRESTACIONES ECONOMICAS, CESANTIAS Y PENSIONES -FONCEP-",
+        "nature": "Establecimiento Público",
+        "territory": "11001"
+      }
+    ],
+    "fonvichiq": [
+      {
+        "code": "4330",
+        "index": 4104,
+        "name": "FONDO DE VIVIENDA DE INTERES SOCIAL Y REFORMA URBANA -FONVICHIQ-",
+        "nature": "Establecimiento Público",
+        "territory": "15176"
+      }
+    ],
+    "fonvidu": [
+      {
+        "code": "4332",
+        "index": 4106,
+        "name": "FONDO DE VIVIENDA OBRERA DE DUITAMA -FONVIDU-",
+        "nature": "Establecimiento Público",
+        "territory": "15238"
+      }
+    ],
+    "fonvisog": [
+      {
+        "code": "4327",
+        "index": 4101,
+        "name": "FONDO DE VIVIENDA DE INTERES SOCIAL Y REFORMA URBANA DEL MUNICIPIO DE SOGAMOSO -FONVISOG-",
+        "nature": "Establecimiento Público",
+        "territory": "15759"
+      }
+    ],
+    "fovis": [
+      {
+        "code": "4315",
+        "index": 4091,
+        "name": "FONDO DE VIVIENDA DE INTERES SOCIAL - FOVIS - CISNEROS",
+        "nature": "Establecimiento Público",
+        "territory": "05190"
+      },
+      {
+        "code": "4322",
+        "index": 4097,
+        "name": "FONDO DE VIVIENDA DE INTERÉS SOCIAL Y REFORMA URBANA - FOVIS - SEGOVIA",
+        "nature": "Establecimiento Público",
+        "territory": "05736"
+      },
+      {
+        "code": "4334",
+        "index": 4108,
+        "name": "FONDO DE VIVIENDAD DE INTERES SOCIAL  - FOVIS - EL BAGRE",
+        "nature": "Establecimiento Público",
+        "territory": "05250"
+      },
+      {
+        "code": "4372",
+        "index": 4139,
+        "name": "FONDO MUNICIPAL DE VIVIENDA DE INTERES SOCIAL Y REFORMA URBANA DE SINCELEJO -FOVIS-",
+        "nature": "Establecimiento Público",
+        "territory": "70001"
+      }
+    ],
+    "genova": [
+      {
+        "code": "1640",
+        "index": 1564,
+        "name": "CONCEJO DE COLON(GENOVA)",
+        "nature": "Concejo Municipal",
+        "territory": "52203"
+      },
+      {
+        "code": "5160",
+        "index": 4847,
+        "name": "PERSONERÍA DE COLON(GENOVA)",
+        "nature": "Personeria Municipal",
+        "territory": "52203"
+      }
+    ],
+    "guachaves": [
+      {
+        "code": "2783",
+        "index": 2653,
+        "name": "CENTRO DE SALUD DE SANTACRUZ (GUACHAVÉS)",
+        "nature": "Empresas Sociales del Estado",
+        "territory": "52699"
+      }
+    ],
+    "guayabal": [
+      {
+        "code": "1716",
+        "index": 1637,
+        "name": "CONCEJO DE ARMERO (GUAYABAL)",
+        "nature": "Concejo Municipal",
+        "territory": "73055"
+      },
+      {
+        "code": "5095",
+        "index": 4787,
+        "name": "PERSONERÍA DE ARMERO (GUAYABAL)",
+        "nature": "Personeria Municipal",
+        "territory": "73055"
+      }
+    ],
+    "hidc": [],
+    "hmi": [],
+    "hmzr": [],
+    "hosacruz": [],
+    "hsjb": [],
+    "icty": [],
+    "icutuder": [],
+    "iderbol": [],
+    "idercar": [],
+    "iderf": [
+      {
+        "code": "4635",
+        "index": 4369,
+        "name": "INSTITUTO DEPORTIVO Y RECREATIVO DE FUSAGASUGA -IDERF-",
+        "nature": "Establecimiento Público",
+        "territory": "25290"
+      }
+    ],
+    "idry": [],
+    "ids": [],
+    "iduvi": [],
+    "ierd": [],
+    "ifinorte": [
+      {
+        "code": "4650",
+        "index": 4380,
+        "name": "INSTITUTO FINANCIERO DEL NORTE DE SANTANDER -IFINORTE-",
+        "nature": "Establecimiento Público",
+        "territory": "54001"
+      }
+    ],
+    "imctp": [],
+    "imdecur": [],
+    "imdercor": [],
+    "imer": [],
+    "imety": [],
+    "imrda": [],
+    "imtrac": [],
+    "imviyumbo": [],
+    "incerde": [],
+    "indequi": [
+      {
+        "code": "4552",
+        "index": 4294,
+        "name": "INSTITUTO DE DESARROLLO DEL QUINDIO -INDEQUI-",
+        "nature": "Establecimiento Público",
+        "territory": "63001"
+      }
+    ],
+    "inder": [
+      {
+        "code": "4547",
+        "index": 4289,
+        "name": "INSTITUTO DE DEPORTES Y RECREACIÓN -INDER-",
+        "nature": "Establecimiento Público",
+        "territory": "05001"
+      }
+    ],
+    "inderbu": [],
+    "inderhuila": [],
+    "inderyal": [
+      {
+        "code": "4546",
+        "index": 4288,
+        "name": "INSTITUTO DE DEPORTES Y RECREACION DE YARUMAL - INDERYAL - YARUMAL",
+        "nature": "Establecimiento Público",
+        "territory": "05887"
+      }
+    ],
+    "indesa": [],
+    "indev": [],
+    "infider": [
+      {
+        "code": "4652",
+        "index": 4382,
+        "name": "INSTITUTO FINANCIERO PARA EL DESARROLLO DE RISARALDA -INFIDER-",
+        "nature": "Establecimiento Público",
+        "territory": "66001"
+      }
+    ],
+    "infordes": [],
+    "invama": [
+      {
+        "code": "4587",
+        "index": 4326,
+        "name": "INSTITUTO DE VALORIZACIÓN DE MANIZALES -INVAMA-",
+        "nature": "Establecimiento Público",
+        "territory": "17001"
+      }
+    ],
+    "invap": [
+      {
+        "code": "4588",
+        "index": 4327,
+        "name": "INSTITUTO DE VALORIZACIÓN MUNICIPAL DE PASTO -INVAP-",
+        "nature": "Establecimiento Público",
+        "territory": "52001"
+      }
+    ],
+    "invipasto": [],
+    "invisbu": [
+      {
+        "code": "4595",
+        "index": 4332,
+        "name": "INSTITUTO DE VIVIENDA MUNICIPAL DE BUCARAMANGA - INVISBU -",
+        "nature": "Establecimiento Público",
+        "territory": "68001"
+      }
+    ],
+    "ipcc": [],
+    "irds": [],
+    "iscuande": [
+      {
+        "code": "1083",
+        "index": 1043,
+        "name": "ALCALDÍA DE SANTA BÁRBARA  (ISCUANDÉ) - NARIÑO",
+        "nature": "Alcaldía",
+        "territory": "52696"
+      },
+      {
+        "code": "2489",
+        "index": 2374,
+        "name": "CONCEJO DE SANTA BÁRBARA (ISCUANDÉ)",
+        "nature": "Concejo Municipal",
+        "territory": "52696"
+      },
+      {
+        "code": "5947",
+        "index": 5585,
+        "name": "PERSONERÍA DE SANTA BÁRBARA (ISCUANDÉ)",
+        "nature": "Personeria Municipal",
+        "territory": "52696"
+      }
+    ],
+    "iservi": [
+      {
+        "code": "4123",
+        "index": 3915,
+        "name": "EMPRESA DE SERVICIOS PUBLICOS INSTITUTO DE SERVICIOS VARIOS DE IPIALES -ISERVI-",
+        "nature": "Empresas de Servicios Públicos Domiciliarios - Oficiales",
+        "territory": "52356"
+      }
+    ],
+    "isvimed": [],
+    "itthuila": [],
+    "iuoc": [],
+    "mabapu": [
+      {
+        "code": "4875",
+        "index": 4579,
+        "name": "MUNICIPIOS ASOCIADOS DEL BAJO PUTUMAYO - MABAPU - EN LIQUIDACIÓN",
+        "nature": "Establecimiento Público",
+        "territory": "86568"
+      }
+    ],
+    "madu": [
+      {
+        "code": "4873",
+        "index": 4577,
+        "name": "MUNICIPIOS ASOCIADOS DE URABA -MADU-",
+        "nature": "Establecimiento Público",
+        "territory": "05001"
+      }
+    ],
+    "magd": [
+      {
+        "code": "1633",
+        "index": 1559,
+        "name": "CONCEJO DE CIENAGA (MAGD)",
+        "nature": "Concejo Municipal",
+        "territory": "47189"
+      },
+      {
+        "code": "5037",
+        "index": 4733,
+        "name": "PERSONERÍA DE CIENAGA (MAGD)",
+        "nature": "Personeria Municipal",
+        "territory": "47189"
+      }
+    ],
+    "maser": [
+      {
+        "code": "4871",
+        "index": 4575,
+        "name": "MUNICIPIOS ASOCIADOS DE LA SUBREGIÓN DE EMBALSES DE LOS RIOS NEGRO Y NARE -MASER-",
+        "nature": "Establecimiento Público",
+        "territory": "05001"
+      }
+    ],
+    "masora": [
+      {
+        "code": "4874",
+        "index": 4578,
+        "name": "MUNICIPIOS ASOCIADOS DEL ALTIPLANO Y ORIENTE ANTIOQUEÑO -MASORA-",
+        "nature": "Establecimiento Público",
+        "territory": "05615"
+      }
+    ],
+    "metroparques": [
+      {
+        "code": "2725",
+        "index": 2602,
+        "name": "CORPORACIÓN RECREATIVA METROPOLITANA DE MEDELLÍN - METROPARQUES -",
+        "nature": "Empresas Industriales y Comerciales del Estado",
+        "territory": "05001"
+      }
+    ],
+    "mologavita": [],
+    "mutis": [
+      {
+        "code": "1547",
+        "index": 1478,
+        "name": "CONCEJO DE BAHIA SOLANO (MUTIS)",
+        "nature": "Concejo Municipal",
+        "territory": "27075"
+      },
+      {
+        "code": "4957",
+        "index": 4657,
+        "name": "PERSONERÍA DE BAHIA SOLANO (MUTIS)",
+        "nature": "Personeria Municipal",
+        "territory": "27075"
+      }
+    ],
+    "pap": [
+      {
+        "code": "8475",
+        "index": 6281,
+        "name": "LA PROVINCIA ADMINISTRATIVA Y DE PLANIFICACIÓN-PAP- DE LA PAZ EN EL DEPARTAMENTO DE ANTIOQUIA",
+        "nature": "Asociación de Municipios",
+        "territory": "05756"
+      }
+    ],
+    "payan": [
+      {
+        "code": "2263",
+        "index": 2164,
+        "name": "CONCEJO DE MAGÜÍ (PAYÁN)",
+        "nature": "Concejo Municipal",
+        "territory": "52427"
+      },
+      {
+        "code": "5717",
+        "index": 5375,
+        "name": "PERSONERÍA DE MAGÜÍ (PAYÁN)",
+        "nature": "Personeria Municipal",
+        "territory": "52427"
+      }
+    ],
+    "pizarro": [
+      {
+        "code": "0121",
+        "index": 113,
+        "name": "ALCALDÍA DE BAJO BAUDÓ (PIZARRO)",
+        "nature": "Alcaldía",
+        "territory": "27077"
+      },
+      {
+        "code": "1548",
+        "index": 1479,
+        "name": "CONCEJO DE BAJO BAUDO (PIZARRO)",
+        "nature": "Concejo Municipal",
+        "territory": "27077"
+      },
+      {
+        "code": "4958",
+        "index": 4658,
+        "name": "PERSONERÍA DE BAJO BAUDO (PIZARRO)",
+        "nature": "Personeria Municipal",
+        "territory": "27077"
+      }
+    ],
+    "quinsa": [
+      {
+        "code": "6113",
+        "index": 5742,
+        "name": "QUIMICA INTEGRADA S.A. -QUINSA-",
+        "nature": "Sociedad de Economía Mixta",
+        "territory": "41016"
+      }
+    ],
+    "umayor": []
+  },
+  "profiles_examined": 876,
+  "rows": [
+    {
+      "acronym": "indev",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:1ffe0289183c4e57ef1d",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "essmar",
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:84745fd4b6256bb2f235",
+      "source_class": "F",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "umayor",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:3f9314fb7d88298644ea",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "iduvi",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:bc219b02e4c364d7d15a",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "inderbu",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:bce6ccafcad9b63a436f",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "iderbol",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:9cdbb575f8432a799398",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "hidc",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:10512c6e33fb92920337",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "indesa",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:7eb18e0f9282793f87c3",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "hmzr",
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:9e1c3495768079a0330c",
+      "source_class": "F",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "imviyumbo",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:4168773bd15238f1ec9c",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "inderhuila",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:51e2d480e7ce859ab9df",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "iuoc",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:b8427025f60e4c52a079",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "ipcc",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:ccdbef7c3f229c81339f",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "imctp",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:1d1c5e113b3eb5352abb",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "hmi",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:1b4bcd73bac86e738640",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "imer",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:64742438cf0a6cb3b275",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "isvimed",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:98222ddd678bd1c7693a",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "itthuila",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:f96907b846c0c9df29af",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "iderf",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [
+        {
+          "code": "4635",
+          "index": 4369,
+          "name": "INSTITUTO DEPORTIVO Y RECREATIVO DE FUSAGASUGA -IDERF-",
+          "nature": "Establecimiento Público",
+          "territory": "25290"
+        }
+      ],
+      "profile_id": "physical:5ce6ce6a5fd012724ee2",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "imety",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:8d6ff9a7aecdb29e1b9c",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "centro",
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:f239c4e113e075864165",
+      "source_class": "F",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "acuasan",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:afc9ab0bac1f313f82ef",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "mologavita",
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:ac9da48d3ef488661180",
+      "source_class": "F",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "emser",
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:ca74840f4740d467e8f5",
+      "source_class": "F",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "emsa",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:cf319b665bf14790f3da",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "hosacruz",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:5472b0db3fe65a983e03",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "cdb",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:bdb8da5335188c3e0d39",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "aapsa",
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:54fc2070df407ad3227c",
+      "source_class": "F",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "icutuder",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:d9da45df3536c616a1b0",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "imdecur",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:248324058d827781ac9c",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "incerde",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:041c0bb8c3f4b5ea9016",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "asomsurca",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:d6bb526fae1b393262e2",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "bordo",
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:df40b9062ab663e2df3a",
+      "source_class": "F",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "espag",
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:269651a0c0aad33d0ac1",
+      "source_class": "F",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "idry",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:53845df77e898bb06293",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "emac",
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:171a39351bcaefc5e2fb",
+      "source_class": "F",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "emcalima",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:9c8b74996ba85f9b9135",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "irds",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:5842cd7635e77aebf41f",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "emcade",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:8c100ece5146a3d93a08",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "masora",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [
+        {
+          "code": "4874",
+          "index": 4578,
+          "name": "MUNICIPIOS ASOCIADOS DEL ALTIPLANO Y ORIENTE ANTIOQUEÑO -MASORA-",
+          "nature": "Establecimiento Público",
+          "territory": "05615"
+        }
+      ],
+      "profile_id": "physical:d10202358542cc2117f1",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "esehlcr",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:f3f947156272ce895c8e",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "hsjb",
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:b313cb4db469eaee49c2",
+      "source_class": "F",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "ids",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:ef74f1ca918fe972efff",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "emsa",
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "official_matches": [
+        {
+          "code": "3799",
+          "index": 3615,
+          "name": "EMPRESA MUNICIPAL DE SERVICIOS DE ASEO -EMSA- RIOSUCIO",
+          "nature": "Empresas de Servicios Públicos Domiciliarios - Oficiales",
+          "territory": "17614"
+        }
+      ],
+      "profile_id": "physical:600ca511949295c0a26f",
+      "source_class": "F",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "eag",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:b6062a715c49e2f38cd5",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "icty",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:663c624748daf6cf793b",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "cordech",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:89c5723925c576e7d073",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "ierd",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:daeb0e55b9ecb6eaddf0",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "asmeta",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:f56b5026c2cde97f5a2f",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "fonvisog",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [
+        {
+          "code": "4327",
+          "index": 4101,
+          "name": "FONDO DE VIVIENDA DE INTERES SOCIAL Y REFORMA URBANA DEL MUNICIPIO DE SOGAMOSO -FONVISOG-",
+          "nature": "Establecimiento Público",
+          "territory": "15759"
+        }
+      ],
+      "profile_id": "physical:ecee1190469cc5ca885b",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "invipasto",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:ef999610df3db693bc3d",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "imtrac",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:7646e248656446a9b3d8",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "fomviti",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:4bb66177ac055aa56d4e",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "empsa",
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:8aa6b6af899e56489953",
+      "source_class": "F",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "entidad",
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:0fa1c402f4ce35f6cb97",
+      "source_class": "F",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "eaaap",
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:a6b3fd68b7c755fbc551",
+      "source_class": "F",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "eice",
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:282a37b707961d74680a",
+      "source_class": "F",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "infordes",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:a0dd4076916afc905ae3",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "esehsnt",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:227a3120b4829b525c05",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "imdercor",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:838a9cbace357dddfc88",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "idercar",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:0e4faa5625b69db66772",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "imrda",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:c1b1a2144585e93c3084",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    },
+    {
+      "acronym": "emprevel",
+      "contradictions": [
+        "OUTSIDE_TARGETED_CLASSES_NO_ADJUDICATION"
+      ],
+      "official_matches": [],
+      "profile_id": "physical:f3c65ded4ec4a031cbcc",
+      "source_class": "J",
+      "status": "UNRESOLVED_ACRONYM"
+    }
+  ]
+}

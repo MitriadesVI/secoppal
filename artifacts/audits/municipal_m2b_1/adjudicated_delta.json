@@ -1,0 +1,2483 @@
+{
+  "M2B_ACCEPTED_CANDIDATES": 55,
+  "candidates": [
+    {
+      "account": "700120017",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "logical:0d3b209c00f4bd723b22",
+      "canonical_claims": [
+        "E.S.E. HOSPITAL UNIVERSITARIO HERNANDO MONCALEANO PERDOMO DE NEIVA"
+      ],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 1,
+      "contradictions": [],
+      "creates_new_logical_unit": false,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/3466",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/26596",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:e451f68ca58086d3929d"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "ESE_HEALTH",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+          "sigep_code": "3634",
+          "sigep_index": 3466,
+          "territory": "41001"
+        }
+      ],
+      "own_directory_indices": [
+        26596
+      ],
+      "physical_source_name": "E.S.E. HOSPITAL UNIVERSITARIO HERNANDO MONCALEANO PERDOMO DE NEIVA",
+      "profile_id": "physical:e451f68ca58086d3929d",
+      "rules_matched": [
+        "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER"
+      ],
+      "selected_rule": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "selected_sigep_code": "3634",
+      "selected_sigep_index": 3466,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": "E.S.E. HOSPITAL UNIVERSITARIO HERNANDO MONCALEANO PERDOMO DE NEIVA",
+      "territory_divipola": "41001",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 481
+    },
+    {
+      "account": "700620024",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "logical:f9425db4e32d0ffe1744",
+      "canonical_claims": [
+        "E.S.E. HOSPITAL REGIONAL SUR ORIENTAL"
+      ],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 1422,
+      "contradictions": [],
+      "creates_new_logical_unit": false,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/2714",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/2271",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:0dc3190f37b17769ccd2"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "ESE_HEALTH",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R0_EXISTING_CANONICAL_ADR076",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R0_EXISTING_CANONICAL_ADR076",
+          "sigep_code": "2846",
+          "sigep_index": 2714,
+          "territory": "54172"
+        }
+      ],
+      "own_directory_indices": [
+        2271
+      ],
+      "physical_source_name": "E.S.E. HOSPITAL REGIONAL SUR ORIENTAL",
+      "profile_id": "physical:0dc3190f37b17769ccd2",
+      "rules_matched": [
+        "M2B1_R0_EXISTING_CANONICAL_ADR076"
+      ],
+      "selected_rule": "M2B1_R0_EXISTING_CANONICAL_ADR076",
+      "selected_sigep_code": "2846",
+      "selected_sigep_index": 2714,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": "E.S.E. HOSPITAL REGIONAL SUR ORIENTAL",
+      "territory_divipola": "54172",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 1253
+    },
+    {
+      "account": "700799117",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:7142cadfe977f7f33fb5",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 0,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/3459",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/22450",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:8c89400354a46fdc8151"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "ESE_HEALTH",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+          "sigep_code": "3626",
+          "sigep_index": 3459,
+          "territory": "41797"
+        }
+      ],
+      "own_directory_indices": [
+        22450
+      ],
+      "physical_source_name": "ESE HOSPITAL SANTA TERESA",
+      "profile_id": "physical:8c89400354a46fdc8151",
+      "rules_matched": [
+        "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER"
+      ],
+      "selected_rule": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "selected_sigep_code": "3626",
+      "selected_sigep_index": 3459,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "41797",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 252
+    },
+    {
+      "account": "701618050",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:f42da074b02cc82fb4ab",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 0,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/2889",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/25917",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:6b09b539d1500459597e"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "ESE_HEALTH",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+          "sigep_code": "3025",
+          "sigep_index": 2889,
+          "territory": "15761"
+        }
+      ],
+      "own_directory_indices": [
+        25917
+      ],
+      "physical_source_name": "E.S.E CENTRO DE SALUD SAN SEBASTIAN DE SOMONDOCO",
+      "profile_id": "physical:6b09b539d1500459597e",
+      "rules_matched": [
+        "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER"
+      ],
+      "selected_rule": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "selected_sigep_code": "3025",
+      "selected_sigep_index": 2889,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "15761",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 162
+    },
+    {
+      "account": "701691107",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:e5cc577e25ec1b089c08",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 6,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/2929",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/7964",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:a0199997cc9c53ba8a65"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "ESE_HEALTH",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+          "sigep_code": "3066",
+          "sigep_index": 2929,
+          "territory": "41668"
+        }
+      ],
+      "own_directory_indices": [
+        7964
+      ],
+      "physical_source_name": "E.S.E HOSPITAL ARSENIO REPIZO VANEGAS",
+      "profile_id": "physical:a0199997cc9c53ba8a65",
+      "rules_matched": [
+        "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER"
+      ],
+      "selected_rule": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "selected_sigep_code": "3066",
+      "selected_sigep_index": 2929,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "41668",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 573
+    },
+    {
+      "account": "703104059",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:4a3a94f89b094f894477",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 2,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/3094",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/12603",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:6d76a9aa74d18bdd8942"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "ESE_HEALTH",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+          "sigep_code": "3242",
+          "sigep_index": 3094,
+          "territory": "05792"
+        }
+      ],
+      "own_directory_indices": [
+        12603
+      ],
+      "physical_source_name": "E.S.E HOSPITAL SAN PABLO DE TARSO",
+      "profile_id": "physical:6d76a9aa74d18bdd8942",
+      "rules_matched": [
+        "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER"
+      ],
+      "selected_rule": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "selected_sigep_code": "3242",
+      "selected_sigep_index": 3094,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "05792",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 161
+    },
+    {
+      "account": "703411371",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:676cc5b03551f028bf5d",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 0,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/2957",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/16796",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:9d934494484754ab8e1a"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "ESE_HEALTH",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+          "sigep_code": "3095",
+          "sigep_index": 2957,
+          "territory": "05761"
+        }
+      ],
+      "own_directory_indices": [
+        16796
+      ],
+      "physical_source_name": "E.S.E HOSPITAL HORACIO MUÑOZ SUESCUN DE SOPETRAN",
+      "profile_id": "physical:9d934494484754ab8e1a",
+      "rules_matched": [
+        "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER"
+      ],
+      "selected_rule": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "selected_sigep_code": "3095",
+      "selected_sigep_index": 2957,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "05761",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 172
+    },
+    {
+      "account": "703798249",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "logical:1ea60e3ece29f212f7e7",
+      "canonical_claims": [
+        "ESE HOSPITAL SAN FELIX LA DORADA"
+      ],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 3,
+      "contradictions": [],
+      "creates_new_logical_unit": false,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/3040",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/11649",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:5639669ef63f034a54ce"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "ESE_HEALTH",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R0_EXISTING_CANONICAL_ADR076",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R0_EXISTING_CANONICAL_ADR076",
+          "sigep_code": "3185",
+          "sigep_index": 3040,
+          "territory": "17380"
+        }
+      ],
+      "own_directory_indices": [
+        11649
+      ],
+      "physical_source_name": "ESE HOSPITAL SAN FELIX LA DORADA",
+      "profile_id": "physical:5639669ef63f034a54ce",
+      "rules_matched": [
+        "M2B1_R0_EXISTING_CANONICAL_ADR076"
+      ],
+      "selected_rule": "M2B1_R0_EXISTING_CANONICAL_ADR076",
+      "selected_sigep_code": "3185",
+      "selected_sigep_index": 3040,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": "ESE HOSPITAL SAN FELIX LA DORADA",
+      "territory_divipola": "17380",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 1067
+    },
+    {
+      "account": "704143098",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:e66eeb8a7af493bcf4fb",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 2,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/3168",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/15515",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:844e180a6a8945c13469"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "ESE_HEALTH",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+          "sigep_code": "3317",
+          "sigep_index": 3168,
+          "territory": "76122"
+        }
+      ],
+      "own_directory_indices": [
+        15515
+      ],
+      "physical_source_name": "HOSPITAL SANTANDER ESE",
+      "profile_id": "physical:844e180a6a8945c13469",
+      "rules_matched": [
+        "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER"
+      ],
+      "selected_rule": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "selected_sigep_code": "3317",
+      "selected_sigep_index": 3168,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "76122",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 160
+    },
+    {
+      "account": "704246693",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:32514b55bbc7d112c157",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 9,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/3147",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/22506",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:4793344302a595b312c1"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "ESE_HEALTH",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+          "sigep_code": "3295",
+          "sigep_index": 3147,
+          "territory": "76036"
+        }
+      ],
+      "own_directory_indices": [
+        22506
+      ],
+      "physical_source_name": "HOSPITAL SAN VICENTE FERRER ESE",
+      "profile_id": "physical:4793344302a595b312c1",
+      "rules_matched": [
+        "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER"
+      ],
+      "selected_rule": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "selected_sigep_code": "3295",
+      "selected_sigep_index": 3147,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "76036",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 406
+    },
+    {
+      "account": "704247105",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:4139d979cb1148ab0b4b",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 1,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/3152",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/20376",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:33714e84e29ac212020a"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "ESE_HEALTH",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+          "sigep_code": "3300",
+          "sigep_index": 3152,
+          "territory": "76041"
+        }
+      ],
+      "own_directory_indices": [
+        20376
+      ],
+      "physical_source_name": "HOSPITAL SANTA ANA DE LOS CABALLEROS E.S.E",
+      "profile_id": "physical:33714e84e29ac212020a",
+      "rules_matched": [
+        "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER"
+      ],
+      "selected_rule": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "selected_sigep_code": "3300",
+      "selected_sigep_index": 3152,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "76041",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 178
+    },
+    {
+      "account": "704247451",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:38bac64a803f45817d66",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 0,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/3266",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/26888",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:bb0432187c5f15b67ce0"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "ESE_HEALTH",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+          "sigep_code": "3427",
+          "sigep_index": 3266,
+          "territory": "76845"
+        }
+      ],
+      "own_directory_indices": [
+        26888
+      ],
+      "physical_source_name": "HOSPITAL LOCAL PEDRO SAENZ DIAZ E.S.E",
+      "profile_id": "physical:bb0432187c5f15b67ce0",
+      "rules_matched": [
+        "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER"
+      ],
+      "selected_rule": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "selected_sigep_code": "3427",
+      "selected_sigep_index": 3266,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "76845",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 127
+    },
+    {
+      "account": "704247535",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:54227d30be0c0f5fb090",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 0,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/3039",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/22081",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:bcb8de4348d4a18cfe7c"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "ESE_HEALTH",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+          "sigep_code": "3184",
+          "sigep_index": 3039,
+          "territory": "76400"
+        }
+      ],
+      "own_directory_indices": [
+        22081
+      ],
+      "physical_source_name": "HOSPITAL GONZALO CONTRERAS E.S.E",
+      "profile_id": "physical:bcb8de4348d4a18cfe7c",
+      "rules_matched": [
+        "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER"
+      ],
+      "selected_rule": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "selected_sigep_code": "3184",
+      "selected_sigep_index": 3039,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "76400",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 278
+    },
+    {
+      "account": "704259241",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:c49f2f6789bf3daada3d",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 10,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/2966",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/25080",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:32c3ae23da0117da776e"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "ESE_HEALTH",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+          "sigep_code": "3104",
+          "sigep_index": 2966,
+          "territory": "76892"
+        }
+      ],
+      "own_directory_indices": [
+        25080
+      ],
+      "physical_source_name": "HOSPITAL LA BUENA ESPERANZA DE YUMBO E.S.E.",
+      "profile_id": "physical:32c3ae23da0117da776e",
+      "rules_matched": [
+        "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER"
+      ],
+      "selected_rule": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "selected_sigep_code": "3104",
+      "selected_sigep_index": 2966,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "76892",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 707
+    },
+    {
+      "account": "704260231",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:68251467252dddcfa2a7",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 4,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/2946",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/15769",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:d5fc2b7f20f24854afd9"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "ESE_HEALTH",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+          "sigep_code": "3084",
+          "sigep_index": 2946,
+          "territory": "73226"
+        }
+      ],
+      "own_directory_indices": [
+        15769
+      ],
+      "physical_source_name": "HOSPITAL FEDERICO ARBELAEZ ESE",
+      "profile_id": "physical:d5fc2b7f20f24854afd9",
+      "rules_matched": [
+        "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER"
+      ],
+      "selected_rule": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "selected_sigep_code": "3084",
+      "selected_sigep_index": 2946,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "73226",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 226
+    },
+    {
+      "account": "704357409",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:71c8919b08b06631087a",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 0,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/3817",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/14922",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:51887c4ce7f302c15057"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "PUBLIC_COMPANY",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+          "sigep_code": "4017",
+          "sigep_index": 3817,
+          "territory": "50606"
+        }
+      ],
+      "own_directory_indices": [
+        14922
+      ],
+      "physical_source_name": "EMPRESA DE SERVICIOS PUBLICOS DE RESTREPO AGUA VIVA S.A. E.S.P.",
+      "profile_id": "physical:51887c4ce7f302c15057",
+      "rules_matched": [
+        "M2B1_R3_ESP_LEGAL_DESIGNATOR"
+      ],
+      "selected_rule": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+      "selected_sigep_code": "4017",
+      "selected_sigep_index": 3817,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "50606",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 6
+    },
+    {
+      "account": "704494194",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:d4a4a524aa2f116df738",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 46,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/3264",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/27182",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:f95bd33da5240cf40cbb"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "ESE_HEALTH",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+          "sigep_code": "3425",
+          "sigep_index": 3264,
+          "territory": "27001"
+        }
+      ],
+      "own_directory_indices": [
+        27182
+      ],
+      "physical_source_name": "ESE HOSPITAL LOCAL ISMAEL ROLDAN VALENCIA",
+      "profile_id": "physical:f95bd33da5240cf40cbb",
+      "rules_matched": [
+        "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER"
+      ],
+      "selected_rule": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "selected_sigep_code": "3425",
+      "selected_sigep_index": 3264,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "27001",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 69
+    },
+    {
+      "account": "704561760",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:49f1358d08710dba4cd4",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 0,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/2992",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/18033",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:be9c172ae1ea2970ce7b"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "ESE_HEALTH",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+          "sigep_code": "3133",
+          "sigep_index": 2992,
+          "territory": "73067"
+        }
+      ],
+      "own_directory_indices": [
+        18033
+      ],
+      "physical_source_name": "HOSPITAL NUESTRA SEÑORA DE LOURDES E.S.E",
+      "profile_id": "physical:be9c172ae1ea2970ce7b",
+      "rules_matched": [
+        "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER"
+      ],
+      "selected_rule": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "selected_sigep_code": "3133",
+      "selected_sigep_index": 2992,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "73067",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 91
+    },
+    {
+      "account": "704660794",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:97cc86270ec0265d0cdb",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 0,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/3643",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/3582",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:d2b0b5a8e126b746b861"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "PUBLIC_COMPANY",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+          "sigep_code": "3828",
+          "sigep_index": 3643,
+          "territory": "17541"
+        }
+      ],
+      "own_directory_indices": [
+        3582
+      ],
+      "physical_source_name": "EMPRESAS PUBLICAS DE PENSILVANIA E.S.P",
+      "profile_id": "physical:d2b0b5a8e126b746b861",
+      "rules_matched": [
+        "M2B1_R3_ESP_LEGAL_DESIGNATOR"
+      ],
+      "selected_rule": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+      "selected_sigep_code": "3828",
+      "selected_sigep_index": 3643,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "17541",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 124
+    },
+    {
+      "account": "704661388",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:437712e91230b6a2b92f",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 2,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/3405",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/21157",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:ac95e0c1caa8444c9bcd"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "ESE_HEALTH",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+          "sigep_code": "3570",
+          "sigep_index": 3405,
+          "territory": "17272"
+        }
+      ],
+      "own_directory_indices": [
+        21157
+      ],
+      "physical_source_name": "ESE HOSPITAL SAN BERNARDO",
+      "profile_id": "physical:ac95e0c1caa8444c9bcd",
+      "rules_matched": [
+        "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER"
+      ],
+      "selected_rule": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "selected_sigep_code": "3570",
+      "selected_sigep_index": 3405,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "17272",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 125
+    },
+    {
+      "account": "704690213",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:ce110199d172bd513c15",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 0,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/4194",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/9981",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:4905fd3a437558c0e699"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "ESE_HEALTH",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+          "sigep_code": "4430",
+          "sigep_index": 4194,
+          "territory": "25718"
+        }
+      ],
+      "own_directory_indices": [
+        9981
+      ],
+      "physical_source_name": "E.S.E. HOSPITAL HILARIO LUGO",
+      "profile_id": "physical:4905fd3a437558c0e699",
+      "rules_matched": [
+        "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER"
+      ],
+      "selected_rule": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "selected_sigep_code": "4430",
+      "selected_sigep_index": 4194,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "25718",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 422
+    },
+    {
+      "account": "704834951",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:49bd8a9f9e7136c4fd32",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 7,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/3172",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/20898",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:24044b6b3c15fddcce2b"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "ESE_HEALTH",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+          "sigep_code": "3322",
+          "sigep_index": 3172,
+          "territory": "73352"
+        }
+      ],
+      "own_directory_indices": [
+        20898
+      ],
+      "physical_source_name": "HOSPITAL SUMAPAZ E.S.E",
+      "profile_id": "physical:24044b6b3c15fddcce2b",
+      "rules_matched": [
+        "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER"
+      ],
+      "selected_rule": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "selected_sigep_code": "3322",
+      "selected_sigep_index": 3172,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "73352",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 205
+    },
+    {
+      "account": "705405173",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:b5f8b1bd7e035ce115cf",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 0,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/2953",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/12512",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:11d94e942202137d7b7b"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "ESE_HEALTH",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+          "sigep_code": "3091",
+          "sigep_index": 2953,
+          "territory": "05093"
+        }
+      ],
+      "own_directory_indices": [
+        12512
+      ],
+      "physical_source_name": "ESE HOSPITAL GERMAN VELEZ GUTIERREZ",
+      "profile_id": "physical:11d94e942202137d7b7b",
+      "rules_matched": [
+        "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER"
+      ],
+      "selected_rule": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "selected_sigep_code": "3091",
+      "selected_sigep_index": 2953,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "05093",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 141
+    },
+    {
+      "account": "705911287",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "logical:4ec0350ec0efa8b4acb5",
+      "canonical_claims": [
+        "EMPRESAS PUBLICAS DE MEDELLIN E.S.P."
+      ],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 0,
+      "contradictions": [],
+      "creates_new_logical_unit": false,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/4034",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/16310",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:3cf2d59ce42c072b9501"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "PUBLIC_COMPANY",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+          "sigep_code": "4256",
+          "sigep_index": 4034,
+          "territory": "05001"
+        }
+      ],
+      "own_directory_indices": [
+        16310
+      ],
+      "physical_source_name": "EMPRESAS PUBLICAS DE MEDELLIN E.S.P.",
+      "profile_id": "physical:3cf2d59ce42c072b9501",
+      "rules_matched": [
+        "M2B1_R3_ESP_LEGAL_DESIGNATOR"
+      ],
+      "selected_rule": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+      "selected_sigep_code": "4256",
+      "selected_sigep_index": 4034,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": "EMPRESAS PUBLICAS DE MEDELLIN E.S.P.",
+      "territory_divipola": "05001",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 4836
+    },
+    {
+      "account": "705936763",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:623a2f6ec8344ee40773",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 108,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/3869",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/11726",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:18a8cc48e37a9f7800c5"
+      ],
+      "explained_fiscal_peers": [
+        {
+          "explanation": "DISTINCT_INSTITUTIONAL_FAMILY",
+          "reference": 7030,
+          "type": "DIRECTORY"
+        }
+      ],
+      "family": "PUBLIC_COMPANY",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+          "sigep_code": "4073",
+          "sigep_index": 3869,
+          "territory": "66400"
+        }
+      ],
+      "own_directory_indices": [
+        11726
+      ],
+      "physical_source_name": "EMPRESA DE SERVICIOS PUBLICOS DE LA VIRGINIA E.S.P**",
+      "profile_id": "physical:18a8cc48e37a9f7800c5",
+      "rules_matched": [
+        "M2B1_R3_ESP_LEGAL_DESIGNATOR"
+      ],
+      "selected_rule": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+      "selected_sigep_code": "4073",
+      "selected_sigep_index": 3869,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "66400",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 116
+    },
+    {
+      "account": "707981171",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:c5743e94940823cc670d",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 1,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/3418",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/4756",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:371aee9bb3aba32eeac7"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "ESE_HEALTH",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R2_TRAILING_CARE_LEVEL",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R2_TRAILING_CARE_LEVEL",
+          "sigep_code": "3583",
+          "sigep_index": 3418,
+          "territory": "44430"
+        }
+      ],
+      "own_directory_indices": [
+        4756
+      ],
+      "physical_source_name": "ESE HOSPITAL SAN JOSE DE MAICAO",
+      "profile_id": "physical:371aee9bb3aba32eeac7",
+      "rules_matched": [
+        "M2B1_R2_TRAILING_CARE_LEVEL"
+      ],
+      "selected_rule": "M2B1_R2_TRAILING_CARE_LEVEL",
+      "selected_sigep_code": "3583",
+      "selected_sigep_index": 3418,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "44430",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 2643
+    },
+    {
+      "account": "708209200",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:b4ebad5ab29799511e1b",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 1,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/2783",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/20254",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:b1b9e8cffbdb0266c36a"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "ESE_HEALTH",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+          "sigep_code": "2917",
+          "sigep_index": 2783,
+          "territory": "15621"
+        }
+      ],
+      "own_directory_indices": [
+        20254
+      ],
+      "physical_source_name": "ESE CENTRO DE SALUD SAN RAFAEL - RONDON",
+      "profile_id": "physical:b1b9e8cffbdb0266c36a",
+      "rules_matched": [
+        "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER"
+      ],
+      "selected_rule": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "selected_sigep_code": "2917",
+      "selected_sigep_index": 2783,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "15621",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 85
+    },
+    {
+      "account": "709717391",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:0a0fb6957cf833c7e1b4",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 0,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/2836",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/23137",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:c396aeaed068ed7f54a3"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "ESE_HEALTH",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+          "sigep_code": "2971",
+          "sigep_index": 2836,
+          "territory": "15514"
+        }
+      ],
+      "own_directory_indices": [
+        23137
+      ],
+      "physical_source_name": "ESE CENTRO DE SALUD JORGE GONZALEZ OLMOS",
+      "profile_id": "physical:c396aeaed068ed7f54a3",
+      "rules_matched": [
+        "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER"
+      ],
+      "selected_rule": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "selected_sigep_code": "2971",
+      "selected_sigep_index": 2836,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "15514",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 109
+    },
+    {
+      "account": "709730139",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:31bd4521623cda64b27a",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 0,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/2843",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/6714",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:20523039eb04497e306c"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "ESE_HEALTH",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+          "sigep_code": "2978",
+          "sigep_index": 2843,
+          "territory": "15212"
+        }
+      ],
+      "own_directory_indices": [
+        6714
+      ],
+      "physical_source_name": "ESE CENTRO DE SALUD LUIS LANCHEROS",
+      "profile_id": "physical:20523039eb04497e306c",
+      "rules_matched": [
+        "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER"
+      ],
+      "selected_rule": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "selected_sigep_code": "2978",
+      "selected_sigep_index": 2843,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "15212",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 136
+    },
+    {
+      "account": "711297358",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:31ffe52a344c1fc8829a",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 3,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/2999",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/23074",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:47d3bda2c0adc0ecbb84"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "ESE_HEALTH",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+          "sigep_code": "3141",
+          "sigep_index": 2999,
+          "territory": "20295"
+        }
+      ],
+      "own_directory_indices": [
+        23074
+      ],
+      "physical_source_name": "E.S.E HOSPITAL OLAYA HERRERA",
+      "profile_id": "physical:47d3bda2c0adc0ecbb84",
+      "rules_matched": [
+        "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER"
+      ],
+      "selected_rule": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "selected_sigep_code": "3141",
+      "selected_sigep_index": 2999,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "20295",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 257
+    },
+    {
+      "account": "711316901",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:77a024678d79823a872d",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 0,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/3244",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/11615",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:d101ba494379972f1ff7"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "ESE_HEALTH",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+          "sigep_code": "3404",
+          "sigep_index": 3244,
+          "territory": "20517"
+        }
+      ],
+      "own_directory_indices": [
+        11615
+      ],
+      "physical_source_name": "ESE HOSPITAL HELI MORENO BLANCO//",
+      "profile_id": "physical:d101ba494379972f1ff7",
+      "rules_matched": [
+        "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER"
+      ],
+      "selected_rule": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "selected_sigep_code": "3404",
+      "selected_sigep_index": 3244,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "20517",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 435
+    },
+    {
+      "account": "713879740",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:405372a89bae7fa19ff0",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 2,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/3460",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/16299",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:6a0f35dc209cb4b9fde3"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "ESE_HEALTH",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+          "sigep_code": "3627",
+          "sigep_index": 3460,
+          "territory": "44090"
+        }
+      ],
+      "own_directory_indices": [
+        16299
+      ],
+      "physical_source_name": "ESE HOSPITAL SANTA TERESA DE JESUS DE AVILA",
+      "profile_id": "physical:6a0f35dc209cb4b9fde3",
+      "rules_matched": [
+        "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER"
+      ],
+      "selected_rule": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "selected_sigep_code": "3627",
+      "selected_sigep_index": 3460,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "44090",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 717
+    },
+    {
+      "account": "717912059",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:fc7c88f5e8ae793c1f36",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 2,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/3188",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/20316",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:70f89b0df1c287bb8db4"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "ESE_HEALTH",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+          "sigep_code": "3340",
+          "sigep_index": 3188,
+          "territory": "18001"
+        }
+      ],
+      "own_directory_indices": [
+        20316
+      ],
+      "physical_source_name": "ESE HOSPITAL MALVINAS HECTOR OROZCO OROZCO",
+      "profile_id": "physical:70f89b0df1c287bb8db4",
+      "rules_matched": [
+        "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER"
+      ],
+      "selected_rule": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "selected_sigep_code": "3340",
+      "selected_sigep_index": 3188,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "18001",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 758
+    },
+    {
+      "account": "718104466",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:4c934db9e1fdf77bba14",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 0,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/3733",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/7422",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:0d1d388760984834904f"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "PUBLIC_COMPANY",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+          "sigep_code": "3924",
+          "sigep_index": 3733,
+          "territory": "18029"
+        }
+      ],
+      "own_directory_indices": [
+        7422
+      ],
+      "physical_source_name": "EMPRESA DE SERVICIOS PUBLICOS DOMICILIARIOS DE ALBANIA S.A E.S.P.",
+      "profile_id": "physical:0d1d388760984834904f",
+      "rules_matched": [
+        "M2B1_R3_ESP_LEGAL_DESIGNATOR"
+      ],
+      "selected_rule": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+      "selected_sigep_code": "3924",
+      "selected_sigep_index": 3733,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "18029",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 11
+    },
+    {
+      "account": "718361298",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:3b1d0bed3055fec8a90a",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 0,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/3797",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/13632",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:6ec3b42fb832f6e3e66f"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "PUBLIC_COMPANY",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+          "sigep_code": "3997",
+          "sigep_index": 3797,
+          "territory": "20013"
+        }
+      ],
+      "own_directory_indices": [
+        13632
+      ],
+      "physical_source_name": "EMPRESA DE SERVICIOS PUBLICOS DE AGUSTIN CODAZZI E.S.P",
+      "profile_id": "physical:6ec3b42fb832f6e3e66f",
+      "rules_matched": [
+        "M2B1_R3_ESP_LEGAL_DESIGNATOR"
+      ],
+      "selected_rule": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+      "selected_sigep_code": "3997",
+      "selected_sigep_index": 3797,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "20013",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 94
+    },
+    {
+      "account": "718398043",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "logical:6b9348c804e4281b72b3",
+      "canonical_claims": [
+        "HOSPITAL MUNICIPAL DE ACACIAS E.S.E."
+      ],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 10,
+      "contradictions": [],
+      "creates_new_logical_unit": false,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/3338",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/3047",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:7fa3c1ac892402dd01e8"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "ESE_HEALTH",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R0_EXISTING_CANONICAL_ADR076",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R0_EXISTING_CANONICAL_ADR076",
+          "sigep_code": "3500",
+          "sigep_index": 3338,
+          "territory": "50006"
+        }
+      ],
+      "own_directory_indices": [
+        3047
+      ],
+      "physical_source_name": "HOSPITAL MUNICIPAL DE ACACIAS E.S.E.",
+      "profile_id": "physical:7fa3c1ac892402dd01e8",
+      "rules_matched": [
+        "M2B1_R0_EXISTING_CANONICAL_ADR076"
+      ],
+      "selected_rule": "M2B1_R0_EXISTING_CANONICAL_ADR076",
+      "selected_sigep_code": "3500",
+      "selected_sigep_index": 3338,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": "HOSPITAL MUNICIPAL DE ACACIAS E.S.E.",
+      "territory_divipola": "50006",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 855
+    },
+    {
+      "account": "718399165",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:a1592edf5d436bb2e3f2",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 0,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/3877",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/17476",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:aad325afb95a83fcde63"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "PUBLIC_COMPANY",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+          "sigep_code": "4081",
+          "sigep_index": 3877,
+          "territory": "05002"
+        }
+      ],
+      "own_directory_indices": [
+        17476
+      ],
+      "physical_source_name": "EMPRESAS PUBLICAS DE ABEJORRAL E.S.P",
+      "profile_id": "physical:aad325afb95a83fcde63",
+      "rules_matched": [
+        "M2B1_R3_ESP_LEGAL_DESIGNATOR"
+      ],
+      "selected_rule": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+      "selected_sigep_code": "4081",
+      "selected_sigep_index": 3877,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "05002",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 46
+    },
+    {
+      "account": "718412471",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:59c8bae3085219e153af",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 0,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/3888",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/12743",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:b92f7970af356b639f34"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "PUBLIC_COMPANY",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+          "sigep_code": "4092",
+          "sigep_index": 3888,
+          "territory": "85162"
+        }
+      ],
+      "own_directory_indices": [
+        12743
+      ],
+      "physical_source_name": "EMPRESAS PUBLICAS DE MONTERREY S.A E.S.P",
+      "profile_id": "physical:b92f7970af356b639f34",
+      "rules_matched": [
+        "M2B1_R3_ESP_LEGAL_DESIGNATOR"
+      ],
+      "selected_rule": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+      "selected_sigep_code": "4092",
+      "selected_sigep_index": 3888,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "85162",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 34
+    },
+    {
+      "account": "718725476",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:1beb2236834e8cf39e00",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 46,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/3627",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/25156",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:a15f5606001d5f0ed65d"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "PUBLIC_COMPANY",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+          "sigep_code": "3812",
+          "sigep_index": 3627,
+          "territory": "05576"
+        }
+      ],
+      "own_directory_indices": [
+        25156
+      ],
+      "physical_source_name": "EMPRESA PUEBLORRIQUEÑA DE ACUEDUCTO, ALCANTARILLADO Y ASEO S.A E.S.P",
+      "profile_id": "physical:a15f5606001d5f0ed65d",
+      "rules_matched": [
+        "M2B1_R3_ESP_LEGAL_DESIGNATOR"
+      ],
+      "selected_rule": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+      "selected_sigep_code": "3812",
+      "selected_sigep_index": 3627,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "05576",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 46
+    },
+    {
+      "account": "718745334",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:e5a5dcd3ad0219671892",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 0,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/6171",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/12387",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:94dda648cb38012b2615"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "PUBLIC_COMPANY",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+          "sigep_code": "8352",
+          "sigep_index": 6171,
+          "territory": "25797"
+        }
+      ],
+      "own_directory_indices": [
+        12387
+      ],
+      "physical_source_name": "EMPRESA DE SERVICIOS PUBLICOS DE TENA S.A. - E.S.P.",
+      "profile_id": "physical:94dda648cb38012b2615",
+      "rules_matched": [
+        "M2B1_R3_ESP_LEGAL_DESIGNATOR"
+      ],
+      "selected_rule": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+      "selected_sigep_code": "8352",
+      "selected_sigep_index": 6171,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "25797",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 39
+    },
+    {
+      "account": "718816606",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:ab07b90af4786427b5ad",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 63,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/5833",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/4308",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:a79ec1588996c05e9e92"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "OTHER_DECENTRALIZED",
+      "family_basis": "SIGEP_ENTITY_MATCH_PUBLIC_ESTABLISHMENT_AND_OFFICIAL_NAME",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+          "sigep_code": "6215",
+          "sigep_index": 5833,
+          "territory": "68169"
+        }
+      ],
+      "own_directory_indices": [
+        4308
+      ],
+      "physical_source_name": "ESE UCATA CHARTA",
+      "profile_id": "physical:a79ec1588996c05e9e92",
+      "rules_matched": [
+        "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER"
+      ],
+      "selected_rule": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "selected_sigep_code": "6215",
+      "selected_sigep_index": 5833,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "68169",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 75
+    },
+    {
+      "account": "719506438",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:be1c2d342e234c72af18",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 0,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/3829",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/25262",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:3b759c492f8a7ab04063"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "PUBLIC_COMPANY",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+          "sigep_code": "4032",
+          "sigep_index": 3829,
+          "territory": "41026"
+        }
+      ],
+      "own_directory_indices": [
+        25262
+      ],
+      "physical_source_name": "EMPRESA DE SERVICIOS PUBLICOS DOMICILIARIOS DE ALTAMIRA S.A. E.S.P**",
+      "profile_id": "physical:3b759c492f8a7ab04063",
+      "rules_matched": [
+        "M2B1_R3_ESP_LEGAL_DESIGNATOR"
+      ],
+      "selected_rule": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+      "selected_sigep_code": "4032",
+      "selected_sigep_index": 3829,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "41026",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 66
+    },
+    {
+      "account": "719540296",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:0ccbd488f0f5375e9216",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 0,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/3871",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/19858",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:7bb4b8ce45c962f6208e"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "PUBLIC_COMPANY",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+          "sigep_code": "4075",
+          "sigep_index": 3871,
+          "territory": "15806"
+        }
+      ],
+      "own_directory_indices": [
+        19858
+      ],
+      "physical_source_name": "EMPRESAS MUNICIPALES DE TIBASOSA E.S.P",
+      "profile_id": "physical:7bb4b8ce45c962f6208e",
+      "rules_matched": [
+        "M2B1_R3_ESP_LEGAL_DESIGNATOR"
+      ],
+      "selected_rule": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+      "selected_sigep_code": "4075",
+      "selected_sigep_index": 3871,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "15806",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 26
+    },
+    {
+      "account": "724844592",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:4bf5793dfadd8c7e0938",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 1,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/3474",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/19607",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:8db425834d4f876d0dba"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "ESE_HEALTH",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+          "sigep_code": "3643",
+          "sigep_index": 3474,
+          "territory": "08549"
+        }
+      ],
+      "own_directory_indices": [
+        19607
+      ],
+      "physical_source_name": "ESE HOSPITAL VERA JUDITH IMITOLA VILLANUEVA DE PIOJO",
+      "profile_id": "physical:8db425834d4f876d0dba",
+      "rules_matched": [
+        "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER"
+      ],
+      "selected_rule": "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+      "selected_sigep_code": "3643",
+      "selected_sigep_index": 3474,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "08549",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 151
+    },
+    {
+      "account": "724950977",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:ee3d3b8a08addb983f44",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 0,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/6228",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/11318",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:1ccc7bc7f6268891c50b"
+      ],
+      "explained_fiscal_peers": [
+        {
+          "explanation": "DISTINCT_INSTITUTIONAL_FAMILY",
+          "reference": 24267,
+          "type": "DIRECTORY"
+        }
+      ],
+      "family": "PUBLIC_COMPANY",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+          "sigep_code": "8412",
+          "sigep_index": 6228,
+          "territory": "05686"
+        }
+      ],
+      "own_directory_indices": [
+        11318
+      ],
+      "physical_source_name": "EMPRESA DE SERVICIOS PUBLICOS POR SANTA ROSA SOSTENIBLE S.A.S E.S.P",
+      "profile_id": "physical:1ccc7bc7f6268891c50b",
+      "rules_matched": [
+        "M2B1_R3_ESP_LEGAL_DESIGNATOR"
+      ],
+      "selected_rule": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+      "selected_sigep_code": "8412",
+      "selected_sigep_index": 6228,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "05686",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 19
+    },
+    {
+      "account": "725470983",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:e0aa39933425b20ce486",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 0,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/3735",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/17847",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:52aac3d19fb4c90a37b3"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "PUBLIC_COMPANY",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+          "sigep_code": "3926",
+          "sigep_index": 3735,
+          "territory": "18410"
+        }
+      ],
+      "own_directory_indices": [
+        17847
+      ],
+      "physical_source_name": "EMPRESA DE SERVICIOS PUBLICOS DOMICILIARIOS DE LA MONTAÑITA S.A. E.S.P",
+      "profile_id": "physical:52aac3d19fb4c90a37b3",
+      "rules_matched": [
+        "M2B1_R3_ESP_LEGAL_DESIGNATOR"
+      ],
+      "selected_rule": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+      "selected_sigep_code": "3926",
+      "selected_sigep_index": 3735,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "18410",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 15
+    },
+    {
+      "account": "732401526",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:22a895b573b034a17f88",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 0,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/3894",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/22250",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:59267bbfb206391636a0"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "PUBLIC_COMPANY",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+          "sigep_code": "4098",
+          "sigep_index": 3894,
+          "territory": "41797"
+        }
+      ],
+      "own_directory_indices": [
+        22250
+      ],
+      "physical_source_name": "EMPRESAS PUBLICAS DE TESALIA S.A. E.S.P.",
+      "profile_id": "physical:59267bbfb206391636a0",
+      "rules_matched": [
+        "M2B1_R3_ESP_LEGAL_DESIGNATOR"
+      ],
+      "selected_rule": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+      "selected_sigep_code": "4098",
+      "selected_sigep_index": 3894,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "41797",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 16
+    },
+    {
+      "account": "733007579",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "m2b1-logical:8d8c175d7cf609f9c36d",
+      "canonical_claims": [],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 0,
+      "contradictions": [],
+      "creates_new_logical_unit": true,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/3652",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/8739",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:19e2cae4453a524688b5"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "PUBLIC_COMPANY",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+          "sigep_code": "3838",
+          "sigep_index": 3652,
+          "territory": "23807"
+        }
+      ],
+      "own_directory_indices": [
+        8739
+      ],
+      "physical_source_name": "EMPRESAS PUBLICAS MUNICIPALES DE TIERRALTA E.S.P.",
+      "profile_id": "physical:19e2cae4453a524688b5",
+      "rules_matched": [
+        "M2B1_R3_ESP_LEGAL_DESIGNATOR"
+      ],
+      "selected_rule": "M2B1_R3_ESP_LEGAL_DESIGNATOR",
+      "selected_sigep_code": "3838",
+      "selected_sigep_index": 3652,
+      "source_class": "F",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": null,
+      "territory_divipola": "23807",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 113
+    },
+    {
+      "account": "703985846",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "logical:7f4609ed09ea3b956f56",
+      "canonical_claims": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN VICENTE DE PAUL REMEDIOS"
+      ],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 0,
+      "contradictions": [],
+      "creates_new_logical_unit": false,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/3143",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/12881",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:6da535298775377cba55"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "ESE_HEALTH",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R0_EXISTING_CANONICAL_ADR076",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R0_EXISTING_CANONICAL_ADR076",
+          "sigep_code": "3291",
+          "sigep_index": 3143,
+          "territory": "05604"
+        }
+      ],
+      "own_directory_indices": [
+        12881
+      ],
+      "physical_source_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN VICENTE DE PAUL REMEDIOS",
+      "profile_id": "physical:6da535298775377cba55",
+      "rules_matched": [
+        "M2B1_R0_EXISTING_CANONICAL_ADR076"
+      ],
+      "selected_rule": "M2B1_R0_EXISTING_CANONICAL_ADR076",
+      "selected_sigep_code": "3291",
+      "selected_sigep_index": 3143,
+      "source_class": "C",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN VICENTE DE PAUL REMEDIOS",
+      "territory_divipola": "05604",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 1249
+    },
+    {
+      "account": "704662824",
+      "account_other_name_indices": [],
+      "candidate_logical_unit_id": "logical:d202cb7e247cc064aeba",
+      "canonical_claims": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL ROSARIO PUMAREJO DE LOPEZ"
+      ],
+      "competing_directory_indices": [],
+      "competing_profile_ids": [],
+      "contract_rows": 0,
+      "contradictions": [],
+      "creates_new_logical_unit": false,
+      "evidence_sources": [
+        "artifacts/audits/municipal_m0_v1/sources/sigep.json.gz#/3388",
+        "artifacts/audits/municipal_m0_v1/sources/directory.json.gz#/rows/15715",
+        "artifacts/audits/municipal_m2b/pending_identity_profiles.json#profile_id=physical:8821500de006a4af8450"
+      ],
+      "explained_fiscal_peers": [],
+      "family": "ESE_HEALTH",
+      "family_basis": "SIGEP_ENTITY_MATCH_LEGAL_NATURE",
+      "family_compatible": true,
+      "family_status": "VERIFIED",
+      "identity_authority": "M2B1_R0_EXISTING_CANONICAL_ADR076",
+      "merge_applied": false,
+      "official_matches": [
+        {
+          "rule_id": "M2B1_R0_EXISTING_CANONICAL_ADR076",
+          "sigep_code": "3553",
+          "sigep_index": 3388,
+          "territory": "20001"
+        }
+      ],
+      "own_directory_indices": [
+        15715
+      ],
+      "physical_source_name": "EMPRESA SOCIAL DEL ESTADO HOSPITAL ROSARIO PUMAREJO DE LOPEZ",
+      "profile_id": "physical:8821500de006a4af8450",
+      "rules_matched": [
+        "M2B1_R0_EXISTING_CANONICAL_ADR076"
+      ],
+      "selected_rule": "M2B1_R0_EXISTING_CANONICAL_ADR076",
+      "selected_sigep_code": "3553",
+      "selected_sigep_index": 3388,
+      "source_class": "C",
+      "status": "ADJUDICATED_DELTA",
+      "target_existing_canonical": "EMPRESA SOCIAL DEL ESTADO HOSPITAL ROSARIO PUMAREJO DE LOPEZ",
+      "territory_divipola": "20001",
+      "unexplained_fiscal_directory_indices": [],
+      "unexplained_fiscal_profile_ids": [],
+      "unique_processes": 1850
+    }
+  ],
+  "m2b_reference": "artifacts/audits/municipal_m2b/adjudicated_candidates.json",
+  "production_apply": false
+}

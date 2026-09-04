@@ -1,0 +1,70 @@
+{
+  "ADR_REQUIRED": "YES",
+  "EXISTING_CANONICAL_PROFILES_LINKED": 7,
+  "FUZZY": 0,
+  "INPUT": {
+    "C": {
+      "contract_rows": 565,
+      "profiles": 29,
+      "unique_processes": 15945
+    },
+    "F": {
+      "contract_rows": 28436,
+      "profiles": 444,
+      "unique_processes": 168407
+    },
+    "H": {
+      "contract_rows": 2412,
+      "profiles": 59,
+      "unique_processes": 2646
+    },
+    "I": {
+      "contract_rows": 1852,
+      "profiles": 20,
+      "unique_processes": 16935
+    }
+  },
+  "LIVE_CALLS": 0,
+  "LLM_CALLS": 0,
+  "M2B_ACCEPTED_CANDIDATES": 55,
+  "M2B_IDENTITY_DIMINISHING_RETURNS": "NO",
+  "MULTI_TERRITORY": 0,
+  "MUNICIPAL_M2B_1": "PARTIAL",
+  "NEW_LOGICAL_UNITS": 43,
+  "NEXT": "M2B_2_ONLY_IF_JUSTIFIED",
+  "NIT_AUTO_MERGE": 0,
+  "PROFILES_RESOLVED": 50,
+  "PUSH": "NO",
+  "TARGETED_DELTA_PROFILES": 497,
+  "WRONG_IDENTITY": 0,
+  "accepted_new_rules": [
+    "M2B1_R1_OFFICIAL_LOCATION_QUALIFIER",
+    "M2B1_R2_TRAILING_CARE_LEVEL",
+    "M2B1_R3_ESP_LEGAL_DESIGNATOR"
+  ],
+  "audit_integrity": "PASS",
+  "checks": {
+    "ALL_H_CONFLICTS_VISIBLE": "PASS",
+    "BOGOTA_UNCHANGED": "PASS",
+    "CONTRACT_VOLUME_CONSERVED": "PASS",
+    "DELTA_PLUS_REMAINING": "PASS",
+    "DELTA_UNIQUE": "PASS",
+    "DIRECTORY_ONLY_GRANTS_NONE": "PASS",
+    "EVERY_ACCEPTED_CHAIN_COMPLETE": "PASS",
+    "FROZEN_INPUT_COUNTS": "PASS",
+    "M2B_ACCEPTED_PRESERVED": "PASS",
+    "NO_FROZEN_EVIDENCE_MUTATION": "PASS",
+    "NO_FUZZY": "PASS",
+    "NO_MULTI_ACCOUNT_MERGE": "PASS",
+    "NO_NIT_AUTO_MERGE": "PASS",
+    "NO_RUNTIME_MUTATION": "PASS",
+    "OPAQUE_ACRONYM_RULE_FAILS_CLOSED": "PASS",
+    "PROCESS_VOLUME_CONSERVED": "PASS",
+    "TARGET_DELTA_UNIVERSE": "PASS",
+    "TOP_VOLUMES_RECONCILE": "PASS"
+  },
+  "failed": [],
+  "invalid_candidates": [],
+  "operational_zero_note": "WRONG_IDENTITY=0 means no accepted candidate violates an executable canary; it is not a population precision estimate.",
+  "production_apply": false
+}

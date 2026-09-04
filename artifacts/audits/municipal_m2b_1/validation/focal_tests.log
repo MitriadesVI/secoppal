@@ -1,0 +1,4 @@
+$ /Users/rodrigoortiz/Documents/secoppal/.venv/bin/python3 -m pytest tests/test_municipal_m2b1.py tests/test_municipal_m2b.py tests/test_municipal_m2a.py -q
+........................................................................ [ 80%]
+.................                                                        [100%]
+89 passed in 8.05s

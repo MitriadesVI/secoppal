@@ -1,0 +1,2 @@
+$ /Users/rodrigoortiz/Documents/secoppal/.venv/bin/ruff check app/ tests/ scripts/
+All checks passed!

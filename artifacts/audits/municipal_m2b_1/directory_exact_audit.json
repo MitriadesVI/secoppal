@@ -1,0 +1,635 @@
+{
+  "categories": {
+    "DIRECTORY_PLUS_OWN_SIGEP_ENTITY": 29
+  },
+  "directory_only_identity_grants": 0,
+  "dispositions": {
+    "KEEP_REVIEW": 10,
+    "M2B1_DELTA_EXISTING_CANONICAL": 2,
+    "M2B_ACCEPTED_BASELINE": 17
+  },
+  "input": {
+    "contract_rows": 565,
+    "families": [
+      "ESE_HEALTH"
+    ],
+    "profile_ids": [
+      "physical:08178a234a12a29c1888",
+      "physical:1386c65cd6183efb45ed",
+      "physical:186d094fae159b2d0bf3",
+      "physical:196404800437163a340e",
+      "physical:393348dfcc3316c5fc14",
+      "physical:3a3d06adbf60bf86996b",
+      "physical:4550071abf19bd52b6b6",
+      "physical:547bbbcb5052abe57bed",
+      "physical:5eefc3f1b0ab4bb3cd65",
+      "physical:629021dd67c10e3bf421",
+      "physical:6d163907688c7c222adc",
+      "physical:6da535298775377cba55",
+      "physical:77d0ab811a6666bb25c9",
+      "physical:80a256e598f461e9583c",
+      "physical:8701ad8c36806a3ec98c",
+      "physical:8821500de006a4af8450",
+      "physical:8a20a5d63c434762e1f3",
+      "physical:9b41dc7d66660e235fe7",
+      "physical:ab9dd20ab7c501b5979e",
+      "physical:b4265858d396c9f5cd58",
+      "physical:b735023e142981b4af4a",
+      "physical:c11c687605a47b8fd534",
+      "physical:c15f12298f623ea9926b",
+      "physical:d310ac256a23a971fbef",
+      "physical:d3af2fa04864d0fb4bb1",
+      "physical:db57f4d520a06be567ee",
+      "physical:f1f8044aef7d98e2ba43",
+      "physical:fc19f8b31451f4a3e5db",
+      "physical:fd95663646a4f8086c64"
+    ],
+    "profiles": 29,
+    "territories": [
+      "05040",
+      "05604",
+      "08558",
+      "15135",
+      "15162",
+      "15189",
+      "15362",
+      "15380",
+      "15407",
+      "15537",
+      "15550",
+      "15580",
+      "15660",
+      "15822",
+      "18094",
+      "20001",
+      "23001",
+      "25878",
+      "41016",
+      "44650",
+      "50150",
+      "50223",
+      "52083",
+      "52227",
+      "54518",
+      "76001",
+      "76563",
+      "85410"
+    ],
+    "unique_processes": 15945
+  },
+  "official_register": {
+    "interpretation": "No live or additional official register was introduced; absence is not negative evidence.",
+    "profiles": 0,
+    "status": "NOT_AVAILABLE_IN_FROZEN_INPUTS"
+  },
+  "profiles": [
+    {
+      "canonical_claims": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN JUAN DE DIOS DE PAMPLONA"
+      ],
+      "category": "DIRECTORY_PLUS_OWN_SIGEP_ENTITY",
+      "contradictions": [
+        "COMPETING_DIRECTORY_ACCOUNT"
+      ],
+      "directory_indices": [
+        17913
+      ],
+      "disposition": "KEEP_REVIEW",
+      "profile_id": "physical:d3af2fa04864d0fb4bb1",
+      "sigep_matches": [
+        {
+          "method": "OWN_SIGEP_ESE_LEGAL_LABEL_EXACT_CORE",
+          "sigep_code": "3589",
+          "sigep_index": 3424,
+          "territory": "54518"
+        }
+      ]
+    },
+    {
+      "canonical_claims": [],
+      "category": "DIRECTORY_PLUS_OWN_SIGEP_ENTITY",
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "directory_indices": [
+        21731
+      ],
+      "disposition": "KEEP_REVIEW",
+      "profile_id": "physical:ab9dd20ab7c501b5979e",
+      "sigep_matches": [
+        {
+          "method": "OWN_SIGEP_ESE_LEGAL_LABEL_EXACT_CORE",
+          "sigep_code": "2923",
+          "sigep_index": 2789,
+          "territory": "15135"
+        }
+      ]
+    },
+    {
+      "canonical_claims": [],
+      "category": "DIRECTORY_PLUS_OWN_SIGEP_ENTITY",
+      "contradictions": [],
+      "directory_indices": [
+        22016
+      ],
+      "disposition": "M2B_ACCEPTED_BASELINE",
+      "profile_id": "physical:3a3d06adbf60bf86996b",
+      "sigep_matches": [
+        {
+          "method": "OWN_SIGEP_ESE_LEGAL_LABEL_EXACT_CORE",
+          "sigep_code": "2882",
+          "sigep_index": 2748,
+          "territory": "08558"
+        }
+      ]
+    },
+    {
+      "canonical_claims": [],
+      "category": "DIRECTORY_PLUS_OWN_SIGEP_ENTITY",
+      "contradictions": [],
+      "directory_indices": [
+        14514
+      ],
+      "disposition": "M2B_ACCEPTED_BASELINE",
+      "profile_id": "physical:80a256e598f461e9583c",
+      "sigep_matches": [
+        {
+          "method": "OWN_SIGEP_ESE_LEGAL_LABEL_EXACT_CORE",
+          "sigep_code": "3572",
+          "sigep_index": 3407,
+          "territory": "15407"
+        }
+      ]
+    },
+    {
+      "canonical_claims": [],
+      "category": "DIRECTORY_PLUS_OWN_SIGEP_ENTITY",
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "directory_indices": [
+        14647
+      ],
+      "disposition": "KEEP_REVIEW",
+      "profile_id": "physical:186d094fae159b2d0bf3",
+      "sigep_matches": [
+        {
+          "method": "OWN_SIGEP_ESE_LEGAL_LABEL_EXACT_CORE",
+          "sigep_code": "2970",
+          "sigep_index": 2835,
+          "territory": "15660"
+        }
+      ]
+    },
+    {
+      "canonical_claims": [],
+      "category": "DIRECTORY_PLUS_OWN_SIGEP_ENTITY",
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "directory_indices": [
+        6421
+      ],
+      "disposition": "KEEP_REVIEW",
+      "profile_id": "physical:4550071abf19bd52b6b6",
+      "sigep_matches": [
+        {
+          "method": "OWN_SIGEP_ESE_LEGAL_LABEL_EXACT_CORE",
+          "sigep_code": "3346",
+          "sigep_index": 3193,
+          "territory": "50150"
+        }
+      ]
+    },
+    {
+      "canonical_claims": [],
+      "category": "DIRECTORY_PLUS_OWN_SIGEP_ENTITY",
+      "contradictions": [],
+      "directory_indices": [
+        9987
+      ],
+      "disposition": "M2B_ACCEPTED_BASELINE",
+      "profile_id": "physical:b735023e142981b4af4a",
+      "sigep_matches": [
+        {
+          "method": "OWN_SIGEP_ESE_LEGAL_LABEL_EXACT_CORE",
+          "sigep_code": "3443",
+          "sigep_index": 3281,
+          "territory": "50223"
+        }
+      ]
+    },
+    {
+      "canonical_claims": [],
+      "category": "DIRECTORY_PLUS_OWN_SIGEP_ENTITY",
+      "contradictions": [],
+      "directory_indices": [
+        26399
+      ],
+      "disposition": "M2B_ACCEPTED_BASELINE",
+      "profile_id": "physical:393348dfcc3316c5fc14",
+      "sigep_matches": [
+        {
+          "method": "OWN_SIGEP_ESE_LEGAL_LABEL_EXACT_CORE",
+          "sigep_code": "3180",
+          "sigep_index": 3036,
+          "territory": "41016"
+        }
+      ]
+    },
+    {
+      "canonical_claims": [],
+      "category": "DIRECTORY_PLUS_OWN_SIGEP_ENTITY",
+      "contradictions": [],
+      "directory_indices": [
+        1290
+      ],
+      "disposition": "M2B_ACCEPTED_BASELINE",
+      "profile_id": "physical:fc19f8b31451f4a3e5db",
+      "sigep_matches": [
+        {
+          "method": "OWN_SIGEP_ESE_LEGAL_LABEL_EXACT_CORE",
+          "sigep_code": "3216",
+          "sigep_index": 3069,
+          "territory": "05040"
+        }
+      ]
+    },
+    {
+      "canonical_claims": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL SAN VICENTE DE PAUL REMEDIOS"
+      ],
+      "category": "DIRECTORY_PLUS_OWN_SIGEP_ENTITY",
+      "contradictions": [],
+      "directory_indices": [
+        12881
+      ],
+      "disposition": "M2B1_DELTA_EXISTING_CANONICAL",
+      "profile_id": "physical:6da535298775377cba55",
+      "sigep_matches": [
+        {
+          "method": "OWN_SIGEP_ESE_LEGAL_LABEL_EXACT_CORE",
+          "sigep_code": "3291",
+          "sigep_index": 3143,
+          "territory": "05604"
+        }
+      ]
+    },
+    {
+      "canonical_claims": [],
+      "category": "DIRECTORY_PLUS_OWN_SIGEP_ENTITY",
+      "contradictions": [],
+      "directory_indices": [
+        5194
+      ],
+      "disposition": "M2B_ACCEPTED_BASELINE",
+      "profile_id": "physical:5eefc3f1b0ab4bb3cd65",
+      "sigep_matches": [
+        {
+          "method": "OWN_SIGEP_ESE_LEGAL_LABEL_EXACT_CORE",
+          "sigep_code": "4443",
+          "sigep_index": 4205,
+          "territory": "25878"
+        }
+      ]
+    },
+    {
+      "canonical_claims": [],
+      "category": "DIRECTORY_PLUS_OWN_SIGEP_ENTITY",
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "directory_indices": [
+        26251
+      ],
+      "disposition": "KEEP_REVIEW",
+      "profile_id": "physical:fd95663646a4f8086c64",
+      "sigep_matches": [
+        {
+          "method": "OWN_SIGEP_ESE_LEGAL_LABEL_EXACT_CORE",
+          "sigep_code": "2831",
+          "sigep_index": 2699,
+          "territory": "85410"
+        }
+      ]
+    },
+    {
+      "canonical_claims": [],
+      "category": "DIRECTORY_PLUS_OWN_SIGEP_ENTITY",
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "directory_indices": [
+        17686
+      ],
+      "disposition": "KEEP_REVIEW",
+      "profile_id": "physical:08178a234a12a29c1888",
+      "sigep_matches": [
+        {
+          "method": "OWN_SIGEP_ESE_LEGAL_LABEL_EXACT_CORE",
+          "sigep_code": "3685",
+          "sigep_index": 3511,
+          "territory": "76001"
+        }
+      ]
+    },
+    {
+      "canonical_claims": [],
+      "category": "DIRECTORY_PLUS_OWN_SIGEP_ENTITY",
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "directory_indices": [
+        26303
+      ],
+      "disposition": "KEEP_REVIEW",
+      "profile_id": "physical:196404800437163a340e",
+      "sigep_matches": [
+        {
+          "method": "OWN_SIGEP_ESE_LEGAL_LABEL_EXACT_CORE",
+          "sigep_code": "3271",
+          "sigep_index": 3123,
+          "territory": "76563"
+        }
+      ]
+    },
+    {
+      "canonical_claims": [],
+      "category": "DIRECTORY_PLUS_OWN_SIGEP_ENTITY",
+      "contradictions": [],
+      "directory_indices": [
+        21378
+      ],
+      "disposition": "M2B_ACCEPTED_BASELINE",
+      "profile_id": "physical:77d0ab811a6666bb25c9",
+      "sigep_matches": [
+        {
+          "method": "OWN_SIGEP_ESE_LEGAL_LABEL_EXACT_CORE",
+          "sigep_code": "3683",
+          "sigep_index": 3509,
+          "territory": "76001"
+        }
+      ]
+    },
+    {
+      "canonical_claims": [],
+      "category": "DIRECTORY_PLUS_OWN_SIGEP_ENTITY",
+      "contradictions": [],
+      "directory_indices": [
+        15264
+      ],
+      "disposition": "M2B_ACCEPTED_BASELINE",
+      "profile_id": "physical:1386c65cd6183efb45ed",
+      "sigep_matches": [
+        {
+          "method": "OWN_SIGEP_ESE_LEGAL_LABEL_EXACT_CORE",
+          "sigep_code": "3605",
+          "sigep_index": 3439,
+          "territory": "44650"
+        }
+      ]
+    },
+    {
+      "canonical_claims": [
+        "EMPRESA SOCIAL DEL ESTADO HOSPITAL ROSARIO PUMAREJO DE LOPEZ"
+      ],
+      "category": "DIRECTORY_PLUS_OWN_SIGEP_ENTITY",
+      "contradictions": [],
+      "directory_indices": [
+        15715
+      ],
+      "disposition": "M2B1_DELTA_EXISTING_CANONICAL",
+      "profile_id": "physical:8821500de006a4af8450",
+      "sigep_matches": [
+        {
+          "method": "OWN_SIGEP_ESE_LEGAL_LABEL_EXACT_CORE",
+          "sigep_code": "3553",
+          "sigep_index": 3388,
+          "territory": "20001"
+        }
+      ]
+    },
+    {
+      "canonical_claims": [],
+      "category": "DIRECTORY_PLUS_OWN_SIGEP_ENTITY",
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "directory_indices": [
+        8613
+      ],
+      "disposition": "KEEP_REVIEW",
+      "profile_id": "physical:629021dd67c10e3bf421",
+      "sigep_matches": [
+        {
+          "method": "OWN_SIGEP_ESE_LEGAL_LABEL_EXACT_CORE",
+          "sigep_code": "3665",
+          "sigep_index": 3493,
+          "territory": "15550"
+        }
+      ]
+    },
+    {
+      "canonical_claims": [],
+      "category": "DIRECTORY_PLUS_OWN_SIGEP_ENTITY",
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "directory_indices": [
+        8833
+      ],
+      "disposition": "KEEP_REVIEW",
+      "profile_id": "physical:b4265858d396c9f5cd58",
+      "sigep_matches": [
+        {
+          "method": "OWN_SIGEP_ESE_LEGAL_LABEL_EXACT_CORE",
+          "sigep_code": "3694",
+          "sigep_index": 3518,
+          "territory": "15537"
+        }
+      ]
+    },
+    {
+      "canonical_claims": [],
+      "category": "DIRECTORY_PLUS_OWN_SIGEP_ENTITY",
+      "contradictions": [],
+      "directory_indices": [
+        23250
+      ],
+      "disposition": "M2B_ACCEPTED_BASELINE",
+      "profile_id": "physical:d310ac256a23a971fbef",
+      "sigep_matches": [
+        {
+          "method": "OWN_SIGEP_ESE_LEGAL_LABEL_EXACT_CORE",
+          "sigep_code": "2770",
+          "sigep_index": 2641,
+          "territory": "23001"
+        }
+      ]
+    },
+    {
+      "canonical_claims": [],
+      "category": "DIRECTORY_PLUS_OWN_SIGEP_ENTITY",
+      "contradictions": [],
+      "directory_indices": [
+        24276
+      ],
+      "disposition": "M2B_ACCEPTED_BASELINE",
+      "profile_id": "physical:547bbbcb5052abe57bed",
+      "sigep_matches": [
+        {
+          "method": "OWN_SIGEP_ESE_LEGAL_LABEL_EXACT_CORE",
+          "sigep_code": "2906",
+          "sigep_index": 2772,
+          "territory": "15162"
+        }
+      ]
+    },
+    {
+      "canonical_claims": [],
+      "category": "DIRECTORY_PLUS_OWN_SIGEP_ENTITY",
+      "contradictions": [
+        "NO_RULE_MATCH"
+      ],
+      "directory_indices": [
+        18218
+      ],
+      "disposition": "KEEP_REVIEW",
+      "profile_id": "physical:db57f4d520a06be567ee",
+      "sigep_matches": [
+        {
+          "method": "OWN_SIGEP_ESE_LEGAL_LABEL_EXACT_CORE",
+          "sigep_code": "2989",
+          "sigep_index": 2854,
+          "territory": "15580"
+        }
+      ]
+    },
+    {
+      "canonical_claims": [],
+      "category": "DIRECTORY_PLUS_OWN_SIGEP_ENTITY",
+      "contradictions": [],
+      "directory_indices": [
+        14524
+      ],
+      "disposition": "M2B_ACCEPTED_BASELINE",
+      "profile_id": "physical:c15f12298f623ea9926b",
+      "sigep_matches": [
+        {
+          "method": "OWN_SIGEP_ESE_LEGAL_LABEL_EXACT_CORE",
+          "sigep_code": "3674",
+          "sigep_index": 3501,
+          "territory": "15189"
+        }
+      ]
+    },
+    {
+      "canonical_claims": [],
+      "category": "DIRECTORY_PLUS_OWN_SIGEP_ENTITY",
+      "contradictions": [],
+      "directory_indices": [
+        24313
+      ],
+      "disposition": "M2B_ACCEPTED_BASELINE",
+      "profile_id": "physical:6d163907688c7c222adc",
+      "sigep_matches": [
+        {
+          "method": "OWN_SIGEP_ESE_LEGAL_LABEL_EXACT_CORE",
+          "sigep_code": "2916",
+          "sigep_index": 2782,
+          "territory": "15362"
+        }
+      ]
+    },
+    {
+      "canonical_claims": [],
+      "category": "DIRECTORY_PLUS_OWN_SIGEP_ENTITY",
+      "contradictions": [],
+      "directory_indices": [
+        21046
+      ],
+      "disposition": "M2B_ACCEPTED_BASELINE",
+      "profile_id": "physical:c11c687605a47b8fd534",
+      "sigep_matches": [
+        {
+          "method": "OWN_SIGEP_ESE_LEGAL_LABEL_EXACT_CORE",
+          "sigep_code": "3341",
+          "sigep_index": 3189,
+          "territory": "52227"
+        }
+      ]
+    },
+    {
+      "canonical_claims": [],
+      "category": "DIRECTORY_PLUS_OWN_SIGEP_ENTITY",
+      "contradictions": [],
+      "directory_indices": [
+        17729
+      ],
+      "disposition": "M2B_ACCEPTED_BASELINE",
+      "profile_id": "physical:8701ad8c36806a3ec98c",
+      "sigep_matches": [
+        {
+          "method": "OWN_SIGEP_ESE_LEGAL_LABEL_EXACT_CORE",
+          "sigep_code": "3679",
+          "sigep_index": 3506,
+          "territory": "18094"
+        }
+      ]
+    },
+    {
+      "canonical_claims": [],
+      "category": "DIRECTORY_PLUS_OWN_SIGEP_ENTITY",
+      "contradictions": [],
+      "directory_indices": [
+        20957
+      ],
+      "disposition": "M2B_ACCEPTED_BASELINE",
+      "profile_id": "physical:9b41dc7d66660e235fe7",
+      "sigep_matches": [
+        {
+          "method": "OWN_SIGEP_ESE_LEGAL_LABEL_EXACT_CORE",
+          "sigep_code": "1440",
+          "sigep_index": 1381,
+          "territory": "52083"
+        }
+      ]
+    },
+    {
+      "canonical_claims": [],
+      "category": "DIRECTORY_PLUS_OWN_SIGEP_ENTITY",
+      "contradictions": [],
+      "directory_indices": [
+        16892
+      ],
+      "disposition": "M2B_ACCEPTED_BASELINE",
+      "profile_id": "physical:f1f8044aef7d98e2ba43",
+      "sigep_matches": [
+        {
+          "method": "OWN_SIGEP_ESE_LEGAL_LABEL_EXACT_CORE",
+          "sigep_code": "2915",
+          "sigep_index": 2781,
+          "territory": "15380"
+        }
+      ]
+    },
+    {
+      "canonical_claims": [],
+      "category": "DIRECTORY_PLUS_OWN_SIGEP_ENTITY",
+      "contradictions": [],
+      "directory_indices": [
+        18860
+      ],
+      "disposition": "M2B_ACCEPTED_BASELINE",
+      "profile_id": "physical:8a20a5d63c434762e1f3",
+      "sigep_matches": [
+        {
+          "method": "OWN_SIGEP_ESE_LEGAL_LABEL_EXACT_CORE",
+          "sigep_code": "3039",
+          "sigep_index": 2903,
+          "territory": "15822"
+        }
+      ]
+    }
+  ]
+}

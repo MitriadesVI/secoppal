@@ -1,0 +1,2 @@
+$ /Users/rodrigoortiz/Documents/secoppal/.venv/bin/python3 /Users/rodrigoortiz/Documents/secoppal/scripts/audits/audit_municipal_m2b1.py --output /var/folders/md/4k9ytrcn3tnb63chr970lyb00000gn/T/municipal-m2b1-replay-qf7hmc90
+PARTIAL resolved= 50 new_units= 43 next= M2B_2_ONLY_IF_JUSTIFIED
