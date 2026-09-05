@@ -58,10 +58,9 @@ nuevas en archivos ya cargados.
 **Nunca declares que algo pasa porque leíste el código.** El orden es:
 
 ```bash
-source .venv/bin/activate
-ruff check app/ tests/ scripts/                        # debe decir "All checks passed!"
-semgrep --config .semgrep/secoppal-laws.yml app/ --metrics=off
-python -m pytest tests/<los de tu carril> -q           # SOLO los tuyos
+.venv/bin/ruff check app/ tests/ scripts/                        # debe decir "All checks passed!"
+.venv/bin/semgrep --config .semgrep/secoppal-laws.yml app/ --metrics=off
+.venv/bin/python -m pytest tests/<los de tu carril> -q           # SOLO los tuyos
 ```
 
 **No corras la suite completa.** Son ~11.161 tests y hacen red real contra
@@ -78,15 +77,43 @@ Dos advertencias que vienen de fallos reales aquí:
   estas palabras: *"corrí X, no la suite"*. El orquestador asume que no la
   corriste; lo que no puede asumir es qué sí.
 
-**Estado real de las puertas al 2026-09-04:** `ruff` verde. `semgrep` **rojo con
-10 hallazgos** de `except-exception-que-silencia` — el binario no estaba
-instalado, así que esta ley nunca había corrido. No la ignores y no la
-"arregles" fuera de tu lote: el conteo baja solo por lotes asignados.
+**Estado real de las puertas al 2026-09-05:** `ruff` verde. `semgrep` está
+instalado y su baseline global es **rojo con 10 hallazgos** de
+`except-exception-que-silencia`. No la ignores y no la "arregles" fuera de tu
+lote: el conteo baja solo por lotes asignados. Invoca el ejecutable como
+`.venv/bin/semgrep`; `python -m semgrep` no es la comprobación de disponibilidad.
 
 `ruff.toml` selecciona solo reglas donde `app/` ya está limpio, para que la
 puerta nazca verde. El backlog conocido (C901 81, BLE001 54, S608 22, S110 10)
 está listado ahí y se limpia **por lotes asignados**, nunca de golpe y nunca
 fuera de tu carril.
+
+### 2.1 Instrumentación obligatoria
+
+En cada tarea haz un preflight de disponibilidad de `ruff`, `semgrep`,
+`hypothesis` y `codegraph`. No declares una herramienta activa por la mera
+presencia de archivos: registra versión y, para Codegraph, `codegraph status`.
+
+- **Ruff:** toda entrega que cambie Python ejecuta
+  `.venv/bin/ruff check app/ tests/ scripts/` y conserva la salida literal.
+- **Semgrep:** toda entrega que cambie runtime, scripts o tests ejecuta
+  `.venv/bin/semgrep --config .semgrep/secoppal-laws.yml app/ --metrics=off`.
+  Mientras exista baseline rojo, la condición del carril es cero hallazgos
+  nuevos en archivos propios; el reporte separa baseline y delta.
+- **Codegraph:** es el primer instrumento para consumidores, callers/callees,
+  impacto y tests afectados. Sincroniza o comprueba el índice antes de confiar
+  en él. Si el MCP no está cargado, usa el CLI (`query`, `callers`, `callees`,
+  `impact`, `affected`); si tampoco está disponible, declara el fallback y usa
+  `rg` más verificación manual. Nunca lo omitas en silencio.
+- **Hypothesis:** al crear o modificar parsers, resolvers, normalizadores,
+  aritmética de rangos, máquinas de estado o cualquier lógica con invariantes y
+  espacio combinatorio, añade o amplía pruebas de propiedades. Las propiedades
+  deben ser deterministas, sin I/O externo y expresar una invariante real. Un
+  cambio sólo documental o mecánico no justifica una prueba ornamental.
+
+El reporte final dice qué instrumento se usó, con qué alcance y qué no se
+ejecutó. Disponibilidad no equivale a validación y un índice presente no
+equivale a un MCP cargado en la sesión.
 
 ---
 
@@ -120,9 +147,10 @@ tocar uno, **avisa antes de editar**: `docs/decisions_log.md`, `Makefile`,
 
 | La pregunta | El instrumento |
 |---|---|
-| "¿Dónde se usa X?" / "¿qué rompo?" | grafo AST (codegraph) si está; si no, `grep -rn` + verificación |
+| "¿Dónde se usa X?" / "¿qué rompo?" | Codegraph (`query` / `callers` / `impact` / `affected`); si no está disponible, declarar fallback a `rg` + verificación |
 | "¿Cuándo apareció esto?" | `git log -S` / `git blame` |
-| "¿Violé una ley del proyecto?" | `semgrep --config .semgrep/` |
+| "¿Violé una ley del proyecto?" | `.venv/bin/semgrep --config .semgrep/secoppal-laws.yml app/ --metrics=off` |
+| "¿La regla se mantiene para entradas no enumeradas?" | Hypothesis + ejemplos focales de regresión |
 | "¿Cómo funciona la API X?" | leer el código de la dependencia — `burr` y el SDK de `openai` se mueven rápido, no cites de memoria |
 
 ---
