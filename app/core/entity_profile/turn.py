@@ -1,0 +1,189 @@
+"""Small deterministic detector and safe parameter projection for profile turns."""
+from __future__ import annotations
+
+from dataclasses import dataclass
+import re
+import unicodedata
+
+from app.core.entity_profile.models import EntityProfileIdentity, EntityProfileScope
+from app.core.entity_profile.scope import resolve_profile_scope
+from app.core.municipal_territory import get_municipal_territories
+
+
+PROFILE_ACTIVE_PARAM = "_entity_profile_active"
+
+_OVERVIEW = re.compile(
+    r"\b(?:analiza(?:me)?|como\s+(?:ha\s+)?contrata(?:do)?|que\s+sabes\s+de|"
+    r"perfil\s+d(?:e|el)|radiografia\s+d(?:e|el))\b"
+)
+_FOCUS = (
+    ("suppliers", re.compile(r"\b(?:proveedores?|contratistas?)\b")),
+    ("modalities", re.compile(r"\bmodalidad(?:es)?\b")),
+    ("values", re.compile(r"\b(?:valores?|montos?|cuanto\s+(?:contrato|contratado))\b")),
+    ("recent", re.compile(r"\b(?:recientes?|ultimos?|actividad\s+reciente)\b")),
+    ("temporal", re.compile(r"\b(?:evolucion|por\s+anos?|compar(?:a|ar)\s+anos?)\b")),
+)
+_TIME_FOLLOWUP = re.compile(
+    r"\b(?:este\s+ano|ano\s+pasado|en\s+20\d{2}|entre\s+20\d{2})\b"
+)
+_MODALITY_FOLLOWUP = re.compile(r"\b(?:solo|solamente)\b.*\bcontratacion\b")
+_PROFILE_NOISE = frozenset({
+    "analiza", "analizame", "perfil", "radiografia", "sabes", "contrata",
+    "contratado", "entidad", "principales", "proveedores", "proveedor",
+    "contratistas", "contratista", "modalidades", "modalidad", "valores",
+    "valor", "montos", "monto", "recientes", "reciente", "ultimos", "ultimo",
+    "evolucion",
+})
+_GEOGRAPHY_PARAM_KEYS = frozenset({
+    "ciudad", "ciudad_resolved", "departamento", "departamento_resolved",
+    "departamento_resolution", "departamentos_in", "region", "municipal_territory",
+})
+
+
+@dataclass(frozen=True, slots=True)
+class EntityProfileTurn:
+    detected: bool
+    focus: str | None
+    params: dict
+    scope: EntityProfileScope | None
+    identity: EntityProfileIdentity | None
+    clarification: str | None = None
+
+
+def _fold(text: str) -> str:
+    decomposed = unicodedata.normalize("NFD", text.casefold())
+    return "".join(char for char in decomposed if not unicodedata.combining(char))
+
+
+def _focus(text: str) -> str | None:
+    for focus, pattern in _FOCUS:
+        if pattern.search(text):
+            return focus
+    return None
+
+
+def detect_entity_profile_turn(user_query: str, params: dict) -> tuple[bool, str | None]:
+    normalized = _fold(user_query)
+    focus = _focus(normalized)
+    if _OVERVIEW.search(normalized):
+        return True, focus or "overview"
+    if not params.get(PROFILE_ACTIVE_PARAM):
+        return False, None
+    if focus:
+        return True, focus
+    if _TIME_FOLLOWUP.search(normalized) or _MODALITY_FOLLOWUP.search(normalized):
+        return True, "overview"
+    return False, None
+
+
+def _clean_topic_value(value: object) -> object:
+    if isinstance(value, list):
+        cleaned = [_clean_topic_value(item) for item in value]
+        return [item for item in cleaned if item not in (None, "", [], ())]
+    if not isinstance(value, str):
+        return value
+    return "" if _fold(value) in _PROFILE_NOISE else value
+
+
+def profile_query_params(params: dict) -> dict:
+    """Keep validated filters, remove only profile language and geography."""
+    clean = {
+        key: value
+        for key, value in params.items()
+        if key not in _GEOGRAPHY_PARAM_KEYS and key != PROFILE_ACTIVE_PARAM
+    }
+    for key in ("objeto", "objeto_or", "objeto_phrases"):
+        if key not in clean:
+            continue
+        value = _clean_topic_value(clean[key])
+        if value in (None, "", [], ()):
+            clean.pop(key, None)
+        else:
+            clean[key] = value
+    clean.pop("offset", None)
+    clean.pop("limit", None)
+    return clean
+
+
+def _territory_only_name(user_query: str) -> bool:
+    """A naked municipal name stays Territory, even if a legacy alias owns it."""
+    text = _fold(user_query)
+    spans = get_municipal_territories().name_spans(text)
+    if len(spans) != 1:
+        return False
+    start, end = spans[0]
+    residual = f"{text[:start]} {text[end:]}"
+    residual = _OVERVIEW.sub(" ", residual)
+    residual = re.sub(r"\b(?:en\s+)?20\d{2}\b", " ", residual)
+    residual = re.sub(r"\b(?:la|el|de|del|un|una|por|favor)\b", " ", residual)
+    return not re.sub(r"[^a-z0-9]+", "", residual)
+
+
+def _territory_clarification(user_query: str) -> str:
+    registry = get_municipal_territories()
+    folded = _fold(user_query)
+    spans = registry.name_spans(folded)
+    if len(spans) == 1:
+        start, end = spans[0]
+        candidates = registry.lookup(folded[start:end])
+        if len(candidates) == 1:
+            name = candidates[0].municipality.title()
+            return (
+                f"¿Quieres analizar la Alcaldía de {name} o el territorio "
+                f"institucional de {name}?"
+            )
+    return (
+        "Necesito una entidad compradora reconocida. Indica, por ejemplo, "
+        "‘la Alcaldía de Baranoa’; un territorio por sí solo no selecciona una entidad."
+    )
+
+
+def classify_entity_profile_turn(user_query: str, params: dict) -> EntityProfileTurn:
+    detected, focus = detect_entity_profile_turn(user_query, params)
+    if not detected:
+        clean = dict(params)
+        clean.pop(PROFILE_ACTIVE_PARAM, None)
+        return EntityProfileTurn(False, None, clean, None, None)
+
+    clean = profile_query_params(params)
+    resolution = resolve_profile_scope(clean)
+    territory_only = _territory_only_name(user_query)
+    has_geographic_scope = any(params.get(key) for key in _GEOGRAPHY_PARAM_KEYS)
+    if (
+        resolution.scope is None
+        and resolution.reason in {
+            "BUYER_SCOPE_REQUIRED", "PRODUCTIVE_BUYER_RESOLUTION_REQUIRED",
+        }
+        and not territory_only
+        and not has_geographic_scope
+    ):
+        return EntityProfileTurn(False, None, clean, None, None)
+    if (
+        resolution.scope is None
+        or resolution.identity is None
+        or (
+            resolution.scope.buyer_group_id is None
+            and territory_only
+        )
+    ):
+        return EntityProfileTurn(
+            True,
+            focus,
+            clean,
+            None,
+            None,
+            resolution.reason
+            if resolution.reason
+            and resolution.reason not in {
+                "BUYER_SCOPE_REQUIRED", "PRODUCTIVE_BUYER_RESOLUTION_REQUIRED",
+            }
+            else _territory_clarification(user_query),
+        )
+    clean[PROFILE_ACTIVE_PARAM] = True
+    return EntityProfileTurn(
+        True,
+        focus,
+        clean,
+        resolution.scope,
+        resolution.identity,
+    )

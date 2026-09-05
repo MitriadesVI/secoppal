@@ -1,0 +1,104 @@
+version: 1
+single_turn:
+  - {id: EP-ST001, text: "analiza la alcaldia de baranoa", detected: true, focus: overview, scope: BUYER_UNIT}
+  - {id: EP-ST002, text: "como contrata la alcaldia de baranoa", detected: true, focus: overview, scope: BUYER_UNIT}
+  - {id: EP-ST003, text: "que sabes de la gobernacion del atlantico", detected: true, focus: overview, scope: BUYER_UNIT}
+  - {id: EP-ST004, text: "analiza la alcaldia de barranquilla en 2026", detected: true, focus: overview, scope: BUYER_UNIT}
+  - {id: EP-ST005, text: "perfil del municipio de bucaramanga", detected: true, focus: overview, scope: BUYER_UNIT}
+  - {id: EP-ST006, text: "radiografia de la alcaldia de yumbo", detected: true, focus: overview, scope: BUYER_UNIT}
+  - {id: EP-ST007, text: "analizame la alcaldia de baranoa", detected: true, focus: overview, scope: BUYER_UNIT}
+  - {id: EP-ST008, text: "como ha contratado la alcaldia de barranquilla este año", detected: true, focus: overview, scope: BUYER_UNIT}
+  - {id: EP-ST009, text: "que sabes de la alcaldia de bucaramanga el año pasado", detected: true, focus: overview, scope: BUYER_UNIT}
+  - {id: EP-ST010, text: "perfil de la gobernacion del atlantico", detected: true, focus: overview, scope: BUYER_UNIT}
+  - {id: EP-ST011, text: "radiografia de la alcaldia de baranoa en 2025", detected: true, focus: overview, scope: BUYER_UNIT}
+  - {id: EP-ST012, text: "analiza el municipio de yumbo", detected: true, focus: overview, scope: BUYER_UNIT}
+  - {id: EP-ST013, text: "perfil de la alcaldia mayor de bogota", detected: true, focus: overview, scope: BUYER_GROUP}
+  - {id: EP-ST014, text: "como contrata la alcaldia mayor de bogota", detected: true, focus: overview, scope: BUYER_GROUP}
+  - {id: EP-ST015, text: "que sabes de la alcaldia de bogota", detected: true, focus: overview, scope: BUYER_GROUP}
+  - {id: EP-ST016, text: "radiografia de la alcaldia de bogota", detected: true, focus: overview, scope: BUYER_GROUP}
+  - {id: EP-ST017, text: "analiza Baranoa", detected: true, focus: overview, clarification: true}
+  - {id: EP-ST018, text: "analiza Bucaramanga", detected: true, focus: overview, clarification: true}
+  - {id: EP-ST019, text: "analiza Yumbo", detected: true, focus: overview, clarification: true}
+  - {id: EP-ST020, text: "analiza Barranquilla en 2026", detected: true, focus: overview, clarification: true}
+  - {id: EP-ST021, text: "radiografia de Bogota", detected: true, focus: overview, clarification: true}
+  - {id: EP-ST022, text: "perfil de contratos de alimentacion", detected: false}
+  - {id: EP-ST023, text: "analiza contratos de alimentacion", detected: false}
+  - {id: EP-ST024, text: "cuanto suma lo contratado por la alcaldia de baranoa", detected: false}
+  - {id: EP-ST025, text: "contratos de alimentacion de la alcaldia de baranoa", detected: false}
+  - {id: EP-ST026, text: "ultimos procesos de la alcaldia de baranoa", detected: false}
+  - {id: EP-ST027, text: "analiza el proveedor NIT 860002400", detected: false}
+  - {id: EP-ST028, text: "perfil de los contratos", detected: false}
+  - {id: EP-ST029, text: "como ha contratado esta entidad este año", detected: false}
+  - {id: EP-ST030, text: "analiza el DAPRE", detected: true, focus: overview, scope: BUYER_UNIT}
+  - {id: EP-ST031, text: "perfil del SENA", detected: true, focus: overview, scope: BUYER_UNIT}
+  - {id: EP-ST032, text: "radiografia de la gobernacion de santander", detected: true, focus: overview, scope: BUYER_UNIT}
+  - {id: EP-ST033, text: "analiza la alcaldia de medellin", detected: true, focus: overview, scope: BUYER_UNIT}
+  - {id: EP-ST034, text: "que sabes de la alcaldia de cartagena", detected: true, focus: overview, scope: BUYER_UNIT}
+  - {id: EP-ST035, text: "analiza las modalidades de la alcaldia de baranoa", detected: true, focus: modalities, scope: BUYER_UNIT}
+  - {id: EP-ST036, text: "analiza los proveedores de la alcaldia de baranoa", detected: true, focus: suppliers, scope: BUYER_UNIT}
+  - {id: EP-ST037, text: "analiza la actividad reciente de la alcaldia de baranoa", detected: true, focus: recent, scope: BUYER_UNIT}
+  - {id: EP-ST038, text: "analiza los montos de la alcaldia de baranoa", detected: true, focus: values, scope: BUYER_UNIT}
+  - {id: EP-ST039, text: "analiza la evolucion de la alcaldia de baranoa", detected: true, focus: temporal, scope: BUYER_UNIT}
+  - {id: EP-ST040, text: "analiza la alcaldia de baranoa en alimentacion escolar", detected: true, focus: overview, scope: BUYER_UNIT}
+
+conversations:
+  - id: EP-MT001
+    turns:
+      - {text: "analiza la alcaldia de baranoa en 2026", route: overview}
+      - {text: "y los principales proveedores", route: suppliers}
+  - id: EP-MT002
+    turns:
+      - {text: "analiza la alcaldia de baranoa en 2026", route: overview}
+      - {text: "solo contratación directa", route: overview}
+  - id: EP-MT003
+    turns:
+      - {text: "analiza la alcaldia de baranoa en 2026", route: overview}
+      - {text: "y el año pasado", route: overview}
+  - id: EP-MT004
+    turns:
+      - {text: "perfil de la alcaldia de barranquilla", route: overview}
+      - {text: "y los contratos recientes", route: recent}
+  - id: EP-MT005
+    turns:
+      - {text: "perfil de la alcaldia de bucaramanga", route: overview}
+      - {text: "y la evolución por años", route: temporal}
+  - id: EP-MT006
+    turns:
+      - {text: "radiografia de la alcaldia de yumbo", route: overview}
+      - {text: "y los montos", route: values}
+  - id: EP-MT007
+    turns:
+      - {text: "que sabes de la gobernacion del atlantico", route: overview}
+      - {text: "principales contratistas", route: suppliers}
+  - id: EP-MT008
+    turns:
+      - {text: "perfil de la alcaldia mayor de bogota", route: overview}
+      - {text: "y sus proveedores", route: suppliers}
+  - id: EP-MT009
+    turns:
+      - {text: "analiza la alcaldia de baranoa", route: overview}
+      - {text: "contratos de alimentacion", route: normal}
+  - id: EP-MT010
+    turns:
+      - {text: "analiza la alcaldia de baranoa", route: overview}
+      - {text: "cuanto suma lo contratado", route: analytics}
+  - id: EP-MT011
+    turns:
+      - {text: "analiza la alcaldia de baranoa", route: overview}
+      - {text: "ahora analiza la alcaldia de bucaramanga", route: overview}
+  - id: EP-MT012
+    turns:
+      - {text: "analiza la alcaldia de baranoa", route: overview}
+      - {text: "ahora Yumbo", route: normal}
+  - id: EP-MT013
+    turns:
+      - {text: "que sabes de la alcaldia de bucaramanga", route: overview}
+      - {text: "solo contratación directa", route: overview}
+  - id: EP-MT014
+    turns:
+      - {text: "radiografia de la alcaldia de barranquilla", route: overview}
+      - {text: "y las modalidades", route: modalities}
+  - id: EP-MT015
+    turns:
+      - {text: "perfil de la gobernacion del atlantico en 2025", route: overview}
+      - {text: "y este año", route: overview}
