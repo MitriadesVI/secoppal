@@ -1,4 +1,5 @@
 """Entity Analysis V1 public types and pure turn classification."""
+from app.core.entity_profile.assembler import build_entity_profile
 from app.core.entity_profile.models import (
     EntityProfile,
     EntityProfileFact,
@@ -19,4 +20,5 @@ __all__ = [
     "ScopeType",
     "SectionStatus",
     "classify_entity_profile_turn",
+    "build_entity_profile",
 ]

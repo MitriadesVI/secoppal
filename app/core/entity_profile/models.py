@@ -139,6 +139,7 @@ class SourceCall:
     latency_ms: float
     soql: str
     error_type: str | None = None
+    attempted: bool = True
 
 
 @dataclass(frozen=True, slots=True)
@@ -148,12 +149,14 @@ class SourceCalls:
 
     @property
     def calls_total(self) -> int:
-        return len(self.calls)
+        return sum(call.attempted for call in self.calls)
 
     @property
     def calls_by_aspect(self) -> dict[str, int]:
         counts: dict[str, int] = {}
         for call in self.calls:
+            if not call.attempted:
+                continue
             counts[call.aspect] = counts.get(call.aspect, 0) + 1
         return counts
 
@@ -161,6 +164,8 @@ class SourceCalls:
     def latency_by_aspect(self) -> dict[str, float]:
         totals: dict[str, float] = {}
         for call in self.calls:
+            if not call.attempted:
+                continue
             totals[call.aspect] = totals.get(call.aspect, 0.0) + call.latency_ms
         return totals
 
