@@ -18,7 +18,7 @@ from app.core.entity_profile.models import CONTRACT_DATASET, PROCESS_DATASET, So
 
 
 ENTITY_PROFILE_QUERY_BUDGET = 6
-ENTITY_PROFILE_TIMEOUT_PER_CALL = 6
+ENTITY_PROFILE_TIMEOUT_PER_CALL = 8
 ENTITY_PROFILE_TIMEOUT_GLOBAL = 9
 
 
@@ -101,10 +101,12 @@ def _is_timeout(exc: Exception) -> bool:
     return _is_timeout_exception(exc)
 
 
-def _run_job(job: QueryJob, soql: str, secop_client: Any) -> JobResult:
+def _run_job(
+    job: QueryJob, soql: str, secop_client: Any, timeout_s: int,
+) -> JobResult:
     start = time.perf_counter()
     try:
-        client = secop_client.derived_for_timeout(ENTITY_PROFILE_TIMEOUT_PER_CALL)
+        client = secop_client.derived_for_timeout(timeout_s)
         rows = list(getattr(client, job.operation)(job.dataset_id, soql))
         status, error_type = "SUCCESS", None
     except Exception as exc:
@@ -150,10 +152,36 @@ def execute_jobs(
                 attempted=False,
             )
 
+    from app.core.deadline import MIN_USEFUL_FETCH_SECONDS, current_deadline
+
+    deadline = current_deadline()
+    budget = (
+        deadline.fetch_budget_s(ENTITY_PROFILE_TIMEOUT_PER_CALL)
+        if deadline is not None
+        else float(ENTITY_PROFILE_TIMEOUT_PER_CALL)
+    )
     rows: dict[str, list[dict]] = {}
+    if budget < MIN_USEFUL_FETCH_SECONDS:
+        for job in jobs:
+            calls.setdefault(job.call_id, SourceCall(
+                call_id=job.call_id,
+                aspect=job.aspect,
+                dataset_id=job.dataset_id,
+                operation=job.operation,
+                status="BUDGET_EXHAUSTED",
+                rows_received=0,
+                latency_ms=0.0,
+                soql=built.get(job.call_id, ""),
+                error_type="TurnDeadline",
+                attempted=False,
+            ))
+        return rows, calls
+    timeout_s = max(1, int(budget))
     executor = ThreadPoolExecutor(max_workers=max(1, len(built)))
     futures: dict[Future[JobResult], QueryJob] = {
-        executor.submit(_run_job, job, built[job.call_id], secop_client): job
+        executor.submit(
+            _run_job, job, built[job.call_id], secop_client, timeout_s,
+        ): job
         for job in jobs
         if job.call_id in built
     }

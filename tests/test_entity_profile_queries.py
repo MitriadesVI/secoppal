@@ -14,6 +14,7 @@ from app.core.entity_profile.query_runner import (
 )
 from app.core.entity_profile.turn import classify_entity_profile_turn
 from app.core.entity_resolver import EntityResolver
+from app.core.deadline import begin_deadline, end_deadline, reset_clock, set_clock
 from app.core.query_router import QueryRouter
 from app.core.soql_builder import SoQLBuilder
 
@@ -22,9 +23,12 @@ class FakeClient:
     def __init__(self, fail: str | None = None):
         self.fail = fail
         self.calls: list[tuple[str, str, str]] = []
+        self.timeouts: list[int] = []
         self._lock = threading.Lock()
 
-    def derived_for_timeout(self, _timeout: int):
+    def derived_for_timeout(self, timeout: int):
+        with self._lock:
+            self.timeouts.append(timeout)
         return self
 
     def _record(self, operation: str, dataset: str, soql: str) -> None:
@@ -204,3 +208,37 @@ def test_one_supplier_timeout_makes_only_that_section_partial(baranoa_turn):
     assert profile.suppliers.fact("top_by_contract_count")
     assert profile.suppliers.fact("top_by_contract_value") is None
     assert "fuente no respondió" in profile.suppliers.warnings[0]
+
+
+def test_source_calls_honor_remaining_turn_deadline(baranoa_turn):
+    client = FakeClient()
+    set_clock(lambda: 10.0)
+    tokens = begin_deadline(0.0, budget_s=14.5, reserve_s=4.0)
+    try:
+        profile = _profile(baranoa_turn, client)
+    finally:
+        end_deadline(tokens)
+        reset_clock()
+
+    assert client.calls == []
+    assert client.timeouts == []
+    assert profile.source_calls.calls_total == 0
+    assert {call.status for call in profile.source_calls.calls} == {
+        "BUDGET_EXHAUSTED",
+    }
+    assert profile.activity.status is SectionStatus.UNAVAILABLE
+    assert profile.partial is True
+
+
+def test_source_timeout_is_capped_by_available_turn_budget(baranoa_turn):
+    client = FakeClient()
+    set_clock(lambda: 2.0)
+    tokens = begin_deadline(0.0, budget_s=11.5, reserve_s=4.0)
+    try:
+        profile = _profile(baranoa_turn, client, "values")
+    finally:
+        end_deadline(tokens)
+        reset_clock()
+
+    assert profile.source_calls.calls_total == 1
+    assert client.timeouts == [5]
