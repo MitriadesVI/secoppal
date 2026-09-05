@@ -25,6 +25,7 @@ from burr.core import State, action
 from app.core._followup_constants import SCOPE_TOPIC_KEYS
 from app.core.actor_profile.turn import maybe_handle_actor_profile
 from app.core.analytics import maybe_handle_analytical_query
+from app.core.entity_profile.turn import classify_entity_profile_turn
 from app.core.observer import observe as observe_universe_fn
 from app.core.secop_client import SecopClient
 from app.core.socrata_transport import Soda3OrderingSpecifier
@@ -45,6 +46,10 @@ from app.core.workflow.helpers import (
     _with_timing,
     _with_timings,
 )
+from app.core.workflow.actions.entity_profile import (
+    entity_profile_state,
+    run_entity_profile_turn,
+)
 
 
 # Marca del turno de perfil en el estado y en el feedback. No es un análisis
@@ -52,14 +57,18 @@ from app.core.workflow.helpers import (
 ACTOR_PROFILE_INTENT = "actor_profile"
 
 
-@action(reads=["resolved_params", "dataset_id", "soql_query", "user_query", "timings_ms"], writes=["soql_query", "results", "query_error", "total_count", "timeout_suggestions", "risk_flag_timeout", "needs_clarification", "clarification_reason", "analytical_response", "analytical_intent", "route_reason", "timings_ms"])
+@action(reads=["resolved_params", "dataset_id", "soql_query", "user_query", "timings_ms"], writes=["soql_query", "results", "query_error", "total_count", "timeout_suggestions", "risk_flag_timeout", "needs_clarification", "clarification_reason", "analytical_response", "analytical_intent", "route_reason", "resolved_params", "timings_ms"])
 def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBuilder) -> State:
     """Execute SECOP count + query with graceful error handling.
     On timeout for heavy ordering queries, retry without ordering_signal.
     Guards against WHERE 1=1 — requires at least one scope/topic filter.
     """
     start_total = time.perf_counter()
-    params = state.get("resolved_params", {})
+    profile_turn = classify_entity_profile_turn(
+        state.get("user_query", ""), state.get("resolved_params", {}),
+    )
+    params = profile_turn.params
+    state = state.update(resolved_params=params)
 
     # ── Ruta analítica (aggregate_sum) ─────────────────────────────
     # Si maybe_handle_analytical_query atiende la consulta, NO se ejecuta el
@@ -88,6 +97,21 @@ def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
             analytical_intent=analytics.get("analytical_intent", ""),
             soql_query=analytics.get("soql_query", ""),
             route_reason=analytics.get("route_reason", state.get("route_reason", "")),
+            resolved_params=params,
+        )
+
+    # ── Entity Analysis V1 ────────────────────────────────────────────────
+    # Un overview institucional va después del analyzer puntual y antes del
+    # perfil de actor. El scope ya fue resuelto por autoridades productivas;
+    # Territorial Knowledge aporta sólo metadata y nunca predicados.
+    entity_profile = run_entity_profile_turn(
+        profile_turn,
+        secop_client=secop_client,
+        soql_builder=soql_builder,
+    )
+    if entity_profile:
+        return entity_profile_state(
+            state, entity_profile, execute_started_at=start_total,
         )
 
     # ── Ruta de perfil de actor (AP2) ──────────────────────────────────
@@ -119,6 +143,7 @@ def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
             analytical_response=profile_turn.get("response", ""),
             analytical_intent=ACTOR_PROFILE_INTENT,
             route_reason=profile_turn.get("route_reason", ""),
+            resolved_params=params,
         )
 
     # ── Guard anti-WHERE 1=1 ─────────────────────────────────────────────

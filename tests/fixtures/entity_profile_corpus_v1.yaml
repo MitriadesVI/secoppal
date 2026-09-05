@@ -61,7 +61,7 @@ conversations:
   - id: EP-MT005
     turns:
       - {text: "perfil de la alcaldia de bucaramanga", route: overview}
-      - {text: "y la evolución por años", route: temporal}
+      - {text: "y la evolución por años", route: analytics}
   - id: EP-MT006
     turns:
       - {text: "radiografia de la alcaldia de yumbo", route: overview}
