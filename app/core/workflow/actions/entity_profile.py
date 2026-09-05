@@ -50,7 +50,9 @@ def run_entity_profile_turn(
             "resolved_params": turn.params,
             "partial": True,
             "calls_total": 0,
+            "calls_by_aspect": {},
             "latency_by_aspect": {},
+            "total_latency_ms": 0.0,
         }
     return {
         "response": render_entity_profile(profile),
@@ -58,7 +60,9 @@ def run_entity_profile_turn(
         "resolved_params": turn.params,
         "partial": profile.partial,
         "calls_total": profile.source_calls.calls_total,
+        "calls_by_aspect": profile.source_calls.calls_by_aspect,
         "latency_by_aspect": profile.source_calls.latency_by_aspect,
+        "total_latency_ms": profile.source_calls.total_latency_ms,
         "profile": profile,
     }
 
@@ -72,6 +76,11 @@ def entity_profile_state(
     """Map the profile result without adding a second rendering pipeline."""
     timings = dict(state.get("timings_ms", {}) or {})
     timings["entity_profile_calls_total"] = float(outcome.get("calls_total", 0))
+    timings["entity_profile_total_latency_ms"] = float(
+        outcome.get("total_latency_ms", 0.0)
+    )
+    for aspect, calls in outcome.get("calls_by_aspect", {}).items():
+        timings[f"entity_profile_{aspect}_calls"] = float(calls)
     for aspect, latency in outcome.get("latency_by_aspect", {}).items():
         timings[f"entity_profile_{aspect}_ms"] = float(latency)
     state = state.update(timings_ms=timings)

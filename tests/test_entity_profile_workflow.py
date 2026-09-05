@@ -128,6 +128,9 @@ def test_overview_reaches_product_response_without_advisor_rewrite():
     assert result["response"].count("•") <= 8
     assert len(client.calls) == 6
     assert result["timings_ms"]["entity_profile_calls_total"] == 6
+    assert result["timings_ms"]["entity_profile_total_latency_ms"] >= 0
+    assert result["timings_ms"]["entity_profile_suppliers_calls"] == 2
+    assert result["timings_ms"]["entity_profile_recent_calls"] == 2
 
 
 def test_product_response_does_not_expose_internal_profile_jargon():
