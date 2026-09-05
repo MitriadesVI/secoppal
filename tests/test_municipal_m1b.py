@@ -1,19 +1,21 @@
 """M1B must explain the fixed cohort without turning geography/NIT into identity."""
+from collections import Counter
 from copy import deepcopy
 import gzip
-import hashlib
 import json
 from pathlib import Path
 
 import pytest
 
 from scripts.audits.audit_municipal_m1b import (
-    ACCREDITED, DATASETS, DEBTS, FAMILIES, METRICS, candidate, coverage_scenario,
-    derive_universe, family, sum_volumes, volumes,
+    ACCREDITED, DATASETS, DEBTS, EXPECTED_HEAD, FAMILIES, METRICS, candidate,
+    coverage_scenario, derive_universe, family, sum_volumes, volumes,
 )
+from scripts.audits.frozen_baseline import blob_digests
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'artifacts/audits/municipal_m1b'
+M1B_FROZEN_COMMIT = '51a5ad9a4f47e55f65f2c7d31e825e937c461d3e'
 
 
 def read(path):
@@ -141,10 +143,28 @@ def test_ambiguous_or_incomplete_candidate_never_becomes_auto_safe(evidence):
     assert sum(candidates['residual_dispositions'].values()) == len(primary)
 
 
-def test_every_protected_baseline_file_retains_its_digest():
+def test_gates_record_the_audited_commit_and_not_the_working_tree():
+    """The digests attest to what M1B audited, not to later edits.
+
+    Reading them against the working tree made the municipal evidence gate a
+    global freeze on 1013 unrelated files. The evidence lives in the frozen
+    commit, so that is the tree whose blobs must retain the recorded digests.
+    """
     gates = read(OUT / 'gates.json')
     assert gates['WRONG_OWNER'] == 0 and not gates['protected_changed']
     assert all(r['owner_check_passed'] for r in gates['existing_executive_pipeline'])
     assert all(not r['pipeline_safe'] for r in gates['existing_executive_pipeline'])
-    for path, expected in gates['protected_sha256'].items():
-        assert hashlib.sha256((ROOT / path).read_bytes()).hexdigest() == expected, path
+    protected = gates['protected_sha256']
+    assert len(protected) == 1013
+    assert Counter(path.split('/', 1)[0] for path in protected) == {
+        'app': 255,
+        'scripts': 103,
+        'tests': 361,
+        'artifacts': 277,
+        'docs': 17,
+    }
+    # Repinning gates.json to a newer commit would relabel a different baseline
+    # as the audited one, so both recorded heads remain part of the assertion.
+    assert EXPECTED_HEAD == M1B_FROZEN_COMMIT
+    assert gates['baseline_head'] == gates['replay_head'] == M1B_FROZEN_COMMIT
+    assert blob_digests(ROOT, M1B_FROZEN_COMMIT, protected) == protected
