@@ -7,6 +7,8 @@ text governed by a negative marker is masked before positive extractors run.
 """
 from __future__ import annotations
 
+from app.core.money_polarity import protected_money_spans
+
 import re
 from dataclasses import dataclass, replace
 from enum import Enum
@@ -149,16 +151,6 @@ _CONTRACT_TYPE_RE = re.compile(
 # positivo. La autoridad léxica es única.
 _STATE_RE = re.compile(
     rf"\b(?:estado\s+)?(?:{STATE_ALTERNATION})\b",
-    re.IGNORECASE,
-)
-_MONEY_POLARITY_RE = re.compile(
-    r"\b(?:por\s+)?menos\s+de\s+(?:\$\s*|cop\s+)?"
-    r"(?:\d|un\b|una\b|mil\b|millones?\b|billon(?:es)?\b)",
-    re.IGNORECASE,
-)
-_NEGATED_MONEY_COMPARATOR_RE = re.compile(
-    r"\bno(?:\s+sean?|\s+sea)?\s+(?:por\s+)?"
-    r"(?:mas|menos|mayor(?:es)?|menor(?:es)?|superior(?:es)?|inferior(?:es)?)\s+de\b",
     re.IGNORECASE,
 )
 _SINO_RE = re.compile(r"\bsino(?:\s+tambien)?\b", re.IGNORECASE)
@@ -320,14 +312,6 @@ def _actor_contrast_start(text: str, marker: NegativeMarker) -> int | None:
     return prefix_start + match.start("contrast")
 
 
-def _protected_money_spans(text: str) -> tuple[tuple[int, int], ...]:
-    return tuple(
-        match.span()
-        for pattern in (_MONEY_POLARITY_RE, _NEGATED_MONEY_COMPARATOR_RE)
-        for match in pattern.finditer(text)
-    )
-
-
 def _target_end(text: str, marker: NegativeMarker, next_marker_start: int) -> tuple[int, tuple[int, int] | None]:
     end = next_marker_start
     local = text[marker.end:end]
@@ -428,7 +412,7 @@ def bind_negations(
     protected = (
         *modality,
         *tuple(protected_spans),
-        *_protected_money_spans(text),
+        *protected_money_spans(text),
     )
     markers = find_dimensional_negative_markers(text, protected_spans=protected)
     requests: list[NegationRequest] = []

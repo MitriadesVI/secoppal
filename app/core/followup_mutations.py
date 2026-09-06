@@ -206,6 +206,7 @@ def _transition_clears(
 
     accepted_money = set(accepted) & MONEY_FIELDS
     if accepted_money:
+        clears.add("money_clarification")
         # Follow-up bounds keep the existing intersection when it is coherent,
         # but an explicit replacement can never inherit an impossible opposite
         # bound.  A complete range replaces both previous endpoints.
@@ -289,7 +290,11 @@ def gate_delta(
     rejected: dict[str, str] = {}
     control_only = policy.allows_topic_mutation() and is_control_only_turn(text, delta)
     for key, value in delta.items():
-        if key not in policy.allowed_set:
+        if key == "money_clarification":
+            # A blocker is evidence about this turn, never an executable
+            # mutation to prune. P16 must see it even on a follow-up.
+            accepted[key] = value
+        elif key not in policy.allowed_set:
             rejected[key] = "field_not_allowed_for_intent"
         elif control_only and key in TOPIC_FIELDS:
             rejected[key] = "control_only_without_new_domain_topic"

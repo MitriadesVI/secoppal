@@ -35,7 +35,12 @@ from app.core.temporal_semantics import (
 )
 from app.core.contract_type_resolver import resolve_contract_types
 from app.core.control_language import interpret_control_language
-from app.core.money_resolution import CARDINAL_WORD_PATTERN
+from app.core.money_polarity import (
+    MoneyRelation,
+    has_money_relation_before,
+    protected_money_spans,
+    resolve_money_polarity,
+)
 from app.core.estado_projection import project_estado_family
 from app.core.generic_buyer import (
     build_incomplete_buyer_resolution,
@@ -66,7 +71,6 @@ from app.utils.money import (
     money_to_cop,
     MONETARY_ATOMIC_SCALE_UNIT_PATTERN,
     MONETARY_SCALE_UNIT_PATTERN,
-    MONETARY_UNIT_PATTERN,
     normalize_text,
     smmlv_to_cop,
 )
@@ -128,12 +132,6 @@ _MONEY_UNIT_AFTER_NUMBER_RE = re.compile(
     rf"billones?\b|palos?\b|barras?\b|{SMMLV_UNIT_PATTERN})",
     re.IGNORECASE,
 )
-_MONEY_COMPARATOR_BEFORE_NUMBER_RE = re.compile(
-    r"(?:\$\s*|\bcop\s+|\b(?:mas|menos)\s+de\s+|"
-    r"\b(?:mayor(?:es)?|menor(?:es)?|superior(?:es)?|inferior(?:es)?)\s+(?:a|de|que)\s+|"
-    r"\b(?:desde|hasta|por)\s+)\s*$",
-    re.IGNORECASE,
-)
 _IDENTIFIER_BEFORE_NUMBER_RE = re.compile(
     r"\b(?:nit|c[eé]dulas?|c\.c\.|cc|documento(?:\s+de\s+identidad)?|"
     r"contratista|proveedor)\s*(?:n(?:umero|ro)?\.?\s*)?$",
@@ -162,7 +160,7 @@ def _number_role(text: str, match: re.Match[str]) -> str:
         return "other"
     if _MONEY_UNIT_AFTER_NUMBER_RE.search(right):
         return "money"
-    if _MONEY_COMPARATOR_BEFORE_NUMBER_RE.search(left):
+    if re.search(r"(?:\$\s*|\bcop\s+)$", left) or has_money_relation_before(left):
         return "money"
     return "identifier"
 
@@ -264,7 +262,10 @@ class QueryRouter:
         from app.core.municipal_territory import get_municipal_territories
         municipal_geography = get_municipal_territories()
         normalized = correct_query(
-            normalized, protected_spans=tuple(municipal_geography.name_spans(normalized)),
+            normalized, protected_spans=(
+                *municipal_geography.name_spans(normalized),
+                *protected_money_spans(normalized),
+            ),
         )
         params: dict[str, object] = {}
         actor_conversation = ActorConversationInstruction()
@@ -405,6 +406,17 @@ class QueryRouter:
             protected_spans=preliminary_amount_spans,
         )
         positive_text = negation_binding.masked_text
+        # Unsupported negation must not erase a monetary request before its
+        # authority runs. Recognized money negations are already protected.
+        if any(
+            normalized[start:end] != positive_text[start:end]
+            and has_explicit_monetary_evidence(normalized[start:end])
+            for start, end in preliminary_amount_spans
+        ):
+            params["money_clarification"] = (
+                "No pude interpretar la relación monetaria bajo esa negación. "
+                "¿Quieres un mínimo, un máximo, un rango o un valor aproximado?"
+            )
         # ── 1.c.2 Revocación de siembras pre-negación ──────────────────
         # INV-NO-SILENT-SEMANTIC-FALLBACK. El atajo de oportunidades y el
         # vocabulario de intención escanean el texto CRUDO para poder elegir
@@ -907,6 +919,9 @@ class QueryRouter:
             scrubbed, date_params, reference_year=clock.year,
         )
         params.update(amount_params)
+        if params.get("money_clarification"):
+            params.pop("valor_min", None)
+            params.pop("valor_max", None)
         # Scrub consumed amount spans so residual tokens ("adelante", "menos")
         # don't leak into objeto.
         for span in amount_spans:
@@ -1057,6 +1072,10 @@ class QueryRouter:
             needs_llm = True
             route_reason = "ordering_without_object"
 
+        if params.get("money_clarification"):
+            needs_llm = False
+            route_reason = "heuristic_only"
+
         negation_policy = apply_negation_policy(negation_binding.requests, params)
         params = negation_policy.params
         # INV-STATE-FAMILY-PROJECTS-COMPLETE: una familia declarada por
@@ -1175,18 +1194,6 @@ class QueryRouter:
         """
         params: dict[str, object] = {}
         consumed_spans: list[str] = []
-        digit_amount = r"(?:\$\s*|cop\s+)?\d+(?:[.,]\d+)*"
-        verbal_amount = rf"{CARDINAL_WORD_PATTERN}(?:\s+{CARDINAL_WORD_PATTERN})*"
-        amount_atom = rf"(?:{digit_amount}|{verbal_amount})"
-        # HCA-P1: la gramática de unidades es autoridad de app.utils.money, la
-        # misma capa que sabe escalarlas. El catálogo local escribía
-        # ``millones?`` — que no acepta el singular — y dejaba que ``mil`` se
-        # comiera el prefijo de "millon", de modo que "1 millon" valía 1.000.
-        unit_pattern = MONETARY_UNIT_PATTERN
-        # INV-NO-SILENT-EXPLICIT-MONEY-DROP: spans con unidad monetaria
-        # declarada que la conversión no supo resolver. Si al final no queda
-        # ningún filtro de valor, se pide precisión en vez de ejecutar.
-        unconvertible_money: list[str] = []
         smmlv_requested = is_smmlv_expression(normalized_query)
         smmlv_year: int | None = None
         smmlv_year_assumed = False
@@ -1245,20 +1252,6 @@ class QueryRouter:
                 smmlv_sources[cop] = (str(source_amount), amount_text.strip())
                 return cop
             return money_to_cop(amount_text)
-        year_tokens: set[str] = set()
-        for val in date_params.values():
-            if isinstance(val, str) and re.fullmatch(r"\d{4}-\d{2}-\d{2}", val):
-                year_tokens.add(val[:4])
-        _year_money_re = re.compile(
-            rf"\b(20\d{{2}})\b(?!\s*(?:millones?|millon|mil\s+millones|billones?|palos?|barras?|pesos|{SMMLV_UNIT_PATTERN}))",
-            re.IGNORECASE,
-        )
-        for m in re.finditer(_year_money_re, normalized_query):
-            year_tokens.add(m.group(1))
-
-        # Detect "entre X y Y" range BEFORE individual amount parsing so the
-        # two numbers don't each get mis-classified by the generic loop below.
-        # ── Shared unit-inheritance helpers (used by range + compound block) ──
         _compound_unit_re = re.compile(
             rf"{MONETARY_SCALE_UNIT_PATTERN}|{SMMLV_UNIT_PATTERN}",
             re.IGNORECASE,
@@ -1281,307 +1274,61 @@ class QueryRouter:
                 m = _atomic_unit_re.search(donor_text)
             return m.group(0) if m else None
 
-        _range_re = re.compile(
-            rf"(?:entre|de|desde)\s+({amount_atom}\s*{unit_pattern}?(?:\s+y\s+medi[oa]s?)?(?:(?:\s+de)?\s+pesos?)?)(?:\s*[-–—]\s*|\s+y\s+|\s+a\s+|\s+hasta\s+)({amount_atom}\s*{unit_pattern}?(?:\s+y\s+medi[oa]s?)?(?:(?:\s+de)?\s+pesos?)?)",
-            re.IGNORECASE,
-        )
-        range_match = _range_re.search(normalized_query)
-        if range_match:
-            lo_text = range_match.group(1)
-            hi_text = range_match.group(2)
-
-            # DOGFOOD-D: cuando un lado del rango no trae unidad explícita,
-            # hereda la unidad del otro lado con esta regla:
-            #   - Si el otro lado tiene NÚMERO + unidad compuesta ("2 mil millones"),
-            #     hereda la unidad COMPUESTA ("mil millones") → "1" → 1 mil millones.
-            #   - Si el otro lado es solo "mil millones" (sin número antes),
-            #     hereda solo la unidad ATÓMICA ("millones") → "500" → 500 millones.
-            lo_has_unit = _has_monetary_unit(lo_text)
-            hi_has_unit = _has_monetary_unit(hi_text)
-
-            if not lo_has_unit and hi_has_unit:
-                u = _inherit_unit(hi_text)
-                if u:
-                    lo_text = lo_text + " " + u
-            if not hi_has_unit and lo_has_unit:
-                u = _inherit_unit(lo_text)
-                if u:
-                    hi_text = hi_text + " " + u
-
-            amount_lo = _to_cop(lo_text)
-            amount_hi = _to_cop(hi_text)
-
-            # INV-MONEY-RANGE-ATOMIC: entero o nada. El span se consume en los
-            # dos desenlaces — si sobrevive, el bucle genérico de abajo lo relee
-            # y reconstruye justo la cota unilateral que el invariante existe
-            # para impedir.
-            span = normalized_query[range_match.start():range_match.end()]
-            verdict = admit_range(amount_lo, lo_text, amount_hi, hi_text)
-            if verdict is not RangeVerdict.ABSENT:
-                if verdict is RangeVerdict.EXECUTE:
-                    params["valor_min"] = min(amount_lo, amount_hi)
-                    params["valor_max"] = max(amount_lo, amount_hi)
-                else:
-                    params["money_clarification"] = (
-                        RANGE_PARTIAL_CLARIFICATION.format(span=span.strip())
-                    )
-                consumed_spans.append(span)
-                normalized_query = normalized_query[: range_match.start()] + " " + normalized_query[range_match.end() :]
-
-        # Detect "N1-N2 unidad" pattern WITHOUT "entre"/"de"/"desde" prefix.
-        # e.g., "contratos 1000-3000 millones" where the hyphen acts as range
-        # separator and the unit follows both numbers.
-        # Only fires when the prefixed _range_re above did NOT match.
-        if not range_match:
-            _range_hyphen_re = re.compile(
-                rf"({digit_amount})\s*[-–—]\s*({digit_amount})\s+"
-                rf"({unit_pattern})",
-                re.IGNORECASE,
-            )
-            h_match = _range_hyphen_re.search(normalized_query)
-            if h_match:
-                unit = h_match.group(3)
-                lo_text = h_match.group(1) + " " + unit
-                hi_text = h_match.group(2) + " " + unit
-
-                amount_lo = _to_cop(lo_text)
-                amount_hi = _to_cop(hi_text)
-
-                span = normalized_query[h_match.start():h_match.end()]
-                verdict = admit_range(amount_lo, lo_text, amount_hi, hi_text)
-                if verdict is not RangeVerdict.ABSENT:
-                    if verdict is RangeVerdict.EXECUTE:
-                        params["valor_min"] = min(amount_lo, amount_hi)
-                        params["valor_max"] = max(amount_lo, amount_hi)
-                    else:
-                        params["money_clarification"] = (
-                            RANGE_PARTIAL_CLARIFICATION.format(span=span.strip())
-                        )
-                    consumed_spans.append(span)
-                    normalized_query = normalized_query[: h_match.start()] + " " + normalized_query[h_match.end() :]
-                range_match = h_match  # prevent polarity patterns from re-parsing
-
-        # Detect compound polarity ranges: "más de X y menos de Y"
-        # e.g., "más de 350 millones y menos de 700" → valor_min + valor_max
-        _compound_range_re = re.compile(
-            r"(?:m[aá]s\s+de|mayor(?:es)?\s+(?:a|de|que)|por\s+encima\s+de|al\s+menos|superior(?:es)?\s+(?:a|de|que))\s+"
-            rf"({amount_atom}\s*{unit_pattern}?(?:\s+y\s+medi[oa]s?)?(?:(?:\s+de)?\s+pesos?)?)"
-            r"\s+(?:y|e)\s+"
-            r"(?:menos\s+de|menor(?:es)?\s+(?:a|de|que)|por\s+debajo\s+de|a\s+lo\s+sumo|inferior(?:es)?\s+(?:a|de|que))\s+"
-            rf"({amount_atom}\s*{unit_pattern}?(?:\s+y\s+medi[oa]s?)?(?:(?:\s+de)?\s+pesos?)?)",
-            re.IGNORECASE,
-        )
-        cr_match = _compound_range_re.search(normalized_query)
-        if cr_match:
-            lo_text = cr_match.group(1)
-            hi_text = cr_match.group(2)
-
-            # Inherit monetary unit from one side to the other
-            lo_has_unit = _has_monetary_unit(lo_text)
-            hi_has_unit = _has_monetary_unit(hi_text)
-
-            if not lo_has_unit and hi_has_unit:
-                u = _inherit_unit(hi_text)
-                if u:
-                    lo_text = lo_text + " " + u
-            if not hi_has_unit and lo_has_unit:
-                u = _inherit_unit(lo_text)
-                if u:
-                    hi_text = hi_text + " " + u
-
-            amount_lo = _to_cop(lo_text)
-            amount_hi = _to_cop(hi_text)
-
-            span = normalized_query[cr_match.start():cr_match.end()]
-            verdict = admit_range(amount_lo, lo_text, amount_hi, hi_text)
-            if verdict is not RangeVerdict.ABSENT:
-                if verdict is RangeVerdict.EXECUTE:
-                    # Unlike a symmetric ``entre X y Y`` range, these operands
-                    # have explicit semantic roles.  Preserve them so P8 can see
-                    # a contradictory lower bound instead of silently swapping it.
-                    params["valor_min"] = amount_lo
-                    params["valor_max"] = amount_hi
-                else:
-                    params["money_clarification"] = (
-                        RANGE_PARTIAL_CLARIFICATION.format(span=span.strip())
-                    )
-                consumed_spans.append(span)
-                normalized_query = normalized_query[: cr_match.start()] + " " + normalized_query[cr_match.end() :]
-
-        # Detect "X o más" / "X o mas" → valor_min only (before generic loop)
-        _o_mas_re = re.compile(
-            rf"({amount_atom}\s*{unit_pattern}?(?:\s+y\s+medi[oa]s?)?(?:(?:\s+de)?\s+pesos?)?)\s+o\s+m[aá]s",
-            re.IGNORECASE,
-        )
-        om = _o_mas_re.search(normalized_query)
-        if om:
-            amount = _to_cop(om.group(1))
-            if is_admissible_amount(amount, om.group(1)):
-                params["valor_min"] = amount
-                # Remove matched span
-                span = normalized_query[om.start():om.end()]
-                consumed_spans.append(span)
-                normalized_query = normalized_query[: om.start()] + " " + normalized_query[om.end() :]
-
-        # La fracción verbal entra en el span A PROPÓSITO. money_to_cop se niega
-        # a convertir "un millón y medio" —no interpreta a medias— pero solo
-        # puede negarse si la ve: si "y medio" quedara fuera del span, la
-        # conversión leería "un millón" y devolvería 1.000.000 por un millón y
-        # medio. Dentro del span, devuelve None y el invariante de no-drop
-        # convierte el caso en una pregunta.
-        amount_text = (
-            rf"({amount_atom}\s*"
-            rf"{unit_pattern}?"
-            r"(?:\s+y\s+medi[oa]s?)?(?:(?:\s+de)?\s+pesos?)?)"
-        )
-        polarity_patterns = (
-            (
-                "valor_max",
-                re.compile(
-                    rf"""
-                    \b(?:
-                        no\s+(?:sea|sean)?\s*(?:mayor(?:es)?|superior(?:es)?)\s+(?:a|de|que)
-                        |que\s+no\s+(?:supere|superen|exceda|excedan|rebase|rebasen)(?:\s+los?)?
-                        |no\s+(?:supere|superen|exceda|excedan|rebase|rebasen)(?:\s+los?)?
-                        |no\s+(?:sea|sean)?\s*(?:por\s+)?m[aá]s\s+de
-                    )\s+{amount_text}
-                    """,
-                    re.IGNORECASE | re.VERBOSE,
-                ),
-            ),
-            (
-                "valor_min",
-                re.compile(
-                    rf"""
-                    \b(?:
-                        no\s+(?:sea|sean)?\s*menor(?:es)?\s+(?:a|de|que)
-                        |no\s+(?:sea|sean)?\s*(?:por\s+)?menos\s+de
-                        |que\s+no\s+baje(?:n)?\s+de
-                        |no\s+baje(?:n)?\s+de
-                    )\s+{amount_text}
-                    """,
-                    re.IGNORECASE | re.VERBOSE,
-                ),
-            ),
-            (
-                "valor_max",
-                re.compile(
-                    rf"""
-                    \b(?:
-                        menor(?:es)?\s+(?:o\s+igual\s+)?(?:a|de|que)
-                        |menos\s+de
-                        |inferior(?:es)?\s+(?:a|de|que)
-                        |por\s+debajo\s+de
-                        |hasta
-                        |m[aá]ximo
-                        |a\s+lo\s+sumo
-                    )\s+{amount_text}
-                    """,
-                    re.IGNORECASE | re.VERBOSE,
-                ),
-            ),
-            (
-                "valor_min",
-                re.compile(
-                    rf"""
-                    \b(?:
-                        mayor(?:es)?\s+(?:o\s+igual\s+)?(?:a|de|que)
-                        |m[aá]s\s+de
-                        |superior(?:es)?\s+(?:a|de|que)
-                        |supere(?:n)?(?:\s+los?)?
-                        |exceda(?:n)?(?:\s+los?)?
-                        |por\s+encima\s+de
-                        |al\s+menos
-                        |m[ií]nim[oa]
-                        |desde
-                        |a\s+partir\s+de
-                    )\s+{amount_text}
-                    """,
-                    re.IGNORECASE | re.VERBOSE,
-                ),
-            ),
-        )
-        for field, pattern in polarity_patterns:
-            for match in list(pattern.finditer(normalized_query)):
-                amount = _to_cop(match.group(1))
-                if not is_admissible_amount(amount, match.group(1)):
-                    # INV-NO-SILENT-EXPLICIT-MONEY-DROP: un comparador con
-                    # unidad monetaria declarada que no se puede convertir no
-                    # se ejecuta sin filtro — se pregunta.
-                    if amount is None and has_explicit_monetary_evidence(match.group(1)):
-                        unconvertible_money.append(match.group(1).strip())
+        for decision in resolve_money_polarity(normalized_query):
+            operands = list(decision.amount_spans)
+            if len(operands) == 2:
+                lo_text, hi_text = operands
+                lo_has_unit = _has_monetary_unit(lo_text)
+                hi_has_unit = _has_monetary_unit(hi_text)
+                if not lo_has_unit and hi_has_unit and (unit := _inherit_unit(hi_text)):
+                    lo_text += " " + unit
+                if not hi_has_unit and lo_has_unit and (unit := _inherit_unit(lo_text)):
+                    hi_text += " " + unit
+                operands = [lo_text, hi_text]
+            values = [_to_cop(operand) for operand in operands]
+            explicit = any(has_explicit_monetary_evidence(operand) for operand in operands)
+            if decision.relation is MoneyRelation.RANGE:
+                low, high = values
+                verdict = admit_range(low, operands[0], high, operands[1])
+                if verdict is RangeVerdict.ABSENT and not explicit:
                     continue
-                params[field] = amount
-                span = normalized_query[match.start():match.end()]
-                consumed_spans.append(span)
-                normalized_query = (
-                    normalized_query[: match.start()]
-                    + " "
-                    + normalized_query[match.end() :]
-                )
-
-        # PARSER-POLARITY-MONETARY-002: post-number polarity patterns.
-        # Detects "X o menos", "X en adelante", etc. AFTER pre-number polarity
-        # but BEFORE the generic number scanner, so the number is consumed
-        # and doesn't trigger false ±20% range construction.
-        _less_than_post_re = re.compile(
-            rf"{amount_text}\s+(?:o\s+menos|o\s+menores|y\s+menos|y\s+menores|para\s+abajo|para\s+menos)",
-            re.IGNORECASE,
-        )
-        for match in list(_less_than_post_re.finditer(normalized_query)):
-            amount = _to_cop(match.group(1))
-            if is_admissible_amount(amount, match.group(1)):
-                params["valor_max"] = amount
-                span = normalized_query[match.start():match.end()]
-                consumed_spans.append(span)
-                normalized_query = (
-                    normalized_query[: match.start()]
-                    + " "
-                    + normalized_query[match.end() :]
-                )
-
-        _more_than_post_re = re.compile(
-            rf"{amount_text}\s+(?:en\s+adelante|o\s+mas|o\s+más|o\s+mayores|y\s+mas|y\s+más|y\s+mayores|o\s+superiores|para\s+arriba|para\s+mas|para\s+más)",
-            re.IGNORECASE,
-        )
-        for match in list(_more_than_post_re.finditer(normalized_query)):
-            amount = _to_cop(match.group(1))
-            if is_admissible_amount(amount, match.group(1)):
-                params["valor_min"] = amount
-                span = normalized_query[match.start():match.end()]
-                consumed_spans.append(span)
-                normalized_query = (
-                    normalized_query[: match.start()]
-                    + " "
-                    + normalized_query[match.end() :]
-                )
-
-        matches = list(re.finditer(
-            rf"(?:(?:mas|mayor(?:es)?|superior(?:es)?|superen?)\s+(?:de|a)|(?:menos|menor(?:es)?)\s+(?:de|a)|hasta|por|de|desde)?\s*({amount_atom})\s*{unit_pattern}?(?:\s+y\s+medi[oa]s?)?(?:(?:\s+de)?\s+pesos?)?",
-            normalized_query,
-        ))
-
-        for match in matches:
-            raw = match.group(0).strip()
-            number_part = match.group(1)
-            if number_part in year_tokens:
+                consumed_spans.append(decision.source_span)
+                if verdict is RangeVerdict.EXECUTE:
+                    params["valor_min"], params["valor_max"] = (
+                        (low, high) if decision.ordered else (min(low, high), max(low, high))
+                    )
+                else:
+                    params["money_clarification"] = RANGE_PARTIAL_CLARIFICATION.format(
+                        span=decision.source_span,
+                    )
                 continue
-            amount = _to_cop(raw)
-            if not is_admissible_amount(amount, raw):
+            admissible = any(is_admissible_amount(value, operand)
+                             for value, operand in zip(values, operands))
+            if not admissible and not explicit:
                 continue
-
-            if re.search(r"(?:mas|mayor(?:es)?|superior(?:es)?|superen?)\s+(?:de|a)|desde", raw):
-                params["valor_min"] = amount
-            elif re.search(r"(?:menos|menor(?:es)?)\s+(?:de|a)|hasta", raw):
-                params["valor_max"] = amount
-            elif re.search(r"\bpor\b", raw):
-                # PARSER-POLARITY-MONETARY-002: only build ±20% range if NO
-                # explicit valor_min/valor_max was already set by a post-pattern.
+            consumed_spans.append(decision.source_span)
+            if decision.relation is MoneyRelation.UNKNOWN or not all(
+                is_admissible_amount(value, operand) for value, operand in zip(values, operands)
+            ):
+                params["money_clarification"] = (
+                    f'No pude determinar el filtro monetario de "{decision.source_span}". '
+                    '¿Quieres un mínimo, un máximo, un rango o un valor aproximado? '
+                    'Por ejemplo: "más de 200 millones" o "entre 100 y 200 millones".'
+                )
+            elif decision.relation is MoneyRelation.LOWER_BOUND:
+                params["valor_min"] = values[0]
+            elif decision.relation is MoneyRelation.UPPER_BOUND:
+                params["valor_max"] = values[0]
+            elif decision.relation is MoneyRelation.APPROXIMATE:
+                # Preserve the authorized legacy approximation exactly.
                 if "valor_min" not in params and "valor_max" not in params:
-                    params.setdefault("valor_min", int(amount * 0.8))
-                    params.setdefault("valor_max", int(amount * 1.2))
-            else:
-                params.setdefault("valor_max", amount)
+                    params["valor_min"] = int(values[0] * 0.8)
+                    params["valor_max"] = int(values[0] * 1.2)
+
+        # No partial executable constraint survives an unresolved operand.
+        if params.get("money_clarification"):
+            params.pop("valor_min", None)
+            params.pop("valor_max", None)
 
         if smmlv_sources and smmlv_year is not None:
             source_values: dict[str, str] = {}
@@ -1602,20 +1349,6 @@ class QueryRouter:
                 "source_texts": source_texts,
                 "representation_kind": "indexed_unit",
             }
-
-        # INV-NO-SILENT-EXPLICIT-MONEY-DROP. Un comparador con unidad monetaria
-        # declarada que no se pudo convertir, y sin ningún otro filtro de valor
-        # que lo respalde, no puede terminar en una consulta sin cota: el
-        # usuario recibiría un universo que no pidió y no tendría cómo notarlo.
-        if unconvertible_money and not (
-            "valor_min" in params or "valor_max" in params
-        ) and "money_clarification" not in params:
-            expresion = unconvertible_money[0]
-            params["money_clarification"] = (
-                f"No pude interpretar el monto de \"{expresion}\". "
-                "¿Me lo das como una cifra? Por ejemplo: "
-                "\"más de 100 mil pesos\" o \"más de 2 millones\"."
-            )
 
         return params, consumed_spans
 
