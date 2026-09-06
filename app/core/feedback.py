@@ -203,12 +203,16 @@ class FeedbackStore:
         workflow_result is the dict returned by SecopalWorkflow.run_query()
         """
         trace_id = uuid.uuid4().hex[:12]
+        from app.core.actor_resolution_trace import actor_resolution_trace
         has_suggestions = bool(
             workflow_result.get("suggestions")
             or workflow_result.get("timeout_suggestions")
         )
 
         trace = {
+            **actor_resolution_trace(
+                workflow_result.get("resolved_params") or workflow_result.get("parsed_params") or {}
+            ),
             "trace_id": trace_id,
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "user_query": user_query,
