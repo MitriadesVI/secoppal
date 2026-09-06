@@ -58,15 +58,14 @@ class Settings(BaseSettings):
     # el SoQL y la respuesta vuelven al comportamiento previo a AP2 — lo
     # verifica tests/test_actor_flag_off.py.
     #
-    # Apagado POR DEFECTO a propósito. Si esta rama entra a main por
-    # fast-forward, el merge no debe encender un routing nuevo en producción
-    # sin que nadie lo haya decidido: la activación es un acto explícito del
-    # entorno (SECOPPAL_ACTOR_PROFILE_ENABLED=true), no un efecto secundario
-    # de integrar código. La suite corre con el flag encendido —ver
-    # tests/conftest.py— porque lo que hay que ejercitar es el camino que se
-    # va a desplegar el día que se encienda.
+    # Encendido POR DEFECTO como capacidad productiva del beta. El flag se
+    # conserva como kill-switch: SECOPPAL_ACTOR_PROFILE_ENABLED=false es el
+    # rollback explícito y restaura el comportamiento anterior a AP2.
+    #
+    # El default ON no relaja la resolución: un índice ausente, corrupto o de
+    # esquema incompatible sigue produciendo INDEX_UNAVAILABLE sin fallback.
     secoppal_actor_profile_enabled: bool = Field(
-        default=False, alias="SECOPPAL_ACTOR_PROFILE_ENABLED",
+        default=True, alias="SECOPPAL_ACTOR_PROFILE_ENABLED",
     )
 
     # ── Transporte Socrata (SODA3_TRANSPORT_V1) ──────────────────────────────

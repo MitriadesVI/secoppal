@@ -1,8 +1,8 @@
 # Actor Profile V1 — guía técnica y operativa
 
 **Estado:** entregado y vigente en `main` (`8acb21a`) · decisión canónica en
-[`ADR-060`](../decisions_log.md) · **flag apagado por defecto en código**  
-**Última actualización:** 2026-08-22
+[`ADR-060`](../decisions_log.md) · **capacidad productiva ON por defecto**
+**Última actualización:** 2026-09-06
 
 > Esta guía es de **mantenimiento y operación**. La decisión y sus alternativas
 > descartadas viven una sola vez, en `docs/decisions_log.md` (ADR-060). Aquí no
@@ -383,26 +383,29 @@ lee la respuesta y con qué método de transporte se pide. Añadir un aspecto es
 ## 12. Flag y despliegue
 
 ```bash
-# default seguro EN CÓDIGO (app/config.py) — no significa "sin terminar"
-SECOPPAL_ACTOR_PROFILE_ENABLED=false
+# default productivo EN CÓDIGO (app/config.py)
+SECOPPAL_ACTOR_PROFILE_ENABLED=true
 ```
 
-Activar es una **decisión de entorno aprovisionado**, no un efecto secundario del
-import. `tests/test_actor_flag_off.py` verifica el comportamiento con el flag
-apagado.
+Actor Profile forma parte del beta productivo y ya no requiere activación manual.
+`SECOPPAL_ACTOR_PROFILE_ENABLED=false` es el **rollback de emergencia explícito**;
+`tests/test_actor_flag_off.py` verifica que restaura el comportamiento anterior.
 
-**Para activar hacen falta dos cosas:**
+El índice sigue siendo un **requisito operativo independiente del flag**:
 
 ```bash
-SECOPPAL_ACTOR_PROFILE_ENABLED=true
 SECOP_ACTOR_ALIAS_INDEX_PATH=<ruta a un actor_alias_index.sqlite completo>
 ```
 
 **Requisito de despliegue:** debe existir un directorio de aliases **completo y de
-esquema compatible** antes de activar. Sin artefacto válido el resolver devuelve
+esquema compatible** antes de operar. Sin artefacto válido el resolver devuelve
 `INDEX_UNAVAILABLE` y no adivina. La ruta por defecto declarada es
 `data/actor_alias_index.sqlite`, relativa al despliegue; ninguna ruta absoluta de
 una máquina concreta es arquitectura.
+
+El default ON no autoriza sustitutos: ante un índice ausente, corrupto o
+incompatible no hay `LIKE` legacy, fuzzy autoritativo, identidad inventada ni
+relajación global.
 
 ---
 

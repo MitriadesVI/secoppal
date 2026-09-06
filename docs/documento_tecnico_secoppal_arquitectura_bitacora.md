@@ -649,9 +649,10 @@ bugs abiertos de runtime. El fixture permanece congelado con SHA-256
   de desambiguación.
 - **Selección clicable** en Streamlit que llega a la misma operación de backend
   que el texto, independiente del transporte.
-- **Flag apagado por defecto en código** (`SECOPPAL_ACTOR_PROFILE_ENABLED=false`);
-  se activa por entorno aprovisionado y exige un `actor_alias_index.sqlite`
-  completo y compatible en `SECOP_ACTOR_ALIAS_INDEX_PATH`.
+- **Capacidad productiva encendida por defecto**
+  (`SECOPPAL_ACTOR_PROFILE_ENABLED=true`); `false` es el rollback explícito y el
+  `actor_alias_index.sqlite` completo y compatible sigue siendo obligatorio en
+  `SECOP_ACTOR_ALIAS_INDEX_PATH`.
 - Auditoría adversarial congelada de **1.150 casos**: P0 0 · P1 0 · identidades
   equivocadas 0 · secuestros temáticos 0 · pérdidas de actor 0 ·
   auto-resoluciones difusas 0.
@@ -1416,7 +1417,7 @@ sistema descartaba en silencio información que el usuario sí había dado.
   método de autoridad, con la recuperación difusa explícitamente **sin**
   autoridad; huella contractual observada con límites declarados; álgebra
   conversacional de actor; documento completo y selección clicable en la UX de
-  candidatos. Flag apagado por defecto en código.
+  candidatos. Capacidad productiva ON por defecto, con `false` como kill-switch.
 - **SEARCH-SH1 (ADR-061, `8acb21a`)** — `SemanticDimension` como vocabulario
   compartido de dimensiones; resolutor y proyección de tipo/naturaleza
   contractual respaldados por auditoría de fuente (`convenio` es **compuesto**,

@@ -2813,16 +2813,19 @@ lista pendiente vigente. Procedencia resultante: `user_selected_candidate`. Los
 botones de candidato en Telegram **no** están entregados todavía; la operación ya
 es apta para ese callback.
 
-#### 11. Flag apagado por defecto ≠ feature incompleta
+#### 11. Default productivo ON y rollback explícito
 
-`SECOPPAL_ACTOR_PROFILE_ENABLED=false` es el **default seguro del código**
-(`app/config.py`), verificado por `tests/test_actor_flag_off.py`. Activar es una
-decisión de entorno aprovisionado, no un efecto secundario del import.
+**Enmienda operativa 2026-09-06.** Actor Profile es una capacidad productiva del
+beta y `SECOPPAL_ACTOR_PROFILE_ENABLED=true` es el default del código
+(`app/config.py`), verificado por `tests/test_actor_flag_off.py`.
+`SECOPPAL_ACTOR_PROFILE_ENABLED=false` se conserva como kill-switch y restaura
+explícitamente el comportamiento anterior a AP2.
 
-Para activar hacen falta **dos** cosas: `SECOPPAL_ACTOR_PROFILE_ENABLED=true` y
-`SECOP_ACTOR_ALIAS_INDEX_PATH` apuntando a un `actor_alias_index.sqlite` completo
-y de esquema compatible. Sin artefacto válido el resolver devuelve
-`INDEX_UNAVAILABLE` sin fallback — nunca adivina.
+El índice no deja de ser requisito por encender el default:
+`SECOP_ACTOR_ALIAS_INDEX_PATH` debe apuntar a un `actor_alias_index.sqlite`
+completo y de esquema compatible. Sin artefacto válido el resolver devuelve
+`INDEX_UNAVAILABLE` sin fallback — nunca usa `LIKE` legacy, fuzzy autoritativo,
+identidad inventada ni relajación global.
 
 ### Alternativas descartadas
 

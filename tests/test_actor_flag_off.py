@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import pytest
 
-from app.config import Settings, actor_profile_enabled
+from app.config import Settings, actor_profile_enabled, get_settings
 from app.core.query_plan import compute_query_plan
 from app.core.query_router import QueryRouter
 from app.core.soql_builder import SoQLBuilder
@@ -39,25 +39,34 @@ def soql_for(text: str) -> str:
     return builder.build(builder.dataset_id_for(params.get("dataset")), params)
 
 
-def test_the_declared_default_is_off():
-    """El default de producción es apagado; la suite lo enciende aparte.
+def test_the_declared_default_is_on(monkeypatch):
+    """El default productivo es ON aunque no exista una variable de entorno.
 
-    Se lee el campo declarado y no ``actor_profile_enabled()``, porque la
-    fixture de ``conftest`` ya encendió el flag para todo el resto de la
-    suite: preguntarle a la función mediría el entorno de pruebas, no la
-    decisión de despliegue.
-
-    Importa que un fast-forward a main no active un routing nuevo por el
-    solo hecho de integrar el código.
+    La fixture global fija el entorno para la suite; ``_env_file=None`` y la
+    eliminación explícita de la variable miden el default declarado.
     """
+    monkeypatch.delenv("SECOPPAL_ACTOR_PROFILE_ENABLED", raising=False)
     field = Settings.model_fields["secoppal_actor_profile_enabled"]
-    assert field.default is False
+    assert field.default is True
     assert field.alias == "SECOPPAL_ACTOR_PROFILE_ENABLED"
+    assert Settings(_env_file=None).secoppal_actor_profile_enabled is True
 
 
-def test_the_suite_runs_with_the_flag_on():
-    """Lo que se despliega el día que se encienda es lo que se está probando."""
+def test_environment_true_enables_actor_profile(monkeypatch):
+    monkeypatch.setenv("SECOPPAL_ACTOR_PROFILE_ENABLED", "true")
+    get_settings.cache_clear()
     assert actor_profile_enabled() is True
+
+
+def test_environment_false_is_a_working_kill_switch(monkeypatch):
+    monkeypatch.setenv("SECOPPAL_ACTOR_PROFILE_ENABLED", "false")
+    get_settings.cache_clear()
+
+    assert actor_profile_enabled() is False
+    params = parse("contratos del proveedor FUNDACARIBE")
+    assert params["contratista"] == "fundacaribe"
+    assert "actor_resolution" not in params
+    assert "actor_scope" not in params
 
 
 # ---------------------------------------------------------------------------
