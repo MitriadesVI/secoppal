@@ -74,3 +74,9 @@ no prueban tipo jurídico ni vigencia de membresía de los grupos.
 No se hicieron llamadas SECOP, cambios de runtime, arranque de app, merge ni push.
 La integración productiva queda pendiente; esta entrega permite ejecutar y
 revisar el modelo con evidencia real congelada.
+
+La comprobación inicial de whitespace detectó espacios finales generados por
+las herramientas en sus logs. `literal_logs.json` conserva las salidas originales
+exactas, incluido ese diagnóstico inicial; los `.log` son copias legibles sin
+espacios finales ni líneas vacías al cierre. No se desactivó ninguna regla de Git.
+El diff final desde `d608336` se comprueba de nuevo tras esa limpieza.
