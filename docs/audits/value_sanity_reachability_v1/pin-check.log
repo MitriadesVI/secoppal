@@ -1,0 +1,2 @@
+PIN_DELTA: only soql_builder digest; other test AST and historical oracles unchanged.
+SEMGREP_DELTA: 0; 10 baseline findings retained.

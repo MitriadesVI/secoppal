@@ -1,0 +1,10 @@
+{
+  "base": "b123c5ac7e97870bbbc220ea9f0405f2001b7a21",
+  "baseline_findings": 10,
+  "final_findings": 10,
+  "comparison": "multiset(check_id, path, extra.message)",
+  "new_findings": 0,
+  "removed_findings": 0,
+  "owned_runtime_findings": 0,
+  "scan_errors": []
+}

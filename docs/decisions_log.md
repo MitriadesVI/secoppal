@@ -4408,3 +4408,37 @@ antes/después, propiedades, E2E con spies y límites de validación.
 
 Detalle: `docs/decisions/2026-09-06_ADR-093_money-polarity-v2-fail-closed.md`.
 Cierre: `docs/audits/2026-09-06_MONEY_POLARITY_V2_CLOSEOUT.md`.
+
+
+---
+
+## 2026-09-06 — VALUE-SANITY-REACHABILITY-V1: restaurar ADR-005
+
+La defensa VALUE-SANITY-002A no era alcanzable desde la búsqueda ordinaria:
+`SoQLBuilder` omitía `valor_facturado` del SELECT de contratos y `SecopClient`
+lo conservaba como string cuando una consulta sí lo recuperaba. El detector
+exige dos números comparables; añadir solo el SELECT no cerraba el defecto.
+
+Se transporta esa columna en `jbjy-vk9h` y se normaliza mediante `_safe_money`,
+la conversión monetaria existente del cliente. El umbral sigue en ratio ≥100;
+`valor_del_contrato` continúa siendo el valor principal y `valor_facturado`
+solo es la referencia del warning existente. Facturado cero/null/no disponible
+no implica CLEAN. No se modificaron el detector, Procesos ni agregados de
+Entity Profile. No se crea ADR nuevo.
+
+La regresión offline ejecuta builder → payload proyectado con string → cliente
+→ formatter → detector y los textos de WhatsApp, Telegram y Streamlit. También
+cubre la frontera 100 con Hypothesis determinista, conservación del dato,
+lookup, Radar y exportación. Sobre la base: 13 fallos y 5 pases; tras el fix:
+453 tests focales pasan, incluidos 12 de paridad. Ruff: `All checks passed!`; lint-core:
+`app/core/ limpio`; Semgrep: 10 hallazgos de baseline, cero nuevos y ninguno en
+los archivos runtime propios. La primera suite tuvo un único fallo por el hash
+físico del builder. Se actualizó exclusivamente ese pin en
+`tests/test_truth_layer_public_parity.py`, con comentario y regresión aditiva;
+los oráculos históricos, restantes pins y aserciones permanecen intactos.
+La suite completa se repitió tras cerrar ese guard: `11527 passed, 11 skipped,
+14 xfailed in 458.33s (0:07:38)`. Veredicto del slice: GO.
+
+Base `b123c5ac7e97870bbbc220ea9f0405f2001b7a21`; rama
+`fix/value-sanity-reachability-v1`. Informe, límites y salidas literales:
+[VALUE-SANITY-REACHABILITY-V1](audits/value_sanity_reachability_v1/REPORT.md).
