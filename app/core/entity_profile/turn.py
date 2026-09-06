@@ -6,6 +6,7 @@ import re
 import unicodedata
 
 from app.core.entity_profile.models import EntityProfileIdentity, EntityProfileScope
+from app.core.entity_profile.followup import PROFILE_FOCUS_PARAM, is_supplier_followup
 from app.core.entity_profile.scope import resolve_profile_scope
 from app.core.municipal_territory import get_municipal_territories
 
@@ -64,6 +65,8 @@ def _focus(text: str) -> str | None:
 
 def detect_entity_profile_turn(user_query: str, params: dict) -> tuple[bool, str | None]:
     normalized = _fold(user_query)
+    if is_supplier_followup(user_query, params):
+        return True, "suppliers"
     focus = _focus(normalized)
     if _OVERVIEW.search(normalized):
         return True, focus or "overview"
@@ -143,6 +146,7 @@ def classify_entity_profile_turn(user_query: str, params: dict) -> EntityProfile
     if not detected:
         clean = dict(params)
         clean.pop(PROFILE_ACTIVE_PARAM, None)
+        clean.pop(PROFILE_FOCUS_PARAM, None)
         return EntityProfileTurn(False, None, clean, None, None)
 
     clean = profile_query_params(params)
@@ -180,6 +184,7 @@ def classify_entity_profile_turn(user_query: str, params: dict) -> EntityProfile
             else _territory_clarification(user_query),
         )
     clean[PROFILE_ACTIVE_PARAM] = True
+    clean[PROFILE_FOCUS_PARAM] = focus
     return EntityProfileTurn(
         True,
         focus,

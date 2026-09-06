@@ -26,6 +26,7 @@ from app.core._followup_constants import SCOPE_TOPIC_KEYS
 from app.core.actor_profile.turn import maybe_handle_actor_profile
 from app.core.analytics import maybe_handle_analytical_query
 from app.core.entity_profile.turn import classify_entity_profile_turn
+from app.core.entity_profile.followup import is_supplier_followup
 from app.core.observer import observe as observe_universe_fn
 from app.core.secop_client import SecopClient
 from app.core.socrata_transport import Soda3OrderingSpecifier
@@ -74,7 +75,7 @@ def execute_query(state: State, secop_client: SecopClient, soql_builder: SoQLBui
     # Si maybe_handle_analytical_query atiende la consulta, NO se ejecuta el
     # camino tabular. La respuesta queda en analytical_response y se propaga
     # intacta por degrade_query/format_response/build_advisor_response.
-    analytics = maybe_handle_analytical_query(
+    analytics = None if is_supplier_followup(state.get("user_query", ""), params) else maybe_handle_analytical_query(
         user_query=state.get("user_query", ""),
         params=params,
         dataset_id=state.get("dataset_id", ""),

@@ -41,6 +41,8 @@ single_turn:
   - {id: EP-ST039, text: "analiza la evolucion de la alcaldia de baranoa", detected: true, focus: temporal, scope: BUYER_UNIT}
   - {id: EP-ST040, text: "analiza la alcaldia de baranoa en alimentacion escolar", detected: true, focus: overview, scope: BUYER_UNIT}
 
+  - {id: EP-ST041, text: "analizame la alcaldia de galapa", detected: true, focus: overview, scope: BUYER_UNIT}
+
 conversations:
   - id: EP-MT001
     turns:
@@ -102,3 +104,26 @@ conversations:
     turns:
       - {text: "perfil de la gobernacion del atlantico en 2025", route: overview}
       - {text: "y este año", route: overview}
+
+  - id: EP-MT016
+    turns:
+      - {text: "analiza la alcaldia de galapa", route: overview}
+      - {text: "cuales son sus mayores proveedores?", route: suppliers}
+      - {text: "cuales son sus mayores proveedores?", route: suppliers}
+  - id: EP-MT017
+    turns:
+      - {text: "analiza la alcaldia de galapa", route: overview}
+      - {text: "quienes son sus principales proveedores", route: suppliers}
+  - id: EP-MT018
+    turns:
+      - {text: "analiza la alcaldia de galapa", route: overview}
+      - {text: "quien tiene mas contratos", route: suppliers}
+  - id: EP-MT019
+    turns:
+      - {text: "analiza la alcaldia de galapa", route: overview}
+      - {text: "quienes contratan mas con esa entidad", route: suppliers}
+  - id: EP-MT020
+    turns:
+      - {text: "analiza la alcaldia de galapa", route: overview}
+      - {text: "y sus proveedores", route: suppliers}
+      - {text: "y por valor", route: suppliers}

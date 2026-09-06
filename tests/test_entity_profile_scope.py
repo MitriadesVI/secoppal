@@ -24,10 +24,10 @@ def _case_params(router: QueryRouter, text: str) -> dict:
     return router.parse(text, today=date(2026, 9, 5)).params
 
 
-def test_entity_profile_single_turn_corpus_has_exactly_forty_cases(router):
+def test_entity_profile_single_turn_corpus_includes_beta_regressions(router):
     payload = yaml.safe_load(CORPUS.read_text(encoding="utf-8"))
     cases = payload["single_turn"]
-    assert len(cases) == 40
+    assert len(cases) == 41
 
     failures: list[str] = []
     for case in cases:

@@ -283,9 +283,9 @@ def _route(result: dict) -> str:
     return "normal"
 
 
-def test_entity_profile_multiturn_corpus_has_fifteen_conversations():
+def test_entity_profile_multiturn_corpus_includes_beta_regressions():
     conversations = yaml.safe_load(CORPUS.read_text(encoding="utf-8"))["conversations"]
-    assert len(conversations) == 15
+    assert len(conversations) == 20
     failures: list[str] = []
     for conversation in conversations:
         workflow, _ = _workflow()
