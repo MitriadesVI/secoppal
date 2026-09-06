@@ -1,0 +1,7 @@
+{
+  "provenance": "Synthetic minimal reproductions of the user-reported 11-row cohorts; not a live dataset snapshot. Five valid candidate groups plus one artificial placeholder group.",
+  "cases": [
+    {"city": "Barranquilla", "placeholder_rows": 11, "distinct_names": 9},
+    {"city": "Bucaramanga", "placeholder_rows": 11, "distinct_names": 11}
+  ]
+}
