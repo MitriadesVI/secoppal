@@ -1,0 +1,5265 @@
+{
+  "city": "barranquilla",
+  "timestamp": "2026-09-06T23:38:18.750693+00:00",
+  "prompt": "analiza la alcaldia de barranquilla en 2026",
+  "params": {
+    "dataset": "procesos",
+    "dataset_explicit": false,
+    "fecha_desde": "2026-01-01",
+    "fecha_hasta": "2026-12-31",
+    "_temporal_replace_scope": true,
+    "entidad": "Municipio de barranquilla",
+    "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+    "entidad_resolution": {
+      "value": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "method": "rewrite_alcald[ií]a",
+      "kind": "buyer_entity",
+      "confidence": "high",
+      "like_value": null,
+      "metadata": {
+        "rewritten_from": "alcaldia de barranquilla",
+        "resolution_method": "exact"
+      }
+    },
+    "_entity_profile_active": true,
+    "_entity_profile_focus": "overview"
+  },
+  "transport": "soda3",
+  "timeout": 8,
+  "count": {
+    "sql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor IS NOT NULL AND documento_proveedor != '' GROUP BY documento_proveedor, tipodocproveedor ORDER BY contract_count DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+    "rows": [
+      {
+        "documento_proveedor": "900249143",
+        "tipodocproveedor": "NIT",
+        "supplier_name": "PUERTA DE ORO EMPRESA DE DESARROLLO CARIBE SAS",
+        "contract_count": "16",
+        "total_contract_value": "134975097092"
+      },
+      {
+        "documento_proveedor": "No Definido",
+        "tipodocproveedor": "No Definido",
+        "supplier_name": "UTNIBQ",
+        "contract_count": "11",
+        "total_contract_value": "75450630884"
+      },
+      {
+        "documento_proveedor": "1045705185",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "supplier_name": "ANDRES ALBERTO IGLESIAS PARDO",
+        "contract_count": "7",
+        "total_contract_value": "220601600"
+      },
+      {
+        "documento_proveedor": "800091140",
+        "tipodocproveedor": "NIT",
+        "supplier_name": "EDUBAR S.A.",
+        "contract_count": "7",
+        "total_contract_value": "432271566899.68"
+      },
+      {
+        "documento_proveedor": "901033967",
+        "tipodocproveedor": "NIT",
+        "supplier_name": "FUNDACION SOCIAL TEJEDORES DE DIVERSIDAD",
+        "contract_count": "7",
+        "total_contract_value": "14232142857"
+      }
+    ],
+    "seconds": 3.424,
+    "parsed": [
+      {
+        "actor_identity": "NIT:900249143",
+        "document_type": "NIT",
+        "document": "900249143",
+        "observed_name": "PUERTA DE ORO EMPRESA DE DESARROLLO CARIBE SAS",
+        "contract_count": 16,
+        "total_contract_value": 134975097092.0
+      },
+      {
+        "actor_identity": "CC:1045705185",
+        "document_type": "CC",
+        "document": "1045705185",
+        "observed_name": "ANDRES ALBERTO IGLESIAS PARDO",
+        "contract_count": 7,
+        "total_contract_value": 220601600.0
+      },
+      {
+        "actor_identity": "NIT:800091140",
+        "document_type": "NIT",
+        "document": "800091140",
+        "observed_name": "EDUBAR S.A.",
+        "contract_count": 7,
+        "total_contract_value": 432271566899.68
+      },
+      {
+        "actor_identity": "NIT:901033967",
+        "document_type": "NIT",
+        "document": "901033967",
+        "observed_name": "FUNDACION SOCIAL TEJEDORES DE DIVERSIDAD",
+        "contract_count": 7,
+        "total_contract_value": 14232142857.0
+      }
+    ],
+    "visible_count": 4
+  },
+  "value": {
+    "sql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor IS NOT NULL AND documento_proveedor != '' GROUP BY documento_proveedor, tipodocproveedor ORDER BY total_contract_value DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+    "rows": [
+      {
+        "documento_proveedor": "800091140",
+        "tipodocproveedor": "NIT",
+        "supplier_name": "EDUBAR S.A.",
+        "contract_count": "7",
+        "total_contract_value": "432271566899.68"
+      },
+      {
+        "documento_proveedor": "900249143",
+        "tipodocproveedor": "NIT",
+        "supplier_name": "PUERTA DE ORO EMPRESA DE DESARROLLO CARIBE SAS",
+        "contract_count": "16",
+        "total_contract_value": "134975097092"
+      },
+      {
+        "documento_proveedor": "No Definido",
+        "tipodocproveedor": "No Definido",
+        "supplier_name": "UTNIBQ",
+        "contract_count": "11",
+        "total_contract_value": "75450630884"
+      },
+      {
+        "documento_proveedor": "901040175",
+        "tipodocproveedor": "NIT",
+        "supplier_name": "K-YENA S.A.S.",
+        "contract_count": "2",
+        "total_contract_value": "69709518946"
+      },
+      {
+        "documento_proveedor": "900508420",
+        "tipodocproveedor": "NIT",
+        "supplier_name": "VIGICOLBA LTDA",
+        "contract_count": "3",
+        "total_contract_value": "57854241080"
+      }
+    ],
+    "seconds": 3.305,
+    "parsed": [
+      {
+        "actor_identity": "NIT:800091140",
+        "document_type": "NIT",
+        "document": "800091140",
+        "observed_name": "EDUBAR S.A.",
+        "contract_count": 7,
+        "total_contract_value": 432271566899.68
+      },
+      {
+        "actor_identity": "NIT:900249143",
+        "document_type": "NIT",
+        "document": "900249143",
+        "observed_name": "PUERTA DE ORO EMPRESA DE DESARROLLO CARIBE SAS",
+        "contract_count": 16,
+        "total_contract_value": 134975097092.0
+      },
+      {
+        "actor_identity": "NIT:901040175",
+        "document_type": "NIT",
+        "document": "901040175",
+        "observed_name": "K-YENA S.A.S.",
+        "contract_count": 2,
+        "total_contract_value": 69709518946.0
+      },
+      {
+        "actor_identity": "NIT:900508420",
+        "document_type": "NIT",
+        "document": "900508420",
+        "observed_name": "VIGICOLBA LTDA",
+        "contract_count": 3,
+        "total_contract_value": 57854241080.0
+      }
+    ],
+    "visible_count": 4
+  },
+  "audit": {
+    "sql": "SELECT documento_proveedor, tipodocproveedor, count(*) AS occurrences WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor IS NOT NULL AND documento_proveedor != '' GROUP BY documento_proveedor, tipodocproveedor ORDER BY occurrences DESC, documento_proveedor ASC, tipodocproveedor ASC LIMIT 1000",
+    "rows": [
+      {
+        "documento_proveedor": "900249143",
+        "tipodocproveedor": "NIT",
+        "occurrences": "16"
+      },
+      {
+        "documento_proveedor": "No Definido",
+        "tipodocproveedor": "No Definido",
+        "occurrences": "11"
+      },
+      {
+        "documento_proveedor": "1045705185",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "7"
+      },
+      {
+        "documento_proveedor": "800091140",
+        "tipodocproveedor": "NIT",
+        "occurrences": "7"
+      },
+      {
+        "documento_proveedor": "901033967",
+        "tipodocproveedor": "NIT",
+        "occurrences": "7"
+      },
+      {
+        "documento_proveedor": "1125079383",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "5"
+      },
+      {
+        "documento_proveedor": "1140832205",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "5"
+      },
+      {
+        "documento_proveedor": "1140835826",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "5"
+      },
+      {
+        "documento_proveedor": "900473222",
+        "tipodocproveedor": "NIT",
+        "occurrences": "5"
+      },
+      {
+        "documento_proveedor": "900583080",
+        "tipodocproveedor": "NIT",
+        "occurrences": "5"
+      },
+      {
+        "documento_proveedor": "900804571",
+        "tipodocproveedor": "NIT",
+        "occurrences": "5"
+      },
+      {
+        "documento_proveedor": "901040587",
+        "tipodocproveedor": "NIT",
+        "occurrences": "5"
+      },
+      {
+        "documento_proveedor": "1082974973",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "4"
+      },
+      {
+        "documento_proveedor": "1118869933",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "4"
+      },
+      {
+        "documento_proveedor": "1122417644",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "4"
+      },
+      {
+        "documento_proveedor": "1140822962",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "4"
+      },
+      {
+        "documento_proveedor": "1140855413",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "4"
+      },
+      {
+        "documento_proveedor": "22494469",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "4"
+      },
+      {
+        "documento_proveedor": "32733869",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "4"
+      },
+      {
+        "documento_proveedor": "72243013",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "4"
+      },
+      {
+        "documento_proveedor": "80218055",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "4"
+      },
+      {
+        "documento_proveedor": "890104633",
+        "tipodocproveedor": "NIT",
+        "occurrences": "4"
+      },
+      {
+        "documento_proveedor": "900078164",
+        "tipodocproveedor": "NIT",
+        "occurrences": "4"
+      },
+      {
+        "documento_proveedor": "900179318",
+        "tipodocproveedor": "NIT",
+        "occurrences": "4"
+      },
+      {
+        "documento_proveedor": "900429416",
+        "tipodocproveedor": "NIT",
+        "occurrences": "4"
+      },
+      {
+        "documento_proveedor": "900545489",
+        "tipodocproveedor": "NIT",
+        "occurrences": "4"
+      },
+      {
+        "documento_proveedor": "900623310",
+        "tipodocproveedor": "NIT",
+        "occurrences": "4"
+      },
+      {
+        "documento_proveedor": "900940101",
+        "tipodocproveedor": "NIT",
+        "occurrences": "4"
+      },
+      {
+        "documento_proveedor": "901139193",
+        "tipodocproveedor": "NIT",
+        "occurrences": "4"
+      },
+      {
+        "documento_proveedor": "901157410",
+        "tipodocproveedor": "NIT",
+        "occurrences": "4"
+      },
+      {
+        "documento_proveedor": "1042416765",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "1043611498",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "1045673973",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "1045720300",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "1048214277",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "1082861969",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "1083561987",
+        "tipodocproveedor": "NIT",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "1129516912",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "1129564960",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "1129572776",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "1129573219",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "1140815797",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "1140816824",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "1140820671",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "1140826601",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "1140841507",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "1140861383",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "1140878718",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "1140894348",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "1140898284",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "1234091804",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "32713138",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "32749128",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "44190027",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "5164713",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "55233489",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "55301399",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "71379027",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "72155842",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "72171670",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "72181904",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "72200923",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "72259844",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "72268223",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "72281630",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "72288318",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "72293700",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "72296261",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "8000709922",
+        "tipodocproveedor": "NIT",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "802013127",
+        "tipodocproveedor": "NIT",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "802015182",
+        "tipodocproveedor": "NIT",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "802016765",
+        "tipodocproveedor": "NIT",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "830032436",
+        "tipodocproveedor": "NIT",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "830045603",
+        "tipodocproveedor": "NIT",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "8531566",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "890101681",
+        "tipodocproveedor": "NIT",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "890102508",
+        "tipodocproveedor": "NIT",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "890104481",
+        "tipodocproveedor": "NIT",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "890115957",
+        "tipodocproveedor": "NIT",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "900225453",
+        "tipodocproveedor": "NIT",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "900334689",
+        "tipodocproveedor": "NIT",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "900508420",
+        "tipodocproveedor": "NIT",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "900762253",
+        "tipodocproveedor": "NIT",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "900763490",
+        "tipodocproveedor": "NIT",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "900829017",
+        "tipodocproveedor": "NIT",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "900864938",
+        "tipodocproveedor": "NIT",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "900928544",
+        "tipodocproveedor": "NIT",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "900937349",
+        "tipodocproveedor": "NIT",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "901029246",
+        "tipodocproveedor": "NIT",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "901166609",
+        "tipodocproveedor": "NIT",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "901266867",
+        "tipodocproveedor": "NIT",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "901355021",
+        "tipodocproveedor": "NIT",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "901657507",
+        "tipodocproveedor": "NIT",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "901784045",
+        "tipodocproveedor": "NIT",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "901856007",
+        "tipodocproveedor": "NIT",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "901875659",
+        "tipodocproveedor": "NIT",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "902025340",
+        "tipodocproveedor": "NIT",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "1000257809",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1000575496",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1000944288",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1000954004",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001778588",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001780129",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001788348",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001800479",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001818216",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001818581",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001820092",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001820418",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001822538",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001822987",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001823535",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001823564",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001823566",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001823733",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001824340",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001825886",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001825947",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001825996",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001826007",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001851043",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001851084",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001851400",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001851431",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001851445",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001851826",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001852089",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001853697",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001854569",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001856286",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001865949",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001866357",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001868058",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001871659",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001872608",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001876394",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001877640",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001879486",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001880920",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001883301",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001887511",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001888084",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001888806",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001890457",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001893352",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001893703",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001913971",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001915490",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001916787",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001917191",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001918484",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001919176",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001919362",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001919382",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001920477",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001937731",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001940488",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001943803",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001943973",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001944172",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001945019",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001945135",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001945898",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001945963",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001947799",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001948005",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001994865",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001996395",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001997052",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001997328",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001997704",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001999118",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001999163",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001999854",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1001999953",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002000396",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002001314",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002008380",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002014327",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002022222",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002022801",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002024201",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002025358",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002025455",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002026696",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002027788",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002028009",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002028831",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002030461",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002033345",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002034981",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002036521",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002069910",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002070020",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002092766",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002133778",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002145124",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002153363",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002153651",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002155132",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002155418",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002159788",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002160093",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002160201",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002160396",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002160498",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002161550",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002162339",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002182938",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002185402",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002207617",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002209824",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002210959",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002211668",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002212091",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002212291",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002212532",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002236261",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002276159",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1002995518",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1004092016",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1004123636",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1004277723",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1004345306",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1004345413",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1004350076",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1004487424",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1005372649",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1005425028",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1005434782",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1005551343",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1005566630",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1007119035",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1007123561",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1007128714",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1007138847",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1007199260",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1007280572",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1007338439",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1007483573",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1007583274",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1007925746",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1007926040",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1007957262",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1007964831",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1007969966",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1007973294",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1010018765",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1010043613",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1010060729",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1010076944",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1010084654",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1010088662",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1010097552",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1010097916",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1010112637",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1010117433",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1010120394",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1010122297",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1010147463",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1011089132",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1014257532",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1018420572",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1018483845",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1019006365",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1019006394",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1019150747",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1020727022",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1020750168",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1020755793",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1020781585",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1020834297",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1022440831",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1023862098",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1024589533",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1026294968",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1026591338",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1030621212",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1030631243",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1032413357",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1032443403",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1032466025",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1035424687",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1037610681",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1039886084",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1041770130",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1041893115",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1041897052",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042240445",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042240577",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042240683",
+        "tipodocproveedor": "Cédula de Extranjería",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042240722",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042241285",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042242320",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042244499",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042248397",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042347121",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042348133",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042348688",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042351527",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042352004",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042354702",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042357787",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042416938",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042420871",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042421845",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042430094",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042430466",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042432391",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042432417",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042432764",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042433617",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042435487",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042439882",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042440389",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042440571",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042442767",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042443281",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042445624",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042446017",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042448838",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042449673",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042450600",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042452398",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042453923",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042454042",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042456265",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042460114",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042472072",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042848250",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042850177",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042853278",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042980135",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042996242",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042997118",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042997370",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042998977",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042999008",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1042999616",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043000083",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043000390",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043000452",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043001471",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043001474",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043001738",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043001851",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043003361",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043003864",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043007815",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043008216",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043009040",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043009520",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043012903",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043013170",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043017031",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043017951",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043018633",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043019314",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043019760",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043019788",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043019816",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043020223",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043021264",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043021777",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043022318",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043024284",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043026264",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043027255",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043027937",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043029737",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043127298",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043134777",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043151767",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043437614",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043441082",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043605154",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043660948",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043661303",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043661573",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043661737",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043662892",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043664466",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043664966",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043668229",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043842527",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043871631",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043872906",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043874631",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043876995",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043877709",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043931145",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043931930",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043932735",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1043961871",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1044211222",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1044213877",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1044214527",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1044390339",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1044390792",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1044392166",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1044392598",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1044392711",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1044394445",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1044420047",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1044421341",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1044421448",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1044421966",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1044422011",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1044422602",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1044422930",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1044423247",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1044423895",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1044425681",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1044426907",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1044428352",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1044428483",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1044430875",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1044432062",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1044434573",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1044600550",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1044603944",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1044611297",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1044621522",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1044625459",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1044638320",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1044801523",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045232635",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045666199",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045666268",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045667290",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045667618",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045667745",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045669047",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045669769",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045671988",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045672272",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045672769",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045673193",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045673252",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045673433",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045673522",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045674215",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045674342",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045675062",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045675539",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045676782",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045677261",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045678019",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045678079",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045678539",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045679394",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045679967",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045680286",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045680299",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045680596",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045680631",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045680721",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045681186",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045682170",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045682718",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045683177",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045683460",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045683649",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045684279",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045684352",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045684510",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045685001",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045685010",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045685906",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045686096",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045686171",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045686192",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045686938",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045687083",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045687494",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045687815",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045687837",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045690699",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045692146",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045692373",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045693419",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045693737",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045694004",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045694163",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045694847",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045695066",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045695115",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045695892",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045697300",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045697433",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045697690",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045697753",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045697824",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045697885",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045697924",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045698450",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045698453",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045698606",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045698951",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045699261",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045700133",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045700655",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045700930",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045701924",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045702957",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045704175",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045704251",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045704522",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045706148",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045706274",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045706682",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045707508",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045708319",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045708526",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045708988",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045709486",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045709676",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045710076",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045710213",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045711240",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045711564",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045712856",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045713055",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045713181",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045714822",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045714939",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045715080",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045716428",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045716631",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045716795",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045716891",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045717087",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045717093",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045717109",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045719067",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045719110",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045720730",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045721439",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045721730",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045722562",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045722940",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045723042",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045723997",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045724627",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045724883",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045724924",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045724927",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045725124",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045725595",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045725695",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045725953",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045727337",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045728124",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045728819",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045728945",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045729241",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045729365",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045729571",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045729652",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045729705",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045730322",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045730340",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045730487",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045730499",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045731082",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045731316",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045732128",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045732963",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045733535",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045733603",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045733949",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045734219",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045734666",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045735008",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045735079",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045735765",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045736996",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045737836",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045738005",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045738026",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045739347",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045740315",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045740451",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045740843",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045741580",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045741664",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045742077",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045742541",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045742962",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045743288",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045743301",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045743372",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045744609",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045745007",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045746462",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045746561",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045746786",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045746835",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045747074",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045747124",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045747184",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045747508",
+        "tipodocproveedor": "NIT",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045748736",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045748740",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045749007",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045750767",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045750827",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045751261",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045751651",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045752194",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045753472",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045755526",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045758306",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045760043",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045760606",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045761413",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1045761553",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1046268893",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1046269668",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1046276779",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1046339070",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1046339194",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1046693147",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1046701595",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1046703001",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1046812736",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1046812804",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1046872668",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1046873237",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1046874702",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1047035676",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1047039719",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1047041260",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1047042956",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1047043228",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1047218859",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1047221656",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1047226425",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1047226899",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1047230323",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1047231684",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1047232195",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1047232686",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1047233497",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1047234267",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1047236531",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1047239463",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1047240127",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1047336675",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1047337081",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1047337662",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1047338307",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1047342409",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1047345345",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1047347284",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1047367139",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1047373994",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1047373995",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1047393147",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1047399153",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1047421936",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1047423481",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1047455022",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1047479425",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1048064575",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1048064674",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1048065659",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1048068739",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1048069481",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1048204343",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1048204407",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1048205228",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1048206759",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1048208431",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1048209069",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1048209127",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1048210366",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1048210461",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1048210955",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1048211194",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1048213004",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1048213930",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1048216186",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1048217919",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1048218005",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1048219116",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1048219506",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1048221425",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1048222694",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1048224602",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1048224658",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1048224771",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1048274802",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1048276596",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1048279309",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1048295301",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1048321272",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1048321289",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1048322641",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1049346642",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1049453157",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1049454791",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1049538925",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1049615871",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1050036068",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1050040576",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1050719641",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1050953347",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1051357515",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1051357720",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1051359381",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1051359833",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1051661041",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1051662000",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1051673267",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1051678424",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1051817614",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1052068525",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1052077149",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1052949561",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1052953394",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1052968595",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1052970498",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1061774706",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1063139422",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1063165746",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1063292043",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1063364598",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1064838229",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1064841392",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1064977599",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1064982961",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1065008170",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1065123901",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1065131400",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1065581437",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1065599124",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1065612858",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1065617175",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1065618484",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1065636003",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1065639935",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1065644455",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1065651555",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1065659348",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1065810604",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1065813244",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1065814793",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1065824684",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1065827574",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1065842056",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1065845538",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1065846154",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1065848698",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1065869544",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1066001950",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1066094664",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1066740398",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1067714191",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1067728620",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1067809897",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1067879432",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1067896979",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1067945169",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1067952949",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1067954818",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1069466643",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1069473804",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1069497865",
+        "tipodocproveedor": "Otro",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1069501579",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1069872468",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1072529015",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1073510272",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1073810606",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1073813709",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1074004389",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1079657424",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1079885132",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1079915675",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1079933187",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1079937508",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1081790378",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1081800909",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1081801465",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1081812847",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1081833730",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1081833932",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1081904196",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1081926646",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1081928424",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1081928896",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1082371681",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1082374828",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1082840990",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1082841323",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1082862779",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1082863473",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1082874768",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1082875035",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1082917462",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1082925582",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1082971923",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1083022707",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1083041889",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1083432003",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1083433888",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1083434022",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1083464337",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1083466444",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1083558191",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1083912661",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1084791215",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1085042527",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1085048277",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1085229028",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1085231338",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1085269947",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1092731099",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1094832932",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1094925381",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1095789131",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1095816078",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1098666878",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1098737833",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1100393771",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1100396263",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1100693379",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1100965554",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1101451906",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1101682615",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1102231937",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1102388529",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1102805062",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1102807244",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1102808371",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1102814745",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1102820005",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1102826050",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1102827780",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1102828246",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1102828718",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1102835983",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1102843778",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1102852056",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1102857898",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1102872198",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1102877353",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1102884195",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1103094610",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1103105291",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1103106986",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1103115194",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1103120323",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1104011159",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1104012629",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1104014771",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1104255214",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1104405630",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1105787881",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "11156087",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1116778672",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1118805369",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1118850427",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1118852830",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1118860953",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1118865007",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1118869150",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1121040220",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1121333701",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1121820779",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1122412296",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1122808255",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1122820152",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1123402215",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1123730686",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1124020376",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1124380152",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1125230472",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1126238834",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1127226291",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1127389914",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1127584776",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1128046872",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1128047089",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1128124752",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1128125592",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1128126065",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1128127615",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1128128570",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1128129921",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1128129972",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129487343",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129488495",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129495164",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129495731",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129497002",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129499144",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129499680",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129501426",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129501673",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129501986",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129508806",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129509948",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129510203",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129511101",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129511269",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129512495",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129513053",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129515585",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129515661",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129515887",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129516703",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129518741",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129519678",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129520517",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129521017",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129521630",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129523847",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129525392",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129531130",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129531659",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129533222",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129533266",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129533997",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129535204",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129535363",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129535417",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129536129",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129536130",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129536368",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129537298",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129537772",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129538074",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129538600",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129538843",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129539406",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129539718",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129539892",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129542495",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129564159",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129564338",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129564552",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129564944",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129565314",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129565976",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129566385",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129566472",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129567345",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129567374",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129568005",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129568976",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129569139",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129569140",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129569358",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129569422",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129569569",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129569757",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129569798",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129570121",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129570430",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129570525",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129570638",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129570923",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129571674",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129571913",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129572183",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129572590",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129572767",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129573220",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129573963",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129573981",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129574176",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129574791",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129575902",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129576194",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129576407",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129576549",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129577063",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129577141",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129577144",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129577475",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129577794",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129578138",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129580057",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129580629",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129581203",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129581647",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129581917",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129582925",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129583015",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129583202",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129583257",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129583289",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1129583725",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1130265991",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1131439036",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1132234009",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1140814313",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1140814676",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "1140814837",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "occurrences": "2"
+      }
+    ],
+    "seconds": 3.124,
+    "cap": 1000,
+    "cap_reached": true,
+    "rejected": [
+      {
+        "documento_proveedor": "No Definido",
+        "tipodocproveedor": "No Definido",
+        "occurrences": "11",
+        "reasons": [
+          "IDENTITY_SENTINEL_DISCARDED"
+        ]
+      }
+    ]
+  },
+  "placeholder_names": {
+    "sql": "SELECT documento_proveedor, proveedor_adjudicado, count(*) AS occurrences WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND upper(documento_proveedor) = 'NO DEFINIDO' GROUP BY documento_proveedor, proveedor_adjudicado ORDER BY occurrences DESC, proveedor_adjudicado ASC LIMIT 100",
+    "rows": [
+      {
+        "documento_proveedor": "No Definido",
+        "proveedor_adjudicado": "UT AXA-SBS-CHUBB-SOLIDARIA-MAPFRE LP-009-2026",
+        "occurrences": "3"
+      },
+      {
+        "documento_proveedor": "No Definido",
+        "proveedor_adjudicado": "CONSORCIO ARROYOS CARIBE",
+        "occurrences": "1"
+      },
+      {
+        "documento_proveedor": "No Definido",
+        "proveedor_adjudicado": "CONSORCIO DISTRITO W",
+        "occurrences": "1"
+      },
+      {
+        "documento_proveedor": "No Definido",
+        "proveedor_adjudicado": "CONSORCIO ELECTRICO BQ 2026",
+        "occurrences": "1"
+      },
+      {
+        "documento_proveedor": "No Definido",
+        "proveedor_adjudicado": "UNION TEMPORAL ALLIANZ-CONFIANZA-SEGUROS DEL ESTADO-PREVISORA-DISTRITO BARRANQUILLA-LP-009-2026",
+        "occurrences": "1"
+      },
+      {
+        "documento_proveedor": "No Definido",
+        "proveedor_adjudicado": "UNION TEMPORAL NUTRIENDO BARRANQUILLA 2026",
+        "occurrences": "1"
+      },
+      {
+        "documento_proveedor": "No Definido",
+        "proveedor_adjudicado": "UNION TEMPORAL PAE BARRANQUILLA 2026",
+        "occurrences": "1"
+      },
+      {
+        "documento_proveedor": "No Definido",
+        "proveedor_adjudicado": "UNION TEMPORAL PROPOSITO SUPERIOR",
+        "occurrences": "1"
+      },
+      {
+        "documento_proveedor": "No Definido",
+        "proveedor_adjudicado": "UTAA26",
+        "occurrences": "1"
+      },
+      {
+        "documento_proveedor": "No Definido",
+        "proveedor_adjudicado": "UT AXA-SBS-CHUBB-SOLIDARIA-MAPFRE-IMC-013- 2026",
+        "occurrences": "1"
+      },
+      {
+        "documento_proveedor": "No Definido",
+        "proveedor_adjudicado": "UTHS2026",
+        "occurrences": "1"
+      },
+      {
+        "documento_proveedor": "No Definido",
+        "proveedor_adjudicado": "UTNIBQ",
+        "occurrences": "1"
+      }
+    ],
+    "seconds": 0.47
+  }
+}

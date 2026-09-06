@@ -1,0 +1,9 @@
+{
+  "sql": "SELECT upper(trim(' No Definido ')) AS sentinel LIMIT 1",
+  "rows": [
+    {
+      "sentinel": "NO DEFINIDO"
+    }
+  ],
+  "seconds": 0.148
+}

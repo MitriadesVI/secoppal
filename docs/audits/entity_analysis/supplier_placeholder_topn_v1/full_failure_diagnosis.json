@@ -1,0 +1,29 @@
+{
+  "registry_differences": [
+    {
+      "path": "/source_authorities/local_digests/app/core/actor_identity.py",
+      "frozen": "ca0c436eecea67fbbb30d5397249b193112cc15f0bf9f50444ae3ef35ae9b725",
+      "current": "f23d9c6a3f15fdbfcee788a567260463a484777687cda3bddfda544acaf7bbaf"
+    }
+  ],
+  "artifact_byte_drift": [],
+  "computed_gates_pass": true,
+  "identity_and_product": {
+    "TERRITORY_AS_BUYER": 0,
+    "NIT_AS_BUYER_UNIT_ID": 0,
+    "NIT_AS_SECOP_SUPPLIER_ID": 0,
+    "SUPPLIER_CODE_AS_ACTOR_ID": 0,
+    "NAME_AS_PRIMARY_NODE_ID": 0,
+    "BUYER_GROUP_INFERRED_MEMBERSHIP": 0,
+    "PROCESS_UNSTABLE_IDS_AS_NODES": 0,
+    "CONTRACT_UNSTABLE_IDS_AS_NODES": 0,
+    "RUNTIME_IMPORTS": 0,
+    "QUERY_EFFECT": 0,
+    "SOQL_EFFECT": 0,
+    "ENTITY_ANALYSIS_EFFECT": 0,
+    "ACTOR_PROFILE_EFFECT": 0,
+    "RADAR_EFFECT": 0
+  },
+  "actor_identity_base_sha256": "ca0c436eecea67fbbb30d5397249b193112cc15f0bf9f50444ae3ef35ae9b725",
+  "actor_identity_current_sha256": "f23d9c6a3f15fdbfcee788a567260463a484777687cda3bddfda544acaf7bbaf"
+}

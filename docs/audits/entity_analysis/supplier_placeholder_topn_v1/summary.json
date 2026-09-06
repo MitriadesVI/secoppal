@@ -1,0 +1,93 @@
+{
+  "barranquilla": {
+    "placeholder_rows_by_type": {
+      "No Definido": 11,
+      "Otro": 1,
+      "NIT": 2
+    },
+    "distinct_names_by_type": {
+      "No Definido": 9,
+      "Otro": 1,
+      "NIT": 2
+    },
+    "placeholder_rows_all_types": 14,
+    "supplier_focus_calls": 2,
+    "visible_bullets": 10,
+    "rankings": {
+      "count": {
+        "before": 4,
+        "after": 5,
+        "valid_prefix_unchanged": true,
+        "seconds": 0.176,
+        "limit": 5
+      },
+      "value": {
+        "before": 4,
+        "after": 5,
+        "valid_prefix_unchanged": true,
+        "seconds": 0.421,
+        "limit": 5
+      }
+    }
+  },
+  "bucaramanga": {
+    "placeholder_rows_by_type": {
+      "NIT": 2,
+      "No Definido": 11,
+      "Otro": 1
+    },
+    "distinct_names_by_type": {
+      "NIT": 2,
+      "No Definido": 11,
+      "Otro": 1
+    },
+    "placeholder_rows_all_types": 14,
+    "supplier_focus_calls": 2,
+    "visible_bullets": 10,
+    "rankings": {
+      "count": {
+        "before": 4,
+        "after": 5,
+        "valid_prefix_unchanged": true,
+        "seconds": 0.14,
+        "limit": 5
+      },
+      "value": {
+        "before": 4,
+        "after": 5,
+        "valid_prefix_unchanged": true,
+        "seconds": 0.512,
+        "limit": 5
+      }
+    }
+  },
+  "galapa": {
+    "placeholder_rows_by_type": {
+      "No Definido": 65,
+      "NIT": 1
+    },
+    "distinct_names_by_type": {
+      "No Definido": 8,
+      "NIT": 1
+    },
+    "placeholder_rows_all_types": 66,
+    "supplier_focus_calls": 2,
+    "visible_bullets": 10,
+    "rankings": {
+      "count": {
+        "before": 4,
+        "after": 5,
+        "valid_prefix_unchanged": true,
+        "seconds": 0.431,
+        "limit": 5
+      },
+      "value": {
+        "before": 5,
+        "after": 5,
+        "valid_prefix_unchanged": true,
+        "seconds": 0.417,
+        "limit": 5
+      }
+    }
+  }
+}

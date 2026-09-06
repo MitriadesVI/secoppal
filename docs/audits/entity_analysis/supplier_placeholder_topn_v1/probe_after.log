@@ -1,0 +1,6 @@
+after barranquilla count 5 OK
+after barranquilla value 5 OK
+after bucaramanga count 5 OK
+after bucaramanga value 5 OK
+after galapa count 0 Soda3TimeoutError: SODA3 request exceeded its budget on dataset jbjy-vk9h
+after galapa value 0 Soda3TimeoutError: SODA3 request exceeded its budget on dataset jbjy-vk9h

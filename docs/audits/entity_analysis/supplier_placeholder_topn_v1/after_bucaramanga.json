@@ -1,0 +1,197 @@
+{
+  "city": "bucaramanga",
+  "timestamp": "2026-09-06T23:41:48.024157+00:00",
+  "prompt": "analiza la alcaldia de bucaramanga en 2026",
+  "params": {
+    "dataset": "procesos",
+    "dataset_explicit": false,
+    "fecha_desde": "2026-01-01",
+    "fecha_hasta": "2026-12-31",
+    "_temporal_replace_scope": true,
+    "entidad": "Municipio de bucaramanga",
+    "entidad_resolved": "MUNICIPIO DE BUCARAMANGA",
+    "entidad_resolution": {
+      "value": "MUNICIPIO DE BUCARAMANGA",
+      "method": "rewrite_alcald[ií]a",
+      "kind": "buyer_entity",
+      "confidence": "high",
+      "like_value": null,
+      "metadata": {
+        "rewritten_from": "alcaldia de bucaramanga",
+        "resolution_method": "exact"
+      }
+    },
+    "_entity_profile_active": true,
+    "_entity_profile_focus": "overview"
+  },
+  "transport": "soda3",
+  "timeout": 8,
+  "count": {
+    "sql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE nombre_entidad = 'MUNICIPIO DE BUCARAMANGA' AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor IS NOT NULL AND documento_proveedor != '' AND upper(trim(documento_proveedor)) NOT IN ('-', 'N/A', 'NA', 'NO APLICA', 'NO DEFINIDA', 'NO DEFINIDO', 'NODEFINIDO', 'NONE', 'NULL', 'SIN DATO', 'SIN INFORMACION', 'SIN INFORMACIÓN') GROUP BY documento_proveedor, tipodocproveedor ORDER BY contract_count DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+    "rows": [
+      {
+        "documento_proveedor": "901575686",
+        "tipodocproveedor": "NIT",
+        "supplier_name": "UNIVERSITARIA DE CHICAMOCHA",
+        "contract_count": "4",
+        "total_contract_value": "1763646495"
+      },
+      {
+        "documento_proveedor": "1020765487",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "supplier_name": "BRIYITH LILIETH ALVAREZ CANO",
+        "contract_count": "3",
+        "total_contract_value": "99000000"
+      },
+      {
+        "documento_proveedor": "1095786439",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "supplier_name": "PAULA ANDREA CRUZ GUALDRON",
+        "contract_count": "3",
+        "total_contract_value": "73950000"
+      },
+      {
+        "documento_proveedor": "1098650116",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "supplier_name": "LAURA CONTRERAS GARCIA",
+        "contract_count": "3",
+        "total_contract_value": "82500000"
+      },
+      {
+        "documento_proveedor": "37547925",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "supplier_name": "ANAYIBE GARNICA BENITEZ",
+        "contract_count": "3",
+        "total_contract_value": "62000000"
+      }
+    ],
+    "seconds": 0.335,
+    "parsed": [
+      {
+        "actor_identity": "NIT:901575686",
+        "document_type": "NIT",
+        "document": "901575686",
+        "observed_name": "UNIVERSITARIA DE CHICAMOCHA",
+        "contract_count": 4,
+        "total_contract_value": 1763646495.0
+      },
+      {
+        "actor_identity": "CC:1020765487",
+        "document_type": "CC",
+        "document": "1020765487",
+        "observed_name": "BRIYITH LILIETH ALVAREZ CANO",
+        "contract_count": 3,
+        "total_contract_value": 99000000.0
+      },
+      {
+        "actor_identity": "CC:1095786439",
+        "document_type": "CC",
+        "document": "1095786439",
+        "observed_name": "PAULA ANDREA CRUZ GUALDRON",
+        "contract_count": 3,
+        "total_contract_value": 73950000.0
+      },
+      {
+        "actor_identity": "CC:1098650116",
+        "document_type": "CC",
+        "document": "1098650116",
+        "observed_name": "LAURA CONTRERAS GARCIA",
+        "contract_count": 3,
+        "total_contract_value": 82500000.0
+      },
+      {
+        "actor_identity": "CC:37547925",
+        "document_type": "CC",
+        "document": "37547925",
+        "observed_name": "ANAYIBE GARNICA BENITEZ",
+        "contract_count": 3,
+        "total_contract_value": 62000000.0
+      }
+    ],
+    "visible_count": 5
+  },
+  "value": {
+    "sql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE nombre_entidad = 'MUNICIPIO DE BUCARAMANGA' AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor IS NOT NULL AND documento_proveedor != '' AND upper(trim(documento_proveedor)) NOT IN ('-', 'N/A', 'NA', 'NO APLICA', 'NO DEFINIDA', 'NO DEFINIDO', 'NODEFINIDO', 'NONE', 'NULL', 'SIN DATO', 'SIN INFORMACION', 'SIN INFORMACIÓN') GROUP BY documento_proveedor, tipodocproveedor ORDER BY total_contract_value DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+    "rows": [
+      {
+        "documento_proveedor": "804006674",
+        "tipodocproveedor": "NIT",
+        "supplier_name": "EMPRESA DE ASEO DE BUCARAMANGA S.A. ESP.",
+        "contract_count": "3",
+        "total_contract_value": "21383193015.71"
+      },
+      {
+        "documento_proveedor": "902059350",
+        "tipodocproveedor": "NIT",
+        "supplier_name": "CONSORCIO MEJORAMIENTO VIAS BGA",
+        "contract_count": "1",
+        "total_contract_value": "18573570772"
+      },
+      {
+        "documento_proveedor": "901153192",
+        "tipodocproveedor": "NIT",
+        "supplier_name": "DETECCION SEGURIDAD PRIVADA LIMITADA",
+        "contract_count": "1",
+        "total_contract_value": "12556999268.16"
+      },
+      {
+        "documento_proveedor": "890984761",
+        "tipodocproveedor": "NIT",
+        "supplier_name": "EMPRESA PARA LA SEGURIDAD Y SOLUCIONES URBANAS - ESU",
+        "contract_count": "2",
+        "total_contract_value": "9345708288"
+      },
+      {
+        "documento_proveedor": "900115931",
+        "tipodocproveedor": "NIT",
+        "supplier_name": "EMPRESA PUBLICA DE ALCANTARILLADO DE SANTANDER S.A E.S.P.",
+        "contract_count": "1",
+        "total_contract_value": "7488540507.7"
+      }
+    ],
+    "seconds": 0.41,
+    "parsed": [
+      {
+        "actor_identity": "NIT:804006674",
+        "document_type": "NIT",
+        "document": "804006674",
+        "observed_name": "EMPRESA DE ASEO DE BUCARAMANGA S.A. ESP.",
+        "contract_count": 3,
+        "total_contract_value": 21383193015.71
+      },
+      {
+        "actor_identity": "NIT:902059350",
+        "document_type": "NIT",
+        "document": "902059350",
+        "observed_name": "CONSORCIO MEJORAMIENTO VIAS BGA",
+        "contract_count": 1,
+        "total_contract_value": 18573570772.0
+      },
+      {
+        "actor_identity": "NIT:901153192",
+        "document_type": "NIT",
+        "document": "901153192",
+        "observed_name": "DETECCION SEGURIDAD PRIVADA LIMITADA",
+        "contract_count": 1,
+        "total_contract_value": 12556999268.16
+      },
+      {
+        "actor_identity": "NIT:890984761",
+        "document_type": "NIT",
+        "document": "890984761",
+        "observed_name": "EMPRESA PARA LA SEGURIDAD Y SOLUCIONES URBANAS - ESU",
+        "contract_count": 2,
+        "total_contract_value": 9345708288.0
+      },
+      {
+        "actor_identity": "NIT:900115931",
+        "document_type": "NIT",
+        "document": "900115931",
+        "observed_name": "EMPRESA PUBLICA DE ALCANTARILLADO DE SANTANDER S.A E.S.P.",
+        "contract_count": 1,
+        "total_contract_value": 7488540507.7
+      }
+    ],
+    "visible_count": 5
+  }
+}

@@ -2179,3 +2179,26 @@ trabajo con tests 945 passed.
 - lint-core: limpio
 
 **Documentación:** ADR-023.
+
+### 2026-09-06 — SUPPLIER_PLACEHOLDER_GROUPING_AND_TOPN_COVERAGE_V1
+
+Entity Profile agrupaba documentos `No Definido`, sumaba contratos de distintos
+nombres, les asignaba `max(nombre)` y consumía un puesto del TOP5 que el parser
+luego descartaba. Se restaura la autoridad existente de Actor Identity mediante
+un prefilter SoQL compartido antes de GROUP BY/LIMIT. No se crea ADR ni autoridad
+nueva; no hay fallback por nombre. Se conservan la llave tipada, los rankings
+raw válidos, LIMIT 5, las dos llamadas de suppliers y los timeouts.
+
+En dogfood SODA3, Barranquilla y Bucaramanga 2026 muestran cinco proveedores en
+ambos rankings; Galapa histórico también. El audit distingue el grupo de 11
+filas con tipo `No Definido` de otros placeholders publicados como NIT u Otro.
+Los fallos iniciales y límites de cobertura se preservan; no se añade una query
+para denominadores de identidad. Detalle y salida literal de las puertas en
+[SUPPLIER_PLACEHOLDER_TOPN_V1](audits/entity_analysis/supplier_placeholder_topn_v1/SUPPLIER_PLACEHOLDER_TOPN_V1.md).
+
+Validación: 334 focales verdes; Ruff verde; Semgrep 10 hallazgos de base y delta
+0. Suite completa: 11.571 passed, 11 skipped, 14 xfailed, 1 failed. El fallo es
+nuevo: el replay de Procurement Relationships exige el hash fuente congelado de
+`actor_identity.py`; el mismo test pasa en BASE. Se conserva la evidencia sin
+repin y se entrega **PARTIAL**, pendiente de decisión sobre ese replay ajeno al
+carril. No se declara integración lista.

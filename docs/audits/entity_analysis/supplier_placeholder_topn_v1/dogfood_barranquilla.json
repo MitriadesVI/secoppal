@@ -1,0 +1,1007 @@
+[
+  {
+    "prompt": "analiza barranquilla en 2026",
+    "result": {
+      "response": "¿Quieres analizar la Alcaldía de Barranquilla o el territorio institucional de Barranquilla?\n\nPuedo buscar de varias formas:\n1. Procesos mas recientes\n2. Procesos de mayor valor\n3. Procesos de mantenimiento vial\n\nCual camino quieres?",
+      "rows": [],
+      "results": [],
+      "dataset_id": "p6dx-8zbt",
+      "soql_query": "",
+      "parsed_params": {
+        "dataset": "procesos",
+        "dataset_explicit": false,
+        "fecha_desde": "2026-01-01",
+        "fecha_hasta": "2026-12-31",
+        "ciudad": "Barranquilla",
+        "objeto": [
+          "analiza"
+        ]
+      },
+      "resolved_params": {
+        "dataset": "procesos",
+        "fecha_desde": "2026-01-01",
+        "fecha_hasta": "2026-12-31"
+      },
+      "needs_llm": false,
+      "needs_clarification": true,
+      "route_reason": "entity_profile_scope_clarification",
+      "degraded": false,
+      "degraded_hint": "",
+      "total_count": 0,
+      "universe_insights": null,
+      "suggestions": [],
+      "timeout_suggestions": [],
+      "risk_flag_timeout": false,
+      "query_error": "",
+      "intent_type": "",
+      "followup_intent_type": "",
+      "followup_mutation": {},
+      "analytical_intent": "entity_profile",
+      "analytical_response": "",
+      "clarification_reason": "¿Quieres analizar la Alcaldía de Barranquilla o el territorio institucional de Barranquilla?",
+      "total_count_approximate": false,
+      "result_order_guarantee": "exact_order",
+      "fallback_attempted": false,
+      "fallback_used": false,
+      "fallback_strategy": "",
+      "fallback_query_status": "not_attempted",
+      "primary_query_status": "",
+      "transformations_applied": [],
+      "substantive_filters_preserved": true,
+      "query_plan": {
+        "should_execute": true,
+        "params": {
+          "dataset": "procesos",
+          "dataset_explicit": false,
+          "fecha_desde": "2026-01-01",
+          "fecha_hasta": "2026-12-31",
+          "ciudad": "Barranquilla",
+          "objeto": [
+            "analiza"
+          ]
+        },
+        "missing_slots": [],
+        "risk_flags": [
+          "entity_autopromotion_purged",
+          "temporal_conflict"
+        ],
+        "clarification_question": null,
+        "reason": "entity_autopromotion_purged",
+        "signals": [
+          {
+            "kind": "temporal_range",
+            "payload": {
+              "desde": "2026-01-01",
+              "hasta": "2026-12-31",
+              "phrase": "en 2026",
+              "precision": "year"
+            },
+            "confidence": "high",
+            "source_tokens": [
+              "en 2026"
+            ]
+          }
+        ]
+      },
+      "followup": false,
+      "timings_ms": {
+        "parse_ms": 34.09,
+        "resolve_ms": 1.61,
+        "build_soql_ms": 0.06,
+        "entity_profile_calls_total": 0.0,
+        "entity_profile_total_latency_ms": 0.0,
+        "execute_total_ms": 0.2,
+        "clarify_ms": 0.0,
+        "advisor_response_ms": 0.02,
+        "total_ms": 38.98
+      },
+      "contextual_filters": {},
+      "should_execute_decision": true,
+      "outcome": "clarification",
+      "outcome_reason": "clarification_requested",
+      "query_fingerprint": "67c625d6cff248b06e317fa9dbd0ca601931fc5d07f4d6476b0ab6df3e530641",
+      "trace_id": "53868590e076",
+      "turn_deadline_ms": 15000.0,
+      "turn_elapsed_ms": 41.3
+    },
+    "calls": []
+  },
+  {
+    "prompt": "analiza la alcaldia de barranquilla en 2026",
+    "result": {
+      "response": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA — 2026\n\nTerritorio: Barranquilla, Atlántico (DIVIPOLA 08001).\n\n• Publicó 1,641 procesos en el periodo. [SECOP II Procesos]\n• Se observan 10,295 contratos por $1.9 billones; promedio $180.9 millones. [SECOP II Contratos]\n• Sus modalidades de proceso más frecuentes fueron Contratación directa (86%), Selección Abreviada de Menor Cuantía (3%), Solicitud de información a los Proveedores (3%). [SECOP II Procesos]\n• Principal contratista por valor: EDUBAR S.A. ($432.3 mil millones). [SECOP II Contratos]\n• Principal contratista por número de contratos: PUERTA DE ORO EMPRESA DE DESARROLLO CARIBE SAS (16). [SECOP II Contratos]\n• Proceso reciente: ADQUISICION DE MOBILIARIO ESPECIALIZADO Y ACCESORIOS PARA LA DOTACIÓN DE INFRAESTRUCTUR.... [SECOP II Procesos]\n• Contrato reciente: PRESTACIÓN DE SERVICIOS PROFESIONALES DE ASESORIA PARA EJERCER LA DEFENSA JUDICIAL Y EX.... [SECOP II Contratos]\n\nPuedes pedirme sus proveedores, modalidades, evolución o contratos recientes.",
+      "rows": [],
+      "results": [],
+      "dataset_id": "p6dx-8zbt",
+      "soql_query": "",
+      "parsed_params": {
+        "dataset": "procesos",
+        "entidad": "Municipio de barranquilla",
+        "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+        "entidad_resolution": {
+          "value": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de barranquilla",
+            "resolution_method": "exact"
+          }
+        },
+        "objeto": [
+          "analiza"
+        ],
+        "fecha_desde": "2026-01-01",
+        "fecha_hasta": "2026-12-31"
+      },
+      "resolved_params": {
+        "dataset": "procesos",
+        "entidad": "Municipio de barranquilla",
+        "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+        "entidad_resolution": {
+          "value": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de barranquilla",
+            "resolution_method": "exact"
+          }
+        },
+        "fecha_desde": "2026-01-01",
+        "fecha_hasta": "2026-12-31",
+        "_entity_profile_active": true,
+        "_entity_profile_focus": "overview"
+      },
+      "needs_llm": false,
+      "needs_clarification": false,
+      "route_reason": "entity_profile_overview",
+      "degraded": false,
+      "degraded_hint": "",
+      "total_count": 0,
+      "universe_insights": null,
+      "suggestions": [],
+      "timeout_suggestions": [],
+      "risk_flag_timeout": false,
+      "query_error": "",
+      "intent_type": "new_search",
+      "followup_intent_type": "new_search",
+      "followup_mutation": {
+        "intent": "new_search",
+        "requested_fields": [
+          "_temporal_replace_scope",
+          "dataset",
+          "entidad",
+          "entidad_resolution",
+          "entidad_resolved",
+          "fecha_desde",
+          "fecha_hasta",
+          "objeto"
+        ],
+        "accepted_fields": [
+          "_temporal_replace_scope",
+          "dataset",
+          "entidad",
+          "entidad_resolution",
+          "entidad_resolved",
+          "fecha_desde",
+          "fecha_hasta",
+          "objeto"
+        ],
+        "transition_cleared_fields": [
+          "fecha_desde",
+          "fecha_hasta"
+        ],
+        "rejected_fields": [],
+        "rejection_reasons": {}
+      },
+      "analytical_intent": "entity_profile",
+      "analytical_response": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA — 2026\n\nTerritorio: Barranquilla, Atlántico (DIVIPOLA 08001).\n\n• Publicó 1,641 procesos en el periodo. [SECOP II Procesos]\n• Se observan 10,295 contratos por $1.9 billones; promedio $180.9 millones. [SECOP II Contratos]\n• Sus modalidades de proceso más frecuentes fueron Contratación directa (86%), Selección Abreviada de Menor Cuantía (3%), Solicitud de información a los Proveedores (3%). [SECOP II Procesos]\n• Principal contratista por valor: EDUBAR S.A. ($432.3 mil millones). [SECOP II Contratos]\n• Principal contratista por número de contratos: PUERTA DE ORO EMPRESA DE DESARROLLO CARIBE SAS (16). [SECOP II Contratos]\n• Proceso reciente: ADQUISICION DE MOBILIARIO ESPECIALIZADO Y ACCESORIOS PARA LA DOTACIÓN DE INFRAESTRUCTUR.... [SECOP II Procesos]\n• Contrato reciente: PRESTACIÓN DE SERVICIOS PROFESIONALES DE ASESORIA PARA EJERCER LA DEFENSA JUDICIAL Y EX.... [SECOP II Contratos]\n\nPuedes pedirme sus proveedores, modalidades, evolución o contratos recientes.",
+      "clarification_reason": "",
+      "total_count_approximate": false,
+      "result_order_guarantee": "exact_order",
+      "fallback_attempted": false,
+      "fallback_used": false,
+      "fallback_strategy": "",
+      "fallback_query_status": "not_attempted",
+      "primary_query_status": "",
+      "transformations_applied": [],
+      "substantive_filters_preserved": true,
+      "query_plan": {
+        "should_execute": true,
+        "params": {
+          "dataset": "procesos",
+          "entidad": "Municipio de barranquilla",
+          "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+          "entidad_resolution": {
+            "value": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+            "method": "rewrite_alcald[ií]a",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "rewritten_from": "alcaldia de barranquilla",
+              "resolution_method": "exact"
+            }
+          },
+          "objeto": [
+            "analiza"
+          ],
+          "fecha_desde": "2026-01-01",
+          "fecha_hasta": "2026-12-31"
+        },
+        "missing_slots": [],
+        "risk_flags": [
+          "temporal_conflict"
+        ],
+        "clarification_question": null,
+        "reason": "valid_query",
+        "signals": [
+          {
+            "kind": "temporal_range",
+            "payload": {
+              "desde": "2026-01-01",
+              "hasta": "2026-12-31",
+              "phrase": "en 2026",
+              "precision": "year"
+            },
+            "confidence": "high",
+            "source_tokens": [
+              "en 2026"
+            ]
+          }
+        ]
+      },
+      "followup": true,
+      "timings_ms": {
+        "parse_ms": 1.22,
+        "apply_context_ms": 11.47,
+        "resolve_ms": 0.02,
+        "build_soql_ms": 5.22,
+        "entity_profile_calls_total": 6.0,
+        "entity_profile_total_latency_ms": 4928.479333000723,
+        "entity_profile_activity_modalities_calls": 1.0,
+        "entity_profile_activity_values_calls": 1.0,
+        "entity_profile_suppliers_calls": 2.0,
+        "entity_profile_recent_calls": 2.0,
+        "entity_profile_activity_modalities_ms": 4926.662957994267,
+        "entity_profile_activity_values_ms": 462.960250035394,
+        "entity_profile_suppliers_ms": 927.2280010045506,
+        "entity_profile_recent_ms": 1017.2163750394247,
+        "execute_total_ms": 4929.09,
+        "degrade_ms": 0.0,
+        "observe_ms": 0.0,
+        "suggest_ms": 0.03,
+        "rank_ms": 0.04,
+        "format_ms": 0.0,
+        "advisor_response_ms": 0.03,
+        "total_ms": 4951.45
+      },
+      "contextual_filters": {},
+      "should_execute_decision": true,
+      "source_candidate_total": 0,
+      "validated_total_known": 0,
+      "displayed_so_far": 0,
+      "source_total_approximate": false,
+      "outcome": "success",
+      "outcome_reason": "results_found",
+      "query_fingerprint": "aa44c4b30da2550a84dd4e3025e35d519f74f0751e9c46a74ee2b1d8179f4747",
+      "trace_id": "b579b3e41912",
+      "turn_deadline_ms": 15000.0,
+      "turn_elapsed_ms": 4955.7
+    },
+    "calls": [
+      {
+        "operation": "aggregate",
+        "dataset": "p6dx-8zbt",
+        "sql": "SELECT modalidad_de_contratacion, count(*) AS process_count WHERE unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_publicacion_del >= '2026-01-01' AND fecha_de_publicacion_del <= '2026-12-31' GROUP BY modalidad_de_contratacion ORDER BY process_count DESC, modalidad_de_contratacion ASC LIMIT 100",
+        "timeout": 8,
+        "rows": [
+          {
+            "modalidad_de_contratacion": "Contratación directa",
+            "process_count": "1405"
+          },
+          {
+            "modalidad_de_contratacion": "Selección Abreviada de Menor Cuantía",
+            "process_count": "56"
+          },
+          {
+            "modalidad_de_contratacion": "Solicitud de información a los Proveedores",
+            "process_count": "52"
+          },
+          {
+            "modalidad_de_contratacion": "Contratación régimen especial (con ofertas)",
+            "process_count": "31"
+          },
+          {
+            "modalidad_de_contratacion": "Licitación pública",
+            "process_count": "29"
+          },
+          {
+            "modalidad_de_contratacion": "Mínima cuantía",
+            "process_count": "25"
+          },
+          {
+            "modalidad_de_contratacion": "Contratación régimen especial",
+            "process_count": "17"
+          },
+          {
+            "modalidad_de_contratacion": "Selección abreviada subasta inversa",
+            "process_count": "16"
+          },
+          {
+            "modalidad_de_contratacion": "Licitación pública Obra Publica",
+            "process_count": "7"
+          },
+          {
+            "modalidad_de_contratacion": "Contratación Directa (con ofertas)",
+            "process_count": "3"
+          }
+        ],
+        "seconds": 4.927
+      },
+      {
+        "operation": "aggregate",
+        "dataset": "jbjy-vk9h",
+        "sql": "SELECT count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value, avg(valor_del_contrato) AS average_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31'",
+        "timeout": 8,
+        "rows": [
+          {
+            "contract_count": "10295",
+            "total_contract_value": "1862263055751.56",
+            "average_contract_value": "180890049.125940747936"
+          }
+        ],
+        "seconds": 0.463
+      },
+      {
+        "operation": "aggregate",
+        "dataset": "jbjy-vk9h",
+        "sql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor IS NOT NULL AND documento_proveedor != '' AND upper(trim(documento_proveedor)) NOT IN ('-', 'N/A', 'NA', 'NO APLICA', 'NO DEFINIDA', 'NO DEFINIDO', 'NODEFINIDO', 'NONE', 'NULL', 'SIN DATO', 'SIN INFORMACION', 'SIN INFORMACIÓN') GROUP BY documento_proveedor, tipodocproveedor ORDER BY contract_count DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+        "timeout": 8,
+        "rows": [
+          {
+            "documento_proveedor": "900249143",
+            "tipodocproveedor": "NIT",
+            "supplier_name": "PUERTA DE ORO EMPRESA DE DESARROLLO CARIBE SAS",
+            "contract_count": "16",
+            "total_contract_value": "134975097092"
+          },
+          {
+            "documento_proveedor": "1045705185",
+            "tipodocproveedor": "Cédula de Ciudadanía",
+            "supplier_name": "ANDRES ALBERTO IGLESIAS PARDO",
+            "contract_count": "7",
+            "total_contract_value": "220601600"
+          },
+          {
+            "documento_proveedor": "800091140",
+            "tipodocproveedor": "NIT",
+            "supplier_name": "EDUBAR S.A.",
+            "contract_count": "7",
+            "total_contract_value": "432271566899.68"
+          },
+          {
+            "documento_proveedor": "901033967",
+            "tipodocproveedor": "NIT",
+            "supplier_name": "FUNDACION SOCIAL TEJEDORES DE DIVERSIDAD",
+            "contract_count": "7",
+            "total_contract_value": "14232142857"
+          },
+          {
+            "documento_proveedor": "1125079383",
+            "tipodocproveedor": "Cédula de Ciudadanía",
+            "supplier_name": "GUSTAVO ADOLFO GONZALEZ RIVERO",
+            "contract_count": "5",
+            "total_contract_value": "148200000"
+          }
+        ],
+        "parsed": [
+          {
+            "actor_identity": "NIT:900249143",
+            "document_type": "NIT",
+            "document": "900249143",
+            "observed_name": "PUERTA DE ORO EMPRESA DE DESARROLLO CARIBE SAS",
+            "contract_count": 16,
+            "total_contract_value": 134975097092.0
+          },
+          {
+            "actor_identity": "CC:1045705185",
+            "document_type": "CC",
+            "document": "1045705185",
+            "observed_name": "ANDRES ALBERTO IGLESIAS PARDO",
+            "contract_count": 7,
+            "total_contract_value": 220601600.0
+          },
+          {
+            "actor_identity": "NIT:800091140",
+            "document_type": "NIT",
+            "document": "800091140",
+            "observed_name": "EDUBAR S.A.",
+            "contract_count": 7,
+            "total_contract_value": 432271566899.68
+          },
+          {
+            "actor_identity": "NIT:901033967",
+            "document_type": "NIT",
+            "document": "901033967",
+            "observed_name": "FUNDACION SOCIAL TEJEDORES DE DIVERSIDAD",
+            "contract_count": 7,
+            "total_contract_value": 14232142857.0
+          },
+          {
+            "actor_identity": "CC:1125079383",
+            "document_type": "CC",
+            "document": "1125079383",
+            "observed_name": "GUSTAVO ADOLFO GONZALEZ RIVERO",
+            "contract_count": 5,
+            "total_contract_value": 148200000.0
+          }
+        ],
+        "visible_count": 5,
+        "seconds": 0.464
+      },
+      {
+        "operation": "aggregate",
+        "dataset": "jbjy-vk9h",
+        "sql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor IS NOT NULL AND documento_proveedor != '' AND upper(trim(documento_proveedor)) NOT IN ('-', 'N/A', 'NA', 'NO APLICA', 'NO DEFINIDA', 'NO DEFINIDO', 'NODEFINIDO', 'NONE', 'NULL', 'SIN DATO', 'SIN INFORMACION', 'SIN INFORMACIÓN') GROUP BY documento_proveedor, tipodocproveedor ORDER BY total_contract_value DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+        "timeout": 8,
+        "rows": [
+          {
+            "documento_proveedor": "800091140",
+            "tipodocproveedor": "NIT",
+            "supplier_name": "EDUBAR S.A.",
+            "contract_count": "7",
+            "total_contract_value": "432271566899.68"
+          },
+          {
+            "documento_proveedor": "900249143",
+            "tipodocproveedor": "NIT",
+            "supplier_name": "PUERTA DE ORO EMPRESA DE DESARROLLO CARIBE SAS",
+            "contract_count": "16",
+            "total_contract_value": "134975097092"
+          },
+          {
+            "documento_proveedor": "901040175",
+            "tipodocproveedor": "NIT",
+            "supplier_name": "K-YENA S.A.S.",
+            "contract_count": "2",
+            "total_contract_value": "69709518946"
+          },
+          {
+            "documento_proveedor": "900508420",
+            "tipodocproveedor": "NIT",
+            "supplier_name": "VIGICOLBA LTDA",
+            "contract_count": "3",
+            "total_contract_value": "57854241080"
+          },
+          {
+            "documento_proveedor": "800146077",
+            "tipodocproveedor": "Cédula de Ciudadanía",
+            "supplier_name": "ASEOCOLBA S.A.",
+            "contract_count": "2",
+            "total_contract_value": "41731197867"
+          }
+        ],
+        "parsed": [
+          {
+            "actor_identity": "NIT:800091140",
+            "document_type": "NIT",
+            "document": "800091140",
+            "observed_name": "EDUBAR S.A.",
+            "contract_count": 7,
+            "total_contract_value": 432271566899.68
+          },
+          {
+            "actor_identity": "NIT:900249143",
+            "document_type": "NIT",
+            "document": "900249143",
+            "observed_name": "PUERTA DE ORO EMPRESA DE DESARROLLO CARIBE SAS",
+            "contract_count": 16,
+            "total_contract_value": 134975097092.0
+          },
+          {
+            "actor_identity": "NIT:901040175",
+            "document_type": "NIT",
+            "document": "901040175",
+            "observed_name": "K-YENA S.A.S.",
+            "contract_count": 2,
+            "total_contract_value": 69709518946.0
+          },
+          {
+            "actor_identity": "NIT:900508420",
+            "document_type": "NIT",
+            "document": "900508420",
+            "observed_name": "VIGICOLBA LTDA",
+            "contract_count": 3,
+            "total_contract_value": 57854241080.0
+          },
+          {
+            "actor_identity": "CC:800146077",
+            "document_type": "CC",
+            "document": "800146077",
+            "observed_name": "ASEOCOLBA S.A.",
+            "contract_count": 2,
+            "total_contract_value": 41731197867.0
+          }
+        ],
+        "visible_count": 5,
+        "seconds": 0.463
+      },
+      {
+        "operation": "query",
+        "dataset": "p6dx-8zbt",
+        "sql": "SELECT id_del_proceso, referencia_del_proceso, entidad, departamento_entidad, ciudad_entidad, nombre_del_procedimiento, descripci_n_del_procedimiento, tipo_de_contrato, modalidad_de_contratacion, precio_base, estado_de_apertura_del_proceso, estado_del_procedimiento, fase, estado_resumen, fecha_de_publicacion_del, fecha_de_recepcion_de, urlproceso WHERE unaccent(UPPER(entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_publicacion_del >= '2026-01-01' AND fecha_de_publicacion_del <= '2026-12-31' ORDER BY fecha_de_publicacion_del DESC, id_del_proceso ASC LIMIT 3",
+        "timeout": 8,
+        "rows": [
+          {
+            "id_del_proceso": "CO1.REQ.10986703",
+            "referencia_del_proceso": "IMC-023-2026",
+            "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+            "departamento_entidad": "Atlántico",
+            "ciudad_entidad": "Barranquilla",
+            "nombre_del_procedimiento": "ADQUISICION DE MOBILIARIO ESPECIALIZADO Y  ACCESORIOS PARA LA DOTACIÓN DE INFRAESTRUCTURA DE  LOS ORGANISMOS DE SEGURIDAD EN EL DISTRITO DE BARRANQUILLA",
+            "descripci_n_del_procedimiento": "ADQUISICION DE MOBILIARIO ESPECIALIZADO Y  ACCESORIOS PARA LA DOTACIÓN DE INFRAESTRUCTURA DE  LOS ORGANISMOS DE SEGURIDAD EN EL DISTRITO DE BARRANQUILLA",
+            "tipo_de_contrato": "Compraventa",
+            "modalidad_de_contratacion": "Mínima cuantía",
+            "precio_base": 174341313.0,
+            "estado_de_apertura_del_proceso": "Abierto",
+            "estado_del_procedimiento": "Publicado",
+            "fase": "Presentación de oferta",
+            "estado_resumen": "Presentación de oferta",
+            "fecha_de_publicacion_del": "2026-09-04T00:00:00.000",
+            "fecha_de_recepcion_de": "2026-09-11T00:00:00.000",
+            "urlproceso": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10840581"
+          },
+          {
+            "id_del_proceso": "CO1.REQ.10988109",
+            "referencia_del_proceso": "CD-58-2026-10537",
+            "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+            "departamento_entidad": "Atlántico",
+            "ciudad_entidad": "Barranquilla",
+            "nombre_del_procedimiento": "PRESTACION DE SERVICIOS DE APOYO A LA GESTION PARA BRINDAR ACOMPAÑAMIENTO A LA SECRETARIA DISTRITAL DE RECREACION Y DEPORTES PARA EL DESARROLLO DE EVENTOS LOCALES; NACIONALES E INTERNACIONALES CHALLEN",
+            "descripci_n_del_procedimiento": "PRESTACION DE SERVICIOS DE APOYO A LA GESTION PARA BRINDAR ACOMPAÑAMIENTO A LA SECRETARIA DISTRITAL DE RECREACION Y DEPORTES PARA EL DESARROLLO DE EVENTOS LOCALES, NACIONALES E INTERNACIONALES CHALLEN",
+            "tipo_de_contrato": "Prestación de servicios",
+            "modalidad_de_contratacion": "Contratación directa",
+            "precio_base": 100000000.0,
+            "estado_de_apertura_del_proceso": "Abierto",
+            "estado_del_procedimiento": "Seleccionado",
+            "fase": "Presentación de oferta",
+            "estado_resumen": "Presentación de oferta",
+            "fecha_de_publicacion_del": "2026-09-04T00:00:00.000",
+            "urlproceso": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10841858"
+          },
+          {
+            "id_del_proceso": "CO1.REQ.10988223",
+            "referencia_del_proceso": "CD-11-2026-10512",
+            "entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+            "departamento_entidad": "Atlántico",
+            "ciudad_entidad": "Barranquilla",
+            "nombre_del_procedimiento": "LA PRESTACIÓN DE SERVICIOS DE APOYO  PARA REALIZAR LAS ACCIONES DE GESTION DE SALUD PUBLICA  EN EL PROGRAMA DE SALUD MENTAL DE LA SECRETARÍA DE SALUD DEL DISTRITO DE BARRANQUILLA",
+            "descripci_n_del_procedimiento": "LA PRESTACIÓN DE SERVICIOS DE APOYO  PARA REALIZAR LAS ACCIONES DE GESTION DE SALUD PUBLICA  EN EL PROGRAMA DE SALUD MENTAL DE LA SECRETARÍA DE SALUD DEL DISTRITO DE BARRANQUILLA",
+            "tipo_de_contrato": "Prestación de servicios",
+            "modalidad_de_contratacion": "Contratación directa",
+            "precio_base": 21632000.0,
+            "estado_de_apertura_del_proceso": "Abierto",
+            "estado_del_procedimiento": "Seleccionado",
+            "fase": "Fase de ofertas",
+            "estado_resumen": "Fase de ofertas",
+            "fecha_de_publicacion_del": "2026-09-04T00:00:00.000",
+            "urlproceso": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10841940"
+          }
+        ],
+        "seconds": 0.496
+      },
+      {
+        "operation": "query",
+        "dataset": "jbjy-vk9h",
+        "sql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, valor_facturado, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso, tipodocproveedor WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' ORDER BY fecha_de_firma DESC, id_contrato ASC LIMIT 3",
+        "timeout": 8,
+        "rows": [
+          {
+            "id_contrato": "CO1.PCCNTR.9813629",
+            "referencia_del_contrato": "CD-45-2026-9502",
+            "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+            "departamento": "Atlántico",
+            "ciudad": "Barranquilla",
+            "objeto_del_contrato": "PRESTACIÓN DE SERVICIOS PROFESIONALES DE ASESORIA PARA EJERCER LA DEFENSA JUDICIAL Y EXTRAJUDICIAL DEL DISTRITO DE BARRANQUILLA ANTE LOS DISTINTOS DESPACHOS JUDICIALES Y ADMINISTRATIVOS",
+            "descripcion_del_proceso": "PRESTACIÓN DE SERVICIOS PROFESIONALES DE ASESORIA PARA EJERCER LA DEFENSA JUDICIAL Y EXTRAJUDICIAL DEL DISTRITO DE BARRANQUILLA ANTE LOS DISTINTOS DESPACHOS JUDICIALES Y ADMINISTRATIVOS",
+            "tipo_de_contrato": "Prestación de servicios",
+            "modalidad_de_contratacion": "Contratación directa",
+            "valor_del_contrato": 38826666.67,
+            "valor_facturado": 0.0,
+            "estado_contrato": "Aprobado",
+            "fecha_de_firma": "2026-09-04T00:00:00.000",
+            "proveedor_adjudicado": "EDUARDO LUIS GOMEZ LORA",
+            "documento_proveedor": "1102835983",
+            "urlproceso": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10712719&isFromPublicArea=True&isModal=true&asPopupView=true",
+            "tipodocproveedor": "Cédula de Ciudadanía"
+          },
+          {
+            "id_contrato": "CO1.PCCNTR.9813901",
+            "referencia_del_contrato": "CD-45-2026-9495",
+            "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+            "departamento": "Atlántico",
+            "ciudad": "Barranquilla",
+            "objeto_del_contrato": "PRESTACIÓN DE SERVICIOS PROFESIONALES DE ASESORIA PARA EJERCER LA DEFENSA JUDICIAL Y EXTRAJUDICIAL DEL DISTRITO DE BARRANQUILLA ANTE LOS DISTINTOS DESPACHOS JUDICIALES Y ADMINISTRATIVOS",
+            "descripcion_del_proceso": "PRESTACIÓN DE SERVICIOS PROFESIONALES DE ASESORIA PARA EJERCER LA DEFENSA JUDICIAL Y EXTRAJUDICIAL DEL DISTRITO DE BARRANQUILLA ANTE LOS DISTINTOS DESPACHOS JUDICIALES Y ADMINISTRATIVOS",
+            "tipo_de_contrato": "Prestación de servicios",
+            "modalidad_de_contratacion": "Contratación directa",
+            "valor_del_contrato": 20189866.67,
+            "valor_facturado": 0.0,
+            "estado_contrato": "Aprobado",
+            "fecha_de_firma": "2026-09-04T00:00:00.000",
+            "proveedor_adjudicado": "EUGENIO RAFAEL SIERRA BLANCO",
+            "documento_proveedor": "72013179",
+            "urlproceso": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10712719&isFromPublicArea=True&isModal=true&asPopupView=true",
+            "tipodocproveedor": "Cédula de Ciudadanía"
+          },
+          {
+            "id_contrato": "CO1.PCCNTR.9814360",
+            "referencia_del_contrato": "CD-45-2026-9493",
+            "nombre_entidad": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+            "departamento": "Atlántico",
+            "ciudad": "Barranquilla",
+            "objeto_del_contrato": "PRESTACIÓN DE SERVICIOS PROFESIONALES DE ASESORIA PARA EJERCER LA DEFENSA JUDICIAL Y EXTRAJUDICIAL DEL DISTRITO DE BARRANQUILLA ANTE LOS DISTINTOS DESPACHOS JUDICIALES Y ADMINISTRATIVOS",
+            "descripcion_del_proceso": "PRESTACIÓN DE SERVICIOS PROFESIONALES DE ASESORIA PARA EJERCER LA DEFENSA JUDICIAL Y EXTRAJUDICIAL DEL DISTRITO DE BARRANQUILLA ANTE LOS DISTINTOS DESPACHOS JUDICIALES Y ADMINISTRATIVOS",
+            "tipo_de_contrato": "Prestación de servicios",
+            "modalidad_de_contratacion": "Contratación directa",
+            "valor_del_contrato": 20189866.67,
+            "valor_facturado": 0.0,
+            "estado_contrato": "Aprobado",
+            "fecha_de_firma": "2026-09-04T00:00:00.000",
+            "proveedor_adjudicado": "LAURA ARTUZ DELGADO",
+            "documento_proveedor": "1045717087",
+            "urlproceso": "https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=CO1.NTC.10712719&isFromPublicArea=True&isModal=true&asPopupView=true",
+            "tipodocproveedor": "Cédula de Ciudadanía"
+          }
+        ],
+        "seconds": 0.522
+      }
+    ]
+  },
+  {
+    "prompt": "cuales son sus mayores proveedores",
+    "result": {
+      "response": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA — 2026\n\nTerritorio: Barranquilla, Atlántico (DIVIPOLA 08001).\n\nPrincipales contratistas por número de contratos\n• PUERTA DE ORO EMPRESA DE DESARROLLO CARIBE SAS: 16 contratos\n• ANDRES ALBERTO IGLESIAS PARDO: 7 contratos\n• EDUBAR S.A.: 7 contratos\n• FUNDACION SOCIAL TEJEDORES DE DIVERSIDAD: 7 contratos\n• GUSTAVO ADOLFO GONZALEZ RIVERO: 5 contratos\nPrincipales contratistas por valor contratado\n• EDUBAR S.A.: $432.3 mil millones\n• PUERTA DE ORO EMPRESA DE DESARROLLO CARIBE SAS: $135.0 mil millones\n• K-YENA S.A.S.: $69.7 mil millones\n• VIGICOLBA LTDA: $57.9 mil millones\n• ASEOCOLBA S.A.: $41.7 mil millones",
+      "rows": [],
+      "results": [],
+      "dataset_id": "p6dx-8zbt",
+      "soql_query": "",
+      "parsed_params": {
+        "dataset": "procesos",
+        "entidad": "Municipio de barranquilla",
+        "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+        "entidad_resolution": {
+          "value": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de barranquilla",
+            "resolution_method": "exact"
+          }
+        },
+        "fecha_desde": "2026-01-01",
+        "fecha_hasta": "2026-12-31",
+        "_entity_profile_active": true,
+        "_entity_profile_focus": "overview",
+        "objeto": []
+      },
+      "resolved_params": {
+        "dataset": "procesos",
+        "entidad": "Municipio de barranquilla",
+        "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+        "entidad_resolution": {
+          "value": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+          "method": "rewrite_alcald[ií]a",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {
+            "rewritten_from": "alcaldia de barranquilla",
+            "resolution_method": "exact"
+          }
+        },
+        "fecha_desde": "2026-01-01",
+        "fecha_hasta": "2026-12-31",
+        "_entity_profile_focus": "suppliers",
+        "_entity_profile_active": true
+      },
+      "needs_llm": false,
+      "needs_clarification": false,
+      "route_reason": "entity_profile_suppliers",
+      "degraded": false,
+      "degraded_hint": "",
+      "total_count": 0,
+      "universe_insights": null,
+      "suggestions": [],
+      "timeout_suggestions": [],
+      "risk_flag_timeout": false,
+      "query_error": "",
+      "intent_type": "refine_filter",
+      "followup_intent_type": "refine_filter",
+      "followup_mutation": {
+        "intent": "refine_filter",
+        "requested_fields": [
+          "dataset",
+          "dataset_explicit"
+        ],
+        "accepted_fields": [],
+        "transition_cleared_fields": [],
+        "rejected_fields": [
+          "dataset",
+          "dataset_explicit"
+        ],
+        "rejection_reasons": {
+          "dataset": "field_not_allowed_for_intent",
+          "dataset_explicit": "field_not_allowed_for_intent"
+        }
+      },
+      "analytical_intent": "entity_profile",
+      "analytical_response": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA — 2026\n\nTerritorio: Barranquilla, Atlántico (DIVIPOLA 08001).\n\nPrincipales contratistas por número de contratos\n• PUERTA DE ORO EMPRESA DE DESARROLLO CARIBE SAS: 16 contratos\n• ANDRES ALBERTO IGLESIAS PARDO: 7 contratos\n• EDUBAR S.A.: 7 contratos\n• FUNDACION SOCIAL TEJEDORES DE DIVERSIDAD: 7 contratos\n• GUSTAVO ADOLFO GONZALEZ RIVERO: 5 contratos\nPrincipales contratistas por valor contratado\n• EDUBAR S.A.: $432.3 mil millones\n• PUERTA DE ORO EMPRESA DE DESARROLLO CARIBE SAS: $135.0 mil millones\n• K-YENA S.A.S.: $69.7 mil millones\n• VIGICOLBA LTDA: $57.9 mil millones\n• ASEOCOLBA S.A.: $41.7 mil millones",
+      "clarification_reason": "",
+      "total_count_approximate": false,
+      "result_order_guarantee": "exact_order",
+      "fallback_attempted": false,
+      "fallback_used": false,
+      "fallback_strategy": "",
+      "fallback_query_status": "not_attempted",
+      "primary_query_status": "",
+      "transformations_applied": [],
+      "substantive_filters_preserved": true,
+      "query_plan": {
+        "should_execute": true,
+        "params": {
+          "dataset": "procesos",
+          "entidad": "Municipio de barranquilla",
+          "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+          "entidad_resolution": {
+            "value": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+            "method": "rewrite_alcald[ií]a",
+            "kind": "buyer_entity",
+            "confidence": "high",
+            "like_value": null,
+            "metadata": {
+              "rewritten_from": "alcaldia de barranquilla",
+              "resolution_method": "exact"
+            }
+          },
+          "fecha_desde": "2026-01-01",
+          "fecha_hasta": "2026-12-31",
+          "_entity_profile_active": true,
+          "_entity_profile_focus": "overview",
+          "objeto": []
+        },
+        "missing_slots": [],
+        "risk_flags": [],
+        "clarification_question": null,
+        "reason": "filler_scrubbed",
+        "signals": [
+          {
+            "kind": "discourse_filler",
+            "payload": {
+              "tokens_to_scrub": [
+                "son"
+              ]
+            },
+            "confidence": "high",
+            "source_tokens": [
+              "son"
+            ]
+          }
+        ]
+      },
+      "followup": true,
+      "timings_ms": {
+        "parse_ms": 2.23,
+        "apply_context_ms": 0.25,
+        "resolve_ms": 0.03,
+        "build_soql_ms": 0.07,
+        "entity_profile_calls_total": 2.0,
+        "entity_profile_total_latency_ms": 422.52195795299485,
+        "entity_profile_suppliers_calls": 2.0,
+        "entity_profile_suppliers_ms": 596.7855840572156,
+        "execute_total_ms": 422.86,
+        "degrade_ms": 0.0,
+        "observe_ms": 0.0,
+        "suggest_ms": 0.02,
+        "rank_ms": 0.04,
+        "format_ms": 0.0,
+        "advisor_response_ms": 0.04,
+        "total_ms": 431.67
+      },
+      "contextual_filters": {},
+      "should_execute_decision": true,
+      "source_candidate_total": 0,
+      "validated_total_known": 0,
+      "displayed_so_far": 0,
+      "source_total_approximate": false,
+      "outcome": "success",
+      "outcome_reason": "results_found",
+      "query_fingerprint": "145edb77bdf4ffe0631a52ca84ea1e8f8e949d768f1e84f1ec181415eff23ba1",
+      "trace_id": "4d3ab3c63d86",
+      "turn_deadline_ms": 15000.0,
+      "turn_elapsed_ms": 435.3
+    },
+    "calls": [
+      {
+        "operation": "aggregate",
+        "dataset": "jbjy-vk9h",
+        "sql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor IS NOT NULL AND documento_proveedor != '' AND upper(trim(documento_proveedor)) NOT IN ('-', 'N/A', 'NA', 'NO APLICA', 'NO DEFINIDA', 'NO DEFINIDO', 'NODEFINIDO', 'NONE', 'NULL', 'SIN DATO', 'SIN INFORMACION', 'SIN INFORMACIÓN') GROUP BY documento_proveedor, tipodocproveedor ORDER BY contract_count DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+        "timeout": 8,
+        "rows": [
+          {
+            "documento_proveedor": "900249143",
+            "tipodocproveedor": "NIT",
+            "supplier_name": "PUERTA DE ORO EMPRESA DE DESARROLLO CARIBE SAS",
+            "contract_count": "16",
+            "total_contract_value": "134975097092"
+          },
+          {
+            "documento_proveedor": "1045705185",
+            "tipodocproveedor": "Cédula de Ciudadanía",
+            "supplier_name": "ANDRES ALBERTO IGLESIAS PARDO",
+            "contract_count": "7",
+            "total_contract_value": "220601600"
+          },
+          {
+            "documento_proveedor": "800091140",
+            "tipodocproveedor": "NIT",
+            "supplier_name": "EDUBAR S.A.",
+            "contract_count": "7",
+            "total_contract_value": "432271566899.68"
+          },
+          {
+            "documento_proveedor": "901033967",
+            "tipodocproveedor": "NIT",
+            "supplier_name": "FUNDACION SOCIAL TEJEDORES DE DIVERSIDAD",
+            "contract_count": "7",
+            "total_contract_value": "14232142857"
+          },
+          {
+            "documento_proveedor": "1125079383",
+            "tipodocproveedor": "Cédula de Ciudadanía",
+            "supplier_name": "GUSTAVO ADOLFO GONZALEZ RIVERO",
+            "contract_count": "5",
+            "total_contract_value": "148200000"
+          }
+        ],
+        "parsed": [
+          {
+            "actor_identity": "NIT:900249143",
+            "document_type": "NIT",
+            "document": "900249143",
+            "observed_name": "PUERTA DE ORO EMPRESA DE DESARROLLO CARIBE SAS",
+            "contract_count": 16,
+            "total_contract_value": 134975097092.0
+          },
+          {
+            "actor_identity": "CC:1045705185",
+            "document_type": "CC",
+            "document": "1045705185",
+            "observed_name": "ANDRES ALBERTO IGLESIAS PARDO",
+            "contract_count": 7,
+            "total_contract_value": 220601600.0
+          },
+          {
+            "actor_identity": "NIT:800091140",
+            "document_type": "NIT",
+            "document": "800091140",
+            "observed_name": "EDUBAR S.A.",
+            "contract_count": 7,
+            "total_contract_value": 432271566899.68
+          },
+          {
+            "actor_identity": "NIT:901033967",
+            "document_type": "NIT",
+            "document": "901033967",
+            "observed_name": "FUNDACION SOCIAL TEJEDORES DE DIVERSIDAD",
+            "contract_count": 7,
+            "total_contract_value": 14232142857.0
+          },
+          {
+            "actor_identity": "CC:1125079383",
+            "document_type": "CC",
+            "document": "1125079383",
+            "observed_name": "GUSTAVO ADOLFO GONZALEZ RIVERO",
+            "contract_count": 5,
+            "total_contract_value": 148200000.0
+          }
+        ],
+        "visible_count": 5,
+        "seconds": 0.176
+      },
+      {
+        "operation": "aggregate",
+        "dataset": "jbjy-vk9h",
+        "sql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND documento_proveedor IS NOT NULL AND documento_proveedor != '' AND upper(trim(documento_proveedor)) NOT IN ('-', 'N/A', 'NA', 'NO APLICA', 'NO DEFINIDA', 'NO DEFINIDO', 'NODEFINIDO', 'NONE', 'NULL', 'SIN DATO', 'SIN INFORMACION', 'SIN INFORMACIÓN') GROUP BY documento_proveedor, tipodocproveedor ORDER BY total_contract_value DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+        "timeout": 8,
+        "rows": [
+          {
+            "documento_proveedor": "800091140",
+            "tipodocproveedor": "NIT",
+            "supplier_name": "EDUBAR S.A.",
+            "contract_count": "7",
+            "total_contract_value": "432271566899.68"
+          },
+          {
+            "documento_proveedor": "900249143",
+            "tipodocproveedor": "NIT",
+            "supplier_name": "PUERTA DE ORO EMPRESA DE DESARROLLO CARIBE SAS",
+            "contract_count": "16",
+            "total_contract_value": "134975097092"
+          },
+          {
+            "documento_proveedor": "901040175",
+            "tipodocproveedor": "NIT",
+            "supplier_name": "K-YENA S.A.S.",
+            "contract_count": "2",
+            "total_contract_value": "69709518946"
+          },
+          {
+            "documento_proveedor": "900508420",
+            "tipodocproveedor": "NIT",
+            "supplier_name": "VIGICOLBA LTDA",
+            "contract_count": "3",
+            "total_contract_value": "57854241080"
+          },
+          {
+            "documento_proveedor": "800146077",
+            "tipodocproveedor": "Cédula de Ciudadanía",
+            "supplier_name": "ASEOCOLBA S.A.",
+            "contract_count": "2",
+            "total_contract_value": "41731197867"
+          }
+        ],
+        "parsed": [
+          {
+            "actor_identity": "NIT:800091140",
+            "document_type": "NIT",
+            "document": "800091140",
+            "observed_name": "EDUBAR S.A.",
+            "contract_count": 7,
+            "total_contract_value": 432271566899.68
+          },
+          {
+            "actor_identity": "NIT:900249143",
+            "document_type": "NIT",
+            "document": "900249143",
+            "observed_name": "PUERTA DE ORO EMPRESA DE DESARROLLO CARIBE SAS",
+            "contract_count": 16,
+            "total_contract_value": 134975097092.0
+          },
+          {
+            "actor_identity": "NIT:901040175",
+            "document_type": "NIT",
+            "document": "901040175",
+            "observed_name": "K-YENA S.A.S.",
+            "contract_count": 2,
+            "total_contract_value": 69709518946.0
+          },
+          {
+            "actor_identity": "NIT:900508420",
+            "document_type": "NIT",
+            "document": "900508420",
+            "observed_name": "VIGICOLBA LTDA",
+            "contract_count": 3,
+            "total_contract_value": 57854241080.0
+          },
+          {
+            "actor_identity": "CC:800146077",
+            "document_type": "CC",
+            "document": "800146077",
+            "observed_name": "ASEOCOLBA S.A.",
+            "contract_count": 2,
+            "total_contract_value": 41731197867.0
+          }
+        ],
+        "visible_count": 5,
+        "seconds": 0.421
+      }
+    ]
+  }
+]

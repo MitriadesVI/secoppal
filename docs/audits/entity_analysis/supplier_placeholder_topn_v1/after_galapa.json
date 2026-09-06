@@ -1,0 +1,40 @@
+{
+  "city": "galapa",
+  "timestamp": "2026-09-06T23:41:48.771560+00:00",
+  "prompt": "analiza la alcaldia de galapa",
+  "params": {
+    "dataset": "procesos",
+    "dataset_explicit": false,
+    "entidad": "Municipio de galapa",
+    "entidad_resolved": "MUNICIPIO DE GALAPA.",
+    "entidad_resolution": {
+      "value": "MUNICIPIO DE GALAPA.",
+      "method": "rewrite_alcald[ií]a",
+      "kind": "buyer_entity",
+      "confidence": "high",
+      "like_value": null,
+      "metadata": {
+        "rewritten_from": "alcaldia de galapa",
+        "resolution_method": "exact"
+      }
+    },
+    "_entity_profile_active": true,
+    "_entity_profile_focus": "overview"
+  },
+  "transport": "soda3",
+  "timeout": 8,
+  "count": {
+    "sql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%')) AND documento_proveedor IS NOT NULL AND documento_proveedor != '' AND upper(trim(documento_proveedor)) NOT IN ('-', 'N/A', 'NA', 'NO APLICA', 'NO DEFINIDA', 'NO DEFINIDO', 'NODEFINIDO', 'NONE', 'NULL', 'SIN DATO', 'SIN INFORMACION', 'SIN INFORMACIÓN') GROUP BY documento_proveedor, tipodocproveedor ORDER BY contract_count DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+    "error": "Soda3TimeoutError: SODA3 request exceeded its budget on dataset jbjy-vk9h",
+    "seconds": 8.008,
+    "parsed": [],
+    "visible_count": 0
+  },
+  "value": {
+    "sql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%')) AND documento_proveedor IS NOT NULL AND documento_proveedor != '' AND upper(trim(documento_proveedor)) NOT IN ('-', 'N/A', 'NA', 'NO APLICA', 'NO DEFINIDA', 'NO DEFINIDO', 'NODEFINIDO', 'NONE', 'NULL', 'SIN DATO', 'SIN INFORMACION', 'SIN INFORMACIÓN') GROUP BY documento_proveedor, tipodocproveedor ORDER BY total_contract_value DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+    "error": "Soda3TimeoutError: SODA3 request exceeded its budget on dataset jbjy-vk9h",
+    "seconds": 8.356,
+    "parsed": [],
+    "visible_count": 0
+  }
+}

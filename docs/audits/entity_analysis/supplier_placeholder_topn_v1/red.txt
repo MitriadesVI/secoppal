@@ -1,0 +1,176 @@
+FFFFFF................F                                                  [100%]
+=================================== FAILURES ===================================
+______ test_placeholder_group_cannot_consume_top_five[count-Barranquilla] ______
+
+case = {'city': 'Barranquilla', 'distinct_names': 9, 'placeholder_rows': 11}
+ranking = 'count'
+
+    @pytest.mark.parametrize('case', json.loads(FIXTURE.read_text())['cases'], ids=lambda c: c['city'])
+    @pytest.mark.parametrize('ranking', ['count', 'value'])
+    def test_placeholder_group_cannot_consume_top_five(case, ranking):
+        valid, placeholders = candidate_rows(case)
+        old = aggregate(valid + placeholders, ranking, legacy=True)
+        artificial = next(row for row in old if row['documento_proveedor'] == 'No Definido')
+        assert artificial['contract_count'] == 11
+        assert artificial['supplier_name'] == max(row[2] for row in placeholders)
+        assert len(parse_suppliers(old)) == 4
+        actual = parse_suppliers(aggregate(valid + placeholders, ranking))
+        expected = parse_suppliers(aggregate(valid, ranking))
+>       assert len(actual) == 5
+E       AssertionError: assert 4 == 5
+E        +  where 4 = len((SupplierMetric(actor_identity='NIT:900123450', document_type='NIT', document='900123450', observed_name='VALID 0', co...53', document_type='NIT', document='900123453', observed_name='VALID 3', contract_count=1, total_contract_value=400.0)))
+
+tests/test_entity_profile_supplier_placeholders.py:65: AssertionError
+______ test_placeholder_group_cannot_consume_top_five[count-Bucaramanga] _______
+
+case = {'city': 'Bucaramanga', 'distinct_names': 11, 'placeholder_rows': 11}
+ranking = 'count'
+
+    @pytest.mark.parametrize('case', json.loads(FIXTURE.read_text())['cases'], ids=lambda c: c['city'])
+    @pytest.mark.parametrize('ranking', ['count', 'value'])
+    def test_placeholder_group_cannot_consume_top_five(case, ranking):
+        valid, placeholders = candidate_rows(case)
+        old = aggregate(valid + placeholders, ranking, legacy=True)
+        artificial = next(row for row in old if row['documento_proveedor'] == 'No Definido')
+        assert artificial['contract_count'] == 11
+        assert artificial['supplier_name'] == max(row[2] for row in placeholders)
+        assert len(parse_suppliers(old)) == 4
+        actual = parse_suppliers(aggregate(valid + placeholders, ranking))
+        expected = parse_suppliers(aggregate(valid, ranking))
+>       assert len(actual) == 5
+E       AssertionError: assert 4 == 5
+E        +  where 4 = len((SupplierMetric(actor_identity='NIT:900123450', document_type='NIT', document='900123450', observed_name='VALID 0', co...53', document_type='NIT', document='900123453', observed_name='VALID 3', contract_count=1, total_contract_value=400.0)))
+
+tests/test_entity_profile_supplier_placeholders.py:65: AssertionError
+______ test_placeholder_group_cannot_consume_top_five[value-Barranquilla] ______
+
+case = {'city': 'Barranquilla', 'distinct_names': 9, 'placeholder_rows': 11}
+ranking = 'value'
+
+    @pytest.mark.parametrize('case', json.loads(FIXTURE.read_text())['cases'], ids=lambda c: c['city'])
+    @pytest.mark.parametrize('ranking', ['count', 'value'])
+    def test_placeholder_group_cannot_consume_top_five(case, ranking):
+        valid, placeholders = candidate_rows(case)
+        old = aggregate(valid + placeholders, ranking, legacy=True)
+        artificial = next(row for row in old if row['documento_proveedor'] == 'No Definido')
+        assert artificial['contract_count'] == 11
+        assert artificial['supplier_name'] == max(row[2] for row in placeholders)
+        assert len(parse_suppliers(old)) == 4
+        actual = parse_suppliers(aggregate(valid + placeholders, ranking))
+        expected = parse_suppliers(aggregate(valid, ranking))
+>       assert len(actual) == 5
+E       AssertionError: assert 4 == 5
+E        +  where 4 = len((SupplierMetric(actor_identity='NIT:900123454', document_type='NIT', document='900123454', observed_name='VALID 4', co...51', document_type='NIT', document='900123451', observed_name='VALID 1', contract_count=1, total_contract_value=200.0)))
+
+tests/test_entity_profile_supplier_placeholders.py:65: AssertionError
+______ test_placeholder_group_cannot_consume_top_five[value-Bucaramanga] _______
+
+case = {'city': 'Bucaramanga', 'distinct_names': 11, 'placeholder_rows': 11}
+ranking = 'value'
+
+    @pytest.mark.parametrize('case', json.loads(FIXTURE.read_text())['cases'], ids=lambda c: c['city'])
+    @pytest.mark.parametrize('ranking', ['count', 'value'])
+    def test_placeholder_group_cannot_consume_top_five(case, ranking):
+        valid, placeholders = candidate_rows(case)
+        old = aggregate(valid + placeholders, ranking, legacy=True)
+        artificial = next(row for row in old if row['documento_proveedor'] == 'No Definido')
+        assert artificial['contract_count'] == 11
+        assert artificial['supplier_name'] == max(row[2] for row in placeholders)
+        assert len(parse_suppliers(old)) == 4
+        actual = parse_suppliers(aggregate(valid + placeholders, ranking))
+        expected = parse_suppliers(aggregate(valid, ranking))
+>       assert len(actual) == 5
+E       AssertionError: assert 4 == 5
+E        +  where 4 = len((SupplierMetric(actor_identity='NIT:900123454', document_type='NIT', document='900123454', observed_name='VALID 4', co...51', document_type='NIT', document='900123451', observed_name='VALID 1', contract_count=1, total_contract_value=200.0)))
+
+tests/test_entity_profile_supplier_placeholders.py:65: AssertionError
+____ test_predicate_precedes_grouping_and_keeps_typed_key_and_limit[count] _____
+
+ranking = 'count'
+
+    @pytest.mark.parametrize('ranking', ['count', 'value'])
+    def test_predicate_precedes_grouping_and_keeps_typed_key_and_limit(ranking):
+        sql = build_supplier_query(BUILDER, {}, ranking)
+        where = sql.split(' WHERE ')[1].split(' GROUP BY ')[0]
+>       assert 'NOT IN' in where
+E       assert 'NOT IN' in "nombre_entidad = 'BUYER' AND documento_proveedor IS NOT NULL AND documento_proveedor != ''"
+
+tests/test_entity_profile_supplier_placeholders.py:73: AssertionError
+____ test_predicate_precedes_grouping_and_keeps_typed_key_and_limit[value] _____
+
+ranking = 'value'
+
+    @pytest.mark.parametrize('ranking', ['count', 'value'])
+    def test_predicate_precedes_grouping_and_keeps_typed_key_and_limit(ranking):
+        sql = build_supplier_query(BUILDER, {}, ranking)
+        where = sql.split(' WHERE ')[1].split(' GROUP BY ')[0]
+>       assert 'NOT IN' in where
+E       assert 'NOT IN' in "nombre_entidad = 'BUYER' AND documento_proveedor IS NOT NULL AND documento_proveedor != ''"
+
+tests/test_entity_profile_supplier_placeholders.py:73: AssertionError
+_________ test_sentinel_insertion_preserves_valid_ranking_and_metrics __________
+
+    @settings(max_examples=50, derandomize=True, deadline=None)
+>   @given(
+
+        sentinels=st.lists(st.tuples(st.sampled_from(SENTINELS), st.booleans(), st.integers(0, 10**9)), max_size=30),
+        values=st.lists(st.integers(0, 10**9), min_size=5, max_size=5),
+        repetitions=st.lists(st.integers(1, 5), min_size=5, max_size=5),
+    )
+
+tests/test_entity_profile_supplier_placeholders.py:85:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+sentinels = [('NO DEFINIDO', False, 1)], values = [0, 0, 0, 0, 0]
+repetitions = [1, 1, 1, 1, 1]
+
+    @settings(max_examples=50, derandomize=True, deadline=None)
+    @given(
+        sentinels=st.lists(st.tuples(st.sampled_from(SENTINELS), st.booleans(), st.integers(0, 10**9)), max_size=30),
+        values=st.lists(st.integers(0, 10**9), min_size=5, max_size=5),
+        repetitions=st.lists(st.integers(1, 5), min_size=5, max_size=5),
+    )
+    def test_sentinel_insertion_preserves_valid_ranking_and_metrics(sentinels, values, repetitions):
+        valid = [
+            (str(10000000 + i), 'Cédula de Ciudadanía', f'ACTOR {i}', value)
+            for i, (value, count) in enumerate(zip(values, repetitions))
+            for _ in range(count)
+        ]
+        extra = []
+        for text, lower, value in sentinels:
+            raw = '  ' + (text.lower() if lower else text) + ' '
+            assert normalize_identity(raw).key is None
+            extra.append((raw, 'No Definido', 'UNATTRIBUTABLE', value))
+        for ranking in ('count', 'value'):
+            expected = parse_suppliers(aggregate(valid, ranking))
+            actual = parse_suppliers(aggregate(valid + extra, ranking))
+>           assert actual == expected
+E           AssertionError: assert (SupplierMetr...ct_value=0.0)) == (SupplierMetr...ct_value=0.0))
+E
+E             Right contains one more item: SupplierMetric(actor_identity='CC:10000004', document_type='CC', document='10000004', observed_name='ACTOR 4', contract_count=1, total_contract_value=0.0)
+E             Use -v to get more diff
+E           Failing test case: test_sentinel_insertion_preserves_valid_ranking_and_metrics(
+E               # The test always failed when commented parts were varied together.
+E               sentinels=[(
+E                    'NO DEFINIDO',  # or any other generated value
+E                    False,  # or any other generated value
+E                    1,
+E                )],
+E               values=[0, 0, 0, 0, 0],
+E               repetitions=[1, 1, 1, 1, 1],  # or any other generated value
+E           )
+E           Explanation:
+E               These lines were always and only run by failing test cases:
+E                   /Users/rodrigoortiz/Documents/secoppal-supplier-placeholder-topn-v1/app/core/entity_profile/aspects/suppliers.py:41
+E                   /Users/rodrigoortiz/Documents/secoppal-supplier-placeholder-topn-v1/app/core/entity_profile/aspects/suppliers.py:55
+
+tests/test_entity_profile_supplier_placeholders.py:104: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_entity_profile_supplier_placeholders.py::test_placeholder_group_cannot_consume_top_five[count-Barranquilla]
+FAILED tests/test_entity_profile_supplier_placeholders.py::test_placeholder_group_cannot_consume_top_five[count-Bucaramanga]
+FAILED tests/test_entity_profile_supplier_placeholders.py::test_placeholder_group_cannot_consume_top_five[value-Barranquilla]
+FAILED tests/test_entity_profile_supplier_placeholders.py::test_placeholder_group_cannot_consume_top_five[value-Bucaramanga]
+FAILED tests/test_entity_profile_supplier_placeholders.py::test_predicate_precedes_grouping_and_keeps_typed_key_and_limit[count]
+FAILED tests/test_entity_profile_supplier_placeholders.py::test_predicate_precedes_grouping_and_keeps_typed_key_and_limit[value]
+FAILED tests/test_entity_profile_supplier_placeholders.py::test_sentinel_insertion_preserves_valid_ranking_and_metrics
+7 failed, 16 passed in 1.51s

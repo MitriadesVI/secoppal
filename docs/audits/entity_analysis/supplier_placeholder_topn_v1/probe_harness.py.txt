@@ -1,0 +1,49 @@
+import json, sys, time
+from dataclasses import asdict
+from datetime import date, datetime, timezone
+from pathlib import Path
+from app.core.entity_resolver import EntityResolver
+from app.core.query_router import QueryRouter
+from app.core.entity_profile.turn import classify_entity_profile_turn
+from app.core.entity_profile.aspects.suppliers import build_supplier_query, parse_suppliers
+from app.core.soql_builder import SoQLBuilder
+from app.core.actor_identity import normalize_identity
+from app.core.secop_client import SecopClient
+from app.core.socrata_transport.factory import build_transport
+out=Path('docs/audits/entity_analysis/supplier_placeholder_topn_v1')
+client=SecopClient('www.datos.gov.co',None,timeout=8,max_retries=0,transport=build_transport('soda3',domain='www.datos.gov.co',app_token=None,timeout_seconds=8))
+r=QueryRouter(EntityResolver(Path('app/data/aliases_db.json')))
+def run(q):
+ start=time.monotonic()
+ receipt={'sql':q}
+ try:
+  receipt['rows']=client.aggregate('jbjy-vk9h',q)
+ except Exception as e:
+  receipt['error']=type(e).__name__+': '+str(e)
+ receipt['seconds']=round(time.monotonic()-start,3)
+ return receipt
+phase=sys.argv[1]
+for city in ['barranquilla','bucaramanga','galapa']:
+ q='analiza la alcaldia de '+city+(' en 2026' if city!='galapa' else '')
+ t=classify_entity_profile_turn(q,r.parse(q,today=date(2026,9,6)).params)
+ d={'city':city,'timestamp':datetime.now(timezone.utc).isoformat(),'prompt':q,'params':t.params,'transport':'soda3','timeout':8}
+ for ranking in ['count','value']:
+  receipt=run(build_supplier_query(SoQLBuilder(),t.params,ranking))
+  receipt['parsed']=[asdict(x) for x in parse_suppliers(receipt.get('rows',[]))]
+  receipt['visible_count']=len(receipt['parsed'])
+  d[ranking]=receipt
+  print(phase,city,ranking,receipt['visible_count'],receipt.get('error','OK'),flush=True)
+ if phase=='before':
+  scope=SoQLBuilder()._build_where(SoQLBuilder.SPECS['jbjy-vk9h'],t.params)
+  receipt=run('SELECT documento_proveedor, tipodocproveedor, count(*) AS occurrences WHERE '+scope+" AND documento_proveedor IS NOT NULL AND documento_proveedor != '' GROUP BY documento_proveedor, tipodocproveedor ORDER BY occurrences DESC, documento_proveedor ASC, tipodocproveedor ASC LIMIT 1000")
+  receipt['cap']=1000
+  receipt['cap_reached']=len(receipt.get('rows',[]))==1000
+  receipt['rejected']=[{**row,'reasons':normalize_identity(row['documento_proveedor']).reason_codes} for row in receipt.get('rows',[]) if normalize_identity(row['documento_proveedor']).key is None]
+  d['audit']=receipt
+  d['placeholder_names']=run('SELECT documento_proveedor, proveedor_adjudicado, count(*) AS occurrences WHERE '+scope+" AND upper(documento_proveedor) = 'NO DEFINIDO' GROUP BY documento_proveedor, proveedor_adjudicado ORDER BY occurrences DESC, proveedor_adjudicado ASC LIMIT 100")
+  print(city,'rejected',receipt.get('rejected'),'names',len(d['placeholder_names'].get('rows',[])),flush=True)
+ (out/f'{phase}_{city}.json').write_text(json.dumps(d,indent=2,ensure_ascii=False,default=str)+'\n')
+if phase=='before':
+ receipt=run("SELECT upper(trim(' No Definido ')) AS sentinel LIMIT 1")
+ (out/'soql_trim_probe.json').write_text(json.dumps(receipt,indent=2)+'\n')
+ print('trim',receipt,flush=True)

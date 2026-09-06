@@ -1,0 +1,10 @@
+before barranquilla count 4 OK
+before barranquilla value 4 OK
+barranquilla rejected [{'documento_proveedor': 'No Definido', 'tipodocproveedor': 'No Definido', 'occurrences': '11', 'reasons': ('IDENTITY_SENTINEL_DISCARDED',)}] names 12
+before bucaramanga count 4 OK
+before bucaramanga value 4 OK
+bucaramanga rejected [{'documento_proveedor': 'No Definido', 'tipodocproveedor': 'No Definido', 'occurrences': '11', 'reasons': ('IDENTITY_SENTINEL_DISCARDED',)}] names 14
+before galapa count 4 OK
+before galapa value 5 OK
+galapa rejected [] names 9
+trim {'sql': "SELECT upper(trim(' No Definido ')) AS sentinel LIMIT 1", 'rows': [{'sentinel': 'NO DEFINIDO'}], 'seconds': 0.148}

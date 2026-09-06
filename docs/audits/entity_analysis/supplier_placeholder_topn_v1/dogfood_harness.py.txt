@@ -1,0 +1,39 @@
+import json, os, tempfile, time
+from dataclasses import asdict
+from pathlib import Path
+from app.config import Settings
+from app.core.orchestrator import SecopalWorkflow
+from app.core.entity_profile.aspects.suppliers import parse_suppliers
+out=Path('docs/audits/entity_analysis/supplier_placeholder_topn_v1')
+class Capture:
+ def __init__(self,inner,calls): self.inner,self.calls=inner,calls
+ def derived_for_timeout(self,t): return Capture(self.inner.derived_for_timeout(t),self.calls)
+ def with_timeout(self,t): return Capture(self.inner.with_timeout(t),self.calls)
+ def __getattr__(self,k): return getattr(self.inner,k)
+ def record(self,op,dataset,sql,**kwargs):
+  start=time.monotonic(); receipt={'operation':op,'dataset':dataset,'sql':sql,'timeout':self.inner.timeout}; self.calls.append(receipt)
+  try:
+   rows=getattr(self.inner,op)(dataset,sql,**kwargs); receipt['rows']=rows
+   if 'GROUP BY documento_proveedor' in sql:
+    receipt['parsed']=[asdict(x) for x in parse_suppliers(rows)]; receipt['visible_count']=len(receipt['parsed'])
+   return rows
+  except Exception as e:
+   receipt['error']=type(e).__name__+': '+str(e); raise
+  finally: receipt['seconds']=round(time.monotonic()-start,3)
+ def aggregate(self,d,s,**kw): return self.record('aggregate',d,s,**kw)
+ def query(self,d,s,**kw): return self.record('query',d,s,**kw)
+with tempfile.TemporaryDirectory(prefix='supplier-topn-') as tmp:
+ os.environ['CONVERSATION_STORE_DIR']=tmp+'/conversations'
+ os.environ['SECOP_FEEDBACK_PATH']=tmp+'/feedback.jsonl'
+ os.environ['SECOP_FEEDBACK_DB_PATH']=tmp+'/feedback.db'
+ settings=Settings(secop_feedback_path=Path(tmp)/'feedback.jsonl',secop_feedback_db_path=Path(tmp)/'feedback.db')
+ for city in ('barranquilla','bucaramanga','galapa'):
+  workflow=SecopalWorkflow(settings); calls=[]; workflow.secop_client=Capture(workflow.secop_client,calls)
+  workflow.narrator.narrate_with_grounding=lambda **kwargs: None
+  prompts=(['analiza '+city+' en 2026','analiza la alcaldia de '+city+' en 2026'] if city!='galapa' else ['analiza la alcaldia de galapa'])+['cuales son sus mayores proveedores']
+  turns=[]
+  for prompt in prompts:
+   calls.clear(); result=workflow.run_query(prompt,chat_id='supplier-topn-'+city,channel='streamlit')
+   turns.append({'prompt':prompt,'result':result,'calls':list(calls)})
+   print(city,prompt,result.get('route_reason'),[(c.get('visible_count'),c.get('error')) for c in calls if 'GROUP BY documento_proveedor' in c['sql']],flush=True)
+  (out/f'dogfood_{city}.json').write_text(json.dumps(turns,indent=2,ensure_ascii=False,default=str)+'\n')

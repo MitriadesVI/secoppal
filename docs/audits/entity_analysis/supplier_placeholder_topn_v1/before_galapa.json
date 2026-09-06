@@ -1,0 +1,245 @@
+{
+  "city": "galapa",
+  "timestamp": "2026-09-06T23:38:30.291070+00:00",
+  "prompt": "analiza la alcaldia de galapa",
+  "params": {
+    "dataset": "procesos",
+    "dataset_explicit": false,
+    "entidad": "Municipio de galapa",
+    "entidad_resolved": "MUNICIPIO DE GALAPA.",
+    "entidad_resolution": {
+      "value": "MUNICIPIO DE GALAPA.",
+      "method": "rewrite_alcald[ií]a",
+      "kind": "buyer_entity",
+      "confidence": "high",
+      "like_value": null,
+      "metadata": {
+        "rewritten_from": "alcaldia de galapa",
+        "resolution_method": "exact"
+      }
+    },
+    "_entity_profile_active": true,
+    "_entity_profile_focus": "overview"
+  },
+  "transport": "soda3",
+  "timeout": 8,
+  "count": {
+    "sql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%')) AND documento_proveedor IS NOT NULL AND documento_proveedor != '' GROUP BY documento_proveedor, tipodocproveedor ORDER BY contract_count DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+    "rows": [
+      {
+        "documento_proveedor": "No Definido",
+        "tipodocproveedor": "No Definido",
+        "supplier_name": "UTSAMFGALAPA",
+        "contract_count": "65",
+        "total_contract_value": "10204238989.78"
+      },
+      {
+        "documento_proveedor": "860524654",
+        "tipodocproveedor": "NIT",
+        "supplier_name": "Aseguradora Solidaria de Colombia Entidad Cooperativa.",
+        "contract_count": "26",
+        "total_contract_value": "501380472"
+      },
+      {
+        "documento_proveedor": "8792834",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "supplier_name": "JULIO CESAR CASTRO BLANCO",
+        "contract_count": "16",
+        "total_contract_value": "90707759"
+      },
+      {
+        "documento_proveedor": "900870011",
+        "tipodocproveedor": "NIT",
+        "supplier_name": "FUNDACION  SOCIAL INNOVA",
+        "contract_count": "16",
+        "total_contract_value": "3181701274"
+      },
+      {
+        "documento_proveedor": "72002618",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "supplier_name": "Sean Ronald Barraza Zúñiga",
+        "contract_count": "15",
+        "total_contract_value": "160253899"
+      }
+    ],
+    "seconds": 0.135,
+    "parsed": [
+      {
+        "actor_identity": "NIT:860524654",
+        "document_type": "NIT",
+        "document": "860524654",
+        "observed_name": "Aseguradora Solidaria de Colombia Entidad Cooperativa.",
+        "contract_count": 26,
+        "total_contract_value": 501380472.0
+      },
+      {
+        "actor_identity": "CC:8792834",
+        "document_type": "CC",
+        "document": "8792834",
+        "observed_name": "JULIO CESAR CASTRO BLANCO",
+        "contract_count": 16,
+        "total_contract_value": 90707759.0
+      },
+      {
+        "actor_identity": "NIT:900870011",
+        "document_type": "NIT",
+        "document": "900870011",
+        "observed_name": "FUNDACION  SOCIAL INNOVA",
+        "contract_count": 16,
+        "total_contract_value": 3181701274.0
+      },
+      {
+        "actor_identity": "CC:72002618",
+        "document_type": "CC",
+        "document": "72002618",
+        "observed_name": "Sean Ronald Barraza Zúñiga",
+        "contract_count": 15,
+        "total_contract_value": 160253899.0
+      }
+    ],
+    "visible_count": 4
+  },
+  "value": {
+    "sql": "SELECT documento_proveedor, tipodocproveedor, max(proveedor_adjudicado) AS supplier_name, count(*) AS contract_count, sum(valor_del_contrato) AS total_contract_value WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%')) AND documento_proveedor IS NOT NULL AND documento_proveedor != '' GROUP BY documento_proveedor, tipodocproveedor ORDER BY total_contract_value DESC, tipodocproveedor ASC, documento_proveedor ASC LIMIT 5",
+    "rows": [
+      {
+        "documento_proveedor": "1047215223",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "supplier_name": "FABIAN ALBERTO ACOSTA POLO",
+        "contract_count": "9",
+        "total_contract_value": "41924387634700"
+      },
+      {
+        "documento_proveedor": "1047223551",
+        "tipodocproveedor": "Cédula de Ciudadanía",
+        "supplier_name": "Edinson Yesid Iguaran Mendoza",
+        "contract_count": "2",
+        "total_contract_value": "27156112933727"
+      },
+      {
+        "documento_proveedor": "806009116",
+        "tipodocproveedor": "NIT",
+        "supplier_name": "ASOCIACION HOMBRES DE  MI TIERRA",
+        "contract_count": "6",
+        "total_contract_value": "498856957617"
+      },
+      {
+        "documento_proveedor": "890101681",
+        "tipodocproveedor": "NIT",
+        "supplier_name": "UNINORTE",
+        "contract_count": "5",
+        "total_contract_value": "79117451723"
+      },
+      {
+        "documento_proveedor": "800135913",
+        "tipodocproveedor": "NIT",
+        "supplier_name": "SOCIEDAD DE ACUEDUCTO ALCANTARILLADO Y ASEO DE BARRANQUILLA S.A. E.S.P.",
+        "contract_count": "1",
+        "total_contract_value": "39703500000"
+      }
+    ],
+    "seconds": 0.164,
+    "parsed": [
+      {
+        "actor_identity": "CC:1047215223",
+        "document_type": "CC",
+        "document": "1047215223",
+        "observed_name": "FABIAN ALBERTO ACOSTA POLO",
+        "contract_count": 9,
+        "total_contract_value": 41924387634700.0
+      },
+      {
+        "actor_identity": "CC:1047223551",
+        "document_type": "CC",
+        "document": "1047223551",
+        "observed_name": "Edinson Yesid Iguaran Mendoza",
+        "contract_count": 2,
+        "total_contract_value": 27156112933727.0
+      },
+      {
+        "actor_identity": "NIT:806009116",
+        "document_type": "NIT",
+        "document": "806009116",
+        "observed_name": "ASOCIACION HOMBRES DE  MI TIERRA",
+        "contract_count": 6,
+        "total_contract_value": 498856957617.0
+      },
+      {
+        "actor_identity": "NIT:890101681",
+        "document_type": "NIT",
+        "document": "890101681",
+        "observed_name": "UNINORTE",
+        "contract_count": 5,
+        "total_contract_value": 79117451723.0
+      },
+      {
+        "actor_identity": "NIT:800135913",
+        "document_type": "NIT",
+        "document": "800135913",
+        "observed_name": "SOCIEDAD DE ACUEDUCTO ALCANTARILLADO Y ASEO DE BARRANQUILLA S.A. E.S.P.",
+        "contract_count": 1,
+        "total_contract_value": 39703500000.0
+      }
+    ],
+    "visible_count": 5
+  },
+  "audit": {
+    "sql": "SELECT documento_proveedor, tipodocproveedor, count(*) AS occurrences WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%')) AND documento_proveedor IS NOT NULL AND documento_proveedor != '' GROUP BY documento_proveedor, tipodocproveedor ORDER BY occurrences DESC, documento_proveedor ASC, tipodocproveedor ASC LIMIT 1000",
+    "error": "Soda3TimeoutError: SODA3 request exceeded its budget on dataset jbjy-vk9h",
+    "seconds": 8.009,
+    "cap": 1000,
+    "cap_reached": false,
+    "rejected": []
+  },
+  "placeholder_names": {
+    "sql": "SELECT documento_proveedor, proveedor_adjudicado, count(*) AS occurrences WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%')) AND upper(documento_proveedor) = 'NO DEFINIDO' GROUP BY documento_proveedor, proveedor_adjudicado ORDER BY occurrences DESC, proveedor_adjudicado ASC LIMIT 100",
+    "rows": [
+      {
+        "documento_proveedor": "No Definido",
+        "proveedor_adjudicado": "Sin Descripcion",
+        "occurrences": "57"
+      },
+      {
+        "documento_proveedor": "No Definido",
+        "proveedor_adjudicado": "CONSORCIO POLIDEPORTIVO GALAPA 2026",
+        "occurrences": "2"
+      },
+      {
+        "documento_proveedor": "No Definido",
+        "proveedor_adjudicado": "CONSORCIO GEDORI.",
+        "occurrences": "1"
+      },
+      {
+        "documento_proveedor": "No Definido",
+        "proveedor_adjudicado": "CONSORCIO INTERCANALES",
+        "occurrences": "1"
+      },
+      {
+        "documento_proveedor": "No Definido",
+        "proveedor_adjudicado": "CONSORCIO MEGAOBRAS 2026",
+        "occurrences": "1"
+      },
+      {
+        "documento_proveedor": "No Definido",
+        "proveedor_adjudicado": "CONSORCIO MOVAID",
+        "occurrences": "1"
+      },
+      {
+        "documento_proveedor": "No Definido",
+        "proveedor_adjudicado": "INTERVENTORÍA C.C.C GALAPA.",
+        "occurrences": "1"
+      },
+      {
+        "documento_proveedor": "No Definido",
+        "proveedor_adjudicado": "UT BESO-IN",
+        "occurrences": "1"
+      },
+      {
+        "documento_proveedor": "No Definido",
+        "proveedor_adjudicado": "UTSAMFGALAPA",
+        "occurrences": "1"
+      }
+    ],
+    "seconds": 0.919
+  }
+}

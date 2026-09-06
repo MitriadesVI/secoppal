@@ -1,0 +1,89 @@
+{
+  "sql": "SELECT documento_proveedor, tipodocproveedor, proveedor_adjudicado, count(*) AS occurrences WHERE nombre_entidad = 'MUNICIPIO DE BUCARAMANGA' AND fecha_de_firma >= '2026-01-01' AND fecha_de_firma <= '2026-12-31' AND upper(documento_proveedor) = 'NO DEFINIDO' GROUP BY documento_proveedor, tipodocproveedor, proveedor_adjudicado ORDER BY occurrences DESC, proveedor_adjudicado ASC LIMIT 100",
+  "rows": [
+    {
+      "documento_proveedor": "No Definido",
+      "tipodocproveedor": "NIT",
+      "proveedor_adjudicado": "CONSORCIO 004 BGA",
+      "occurrences": "1"
+    },
+    {
+      "documento_proveedor": "No Definido",
+      "tipodocproveedor": "No Definido",
+      "proveedor_adjudicado": "CONSORCIO AUTOMOTOR BGA",
+      "occurrences": "1"
+    },
+    {
+      "documento_proveedor": "No Definido",
+      "tipodocproveedor": "No Definido",
+      "proveedor_adjudicado": "CONSORCIO BUCARAMANGA 26",
+      "occurrences": "1"
+    },
+    {
+      "documento_proveedor": "No Definido",
+      "tipodocproveedor": "No Definido",
+      "proveedor_adjudicado": "CONSORCIO ESPACIO PUBLICO BGA 2026",
+      "occurrences": "1"
+    },
+    {
+      "documento_proveedor": "No Definido",
+      "tipodocproveedor": "No Definido",
+      "proveedor_adjudicado": "CONSORCIO INTER MALLA VIAL BGA",
+      "occurrences": "1"
+    },
+    {
+      "documento_proveedor": "No Definido",
+      "tipodocproveedor": "No Definido",
+      "proveedor_adjudicado": "CONSORCIO KITS 2026.",
+      "occurrences": "1"
+    },
+    {
+      "documento_proveedor": "No Definido",
+      "tipodocproveedor": "No Definido",
+      "proveedor_adjudicado": "CONSORCIO VIAL DIAMANTE II GR 2026",
+      "occurrences": "1"
+    },
+    {
+      "documento_proveedor": "No Definido",
+      "tipodocproveedor": "No Definido",
+      "proveedor_adjudicado": "UNIÓN TEMPORAL ALLIANZ SEGUROS - LA PREVISORA - AXA COLPATRIA- SOLIDARIA - SEGUROS DEL ESTADO-007-2026-BGA",
+      "occurrences": "1"
+    },
+    {
+      "documento_proveedor": "No Definido",
+      "tipodocproveedor": "NIT",
+      "proveedor_adjudicado": "UT AIRE PRECISION BGA 2026",
+      "occurrences": "1"
+    },
+    {
+      "documento_proveedor": "No Definido",
+      "tipodocproveedor": "No Definido",
+      "proveedor_adjudicado": "UT AXA  ALLIANZ MPIO BUCARAMANGA2026",
+      "occurrences": "1"
+    },
+    {
+      "documento_proveedor": "No Definido",
+      "tipodocproveedor": "No Definido",
+      "proveedor_adjudicado": "UT COMPU 26 SOCAMUL",
+      "occurrences": "1"
+    },
+    {
+      "documento_proveedor": "No Definido",
+      "tipodocproveedor": "Otro",
+      "proveedor_adjudicado": "UT INTERVENTORIA PARQUES 2026",
+      "occurrences": "1"
+    },
+    {
+      "documento_proveedor": "No Definido",
+      "tipodocproveedor": "No Definido",
+      "proveedor_adjudicado": "UT PRENSAR MEDIOS 2026",
+      "occurrences": "1"
+    },
+    {
+      "documento_proveedor": "No Definido",
+      "tipodocproveedor": "No Definido",
+      "proveedor_adjudicado": "UT SEGUROS BUCARAMANGA 2026",
+      "occurrences": "1"
+    }
+  ]
+}

@@ -180,3 +180,44 @@ Los dogfoods y contrastes live se registran en
 [`ENTITY_ANALYSIS_V1_DOGFOOD.md`](../audits/entity_analysis/ENTITY_ANALYSIS_V1_DOGFOOD.md).
 El diagnóstico causal y la verificación beta posterior están en
 [`BETA_ENTITY_ACTOR_HARDENING.md`](../audits/beta_entity_actor_v1/BETA_ENTITY_ACTOR_HARDENING.md).
+
+## SUPPLIER_PLACEHOLDER_GROUPING_AND_TOPN_COVERAGE_V1 — 2026-09-06
+
+Un documento placeholder no es un actor. `actor_identity` conserva la autoridad
+cerrada existente y expone `actor_document_sentinels()` e
+`is_actor_document_sentinel()` sin cambiar la normalización. Su proyección en
+`actor_identity_soql` excluye sentinelas del documento mediante
+`upper(trim(documento_proveedor)) NOT IN (...)` **antes de GROUP BY y LIMIT**.
+El tipo documental no decide si un documento placeholder es atribuible: también
+se excluye cuando la fuente lo publica con tipo NIT u Otro.
+
+Ambos rankings mantienen `GROUP BY documento_proveedor, tipodocproveedor`,
+`LIMIT 5`, desempates y métricas raw de las identidades válidas. No hay fallback
+por nombre, hash, fuzzy ni inferencia de UT. `max(proveedor_adjudicado)` sólo
+rotula grupos de documentos elegibles; no define la identidad. La validación
+tipada fina sigue en `normalize_identity()`.
+
+El foco suppliers mantiene dos llamadas, 8 s por llamada y 9 s globales; overview
+mantiene seis llamadas. El dogfood conversacional de Barranquilla y Bucaramanga
+2026 pasó de cuatro a cinco proveedores en ambos rankings; Galapa histórico
+pasó de cuatro a cinco por cantidad y conservó cinco por valor. Se conservan los
+timeouts iniciales de Galapa y los límites del audit, sin interpretarlos como
+vacío. Los nombres territoriales solos siguen pidiendo aclaración institucional.
+
+La cobertura `attributable_rows / unattributable_rows` se difiere: dos rankings
+TOP5 no contienen denominadores completos y calcularlos exigiría otra consulta.
+No se garantiza completar cinco ante documentos no-sentinel rechazados por otras
+reglas del parser, ni se introduce refill. SoQL TRIM cubre espacios exteriores;
+las demás variantes de whitespace siguen protegidas por el parser, sin afirmar
+paridad total con `str.strip()`. No se amplía la autoridad por intuición.
+
+Evidencia, SQL, filas raw, métricas parseadas, regresiones y puertas:
+[`SUPPLIER_PLACEHOLDER_TOPN_V1.md`](../audits/entity_analysis/supplier_placeholder_topn_v1/SUPPLIER_PLACEHOLDER_TOPN_V1.md).
+
+Cierre de validación: 334 focales verdes; Ruff verde; Semgrep 10 → 10, delta 0.
+La suite completa terminó con 11.571 passed y un fallo nuevo en el replay de
+Procurement Relationships: su registro congelado compara el hash literal de
+`actor_identity.py`. El test pasa en la base; la API extraída cambia sólo ese
+digest en el registro regenerado y el resto de artefactos coincide byte a byte.
+No se repinea ni cambia ese carril. **Entrega PARTIAL**, pendiente de resolver
+el contrato de replay antes de integración.

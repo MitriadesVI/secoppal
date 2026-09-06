@@ -1,0 +1,59 @@
+{
+  "sql": "SELECT documento_proveedor, tipodocproveedor, proveedor_adjudicado, count(*) AS occurrences WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%MUNICIPIO DE GALAPA.%')) AND upper(documento_proveedor) = 'NO DEFINIDO' GROUP BY documento_proveedor, tipodocproveedor, proveedor_adjudicado ORDER BY occurrences DESC, proveedor_adjudicado ASC LIMIT 100",
+  "rows": [
+    {
+      "documento_proveedor": "No Definido",
+      "tipodocproveedor": "No Definido",
+      "proveedor_adjudicado": "Sin Descripcion",
+      "occurrences": "57"
+    },
+    {
+      "documento_proveedor": "No Definido",
+      "tipodocproveedor": "No Definido",
+      "proveedor_adjudicado": "CONSORCIO POLIDEPORTIVO GALAPA 2026",
+      "occurrences": "2"
+    },
+    {
+      "documento_proveedor": "No Definido",
+      "tipodocproveedor": "No Definido",
+      "proveedor_adjudicado": "CONSORCIO GEDORI.",
+      "occurrences": "1"
+    },
+    {
+      "documento_proveedor": "No Definido",
+      "tipodocproveedor": "No Definido",
+      "proveedor_adjudicado": "CONSORCIO INTERCANALES",
+      "occurrences": "1"
+    },
+    {
+      "documento_proveedor": "No Definido",
+      "tipodocproveedor": "No Definido",
+      "proveedor_adjudicado": "CONSORCIO MEGAOBRAS 2026",
+      "occurrences": "1"
+    },
+    {
+      "documento_proveedor": "No Definido",
+      "tipodocproveedor": "No Definido",
+      "proveedor_adjudicado": "CONSORCIO MOVAID",
+      "occurrences": "1"
+    },
+    {
+      "documento_proveedor": "No Definido",
+      "tipodocproveedor": "No Definido",
+      "proveedor_adjudicado": "INTERVENTORÍA C.C.C GALAPA.",
+      "occurrences": "1"
+    },
+    {
+      "documento_proveedor": "No Definido",
+      "tipodocproveedor": "NIT",
+      "proveedor_adjudicado": "UT BESO-IN",
+      "occurrences": "1"
+    },
+    {
+      "documento_proveedor": "No Definido",
+      "tipodocproveedor": "No Definido",
+      "proveedor_adjudicado": "UTSAMFGALAPA",
+      "occurrences": "1"
+    }
+  ]
+}
