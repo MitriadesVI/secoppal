@@ -163,7 +163,7 @@ def test_strong_actor_new_search_discards_previous_topic_and_scope(tmp_path):
     workflow.run_query("contratos de alimentacion de la alcaldia de galapa en 2025", chat_id="new")
     result = workflow.run_query("busca proveedor ACTOR X", chat_id="new")
     params = result["resolved_params"]
-    assert params["actor_scope"]["observed_name"] == "ACTOR X"
+    assert params["actor_scope"]["observed_name"] == "actor x"
     for key in ["entidad_resolved", "objeto", "fecha_desde", PROFILE_ACTIVE_PARAM]:
         assert not params.get(key)
 

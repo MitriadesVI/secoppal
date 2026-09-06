@@ -30,6 +30,7 @@ from app.core.actor_conversation import (
     purge_actor_state,
 )
 from app.core.actor_resolution import is_authoritative_actor_resolution
+from app.core.actor_resolution_admission import can_resolve_new_actor
 from app.core.followup_engine import FollowupGuards, detect_and_merge
 from app.core.llm_handler import LLMHandler
 from app.core.negation_binding import (
@@ -798,9 +799,10 @@ def _finish_apply_context(state, start, merged, intent, mutation_trace) -> State
     pending_yields = intent == "new_search" and bool(
         (state.get("context_params") or {}).get("actor_pending")
     )
+    resolution_pending = can_resolve_new_actor(merged, intent)
     # A fresh, possibly broad search is not lost follow-up context. Let the
     # normal planner enforce scope while committing the replacement frame.
-    if not is_opportunity and not pending_yields and not FollowupGuards.check_no_where_1_1(merged):
+    if not is_opportunity and not pending_yields and not resolution_pending and not FollowupGuards.check_no_where_1_1(merged):
         return _with_timing(
             state,
             "apply_context_ms",
@@ -822,7 +824,7 @@ def _finish_apply_context(state, start, merged, intent, mutation_trace) -> State
 
     # Si el merge produjo contexto suficiente, no necesita LLM
     has_context = FollowupGuards.check_no_where_1_1(merged)
-    if has_context:
+    if has_context or resolution_pending:
         return _with_timing(state, "apply_context_ms", start, parsed_params=merged, needs_llm=False, intent_type=intent, followup_intent_type=intent, followup_mutation=mutation_trace)
 
     return _with_timing(state, "apply_context_ms", start, parsed_params=merged, intent_type=intent, followup_intent_type=intent, followup_mutation=mutation_trace)
