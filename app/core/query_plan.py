@@ -22,6 +22,7 @@ from app.config import actor_profile_enabled
 from app.core.actor_scope_policy import evaluate_actor_scope
 from app.core.dialogue_policy import classify
 from app.core.query_plan_types import QueryPlan
+from app.core.money_query_gate import money_query_gate
 from app.core.opportunity_scope_policy import evaluate_opportunity_scope
 from app.core.semantic_sanity import compute_sanity_flags
 from app.core.query_plan_preflight import semantic_preflight
@@ -253,24 +254,10 @@ def compute_query_plan(
                 signals=all_signals,
             )
 
-    # ── P16: SMMLV nunca usa una tarifa única sobre alcance multianual ──
+    # ── P16: monetary clarification gate ───────────────────────────────
     if "P16" in rules_to_apply:
-        money_metadata = working_params.get("money_metadata")
-        metadata_message = (
-            money_metadata.get("clarification_message")
-            if isinstance(money_metadata, dict)
-            else None
-        )
-        clarification = working_params.get("money_clarification") or metadata_message
-        if clarification:
-            return QueryPlan(
-                should_execute=False,
-                params=working_params,
-                risk_flags=risk_flags + ["smmlv_year_scope_unsupported"],
-                clarification_question=str(clarification),
-                reason="smmlv_year_scope_unsupported",
-                signals=all_signals,
-            )
+        if blocked := money_query_gate(working_params, risk_flags, all_signals):
+            return blocked
 
     # ── P10: signed dataset / invalid contract states ───────────────────
     if "P10" in rules_to_apply:
