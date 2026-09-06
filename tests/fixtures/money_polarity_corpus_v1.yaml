@@ -1,0 +1,633 @@
+version: 1
+cases:
+- id: MPV2-001
+  category: lower
+  query: contratos de alimentación más de 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-002
+  category: lower
+  query: contratos de alimentación mas de 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-003
+  category: lower
+  query: contratos de alimentación por más de 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-004
+  category: lower
+  query: contratos de alimentación por mas de 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-005
+  category: lower
+  query: contratos de alimentación por más 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-006
+  category: lower
+  query: contratos de alimentación por mas 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-007
+  category: lower
+  query: contratos de alimentación más 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-008
+  category: lower
+  query: contratos de alimentación mayores a 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-009
+  category: lower
+  query: contratos de alimentación mayores 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-010
+  category: lower
+  query: contratos de alimentación superiores a 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-011
+  category: lower
+  query: contratos de alimentación superiores 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-012
+  category: lower
+  query: contratos de alimentación supera los 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-013
+  category: lower
+  query: contratos de alimentación superan 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-014
+  category: lower
+  query: contratos de alimentación supere los 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-015
+  category: lower
+  query: contratos de alimentación exceda 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-016
+  category: lower
+  query: contratos de alimentación excede los 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-017
+  category: lower
+  query: contratos de alimentación exceden 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-018
+  category: lower
+  query: contratos de alimentación rebasa 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-019
+  category: lower
+  query: contratos de alimentación rebase los 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-020
+  category: lower
+  query: contratos de alimentación sobrepasa 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-021
+  category: lower
+  query: contratos de alimentación por encima de 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-022
+  category: lower
+  query: contratos de alimentación por encima 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-023
+  category: lower
+  query: contratos de alimentación mínimo 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-024
+  category: lower
+  query: contratos de alimentación mínimo de 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-025
+  category: lower
+  query: contratos de alimentación al menos 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-026
+  category: lower
+  query: contratos de alimentación a partir de 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-027
+  category: lower
+  query: contratos de alimentación desde 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-028
+  category: lower
+  query: contratos de alimentación 200 millones en adelante
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-029
+  category: lower
+  query: contratos de alimentación 200 millones para arriba
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-030
+  category: lower
+  query: contratos de alimentación 200 millones o más
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-031
+  category: lower
+  query: contratos de alimentación mayor o igual que 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-032
+  category: lower
+  query: contratos de alimentación >= 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-033
+  category: upper
+  query: contratos de alimentación menos de 200 millones
+  relation: UPPER_BOUND
+  valor_min: null
+  valor_max: 200000000
+- id: MPV2-034
+  category: upper
+  query: contratos de alimentación menos 200 millones
+  relation: UPPER_BOUND
+  valor_min: null
+  valor_max: 200000000
+- id: MPV2-035
+  category: upper
+  query: contratos de alimentación menores a 200 millones
+  relation: UPPER_BOUND
+  valor_min: null
+  valor_max: 200000000
+- id: MPV2-036
+  category: upper
+  query: contratos de alimentación menores 200 millones
+  relation: UPPER_BOUND
+  valor_min: null
+  valor_max: 200000000
+- id: MPV2-037
+  category: upper
+  query: contratos de alimentación inferiores a 200 millones
+  relation: UPPER_BOUND
+  valor_min: null
+  valor_max: 200000000
+- id: MPV2-038
+  category: upper
+  query: contratos de alimentación inferiores 200 millones
+  relation: UPPER_BOUND
+  valor_min: null
+  valor_max: 200000000
+- id: MPV2-039
+  category: upper
+  query: contratos de alimentación hasta 200 millones
+  relation: UPPER_BOUND
+  valor_min: null
+  valor_max: 200000000
+- id: MPV2-040
+  category: upper
+  query: contratos de alimentación máximo 200 millones
+  relation: UPPER_BOUND
+  valor_min: null
+  valor_max: 200000000
+- id: MPV2-041
+  category: upper
+  query: contratos de alimentación máximo de 200 millones
+  relation: UPPER_BOUND
+  valor_min: null
+  valor_max: 200000000
+- id: MPV2-042
+  category: upper
+  query: contratos de alimentación a lo sumo 200 millones
+  relation: UPPER_BOUND
+  valor_min: null
+  valor_max: 200000000
+- id: MPV2-043
+  category: upper
+  query: contratos de alimentación por debajo de 200 millones
+  relation: UPPER_BOUND
+  valor_min: null
+  valor_max: 200000000
+- id: MPV2-044
+  category: upper
+  query: contratos de alimentación por debajo 200 millones
+  relation: UPPER_BOUND
+  valor_min: null
+  valor_max: 200000000
+- id: MPV2-045
+  category: upper
+  query: contratos de alimentación 200 millones o menos
+  relation: UPPER_BOUND
+  valor_min: null
+  valor_max: 200000000
+- id: MPV2-046
+  category: upper
+  query: contratos de alimentación 200 millones para abajo
+  relation: UPPER_BOUND
+  valor_min: null
+  valor_max: 200000000
+- id: MPV2-047
+  category: upper
+  query: contratos de alimentación menor o igual a 200 millones
+  relation: UPPER_BOUND
+  valor_min: null
+  valor_max: 200000000
+- id: MPV2-048
+  category: upper
+  query: contratos de alimentación <= 200 millones
+  relation: UPPER_BOUND
+  valor_min: null
+  valor_max: 200000000
+- id: MPV2-049
+  category: negated
+  query: contratos de alimentación no supera 200 millones
+  relation: UPPER_BOUND
+  valor_min: null
+  valor_max: 200000000
+- id: MPV2-050
+  category: negated
+  query: contratos de alimentación no superan 200 millones
+  relation: UPPER_BOUND
+  valor_min: null
+  valor_max: 200000000
+- id: MPV2-051
+  category: negated
+  query: contratos de alimentación no mayor 200 millones
+  relation: UPPER_BOUND
+  valor_min: null
+  valor_max: 200000000
+- id: MPV2-052
+  category: negated
+  query: contratos de alimentación no sea mayor a 200 millones
+  relation: UPPER_BOUND
+  valor_min: null
+  valor_max: 200000000
+- id: MPV2-053
+  category: negated
+  query: contratos de alimentación no sean mayores a 200 millones
+  relation: UPPER_BOUND
+  valor_min: null
+  valor_max: 200000000
+- id: MPV2-054
+  category: negated
+  query: contratos de alimentación que no supere 200 millones
+  relation: UPPER_BOUND
+  valor_min: null
+  valor_max: 200000000
+- id: MPV2-055
+  category: negated
+  query: contratos de alimentación que no superen 200 millones
+  relation: UPPER_BOUND
+  valor_min: null
+  valor_max: 200000000
+- id: MPV2-056
+  category: negated
+  query: contratos de alimentación no exceda 200 millones
+  relation: UPPER_BOUND
+  valor_min: null
+  valor_max: 200000000
+- id: MPV2-057
+  category: negated
+  query: contratos de alimentación no excedan 200 millones
+  relation: UPPER_BOUND
+  valor_min: null
+  valor_max: 200000000
+- id: MPV2-058
+  category: negated
+  query: contratos de alimentación no rebase 200 millones
+  relation: UPPER_BOUND
+  valor_min: null
+  valor_max: 200000000
+- id: MPV2-059
+  category: negated
+  query: contratos de alimentación no sean superiores a 200 millones
+  relation: UPPER_BOUND
+  valor_min: null
+  valor_max: 200000000
+- id: MPV2-060
+  category: negated
+  query: contratos de alimentación no más de 200 millones
+  relation: UPPER_BOUND
+  valor_min: null
+  valor_max: 200000000
+- id: MPV2-061
+  category: negated
+  query: contratos de alimentación no rebasa 200 millones
+  relation: UPPER_BOUND
+  valor_min: null
+  valor_max: 200000000
+- id: MPV2-062
+  category: negated
+  query: contratos de alimentación no menor 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-063
+  category: negated
+  query: contratos de alimentación no sean menores 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-064
+  category: negated
+  query: contratos de alimentación no sea menor 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-065
+  category: negated
+  query: contratos de alimentación no baje de 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-066
+  category: negated
+  query: contratos de alimentación no menos de 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-067
+  category: negated
+  query: contratos de alimentación no inferiores a 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-068
+  category: negated
+  query: contratos de alimentación no por debajo de 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-069
+  category: negated
+  query: contratos de alimentación que no sean menores a 200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
+- id: MPV2-070
+  category: range
+  query: contratos de alimentación entre 100 y 200 millones
+  relation: RANGE
+  valor_min: 100000000
+  valor_max: 200000000
+- id: MPV2-071
+  category: range
+  query: contratos de alimentación de 100 a 200 millones
+  relation: RANGE
+  valor_min: 100000000
+  valor_max: 200000000
+- id: MPV2-072
+  category: range
+  query: contratos de alimentación desde 100 hasta 200 millones
+  relation: RANGE
+  valor_min: 100000000
+  valor_max: 200000000
+- id: MPV2-073
+  category: range
+  query: contratos de alimentación 100-200 millones
+  relation: RANGE
+  valor_min: 100000000
+  valor_max: 200000000
+- id: MPV2-074
+  category: range
+  query: contratos de alimentación más de 100 y menos de 200 millones
+  relation: RANGE
+  valor_min: 100000000
+  valor_max: 200000000
+- id: MPV2-075
+  category: range
+  query: contratos de alimentación mayor a 100 y menor a 200 millones
+  relation: RANGE
+  valor_min: 100000000
+  valor_max: 200000000
+- id: MPV2-076
+  category: range
+  query: contratos de alimentación al menos 100 y a lo sumo 200 millones
+  relation: RANGE
+  valor_min: 100000000
+  valor_max: 200000000
+- id: MPV2-077
+  category: range
+  query: contratos de alimentación entre 200 y 100 millones
+  relation: RANGE
+  valor_min: 100000000
+  valor_max: 200000000
+- id: MPV2-078
+  category: range
+  query: contratos de alimentación supera 100 millones y no supera 200 millones
+  relation: RANGE
+  valor_min: 100000000
+  valor_max: 200000000
+- id: MPV2-079
+  category: range
+  query: contratos de alimentación no menor 100 millones y no mayor 200 millones
+  relation: RANGE
+  valor_min: 100000000
+  valor_max: 200000000
+- id: MPV2-080
+  category: approximate
+  query: contratos por 500 millones
+  relation: APPROXIMATE
+  valor_min: 400000000
+  valor_max: 600000000
+- id: MPV2-081
+  category: approximate
+  query: contratos de mantenimiento por 500 millones
+  relation: APPROXIMATE
+  valor_min: 400000000
+  valor_max: 600000000
+- id: MPV2-082
+  category: approximate
+  query: procesos de software por 500 millones
+  relation: APPROXIMATE
+  valor_min: 400000000
+  valor_max: 600000000
+- id: MPV2-083
+  category: approximate
+  query: contratos para adulto mayor por 500 millones
+  relation: APPROXIMATE
+  valor_min: 400000000
+  valor_max: 600000000
+- id: MPV2-084
+  category: unknown
+  query: contratos de 500 millones
+  relation: UNKNOWN
+  valor_min: null
+  valor_max: null
+- id: MPV2-085
+  category: unknown
+  query: contratos 500 millones
+  relation: UNKNOWN
+  valor_min: null
+  valor_max: null
+- id: MPV2-086
+  category: unknown
+  query: procesos con 500 millones
+  relation: UNKNOWN
+  valor_min: null
+  valor_max: null
+- id: MPV2-087
+  category: unknown
+  query: contratos de alimentación de 200 millones
+  relation: UNKNOWN
+  valor_min: null
+  valor_max: null
+- id: MPV2-088
+  category: unknown
+  query: contratos de alimentación rondan 200 millones
+  relation: UNKNOWN
+  valor_min: null
+  valor_max: null
+- id: MPV2-089
+  category: unknown
+  query: contratos de alimentación cerca de 200 millones
+  relation: UNKNOWN
+  valor_min: null
+  valor_max: null
+- id: MPV2-090
+  category: unknown
+  query: contratos de alimentación oscilan en 200 millones
+  relation: UNKNOWN
+  valor_min: null
+  valor_max: null
+- id: MPV2-091
+  category: unknown
+  query: contratos de alimentación más contratos de 200 millones
+  relation: UNKNOWN
+  valor_min: null
+  valor_max: null
+- id: MPV2-092
+  category: unknown
+  query: contratos de alimentación entre 500 mil y 3 millones
+  relation: UNKNOWN
+  valor_min: null
+  valor_max: null
+- id: MPV2-093
+  category: unknown
+  query: contratos de alimentación más de un millón y medio
+  relation: UNKNOWN
+  valor_min: null
+  valor_max: null
+- id: MPV2-094
+  category: unknown
+  query: contratos de alimentación más de 100 millones y 200 millones
+  relation: UNKNOWN
+  valor_min: null
+  valor_max: null
+- id: MPV2-095
+  category: unknown
+  query: contratos de alimentación más de 100 millones y cerca de 200 millones
+  relation: UNKNOWN
+  valor_min: null
+  valor_max: null
+- id: MPV2-096
+  category: adversarial
+  query: quiero más contratos de 200 millones
+  relation: UNKNOWN
+  valor_min: null
+  valor_max: null
+- id: MPV2-097
+  category: adversarial
+  query: contratos de alimentación más recientes de 300 millones
+  relation: UNKNOWN
+  valor_min: null
+  valor_max: null
+- id: MPV2-098
+  category: adversarial
+  query: contratos de alimentación superiores resultados de 200 millones
+  relation: UNKNOWN
+  valor_min: null
+  valor_max: null
+- id: MPV2-099
+  category: adversarial
+  query: contratos de alimentación menores demoras de 200 millones
+  relation: UNKNOWN
+  valor_min: null
+  valor_max: null
+- id: MPV2-100
+  category: adversarial
+  query: los más grandes por valor de 500 millones
+  relation: UNKNOWN
+  valor_min: null
+  valor_max: null
+- id: MPV2-101
+  category: adversarial
+  query: muéstrame más contratos por 200 millones
+  relation: APPROXIMATE
+  valor_min: 160000000
+  valor_max: 240000000
+- id: MPV2-102
+  category: adversarial
+  query: quiero más procesos de obras por 500 millones
+  relation: APPROXIMATE
+  valor_min: 400000000
+  valor_max: 600000000
+- id: MPV2-103
+  category: adversarial
+  query: quiero más contratos de alimentación por 500 millones
+  relation: APPROXIMATE
+  valor_min: 400000000
+  valor_max: 600000000
+- id: MPV2-104
+  category: adversarial
+  query: contratos más recientes por 300 millones
+  relation: APPROXIMATE
+  valor_min: 240000000
+  valor_max: 360000000
+- id: DEMO-001
+  category: lower
+  query: contratos firmados por distrito de barranquilla en agosto de 2026 por mas
+    200 millones
+  relation: LOWER_BOUND
+  valor_min: 200000000
+  valor_max: null
