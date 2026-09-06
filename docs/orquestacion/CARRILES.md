@@ -9,6 +9,27 @@ carril por cuenta propia.
 
 ---
 
+## MPV2 — asignación explícita del usuario (2026-09-06)
+
+- Rama: `feature/money-polarity-v2`.
+- Worktree: `/Users/rodrigoortiz/Documents/secoppal-money-polarity-v2`.
+- Base: `main` @ `691ca352c510d3e1b4bb8ca1717ce6c171d43253`.
+- ADR reservado: **093**, tras verificar máximo global 092 en los worktrees.
+- Propiedad: autoridad `money_polarity.py`, extracción monetaria y protección
+  de spans en `query_router.py`, consumo monetario en `negation_binding.py`,
+  admisión de spans protegidos en `money_admission.py`, extracción
+  `money_query_gate.py` y enganche P16, transporte de aclaración en
+  `followup_mutations.py`, pruebas/corpus MPV2 y documentación de este sprint.
+- Los cambios adicionales a fixtures monetarios solo pueden actualizar la
+  expectativa bare-amount que este sprint reemplaza explícitamente.
+- La orden autoriza al coordinador MPV2 a ejecutar la suite completa en serie,
+  después de comprobar que no hay otro pytest activo. No arranca la app.
+- No integra commits en cuarentena, no modifica fuentes/identidades/territorio,
+  no repinea evidencia, no mergea ni hace push. Los carriles históricos de
+  abajo conservan sus límites.
+
+---
+
 ## Base común del epoch
 
 - Base histórica solicitada: `main` @ `0d6fd55`.

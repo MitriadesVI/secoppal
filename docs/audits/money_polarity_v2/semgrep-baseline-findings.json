@@ -1,0 +1,52 @@
+[
+  {
+    "rule": "semgrep.except-exception-que-silencia",
+    "path": "app/core/formatter.py",
+    "line": 171
+  },
+  {
+    "rule": "semgrep.except-exception-que-silencia",
+    "path": "app/core/formatter.py",
+    "line": 699
+  },
+  {
+    "rule": "semgrep.except-exception-que-silencia",
+    "path": "app/core/response_policy.py",
+    "line": 508
+  },
+  {
+    "rule": "semgrep.except-exception-que-silencia",
+    "path": "app/core/response_policy.py",
+    "line": 577
+  },
+  {
+    "rule": "semgrep.except-exception-que-silencia",
+    "path": "app/core/workflow/actions/execution.py",
+    "line": 364
+  },
+  {
+    "rule": "semgrep.except-exception-que-silencia",
+    "path": "app/core/workflow/handlers/direct_lookup.py",
+    "line": 366
+  },
+  {
+    "rule": "semgrep.except-exception-que-silencia",
+    "path": "app/core/workflow/handlers/normal_flow.py",
+    "line": 170
+  },
+  {
+    "rule": "semgrep.except-exception-que-silencia",
+    "path": "app/core/workflow/handlers/pagination.py",
+    "line": 177
+  },
+  {
+    "rule": "semgrep.except-exception-que-silencia",
+    "path": "app/core/workflow/handlers/radar.py",
+    "line": 109
+  },
+  {
+    "rule": "semgrep.except-exception-que-silencia",
+    "path": "app/core/workflow/handlers/refinement.py",
+    "line": 93
+  }
+]

@@ -4383,3 +4383,28 @@ Se añade esta entrada sin reordenar ni eliminar historia.
 
 [Decisión completa](decisions/2026-09-05_ADR-081_entity-analysis-territorial-metadata-consumer.md).
 [Arquitectura](architecture/ENTITY_ANALYSIS_V1.md).
+
+## ADR-093: Money Polarity V2 — relación determinista y fallo cerrado
+
+**Fecha:** 2026-09-06
+**Estado:** Implemented in feature branch; pendiente de integración
+**Rama:** `feature/money-polarity-v2`
+
+La demo «por mas 200 millones» producía un máximo opuesto al mínimo pedido.
+`INV-NO-SILENT-MONEY-POLARITY-GUESS` elimina el fallback unknown → máximo:
+una relación monetaria desconocida pide aclaración y bloquea toda ejecución.
+
+`money_polarity.py` es la única autoridad léxica de relación; numeric resolution,
+conversión COP y admisión conservan sus autoridades. Negation binding, protección
+ante corrector y arbitraje NIT/dinero consumen los mismos comparadores. P16,
+extraído antes del cambio funcional por NEXT_TOUCH_RULE, distingue incertidumbre
+genérica de vigencia SMMLV no soportada. El gate de mutaciones conserva el
+bloqueo en follow-ups sin cambiar la política de cotas.
+
+Se reemplaza la aceptación histórica de bare amounts como máximos de ADR-059;
+se preservan SMMLV y el rango legacy ±20 % de «por X». LLM y sus prompts no se
+tocan. El corpus de 105 casos precede al runtime; el cierre conserva evidencia
+antes/después, propiedades, E2E con spies y límites de validación.
+
+Detalle: `docs/decisions/2026-09-06_ADR-093_money-polarity-v2-fail-closed.md`.
+Cierre: `docs/audits/2026-09-06_MONEY_POLARITY_V2_CLOSEOUT.md`.

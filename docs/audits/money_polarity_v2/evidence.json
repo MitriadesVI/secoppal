@@ -1,0 +1,264 @@
+{
+  "base_sha": "691ca352c510d3e1b4bb8ca1717ce6c171d43253",
+  "runtime_sha": "a81c39dad2b63128f6e7897980d93a9190df1b56",
+  "corpus_sha256": "2f14310634fff9ebcca35c8698c645eaf9b22cb8f8fbc5870013bc7d31b87354",
+  "corpus_categories": {
+    "lower": 33,
+    "upper": 16,
+    "negated": 21,
+    "range": 10,
+    "approximate": 4,
+    "unknown": 12,
+    "adversarial": 9
+  },
+  "corpus_relations": {
+    "LOWER_BOUND": 41,
+    "UPPER_BOUND": 29,
+    "RANGE": 10,
+    "APPROXIMATE": 8,
+    "UNKNOWN": 17
+  },
+  "semgrep_baseline": 10,
+  "semgrep_final": 10,
+  "semgrep_new": 0,
+  "incident_before": {
+    "query": "contratos firmados por distrito de barranquilla en agosto de 2026 por mas 200 millones",
+    "params": {
+      "dataset": "contratos",
+      "dataset_explicit": true,
+      "fecha_desde": "2026-08-01",
+      "fecha_hasta": "2026-08-31",
+      "_temporal_replace_scope": true,
+      "entidad": "distrito de barranquilla",
+      "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+      "entidad_resolution": {
+        "value": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+        "method": "scan_exact",
+        "kind": "buyer_entity",
+        "confidence": "high",
+        "like_value": null,
+        "metadata": {}
+      },
+      "valor_max": 200000000
+    },
+    "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND valor_del_contrato <= 200000000 AND fecha_de_firma >= '2026-08-01' AND fecha_de_firma <= '2026-08-31' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+  },
+  "demos": [
+    {
+      "id": "DEMO-001",
+      "query": "contratos firmados por distrito de barranquilla en agosto de 2026 por mas 200 millones",
+      "params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "fecha_desde": "2026-08-01",
+        "fecha_hasta": "2026-08-31",
+        "_temporal_replace_scope": true,
+        "entidad": "distrito de barranquilla",
+        "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+        "entidad_resolution": {
+          "value": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+          "method": "scan_exact",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        },
+        "valor_min": 200000000
+      },
+      "route": "heuristic_only",
+      "needs_llm": false,
+      "should_execute": true,
+      "reason": "valid_query",
+      "soql": "SELECT id_contrato, referencia_del_contrato, nombre_entidad, departamento, ciudad, objeto_del_contrato, descripcion_del_proceso, tipo_de_contrato, modalidad_de_contratacion, valor_del_contrato, estado_contrato, fecha_de_firma, proveedor_adjudicado, documento_proveedor, urlproceso WHERE unaccent(UPPER(nombre_entidad)) LIKE unaccent(UPPER('%DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA%')) AND valor_del_contrato >= 200000000 AND fecha_de_firma >= '2026-08-01' AND fecha_de_firma <= '2026-08-31' ORDER BY fecha_de_firma DESC, valor_del_contrato DESC, id_contrato DESC LIMIT 50"
+    },
+    {
+      "id": "DEMO-002",
+      "query": "contratos firmados por distrito de barranquilla en agosto de 2026 por más 200 millones",
+      "params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "fecha_desde": "2026-08-01",
+        "fecha_hasta": "2026-08-31",
+        "_temporal_replace_scope": true,
+        "entidad": "distrito de barranquilla",
+        "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+        "entidad_resolution": {
+          "value": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+          "method": "scan_exact",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        },
+        "valor_min": 200000000
+      },
+      "route": "heuristic_only",
+      "needs_llm": false,
+      "should_execute": true,
+      "reason": "valid_query"
+    },
+    {
+      "id": "DEMO-003",
+      "query": "contratos firmados por distrito de barranquilla en agosto de 2026 más 200 millones",
+      "params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "fecha_desde": "2026-08-01",
+        "fecha_hasta": "2026-08-31",
+        "_temporal_replace_scope": true,
+        "entidad": "distrito de barranquilla",
+        "entidad_resolved": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+        "entidad_resolution": {
+          "value": "DISTRITO ESPECIAL INDUSTRIAL Y PORTUARIO DE BARRANQUILLA",
+          "method": "scan_exact",
+          "kind": "buyer_entity",
+          "confidence": "high",
+          "like_value": null,
+          "metadata": {}
+        },
+        "valor_min": 200000000
+      },
+      "route": "heuristic_only",
+      "needs_llm": false,
+      "should_execute": true,
+      "reason": "valid_query"
+    },
+    {
+      "id": "DEMO-004",
+      "query": "quiero más contratos de alimentación por 200 millones",
+      "params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "valor_min": 160000000,
+        "valor_max": 240000000,
+        "objeto": [
+          "alimentacion"
+        ]
+      },
+      "route": "heuristic_only",
+      "needs_llm": false,
+      "should_execute": true,
+      "reason": "valid_query"
+    },
+    {
+      "id": "DEMO-005",
+      "query": "contratos de alimentación no superiores a 200 millones",
+      "params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "valor_max": 200000000,
+        "objeto": [
+          "alimentacion"
+        ]
+      },
+      "route": "heuristic_only",
+      "needs_llm": false,
+      "should_execute": true,
+      "reason": "valid_query"
+    },
+    {
+      "id": "DEMO-006",
+      "query": "contratos de alimentación no menores a 200 millones",
+      "params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "valor_min": 200000000,
+        "objeto": [
+          "alimentacion"
+        ]
+      },
+      "route": "heuristic_only",
+      "needs_llm": false,
+      "should_execute": true,
+      "reason": "valid_query"
+    },
+    {
+      "id": "DEMO-007",
+      "query": "contratos de alimentación por encima 200 millones",
+      "params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "valor_min": 200000000,
+        "objeto": [
+          "alimentacion"
+        ]
+      },
+      "route": "heuristic_only",
+      "needs_llm": false,
+      "should_execute": true,
+      "reason": "valid_query"
+    },
+    {
+      "id": "DEMO-008",
+      "query": "contratos de alimentación por debajo 200 millones",
+      "params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "valor_max": 200000000,
+        "objeto": [
+          "alimentacion"
+        ]
+      },
+      "route": "heuristic_only",
+      "needs_llm": false,
+      "should_execute": true,
+      "reason": "valid_query"
+    },
+    {
+      "id": "DEMO-009",
+      "query": "contratos de alimentación de 200 millones",
+      "params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "money_clarification": "No pude determinar el filtro monetario de \"200 millones\". ¿Quieres un mínimo, un máximo, un rango o un valor aproximado? Por ejemplo: \"más de 200 millones\" o \"entre 100 y 200 millones\".",
+        "objeto": [
+          "alimentacion"
+        ]
+      },
+      "route": "heuristic_only",
+      "needs_llm": false,
+      "should_execute": false,
+      "reason": "money_interpretation_uncertain"
+    },
+    {
+      "id": "DEMO-010",
+      "query": "contratos por 500 millones",
+      "params": {
+        "dataset": "contratos",
+        "dataset_explicit": true,
+        "valor_min": 400000000,
+        "valor_max": 600000000
+      },
+      "route": "heuristic_only",
+      "needs_llm": false,
+      "should_execute": true,
+      "reason": "valid_query"
+    }
+  ],
+  "query_plan_loc": {
+    "before": 276,
+    "after": 263
+  },
+  "instrumentation": {
+    "ruff": "0.16.4",
+    "semgrep": "1.176.0",
+    "hypothesis": "6.165.10",
+    "codegraph": "0.9.6",
+    "codegraph_mcp_loaded": true,
+    "codegraph_index_status": "Index is up to date; 795 files, 18650 nodes, 41759 edges",
+    "codegraph_impact_limitation": "Homonym selected an archive copy; affected returned no dependents. Used rg and direct source reads for live consumers."
+  },
+  "final_gates": {
+    "full_suite": "11465 passed, 11 skipped, 14 xfailed in 487.54s (0:08:07)",
+    "focal": "486 passed in 57.00s",
+    "correction": "1 passed in 1.06s",
+    "query_corpus": "89/89 PASS",
+    "dialogue_corpus": "60/61; GOB-DEPTO-001 baseline, byte-identical report",
+    "ruff": "All checks passed!",
+    "lint_core": "app/core/ limpio",
+    "semgrep_baseline": 10,
+    "semgrep_final": 10,
+    "semgrep_new": 0,
+    "verdict": "GO"
+  }
+}

@@ -1,0 +1,3 @@
+{
+  "stderr": "               \n               \n┌─────────────┐\n│ Scan Status │\n└─────────────┘\n  Scanning 276 files tracked by git with 3 Code rules:\n  Scanning 259 files with 3 python rules.\n                \n                \n┌──────────────┐\n│ Scan Summary │\n└──────────────┘\n✅ Scan completed successfully.\n • Findings: 10 (10 blocking)\n • Rules run: 3\n • Targets scanned: 259\n • Parsed lines: ~100.0%\n • Scan skipped: \n   ◦ Files larger than  files 1.0 MB: 1\n • Scan was limited to files tracked by git\n • For a detailed list of skipped files and lines, run semgrep with the --verbose flag\nRan 3 rules on 259 files: 10 findings.\n"
+}
