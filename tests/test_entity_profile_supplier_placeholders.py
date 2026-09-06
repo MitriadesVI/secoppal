@@ -36,6 +36,10 @@ def aggregate(rows, ranking, *, legacy=False):
         start, tail = sql.split(' WHERE ', 1)
         _, suffix = tail.split(' GROUP BY ', 1)
         sql = start + " WHERE nombre_entidad = 'BUYER' AND documento_proveedor IS NOT NULL AND documento_proveedor != '' GROUP BY " + suffix
+    return execute_sql(rows, sql)
+
+
+def execute_sql(rows, sql):
     with sqlite3.connect(':memory:') as db:
         db.row_factory = sqlite3.Row
         db.create_function('upper', 1, lambda v: v.upper() if v is not None else None)
@@ -107,3 +111,53 @@ def test_sentinel_insertion_preserves_valid_ranking_and_metrics(sentinels, value
             index = int(metric.document) - 10000000
             assert metric.contract_count == repetitions[index]
             assert metric.total_contract_value == values[index] * repetitions[index]
+
+
+def test_typed_supplier_key_keeps_same_digits_separate():
+    rows = [('900123456', kind, kind, 100) for kind in ('NIT', 'Cédula de Ciudadanía')]
+    metrics = parse_suppliers(aggregate(rows, 'count'))
+    assert {m.actor_identity for m in metrics} == {'NIT:900123456', 'CC:900123456'}
+
+
+def test_unknown_non_sentinel_is_still_rejected_by_parser():
+    rows = [('xyz', 'Otro', 'NOT AN ACTOR', 100)]
+    assert len(aggregate(rows, 'count')) == 1  # no new SQL identity heuristic
+    assert parse_suppliers(aggregate(rows, 'count')) == ()
+
+
+def test_supplier_focus_executes_two_actual_queries_and_renders_five_per_ranking():
+    from datetime import date
+    from app.core.entity_profile.assembler import build_entity_profile
+    from app.core.entity_profile.render import render_entity_profile
+    from app.core.entity_profile.turn import classify_entity_profile_turn
+    from app.core.entity_resolver import EntityResolver
+    from app.core.query_router import QueryRouter
+
+    query = 'analiza la alcaldia de baranoa en 2026'
+    router = QueryRouter(EntityResolver(Path('app/data/aliases_db.json')))
+    turn = classify_entity_profile_turn(query, router.parse(query, today=date(2026, 9, 6)).params)
+    valid, placeholders = candidate_rows({'distinct_names': 9, 'placeholder_rows': 11})
+
+    class Client:
+        def __init__(self):
+            self.calls = []
+
+        def derived_for_timeout(self, timeout):
+            assert timeout <= 8
+            return self
+
+        def aggregate(self, dataset, sql):
+            assert dataset == 'jbjy-vk9h'
+            self.calls.append(sql)
+            return execute_sql(valid + placeholders, sql)
+
+    client = Client()
+    profile = build_entity_profile(
+        scope=turn.scope, identity=turn.identity, params=turn.params,
+        focus='suppliers', secop_client=client, soql_builder=BUILDER,
+    )
+    assert profile.source_calls.calls_total == len(client.calls) == 2
+    assert not profile.partial
+    assert len(profile.suppliers.fact('top_by_contract_count')) == 5
+    assert len(profile.suppliers.fact('top_by_contract_value')) == 5
+    assert render_entity_profile(profile).count('•') == 10

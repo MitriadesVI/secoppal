@@ -5,6 +5,7 @@ from typing import Any, Literal
 
 from app.core.actor_document_types import is_personal_source_type
 from app.core.actor_identity import normalize_identity
+from app.core.actor_identity_soql import exclude_actor_document_sentinels
 from app.core.entity_profile.aspects.common import as_float, as_int, build_where
 from app.core.entity_profile.models import CONTRACT_DATASET, SupplierMetric
 
@@ -25,6 +26,7 @@ def build_supplier_query(builder: Any, params: dict, ranking: SupplierRanking) -
         f"SELECT {document}, {document_type}, max({supplier}) AS supplier_name, "
         f"count(*) AS contract_count, sum({spec.value}) AS total_contract_value "
         f"WHERE {where} AND {document} IS NOT NULL AND {document} != '' "
+        f"AND {exclude_actor_document_sentinels(document)} "
         f"GROUP BY {document}, {document_type} "
         f"ORDER BY {metric} DESC, {document_type} ASC, {document} ASC "
         f"LIMIT {SUPPLIER_LIMIT}"

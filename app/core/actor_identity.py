@@ -105,6 +105,8 @@ __all__ = [
     "REASON_SENTINEL_DISCARDED",
     "REASON_TYPE_DECLARED",
     "REASON_TYPE_UNDETERMINED",
+    "actor_document_sentinels",
+    "is_actor_document_sentinel",
     "compute_check_digit",
     "has_plausible_actor_document_digits",
     "normalize_identity",
@@ -160,6 +162,16 @@ _SENTINEL_TEXTS: frozenset[str] = frozenset({
 _EXPLICIT_CHECK_DIGIT_RE = re.compile(r"[-\s.](\d)$")
 
 _NON_DIGITS_RE = re.compile(r"[^0-9]")
+
+
+def actor_document_sentinels() -> tuple[str, ...]:
+    """Closed uppercase vocabulary for source prefilters; no identity inference."""
+    return tuple(sorted(_SENTINEL_TEXTS))
+
+
+def is_actor_document_sentinel(value: object) -> bool:
+    """Recognize exactly the existing strip/uppercase sentinel authority."""
+    return isinstance(value, str) and value.strip().upper() in _SENTINEL_TEXTS
 
 
 def has_plausible_actor_document_digits(value: object) -> bool:
@@ -336,7 +348,7 @@ def _clean_raw(value: object) -> tuple[str | None, tuple[str, ...]]:
     stripped = value.strip()
     if not stripped:
         return None, (REASON_EMPTY,)
-    if stripped.upper() in _SENTINEL_TEXTS:
+    if is_actor_document_sentinel(stripped):
         return None, (REASON_SENTINEL_DISCARDED,)
     return stripped, ()
 
